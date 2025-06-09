@@ -6,10 +6,23 @@
 </head>
 <body>
   <div id="popup-root">
-    <h2>Best Card for this Site</h2>
-    <div id="recommendation"></div>
-    <button id="settings-btn">Settings</button>
+  <h2>Credit Card Recommendation</h2>
+  <div id="site-recommendation"></div>
+
+  <button id="settings-btn">Settings</button>
+
+<!-- Settings Modal -->
+<div id="settings-modal" style="display:none; position:fixed; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1000; align-items:center; justify-content:center;">
+  <div style="background:#fff; padding:20px; border-radius:8px; width:300px; margin:100px auto; position:relative;">
+    <h3>API Settings</h3>
+    <label for="openai-key">OpenAI API Key:</label>
+    <input type="password" id="openai-key" style="width:100%" placeholder="sk-..." />
+    <button id="save-key-btn" style="margin-top:10px;">Save</button>
+    <button id="close-modal-btn" style="position:absolute; top:5px; right:10px;">&times;</button>
+    <div id="save-key-status" style="margin-top:10px; color:green;"></div>
   </div>
+</div>
+</div>
   <script src="popup.js"></script>
 </body>
 </html>
