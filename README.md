@@ -26,6 +26,7 @@ CreditCardAI/
 ├── simulation/          # Simulation and web server files
 │   ├── server.js
 │   ├── llm.js
+│   ├── cards.json   
 │   ├── credentials.json # (NOT committed, holds your OpenAI API key)
 │   ├── package.json
 │   ├── package-lock.json
