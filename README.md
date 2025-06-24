@@ -1,4 +1,4 @@
-# CreditCardAI Project
+# AI Checkout
 
 ## Overview
 This repository contains two main components:
