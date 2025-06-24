@@ -87,7 +87,7 @@ CreditCardAI/
 ### Demo
 Below is an example of the simulation in action. You can see total spend, per-order rewards, and how the AI checkout compares to the 1% cashback baseline.
 
-![AI Checkout Reward Simulation Demo](images/demo.png)
+![AI Checkout Reward Simulation Demo](images/demo.jpeg)
 
 _**Figure 1:** After 100 simulated orders, this shows total spend, 1% flat cashback vs. AI Checkout rewards, with a total of 4.01× multiplier._
 
