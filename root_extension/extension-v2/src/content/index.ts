@@ -1,12 +1,41 @@
 // Content script for Credit Card Recommender extension
 // Runs on all pages and provides cart extraction and banner display functionality
 
-import type { CartItem, Recommendation } from '../types';
+import type { CartItem } from '../types';
+import { getRegistry } from './extractors/ExtractorRegistry';
+import { GenericExtractor } from './extractors/GenericExtractor';
+import { SephoraExtractor } from './extractors/sites/SephoraExtractor';
+import { ConfigExtractor, createConfigExtractors } from './extractors/ConfigExtractor';
+import { SIMPLE_SITE_CONFIGS } from './extractors/configs/simple-sites.config';
 
 // Debug mode flag
 const DEBUG_MODE = false;
 
-console.log('Credit Card Recommender content script loaded');
+console.log('Credit Card Recommender content script loaded (Registry Pattern v2)');
+
+// Initialize the extractor registry
+const registry = getRegistry();
+
+// Register all extractors
+function initializeExtractors() {
+  console.log('[Registry] Initializing extractors...');
+
+  // Register site-specific extractors
+  registry.register(new SephoraExtractor());
+
+  // Register config-driven extractors
+  const configExtractors = createConfigExtractors(SIMPLE_SITE_CONFIGS);
+  registry.registerAll(configExtractors);
+
+  // Register generic fallback extractor
+  registry.setFallback(new GenericExtractor());
+
+  const info = registry.getInfo();
+  console.log(`[Registry] Initialized with ${info.registered} extractors for sites:`, info.sites);
+}
+
+// Initialize on load
+initializeExtractors();
 
 // Make functions available globally for popup to call
 declare global {
@@ -14,168 +43,37 @@ declare global {
     __CC_extractCartItems?: () => CartItem[];
     __CC_createBanner?: (html: string) => void;
     __CC_DEBUG?: boolean;
+    __CC_getRegistryInfo?: () => any;
   }
 }
 
 /**
  * Extract cart items from the current page
  * Exposed globally for popup script to call
+ * Uses registry to automatically select the right extractor
  */
 window.__CC_extractCartItems = function (): CartItem[] {
-  console.log('Extracting cart items from:', window.location.hostname);
+  const hostname = window.location.hostname;
+  console.log(`[Extraction] Starting for: ${hostname}`);
 
-  const items: CartItem[] = [];
+  try {
+    // Use registry to extract items (automatically selects right extractor)
+    const items = registry.extractItems(hostname);
 
-  // Strategy 1: Common cart selectors
-  const cartSelectors = [
-    '[id*="cart"]',
-    '[class*="cart"]',
-    '[id*="basket"]',
-    '[class*="basket"]',
-    '[id*="checkout"]',
-    '[class*="checkout"]',
-    '[id*="bag"]',
-    '[class*="bag"]'
-  ];
-
-  for (const selector of cartSelectors) {
-    const containers = document.querySelectorAll(selector);
-    containers.forEach((container) => {
-      // Look for items within container
-      const itemElements = container.querySelectorAll(
-        'li, .cart-item, .product, .line-item, [class*="item"]'
-      );
-
-      itemElements.forEach((item) => {
-        const name = extractItemName(item as HTMLElement);
-        if (name) {
-          const price = extractPrice(item as HTMLElement);
-          const quantity = extractQuantity(item as HTMLElement);
-          items.push({ name, price, quantity });
-        }
-      });
-    });
+    console.log(`[Extraction] Successfully extracted ${items.length} items`);
+    return items;
+  } catch (error) {
+    console.error('[Extraction] Failed:', error);
+    return [];
   }
-
-  // Strategy 2: Fallback - find elements with prices
-  if (items.length === 0) {
-    const pricePattern = /\$\d+(\.\d{2})?/;
-    const candidates = document.querySelectorAll('li, .product, .cart-item, .line-item, div');
-
-    candidates.forEach((element) => {
-      const text = element.textContent || '';
-      if (pricePattern.test(text) && text.length < 300) {
-        const name = extractItemName(element as HTMLElement);
-        if (name && name.length > 3 && name.length < 200) {
-          items.push({ name });
-        }
-      }
-    });
-  }
-
-  // Deduplicate by name
-  const uniqueItems = Array.from(
-    new Map(items.map((item) => [item.name.toLowerCase().trim(), item])).values()
-  ).slice(0, 20); // Limit to 20 items max
-
-  console.log('Extracted cart items:', uniqueItems.length);
-  return uniqueItems;
 };
 
 /**
- * Extract item name from element
+ * Get registry info (for debugging)
  */
-function extractItemName(element: HTMLElement): string | null {
-  // Try specific selectors first
-  const nameSelectors = [
-    '.product-title',
-    '.item-title',
-    '.product-name',
-    '.name',
-    '[class*="title"]',
-    '[class*="name"]',
-    'h2',
-    'h3',
-    'h4',
-    'a'
-  ];
-
-  for (const selector of nameSelectors) {
-    const nameElement = element.querySelector(selector);
-    if (nameElement && nameElement.textContent) {
-      const name = nameElement.textContent.trim();
-      if (name.length > 0 && name.length < 200) {
-        return name;
-      }
-    }
-  }
-
-  // Fallback to element's text content
-  const text = element.textContent?.trim() || '';
-  if (text.length > 3 && text.length < 300) {
-    // Clean up: take first line or before price
-    const lines = text.split('\n');
-    const firstLine = lines[0].trim();
-    if (firstLine.length > 3) {
-      return firstLine;
-    }
-  }
-
-  return null;
-}
-
-/**
- * Extract price from element
- */
-function extractPrice(element: HTMLElement): string | undefined {
-  const priceSelectors = [
-    '.price',
-    '.product-price',
-    '[class*="price"]',
-    '[data-price]',
-    '[data-test*="price"]'
-  ];
-
-  for (const selector of priceSelectors) {
-    const priceElement = element.querySelector(selector);
-    if (priceElement && priceElement.textContent) {
-      const price = priceElement.textContent.trim();
-      if (price.includes('$')) {
-        return price;
-      }
-    }
-  }
-
-  // Fallback: search text for price pattern
-  const text = element.textContent || '';
-  const priceMatch = text.match(/\$\d+(\.\d{2})?/);
-  return priceMatch ? priceMatch[0] : undefined;
-}
-
-/**
- * Extract quantity from element
- */
-function extractQuantity(element: HTMLElement): number | undefined {
-  const quantitySelectors = [
-    '[class*="quantity"]',
-    '[class*="qty"]',
-    'input[type="number"]',
-    '[data-quantity]'
-  ];
-
-  for (const selector of quantitySelectors) {
-    const qtyElement = element.querySelector(selector) as HTMLInputElement;
-    if (qtyElement) {
-      const qtyValue = qtyElement.value || qtyElement.textContent;
-      const parsed = parseInt(qtyValue || '1', 10);
-      if (!isNaN(parsed) && parsed > 0) {
-        return parsed;
-      }
-    }
-  }
-
-  return undefined;
-}
+window.__CC_getRegistryInfo = function () {
+  return registry.getInfo();
+};
 
 /**
  * Create or update recommendation banner on page
@@ -256,6 +154,7 @@ window.__CC_createBanner = function (html: string): void {
 
 /**
  * Build LLM prompt (exposed for popup to use)
+ * Kept for backward compatibility with old popup code
  */
 window.buildLLMPrompt = function (
   cartItems: CartItem[],
@@ -300,6 +199,7 @@ Respond ONLY with a valid JSON object with the following fields and no other tex
 
 /**
  * Call OpenAI API (exposed for popup to use)
+ * Kept for backward compatibility with old popup code
  */
 window.callOpenAIChat = async function (prompt: string, apiKey: string): Promise<string> {
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -338,6 +238,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   } else if (message.type === 'CREATE_BANNER') {
     window.__CC_createBanner?.(message.payload);
     sendResponse({ success: true });
+  } else if (message.type === 'GET_REGISTRY_INFO') {
+    const info = window.__CC_getRegistryInfo?.() || {};
+    sendResponse({ success: true, data: info });
   }
 
   return true;
