@@ -5,6 +5,7 @@ import { cardAPI } from '../services/api';
 import ErrorBoundary from '../components/ErrorBoundary';
 import LoadingState from '../components/LoadingState';
 import RecommendationCard from '../components/RecommendationCard';
+import CartItemsList from '../components/CartItemsList';
 import SettingsModal from '../components/SettingsModal';
 import type { CartItem, Recommendation } from '../types';
 
@@ -14,10 +15,12 @@ import type { CartItem, Recommendation } from '../types';
 const Popup: React.FC = () => {
   const {
     recommendation,
+    cartItems,
     isLoading,
     error,
     showSettings,
     setRecommendation,
+    setCartItems,
     setLoading,
     setError,
     setShowSettings,
@@ -47,6 +50,7 @@ const Popup: React.FC = () => {
   const handleGetRecommendation = async () => {
     setLoading(true);
     setError(null);
+    setCartItems(null);
 
     try {
       // Check API key again
@@ -93,10 +97,10 @@ const Popup: React.FC = () => {
         },
       });
 
-      const cartItems: CartItem[] = cartResults[0]?.result || [];
-      console.log('Extracted cart items:', cartItems);
+      const extractedItems: CartItem[] = cartResults[0]?.result || [];
+      console.log('Extracted cart items:', extractedItems);
 
-      if (cartItems.length === 0) {
+      if (extractedItems.length === 0) {
         setError(
           'No cart items found on this page. Try visiting a shopping cart or checkout page.'
         );
@@ -104,8 +108,11 @@ const Popup: React.FC = () => {
         return;
       }
 
+      // Store cart items in state
+      setCartItems(extractedItems);
+
       // Get recommendation
-      const rec = await cardAPI.getRecommendation(cartItems, site, apiKey);
+      const rec = await cardAPI.getRecommendation(extractedItems, site, apiKey);
       setRecommendation(rec);
 
       // Also create banner on page
@@ -120,6 +127,7 @@ const Popup: React.FC = () => {
     } catch (err) {
       console.error('Error getting recommendation:', err);
       setError(err instanceof Error ? err.message : 'Failed to get recommendation');
+      setCartItems(null);
     } finally {
       setLoading(false);
     }
@@ -232,7 +240,14 @@ const Popup: React.FC = () => {
               </div>
             </div>
           ) : recommendation ? (
-            <RecommendationCard recommendation={recommendation} />
+            <>
+              {cartItems && cartItems.length > 0 && (
+                <div className="mb-4">
+                  <CartItemsList items={cartItems} />
+                </div>
+              )}
+              <RecommendationCard recommendation={recommendation} />
+            </>
           ) : (
             <div className="text-center py-8">
               <div className="w-16 h-16 mx-auto mb-4 bg-primary-100 rounded-full flex items-center justify-center">

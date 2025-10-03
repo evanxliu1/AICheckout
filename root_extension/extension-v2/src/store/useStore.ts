@@ -1,11 +1,12 @@
 import { create } from 'zustand';
-import type { CreditCard, Recommendation } from '../types';
+import type { CreditCard, Recommendation, CartItem } from '../types';
 
 interface AppState {
   // State
   apiKey: string;
   cards: CreditCard[];
   recommendation: Recommendation | null;
+  cartItems: CartItem[] | null;
   isLoading: boolean;
   error: string | null;
   showSettings: boolean;
@@ -14,6 +15,7 @@ interface AppState {
   setApiKey: (key: string) => void;
   setCards: (cards: CreditCard[]) => void;
   setRecommendation: (recommendation: Recommendation | null) => void;
+  setCartItems: (items: CartItem[] | null) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   setShowSettings: (show: boolean) => void;
@@ -24,6 +26,7 @@ const initialState = {
   apiKey: '',
   cards: [],
   recommendation: null,
+  cartItems: null,
   isLoading: false,
   error: null,
   showSettings: false,
@@ -40,6 +43,8 @@ export const useStore = create<AppState>((set) => ({
   setCards: (cards) => set({ cards }),
 
   setRecommendation: (recommendation) => set({ recommendation }),
+
+  setCartItems: (items) => set({ cartItems: items }),
 
   setLoading: (loading) => set({ isLoading: loading }),
 
