@@ -7,6 +7,7 @@ import LoadingState from '../components/LoadingState';
 import RecommendationCard from '../components/RecommendationCard';
 import CartItemsList from '../components/CartItemsList';
 import SettingsModal from '../components/SettingsModal';
+import { DebugPanel } from '../components/DebugPanel';
 import type { CartItem, Recommendation } from '../types';
 
 /**
@@ -247,6 +248,13 @@ const Popup: React.FC = () => {
                 </div>
               )}
               <RecommendationCard recommendation={recommendation} />
+              <DebugPanel
+                currentRecommendation={{
+                  card: recommendation.card,
+                  category: recommendation.category,
+                  reasoning: recommendation.reasoning
+                }}
+              />
             </>
           ) : (
             <div className="text-center py-8">

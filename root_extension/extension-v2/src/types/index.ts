@@ -27,6 +27,8 @@ export interface Recommendation {
   };
   merchant: string;
   category: string;
+  reasoning?: string; // Why this card was chosen
+  timestamp?: number; // When recommendation was made
 }
 
 export interface RecommendationRequest {
@@ -76,6 +78,19 @@ export interface StorageData {
   cachedCards?: CreditCard[];
   latestRecommendation?: string;
   lastCardsFetch?: number;
+  recommendationLogs?: RecommendationLog[];
+  debugMode?: boolean;
+}
+
+// Recommendation logging for debugging
+export interface RecommendationLog {
+  timestamp: number;
+  site: string;
+  cartItems: CartItem[];
+  recommendation: Recommendation;
+  allCards: { name: string; rewards: Record<string, string> }[];
+  prompt: string;
+  rawResponse: string;
 }
 
 // Message passing types for content scripts

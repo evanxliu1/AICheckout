@@ -26,16 +26,8 @@ export const SIMPLE_SITE_CONFIGS: ExtractorConfig[] = [
     combineBrandName: true
   },
 
-  // Example: Best Buy (placeholder - needs actual selectors)
-  {
-    siteId: 'bestbuy',
-    displayName: 'Best Buy',
-    urlPatterns: ['bestbuy.com'],
-    itemSelector: '.cart-item', // TODO: Verify actual selector
-    nameSelector: '.sku-title', // TODO: Verify
-    priceSelector: '.pricing-price__regular-price', // TODO: Verify
-    quantitySelector: 'select.quantity-select', // TODO: Verify
-  },
+  // NOTE: Best Buy now uses a custom extractor (BestBuyExtractor.ts)
+  // Removed config-based entry to avoid conflicts
 
   // Add more sites here as needed
   // Example template:

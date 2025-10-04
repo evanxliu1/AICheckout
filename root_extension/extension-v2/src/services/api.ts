@@ -8,10 +8,12 @@ import type {
   RecommendationRequest,
   APIResponse,
   OpenAIRequest,
-  OpenAIResponse
+  OpenAIResponse,
+  RecommendationLog
 } from '../types';
 import { getActiveCards } from './supabase';
 import { getOpenAIKey } from '../utils/storage';
+import { logRecommendation } from '../utils/logging';
 
 /**
  * Configuration for API endpoints
@@ -130,7 +132,20 @@ export class CardAPIClient {
     const llmResponse = await this.callOpenAI(prompt, openaiKey);
 
     // Parse response
-    return this.parseRecommendation(llmResponse);
+    const recommendation = this.parseRecommendation(llmResponse);
+
+    // Log for debugging
+    await logRecommendation({
+      timestamp: Date.now(),
+      site,
+      cartItems,
+      recommendation,
+      allCards: cards.map(c => ({ name: c.name, rewards: c.rewards })),
+      prompt,
+      rawResponse: llmResponse
+    });
+
+    return recommendation;
   }
 
   /**
@@ -166,15 +181,29 @@ The website is: ${site}
 Here are the available credit cards (with their reward categories):
 ${cardInfo}
 
-First, infer the most likely merchant category for this purchase based on the cart and website.
-Then, recommend the single best card for this purchase.
+IMPORTANT INSTRUCTIONS:
+1. First, determine the merchant category for this purchase:
+   - If this is an e-commerce website (like Amazon, Sephora, Target.com, etc.), consider the "online" category
+   - Also consider specific categories like groceries, dining, entertainment, travel, streaming, etc.
+   - A purchase can match MULTIPLE categories (e.g., Sephora.com is both "online" and "beauty/retail")
 
-Respond ONLY with a valid JSON object with the following fields and no other text, no markdown, no explanation:
+2. For each card, calculate the ACTUAL reward value:
+   - "5% cashback" = 5% return
+   - "4x points" ≈ 4% return (assume 1 point = 1 cent for comparison)
+   - "3% cashback" = 3% return
+   - Compare the HIGHEST matching category for each card
+
+3. Recommend the card with the HIGHEST reward rate for the matching categories
+
+4. Explain your reasoning step-by-step
+
+Respond ONLY with a valid JSON object with the following fields and no other text, no markdown:
 {
-  "card": <Card Name>,
-  "rewards": {<category>: <reward>, ...},
-  "merchant": <website URL>,
-  "category": <merchant category>
+  "card": "<Card Name>",
+  "rewards": {"<category>": "<reward>", ...},
+  "merchant": "<website URL>",
+  "category": "<merchant category>",
+  "reasoning": "<Step-by-step explanation of why this card was chosen, including: (1) what categories matched, (2) reward comparison between cards, (3) why this card has the best value>"
 }`;
   }
 
@@ -188,7 +217,7 @@ Respond ONLY with a valid JSON object with the following fields and no other tex
         { role: 'system', content: 'You are a helpful assistant that recommends credit cards.' },
         { role: 'user', content: prompt }
       ],
-      max_tokens: 120,
+      max_tokens: 300, // Increased from 120 to accommodate reasoning field
       temperature: 0.7
     };
 
@@ -223,7 +252,27 @@ Respond ONLY with a valid JSON object with the following fields and no other tex
         jsonStr = jsonStr.replace(/^```/, '').replace(/```$/, '').trim();
       }
 
-      const parsed = JSON.parse(jsonStr);
+      // Try to parse as-is first
+      let parsed;
+      try {
+        parsed = JSON.parse(jsonStr);
+      } catch (parseError) {
+        // If parsing fails, try to fix truncated JSON
+        console.warn('Initial JSON parse failed, attempting to fix truncated response...');
+
+        // Find the last complete field before truncation
+        // Look for the last complete key-value pair
+        const lastCompleteField = jsonStr.lastIndexOf('",');
+        if (lastCompleteField > 0) {
+          // Truncate at last complete field and close the JSON
+          jsonStr = jsonStr.substring(0, lastCompleteField + 1) + '\n}';
+          console.log('Attempting to parse fixed JSON:', jsonStr);
+          parsed = JSON.parse(jsonStr);
+        } else {
+          // Can't fix it, re-throw the original error
+          throw parseError;
+        }
+      }
 
       // Validate required fields
       if (!parsed.card || !parsed.rewards || !parsed.merchant || !parsed.category) {
@@ -234,7 +283,9 @@ Respond ONLY with a valid JSON object with the following fields and no other tex
         card: parsed.card,
         rewards: parsed.rewards,
         merchant: parsed.merchant,
-        category: parsed.category
+        category: parsed.category,
+        reasoning: parsed.reasoning || 'Reasoning was truncated or not provided',
+        timestamp: Date.now()
       };
     } catch (error) {
       console.error('Error parsing recommendation:', error);

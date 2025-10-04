@@ -5,6 +5,8 @@ import type { CartItem } from '../types';
 import { getRegistry } from './extractors/ExtractorRegistry';
 import { GenericExtractor } from './extractors/GenericExtractor';
 import { SephoraExtractor } from './extractors/sites/SephoraExtractor';
+import { SafewayExtractor } from './extractors/sites/SafewayExtractor';
+import { BestBuyExtractor } from './extractors/sites/BestBuyExtractor';
 import { ConfigExtractor, createConfigExtractors } from './extractors/ConfigExtractor';
 import { SIMPLE_SITE_CONFIGS } from './extractors/configs/simple-sites.config';
 
@@ -22,6 +24,8 @@ function initializeExtractors() {
 
   // Register site-specific extractors
   registry.register(new SephoraExtractor());
+  registry.register(new SafewayExtractor());
+  registry.register(new BestBuyExtractor());
 
   // Register config-driven extractors
   const configExtractors = createConfigExtractors(SIMPLE_SITE_CONFIGS);
