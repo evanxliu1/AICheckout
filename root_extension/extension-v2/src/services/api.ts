@@ -252,27 +252,7 @@ Respond ONLY with a valid JSON object with the following fields and no other tex
         jsonStr = jsonStr.replace(/^```/, '').replace(/```$/, '').trim();
       }
 
-      // Try to parse as-is first
-      let parsed;
-      try {
-        parsed = JSON.parse(jsonStr);
-      } catch (parseError) {
-        // If parsing fails, try to fix truncated JSON
-        console.warn('Initial JSON parse failed, attempting to fix truncated response...');
-
-        // Find the last complete field before truncation
-        // Look for the last complete key-value pair
-        const lastCompleteField = jsonStr.lastIndexOf('",');
-        if (lastCompleteField > 0) {
-          // Truncate at last complete field and close the JSON
-          jsonStr = jsonStr.substring(0, lastCompleteField + 1) + '\n}';
-          console.log('Attempting to parse fixed JSON:', jsonStr);
-          parsed = JSON.parse(jsonStr);
-        } else {
-          // Can't fix it, re-throw the original error
-          throw parseError;
-        }
-      }
+      const parsed = JSON.parse(jsonStr);
 
       // Validate required fields
       if (!parsed.card || !parsed.rewards || !parsed.merchant || !parsed.category) {
@@ -284,7 +264,7 @@ Respond ONLY with a valid JSON object with the following fields and no other tex
         rewards: parsed.rewards,
         merchant: parsed.merchant,
         category: parsed.category,
-        reasoning: parsed.reasoning || 'Reasoning was truncated or not provided',
+        reasoning: parsed.reasoning || 'No reasoning provided',
         timestamp: Date.now()
       };
     } catch (error) {

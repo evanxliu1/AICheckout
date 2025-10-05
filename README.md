@@ -195,7 +195,6 @@ _Example simulation showing cumulative rewards over 100 orders comparing AI-sele
 
 **Caching & Performance**
 - 1-hour TTL cache in Chrome local storage
-- Reduces database/API calls by ~95%
 - Offline support with automatic fallback to cached data
 - Bundle size: 365KB (108KB gzipped)
 
