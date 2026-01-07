@@ -104,3 +104,35 @@ export interface ExtensionMessageResponse<T = any> {
   data?: T;
   error?: string;
 }
+
+// Extractor types
+export interface ExtractorConfig {
+  siteId: string;
+  urlPatterns: string[];
+  displayName: string;
+  itemSelector: string;
+  brandSelector?: string;
+  nameSelector: string;
+  priceSelector?: string;
+  quantitySelector?: string;
+  combineBrandName?: boolean;
+  customNameExtractor?: (element: Element) => string | null;
+  customPriceExtractor?: (element: Element) => string | null;
+  customQuantityExtractor?: (element: Element) => number | null;
+}
+
+export interface ExtractionResult {
+  items: CartItem[];
+  extractorId: string;
+  success: boolean;
+  error?: string;
+  duration?: number;
+}
+
+export interface ExtractorMetadata {
+  siteId: string;
+  displayName: string;
+  urlPatterns: string[];
+  version?: string;
+  author?: string;
+}

@@ -1,6 +1,6 @@
 // Best Buy-specific cart extractor
 import { BaseExtractor } from '../BaseExtractor';
-import type { CartItem } from '../../../types';
+import type { CartItem } from '../../types';
 
 /**
  * Best Buy extractor

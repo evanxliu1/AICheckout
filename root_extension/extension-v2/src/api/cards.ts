@@ -1,11 +1,11 @@
-// Supabase client for Credit Card Recommender extension
-// Handles database operations for credit cards
+// Card data API client
+// Handles fetching and caching credit card data (currently uses Supabase)
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import type { CreditCard } from '../types';
 import { getCachedCards, setCachedCards, areCachedCardsStale } from '../utils/storage';
 
-// Get Supabase credentials from environment variables
+// Get credentials from environment variables
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
@@ -13,22 +13,22 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Missing Supabase credentials. Check your .env file.');
 }
 
-// Initialize Supabase client (singleton)
-let supabaseClient: SupabaseClient | null = null;
+// Initialize client (singleton)
+let client: SupabaseClient | null = null;
 
-function getSupabaseClient(): SupabaseClient {
-  if (!supabaseClient) {
+function getClient(): SupabaseClient {
+  if (!client) {
     if (!supabaseUrl || !supabaseAnonKey) {
-      throw new Error('Supabase credentials not configured');
+      throw new Error('Database credentials not configured');
     }
-    supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+    client = createClient(supabaseUrl, supabaseAnonKey);
   }
-  return supabaseClient;
+  return client;
 }
 
 /**
- * Fetch all active credit cards from Supabase
- * Uses caching to reduce API calls
+ * Fetch all active credit cards
+ * Uses caching to reduce API calls (1 hour TTL)
  */
 export async function getActiveCards(forceRefresh = false): Promise<CreditCard[]> {
   try {
@@ -44,9 +44,9 @@ export async function getActiveCards(forceRefresh = false): Promise<CreditCard[]
       }
     }
 
-    // Fetch from Supabase
-    console.log('Fetching cards from Supabase...');
-    const supabase = getSupabaseClient();
+    // Fetch from database
+    console.log('Fetching cards from database...');
+    const supabase = getClient();
 
     const { data, error } = await supabase
       .from('credit_cards')
@@ -55,14 +55,14 @@ export async function getActiveCards(forceRefresh = false): Promise<CreditCard[]
       .order('name', { ascending: true });
 
     if (error) {
-      throw new Error(`Supabase error: ${error.message}`);
+      throw new Error(`Database error: ${error.message}`);
     }
 
     if (!data || data.length === 0) {
       throw new Error('No active cards found in database');
     }
 
-    // Transform data to match CreditCard interface
+    // Transform to CreditCard interface
     const cards: CreditCard[] = data.map((card: any) => ({
       id: card.id,
       name: card.name,
@@ -98,7 +98,7 @@ export async function getActiveCards(forceRefresh = false): Promise<CreditCard[]
  */
 export async function getCardById(id: string): Promise<CreditCard | null> {
   try {
-    const supabase = getSupabaseClient();
+    const supabase = getClient();
 
     const { data, error } = await supabase
       .from('credit_cards')
@@ -108,7 +108,7 @@ export async function getCardById(id: string): Promise<CreditCard | null> {
       .single();
 
     if (error) {
-      throw new Error(`Supabase error: ${error.message}`);
+      throw new Error(`Database error: ${error.message}`);
     }
 
     if (!data) {
@@ -139,15 +139,15 @@ export async function refreshCardCache(): Promise<CreditCard[]> {
 }
 
 /**
- * Test Supabase connection
+ * Test database connection
  */
 export async function testConnection(): Promise<boolean> {
   try {
-    const supabase = getSupabaseClient();
+    const supabase = getClient();
     const { error } = await supabase.from('credit_cards').select('id').limit(1);
     return !error;
   } catch (error) {
-    console.error('Supabase connection test failed:', error);
+    console.error('Database connection test failed:', error);
     return false;
   }
 }

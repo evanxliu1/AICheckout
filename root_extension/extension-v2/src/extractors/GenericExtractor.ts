@@ -1,6 +1,6 @@
 // Generic fallback extractor for unknown e-commerce sites
 import { BaseExtractor } from './BaseExtractor';
-import type { CartItem } from '../../types';
+import type { CartItem } from '../types';
 
 /**
  * Generic cart extractor - fallback for sites without specific extractors

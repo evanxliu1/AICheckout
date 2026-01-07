@@ -1,5 +1,5 @@
 // Configuration for simple config-driven extractors
-import type { ExtractorConfig } from '../../types/extractor.types';
+import type { ExtractorConfig } from '../../types';
 
 /**
  * Simple site configurations

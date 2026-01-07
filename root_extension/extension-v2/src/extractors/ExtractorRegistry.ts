@@ -1,7 +1,6 @@
 // Registry for managing cart extractors with O(1) lookup
 import type { BaseExtractor } from './BaseExtractor';
-import type { CartItem } from '../../types';
-import type { ExtractionResult } from '../types/extractor.types';
+import type { CartItem, ExtractionResult } from '../types';
 
 /**
  * Registry for managing and selecting cart extractors

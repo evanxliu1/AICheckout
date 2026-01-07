@@ -1,7 +1,6 @@
 // Config-driven extractor for simple e-commerce sites
 import { BaseExtractor } from './BaseExtractor';
-import type { CartItem } from '../../types';
-import type { ExtractorConfig } from '../types/extractor.types';
+import type { CartItem, ExtractorConfig } from '../types';
 
 /**
  * Config-driven extractor for simple sites

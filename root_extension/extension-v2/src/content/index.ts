@@ -2,13 +2,13 @@
 // Runs on all pages and provides cart extraction and banner display functionality
 
 import type { CartItem } from '../types';
-import { getRegistry } from './extractors/ExtractorRegistry';
-import { GenericExtractor } from './extractors/GenericExtractor';
-import { SephoraExtractor } from './extractors/sites/SephoraExtractor';
-import { SafewayExtractor } from './extractors/sites/SafewayExtractor';
-import { BestBuyExtractor } from './extractors/sites/BestBuyExtractor';
-import { ConfigExtractor, createConfigExtractors } from './extractors/ConfigExtractor';
-import { SIMPLE_SITE_CONFIGS } from './extractors/configs/simple-sites.config';
+import { getRegistry } from '../extractors/ExtractorRegistry';
+import { GenericExtractor } from '../extractors/GenericExtractor';
+import { SephoraExtractor } from '../extractors/sites/SephoraExtractor';
+import { SafewayExtractor } from '../extractors/sites/SafewayExtractor';
+import { BestBuyExtractor } from '../extractors/sites/BestBuyExtractor';
+import { createConfigExtractors } from '../extractors/ConfigExtractor';
+import { SIMPLE_SITE_CONFIGS } from '../extractors/configs/simple-sites.config';
 
 // Debug mode flag
 const DEBUG_MODE = false;
@@ -156,82 +156,6 @@ window.__CC_createBanner = function (html: string): void {
   banner.appendChild(content);
 };
 
-/**
- * Build LLM prompt (exposed for popup to use)
- * Kept for backward compatibility with old popup code
- */
-window.buildLLMPrompt = function (
-  cartItems: CartItem[],
-  site: string,
-  cards: any[]
-): string {
-  const cardInfo = cards
-    .map((card) => {
-      const rewardCategories = Object.entries(card.rewards)
-        .map(([cat, val]) => `${cat}: ${val}`)
-        .join(', ');
-      return `Name: ${card.name}\nReward Categories: ${rewardCategories}\nAnnual Fee: $${card.annualFee || card.annual_fee}\nDescription: ${card.description}`;
-    })
-    .join('\n---\n');
-
-  const cartText =
-    cartItems.length > 0
-      ? cartItems.map((item, i) => `${i + 1}. ${item.name}`).join('\n')
-      : '[Cart items could not be extracted]';
-
-  return `You are a helpful assistant that recommends credit cards.
-
-Here are the items in the user's shopping cart:
-${cartText}
-
-The website is: ${site}
-
-Here are the available credit cards (with their reward categories):
-${cardInfo}
-
-First, infer the most likely merchant category for this purchase based on the cart and website.
-Then, recommend the single best card for this purchase.
-
-Respond ONLY with a valid JSON object with the following fields and no other text, no markdown, no explanation:
-{
-  "card": <Card Name>,
-  "rewards": {<category>: <reward>, ...},
-  "merchant": <website URL>,
-  "category": <merchant category>
-}`;
-};
-
-/**
- * Call OpenAI API (exposed for popup to use)
- * Kept for backward compatibility with old popup code
- */
-window.callOpenAIChat = async function (prompt: string, apiKey: string): Promise<string> {
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      model: 'gpt-3.5-turbo',
-      messages: [
-        { role: 'system', content: 'You are a helpful assistant that recommends credit cards.' },
-        { role: 'user', content: prompt }
-      ],
-      max_tokens: 120,
-      temperature: 0.7
-    })
-  });
-
-  if (!response.ok) {
-    const err = await response.json();
-    throw new Error(err.error?.message || 'OpenAI API error');
-  }
-
-  const data = await response.json();
-  return data.choices[0].message.content.trim();
-};
-
 // Message listener for communication with background/popup
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log('Content script received message:', message.type);
@@ -252,13 +176,5 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 // Set debug mode
 window.__CC_DEBUG = DEBUG_MODE;
-
-// Add type declarations for global functions
-declare global {
-  interface Window {
-    buildLLMPrompt?: (cartItems: CartItem[], site: string, cards: any[]) => string;
-    callOpenAIChat?: (prompt: string, apiKey: string) => Promise<string>;
-  }
-}
 
 export {};

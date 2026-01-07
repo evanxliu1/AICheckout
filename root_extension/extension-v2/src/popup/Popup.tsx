@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useStore } from '../store/useStore';
 import { getOpenAIKey } from '../utils/storage';
-import { cardAPI } from '../services/api';
+import { getActiveCards, getAIRecommendation } from '../api';
+import { logRecommendation } from '../utils/logging';
 import ErrorBoundary from '../components/ErrorBoundary';
 import LoadingState from '../components/LoadingState';
 import RecommendationCard from '../components/RecommendationCard';
@@ -112,8 +113,26 @@ const Popup: React.FC = () => {
       // Store cart items in state
       setCartItems(extractedItems);
 
-      // Get recommendation
-      const rec = await cardAPI.getRecommendation(extractedItems, site, apiKey);
+      // Get cards and recommendation
+      const cards = await getActiveCards();
+      const { recommendation: rec, prompt, rawResponse } = await getAIRecommendation(
+        extractedItems,
+        site,
+        cards,
+        apiKey
+      );
+
+      // Log for debugging
+      await logRecommendation({
+        timestamp: Date.now(),
+        site,
+        cartItems: extractedItems,
+        recommendation: rec,
+        allCards: cards.map(c => ({ name: c.name, rewards: c.rewards })),
+        prompt,
+        rawResponse
+      });
+
       setRecommendation(rec);
 
       // Also create banner on page

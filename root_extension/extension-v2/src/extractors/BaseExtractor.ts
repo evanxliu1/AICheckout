@@ -1,6 +1,5 @@
 // Base class for all cart extractors
-import type { CartItem } from '../../types';
-import type { ExtractionResult, ExtractorMetadata } from '../types/extractor.types';
+import type { CartItem, ExtractionResult, ExtractorMetadata } from '../types';
 
 /**
  * Abstract base class for all cart extractors
