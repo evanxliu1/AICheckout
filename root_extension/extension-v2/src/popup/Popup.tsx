@@ -134,16 +134,6 @@ const Popup: React.FC = () => {
       });
 
       setRecommendation(rec);
-
-      // Also create banner on page
-      const bannerHtml = createBannerHtml(rec);
-      await chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        func: (html: string) => {
-          (window as any).__CC_createBanner?.(html);
-        },
-        args: [bannerHtml],
-      });
     } catch (err) {
       console.error('Error getting recommendation:', err);
       setError(err instanceof Error ? err.message : 'Failed to get recommendation');
@@ -201,7 +191,7 @@ const Popup: React.FC = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <h1 className="text-lg font-bold text-gray-900">Credit Card AI</h1>
+              <h1 className="text-lg font-bold text-gray-900">AI Checkout</h1>
             </div>
             <button
               onClick={() => setShowSettings(true)}
@@ -296,7 +286,7 @@ const Popup: React.FC = () => {
                 Get AI-Powered Card Recommendation
               </h3>
               <p className="text-sm text-gray-600 mb-4">
-                Click below to analyze your cart and find the best credit card for maximum rewards.
+                Analyze your cart to find the best card for maximum rewards.
               </p>
               <button
                 onClick={handleGetRecommendation}

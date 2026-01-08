@@ -13,7 +13,7 @@ The extension extracts items from e-commerce sites, sends them to an AI model fo
 ## Repository Structure
 
 ```
-CreditCardAI/
+AICheckout/
 ├── root_extension/
 │   ├── extension/              # ⚠️ Legacy v1 (archived, vanilla JS proof-of-concept)
 │   └── extension-v2/           # ✅ Current - Modern React/TypeScript implementation

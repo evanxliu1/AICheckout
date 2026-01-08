@@ -60,12 +60,14 @@ IMPORTANT INSTRUCTIONS:
 
 Respond ONLY with a valid JSON object with the following fields and no other text, no markdown:
 {
-  "card": "<Card Name>",
-  "rewards": {"<category>": "<reward>", ...},
+  "card": "<Recommended Card Name>",
+  "rewards": {"<matching category>": "<reward rate for THIS card only>"},
   "merchant": "<website URL>",
   "category": "<merchant category>",
-  "reasoning": "<Step-by-step explanation of why this card was chosen, including: (1) what categories matched, (2) reward comparison between cards, (3) why this card has the best value>"
-}`;
+  "reasoning": "<Brief explanation: what category matched and why this card wins>"
+}
+
+IMPORTANT: The "rewards" field should ONLY contain the matching reward categories for the RECOMMENDED card, NOT all cards.`;
 }
 
 /**
@@ -73,12 +75,12 @@ Respond ONLY with a valid JSON object with the following fields and no other tex
  */
 export async function callOpenAI(prompt: string, apiKey: string): Promise<string> {
   const requestBody: OpenAIRequest = {
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-4o-mini',
     messages: [
       { role: 'system', content: 'You are a helpful assistant that recommends credit cards.' },
       { role: 'user', content: prompt }
     ],
-    max_tokens: 300,
+    max_completion_tokens: 500,
     temperature: 0.7
   };
 
@@ -97,7 +99,14 @@ export async function callOpenAI(prompt: string, apiKey: string): Promise<string
   }
 
   const data: OpenAIResponse = await response.json();
-  return data.choices[0].message.content.trim();
+  console.log('OpenAI full response:', JSON.stringify(data, null, 2));
+
+  const content = data.choices[0]?.message?.content;
+  if (!content) {
+    console.error('No content in response. Full response:', data);
+    throw new Error('Empty response from OpenAI');
+  }
+  return content.trim();
 }
 
 /**

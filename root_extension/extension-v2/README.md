@@ -1,4 +1,4 @@
-# Credit Card Recommender Extension v2
+# AI Checkout Extension v2
 
 Modern Chrome extension built with React + TypeScript + Vite that provides AI-powered credit card recommendations for online shopping.
 
@@ -146,7 +146,7 @@ npm run build
 
 - `supabase/SETUP.md` - Database setup guide
 - `api/README.md` - Optional backend API
-- `/Users/evanliu/Projects/CreditCardAI/root_extension/CLAUDE.md` - Development plan
+- `/Users/evanliu/Projects/AICheckout/root_extension/CLAUDE.md` - Development plan
 
 ## License
 
