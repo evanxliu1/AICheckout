@@ -1,6 +1,6 @@
 # AI Checkout - Credit Card Recommender
 
-A Chrome extension that recommends optimal credit cards for online purchases based on shopping cart analysis. Uses OpenAI GPT-3.5 Turbo to match purchases with credit card reward categories.
+A Chrome extension that recommends optimal credit cards for online purchases based on shopping cart analysis. Uses OpenAI GPT-4o-mini to match purchases with credit card reward categories.
 
 ## Problem & Solution
 
@@ -14,22 +14,21 @@ The extension extracts items from e-commerce sites, sends them to an AI model fo
 
 ```
 AICheckout/
-├── root_extension/
-│   ├── extension/              # ⚠️ Legacy v1 (archived, vanilla JS proof-of-concept)
-│   └── extension-v2/           # ✅ Current - Modern React/TypeScript implementation
-│       ├── src/
-│       │   ├── content/        # Cart extraction system
-│       │   │   └── extractors/ # Site-specific cart extractors
-│       │   ├── popup/          # React popup UI
-│       │   ├── components/     # Reusable UI components
-│       │   ├── services/       # API clients (Supabase, OpenAI)
-│       │   ├── store/          # Zustand state management
-│       │   └── utils/          # Helper functions
-│       ├── supabase/           # Database schema & seed data
-│       ├── docs/               # Detailed documentation
-│       ├── manifest.json       # Chrome extension config
-│       └── package.json
+├── extension/                  # Chrome extension (React/TypeScript)
+│   ├── src/
+│   │   ├── api/                # API clients (OpenAI, Supabase)
+│   │   ├── extractors/         # Cart extraction system
+│   │   │   ├── sites/          # Custom site-specific extractors
+│   │   │   └── configs/        # Config-driven extractors
+│   │   ├── popup/              # React popup UI
+│   │   ├── components/         # Reusable UI components
+│   │   ├── content/            # Content script
+│   │   ├── store/              # Zustand state management
+│   │   └── utils/              # Helper functions
+│   ├── manifest.json           # Chrome extension config
+│   └── package.json
 ├── simulation/                 # Interactive simulation app (Node.js/Express)
+├── images/                     # Demo images
 └── README.md                   # This file
 ```
 
@@ -40,12 +39,14 @@ AICheckout/
 ### Chrome Extension
 - **Cart Extraction** - Automatically extracts shopping cart items from e-commerce websites
   - Site-specific extractors for Sephora, Safeway, Best Buy
-  - Config-driven system for adding new sites
+  - Config-driven system for adding new sites easily
   - Generic fallback extractor for unsupported sites
-- **AI Recommendations** - Uses OpenAI GPT-3.5 Turbo to analyze purchases and recommend cards
-- **Dynamic Database** - Credit card data stored in Supabase with local caching
+- **AI Recommendations** - Uses OpenAI GPT-4o-mini to analyze purchases and recommend cards
+- **Dynamic Database** - Credit card data stored in Supabase with local caching (1-hour TTL)
 - **User Interface** - React-based popup showing cart items, recommendations, and AI reasoning
 - **Settings Management** - Secure API key storage in Chrome local storage
+
+---
 
 ## Installation
 
@@ -53,7 +54,7 @@ AICheckout/
 
 1. Clone this repository and navigate to the extension directory:
    ```bash
-   cd root_extension/extension-v2
+   cd extension
    ```
 
 2. Install dependencies:
@@ -76,65 +77,55 @@ AICheckout/
    - Go to `chrome://extensions/`
    - Enable "Developer mode"
    - Click "Load unpacked"
-   - Select the `root_extension/extension-v2/dist/` directory
+   - Select the `extension/dist/` directory
 
 6. Configure your OpenAI API key:
    - Click the extension icon
    - Open settings
    - Enter your OpenAI API key
 
+---
+
 ## How It Works
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│ 1. User Shopping                                                    │
-│    User adds items to cart on e-commerce site (Sephora, Safeway...) │
-└────────────────────────────────┬────────────────────────────────────┘
-                                 │
-                                 ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│ 2. Click Extension Icon                                             │
-│    User clicks Chrome extension icon in browser toolbar             │
-└────────────────────────────────┬────────────────────────────────────┘
-                                 │
-                                 ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│ 3. Cart Extraction                                                  │
-│    Content script extracts cart items from page DOM                 │
-│    - Matches site to registered extractor (O(1) lookup)             │
-│    - Extracts product names, prices, quantities                     │
-│    Returns: [{ name, price, quantity }, ...]                        │
-└────────────────────────────────┬────────────────────────────────────┘
-                                 │
-                                 ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│ 4. Fetch Credit Cards                                               │
-│    Extension fetches available cards from Supabase                  │
-│    - Checks 1-hour cache first                                      │
-│    - Falls back to database if cache expired                        │
-│    Returns: [{ name, rewards, annualFee, ... }, ...]                │
-└────────────────────────────────┬────────────────────────────────────┘
-                                 │
-                                 ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│ 5. AI Analysis                                                      │
-│    Send cart items + cards to OpenAI GPT-3.5 Turbo                  │
-│    - Builds prompt with cart context and card details               │
-│    - AI determines merchant category (groceries, dining, etc.)      │
-│    - AI matches categories to card reward structures                │
-│    - AI selects optimal card and provides reasoning                 │
-│    Returns: { card, rewards, category, reasoning }                  │
-└────────────────────────────────┬────────────────────────────────────┘
-                                 │
-                                 ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│ 6. Display Recommendation                                           │
-│    Shows results in extension popup + on-page banner:               │
-│    - Extracted cart items                                           │
-│    - Recommended credit card                                        │
-│    - Reward categories and percentages                              │
-│    - AI reasoning for recommendation                                │
-└─────────────────────────────────────────────────────────────────────┘
+1. User Shopping
+   User adds items to cart on e-commerce site (Sephora, Safeway, etc.)
+                                 |
+                                 v
+2. Click Extension Icon
+   User clicks Chrome extension icon in browser toolbar
+                                 |
+                                 v
+3. Cart Extraction
+   Content script extracts cart items from page DOM
+   - Matches site to registered extractor (O(1) lookup)
+   - Extracts product names, prices, quantities
+   Returns: [{ name, price, quantity }, ...]
+                                 |
+                                 v
+4. Fetch Credit Cards
+   Extension fetches available cards from Supabase
+   - Checks 1-hour cache first
+   - Falls back to database if cache expired
+   Returns: [{ name, rewards, annualFee, ... }, ...]
+                                 |
+                                 v
+5. AI Analysis
+   Send cart items + cards to OpenAI GPT-4o-mini
+   - Builds prompt with cart context and card details
+   - AI determines merchant category (groceries, dining, etc.)
+   - AI matches categories to card reward structures
+   - AI selects optimal card and provides reasoning
+   Returns: { card, rewards, category, reasoning }
+                                 |
+                                 v
+6. Display Recommendation
+   Shows results in extension popup:
+   - Extracted cart items
+   - Recommended credit card
+   - Reward categories and percentages
+   - AI reasoning for recommendation
 ```
 
 ---
@@ -196,10 +187,10 @@ _Example simulation showing cumulative rewards over 100 orders comparing AI-sele
 **Caching & Performance**
 - 1-hour TTL cache in Chrome local storage
 - Offline support with automatic fallback to cached data
-- Bundle size: 365KB (108KB gzipped)
+- Bundle size: ~367KB (~109KB gzipped)
 
 **AI Integration**
-- Direct OpenAI API calls with GPT-3.5 Turbo
+- Direct OpenAI API calls with GPT-4o-mini
 - Structured JSON output with reasoning field
 - 300 token limit (~$0.001-0.002 per recommendation)
 - Error handling with fallback JSON parsing
@@ -226,11 +217,29 @@ _Example simulation showing cumulative rewards over 100 orders comparing AI-sele
 
 **Backend**
 - Supabase (PostgreSQL)
-- OpenAI GPT-3.5 Turbo API
+- OpenAI GPT-4o-mini API
 
 **Platform**
 - Chrome Extensions (Manifest V3)
 - Node.js + Express (simulation app)
+
+---
+
+## Supported Sites
+
+### Custom Extractors
+- Sephora
+- Safeway / Albertsons / Vons
+- Best Buy (US & Canada)
+
+### Config-driven Extractors
+- Amazon
+- Target
+- Walmart
+- And more (see `extension/src/extractors/configs/simple-sites.config.ts`)
+
+### Fallback
+- Generic extractor for unsupported sites using heuristic detection
 
 ---
 
@@ -243,14 +252,36 @@ _Example simulation showing cumulative rewards over 100 orders comparing AI-sele
 
 ---
 
+## Development
+
+```bash
+cd extension/
+
+# Install dependencies
+npm install
+
+# Development mode with hot reload
+npm run dev
+
+# Production build
+npm run build
+
+# Run linter
+npm run lint
+```
+
+---
+
 ## Future Roadmap
 
 - Chrome Web Store publication
-- Additional site extractors (Amazon, Target, Walmart, Ulta, eBay, Etsy)
+- Additional site extractors (Ulta, eBay, Etsy)
 - Recommendation history tracking
 - User preferences (cashback vs points, max annual fee)
 - Multi-card comparison view
 - Firefox extension port
+
+---
 
 ## License
 
