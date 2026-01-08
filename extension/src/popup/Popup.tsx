@@ -42,6 +42,8 @@ const Popup: React.FC = () => {
 
       if (!key) {
         setError('OpenAI API key not configured. Please add your API key in settings.');
+      } else {
+        setError(null); // Clear error when API key is found
       }
     } catch (err) {
       console.error('Error checking API key:', err);
@@ -72,6 +74,7 @@ const Popup: React.FC = () => {
       // Check if content script is ready, retry if not
       let retries = 0;
       const maxRetries = 5;
+      let contentScriptReady = false;
 
       while (retries < maxRetries) {
         const checkResults = await chrome.scripting.executeScript({
@@ -80,6 +83,7 @@ const Popup: React.FC = () => {
         });
 
         if (checkResults[0]?.result) {
+          contentScriptReady = true;
           break; // Content script is ready
         }
 
@@ -87,8 +91,44 @@ const Popup: React.FC = () => {
         retries++;
       }
 
-      if (retries === maxRetries) {
-        throw new Error('Content script not loaded. Try refreshing the page.');
+      // If content script not loaded, auto-refresh the page and wait
+      if (!contentScriptReady) {
+        setError('Refreshing page to load extension...');
+
+        // Reload the tab
+        await chrome.tabs.reload(tab.id);
+
+        // Wait for tab to finish loading
+        await new Promise<void>((resolve) => {
+          const listener = (tabId: number, changeInfo: { status?: string }) => {
+            if (tabId === tab.id && changeInfo.status === 'complete') {
+              chrome.tabs.onUpdated.removeListener(listener);
+              resolve();
+            }
+          };
+          chrome.tabs.onUpdated.addListener(listener);
+
+          // Timeout after 10 seconds
+          setTimeout(() => {
+            chrome.tabs.onUpdated.removeListener(listener);
+            resolve();
+          }, 10000);
+        });
+
+        // Wait a bit more for content script to initialize
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        // Try one more time to check content script
+        const finalCheck = await chrome.scripting.executeScript({
+          target: { tabId: tab.id },
+          func: () => typeof (window as any).__CC_extractCartItems === 'function',
+        });
+
+        if (!finalCheck[0]?.result) {
+          throw new Error('Content script failed to load after page refresh. Please try again.');
+        }
+
+        setError(null);
       }
 
       // Extract cart items from page
