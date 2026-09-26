@@ -37,7 +37,7 @@ export interface RecommendationRequest {
   cards: CreditCard[];
 }
 
-export interface APIResponse<T = any> {
+export interface APIResponse<T = unknown> {
   data?: T;
   error?: string;
   success: boolean;
@@ -95,11 +95,11 @@ export interface RecommendationLog {
 
 // Message passing types for content scripts
 export interface ExtensionMessage {
-  type: 'EXTRACT_CART' | 'BUILD_PROMPT' | 'CALL_OPENAI' | 'CREATE_BANNER';
-  payload?: any;
+  type: 'EXTRACT_CART';
+  payload?: unknown;
 }
 
-export interface ExtensionMessageResponse<T = any> {
+export interface ExtensionMessageResponse<T = unknown> {
   success: boolean;
   data?: T;
   error?: string;

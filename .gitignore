@@ -37,3 +37,47 @@ simulation/credentials.json
 **/CLAUDE.md
 **/DOCUMENTATION_GUIDE.md
 **/docs/
+# Include this public release evidence without exposing other private assistant docs.
+!/docs/
+/docs/*
+!/docs/verification/
+/docs/verification/*
+!/docs/verification/merchants.md
+!/docs/verification/extension-lifecycle.md
+!/docs/verification/release-package.md
+!/docs/verification/local-protection.md
+!/docs/verification/newegg-live-2026-09-26.json
+!/docs/release/
+/docs/release/*
+!/docs/release/README.md
+!/docs/release/store-listing.md
+!/docs/release/privacy-policy.md
+!/docs/release/support.md
+!/docs/release/reviewer-instructions.md
+!/docs/release/privacy-review.md
+!/docs/release/deployment-runbook.md
+!/docs/release/portfolio-demo.md
+!/docs/release/assets/
+/docs/release/assets/*
+!/docs/release/assets/README.md
+!/docs/release/assets/full-stack-demo.md
+!/docs/release/assets/*.html
+!/docs/release/assets/*.json
+!/docs/release/assets/*.png
+!/docs/release/assets/*.mp4
+!/docs/release/assets/*.webm
+!/docs/release/assets/*.vtt
+!/docs/release/assets/captures/
+/docs/release/assets/captures/*
+!/docs/release/assets/captures/*.png
+# Local verification and packaged artifacts
+extension/artifacts/
+extension/test-results/
+extension/playwright-report/
+apps/review/test-results/
+apps/review/playwright-report/
+extension/dist-catalog-test/
+**/.env.*
+!**/.env.example
+# Private/local curation observations and derived experiment reports.
+/evals/curation/runs/

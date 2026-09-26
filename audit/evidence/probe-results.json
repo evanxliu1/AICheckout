@@ -1,0 +1,48 @@
+[
+  {
+    "probe": "wrong field types",
+    "accepted": true,
+    "card": {
+      "name": "Invalid"
+    }
+  },
+  {
+    "probe": "invented card and rate",
+    "accepted": true,
+    "card": "NOT_IN_CATALOG"
+  },
+  {
+    "probe": "generic non-cart product accepted",
+    "items": [
+      {
+        "name": "Product outside cart",
+        "price": "$1"
+      }
+    ]
+  },
+  {
+    "probe": "hostname boundary",
+    "matched": true
+  },
+  {
+    "probe": "distinct lines sharing a name",
+    "inputLines": 2,
+    "outputLines": 1
+  },
+  {
+    "probe": "storage setter with runtime.lastError",
+    "outcome": "resolved"
+  },
+  {
+    "probe": "settings export includes key",
+    "containsKey": true
+  },
+  {
+    "probe": "simulation receives syntactically valid null JSON",
+    "outcome": "Cannot read properties of null (reading 'card')"
+  },
+  {
+    "probe": "model card name rendered as HTML",
+    "injectedMarkupPresent": true
+  }
+]

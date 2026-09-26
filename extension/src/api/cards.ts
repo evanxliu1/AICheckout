@@ -3,6 +3,7 @@
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import type { CreditCard } from '../types';
+import { databaseCardSchema } from '../types/schemas';
 import { getCachedCards, setCachedCards, areCachedCardsStale } from '../utils/storage';
 
 // Get credentials from environment variables
@@ -63,16 +64,7 @@ export async function getActiveCards(forceRefresh = false): Promise<CreditCard[]
     }
 
     // Transform to CreditCard interface
-    const cards: CreditCard[] = data.map((card: any) => ({
-      id: card.id,
-      name: card.name,
-      annualFee: Number(card.annual_fee),
-      rewards: card.rewards,
-      description: card.description || '',
-      isActive: card.is_active,
-      createdAt: card.created_at,
-      updatedAt: card.updated_at
-    }));
+    const cards = databaseCardSchema.array().max(1000).parse(data);
 
     // Cache the results
     await setCachedCards(cards);
@@ -84,8 +76,8 @@ export async function getActiveCards(forceRefresh = false): Promise<CreditCard[]
 
     // Fallback to cached cards if available
     const cachedCards = await getCachedCards();
-    if (cachedCards.length > 0) {
-      console.log('Using cached cards as fallback');
+    if (cachedCards.length > 0 && !(await areCachedCardsStale())) {
+      console.log('Using current cached cards as fallback');
       return cachedCards;
     }
 
@@ -115,16 +107,7 @@ export async function getCardById(id: string): Promise<CreditCard | null> {
       return null;
     }
 
-    return {
-      id: data.id,
-      name: data.name,
-      annualFee: Number(data.annual_fee),
-      rewards: data.rewards,
-      description: data.description || '',
-      isActive: data.is_active,
-      createdAt: data.created_at,
-      updatedAt: data.updated_at
-    };
+    return databaseCardSchema.parse(data);
   } catch (error) {
     console.error('Error fetching card by ID:', error);
     return null;

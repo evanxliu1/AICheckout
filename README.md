@@ -1,288 +1,58 @@
-# AI Checkout - Credit Card Recommender
+# AI Checkout
 
-A Chrome extension that recommends optimal credit cards for online purchases based on shopping cart analysis. Uses OpenAI GPT-4o-mini to match purchases with credit card reward categories.
+A Chrome extension project moving from an LLM-powered prototype toward a dependable credit-card rewards assistant. The intended product recommends the best eligible card a user already owns at supported checkouts.
 
-## Problem & Solution
+The portfolio targets full-stack and LLM application engineering: a tested TypeScript rewards engine, a PostgreSQL catalog, and an evaluated LLM workflow for turning issuer terms into draft rules that require review before publication.
 
-Many credit cards offer category-specific rewards (e.g., 5% on groceries, 3% on dining), but manually selecting the right card for each purchase is inconvenient. This extension automatically analyzes shopping carts and recommends the best card to maximize rewards.
+**Current status: working local pilot; not ready for public submission.** The popup saves owned cards and compares estimated rewards with a deterministic engine, offline and without an API key. The pilot covers Quicksilver and Blue Cash Everyday for confirmed eligible Best Buy US and Newegg US purchases, using user-triggered summary readers or manual merchant/amount entry. A protected React review app now demonstrates captured terms → bounded extraction → human condition review → audited draft application → separate publication through Node and PostgreSQL. This flow is verified locally with synthetic intercepted model replies. Live model evaluation, final retailer/normal-Chrome checks, hosted deployment, and store preparation remain unfinished.
 
-The extension extracts items from e-commerce sites, sends them to an AI model for category analysis, and suggests the optimal credit card from a database of available cards with their reward structures.
+## Start here
 
----
+- [Extension setup and verification](extension/README.md)
+- [Catalog database setup, security, and verification](supabase/README.md)
+- [Node catalog API](apps/api/README.md)
+- [Protected catalog review app](apps/review/README.md)
+- [Release and portfolio plan](RELEASE_PLAN.md)
+- [Active build goal and checkpoint](BUILD_STATUS.md)
+- [Release drafts, privacy findings, deployment and demo procedures](docs/release/README.md)
+- [Shopper/store media](docs/release/assets/README.md) and [full-stack recording with transcript](docs/release/assets/full-stack-demo.md)
+- [Earlier production readiness audit](audit/PRODUCTION_READINESS.md)
 
-## Repository Structure
+## Repository
 
-```
-AICheckout/
-├── extension/                  # Chrome extension (React/TypeScript)
-│   ├── src/
-│   │   ├── api/                # API clients (OpenAI, Supabase)
-│   │   ├── extractors/         # Cart extraction system
-│   │   │   ├── sites/          # Custom site-specific extractors
-│   │   │   └── configs/        # Config-driven extractors
-│   │   ├── popup/              # React popup UI
-│   │   ├── components/         # Reusable UI components
-│   │   ├── content/            # Content script
-│   │   ├── store/              # Zustand state management
-│   │   └── utils/              # Helper functions
-│   ├── manifest.json           # Chrome extension config
-│   └── package.json
-├── simulation/                 # Interactive simulation app (Node.js/Express)
-├── images/                     # Demo images
-└── README.md                   # This file
-```
+- `extension/`: React, TypeScript, Tailwind, Manifest V3, Vite/CRXJS, Zod; local wallet and service-worker orchestration. Legacy Supabase/OpenAI prototype modules are retained but are not used by the current popup or included in its production bundle.
+- `packages/rewards-core/`: browser-independent TypeScript calculations, strict Zod catalog contracts, sourced pilot catalog, integer money, uncertainty and cap handling.
+- `packages/catalog-client/`: bounded JSON transport and the extension's fixed HTTPS catalog request.
+- `packages/catalog-review/`: shared strict source, draft, review, publication, and browser-safe curation contracts; never shipped to the checkout reader.
+- `apps/api/`: Node 24/TypeScript/Fastify public catalog API, protected source/draft/review/publication routes, and same-origin serving of the compiled review app.
+- `apps/api/src/curation/`: bounded extraction kernel, authenticated invocation/inspection, private ledger, and an official OpenAI Responses SDK adapter with versioned context/schema, evidence checks, persistent traces, atomic reservations, and duplicate-execution protection. Verified with real local sessions/database and intercepted provider transport; live model verification remains pending.
+- `evals/curation/`: [local scorer and replay tools](evals/curation/README.md), 60 explicitly synthetic cases, and a diagnostic baseline. Human-reviewed representative labels and live model-quality results remain pending.
+- `apps/review/`: React/TypeScript review interface with Supabase Auth, saved extraction recovery, field/condition evidence, audited application, comparison against the exact published snapshot, optimistic correction, and separate publication approval. Sessions stay in tab memory; two real local browser flows cover manual/extraction review, stale decisions, and sign-out revocation.
+- `supabase/`: reproducible PostgreSQL migrations, local unapproved catalog seed, reviewer authorization, immutable source captures, versioned drafts, and atomic publication. Real local Auth/Data API, role/security, schema-parity, and concurrency tests pass; hosted migration remains pending.
+- `extension/tests/`: Vitest regression and component tests.
+- `extension/e2e/`: Playwright checks of the packaged extension's offline wallet, comparisons, stale state, deletion, popup closure, navigation/access revocation, and observed natural worker shutdown/recovery.
+- `.github/workflows/extension.yml`: clean installation, lint, types, tests, dependency audit, build, browser verification, and an inspected ZIP with file hashes. A separate browser check installs that ZIP and verifies a native two-card comparison and deletion before upload; [local evidence and limits](docs/verification/release-package.md).
+- `.github/workflows/database.yml`: local Supabase rebuild, signed-session HTTP publication, compiled review-app browser flow, role-policy/schema-parity/concurrent-publication tests, database lint, and security advisors.
+- `simulation/`: older Express simulation, retained as an internal prototype. It is not the production backend and should not be exposed publicly in its current form.
 
----
+## Merchant coverage
 
-## Features
-
-### Chrome Extension
-- **Cart Extraction** - Automatically extracts shopping cart items from e-commerce websites
-  - Site-specific extractors for Sephora, Safeway, Best Buy
-  - Config-driven system for adding new sites easily
-  - Generic fallback extractor for unsupported sites
-- **AI Recommendations** - Uses OpenAI GPT-4o-mini to analyze purchases and recommend cards
-- **Dynamic Database** - Credit card data stored in Supabase with local caching (1-hour TTL)
-- **User Interface** - React-based popup showing cart items, recommendations, and AI reasoning
-- **Settings Management** - Secure API key storage in Chrome local storage
-
----
-
-## Installation
-
-### Chrome Extension Setup
-
-1. Clone this repository and navigate to the extension directory:
-   ```bash
-   cd extension
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Create a `.env` file with your Supabase credentials:
-   ```env
-   VITE_SUPABASE_URL=https://xxxxx.supabase.co
-   VITE_SUPABASE_ANON_KEY=eyJ...
-   ```
-
-4. Build the extension:
-   ```bash
-   npm run build
-   ```
-
-5. Load in Chrome:
-   - Go to `chrome://extensions/`
-   - Enable "Developer mode"
-   - Click "Load unpacked"
-   - Select the `extension/dist/` directory
-
-6. Configure your OpenAI API key:
-   - Click the extension icon
-   - Open settings
-   - Enter your OpenAI API key
-
----
-
-## How It Works
-
-```
-1. User Shopping
-   User adds items to cart on e-commerce site (Sephora, Safeway, etc.)
-                                 |
-                                 v
-2. Click Extension Icon
-   User clicks Chrome extension icon in browser toolbar
-                                 |
-                                 v
-3. Cart Extraction
-   Content script extracts cart items from page DOM
-   - Matches site to registered extractor (O(1) lookup)
-   - Extracts product names, prices, quantities
-   Returns: [{ name, price, quantity }, ...]
-                                 |
-                                 v
-4. Fetch Credit Cards
-   Extension fetches available cards from Supabase
-   - Checks 1-hour cache first
-   - Falls back to database if cache expired
-   Returns: [{ name, rewards, annualFee, ... }, ...]
-                                 |
-                                 v
-5. AI Analysis
-   Send cart items + cards to OpenAI GPT-4o-mini
-   - Builds prompt with cart context and card details
-   - AI determines merchant category (groceries, dining, etc.)
-   - AI matches categories to card reward structures
-   - AI selects optimal card and provides reasoning
-   Returns: { card, rewards, category, reasoning }
-                                 |
-                                 v
-6. Display Recommendation
-   Shows results in extension popup:
-   - Extracted cart items
-   - Recommended credit card
-   - Reward categories and percentages
-   - AI reasoning for recommendation
-```
-
----
-
-## Simulation App
-
-A Node.js web application that simulates shopping transactions to compare AI-powered card selection against a baseline 1% cashback card.
-
-### Setup
-
-1. Navigate to the simulation directory:
-   ```bash
-   cd simulation
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Create `credentials.json` with your OpenAI API key:
-   ```json
-   {
-     "OPENAI_API_KEY": "sk-..."
-   }
-   ```
-
-4. Start the server:
-   ```bash
-   npm start
-   ```
-
-5. Open [http://localhost:3000](http://localhost:3000)
-
-### How It Works
-
-The simulation generates random shopping carts, uses the OpenAI API to recommend the optimal card for each purchase, and calculates rewards. It compares these results against a flat 1% cashback card to show the potential benefit of AI-optimized card selection.
-
-### Demo
-
-![AI Checkout Reward Simulation Demo](images/demo.jpeg)
-
-_Example simulation showing cumulative rewards over 100 orders comparing AI-selected cards vs. 1% flat cashback._
-
----
-
-## Technical Details
-
-### Architecture
-
-**Cart Extraction System**
-- Uses a registry pattern with O(1) site lookup via Map data structure
-- `ExtractorRegistry` - Singleton managing all site extractors
-- `BaseExtractor` - Abstract base class with common extraction methods
-- Site-specific extractors for Sephora, Safeway, and Best Buy
-- Config-driven extractors for simple sites
-- Generic fallback extractor for unknown sites
-
-**Caching & Performance**
-- 1-hour TTL cache in Chrome local storage
-- Offline support with automatic fallback to cached data
-- Bundle size: ~367KB (~109KB gzipped)
-
-**AI Integration**
-- Direct OpenAI API calls with GPT-4o-mini
-- Structured JSON output with reasoning field
-- 300 token limit (~$0.001-0.002 per recommendation)
-- Error handling with fallback JSON parsing
-
-**Database**
-- Supabase (PostgreSQL) for credit card data
-- JSONB column for flexible reward categories
-- Row Level Security (RLS) policies
-
----
-
-## Tech Stack
-
-**Frontend**
-- React 19
-- TypeScript 5.8
-- Tailwind CSS 3.4
-- Zustand 5 (state management)
-
-**Build Tools**
-- Vite 7
-- @crxjs/vite-plugin (Chrome Extension bundling)
-- ESLint + TypeScript ESLint
-
-**Backend**
-- Supabase (PostgreSQL)
-- OpenAI GPT-4o-mini API
-
-**Platform**
-- Chrome Extensions (Manifest V3)
-- Node.js + Express (simulation app)
-
----
-
-## Supported Sites
-
-### Custom Extractors
-- Sephora
-- Safeway / Albertsons / Vons
-- Best Buy (US & Canada)
-
-### Config-driven Extractors
-- Amazon
-- Target
-- Walmart
-- And more (see `extension/src/extractors/configs/simple-sites.config.ts`)
-
-### Fallback
-- Generic extractor for unsupported sites using heuristic detection
-
----
-
-## Security
-
-- API keys and credentials are gitignored (`credentials.json`, `.env`)
-- OpenAI API key stored in Chrome local storage (user-provided)
-- Supabase uses Row Level Security (RLS) policies
-- Dependencies managed via `package.json`
-
----
+Best Buy US has live empty/populated/quantity-change DOM evidence and separate packaged Chrome action tests. Newegg US now also passes the combined native-toolbar → live anonymous cart → two-card comparison flow at two quantities. Its observed total was TBD, so the extension explicitly compares the subtotal before tax/shipping. Both require confirmation and allow manual correction; changing the selected merchant clears stale inputs/results. Issuer reward eligibility remains a user-confirmed assumption, not verified merchant coding. See [the exact verification scope and remaining cases](docs/verification/merchants.md). Legacy item extractors for other merchants remain disconnected. No broad extraction success-rate or real-user savings claim is made.
 
 ## Development
 
-```bash
-cd extension/
+Use Node 24. Install all npm workspaces from the repository root; there is one root lockfile. No environment file, account, API key, or network service is needed for the local comparison flow. The bundled card snapshot expires October 25, 2026; that is a maintenance deadline, not an issuer guarantee.
 
-# Install dependencies
-npm install
-
-# Development mode with hot reload
-npm run dev
-
-# Production build
-npm run build
-
-# Run linter
+```sh
+npm ci
 npm run lint
+npm run typecheck
+npm test
+npm run build
 ```
 
----
-
-## Future Roadmap
-
-- Chrome Web Store publication
-- Additional site extractors (Ulta, eBay, Etsy)
-- Recommendation history tracking
-- User preferences (cashback vs points, max annual fee)
-- Multi-card comparison view
-- Firefox extension port
-
----
+Load `extension/dist` from Chrome's Extensions page in Developer mode. See the extension README for browser tests, optional catalog updates, and packaging. The production catalog endpoint is not deployed or configured yet; the default build uses the bundled pilot.
 
 ## License
 
-MIT
+MIT. See [LICENSE](LICENSE).

@@ -35,7 +35,10 @@ export abstract class BaseExtractor {
    */
   canHandle(hostname: string): boolean {
     const lowerHostname = hostname.toLowerCase();
-    return this.urlPatterns.some(pattern => lowerHostname.includes(pattern.toLowerCase()));
+    return this.urlPatterns.some(pattern => {
+      const host = pattern.toLowerCase();
+      return lowerHostname === host || lowerHostname.endsWith(`.${host}`);
+    });
   }
 
   /**

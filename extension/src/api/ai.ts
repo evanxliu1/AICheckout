@@ -6,8 +6,9 @@ import type {
   CartItem,
   Recommendation,
   OpenAIRequest,
-  OpenAIResponse,
 } from '../types';
+import { z } from 'zod';
+import { cartItemsSchema, creditCardsSchema, recommendationSchema } from '../types/schemas';
 
 /**
  * Build LLM prompt for recommendation
@@ -90,57 +91,49 @@ export async function callOpenAI(prompt: string, apiKey: string): Promise<string
       'Content-Type': 'application/json',
       Authorization: `Bearer ${apiKey}`
     },
-    body: JSON.stringify(requestBody)
+    body: JSON.stringify(requestBody),
+    signal: AbortSignal.timeout(20_000),
   });
 
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error?.message || 'OpenAI API error');
+    if (response.status === 401) throw new Error('The API key was rejected. Update it in Settings.');
+    if (response.status === 429) throw new Error('The AI service is at its usage limit. Check your API quota or try later.');
+    throw new Error('The AI service is unavailable. Please try again.');
   }
 
-  const data: OpenAIResponse = await response.json();
-  console.log('OpenAI full response:', JSON.stringify(data, null, 2));
-
-  const content = data.choices[0]?.message?.content;
-  if (!content) {
-    console.error('No content in response. Full response:', data);
-    throw new Error('Empty response from OpenAI');
+  const data = z.object({ choices: z.array(z.object({
+    message: z.object({ content: z.string().nullable() }),
+    finish_reason: z.string(),
+  })).min(1) }).parse(await response.json());
+  const choice = data.choices[0];
+  if (choice.finish_reason !== 'stop' || !choice.message.content) {
+    throw new Error('The AI service did not return a complete result. Please try again.');
   }
+  const content = choice.message.content;
   return content.trim();
 }
 
 /**
  * Parse LLM response into Recommendation object
  */
-export function parseRecommendation(llmResponse: string): Recommendation {
+export function parseRecommendation(
+  llmResponse: string,
+  context?: { cards: CreditCard[]; site: string },
+): Recommendation {
+  if (llmResponse.length > 20_000) throw new Error('The recommendation was too large.');
   try {
-    // Remove markdown code blocks if present
-    let jsonStr = llmResponse.trim();
-    if (jsonStr.startsWith('```json')) {
-      jsonStr = jsonStr.replace(/^```json/, '').replace(/```$/, '').trim();
-    } else if (jsonStr.startsWith('```')) {
-      jsonStr = jsonStr.replace(/^```/, '').replace(/```$/, '').trim();
+    const json = llmResponse.trim().replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
+    const parsed = recommendationSchema.parse(JSON.parse(json));
+    if (context) {
+      const card = context.cards.find((candidate) => candidate.name === parsed.card);
+      if (!card || parsed.merchant !== context.site) throw new Error('Unexpected card or merchant');
+      for (const [category, rate] of Object.entries(parsed.rewards)) {
+        if (card.rewards[category] !== rate) throw new Error('Unverified reward rate');
+      }
     }
-
-    const parsed = JSON.parse(jsonStr);
-
-    // Validate required fields
-    if (!parsed.card || !parsed.rewards || !parsed.merchant || !parsed.category) {
-      throw new Error('Missing required fields in recommendation');
-    }
-
-    return {
-      card: parsed.card,
-      rewards: parsed.rewards,
-      merchant: parsed.merchant,
-      category: parsed.category,
-      reasoning: parsed.reasoning || 'No reasoning provided',
-      timestamp: Date.now()
-    };
-  } catch (error) {
-    console.error('Error parsing recommendation:', error);
-    console.error('Raw response:', llmResponse);
-    throw new Error('Failed to parse recommendation from LLM response');
+    return { ...parsed, reasoning: parsed.reasoning ?? 'No explanation available.', timestamp: Date.now() };
+  } catch {
+    throw new Error('The AI result could not be verified against the card catalog. Please try again.');
   }
 }
 
@@ -154,9 +147,11 @@ export async function getAIRecommendation(
   cards: CreditCard[],
   apiKey: string
 ): Promise<{ recommendation: Recommendation; prompt: string; rawResponse: string }> {
+  cartItemsSchema.parse(cartItems);
+  creditCardsSchema.nonempty().parse(cards);
   const prompt = buildPrompt(cartItems, site, cards);
   const rawResponse = await callOpenAI(prompt, apiKey);
-  const recommendation = parseRecommendation(rawResponse);
+  const recommendation = parseRecommendation(rawResponse, { cards, site });
 
   return { recommendation, prompt, rawResponse };
 }

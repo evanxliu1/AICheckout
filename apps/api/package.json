@@ -1,0 +1,29 @@
+{
+  "name": "@ai-checkout/api",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node24 --format=esm --external:fastify --external:zod --external:pg --external:openai --external:@fastify/rate-limit --external:@fastify/static --outfile=dist/index.js",
+    "start": "node dist/index.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ai-checkout/rewards-core": "2.0.0",
+    "@ai-checkout/catalog-review": "2.0.0",
+    "@fastify/rate-limit": "11.2.0",
+    "@fastify/static": "10.1.4",
+    "fastify": "5.12.5",
+    "zod": "4.6.5",
+    "pg": "8.23.0",
+    "openai": "7.23.0",
+    "@ai-checkout/catalog-client": "2.0.0"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3",
+    "@types/pg": "8.23.1",
+    "vitest": "5.0.2",
+    "esbuild": "0.28.2"
+  }
+}

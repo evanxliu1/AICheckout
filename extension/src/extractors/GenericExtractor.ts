@@ -188,7 +188,7 @@ export class GenericExtractor extends BaseExtractor {
 
     // Fallback: search text for price pattern
     const text = element.textContent || '';
-    const priceMatch = text.match(/\$\d+(\.\d{2})?/);
+    const priceMatch = text.match(/\$(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d{2})?(?![\d,.])/);
     return priceMatch ? priceMatch[0] : undefined;
   }
 
@@ -221,7 +221,7 @@ export class GenericExtractor extends BaseExtractor {
   /**
    * Override canHandle to always return false (only used as fallback)
    */
-  canHandle(hostname: string): boolean {
+  canHandle(): boolean {
     return false; // Never auto-selected, only used as fallback
   }
 }

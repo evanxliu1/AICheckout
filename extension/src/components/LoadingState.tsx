@@ -14,7 +14,8 @@ const LoadingState: React.FC<LoadingStateProps> = ({
 }) => {
   if (variant === 'skeleton') {
     return (
-      <div className="animate-fade-in p-4">
+      <div role="status" className="animate-fade-in p-4">
+        <p className="mb-3 text-sm text-gray-700">{message}</p>
         {/* Skeleton for recommendation card */}
         <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200">
           {/* Title skeleton */}

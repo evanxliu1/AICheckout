@@ -1,0 +1,44 @@
+{
+  "name": "ai-checkout",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "workspaces": [
+    "extension",
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "lint": "eslint extension/src extension/tests extension/e2e extension/scripts packages apps scripts",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "release:media": "node scripts/build-release-media.mjs",
+    "release:portfolio": "node scripts/build-portfolio-demo.mjs",
+    "test:catalog:browser": "node scripts/test-catalog-browser.mjs",
+    "supabase": "supabase",
+    "db:start": "supabase db start",
+    "db:start:api": "supabase start --exclude realtime,storage-api,imgproxy,mailpit,postgres-meta,studio,edge-runtime,logflare,vector,supavisor",
+    "db:reset": "supabase db reset --local",
+    "db:test": "supabase test db --local",
+    "db:test:concurrency": "node scripts/test-db-concurrency.mjs",
+    "db:test:catalog": "node scripts/test-catalog-parity.mjs",
+    "db:test:http": "node scripts/test-catalog-http.mjs",
+    "db:test:curation": "node scripts/test-curation-ledger.mjs",
+    "db:test:curation:http": "node scripts/test-curation-http.mjs",
+    "db:test:curation:application": "node scripts/test-curation-application.mjs",
+    "eval:curation": "node scripts/evaluate-curation.mjs",
+    "db:lint": "supabase db lint --local --schema public,catalog_private --fail-on warning",
+    "db:advisors": "supabase db advisors --local --type security --level warn --fail-on error",
+    "db:seed:generate": "node scripts/generate-db-seed.mjs",
+    "db:seed:check": "node scripts/generate-db-seed.mjs --check"
+  },
+  "devDependencies": {
+    "@types/node": "24.6.1",
+    "pg": "8.23.0",
+    "supabase": "2.118.0"
+  }
+}

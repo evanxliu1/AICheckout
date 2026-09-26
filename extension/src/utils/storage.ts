@@ -1,167 +1,73 @@
-// Chrome storage utilities with TypeScript type safety
-// Provides helper functions for storing and retrieving data
-
 import type { CreditCard, StorageData } from '../types';
+import { creditCardsSchema } from '../types/schemas';
 
-/**
- * Generic storage getter with type safety
- */
-async function getFromStorage<K extends keyof StorageData>(
-  key: K
-): Promise<StorageData[K] | null> {
-  return new Promise((resolve) => {
-    chrome.storage.local.get([key], (result) => {
-      resolve(result[key] ?? null);
-    });
-  });
+async function getFromStorage<K extends keyof StorageData>(key: K): Promise<unknown> {
+  const values = await chrome.storage.local.get(key);
+  return values[key];
 }
 
-/**
- * Generic storage setter with type safety
- */
-async function setInStorage<K extends keyof StorageData>(
-  key: K,
-  value: StorageData[K]
-): Promise<void> {
-  return new Promise((resolve) => {
-    chrome.storage.local.set({ [key]: value }, () => {
-      resolve();
-    });
-  });
-}
-
-/**
- * Get OpenAI API key from storage
- */
 export async function getOpenAIKey(): Promise<string> {
   const key = await getFromStorage('openaiKey');
-  return key || '';
+  return typeof key === 'string' ? key : '';
 }
 
-/**
- * Set OpenAI API key in storage
- */
 export async function setOpenAIKey(key: string): Promise<void> {
-  await setInStorage('openaiKey', key);
+  if (key) await chrome.storage.local.set({ openaiKey: key });
+  else await chrome.storage.local.remove('openaiKey');
 }
 
-/**
- * Validate OpenAI API key format
- */
 export function validateOpenAIKey(key: string): boolean {
-  return key.startsWith('sk-') && key.length > 20;
+  return key.startsWith('sk-') && key.length > 20 && key.length <= 512 && !/\s/.test(key);
 }
 
-/**
- * Get cached credit cards from storage
- */
 export async function getCachedCards(): Promise<CreditCard[]> {
-  const cards = await getFromStorage('cachedCards');
-  return cards || [];
+  const result = creditCardsSchema.safeParse(await getFromStorage('cachedCards'));
+  return result.success ? result.data : [];
 }
 
-/**
- * Set cached credit cards in storage
- */
 export async function setCachedCards(cards: CreditCard[]): Promise<void> {
-  await setInStorage('cachedCards', cards);
-  await setInStorage('lastCardsFetch', Date.now());
+  await chrome.storage.local.set({ cachedCards: creditCardsSchema.parse(cards), lastCardsFetch: Date.now() });
 }
 
-/**
- * Check if cached cards are stale (older than 1 hour)
- */
 export async function areCachedCardsStale(): Promise<boolean> {
   const lastFetch = await getFromStorage('lastCardsFetch');
-  if (!lastFetch) return true;
-
-  const ONE_HOUR = 60 * 60 * 1000;
-  return Date.now() - lastFetch > ONE_HOUR;
+  if (typeof lastFetch !== 'number' || !Number.isFinite(lastFetch)) return true;
+  const age = Date.now() - lastFetch;
+  return age < 0 || age >= 60 * 60 * 1000;
 }
 
-/**
- * Get latest recommendation from storage
- */
 export async function getLatestRecommendation(): Promise<string> {
-  const recommendation = await getFromStorage('latestRecommendation');
-  return recommendation || '';
+  const value = await getFromStorage('latestRecommendation');
+  return typeof value === 'string' ? value : '';
 }
 
-/**
- * Set latest recommendation in storage
- */
 export async function setLatestRecommendation(recommendation: string): Promise<void> {
-  await setInStorage('latestRecommendation', recommendation);
+  await chrome.storage.local.set({ latestRecommendation: recommendation });
 }
 
-/**
- * Clear all stored data (useful for testing/reset)
- */
 export async function clearAllStorage(): Promise<void> {
-  return new Promise((resolve) => {
-    chrome.storage.local.clear(() => {
-      resolve();
-    });
-  });
+  await chrome.storage.local.clear();
 }
 
-/**
- * Get all storage data (useful for debugging)
- */
 export async function getAllStorageData(): Promise<StorageData> {
-  return new Promise((resolve) => {
-    chrome.storage.local.get(null, (result) => {
-      resolve(result as StorageData);
-    });
-  });
+  return await chrome.storage.local.get(null) as StorageData;
 }
 
-/**
- * Get storage quota info
- */
-export async function getStorageInfo(): Promise<{
-  bytesInUse: number;
-  quotaBytes: number;
-  percentUsed: number;
-}> {
-  return new Promise((resolve) => {
-    chrome.storage.local.getBytesInUse(null, (bytesInUse) => {
-      const quotaBytes = chrome.storage.local.QUOTA_BYTES;
-      const percentUsed = (bytesInUse / quotaBytes) * 100;
-
-      resolve({
-        bytesInUse,
-        quotaBytes,
-        percentUsed
-      });
-    });
-  });
+export async function getStorageInfo() {
+  const bytesInUse = await chrome.storage.local.getBytesInUse(null);
+  const quotaBytes = chrome.storage.local.QUOTA_BYTES;
+  return { bytesInUse, quotaBytes, percentUsed: (bytesInUse / quotaBytes) * 100 };
 }
 
-/**
- * Export settings (for backup)
- */
+// Backup only user preferences, never credentials, raw logs, or cached API data.
 export async function exportSettings(): Promise<string> {
-  const data = await getAllStorageData();
-  return JSON.stringify(data, null, 2);
+  return JSON.stringify({ debugMode: await getFromStorage('debugMode') === true }, null, 2);
 }
 
-/**
- * Import settings (from backup)
- */
 export async function importSettings(jsonString: string): Promise<void> {
-  try {
-    const data = JSON.parse(jsonString);
-    return new Promise((resolve, reject) => {
-      chrome.storage.local.set(data, () => {
-        if (chrome.runtime.lastError) {
-          reject(chrome.runtime.lastError);
-        } else {
-          resolve();
-        }
-      });
-    });
-  } catch (error) {
-    throw new Error('Invalid JSON format');
+  const value: unknown = JSON.parse(jsonString);
+  if (!value || typeof value !== 'object' || !('debugMode' in value) || typeof value.debugMode !== 'boolean') {
+    throw new Error('Expected settings with a true/false diagnostics preference.');
   }
+  await chrome.storage.local.set({ debugMode: value.debugMode });
 }

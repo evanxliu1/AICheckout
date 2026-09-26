@@ -41,12 +41,7 @@ export class BestBuyExtractor extends BaseExtractor {
 
     if (cartItems.length === 0) {
       console.warn('[BestBuy] No cart items found with any selector. User may have empty cart or page structure changed.');
-      console.log('[BestBuy] Debug info:', {
-        hasItemList: !!document.querySelector('ul.item-list'),
-        hasSectionCard: !!document.querySelector('section.card'),
-        hasFluidItem: !!document.querySelector('.fluid-item'),
-        url: window.location.href
-      });
+
       return items;
     }
 
@@ -57,7 +52,6 @@ export class BestBuyExtractor extends BaseExtractor {
         const cartItem = this.extractBestBuyItem(item);
         if (cartItem && this.isValidItem(cartItem)) {
           items.push(cartItem);
-          console.log(`[BestBuy] Extracted item ${index + 1}:`, cartItem.name);
         }
       } catch (error) {
         console.error(`[BestBuy] Error extracting item ${index + 1}:`, error);
@@ -86,7 +80,6 @@ export class BestBuyExtractor extends BaseExtractor {
 
     if (!productName) {
       console.warn('[BestBuy] Could not extract product name, tried multiple selectors');
-      console.log('[BestBuy] Element HTML preview:', element.innerHTML.substring(0, 200));
       return null;
     }
 

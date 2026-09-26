@@ -27,7 +27,7 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({ recommendation 
                 clipRule="evenodd"
               />
             </svg>
-            <h3 className="text-sm font-medium text-gray-500">Best Card</h3>
+            <h3 className="text-sm font-medium text-gray-500">AI suggestion</h3>
           </div>
           <h2 className="text-xl font-bold text-gray-900">{recommendation.card}</h2>
         </div>
@@ -95,9 +95,12 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({ recommendation 
         </div>
       </div>
 
+      {recommendation.reasoning && (
+        <p className="mt-4 text-sm text-gray-700 break-words">{recommendation.reasoning}</p>
+      )}
       {/* Footer note */}
       <div className="mt-4 pt-3 border-t border-gray-100">
-        <p className="text-xs text-gray-400 text-center">
+        <p className="text-xs text-gray-600 text-center">
           AI-powered recommendation based on your cart
         </p>
       </div>
