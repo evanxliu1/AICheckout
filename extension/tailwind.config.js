@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -21,13 +18,13 @@ export default {
         },
       },
       spacing: {
-        '128': '32rem',
+        128: '32rem',
       },
       borderRadius: {
         '4xl': '2rem',
       },
       animation: {
-        'spin': 'spin 1s linear infinite',
+        spin: 'spin 1s linear infinite',
         'fade-in': 'fadeIn 0.3s ease-out',
       },
       keyframes: {
@@ -50,4 +47,4 @@ export default {
     },
   },
   plugins: [],
-}
+};

@@ -2,22 +2,27 @@ import { chromium, expect, test } from '@playwright/test';
 import { resolve } from 'node:path';
 import { deleteVault, createVault, unlockVault, mutateVaultState } from './vault';
 
-test('packaged wallet: offline comparison, browser restart, expiry, and deletion', async ({ browserName }, testInfo) => {
+test('packaged wallet: offline comparison, browser restart, expiry, and deletion', async ({
+  browserName,
+}, testInfo) => {
   expect(browserName).toBe('chromium');
   const extension = resolve('dist');
-  const launch = () => chromium.launchPersistentContext(testInfo.outputPath('profile'), {
-    channel: 'chromium', headless: true, viewport: { width: 360, height: 600 },
-    args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`],
-  });
+  const launch = () =>
+    chromium.launchPersistentContext(testInfo.outputPath('profile'), {
+      channel: 'chromium',
+      headless: true,
+      viewport: { width: 360, height: 600 },
+      args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`],
+    });
   let context = await launch();
   try {
     await context.setOffline(true);
-    const worker = context.serviceWorkers()[0] ?? await context.waitForEvent('serviceworker');
+    const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
     const id = new URL(worker.url()).host;
     const url = `chrome-extension://${id}/src/popup/index.html`;
     const popup = await context.newPage();
     const errors: string[] = [];
-    popup.on('pageerror', error => errors.push(error.message));
+    popup.on('pageerror', (error) => errors.push(error.message));
     await popup.goto(url);
     await createVault(popup);
     await popup.getByRole('checkbox', { name: 'Capital One Quicksilver', exact: true }).check();
@@ -42,11 +47,11 @@ test('packaged wallet: offline comparison, browser restart, expiry, and deletion
     await context.close();
     context = await launch();
     await context.setOffline(true);
-    const restartedWorker = context.serviceWorkers()[0] ?? await context.waitForEvent('serviceworker');
+    const restartedWorker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
     expect(restartedWorker).not.toBe(worker);
     expect(new URL(restartedWorker.url()).host).toBe(id);
     const reopened = await context.newPage();
-    reopened.on('pageerror', error => errors.push(error.message));
+    reopened.on('pageerror', (error) => errors.push(error.message));
     await reopened.goto(url);
     await expect(reopened.getByLabel('Purchase amount (USD)')).toHaveCount(0);
     expect(await reopened.evaluate(() => chrome.storage.session.get(null))).toEqual({});
@@ -64,7 +69,7 @@ test('packaged wallet: offline comparison, browser restart, expiry, and deletion
     await expect(reopened.getByText('$1.00–$3.00', { exact: true })).toBeVisible();
 
     // Expire the stored estimate, then exercise packaged read/refresh behavior.
-    await mutateVaultState(reopened, state => {
+    await mutateVaultState(reopened, (state) => {
       state.comparison!.computedAt -= 16 * 60 * 1000;
     });
     await reopened.reload();
@@ -78,21 +83,28 @@ test('packaged wallet: offline comparison, browser restart, expiry, and deletion
     expect(permissions.permissions?.sort()).toEqual(['activeTab', 'scripting', 'storage']);
     expect(permissions.origins ?? []).toEqual([]);
     expect(errors).toEqual([]);
-  } finally { await context.close(); }
+  } finally {
+    await context.close();
+  }
 });
 
-test('a second popup invalidates a changed wallet and observes deletion', async ({ browserName }, testInfo) => {
+test('a second popup invalidates a changed wallet and observes deletion', async ({
+  browserName,
+}, testInfo) => {
   expect(browserName).toBe('chromium');
   const extension = resolve('dist');
   const context = await chromium.launchPersistentContext(testInfo.outputPath('profile'), {
-    channel: 'chromium', headless: true, viewport: { width: 360, height: 600 },
+    channel: 'chromium',
+    headless: true,
+    viewport: { width: 360, height: 600 },
     args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`],
   });
   try {
     await context.setOffline(true);
-    const worker = context.serviceWorkers()[0] ?? await context.waitForEvent('serviceworker');
+    const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
     const url = `chrome-extension://${new URL(worker.url()).host}/src/popup/index.html`;
-    const first = await context.newPage(); await first.goto(url);
+    const first = await context.newPage();
+    await first.goto(url);
     await createVault(first);
     await first.getByRole('checkbox', { name: 'Capital One Quicksilver', exact: true }).check();
     await first.getByRole('button', { name: 'Save cards' }).click();
@@ -100,7 +112,8 @@ test('a second popup invalidates a changed wallet and observes deletion', async 
     await first.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
     await first.getByRole('button', { name: 'Compare my cards' }).click();
     await expect(first.getByText('$1.50', { exact: true })).toBeVisible();
-    const second = await context.newPage(); await second.goto(url);
+    const second = await context.newPage();
+    await second.goto(url);
     await expect(second.getByText('$1.50', { exact: true })).toBeVisible();
     await first.getByRole('button', { name: 'Edit cards' }).click();
     await first.getByRole('checkbox', { name: 'American Express Blue Cash Everyday', exact: true }).check();
@@ -109,7 +122,11 @@ test('a second popup invalidates a changed wallet and observes deletion', async 
     await expect(second.getByRole('status')).toContainText('Saved inputs changed');
     await deleteVault(first);
     await expect(second.getByLabel('New local passphrase', { exact: true })).toBeVisible();
-    await expect(second.getByRole('checkbox', { name: 'Capital One Quicksilver', exact: true })).toHaveCount(0);
+    await expect(second.getByRole('checkbox', { name: 'Capital One Quicksilver', exact: true })).toHaveCount(
+      0,
+    );
     expect(await second.evaluate(() => chrome.storage.session.get(null))).toEqual({});
-  } finally { await context.close(); }
+  } finally {
+    await context.close();
+  }
 });

@@ -13,7 +13,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog$${payload}$catalog$::js
 on conflict (id) do nothing;
 `;
 if (process.argv.includes('--check')) {
-  if (await readFile(path, 'utf8') !== sql) throw new Error('Database seed is out of date. Run npm run db:seed:generate.');
+  if ((await readFile(path, 'utf8')) !== sql)
+    throw new Error('Database seed is out of date. Run npm run db:seed:generate.');
   console.log('Database seed matches the bundled catalog.');
 } else {
   await writeFile(path, sql);

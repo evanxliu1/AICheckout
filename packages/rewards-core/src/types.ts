@@ -89,6 +89,12 @@ export interface Comparison {
 
 export interface UnavailableComparison {
   status: 'unavailable';
-  reason: 'catalog-expired' | 'catalog-not-yet-valid' | 'unsupported-merchant' |
-    'no-owned-cards' | 'unknown-owned-card' | 'purchase-not-confirmed' | 'ineligible-purchase';
+  reason:
+    | 'catalog-expired'
+    | 'catalog-not-yet-valid'
+    | 'unsupported-merchant'
+    | 'no-owned-cards'
+    | 'unknown-owned-card'
+    | 'purchase-not-confirmed'
+    | 'ineligible-purchase';
 }

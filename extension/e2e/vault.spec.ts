@@ -3,30 +3,40 @@ import { resolve } from 'node:path';
 import { createVault, unlockVault, deleteVault } from './vault';
 import { emptyState } from '../src/state/contracts';
 
-test('protection setup, cross-window lock, wrong phrase, migration and reset use the packaged UI', async ({ browserName }, testInfo) => {
+test('protection setup, cross-window lock, wrong phrase, migration and reset use the packaged UI', async ({
+  browserName,
+}, testInfo) => {
   expect(browserName).toBe('chromium');
   const extension = resolve('dist');
   const context = await chromium.launchPersistentContext(testInfo.outputPath('profile'), {
-    channel: 'chromium', headless: true, viewport: { width: 360, height: 600 },
+    channel: 'chromium',
+    headless: true,
+    viewport: { width: 360, height: 600 },
     args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`],
   });
   try {
     await context.setOffline(true);
-    const worker = context.serviceWorkers()[0] ?? await context.waitForEvent('serviceworker');
+    const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
     const url = `chrome-extension://${new URL(worker.url()).host}/src/popup/index.html`;
-    const page = await context.newPage(), errors: string[] = [];
-    page.on('pageerror', error => errors.push(error.message));
+    const page = await context.newPage(),
+      errors: string[] = [];
+    page.on('pageerror', (error) => errors.push(error.message));
     await page.goto(url);
     async function capture(name: string) {
       await page.setViewportSize({ width: 360, height: 600 });
       await page.screenshot({ path: testInfo.outputPath(`${name}-360.png`) });
       for (const width of [360, 480]) {
         await page.setViewportSize({ width, height: 800 });
-        await page.locator('main').evaluate(el => { el.style.maxHeight = 'none'; });
+        await page.locator('main').evaluate((el) => {
+          el.style.maxHeight = 'none';
+        });
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
         await page.screenshot({ path: testInfo.outputPath(`${name}-full-${width}.png`), fullPage: true });
       }
-      await page.locator('main').evaluate(el => { el.style.maxHeight = ''; el.scrollTop = 0; });
+      await page.locator('main').evaluate((el) => {
+        el.style.maxHeight = '';
+        el.scrollTop = 0;
+      });
       await page.setViewportSize({ width: 360, height: 600 });
     }
     await expect(page.getByLabel('New local passphrase', { exact: true })).toBeVisible();
@@ -45,11 +55,19 @@ test('protection setup, cross-window lock, wrong phrase, migration and reset use
     await expect(page.getByText('$1.85', { exact: true })).toBeVisible();
     const disk = await page.evaluate(() => chrome.storage.local.get(null));
     expect(Object.keys(disk)).toEqual(['checkoutStateV1']);
-    expect(disk.checkoutStateV1).toMatchObject({ kind: 'encrypted-vault', version: 1, cipher: 'AES-GCM-256', iterations: 600000 });
+    expect(disk.checkoutStateV1).toMatchObject({
+      kind: 'encrypted-vault',
+      version: 1,
+      cipher: 'AES-GCM-256',
+      iterations: 600000,
+    });
     expect(JSON.stringify(disk)).not.toMatch(/capital-one|12345|amountCents|wallet|purchase|test-only/);
-    expect(Object.keys(await page.evaluate(() => chrome.storage.session.get(null)))).toEqual(['checkoutVaultSessionV1']);
+    expect(Object.keys(await page.evaluate(() => chrome.storage.session.get(null)))).toEqual([
+      'checkoutVaultSessionV1',
+    ]);
 
-    const other = await context.newPage(); await other.goto(url);
+    const other = await context.newPage();
+    await other.goto(url);
     await expect(other.getByText('$1.85', { exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Lock saved inputs' }).click();
     for (const view of [page, other]) {
@@ -83,9 +101,14 @@ test('protection setup, cross-window lock, wrong phrase, migration and reset use
 
     // A previous-version fixture is migrated by the real setup UI, without loading
     // its financial state into the comparison component first.
-    const legacy = { ...emptyState(), wallet: { defaultCardId: 'capital-one-quicksilver',
-      cards: [{ cardId: 'capital-one-quicksilver', usage: [] }] } };
-    await page.evaluate(value => chrome.storage.local.set({ checkoutStateV1: value }), legacy);
+    const legacy = {
+      ...emptyState(),
+      wallet: {
+        defaultCardId: 'capital-one-quicksilver',
+        cards: [{ cardId: 'capital-one-quicksilver', usage: [] }],
+      },
+    };
+    await page.evaluate((value) => chrome.storage.local.set({ checkoutStateV1: value }), legacy);
     await page.reload();
     await expect(page.getByText(/Your earlier inputs are not encrypted yet/)).toBeVisible();
     await capture('migration');
@@ -104,5 +127,7 @@ test('protection setup, cross-window lock, wrong phrase, migration and reset use
     expect(await page.evaluate(() => chrome.storage.local.get(null))).toEqual({});
     expect(await page.evaluate(() => chrome.storage.session.get(null))).toEqual({});
     expect(errors).toEqual([]);
-  } finally { await context.close(); }
+  } finally {
+    await context.close();
+  }
 });

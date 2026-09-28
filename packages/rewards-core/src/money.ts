@@ -16,12 +16,25 @@ export function formatUsd(cents: number): string {
 
 /** Aggregate exact integer products, then truncate to a cent for a conservative estimate.
  * Issuers may round across an entire billing period instead; this is not a posted reward. */
-export function rewardCents(amountCents: number, baseBps: number, bonusSpendCents = 0, bonusBps = baseBps): number {
-  if (![amountCents, baseBps, bonusSpendCents, bonusBps].every(Number.isSafeInteger) ||
-    amountCents < 0 || amountCents > MAX_AMOUNT_CENTS || baseBps < 0 ||
-    bonusBps < baseBps || bonusBps > 10_000 || bonusSpendCents < 0 || bonusSpendCents > amountCents) {
+export function rewardCents(
+  amountCents: number,
+  baseBps: number,
+  bonusSpendCents = 0,
+  bonusBps = baseBps,
+): number {
+  if (
+    ![amountCents, baseBps, bonusSpendCents, bonusBps].every(Number.isSafeInteger) ||
+    amountCents < 0 ||
+    amountCents > MAX_AMOUNT_CENTS ||
+    baseBps < 0 ||
+    bonusBps < baseBps ||
+    bonusBps > 10_000 ||
+    bonusSpendCents < 0 ||
+    bonusSpendCents > amountCents
+  ) {
     throw new Error('Invalid reward operands.');
   }
-  const numerator = BigInt(amountCents) * BigInt(baseBps) + BigInt(bonusSpendCents) * BigInt(bonusBps - baseBps);
+  const numerator =
+    BigInt(amountCents) * BigInt(baseBps) + BigInt(bonusSpendCents) * BigInt(bonusBps - baseBps);
   return Number(numerator / 10_000n);
 }

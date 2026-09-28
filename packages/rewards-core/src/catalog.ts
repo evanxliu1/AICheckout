@@ -30,22 +30,37 @@ export const PILOT_CATALOG: Catalog = {
   ],
   cards: [
     {
-      id: 'capital-one-quicksilver', name: 'Capital One Quicksilver', shortName: 'Quicksilver',
-      rules: [{
-        id: 'quicksilver-base', category: 'all-eligible', rateBps: 150,
-        requiresActivation: false, sourceIds: ['capital-one-quicksilver-benefits'],
-      }],
-    },
-    {
-      id: 'amex-blue-cash-everyday', name: 'American Express Blue Cash Everyday', shortName: 'Blue Cash Everyday',
+      id: 'capital-one-quicksilver',
+      name: 'Capital One Quicksilver',
+      shortName: 'Quicksilver',
       rules: [
         {
-          id: 'bce-base', category: 'all-eligible', rateBps: 100,
-          requiresActivation: false, sourceIds: ['amex-bce-rewards'],
+          id: 'quicksilver-base',
+          category: 'all-eligible',
+          rateBps: 150,
+          requiresActivation: false,
+          sourceIds: ['capital-one-quicksilver-benefits'],
+        },
+      ],
+    },
+    {
+      id: 'amex-blue-cash-everyday',
+      name: 'American Express Blue Cash Everyday',
+      shortName: 'Blue Cash Everyday',
+      rules: [
+        {
+          id: 'bce-base',
+          category: 'all-eligible',
+          rateBps: 100,
+          requiresActivation: false,
+          sourceIds: ['amex-bce-rewards'],
         },
         {
-          id: 'bce-online-retail', category: 'us-online-retail', rateBps: 300,
-          annualCapCents: 600_000, requiresActivation: false,
+          id: 'bce-online-retail',
+          category: 'us-online-retail',
+          rateBps: 300,
+          annualCapCents: 600_000,
+          requiresActivation: false,
           sourceIds: ['amex-bce-rewards', 'amex-online-retail'],
         },
       ],

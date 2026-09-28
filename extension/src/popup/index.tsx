@@ -5,5 +5,9 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import '../styles/globals.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode><ErrorBoundary><VaultGate /></ErrorBoundary></React.StrictMode>,
+  <React.StrictMode>
+    <ErrorBoundary>
+      <VaultGate />
+    </ErrorBoundary>
+  </React.StrictMode>,
 );

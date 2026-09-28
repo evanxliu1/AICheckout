@@ -1,6 +1,12 @@
 import { zodTextFormat } from 'openai/helpers/zod';
 import { PILOT_CATALOG } from '@ai-checkout/rewards-core';
-import { extractionSchema, EXTRACTION_SCHEMA_VERSION, SOURCE_POLICY_VERSION, sha256, type ExtractionInput } from './extraction';
+import {
+  extractionSchema,
+  EXTRACTION_SCHEMA_VERSION,
+  SOURCE_POLICY_VERSION,
+  sha256,
+  type ExtractionInput,
+} from './extraction';
 import { canonicalJson } from './canonical';
 
 export const PROMPT_VERSION = 'issuer-extraction.1';
@@ -13,16 +19,41 @@ Rates are integer basis points (1.5 percent = 150). Caps are integer USD cents a
 Include every relevant eligibility restriction, exclusion, and other condition with evidence. Report unsupported categories, stacked rewards, introductory offers, membership requirements, anniversary caps, reward caps, or other unrepresentable conditions; never silently discard them to fit the supported rules. Do not invent effective/expiry dates from the capture date. Report ambiguity or missing information explicitly. A structurally valid response still requires a human review.`;
 
 export function buildContext(input: ExtractionInput) {
-  const card = PILOT_CATALOG.cards.find(value => value.id === input.cardId)!;
-  const user = JSON.stringify({ contextVersion: CONTEXT_VERSION,
-    target: { cardId: card.id, name: card.name, rules: card.rules.map(rule => ({ ruleId: rule.id, category: rule.category })) },
-    documents: input.documents.map(document => ({ documentId: document.id, sourceKey: document.source_key,
-      url: document.url, checkedOn: document.checked_on, contentHash: document.content_hash, body: document.body })) });
+  const card = PILOT_CATALOG.cards.find((value) => value.id === input.cardId)!;
+  const user = JSON.stringify({
+    contextVersion: CONTEXT_VERSION,
+    target: {
+      cardId: card.id,
+      name: card.name,
+      rules: card.rules.map((rule) => ({ ruleId: rule.id, category: rule.category })),
+    },
+    documents: input.documents.map((document) => ({
+      documentId: document.id,
+      sourceKey: document.source_key,
+      url: document.url,
+      checkedOn: document.checked_on,
+      contentHash: document.content_hash,
+      body: document.body,
+    })),
+  });
   // Persist/hash the same strict schema sent on the wire, including SDK normalization.
-  const jsonSchema = JSON.parse(canonicalJson(zodTextFormat(extractionSchema, 'issuer_extraction').schema)) as Record<string, unknown>;
-  return { system: SYSTEM_PROMPT, user, jsonSchema,
-    versions: { prompt: PROMPT_VERSION, context: CONTEXT_VERSION, schema: EXTRACTION_SCHEMA_VERSION, sourcePolicy: SOURCE_POLICY_VERSION },
-    hash: sha256(canonicalJson({ system: SYSTEM_PROMPT, user, jsonSchema, sourcePolicy: SOURCE_POLICY_VERSION })),
+  const jsonSchema = JSON.parse(
+    canonicalJson(zodTextFormat(extractionSchema, 'issuer_extraction').schema),
+  ) as Record<string, unknown>;
+  return {
+    system: SYSTEM_PROMPT,
+    user,
+    jsonSchema,
+    versions: {
+      prompt: PROMPT_VERSION,
+      context: CONTEXT_VERSION,
+      schema: EXTRACTION_SCHEMA_VERSION,
+      sourcePolicy: SOURCE_POLICY_VERSION,
+    },
+    hash: sha256(
+      canonicalJson({ system: SYSTEM_PROMPT, user, jsonSchema, sourcePolicy: SOURCE_POLICY_VERSION }),
+    ),
     // Deliberately conservative byte admission estimate, not provider-reported token usage.
-    inputTokenEstimate: Buffer.byteLength(SYSTEM_PROMPT + user + JSON.stringify(jsonSchema), 'utf8') + 1024 };
+    inputTokenEstimate: Buffer.byteLength(SYSTEM_PROMPT + user + JSON.stringify(jsonSchema), 'utf8') + 1024,
+  };
 }

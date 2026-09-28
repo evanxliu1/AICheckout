@@ -40,10 +40,13 @@ export async function deleteNativeVault(popup: Awaited<ReturnType<typeof openNat
 }
 type InspectionTarget = { evaluate<R, Arg>(fn: (arg: Arg) => R | Promise<R>, arg: Arg): Promise<R> };
 async function snapshot(target: InspectionTarget) {
-  return target.evaluate(async () => ({
-    envelope: (await chrome.storage.local.get('checkoutStateV1')).checkoutStateV1,
-    key: (await chrome.storage.session.get('checkoutVaultSessionV1')).checkoutVaultSessionV1,
-  }), undefined);
+  return target.evaluate(
+    async () => ({
+      envelope: (await chrome.storage.local.get('checkoutStateV1')).checkoutStateV1,
+      key: (await chrome.storage.session.get('checkoutVaultSessionV1')).checkoutVaultSessionV1,
+    }),
+    undefined,
+  );
 }
 // Fixture-only privileged inspection: decrypt in the test process, using the real
 // format/crypto, without adding a bypass to the shipped worker or popup.
@@ -52,8 +55,9 @@ export async function readVaultState(target: InspectionTarget) {
   return decryptVault(envelope, key);
 }
 export async function mutateVaultState(target: InspectionTarget, mutate: (state: AppState) => void) {
-  const { envelope, key } = await snapshot(target), state = await decryptVault(envelope, key);
+  const { envelope, key } = await snapshot(target),
+    state = await decryptVault(envelope, key);
   mutate(state);
   const encrypted = await encryptVault(state, envelope, key);
-  await target.evaluate(value => chrome.storage.local.set({ checkoutStateV1: value }), encrypted);
+  await target.evaluate((value) => chrome.storage.local.set({ checkoutStateV1: value }), encrypted);
 }

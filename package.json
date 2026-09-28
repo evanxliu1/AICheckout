@@ -34,11 +34,14 @@
     "db:lint": "supabase db lint --local --schema public,catalog_private --fail-on warning",
     "db:advisors": "supabase db advisors --local --type security --level warn --fail-on error",
     "db:seed:generate": "node scripts/generate-db-seed.mjs",
-    "db:seed:check": "node scripts/generate-db-seed.mjs --check"
+    "db:seed:check": "node scripts/generate-db-seed.mjs --check",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "@types/node": "24.6.1",
     "pg": "8.23.0",
+    "prettier": "3.9.9",
     "supabase": "2.118.0"
   }
 }

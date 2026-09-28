@@ -15,9 +15,9 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -105,14 +105,40 @@ body {
   overflow-y: auto;
   color: #111827;
 }
-.settings-dialog::backdrop { background: rgb(17 24 39 / 55%); }
-button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible, a:focus-visible { outline: 2px solid #1d4ed8; outline-offset: 3px; }
-.checkout-popup { width: 360px; max-height: 600px; overflow-y: auto; overflow-wrap: anywhere; }
-.surface { @apply bg-white rounded-xl p-4 border border-gray-200; }
-.supporting { @apply text-sm text-gray-600; line-height: 1.5; }
-.field-label { @apply block text-sm font-medium mb-2; }
-.field-input { @apply w-full px-3 py-2 border border-gray-400 rounded-md bg-white text-gray-900; font-size: 14px; }
-.field-input::placeholder { color: #6b7280; }
+.settings-dialog::backdrop {
+  background: rgb(17 24 39 / 55%);
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+a:focus-visible {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 3px;
+}
+.checkout-popup {
+  width: 360px;
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+}
+.surface {
+  @apply bg-white rounded-xl p-4 border border-gray-200;
+}
+.supporting {
+  @apply text-sm text-gray-600;
+  line-height: 1.5;
+}
+.field-label {
+  @apply block text-sm font-medium mb-2;
+}
+.field-input {
+  @apply w-full px-3 py-2 border border-gray-400 rounded-md bg-white text-gray-900;
+  font-size: 14px;
+}
+.field-input::placeholder {
+  color: #6b7280;
+}
 .error-message {
   font-size: 14px;
   color: #991b1b;
@@ -121,7 +147,17 @@ button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-v
   padding: 12px;
   border-radius: 8px;
 }
-input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; accent-color: #2563eb; }
+input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  accent-color: #2563eb;
+}
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }
