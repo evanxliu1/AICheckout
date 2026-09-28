@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
-import { buildContext } from './context';
-import { extractionInputSchema, extractionSchema, validateExtraction, validateInputs } from './extraction';
+import { buildContext } from './context.ts';
+import { extractionInputSchema, extractionSchema, validateExtraction, validateInputs } from './extraction.ts';
 import {
   replySchema,
   limitsSchema,
@@ -27,8 +27,10 @@ export interface ExtractionProvider {
   }): Promise<unknown>;
 }
 export class ProviderFailure extends Error {
-  constructor(readonly category: 'transient' | 'rate-limit' | 'permanent') {
+  readonly category: 'transient' | 'rate-limit' | 'permanent';
+  constructor(category: 'transient' | 'rate-limit' | 'permanent') {
     super(category);
+    this.category = category;
   }
 }
 const MAX_INPUT_BYTES = 96_000,

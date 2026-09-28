@@ -1,13 +1,13 @@
 import { z } from 'zod';
 import { resolve } from 'node:path';
 import { readFile } from 'node:fs/promises';
-import { createApp } from './app.js';
-import { createCatalogRepository } from './catalog-repository.js';
-import { createReviewRepository } from './review-repository.js';
-import { createCurationDatabase } from './curation/database';
-import { createCurationLedger } from './curation/ledger';
-import { fixtureRefusalProvider, type CurationExecution } from './curation/service';
-import { createOpenAIProviderFactory } from './curation/openai';
+import { createApp } from './app.ts';
+import { createCatalogRepository } from './catalog-repository.ts';
+import { createReviewRepository } from './review-repository.ts';
+import { createCurationDatabase } from './curation/database.ts';
+import { createCurationLedger } from './curation/ledger.ts';
+import { fixtureRefusalProvider, type CurationExecution } from './curation/service.ts';
+import { createOpenAIProviderFactory } from './curation/openai.ts';
 
 const env = z
   .object({

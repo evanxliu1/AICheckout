@@ -10,10 +10,10 @@ import {
   type ApplyExtractionInput,
   type ExtractionReview,
 } from '@ai-checkout/catalog-review/curation';
-import { validateExtraction, validateInputs, sha256 } from './extraction';
-import { canonicalJson } from './canonical';
-import { buildContext, CONTEXT_VERSION } from './context';
-import { ReviewError, type ReviewRpc } from '../review-repository';
+import { validateExtraction, validateInputs, sha256 } from './extraction.ts';
+import { canonicalJson } from './canonical.ts';
+import { buildContext, CONTEXT_VERSION } from './context.ts';
+import { ReviewError, type ReviewRpc } from '../review-repository.ts';
 
 const savedRunSchema = z.strictObject({
   run: reviewRunSchema,

@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { PILOT_CATALOG } from '@ai-checkout/rewards-core';
 import { createCatalogFetcher, readBoundedJson } from '@ai-checkout/catalog-client';
-import { createApp } from '../src/app';
-import { createCatalogRepository } from '../src/catalog-repository';
+import { createApp } from '../src/app.ts';
+import { createCatalogRepository } from '../src/catalog-repository.ts';
 
 const release = {
   sequence: 1,

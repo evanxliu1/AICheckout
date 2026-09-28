@@ -1,13 +1,13 @@
 import { afterEach, expect, it, vi } from 'vitest';
 import { PILOT_CATALOG } from '@ai-checkout/rewards-core';
 import type { ReviewDetail } from '@ai-checkout/catalog-review';
-import { createApp } from '../src/app';
-import { createCurationLedger, LedgerError, type CurationRun } from '../src/curation/ledger';
-import { fixtureRefusalProvider, startReviewedExtraction } from '../src/curation/service';
-import { curationDatabaseConfig } from '../src/curation/database';
-import { ReviewError, type ReviewRpc } from '../src/review-repository';
-import { extractionFixture } from './curation-fixture';
-import { buildContext } from '../src/curation/context';
+import { createApp } from '../src/app.ts';
+import { createCurationLedger, LedgerError, type CurationRun } from '../src/curation/ledger.ts';
+import { fixtureRefusalProvider, startReviewedExtraction } from '../src/curation/service.ts';
+import { curationDatabaseConfig } from '../src/curation/database.ts';
+import { ReviewError, type ReviewRpc } from '../src/review-repository.ts';
+import { extractionFixture } from './curation-fixture.ts';
+import { buildContext } from '../src/curation/context.ts';
 
 const apps: ReturnType<typeof createApp>[] = [];
 afterEach(async () => {

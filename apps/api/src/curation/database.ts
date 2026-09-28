@@ -1,5 +1,5 @@
 import pg, { type PoolConfig } from 'pg';
-import type { LedgerQuery } from './ledger';
+import type { LedgerQuery } from './ledger.ts';
 
 export function curationDatabaseConfig(connectionUrl: string, ca?: string): PoolConfig {
   try {

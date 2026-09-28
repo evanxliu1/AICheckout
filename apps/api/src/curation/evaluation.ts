@@ -8,11 +8,11 @@ import {
   validateInputs,
   type Extraction,
   type ExtractionInput,
-} from './extraction';
-import { buildContext } from './context';
-import { extractionTraceSchema, type ExtractionProvider } from './runner';
-import { canonicalJson as canonical } from './canonical';
-import { curationRunSchema } from './ledger';
+} from './extraction.ts';
+import { buildContext } from './context.ts';
+import { extractionTraceSchema, type ExtractionProvider } from './runner.ts';
+import { canonicalJson as canonical } from './canonical.ts';
+import { curationRunSchema } from './ledger.ts';
 
 export const EVALUATOR_VERSION = 'curation-evaluator.1';
 const key = z.string().regex(/^[a-z0-9._/-]{1,120}$/),

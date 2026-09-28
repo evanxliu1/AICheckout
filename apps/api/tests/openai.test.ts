@@ -1,9 +1,9 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
-import { createOpenAIProviderFactory, OPENAI_RESPONSE_BYTES } from '../src/curation/openai';
-import { runExtraction, ProviderFailure } from '../src/curation/runner';
-import { buildContext } from '../src/curation/context';
-import type { CurationProfile } from '../src/curation/ledger';
-import { extractionFixture } from './curation-fixture';
+import { createOpenAIProviderFactory, OPENAI_RESPONSE_BYTES } from '../src/curation/openai.ts';
+import { runExtraction, ProviderFailure } from '../src/curation/runner.ts';
+import { buildContext } from '../src/curation/context.ts';
+import type { CurationProfile } from '../src/curation/ledger.ts';
+import { extractionFixture } from './curation-fixture.ts';
 
 // All SDK requests use an intercepted transport and a fake key/model. Accidental
 // fallback to global fetch is an error, never a real model call.

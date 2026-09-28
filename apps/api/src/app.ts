@@ -4,7 +4,7 @@ import { reviewRoutes } from './review-routes.ts';
 import type { ReviewRpc } from './review-repository.ts';
 import { reviewSite } from './review-site.ts';
 import type { ReviewConfig } from '@ai-checkout/catalog-review';
-import type { CurationExecution } from './curation/service';
+import type { CurationExecution } from './curation/service.ts';
 
 export function createApp({
   readCatalog,

@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { buildContext } from './context';
-import { extractionInputSchema, validateInputs } from './extraction';
-import { runExtraction, type ExtractionProvider, type ExtractionTrace } from './runner';
+import { buildContext } from './context.ts';
+import { extractionInputSchema, validateInputs } from './extraction.ts';
+import { runExtraction, type ExtractionProvider, type ExtractionTrace } from './runner.ts';
 
 import {
   curationRunSchema,
@@ -22,11 +22,12 @@ const claimSchema = z.discriminatedUnion('claimed', [
 /** Supply a bounded, parameterized connection under aicheckout_curation_executor, never postgres. */
 export type LedgerQuery = (sql: string, parameters: unknown[]) => Promise<{ rows: { value: unknown }[] }>;
 export class LedgerError extends Error {
-  constructor(
-    readonly code: string,
-    readonly runId?: string,
-  ) {
+  readonly code: string;
+  readonly runId?: string;
+  constructor(code: string, runId?: string) {
     super(code);
+    this.code = code;
+    this.runId = runId;
   }
 }
 export function createCurationLedger(query: LedgerQuery) {

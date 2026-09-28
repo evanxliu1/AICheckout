@@ -15,10 +15,10 @@ import {
   startExtractionInputSchema,
 } from '@ai-checkout/catalog-review';
 import { ReviewError, type ReviewRpc } from './review-repository.ts';
-import { curationRunSchema, LedgerError } from './curation/ledger';
-import { startReviewedExtraction, type CurationExecution } from './curation/service';
+import { curationRunSchema, LedgerError } from './curation/ledger.ts';
+import { startReviewedExtraction, type CurationExecution } from './curation/service.ts';
 import { applyExtractionInputSchema, extractionListSchema } from '@ai-checkout/catalog-review/curation';
-import { applyReviewedExtraction, readExtractionReview } from './curation/review';
+import { applyReviewedExtraction, readExtractionReview } from './curation/review.ts';
 
 function bearer(request: FastifyRequest) {
   const header = request.headers.authorization;

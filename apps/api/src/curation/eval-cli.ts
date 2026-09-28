@@ -2,8 +2,8 @@ import { mkdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { parseArgs } from 'node:util';
-import { buildContext } from './context';
-import { runExtraction } from './runner';
+import { buildContext } from './context.ts';
+import { runExtraction } from './runner.ts';
 import {
   abstainingProvider,
   corpusHash,
@@ -12,7 +12,7 @@ import {
   observationFromRun,
   validateCorpus,
   type EvalObservation,
-} from './evaluation';
+} from './evaluation.ts';
 
 async function jsonFile(path: string, max: number) {
   const info = await stat(path);

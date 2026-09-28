@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
-import { buildContext } from '../src/curation/context';
-import { extractionSchema, sha256, validateExtraction } from '../src/curation/extraction';
-import { ProviderFailure, runExtraction } from '../src/curation/runner';
-import { extractionFixture } from './curation-fixture';
+import { buildContext } from '../src/curation/context.ts';
+import { extractionSchema, sha256, validateExtraction } from '../src/curation/extraction.ts';
+import { ProviderFailure, runExtraction } from '../src/curation/runner.ts';
+import { extractionFixture } from './curation-fixture.ts';
 
 beforeEach(() => {
   vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-09-26T12:00:00Z'));

@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import { expect, it } from 'vitest';
-import { buildContext } from '../src/curation/context';
-import { canonicalJson } from '../src/curation/canonical';
+import { buildContext } from '../src/curation/context.ts';
+import { canonicalJson } from '../src/curation/canonical.ts';
 import {
   abstainingProvider,
   corpusHash,
@@ -13,10 +13,10 @@ import {
   type EvalCase,
   type EvalCorpus,
   type EvalObservation,
-} from '../src/curation/evaluation';
-import { runExtraction, extractionTraceSchema } from '../src/curation/runner';
-import { extractionFixture } from './curation-fixture';
-import type { CurationRun } from '../src/curation/ledger';
+} from '../src/curation/evaluation.ts';
+import { runExtraction, extractionTraceSchema } from '../src/curation/runner.ts';
+import { extractionFixture } from './curation-fixture.ts';
+import type { CurationRun } from '../src/curation/ledger.ts';
 
 async function sample(change?: (fixture: ReturnType<typeof extractionFixture>) => void) {
   const f = extractionFixture();

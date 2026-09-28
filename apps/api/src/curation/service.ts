@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { PILOT_CATALOG } from '@ai-checkout/rewards-core';
 import { reviewDetailSchema, type StartExtractionInput } from '@ai-checkout/catalog-review';
-import { ReviewError, type ReviewRpc } from '../review-repository';
-import { executeRecordedExtraction, type CurationProfile, type createCurationLedger } from './ledger';
-import type { ExtractionProvider } from './runner';
+import { ReviewError, type ReviewRpc } from '../review-repository.ts';
+import { executeRecordedExtraction, type CurationProfile, type createCurationLedger } from './ledger.ts';
+import type { ExtractionProvider } from './runner.ts';
 
 export type RecordedExecutor = typeof executeRecordedExtraction;
 export interface CurationExecution {

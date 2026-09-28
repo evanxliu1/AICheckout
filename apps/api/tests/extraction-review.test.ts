@@ -3,11 +3,11 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { PILOT_CATALOG } from '@ai-checkout/rewards-core';
 import type { ReviewDetail } from '@ai-checkout/catalog-review';
 import type { ApplyExtractionInput, CurationRun } from '@ai-checkout/catalog-review/curation';
-import { createApp } from '../src/app';
-import { buildContext } from '../src/curation/context';
-import { runExtraction } from '../src/curation/runner';
-import { prepareExtractionReview } from '../src/curation/review';
-import { extractionFixture } from './curation-fixture';
+import { createApp } from '../src/app.ts';
+import { buildContext } from '../src/curation/context.ts';
+import { runExtraction } from '../src/curation/runner.ts';
+import { prepareExtractionReview } from '../src/curation/review.ts';
+import { extractionFixture } from './curation-fixture.ts';
 
 async function fixture(change?: (value: ReturnType<typeof extractionFixture>) => void) {
   const f = extractionFixture();

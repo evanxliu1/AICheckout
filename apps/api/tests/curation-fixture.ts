@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
-import { sha256, type ExtractionInput, type Extraction } from '../src/curation/extraction';
-import type { ExtractionProvider } from '../src/curation/runner';
+import { sha256, type ExtractionInput, type Extraction } from '../src/curation/extraction.ts';
+import type { ExtractionProvider } from '../src/curation/runner.ts';
 
 export function extractionFixture() {
   const body =

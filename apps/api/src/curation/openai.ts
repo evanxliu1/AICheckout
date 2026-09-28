@@ -1,8 +1,8 @@
 import OpenAI from 'openai';
 import { z } from 'zod';
 import { readBoundedJson } from '@ai-checkout/catalog-client';
-import type { CurationProfile } from './ledger';
-import { ProviderFailure, type ExtractionProvider } from './runner';
+import type { CurationProfile } from './ledger.ts';
+import { ProviderFailure, type ExtractionProvider } from './runner.ts';
 
 export const OPENAI_RESPONSE_BYTES = 524288;
 const endpoint = 'https://api.openai.com/v1/responses';

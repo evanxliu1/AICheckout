@@ -6,8 +6,8 @@ import {
   SOURCE_POLICY_VERSION,
   sha256,
   type ExtractionInput,
-} from './extraction';
-import { canonicalJson } from './canonical';
+} from './extraction.ts';
+import { canonicalJson } from './canonical.ts';
 
 export const PROMPT_VERSION = 'issuer-extraction.1';
 export const CONTEXT_VERSION = 'captured-text-json.3';
