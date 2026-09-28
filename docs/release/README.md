@@ -1,6 +1,6 @@
 # Release preparation
 
-Prepared September 26, 2026 against extension 2.0.0 and catalog `2026-09-25.pilot.2`. These are reviewable drafts and operating instructions, **not evidence of submission or deployment**. [BUILD_STATUS](../../BUILD_STATUS.md) remains the release authority.
+Prepared September 26, 2026 against extension 2.0.0 and catalog `2026-09-25.pilot.2`. These are reviewable drafts and operating instructions, **not evidence of submission or deployment**. See the [design doc](../design.md) for architecture and roadmap.
 
 ## Contents
 

@@ -2,7 +2,7 @@
 
 React/TypeScript, Manifest V3, Vite/CRXJS, Tailwind, and Zod. The popup compares owned-card rewards locally. Comparisons require no API key, account, or network request; an optional configured HTTPS endpoint supplies reviewed catalog updates.
 
-**Status:** local pilot, not ready for store submission. See [the release plan](../RELEASE_PLAN.md) and [build checkpoint](../BUILD_STATUS.md).
+**Status:** local pilot covering Quicksilver and Blue Cash Everyday at Best Buy US and Newegg US. See the [roadmap](../docs/design.md#roadmap).
 
 ## Setup and use
 
@@ -62,6 +62,6 @@ This remains a development artifact. CI can build the current flow without secre
 - Saved state uses passphrase-derived AES-GCM encryption; the usable key is kept only in trusted Chrome session memory. Setup requires disclosure acceptance; browser restart/reload requires unlocking. Manual lock hides private inputs across views. [Protection design and limits](../docs/verification/local-protection.md).
 - Delete all local data clears the session key and saved state and returns to setup; all UI deletion paths require explicit confirmation. Old prototype API keys and shopping logs are removed on the first status/state read.
 
-Legacy item extractors and OpenAI/Supabase clients remain in source but are not connected to the packaged pilot. The active summary reader is in `src/checkout/`. `.env.example` documents the optional public catalog endpoint and the separate legacy catalog inspection variables. Never place service-role or model provider secrets in `VITE_` variables.
+The active summary reader is in `src/checkout/`. `.env.example` documents the optional public catalog endpoint. Never place service-role or model provider secrets in `VITE_` variables.
 
-Still required: the combined Best Buy native/live smoke test and final normal Chrome installation checks, hosted catalog/backend deployment, representative live model evaluation, privacy/support/store materials, and release checks. The Newegg native/live subtotal flow now passes on one anonymous desktop cart with two quantities. The source-to-reviewed-draft workflow is implemented and verified locally with synthetic model responses; it does not establish live model quality.
+Remaining work is tracked in the [roadmap](../docs/design.md#roadmap).

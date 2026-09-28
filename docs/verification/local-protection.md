@@ -1,6 +1,6 @@
 # Local input protection
 
-Implemented and verified locally September 26, 2026. This records application behavior and its limits; it is not an independent security audit or Chrome Web Store approval. The final public identity, privacy/support URLs, installed-Chrome checks and other release gates remain in [BUILD_STATUS](../../BUILD_STATUS.md).
+Implemented and verified locally September 26, 2026. This records application behavior and its limits; it is not an independent security audit or Chrome Web Store approval. The final public identity, privacy/support URLs, installed-Chrome checks and other release gates remain in the [roadmap](../design.md#roadmap).
 
 ## Stored record and key lifetime
 

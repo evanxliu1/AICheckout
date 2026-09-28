@@ -1,6 +1,6 @@
 # Curation evaluations
 
-This local evaluator scores saved extraction traces against versioned references. It includes **60 synthetic, agent-authored cases awaiting human annotation review**. It has made no live model calls and does not establish model accuracy. The [release plan](../../RELEASE_PLAN.md) still requires independently reviewed representative terms and an authorized live evaluation.
+This local evaluator scores saved extraction traces against versioned references. It includes **60 synthetic, agent-authored cases awaiting human annotation review**. It has made no live model calls and does not establish model accuracy. The [roadmap](../../docs/design.md#roadmap) still requires independently reviewed representative terms and an authorized live evaluation.
 
 The current corpus has 30 development Quicksilver examples and 30 reserved BCE examples. Related issuer/document families cannot cross splits; identical source bodies after Unicode/whitespace normalization cannot cross splits either. The two sets deliberately share scenario templates. Two issuer families and paired synthetic templates are **not a validated independent held-out benchmark**. The reserved flag prevents accidental use in ordinary development commands; it is not secrecy or a guarantee against leakage.
 

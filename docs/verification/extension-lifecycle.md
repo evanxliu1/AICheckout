@@ -32,7 +32,7 @@ An initial attempt left Playwright attached and the worker remained running for 
 
 The directly owned browser uses the relevant startup defaults from pinned Playwright 1.63.0, including suppression of first-run/keychain prompts and popup/background-rendering interference. Keep those settings aligned when upgrading the browser/test framework. The native-action helper activates the merchant tab and has a 10-second action deadline. A pre-fix repeat hung while opening the popup; after the setup changes, both a targeted idle run and the full default suite passed consecutively. This is local repeatability evidence, not remote CI execution.
 
-The final full default suite passed five tests in 41 seconds. The HTTPS catalog case is intentionally skipped there and uses `npm run test:catalog:browser` with its separate configured build; its preceding verification is recorded in `BUILD_STATUS.md`.
+The final full default suite passed five tests in 41 seconds. The HTTPS catalog case is intentionally skipped there and uses `npm run test:catalog:browser` with its separate configured build.
 
 ## Scope limits
 

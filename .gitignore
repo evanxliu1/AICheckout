@@ -1,75 +1,32 @@
-# Node modules
+# Dependencies
 node_modules/
-simulation/node_modules/
 
-# Environment variables and secrets
+# Environment and secrets
 .env
-simulation/.env
+**/.env.*
+!**/.env.example
 
-# OS generated files
+# OS / editor
 .DS_Store
 Thumbs.db
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Editor directories and files
 .vscode/
 .idea/
 *.swp
 
-# Build output (if any)
+# Build output and logs
 dist/
 build/
-
-# Ignore coverage reports
 coverage/
-
-# Ignore by extension
 *.log
 
-# Credentials
-simulation/credentials.json
-
-# AI assistant documentation (not for public repository)
+# Local assistant notes
 **/CLAUDE.md
 **/DOCUMENTATION_GUIDE.md
-**/docs/
-# Include this public release evidence without exposing other private assistant docs.
-!/docs/
-/docs/*
-!/docs/verification/
-/docs/verification/*
-!/docs/verification/merchants.md
-!/docs/verification/extension-lifecycle.md
-!/docs/verification/release-package.md
-!/docs/verification/local-protection.md
-!/docs/verification/newegg-live-2026-09-26.json
-!/docs/release/
-/docs/release/*
-!/docs/release/README.md
-!/docs/release/store-listing.md
-!/docs/release/privacy-policy.md
-!/docs/release/support.md
-!/docs/release/reviewer-instructions.md
-!/docs/release/privacy-review.md
-!/docs/release/deployment-runbook.md
-!/docs/release/portfolio-demo.md
-!/docs/release/assets/
-/docs/release/assets/*
-!/docs/release/assets/README.md
-!/docs/release/assets/full-stack-demo.md
-!/docs/release/assets/*.html
-!/docs/release/assets/*.json
-!/docs/release/assets/*.png
-!/docs/release/assets/*.mp4
-!/docs/release/assets/*.webm
-!/docs/release/assets/*.vtt
-!/docs/release/assets/captures/
-/docs/release/assets/captures/*
-!/docs/release/assets/captures/*.png
+
+# Intermediate release-media renders
+docs/release/assets/video-captions/
+docs/release/assets/full-stack-captions/
+
 # Local verification and packaged artifacts
 extension/artifacts/
 extension/test-results/
@@ -77,7 +34,9 @@ extension/playwright-report/
 apps/review/test-results/
 apps/review/playwright-report/
 extension/dist-catalog-test/
-**/.env.*
-!**/.env.example
-# Private/local curation observations and derived experiment reports.
+
+# Private curation observations and experiment reports
 /evals/curation/runs/
+
+# Retired prototype (local copy only; holds old secrets)
+simulation/
