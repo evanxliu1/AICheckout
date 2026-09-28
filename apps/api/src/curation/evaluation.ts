@@ -178,7 +178,7 @@ export const observationBundleSchema = z.strictObject({
   schemaVersion: z.literal(1),
   corpusHash: hash,
   experiment: key,
-  provenance: z.enum(['scripted-diagnostic', 'imported-traces-unverified']),
+  provenance: z.enum(['scripted-diagnostic', 'live-collected', 'imported-traces-unverified']),
   observations: z.array(observationSchema).max(200),
 });
 export const ledgerBundleSchema = z.strictObject({
@@ -490,6 +490,8 @@ export function evaluateCorpus(
       throw new Error('Unexpected or duplicate observation.');
     if (bundle.provenance === 'scripted-diagnostic' && observation.trace.provider.mode !== 'fixture')
       throw new Error('Scripted diagnostics cannot contain metered traces.');
+    if (bundle.provenance === 'live-collected' && observation.trace.provider.mode === 'fixture')
+      throw new Error('Live collections cannot contain fixture traces.');
     if (canonical(configurationOf(observation)) !== canonical(configuration))
       throw new Error('Mixed generation configurations require separate experiments.');
     seen.add(item.id);

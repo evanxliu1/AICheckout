@@ -15,7 +15,7 @@ export { extractionTraceSchema, type ExtractionTrace } from '@ai-checkout/catalo
 export interface ExtractionProvider {
   id: string;
   model: string;
-  mode: 'fixture' | 'metered';
+  mode: 'fixture' | 'subscription' | 'metered';
   /** Configured maximum rates, in micro-USD per million tokens. Zero is fixture-only. */
   pricing: { input: number; output: number };
   invoke(request: {

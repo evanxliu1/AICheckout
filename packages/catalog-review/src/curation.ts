@@ -84,8 +84,8 @@ export const replySchema = z.strictObject({
 export const limitsSchema = z.strictObject({
   budgetMicrousd: z.number().int().min(0).max(1_000_000_000).default(0),
   maxAttempts: z.number().int().min(1).max(2).default(2),
-  attemptTimeoutMs: z.number().int().min(1).max(30_000).default(10_000),
-  totalTimeoutMs: z.number().int().min(1).max(60_000).default(15_000),
+  attemptTimeoutMs: z.number().int().min(1).max(300_000).default(10_000),
+  totalTimeoutMs: z.number().int().min(1).max(600_000).default(15_000),
   maxInputTokens: z.number().int().min(512).max(64_000).default(48_000),
   maxOutputTokens: z.number().int().min(128).max(8192).default(4096),
 });
@@ -93,14 +93,15 @@ export const providerIdentitySchema = z
   .strictObject({
     id: z.string().regex(/^[a-z0-9._-]{1,80}$/),
     model: z.string().regex(/^[a-zA-Z0-9/._:-]{1,120}$/),
-    mode: z.enum(['fixture', 'metered']),
+    // subscription: a real model billed through a flat-rate plan (e.g. Codex CLI), so no per-token price.
+    mode: z.enum(['fixture', 'subscription', 'metered']),
     pricing: z.strictObject({
       input: z.number().int().min(0).max(1_000_000_000),
       output: z.number().int().min(0).max(1_000_000_000),
     }),
   })
   .refine((value) =>
-    value.mode === 'fixture'
+    value.mode !== 'metered'
       ? value.pricing.input === 0 && value.pricing.output === 0
       : value.pricing.input > 0 && value.pricing.output > 0,
   );

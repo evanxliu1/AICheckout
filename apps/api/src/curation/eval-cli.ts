@@ -2,7 +2,8 @@ import { mkdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { parseArgs } from 'node:util';
-import { buildContext } from './context.ts';
+import { buildContext, PROMPT_VERSION } from './context.ts';
+import { createCodexProvider, type CodexOptions } from './codex.ts';
 import { runExtraction } from './runner.ts';
 import {
   abstainingProvider,
@@ -13,6 +14,9 @@ import {
   validateCorpus,
   type EvalObservation,
 } from './evaluation.ts';
+
+// Agentic CLIs are slower than a raw completion call; allow longer attempts than the hosted defaults.
+const CODEX_LIMITS = { attemptTimeoutMs: 240_000, totalTimeoutMs: 480_000, maxOutputTokens: 8192 };
 
 async function jsonFile(path: string, max: number) {
   const info = await stat(path);
@@ -47,13 +51,16 @@ function markdown(report: ReturnType<typeof evaluateCorpus>) {
     : [['Aggregate scores', 'Withheld: observations are incomplete.']];
   return (
     `# Curation evaluation: ${report.experiment}\n\n` +
-    `**${report.provenance === 'scripted-diagnostic' ? 'Scripted diagnostic — no model was called.' : 'Imported trace analysis — provenance is not independently verified.'}**\n\n` +
+    `**${PROVENANCE_NOTE[report.provenance]}**\n\n` +
+    (report.configuration
+      ? `Provider: ${report.configuration.provider.id} · model \`${report.configuration.provider.model}\` · prompt ${report.configuration.versions.prompt}.\n\n`
+      : '') +
     `Corpus: ${report.corpus.version}; split: ${report.corpus.split}; labels: ${report.corpus.annotationStatus}.\n\n` +
     `Corpus SHA-256: \`${report.corpus.hash}\`. Evaluator: ${report.evaluatorVersion}.\n\n` +
     `Observed ${report.observed}/${report.planned} cases. ${report.complete ? 'Complete selected set.' : `Missing: ${report.missing.join(', ')}.`}\n\n` +
     '| Measure | Result |\n| --- | --- |\n' +
     rows.map(([name, value]) => `| ${name} | ${value} |`).join('\n') +
-    `\n\nRecorded execution: p50 ${report.execution.p50Ms ?? 'n/a'} ms; p95 ${report.execution.p95Ms ?? 'n/a'} ms; ${report.execution.accountedMicrousd} accounted micro-USD. These are fixture measurements or imported trace values, not independently verified provider latency/billing.\n\n` +
+    `\n\nRecorded execution: p50 ${report.execution.p50Ms ?? 'n/a'} ms; p95 ${report.execution.p95Ms ?? 'n/a'} ms; ${report.execution.accountedMicrousd} accounted micro-USD. Latency is wall-clock time per case as measured by the runner.\n\n` +
     report.limitations.map((value) => `- ${value}`).join('\n') +
     '\n\n' +
     '| Case | Outcome | Field errors | Missed conditions | Missed issues | False clear |\n| --- | --- | ---: | ---: | ---: | --- |\n' +
@@ -66,6 +73,27 @@ function markdown(report: ReturnType<typeof evaluateCorpus>) {
     '\n'
   );
 }
+const PROVENANCE_NOTE = {
+  'scripted-diagnostic': 'Scripted diagnostic — no model was called.',
+  'live-collected': 'Live model run collected by this CLI.',
+  'imported-traces-unverified': 'Imported trace analysis — provenance is not independently verified.',
+} as const;
+
+/** Run `task` over `items` with at most `limit` in flight, preserving input order. */
+async function mapConcurrent<T, R>(items: T[], limit: number, task: (item: T, index: number) => Promise<R>) {
+  const results = new Array<R>(items.length);
+  let next = 0;
+  await Promise.all(
+    Array.from({ length: Math.min(limit, items.length) }, async () => {
+      while (next < items.length) {
+        const index = next++;
+        results[index] = await task(items[index], index);
+      }
+    }),
+  );
+  return results;
+}
+
 export async function runEvaluationCli(args: string[], root: string) {
   const { values } = parseArgs({
     args,
@@ -79,23 +107,55 @@ export async function runEvaluationCli(args: string[], root: string) {
       output: { type: 'string' },
       'allow-reserved': { type: 'boolean', default: false },
       check: { type: 'boolean', default: false },
+      // codex mode: live extraction through the local Codex CLI (ChatGPT subscription).
+      model: { type: 'string' },
+      effort: { type: 'string', default: 'low' },
+      concurrency: { type: 'string', default: '3' },
+      limit: { type: 'string' },
     },
   });
   if (
-    !['fixture', 'replay', 'ledger'].includes(values.mode) ||
+    !['fixture', 'codex', 'replay', 'ledger'].includes(values.mode) ||
     !['development', 'reserved', 'all'].includes(values.split)
   )
-    throw new Error('Use fixture/replay/ledger mode and development/reserved/all split.');
+    throw new Error('Use fixture/codex/replay/ledger mode and development/reserved/all split.');
   if (values.split !== 'development' && !values['allow-reserved'])
     throw new Error(
       'Reserved cases require explicit --allow-reserved; do not tune prompts on their results.',
     );
-  if (values.mode !== 'fixture' ? !values.observations || values.check : Boolean(values.observations))
+  const imports = values.mode === 'replay' || values.mode === 'ledger';
+  if (imports !== Boolean(values.observations) || (values.check && values.mode !== 'fixture'))
     throw new Error('Replay/ledger requires --observations; --check is only for scripted diagnostics.');
+  if ((values.mode === 'codex') !== Boolean(values.model))
+    throw new Error('Codex mode requires --model (and --model is only used by codex mode).');
   const split = values.split as 'development' | 'reserved' | 'all';
   const corpus = validateCorpus(await jsonFile(resolve(root, values.corpus), 4 * 1024 * 1024));
   let bundle: unknown;
-  if (values.mode === 'fixture') {
+  if (values.mode === 'codex') {
+    const concurrency = Number(values.concurrency),
+      limit = values.limit === undefined ? Infinity : Number(values.limit);
+    if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 8)
+      throw new Error('--concurrency must be an integer from 1 to 8.');
+    if (limit !== Infinity && (!Number.isInteger(limit) || limit < 1))
+      throw new Error('--limit must be a positive integer.');
+    const provider = await createCodexProvider({
+      model: values.model!,
+      reasoningEffort: values.effort as CodexOptions['reasoningEffort'],
+    });
+    const cases = corpus.cases.filter((item) => split === 'all' || item.split === split).slice(0, limit);
+    const observations = await mapConcurrent(cases, concurrency, async (item, index) => {
+      const trace = await runExtraction(item.input, provider, { limits: CODEX_LIMITS });
+      console.log(`[${index + 1}/${cases.length}] ${item.id}: ${trace.status} (${trace.durationMs} ms)`);
+      return { caseId: item.id, input: item.input, context: buildContext(item.input), trace };
+    });
+    bundle = {
+      schemaVersion: 1,
+      corpusHash: corpusHash(corpus),
+      experiment: `codex.${provider.model}.${values.effort}.${PROMPT_VERSION}`.toLowerCase(),
+      provenance: 'live-collected',
+      observations,
+    };
+  } else if (values.mode === 'fixture') {
     const observations: EvalObservation[] = [];
     for (const item of corpus.cases.filter((item) => split === 'all' || item.split === split)) {
       // Only captured inputs enter the harness. Reference labels stay in the scorer.

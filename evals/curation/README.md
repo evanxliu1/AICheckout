@@ -1,6 +1,6 @@
 # Curation evaluations
 
-This local evaluator scores saved extraction traces against versioned references. It includes **60 synthetic, agent-authored cases awaiting human annotation review**. It has made no live model calls and does not establish model accuracy. The [roadmap](../../docs/design.md#roadmap) still requires independently reviewed representative terms and an authorized live evaluation.
+This local evaluator scores saved extraction traces against versioned references. It includes **60 synthetic, agent-authored cases awaiting human annotation review**. It can collect live runs through the Codex CLI (below), but the synthetic corpus cannot establish model accuracy; the [roadmap](../../docs/design.md#roadmap) replaces it with hand-labeled real issuer terms.
 
 The current corpus has 30 development Quicksilver examples and 30 reserved BCE examples. Related issuer/document families cannot cross splits; identical source bodies after Unicode/whitespace normalization cannot cross splits either. The two sets deliberately share scenario templates. Two issuer families and paired synthetic templates are **not a validated independent held-out benchmark**. The reserved flag prevents accidental use in ordinary development commands; it is not secrecy or a guarantee against leakage.
 
@@ -57,7 +57,25 @@ Both `replay` and `ledger` forcibly label results **imported traces, provenance 
 
 Context `captured-text-json.3` uses a canonical JSON hash so PostgreSQL JSONB key ordering does not break replay. The exact system/user strings are still bound to that hash. Earlier context versions remain inspectable but are rejected by this scorer because their schema object serialization was not portable across the database round trip. No historical trace is rewritten. The importer also checks saved provider/profile/limit/reservation identity. Local compiled HTTP tests verify the real JSONB round trip for fixture and intercepted-SDK runs.
 
-There is intentionally no live-provider collection mode in this CLI. Actual collection uses the authenticated, budgeted service once account access and spending are authorized. Replaying a run does not invoke a model, refund a reservation, modify the ledger, or publish a catalog.
+Replaying a run does not invoke a model, refund a reservation, modify the ledger, or publish a catalog.
+
+## Run live through the Codex CLI (ChatGPT subscription)
+
+`codex` mode runs each case through the same harness (context, runner, validation) using `codex exec`, so a signed-in ChatGPT plan pays for it instead of a metered API key. Sign in once with `codex login`, then:
+
+```sh
+# Smoke test two cases
+npm run eval:curation -- --mode codex --model gpt-5.5 --limit 2
+
+# Full development split, three cases in flight
+npm run eval:curation -- --mode codex --model gpt-5.5 --effort low --concurrency 3
+```
+
+`--model` is required and is recorded in every trace; `--effort` is `minimal|low|medium|high|xhigh` (default `low`). Results are labeled **live-collected** with provider `codex-cli` and mode `subscription` (zero per-token price). Each call runs in an empty read-only directory with Codex's base instructions replaced by the extraction prompt, user config ignored, and every optional tool the installed CLI reports disabled; a run in which the agent executes a tool is rejected. `OPENAI_API_KEY`/`CODEX_API_KEY` are removed from the child environment so billing cannot silently switch to an API key. Token counts include roughly 2.5k tokens of Codex harness overhead.
+
+This is for local experiments only. The CLI uses your personal login, so never wire it into the hosted API.
+
+**Known limitation of the synthetic corpus:** every synthetic source body opens by declaring itself invented and "not issuer evidence". A capable model following the prompt's evidence rules correctly abstains on all facts, so live runs against this corpus measure harness behavior, not extraction quality. Real, hand-labeled issuer terms are required for model comparisons.
 
 ## What the scores mean
 
