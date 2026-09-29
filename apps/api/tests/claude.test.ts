@@ -22,7 +22,8 @@ process.stdin.on('end', () => {
   }));
   const mode = process.env.FAKE_CLAUDE_MODE;
   if (mode === 'hang') return setTimeout(() => {}, 60_000);
-  const usage = { input_tokens: 3000, cache_creation_input_tokens: 500, cache_read_input_tokens: 400, output_tokens: 1200 };
+  const usage = { input_tokens: 3000, cache_creation_input_tokens: 500, cache_read_input_tokens: 400, output_tokens: 2000,
+    iterations: [{ output_tokens: 800, type: 'message' }, { output_tokens: 1200, type: 'message' }] };
   if (mode === 'limit') {
     console.log(JSON.stringify({ type: 'result', subtype: 'error_during_execution', is_error: true,
       result: "You've hit your usage limit. Try again later.", usage, api_error_status: 429 }));
@@ -78,7 +79,8 @@ it('runs claude -p as a headless structured extraction and records subscription 
     pricing: { input: 0, output: 0 },
   });
   expect(trace.accountedMicrousd).toBe(0);
-  // Fresh and cache-creating input tokens count once; the CLI's cache reads on later turns do not.
+  // Fresh and cache-creating input tokens count once; the CLI's cache reads on later turns do not. Output
+  // is the final message's, not the sum over the CLI's turns.
   expect(trace.attempts[0].usage).toEqual({ inputTokens: 3500, outputTokens: 1200 });
   expect(trace.extraction).toEqual(f.output);
 

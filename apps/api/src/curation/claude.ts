@@ -29,6 +29,8 @@ const resultSchema = z.looseObject({
       cache_creation_input_tokens: z.number().int().min(0).optional(),
       cache_read_input_tokens: z.number().int().min(0).optional(),
       output_tokens: z.number().int().min(0),
+      /** Per-message usage; the last entry is the message that carried the structured output. */
+      iterations: z.array(z.looseObject({ output_tokens: z.number().int().min(0) })).optional(),
     })
     .optional(),
 });
@@ -62,16 +64,17 @@ export function parseClaudeResult(stdout: string) {
   if (parsed.is_error || parsed.structured_output === undefined || !parsed.usage)
     throw failureFor(parsed.result ?? parsed.subtype ?? '', parsed.api_error_status);
   const u = parsed.usage;
-  // The CLI sums usage over its turns (structured output is a tool call, so there are at least two), and
-  // the second turn re-reads the whole prompt from cache. Count each prompt token once: fresh input plus
-  // cache writes, not cache reads, so the harness's input budget applies to the prompt and not to the CLI's
-  // turn count.
+  // The CLI sums usage over its turns: structured output is a tool call, so there are at least two, later
+  // turns re-read the prompt from cache, and the model sometimes drafts an answer before the tool call.
+  // Count each prompt token once (fresh input plus cache writes, not cache reads) and charge output for the
+  // message that carried the structured output, so the harness's budgets apply to the prompt and the
+  // answer rather than to the CLI's turn count.
   return {
     finishReason: 'stop' as const,
     text: JSON.stringify(parsed.structured_output),
     usage: {
       inputTokens: u.input_tokens + (u.cache_creation_input_tokens ?? 0),
-      outputTokens: u.output_tokens,
+      outputTokens: u.iterations?.at(-1)?.output_tokens ?? u.output_tokens,
     },
   };
 }
