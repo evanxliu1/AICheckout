@@ -76,10 +76,49 @@ Exit: `evals/curation/real/corpus.v2.json` committed (no issuer bodies), all anc
 
 ### 2c. Experiments (resume headline)
 
-1. Matrix on **dev**: models {`gpt-5.5` low, `gpt-5.5` high, `gpt-6-astra`, one local Ollama model via `codex --oss`} × prompts {`baseline.1`, `guided.1`} × selection {`full`, `keyword-window.1`}; `--repeat 2` for variance. Ask Evan before any paid API run (e.g. one Claude model via API) and get a budget.
-2. Error analysis on dev failures → `guided.2` (new version string; never edit an existing prompt). Re-run dev.
-3. Final: best 2–3 configurations once on **held-out**.
-4. `docs/evals/results.md`: results table (field accuracy, rule recall/precision, evidence validity, injection resistance, false-clean, latency, tokens), a chart, per-category error breakdown, 3–5 concrete failure examples with short quotes, and what changed between prompt versions with measured deltas. Link it from the README.
+Branch `phase2c-experiments` (stacked on `phase2b-corpus`). Captures are machine-local and gitignored, so work in the main checkout, not a worktree. Never re-capture pages (hashes would invalidate labels), never edit corpus labels (if one looks wrong, write it up in the error analysis for a separate verification pass), never tune on held-out, never make paid API calls.
+
+**Step 1: Pilot (de-risk before scale).** Run one real dev case per card family with `gpt-5.5` (low), `guided.1`, both selections. Confirm there are no `input_limit`, `timeout` or `output_limit` statuses on the biggest input (Citi `full`: ~105 kB of text); adjust `CODEX_LIMITS` only if needed, and record why. Read one raw output per card to catch scorer bugs early (for example, legitimate answers scored wrong by rule matching). Scorer changes are bug fixes only: add a test, bump `SCORER_VERSION`, and re-score earlier runs with `--replay` so all reported numbers use one scorer version.
+
+**Step 2: Resumable matrix runner.** `scripts/run-eval-matrix.mjs` plus `evals/curation/matrix.dev.json`, a list of configurations `{model, effort, prompt, selection, repeat, provider}`.
+- Each configuration writes to a deterministic run directory, `evals/curation/runs/matrix/<config-slug>/`.
+- Re-running skips complete configurations and, for incomplete ones, runs only the missing `caseId#repeat` slots. This needs a `--resume <dir>` option in `eval:v2`: load the existing `observations.json`, verify the corpus hash and configuration match, append the missing observations, and rewrite the files. Old files are replaced only by a superset.
+- Stop cleanly on `rate-limit` provider failures (usage-limit messages) and print how to resume.
+- Tests cover the resume merge logic.
+
+**Step 3: Local model.** Add `oss` support to `createCodexProvider`: `codex exec --oss`, model `llama3.1`, provider id `codex-oss`, mode `subscription` with zero price. Verify on one case that `--output-schema` is honored. If the local model cannot produce schema-valid JSON on most pilot cases, keep its failures as a measured result (`invalid_output` rate) instead of dropping it. Ollama's default context window is small, so set `OLLAMA_CONTEXT_LENGTH` (at least 32768) for the server if needed and record the value. Local runs use `keyword-window.1` only and `--repeat 1`.
+
+**Step 4: Dev matrix** (20 dev cases each):
+
+| Model | Effort | Prompts | Selections | Repeat |
+| --- | --- | --- | --- | --- |
+| gpt-5.5 | low | baseline.1, guided.1 | full, keyword-window.1 | 2 |
+| gpt-5.5 | high | baseline.1, guided.1 | full, keyword-window.1 | 2 |
+| gpt-6-astra | default (low) | baseline.1, guided.1 | full, keyword-window.1 | 2 |
+| llama3.1 (local) | n/a | baseline.1, guided.1 | keyword-window.1 | 1 |
+
+That is 12 × 40 + 2 × 20 = 520 runs. Run the cheapest configurations first. Use concurrency 3 for Codex and 1 for local. Expect several hours and possible usage-limit pauses; resume with the runner.
+
+**Step 5: Error analysis → `guided.2`.** From dev failures, tabulate error types: missed rule by category, wrong rate, cap, U.S.-only or activation, claims unsupported by evidence, missed injection or conflict, stale-promo handling, distractor rules taken from comparison tables or generic FAQs, and quote-resolution failures. Pick the top 2–3 fixable causes and write `guided.2` as a new prompt version (never edit `guided.1`). Re-run the best 1–2 dev configurations with `guided.2` and report deltas. At most two prompt iterations.
+
+**Step 6: Held-out, once.** Choose configurations using dev only: the best overall, the best cheap/fast one, and `baseline.1` on the best model as the reference. Run each on held-out (`--split heldout --allow-heldout`, repeat 2). Do not change prompts after seeing held-out results.
+
+**Step 7: Results.** `scripts/summarize-evals.mjs` reads the run directories and writes:
+- `docs/evals/results.json` (committed): aggregated metrics per configuration, by variant, by category, and by repeat.
+- `docs/evals/results.svg`: a grouped bar chart, no new dependencies.
+
+`docs/evals/results.md` covers:
+- setup: corpus, `agent-verified` labels, splits, scorer version, dates, models
+- the main table: end-to-end field accuracy, rule recall/precision, claim precision, evidence validity, injection resistance (untrusted-instruction recall and field accuracy on injection variants), conflict recall, false-clean, p50/p95 latency, mean tokens
+- a per-category error breakdown
+- 3–5 concrete failure examples, each with a short quote of 25 words or fewer
+- the guided.1 → guided.2 deltas
+- held-out results
+- limitations: n=7 cards, agent-verified labels, variants synthetic, Codex harness token overhead, subscription models not pinned snapshots
+
+The committed results files contain only metrics and short quotes, no issuer text beyond that. Link results.md from the README with 2–3 headline numbers.
+
+**Step 8: Checks.** Lint, format:check, typecheck, tests, `eval:curation -- --check`, `eval:v2 -- --check`. Commit in logical steps, push the branch, and don't open the PR (the reviewer does).
 
 Exit: results doc committed; README headline numbers updated.
 
