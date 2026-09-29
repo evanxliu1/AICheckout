@@ -18,6 +18,7 @@ process.stdin.on('end', () => {
   fs.writeFileSync(process.env.FAKE_CLAUDE_LOG, JSON.stringify({
     args, stdin, cwd: process.cwd(),
     hasKey: 'ANTHROPIC_API_KEY' in process.env || 'CLAUDE_CODE_USE_BEDROCK' in process.env,
+    thinking: process.env.MAX_THINKING_TOKENS,
   }));
   const mode = process.env.FAKE_CLAUDE_MODE;
   if (mode === 'hang') return setTimeout(() => {}, 60_000);
@@ -77,8 +78,8 @@ it('runs claude -p as a headless structured extraction and records subscription 
     pricing: { input: 0, output: 0 },
   });
   expect(trace.accountedMicrousd).toBe(0);
-  // Cached and cache-creating input tokens count as input.
-  expect(trace.attempts[0].usage).toEqual({ inputTokens: 3900, outputTokens: 1200 });
+  // Fresh and cache-creating input tokens count once; the CLI's cache reads on later turns do not.
+  expect(trace.attempts[0].usage).toEqual({ inputTokens: 3500, outputTokens: 1200 });
   expect(trace.extraction).toEqual(f.output);
 
   const arg = (name: string) => seen.args[seen.args.indexOf(name) + 1];
@@ -95,10 +96,12 @@ it('runs claude -p as a headless structured extraction and records subscription 
     ]),
   );
   expect(arg('--tools')).toBe('');
+  expect(arg('--effort')).toBe('low');
   expect(arg('--setting-sources')).toBe('');
   // The run happens in an empty scratch directory, and metered credentials never reach the CLI.
   expect(seen.cwd).toMatch(/aicheckout-claude-/);
   expect(seen.hasKey).toBe(false);
+  expect(seen.thinking).toBe('0');
 });
 
 it('classifies usage limits as rate limiting and retries once', async () => {

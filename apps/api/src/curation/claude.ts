@@ -33,8 +33,11 @@ const resultSchema = z.looseObject({
     .optional(),
 });
 
+const effortSchema = z.enum(['low', 'medium', 'high', 'xhigh', 'max']);
 export interface ClaudeOptions {
   model: string;
+  /** The CLI's `--effort`; it bounds thinking, whose tokens the CLI counts as output. Defaults to low. */
+  effort?: z.infer<typeof effortSchema>;
   /** Path to the claude binary; defaults to `claude` on PATH. */
   bin?: string;
 }
@@ -59,11 +62,15 @@ export function parseClaudeResult(stdout: string) {
   if (parsed.is_error || parsed.structured_output === undefined || !parsed.usage)
     throw failureFor(parsed.result ?? parsed.subtype ?? '', parsed.api_error_status);
   const u = parsed.usage;
+  // The CLI sums usage over its turns (structured output is a tool call, so there are at least two), and
+  // the second turn re-reads the whole prompt from cache. Count each prompt token once: fresh input plus
+  // cache writes, not cache reads, so the harness's input budget applies to the prompt and not to the CLI's
+  // turn count.
   return {
     finishReason: 'stop' as const,
     text: JSON.stringify(parsed.structured_output),
     usage: {
-      inputTokens: u.input_tokens + (u.cache_creation_input_tokens ?? 0) + (u.cache_read_input_tokens ?? 0),
+      inputTokens: u.input_tokens + (u.cache_creation_input_tokens ?? 0),
       outputTokens: u.output_tokens,
     },
   };
@@ -71,12 +78,18 @@ export function parseClaudeResult(stdout: string) {
 
 export function createClaudeProvider(options: ClaudeOptions): ExtractionProvider {
   const bin = options.bin ?? 'claude';
+  const effort = effortSchema.parse(options.effort ?? 'low');
   const model = z
     .string()
     .regex(/^[a-zA-Z0-9._:-]{1,120}$/)
     .parse(options.model);
   // Drop metered credentials so the CLI bills the subscription login, never an API key or cloud account.
-  const env = Object.fromEntries(Object.entries(process.env).filter(([name]) => !METERED_ENV.test(name)));
+  // Extended thinking is off: the CLI counts thinking as output tokens, which blew the harness's output
+  // budget (9.7k tokens for a 2 kB answer) and made each call several times slower.
+  const env = {
+    ...Object.fromEntries(Object.entries(process.env).filter(([name]) => !METERED_ENV.test(name))),
+    MAX_THINKING_TOKENS: '0',
+  };
 
   return {
     id: 'claude-cli',
@@ -90,6 +103,8 @@ export function createClaudeProvider(options: ClaudeOptions): ExtractionProvider
           '-p',
           '--model',
           model,
+          '--effort',
+          effort,
           '--output-format',
           'json',
           '--json-schema',

@@ -2,7 +2,7 @@ import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { parseArgs } from 'node:util';
-import { createClaudeProvider } from '../claude.ts';
+import { createClaudeProvider, type ClaudeOptions } from '../claude.ts';
 import { createCodexProvider, type CodexOptions } from '../codex.ts';
 import { executeTask, type ExtractionProvider } from '../runner.ts';
 import { PROMPTS, type PromptVersion } from './context.ts';
@@ -179,7 +179,10 @@ async function providerFor(configuration: Configuration): Promise<(value: Loaded
       ? () => abstainingProviderV2()
       : (value: LoadedCase) => referenceProvider(value.item);
   if (provider.id === 'claude-cli') {
-    const claude = createClaudeProvider({ model: provider.model });
+    const claude = createClaudeProvider({
+      model: provider.model,
+      effort: (effort ?? 'low') as ClaudeOptions['effort'],
+    });
     return () => claude;
   }
   if (provider.id !== 'codex-cli') throw new Error(`Provider ${provider.id} is not available.`);
@@ -274,8 +277,7 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
         provider: live
           ? { id: PROVIDER_IDS[values.provider], model: values.model!, mode: 'subscription' }
           : { id: 'fixture', model: fixtureModel, mode: 'fixture' },
-        // Only Codex takes a reasoning-effort setting.
-        effort: values.provider === 'codex' ? values.effort : null,
+        effort: live ? values.effort : null,
         prompt: values.prompt as PromptVersion,
         selection: values.selection as Configuration['selection'],
         split: values.split as Split,

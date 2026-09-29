@@ -29,7 +29,13 @@ npm run eval:v2 -- --provider codex --model gpt-5.5 --effort low --prompt guided
 npm run eval:v2 -- --replay evals/curation/runs/RUN/observations.json
 ```
 
-Options: `--corpus DIR` (default `evals/curation/real`, or `fixture.v2` with `--check`), `--prompt baseline.1|guided.1`, `--selection full|keyword-window.1`, `--split dev|heldout|all` (held-out needs `--allow-heldout`; never tune on it), `--repeat N`, `--concurrency N`, `--limit N`, `--output DIR`. Fixture runs take `--model reference-echo.1|abstain.2`.
+Options: `--corpus DIR` (default `evals/curation/real`, or `fixture.v2` with `--check`), `--provider fixture|codex|claude`, `--prompt baseline.1|guided.1|guided.2`, `--selection full|keyword-window.1`, `--split dev|heldout|all` (held-out needs `--allow-heldout`; never tune on it), `--repeat N`, `--concurrency N`, `--limit N`, `--case ID` (repeatable), `--output DIR`. Fixture runs take `--model reference-echo.1|abstain.2`. `--provider claude` runs `claude -p` headless on a claude.ai login (`apps/api/src/curation/claude.ts`); `--effort` maps to the CLI's `--effort` (low, medium, high, xhigh, max), and extended thinking is disabled (`MAX_THINKING_TOKENS=0`) because the CLI counts thinking as output tokens. Reported input tokens are fresh plus cache-written tokens (each prompt token once); the CLI's cache reads on its second turn are not counted.
+
+A live run that hits a usage limit stops, saves what it has, and exits with status 3. `--resume DIR` (with the same `--corpus`) reloads that directory, verifies the corpus hash, runs only the missing `caseId#repeat` slots, and rewrites the files as a superset.
+
+### Matrix runs
+
+`evals/curation/matrix.dev.json` lists configurations (`provider`, `model`, `effort`, `prompt`, `selection`, `repeat`). `npm run eval:matrix -- [--provider codex|claude] [--only SLUG] [--wait-minutes 15]` runs each one into `runs/matrix/<slug>/`, skipping complete configurations and resuming partial ones, so it can be re-run after a usage-limit stop (`--wait-minutes` sleeps and resumes by itself). Codex and Claude have separate limits, so one runner per provider can run at the same time. `npm run eval:summarize -- --runs DIR...` aggregates run directories into `docs/evals/results.json` and `results.svg` (metrics only). The results are written up in [`docs/evals/results.md`](../../docs/evals/results.md).
 
 Each run writes `observations.json` (traces, with sources by hash and no captured text), `report.json`, and `report.md` to the ignored `runs/` directory. Scoring rebuilds each case's context and rejects observations whose source hashes, prompt, or selection differ from what the corpus produces.
 
