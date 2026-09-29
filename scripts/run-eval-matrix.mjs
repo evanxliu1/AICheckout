@@ -12,7 +12,14 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { fileURLToPath } from 'node:url';
-import { classifyRun, evalArgs, EXIT_RATE_LIMITED, parseMatrix, planRuns } from './lib/eval-matrix.mjs';
+import {
+  classifyRun,
+  evalArgs,
+  EXIT_RATE_LIMITED,
+  parseMatrix,
+  planRuns,
+  retriableCount,
+} from './lib/eval-matrix.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const { values } = parseArgs({
@@ -41,22 +48,44 @@ const saveStatus = () => writeFile(statusPath, JSON.stringify(status, null, 2) +
 const readReport = (dir) => readFile(join(dir, 'report.json'), 'utf8').then(JSON.parse, () => undefined);
 /** Saved state from the observations themselves, so a run edited after its report was written is resumed. */
 async function savedState(dir) {
-  const [report, observations] = await Promise.all([
+  const [report, observations, failures] = await Promise.all([
     readReport(dir),
     readFile(join(dir, 'observations.json'), 'utf8').then(JSON.parse, () => undefined),
+    readFile(join(dir, 'failures.jsonl'), 'utf8').then(
+      (text) =>
+        text
+          .split('\n')
+          .filter(Boolean)
+          .map((line) => JSON.parse(line)),
+      () => [],
+    ),
   ]);
   if (!observations) return undefined;
   const observed = observations.observations.length,
     planned = report?.planned ?? null;
-  return { observed, planned, complete: planned !== null && observed >= planned };
+  return {
+    observed,
+    planned,
+    complete: planned !== null && observed >= planned,
+    retriable: retriableCount(observations.observations, failures),
+    configuration: observations.configuration,
+  };
 }
 const savedReports = new Map();
 for (const c of matrix.configurations) savedReports.set(c.slug, await savedState(join(outputDir, c.slug)));
 
 const plan = planRuns(matrix, savedReports, { provider: values.provider, only: values.only });
-for (const { configuration, action, observed, planned } of plan)
-  console.log(`${action.padEnd(6)} ${configuration.slug}${planned ? ` (${observed}/${planned} saved)` : ''}`);
+for (const { configuration, action, observed, planned, retriable, mismatch } of plan)
+  console.log(
+    `${action.padEnd(8)} ${configuration.slug}` +
+      (planned ? ` (${observed}/${planned} saved${retriable ? `, ${retriable} retriable` : ''})` : '') +
+      (mismatch.length ? ` saved run differs in ${mismatch.join(', ')}; move it aside or fix the row` : ''),
+  );
 if (values['dry-run']) process.exit(0);
+if (plan.some((p) => p.action === 'mismatch')) {
+  console.error('Refusing to run: a saved run directory does not match its matrix row.');
+  process.exit(1);
+}
 
 function runEval(args) {
   return new Promise((done) => {
@@ -65,6 +94,8 @@ function runEval(args) {
   });
 }
 const sleep = (minutes) => new Promise((done) => setTimeout(done, minutes * 60_000));
+/** Resume passes for harness failures per configuration; eval:v2 itself caps retries per slot. */
+const MAX_RETRY_PASSES = 3;
 
 let waits = 0;
 const rejectedModels = new Set();
@@ -84,7 +115,8 @@ for (const { configuration, action } of plan) {
     continue;
   }
   const dir = join(outputDir, configuration.slug);
-  let resume = action === 'resume';
+  let resume = action === 'resume',
+    passes = 0;
   for (;;) {
     console.log(`\n=== ${resume ? 'resume' : 'run'} ${configuration.slug}`);
     const code = await runEval(evalArgs(configuration, matrix.split, dir, { resume, corpus: matrix.corpus }));
@@ -94,9 +126,16 @@ for (const { configuration, action } of plan) {
       outcome,
       observed: report?.observed ?? 0,
       planned: report?.planned ?? null,
+      harnessFailures: report?.harness?.failed ?? 0,
       updatedAt: new Date().toISOString(),
     };
     await saveStatus();
+    // Timed-out or provider-failed slots are run again (eval:v2 caps retries per slot).
+    if (outcome === 'incomplete' && report?.harness?.retriable && ++passes <= MAX_RETRY_PASSES) {
+      console.log(`${configuration.slug}: retrying ${report.harness.retriable} harness-failed slots.`);
+      resume = true;
+      continue;
+    }
     if (outcome !== 'rate-limited') {
       if (outcome === 'rejected') {
         rejectedModels.add(modelKey);

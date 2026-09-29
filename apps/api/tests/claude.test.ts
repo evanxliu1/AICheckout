@@ -17,13 +17,17 @@ process.stdin.on('data', (c) => (stdin += c));
 process.stdin.on('end', () => {
   fs.writeFileSync(process.env.FAKE_CLAUDE_LOG, JSON.stringify({
     args, stdin, cwd: process.cwd(),
-    hasKey: 'ANTHROPIC_API_KEY' in process.env || 'CLAUDE_CODE_USE_BEDROCK' in process.env,
+    hasKey: Object.keys(process.env).some((k) => /^(ANTHROPIC_|CLAUDE_CODE_USE_)/.test(k)),
+    oauth: process.env.CLAUDE_CODE_OAUTH_TOKEN,
     thinking: process.env.MAX_THINKING_TOKENS,
   }));
   const mode = process.env.FAKE_CLAUDE_MODE;
   if (mode === 'hang') return setTimeout(() => {}, 60_000);
-  const usage = { input_tokens: 3000, cache_creation_input_tokens: 500, cache_read_input_tokens: 400, output_tokens: 2000,
-    iterations: [{ output_tokens: 800, type: 'message' }, { output_tokens: 1200, type: 'message' }] };
+  const usage = { input_tokens: 3004, cache_creation_input_tokens: 500, cache_read_input_tokens: 3400, output_tokens: 2000,
+    iterations: [
+      { input_tokens: 3000, cache_creation_input_tokens: 500, cache_read_input_tokens: 400, output_tokens: 800, type: 'message' },
+      { input_tokens: 4, cache_creation_input_tokens: 0, cache_read_input_tokens: 3000, output_tokens: 1200, type: 'message' },
+    ] };
   if (mode === 'limit') {
     console.log(JSON.stringify({ type: 'result', subtype: 'error_during_execution', is_error: true,
       result: "You've hit your usage limit. Try again later.", usage, api_error_status: 429 }));
@@ -57,7 +61,9 @@ async function run(mode: string, limits = {}) {
     FAKE_CLAUDE_LOG: log,
     FAKE_CLAUDE_TEXT: f.reply.text,
     ANTHROPIC_API_KEY: 'sk-ant-SYNTHETIC-NOT-A-KEY',
+    ANTHROPIC_BASE_URL: 'https://example.invalid',
     CLAUDE_CODE_USE_BEDROCK: '1',
+    CLAUDE_CODE_OAUTH_TOKEN: 'oauth-SYNTHETIC',
   });
   try {
     const provider = createClaudeProvider({ model: 'claude-haiku-4-5-20251001', bin });
@@ -65,8 +71,13 @@ async function run(mode: string, limits = {}) {
     const seen = await readFile(log, 'utf8').then(JSON.parse, () => undefined);
     return { f, trace, seen };
   } finally {
-    delete process.env.ANTHROPIC_API_KEY;
-    delete process.env.CLAUDE_CODE_USE_BEDROCK;
+    for (const name of [
+      'ANTHROPIC_API_KEY',
+      'ANTHROPIC_BASE_URL',
+      'CLAUDE_CODE_USE_BEDROCK',
+      'CLAUDE_CODE_OAUTH_TOKEN',
+    ])
+      delete process.env[name];
   }
 }
 
@@ -80,9 +91,9 @@ it('runs claude -p as a headless structured extraction and records subscription 
     pricing: { input: 0, output: 0 },
   });
   expect(trace.accountedMicrousd).toBe(0);
-  // Fresh and cache-creating input tokens count once; the CLI's cache reads on later turns do not. Output
-  // is the final message's, not the sum over the CLI's turns.
-  expect(trace.attempts[0].usage).toEqual({ inputTokens: 3500, outputTokens: 1200 });
+  // Input is the largest turn's prompt (fresh + cache-written + cache-read, so cache reads on turn 1 count);
+  // output is the total over the CLI's turns.
+  expect(trace.attempts[0].usage).toEqual({ inputTokens: 3900, outputTokens: 2000 });
   // The canonical model the CLI resolved is kept beside the requested one.
   expect(trace.attempts[0].providerResponse).toEqual({ id: 'sess-1', model: 'claude-haiku-4-5' });
   expect(trace.extraction).toEqual(f.output);
@@ -106,6 +117,7 @@ it('runs claude -p as a headless structured extraction and records subscription 
   // The run happens in an empty scratch directory, and metered credentials never reach the CLI.
   expect(seen.cwd).toMatch(/aicheckout-claude-/);
   expect(seen.hasKey).toBe(false);
+  expect(seen.oauth).toBe('oauth-SYNTHETIC');
   expect(seen.thinking).toBe('0');
 });
 
@@ -145,11 +157,39 @@ it('parses results and classifies failures', () => {
   };
   expect(failure('not json')).toBe('transient');
   expect(failure({ is_error: true, result: 'Rate limit exceeded', usage })).toBe('rate-limit');
-  expect(failure({ is_error: false, result: 'x', usage, api_error_status: 429 })).toBe('rate-limit');
+  expect(failure({ is_error: true, result: 'x', usage, api_error_status: 429 })).toBe('rate-limit');
   expect(failure({ is_error: true, result: 'Not logged in. Please run claude login', usage })).toBe(
     'permanent',
   );
   expect(failure({ is_error: true, result: 'Internal server error', usage })).toBe('transient');
+  expect(failure({ is_error: true, result: 'Overloaded', usage, api_error_status: 529 })).toBe('transient');
+  // Only an error result is classified from its text: a successful reply mentioning a limit is not a limit.
+  expect(
+    parseClaudeResult(JSON.stringify({ is_error: false, result: 'rate limit', structured_output: {}, usage }))
+      .text,
+  ).toBe('{}');
+  // Per-turn prompt tokens, including cache reads on the first turn; output summed over turns.
+  const turns = {
+    input_tokens: 5,
+    cache_read_input_tokens: 100,
+    output_tokens: 30,
+    iterations: [
+      { input_tokens: 5, cache_read_input_tokens: 100, output_tokens: 10 },
+      { input_tokens: 0, cache_read_input_tokens: 105, output_tokens: 20 },
+    ],
+  };
+  expect(
+    parseClaudeResult(JSON.stringify({ is_error: false, structured_output: {}, usage: turns })).usage,
+  ).toEqual({ inputTokens: 105, outputTokens: 30 });
+  const two = {
+    is_error: false,
+    structured_output: {},
+    usage,
+    session_id: 's',
+    modelUsage: { a: {}, b: {} },
+  };
+  expect(parseClaudeResult(JSON.stringify(two), 'b').providerResponse).toEqual({ id: 's', model: 'b' });
+  expect(parseClaudeResult(JSON.stringify(two), 'c').providerResponse).toEqual({ id: 's', model: 'a+b' });
   expect(
     failure({
       is_error: true,
@@ -158,6 +198,8 @@ it('parses results and classifies failures', () => {
       api_error_status: 400,
     }),
   ).toBe('permanent');
-  // A text-only reply without structured output is not a schema-valid completion.
-  expect(failure({ is_error: false, result: '{}', usage })).toBe('transient');
+  // A text-only reply without structured output is returned as text, for the runner to record as invalid output.
+  expect(parseClaudeResult(JSON.stringify({ is_error: false, result: 'not json', usage })).text).toBe(
+    'not json',
+  );
 });

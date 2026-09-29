@@ -394,9 +394,20 @@ describe('evaluate', () => {
       complete: false,
       missing: [`${dev.at(-1)!.item.id}#1`],
     });
-    expect(() => evaluate(loaded, { ...bundle, corpus: { ...bundle.corpus, hash: '1'.repeat(64) } })).toThrow(
-      /changed since/,
-    );
+    // Relabeling changes the corpus hash but not the inputs: the observations still score, and the report
+    // records which labels they were collected under. Changed inputs are rejected.
+    const relabeled = evaluate(loaded, { ...bundle, corpus: { ...bundle.corpus, hash: '1'.repeat(64) } });
+    expect(relabeled.labels).toEqual({
+      version: loaded.corpus.version,
+      hash: loaded.hash,
+      collectedWith: '1'.repeat(64),
+    });
+    expect(() =>
+      evaluate(loaded, { ...bundle, corpus: { ...bundle.corpus, inputsHash: '2'.repeat(64) } }),
+    ).toThrow(/inputs or captures changed/);
+    expect(
+      evaluate(loaded, { ...bundle, corpus: { ...bundle.corpus, inputsHash: loaded.inputsHash } }).complete,
+    ).toBe(true);
   });
 
   it('keeps abstention in review', async () => {
@@ -455,9 +466,13 @@ describe('resume', () => {
     expect(() =>
       mergeBundles(base, { ...base, configuration: { ...configuration, prompt: 'baseline.1' } }),
     ).toThrow(/different configuration/);
-    expect(() => mergeBundles(base, { ...base, corpus: { ...base.corpus, hash: 'b'.repeat(64) } })).toThrow(
-      /captures changed/,
-    );
+    // Different labels (corpus hash) with the same inputs merge; different inputs do not.
+    const inputs = (h: string) => ({ ...base.corpus, hash: h, inputsHash: 'c'.repeat(64) });
+    const added = { ...base, corpus: inputs('b'.repeat(64)), observations: [observation('x', 2)] };
+    expect(mergeBundles({ ...base, corpus: inputs('a'.repeat(64)) }, added).corpus).toEqual(added.corpus);
+    expect(() =>
+      mergeBundles({ ...base, corpus: { ...base.corpus, inputsHash: 'd'.repeat(64) } }, added),
+    ).toThrow(/captures changed/);
   });
 
   it('recognizes usage-limit failures as runs to repeat', () => {
@@ -487,6 +502,58 @@ describe('resume', () => {
       // Re-resuming a complete run changes nothing.
       const again = await runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root);
       expect(again!.observed).toBe(resumed!.observed);
+      expect(again!.harness).toEqual({ failed: 0, retriable: 0, attempts: 0 });
+
+      // A timed-out slot is not a model result: resuming logs it and runs it again.
+      const fail = (slot: { trace: { runId: string } }, status: string) => ({
+        ...slot,
+        trace: {
+          runId: slot.trace.runId,
+          status,
+          durationMs: 5,
+          documents: merged.observations[0].trace.documents,
+          attempts: [{ outcome: 'transient' }],
+        },
+      });
+      const broken = structuredClone(merged);
+      broken.observations[0] = fail(broken.observations[0], 'timeout');
+      await writeFile(join(out, 'observations.json'), JSON.stringify(broken));
+      const retried = await runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root);
+      expect(retried!.harness).toEqual({ failed: 0, retriable: 0, attempts: 1 });
+      expect(retried!.complete).toBe(true);
+      const log = (await readFile(join(out, 'failures.jsonl'), 'utf8'))
+        .trim()
+        .split('\n')
+        .map((l) => JSON.parse(l));
+      expect(log).toHaveLength(1);
+      expect(log[0]).toMatchObject({
+        slot: `${merged.observations[0].caseId}#1`,
+        status: 'timeout',
+        outcome: 'transient',
+      });
+      expect(process.exitCode ?? 0).toBe(0);
+
+      // After the retry cap the failure stays in the report and the run is not complete.
+      const capped = JSON.parse(await readFile(join(out, 'observations.json'), 'utf8'));
+      capped.observations[0] = fail(capped.observations[0], 'provider_error');
+      await writeFile(join(out, 'observations.json'), JSON.stringify(capped));
+      const slot = `${capped.observations[0].caseId}#${capped.observations[0].repeat}`;
+      await writeFile(
+        join(out, 'failures.jsonl'),
+        [1, 2]
+          .map((i) =>
+            JSON.stringify({ slot, runId: `old-${i}`, status: 'timeout', durationMs: 1, loggedAt: 'x' }),
+          )
+          .join('\n') + '\n',
+      );
+      const stuck = await runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root);
+      expect(stuck!.harness).toEqual({ failed: 1, retriable: 0, attempts: 2 });
+      expect(stuck!.overall.statuses.provider_error).toBe(1);
+      // Nothing is left to retry, so the run is final.
+      expect(process.exitCode ?? 0).toBe(0);
+      await expect(
+        runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE, '--prompt', 'guided.1'], root),
+      ).rejects.toThrow(/drop --prompt/);
       await expect(runEvaluationV2Cli(['--resume', out, '--output', dir], root)).rejects.toThrow(
         /drop --output/,
       );

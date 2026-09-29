@@ -14,8 +14,9 @@ import { ProviderFailure, type ExtractionProvider } from './runner.ts';
  * persistence, so the result is close to one structured completion.
  */
 export const CLAUDE_STDOUT_BYTES = 1_048_576;
-const METERED_ENV =
-  /^(ANTHROPIC_API_KEY|ANTHROPIC_AUTH_TOKEN|CLAUDE_CODE_USE_BEDROCK|CLAUDE_CODE_USE_VERTEX)$/;
+/** API keys, auth tokens, base URLs, and cloud-provider switches: anything that could bill a metered account. */
+const METERED_ENV = /^(ANTHROPIC_|CLAUDE_CODE_USE_)/;
+const KEEP_ENV = new Set(['CLAUDE_CODE_OAUTH_TOKEN']);
 const resultSchema = z.looseObject({
   is_error: z.boolean().optional(),
   subtype: z.string().optional(),
@@ -32,8 +33,17 @@ const resultSchema = z.looseObject({
       cache_creation_input_tokens: z.number().int().min(0).optional(),
       cache_read_input_tokens: z.number().int().min(0).optional(),
       output_tokens: z.number().int().min(0),
-      /** Per-message usage; the last entry is the message that carried the structured output. */
-      iterations: z.array(z.looseObject({ output_tokens: z.number().int().min(0) })).optional(),
+      /** Per-message usage, one entry per CLI turn. */
+      iterations: z
+        .array(
+          z.looseObject({
+            input_tokens: z.number().int().min(0).optional(),
+            cache_creation_input_tokens: z.number().int().min(0).optional(),
+            cache_read_input_tokens: z.number().int().min(0).optional(),
+            output_tokens: z.number().int().min(0),
+          }),
+        )
+        .optional(),
     })
     .optional(),
 });
@@ -47,8 +57,10 @@ export interface ClaudeOptions {
   bin?: string;
 }
 
+/** Classify an `is_error` result. An overloaded API (529) is transient; usage and rate limits are not. */
 function failureFor(message: string, status: number | null | undefined): ProviderFailure {
-  if (status === 429 || /usage limit|rate limit|429|too many requests|overloaded/i.test(message))
+  if (status === 529 || /overloaded/i.test(message)) return new ProviderFailure('transient');
+  if (status === 429 || /usage limit|rate limit|429|too many requests/i.test(message))
     return new ProviderFailure('rate-limit');
   // Bad requests (an unknown model, a CLI too old for the model) will not succeed on retry.
   if (
@@ -62,8 +74,14 @@ function failureFor(message: string, status: number | null | undefined): Provide
   return new ProviderFailure('transient');
 }
 
-/** Parse `claude -p --output-format json` output into the runner's reply shape. */
-export function parseClaudeResult(stdout: string) {
+/**
+ * Parse `claude -p --output-format json` output into the runner's reply shape.
+ *
+ * The CLI sums usage over its turns (structured output is a tool call, so there are at least two), and each
+ * turn re-reads the prompt, mostly from cache. Input tokens are the largest single turn's prompt (fresh +
+ * cache-written + cache-read), which is the prompt size; output tokens are the total over turns.
+ */
+export function parseClaudeResult(stdout: string, requestedModel?: string) {
   let parsed: z.infer<typeof resultSchema>;
   try {
     parsed = resultSchema.parse(JSON.parse(stdout));
@@ -71,24 +89,30 @@ export function parseClaudeResult(stdout: string) {
     throw new ProviderFailure('transient');
   }
   if (parsed.permission_denials?.length) throw new ProviderFailure('permanent'); // A tool was attempted.
-  if (parsed.is_error || parsed.structured_output === undefined || !parsed.usage)
-    throw failureFor(parsed.result ?? parsed.subtype ?? '', parsed.api_error_status);
+  if (parsed.is_error) throw failureFor(parsed.result ?? parsed.subtype ?? '', parsed.api_error_status);
+  if (!parsed.usage) throw new ProviderFailure('transient');
   const u = parsed.usage;
-  // The CLI sums usage over its turns: structured output is a tool call, so there are at least two, later
-  // turns re-read the prompt from cache, and the model sometimes drafts an answer before the tool call.
-  // Count each prompt token once (fresh input plus cache writes, not cache reads) and charge output for the
-  // message that carried the structured output, so the harness's budgets apply to the prompt and the
-  // answer rather than to the CLI's turn count.
-  const canonical = Object.keys(parsed.modelUsage ?? {});
+  const turns = u.iterations?.length ? u.iterations : [u];
+  const prompt = (t: (typeof turns)[number]) =>
+    (t.input_tokens ?? 0) + (t.cache_creation_input_tokens ?? 0) + (t.cache_read_input_tokens ?? 0);
+  const keys = Object.keys(parsed.modelUsage ?? {});
+  const canonical = keys.find((k) => k === requestedModel) ?? (keys.length ? keys.join('+') : undefined);
   return {
     finishReason: 'stop' as const,
-    text: JSON.stringify(parsed.structured_output),
+    // Without structured output the reply is whatever text the model gave; the runner records it as
+    // invalid output rather than a provider failure.
+    text:
+      parsed.structured_output === undefined
+        ? (parsed.result ?? '')
+        : JSON.stringify(parsed.structured_output),
     usage: {
-      inputTokens: u.input_tokens + (u.cache_creation_input_tokens ?? 0),
-      outputTokens: u.iterations?.at(-1)?.output_tokens ?? u.output_tokens,
+      inputTokens: Math.max(...turns.map(prompt)),
+      outputTokens: u.iterations?.length
+        ? u.iterations.reduce((n, t) => n + t.output_tokens, 0)
+        : u.output_tokens,
     },
-    ...(parsed.session_id && canonical.length === 1
-      ? { providerResponse: { id: parsed.session_id, model: canonical[0] } }
+    ...(parsed.session_id && canonical
+      ? { providerResponse: { id: parsed.session_id, model: canonical } }
       : {}),
   };
 }
@@ -104,7 +128,9 @@ export function createClaudeProvider(options: ClaudeOptions): ExtractionProvider
   // Extended thinking is off: the CLI counts thinking as output tokens, which blew the harness's output
   // budget (9.7k tokens for a 2 kB answer) and made each call several times slower.
   const env = {
-    ...Object.fromEntries(Object.entries(process.env).filter(([name]) => !METERED_ENV.test(name))),
+    ...Object.fromEntries(
+      Object.entries(process.env).filter(([name]) => KEEP_ENV.has(name) || !METERED_ENV.test(name)),
+    ),
     MAX_THINKING_TOKENS: '0',
   };
 
@@ -157,7 +183,7 @@ export function createClaudeProvider(options: ClaudeOptions): ExtractionProvider
           });
           child.stdin.end(request.user);
         });
-        return parseClaudeResult(stdout);
+        return parseClaudeResult(stdout, model);
       } finally {
         await rm(work, { recursive: true, force: true });
       }

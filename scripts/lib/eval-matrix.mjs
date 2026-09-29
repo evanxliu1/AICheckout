@@ -76,32 +76,96 @@ export function evalArgs(configuration, split, dir, { resume = false, corpus } =
   return args;
 }
 
+const PROVIDER_IDS = { fixture: 'fixture', codex: 'codex-cli', claude: 'claude-cli' };
+/** Mirrors HARNESS_STATUSES and RETRY_CAP in evaluate.ts. */
+const HARNESS_STATUSES = new Set(['timeout', 'provider_error']);
+const RETRY_CAP = 2;
+
 /**
- * What to do with each configuration given the saved report in its directory (or `undefined` when the
- * directory has no run yet): skip complete runs, resume partial ones, start the rest.
+ * Harness-failed observations that `eval:v2 --resume` would still retry, from the saved observations and
+ * the failures log (one JSON line per earlier failed attempt), so old reports need not be trusted.
  */
-export function planRuns(matrix, savedReports, filter = {}) {
+export function retriableCount(observations, failureLines) {
+  const seen = new Set(),
+    counts = new Map();
+  for (const line of failureLines) {
+    if (seen.has(line.runId)) continue;
+    seen.add(line.runId);
+    counts.set(line.slot, (counts.get(line.slot) ?? 0) + 1);
+  }
+  return observations.filter(
+    (o) => HARNESS_STATUSES.has(o.trace.status) && (counts.get(`${o.caseId}#${o.repeat}`) ?? 0) < RETRY_CAP,
+  ).length;
+}
+
+/** Fields of a saved bundle's configuration that differ from the matrix row (empty when it matches). */
+export function configurationMismatch(row, split, saved) {
+  const want = {
+    'provider.id': PROVIDER_IDS[row.provider] ?? row.provider,
+    'provider.model': row.model,
+    effort: row.provider === 'fixture' ? null : row.effort,
+    prompt: row.prompt,
+    selection: row.selection,
+    split,
+    repeat: row.repeat,
+  };
+  const got = {
+    'provider.id': saved.provider?.id,
+    'provider.model': saved.provider?.model,
+    effort: saved.effort,
+    prompt: saved.prompt,
+    selection: saved.selection,
+    split: saved.split,
+    repeat: saved.repeat,
+  };
+  return Object.keys(want).filter((key) => want[key] !== got[key]);
+}
+
+/**
+ * What to do with each configuration given its saved state (`undefined` when the directory has no run yet;
+ * otherwise `{observed, planned, complete, retriable, configuration}` read from the saved files): skip
+ * complete runs, resume partial ones or ones with retriable harness failures, flag a directory whose saved
+ * configuration differs from the row, and start the rest.
+ */
+export function planRuns(matrix, savedStates, filter = {}) {
   return matrix.configurations
     .filter((c) => !filter.provider || c.provider === filter.provider)
     .filter((c) => !filter.only || c.slug.includes(filter.only))
     .map((configuration) => {
-      const report = savedReports.get(configuration.slug);
-      const action = !report ? 'run' : report.complete ? 'skip' : 'resume';
-      return { configuration, action, observed: report?.observed ?? 0, planned: report?.planned ?? null };
+      const saved = savedStates.get(configuration.slug);
+      const mismatch = saved?.configuration
+        ? configurationMismatch(configuration, matrix.split, saved.configuration)
+        : [];
+      const action = !saved
+        ? 'run'
+        : mismatch.length
+          ? 'mismatch'
+          : saved.complete && !saved.retriable
+            ? 'skip'
+            : 'resume';
+      return {
+        configuration,
+        action,
+        mismatch,
+        observed: saved?.observed ?? 0,
+        planned: saved?.planned ?? null,
+        retriable: saved?.retriable ?? 0,
+      };
     });
 }
 
 /**
- * Classify one `eval:v2` invocation from its exit code and the report it wrote. A run whose every observed
- * trace ended in `provider_error` without a usage limit is treated as rejected (for example an unknown model
- * name) so the matrix moves on instead of retrying it.
+ * Classify one `eval:v2` invocation from its exit code and the report it wrote. A run is complete only when
+ * every slot is observed and no timed-out or provider-failed slot may still be retried. A run whose every
+ * observed trace ended in `provider_error` after the retries were used up is rejected (for example an
+ * unknown model name) so the matrix moves on.
  */
 export function classifyRun(exitCode, report) {
   if (exitCode === EXIT_RATE_LIMITED) return 'rate-limited';
   if (!report) return 'failed';
   const statuses = report.overall?.statuses ?? {};
   const observed = report.observed ?? 0;
+  if ((report.harness?.retriable ?? 0) > 0) return 'incomplete';
   if (observed > 0 && (statuses.provider_error ?? 0) === observed) return 'rejected';
-  if (report.complete) return 'complete';
-  return exitCode === 0 ? 'complete' : 'incomplete';
+  return report.complete ? 'complete' : 'incomplete';
 }

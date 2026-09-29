@@ -34,9 +34,11 @@ const traceSchema = z.looseObject({
   ),
   extraction: extractionV2Schema.optional(),
 });
+const hex64 = z.string().regex(/^[a-f0-9]{64}$/);
 export const bundleSchema = z.strictObject({
   schemaVersion: z.literal(2),
-  corpus: z.strictObject({ version: key, hash: z.string().regex(/^[a-f0-9]{64}$/) }),
+  // inputsHash is absent on bundles saved before relabeling support.
+  corpus: z.strictObject({ version: key, hash: hex64, inputsHash: hex64.optional() }),
   experiment: key,
   provenance: z.enum(['scripted-diagnostic', 'live-collected', 'imported-unverified']),
   configuration: configurationSchema,
@@ -55,6 +57,17 @@ export const slotOf = (o: { caseId: string; repeat: number }) => `${o.caseId}#${
 /** A run the provider refused for usage or rate limits; it measures nothing and should be run again. */
 export const rateLimited = (trace: { status: string; attempts: { outcome?: string }[] }) =>
   trace.status === 'provider_error' && trace.attempts.at(-1)?.outcome === 'rate-limit';
+
+/** Statuses that say nothing about the model (a deadline or a provider fault); such slots are run again. */
+export const HARNESS_STATUSES = ['timeout', 'provider_error'] as const;
+export const isHarnessFailure = (trace: { status: string }) =>
+  (HARNESS_STATUSES as readonly string[]).includes(trace.status);
+/** Retries per slot after its first harness failure; the last failure stays in the report. */
+export const RETRY_CAP = 2;
+
+/** Harness-failed observations that may still be retried, given how many failures each slot has logged. */
+export const retryableFailures = (bundle: ObservationBundle, failures: ReadonlyMap<string, number>) =>
+  bundle.observations.filter((o) => isHarnessFailure(o.trace) && (failures.get(slotOf(o)) ?? 0) < RETRY_CAP);
 
 /** Every `caseId#repeat` slot a configuration plans, in corpus order, minus those already observed. */
 export function missingSlots(
@@ -78,9 +91,14 @@ export function missingSlots(
  * and experiment, every old observation kept, and no slot or run ID twice.
  */
 export function mergeBundles(existing: ObservationBundle, added: ObservationBundle): ObservationBundle {
-  const same = (key: 'corpus' | 'configuration' | 'experiment') =>
+  const same = (key: 'configuration' | 'experiment') =>
     canonicalJson(existing[key]) === canonicalJson(added[key]);
-  if (!same('corpus')) throw new Error('Cannot resume: the corpus or its captures changed.');
+  // Labels may change between collections (the observations are re-scored); the inputs may not.
+  const sameInputs =
+    existing.corpus.inputsHash && added.corpus.inputsHash
+      ? existing.corpus.inputsHash === added.corpus.inputsHash
+      : existing.corpus.hash === added.corpus.hash || !existing.corpus.inputsHash;
+  if (!sameInputs) throw new Error('Cannot resume: the corpus or its captures changed.');
   if (!same('configuration') || !same('experiment'))
     throw new Error('Cannot resume: the saved run used a different configuration.');
   if (existing.provenance !== added.provenance) throw new Error('Cannot resume: provenance differs.');
@@ -93,7 +111,7 @@ export function mergeBundles(existing: ObservationBundle, added: ObservationBund
     slots.add(slotOf(o));
     runs.add(o.trace.runId);
   }
-  return { ...existing, observations };
+  return { ...existing, corpus: added.corpus, observations };
 }
 
 /** The labeled answer written as a model reply, citing each field with its rule's anchors. */
@@ -189,10 +207,16 @@ function verify(
     throw new Error(`Observation for ${item.id} has an inconsistent extraction.`);
 }
 
-export function evaluate(loaded: LoadedCorpus, rawBundle: unknown) {
+export function evaluate(
+  loaded: LoadedCorpus,
+  rawBundle: unknown,
+  options: { failures?: ReadonlyMap<string, number> } = {},
+) {
   const bundle = bundleSchema.parse(rawBundle);
-  if (bundle.corpus.hash !== loaded.hash)
-    throw new Error('The corpus or its captures changed since these observations were collected.');
+  // A relabeled corpus is fine: every observation below is verified against the exact documents and
+  // context it ran on. Changed inputs are not.
+  if (bundle.corpus.inputsHash && bundle.corpus.inputsHash !== loaded.inputsHash)
+    throw new Error('The corpus inputs or captures changed since these observations were collected.');
   const selected = selectCases(loaded, bundle.configuration.split);
   const byId = new Map(selected.map((value) => [value.item.id, value]));
   const seen = new Set<string>(),
@@ -216,6 +240,8 @@ export function evaluate(loaded: LoadedCorpus, rawBundle: unknown) {
     summarize(cases.filter((value) => value.repeat === i + 1)),
   );
   const variants = [...new Set(cases.map((value) => value.variant))].sort();
+  const failures = options.failures ?? new Map<string, number>();
+  const failed = bundle.observations.filter((o) => isHarnessFailure(o.trace));
   return {
     schemaVersion: 2,
     scorerVersion: SCORER_VERSION,
@@ -225,13 +251,23 @@ export function evaluate(loaded: LoadedCorpus, rawBundle: unknown) {
     corpus: {
       version: loaded.corpus.version,
       hash: loaded.hash,
+      inputsHash: loaded.inputsHash,
       origin: loaded.corpus.origin,
       annotationStatus: loaded.corpus.annotationStatus,
     },
+    /** The labels scored here versus the corpus hash the observations were collected under. */
+    labels: { version: loaded.corpus.version, hash: loaded.hash, collectedWith: bundle.corpus.hash },
     planned: selected.length * bundle.configuration.repeat,
     observed: cases.length,
     complete: missing.length === 0,
     missing,
+    /** Timeouts and provider errors in the observations: how many, how many may still be retried, and the
+     * earlier failed attempts already logged for this run. */
+    harness: {
+      failed: failed.length,
+      retriable: failed.filter((o) => (failures.get(slotOf(o)) ?? 0) < RETRY_CAP).length,
+      attempts: [...failures.values()].reduce((n, v) => n + v, 0),
+    },
     overall: summarize(cases),
     repeats,
     byVariant: Object.fromEntries(
@@ -289,7 +325,10 @@ export function reportMarkdown(report: Report) {
     '',
     `Corpus \`${report.corpus.version}\` (${report.corpus.origin}, ${report.corpus.annotationStatus}), hash \`${report.corpus.hash.slice(0, 12)}\`. Scorer ${report.scorerVersion}.`,
     '',
-    `Observed ${report.observed}/${report.planned} runs.${report.complete ? '' : ` Missing: ${report.missing.join(', ')}.`}`,
+    `Observed ${report.observed}/${report.planned} runs.${report.complete ? '' : ` Missing: ${report.missing.join(', ')}.`}` +
+      (report.harness.failed
+        ? ` Harness failures (timeout/provider error): ${report.harness.failed}, ${report.harness.retriable} still retriable, ${report.harness.attempts} earlier attempts logged.`
+        : ''),
     '',
     '## Overall',
     '',

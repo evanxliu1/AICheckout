@@ -1,4 +1,4 @@
-import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
+import { appendFile, mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { parseArgs } from 'node:util';
@@ -15,6 +15,7 @@ import {
   missingSlots,
   rateLimited,
   referenceProvider,
+  retryableFailures,
   reportMarkdown,
   slotOf,
   SELECTIONS,
@@ -39,6 +40,53 @@ const FIXTURE_CORPUS = 'evals/curation/fixture.v2',
 const PROVIDER_IDS: Record<string, string> = { fixture: 'fixture', codex: 'codex-cli', claude: 'claude-cli' };
 /** Exit status when a live run stopped early on a usage limit; the run directory can be resumed. */
 export const EXIT_RATE_LIMITED = 3;
+const CHECKPOINT_EVERY = 3;
+/** Options that describe the configuration; a resumed run takes its configuration from the saved bundle. */
+const CONFIGURATION_FLAGS = [
+  '--provider',
+  '--model',
+  '--effort',
+  '--prompt',
+  '--selection',
+  '--split',
+  '--repeat',
+];
+
+/** Earlier harness-failed attempts of a run, one JSON line each (statuses and timings only, no output). */
+interface FailureEntry {
+  slot: string;
+  runId: string;
+  status: string;
+  outcome?: string;
+  startedAt?: string;
+  durationMs: number;
+  loggedAt: string;
+}
+async function readFailures(dir: string): Promise<FailureEntry[]> {
+  const text = await readFile(join(dir, 'failures.jsonl'), 'utf8').catch(() => '');
+  return text
+    .split('\n')
+    .filter(Boolean)
+    .map((line) => JSON.parse(line) as FailureEntry);
+}
+/** Distinct failed attempts per slot. */
+function failureCounts(entries: FailureEntry[]) {
+  const seen = new Set<string>(),
+    counts = new Map<string, number>();
+  for (const entry of entries) {
+    if (seen.has(entry.runId)) continue;
+    seen.add(entry.runId);
+    counts.set(entry.slot, (counts.get(entry.slot) ?? 0) + 1);
+  }
+  return counts;
+}
+/** Write a file whole and rename it into place, so a crash never leaves a half-written run. */
+let tempCounter = 0;
+async function writeAtomic(dir: string, name: string, text: string) {
+  const temp = join(dir, `${name}.${process.pid}.${tempCounter++}.tmp`);
+  await writeFile(temp, text, { mode: 0o600 });
+  await rename(temp, join(dir, name));
+}
 
 /** Run `task` over `items` with at most `limit` in flight, preserving input order. */
 async function mapConcurrent<T, R>(items: T[], limit: number, task: (item: T, index: number) => Promise<R>) {
@@ -67,10 +115,20 @@ async function collect(
   configuration: Configuration,
   providerFor: (value: LoadedCase) => ExtractionProvider,
   jobs: { value: LoadedCase; repeat: number }[],
-  options: { concurrency: number; live: boolean },
+  options: {
+    concurrency: number;
+    live: boolean;
+    /** Called with everything collected so far after every few slots, so a crash loses little. */
+    onProgress?: (observations: Observation[]) => Promise<void>;
+  },
 ): Promise<{ bundle: ObservationBundle; stopped: boolean }> {
   const task = extractionTaskV2(configuration.prompt, configuration.selection);
-  let stopped = false;
+  let stopped = false,
+    completed = 0,
+    checkpoint = Promise.resolve();
+  const done: Observation[] = [];
+  // Workers finish concurrently; checkpoints are written one at a time, each with everything so far.
+  const progress = () => (checkpoint = checkpoint.then(() => options.onProgress?.([...done])));
   const observations = await mapConcurrent(jobs, options.concurrency, async ({ value, repeat }, index) => {
     if (stopped) return undefined;
     const trace = await executeTask(task, value.input, providerFor(value), {
@@ -85,18 +143,29 @@ async function collect(
       return undefined;
     }
     // Keep the trace but not the captured text: observations reference sources by hash.
-    return { caseId: value.item.id, repeat, trace } as unknown as Observation;
+    const observation = { caseId: value.item.id, repeat, trace } as unknown as Observation;
+    done.push(observation);
+    if (++completed % CHECKPOINT_EVERY === 0) await progress();
+    return observation;
   });
+  await checkpoint;
   return {
     bundle: {
-      schemaVersion: 2,
-      corpus: { version: loaded.corpus.version, hash: loaded.hash },
-      experiment: experimentName(configuration),
-      provenance: options.live ? 'live-collected' : 'scripted-diagnostic',
-      configuration,
+      ...emptyBundle(loaded, configuration, options.live),
       observations: observations.filter((o): o is Observation => o !== undefined),
     },
     stopped,
+  };
+}
+
+function emptyBundle(loaded: LoadedCorpus, configuration: Configuration, live: boolean): ObservationBundle {
+  return {
+    schemaVersion: 2,
+    corpus: { version: loaded.corpus.version, hash: loaded.hash, inputsHash: loaded.inputsHash },
+    experiment: experimentName(configuration),
+    provenance: live ? 'live-collected' : 'scripted-diagnostic',
+    configuration,
+    observations: [],
   };
 }
 
@@ -244,7 +313,8 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
     );
   const output = values.resume ? resolve(root, values.resume) : freshOutput();
   let bundle: ObservationBundle | unknown,
-    stopped = false;
+    stopped = false,
+    failures = new Map<string, number>();
   if (values.replay) {
     const saved = JSON.parse(await readFile(resolve(root, values.replay), 'utf8'));
     bundle = {
@@ -255,10 +325,45 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
     let configuration: Configuration, existing: ObservationBundle | undefined;
     if (values.resume) {
       if (values.output) throw new Error('--resume writes back to the same directory; drop --output.');
+      const given = CONFIGURATION_FLAGS.filter((flag) =>
+        args.some((a) => a === flag || a.startsWith(`${flag}=`)),
+      );
+      if (given.length)
+        throw new Error(`--resume takes the configuration from the saved run; drop ${given.join(', ')}.`);
       existing = bundleSchema.parse(JSON.parse(await readFile(join(output, 'observations.json'), 'utf8')));
-      if (existing.corpus.hash !== loaded.hash)
-        throw new Error('Cannot resume: the corpus or its captures changed since the saved run.');
+      if (
+        existing.corpus.inputsHash
+          ? existing.corpus.inputsHash !== loaded.inputsHash
+          : existing.corpus.hash !== loaded.hash
+      )
+        throw new Error('Cannot resume: the corpus inputs or captures changed since the saved run.');
       configuration = existing.configuration;
+      // Harness failures are not model results: log them and run their slots again, up to the cap.
+      const logged = await readFailures(output);
+      failures = failureCounts(logged);
+      const retry = retryableFailures(existing, failures);
+      const known = new Set(logged.map((entry) => entry.runId));
+      for (const o of retry) {
+        if (known.has(o.trace.runId)) continue;
+        const trace = o.trace as unknown as { startedAt?: string; attempts: { outcome?: string }[] };
+        const entry: FailureEntry = {
+          slot: slotOf(o),
+          runId: o.trace.runId,
+          status: o.trace.status,
+          outcome: trace.attempts.at(-1)?.outcome,
+          startedAt: trace.startedAt,
+          durationMs: o.trace.durationMs,
+          loggedAt: new Date().toISOString(),
+        };
+        await appendFile(join(output, 'failures.jsonl'), JSON.stringify(entry) + '\n', { mode: 0o600 });
+        failures.set(entry.slot, (failures.get(entry.slot) ?? 0) + 1);
+      }
+      const retrySlots = new Set(retry.map(slotOf));
+      existing = {
+        ...existing,
+        observations: existing.observations.filter((o) => !retrySlots.has(slotOf(o))),
+      };
+      if (retry.length) console.log(`Retrying ${retry.length} timed-out or provider-failed slots.`);
     } else {
       if (!(values.provider in PROVIDER_IDS))
         throw new Error(`--provider must be one of ${Object.keys(PROVIDER_IDS).join(', ')}.`);
@@ -290,25 +395,30 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
     const jobs = missingSlots(loaded, configuration, existing?.observations, values.case).slice(0, limit);
     if (existing)
       console.log(`Resuming ${output}: ${existing.observations.length} saved, ${jobs.length} to run.`);
+    if (!values.resume) {
+      // A new directory preserves older experiment evidence; files inside it are replaced atomically.
+      await mkdir(resolve(output, '..'), { recursive: true });
+      await mkdir(output, { mode: 0o700 });
+    }
+    const saved = existing;
     const collected = await collect(loaded, configuration, await providerFor(configuration), jobs, {
       concurrency,
       live,
+      onProgress: async (observations) => {
+        const partial = { ...emptyBundle(loaded, configuration, live), observations };
+        const merged = saved ? mergeBundles(saved, partial) : partial;
+        await writeAtomic(output, 'observations.json', JSON.stringify(merged, null, 2) + '\n');
+      },
     });
     stopped = collected.stopped;
     bundle = existing ? mergeBundles(existing, collected.bundle) : collected.bundle;
   }
-  const report = evaluate(loaded, bundle);
-  if (!values.resume) {
-    // A new directory and exclusive files preserve older experiment evidence.
+  const report = evaluate(loaded, bundle, { failures });
+  if (values.replay) {
     await mkdir(resolve(output, '..'), { recursive: true });
     await mkdir(output, { mode: 0o700 });
   }
-  // A resumed run replaces its files only with a superset, written whole and then renamed into place.
-  const write = async (name: string, text: string) => {
-    if (!values.resume) return writeFile(join(output, name), text, { flag: 'wx', mode: 0o600 });
-    await writeFile(join(output, `${name}.tmp`), text, { mode: 0o600 });
-    await rename(join(output, `${name}.tmp`), join(output, name));
-  };
+  const write = (name: string, text: string) => writeAtomic(output, name, text);
   if (!values.replay) await write('observations.json', JSON.stringify(bundle, null, 2) + '\n');
   await write('report.json', JSON.stringify(report, null, 2) + '\n');
   await write('report.md', reportMarkdown(report));
@@ -319,9 +429,13 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
       `claim precision ${show(o.claimPrecision)}, issue recall ${show(o.issueRecall)}, false-clean ${o.falseClean}.`,
   );
   console.log(`Saved ${report.provenance} (${report.observed}/${report.planned} runs) to ${output}`);
+  if (report.harness.failed)
+    console.log(
+      `Harness failures: ${report.harness.failed} (${report.harness.retriable} retriable with --resume).`,
+    );
   if (stopped) {
     console.log(`Usage limit reached. Resume later with: npm run eval:v2 -- --resume ${output}`);
     process.exitCode = EXIT_RATE_LIMITED;
-  } else if (!report.complete) process.exitCode = 1;
+  } else if (!report.complete || report.harness.retriable) process.exitCode = 1;
   return report;
 }
