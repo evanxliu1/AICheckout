@@ -12,14 +12,14 @@ Priorities: measurable LLM results first; product schema only where the product 
 
 | Area | State |
 | --- | --- |
-| Repo | `main` has PR #1 merged (cleanup, Prettier, CI, docs, Render blueprint, Codex provider). Working branch `phase1-hosted` has hosted-build docs plus the uncommitted/just-committed Phase 2a start (see below). No PR opened for it yet. |
+| Repo | `main` has PR #1 merged (cleanup, Prettier, CI, docs, Render blueprint, Codex provider). Phase 1 hosted-build docs and the Phase 2a start are merged via PR #2 (branch `phase1-hosted`). |
 | CI | Both GitHub Actions workflows green on `main`. |
 | Hosted | Render web service `ai-checkout-api` at https://ai-checkout-api.onrender.com (free tier, sleeps; first request ~50 s). `/health` 200, `/v1/catalog` 200 `{"release":null}`, `/v1/review/` 401, `/review/` serves the review app. |
 | Supabase | Project `rnzzyeuzydyrdjuihomb` (Pro plan). All 6 migrations applied. New-format publishable key created (`sb_publishable_eMh8…`). Site URL = `https://ai-checkout-api.onrender.com/review/`. Public sign-ups **disabled**. Only user: `evanliu5566@gmail.com`, provisioned in `catalog_private.reviewers`. Legacy `public.credit_cards` rows preserved. |
 | LLM access | Codex CLI logged in with ChatGPT. `npm run eval:curation -- --mode codex --model gpt-5.5` runs v1 evals on the subscription (`apps/api/src/curation/codex.ts`). Local only; never on Render. |
 | Research | `docs/research/cashback-card-terms-2026.md`: terms for the 7 cards, Best Buy/Newegg categorization, 12-category taxonomy, 2025–26 changes, open uncertainties. Quotes labeled OV (verbatim official) vs OF (official via summarizing fetch, must be re-checked) vs PA/SEC. |
 
-### Phase 2a work already done (on `phase1-hosted`)
+### Phase 2a work already done (merged to `main`)
 
 - `apps/api/src/curation/runner.ts`: the bounded loop is now `executeTask(task, input, provider, options)` over an `ExtractionTask` interface; `runExtraction` is the v1 task. All 207 API tests and the v1 eval check pass unchanged.
 - `apps/api/src/curation/v2/schema.ts`: extraction contract v2 (`issuer-extraction.2`): 13 categories (`CATEGORIES`), per-rule `rateBps` (total, not increment), `paidOnPaymentBps` (Citi "1% as you pay"), `cap` {kind, amountCents, period, rateAfterCapBps}, `activation`, `usMerchantsOnly`, `limitedTime`, `definition` includes/excludes, card-level `rewardCurrency`, `pointValueHundredthsOfCent`, `exclusions`, `issues`. Every value is `{value|null, evidence: string[]}`. Input: `{cardId, cardName, documents[{id,title,url,capturedOn,body,contentHash}]}`.
@@ -120,6 +120,5 @@ Chrome Web Store (Evan pays the $5 fee and submits) using the privacy/support pa
 
 ## Housekeeping
 
-- Open a PR for `phase1-hosted` (Phase 1 docs + Phase 2a start) or fold it into the 2a PR.
 - Delete `extension/CLAUDE.md` (gitignored, local only); it describes code that no longer exists.
-- `simulation/credentials.json` (gitignored, local) holds old secrets: Evan should delete it and rotate.
+- The retired simulation's `credentials.json` and `.env` were moved to `~/.Trash` on 2026-09-28; Evan should revoke the keys they held.
