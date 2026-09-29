@@ -64,6 +64,6 @@ US/USD, cards the user already owns, supported merchants only (Best Buy US, Newe
 
 1. Hand-labeled evaluation set from real issuer terms; compare models and prompt versions with measured deltas.
 2. Grow the catalog to 10–15 popular cards through the curation pipeline.
-3. Hosted API and review app (Render + Supabase); extension reads the hosted catalog.
+3. ~~Hosted API and review app (Render + Supabase)~~ (done); publish the first reviewed release so the extension reads the hosted catalog.
 4. Scheduled terms-change detection that re-runs extraction and opens a review item.
 5. Chrome Web Store release.
