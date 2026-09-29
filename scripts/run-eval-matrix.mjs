@@ -67,8 +67,22 @@ function runEval(args) {
 const sleep = (minutes) => new Promise((done) => setTimeout(done, minutes * 60_000));
 
 let waits = 0;
+const rejectedModels = new Set();
 for (const { configuration, action } of plan) {
   if (action === 'skip') continue;
+  const modelKey = `${configuration.provider}:${configuration.model}`;
+  if (rejectedModels.has(modelKey)) {
+    // Every run of an earlier configuration failed at the provider (for example an unknown model name).
+    status[configuration.slug] = {
+      outcome: 'rejected',
+      observed: 0,
+      planned: null,
+      updatedAt: new Date().toISOString(),
+    };
+    await saveStatus();
+    console.log(`\n=== skip ${configuration.slug}: ${modelKey} was rejected by the provider.`);
+    continue;
+  }
   const dir = join(outputDir, configuration.slug);
   let resume = action === 'resume';
   for (;;) {
@@ -84,8 +98,10 @@ for (const { configuration, action } of plan) {
     };
     await saveStatus();
     if (outcome !== 'rate-limited') {
-      if (outcome === 'rejected')
+      if (outcome === 'rejected') {
+        rejectedModels.add(modelKey);
         console.log(`${configuration.slug}: every run failed; recorded as rejected.`);
+      }
       break;
     }
     if (waitMinutes === 0 || waits >= maxWaits) {
