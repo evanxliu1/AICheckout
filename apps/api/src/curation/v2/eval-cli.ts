@@ -331,11 +331,9 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
       if (given.length)
         throw new Error(`--resume takes the configuration from the saved run; drop ${given.join(', ')}.`);
       existing = bundleSchema.parse(JSON.parse(await readFile(join(output, 'observations.json'), 'utf8')));
-      if (
-        existing.corpus.inputsHash
-          ? existing.corpus.inputsHash !== loaded.inputsHash
-          : existing.corpus.hash !== loaded.hash
-      )
+      // Bundles saved before inputs hashes existed are accepted: every observation is verified below against
+      // the documents and context it ran on, so a relabeled corpus still resumes.
+      if (existing.corpus.inputsHash && existing.corpus.inputsHash !== loaded.inputsHash)
         throw new Error('Cannot resume: the corpus inputs or captures changed since the saved run.');
       configuration = existing.configuration;
       // Harness failures are not model results: log them and run their slots again, up to the cap.

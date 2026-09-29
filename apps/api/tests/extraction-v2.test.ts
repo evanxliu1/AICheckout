@@ -484,6 +484,7 @@ describe('resume', () => {
   it('resumes a partial run directory into a complete superset', async () => {
     const dir = await mkdtemp(join(tmpdir(), 'resume-v2-'));
     const root = resolve(import.meta.dirname, '../../..');
+    const loaded = await loadCorpusV2(FIXTURE);
     try {
       const out = join(dir, 'run');
       const common = ['--corpus', FIXTURE, '--prompt', 'guided.1', '--selection', 'full', '--repeat', '2'];
@@ -503,6 +504,18 @@ describe('resume', () => {
       const again = await runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root);
       expect(again!.observed).toBe(resumed!.observed);
       expect(again!.harness).toEqual({ failed: 0, retriable: 0, attempts: 0 });
+
+      // A bundle saved before inputs hashes existed resumes under relabeled (rehashed) labels.
+      const legacy = structuredClone(merged);
+      legacy.corpus = { version: legacy.corpus.version, hash: '9'.repeat(64) };
+      legacy.observations.pop();
+      await writeFile(join(out, 'observations.json'), JSON.stringify(legacy));
+      const relabeled = await runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root);
+      // The merged bundle is re-bound to the current corpus (with its inputs hash).
+      expect(relabeled).toMatchObject({ complete: true, labels: { collectedWith: loaded.hash } });
+      expect(JSON.parse(await readFile(join(out, 'observations.json'), 'utf8')).corpus.inputsHash).toBe(
+        loaded.inputsHash,
+      );
 
       // A timed-out slot is not a model result: resuming logs it and runs it again.
       const fail = (slot: { trace: { runId: string } }, status: string) => ({
