@@ -23,7 +23,7 @@ The bundled `2026-09-25.pilot.2` snapshot covers both merchants. Its issuer term
 
 ## Optional catalog updates
 
-Set `VITE_CATALOG_API_URL=https://your-api.example/v1/catalog` in `extension/.env.local` before building. Use the deployed [Node catalog API](../apps/api/README.md), with valid HTTPS. The build adds only that API origin to host permissions. No deployed endpoint is supplied yet; the default build remains an offline pilot.
+Set `VITE_CATALOG_API_URL=https://your-api.example/v1/catalog` in `extension/.env.local` before building. Use the deployed [Node catalog API](../apps/api/README.md), with valid HTTPS. The build adds only that API origin to host permissions. The hosted API is at `https://ai-checkout-api.onrender.com`; `npm run build:hosted --workspace=ai-checkout-extension` builds against it. The default build stays offline.
 
 **Check for updated terms** downloads published rule data only, with no wallet, purchase, page URL, cookies, or authentication token. It does not run automatically. The worker validates the bounded response, release sequence, version, dates, and source/rule references before one atomic storage update. It rejects rollbacks, altered releases, malformed data, and expired terms. A failed request preserves the current snapshot. Already cached valid terms work offline; an expired remote release never silently falls back to the bundle.
 

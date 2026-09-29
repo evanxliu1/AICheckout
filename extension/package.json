@@ -14,7 +14,8 @@
     "test:package:browser": "npm run package && RELEASE_ZIP_E2E=1 playwright test e2e/package.spec.ts",
     "test:watch": "vitest",
     "test:browser": "playwright test",
-    "package": "node scripts/package.mjs"
+    "package": "node scripts/package.mjs",
+    "build:hosted": "VITE_CATALOG_API_URL=https://ai-checkout-api.onrender.com/v1/catalog npm run build"
   },
   "dependencies": {
     "@ai-checkout/catalog-client": "2.0.0",

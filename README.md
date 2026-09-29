@@ -64,9 +64,9 @@ Load `extension/dist` from `chrome://extensions` with Developer mode on. For the
 
 ## Status
 
-Working: the extension (2 cards: Quicksilver and Blue Cash Everyday; 2 merchants: Best Buy US and Newegg US), the full curation → review → publication path against a local stack, and CI.
+Working: the extension (2 cards: Quicksilver and Blue Cash Everyday; 2 merchants: Best Buy US and Newegg US), CI, and the hosted catalog API and review app at [ai-checkout-api.onrender.com](https://ai-checkout-api.onrender.com/health) (Render + Supabase).
 
-Next: a hand-labeled evaluation set from real issuer terms, model/prompt comparisons, a larger catalog, hosted deployment, and a Chrome Web Store release. See the [roadmap](docs/design.md#roadmap).
+Next: a hand-labeled evaluation set from real issuer terms, model/prompt comparisons, a larger catalog, and a Chrome Web Store release. See the [roadmap](docs/design.md#roadmap).
 
 ## License
 
