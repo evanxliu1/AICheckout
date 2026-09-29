@@ -1,7 +1,8 @@
-import { spawn } from 'node:child_process';
+import { execFile, spawn } from 'node:child_process';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { promisify } from 'node:util';
 import { z } from 'zod';
 import { ProviderFailure, type ExtractionProvider } from './runner.ts';
 
@@ -96,7 +97,10 @@ export function parseClaudeResult(stdout: string, requestedModel?: string) {
   const prompt = (t: (typeof turns)[number]) =>
     (t.input_tokens ?? 0) + (t.cache_creation_input_tokens ?? 0) + (t.cache_read_input_tokens ?? 0);
   const keys = Object.keys(parsed.modelUsage ?? {});
-  const canonical = keys.find((k) => k === requestedModel) ?? (keys.length ? keys.join('+') : undefined);
+  // The trace schema allows 120 characters for a model name.
+  const canonical = (
+    keys.find((k) => k === requestedModel) ?? (keys.length ? keys.join('+') : undefined)
+  )?.slice(0, 120);
   return {
     finishReason: 'stop' as const,
     // Without structured output the reply is whatever text the model gave; the runner records it as
@@ -115,6 +119,16 @@ export function parseClaudeResult(stdout: string, requestedModel?: string) {
       ? { providerResponse: { id: parsed.session_id, model: canonical } }
       : {}),
   };
+}
+
+/** The installed CLI's version string, or "unknown" when it cannot be read. */
+export async function cliVersion(bin: string): Promise<string> {
+  try {
+    const { stdout } = await promisify(execFile)(bin, ['--version'], { timeout: 15_000 });
+    return stdout.trim().split('\n')[0].slice(0, 80) || 'unknown';
+  } catch {
+    return 'unknown';
+  }
 }
 
 export function createClaudeProvider(options: ClaudeOptions): ExtractionProvider {

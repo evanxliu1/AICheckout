@@ -11,7 +11,13 @@ export type Split = 'dev' | 'heldout' | 'all';
 
 const key = z.string().regex(/^[a-zA-Z0-9._/:-]{1,160}$/);
 export const configurationSchema = z.strictObject({
-  provider: z.strictObject({ id: key, model: key, mode: z.enum(['fixture', 'subscription', 'metered']) }),
+  provider: z.strictObject({
+    id: key,
+    model: key,
+    mode: z.enum(['fixture', 'subscription', 'metered']),
+    /** The vendor CLI's reported version (`codex --version`, `claude --version`), from when it was recorded. */
+    cliVersion: z.string().min(1).max(80).optional(),
+  }),
   effort: key.nullable(),
   prompt: z.enum(Object.keys(PROMPTS) as [PromptVersion, ...PromptVersion[]]),
   selection: z.enum(SELECTIONS),
@@ -38,7 +44,13 @@ const hex64 = z.string().regex(/^[a-f0-9]{64}$/);
 export const bundleSchema = z.strictObject({
   schemaVersion: z.literal(2),
   // inputsHash is absent on bundles saved before relabeling support.
-  corpus: z.strictObject({ version: key, hash: hex64, inputsHash: hex64.optional() }),
+  corpus: z.strictObject({
+    version: key,
+    hash: hex64,
+    inputsHash: hex64.optional(),
+    /** Every corpus hash (labels) the observations were collected under, oldest first. */
+    collectedWith: z.array(hex64).max(50).optional(),
+  }),
   experiment: key,
   provenance: z.enum(['scripted-diagnostic', 'live-collected', 'imported-unverified']),
   configuration: configurationSchema,
@@ -91,8 +103,18 @@ export function missingSlots(
  * and experiment, every old observation kept, and no slot or run ID twice.
  */
 export function mergeBundles(existing: ObservationBundle, added: ObservationBundle): ObservationBundle {
+  const bare = (c: Configuration) => {
+    const { cliVersion: _version, ...provider } = c.provider;
+    void _version;
+    return { ...c, provider };
+  };
   const same = (key: 'configuration' | 'experiment') =>
-    canonicalJson(existing[key]) === canonicalJson(added[key]);
+    key === 'configuration'
+      ? canonicalJson(bare(existing.configuration)) === canonicalJson(bare(added.configuration))
+      : existing[key] === added[key];
+  const versions = [existing.configuration.provider.cliVersion, added.configuration.provider.cliVersion];
+  if (versions[0] && versions[1] && versions[0] !== versions[1])
+    throw new Error(`Cannot resume: the saved run used CLI ${versions[0]}, this one ${versions[1]}.`);
   // Labels may change between collections (the observations are re-scored); the inputs may not.
   const sameInputs =
     existing.corpus.inputsHash && added.corpus.inputsHash
@@ -111,7 +133,24 @@ export function mergeBundles(existing: ObservationBundle, added: ObservationBund
     slots.add(slotOf(o));
     runs.add(o.trace.runId);
   }
-  return { ...existing, corpus: added.corpus, observations };
+  const collectedWith = [
+    ...new Set([
+      ...(existing.corpus.collectedWith ?? [existing.corpus.hash]),
+      ...(added.corpus.collectedWith ?? [added.corpus.hash]),
+    ]),
+  ];
+  return {
+    ...existing,
+    configuration: {
+      ...existing.configuration,
+      provider: {
+        ...existing.configuration.provider,
+        ...((versions[0] ?? versions[1]) ? { cliVersion: versions[0] ?? versions[1] } : {}),
+      },
+    },
+    corpus: { ...added.corpus, collectedWith },
+    observations,
+  };
 }
 
 /** The labeled answer written as a model reply, citing each field with its rule's anchors. */
@@ -200,8 +239,13 @@ function verify(
   }));
   if (canonicalJson(trace.documents) !== canonicalJson(expected))
     throw new Error(`Observation for ${item.id} was collected on different source text.`);
+  // Only a run rejected before its context was built may lack one.
+  if (!trace.context) {
+    if (['invalid_input', 'input_limit'].includes(trace.status)) return;
+    throw new Error(`Observation for ${item.id} has no context.`);
+  }
   const context = buildContextV2(input, bundle.configuration.prompt, bundle.configuration.selection);
-  if (trace.context && trace.context.hash !== context.hash)
+  if (trace.context.hash !== context.hash)
     throw new Error(`Observation for ${item.id} used a different prompt or context.`);
   if (['evidence_valid', 'needs_review'].includes(trace.status) !== Boolean(trace.extraction))
     throw new Error(`Observation for ${item.id} has an inconsistent extraction.`);
@@ -256,7 +300,11 @@ export function evaluate(
       annotationStatus: loaded.corpus.annotationStatus,
     },
     /** The labels scored here versus the corpus hash the observations were collected under. */
-    labels: { version: loaded.corpus.version, hash: loaded.hash, collectedWith: bundle.corpus.hash },
+    labels: {
+      version: loaded.corpus.version,
+      hash: loaded.hash,
+      collectedWith: bundle.corpus.collectedWith ?? [bundle.corpus.hash],
+    },
     planned: selected.length * bundle.configuration.repeat,
     observed: cases.length,
     complete: missing.length === 0,

@@ -29,7 +29,7 @@ const matrix = () =>
 test('slugs are deterministic and filesystem-safe', () => {
   const m = matrix();
   assert.equal(m.configurations[0].slug, 'codex.gpt-5.5.low.guided.1.full.dev');
-  assert.equal(m.configurations[1].slug, 'claude.claude-sonnet-5.default.baseline.1.keyword-window.1.dev');
+  assert.equal(m.configurations[1].slug, 'claude.claude-sonnet-5.low.baseline.1.keyword-window.1.dev');
   assert.equal(
     slugFor({ provider: 'x', model: 'A/B C', prompt: 'p', selection: 's' }, 'heldout'),
     'x.a-b-c.default.p.s.heldout',
@@ -77,7 +77,7 @@ test('evalArgs builds a fresh run or a resume, guarding held-out', () => {
     '--corpus',
     'c',
   ]);
-  assert.ok(!evalArgs(m.configurations[1], 'dev', 'out/b').includes('--effort'));
+  assert.ok(evalArgs(m.configurations[1], 'dev', 'out/b').includes('--effort'));
 });
 
 test('planRuns skips complete runs, resumes partial or retriable ones, flags mismatches, filters', () => {
@@ -139,7 +139,7 @@ test('configurationMismatch compares every configuration field', () => {
   const m = matrix();
   const cfg = {
     provider: { id: 'claude-cli', model: 'claude-sonnet-5' },
-    effort: null,
+    effort: 'low',
     prompt: 'baseline.1',
     selection: 'keyword-window.1',
     split: 'dev',

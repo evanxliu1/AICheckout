@@ -42,7 +42,7 @@ const results = {
   scorerVersion: summary.scorerVersion,
   retryCap: summary.retryCap,
   corpus: summary.corpus,
-  labelsCollectedWith: [...new Set(summary.rows.map((r) => r.labelsCollectedWith))],
+  labelsCollectedWith: [...new Set(summary.rows.flatMap((r) => r.labelsCollectedWith))],
   incomplete: summary.rows.filter((r) => !r.complete).map((r) => r.id),
   rejected: summary.rows.filter((r) => r.rejected).map((r) => r.id),
   runs: summary.rows,

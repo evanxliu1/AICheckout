@@ -12,6 +12,10 @@ let dir: string, bin: string;
 const FAKE = `#!/usr/bin/env node
 const fs = require('node:fs');
 const args = process.argv.slice(2);
+if (args[0] === '--version') {
+  console.log('codex-cli 9.9.9');
+  process.exit(0);
+}
 if (args[0] === 'features') {
   console.log('shell_tool   stable  true\\napps   stable  true\\nweb_search_cached  deprecated  false');
   process.exit(0);

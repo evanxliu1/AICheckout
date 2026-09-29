@@ -1,9 +1,9 @@
-import { appendFile, mkdir, readFile, rename, writeFile } from 'node:fs/promises';
+import { appendFile, mkdir, readdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { parseArgs } from 'node:util';
-import { createClaudeProvider, type ClaudeOptions } from '../claude.ts';
-import { createCodexProvider, type CodexOptions } from '../codex.ts';
+import { cliVersion as claudeVersion, createClaudeProvider, type ClaudeOptions } from '../claude.ts';
+import { cliVersion as codexVersion, createCodexProvider, type CodexOptions } from '../codex.ts';
 import { executeTask, type ExtractionProvider } from '../runner.ts';
 import { PROMPTS, type PromptVersion } from './context.ts';
 import { loadCorpusV2, type LoadedCase, type LoadedCorpus } from './corpus.ts';
@@ -241,25 +241,35 @@ async function check(loaded: LoadedCorpus) {
 }
 
 /** The provider a saved or requested configuration names. Live providers go through the Codex CLI only. */
-async function providerFor(configuration: Configuration): Promise<(value: LoadedCase) => ExtractionProvider> {
+async function providerFor(
+  configuration: Configuration,
+  bins: { codex?: string; claude?: string } = {},
+): Promise<{ providerFor: (value: LoadedCase) => ExtractionProvider; cliVersion?: string }> {
   const { provider, effort } = configuration;
   if (provider.id === 'fixture')
-    return provider.model === 'abstain.2'
-      ? () => abstainingProviderV2()
-      : (value: LoadedCase) => referenceProvider(value.item);
+    return {
+      providerFor:
+        provider.model === 'abstain.2'
+          ? () => abstainingProviderV2()
+          : (value: LoadedCase) => referenceProvider(value.item),
+    };
   if (provider.id === 'claude-cli') {
+    const bin = bins.claude ?? 'claude';
     const claude = createClaudeProvider({
       model: provider.model,
       effort: (effort ?? 'low') as ClaudeOptions['effort'],
+      bin,
     });
-    return () => claude;
+    return { providerFor: () => claude, cliVersion: await claudeVersion(bin) };
   }
   if (provider.id !== 'codex-cli') throw new Error(`Provider ${provider.id} is not available.`);
+  const bin = bins.codex ?? 'codex';
   const codex = await createCodexProvider({
     model: provider.model,
     reasoningEffort: (effort ?? 'low') as CodexOptions['reasoningEffort'],
+    bin,
   });
-  return () => codex;
+  return { providerFor: () => codex, cliVersion: await codexVersion(bin) };
 }
 
 const positiveInt = (name: string, raw: string | undefined, fallback: number, max = Infinity) => {
@@ -339,7 +349,20 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
       // Harness failures are not model results: log them and run their slots again, up to the cap.
       const logged = await readFailures(output);
       failures = failureCounts(logged);
-      const retry = retryableFailures(existing, failures);
+      // Only slots this invocation will actually run (--case, --limit) are taken out of the saved run.
+      const retryable = retryableFailures(existing, failures);
+      const retryableSlots = new Set(retryable.map(slotOf));
+      const planned = new Set(
+        missingSlots(
+          loaded,
+          configuration,
+          existing.observations.filter((o) => !retryableSlots.has(slotOf(o))),
+          values.case,
+        )
+          .slice(0, limit)
+          .map((s) => slotOf({ caseId: s.value.item.id, repeat: s.repeat })),
+      );
+      const retry = retryable.filter((o) => planned.has(slotOf(o)));
       const known = new Set(logged.map((entry) => entry.runId));
       for (const o of retry) {
         if (known.has(o.trace.runId)) continue;
@@ -393,13 +416,35 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
     const jobs = missingSlots(loaded, configuration, existing?.observations, values.case).slice(0, limit);
     if (existing)
       console.log(`Resuming ${output}: ${existing.observations.length} saved, ${jobs.length} to run.`);
+    const provider = await providerFor(configuration);
+    if (provider.cliVersion && !configuration.provider.cliVersion)
+      configuration = {
+        ...configuration,
+        provider: { ...configuration.provider, cliVersion: provider.cliVersion },
+      };
+    else if (provider.cliVersion && configuration.provider.cliVersion !== provider.cliVersion)
+      throw new Error(
+        `Cannot resume: the saved run used CLI ${configuration.provider.cliVersion}, this one ${provider.cliVersion}. Move it aside or use that version.`,
+      );
+    if (existing) existing = { ...existing, configuration };
     if (!values.resume) {
-      // A new directory preserves older experiment evidence; files inside it are replaced atomically.
+      // A new directory preserves older experiment evidence; files inside it are replaced atomically. An
+      // empty bundle is written at once so a crash before the first checkpoint leaves a resumable run, and
+      // a directory left empty by such a crash is reused.
       await mkdir(resolve(output, '..'), { recursive: true });
-      await mkdir(output, { mode: 0o700 });
+      await mkdir(output, { mode: 0o700 }).catch(async (error: NodeJS.ErrnoException) => {
+        if (error.code !== 'EEXIST') throw error;
+        const files = await readdir(output);
+        if (files.length) throw error;
+      });
+      await writeAtomic(
+        output,
+        'observations.json',
+        JSON.stringify(emptyBundle(loaded, configuration, live), null, 2) + '\n',
+      );
     }
     const saved = existing;
-    const collected = await collect(loaded, configuration, await providerFor(configuration), jobs, {
+    const collected = await collect(loaded, configuration, provider.providerFor, jobs, {
       concurrency,
       live,
       onProgress: async (observations) => {

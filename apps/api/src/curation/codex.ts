@@ -74,6 +74,16 @@ async function supportedFeatures(bin: string): Promise<Set<string>> {
   return new Set(stdout.split('\n').map((line) => line.trim().split(/\s+/)[0]));
 }
 
+/** The installed CLI's version string, or "unknown" when it cannot be read. */
+export async function cliVersion(bin: string): Promise<string> {
+  try {
+    const { stdout } = await promisify(execFile)(bin, ['--version'], { timeout: 15_000 });
+    return stdout.trim().split('\n')[0].slice(0, 80) || 'unknown';
+  } catch {
+    return 'unknown';
+  }
+}
+
 function failureFor(message: string): ProviderFailure {
   if (/usage limit|rate limit|429|too many requests/i.test(message)) return new ProviderFailure('rate-limit');
   if (/not logged in|unauthorized|401|403|login/i.test(message)) return new ProviderFailure('permanent');

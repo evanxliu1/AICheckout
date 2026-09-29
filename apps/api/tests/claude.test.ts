@@ -12,6 +12,10 @@ let dir: string, bin: string;
 const FAKE = `#!/usr/bin/env node
 const fs = require('node:fs');
 const args = process.argv.slice(2);
+if (args[0] === '--version') {
+  console.log('9.9.9 (Claude Code fake)');
+  process.exit(0);
+}
 let stdin = '';
 process.stdin.on('data', (c) => (stdin += c));
 process.stdin.on('end', () => {

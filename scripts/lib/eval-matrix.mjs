@@ -35,7 +35,8 @@ export function parseMatrix(raw) {
     const configuration = {
       provider: row.provider,
       model: row.model,
-      effort: row.effort ?? null,
+      // Live providers take an effort; eval:v2 defaults it to low, so the row records the same.
+      effort: row.provider === 'fixture' ? null : (row.effort ?? 'low'),
       prompt: row.prompt,
       selection: row.selection,
       repeat,
