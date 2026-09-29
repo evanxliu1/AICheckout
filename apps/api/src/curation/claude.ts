@@ -23,6 +23,9 @@ const resultSchema = z.looseObject({
   structured_output: z.unknown().optional(),
   permission_denials: z.array(z.unknown()).optional(),
   api_error_status: z.number().nullable().optional(),
+  session_id: z.string().optional(),
+  /** Keyed by the canonical model name the CLI resolved (an alias such as `opus` resolves here). */
+  modelUsage: z.record(z.string(), z.unknown()).optional(),
   usage: z
     .looseObject({
       input_tokens: z.number().int().min(0),
@@ -76,6 +79,7 @@ export function parseClaudeResult(stdout: string) {
   // Count each prompt token once (fresh input plus cache writes, not cache reads) and charge output for the
   // message that carried the structured output, so the harness's budgets apply to the prompt and the
   // answer rather than to the CLI's turn count.
+  const canonical = Object.keys(parsed.modelUsage ?? {});
   return {
     finishReason: 'stop' as const,
     text: JSON.stringify(parsed.structured_output),
@@ -83,6 +87,9 @@ export function parseClaudeResult(stdout: string) {
       inputTokens: u.input_tokens + (u.cache_creation_input_tokens ?? 0),
       outputTokens: u.iterations?.at(-1)?.output_tokens ?? u.output_tokens,
     },
+    ...(parsed.session_id && canonical.length === 1
+      ? { providerResponse: { id: parsed.session_id, model: canonical[0] } }
+      : {}),
   };
 }
 

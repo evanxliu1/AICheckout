@@ -36,7 +36,8 @@ process.stdin.on('end', () => {
   }
   console.log(JSON.stringify({ type: 'result', subtype: 'success', is_error: false, result: 'done', usage,
     stop_reason: 'tool_use', num_turns: 2, structured_output: JSON.parse(process.env.FAKE_CLAUDE_TEXT),
-    permission_denials: [], api_error_status: null, total_cost_usd: 0.01 }));
+    permission_denials: [], api_error_status: null, total_cost_usd: 0.01, session_id: 'sess-1',
+    modelUsage: { 'claude-haiku-4-5': {} } }));
 });
 `;
 
@@ -82,6 +83,8 @@ it('runs claude -p as a headless structured extraction and records subscription 
   // Fresh and cache-creating input tokens count once; the CLI's cache reads on later turns do not. Output
   // is the final message's, not the sum over the CLI's turns.
   expect(trace.attempts[0].usage).toEqual({ inputTokens: 3500, outputTokens: 1200 });
+  // The canonical model the CLI resolved is kept beside the requested one.
+  expect(trace.attempts[0].providerResponse).toEqual({ id: 'sess-1', model: 'claude-haiku-4-5' });
   expect(trace.extraction).toEqual(f.output);
 
   const arg = (name: string) => seen.args[seen.args.indexOf(name) + 1];
