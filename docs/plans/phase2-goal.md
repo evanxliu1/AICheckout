@@ -121,6 +121,5 @@ Chrome Web Store (Evan pays the $5 fee and submits) using the privacy/support pa
 ## Housekeeping
 
 - Open a PR for `phase1-hosted` (Phase 1 docs + Phase 2a start) or fold it into the 2a PR.
-- `extension/CLAUDE.md` (gitignored) describes deleted code: rewrite or delete.
+- Delete `extension/CLAUDE.md` (gitignored, local only); it describes code that no longer exists.
 - `simulation/credentials.json` (gitignored, local) holds old secrets: Evan should delete it and rotate.
-- Supabase org egress was at 103% of free quota (mostly the `stock` project) before the Pro upgrade.
