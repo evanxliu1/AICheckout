@@ -66,8 +66,9 @@ function chart(rows, title) {
     barH = 9,
     rowH = 36,
     top = 50;
-  const height = top + rows.length * rowH + 30;
-  const x = (v) => left + (v ?? 0) * (width - left - 20);
+  const height = top + rows.length * rowH + 44;
+  // Right padding leaves room for the value label after a 100% bar.
+  const x = (v) => left + (v ?? 0) * (width - left - 40);
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
   const parts = [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" font-family="system-ui, sans-serif" font-size="12">`,
@@ -81,8 +82,11 @@ function chart(rows, title) {
   for (const tick of [0, 0.25, 0.5, 0.75, 1])
     parts.push(
       `<line x1="${x(tick)}" y1="${top}" x2="${x(tick)}" y2="${height - 24}" stroke="#e5e7eb"/>`,
-      `<text x="${x(tick)}" y="${height - 8}" text-anchor="middle" fill="#666">${tick * 100}%</text>`,
+      `<text x="${x(tick)}" y="${height - 22}" text-anchor="middle" fill="#666">${tick * 100}%</text>`,
     );
+  parts.push(
+    `<text x="${(left + x(1)) / 2}" y="${height - 6}" text-anchor="middle" fill="#666">share of labeled fields, claims, or issues (higher is better)</text>`,
+  );
   rows.forEach((r, i) => {
     const y = top + i * rowH;
     parts.push(`<text x="${left - 8}" y="${y + 20}" text-anchor="end" fill="#111">${esc(label(r))}</text>`);
@@ -98,13 +102,26 @@ function chart(rows, title) {
   parts.push('</svg>');
   return parts.join('\n') + '\n';
 }
-const dev = runs
-  .filter((r) => r.split === 'dev' && r.complete && !r.rejected)
-  .sort(
-    (a, b) => (b.overall.endToEndFieldAccuracy?.rate ?? 0) - (a.overall.endToEndFieldAccuracy?.rate ?? 0),
+const byAccuracy = (a, b) =>
+  (b.overall.endToEndFieldAccuracy?.rate ?? 0) - (a.overall.endToEndFieldAccuracy?.rate ?? 0);
+const splitRows = (split) =>
+  runs.filter((r) => r.split === split && r.complete && !r.rejected).sort(byAccuracy);
+/** "20 cases; 2 repeats, claude-opus-5-5 1" from the rows themselves. */
+function describe(rows) {
+  const cases = [...new Set(rows.map((r) => r.planned / r.repeat))].join('/');
+  const repeats = [...new Set(rows.map((r) => r.repeat))].sort((a, b) => b - a);
+  const common = repeats[0];
+  const exceptions = [
+    ...new Set(rows.filter((r) => r.repeat !== common).map((r) => `${r.model} ${r.repeat}`)),
+  ];
+  return `${cases} cases; ${common} repeat${common === 1 ? '' : 's'}${exceptions.length ? `, ${exceptions.join(', ')}` : ''}`;
+}
+const dev = splitRows('dev');
+await writeFile(join(out, 'results.svg'), chart(dev, `Extraction v2, dev split (${describe(dev)})`));
+const heldout = splitRows('heldout');
+if (heldout.length)
+  await writeFile(
+    join(out, 'results-heldout.svg'),
+    chart(heldout, `Extraction v2, held-out split (${describe(heldout)})`),
   );
-await writeFile(
-  join(out, 'results.svg'),
-  chart(dev, `Extraction v2, dev split (${dev[0]?.planned ?? 0} runs per configuration)`),
-);
 console.log(`Summarized ${runs.length} runs (${dev.length} complete dev configurations) into ${out}`);
