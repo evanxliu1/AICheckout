@@ -1,39 +1,42 @@
-# Node modules
+# Dependencies
 node_modules/
-simulation/node_modules/
 
-# Environment variables and secrets
+# Environment and secrets
 .env
-simulation/.env
+**/.env.*
+!**/.env.example
 
-# OS generated files
+# OS / editor
 .DS_Store
 Thumbs.db
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Editor directories and files
 .vscode/
 .idea/
 *.swp
 
-# Build output (if any)
+# Build output and logs
 dist/
 build/
-
-# Ignore coverage reports
 coverage/
-
-# Ignore by extension
 *.log
 
-# Credentials
-simulation/credentials.json
-
-# AI assistant documentation (not for public repository)
+# Local assistant notes
 **/CLAUDE.md
 **/DOCUMENTATION_GUIDE.md
-**/docs/
+
+# Intermediate release-media renders
+docs/release/assets/video-captions/
+docs/release/assets/full-stack-captions/
+
+# Local verification and packaged artifacts
+extension/artifacts/
+extension/test-results/
+extension/playwright-report/
+apps/review/test-results/
+apps/review/playwright-report/
+extension/dist-catalog-test/
+
+# Private curation observations and experiment reports
+/evals/curation/runs/
+
+# Retired prototype (local copy only; holds old secrets)
+simulation/

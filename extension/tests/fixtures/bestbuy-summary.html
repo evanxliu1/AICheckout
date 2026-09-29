@@ -1,0 +1,18 @@
+<!-- Synthetic amounts/rows following the observed Best Buy summary-table contract.
+This fixture is not evidence of a populated live checkout. -->
+<main>
+  <h1>Your Cart</h1>
+  <div>Unrelated product price: $99,999.99. Monthly payments: $25.00.</div>
+  <div data-testid="order-summary__container">
+    <h2 id="cart-order-summary">Order Summary</h2>
+    <table aria-label="Order Summary" data-testid="order-summary__price-summary-table">
+      <tbody>
+        <tr><th scope="row">Subtotal</th><td>$1,299.99</td></tr>
+        <tr><th scope="row">Shipping</th><td>FREE</td></tr>
+        <tr><th scope="row">Estimated Tax</th><td>$104.00</td></tr>
+        <tr><th scope="row"><span>Total</span></th><td><span>$1,403</span><span>.99</span><span hidden>$999.99</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <input value="A private shipping address must never be returned">
+</main>

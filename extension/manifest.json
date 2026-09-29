@@ -2,9 +2,10 @@
   "manifest_version": 3,
   "name": "AI Checkout",
   "version": "2.0.0",
-  "description": "AI-powered recommendations to maximize your credit card rewards",
-  "permissions": ["activeTab", "storage", "scripting"],
-  "host_permissions": ["<all_urls>"],
+  "description": "Compare estimated rewards on cards you own, with clear rates and conditions.",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "minimum_chrome_version": "120",
+  "host_permissions": [],
   "background": {
     "service_worker": "src/background/index.ts",
     "type": "module"
@@ -21,17 +22,5 @@
     "16": "public/icons/icon16.png",
     "48": "public/icons/icon48.png",
     "128": "public/icons/icon128.png"
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["src/content/index.ts"]
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": ["assets/*"],
-      "matches": ["<all_urls>"]
-    }
-  ]
+  }
 }

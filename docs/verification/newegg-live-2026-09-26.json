@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-09-26T08:39:45.004Z",
+  "browser": "153.0.8010.12",
+  "passed": true,
+  "method": "Fresh isolated Chromium profile, current unpacked production build, native Extensions.triggerAction popup, real anonymous merchant pages; no response interception.",
+  "merchant": "newegg-us",
+  "cartUrl": "https://secure.newegg.com/shop/cart",
+  "catalogVersion": "2026-09-25.pilot.2",
+  "conditions": {
+    "ownedCards": [
+      "capital-one-quicksilver",
+      "amex-blue-cash-everyday"
+    ],
+    "reportedAnnualOnlineRetailSpendCents": 0,
+    "onlineRetailEligibility": "user-confirmed eligible",
+    "eligiblePurchaseExclusionsConfirmed": true,
+    "estimatedTotal": "TBD",
+    "includesTaxAndShipping": false
+  },
+  "stages": [
+    {
+      "quantity": 1,
+      "amountCents": 24999,
+      "kind": "subtotal",
+      "merchantId": "newegg-us",
+      "expectedRewardCents": {
+        "bce": 749,
+        "quicksilver": 374
+      }
+    },
+    {
+      "quantity": 2,
+      "amountCents": 49998,
+      "kind": "subtotal",
+      "merchantId": "newegg-us",
+      "expectedRewardCents": {
+        "bce": 1499,
+        "quicksilver": 749
+      }
+    }
+  ],
+  "permissions": {
+    "origins": [],
+    "permissions": [
+      "activeTab",
+      "storage",
+      "scripting"
+    ]
+  },
+  "cleanup": {
+    "checkedAt": "2026-09-26T08:40:01.119Z",
+    "empty": "Your cart is currently empty.",
+    "removeButtons": 0,
+    "storage": {}
+  },
+  "buildFiles": [
+    {
+      "path": "manifest.json",
+      "sha256": "ef1c3a86328de9e279af1bae0399f997403a4613764beda3e486b63dd576fff0"
+    },
+    {
+      "path": "service-worker-loader.js",
+      "sha256": "9d56558ee2fd8695872b974ab507377ed0d407c33aef336e09449ea7fa85b95f"
+    },
+    {
+      "path": "src/checkout/content.js",
+      "sha256": "1e83c6d506979559e28ad96bf11e08d1d13d5d3f9927f5bc1745d4eb8bfc5fec"
+    },
+    {
+      "path": "assets/content.ts-wIt5RVgh.js",
+      "sha256": "fdf5530171e3f9b5d02e0cbde42f945e0a907ecfd57f99bffecb72758aba5bc0"
+    },
+    {
+      "path": "assets/index.ts-DMdhMhYY.js",
+      "sha256": "812d2585eaba0cd705781cfd4fd2b729817b981b6e8e5a98d5d8432d17b11056"
+    },
+    {
+      "path": "assets/merchants-BOQj_fYr.js",
+      "sha256": "f49555a26c17f155274bd17d3aa68aab2cdfab1959be2d6f01413beeaaf438dd"
+    },
+    {
+      "path": "assets/page-reader-BqrXiKQZ.js",
+      "sha256": "ddea338d3319aad3a20c846e6fe271a00940e89e2498bfe12141a7e7ab541875"
+    },
+    {
+      "path": "assets/popup-CiW9QNCK.js",
+      "sha256": "0c21d2be5aed6545ab3fe7ad4d1ff892ec132a87bd470da26bbcd99b9b10119f"
+    },
+    {
+      "path": "assets/service-De7-0dxD.js",
+      "sha256": "72b9cbe2cf632e44955145268b2a66c58af5ecd8a2bb8352ae3730775eed4a84"
+    }
+  ],
+  "limits": [
+    "One anonymous desktop cart/product with included gift; physical quantities 1 and 2.",
+    "Conditional estimates; no purchase or issuer coding verification.",
+    "Unpacked Chromium development build; normal installed Chrome and store upgrade remain unverified.",
+    "Numeric estimated total path has synthetic tests only."
+  ]
+}

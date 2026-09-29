@@ -1,367 +1,532 @@
-import React, { useEffect, useState } from 'react';
-import { useStore } from '../store/useStore';
-import { getOpenAIKey } from '../utils/storage';
-import { getActiveCards, getAIRecommendation } from '../api';
-import { logRecommendation } from '../utils/logging';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ErrorBoundary from '../components/ErrorBoundary';
-import LoadingState from '../components/LoadingState';
-import RecommendationCard from '../components/RecommendationCard';
-import CartItemsList from '../components/CartItemsList';
-import SettingsModal from '../components/SettingsModal';
-import { DebugPanel } from '../components/DebugPanel';
-import type { CartItem, Recommendation } from '../types';
+import WalletEditor from '../components/WalletEditor';
+import ComparisonResult from '../components/ComparisonResult';
+import DataProtectionDetails from '../components/DataProtectionDetails';
+import DeleteSavedData from '../components/DeleteSavedData';
+import { formatUsd, parseUsd } from '../domain';
+import type { Eligibility, Wallet } from '../domain';
+import { checkoutRequest } from '../state/client';
+import type { CheckoutResponse } from '../state/contracts';
+import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY } from '../state/service';
+import { emptyState } from '../state/contracts';
+import { currentCatalog } from '../state/catalog';
+import { MERCHANT_IDS, merchantName } from '../checkout/merchants';
 
-/**
- * Main Popup component for the extension
- */
-const Popup: React.FC = () => {
-  const {
-    recommendation,
-    cartItems,
-    isLoading,
-    error,
-    showSettings,
-    setRecommendation,
-    setCartItems,
-    setLoading,
-    setError,
-    setShowSettings,
-  } = useStore();
+type View = Extract<CheckoutResponse, { ok: true }>;
 
-  const [hasApiKey, setHasApiKey] = useState(false);
+export default function Popup({
+  onLock,
+  onDelete,
+  vaultError,
+}: { onLock?: () => void; onDelete?: () => void; vaultError?: string } = {}) {
+  const [view, setView] = useState<View | null>(null);
+  const [editing, setEditing] = useState(false);
+  const [pending, setPending] = useState<'load' | 'read' | 'save' | 'compare' | 'delete' | 'catalog' | null>(
+    null,
+  );
+  const busy = pending !== null;
+  const [error, setError] = useState('');
+  const [amount, setAmount] = useState('');
+  const [merchantId, setMerchantId] = useState<string>('best-buy-us');
+  const [eligible, setEligible] = useState(false);
+  const [onlineRetail, setOnlineRetail] = useState<Eligibility>('unknown');
+  const [dirty, setDirty] = useState(false);
+  const [cartId, setCartId] = useState<string | null>(null);
+  const resultAnchor = useRef<HTMLDivElement>(null);
+  const catalog = currentCatalog(view?.state ?? emptyState());
+  const bceCard = view?.state.wallet.cards.find((c) => c.cardId === 'amex-blue-cash-everyday');
+  const bceUsage = bceCard?.usage.find(
+    (u) => u.ruleId === 'bce-online-retail' && u.recordedOn === localDate(Date.now()),
+  );
 
   useEffect(() => {
-    // Check for API key on mount
-    checkApiKey();
+    if (!dirty && !editing && view?.comparison) {
+      resultAnchor.current?.focus({ preventScroll: true });
+      resultAnchor.current?.scrollIntoView({ block: 'start' });
+    }
+  }, [dirty, editing, view?.comparison]);
+
+  const restore = useCallback((next: View) => {
+    setView(next);
+    const cart = next.state.cart;
+    const hasPendingCart = !!cart && !next.state.comparison;
+    setAmount(
+      hasPendingCart
+        ? (cart.amountCents / 100).toFixed(2)
+        : next.state.purchase
+          ? (next.state.purchase.amountCents / 100).toFixed(2)
+          : '',
+    );
+    setMerchantId(
+      hasPendingCart
+        ? cart.merchantId
+        : (next.state.purchase?.merchantId ?? cart?.merchantId ?? 'best-buy-us'),
+    );
+    setCartId(cart?.id ?? null);
+    // Restored results are labeled saved; a new comparison requires renewed confirmation.
+    setEligible(false);
+    setOnlineRetail(next.state.purchase?.onlineRetail ?? 'unknown');
+    setDirty(false);
+    setEditing(next.state.wallet.cards.length === 0);
   }, []);
 
-  const checkApiKey = async () => {
+  const load = useCallback(async () => {
+    setError('');
+    setPending('load');
     try {
-      const key = await getOpenAIKey();
-      setHasApiKey(!!key);
-
-      if (!key) {
-        setError('OpenAI API key not configured. Please add your API key in settings.');
-      } else {
-        setError(null); // Clear error when API key is found
-      }
+      restore(await checkoutRequest({ type: 'checkout:get-state' }));
     } catch (err) {
-      console.error('Error checking API key:', err);
-      setError('Failed to check API key');
+      setError(err instanceof Error ? err.message : 'Your saved inputs could not be loaded. Try again.');
+    } finally {
+      setPending(null);
     }
-  };
+  }, [restore]);
 
-  const handleGetRecommendation = async () => {
-    setLoading(true);
-    setError(null);
-    setCartItems(null);
+  useEffect(() => {
+    let cancelled = false;
+    void checkoutRequest({ type: 'checkout:get-state' })
+      .then((next) => {
+        if (!cancelled) restore(next);
+      })
+      .catch((err) => {
+        if (!cancelled)
+          setError(err instanceof Error ? err.message : 'Your saved inputs could not be loaded.');
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [restore]);
 
+  useEffect(() => {
+    if (!view?.comparison || !view.state.comparison) return;
+    const midnight = new Date();
+    midnight.setHours(24, 0, 0, 0);
+    const remaining =
+      Math.min(
+        view.state.comparison.computedAt + RESULT_MAX_AGE_MS,
+        Date.parse(catalog.expiresAt),
+        midnight.getTime(),
+        view.state.comparison.cartId && view.state.cart
+          ? view.state.cart.capturedAt + CART_MAX_AGE_MS
+          : Infinity,
+      ) - Date.now();
+    const timer = window.setTimeout(
+      () => {
+        setView((current) =>
+          current
+            ? {
+                ...current,
+                comparison: null,
+                notice: 'Confirm the current amount and compare again to refresh this estimate.',
+              }
+            : current,
+        );
+        setEligible(false);
+      },
+      Math.max(0, remaining),
+    );
+    return () => window.clearTimeout(timer);
+  }, [view, catalog.expiresAt]);
+
+  useEffect(() => {
+    const onChange = (changes: Record<string, chrome.storage.StorageChange>, area: string) => {
+      if (area !== 'local' || !changes[STATE_KEY]) return;
+      const next = changes[STATE_KEY].newValue;
+      if (next === undefined) {
+        restore({
+          ok: true,
+          state: emptyState(),
+          comparison: null,
+          notice: 'Local data deleted.',
+          catalogUpdatesAvailable: view?.catalogUpdatesAvailable ?? false,
+        });
+      } else if (next.revision !== view?.state.revision) {
+        setView((current) =>
+          current
+            ? {
+                ...current,
+                comparison: null,
+                notice: 'Saved inputs changed. Reload them before comparing again.',
+              }
+            : current,
+        );
+        setEligible(false);
+        setDirty(true);
+      }
+    };
+    chrome.storage.onChanged.addListener(onChange);
+    return () => chrome.storage.onChanged.removeListener(onChange);
+  }, [restore, view?.state.revision, view?.catalogUpdatesAvailable]);
+
+  async function readCart() {
+    if (!view) return;
+    setPending('read');
+    setError('');
+    setDirty(true);
+    setEligible(false);
     try {
-      // Check API key again
-      const apiKey = await getOpenAIKey();
-      if (!apiKey) {
-        throw new Error('OpenAI API key not configured');
-      }
+      const next = await checkoutRequest({
+        type: 'checkout:read-cart',
+        expectedRevision: view.state.revision,
+      });
+      setView(next);
+      setCartId(next.state.cart?.id ?? null);
+      setAmount(next.state.cart ? (next.state.cart.amountCents / 100).toFixed(2) : '');
+      if (next.state.cart) setMerchantId(next.state.cart.merchantId);
+      setOnlineRetail('unknown');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'The cart could not be read. Enter the amount manually.');
+    } finally {
+      setPending(null);
+    }
+  }
 
-      // Get active tab
-      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-      if (!tab?.id || !tab.url) {
-        throw new Error('No active tab found');
-      }
-
-      const site = new URL(tab.url).hostname;
-
-      // Check if content script is ready, retry if not
-      let retries = 0;
-      const maxRetries = 5;
-      let contentScriptReady = false;
-
-      while (retries < maxRetries) {
-        const checkResults = await chrome.scripting.executeScript({
-          target: { tabId: tab.id },
-          func: () => typeof (window as any).__CC_extractCartItems === 'function',
-        });
-
-        if (checkResults[0]?.result) {
-          contentScriptReady = true;
-          break; // Content script is ready
-        }
-
-        await new Promise((resolve) => setTimeout(resolve, 200));
-        retries++;
-      }
-
-      // If content script not loaded, auto-refresh the page and wait
-      if (!contentScriptReady) {
-        setError('Refreshing page to load extension...');
-
-        // Reload the tab
-        await chrome.tabs.reload(tab.id);
-
-        // Wait for tab to finish loading
-        await new Promise<void>((resolve) => {
-          const listener = (tabId: number, changeInfo: { status?: string }) => {
-            if (tabId === tab.id && changeInfo.status === 'complete') {
-              chrome.tabs.onUpdated.removeListener(listener);
-              resolve();
-            }
-          };
-          chrome.tabs.onUpdated.addListener(listener);
-
-          // Timeout after 10 seconds
-          setTimeout(() => {
-            chrome.tabs.onUpdated.removeListener(listener);
-            resolve();
-          }, 10000);
-        });
-
-        // Wait a bit more for content script to initialize
-        await new Promise((resolve) => setTimeout(resolve, 500));
-
-        // Try one more time to check content script
-        const finalCheck = await chrome.scripting.executeScript({
-          target: { tabId: tab.id },
-          func: () => typeof (window as any).__CC_extractCartItems === 'function',
-        });
-
-        if (!finalCheck[0]?.result) {
-          throw new Error('Content script failed to load after page refresh. Please try again.');
-        }
-
-        setError(null);
-      }
-
-      // Extract cart items from page
-      const cartResults = await chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        func: () => {
-          return (window as any).__CC_extractCartItems?.() || [];
+  async function saveWallet(wallet: Wallet) {
+    if (!view) return;
+    setPending('save');
+    setError('');
+    try {
+      const next = await checkoutRequest({
+        type: 'checkout:save-wallet',
+        wallet,
+        expectedRevision: view.state.revision,
+      });
+      setView(next);
+      setEditing(false);
+      setDirty(true);
+      setEligible(false);
+    } finally {
+      setPending(null);
+    }
+  }
+  async function compare() {
+    if (!view) return;
+    setError('');
+    const cents = parseUsd(amount);
+    if (cents === null || cents <= 0) {
+      setError('Enter a purchase amount from $0.01 to $100,000.00.');
+      return;
+    }
+    if (!eligible) {
+      setError('Confirm that the amount covers eligible purchases.');
+      return;
+    }
+    setPending('compare');
+    try {
+      const next = await checkoutRequest({
+        type: 'checkout:compare',
+        expectedRevision: view.state.revision,
+        cartId,
+        purchase: {
+          merchantId,
+          currency: 'USD',
+          amountCents: cents,
+          purchasedOn: localDate(Date.now()),
+          eligiblePurchase: 'eligible',
+          onlineRetail,
         },
       });
-
-      const extractedItems: CartItem[] = cartResults[0]?.result || [];
-      console.log('Extracted cart items:', extractedItems);
-
-      if (extractedItems.length === 0) {
-        setError(
-          'No cart items found on this page. Try visiting a shopping cart or checkout page.'
-        );
-        setLoading(false);
-        return;
-      }
-
-      // Store cart items in state
-      setCartItems(extractedItems);
-
-      // Get cards and recommendation
-      const cards = await getActiveCards();
-      const { recommendation: rec, prompt, rawResponse } = await getAIRecommendation(
-        extractedItems,
-        site,
-        cards,
-        apiKey
-      );
-
-      // Log for debugging
-      await logRecommendation({
-        timestamp: Date.now(),
-        site,
-        cartItems: extractedItems,
-        recommendation: rec,
-        allCards: cards.map(c => ({ name: c.name, rewards: c.rewards })),
-        prompt,
-        rawResponse
-      });
-
-      setRecommendation(rec);
+      setView(next);
+      setDirty(false);
     } catch (err) {
-      console.error('Error getting recommendation:', err);
-      setError(err instanceof Error ? err.message : 'Failed to get recommendation');
-      setCartItems(null);
+      setError(err instanceof Error ? err.message : 'The comparison could not be saved. Try again.');
     } finally {
-      setLoading(false);
+      setPending(null);
     }
-  };
-
-  const createBannerHtml = (rec: Recommendation): string => {
-    const rewardsHtml = Object.entries(rec.rewards)
-      .map(
-        ([cat, val]) => `
-        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <span style="text-transform: capitalize;">${cat}</span>
-          <strong style="color: #2563eb;">${val}</strong>
-        </div>
-      `
-      )
-      .join('');
-
-    return `
-      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
-        <div style="margin-bottom: 8px;">
-          <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Best Card</div>
-          <div style="font-size: 18px; font-weight: bold; color: #111827;">${rec.card}</div>
-        </div>
-        <div style="background: linear-gradient(to right, #eff6ff, #dbeafe); padding: 12px; border-radius: 6px; margin-bottom: 8px;">
-          <div style="font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; margin-bottom: 8px;">Rewards</div>
-          ${rewardsHtml}
-        </div>
-        <div style="font-size: 11px; color: #6b7280; text-align: center; padding-top: 8px; border-top: 1px solid #e5e7eb;">
-          AI-powered recommendation
-        </div>
-      </div>
-    `;
-  };
-
+  }
+  async function clear() {
+    setPending('delete');
+    setError('');
+    try {
+      restore(await checkoutRequest({ type: 'checkout:clear' }));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Local data could not be deleted. Try again.');
+    } finally {
+      setPending(null);
+    }
+  }
+  async function refreshCatalog() {
+    if (!view) return;
+    setPending('catalog');
+    setError('');
+    try {
+      restore(
+        await checkoutRequest({ type: 'checkout:refresh-catalog', expectedRevision: view.state.revision }),
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Card terms could not be checked. Try again.');
+    } finally {
+      setPending(null);
+    }
+  }
   return (
     <ErrorBoundary>
-      <div className="min-h-[300px] bg-gray-50">
-        {/* Header */}
-        <div className="bg-white border-b border-gray-200 px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <svg
-                className="w-6 h-6 text-primary-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-                <path
-                  fillRule="evenodd"
-                  d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <h1 className="text-lg font-bold text-gray-900">AI Checkout</h1>
+      <main className="checkout-popup text-gray-900">
+        <header className="px-4 py-3 bg-white border-b border-gray-200">
+          <h1 className="text-xl font-bold">AI Checkout</h1>
+          <p className="supporting mt-1">Compare rewards on cards you own.</p>
+        </header>
+        <div className="p-4 space-y-4">
+          {vaultError && (
+            <p role="alert" className="error-message">
+              {vaultError}
+            </p>
+          )}
+          {error && (
+            <div role="alert" className="error-message">
+              <p>{error}</p>
+              <button className="underline font-medium mt-2" disabled={busy} onClick={() => void load()}>
+                Reload saved inputs
+              </button>
             </div>
-            <button
-              onClick={() => setShowSettings(true)}
-              className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
-              title="Settings"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className="p-4">
-          {isLoading ? (
-            <LoadingState message="Analyzing your cart..." variant="skeleton" />
-          ) : error ? (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-              <div className="flex items-start gap-3">
-                <svg
-                  className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <div className="flex-1">
-                  <p className="text-sm text-red-800">{error}</p>
-                  {!hasApiKey && (
-                    <button
-                      onClick={() => setShowSettings(true)}
-                      className="mt-2 text-sm text-red-600 hover:text-red-700 underline"
-                    >
-                      Configure API Key
-                    </button>
-                  )}
-                </div>
-              </div>
+          )}
+          {!view && !error && (
+            <p role="status" className="supporting">
+              Loading your cards…
+            </p>
+          )}
+          {view?.notice && (
+            <div role="status" className="supporting">
+              <p>{view.notice}</p>
+              <button className="text-primary-700 underline mt-2" disabled={busy} onClick={() => void load()}>
+                Load saved inputs
+              </button>
             </div>
-          ) : recommendation ? (
-            <>
-              {cartItems && cartItems.length > 0 && (
-                <div className="mb-4">
-                  <CartItemsList items={cartItems} />
-                </div>
-              )}
-              <RecommendationCard recommendation={recommendation} />
-              <DebugPanel
-                currentRecommendation={{
-                  card: recommendation.card,
-                  category: recommendation.category,
-                  reasoning: recommendation.reasoning
-                }}
+          )}
+          {view &&
+            (editing ? (
+              <WalletEditor
+                key={view.state.revision}
+                catalog={catalog}
+                wallet={view.state.wallet}
+                busy={busy}
+                onSave={saveWallet}
+                onCancel={view.state.wallet.cards.length ? () => setEditing(false) : undefined}
               />
-            </>
-          ) : (
-            <div className="text-center py-8">
-              <div className="w-16 h-16 mx-auto mb-4 bg-primary-100 rounded-full flex items-center justify-center">
-                <svg
-                  className="w-8 h-8 text-primary-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+            ) : (
+              <>
+                <section className="surface" aria-label="Saved cards">
+                  <div className="flex items-center justify-between gap-3">
+                    <h2 className="font-semibold">Your cards</h2>
+                    <button
+                      className="text-primary-700 underline text-sm"
+                      disabled={busy}
+                      onClick={() => {
+                        setEditing(true);
+                        setError('');
+                      }}
+                    >
+                      Edit cards
+                    </button>
+                  </div>
+                  <p className="supporting mt-1">
+                    {view.state.wallet.cards
+                      .map(
+                        (c) => catalog.cards.find((p) => p.id === c.cardId)?.shortName ?? 'Unavailable card',
+                      )
+                      .join(' · ') || 'No cards selected.'}
+                  </p>
+                  {bceCard && (
+                    <p className="supporting mt-2">
+                      Blue Cash Everyday online retail spend:{' '}
+                      {bceUsage?.spentCents != null
+                        ? `${formatUsd(bceUsage.spentCents)} reported today. Edit if it changed.`
+                        : 'unknown. You can add it in Edit cards.'}
+                    </p>
+                  )}
+                </section>
+                <section className="surface" aria-labelledby="purchase-heading">
+                  <h2 id="purchase-heading" className="text-lg font-semibold">
+                    Your purchase
+                  </h2>
+                  <label htmlFor="purchase-merchant" className="field-label mt-4">
+                    Merchant
+                  </label>
+                  <select
+                    id="purchase-merchant"
+                    className="field-input"
+                    value={merchantId}
+                    disabled={busy}
+                    onChange={(e) => {
+                      setMerchantId(e.target.value);
+                      setAmount('');
+                      setCartId(null);
+                      setOnlineRetail('unknown');
+                      setEligible(false);
+                      setDirty(true);
+                      setError('');
+                    }}
+                    aria-describedby="merchant-help"
+                  >
+                    {!MERCHANT_IDS.some((id) => id === merchantId) && (
+                      <option value={merchantId}>Unsupported saved merchant</option>
+                    )}
+                    {MERCHANT_IDS.map((id) => (
+                      <option key={id} value={id}>
+                        {merchantName(id)}
+                      </option>
+                    ))}
+                  </select>
+                  <p id="merchant-help" className="supporting mt-2">
+                    Choose the merchant for manual entry. Reading a supported cart selects its merchant for
+                    you.
+                  </p>
+                  {!catalog.merchantIds.includes(merchantId) && (
+                    <p role="status" className="supporting mt-2">
+                      Your current card terms do not cover {merchantName(merchantId)}. Check for updated terms
+                      or an extension update.
+                    </p>
+                  )}
+                  <button className="btn-secondary mt-3" disabled={busy} onClick={() => void readCart()}>
+                    {pending === 'read' ? 'Reading cart…' : 'Read cart amount'}
+                  </button>
+                  {cartId && view.state.cart && (
+                    <div className="supporting mt-3" role="status">
+                      <p>
+                        Read {formatUsd(view.state.cart.amountCents)} as{' '}
+                        {view.state.cart.kind === 'estimated-total'
+                          ? 'an estimated total'
+                          : view.state.cart.kind === 'subtotal'
+                            ? 'a subtotal before tax and shipping'
+                            : 'the order total'}
+                        . Confirm or correct the amount below. The page is checked again before comparing.
+                      </p>
+                      {view.state.cart.kind === 'subtotal' && (
+                        <p className="mt-2">
+                          The final charge is not known. Enter the amount you’ll charge when it is available,
+                          or compare this subtotal only.
+                        </p>
+                      )}
+                      <button
+                        className="underline text-primary-700 mt-2"
+                        disabled={busy}
+                        onClick={() => {
+                          setCartId(null);
+                          setDirty(true);
+                          setEligible(false);
+                        }}
+                      >
+                        Use manual entry instead
+                      </button>
+                    </div>
+                  )}
+                  <form
+                    className="mt-4"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      void compare();
+                    }}
+                  >
+                    <label htmlFor="purchase-amount" className="field-label">
+                      Purchase amount (USD)
+                    </label>
+                    <input
+                      id="purchase-amount"
+                      type="text"
+                      inputMode="decimal"
+                      maxLength={14}
+                      value={amount}
+                      disabled={busy}
+                      onChange={(e) => {
+                        setAmount(e.target.value);
+                        setDirty(true);
+                        setEligible(false);
+                      }}
+                      className="field-input"
+                      placeholder="0.00"
+                    />
+                    <label htmlFor="online-eligibility" className="field-label mt-4">
+                      Online retail bonus eligibility
+                    </label>
+                    <select
+                      id="online-eligibility"
+                      className="field-input"
+                      value={onlineRetail}
+                      disabled={busy}
+                      onChange={(e) => {
+                        setOnlineRetail(e.target.value as Eligibility);
+                        setDirty(true);
+                      }}
+                      aria-describedby="online-help"
+                    >
+                      <option value="unknown">I’m not sure</option>
+                      <option value="eligible">Eligible goods, paid directly online</option>
+                      <option value="ineligible">In-store payment or other excluded channel</option>
+                    </select>
+                    <p id="online-help" className="supporting mt-2">
+                      The bonus applies to physical goods paid for online at a US retailer. Services, in-store
+                      payment and third-party installment plans are excluded. The merchant must report an
+                      internet transaction.
+                    </p>
+                    <label className="flex items-start gap-3 text-sm mt-4">
+                      <input
+                        className="mt-1"
+                        type="checkbox"
+                        checked={eligible}
+                        disabled={busy}
+                        onChange={(e) => {
+                          setEligible(e.target.checked);
+                          setDirty(true);
+                        }}
+                      />
+                      <span>
+                        I confirmed the amount is for eligible purchases, excluding gift cards, cash
+                        equivalents, fees and rewards-covered amounts.
+                      </span>
+                    </label>
+                    <button
+                      className="btn-primary w-full mt-5"
+                      type="submit"
+                      disabled={busy || !view.state.wallet.cards.length}
+                    >
+                      {pending === 'compare' ? 'Comparing…' : 'Compare my cards'}
+                    </button>
+                  </form>
+                </section>
+                {!dirty && view.comparison && (
+                  <div ref={resultAnchor} tabIndex={-1} aria-label="Comparison result">
+                    <ComparisonResult
+                      catalog={catalog}
+                      result={view.comparison}
+                      purchase={view.state.purchase}
+                      subtotalOnly={
+                        view.state.cart?.kind === 'subtotal' &&
+                        view.state.cart.amountCents === view.state.purchase?.amountCents
+                      }
+                      maxAgeMinutes={view.state.comparison?.cartId ? 5 : 15}
+                    />
+                  </div>
+                )}
+              </>
+            ))}
+          <footer className="supporting pt-2">
+            <p>
+              Cards and purchase inputs stay on this device. This comparison works offline and requires no API
+              key.
+            </p>
+            <p className="mt-2">Card terms expire {new Date(catalog.expiresAt).toLocaleString('en-US')}.</p>
+            <div className="flex flex-col items-start gap-3 mt-3">
+              {onLock && (
+                <button className="text-primary-700 underline" disabled={busy} onClick={onLock}>
+                  Lock saved inputs
+                </button>
+              )}
+              {view?.catalogUpdatesAvailable && (
+                <button
+                  className="text-primary-700 underline"
+                  disabled={busy || editing}
+                  onClick={() => void refreshCatalog()}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Get AI-Powered Card Recommendation
-              </h3>
-              <p className="text-sm text-gray-600 mb-4">
-                Analyze your cart to find the best card for maximum rewards.
-              </p>
-              <button
-                onClick={handleGetRecommendation}
-                disabled={!hasApiKey}
-                className="btn-primary"
-              >
-                Get Recommendation
-              </button>
+                  {pending === 'catalog' ? 'Checking terms…' : 'Check for updated terms'}
+                </button>
+              )}
             </div>
-          )}
-
-          {/* Retry button when there's a recommendation */}
-          {recommendation && !isLoading && (
-            <div className="mt-4 text-center">
-              <button
-                onClick={handleGetRecommendation}
-                className="text-sm text-primary-600 hover:text-primary-700 font-medium"
-              >
-                Refresh Recommendation
-              </button>
-            </div>
-          )}
+            {onLock && <DataProtectionDetails />}
+            <DeleteSavedData busy={busy} onDelete={() => (onDelete ? onDelete() : void clear())} />
+          </footer>
         </div>
-
-        {/* Settings Modal */}
-        <SettingsModal
-          isOpen={showSettings}
-          onClose={() => {
-            setShowSettings(false);
-            checkApiKey(); // Re-check API key after closing settings
-          }}
-        />
-      </div>
+      </main>
     </ErrorBoundary>
   );
-};
-
-export default Popup;
+}

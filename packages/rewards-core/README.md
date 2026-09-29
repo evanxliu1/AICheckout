@@ -1,0 +1,11 @@
+# Rewards core
+
+Pure TypeScript domain logic shared with the future catalog review/evaluation service. No browser, network, database, model, or clock access. Callers supply the catalog, owned cards, purchase facts, and current time. The extension currently imports this source directly; workspace packaging can be introduced with the second consumer.
+
+Money is integer US cents; rates use basis points. Exact integer products are summed before truncation to cents. Results are purchase estimates, not a reproduction of issuer billing-period rounding. Only one non-stacking online retail bonus is supported; unsupported rule shapes fail closed.
+
+Unknown annual usage, activation, and category eligibility create ranges. Ranking uses the lower estimate, with the user's default card as a tie-breaker. The response flags when a competing card could do better. Usage recorded on another date or in another year becomes unknown, not zero. The app does not track intervening transactions. A missing owned card in a changed catalog blocks comparison rather than silently narrowing the wallet.
+
+The bundled `2026-09-25.pilot.2` snapshot is an engineering seed whose issuer terms were checked September 25, 2026 and expire after 30 days under our maintenance policy. Adding Newegg did not change source or expiry dates. Issuer terms can change earlier. It covers eligible Best Buy US and Newegg US retail purchases only. Travel/entertainment bonuses, sign-up offers, account-specific offers, financing, fees, and other purchase categories are outside this snapshot. Previously published single-merchant snapshots remain valid with their original scope.
+
+Sources: [Capital One](https://www.capitalone.com/learn-grow/money-management/quicksilver-card-benefits/), [American Express reward terms](https://global.americanexpress.com/card-benefits/terms/blue-cash-everyday), and [category guidance](https://www.americanexpress.com/us/rewards-info/retail.htm). American Express's category depends on merchant-supplied transaction data; a retailer domain cannot prove how a payment will post. Both merchants' eligibility is a user-confirmed pilot assumption, not verified issuer coding. Browser cart observations do not verify how a transaction will be rewarded.

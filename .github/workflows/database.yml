@@ -1,0 +1,45 @@
+name: Database checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - run: npm audit --audit-level=high
+      - run: npm run db:seed:check
+      - run: npm run db:start:api
+      - run: npm run db:test
+      - run: npm run db:test:concurrency
+      - run: npm run db:test:catalog
+      - run: npm run db:test:http
+      - run: npm run db:test:curation
+      - run: npm run build --workspace=@ai-checkout/api
+      - run: npm run build --workspace=@ai-checkout/review
+      - run: npm run db:test:curation:http
+      - run: npm run db:test:curation:application
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser --workspace=@ai-checkout/review
+      - run: npm run db:lint
+      - run: npm run db:advisors
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: review-browser-failure
+          path: apps/review/test-results/
+          retention-days: 7
+      - if: always()
+        run: npm run supabase -- stop
