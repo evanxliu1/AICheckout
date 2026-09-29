@@ -30,7 +30,7 @@ flowchart LR
 | Area | What's there |
 | --- | --- |
 | LLM harness | Versioned prompt/context/schema, strict structured output with `known`/`unknown`/`conflicting` states, citation span validation, prompt-injection handling, token/time/cost budgets with atomic reservations, once-only execution, and a private trace ledger ([details](apps/api/src/curation/README.md)) |
-| Evaluation | Offline scorer and replay tool for saved traces: field agreement, fact precision/recall, unsupported claims, evidence coverage, false "clear" verdicts, cost and latency ([details](evals/curation/README.md)) |
+| Evaluation | Offline scorer and replay tool for saved traces: field agreement, fact precision/recall, unsupported claims, evidence coverage, false "clear" verdicts, cost and latency ([details](evals/curation/README.md)). Measured on real issuer terms for seven cards, six models, three prompts: the best configuration (gpt-6-astra, guided prompt) reaches 99% end-to-end field accuracy on dev and 97% on held-out issuers with 100% rule recall, and every planted prompt injection is reported; the prompt matters more than the model (65–83% with a two-sentence prompt vs 89–99% guided) ([results](docs/evals/results.md)) |
 | Backend | Node 24 + Fastify API, Supabase Auth, PostgreSQL with RLS, a private review schema, and transactional publication ([schema](supabase/README.md)) |
 | Review app | React UI for source evidence, per-condition decisions, draft diffs against the published catalog, and separate publication ([app](apps/review/README.md)) |
 | Extension | React + TypeScript on Manifest V3 with minimal permissions, a cart reader that only runs when you click it, and state that survives popup closure and worker shutdown ([extension](extension/README.md)) |
@@ -66,7 +66,7 @@ Load `extension/dist` from `chrome://extensions` with Developer mode on. For the
 
 Working: the extension (2 cards: Quicksilver and Blue Cash Everyday; 2 merchants: Best Buy US and Newegg US), CI, and the hosted catalog API and review app at [ai-checkout-api.onrender.com](https://ai-checkout-api.onrender.com/health) (Render + Supabase).
 
-Next: a hand-labeled evaluation set from real issuer terms, model/prompt comparisons, a larger catalog, and a Chrome Web Store release. See the [roadmap](docs/design.md#roadmap).
+Next: human verification of the evaluation labels, a larger catalog built from the measured configuration, and a Chrome Web Store release. See the [roadmap](docs/design.md#roadmap).
 
 ## License
 
