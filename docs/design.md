@@ -67,4 +67,4 @@ US/USD, cards the user already owns, supported merchants only (Best Buy US, Newe
 3. ~~Hosted API and review app (Render + Supabase)~~ (done); publish the first reviewed release so the extension reads the hosted catalog.
 4. Scheduled terms-change detection that re-runs extraction and opens a review item.
 5. Chrome Web Store release.
-6. Site coverage harness: cart readers become declarative site specs; an LLM drafts specs for new retailers from captured checkout pages, execution-based checks and a human review gate them, and they ship as catalog data.
+6. Site coverage harness: cart readers become declarative site specs; an LLM drafts specs for new retailers from captured checkout pages, execution-based checks and a human review gate them, and they ship bundled in extension releases (Web Store policy forbids remotely fetched interpreter commands); only a remote kill switch for broken adapters is fetched.
