@@ -39,8 +39,19 @@ const status = await readFile(statusPath, 'utf8').then(JSON.parse, () => ({}));
 const saveStatus = () => writeFile(statusPath, JSON.stringify(status, null, 2) + '\n');
 
 const readReport = (dir) => readFile(join(dir, 'report.json'), 'utf8').then(JSON.parse, () => undefined);
+/** Saved state from the observations themselves, so a run edited after its report was written is resumed. */
+async function savedState(dir) {
+  const [report, observations] = await Promise.all([
+    readReport(dir),
+    readFile(join(dir, 'observations.json'), 'utf8').then(JSON.parse, () => undefined),
+  ]);
+  if (!observations) return undefined;
+  const observed = observations.observations.length,
+    planned = report?.planned ?? null;
+  return { observed, planned, complete: planned !== null && observed >= planned };
+}
 const savedReports = new Map();
-for (const c of matrix.configurations) savedReports.set(c.slug, await readReport(join(outputDir, c.slug)));
+for (const c of matrix.configurations) savedReports.set(c.slug, await savedState(join(outputDir, c.slug)));
 
 const plan = planRuns(matrix, savedReports, { provider: values.provider, only: values.only });
 for (const { configuration, action, observed, planned } of plan)
