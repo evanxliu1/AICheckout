@@ -6,6 +6,7 @@ import {
   evalArgs,
   parseMatrix,
   planRuns,
+  retriableCount,
   slugFor,
 } from './eval-matrix.mjs';
 

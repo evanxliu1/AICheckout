@@ -2,10 +2,11 @@
 // issuer text) and docs/evals/results.svg (a grouped bar chart drawn by hand, no dependencies).
 //
 //   node scripts/summarize-evals.mjs [--runs evals/curation/runs/matrix ...] [--out docs/evals]
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { fileURLToPath } from 'node:url';
+import { build } from 'esbuild';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const { values } = parseArgs({
@@ -13,118 +14,40 @@ const { values } = parseArgs({
   strict: true,
   options: {
     runs: { type: 'string', multiple: true, default: ['evals/curation/runs/matrix'] },
+    corpus: { type: 'string', default: 'evals/curation/real' },
     out: { type: 'string', default: 'docs/evals' },
   },
 });
 
-const rate = (fraction) => (fraction && fraction.rate !== null ? Number(fraction.rate.toFixed(4)) : null);
-const fraction = (f) => (f ? { correct: f.correct, total: f.total, rate: rate(f) } : null);
+// Every run is re-scored from observations.json with the current scorer and labels (apps/api/src/curation/v2/summarize.ts).
+const bundle = await build({
+  absWorkingDir: root,
+  entryPoints: ['apps/api/src/curation/v2/summarize.ts'],
+  bundle: true,
+  platform: 'node',
+  format: 'esm',
+  write: false,
+});
+const { summarizeRuns } = await import(
+  `data:text/javascript;base64,${Buffer.from(bundle.outputFiles[0].text).toString('base64')}`
+);
+const summary = await summarizeRuns(
+  resolve(root, values.corpus),
+  values.runs.map((dir) => resolve(root, dir)),
+);
+if (!summary.rows.length) throw new Error('No run directories with observations.json found.');
 
-/** The headline numbers only, for per-repeat and per-variant breakdowns. */
-function brief(summary) {
-  return {
-    runs: summary.cases,
-    ruleRecall: fraction(summary.ruleRecall),
-    endToEndFieldAccuracy: fraction(summary.endToEndFieldAccuracy),
-    fieldAccuracy: fraction(summary.fieldAccuracy),
-    claimPrecision: fraction(summary.claimPrecision),
-    evidenceValidity: fraction(summary.evidenceValidity),
-    issueRecall: fraction(summary.issueRecall),
-    falseClean: summary.falseClean,
-  };
-}
-
-function metrics(summary) {
-  return {
-    runs: summary.cases,
-    ruleRecall: fraction(summary.ruleRecall),
-    rulePrecision: fraction(summary.rulePrecision),
-    fieldAccuracy: fraction(summary.fieldAccuracy),
-    endToEndFieldAccuracy: fraction(summary.endToEndFieldAccuracy),
-    cardFieldAccuracy: fraction(summary.cardFieldAccuracy),
-    claimPrecision: fraction(summary.claimPrecision),
-    unsupportedClaims: summary.unsupportedClaims,
-    evidenceValidity: fraction(summary.evidenceValidity),
-    issueRecall: fraction(summary.issueRecall),
-    issueRecallByCode: Object.fromEntries(
-      Object.entries(summary.issueRecallByCode ?? {}).map(([code, f]) => [code, fraction(f)]),
-    ),
-    exclusionRecall: fraction(summary.exclusionRecall),
-    falseClean: summary.falseClean,
-    statuses: summary.statuses,
-    latencyMs: summary.latencyMs,
-    tokens: summary.tokens,
-    perField: Object.fromEntries(Object.entries(summary.perField ?? {}).map(([k, f]) => [k, fraction(f)])),
-  };
-}
-
-/** Counts that the report does not aggregate itself: extra rules and quote failures by category. */
-function errorCounts(cases) {
-  const extraRules = {},
-    missedRules = {},
-    fieldErrors = {};
-  for (const c of cases) {
-    for (const category of c.extraRules) extraRules[category] = (extraRules[category] ?? 0) + 1;
-    for (const category of c.missedRules) missedRules[category] = (missedRules[category] ?? 0) + 1;
-    for (const e of c.fieldErrors) fieldErrors[e.field] = (fieldErrors[e.field] ?? 0) + 1;
-  }
-  return {
-    extraRules,
-    missedRules,
-    fieldErrors,
-    quotesUnresolved: cases.reduce((n, c) => n + (c.evidence.quotes - c.evidence.resolved), 0),
-    quotesGiven: cases.reduce((n, c) => n + c.evidence.quotes, 0),
-  };
-}
-
-const runs = [];
-for (const dir of values.runs) {
-  const base = resolve(root, dir);
-  for (const name of (await readdir(base, { withFileTypes: true }).catch(() => []))
-    .filter((d) => d.isDirectory())
-    .map((d) => d.name)
-    .sort()) {
-    const report = await readFile(join(base, name, 'report.json'), 'utf8')
-      .then(JSON.parse)
-      .catch(() => undefined);
-    if (!report) continue;
-    const c = report.configuration;
-    runs.push({
-      id: name,
-      provider: c.provider.id,
-      model: c.provider.model,
-      effort: c.effort,
-      prompt: c.prompt,
-      selection: c.selection,
-      split: c.split,
-      repeat: c.repeat,
-      provenance: report.provenance,
-      scorerVersion: report.scorerVersion,
-      corpusHash: report.corpus.hash,
-      planned: report.planned,
-      observed: report.observed,
-      complete: report.complete,
-      overall: metrics(report.overall),
-      byRepeat: report.repeats.map(brief),
-      byVariant: Object.fromEntries(Object.entries(report.byVariant).map(([k, s]) => [k, brief(s)])),
-      byCategory: report.byCategory,
-      errors: errorCounts(report.cases),
-    });
-  }
-}
-if (!runs.length) throw new Error('No run directories with report.json found.');
-
-const corpusHashes = [...new Set(runs.map((r) => r.corpusHash))];
-const scorerVersions = [...new Set(runs.map((r) => r.scorerVersion))];
-// A run whose every trace failed at the provider (for example a model the CLI rejects) measured nothing.
-const measured = (r) => r.complete && (r.overall.statuses.provider_error ?? 0) < r.observed;
 const results = {
   generatedAt: new Date().toISOString(),
-  corpusHashes,
-  scorerVersions,
-  rejected: runs.filter((r) => r.complete && !measured(r)).map((r) => r.id),
-  runs: runs.filter(measured),
+  scorerVersion: summary.scorerVersion,
+  retryCap: summary.retryCap,
+  corpus: summary.corpus,
+  labelsCollectedWith: [...new Set(summary.rows.map((r) => r.labelsCollectedWith))],
+  incomplete: summary.rows.filter((r) => !r.complete).map((r) => r.id),
+  rejected: summary.rows.filter((r) => r.rejected).map((r) => r.id),
+  runs: summary.rows,
 };
+const runs = summary.rows;
 const out = resolve(root, values.out);
 await mkdir(out, { recursive: true });
 await writeFile(join(out, 'results.json'), JSON.stringify(results, null, 2) + '\n');
@@ -176,7 +99,7 @@ function chart(rows, title) {
   return parts.join('\n') + '\n';
 }
 const dev = runs
-  .filter((r) => r.split === 'dev' && measured(r))
+  .filter((r) => r.split === 'dev' && r.complete && !r.rejected)
   .sort(
     (a, b) => (b.overall.endToEndFieldAccuracy?.rate ?? 0) - (a.overall.endToEndFieldAccuracy?.rate ?? 0),
   );
