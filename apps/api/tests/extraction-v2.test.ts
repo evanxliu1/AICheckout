@@ -6,11 +6,16 @@ import { sha256 } from '../src/curation/extraction.ts';
 import { executeTask, type ExtractionProvider, type TaskTrace } from '../src/curation/runner.ts';
 import { buildContextV2, selectText } from '../src/curation/v2/context.ts';
 import { checkCase, loadCorpusV2, type CorpusCase } from '../src/curation/v2/corpus.ts';
+import { runEvaluationV2Cli } from '../src/curation/v2/eval-cli.ts';
 import {
   abstainingProviderV2,
   evaluate,
+  mergeBundles,
+  missingSlots,
+  rateLimited,
   referenceAnswer,
   referenceProvider,
+  type ObservationBundle,
 } from '../src/curation/v2/evaluate.ts';
 import type { ExtractionV2, ExtractionV2Input, Rule } from '../src/curation/v2/schema.ts';
 import { matchRules, scoreCase, summarize } from '../src/curation/v2/score.ts';
@@ -87,6 +92,15 @@ describe('quote resolution', () => {
   it('searches every document and escapes regex characters', () => {
     expect(resolveQuote('plus 1% as you pay.', input)?.documentId).toBe('terms');
     expect(resolveQuote('$6,000 per year', input)?.documentId).toBe('product');
+  });
+  it('matches straight quotation marks against typographic ones', () => {
+    const curly = {
+      documents: [doc('t', 'Traveler\u2019s checks and \u201ccash-like\u201d items do not earn.')],
+    };
+    const span = resolveQuote(`Traveler's checks and "cash-like" items`, curly);
+    expect(span).toEqual({ documentId: 't', start: 0, end: 39 });
+    expect(resolveQuote('Traveler\u2019s checks', curly)).toEqual({ documentId: 't', start: 0, end: 17 });
+    expect(resolveQuote('Travelers checks', curly)).toBeNull();
   });
   it('rejects missing, paraphrased, and blank quotes', () => {
     expect(resolveQuote('3% cash back at supermarkets', input)).toBeNull();
@@ -390,5 +404,94 @@ describe('evaluate', () => {
     const { input: value } = loaded.cases[0];
     const trace = await executeTask(extractionTaskV2('baseline.1', 'full'), value, abstainingProviderV2());
     expect(trace.status).toBe('needs_review');
+  });
+});
+
+describe('resume', () => {
+  const configuration = {
+    provider: { id: 'fixture', model: 'reference-echo.1', mode: 'fixture' },
+    effort: null,
+    prompt: 'guided.1',
+    selection: 'full',
+    split: 'dev',
+    repeat: 2,
+  } as const;
+  const observation = (caseId: string, repeat: number, runId = `${caseId}-${repeat}`) =>
+    ({ caseId, repeat, trace: { runId, status: 'needs_review', attempts: [] } }) as never;
+
+  it('plans only the slots not yet observed, in corpus order', async () => {
+    const loaded = await loadCorpusV2(FIXTURE);
+    const dev = loaded.cases.filter((c) => c.item.split === 'dev').map((c) => c.item.id);
+    const all = missingSlots(loaded, configuration);
+    expect(all.map((s) => `${s.value.item.id}#${s.repeat}`)).toEqual(
+      dev.flatMap((id) => [`${id}#1`, `${id}#2`]),
+    );
+    const rest = missingSlots(loaded, configuration, [observation(dev[0], 1), observation(dev[1], 2)]);
+    expect(rest.length).toBe(all.length - 2);
+    expect(rest[0]).toMatchObject({ repeat: 2 });
+    expect(missingSlots(loaded, configuration, [], [dev[1]]).map((s) => s.value.item.id)).toEqual([
+      dev[1],
+      dev[1],
+    ]);
+  });
+
+  it('merges only a matching superset without duplicate slots or run IDs', () => {
+    const base = {
+      schemaVersion: 2,
+      corpus: { version: 'fixture.v2.1', hash: 'a'.repeat(64) },
+      experiment: 'test',
+      provenance: 'scripted-diagnostic',
+      configuration,
+      observations: [observation('x', 1)],
+    } as unknown as ObservationBundle;
+    const merged = mergeBundles(base, { ...base, observations: [observation('x', 2)] });
+    expect(merged.observations.map((o) => `${o.caseId}#${o.repeat}`)).toEqual(['x#1', 'x#2']);
+    expect(() => mergeBundles(base, { ...base, observations: [observation('x', 1, 'other')] })).toThrow(
+      /Duplicate/,
+    );
+    expect(() => mergeBundles(base, { ...base, observations: [observation('y', 1, 'x-1')] })).toThrow(
+      /Duplicate/,
+    );
+    expect(() =>
+      mergeBundles(base, { ...base, configuration: { ...configuration, prompt: 'baseline.1' } }),
+    ).toThrow(/different configuration/);
+    expect(() => mergeBundles(base, { ...base, corpus: { ...base.corpus, hash: 'b'.repeat(64) } })).toThrow(
+      /captures changed/,
+    );
+  });
+
+  it('recognizes usage-limit failures as runs to repeat', () => {
+    expect(rateLimited({ status: 'provider_error', attempts: [{ outcome: 'rate-limit' }] })).toBe(true);
+    expect(rateLimited({ status: 'provider_error', attempts: [{ outcome: 'transient' }] })).toBe(false);
+    expect(rateLimited({ status: 'needs_review', attempts: [{ outcome: 'needs_review' }] })).toBe(false);
+  });
+
+  it('resumes a partial run directory into a complete superset', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'resume-v2-'));
+    const root = resolve(import.meta.dirname, '../../..');
+    try {
+      const out = join(dir, 'run');
+      const common = ['--corpus', FIXTURE, '--prompt', 'guided.1', '--selection', 'full', '--repeat', '2'];
+      const partial = await runEvaluationV2Cli([...common, '--limit', '3', '--output', out], root);
+      expect(partial).toMatchObject({ observed: 3, complete: false });
+      expect(process.exitCode).toBe(1);
+      process.exitCode = 0;
+      const saved = JSON.parse(await readFile(join(out, 'observations.json'), 'utf8'));
+      const resumed = await runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root);
+      expect(resumed).toMatchObject({ observed: partial!.planned, complete: true });
+      const merged = JSON.parse(await readFile(join(out, 'observations.json'), 'utf8'));
+      // Every earlier observation survives unchanged; the rest were appended.
+      expect(merged.observations.slice(0, 3)).toEqual(saved.observations);
+      expect(merged.configuration).toEqual(saved.configuration);
+      expect(JSON.parse(await readFile(join(out, 'report.json'), 'utf8')).complete).toBe(true);
+      // Re-resuming a complete run changes nothing.
+      const again = await runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root);
+      expect(again!.observed).toBe(resumed!.observed);
+      await expect(runEvaluationV2Cli(['--resume', out, '--output', dir], root)).rejects.toThrow(
+        /drop --output/,
+      );
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
   });
 });

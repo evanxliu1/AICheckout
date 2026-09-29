@@ -9,7 +9,8 @@ export interface Span {
 
 /**
  * Locate a model quote in the original captured text. Matching is exact except that any run of whitespace
- * matches any other run, because rendered pages break lines where the model may write a space.
+ * matches any other run, because rendered pages break lines where the model may write a space, and straight
+ * and typographic quotation marks match each other, because models normalize ’ to ' when copying.
  */
 export function resolveQuote(quote: string, input: Pick<ExtractionV2Input, 'documents'>): Span | null {
   const pattern = quotePattern(quote);
@@ -21,11 +22,25 @@ export function resolveQuote(quote: string, input: Pick<ExtractionV2Input, 'docu
   return null;
 }
 
+/** Each quotation mark stands for its straight and typographic forms. */
+const QUOTE_MARKS: Record<string, string> = {
+  "'": "['\u2018\u2019]",
+  '\u2018': "['\u2018\u2019]",
+  '\u2019': "['\u2018\u2019]",
+  '"': '["\u201c\u201d]',
+  '\u201c': '["\u201c\u201d]',
+  '\u201d': '["\u201c\u201d]',
+};
+
 /** A regex matching `quote` with any whitespace run standing for any other; null for a blank quote. */
 export function quotePattern(quote: string): RegExp | null {
   const words = quote.trim().split(/\s+/).filter(Boolean);
   if (!words.length) return null;
-  return new RegExp(words.map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s+'));
+  const escaped = (word: string) =>
+    word
+      .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      .replace(/['"\u2018\u2019\u201c\u201d]/g, (mark) => QUOTE_MARKS[mark]);
+  return new RegExp(words.map(escaped).join('\\s+'));
 }
 
 export function validateInputsV2(input: ExtractionV2Input): Finding[] {

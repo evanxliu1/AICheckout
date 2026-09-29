@@ -4,7 +4,8 @@ import type { CorpusCase, Reference, ReferenceRule } from './corpus.ts';
 import type { ExtractionV2, ExtractionV2Input, Rule } from './schema.ts';
 import { resolveQuote, type Span } from './validate.ts';
 
-export const SCORER_VERSION = 'v2-scorer.1';
+/** v2-scorer.2: quotes match across straight and typographic quotation marks. */
+export const SCORER_VERSION = 'v2-scorer.2';
 
 /** Rule fields scored on matched rules. Cap parts after `capKind` are scored only when the reference has a spend cap. */
 export const RULE_FIELDS = [
