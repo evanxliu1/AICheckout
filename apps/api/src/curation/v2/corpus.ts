@@ -103,7 +103,7 @@ export const corpusV2Schema = z.strictObject({
   schemaVersion: z.literal(2),
   version: id,
   origin: z.enum(['synthetic-fixture', 'real-issuer-captures']),
-  annotationStatus: z.enum(['agent-drafted', 'human-verified']),
+  annotationStatus: z.enum(['agent-drafted', 'agent-verified', 'human-verified']),
   description: z.string().min(1).max(2000),
   cases: z.array(caseSchema).min(1).max(200),
 });
