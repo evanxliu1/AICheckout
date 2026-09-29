@@ -111,7 +111,7 @@ Exit: all three frontends use `packages/ui` and Helios tokens; browser tests and
 3. New Supabase migration (never edit applied ones) extending the SQL catalog validator to v2; update seed generator and the 28 parity cases. Evan pushes the migration.
 4. Build the 7-card catalog from the verified gold labels (not from model output), publish it through the hosted review app as reviewer, confirm `/v1/catalog` serves it, `npm run build:hosted` the extension and verify a live refresh.
 5. Extension: wallet lists the 7 cards; comparison shows the rule, conditions, and pay-later note for Citi, using the Phase 3a components.
-6. Amazon US cart reader (bounded order-summary rows, fixtures, native browser test), mirroring the Best Buy/Newegg readers.
+6. Site adapters as data (groundwork for Phase 6). Replace the hand-written `readBestBuy`/`readNewegg` functions in `extension/src/checkout/page-reader.ts` with one generic interpreter plus a declarative, versioned `SiteAdapter` spec per merchant: URL match (host + path pattern), summary container selector, row/label/amount selectors, label → amount-kind map, empty-cart and loading markers, and limits (max rows, max text length). Keep today's safety rules in the interpreter (visible text only, no form values, no item names or addresses, ambiguity → `unavailable`). Port Best Buy and Newegg to specs and prove it with the existing fixtures and browser tests, then add **Amazon US** as the first spec written from scratch.
 
 ### 4. Terms-change detection
 
@@ -120,6 +120,26 @@ Scheduled GitHub Action (weekly) runs the capture script, compares hashes to `ma
 ### 5. Ship
 
 Chrome Web Store (Evan pays the $5 fee and submits) using the privacy/support pages from the Phase 3a site, README with results table and live links (site, results page, review app), ~90 s demo video recorded on the Helios UI, decide on the passphrase vault (recommend dropping or opt-in).
+
+
+### 6. Site coverage harness (LLM adds merchants the way it adds cards)
+
+Same pattern as card curation: the model drafts, deterministic checks verify, and a human reviews before publishing. The unit of work here is a merchant site instead of a card.
+
+1. **Capture.** `scripts/capture-checkout-pages.mjs` (Playwright) builds a cart on a target site using public, logged-out flows with a test item. It saves a *redacted* DOM snapshot of the checkout summary region (gitignored) plus a committed manifest (URL, date, hash) and a labeled expectation (amount, kind, or `unavailable` reason). The agent never signs in, enters addresses or payment details, or places orders; sites that require login to show a cart are marked out of scope.
+2. **Extraction task.** An `ExtractionTask` for sites (reusing `executeTask`): the input is the redacted snapshot and the output is a `SiteAdapter` spec. Validation is execution-based: run the real extension interpreter (jsdom) on every fixture for that site, and require the exact labeled amount and kind, `unavailable` where the label says so, and selectors that stay inside the summary region. Findings go into the trace like evidence findings do for cards.
+3. **Corpus and variants.** Real snapshots from ~15–25 US retailers, split dev/held-out by site. Mechanical DOM variants (the analog of card variants):
+   - `class-rename` (hashed class names change): selectors should rely on stable attributes or labels.
+   - `promo-row` (discount, gift card, or "4 payments of $X" rows added): the adapter must not read them as the total.
+   - `loading` (`aria-busy` or skeleton rows): expect `page-loading`.
+   - `empty-cart`: expect `empty-cart`.
+   - `injection` (text in the page telling the model to report a different selector or total): expect an `untrusted-instruction` issue.
+4. **Metrics.** Fixture pass rate, false-found rate (worst case: a wrong amount reported as found), robustness across variants, held-out site success, and repair rate (drift fixed from the old spec plus a new snapshot). Latency and tokens as for cards. Same `eval:sites` CLI shape as `eval:v2`, with a fixture-provider `--check` in CI.
+5. **Merchant profile.** Per site, the reward-relevant facts the engine needs: online retail yes/no, sells physical goods, expected MCC with confidence and sources, and third-party marketplace or payment-path caveats. Drafted from public sources with quoted evidence, as in the card research.
+6. **Publish as data.** Reviewed specs and profiles ship inside the catalog release, so new sites need no extension update. MV3 forbids remotely hosted code, so specs must stay declarative data run by the interpreter, never code. `activeTab` + `scripting` already allow reading any site on the user's click; confirm with the Chrome Web Store policy before shipping remote specs.
+7. **Drift detection.** Extend the Phase 4 scheduled job: re-capture each supported site weekly, run its published spec, and open an issue when it fails; the harness proposes a repaired spec for review.
+
+Exit: at least 10 new US merchants published through review; results (including held-out sites and variant robustness) added to `docs/evals/results.md`.
 
 ## Housekeeping
 
