@@ -11,15 +11,21 @@ export interface Span {
  * Locate a model quote in the original captured text. Matching is exact except that any run of whitespace
  * matches any other run, because rendered pages break lines where the model may write a space.
  */
-export function resolveQuote(quote: string, input: ExtractionV2Input): Span | null {
-  const words = quote.trim().split(/\s+/).filter(Boolean);
-  if (!words.length) return null;
-  const pattern = new RegExp(words.map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s+'));
+export function resolveQuote(quote: string, input: Pick<ExtractionV2Input, 'documents'>): Span | null {
+  const pattern = quotePattern(quote);
+  if (!pattern) return null;
   for (const document of input.documents) {
     const match = pattern.exec(document.body);
     if (match) return { documentId: document.id, start: match.index, end: match.index + match[0].length };
   }
   return null;
+}
+
+/** A regex matching `quote` with any whitespace run standing for any other; null for a blank quote. */
+export function quotePattern(quote: string): RegExp | null {
+  const words = quote.trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return null;
+  return new RegExp(words.map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s+'));
 }
 
 export function validateInputsV2(input: ExtractionV2Input): Finding[] {

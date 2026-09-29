@@ -25,7 +25,8 @@ Priorities: measurable LLM results first; product schema only where the product 
 - `apps/api/src/curation/v2/schema.ts`: extraction contract v2 (`issuer-extraction.2`): 13 categories (`CATEGORIES`), per-rule `rateBps` (total, not increment), `paidOnPaymentBps` (Citi "1% as you pay"), `cap` {kind, amountCents, period, rateAfterCapBps}, `activation`, `usMerchantsOnly`, `limitedTime`, `definition` includes/excludes, card-level `rewardCurrency`, `pointValueHundredthsOfCent`, `exclusions`, `issues`. Every value is `{value|null, evidence: string[]}`. Input: `{cardId, cardName, documents[{id,title,url,capturedOn,body,contentHash}]}`.
 - `apps/api/src/curation/v2/context.ts`: prompts `baseline.1` and `guided.1`; source selection `full` and `keyword-window.1` (keyword lines ±1, verbatim, `[...]` separators); `buildContextV2(input, prompt, selection)` returns system/user/jsonSchema/versions/hash/estimate.
 - `apps/api/src/curation/v2/validate.ts`: `resolveQuote` (exact match except whitespace runs; server computes spans, the model never counts offsets), `validateInputsV2`, `percentsIn`, `validateExtractionV2` (missing/unfound evidence, rate not in evidence, cap/payment consistency, reported issues).
-- None of the v2 files has tests yet, and nothing calls them yet.
+- Phase 2a finished on branch `phase2a-harness` (2026-09-28): `v2/task.ts`, `v2/corpus.ts` (directory corpus: `corpus.v2.json` + committed `manifest.json` + gitignored `captures/`; variants by mechanical edits), `v2/score.ts`, `v2/evaluate.ts`, `v2/eval-cli.ts` (`npm run eval:v2`, with `--replay` to re-score saved runs), synthetic `evals/curation/fixture.v2/`, 21 tests in `apps/api/tests/extraction-v2.test.ts`, and `eval:v2 -- --check` in CI. Metrics are documented in `evals/curation/README.md`.
+- Codex strict-schema smoke passed: `--output-schema` accepts the v2 schema including `"format":"date"`; gpt-5.5 (low) returned `endsOn` correctly on the fixture. No regex fallback needed.
 
 ## Decisions already made (do not re-litigate)
 
@@ -59,7 +60,7 @@ Work on a branch per phase; open a PR at the end of each phase and ask Evan to m
 5. Tests: quote resolution (whitespace, missing, multi-document), `percentsIn`, rate-in-evidence including sums, cap consistency, scorer matching and metric math on hand-built fixtures. Add `eval:v2 --check` to CI.
 6. Codex strict-schema smoke: run one real case after 2b to confirm the v2 JSON schema (including `z.iso.date()` format) is accepted by `--output-schema`; switch to a regex pattern if not.
 
-Exit: `eval:v2 --provider fixture --check` passes in CI; unit tests cover validator and scorer.
+Exit: `eval:v2 --provider fixture --check` passes in CI; unit tests cover validator and scorer. **Done** (step 6 included).
 
 ### 2b. Real corpus
 

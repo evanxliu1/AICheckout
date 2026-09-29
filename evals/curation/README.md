@@ -1,5 +1,57 @@
 # Curation evaluations
 
+## Extraction v2 (`npm run eval:v2`)
+
+v2 evaluates the `issuer-extraction.2` contract on real issuer pages. The model finds every earning rule itself and cites exact quotes. The server resolves each quote to a span in the captured page.
+
+A corpus is a directory:
+
+| File | Committed | Contents |
+| --- | --- | --- |
+| `corpus.v2.json` | yes | Cases: card, split (`dev`/`heldout`), source IDs, optional variant edits, and reference labels with short verbatim anchors |
+| `manifest.json` | yes | Source ID, card, URL, capture date, SHA-256, length |
+| `captures/<id>.txt` | real corpus: **no** (issuer text is copyrighted) | Captured page text. Loading fails if a capture's hash differs from the manifest |
+
+Variant cases (`remove-cap`, `conflicting-rate`, `injection`, `stale-promo`) are derived at load time by mechanical edits (`delete`, `insert-after`, `append`) to the base captures. A source may appear in only one split.
+
+`fixture.v2/` is a small synthetic corpus of invented terms, committed with its captures. It tests the harness and scorer; it is not a benchmark. The real corpus goes in `real/` (Phase 2b).
+
+```sh
+# CI gate: reference-echo must score 100% and abstention 0% on every prompt × selection. No model call.
+npm run eval:v2 -- --check
+
+# Live run on the Codex CLI (ChatGPT subscription)
+npm run eval:v2 -- --provider codex --model gpt-5.5 --effort low --prompt guided.1 --selection keyword-window.1 --split dev --repeat 2
+
+# Re-score saved observations after a scorer change, without calling a model
+npm run eval:v2 -- --replay evals/curation/runs/RUN/observations.json
+```
+
+Options: `--corpus DIR` (default `evals/curation/real`, or `fixture.v2` with `--check`), `--prompt baseline.1|guided.1`, `--selection full|keyword-window.1`, `--split dev|heldout|all` (held-out needs `--allow-heldout`; never tune on it), `--repeat N`, `--concurrency N`, `--limit N`, `--output DIR`. Fixture runs take `--model reference-echo.1|abstain.2`.
+
+Each run writes `observations.json` (traces, with sources by hash and no captured text), `report.json`, and `report.md` to the ignored `runs/` directory. Scoring rebuilds each case's context and rejects observations whose source hashes, prompt, or selection differ from what the corpus produces.
+
+### v2 metrics
+
+Predicted rules are matched to reference rules by category; when a category has several rules, the closest issuer wording wins, then an equal rate.
+
+| Metric | Definition |
+| --- | --- |
+| Rule recall / precision | Matched rules over reference rules / over predicted rules |
+| Field accuracy (matched rules) | Exact match on rate, paid-on-payment portion, cap kind, activation, U.S.-only, limited-time; cap amount, period, and after-cap rate only when the reference has a spend cap |
+| Field accuracy (end to end) | Same correct count over every reference rule's fields, so missed rules count as wrong |
+| Card-level field accuracy | Reward currency and point value |
+| Claim precision / unsupported claims | Non-null predicted values that are correct and cite at least one quote that resolves. Values on unmatched rules are unsupported |
+| Evidence validity | Quotes that resolve in the source over all quotes given |
+| Expected-issue recall | Labeled issues reported with the same code and a quote overlapping an anchor (`missing` needs only the code). Also reported per code |
+| Exclusion recall | Labeled exclusions whose anchor is covered by a predicted exclusion |
+| False-clean | Kernel status `evidence_valid` although the case has labeled issues or the extraction has any error |
+| Latency, tokens | p50/p95 wall-clock per run; mean input/output tokens as reported by the provider (Codex adds ~2.6k harness tokens) |
+
+Reports also break results down by repeat, variant kind, and reference category.
+
+## v1 (synthetic corpus)
+
 This local evaluator scores saved extraction traces against versioned references. It includes **60 synthetic, agent-authored cases awaiting human annotation review**. It can collect live runs through the Codex CLI (below), but the synthetic corpus cannot establish model accuracy; the [roadmap](../../docs/design.md#roadmap) replaces it with hand-labeled real issuer terms.
 
 The current corpus has 30 development Quicksilver examples and 30 reserved BCE examples. Related issuer/document families cannot cross splits; identical source bodies after Unicode/whitespace normalization cannot cross splits either. The two sets deliberately share scenario templates. Two issuer families and paired synthetic templates are **not a validated independent held-out benchmark**. The reserved flag prevents accidental use in ordinary development commands; it is not secrecy or a guarantee against leakage.
