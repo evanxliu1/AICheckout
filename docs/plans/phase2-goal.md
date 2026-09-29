@@ -34,6 +34,7 @@ Priorities: measurable LLM results first; product schema only where the product 
 - Labels: the agent drafts, Evan verifies every field against highlighted source text (~1 hour budget).
 - Source text comes from a **headless capture script** run in the terminal (not the browser pane). Captured issuer text is copyrighted: keep it gitignored; commit only URLs, hashes, labels, and short quotes.
 - v1 contract stays as-is for the hosted server/DB; v2 is additive.
+- Frontend design uses HashiCorp's **Helios Design System** (https://helios.hashicorp.design) across the extension popup, the review app, and a new public site (see Phase 3a).
 
 ## Constraints and gotchas learned this session
 
@@ -79,13 +80,34 @@ Exit: `evals/curation/real/corpus.v2.json` committed (no issuer bodies), all anc
 
 Exit: results doc committed; README headline numbers updated.
 
+### 3a. Frontend design foundation (Helios)
+
+Do this before Phase 3 so the new product UI is built on it. Helios is HashiCorp's design system; its component library (`@hashicorp/design-system-components`) is Ember-only, so we use its framework-neutral parts and rebuild the components in React to Helios's specs.
+
+Verified 2026-09-28:
+- `@hashicorp/design-system-tokens@5.1.0` (MPL-2.0) ships `dist/products/css/tokens.css` (CSS variables such as `--token-color-foreground-primary`, `--token-color-palette-blue-200`, `--token-typography-font-stack-text`, `--token-border-radius-medium`, `--token-elevation-mid-box-shadow`) plus helpers in `dist/products/css/helpers/` (color, elevation, focus-ring, typography).
+- The product tokens are **light theme only**; no dark-mode tokens in this version. Stay light-only unless a later version adds a theme.
+- `@hashicorp/flight-icons@5.2.0` (MPL-2.0) provides the SVG icon set.
+
+Steps:
+1. New workspace package `packages/ui`: imports the Helios tokens and helper CSS once and exports React components that follow the Helios component specs and naming: `Button` (primary/secondary/tertiary/critical, sizes), `TextInput`, `Select`, `Checkbox`/`Radio`/`Toggle`, form `Field` with helper/error text, `Badge`, `AlertInline`, `Card` (container), `Table`, `Tabs`, `Modal`, `ApplicationState` (empty/error/loading), `Link`, and `Icon` (Flight icons, imported per icon so bundles stay small). Each component links to its Helios doc page in a comment and has a unit test for roles/keyboard behavior.
+2. Extension popup (Tailwind 3): map the Tailwind theme (colors, font sizes, radius, shadows) to Helios CSS variables so utilities *are* tokens, and replace ad-hoc controls with `packages/ui` components. Respect the popup constraints: 360 px wide default, Chrome's 800×600 popup maximum, full keyboard use, Helios focus ring.
+3. Review app: replace `apps/review/src/styles.css` values with Helios tokens and use `packages/ui` for forms, tables (draft vs published diff), badges (evidence status), and inline alerts. Source evidence highlighting uses Helios highlight/surface tokens.
+4. Public site `apps/site` (static Vite build served by the Fastify app at `/` on Render, same origin as `/review/` and `/v1/catalog`): landing page (what it does, screenshots, install link), **eval results page** rendered from the results JSON of Phase 2c (table plus chart), architecture page, and the **privacy policy and support pages** the Chrome Web Store listing needs.
+5. Screens to design and verify at 360 px and 480 px (popup) and 1280 px (review app and site): wallet setup, card selection (7 cards), comparison result with per-rule explanation, uncertainty range, Citi pay-later note, cap reached, unsupported merchant, error/offline; review queue, extraction evidence, draft diff, publish confirmation; landing, results, privacy.
+6. Update `extension/DESIGN.md` and `apps/review/DESIGN.md` (and their `.impeccable` sidecars) to record the Helios adoption, tokens, and component usage. Re-render store screenshots and the promo tile with `npm run release:media` after the redesign.
+7. Keep AI Checkout's own name and cart icon. Do not use HashiCorp logos or branding, and do not imply affiliation. Note Helios and Flight (MPL-2.0) in the README credits.
+8. Verification: Playwright selectors should be role/label-based so the restyle doesn't break them; add an automated accessibility check (axe) on popup, review app, and site; one visual review pass on the screens above.
+
+Exit: all three frontends use `packages/ui` and Helios tokens; browser tests and the accessibility check pass; DESIGN.md files updated.
+
 ### 3. Product uses the real catalog
 
 1. `packages/rewards-core` catalog `schemaVersion: 2` supporting: `all-purchases`, `online-retail` (channel-based, optional U.S.-only), named-merchant rules, `paidOnPaymentBps`, caps with period and after-cap rate, reward currency and point value. Keep v1 parsing for old cached releases.
 2. Engine: per merchant profile (online, sells physical goods, expected MCC 5732 with confidence), pick applicable rules, rank by guaranteed minimum; ranges for pending caps, pay-later portions, and payment method (PayPal/BNPL/wallet lower confidence; Amex excludes BNPL).
 3. New Supabase migration (never edit applied ones) extending the SQL catalog validator to v2; update seed generator and the 28 parity cases. Evan pushes the migration.
 4. Build the 7-card catalog from the verified gold labels (not from model output), publish it through the hosted review app as reviewer, confirm `/v1/catalog` serves it, `npm run build:hosted` the extension and verify a live refresh.
-5. Extension: wallet lists the 7 cards; comparison shows the rule, conditions, and pay-later note for Citi.
+5. Extension: wallet lists the 7 cards; comparison shows the rule, conditions, and pay-later note for Citi, using the Phase 3a components.
 6. Amazon US cart reader (bounded order-summary rows, fixtures, native browser test), mirroring the Best Buy/Newegg readers.
 
 ### 4. Terms-change detection
@@ -94,7 +116,7 @@ Scheduled GitHub Action (weekly) runs the capture script, compares hashes to `ma
 
 ### 5. Ship
 
-Chrome Web Store (Evan pays the $5 fee and submits), privacy policy page, README with results table and live links, ~90 s demo video, decide on the passphrase vault (recommend dropping or opt-in).
+Chrome Web Store (Evan pays the $5 fee and submits) using the privacy/support pages from the Phase 3a site, README with results table and live links (site, results page, review app), ~90 s demo video recorded on the Helios UI, decide on the passphrase vault (recommend dropping or opt-in).
 
 ## Housekeeping
 
