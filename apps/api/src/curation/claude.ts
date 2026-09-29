@@ -47,7 +47,14 @@ export interface ClaudeOptions {
 function failureFor(message: string, status: number | null | undefined): ProviderFailure {
   if (status === 429 || /usage limit|rate limit|429|too many requests|overloaded/i.test(message))
     return new ProviderFailure('rate-limit');
-  if (status === 401 || status === 403 || /not logged in|unauthorized|authentication|login/i.test(message))
+  // Bad requests (an unknown model, a CLI too old for the model) will not succeed on retry.
+  if (
+    status === 400 ||
+    status === 401 ||
+    status === 403 ||
+    status === 404 ||
+    /not logged in|unauthorized|authentication|login|does not support this model|unrecognized/i.test(message)
+  )
     return new ProviderFailure('permanent');
   return new ProviderFailure('transient');
 }

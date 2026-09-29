@@ -147,6 +147,14 @@ it('parses results and classifies failures', () => {
     'permanent',
   );
   expect(failure({ is_error: true, result: 'Internal server error', usage })).toBe('transient');
+  expect(
+    failure({
+      is_error: true,
+      result: 'API Error: 400 Claude Code does not support this model',
+      usage,
+      api_error_status: 400,
+    }),
+  ).toBe('permanent');
   // A text-only reply without structured output is not a schema-valid completion.
   expect(failure({ is_error: false, result: '{}', usage })).toBe('transient');
 });
