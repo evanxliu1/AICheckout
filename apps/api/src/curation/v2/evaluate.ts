@@ -28,6 +28,7 @@ const traceSchema = z.looseObject({
   context: z.looseObject({ hash: z.string() }).optional(),
   attempts: z.array(
     z.looseObject({
+      outcome: z.string().optional(),
       usage: z.strictObject({ inputTokens: z.number(), outputTokens: z.number() }).optional(),
     }),
   ),
@@ -47,6 +48,53 @@ export type ObservationBundle = z.infer<typeof bundleSchema>;
 
 export const selectCases = (loaded: LoadedCorpus, split: Split) =>
   loaded.cases.filter(({ item }) => split === 'all' || item.split === split);
+
+export type Observation = ObservationBundle['observations'][number];
+export const slotOf = (o: { caseId: string; repeat: number }) => `${o.caseId}#${o.repeat}`;
+
+/** A run the provider refused for usage or rate limits; it measures nothing and should be run again. */
+export const rateLimited = (trace: { status: string; attempts: { outcome?: string }[] }) =>
+  trace.status === 'provider_error' && trace.attempts.at(-1)?.outcome === 'rate-limit';
+
+/** Every `caseId#repeat` slot a configuration plans, in corpus order, minus those already observed. */
+export function missingSlots(
+  loaded: LoadedCorpus,
+  configuration: Configuration,
+  observed: Iterable<{ caseId: string; repeat: number }> = [],
+  caseIds?: readonly string[],
+) {
+  const seen = new Set(Array.from(observed, slotOf));
+  return selectCases(loaded, configuration.split)
+    .filter(({ item }) => !caseIds || caseIds.includes(item.id))
+    .flatMap((value) =>
+      Array.from({ length: configuration.repeat }, (_, i) => ({ value, repeat: i + 1 })).filter(
+        (slot) => !seen.has(slotOf({ caseId: value.item.id, repeat: slot.repeat })),
+      ),
+    );
+}
+
+/**
+ * Append new observations to a saved bundle. The result is a strict superset: same corpus, configuration,
+ * and experiment, every old observation kept, and no slot or run ID twice.
+ */
+export function mergeBundles(existing: ObservationBundle, added: ObservationBundle): ObservationBundle {
+  const same = (key: 'corpus' | 'configuration' | 'experiment') =>
+    canonicalJson(existing[key]) === canonicalJson(added[key]);
+  if (!same('corpus')) throw new Error('Cannot resume: the corpus or its captures changed.');
+  if (!same('configuration') || !same('experiment'))
+    throw new Error('Cannot resume: the saved run used a different configuration.');
+  if (existing.provenance !== added.provenance) throw new Error('Cannot resume: provenance differs.');
+  const slots = new Set<string>(),
+    runs = new Set<string>();
+  const observations = [...existing.observations, ...added.observations];
+  for (const o of observations) {
+    if (slots.has(slotOf(o)) || runs.has(o.trace.runId))
+      throw new Error(`Duplicate observation ${slotOf(o)}.`);
+    slots.add(slotOf(o));
+    runs.add(o.trace.runId);
+  }
+  return { ...existing, observations };
+}
 
 /** The labeled answer written as a model reply, citing each field with its rule's anchors. */
 export function referenceAnswer(item: CorpusCase): ExtractionV2 {
