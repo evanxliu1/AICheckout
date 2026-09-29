@@ -1,7 +1,15 @@
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
 import { buildContext } from './context.ts';
-import { extractionInputSchema, extractionSchema, validateExtraction, validateInputs } from './extraction.ts';
+import {
+  extractionInputSchema,
+  extractionSchema,
+  validateExtraction,
+  validateInputs,
+  type Extraction,
+  type ExtractionInput,
+  type Finding,
+} from './extraction.ts';
 import {
   replySchema,
   limitsSchema,
@@ -68,17 +76,58 @@ async function bounded<T>(
   }
 }
 
+/** What varies between extraction contracts; the bounded execution loop below is shared. */
+export interface ExtractionTask<Input, Output> {
+  parseInput(raw: unknown): z.ZodSafeParseResult<Input>;
+  validateInputs(input: Input, now: number): Finding[];
+  documents(input: Input): { id: string; contentHash: string }[];
+  buildContext(input: Input): TaskContext;
+  maxInputBytes: number;
+  outputSchema: z.ZodType<Output>;
+  validateOutput(output: Output, input: Input): Finding[];
+}
+export interface TaskContext {
+  system: string;
+  user: string;
+  jsonSchema: unknown;
+  hash: string;
+  versions: { prompt: string; context: string; schema: string; sourcePolicy: string };
+  inputTokenEstimate: number;
+}
+export type TaskTrace<Output> = Omit<ExtractionTrace, 'extraction'> & { extraction?: Output };
+type RunOptions = {
+  limits?: z.input<typeof limitsSchema>;
+  signal?: AbortSignal;
+  runId?: string;
+  beforeAttempt?: (signal: AbortSignal) => Promise<void>;
+};
+
+const v1Task: ExtractionTask<ExtractionInput, Extraction> = {
+  parseInput: (raw) => extractionInputSchema.safeParse(raw),
+  validateInputs,
+  documents: (input) =>
+    input.documents.map((document) => ({ id: document.id, contentHash: document.content_hash })),
+  buildContext,
+  maxInputBytes: MAX_INPUT_BYTES,
+  outputSchema: extractionSchema,
+  validateOutput: validateExtraction,
+};
+
 /** Provider execution has no database/publication tools. HTTP access goes through the authenticated service and durable ledger. */
-export async function runExtraction(
+export function runExtraction(
   rawInput: unknown,
   provider: ExtractionProvider,
-  options: {
-    limits?: z.input<typeof limitsSchema>;
-    signal?: AbortSignal;
-    runId?: string;
-    beforeAttempt?: (signal: AbortSignal) => Promise<void>;
-  } = {},
+  options: RunOptions = {},
 ): Promise<ExtractionTrace> {
+  return executeTask(v1Task, rawInput, provider, options) as Promise<ExtractionTrace>;
+}
+
+export async function executeTask<Input, Output>(
+  task: ExtractionTask<Input, Output>,
+  rawInput: unknown,
+  provider: ExtractionProvider,
+  options: RunOptions = {},
+): Promise<TaskTrace<Output>> {
   const limits = limitsSchema.parse(options.limits ?? {}),
     started = performance.now(),
     now = Date.now();
@@ -88,7 +137,7 @@ export async function runExtraction(
     mode: provider.mode,
     pricing: provider.pricing,
   });
-  const trace: ExtractionTrace = {
+  const trace: TaskTrace<Output> = {
     runId: options.runId ? z.uuid().parse(options.runId) : randomUUID(),
     startedAt: new Date(now).toISOString(),
     durationMs: 0,
@@ -106,7 +155,7 @@ export async function runExtraction(
     trace.durationMs = Math.round(elapsed());
     return trace;
   };
-  const parsed = extractionInputSchema.safeParse(rawInput);
+  const parsed = task.parseInput(rawInput);
   if (!parsed.success) {
     trace.findings = parsed.error.issues
       .slice(0, 30)
@@ -114,14 +163,11 @@ export async function runExtraction(
     return finish('invalid_input');
   }
   const input = parsed.data;
-  trace.documents = input.documents.map((document) => ({
-    id: document.id,
-    contentHash: document.content_hash,
-  }));
-  trace.findings = validateInputs(input, now);
+  trace.documents = task.documents(input);
+  trace.findings = task.validateInputs(input, now);
   if (trace.findings.length) return finish('invalid_input');
-  if (Buffer.byteLength(JSON.stringify(input), 'utf8') > MAX_INPUT_BYTES) return finish('input_limit');
-  const context = buildContext(input);
+  if (Buffer.byteLength(JSON.stringify(input), 'utf8') > task.maxInputBytes) return finish('input_limit');
+  const context = task.buildContext(input);
   trace.context = {
     hash: context.hash,
     versions: context.versions,
@@ -209,7 +255,7 @@ export async function runExtraction(
         endAttempt('invalid_output');
         return finish('invalid_output');
       }
-      const output = extractionSchema.safeParse(decoded);
+      const output = task.outputSchema.safeParse(decoded);
       if (!output.success) {
         trace.findings = output.error.issues
           .slice(0, 30)
@@ -218,7 +264,7 @@ export async function runExtraction(
         return finish('invalid_output');
       }
       trace.extraction = output.data;
-      trace.findings = validateExtraction(output.data, input);
+      trace.findings = task.validateOutput(output.data, input);
       const status = trace.findings.length ? 'needs_review' : 'evidence_valid';
       endAttempt(status);
       return finish(status);
