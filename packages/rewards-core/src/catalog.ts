@@ -1,8 +1,8 @@
-import type { Catalog } from './types.ts';
+import type { CatalogV1 } from './types.ts';
 
 /** Reviewed engineering seed, scoped to Best Buy US and Newegg US. Not a complete benefits catalog.
  * The 30-day refresh deadline is our product policy, not an issuer effective/end date. */
-export const PILOT_CATALOG: Catalog = {
+export const PILOT_CATALOG: CatalogV1 = {
   schemaVersion: 1,
   version: '2026-09-25.pilot.2',
   verifiedAt: '2026-09-25T00:00:00Z',

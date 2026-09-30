@@ -36,6 +36,8 @@
     "db:advisors": "supabase db advisors --local --type security --level warn --fail-on error",
     "db:seed:generate": "node scripts/generate-db-seed.mjs",
     "db:seed:check": "node scripts/generate-db-seed.mjs --check",
+    "catalog:v2": "node scripts/build-catalog-v2.mjs",
+    "catalog:v2:check": "node scripts/build-catalog-v2.mjs --check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:scripts": "node --test \"scripts/lib/*.test.mjs\"",
