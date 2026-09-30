@@ -38,11 +38,39 @@ for (const opener of ['Open modal', 'Open critical modal']) {
     await expect(dialog.getByRole('button', { name: 'Dismiss' })).toBeFocused();
     await expectNoViolations(page);
 
-    // Tab cycles within the dialog.
-    for (let i = 0; i < 6; i++) {
+    // Tab visits only reachable controls: closed disclosure content and unchecked radios are skipped.
+    const name = () =>
+      page.evaluate(() => {
+        const el = document.activeElement as HTMLInputElement;
+        return el.getAttribute('aria-label') ?? (el.labels?.[0]?.textContent || el.textContent)?.trim();
+      });
+    const confirm = opener === 'Open modal' ? 'Publish' : 'Discard';
+    const forward = [];
+    for (let i = 0; i < 7; i++) {
       await page.keyboard.press('Tab');
-      expect(await dialog.evaluate((node) => node.contains(document.activeElement))).toBe(true);
+      forward.push(await name());
     }
+    expect(forward).toEqual([
+      'Changed rules',
+      'No one',
+      'Type the version to confirm',
+      confirm,
+      'Cancel',
+      'Dismiss',
+      'Changed rules',
+    ]);
+    await page.keyboard.press('Shift+Tab');
+    await page.keyboard.press('Shift+Tab');
+    expect(await name()).toBe('Cancel');
+
+    // Opening the disclosure makes its field reachable.
+    await dialog.getByText('Changed rules').click();
+    await page.keyboard.press('Tab');
+    expect(await name()).toBe('Reviewer note');
+    await expectNoViolations(page);
+
+    // Esc still closes when focus has fallen to <body>.
+    await page.evaluate(() => (document.activeElement as HTMLElement).blur());
     await page.keyboard.press('Escape');
     await expect(dialog).toBeHidden();
     await expect(trigger).toBeFocused();

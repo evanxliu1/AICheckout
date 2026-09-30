@@ -33,8 +33,10 @@ export function Tabs({
   className,
 }: TabsProps) {
   const baseId = useId();
-  const [internal, setInternal] = useState(defaultSelectedId ?? tabs[0]?.id);
-  const current = selectedId ?? internal;
+  const [internal, setInternal] = useState(defaultSelectedId);
+  // An unknown or removed id falls back to the first tab, so one tab is always selected and reachable.
+  const requested = selectedId ?? internal;
+  const current = tabs.some((tab) => tab.id === requested) ? requested : tabs[0]?.id;
   const refs = useRef(new Map<string, HTMLButtonElement>());
 
   const select = (id: string, focus = false) => {
@@ -51,7 +53,7 @@ export function Tabs({
       Home: 0,
       End: tabs.length - 1,
     }[event.key];
-    if (next === undefined) return;
+    if (next === undefined || !tabs.length) return;
     event.preventDefault();
     select(tabs[next].id, true);
   };

@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   AlertInline,
   ApplicationState,
@@ -424,5 +424,224 @@ describe('Disclosure', () => {
     expect(details.open).toBe(false);
     await userEvent.click(screen.getByText('Sources'));
     expect(details.open).toBe(true);
+  });
+});
+
+describe('review fixes', () => {
+  it('Modal Tab order skips closed disclosure content, hidden elements, and extra radios', async () => {
+    render(
+      <Modal isOpen onClose={() => {}} title="Trap" footer={<button>Last</button>}>
+        <Disclosure title="More">
+          <input aria-label="Inside closed" />
+        </Disclosure>
+        <input aria-label="Hidden" hidden />
+        <input type="radio" name="g" aria-label="R1" />
+        <input type="radio" name="g" aria-label="R2" defaultChecked />
+        <input type="radio" name="g" aria-label="R3" />
+      </Modal>,
+    );
+    const dismiss = screen.getByRole('button', { name: 'Dismiss' });
+    expect(document.activeElement).toBe(dismiss);
+    const order: (string | null)[] = [];
+    for (let i = 0; i < 4; i++) {
+      await userEvent.tab();
+      order.push(
+        document.activeElement?.getAttribute('aria-label') ?? document.activeElement?.textContent ?? null,
+      );
+    }
+    expect(order).toEqual(['More', 'R2', 'Last', 'Dismiss']);
+    await userEvent.tab({ shift: true });
+    expect(document.activeElement?.textContent).toBe('Last');
+
+    screen.getByText('More').closest('details')!.open = true;
+    await userEvent.tab({ shift: true });
+    await userEvent.tab({ shift: true });
+    expect(document.activeElement?.getAttribute('aria-label')).toBe('Inside closed');
+  });
+
+  it('Modal handles Esc and Tab from the document when focus fell to body', async () => {
+    const onClose = vi.fn();
+    render(
+      <Modal isOpen onClose={onClose} title="Esc">
+        <p>Body</p>
+      </Modal>,
+    );
+    (document.activeElement as HTMLElement).blur();
+    expect(document.activeElement).toBe(document.body);
+    await userEvent.tab();
+    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Dismiss' }));
+    (document.activeElement as HTMLElement).blur();
+    await userEvent.keyboard('{Escape}');
+    expect(onClose).toHaveBeenCalledOnce();
+  });
+
+  it('Modal closes on overlay click and focuses initialFocusRef', async () => {
+    function WithRef() {
+      const [open, setOpen] = useState(true);
+      const ref = useRef<HTMLButtonElement>(null);
+      return (
+        <Modal isOpen={open} onClose={() => setOpen(false)} title="Ref" initialFocusRef={ref}>
+          <button ref={ref}>Confirm</button>
+        </Modal>
+      );
+    }
+    render(<WithRef />);
+    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Confirm' }));
+    await userEvent.click(document.querySelector('.ac-modal-overlay')!);
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
+
+  it('Modal cleans up portal, inert, and scroll lock when unmounted while open', () => {
+    const { unmount } = render(
+      <div data-testid="page">
+        <Modal isOpen onClose={() => {}} title="Gone">
+          <p>Body</p>
+        </Modal>
+      </div>,
+    );
+    const page = screen.getByTestId('page').parentElement!;
+    expect(page.inert).toBe(true);
+    expect(document.body.classList.contains('ac-modal-open')).toBe(true);
+    unmount();
+    expect(document.querySelector('.ac-modal-root')).toBeNull();
+    expect(page.inert).toBe(false);
+    expect(document.body.classList.contains('ac-modal-open')).toBe(false);
+  });
+
+  it('Modal keeps the scroll lock until the last of two modals closes; only the top handles Esc', async () => {
+    const outerClose = vi.fn();
+    function Nested() {
+      const [inner, setInner] = useState(false);
+      return (
+        <Modal isOpen onClose={outerClose} title="Outer">
+          <button onClick={() => setInner(true)}>Open inner</button>
+          <Modal isOpen={inner} onClose={() => setInner(false)} title="Inner">
+            <p>Inner body</p>
+          </Modal>
+        </Modal>
+      );
+    }
+    render(<Nested />);
+    await userEvent.click(screen.getByRole('button', { name: 'Open inner' }));
+    expect(screen.getByRole('dialog', { name: 'Inner' })).toBeTruthy();
+    await userEvent.keyboard('{Escape}');
+    expect(screen.queryByRole('dialog', { name: 'Inner' })).toBeNull();
+    expect(outerClose).not.toHaveBeenCalled();
+    expect(document.body.classList.contains('ac-modal-open')).toBe(true);
+  });
+
+  it('Tabs fall back to the first tab for an unknown default or a removed selected tab', async () => {
+    const all = [
+      { id: 'a', label: 'A', content: 'Panel A' },
+      { id: 'b', label: 'B', content: 'Panel B' },
+    ];
+    const { rerender } = render(<Tabs label="T" tabs={all} defaultSelectedId="missing" />);
+    expect(screen.getByRole('tab', { selected: true }).textContent).toBe('A');
+    await userEvent.click(screen.getByRole('tab', { name: 'B' }));
+    rerender(<Tabs label="T" tabs={[all[0]]} />);
+    const only = screen.getByRole('tab', { name: 'A' });
+    expect(only.getAttribute('aria-selected')).toBe('true');
+    expect(only.tabIndex).toBe(0);
+    expect(screen.getByRole('tabpanel').textContent).toBe('Panel A');
+    rerender(<Tabs label="T" tabs={all} selectedId="gone" />);
+    expect(screen.getByRole('tab', { name: 'A' }).tabIndex).toBe(0);
+  });
+
+  it('treats aria-invalid false/"false" as valid', () => {
+    render(
+      <>
+        <TextInput aria-label="One" aria-invalid={false} />
+        <TextInput aria-label="Two" aria-invalid="false" />
+        <Select aria-label="Three" aria-invalid="false" />
+        <Checkbox label="Four" aria-invalid="false" />
+        <TextInput aria-label="Five" aria-invalid="true" />
+      </>,
+    );
+    for (const name of ['One', 'Two'])
+      expect(screen.getByRole('textbox', { name }).hasAttribute('aria-invalid')).toBe(false);
+    expect(screen.getByRole('combobox', { name: 'Three' }).hasAttribute('aria-invalid')).toBe(false);
+    expect(screen.getByRole('checkbox', { name: 'Four' }).hasAttribute('aria-invalid')).toBe(false);
+    expect(screen.getByRole('textbox', { name: 'Five' }).getAttribute('aria-invalid')).toBe('true');
+  });
+
+  it('Field merges describedBy and keeps a polite live region for errors that appear later', () => {
+    const { rerender } = render(
+      <>
+        <p id="hint">Hint</p>
+        <Field label="Amount" helperText="Dollars" describedBy="hint">
+          {(control) => <TextInput {...control} />}
+        </Field>
+      </>,
+    );
+    const input = screen.getByRole('textbox', { name: 'Amount' });
+    const errorId = input.id + '-error';
+    expect(input.getAttribute('aria-describedby')).toBe(`${input.id}-helper hint`);
+    const region = document.getElementById(errorId)!;
+    expect(region.getAttribute('aria-live')).toBe('polite');
+    expect(region.textContent).toBe('');
+    rerender(
+      <>
+        <p id="hint">Hint</p>
+        <Field label="Amount" helperText="Dollars" describedBy="hint" error="Too high.">
+          {(control) => <TextInput {...control} />}
+        </Field>
+      </>,
+    );
+    expect(document.getElementById(errorId)).toBe(region);
+    expect(region.textContent).toBe('Too high.');
+    expect(input.getAttribute('aria-describedby')).toBe(`${input.id}-helper ${errorId} hint`);
+  });
+
+  it('Fieldset merges a consumer aria-describedby', () => {
+    render(
+      <Fieldset legend="Group" helperText="Help" aria-describedby="extra">
+        <Checkbox label="One" />
+      </Fieldset>,
+    );
+    expect(screen.getByRole('group', { name: 'Group' }).getAttribute('aria-describedby')).toMatch(
+      /-helper extra$/,
+    );
+  });
+
+  it('Button icon-only without a name throws; Icon with aria-label is a labelled image', () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    expect(() =>
+      render(
+        <Button icon="trash" isIconOnly>
+          {null}
+        </Button>,
+      ),
+    ).toThrow(/accessible name/);
+    render(
+      <Button icon="trash" isIconOnly aria-label="Remove">
+        {null}
+      </Button>,
+    );
+    expect(screen.getByRole('button', { name: 'Remove' })).toBeTruthy();
+    render(<Icon name="lock" aria-label="Locked" />);
+    expect(screen.getByRole('img', { name: 'Locked' }).hasAttribute('aria-hidden')).toBe(false);
+  });
+
+  it('Table does not re-sort on re-render with inline columns and unchanged rows', () => {
+    const rows = [
+      { id: 'a', n: 2 },
+      { id: 'b', n: 1 },
+    ];
+    const sortValue = vi.fn((row: { n: number }) => row.n);
+    const view = () => (
+      <Table
+        caption="N"
+        columns={[{ key: 'n', label: 'N', sortValue, render: (row) => String(row.n) }]}
+        rows={rows}
+        rowKey={(row) => row.id}
+        initialSort={{ key: 'n', direction: 'ascending' }}
+      />
+    );
+    const { rerender } = render(view());
+    const calls = sortValue.mock.calls.length;
+    expect(calls).toBeGreaterThan(0);
+    rerender(view());
+    expect(sortValue.mock.calls.length).toBe(calls);
+    expect(screen.getAllByRole('cell').map((cell) => cell.textContent)).toEqual(['1', '2']);
   });
 });

@@ -371,6 +371,13 @@ function ModalDemo() {
         }
       >
         <p>Seven cards and three merchants will be served to every extension on its next refresh.</p>
+        <Disclosure title="Changed rules">
+          <Field label="Reviewer note">{(control) => <TextInput {...control} />}</Field>
+        </Disclosure>
+        <Fieldset legend="Notify" layout="horizontal">
+          <Radio name="notify" value="none" label="No one" defaultChecked />
+          <Radio name="notify" value="team" label="Team" />
+        </Fieldset>
         <Field label="Type the version to confirm">{(control) => <TextInput {...control} />}</Field>
       </Modal>
     </Section>

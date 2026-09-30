@@ -31,6 +31,11 @@ function hasError(error: Messages['error']): boolean {
   return Array.isArray(error) ? error.length > 0 : error != null && error !== false && error !== '';
 }
 
+/** `aria-invalid` of undefined, false, or "false" means valid. */
+function ariaInvalidValue(value: InputHTMLAttributes<HTMLInputElement>['aria-invalid']): boolean {
+  return value !== undefined && value !== false && value !== 'false';
+}
+
 function describedBy(ids: { helper?: string; error?: string }, messages: Messages, extra?: string) {
   const list = [
     messages.helperText ? ids.helper : undefined,
@@ -54,10 +59,19 @@ function HelperText({ id, children }: { id?: string; children: ReactNode }) {
   );
 }
 
-function ErrorText({ id, error }: { id?: string; error: Messages['error'] }) {
+/** Always rendered, so an error that appears after user input is announced politely. */
+function ErrorRegion({ id, error }: { id: string; error: Messages['error'] }) {
+  return (
+    <div id={id} className="ac-form-error-region" aria-live="polite">
+      {hasError(error) ? <ErrorText error={error} /> : null}
+    </div>
+  );
+}
+
+function ErrorText({ error }: { error: Messages['error'] }) {
   const items = Array.isArray(error) ? error : [error];
   return (
-    <div id={id} className="ac-form-error">
+    <div className="ac-form-error">
       <Icon name="alert-diamond" className="ac-form-error__icon" />
       <div className="ac-form-error__content">
         {items.map((item, index) => (
@@ -76,6 +90,8 @@ export type FieldProps = Messages & {
   isOptional?: boolean;
   /** Control id; generated when omitted. */
   id?: string;
+  /** Extra ids for the control's aria-describedby, merged with the helper and error ids. */
+  describedBy?: string;
   className?: string;
   children: (control: FieldControlProps) => ReactNode;
 };
@@ -88,6 +104,7 @@ export function Field({
   isRequired,
   isOptional,
   id,
+  describedBy: extraDescribedBy,
   className,
   children,
 }: FieldProps) {
@@ -105,12 +122,12 @@ export function Field({
       <div className="ac-form-field__control">
         {children({
           id: controlId,
-          'aria-describedby': describedBy(ids, { helperText, error }),
+          'aria-describedby': describedBy(ids, { helperText, error }, extraDescribedBy),
           'aria-invalid': invalid || undefined,
           required: isRequired || undefined,
         })}
       </div>
-      {invalid ? <ErrorText id={ids.error} error={error} /> : null}
+      <ErrorRegion id={ids.error} error={error} />
     </div>
   );
 }
@@ -121,7 +138,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function T
   { type = 'text', isInvalid, className, 'aria-invalid': ariaInvalid, ...rest },
   ref,
 ) {
-  const invalid = Boolean(isInvalid || ariaInvalid);
+  const invalid = Boolean(isInvalid) || ariaInvalidValue(ariaInvalid);
   return (
     <input
       ref={ref}
@@ -139,7 +156,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
   { isInvalid, className, 'aria-invalid': ariaInvalid, ...rest },
   ref,
 ) {
-  const invalid = Boolean(isInvalid || ariaInvalid);
+  const invalid = Boolean(isInvalid) || ariaInvalidValue(ariaInvalid);
   return (
     <select
       ref={ref}
@@ -170,7 +187,7 @@ function Choice({
   const generated = useId();
   const controlId = id ?? `${kind}${generated}`;
   const ids = { helper: `${controlId}-helper`, error: `${controlId}-error` };
-  const invalid = hasError(error) || Boolean(ariaInvalid);
+  const invalid = hasError(error) || ariaInvalidValue(ariaInvalid);
   const input = (
     <input
       ref={inputRef}
@@ -200,7 +217,11 @@ function Choice({
         {label}
       </label>
       {helperText ? <HelperText id={ids.helper}>{helperText}</HelperText> : null}
-      {hasError(error) ? <ErrorText id={ids.error} error={error} /> : null}
+      {hasError(error) ? (
+        <div id={ids.error} className="ac-form-choice__error">
+          <ErrorText error={error} />
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -242,17 +263,17 @@ export function Fieldset({
   className,
   children,
   id,
+  'aria-describedby': extraDescribedBy,
   ...rest
 }: FieldsetProps) {
   const generated = useId();
   const baseId = id ?? `fieldset${generated}`;
   const ids = { helper: `${baseId}-helper`, error: `${baseId}-error` };
-  const invalid = hasError(error);
   return (
     <fieldset
       id={id}
       className={cx('ac-form-fieldset', className)}
-      aria-describedby={describedBy(ids, { helperText, error })}
+      aria-describedby={describedBy(ids, { helperText, error }, extraDescribedBy)}
       {...rest}
     >
       <legend className="ac-form-legend">
@@ -261,7 +282,7 @@ export function Fieldset({
       </legend>
       {helperText ? <HelperText id={ids.helper}>{helperText}</HelperText> : null}
       <div className={cx('ac-form-fieldset__group', `ac-form-fieldset__group--${layout}`)}>{children}</div>
-      {invalid ? <ErrorText id={ids.error} error={error} /> : null}
+      <ErrorRegion id={ids.error} error={error} />
     </fieldset>
   );
 }

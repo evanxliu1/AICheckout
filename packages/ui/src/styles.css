@@ -301,12 +301,19 @@
 .ac-form-field {
   display: flex;
   flex-direction: column;
-  gap: 4px;
   min-width: 0;
 }
 
-.ac-form-field__control {
+.ac-form-field > .ac-form-helper-text {
   margin-top: 4px;
+}
+
+.ac-form-field__control {
+  margin-top: 8px;
+}
+
+.ac-form-field .ac-form-error {
+  margin-top: 8px;
 }
 
 .ac-form-label,
@@ -467,8 +474,11 @@
 }
 
 .ac-form-choice > .ac-form-helper-text,
-.ac-form-choice > .ac-form-error {
+.ac-form-choice > .ac-form-choice__error {
   grid-column: 2;
+}
+
+.ac-form-choice__error > .ac-form-error {
   margin-top: 0;
 }
 

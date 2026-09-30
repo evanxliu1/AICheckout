@@ -1,7 +1,9 @@
 // Helios Modal: https://helios.hashicorp.design/components/modal
 // Focus moves into the dialog, Tab is trapped, Esc and the overlay close it (unless
 // isDismissDisabled), the rest of the page is inert, and focus returns to the opener.
-import { useEffect, useId, useRef, type KeyboardEvent, type ReactNode, type RefObject } from 'react';
+// Designed for one modal at a time; a nested modal works (only the top one handles keys, and
+// the body scroll lock holds until the last one closes) but is not a supported pattern.
+import { useEffect, useId, useRef, type ReactNode, type RefObject } from 'react';
 import { createPortal } from 'react-dom';
 import { Icon, type IconName } from './Icon';
 import { cx } from './cx';
@@ -29,14 +31,54 @@ const FOCUSABLE = [
   'select:not([disabled])',
   'textarea:not([disabled])',
   'summary',
-  '[tabindex]:not([tabindex="-1"])',
+  '[tabindex]',
 ].join(',');
 
-function focusable(root: HTMLElement): HTMLElement[] {
-  return [...root.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(
-    (node) => !node.closest('[hidden], [inert]'),
+/** Content of a closed <details> is unreachable, except that element's own summary. */
+function insideClosedDetails(node: HTMLElement, root: HTMLElement): boolean {
+  for (let el = node.parentElement; el && el !== root; el = el.parentElement) {
+    if (el instanceof HTMLDetailsElement && !el.open) {
+      const summary = el.querySelector(':scope > summary');
+      if (node !== summary) return true;
+    }
+  }
+  return false;
+}
+
+function isVisible(node: HTMLElement): boolean {
+  // checkVisibility covers display:none, visibility:hidden, and content-visibility; jsdom lacks it.
+  return (
+    node.checkVisibility?.({
+      visibilityProperty: true,
+      checkVisibilityCSS: true,
+    } as CheckVisibilityOptions) ?? true
   );
 }
+
+/** Elements Tab can reach inside `root`, in DOM order (one entry per radio group). */
+function tabbable(root: HTMLElement): HTMLElement[] {
+  const candidates = [...root.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(
+    (node) =>
+      !node.closest('[hidden], [inert]') &&
+      !(node.getAttribute('tabindex') ?? '').trim().startsWith('-') &&
+      !insideClosedDetails(node, root) &&
+      isVisible(node),
+  );
+  const radioGroups = new Map<string, HTMLInputElement[]>();
+  for (const node of candidates)
+    if (node instanceof HTMLInputElement && node.type === 'radio' && node.name) {
+      const key = `${node.form ? 'form' : 'doc'}:${node.name}`;
+      radioGroups.set(key, [...(radioGroups.get(key) ?? []), node]);
+    }
+  const keep = new Set<HTMLElement>();
+  for (const group of radioGroups.values()) keep.add(group.find((radio) => radio.checked) ?? group[0]);
+  return candidates.filter(
+    (node) => !(node instanceof HTMLInputElement && node.type === 'radio' && node.name) || keep.has(node),
+  );
+}
+
+// Open dialogs, innermost last: only the top one handles keys; the body stays locked until all close.
+const openStack: HTMLElement[] = [];
 
 export function Modal(props: ModalProps) {
   return props.isOpen ? createPortal(<ModalDialog {...props} />, document.body) : null;
@@ -67,11 +109,38 @@ function ModalDialog({
       (node): node is HTMLElement => node !== root && node instanceof HTMLElement && !node.inert,
     );
     siblings.forEach((node) => (node.inert = true));
+    openStack.push(dialog);
     document.body.classList.add('ac-modal-open');
-    (initialFocusRef?.current ?? focusable(dialog)[0] ?? dialog).focus();
+    (initialFocusRef?.current ?? tabbable(dialog)[0] ?? dialog).focus();
+
+    // On document, so Esc and Tab still work if focus fell to <body>.
+    const onKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (openStack[openStack.length - 1] !== dialog) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        if (!dismissRef.current.isDismissDisabled) dismissRef.current.onClose();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      event.preventDefault();
+      const items = tabbable(dialog);
+      if (!items.length) return dialog.focus();
+      const index = items.indexOf(document.activeElement as HTMLElement);
+      const next = event.shiftKey
+        ? index <= 0
+          ? items.length - 1
+          : index - 1
+        : index === -1 || index === items.length - 1
+          ? 0
+          : index + 1;
+      items[next].focus();
+    };
+    document.addEventListener('keydown', onKeyDown);
     return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      openStack.splice(openStack.indexOf(dialog), 1);
       siblings.forEach((node) => (node.inert = false));
-      document.body.classList.remove('ac-modal-open');
+      if (!openStack.length) document.body.classList.remove('ac-modal-open');
       if (opener?.isConnected) opener.focus();
     };
     // Runs once per open; initialFocusRef is read on open only.
@@ -80,32 +149,6 @@ function ModalDialog({
 
   const dismiss = () => {
     if (!dismissRef.current.isDismissDisabled) dismissRef.current.onClose();
-  };
-
-  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Escape') {
-      event.stopPropagation();
-      dismiss();
-      return;
-    }
-    if (event.key !== 'Tab') return;
-    const items = focusable(dialogRef.current!);
-    if (!items.length) {
-      event.preventDefault();
-      return;
-    }
-    const first = items[0],
-      last = items[items.length - 1];
-    if (
-      event.shiftKey &&
-      (document.activeElement === first || document.activeElement === dialogRef.current)
-    ) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
   };
 
   return (
@@ -118,7 +161,6 @@ function ModalDialog({
         aria-labelledby={titleId}
         tabIndex={-1}
         className={cx('ac-modal', `ac-modal--${size}`, `ac-modal--${color}`)}
-        onKeyDown={onKeyDown}
       >
         <div className="ac-modal__header">
           {icon ? <Icon name={icon} className="ac-modal__icon" /> : null}
