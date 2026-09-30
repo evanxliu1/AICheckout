@@ -29,7 +29,7 @@ export const manifestSchema = z.strictObject({
     .array(
       z.strictObject({
         id,
-        cardId: z.string().min(1).max(80),
+        cardIds: z.array(z.string().min(1).max(80)).min(1).max(8),
         issuer: z.string().min(1).max(80),
         kind: z.string().min(1).max(80),
         title: z.string().min(1).max(200),
@@ -103,7 +103,7 @@ export const corpusV2Schema = z.strictObject({
   schemaVersion: z.literal(2),
   version: id,
   origin: z.enum(['synthetic-fixture', 'real-issuer-captures']),
-  annotationStatus: z.enum(['agent-drafted', 'human-verified']),
+  annotationStatus: z.enum(['agent-drafted', 'agent-verified', 'human-verified']),
   description: z.string().min(1).max(2000),
   cases: z.array(caseSchema).min(1).max(200),
 });
@@ -204,7 +204,7 @@ export async function loadCorpusV2(dir: string): Promise<LoadedCorpus> {
     for (const sourceId of item.sourceIds) {
       const source = sources.get(sourceId);
       if (!source) throw new Error(`${item.id}: unknown source ${sourceId}.`);
-      if (source.cardId !== item.cardId)
+      if (!source.cardIds.includes(item.cardId))
         throw new Error(`${item.id}: source ${sourceId} is for another card.`);
       // Held-out results only mean something if no held-out page was seen while tuning on dev.
       if (splitOf.has(sourceId) && splitOf.get(sourceId) !== item.split)

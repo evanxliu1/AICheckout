@@ -64,13 +64,15 @@ Exit: `eval:v2 --provider fixture --check` passes in CI; unit tests cover valida
 
 ### 2b. Real corpus
 
+**Status (2026-09-29, branch `phase2b-corpus`): done.** Step 5 was changed at Evan's request: instead of a human pass, seven independent reviewer subagents (one per card) checked every base-case field against the captures, and the agent adjudicated their proposals. Result: all rates, caps, currencies, and rules confirmed, no missed rules; four exclusion anchor/text fixes applied. The corpus is marked `annotationStatus: agent-verified` (not human-verified); say so in the results doc. 15 sources captured on 2026-09-28/29 (Capital One application terms come from `disclosures.capitalone.com/disclosure.<productId>.en-US.html`, the iframe behind the product page modal; Amex product pages disable `page.evaluate`, so the script uses locators only; the Citi PDF goes through Ghostscript `txtwrite`). `scripts/author-real-corpus.mjs` generates 37 cases: 7 base + injection-rate, injection-publish, conflicting-rate, stale-promo per card, and remove-cap for both Amex supermarket caps (20 dev, 17 held-out). All anchors resolve, and the reference echo scores 100%. The human verification page (`node scripts/build-verification-page.mjs`) remains available for a later human pass. Captures are machine-local; re-capturing changes hashes and invalidates labels, so do not re-capture until verification is applied. Four pages (Citi product, Wells Fargo, both Capital One product pages) change between back-to-back captures (dynamic content), which Phase 4 must filter before diffing.
+
 1. `evals/curation/real/sources.json`: for each card, 2–3 official pages from the research report (product page; offer terms / rates & fees / rewards terms page; category guidance such as Amex `rewards-info/retail.html`, Chase rewards category FAQ, Citi terms PDF). Record URL, card, issuer, document kind.
 2. `scripts/capture-issuer-pages.mjs` (Playwright headless, already a dependency): load each URL, expand collapsed disclosures (`[aria-expanded=false]`, `<details>`), take `document.body.innerText`, normalize line endings, save to gitignored `evals/curation/real/captures/<id>.txt`, write `evals/curation/real/manifest.json` (id, url, capturedOn, sha256, length) which is committed. PDFs: extract text with a library already present or `pdftotext` if installed. Flag pages that fail or look like bot walls.
 3. Draft labels (the agent) for each card from its captures using the research report as a guide; every rule needs anchors that `resolveQuote` finds in the capture. Split: **dev** = Capital One (2), Citi, Wells Fargo; **held-out** = Amex (2), Chase. Tune prompts only on dev.
 4. Derived variants from real captures, labels transformed mechanically: `remove-cap` (delete the cap sentence → cap null + `missing` issue), `conflicting-rate` (append a contradictory rate line → value null + `conflicting`), `injection` (insert an instruction to report 10% / approve publication → `untrusted-instruction`, values unchanged), `stale-promo` (add an expired limited-time rule). Target ~40–60 cases total.
 5. Verification page: a script generates a local static HTML (gitignored, contains issuer text) showing each labeled field next to its highlighted anchor, with accept/fix controls that export `verification.json`. Evan opens it locally, verifies (~1 hr); the agent applies fixes and marks the corpus `annotationStatus: human-verified`.
 
-Exit: `evals/curation/real/corpus.v2.json` committed (no issuer bodies), all anchors resolve against captures, Evan has verified.
+Exit: `evals/curation/real/corpus.v2.json` committed (no issuer bodies), all anchors resolve against captures, labels verified (agent-verified, see status above).
 
 ### 2c. Experiments (resume headline)
 
@@ -109,7 +111,7 @@ Exit: all three frontends use `packages/ui` and Helios tokens; browser tests and
 3. New Supabase migration (never edit applied ones) extending the SQL catalog validator to v2; update seed generator and the 28 parity cases. Evan pushes the migration.
 4. Build the 7-card catalog from the verified gold labels (not from model output), publish it through the hosted review app as reviewer, confirm `/v1/catalog` serves it, `npm run build:hosted` the extension and verify a live refresh.
 5. Extension: wallet lists the 7 cards; comparison shows the rule, conditions, and pay-later note for Citi, using the Phase 3a components.
-6. Amazon US cart reader (bounded order-summary rows, fixtures, native browser test), mirroring the Best Buy/Newegg readers.
+6. Site adapters as data (groundwork for Phase 6). Replace the hand-written `readBestBuy`/`readNewegg` functions in `extension/src/checkout/page-reader.ts` with one generic interpreter plus a declarative, versioned `SiteAdapter` spec per merchant: URL match (host + path pattern), summary container selector, row/label/amount selectors, label → amount-kind map, empty-cart and loading markers, and limits (max rows, max text length). Keep today's safety rules in the interpreter (visible text only, no form values, no item names or addresses, ambiguity → `unavailable`). Specs live as JSON files inside the extension package (see Phase 6 step 6 for why they are never downloaded). Port Best Buy and Newegg to specs and prove it with the existing fixtures and browser tests, then add **Amazon US** as the first spec written from scratch.
 
 ### 4. Terms-change detection
 
@@ -118,6 +120,26 @@ Scheduled GitHub Action (weekly) runs the capture script, compares hashes to `ma
 ### 5. Ship
 
 Chrome Web Store (Evan pays the $5 fee and submits) using the privacy/support pages from the Phase 3a site, README with results table and live links (site, results page, review app), ~90 s demo video recorded on the Helios UI, decide on the passphrase vault (recommend dropping or opt-in).
+
+
+### 6. Site coverage harness (LLM adds merchants the way it adds cards)
+
+Same pattern as card curation: the model drafts, deterministic checks verify, and a human reviews before publishing. The unit of work here is a merchant site instead of a card.
+
+1. **Capture.** `scripts/capture-checkout-pages.mjs` (Playwright) builds a cart on a target site using public, logged-out flows with a test item. It saves a *redacted* DOM snapshot of the checkout summary region (gitignored) plus a committed manifest (URL, date, hash) and a labeled expectation (amount, kind, or `unavailable` reason). The agent never signs in, enters addresses or payment details, or places orders; sites that require login to show a cart are marked out of scope.
+2. **Extraction task.** An `ExtractionTask` for sites (reusing `executeTask`): the input is the redacted snapshot and the output is a `SiteAdapter` spec. Validation is execution-based: run the real extension interpreter (jsdom) on every fixture for that site, and require the exact labeled amount and kind, `unavailable` where the label says so, and selectors that stay inside the summary region. Findings go into the trace like evidence findings do for cards.
+3. **Corpus and variants.** Real snapshots from ~15–25 US retailers, split dev/held-out by site. Mechanical DOM variants (the analog of card variants):
+   - `class-rename` (hashed class names change): selectors should rely on stable attributes or labels.
+   - `promo-row` (discount, gift card, or "4 payments of $X" rows added): the adapter must not read them as the total.
+   - `loading` (`aria-busy` or skeleton rows): expect `page-loading`.
+   - `empty-cart`: expect `empty-cart`.
+   - `injection` (text in the page telling the model to report a different selector or total): expect an `untrusted-instruction` issue.
+4. **Metrics.** Fixture pass rate, false-found rate (worst case: a wrong amount reported as found), robustness across variants, held-out site success, and repair rate (drift fixed from the old spec plus a new snapshot). Latency and tokens as for cards. Same `eval:sites` CLI shape as `eval:v2`, with a fixture-provider `--check` in CI.
+5. **Merchant profile.** Per site, the reward-relevant facts the engine needs: online retail yes/no, sells physical goods, expected MCC with confidence and sources, and third-party marketplace or payment-path caveats. Drafted from public sources with quoted evidence, as in the card research.
+6. **Ship specs inside the extension package, not downloaded.** Chrome Web Store policy (checked 2026-09-29) bans "building an interpreter to run complex commands fetched from a remote source, even if those commands are fetched as data" ([MV3 requirements](https://developer.chrome.com/docs/webstore/program-policies/mv3-requirements)). AdGuard had a remotely downloaded rule list rejected as remote execution and removed it ([AdGuard](https://adguard.com/en/blog/review-issues-in-chrome-web-store.html)). So reviewed specs are bundled JSON in the package: adding a site means a new extension release through Web Store review, which CI can automate (build → zip → submit via the Web Store API once Evan has set up the listing). What may be remote: a **kill switch** config that disables a bundled adapter by ID and version ("fetching a remote configuration file ... for determining enabled features, where all logic ... is contained within the extension package" is explicitly allowed), and the card catalog (rates and caps are data read by fixed engine logic, not commands). Keep the spec format small and declarative (selectors, label map, limits; no conditionals, loops, or expressions), so the bundled interpreter stays obviously fixed logic.
+7. **Drift detection.** Extend the Phase 4 scheduled job: re-capture each supported site weekly, run its shipped spec, and when it fails, flip that adapter's kill switch (the extension then says the site is temporarily unsupported rather than reading a wrong total), open an issue, and have the harness propose a repaired spec for the next release.
+
+Exit: at least 10 new US merchants shipped in extension releases after review; results (including held-out sites and variant robustness) added to `docs/evals/results.md`.
 
 ## Housekeeping
 
