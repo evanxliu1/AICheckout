@@ -43,6 +43,7 @@ extension/                Chrome extension (popup, service worker, cart readers)
 packages/rewards-core/    Deterministic rewards engine + catalog schema
 packages/catalog-client/  Bounded catalog fetch used by the extension
 packages/catalog-review/  Shared curation/review contracts
+packages/ui/              React components built to the Helios design system specs
 apps/api/                 Fastify API; curation harness in src/curation/
 apps/review/              React review app
 evals/curation/           Evaluation corpus, scorer docs, baseline
@@ -71,3 +72,7 @@ Next: human verification of the evaluation labels, a larger catalog built from t
 ## License
 
 MIT
+
+## Credits
+
+`packages/ui` implements components to the specs of [Helios](https://helios.hashicorp.design), HashiCorp's design system, using its design tokens (`@hashicorp/design-system-tokens`) and [Flight icons](https://helios.hashicorp.design/icons/library) (`@hashicorp/flight-icons`), both MPL-2.0. AI Checkout is not affiliated with or endorsed by HashiCorp.

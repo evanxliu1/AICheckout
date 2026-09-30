@@ -27,6 +27,7 @@ jobs:
       - run: npm audit --audit-level=high
       - run: npm run build
       - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser --workspace=@ai-checkout/ui
       - run: npm run test:browser --workspace=ai-checkout-extension
       - run: npm run test:catalog:browser
       - run: npm run test:package:browser --workspace=ai-checkout-extension
@@ -41,4 +42,6 @@ jobs:
         if: failure()
         with:
           name: browser-test-results
-          path: extension/test-results/
+          path: |
+            extension/test-results/
+            packages/ui/test-results/
