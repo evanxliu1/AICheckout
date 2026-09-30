@@ -105,7 +105,7 @@ export function summarizeReport(id: string, report: Report, bundle: { observatio
     complete: report.complete && report.harness.retriable === 0,
     rejected,
     labelsCollectedWith: report.labels.collectedWith,
-    cliVersion: c.provider.cliVersion ?? null,
+    cliVersions: c.provider.cliVersions ?? ['unrecorded'],
     /** Timed-out or provider-failed slots left after retries, and the failed attempts retried before. */
     harness: report.harness,
     /** The harness's own estimate of the prompt (system + user + schema), comparable across providers. */

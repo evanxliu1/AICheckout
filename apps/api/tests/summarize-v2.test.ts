@@ -30,6 +30,7 @@ it('re-scores saved run directories from their observations', async () => {
       rejected: false,
       harness: { failed: 0, retriable: 0, attempts: 0 },
       labelsCollectedWith: [summary.corpus.hash],
+      cliVersions: ['unrecorded'],
     });
     expect(echo.overall.endToEndFieldAccuracy.rate).toBe(1);
     expect(echo.promptTokenEstimate).toBeGreaterThan(0);

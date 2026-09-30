@@ -1,8 +1,7 @@
-import { execFile, spawn } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { promisify } from 'node:util';
 import { z } from 'zod';
 import { ProviderFailure, type ExtractionProvider } from './runner.ts';
 
@@ -119,16 +118,6 @@ export function parseClaudeResult(stdout: string, requestedModel?: string) {
       ? { providerResponse: { id: parsed.session_id, model: canonical } }
       : {}),
   };
-}
-
-/** The installed CLI's version string, or "unknown" when it cannot be read. */
-export async function cliVersion(bin: string): Promise<string> {
-  try {
-    const { stdout } = await promisify(execFile)(bin, ['--version'], { timeout: 15_000 });
-    return stdout.trim().split('\n')[0].slice(0, 80) || 'unknown';
-  } catch {
-    return 'unknown';
-  }
 }
 
 export function createClaudeProvider(options: ClaudeOptions): ExtractionProvider {

@@ -15,8 +15,9 @@ export const configurationSchema = z.strictObject({
     id: key,
     model: key,
     mode: z.enum(['fixture', 'subscription', 'metered']),
-    /** The vendor CLI's reported version (`codex --version`, `claude --version`), from when it was recorded. */
-    cliVersion: z.string().min(1).max(80).optional(),
+    /** Every vendor CLI version (`codex --version`, `claude --version`) the observations were collected
+     * under, oldest first; "unrecorded" stands for observations saved before versions were recorded. */
+    cliVersions: z.array(z.string().min(1).max(80)).max(20).optional(),
   }),
   effort: key.nullable(),
   prompt: z.enum(Object.keys(PROMPTS) as [PromptVersion, ...PromptVersion[]]),
@@ -104,17 +105,19 @@ export function missingSlots(
  */
 export function mergeBundles(existing: ObservationBundle, added: ObservationBundle): ObservationBundle {
   const bare = (c: Configuration) => {
-    const { cliVersion: _version, ...provider } = c.provider;
-    void _version;
+    const { cliVersions: _versions, ...provider } = c.provider;
+    void _versions;
     return { ...c, provider };
   };
   const same = (key: 'configuration' | 'experiment') =>
     key === 'configuration'
       ? canonicalJson(bare(existing.configuration)) === canonicalJson(bare(added.configuration))
       : existing[key] === added[key];
-  const versions = [existing.configuration.provider.cliVersion, added.configuration.provider.cliVersion];
-  if (versions[0] && versions[1] && versions[0] !== versions[1])
-    throw new Error(`Cannot resume: the saved run used CLI ${versions[0]}, this one ${versions[1]}.`);
+  // CLI versions are unioned, never compared; a side that predates version recording reads "unrecorded".
+  const recorded = [existing, added].map((b) => b.configuration.provider.cliVersions);
+  const versions = recorded.some(Boolean)
+    ? [...new Set(recorded.flatMap((list) => list ?? ['unrecorded']))]
+    : undefined;
   // Labels may change between collections (the observations are re-scored); the inputs may not.
   const sameInputs =
     existing.corpus.inputsHash && added.corpus.inputsHash
@@ -143,10 +146,7 @@ export function mergeBundles(existing: ObservationBundle, added: ObservationBund
     ...existing,
     configuration: {
       ...existing.configuration,
-      provider: {
-        ...existing.configuration.provider,
-        ...((versions[0] ?? versions[1]) ? { cliVersion: versions[0] ?? versions[1] } : {}),
-      },
+      provider: { ...existing.configuration.provider, ...(versions ? { cliVersions: versions } : {}) },
     },
     corpus: { ...added.corpus, collectedWith },
     observations,

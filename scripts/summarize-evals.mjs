@@ -16,6 +16,8 @@ const { values } = parseArgs({
     runs: { type: 'string', multiple: true, default: ['evals/curation/runs/matrix'] },
     corpus: { type: 'string', default: 'evals/curation/real' },
     out: { type: 'string', default: 'docs/evals' },
+    /** Run IDs added after the rest of their split was chosen; marked "(added)" in charts and results. */
+    added: { type: 'string', multiple: true, default: [] },
   },
 });
 
@@ -43,6 +45,7 @@ const results = {
   retryCap: summary.retryCap,
   corpus: summary.corpus,
   labelsCollectedWith: [...new Set(summary.rows.flatMap((r) => r.labelsCollectedWith))],
+  addedAfter: values.added,
   incomplete: summary.rows.filter((r) => !r.complete).map((r) => r.id),
   rejected: summary.rows.filter((r) => r.rejected).map((r) => r.id),
   runs: summary.rows,
@@ -54,7 +57,8 @@ await writeFile(join(out, 'results.json'), JSON.stringify(results, null, 2) + '\
 
 // Chart: one row per complete dev configuration, three bars each.
 const label = (r) =>
-  [r.model, r.effort, r.prompt, r.selection.replace('keyword-window.1', 'kw')].filter(Boolean).join(' · ');
+  [r.model, r.effort, r.prompt, r.selection.replace('keyword-window.1', 'kw')].filter(Boolean).join(' · ') +
+  (values.added.includes(r.id) ? ' (added)' : '');
 const series = [
   ['Field accuracy (end to end)', (r) => r.overall.endToEndFieldAccuracy?.rate, '#2563eb'],
   ['Claim precision', (r) => r.overall.claimPrecision?.rate, '#16a34a'],

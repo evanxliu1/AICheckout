@@ -482,6 +482,19 @@ describe('resume', () => {
       ...added.corpus,
       collectedWith: ['a'.repeat(64), 'b'.repeat(64)],
     });
+    // CLI versions are unioned, never compared; a bundle from before they were recorded says so.
+    const versioned = (versions?: string[]) => ({
+      ...base,
+      configuration: { ...configuration, provider: { ...configuration.provider, cliVersions: versions } },
+    });
+    expect(
+      mergeBundles(versioned(['1.0']), { ...versioned(['1.1']), observations: [observation('x', 2)] })
+        .configuration.provider.cliVersions,
+    ).toEqual(['1.0', '1.1']);
+    expect(
+      mergeBundles(base, { ...versioned(['1.1']), observations: [observation('x', 2)] }).configuration
+        .provider.cliVersions,
+    ).toEqual(['unrecorded', '1.1']);
     expect(() =>
       mergeBundles({ ...base, corpus: { ...base.corpus, inputsHash: 'd'.repeat(64) } }, added),
     ).toThrow(/captures changed/);
@@ -611,6 +624,27 @@ describe('resume', () => {
       expect(one!.observed).toBe(two.observations.length);
       expect(one!.harness).toMatchObject({ failed: 1, attempts: 1 });
       process.exitCode = 0;
+      // A resume that cannot start (here: the provider's binary is missing) logs no failures, so it uses
+      // up no retries.
+      const stale = JSON.parse(await readFile(join(out, 'observations.json'), 'utf8'));
+      stale.observations[0] = fail(stale.observations[0], 'timeout');
+      stale.configuration = {
+        ...stale.configuration,
+        provider: { id: 'codex-cli', model: 'gpt-5.5', mode: 'subscription' },
+        effort: 'low',
+      };
+      stale.provenance = 'live-collected';
+      stale.experiment = 'stale';
+      await writeFile(join(out, 'observations.json'), JSON.stringify(stale));
+      await rm(join(out, 'failures.jsonl'), { force: true });
+      process.env.AICHECKOUT_CODEX_BIN = join(dir, 'no-such-codex');
+      try {
+        await expect(runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root)).rejects.toThrow();
+      } finally {
+        delete process.env.AICHECKOUT_CODEX_BIN;
+      }
+      await expect(readFile(join(out, 'failures.jsonl'), 'utf8')).rejects.toThrow(/ENOENT/);
+
       await expect(runEvaluationV2Cli(['--resume', out, '--output', dir], root)).rejects.toThrow(
         /drop --output/,
       );

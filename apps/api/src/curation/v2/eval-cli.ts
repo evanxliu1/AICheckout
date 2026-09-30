@@ -2,8 +2,9 @@ import { appendFile, mkdir, readdir, readFile, rename, writeFile } from 'node:fs
 import { join, resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { parseArgs } from 'node:util';
-import { cliVersion as claudeVersion, createClaudeProvider, type ClaudeOptions } from '../claude.ts';
-import { cliVersion as codexVersion, createCodexProvider, type CodexOptions } from '../codex.ts';
+import { createClaudeProvider, type ClaudeOptions } from '../claude.ts';
+import { cliVersion } from '../cli-version.ts';
+import { createCodexProvider, type CodexOptions } from '../codex.ts';
 import { executeTask, type ExtractionProvider } from '../runner.ts';
 import { PROMPTS, type PromptVersion } from './context.ts';
 import { loadCorpusV2, type LoadedCase, type LoadedCorpus } from './corpus.ts';
@@ -254,22 +255,22 @@ async function providerFor(
           : (value: LoadedCase) => referenceProvider(value.item),
     };
   if (provider.id === 'claude-cli') {
-    const bin = bins.claude ?? 'claude';
+    const bin = bins.claude ?? process.env.AICHECKOUT_CLAUDE_BIN ?? 'claude';
     const claude = createClaudeProvider({
       model: provider.model,
       effort: (effort ?? 'low') as ClaudeOptions['effort'],
       bin,
     });
-    return { providerFor: () => claude, cliVersion: await claudeVersion(bin) };
+    return { providerFor: () => claude, cliVersion: await cliVersion(bin) };
   }
   if (provider.id !== 'codex-cli') throw new Error(`Provider ${provider.id} is not available.`);
-  const bin = bins.codex ?? 'codex';
+  const bin = bins.codex ?? process.env.AICHECKOUT_CODEX_BIN ?? 'codex';
   const codex = await createCodexProvider({
     model: provider.model,
     reasoningEffort: (effort ?? 'low') as CodexOptions['reasoningEffort'],
     bin,
   });
-  return { providerFor: () => codex, cliVersion: await codexVersion(bin) };
+  return { providerFor: () => codex, cliVersion: await cliVersion(bin) };
 }
 
 const positiveInt = (name: string, raw: string | undefined, fallback: number, max = Infinity) => {
@@ -346,6 +347,51 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
       if (existing.corpus.inputsHash && existing.corpus.inputsHash !== loaded.inputsHash)
         throw new Error('Cannot resume: the corpus inputs or captures changed since the saved run.');
       configuration = existing.configuration;
+    } else {
+      if (!(values.provider in PROVIDER_IDS))
+        throw new Error(`--provider must be one of ${Object.keys(PROVIDER_IDS).join(', ')}.`);
+      if (!(values.prompt in PROMPTS))
+        throw new Error(`--prompt must be one of ${Object.keys(PROMPTS).join(', ')}.`);
+      if (!(SELECTIONS as readonly string[]).includes(values.selection))
+        throw new Error(`--selection must be one of ${SELECTIONS.join(', ')}.`);
+      if (!['dev', 'heldout', 'all'].includes(values.split))
+        throw new Error('--split must be dev, heldout, or all.');
+      const live = values.provider !== 'fixture';
+      const fixtureModel = values.model ?? 'reference-echo.1';
+      if (live && !values.model) throw new Error(`--provider ${values.provider} requires --model.`);
+      if (!live && !['reference-echo.1', 'abstain.2'].includes(fixtureModel))
+        throw new Error('Fixture --model must be reference-echo.1 or abstain.2.');
+      configuration = {
+        provider: live
+          ? { id: PROVIDER_IDS[values.provider], model: values.model!, mode: 'subscription' }
+          : { id: 'fixture', model: fixtureModel, mode: 'fixture' },
+        effort: live ? values.effort : null,
+        prompt: values.prompt as PromptVersion,
+        selection: values.selection as Configuration['selection'],
+        split: values.split as Split,
+        repeat: positiveInt('repeat', values.repeat, 1, 10),
+      };
+    }
+    if (configuration.split !== 'dev' && !values['allow-heldout'])
+      throw new Error('Held-out cases need --allow-heldout. Never tune prompts on held-out results.');
+    // The provider (and its CLI version) is resolved before any failure is logged, so a resume that cannot
+    // run (a missing binary, for example) does not use up retries.
+    const provider = await providerFor(configuration);
+    if (provider.cliVersion) {
+      const saved = configuration.provider.cliVersions ?? (existing ? ['unrecorded'] : []);
+      const comparable = saved.filter((v) => v !== 'unknown' && v !== 'unrecorded');
+      if (provider.cliVersion !== 'unknown' && comparable.length && !comparable.includes(provider.cliVersion))
+        console.warn(
+          `Warning: this run was collected under CLI ${comparable.join(', ')}; continuing under ${provider.cliVersion}.`,
+        );
+      if (!saved.includes(provider.cliVersion))
+        configuration = {
+          ...configuration,
+          provider: { ...configuration.provider, cliVersions: [...saved, provider.cliVersion] },
+        };
+    }
+    if (existing) {
+      existing = { ...existing, configuration };
       // Harness failures are not model results: log them and run their slots again, up to the cap.
       const logged = await readFailures(output);
       failures = failureCounts(logged);
@@ -385,48 +431,12 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
         observations: existing.observations.filter((o) => !retrySlots.has(slotOf(o))),
       };
       if (retry.length) console.log(`Retrying ${retry.length} timed-out or provider-failed slots.`);
-    } else {
-      if (!(values.provider in PROVIDER_IDS))
-        throw new Error(`--provider must be one of ${Object.keys(PROVIDER_IDS).join(', ')}.`);
-      if (!(values.prompt in PROMPTS))
-        throw new Error(`--prompt must be one of ${Object.keys(PROMPTS).join(', ')}.`);
-      if (!(SELECTIONS as readonly string[]).includes(values.selection))
-        throw new Error(`--selection must be one of ${SELECTIONS.join(', ')}.`);
-      if (!['dev', 'heldout', 'all'].includes(values.split))
-        throw new Error('--split must be dev, heldout, or all.');
-      const live = values.provider !== 'fixture';
-      const fixtureModel = values.model ?? 'reference-echo.1';
-      if (live && !values.model) throw new Error(`--provider ${values.provider} requires --model.`);
-      if (!live && !['reference-echo.1', 'abstain.2'].includes(fixtureModel))
-        throw new Error('Fixture --model must be reference-echo.1 or abstain.2.');
-      configuration = {
-        provider: live
-          ? { id: PROVIDER_IDS[values.provider], model: values.model!, mode: 'subscription' }
-          : { id: 'fixture', model: fixtureModel, mode: 'fixture' },
-        effort: live ? values.effort : null,
-        prompt: values.prompt as PromptVersion,
-        selection: values.selection as Configuration['selection'],
-        split: values.split as Split,
-        repeat: positiveInt('repeat', values.repeat, 1, 10),
-      };
     }
-    if (configuration.split !== 'dev' && !values['allow-heldout'])
-      throw new Error('Held-out cases need --allow-heldout. Never tune prompts on held-out results.');
     const live = configuration.provider.id !== 'fixture';
     const jobs = missingSlots(loaded, configuration, existing?.observations, values.case).slice(0, limit);
     if (existing)
       console.log(`Resuming ${output}: ${existing.observations.length} saved, ${jobs.length} to run.`);
-    const provider = await providerFor(configuration);
-    if (provider.cliVersion && !configuration.provider.cliVersion)
-      configuration = {
-        ...configuration,
-        provider: { ...configuration.provider, cliVersion: provider.cliVersion },
-      };
-    else if (provider.cliVersion && configuration.provider.cliVersion !== provider.cliVersion)
-      throw new Error(
-        `Cannot resume: the saved run used CLI ${configuration.provider.cliVersion}, this one ${provider.cliVersion}. Move it aside or use that version.`,
-      );
-    if (existing) existing = { ...existing, configuration };
+
     if (!values.resume) {
       // A new directory preserves older experiment evidence; files inside it are replaced atomically. An
       // empty bundle is written at once so a crash before the first checkpoint leaves a resumable run, and
