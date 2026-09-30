@@ -118,6 +118,8 @@ export interface LoadedCorpus {
   manifest: Manifest;
   /** Binds labels and the exact source captures the observations were collected on. */
   hash: string;
+  /** Binds only what the model sees (sources, cases without labels), so relabeling keeps observations valid. */
+  inputsHash: string;
   cases: LoadedCase[];
 }
 
@@ -229,5 +231,14 @@ export async function loadCorpusV2(dir: string): Promise<LoadedCorpus> {
     checkCase(item, input);
     cases.push({ item, input });
   }
-  return { corpus, manifest, hash: sha256(canonicalJson({ corpus, sources: manifest.sources })), cases };
+  const inputs = corpus.cases.map((item) =>
+    Object.fromEntries(Object.entries(item).filter(([k]) => k !== 'reference')),
+  );
+  return {
+    corpus,
+    manifest,
+    hash: sha256(canonicalJson({ corpus, sources: manifest.sources })),
+    inputsHash: sha256(canonicalJson({ cases: inputs, sources: manifest.sources })),
+    cases,
+  };
 }

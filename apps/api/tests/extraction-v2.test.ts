@@ -1,4 +1,4 @@
-import { cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -6,11 +6,16 @@ import { sha256 } from '../src/curation/extraction.ts';
 import { executeTask, type ExtractionProvider, type TaskTrace } from '../src/curation/runner.ts';
 import { buildContextV2, selectText } from '../src/curation/v2/context.ts';
 import { checkCase, loadCorpusV2, type CorpusCase } from '../src/curation/v2/corpus.ts';
+import { runEvaluationV2Cli } from '../src/curation/v2/eval-cli.ts';
 import {
   abstainingProviderV2,
   evaluate,
+  mergeBundles,
+  missingSlots,
+  rateLimited,
   referenceAnswer,
   referenceProvider,
+  type ObservationBundle,
 } from '../src/curation/v2/evaluate.ts';
 import type { ExtractionV2, ExtractionV2Input, Rule } from '../src/curation/v2/schema.ts';
 import { matchRules, scoreCase, summarize } from '../src/curation/v2/score.ts';
@@ -87,6 +92,15 @@ describe('quote resolution', () => {
   it('searches every document and escapes regex characters', () => {
     expect(resolveQuote('plus 1% as you pay.', input)?.documentId).toBe('terms');
     expect(resolveQuote('$6,000 per year', input)?.documentId).toBe('product');
+  });
+  it('matches straight quotation marks against typographic ones', () => {
+    const curly = {
+      documents: [doc('t', 'Traveler\u2019s checks and \u201ccash-like\u201d items do not earn.')],
+    };
+    const span = resolveQuote(`Traveler's checks and "cash-like" items`, curly);
+    expect(span).toEqual({ documentId: 't', start: 0, end: 39 });
+    expect(resolveQuote('Traveler\u2019s checks', curly)).toEqual({ documentId: 't', start: 0, end: 17 });
+    expect(resolveQuote('Travelers checks', curly)).toBeNull();
   });
   it('rejects missing, paraphrased, and blank quotes', () => {
     expect(resolveQuote('3% cash back at supermarkets', input)).toBeNull();
@@ -380,9 +394,29 @@ describe('evaluate', () => {
       complete: false,
       missing: [`${dev.at(-1)!.item.id}#1`],
     });
-    expect(() => evaluate(loaded, { ...bundle, corpus: { ...bundle.corpus, hash: '1'.repeat(64) } })).toThrow(
-      /changed since/,
-    );
+    // Relabeling changes the corpus hash but not the inputs: the observations still score, and the report
+    // records which labels they were collected under. Changed inputs are rejected.
+    const relabeled = evaluate(loaded, { ...bundle, corpus: { ...bundle.corpus, hash: '1'.repeat(64) } });
+    expect(relabeled.labels).toEqual({
+      version: loaded.corpus.version,
+      hash: loaded.hash,
+      collectedWith: ['1'.repeat(64)],
+    });
+    // A bundle from before inputs hashes whose source text changed is still rejected.
+    const legacyChanged = structuredClone(bundle);
+    legacyChanged.corpus = { version: bundle.corpus.version, hash: '1'.repeat(64) };
+    legacyChanged.observations[0].trace.documents[0].contentHash = '0'.repeat(64);
+    expect(() => evaluate(loaded, legacyChanged)).toThrow(/different source text/);
+    // A trace without a context is only acceptable for runs rejected before the context was built.
+    const noContext = structuredClone(bundle);
+    delete (noContext.observations[0].trace as { context?: unknown }).context;
+    expect(() => evaluate(loaded, noContext)).toThrow(/no context/);
+    expect(() =>
+      evaluate(loaded, { ...bundle, corpus: { ...bundle.corpus, inputsHash: '2'.repeat(64) } }),
+    ).toThrow(/inputs or captures changed/);
+    expect(
+      evaluate(loaded, { ...bundle, corpus: { ...bundle.corpus, inputsHash: loaded.inputsHash } }).complete,
+    ).toBe(true);
   });
 
   it('keeps abstention in review', async () => {
@@ -390,5 +424,232 @@ describe('evaluate', () => {
     const { input: value } = loaded.cases[0];
     const trace = await executeTask(extractionTaskV2('baseline.1', 'full'), value, abstainingProviderV2());
     expect(trace.status).toBe('needs_review');
+  });
+});
+
+describe('resume', () => {
+  const configuration = {
+    provider: { id: 'fixture', model: 'reference-echo.1', mode: 'fixture' },
+    effort: null,
+    prompt: 'guided.1',
+    selection: 'full',
+    split: 'dev',
+    repeat: 2,
+  } as const;
+  const observation = (caseId: string, repeat: number, runId = `${caseId}-${repeat}`) =>
+    ({ caseId, repeat, trace: { runId, status: 'needs_review', attempts: [] } }) as never;
+
+  it('plans only the slots not yet observed, in corpus order', async () => {
+    const loaded = await loadCorpusV2(FIXTURE);
+    const dev = loaded.cases.filter((c) => c.item.split === 'dev').map((c) => c.item.id);
+    const all = missingSlots(loaded, configuration);
+    expect(all.map((s) => `${s.value.item.id}#${s.repeat}`)).toEqual(
+      dev.flatMap((id) => [`${id}#1`, `${id}#2`]),
+    );
+    const rest = missingSlots(loaded, configuration, [observation(dev[0], 1), observation(dev[1], 2)]);
+    expect(rest.length).toBe(all.length - 2);
+    expect(rest[0]).toMatchObject({ repeat: 2 });
+    expect(missingSlots(loaded, configuration, [], [dev[1]]).map((s) => s.value.item.id)).toEqual([
+      dev[1],
+      dev[1],
+    ]);
+  });
+
+  it('merges only a matching superset without duplicate slots or run IDs', () => {
+    const base = {
+      schemaVersion: 2,
+      corpus: { version: 'fixture.v2.1', hash: 'a'.repeat(64) },
+      experiment: 'test',
+      provenance: 'scripted-diagnostic',
+      configuration,
+      observations: [observation('x', 1)],
+    } as unknown as ObservationBundle;
+    const merged = mergeBundles(base, { ...base, observations: [observation('x', 2)] });
+    expect(merged.observations.map((o) => `${o.caseId}#${o.repeat}`)).toEqual(['x#1', 'x#2']);
+    expect(() => mergeBundles(base, { ...base, observations: [observation('x', 1, 'other')] })).toThrow(
+      /Duplicate/,
+    );
+    expect(() => mergeBundles(base, { ...base, observations: [observation('y', 1, 'x-1')] })).toThrow(
+      /Duplicate/,
+    );
+    expect(() =>
+      mergeBundles(base, { ...base, configuration: { ...configuration, prompt: 'baseline.1' } }),
+    ).toThrow(/different configuration/);
+    // Different labels (corpus hash) with the same inputs merge; different inputs do not.
+    const inputs = (h: string) => ({ ...base.corpus, hash: h, inputsHash: 'c'.repeat(64) });
+    const added = { ...base, corpus: inputs('b'.repeat(64)), observations: [observation('x', 2)] };
+    expect(mergeBundles({ ...base, corpus: inputs('a'.repeat(64)) }, added).corpus).toEqual({
+      ...added.corpus,
+      collectedWith: ['a'.repeat(64), 'b'.repeat(64)],
+    });
+    // CLI versions are unioned, never compared; a bundle from before they were recorded says so.
+    const versioned = (versions?: string[]) => ({
+      ...base,
+      configuration: { ...configuration, provider: { ...configuration.provider, cliVersions: versions } },
+    });
+    expect(
+      mergeBundles(versioned(['1.0']), { ...versioned(['1.1']), observations: [observation('x', 2)] })
+        .configuration.provider.cliVersions,
+    ).toEqual(['1.0', '1.1']);
+    expect(
+      mergeBundles(base, { ...versioned(['1.1']), observations: [observation('x', 2)] }).configuration
+        .provider.cliVersions,
+    ).toEqual(['unrecorded', '1.1']);
+    expect(() =>
+      mergeBundles({ ...base, corpus: { ...base.corpus, inputsHash: 'd'.repeat(64) } }, added),
+    ).toThrow(/captures changed/);
+  });
+
+  it('recognizes usage-limit failures as runs to repeat', () => {
+    expect(rateLimited({ status: 'provider_error', attempts: [{ outcome: 'rate-limit' }] })).toBe(true);
+    expect(rateLimited({ status: 'provider_error', attempts: [{ outcome: 'transient' }] })).toBe(false);
+    expect(rateLimited({ status: 'needs_review', attempts: [{ outcome: 'needs_review' }] })).toBe(false);
+  });
+
+  it('resumes a partial run directory into a complete superset', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'resume-v2-'));
+    const root = resolve(import.meta.dirname, '../../..');
+    const loaded = await loadCorpusV2(FIXTURE);
+    try {
+      const out = join(dir, 'run');
+      const common = ['--corpus', FIXTURE, '--prompt', 'guided.1', '--selection', 'full', '--repeat', '2'];
+      const partial = await runEvaluationV2Cli([...common, '--limit', '3', '--output', out], root);
+      expect(partial).toMatchObject({ observed: 3, complete: false });
+      expect(process.exitCode).toBe(1);
+      process.exitCode = 0;
+      const saved = JSON.parse(await readFile(join(out, 'observations.json'), 'utf8'));
+      const resumed = await runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root);
+      expect(resumed).toMatchObject({ observed: partial!.planned, complete: true });
+      const merged = JSON.parse(await readFile(join(out, 'observations.json'), 'utf8'));
+      // Every earlier observation survives unchanged; the rest were appended.
+      expect(merged.observations.slice(0, 3)).toEqual(saved.observations);
+      expect(merged.configuration).toEqual(saved.configuration);
+      expect(JSON.parse(await readFile(join(out, 'report.json'), 'utf8')).complete).toBe(true);
+      // Re-resuming a complete run changes nothing.
+      const again = await runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root);
+      expect(again!.observed).toBe(resumed!.observed);
+      expect(again!.harness).toEqual({ failed: 0, retriable: 0, attempts: 0 });
+
+      // A bundle saved before inputs hashes existed resumes under relabeled (rehashed) labels.
+      const legacy = structuredClone(merged);
+      legacy.corpus = { version: legacy.corpus.version, hash: '9'.repeat(64) };
+      legacy.observations.pop();
+      await writeFile(join(out, 'observations.json'), JSON.stringify(legacy));
+      const relabeled = await runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root);
+      // The merged bundle is re-bound to the current corpus (with its inputs hash).
+      expect(relabeled).toMatchObject({
+        complete: true,
+        labels: { collectedWith: ['9'.repeat(64), loaded.hash] },
+      });
+      expect(JSON.parse(await readFile(join(out, 'observations.json'), 'utf8')).corpus.inputsHash).toBe(
+        loaded.inputsHash,
+      );
+
+      // A timed-out slot is not a model result: resuming logs it and runs it again.
+      const fail = (
+        slot: { trace: { runId: string; documents: unknown; context?: unknown } },
+        status: string,
+      ) => ({
+        ...slot,
+        trace: {
+          runId: slot.trace.runId,
+          status,
+          durationMs: 5,
+          documents: slot.trace.documents,
+          context: slot.trace.context,
+          attempts: [{ outcome: 'transient' }],
+        },
+      });
+      const broken = structuredClone(merged);
+      broken.observations[0] = fail(broken.observations[0], 'timeout');
+      await writeFile(join(out, 'observations.json'), JSON.stringify(broken));
+      const retried = await runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root);
+      expect(retried!.harness).toEqual({ failed: 0, retriable: 0, attempts: 1 });
+      expect(retried!.complete).toBe(true);
+      const log = (await readFile(join(out, 'failures.jsonl'), 'utf8'))
+        .trim()
+        .split('\n')
+        .map((l) => JSON.parse(l));
+      expect(log).toHaveLength(1);
+      expect(log[0]).toMatchObject({
+        slot: `${merged.observations[0].caseId}#1`,
+        status: 'timeout',
+        outcome: 'transient',
+      });
+      expect(process.exitCode ?? 0).toBe(0);
+
+      // After the retry cap the failure stays in the report and the run is not complete.
+      const capped = JSON.parse(await readFile(join(out, 'observations.json'), 'utf8'));
+      capped.observations[0] = fail(capped.observations[0], 'provider_error');
+      await writeFile(join(out, 'observations.json'), JSON.stringify(capped));
+      const slot = `${capped.observations[0].caseId}#${capped.observations[0].repeat}`;
+      await writeFile(
+        join(out, 'failures.jsonl'),
+        [1, 2]
+          .map((i) =>
+            JSON.stringify({ slot, runId: `old-${i}`, status: 'timeout', durationMs: 1, loggedAt: 'x' }),
+          )
+          .join('\n') + '\n',
+      );
+      const stuck = await runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root);
+      expect(stuck!.harness).toEqual({ failed: 1, retriable: 0, attempts: 2 });
+      expect(stuck!.overall.statuses.provider_error).toBe(1);
+      // Nothing is left to retry, so the run is final.
+      expect(process.exitCode ?? 0).toBe(0);
+      await expect(
+        runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE, '--prompt', 'guided.1'], root),
+      ).rejects.toThrow(/drop --prompt/);
+
+      // A directory left empty by a crash before the first checkpoint is reused, and a fresh run writes a
+      // resumable (empty) bundle before collecting anything.
+      const empty = join(dir, 'empty');
+      await mkdir(empty);
+      const reused = await runEvaluationV2Cli([...common, '--limit', '1', '--output', empty], root);
+      expect(reused!.observed).toBe(1);
+      process.exitCode = 0;
+      const fresh = JSON.parse(await readFile(join(empty, 'observations.json'), 'utf8'));
+      expect(fresh.corpus.inputsHash).toBe(loaded.inputsHash);
+      await expect(runEvaluationV2Cli([...common, '--output', empty], root)).rejects.toThrow(/EEXIST/);
+
+      // Under --case only that slot's failure is retried; the other failed slot stays saved.
+      const two = JSON.parse(await readFile(join(out, 'observations.json'), 'utf8'));
+      const a = two.observations[0].caseId;
+      const i = two.observations.findIndex((o: { caseId: string }) => o.caseId === a);
+      const j = two.observations.findIndex((o: { caseId: string }) => o.caseId !== a);
+      two.observations[i] = fail(two.observations[i], 'timeout');
+      two.observations[j] = fail(two.observations[j], 'timeout');
+      await writeFile(join(out, 'observations.json'), JSON.stringify(two));
+      await writeFile(join(out, 'failures.jsonl'), '');
+      const one = await runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE, '--case', a], root);
+      expect(one!.observed).toBe(two.observations.length);
+      expect(one!.harness).toMatchObject({ failed: 1, attempts: 1 });
+      process.exitCode = 0;
+      // A resume that cannot start (here: the provider's binary is missing) logs no failures, so it uses
+      // up no retries.
+      const stale = JSON.parse(await readFile(join(out, 'observations.json'), 'utf8'));
+      stale.observations[0] = fail(stale.observations[0], 'timeout');
+      stale.configuration = {
+        ...stale.configuration,
+        provider: { id: 'codex-cli', model: 'gpt-5.5', mode: 'subscription' },
+        effort: 'low',
+      };
+      stale.provenance = 'live-collected';
+      stale.experiment = 'stale';
+      await writeFile(join(out, 'observations.json'), JSON.stringify(stale));
+      await rm(join(out, 'failures.jsonl'), { force: true });
+      process.env.AICHECKOUT_CODEX_BIN = join(dir, 'no-such-codex');
+      try {
+        await expect(runEvaluationV2Cli(['--resume', out, '--corpus', FIXTURE], root)).rejects.toThrow();
+      } finally {
+        delete process.env.AICHECKOUT_CODEX_BIN;
+      }
+      await expect(readFile(join(out, 'failures.jsonl'), 'utf8')).rejects.toThrow(/ENOENT/);
+
+      await expect(
+        runEvaluationV2Cli(['--resume', out, '--output', dir, '--corpus', FIXTURE], root),
+      ).rejects.toThrow(/drop --output/);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
   });
 });
