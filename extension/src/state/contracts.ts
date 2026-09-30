@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { MAX_AMOUNT_CENTS } from '../domain';
+import { MAX_AMOUNT_CENTS, PAYMENT_PATHS, UNCERTAINTIES } from '../domain';
 import type { Catalog, Comparison, UnavailableComparison } from '../domain';
 import { cartSnapshotSchema } from '../checkout/contracts';
 import { cachedCatalogSchema, emptyCatalogCache } from './catalog';
@@ -40,6 +40,7 @@ export const purchaseSchema = z.strictObject({
   purchasedOn: z.iso.date(),
   eligiblePurchase: eligibility,
   onlineRetail: eligibility,
+  paymentPath: z.enum(PAYMENT_PATHS).optional(),
 });
 
 export const appStateSchema = z.strictObject({
@@ -102,10 +103,27 @@ const estimateSchema = z.strictObject({
   bonusRateBps: z.number().int().min(0).max(10_000).nullable(),
   minBonusSpendCents: money,
   maxBonusSpendCents: money,
-  uncertainties: z
-    .array(z.enum(['online-category-unknown', 'annual-usage-unknown', 'activation-unknown']))
-    .max(3),
-  sourceIds: z.array(id).max(20),
+  uncertainties: z.array(z.enum(UNCERTAINTIES)).max(UNCERTAINTIES.length),
+  sourceIds: z.array(id).max(40),
+  appliedRuleId: id.optional(),
+  paidOnPaymentBps: z.number().int().min(0).max(10_000).optional(),
+  rules: z
+    .array(
+      z.strictObject({
+        ruleId: id,
+        status: z.enum([
+          'applied',
+          'may-apply',
+          'base',
+          'not-at-merchant',
+          'not-eligible',
+          'expired',
+          'cap-reached',
+        ]),
+      }),
+    )
+    .max(20)
+    .optional(),
 });
 export const responseSchema = z.discriminatedUnion('ok', [
   z.strictObject({ ok: z.literal(false), error: z.string().min(1).max(1000) }),

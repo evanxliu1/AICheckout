@@ -191,6 +191,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     await page.getByRole('checkbox', { name: 'Capital One Quicksilver', exact: true }).check();
     await page.getByRole('checkbox', { name: 'American Express Blue Cash Everyday', exact: true }).check();
     await page.getByLabel(/Blue Cash Everyday online retail spend/).fill('0');
+    await page.getByLabel(/Blue Cash Everyday online retail bonus activation/).selectOption('active');
     await pause('Choose two card products. Reported annual online-retail spend is $0 for this example.');
     await page.getByRole('button', { name: 'Save cards' }).click();
     await page.getByLabel('Purchase amount (USD)').fill('100');

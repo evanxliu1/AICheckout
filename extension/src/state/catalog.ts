@@ -1,15 +1,16 @@
 import { z } from 'zod';
 import {
   catalogResponseSchema,
+  CATALOG_V2,
   catalogSchema,
-  PILOT_CATALOG,
   publishedReleaseSchema,
   stableJson,
 } from '../domain';
 import type { Catalog } from '../domain';
 import type { AppState } from './contracts';
 
-const bundled = catalogSchema.parse(PILOT_CATALOG);
+// The bundled fallback is the real catalog v2; cached v1 releases are still accepted.
+const bundled = catalogSchema.parse(CATALOG_V2);
 export const cachedCatalogSchema = z.strictObject({
   release: publishedReleaseSchema.nullable(),
   lastCheckedAt: z.number().int().nonnegative().nullable(),

@@ -74,7 +74,11 @@ test('the inspected upload ZIP installs and completes a native two-card comparis
     await expect.poll(popup.text).toContain('online retail spend in');
     await popup.fill('spend-bce-online-retail', '0');
     await popup.click('Save cards');
-    await expect.poll(popup.text).toContain('Quicksilver · Blue Cash Everyday');
+    await expect
+      .poll(popup.text)
+      .toContain(
+        'Double Cash · Active Cash · Quicksilver · Savor · Freedom Unlimited · Blue Cash Everyday · Blue Cash Preferred',
+      );
     await popup.click('Read cart amount');
     await expect.poll(popup.text).toContain('Read $27.23 as the order total');
     await popup.evaluate(`const select = document.getElementById('online-eligibility');

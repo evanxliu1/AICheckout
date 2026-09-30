@@ -4,6 +4,7 @@ import { catalogSchema, type Catalog } from '@ai-checkout/rewards-core';
 import type { ReviewApi } from './client';
 import { catalogChanges, publicationIssues } from './comparison';
 import ExtractionPanel from './ExtractionPanel';
+import { ruleSummaries } from './comparison';
 
 export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
   const [queue, setQueue] = useState<ReviewQueue | null>(null),
@@ -229,21 +230,27 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
               {detail.draft.catalog.sources.length}{' '}
               {detail.draft.catalog.sources.length === 1 ? 'source' : 'sources'}
             </p>
-            <ExtractionPanel
-              key={detail.draft.id}
-              api={api}
-              detail={detail}
-              busy={busy}
-              dirty={dirty}
-              perform={perform}
-              onApplied={async (signal) => {
-                await refresh(detail.draft.id, signal);
-                if (!signal.aborted)
-                  setNotice(
-                    'Extraction review recorded in a new draft revision. Review the complete draft and give fresh approval before publishing.',
-                  );
-              }}
-            />
+            {detail.draft.catalog.schemaVersion === 2 ? (
+              <p className="muted">
+                This draft uses catalog schema 2. The v1 extraction panel applies only to schema 1 drafts.
+              </p>
+            ) : (
+              <ExtractionPanel
+                key={detail.draft.id}
+                api={api}
+                detail={detail}
+                busy={busy}
+                dirty={dirty}
+                perform={perform}
+                onApplied={async (signal) => {
+                  await refresh(detail.draft.id, signal);
+                  if (!signal.aborted)
+                    setNotice(
+                      'Extraction review recorded in a new draft revision. Review the complete draft and give fresh approval before publishing.',
+                    );
+                }}
+              />
+            )}
             <DraftPanel
               key={`${detail.draft.id}:${generation}`}
               detail={detail}
@@ -395,18 +402,10 @@ export function DraftPanel({
               <article className="rule-summary" key={card.id}>
                 <h3>{card.name}</h3>
                 <ul>
-                  {card.rules.map((rule) => (
+                  {ruleSummaries(card.rules).map(({ rule, title, conditions }) => (
                     <li key={rule.id}>
-                      <strong>
-                        {rule.rateBps / 100}% ·{' '}
-                        {rule.category === 'all-eligible' ? 'All eligible purchases' : 'US online retail'}
-                      </strong>
-                      <p>
-                        {rule.annualCapCents === undefined
-                          ? 'No annual spend cap modeled.'
-                          : `Annual spend cap: $${(rule.annualCapCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}.`}{' '}
-                        {rule.requiresActivation ? 'Activation required.' : 'No activation required.'}
-                      </p>
+                      <strong>{title}</strong>
+                      <p>{conditions}</p>
                       <p className="small muted">
                         Rule: {rule.id} · Sources: {rule.sourceIds.join(', ')}
                       </p>

@@ -1,5 +1,12 @@
-import { formatUsd } from '../domain';
-import type { Catalog, CardEstimate, Comparison, Purchase, UnavailableComparison } from '../domain';
+import { CATEGORY_LABELS, formatUsd } from '../domain';
+import type {
+  Catalog,
+  CardEstimate,
+  Comparison,
+  Purchase,
+  UnavailableComparison,
+  Uncertainty,
+} from '../domain';
 import { merchantName } from '../checkout/merchants';
 
 const unavailableCopy: Record<UnavailableComparison['reason'], string> = {
@@ -13,11 +20,22 @@ const unavailableCopy: Record<UnavailableComparison['reason'], string> = {
   'purchase-not-confirmed': 'Confirm that the amount covers eligible purchases before comparing.',
   'ineligible-purchase': 'This purchase is not eligible for these reward estimates.',
 };
-const uncertaintyCopy = {
+const uncertaintyCopy: Record<Uncertainty, string> = {
   'annual-usage-unknown': 'Annual online retail spend is unknown.',
   'online-category-unknown': 'Online retail eligibility is unconfirmed.',
   'activation-unknown': 'Bonus activation is unconfirmed.',
+  'cap-usage-unknown': 'Spend toward the bonus limit this period is unknown.',
+  'cap-unstated': 'The issuer does not state a limit for this bonus.',
+  'payment-path-uncertain': 'This payment method may not earn the bonus.',
 };
+/** Shopper label for the bonus behind an estimate (v1: online retail; v2: the applied rule). */
+function bonusLabel(catalog: Catalog, estimate: CardEstimate) {
+  if (catalog.schemaVersion === 1) return 'online retail';
+  const rule = catalog.cards
+    .find((c) => c.id === estimate.cardId)
+    ?.rules.find((r) => r.id === estimate.appliedRuleId);
+  return rule ? CATEGORY_LABELS[rule.category] : 'bonus';
+}
 function amount(estimate: CardEstimate) {
   return estimate.minRewardCents === estimate.maxRewardCents
     ? formatUsd(estimate.minRewardCents)
@@ -90,9 +108,14 @@ export default function ComparisonResult({
               <p className="supporting mt-1">
                 {estimate.baseRateBps / 100}% base rate
                 {estimate.maxBonusSpendCents > 0
-                  ? `; ${estimate.bonusRateBps! / 100}% on ${estimate.minBonusSpendCents === estimate.maxBonusSpendCents ? '' : 'up to '}${formatUsd(estimate.maxBonusSpendCents)} of eligible online retail spend.`
+                  ? `; ${estimate.bonusRateBps! / 100}% on ${estimate.minBonusSpendCents === estimate.maxBonusSpendCents ? '' : 'up to '}${formatUsd(estimate.maxBonusSpendCents)} of eligible ${bonusLabel(catalog, estimate)} spend.`
                   : '.'}
               </p>
+              {estimate.paidOnPaymentBps ? (
+                <p className="supporting mt-1">
+                  {`${(estimate.maxBonusSpendCents > 0 ? estimate.bonusRateBps! : estimate.baseRateBps) / 100}% if the balance is paid (${((estimate.maxBonusSpendCents > 0 ? estimate.bonusRateBps! : estimate.baseRateBps) - estimate.paidOnPaymentBps) / 100}% at purchase).`}
+                </p>
+              ) : null}
               {estimate.uncertainties.map((code) => (
                 <p key={code} className="supporting mt-1">
                   {uncertaintyCopy[code]}

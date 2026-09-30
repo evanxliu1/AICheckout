@@ -109,6 +109,12 @@ describe('published catalog lifecycle', () => {
     });
   });
   it('keeps unchanged limits and recovers the published catalog in a new offline worker', async () => {
+    // The bundled catalog is v2, so moving to this v1 release drops the changed rule's usage first.
+    const usage = structuredClone(state().wallet.cards[0].usage);
+    ok(await refresh());
+    expect(state().wallet.cards[0].usage).toEqual([]);
+    state().wallet.cards[0].usage = usage;
+    fetchCatalog.mockResolvedValue({ release: release(2) });
     ok(await refresh());
     fetchCatalog.mockRejectedValue(new Error('offline'));
     expect(state().wallet.cards[0].usage).toHaveLength(1);
@@ -132,7 +138,7 @@ describe('published catalog lifecycle', () => {
   });
   it('preserves removed cards and their usage, then explicitly blocks the incomplete wallet', async () => {
     const next = release();
-    next.catalog.cards = [next.catalog.cards[0]];
+    next.catalog.cards = [next.catalog.cards[0]] as typeof next.catalog.cards;
     fetchCatalog.mockResolvedValue({ release: next });
     const updated = ok(await refresh());
     expect(updated.state.wallet.cards[0].usage).toHaveLength(1);

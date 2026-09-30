@@ -10,7 +10,7 @@ let data: Record<string, unknown>;
 const read = vi.fn();
 beforeEach(() => {
   HTMLElement.prototype.scrollIntoView = vi.fn();
-  vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-09-25T15:00:00Z'));
+  vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-09-30T15:00:00Z'));
   data = {
     checkoutStateV1: {
       ...emptyState(),

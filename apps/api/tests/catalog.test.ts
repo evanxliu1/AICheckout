@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { PILOT_CATALOG } from '@ai-checkout/rewards-core';
+import { CATALOG_V2, PILOT_CATALOG } from '@ai-checkout/rewards-core';
 import { createCatalogFetcher, readBoundedJson } from '@ai-checkout/catalog-client';
 import { createApp } from '../src/app.ts';
 import { createCatalogRepository } from '../src/catalog-repository.ts';
@@ -29,6 +29,28 @@ describe('public catalog API', () => {
     expect(response.json()).toEqual({ release });
     expect(response.headers['cache-control']).toBe('no-store');
     expect(response.headers['x-content-type-options']).toBe('nosniff');
+  });
+  it('serves a catalog v2 release and still fails closed on an invalid v2 catalog', async () => {
+    const v2 = {
+      ...release,
+      version: CATALOG_V2.version,
+      catalog: CATALOG_V2,
+      published_at: '2026-09-30T12:00:00Z',
+    };
+    const server = createApp({
+      readCatalog: vi.fn(async () => v2),
+      clock: () => Date.parse('2026-09-30T15:00:00Z'),
+    });
+    apps.push(server);
+    expect((await server.inject('/v1/catalog')).json()).toEqual({ release: v2 });
+    const broken = structuredClone(v2);
+    broken.catalog.cards[0].rules[0].paidOnPaymentBps = 999;
+    const failing = createApp({
+      readCatalog: vi.fn(async () => broken),
+      clock: () => Date.parse('2026-09-30T15:00:00Z'),
+    });
+    apps.push(failing);
+    expect((await failing.inject('/v1/catalog')).statusCode).toBe(503);
   });
   it('returns no publication when the database has only an unapproved seed', async () => {
     expect((await app(vi.fn(async () => null)).inject('/v1/catalog')).json()).toEqual({ release: null });
