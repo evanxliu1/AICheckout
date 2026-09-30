@@ -6,7 +6,7 @@ test('packaged wallet: offline comparison, browser restart, expiry, and deletion
   browserName,
 }, testInfo) => {
   expect(browserName).toBe('chromium');
-  const extension = resolve('dist');
+  const extension = resolve('dist-e2e');
   const launch = () =>
     chromium.launchPersistentContext(testInfo.outputPath('profile'), {
       channel: 'chromium',
@@ -92,7 +92,7 @@ test('a second popup invalidates a changed wallet and observes deletion', async 
   browserName,
 }, testInfo) => {
   expect(browserName).toBe('chromium');
-  const extension = resolve('dist');
+  const extension = resolve('dist-e2e');
   const context = await chromium.launchPersistentContext(testInfo.outputPath('profile'), {
     channel: 'chromium',
     headless: true,

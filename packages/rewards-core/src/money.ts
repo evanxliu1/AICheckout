@@ -38,3 +38,24 @@ export function rewardCents(
     BigInt(amountCents) * BigInt(baseBps) + BigInt(bonusSpendCents) * BigInt(bonusBps - baseBps);
   return Number(numerator / 10_000n);
 }
+
+/** Sum of spend × rate over non-overlapping portions of one purchase, truncated to a cent once.
+ * Used by catalog v2, where the after-cap rate need not equal the base rate. */
+export function portionRewardCents(portions: { spendCents: number; bps: number }[]): number {
+  let numerator = 0n,
+    total = 0;
+  for (const { spendCents, bps } of portions) {
+    if (
+      !Number.isSafeInteger(spendCents) ||
+      !Number.isSafeInteger(bps) ||
+      spendCents < 0 ||
+      bps < 0 ||
+      bps > 10_000
+    )
+      throw new Error('Invalid reward operands.');
+    total += spendCents;
+    numerator += BigInt(spendCents) * BigInt(bps);
+  }
+  if (total > MAX_AMOUNT_CENTS) throw new Error('Invalid reward operands.');
+  return Number(numerator / 10_000n);
+}

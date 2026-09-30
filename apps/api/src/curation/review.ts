@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { catalogSchema, type Catalog } from '@ai-checkout/rewards-core';
+import { catalogSchema, type Catalog, type CatalogV1 } from '@ai-checkout/rewards-core';
 import { draftSchema, reviewDetailSchema, type ReviewDetail } from '@ai-checkout/catalog-review';
 import {
   extractionApplicationSchema,
@@ -159,7 +159,11 @@ export function prepareExtractionReview(detail: ReviewDetail, raw: unknown): Ext
           canonicalJson(extractionSchema.parse(JSON.parse(rawOutput))) !== canonicalJson(trace.extraction)
         )
           blockers.push('The saved output does not match the parsed facts.');
-        const target = detail.draft.catalog.cards.find((card) => card.id === run.card_id);
+        // The v1 extraction flow only edits v1 drafts; v2 extraction → draft is later work.
+        const v1Draft = detail.draft.catalog.schemaVersion === 1 ? detail.draft.catalog : null;
+        if (!v1Draft)
+          blockers.push('This draft uses catalog schema 2; v1 extractions cannot be applied to it.');
+        const target = v1Draft?.cards.find((card) => card.id === run.card_id);
         if (
           !target ||
           canonicalJson(target.rules.map((rule) => rule.id).sort()) !==
@@ -172,8 +176,8 @@ export function prepareExtractionReview(detail: ReviewDetail, raw: unknown): Ext
         }
         if (!blockers.length) {
           const output = trace.extraction;
-          proposedCatalog = structuredClone(detail.draft.catalog);
-          const card = proposedCatalog.cards.find((value) => value.id === run.card_id)!;
+          const proposed: CatalogV1 = structuredClone(v1Draft!);
+          const card = proposed.cards.find((value) => value.id === run.card_id)!;
           card.rules = card.rules.map((rule) => {
             const fact = output.rules.find((value) => value.ruleId === rule.id)!;
             const result = {
@@ -185,7 +189,7 @@ export function prepareExtractionReview(detail: ReviewDetail, raw: unknown): Ext
             else result.annualCapCents = fact.cap.amountCents!;
             return result;
           });
-          proposedCatalog = catalogSchema.parse(proposedCatalog);
+          proposedCatalog = catalogSchema.parse(proposed);
         }
       }
     }

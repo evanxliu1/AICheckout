@@ -1,5 +1,10 @@
 import { z } from 'zod';
-import { catalogSchema, sourceSchema, publishedReleaseSchema } from '@ai-checkout/rewards-core';
+import {
+  catalogSchema,
+  catalogV1Schema,
+  sourceSchema,
+  publishedReleaseSchema,
+} from '@ai-checkout/rewards-core';
 
 export const MAX_REVIEW_RESPONSE_BYTES = 8 * 1024 * 1024;
 export const draftIdSchema = z.uuid();
@@ -62,7 +67,7 @@ export const reviewQueueSchema = z.strictObject({
     .array(
       draftSchema
         .pick({ id: true, revision: true, status: true, updated_at: true, base_sequence: true })
-        .extend({ version: catalogSchema.shape.version }),
+        .extend({ version: catalogV1Schema.shape.version }),
     )
     .max(30),
 });

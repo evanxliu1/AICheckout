@@ -8,7 +8,7 @@ test('native action grants temporary access, reads a cart and rejects changed to
   browserName,
 }, testInfo) => {
   expect(browserName).toBe('chromium');
-  const extension = resolve('dist');
+  const extension = resolve('dist-e2e');
   const context = await chromium.launchPersistentContext(testInfo.outputPath('profile'), {
     channel: 'chromium',
     headless: true,
@@ -65,6 +65,7 @@ test('native action grants temporary access, reads a cart and rejects changed to
       return result.result;
     });
     expect(storageAccess).toEqual([true, true]);
+    // The first card in catalog v2 is Citi Double Cash (2%).
     await popup.evaluate("document.querySelector('input[type=checkbox]').click()");
     await popup.click('Save cards');
     await expect.poll(popup.text).toContain('Read cart amount');
@@ -74,7 +75,7 @@ test('native action grants temporary access, reads a cart and rejects changed to
     await popup.evaluate("document.querySelector('input[type=checkbox]').click()");
     await popup.click('Compare my cards');
     await expect.poll(popup.text).toContain('Your card estimate');
-    await expect.poll(popup.text).toContain('$0.40');
+    await expect.poll(popup.text).toContain('$0.54');
     writeFileSync(testInfo.outputPath('native-cart-result.png'), await popup.screenshot());
 
     // A script updates the summary without navigating; the next comparison must reject it.
@@ -92,7 +93,7 @@ test('native action grants temporary access, reads a cart and rejects changed to
       "const box2 = document.querySelector('input[type=checkbox]'); if (!box2.checked) box2.click()",
     );
     await popup.click('Compare my cards');
-    await expect.poll(popup.text).toContain('$0.60');
+    await expect.poll(popup.text).toContain('$0.80');
     const permissions = await worker.evaluate(() => chrome.permissions.getAll());
     expect(permissions.origins ?? []).toEqual([]);
     await popup.close();

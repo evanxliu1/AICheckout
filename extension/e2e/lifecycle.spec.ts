@@ -29,14 +29,14 @@ async function compareCapture(popup: Awaited<ReturnType<typeof openNativePopup>>
   await popup.evaluate("document.querySelector('input[type=checkbox]').click()");
   await popup.click('Compare my cards');
   await expect.poll(popup.text).toContain('Your card estimate');
-  await expect.poll(popup.text).toContain('$0.40');
+  await expect.poll(popup.text).toContain('$0.54');
 }
 
 test('popup closure preserves an unconfirmed capture; navigation invalidates it and revokes temporary access', async ({
   browserName,
 }, testInfo) => {
   expect(browserName).toBe('chromium');
-  const extension = resolve('dist');
+  const extension = resolve('dist-e2e');
   const context = await chromium.launchPersistentContext(testInfo.outputPath('profile'), {
     channel: 'chromium',
     headless: true,
@@ -127,7 +127,7 @@ test('a real idle worker stop preserves saved comparison and revalidates the car
 }, testInfo) => {
   test.setTimeout(75_000);
   expect(browserName).toBe('chromium');
-  const fixture = await launchLifecycleBrowser(testInfo.outputPath('profile'), resolve('dist'));
+  const fixture = await launchLifecycleBrowser(testInfo.outputPath('profile'), resolve('dist-e2e'));
   let browser = await fixture.connect().catch(async (error) => {
       await fixture.close();
       throw error;
@@ -161,7 +161,7 @@ test('a real idle worker stop preserves saved comparison and revalidates the car
     expect(merchant).toBeDefined();
     popup = await openNativePopup(context, merchant, id);
     await expect.poll(popup.text).toContain('Your card estimate');
-    await expect.poll(popup.text).toContain('$0.40');
+    await expect.poll(popup.text).toContain('$0.54');
     expect(await popup.evaluate("document.querySelector('input[type=checkbox]').checked")).toBe(false);
     const restarted = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
     const restartedAt = await restarted.evaluate(() => performance.timeOrigin);

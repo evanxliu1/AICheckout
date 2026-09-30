@@ -4,7 +4,7 @@ import WalletEditor from '../components/WalletEditor';
 import ComparisonResult from '../components/ComparisonResult';
 import DataProtectionDetails from '../components/DataProtectionDetails';
 import DeleteSavedData from '../components/DeleteSavedData';
-import { formatUsd, parseUsd } from '../domain';
+import { catalogMerchantIds, formatUsd, parseUsd } from '../domain';
 import type { Eligibility, Wallet } from '../domain';
 import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
@@ -372,7 +372,7 @@ export default function Popup({
                     Choose the merchant for manual entry. Reading a supported cart selects its merchant for
                     you.
                   </p>
-                  {!catalog.merchantIds.includes(merchantId) && (
+                  {!catalogMerchantIds(catalog).includes(merchantId) && (
                     <p role="status" className="supporting mt-2">
                       Your current card terms do not cover {merchantName(merchantId)}. Check for updated terms
                       or an extension update.

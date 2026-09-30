@@ -1,10 +1,26 @@
 import { describe, expect, it } from 'vitest';
-import { catalogSchema, compareRewards, PILOT_CATALOG } from '../src/domain';
-import { catalogCases } from '../../packages/rewards-core/test-cases';
+import {
+  CATALOG_V2,
+  catalogSchema,
+  catalogV1Schema,
+  catalogV2Schema,
+  compareRewards,
+  PILOT_CATALOG,
+} from '../src/domain';
+import { catalogCases, catalogV2Cases } from '../../packages/rewards-core/test-cases';
 
 describe('shared catalog schema', () => {
   it.each(catalogCases)('$name has the intended validity', ({ input, valid }) => {
     expect(catalogSchema.safeParse(input).success).toBe(valid);
+  });
+  it.each(catalogV2Cases)('$name has the intended validity', ({ input, valid }) => {
+    expect(catalogSchema.safeParse(input).success).toBe(valid);
+  });
+  it('keys the union on schemaVersion', () => {
+    expect(catalogV1Schema.safeParse(CATALOG_V2).success).toBe(false);
+    expect(catalogV2Schema.safeParse(PILOT_CATALOG).success).toBe(false);
+    expect(catalogSchema.parse(CATALOG_V2)).toEqual(CATALOG_V2);
+    expect(catalogSchema.parse(PILOT_CATALOG)).toEqual(PILOT_CATALOG);
   });
   it('keeps unknown annual usage separate from confirmed activation', () => {
     const catalog = structuredClone(PILOT_CATALOG);

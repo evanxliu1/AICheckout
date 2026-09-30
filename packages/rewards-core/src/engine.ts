@@ -1,16 +1,18 @@
 import { MAX_AMOUNT_CENTS, rewardCents } from './money.ts';
-import type { CardEstimate, Catalog, Comparison, Purchase, UnavailableComparison, Wallet } from './types.ts';
-
-function integer(value: number, min: number, max: number) {
-  return Number.isSafeInteger(value) && value >= min && value <= max;
-}
-
-function unique(values: string[]) {
-  return new Set(values).size === values.length;
-}
+import { compareV2 } from './engine-v2.ts';
+import { integer, rankEstimates, unavailableReason, unique } from './engine-shared.ts';
+import type {
+  CardEstimate,
+  Catalog,
+  CatalogV1,
+  Comparison,
+  Purchase,
+  UnavailableComparison,
+  Wallet,
+} from './types.ts';
 
 /** Defense in depth for typed callers; external JSON must also pass its runtime schema. */
-function validate(catalog: Catalog, wallet: Wallet, purchase: Purchase, now: number) {
+function validate(catalog: CatalogV1, wallet: Wallet, purchase: Purchase, now: number) {
   const verified = Date.parse(catalog.verifiedAt);
   const expires = Date.parse(catalog.expiresAt);
   const eligible = ['eligible', 'ineligible', 'unknown'];
@@ -81,24 +83,27 @@ function validate(catalog: Catalog, wallet: Wallet, purchase: Purchase, now: num
   }
 }
 
+/** Compares owned cards for one purchase. Catalog v1 keeps its original rules; v2 is in engine-v2.ts. */
 export function compareRewards(
   catalog: Catalog,
   wallet: Wallet,
   purchase: Purchase,
   now: number,
 ): Comparison | UnavailableComparison {
+  return catalog.schemaVersion === 2
+    ? compareV2(catalog, wallet, purchase, now)
+    : compareV1(catalog, wallet, purchase, now);
+}
+
+function compareV1(
+  catalog: CatalogV1,
+  wallet: Wallet,
+  purchase: Purchase,
+  now: number,
+): Comparison | UnavailableComparison {
   validate(catalog, wallet, purchase, now);
-  if (now < Date.parse(catalog.verifiedAt)) return { status: 'unavailable', reason: 'catalog-not-yet-valid' };
-  if (now >= Date.parse(catalog.expiresAt)) return { status: 'unavailable', reason: 'catalog-expired' };
-  if (!catalog.merchantIds.includes(purchase.merchantId))
-    return { status: 'unavailable', reason: 'unsupported-merchant' };
-  if (wallet.cards.length === 0) return { status: 'unavailable', reason: 'no-owned-cards' };
-  if (wallet.cards.some((c) => !catalog.cards.some((p) => p.id === c.cardId)))
-    return { status: 'unavailable', reason: 'unknown-owned-card' };
-  if (purchase.eligiblePurchase === 'unknown')
-    return { status: 'unavailable', reason: 'purchase-not-confirmed' };
-  if (purchase.eligiblePurchase === 'ineligible')
-    return { status: 'unavailable', reason: 'ineligible-purchase' };
+  const unavailable = unavailableReason(catalog, catalog.merchantIds, wallet, purchase, now);
+  if (unavailable) return unavailable;
 
   const year = Number(purchase.purchasedOn.slice(0, 4));
   const estimates: CardEstimate[] = wallet.cards.map((owned) => {
@@ -146,19 +151,5 @@ export function compareRewards(
     estimate.maxRewardCents = rewardCents(purchase.amountCents, base.rateBps, possibleSpend, bonus.rateBps);
     return estimate;
   });
-  estimates.sort(
-    (a, b) =>
-      b.minRewardCents - a.minRewardCents ||
-      Number(b.cardId === wallet.defaultCardId) - Number(a.cardId === wallet.defaultCardId) ||
-      a.cardId.localeCompare(b.cardId, 'en'),
-  );
-  const first = estimates[0];
-  return {
-    status: 'ready',
-    catalogVersion: catalog.version,
-    estimates,
-    preferredCardId: first.cardId,
-    rankingMayChange: estimates.slice(1).some((e) => e.maxRewardCents > first.minRewardCents),
-    tied: estimates.slice(1).some((e) => e.minRewardCents === first.minRewardCents),
-  };
+  return rankEstimates(estimates, wallet, catalog.version);
 }

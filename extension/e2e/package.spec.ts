@@ -5,8 +5,9 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { openNativePopup } from './native-popup';
 import { createNativeVault, deleteNativeVault } from './vault';
+import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2';
 
-test('the inspected upload ZIP installs and completes a native two-card comparison', async ({
+test('the inspected upload ZIP installs and completes a native comparison', async ({
   browserName,
 }, testInfo) => {
   test.skip(
@@ -74,7 +75,11 @@ test('the inspected upload ZIP installs and completes a native two-card comparis
     await expect.poll(popup.text).toContain('online retail spend in');
     await popup.fill('spend-bce-online-retail', '0');
     await popup.click('Save cards');
-    await expect.poll(popup.text).toContain('Quicksilver · Blue Cash Everyday');
+    await expect
+      .poll(popup.text)
+      .toContain(
+        'Double Cash · Active Cash · Quicksilver · Savor · Freedom Unlimited · Blue Cash Everyday · Blue Cash Preferred',
+      );
     await popup.click('Read cart amount');
     await expect.poll(popup.text).toContain('Read $27.23 as the order total');
     await popup.evaluate(`const select = document.getElementById('online-eligibility');
@@ -82,8 +87,12 @@ test('the inspected upload ZIP installs and completes a native two-card comparis
       select.dispatchEvent(new Event('change', { bubbles: true }));`);
     await popup.evaluate("document.querySelector('input[type=checkbox]').click()");
     await popup.click('Compare my cards');
-    await expect.poll(popup.text).toContain('$0.81');
-    await expect.poll(popup.text).toContain('$0.40');
+    // This is the real release artifact, so its bundled catalog is not re-dated: before expiry it
+    // must compare; afterwards it must refuse with the expiry notice. Either way it never time-bombs.
+    if (Date.now() < Date.parse(CATALOG_V2.expiresAt)) {
+      await expect.poll(popup.text).toContain('$0.81');
+      await expect.poll(popup.text).toContain('$0.40');
+    } else await expect.poll(popup.text).toContain('These card terms have expired');
     const permissions = await worker.evaluate(() => chrome.permissions.getAll());
     expect(permissions.permissions?.sort()).toEqual(['activeTab', 'scripting', 'storage']);
     expect(permissions.origins ?? []).toEqual(

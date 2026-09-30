@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { deleteVault, createVault, unlockVault, readVaultState } from './vault';
 import { PILOT_CATALOG } from '../../packages/rewards-core/src/catalog';
+import { redateCatalog } from '../../packages/rewards-core/src/catalog-helpers';
 import type { PublishedRelease } from '../../packages/rewards-core/src/schema';
 
 test('published catalog: HTTPS refresh, changed rules, rollback rejection, offline restart', async ({
@@ -38,8 +39,9 @@ test('published catalog: HTTPS refresh, changed rules, rollback rejection, offli
   const release: PublishedRelease = {
     sequence: 2,
     version: 'synthetic.browser.2',
+    // Re-dated to yesterday so the published release is valid whenever the test runs.
     catalog: {
-      ...structuredClone(PILOT_CATALOG),
+      ...redateCatalog(PILOT_CATALOG, new Date(Date.now() - 86_400_000).toISOString().slice(0, 10)),
       version: 'synthetic.browser.2',
     },
     catalog_hash: '1'.repeat(64),

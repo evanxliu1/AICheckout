@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { parseUsd } from '../domain';
+import { parseUsd, usageInputs } from '../domain';
 import type { Catalog, RuleUsage, Wallet } from '../domain';
 import { localDate } from '../state/service';
 
@@ -25,7 +25,7 @@ export default function WalletEditor({
   >(() =>
     Object.fromEntries(
       catalog.cards.flatMap((card) =>
-        card.rules.map((rule) => {
+        (card.rules as { id: string }[]).map((rule) => {
           const saved = wallet.cards
             .find((c) => c.cardId === card.id)
             ?.usage.find(
@@ -62,10 +62,8 @@ export default function WalletEditor({
     const cards: Wallet['cards'] = [];
     for (const card of catalog.cards.filter((card) => selected.includes(card.id))) {
       const usage: RuleUsage[] = [];
-      for (const rule of card.rules.filter(
-        (rule) => rule.annualCapCents !== undefined || rule.requiresActivation,
-      )) {
-        const input = inputs[rule.id];
+      for (const rule of usageInputs(catalog, card.id)) {
+        const input = inputs[rule.ruleId];
         const spentCents = input.spend.trim() ? parseUsd(input.spend) : null;
         if (input.spend.trim() && spentCents === null) {
           setError(
@@ -75,11 +73,11 @@ export default function WalletEditor({
         }
         if (spentCents !== null || input.activation !== 'unknown')
           usage.push({
-            ruleId: rule.id,
+            ruleId: rule.ruleId,
             calendarYear: year,
             recordedOn,
-            spentCents,
-            activation: rule.requiresActivation ? input.activation : 'unknown',
+            spentCents: rule.needsSpend ? spentCents : null,
+            activation: rule.needsActivation ? input.activation : 'unknown',
           });
       }
       cards.push({ cardId: card.id, usage });
@@ -152,50 +150,49 @@ export default function WalletEditor({
         {catalog.cards
           .filter((card) => selected.includes(card.id))
           .flatMap((card) =>
-            card.rules
-              .filter((rule) => rule.annualCapCents !== undefined || rule.requiresActivation)
-              .map((rule) => (
-                <div key={rule.id} className="mt-4">
-                  {rule.annualCapCents !== undefined && (
+            usageInputs(catalog, card.id).map(({ ruleId, label, needsSpend, needsActivation }) => {
+              return (
+                <div key={ruleId} className="mt-4">
+                  {needsSpend && (
                     <>
-                      <label htmlFor={`spend-${rule.id}`} className="field-label">
-                        {card.shortName} online retail spend in {year}
+                      <label htmlFor={`spend-${ruleId}`} className="field-label">
+                        {card.shortName} {label} spend in {year}
                       </label>
                       <input
-                        id={`spend-${rule.id}`}
+                        id={`spend-${ruleId}`}
                         inputMode="decimal"
                         type="text"
                         maxLength={14}
-                        value={inputs[rule.id].spend}
+                        value={inputs[ruleId].spend}
                         disabled={busy}
                         onChange={(e) =>
-                          setInputs({ ...inputs, [rule.id]: { ...inputs[rule.id], spend: e.target.value } })
+                          setInputs({ ...inputs, [ruleId]: { ...inputs[ruleId], spend: e.target.value } })
                         }
                         className="field-input"
                         placeholder="Unknown"
-                        aria-describedby={`spend-help-${rule.id}`}
+                        aria-describedby={`spend-help-${ruleId}`}
                       />
-                      <p id={`spend-help-${rule.id}`} className="supporting mt-2">
+                      <p id={`spend-help-${ruleId}`} className="supporting mt-2">
                         Optional USD, across your card account. Leave blank if unsure; 0 means none used.
                         Update before each purchase. Becomes unknown tomorrow.
                       </p>
                     </>
                   )}
-                  {rule.requiresActivation && (
+                  {needsActivation && (
                     <>
-                      <label htmlFor={`activation-${rule.id}`} className="field-label mt-3">
-                        {card.shortName} online retail bonus activation
+                      <label htmlFor={`activation-${ruleId}`} className="field-label mt-3">
+                        {card.shortName} {label} bonus activation
                       </label>
                       <select
-                        id={`activation-${rule.id}`}
+                        id={`activation-${ruleId}`}
                         className="field-input"
                         disabled={busy}
-                        value={inputs[rule.id].activation}
+                        value={inputs[ruleId].activation}
                         onChange={(e) =>
                           setInputs({
                             ...inputs,
-                            [rule.id]: {
-                              ...inputs[rule.id],
+                            [ruleId]: {
+                              ...inputs[ruleId],
                               activation: e.target.value as RuleUsage['activation'],
                             },
                           })
@@ -208,7 +205,8 @@ export default function WalletEditor({
                     </>
                   )}
                 </div>
-              )),
+              );
+            }),
           )}
         {error && (
           <p role="alert" className="error-message mt-3">

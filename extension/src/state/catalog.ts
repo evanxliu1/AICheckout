@@ -1,15 +1,20 @@
 import { z } from 'zod';
 import {
   catalogResponseSchema,
+  CATALOG_V2,
   catalogSchema,
-  PILOT_CATALOG,
+  redateCatalog,
   publishedReleaseSchema,
   stableJson,
 } from '../domain';
 import type { Catalog } from '../domain';
 import type { AppState } from './contracts';
 
-const bundled = catalogSchema.parse(PILOT_CATALOG);
+// The bundled fallback is the real catalog v2; cached v1 releases are still accepted.
+// Browser-test builds (dist-e2e, never packaged) set VITE_E2E_CATALOG_DATE so the bundled
+// catalog's validity window follows the test run instead of expiring with the real terms.
+const e2eCatalogDate = import.meta.env?.VITE_E2E_CATALOG_DATE;
+const bundled = catalogSchema.parse(e2eCatalogDate ? redateCatalog(CATALOG_V2, e2eCatalogDate) : CATALOG_V2);
 export const cachedCatalogSchema = z.strictObject({
   release: publishedReleaseSchema.nullable(),
   lastCheckedAt: z.number().int().nonnegative().nullable(),
