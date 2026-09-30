@@ -36,7 +36,7 @@ test('popup closure preserves an unconfirmed capture; navigation invalidates it 
   browserName,
 }, testInfo) => {
   expect(browserName).toBe('chromium');
-  const extension = resolve('dist');
+  const extension = resolve('dist-e2e');
   const context = await chromium.launchPersistentContext(testInfo.outputPath('profile'), {
     channel: 'chromium',
     headless: true,
@@ -127,7 +127,7 @@ test('a real idle worker stop preserves saved comparison and revalidates the car
 }, testInfo) => {
   test.setTimeout(75_000);
   expect(browserName).toBe('chromium');
-  const fixture = await launchLifecycleBrowser(testInfo.outputPath('profile'), resolve('dist'));
+  const fixture = await launchLifecycleBrowser(testInfo.outputPath('profile'), resolve('dist-e2e'));
   let browser = await fixture.connect().catch(async (error) => {
       await fixture.close();
       throw error;

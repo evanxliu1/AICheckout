@@ -6,7 +6,7 @@ test('packaged wallet: offline comparison, browser restart, expiry, and deletion
   browserName,
 }, testInfo) => {
   expect(browserName).toBe('chromium');
-  const extension = resolve('dist');
+  const extension = resolve('dist-e2e');
   const launch = () =>
     chromium.launchPersistentContext(testInfo.outputPath('profile'), {
       channel: 'chromium',
@@ -28,8 +28,6 @@ test('packaged wallet: offline comparison, browser restart, expiry, and deletion
     await popup.getByRole('checkbox', { name: 'Capital One Quicksilver', exact: true }).check();
     await popup.getByRole('checkbox', { name: 'American Express Blue Cash Everyday', exact: true }).check();
     await popup.getByLabel(/Blue Cash Everyday online retail spend/).fill('0');
-    // The issuer terms don't state activation (catalog v2 `unstated`), so the shopper confirms it.
-    await popup.getByLabel(/Blue Cash Everyday online retail bonus activation/).selectOption('active');
     await popup.screenshot({ path: testInfo.outputPath('wallet-360.png') });
     await popup.getByRole('button', { name: 'Save cards' }).click();
     await popup.getByLabel('Purchase amount (USD)').fill('100');
@@ -94,7 +92,7 @@ test('a second popup invalidates a changed wallet and observes deletion', async 
   browserName,
 }, testInfo) => {
   expect(browserName).toBe('chromium');
-  const extension = resolve('dist');
+  const extension = resolve('dist-e2e');
   const context = await chromium.launchPersistentContext(testInfo.outputPath('profile'), {
     channel: 'chromium',
     headless: true,

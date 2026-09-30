@@ -3,7 +3,15 @@ import globals from 'globals';
 import js from '@eslint/js';
 export default [
   ...extension,
-  { ignores: ['**/dist/**', '**/dist-catalog-test/**', '**/node_modules/**', '**/test-results/**'] },
+  {
+    ignores: [
+      '**/dist/**',
+      '**/dist-catalog-test/**',
+      '**/dist-e2e/**',
+      '**/node_modules/**',
+      '**/test-results/**',
+    ],
+  },
   {
     files: ['apps/**/*.ts', 'scripts/**/*.mjs', 'extension/scripts/**/*.mjs', 'packages/*/scripts/**/*.mjs'],
     languageOptions: { globals: globals.node },

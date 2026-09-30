@@ -9,31 +9,45 @@ export async function openNativePopup(context: BrowserContext, merchant: Page, e
   const before = await cdp.send('Target.getTargets', { filter: [{}] });
   const tab = before.targetInfos.find((t) => t.type === 'tab' && t.url === merchant.url());
   if (!tab) throw new Error('Merchant tab target not found');
-  let actionTimer: ReturnType<typeof setTimeout> | undefined;
+  const trigger = async () => {
+    let actionTimer: ReturnType<typeof setTimeout> | undefined;
+    try {
+      await Promise.race([
+        cdp.send('Extensions.triggerAction', { id: extensionId, targetId: tab.targetId }),
+        new Promise<never>((_, reject) => {
+          actionTimer = setTimeout(() => reject(new Error('Chrome toolbar action timed out')), 10000);
+        }),
+      ]);
+    } finally {
+      clearTimeout(actionTimer);
+    }
+  };
+  const findPopup = async () =>
+    (await cdp.send('Target.getTargets', { filter: [{}] })).targetInfos.find(
+      (t) => t.type === 'other' && !before.targetInfos.some((old) => old.targetId === t.targetId),
+    )?.targetId ?? '';
+  // Chrome can drop a toolbar action that arrives while it is still tearing down a popup that
+  // was just closed (seen on slower CI runners when a test reopens the popup). Re-trigger only
+  // after confirming no new popup target exists, so a slow first popup is never toggled closed.
+  let targetId = '';
   try {
-    await Promise.race([
-      cdp.send('Extensions.triggerAction', { id: extensionId, targetId: tab.targetId }),
-      new Promise<never>((_, reject) => {
-        actionTimer = setTimeout(() => reject(new Error('Chrome toolbar action timed out')), 10000);
-      }),
-    ]);
+    for (let attempt = 0; attempt < 3 && !targetId; attempt++) {
+      if (attempt > 0) {
+        targetId = await findPopup();
+        if (targetId) break;
+        await merchant.bringToFront();
+      }
+      await trigger();
+      await expect
+        .poll(async () => (targetId = await findPopup()), { timeout: 4000 })
+        .not.toBe('')
+        .catch(() => undefined);
+    }
+    expect(targetId, 'Chrome did not open the extension popup').not.toBe('');
   } catch (error) {
     await cdp.detach().catch(() => undefined);
     throw error;
-  } finally {
-    clearTimeout(actionTimer);
   }
-  let targetId = '';
-  await expect
-    .poll(async () => {
-      const targets = await cdp.send('Target.getTargets', { filter: [{}] });
-      targetId =
-        targets.targetInfos.find(
-          (t) => t.type === 'other' && !before.targetInfos.some((old) => old.targetId === t.targetId),
-        )?.targetId ?? '';
-      return targetId;
-    })
-    .not.toBe('');
   const { sessionId } = await cdp.send('Target.attachToTarget', { targetId, flatten: false });
   let sequence = 0;
   async function send(method: string, params: Record<string, unknown>) {

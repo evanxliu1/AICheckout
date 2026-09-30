@@ -6,6 +6,8 @@ const run = (args, env) =>
 run(['run', 'build', '--workspace=ai-checkout-extension', '--', '--outDir', 'dist-catalog-test'], {
   ...process.env,
   VITE_CATALOG_API_URL: 'https://127.0.0.1:9443/v1/catalog',
+  // Keep the bundled catalog valid whenever this runs (test build only, never packaged).
+  VITE_E2E_CATALOG_DATE: new Date(Date.now() - 86_400_000).toISOString().slice(0, 10),
 });
 run(['run', 'test:browser', '--workspace=ai-checkout-extension', '--', 'e2e/catalog.spec.ts'], {
   ...process.env,
