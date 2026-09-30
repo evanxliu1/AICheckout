@@ -645,9 +645,9 @@ describe('resume', () => {
       }
       await expect(readFile(join(out, 'failures.jsonl'), 'utf8')).rejects.toThrow(/ENOENT/);
 
-      await expect(runEvaluationV2Cli(['--resume', out, '--output', dir], root)).rejects.toThrow(
-        /drop --output/,
-      );
+      await expect(
+        runEvaluationV2Cli(['--resume', out, '--output', dir, '--corpus', FIXTURE], root),
+      ).rejects.toThrow(/drop --output/);
     } finally {
       await rm(dir, { recursive: true, force: true });
     }
