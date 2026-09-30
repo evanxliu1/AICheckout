@@ -37,6 +37,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   ref,
 ) {
   if (isIconOnly && !icon) throw new Error('Button: isIconOnly requires an icon');
+  if (isIconOnly && !ariaLabel && !(typeof children === 'string' && children.trim()))
+    throw new Error('Button: isIconOnly needs string children or aria-label for its accessible name');
   const iconNode = icon ? <Icon name={icon} className="ac-button__icon" /> : null;
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (isLoading) event.preventDefault();

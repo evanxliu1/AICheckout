@@ -8,13 +8,16 @@ export type { IconName };
 export type IconProps = Omit<SVGProps<SVGSVGElement>, 'name' | 'children'> & {
   name: IconName;
   size?: 16 | 24;
-  /** Accessible name. Without it the icon is decorative and hidden from assistive technology. */
+  /**
+   * Accessible name (or pass aria-label / aria-labelledby). Without one the icon is decorative and
+   * hidden from assistive technology.
+   */
   title?: string;
   isInline?: boolean;
 };
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
-  { name, size = 16, title, isInline, className, ...rest },
+  { name, size = 16, title, isInline, className, 'aria-label': ariaLabel, ...rest },
   ref,
 ) {
   const sizes = FLIGHT_ICONS[name];
@@ -35,7 +38,9 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
         className,
       )}
       data-icon={name}
-      {...(title ? { role: 'img', 'aria-label': title } : { 'aria-hidden': true })}
+      {...(title || ariaLabel || rest['aria-labelledby']
+        ? { role: 'img', 'aria-label': title ?? ariaLabel }
+        : { 'aria-hidden': true })}
       {...rest}
     >
       {paths.map((path, index) => (

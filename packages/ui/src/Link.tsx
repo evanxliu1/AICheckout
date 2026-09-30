@@ -12,7 +12,10 @@ export type LinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'color'> &
   size?: 'small' | 'medium' | 'large';
   icon?: IconName;
   iconPosition?: 'leading' | 'trailing';
-  /** Opens in a new tab with `rel="noopener noreferrer"` and an announced external indicator. */
+  /**
+   * Opens in a new tab with `rel="noopener noreferrer"` and an announced external indicator. The
+   * external-link icon takes the trailing slot (replacing a trailing `icon`); a leading `icon` stays.
+   */
   isExternal?: boolean;
 };
 

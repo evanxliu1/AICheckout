@@ -59,10 +59,17 @@ export function Table<Row>({
     return () => observer.disconnect();
   }, []);
   const sortColumn = sort && columns.find((column) => column.key === sort.key && column.sortValue);
+  // Columns are often declared inline, so the memo keys on the sort key/direction and rows, and
+  // reads the current sortValue from a ref instead of re-sorting on every render.
+  const sortValueRef = useRef(sortColumn?.sortValue);
+  sortValueRef.current = sortColumn?.sortValue;
+  const sortable = Boolean(sortColumn);
+  const sortKey = sort?.key,
+    sortDirection = sort?.direction;
   const sortedRows = useMemo(() => {
-    if (!sort || !sortColumn?.sortValue) return rows;
-    const value = sortColumn.sortValue;
-    const factor = sort.direction === 'ascending' ? 1 : -1;
+    const value = sortValueRef.current;
+    if (!sortable || !value) return rows;
+    const factor = sortDirection === 'ascending' ? 1 : -1;
     return [...rows].sort((a, b) => {
       const left = value(a),
         right = value(b);
@@ -72,7 +79,9 @@ export function Table<Row>({
           : String(left).localeCompare(String(right));
       return order * factor;
     });
-  }, [rows, sort, sortColumn]);
+    // sortKey selects the column whose sortValue is in the ref.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rows, sortable, sortKey, sortDirection]);
 
   const toggle = (key: string) =>
     setSort((current) => ({
