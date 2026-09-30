@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CATALOG_V2, compareRewards, usageInputs } from '../src/domain';
+import { CATALOG_V2, catalogSchema, compareRewards, redateCatalog, usageInputs } from '../src/domain';
 import type {
   CatalogV2,
   CardEstimate,
@@ -127,7 +127,7 @@ describe('catalog v2 engine: applicability per rule kind and merchant profile', 
       'diner-us',
       'capital-one-savor',
       {
-        'savor-dining': 'may-apply',
+        'savor-dining': 'applied',
         'savor-supermarkets': 'not-at-merchant',
         'savor-entertainment-portal': 'not-at-merchant',
       },
@@ -227,25 +227,62 @@ describe('catalog v2 engine: amounts', () => {
     expect([e.minRewardCents, e.maxRewardCents]).toEqual([101_000, 101_000]);
   });
 
-  it('unstated activation is a range until the shopper confirms it; inactive never applies', () => {
-    expect(
-      estimate('amex-blue-cash-everyday', [usage('bce-online-retail', { spentCents: 0 })]),
-    ).toMatchObject({
+  it('unstated activation needs no confirmation: BCE at Best Buy is 3% once cap usage is known', () => {
+    // No usage recorded: only the annual cap allowance is unknown.
+    expect(estimate('amex-blue-cash-everyday')).toMatchObject({
       minRewardCents: 100,
       maxRewardCents: 300,
-      uncertainties: ['activation-unknown'],
+      uncertainties: ['annual-usage-unknown'],
     });
+    // Spend recorded below the cap, activation never confirmed: a guaranteed 3%.
+    expect(
+      estimate('amex-blue-cash-everyday', [usage('bce-online-retail', { spentCents: 0 })]),
+    ).toMatchObject({ minRewardCents: 300, maxRewardCents: 300, uncertainties: [] });
+    // `inactive` is meaningless for a rule that needs no activation.
     const inactive = estimate('amex-blue-cash-everyday', [
-      usage('bce-online-retail', { activation: 'inactive' }),
+      usage('bce-online-retail', { activation: 'inactive', spentCents: 0 }),
     ]);
-    expect(inactive).toMatchObject({ minRewardCents: 100, maxRewardCents: 100, uncertainties: [] });
-    expect(statuses(inactive)['bce-online-retail']).toBe('not-eligible');
+    expect(statuses(inactive)['bce-online-retail']).toBe('applied');
+  });
+
+  it('enroll-once and recurring rules need confirmation; inactive never applies', () => {
+    for (const activation of ['enroll-once', 'recurring'] as const) {
+      const catalog = structuredClone(CATALOG_V2);
+      catalog.cards
+        .find((c) => c.id === 'amex-blue-cash-everyday')!
+        .rules.find((r) => r.id === 'bce-online-retail')!.activation = activation;
+      expect(
+        estimate('amex-blue-cash-everyday', [usage('bce-online-retail', { spentCents: 0 })], {}, catalog),
+      ).toMatchObject({ minRewardCents: 100, maxRewardCents: 300, uncertainties: ['activation-unknown'] });
+      expect(estimate('amex-blue-cash-everyday', bceActive(), {}, catalog).minRewardCents).toBe(300);
+      const inactive = estimate(
+        'amex-blue-cash-everyday',
+        [usage('bce-online-retail', { activation: 'inactive', spentCents: 0 })],
+        {},
+        catalog,
+      );
+      expect(inactive).toMatchObject({ minRewardCents: 100, maxRewardCents: 100, uncertainties: [] });
+      expect(statuses(inactive)['bce-online-retail']).toBe('not-eligible');
+    }
+  });
+
+  it('never estimates below the base, even with an after-cap rate under it', () => {
+    // The schema forbids this; the engine floors at the base as defense in depth.
+    const catalog = structuredClone(CATALOG_V2);
+    const rule = catalog.cards
+      .find((c) => c.id === 'amex-blue-cash-everyday')!
+      .rules.find((r) => r.id === 'bce-online-retail')!;
+    rule.cap = { kind: 'spend', amountCents: 600_000, period: 'calendar-year', rateAfterCapBps: 0 };
+    const atCap = estimate('amex-blue-cash-everyday', bceActive({ spentCents: 600_000 }), {}, catalog);
+    expect([atCap.minRewardCents, atCap.maxRewardCents]).toEqual([100, 100]);
+    const unknown = estimate('amex-blue-cash-everyday', bceActive({ spentCents: null }), {}, catalog);
+    expect([unknown.minRewardCents, unknown.maxRewardCents]).toEqual([100, 300]);
   });
 
   it('stale usage (another day) is unknown, not zero', () => {
     const e = estimate('amex-blue-cash-everyday', bceActive({ recordedOn: '2026-09-29' }));
     expect(e).toMatchObject({ minRewardCents: 100, maxRewardCents: 300 });
-    expect(e.uncertainties).toEqual(['annual-usage-unknown', 'activation-unknown']);
+    expect(e.uncertainties).toEqual(['annual-usage-unknown']);
   });
 
   it.each([
@@ -289,6 +326,21 @@ describe('catalog v2 engine: amounts', () => {
     expect(expired.maxRewardCents).toBe(100);
     rule.limitedTime = { endsOn: today };
     expect(estimate('amex-blue-cash-everyday', bceActive(), {}, catalog).minRewardCents).toBe(300);
+  });
+
+  it('a promotion that ended before the catalog was verified is expired even for an earlier purchase date', () => {
+    const catalog = structuredClone(CATALOG_V2);
+    catalog.cards
+      .find((c) => c.id === 'amex-blue-cash-everyday')!
+      .rules.find((r) => r.id === 'bce-online-retail')!.limitedTime = { endsOn: '2026-09-28' };
+    const e = estimate(
+      'amex-blue-cash-everyday',
+      [usage('bce-online-retail', { spentCents: 0, recordedOn: '2026-09-28' })],
+      { purchasedOn: '2026-09-28' },
+      catalog,
+    );
+    expect(statuses(e)['bce-online-retail']).toBe('expired');
+    expect(e.maxRewardCents).toBe(100);
   });
 
   it('a short-period cap with unknown usage reports cap-usage-unknown', () => {
@@ -407,9 +459,22 @@ describe('catalog v2 engine: bounds and validation', () => {
 describe('wallet usage inputs', () => {
   it('asks only for rules that can apply at a covered merchant', () => {
     expect(usageInputs(CATALOG_V2, 'amex-blue-cash-everyday')).toEqual([
-      { ruleId: 'bce-online-retail', label: 'online retail', needsSpend: true, needsActivation: true },
+      { ruleId: 'bce-online-retail', label: 'online retail', needsSpend: true, needsActivation: false },
     ]);
     expect(usageInputs(CATALOG_V2, 'citi-double-cash')).toEqual([]);
     expect(usageInputs(CATALOG_V2, 'amex-blue-cash-preferred')).toEqual([]);
+  });
+});
+
+describe('redateCatalog (browser-test support)', () => {
+  it('moves every date by the same number of days and stays schema-valid', () => {
+    const moved = redateCatalog(CATALOG_V2, '2027-03-01');
+    expect(moved.verifiedAt).toBe('2027-03-01T00:00:00Z');
+    expect(Date.parse(moved.expiresAt) - Date.parse(moved.verifiedAt)).toBe(
+      Date.parse(CATALOG_V2.expiresAt) - Date.parse(CATALOG_V2.verifiedAt),
+    );
+    expect(moved.sources.find((s) => s.id === 'check-mcc-best-buy')?.checkedOn).toBe('2027-02-28');
+    expect(catalogSchema.safeParse(moved).success).toBe(true);
+    expect(CATALOG_V2.verifiedAt).toBe('2026-09-29T00:00:00Z');
   });
 });

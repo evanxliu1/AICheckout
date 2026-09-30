@@ -1,4 +1,10 @@
-import type { Catalog, RewardRule, RewardRuleV2, RuleCap } from '@ai-checkout/rewards-core';
+import {
+  ACTIVATION_LABELS,
+  type Catalog,
+  type RewardRule,
+  type RewardRuleV2,
+  type RuleCap,
+} from '@ai-checkout/rewards-core';
 import type { ReviewDetail } from '@ai-checkout/catalog-review';
 
 export interface ChangeRow {
@@ -204,7 +210,7 @@ export function ruleSummaries(rules: RewardRule[] | RewardRuleV2[]) {
     }
     const conditions = [
       `Cap: ${capText(rule.cap)}.`,
-      `Activation: ${rule.activation}.`,
+      `${ACTIVATION_LABELS[rule.activation]}.`,
       rule.paidOnPaymentBps ? `${percent(rule.paidOnPaymentBps)} is paid when the balance is paid.` : '',
       rule.usMerchantsOnly ? 'U.S. merchants only.' : '',
       rule.limitedTime ? `Limited time, ends ${rule.limitedTime.endsOn ?? 'on an unstated date'}.` : '',

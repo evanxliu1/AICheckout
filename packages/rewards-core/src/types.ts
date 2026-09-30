@@ -79,6 +79,8 @@ export type CapPeriod = (typeof CAP_PERIODS)[number];
 export const PAYMENT_PATHS = ['card', 'paypal', 'digital-wallet', 'bnpl'] as const;
 /** How the shopper pays at checkout; non-card paths make channel/category bonuses uncertain. */
 export type PaymentPath = (typeof PAYMENT_PATHS)[number];
+/** Paths a rule can exclude; a card payment is the baseline and can't be excluded. */
+export const EXCLUDABLE_PAYMENT_PATHS = ['paypal', 'digital-wallet', 'bnpl'] as const;
 
 export type RuleCap =
   | { kind: 'none' }
@@ -95,10 +97,11 @@ export interface RewardRuleV2 {
   /** Portion of rateBps earned only when the balance is paid (Citi "1% as you pay"). */
   paidOnPaymentBps: number;
   cap: RuleCap;
+  /** `unstated`: the issuer's pages don't mention activation; treated like `none`. */
   activation: 'none' | 'enroll-once' | 'recurring' | 'unstated';
   usMerchantsOnly: boolean;
   /** Payment paths the issuer excludes from this rule (Amex online retail excludes BNPL). */
-  excludedPaymentPaths: PaymentPath[];
+  excludedPaymentPaths: (typeof EXCLUDABLE_PAYMENT_PATHS)[number][];
   /** Promotional rule; an `endsOn` before the purchase date means it never applies. */
   limitedTime: { endsOn: string | null } | null;
   sourceIds: string[];
@@ -196,9 +199,12 @@ export interface CardEstimate {
   maxBonusSpendCents: number;
   uncertainties: Uncertainty[];
   sourceIds: string[];
-  /** Catalog v2 only: the rule behind the lower estimate, and per-rule outcomes. */
+  /** Catalog v2 only: the rule this estimate is about. That is the bonus rule with the highest
+   * possible reward here (it sets `maxRewardCents`, `bonusRateBps` and the bonus spend), or the
+   * base rule when no bonus can add anything. */
   appliedRuleId?: string;
-  /** Catalog v2 only: part of the applied rate paid when the balance is paid (e.g. Citi 100 of 200). */
+  /** Catalog v2 only: the part of `appliedRuleId`'s rate earned when the balance is paid
+   * (Citi Double Cash: 100 of 200). */
   paidOnPaymentBps?: number;
   rules?: { ruleId: string; status: RuleStatus }[];
 }

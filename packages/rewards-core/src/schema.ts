@@ -3,7 +3,7 @@ import { MAX_AMOUNT_CENTS } from './money.ts';
 import {
   CAP_PERIODS,
   MERCHANT_CATEGORIES,
-  PAYMENT_PATHS,
+  EXCLUDABLE_PAYMENT_PATHS,
   REWARD_CATEGORIES,
   type Catalog,
   type CatalogV1,
@@ -137,7 +137,7 @@ export const rewardRuleV2Schema = z.strictObject({
   cap: ruleCapSchema,
   activation: z.enum(['none', 'enroll-once', 'recurring', 'unstated']),
   usMerchantsOnly: z.boolean(),
-  excludedPaymentPaths: z.array(z.enum(PAYMENT_PATHS)).max(4).refine(unique),
+  excludedPaymentPaths: z.array(z.enum(EXCLUDABLE_PAYMENT_PATHS)).max(3).refine(unique),
   limitedTime: z.strictObject({ endsOn: z.iso.date().nullable() }).nullable(),
   sourceIds: sourceIdsSchema.min(1),
 });
@@ -224,6 +224,8 @@ export const catalogV2Schema = z
           reject('The paid-on-payment portion cannot exceed the rate.', [...rulePath, 'paidOnPaymentBps']);
         if (rule.cap.kind === 'spend' && rule.cap.rateAfterCapBps > rule.rateBps)
           reject('The after-cap rate cannot exceed the rule rate.', [...rulePath, 'cap']);
+        if (base && rule.cap.kind === 'spend' && rule.cap.rateAfterCapBps < base.rateBps)
+          reject('The after-cap rate cannot be below the base rate.', [...rulePath, 'cap']);
         if (rule.sourceIds.some((id) => !sourceIds.has(id)))
           reject('Rule references an absent source.', [...rulePath, 'sourceIds']);
       });

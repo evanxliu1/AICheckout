@@ -1,4 +1,20 @@
-import type { Catalog, CardProductV2, CardProduct, CatalogV2, RewardCategory } from './types.ts';
+import { needsActivation } from './engine-v2.ts';
+import type {
+  Catalog,
+  CardProductV2,
+  CardProduct,
+  CatalogV2,
+  RewardCategory,
+  RewardRuleV2,
+} from './types.ts';
+
+/** Shopper-facing activation wording; `unstated` is shown, not treated as a requirement. */
+export const ACTIVATION_LABELS: Record<RewardRuleV2['activation'], string> = {
+  none: 'No activation needed',
+  'enroll-once': 'Enroll once to earn this rate',
+  recurring: 'Activate each period to earn this rate',
+  unstated: 'Activation is not mentioned on the issuer’s pages',
+};
 
 /** Merchant IDs a catalog covers, for either schema version. */
 export function catalogMerchantIds(catalog: Catalog): string[] {
@@ -29,7 +45,7 @@ export type UsageInput = {
   label: string;
   /** The rule has a spend cap, so remaining allowance changes the estimate. */
   needsSpend: boolean;
-  /** The rule needs activation (or the terms don't say), so the shopper can confirm it. */
+  /** The rule needs enroll-once or recurring activation, so the shopper can confirm it. */
   needsActivation: boolean;
 };
 
@@ -57,13 +73,39 @@ export function usageInputs(catalog: Catalog, cardId: string): UsageInput[] {
     .filter(
       (rule) =>
         rule.category !== 'all-purchases' &&
-        (rule.cap.kind === 'spend' || rule.activation !== 'none') &&
+        (rule.cap.kind === 'spend' || needsActivation(rule)) &&
         canApplySomewhere(catalog, rule.category),
     )
     .map((rule) => ({
       ruleId: rule.id,
       label: CATEGORY_LABELS[rule.category],
       needsSpend: rule.cap.kind === 'spend',
-      needsActivation: rule.activation !== 'none',
+      needsActivation: needsActivation(rule),
     }));
+}
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+const shiftDate = (date: string, days: number) =>
+  new Date(Date.parse(`${date}T00:00:00Z`) + days * DAY_MS).toISOString().slice(0, 10);
+const shiftInstant = (instant: string, days: number) =>
+  new Date(Date.parse(instant) + days * DAY_MS).toISOString().replace('.000Z', 'Z');
+
+/** Test support: moves a catalog's dates (verification, expiry, source checks, promotion ends)
+ * so it is verified on `verifiedOn`, keeping every interval. Browser tests use this so they don't
+ * expire with the real terms; release builds never re-date the bundled catalog. */
+export function redateCatalog<T extends Catalog>(catalog: T, verifiedOn: string): T {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(verifiedOn)) throw new Error('verifiedOn must be YYYY-MM-DD.');
+  const days = Math.round(
+    (Date.parse(`${verifiedOn}T00:00:00Z`) - Date.parse(`${catalog.verifiedAt.slice(0, 10)}T00:00:00Z`)) /
+      DAY_MS,
+  );
+  const next = structuredClone(catalog);
+  next.verifiedAt = shiftInstant(next.verifiedAt, days);
+  next.expiresAt = shiftInstant(next.expiresAt, days);
+  for (const source of next.sources) source.checkedOn = shiftDate(source.checkedOn, days);
+  if (next.schemaVersion === 2)
+    for (const card of next.cards)
+      for (const rule of card.rules)
+        if (rule.limitedTime?.endsOn) rule.limitedTime.endsOn = shiftDate(rule.limitedTime.endsOn, days);
+  return next;
 }

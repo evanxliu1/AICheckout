@@ -8,11 +8,11 @@
 // Mapping from gold labels: a null cap becomes `unstated`, a null activation `unstated`, a null
 // usMerchantsOnly `false` (no U.S.-only wording); categories map 1:1. Every rule cites all of its card's
 // manifest sources. verifiedAt is the latest capture date; the catalog expires 30 days later.
+// The version label is that date plus `.real.1` (bump the counter for a rebuild from the same captures).
 import { readFileSync, writeFileSync } from 'node:fs';
 import { format, resolveConfig } from 'prettier';
 import { catalogV2Schema } from '../packages/rewards-core/src/schema.ts';
 
-const VERSION = '2026-10-01.real.1';
 const root = new URL('../', import.meta.url);
 const read = (path) => JSON.parse(readFileSync(new URL(path, root), 'utf8'));
 const out = new URL('packages/rewards-core/src/catalog-v2.ts', root);
@@ -128,7 +128,7 @@ export function buildCatalog() {
   });
   const catalog = {
     schemaVersion: 2,
-    version: VERSION,
+    version: `${verifiedOn}.real.1`,
     verifiedAt,
     expiresAt,
     merchants: merchants.merchants,

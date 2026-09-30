@@ -64,6 +64,10 @@ select ok(not pg_temp.valid(jsonb_set(pg_temp.v2(),'{cards,0,rules,0,activation}
 select ok(not pg_temp.valid(jsonb_set(pg_temp.v2(),'{cards,1,rules,1,rateBps}','50')),'bonus below base fails');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.v2(),'{cards,0,rules,0,paidOnPaymentBps}','201')),'paid-on-payment above rate fails');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.v2(),'{cards,1,rules,1,cap,rateAfterCapBps}','301')),'after-cap above rate fails');
+select ok(not pg_temp.valid(jsonb_set(pg_temp.v2(),'{cards,1,rules,1,cap,rateAfterCapBps}','50')),
+  'after-cap below the base rate fails');
+select ok(not pg_temp.valid(jsonb_set(pg_temp.v2(),'{cards,1,rules,1,excludedPaymentPaths}','["card"]')),
+  'card cannot be an excluded payment path');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.v2(),'{cards,1,rules,1,cap}','{"kind":"unstated","amountCents":1}')),
   'extra cap fields fail');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.v2(),'{cards,1,rules,1,limitedTime}','{"endsOn":"2026-02-30"}')),

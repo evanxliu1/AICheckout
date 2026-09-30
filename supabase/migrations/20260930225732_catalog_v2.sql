@@ -77,8 +77,8 @@ begin
               ]},
               "activation":{"enum":["none","enroll-once","recurring","unstated"]},
               "usMerchantsOnly":{"type":"boolean"},
-              "excludedPaymentPaths":{"type":"array","maxItems":4,"uniqueItems":true,
-                "items":{"enum":["card","paypal","digital-wallet","bnpl"]}},
+              "excludedPaymentPaths":{"type":"array","maxItems":3,"uniqueItems":true,
+                "items":{"enum":["paypal","digital-wallet","bnpl"]}},
               "limitedTime":{"oneOf":[{"type":"null"},{"type":"object","additionalProperties":false,"required":["endsOn"],
                 "properties":{"endsOn":{"oneOf":[{"type":"null"},{"$ref":"#/$defs/date"}]}}}]},
               "sourceIds":{"allOf":[{"$ref":"#/$defs/sourceIds"},{"minItems":1}]}
@@ -133,7 +133,8 @@ begin
     for rule in select value from jsonb_array_elements(card->'rules') loop
       if (rule->>'rateBps')::integer < (base->>'rateBps')::integer
          or (rule->>'paidOnPaymentBps')::integer > (rule->>'rateBps')::integer
-         or (rule#>>'{cap,kind}' = 'spend' and (rule#>>'{cap,rateAfterCapBps}')::integer > (rule->>'rateBps')::integer)
+         or (rule#>>'{cap,kind}' = 'spend' and ((rule#>>'{cap,rateAfterCapBps}')::integer > (rule->>'rateBps')::integer
+             or (rule#>>'{cap,rateAfterCapBps}')::integer < (base->>'rateBps')::integer))
          or exists(select 1 from jsonb_array_elements_text(rule->'sourceIds') id where id <> all(source_ids))
       then return false; end if;
     end loop;

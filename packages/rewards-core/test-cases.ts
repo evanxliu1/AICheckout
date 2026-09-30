@@ -176,6 +176,31 @@ export const catalogV2Cases: Case[] = [
     const target = rule(c, 'amex-blue-cash-everyday', 'online-retail');
     if (target.cap.kind === 'spend') target.cap.rateAfterCapBps = 301;
   }),
+  invalidV2('after-cap rate below the base rate', (c) => {
+    const target = rule(c, 'amex-blue-cash-everyday', 'online-retail');
+    if (target.cap.kind === 'spend') target.cap.rateAfterCapBps = 50;
+  }),
+  invalidV2('card as an excluded payment path', (c) => {
+    Object.assign(rule(c, 'amex-blue-cash-everyday', 'online-retail'), { excludedPaymentPaths: ['card'] });
+  }),
+  invalidV2('duplicate excluded payment path', (c) => {
+    rule(c, 'amex-blue-cash-everyday', 'online-retail').excludedPaymentPaths = ['bnpl', 'bnpl'];
+  }),
+  invalidV2('base with an excluded payment path', (c) => {
+    rule(c, 'citi-double-cash', 'all-purchases').excludedPaymentPaths = ['paypal'];
+  }),
+  invalidV2('base needing one-time enrollment', (c) => {
+    rule(c, 'citi-double-cash', 'all-purchases').activation = 'enroll-once';
+  }),
+  invalidV2('duplicate MCC source', (c) => {
+    c.merchants[0].mcc.sourceIds = [c.merchants[0].mcc.sourceIds[0], c.merchants[0].mcc.sourceIds[0]];
+  }),
+  invalidV2('verification time with an offset', (c) => {
+    c.verifiedAt = c.verifiedAt.replace('Z', '+00:00');
+  }),
+  invalidV2('extra limited-time field', (c) => {
+    rule(c, 'capital-one-savor', 'dining').limitedTime = { endsOn: null, note: 'x' } as never;
+  }),
   invalidV2('negative after-cap rate', (c) => {
     const target = rule(c, 'amex-blue-cash-everyday', 'online-retail');
     if (target.cap.kind === 'spend') target.cap.rateAfterCapBps = -1;

@@ -7,7 +7,7 @@ import type { CatalogV2 } from './types.ts';
  * 2026-09-29. Covers Best Buy, Newegg, Amazon. */
 export const CATALOG_V2: CatalogV2 = {
   schemaVersion: 2,
-  version: '2026-10-01.real.1',
+  version: '2026-09-29.real.1',
   verifiedAt: '2026-09-29T00:00:00Z',
   expiresAt: '2026-10-29T00:00:00Z',
   merchants: [

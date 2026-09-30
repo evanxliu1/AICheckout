@@ -31,13 +31,21 @@ import {
  * - MCC-group categories (supermarkets, gas, dining, ...): only when the merchant profile's
  *   expected category equals the rule category.
  * - travel-portal, entertainment-portal, other: never at a retail checkout ("not at this merchant").
- * Rules do not stack: each card earns its best applicable rule. A rule whose applicability is
- * uncertain (category unconfirmed, activation unknown, non-card payment path, cap unstated)
- * contributes a range from the base reward to its bonus. Spend beyond a cap earns rateAfterCapBps.
+ * - A promotion is expired (never applied) when its end date is before the purchase date or before
+ *   the catalog's verification date.
+ * Rules do not stack: each card earns its best applicable rule, and never less than its base.
+ * A rule whose applicability is uncertain (category unconfirmed, enroll-once/recurring activation
+ * not confirmed, non-card payment path, cap unstated) contributes a range from the base reward to
+ * its bonus. Spend beyond a cap earns rateAfterCapBps. Activation `unstated` means the issuer's
+ * pages don't mention activation; issuers state enrollment requirements explicitly, so it is
+ * treated like `none` (product decision) and never asks the shopper to confirm.
  */
 
 const PORTAL_OR_OTHER = new Set(['travel-portal', 'entertainment-portal', 'other']);
 const YEARLY = new Set(['calendar-year', 'cardmember-year', 'year-unspecified']);
+/** Activation the shopper must confirm; `none` and `unstated` never need it. */
+export const needsActivation = (rule: RewardRuleV2) =>
+  rule.activation === 'enroll-once' || rule.activation === 'recurring';
 
 function validateCatalog(catalog: CatalogV2, wallet: Wallet, purchase: Purchase) {
   const sources = new Set(catalog.sources.map((s) => s.id));
@@ -96,16 +104,19 @@ function blocked(
   merchant: MerchantProfile,
   purchase: Purchase,
   usage: RuleUsage | undefined,
+  verifiedOn: string,
 ): RuleStatus | null {
   if (PORTAL_OR_OTHER.has(rule.category)) return 'not-at-merchant';
-  if (rule.limitedTime?.endsOn && rule.limitedTime.endsOn < purchase.purchasedOn) return 'expired';
+  const endsOn = rule.limitedTime?.endsOn;
+  if (endsOn && (endsOn < purchase.purchasedOn || endsOn < verifiedOn)) return 'expired';
   if (rule.category === 'online-retail') {
     if (!merchant.onlineRetail || !merchant.physicalGoods) return 'not-at-merchant';
     if (purchase.onlineRetail === 'ineligible') return 'not-eligible';
   } else if (rule.category !== merchant.expectedCategory) return 'not-at-merchant';
   if (rule.usMerchantsOnly && !merchant.usMerchant) return 'not-eligible';
-  if (rule.excludedPaymentPaths.includes(purchase.paymentPath ?? 'card')) return 'not-eligible';
-  if (rule.activation !== 'none' && usage?.activation === 'inactive') return 'not-eligible';
+  const path = purchase.paymentPath ?? 'card';
+  if (path !== 'card' && rule.excludedPaymentPaths.includes(path)) return 'not-eligible';
+  if (needsActivation(rule) && usage?.activation === 'inactive') return 'not-eligible';
   return null;
 }
 
@@ -120,7 +131,7 @@ function evaluate(
   if (rule.category === 'online-retail' && purchase.onlineRetail === 'unknown')
     uncertain.push('online-category-unknown');
   if ((purchase.paymentPath ?? 'card') !== 'card') uncertain.push('payment-path-uncertain');
-  if (rule.activation !== 'none' && usage?.activation !== 'active') uncertain.push('activation-unknown');
+  if (needsActivation(rule) && usage?.activation !== 'active') uncertain.push('activation-unknown');
   if (rule.cap.kind === 'unstated') uncertain.push('cap-unstated');
 
   let minBonus = amount,
@@ -163,6 +174,7 @@ function estimateCard(
   usage: RuleUsage[],
   merchant: MerchantProfile,
   purchase: Purchase,
+  verifiedOn: string,
 ): CardEstimate {
   const year = Number(purchase.purchasedOn.slice(0, 4));
   // Only same-day usage for this year counts; stale usage is unknown, not zero.
@@ -179,7 +191,7 @@ function estimateCard(
       statuses.push({ ruleId: rule.id, status: 'base' });
       continue;
     }
-    const why = blocked(rule, merchant, purchase, usageFor(rule));
+    const why = blocked(rule, merchant, purchase, usageFor(rule), verifiedOn);
     if (why) {
       statuses.push({ ruleId: rule.id, status: why });
       continue;
@@ -196,8 +208,9 @@ function estimateCard(
   );
   const floor = byMin[0],
     ceiling = byMax[0];
-  const min = floor?.min ?? baseReward,
-    max = ceiling?.max ?? baseReward;
+  // The base is always an option: no rule (e.g. a low after-cap rate) can pull a card below it.
+  const min = Math.max(baseReward, floor?.min ?? baseReward),
+    max = Math.max(baseReward, ceiling?.max ?? baseReward);
   const codes = new Set(options.filter((o) => o.max > min).flatMap((o) => o.uncertainties));
   const shown = ceiling && ceiling.maxBonusSpend > 0 ? ceiling : undefined;
   const applied = shown?.rule ?? base;
@@ -240,6 +253,7 @@ export function compareV2(
       owned.usage,
       merchant,
       purchase,
+      catalog.verifiedAt.slice(0, 10),
     ),
   );
   return rankEstimates(estimates, wallet, catalog.version);

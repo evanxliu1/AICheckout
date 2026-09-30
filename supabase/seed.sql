@@ -5,7 +5,7 @@
 insert into catalog_private.drafts(id,catalog)
 values ('00000000-0000-4000-8000-000000000001', $catalog${
   "schemaVersion": 2,
-  "version": "2026-10-01.real.1",
+  "version": "2026-09-29.real.1",
   "verifiedAt": "2026-09-29T00:00:00Z",
   "expiresAt": "2026-10-29T00:00:00Z",
   "merchants": [
