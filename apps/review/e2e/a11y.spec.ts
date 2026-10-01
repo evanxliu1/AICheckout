@@ -111,7 +111,7 @@ function detail(captured: boolean) {
   };
 }
 
-async function stubBackend(page: Page, captured: boolean) {
+async function stubBackend(page: Page, captured: boolean, { empty = false } = {}) {
   const payload = Buffer.from(
     JSON.stringify({ sub: reviewerId, exp: Math.floor(Date.now() / 1000) + 3600 }),
   ).toString('base64url');
@@ -130,23 +130,36 @@ async function stubBackend(page: Page, captured: boolean) {
     }),
   );
   const data = detail(captured);
+  // An empty queue until the app creates a draft with POST /drafts; then that draft is the queue.
+  let created = !empty;
   await page.route(`${origin}/v1/review/**`, (route) => {
     const path = new URL(route.request().url()).pathname;
+    if (route.request().method() === 'POST' && path === '/v1/review/drafts') {
+      const body = route.request().postDataJSON() as { catalog: typeof data.draft.catalog };
+      data.draft.catalog = body.catalog;
+      data.draft.revision = 1;
+      data.sources = [];
+      data.draft.source_document_ids = [];
+      created = true;
+      return route.fulfill({ contentType: 'application/json', body: JSON.stringify(data.draft) });
+    }
     const body =
       path === '/v1/review/'
         ? {
             reviewerId,
             head: 1,
-            drafts: [
-              {
-                id: draftId,
-                revision: 2,
-                status: 'draft',
-                updated_at: data.draft.updated_at,
-                base_sequence: 1,
-                version: data.draft.catalog.version,
-              },
-            ],
+            drafts: !created
+              ? []
+              : [
+                  {
+                    id: draftId,
+                    revision: 2,
+                    status: 'draft',
+                    updated_at: data.draft.updated_at,
+                    base_sequence: 1,
+                    version: data.draft.catalog.version,
+                  },
+                ],
           }
         : data;
     return route.fulfill({ contentType: 'application/json', body: JSON.stringify(body) });
@@ -167,7 +180,7 @@ async function check(page: Page, state: string) {
   }
 }
 
-async function signIn(page: Page, captured: boolean) {
+async function signIn(page: Page, captured: boolean, options?: { empty?: boolean }) {
   const violations: string[] = [];
   await page.exposeFunction('reportViolation', (value: string) => violations.push(value));
   await page.addInitScript(() =>
@@ -177,7 +190,7 @@ async function signIn(page: Page, captured: boolean) {
       ),
     ),
   );
-  await stubBackend(page, captured);
+  await stubBackend(page, captured, options);
   await page.goto(`${origin}/review/`);
   await expect(page.getByRole('heading', { name: 'Review the terms behind every estimate.' })).toBeVisible();
   return violations;
@@ -226,5 +239,29 @@ test('publish confirmation dialog: axe-clean, focus on Cancel, Esc closes', asyn
   await page.keyboard.press('Escape');
   await expect(dialog).toBeHidden();
   await expect(page.getByRole('button', { name: 'Publish reviewed terms' })).toBeFocused();
+  expect(violations).toEqual([]);
+});
+
+test('empty queue: start a draft from the bundled catalog, confirm, and land on it', async ({ page }) => {
+  // The app bundles CATALOG_V2 with fixed dates; pin the page clock inside its validity window.
+  await page.clock.setFixedTime(new Date(Date.parse(CATALOG_V2.verifiedAt) + 86_400_000));
+  const violations = await signIn(page, false, { empty: true });
+  await page.getByLabel('Email', { exact: true }).fill('reviewer@example.test');
+  await page.getByLabel('Password', { exact: true }).fill('not-a-real-password');
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1, name: 'Start a new draft' })).toBeVisible();
+  await expect(page.getByText(CATALOG_V2.version, { exact: true })).toBeVisible();
+  await expect(page.getByText('Valid now')).toBeVisible();
+  await check(page, 'start-draft');
+  await page.getByRole('button', { name: 'Create draft', exact: true }).click();
+  const dialog = page.getByRole('dialog', { name: `Create a draft of ${CATALOG_V2.version}?` });
+  await expect(dialog.getByRole('button', { name: 'Cancel' })).toBeFocused();
+  await check(page, 'start-draft-confirmation');
+  await dialog.getByRole('button', { name: 'Create the draft' }).click();
+  const heading = page.getByRole('heading', { level: 1, name: CATALOG_V2.version });
+  await expect(heading).toBeFocused();
+  await expect(page.getByText(/Attach its source evidence with Capture all missing sources/)).toBeVisible();
+  await expect(page.getByText('Matching evidence needed').first()).toBeVisible();
+  await check(page, 'new-draft');
   expect(violations).toEqual([]);
 });

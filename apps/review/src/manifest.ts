@@ -1,8 +1,12 @@
-// SHA-256 of each capture in the real-terms corpus (evals/curation/real/manifest.json: URLs, dates and
-// hashes only, no issuer text). The review app compares captures with it to catch a mislabelled file.
+// SHA-256 of each saved capture: the real-terms corpus (evals/curation/real/manifest.json) and the
+// merchant MCC pages the catalog cites (merchant-manifest.json). URLs, dates and hashes only, no page
+// text. The review app compares captures with them to catch a mislabelled file.
 import manifest from '../../../evals/curation/real/manifest.json';
+import merchantManifest from '../../../evals/curation/real/merchant-manifest.json';
 
-const hashes = new Map(manifest.sources.map((source) => [source.id, source.sha256]));
+const hashes = new Map(
+  [...manifest.sources, ...merchantManifest.sources].map((source) => [source.id, source.sha256]),
+);
 export const manifestHash = (sourceId: string) => hashes.get(sourceId);
 
 /** Hex SHA-256 of the UTF-8 text, as the database computes content_hash; undefined if unavailable. */

@@ -5,6 +5,7 @@ import { AlertInline, ApplicationState, Badge, Button } from '@ai-checkout/ui';
 import type { ReviewApi } from './client';
 import ExtractionPanel from './ExtractionPanel';
 import { DraftPanel, type CaptureItem } from './DraftPanel';
+import StartDraft from './StartDraft';
 
 export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
   const [queue, setQueue] = useState<ReviewQueue | null>(null),
@@ -13,7 +14,8 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
     [error, setError] = useState(''),
     [notice, setNotice] = useState('');
   const [generation, setGeneration] = useState(0),
-    [dirty, setDirty] = useState(false);
+    [dirty, setDirty] = useState(false),
+    [starting, setStarting] = useState(false);
   const controller = useRef<AbortController | null>(null),
     heading = useRef<HTMLHeadingElement>(null);
   const busy = !!pending;
@@ -175,6 +177,31 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
         setNotice(`Captured ${captured.size} sources and attached them to a new draft revision.`);
     });
   }
+  /** Creates a draft with no sources attached, reviewed against the current head, and opens it. */
+  async function create(catalog: Catalog) {
+    await perform('Creating draft…', async (signal) => {
+      const draft = await api.create(
+        { catalog, sourceDocumentIds: [], baseSequence: queue?.head ?? null },
+        signal,
+      );
+      await refresh(draft.id, signal);
+      if (!signal.aborted) {
+        setStarting(false);
+        setNotice(
+          `Draft ${catalog.version} created. Attach its source evidence with Capture all missing sources, then review it.`,
+        );
+        requestAnimationFrame(() => heading.current?.focus({ preventScroll: true }));
+      }
+    });
+  }
+  function startNew() {
+    if (dirty && !window.confirm('Discard unsaved draft or source edits and start a new draft?')) return;
+    setDirty(false);
+    setNotice('');
+    setError('');
+    setStarting(true);
+    requestAnimationFrame(() => document.getElementById('start-draft-heading')?.focus());
+  }
   async function publish(note: string) {
     if (!detail) return;
     await perform('Publishing reviewed terms…', async (signal) => {
@@ -241,6 +268,11 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
         {queue?.drafts.length === 0 && (
           <p>No pending drafts. New candidates appear here when they are saved for review.</p>
         )}
+        {queue && !starting && (detail || queue.drafts.length > 0) && (
+          <Button size="small" color="secondary" icon="arrow-right" disabled={busy} onClick={startNew}>
+            Start a new draft
+          </Button>
+        )}
         <p className="muted small">
           Only the latest 30 pending drafts are shown. Opening a draft does not approve it.
         </p>
@@ -265,7 +297,18 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
             {notice}
           </AlertInline>
         )}
-        {detail ? (
+        {queue && (starting || (!detail && queue.drafts.length === 0)) ? (
+          !busy || starting ? (
+            <StartDraft
+              head={queue.head}
+              busy={busy}
+              now={Date.now()}
+              intro={starting ? undefined : 'No drafts are waiting for review.'}
+              onCreate={create}
+              onCancel={starting ? () => setStarting(false) : undefined}
+            />
+          ) : null
+        ) : detail ? (
           <>
             <div className="draft-heading">
               <h1 ref={heading} tabIndex={-1}>
