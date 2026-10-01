@@ -23,7 +23,7 @@ On your Mac, in `~/Projects/AICheckout` (the main checkout, not `~/Projects/AICh
     --captures merchant-captures --manifest merchant-manifest.json
   ```
 
-  Each file must contain `MCC code 5732`. If the command reports a new hash (`CHANGED since last capture`), the page changed since the committed `merchant-manifest.json`. The review app will then show "Differs from the corpus manifest capture" for that file. Read it and make sure it still says MCC 5732 before you continue.
+  Each file must contain `MCC code 5732`. These are undated community pages: the capture keeps the catalog's recorded `checkedOn` date (2026-09-28) even though the text was fetched later (the committed hashes are from 2026-10-01). That is expected; do not edit the dates. If the command reports a new hash (`CHANGED since last capture`), the page changed since the committed `merchant-manifest.json`. The review app will then show "Differs from the corpus manifest capture" for that file. Read it and make sure it still says MCC 5732 before you continue.
 
 Both folders are gitignored. They hold copyrighted page text, so never commit them.
 
