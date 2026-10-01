@@ -144,5 +144,79 @@ it('can start a new draft while other drafts are queued, and cancel back to the 
   const heading = await screen.findByRole('heading', { level: 1, name: 'Start a new draft' });
   await waitFor(() => expect(document.activeElement).toBe(heading));
   await user.click(button('Cancel'));
+  const draftHeading = await screen.findByRole('heading', { level: 1, name: '2026-09-29.real.0' });
+  await waitFor(() => expect(document.activeElement).toBe(draftHeading));
+});
+
+it('leaves the start form when a queued draft is opened', async () => {
+  const existing = reviewFixture();
+  existing.draft.catalog = structuredClone(CATALOG_V2);
+  existing.draft.catalog.version = '2026-09-29.real.0';
+  backend({ existing });
+  const user = setup();
+  await screen.findByRole('heading', { level: 1, name: '2026-09-29.real.0' });
+  await user.click(button('Start a new draft'));
+  await screen.findByRole('heading', { level: 1, name: 'Start a new draft' });
+  await user.click(screen.getByText('2026-09-29.real.0', { selector: '.queue-item strong' }));
   expect(await screen.findByRole('heading', { level: 1, name: '2026-09-29.real.0' })).toBeTruthy();
+  expect(screen.queryByRole('heading', { level: 1, name: 'Start a new draft' })).toBeNull();
+});
+
+it('keeps the form, its pasted JSON and focus when creating fails', async () => {
+  const api = backend();
+  api.create.mockRejectedValueOnce(new Error('The draft could not be saved.'));
+  const user = setup();
+  await screen.findByText('No drafts are waiting for review.');
+  await user.click(screen.getByLabelText('Catalog JSON I paste'));
+  const json = screen.getByLabelText('Catalog JSON') as HTMLTextAreaElement;
+  fireEvent.change(json, { target: { value: JSON.stringify(CATALOG_V2) } });
+  await user.click(button('Create draft'));
+  await user.click(await screen.findByRole('button', { name: 'Create the draft' }));
+  expect(await screen.findByText('The draft could not be saved.')).toBeTruthy();
+  expect(screen.getByLabelText('Catalog JSON')).toBe(json);
+  expect(json.value).toBe(JSON.stringify(CATALOG_V2));
+});
+
+it('does not offer to create a second draft when loading the new one fails', async () => {
+  const api = backend();
+  api.detail.mockRejectedValueOnce(new Error('The draft could not be loaded.'));
+  const user = setup();
+  await screen.findByText('No drafts are waiting for review.');
+  await user.click(button('Create draft'));
+  await user.click(await screen.findByRole('button', { name: 'Create the draft' }));
+  expect(await screen.findByText('The draft could not be loaded.')).toBeTruthy();
+  expect(location.hash).toBe('#30000000-0000-4000-8000-000000000009');
+  expect(screen.queryByRole('heading', { level: 1, name: 'Start a new draft' })).toBeNull();
+  expect(screen.getByText(CATALOG_V2.version, { selector: '.queue-item strong' })).toBeTruthy();
+  await user.click(button('Reload latest draft'));
+  expect(await screen.findByRole('heading', { level: 1, name: CATALOG_V2.version })).toBeTruthy();
+  expect(api.create).toHaveBeenCalledTimes(1);
+});
+
+it('requires explicit confirmation to create a second draft of a queued version', async () => {
+  const existing = reviewFixture();
+  existing.draft.catalog = structuredClone(CATALOG_V2);
+  const api = backend({ existing });
+  const user = setup();
+  await screen.findByRole('heading', { level: 1, name: CATALOG_V2.version });
+  await user.click(button('Start a new draft'));
+  await user.click(button('Create draft'));
+  await screen.findByText('A draft of this version is already waiting');
+  const confirm = button('Create the draft');
+  expect(confirm.disabled).toBe(true);
+  await user.click(screen.getByLabelText(`Create another ${CATALOG_V2.version} draft anyway`));
+  expect(confirm.disabled).toBe(false);
+  await user.click(confirm);
+  await waitFor(() => expect(api.create).toHaveBeenCalledTimes(1));
+});
+
+it('checks validity when Create draft is chosen, not when the form was drawn', async () => {
+  const api = backend();
+  const user = setup();
+  await screen.findByText('Valid now');
+  vi.spyOn(Date, 'now').mockReturnValue(Date.parse(CATALOG_V2.expiresAt) + 1);
+  await user.click(button('Create draft'));
+  expect(await screen.findByText(/The bundled catalog cannot start a draft\./)).toBeTruthy();
+  expect(screen.queryByRole('dialog')).toBeNull();
+  expect(api.create).not.toHaveBeenCalled();
 });

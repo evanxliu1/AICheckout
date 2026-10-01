@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { CATALOG_V2, catalogSchema, type Catalog } from '@ai-checkout/rewards-core';
-import { AlertInline, Badge, Button, Card, Field, Fieldset, Modal, Radio } from '@ai-checkout/ui';
+import { AlertInline, Badge, Button, Card, Checkbox, Field, Fieldset, Modal, Radio } from '@ai-checkout/ui';
 
 type Source = 'bundled' | 'json';
 
@@ -27,7 +27,10 @@ export default function StartDraft({
   onCreate,
   onCancel,
   intro,
+  queuedVersions = [],
 }: {
+  /** Versions of drafts already waiting for review; creating another of the same needs confirmation. */
+  queuedVersions?: string[];
   /** Shown above the explanation, for example when no draft is waiting. */
   intro?: string;
   head: number | null;
@@ -40,14 +43,20 @@ export default function StartDraft({
   const [json, setJson] = useState('');
   const [error, setError] = useState('');
   const [pending, setPending] = useState<Catalog | null>(null);
+  const [duplicateConfirmed, setDuplicateConfirmed] = useState(false);
+  const duplicate = pending !== null && queuedVersions.includes(pending.version);
   const cancelRef = useRef<HTMLButtonElement>(null);
   const bundledIssue = catalogTimingIssue(CATALOG_V2, now);
 
   function review() {
     setError('');
+    setDuplicateConfirmed(false);
+    // Validity is checked when you choose Create draft, not when the page was drawn.
+    const at = Date.now();
     let catalog: Catalog;
     if (source === 'bundled') {
-      if (bundledIssue) return setError(`The bundled catalog cannot start a draft. ${bundledIssue}`);
+      const issue = catalogTimingIssue(CATALOG_V2, at);
+      if (issue) return setError(`The bundled catalog cannot start a draft. ${issue}`);
       catalog = CATALOG_V2;
     } else {
       let value: unknown;
@@ -61,7 +70,7 @@ export default function StartDraft({
         const first = parsed.error.issues[0];
         return setError(`${first.path.join('.') || 'Catalog'}: ${first.message}`);
       }
-      const issue = catalogTimingIssue(parsed.data, now);
+      const issue = catalogTimingIssue(parsed.data, at);
       if (issue) return setError(`This catalog cannot start a draft. ${issue}`);
       catalog = parsed.data;
     }
@@ -171,6 +180,7 @@ export default function StartDraft({
         footer={
           <>
             <Button
+              disabled={duplicate && !duplicateConfirmed}
               onClick={() => {
                 const catalog = pending;
                 setPending(null);
@@ -186,11 +196,26 @@ export default function StartDraft({
         }
       >
         {pending && (
-          <p>
-            {pending.cards.length} card{pending.cards.length === 1 ? '' : 's'} and {pending.sources.length}{' '}
-            source{pending.sources.length === 1 ? '' : 's'}, with no captured evidence yet. Nothing is
-            published.
-          </p>
+          <div className="stack-tight">
+            <p>
+              {pending.cards.length} card{pending.cards.length === 1 ? '' : 's'} and {pending.sources.length}{' '}
+              source{pending.sources.length === 1 ? '' : 's'}, with no captured evidence yet. Nothing is
+              published.
+            </p>
+            {duplicate && (
+              <>
+                <AlertInline color="warning" role="none" title="A draft of this version is already waiting">
+                  Open the pending {pending.version} draft from the queue instead, unless you mean to create a
+                  second one.
+                </AlertInline>
+                <Checkbox
+                  label={`Create another ${pending.version} draft anyway`}
+                  checked={duplicateConfirmed}
+                  onChange={(event) => setDuplicateConfirmed(event.target.checked)}
+                />
+              </>
+            )}
+          </div>
         )}
       </Modal>
     </section>

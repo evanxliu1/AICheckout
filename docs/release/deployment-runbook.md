@@ -1,6 +1,6 @@
 # Deployment, maintenance and recovery
 
-Prepared against the current Node 24 / Fastify API, React review app, Supabase migrations and extension build. **No hosted deployment or migration has been performed.** Commands marked hosted are procedures for the named, reviewed target, not commands already executed. Current service/model spending authorization is $0.
+Prepared against the current Node 24 / Fastify API, React review app, Supabase migrations and extension build. **The hosted deployment is live:** Render serves the API, review app and public site at https://ai-checkout-api.onrender.com/, backed by a hosted Supabase project with all eight repository migrations applied (through `20261001010350_source_body_limit.sql`). The coordinator applies new migrations after each merge with `./scripts/db-push.sh --dry-run`, then `./scripts/db-push.sh` (the database password comes from the macOS Keychain). Commands marked hosted below are procedures for the named, reviewed target. Current service/model spending authorization is $0.
 
 ## Deployment shape
 
@@ -12,7 +12,7 @@ The extension only needs the public `/v1/catalog` endpoint if online updates are
 
 Record the source revision, deployment host/origin, Supabase project reference, current database/migration versions, owner/reviewer identity, maintenance window, backup/restore evidence, secret store and rollback operator. Choose hosting within the authorized budget; do not assume a free tier or create paid resources.
 
-Inspect the hosted schema against the six repository migrations and retain existing records. Confirm `catalog_private` is not exposed by the Data API, public/client grants are explicit, and RLS is enabled as designed. Verify current platform/database patch guidance and relevant extensions. The September 25 [PostgreSQL 15.19/17.11 advisory](https://supabase.com/changelog/postgres-15-19-17-11-breaking-changes) supersedes the locally observed 17.6 patch level; a local passing test does not prove the hosted database was upgraded.
+Inspect the hosted schema against the eight repository migrations (`npx supabase migration list --linked` shows each as applied remotely) and retain existing records. Confirm `catalog_private` is not exposed by the Data API, public/client grants are explicit, and RLS is enabled as designed. Verify current platform/database patch guidance and relevant extensions. The September 25 [PostgreSQL 15.19/17.11 advisory](https://supabase.com/changelog/postgres-15-19-17-11-breaking-changes) supersedes the locally observed 17.6 patch level; a local passing test does not prove the hosted database was upgraded.
 
 Confirm usable backups and rehearse restore in an approved isolated environment. Do not run the project's reset/seed/concurrency/browser test scripts against hosted credentials: they are deliberately local and create synthetic records. Never use `db reset` as a hosted deployment step.
 

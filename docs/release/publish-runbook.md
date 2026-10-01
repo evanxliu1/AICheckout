@@ -6,12 +6,24 @@ This is the human approval step for catalog `2026-09-29.real.1` (seven cards, 17
 
 ## Before you start
 
-These need to be done once, by the coordinator:
+Already done (you only verify):
 
-- [ ] PR #11 (public site) and `phase3-m6-prep` (Start a new draft, merchant captures) are merged into `main`, and Render has deployed them. Check that https://ai-checkout-api.onrender.com/health returns `{"status":"ok"}`, and that https://ai-checkout-api.onrender.com/review/ shows **Start a new draft** after you sign in.
-- [ ] Migration `20261001010350_source_body_limit.sql` has been pushed to the hosted database (`./scripts/db-push.sh`). The Citi terms PDF capture is about 75,000 characters; without this migration its capture is refused.
-- [ ] Your Supabase account is a reviewer: it has a row in `catalog_private.reviewers`, added through the operator-only path in [the deployment runbook](deployment-runbook.md). Signing in works without this, but the review app then shows that access is required.
+- [x] **Database migrations.** The coordinator pushed both new migrations, `20260930225732_catalog_v2.sql` (catalog v2) and `20261001010350_source_body_limit.sql` (captures up to 120,000 characters; the Citi terms PDF is about 75,000), to the hosted database and checked health. To verify, run `npx supabase migration list --linked` from the repository root: both show in the Remote column. New migrations are applied with `./scripts/db-push.sh --dry-run` first, then `./scripts/db-push.sh`; it reads the database password from the macOS Keychain.
+- [x] **Your reviewer account.** `evanliu5566@gmail.com` is a confirmed Supabase Auth user with a row in `catalog_private.reviewers` (provisioned in Phase 1). To add another reviewer later, the operator first creates and confirms their Auth user, then runs this in the Supabase SQL editor:
+
+  ```sql
+  insert into catalog_private.reviewers (user_id)
+  select id from auth.users where email = 'reviewer@example.com';
+  ```
+
+  Never grant reviewer access through user metadata or a public endpoint.
+
+Before you start, check:
+
+- [ ] `phase3-m6-prep` (Start a new draft, merchant captures) is merged into `main` and Render has deployed it. https://ai-checkout-api.onrender.com/health returns `{"status":"ok"}`, and after signing in, https://ai-checkout-api.onrender.com/review/ shows **Start a new draft**.
 - [ ] https://ai-checkout-api.onrender.com/v1/catalog returns `{"release":null}`, so nothing is published yet.
+
+Your session lives only in the open tab's memory: **reloading the page or closing the tab signs you out.** That is by design. Unsaved edits are lost on reload, while saved revisions and captures are kept on the server.
 
 On your Mac, in `~/Projects/AICheckout` (the main checkout, not `~/Projects/AICheckout-test`):
 
@@ -29,12 +41,13 @@ Both folders are gitignored. They hold copyrighted page text, so never commit th
 
 ## Steps
 
-1. **Sign in.** Open https://ai-checkout-api.onrender.com/review/ and sign in with your reviewer email and password. The free Render instance can take up to a minute to wake up; if the first load times out, reload once.
+1. **Sign in.** Open https://ai-checkout-api.onrender.com/review/ and sign in with `evanliu5566@gmail.com` and your password. The free Render instance can take up to a minute to wake up. If the first load times out, reload once before you sign in.
 2. **Start a new draft.** With no pending drafts, **Start a new draft** opens on its own. Otherwise, choose **Start a new draft** under Pending drafts.
    - Keep **The catalog bundled with this app** selected.
    - Check the summary: version `2026-09-29.real.1`, 7 cards (17 sources to capture), verified Sep 29, 2026, expires Oct 29, 2026, status **Valid now**.
    - Choose **Create draft**. In the dialog, check "7 cards and 17 sources", then choose **Create the draft**.
    - The new draft opens, with **Matching evidence needed** on every source. Nothing is published yet.
+   - If **Create draft** shows an error, don't create another draft right away. The draft may already exist. Reload the page, sign in again, and open the `2026-09-29.real.1` draft from **Pending drafts** if it is there. If a draft of that version is already pending, the app asks you to confirm before it creates a second one; choose the existing draft instead.
 3. **Attach all sources at once.** Under **Source evidence**, open **Capture all missing sources**.
    - Choose **Load capture files**.
    - In the file picker, select all 15 files in `evals/curation/real/captures/` (Cmd-A in that folder).
@@ -59,19 +72,20 @@ Both folders are gitignored. They hold copyrighted page text, so never commit th
    - Check **I checked the full source terms and all proposed rules and conditions.**
    - Write a **Review note** of at least 10 characters, saying what you checked. Example: "Checked all 7 cards' rates, caps, activation and U.S.-only conditions against the 15 issuer captures and both MCC pages on 2026-10-..".
    - Choose **Publish reviewed terms**.
-6. **Confirm.** The dialog **Publish 2026-09-29.real.1?** opens with focus on **Cancel**. Check that the revision, 7 cards, 17 sources and the expiry match, then choose **Publish release**. The page shows "Published 2026-09-29.real.1 as release 1".
-7. **Verify.** Open https://ai-checkout-api.onrender.com/v1/catalog, or run `curl -s https://ai-checkout-api.onrender.com/v1/catalog | head -c 300`. It must return a release with `"sequence":1` and `"version":"2026-09-29.real.1"` instead of `{"release":null}`. Then tell the coordinator, who checks a hosted extension build (`npm run build:hosted`) against it.
+6. **Confirm.** The dialog **Publish 2026-09-29.real.1?** opens with focus on **Cancel**. Check the revision, 7 cards, 17 sources and the expiry (Oct 29, 2026, 12:00 AM UTC), then choose **Publish release**. The page shows "Published 2026-09-29.real.1 as release N". Note N: it is 1 on a database with no earlier release.
+7. **Verify.** Open https://ai-checkout-api.onrender.com/v1/catalog, or run `curl -s https://ai-checkout-api.onrender.com/v1/catalog | head -c 300`. Instead of `{"release":null}`, it must return a release with `"version":"2026-09-29.real.1"` and the same `"sequence"` N as the success message. Then tell the coordinator, who checks a hosted extension build (`npm run build:hosted`) against it.
 
 ## If something is blocked
 
 | What you see | What to do |
 | --- | --- |
-| The page does not load or `/health` times out | Render is waking the free instance. Wait a minute and reload. If it stays down, ask the coordinator to check the Render deploy log. |
-| Signed in, but the app says reviewer access is required | Your account has no row in `catalog_private.reviewers`. Ask the coordinator to add it; do not add it any other way. |
+| The page does not load or `/health` times out | Render is waking the free instance. Wait a minute and reload; you will need to sign in again. If it stays down, ask the coordinator to check the Render deploy log. |
+| Signed in, but the app says reviewer access is required | The account has no row in `catalog_private.reviewers`. `evanliu5566@gmail.com` should already have one; check you used that address. For another account, the operator runs the SQL above. |
 | No **Start a new draft** button | The deployed review app predates `phase3-m6-prep`. Ask the coordinator to check the merge and deploy. |
 | **Create draft** says the bundled catalog cannot be used | It has expired, or the clock is wrong. After 2026-10-29 the catalog must be rebuilt from reverified terms; don't change your computer's date. |
 | A capture field says **Differs from the corpus manifest capture** | The file is not the one recorded in the manifest: wrong file, edited, or recaptured. Load the right file. Recapture only if the page really changed, then reread it. |
-| A capture fails with a length or "could not be captured" error | The 120,000-character migration is probably not on the hosted database yet. Ask the coordinator to push it, then retry; nothing is attached until every capture succeeds. |
+| A capture fails with a length or "could not be captured" error | Check `npx supabase migration list --linked` shows `20261001010350` on the remote. If it does, check the file is the right one and under 120,000 characters. Nothing is attached until every capture succeeds, so retrying is safe. |
 | A button is disabled with "Save or discard the unsaved input in … first" | Another editor or capture form has unsaved input. Save or discard it, as the message says. |
-| **Publish** fails with a stale revision or head error | Someone saved or published in between. Choose **Reload latest draft**, review the new revision, and approve again. |
+| **Publish** fails with a stale revision or head error | Someone saved or published in between. Choose **Reload latest draft** and review the new revision. If **Before you publish** says "Published terms changed. Rebase this draft…", choose **Rebase draft for review**, review again, and approve again. |
+| Signed out unexpectedly | The page was reloaded or the session ended. Sign in again and open the draft from **Pending drafts**. Saved revisions and captures are kept; unsaved edits are not. |
 | `/v1/catalog` still returns `{"release":null}` after publishing | Reload the review app and check the draft shows **Published**. If it does and the endpoint still says null after a minute, tell the coordinator; don't publish again. |
