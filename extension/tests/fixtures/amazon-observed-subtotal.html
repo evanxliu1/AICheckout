@@ -1,0 +1,64 @@
+<!-- Redacted DOM fixture for the bounded Amazon US cart reader; not broad checkout coverage.
+Observed on a logged-out www.amazon.com/gp/cart/view.html cart with one item, 2026-09-30, by
+extension/scripts/observe-amazon-cart.mjs. The buy box keeps its observed structure, ids and
+classes; the item title, image, links, scripts and tracking attributes are removed. The offer
+banner is a synthetic distractor modelled on the observed card offer, which also shows a subtotal. -->
+<div id="sc-new-upsell" class="sc-offer-banner">
+  <span>Get $50 off instantly upon approval for a store card.</span>
+  <table>
+    <tbody>
+      <tr>
+        <td>Current subtotal:</td>
+        <td>$6.49</td>
+      </tr>
+      <tr>
+        <td>Cost after savings:</td>
+        <td>$0.00</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="a-cardui sc-card-style sc-list sc-retail-cart sc-active-cart">
+  <h2>Shopping Cart</h2>
+  <div class="sc-list-item" data-quantity="1">
+    <span class="a-truncate-full">[redacted item title]</span>
+    <span class="a-price sc-product-price">$6.49</span>
+    <fieldset class="a-declarative a-stepper-expanding-fieldset">
+      <div class="a-stepper-inner-container">
+        <div class="a-stepper-controls">
+          <div class="a-declarative"><span class="a-size-base" data-a-selector="value">1</span></div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>
+<div id="sc-buy-box" data-quantity="1" class="a-cardui sc-card-style celwidget sc-card-spacing-top-none">
+  <div class="a-cardui-body a-scroller-none">
+    <form id="gutterCartViewForm" method="get" action="/checkout/entry/cart">
+      <div class="a-box-group sc-buy-box-group">
+        <div class="a-section a-spacing-top-micro sc-sss-spinner-box sc-hidden">
+          <span class="a-spinner a-spinner-small sc-sss-spinner aok-align-center"></span>
+        </div>
+        <div class="a-section a-spacing-top-micro sc-sss-box">
+          <div class="a-row sc-sss">
+            <span
+              >Add <span class="a-color-price sc-white-space-nowrap">$28.51</span> of eligible items or Join
+              Prime to get FREE delivery on eligible items with no order minimum.</span
+            >
+          </div>
+        </div>
+        <div data-name="Subtotals" class="a-row a-spacing-mini sc-subtotal sc-subtotal-buybox">
+          <span id="sc-subtotal-label-buybox" class="a-size-medium sc-number-of-items">
+            Subtotal (1 item):</span
+          ><span id="sc-subtotal-amount-buybox" class="sc-price-container a-text-bold"
+            >&nbsp;<span class="a-size-medium a-color-base sc-price sc-white-space-nowrap">$6.49</span></span
+          >
+        </div>
+        <label><input type="checkbox" name="isGift" /> This order contains a gift</label>
+        <span class="a-button a-button-primary"
+          ><input type="submit" name="proceedToRetailCheckout" value="Proceed to checkout"
+        /></span>
+      </div>
+    </form>
+  </div>
+</div>

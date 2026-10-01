@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "merchantId": "amazon-us",
+  "name": "Amazon US",
+  "extractorVersion": "amazon-summary-v1",
+  "observed": {
+    "on": "2026-09-30",
+    "note": "Logged-out www.amazon.com cart with one item (extension/scripts/observe-amazon-cart.mjs): the buy box shows 'Subtotal (N items):' and the amount in id-tagged spans. A card-offer banner also shows a subtotal and is never read. A quantity change shows a spinner in the item stepper while the subtotal is stale."
+  },
+  "match": { "hosts": ["www.amazon.com"], "paths": ["^/gp/cart/view\\.html$", "^/cart/?$"] },
+  "summary": {
+    "selector": "#sc-buy-box [data-name=\"Subtotals\"], .sc-active-cart [data-name=\"Subtotals\"]",
+    "maxCount": 3
+  },
+  "emptyCart": { "selector": "h3.sc-your-amazon-cart-is-empty", "text": "Your Amazon Cart is empty" },
+  "loading": {
+    "busyAncestor": "[aria-busy=\"true\"]",
+    "checkMatchedRows": true,
+    "indicators": [".a-stepper-controls .a-spinner", ".sc-sss-spinner-box:not(.sc-hidden)"]
+  },
+  "rows": { "selector": null, "max": 1 },
+  "label": { "selectors": [":scope > [id^=\"sc-subtotal-label-\"]"], "single": true },
+  "amount": { "selector": ":scope > [id^=\"sc-subtotal-amount-\"]" },
+  "labels": [
+    { "pattern": "^Subtotal \\([0-9]{1,4} items?\\):$", "caseInsensitive": false, "kind": "subtotal" }
+  ],
+  "pending": [],
+  "requiredKinds": ["subtotal"],
+  "duplicates": "ambiguous",
+  "combine": "per-summary"
+}

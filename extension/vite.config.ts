@@ -2,6 +2,13 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { crx } from '@crxjs/vite-plugin';
 import manifest from './manifest.json';
+import { readdirSync, readFileSync } from 'node:fs';
+import { siteAdapterSchema } from './src/checkout/adapters/schema';
+
+// Site adapters are bundled data; reject an invalid spec at build time, not at checkout.
+const adapterDir = new URL('./src/checkout/adapters/', import.meta.url);
+for (const file of readdirSync(adapterDir).filter((name) => name.endsWith('.json')))
+  siteAdapterSchema.parse(JSON.parse(readFileSync(new URL(file, adapterDir), 'utf8')));
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {

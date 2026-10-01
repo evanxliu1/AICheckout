@@ -6,7 +6,7 @@ import { merchantForCheckout } from './merchants';
 
 const copy = {
   'unsupported-page':
-    'Open a Best Buy US cart or checkout, or the Newegg US cart, then read it again. You can also enter the amount manually.',
+    'Open a Best Buy US cart or checkout, the Newegg US cart, or the Amazon US cart, then read it again. You can also enter the amount manually.',
   'empty-cart': 'The cart has no amount to compare. Add an item or enter a purchase amount manually.',
   'summary-missing':
     'No readable order summary was found. Wait for the cart to load, retry, or enter the amount manually.',
