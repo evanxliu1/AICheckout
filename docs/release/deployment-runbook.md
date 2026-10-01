@@ -63,6 +63,7 @@ Set server environment values using the host's secret/configuration system. `app
 | `SUPABASE_URL` | Actual HTTPS project origin, no path/query/credentials |
 | `SUPABASE_PUBLISHABLE_KEY` | Modern publishable key; never a service-role key |
 | `REVIEW_DIST_DIR` | Absolute directory containing the built review app |
+| `SITE_DIST_DIR` | Directory containing the built public site (`apps/site/dist`), served at `/` |
 | `HOST`, `PORT` | Interface/port appropriate for the selected host; `127.0.0.1` behind a local proxy, or `0.0.0.0` inside a controlled container/network |
 | `CURATION_ADAPTER` | `disabled` initially |
 | `CURATION_ALLOW_METERED` | `false` initially |

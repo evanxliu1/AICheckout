@@ -29,6 +29,8 @@ Only `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` are required. A service-role 
 
 Set `REVIEW_DIST_DIR=apps/review/dist` when starting from the repository root to serve the [review interface](../review/README.md) at `/review/`. Its runtime configuration contains only the Supabase origin and a modern `sb_publishable_` key; startup rejects a secret or legacy JWT key for this browser configuration. The site uses a restrictive Content Security Policy, no-referrer, no-store, and nosniff headers. Static files are restricted to the configured build directory; dotfiles are denied. Build that directory before starting the API.
 
+Set `SITE_DIST_DIR=apps/site/dist` to serve the [public site](../site/README.md) at `/`. It is registered after the API and review routes in its own context: `/health`, `/v1/*` and `/review/*` always win, and the site also refuses those prefixes itself, so an unknown API path is a JSON 404, never a page. Its headers are the review CSP without the Supabase origin (`connect-src 'self'`), no-referrer, nosniff and `Cross-Origin-Opener-Policy: same-origin`; hashed `/assets/` files are cached immutably and everything else is `no-cache`. `tests/public-site.test.ts` covers precedence and headers.
+
 ## Protected review routes
 
 Every review request requires `Authorization: Bearer <human access token>`. Supabase's Data API verifies the signature; the database operation checks current reviewer membership and a live session in its transaction. The server does not trust user metadata, a supplied reviewer ID, browser cookies, or a service-role credential as publication authority. Review access is provisioned explicitly by the project operator in the private reviewers table; there is no self-enrollment route.

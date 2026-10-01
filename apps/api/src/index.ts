@@ -16,6 +16,7 @@ const env = z
     PORT: z.coerce.number().int().min(0).max(65535).default(3000),
     HOST: z.string().default('127.0.0.1'),
     REVIEW_DIST_DIR: z.string().min(1).optional(),
+    SITE_DIST_DIR: z.string().min(1).optional(),
     CURATION_DATABASE_URL: z.string().min(1).optional(),
     CURATION_DATABASE_CA_FILE: z.string().min(1).optional(),
     CURATION_PROFILE_ID: z
@@ -80,6 +81,7 @@ const app = createApp({
   logging: true,
   reviewRoot: env.data.REVIEW_DIST_DIR ? resolve(env.data.REVIEW_DIST_DIR) : undefined,
   reviewConfig: { supabaseUrl: env.data.SUPABASE_URL, publishableKey: env.data.SUPABASE_PUBLISHABLE_KEY },
+  siteRoot: env.data.SITE_DIST_DIR ? resolve(env.data.SITE_DIST_DIR) : undefined,
   curation,
   shutdownSignal: shutdown.signal,
   curationLimit: env.data.CURATION_RATE_LIMIT,

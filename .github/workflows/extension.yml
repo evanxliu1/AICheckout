@@ -29,6 +29,7 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser --workspace=@ai-checkout/ui
+      - run: npm run test:browser --workspace=@ai-checkout/site
       - run: npm run test:browser --workspace=ai-checkout-extension
       - run: npm run test:catalog:browser
       - run: npm run test:package:browser --workspace=ai-checkout-extension
@@ -46,3 +47,4 @@ jobs:
           path: |
             extension/test-results/
             packages/ui/test-results/
+            apps/site/test-results/

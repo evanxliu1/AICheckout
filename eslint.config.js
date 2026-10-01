@@ -17,4 +17,9 @@ export default [
     languageOptions: { globals: globals.node },
   },
   { files: ['extension/scripts/**/*.mjs'], rules: js.configs.recommended.rules },
+  // The public site is rendered to static HTML at build time; there is no fast refresh to protect.
+  {
+    files: ['apps/site/**/*.{ts,tsx}'],
+    rules: { 'react-refresh/only-export-components': 'off' },
+  },
 ];
