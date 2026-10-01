@@ -89,7 +89,7 @@ describe('authenticated passphrase encryption', () => {
       encrypted = await encryptVault(legacy, identity, key);
     await expect(decryptVault({ ...encrypted, ciphertext: 'AAA=' }, key)).rejects.toThrow();
     await expect(
-      encryptVault({ ...legacy, schemaVersion: 2 } as unknown as AppState, identity, key),
+      encryptVault({ ...legacy, schemaVersion: 99 } as unknown as AppState, identity, key),
     ).rejects.toThrow();
   });
 });
@@ -264,5 +264,45 @@ describe('protected storage lifecycle', () => {
     expect(await deletion).toEqual({ ok: true, status: 'setup' });
     expect(local.read()).toEqual({});
     expect(session.read()).toEqual({});
+  });
+});
+
+describe('pilot-era (schema 1) vault migration', () => {
+  it('decrypts a v1 envelope, migrates once, and re-encrypts schema 2 with a bumped revision', async () => {
+    const identity = newVaultIdentity(),
+      key = await deriveVaultKey(phrase, identity);
+    const pilot = {
+      ...legacy,
+      schemaVersion: 1,
+      revision: 7,
+      wallet: {
+        defaultCardId: 'amex-blue-cash-everyday',
+        cards: [
+          {
+            cardId: 'amex-blue-cash-everyday',
+            usage: [
+              {
+                ruleId: 'bce-retired',
+                calendarYear: 2026,
+                recordedOn: '2026-09-26',
+                spentCents: 0,
+                activation: 'unknown',
+              },
+            ],
+          },
+        ],
+      },
+    };
+    const envelope = await encryptVault(pilot as unknown as AppState, identity, key);
+    const local = memory({ [STATE_KEY]: envelope }),
+      session = memory();
+    const service = createVaultService(local.api, session.api, clock);
+    expect(await service({ type: 'checkout:vault-status' })).toEqual({ ok: true, status: 'locked' });
+    expect(await service(unlock)).toEqual({ ok: true, status: 'unlocked' });
+    const read = await service({ type: 'checkout:get-state' });
+    expect(read).toMatchObject({ ok: true, notice: expect.stringContaining('review your cards') });
+    const stored = await decryptVault(local.read()[STATE_KEY], session.read()[VAULT_SESSION_KEY] as never);
+    expect(stored).toMatchObject({ schemaVersion: 2, revision: 8, pendingNotice: null });
+    expect(stored.wallet.cards[0].usage).toEqual([]);
   });
 });

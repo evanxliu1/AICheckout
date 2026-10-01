@@ -1,6 +1,6 @@
 # Merchant verification evidence
 
-This records observed behavior, not broad merchant compatibility or issuer reward-category guarantees. The pilot implements Best Buy US and Newegg US. Best Buy has live reader observations and separate native fixture tests. Newegg also has a passing combined native-toolbar/live-cart comparison at two quantities. Final normal-Chrome and release-build checks remain open.
+This records observed behavior, not broad merchant compatibility or issuer reward-category guarantees. The extension implements Best Buy US, Newegg US and Amazon US. Best Buy has live reader observations and separate native fixture tests. Newegg also has a passing combined native-toolbar/live-cart comparison at two quantities. Final normal-Chrome and release-build checks remain open.
 
 ## Best Buy US — September 25, 2026
 
@@ -68,3 +68,18 @@ Limits: one anonymous desktop cart and physical product type with an included gi
 - Repeat both declared merchant paths in the final release build. Newegg's current combined flow is passing evidence for this development build.
 - Repeat the [verified packaged lifecycle cases](extension-lifecycle.md) in the final normal Chrome smoke pass. Local fixture checks now cover same-tab reload, popup closure during capture, cross-origin permission revocation, and actual idle-worker shutdown/recovery.
 - Ask a small tester group to reproduce the supported flow before submission; record failures honestly.
+
+## Amazon US — observed structure, September 30, 2026
+
+Status: **implemented from observed structure; no combined native-toolbar/live-cart check yet**. Two headless Chromium runs of `extension/scripts/observe-amazon-cart.mjs` used a logged-out session: open the empty cart, add the first search result for a generic office item through the public Add to cart button, open the cart, increase the quantity once (recording the page while it updated), and record again. No sign-in, address, checkout or purchase. The script records structure only (tag, id, class and `data-name` chains for summary regions, spinners and every subtotal label) plus label/amount text; no item titles. Amazon showed no bot check in either run.
+
+| Observed state | Visible summary | Reader contract |
+| --- | --- | --- |
+| Empty cart | `h3.sc-your-amazon-cart-is-empty` "Your Amazon Cart is empty" inside `#sc-active-cart[data-name="Active Cart"]`; no `[data-name="Subtotals"]` | `empty-cart` |
+| One item | `#sc-buy-box … h3 > div[data-name="Subtotals"]` with `#sc-subtotal-label-buybox` "Subtotal (1 item):" and `#sc-subtotal-amount-buybox` (second run: $6.99) | USD subtotal |
+| Updating quantity | A visible `.a-spinner` inside the item's `.a-stepper-controls` while the buy-box subtotal still shows the old amount | `page-loading` |
+| Quantity 2 | "Subtotal (2 items):" $13.98 | USD subtotal |
+
+The first run's screenshot also showed a card-offer banner with a "Current subtotal" line; its markup was not recorded and it did not appear in the second run. The reader is scoped to `#sc-buy-box`, and the fixtures include a synthetic lookalike (same `data-name` and label wording) outside the buy box to prove it is never read. No subtotal row under the item list was observed, so the adapter does not read one.
+
+Amazon's cart page shows no tax, shipping or total, so every capture is a **subtotal**; the popup labels it as such. Third-party marketplace sellers, Subscribe & Save, gift options, promotions, authenticated carts and the checkout pages are not verified. Fixtures: [subtotal](../../extension/tests/fixtures/amazon-observed-subtotal.html), [quantity 2](../../extension/tests/fixtures/amazon-observed-quantity.html), [empty](../../extension/tests/fixtures/amazon-observed-empty.html). The adapter spec is [amazon-us.json](../../extension/src/checkout/adapters/amazon-us.json).

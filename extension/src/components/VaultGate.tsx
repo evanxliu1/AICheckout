@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { AlertInline, ApplicationState, Button, Card, Checkbox, Field, TextInput } from '@ai-checkout/ui';
 import Popup from '../popup/Popup';
+import PopupHeader from './PopupHeader';
 import DataProtectionDetails from './DataProtectionDetails';
 import DeleteSavedData from './DeleteSavedData';
 import { STATE_KEY } from '../state/service';
@@ -116,142 +118,139 @@ export default function VaultGate() {
         onDelete={() => void act({ type: 'checkout:vault-delete', confirmed: true }, true)}
       />
     );
+  const title = creating
+    ? 'Protect your saved inputs'
+    : status === 'damaged'
+      ? 'Saved data could not be read'
+      : 'Unlock your saved inputs';
   return (
-    <main className="checkout-popup text-gray-900">
-      <header className="px-4 py-3 bg-white border-b border-gray-200">
-        <h1 className="text-xl font-bold">AI Checkout</h1>
-        <p className="supporting mt-1">Compare rewards on cards you own.</p>
-      </header>
+    <main className="checkout-popup">
+      <PopupHeader />
       <div className="p-4 space-y-4">
         {error && (
-          <p role="alert" className="error-message">
+          <AlertInline color="critical" role="alert">
             {error}
-          </p>
+          </AlertInline>
         )}
         {status === null ? (
-          <>
-            <p role="status" className="supporting">
-              {busy ? 'Updating protected storage…' : 'Checking saved data…'}
-            </p>
-            {error && (
-              <button
-                className="btn-secondary"
-                disabled={busy}
-                onClick={() => {
-                  setError('');
-                  void refresh();
-                }}
-              >
-                Retry
-              </button>
-            )}
-          </>
-        ) : (
-          <section className="surface" aria-labelledby="vault-heading">
-            <h2 id="vault-heading" className="text-lg font-semibold">
-              {creating
-                ? 'Protect your saved inputs'
-                : status === 'damaged'
-                  ? 'Saved data could not be read'
-                  : 'Unlock your saved inputs'}
-            </h2>
-            {status === 'migration' && (
-              <p className="supporting mt-2">
-                Your earlier inputs are not encrypted yet. Protect them below without losing your saved cards,
-                or delete them to start again.
-              </p>
-            )}
-            {creating ? (
-              <>
-                <p className="supporting mt-2">
-                  Card selections, reported reward limits, purchase inputs and cart identifiers will be
-                  encrypted in this Chrome profile. They stay on your device and are not sent to an AI
-                  provider.
-                </p>
-                <p className="supporting mt-2">
-                  Choose a local passphrase. Unlock once each browser session; no account is needed. We cannot
-                  recover a forgotten passphrase. You can delete the saved data and start again.
-                </p>
-              </>
-            ) : status === 'locked' ? (
-              <p className="supporting mt-2">
-                Enter your local passphrase. Your saved inputs remain encrypted until you unlock them for this
-                browser session.
-              </p>
-            ) : (
-              <p className="supporting mt-2">
-                Your saved record is damaged or uses an unsupported format. It has not been overwritten. You
-                can delete it to start again.
-              </p>
-            )}
-            {status !== 'damaged' && (
-              <form
-                className="mt-4"
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  submit();
-                }}
-              >
-                <label className="field-label" htmlFor="vault-passphrase">
-                  {creating ? 'New local passphrase' : 'Local passphrase'}
-                </label>
-                <input
-                  id="vault-passphrase"
-                  type="password"
-                  className="field-input"
-                  value={phrase}
+          <ApplicationState
+            status="loading"
+            titleTag="h2"
+            title={busy ? 'Updating protected storage…' : 'Checking saved data…'}
+            actions={
+              error ? (
+                <Button
+                  color="secondary"
                   disabled={busy}
-                  required
-                  minLength={PASSPHRASE_MIN_LENGTH}
-                  maxLength={256}
-                  autoComplete={creating ? 'new-password' : 'current-password'}
-                  aria-describedby="vault-passphrase-help"
-                  onChange={(event) => setPhrase(event.target.value)}
-                />
-                <p id="vault-passphrase-help" className="supporting mt-2">
-                  {creating
-                    ? 'Use at least 15 characters, ideally several unrelated words. Save it somewhere you can find again.'
-                    : 'Use the passphrase you created in this Chrome profile.'}
+                  onClick={() => {
+                    setError('');
+                    void refresh();
+                  }}
+                >
+                  Retry
+                </Button>
+              ) : undefined
+            }
+          />
+        ) : (
+          <Card as="section" hasBorder aria-labelledby="vault-heading">
+            <div className="card-body space-y-3">
+              <h2 id="vault-heading" className="section-title">
+                {title}
+              </h2>
+              {status === 'migration' && (
+                <p>
+                  Your earlier inputs are not encrypted yet. Protect them below without losing your saved
+                  cards, or delete them to start again.
                 </p>
-                {creating && (
-                  <>
-                    <label className="field-label mt-4" htmlFor="vault-repeat">
-                      Confirm local passphrase
-                    </label>
-                    <input
-                      id="vault-repeat"
-                      type="password"
-                      className="field-input"
-                      value={repeat}
-                      disabled={busy}
-                      required
-                      minLength={PASSPHRASE_MIN_LENGTH}
-                      maxLength={256}
-                      autoComplete="new-password"
-                      onChange={(event) => setRepeat(event.target.value)}
-                    />
-                    <label className="flex items-start gap-3 text-sm mt-4">
-                      <input
-                        type="checkbox"
-                        className="mt-1"
+              )}
+              {creating ? (
+                <>
+                  <p>
+                    Card selections, reported reward limits, purchase inputs and cart identifiers will be
+                    encrypted in this Chrome profile. They stay on your device and are not sent to an AI
+                    provider.
+                  </p>
+                  <p>
+                    Choose a local passphrase. Unlock once each browser session; no account is needed. We
+                    cannot recover a forgotten passphrase. You can delete the saved data and start again.
+                  </p>
+                </>
+              ) : status === 'locked' ? (
+                <p>
+                  Enter your local passphrase. Your saved inputs remain encrypted until you unlock them for
+                  this browser session.
+                </p>
+              ) : (
+                <p>
+                  Your saved record is damaged or uses an unsupported format. It has not been overwritten. You
+                  can delete it to start again.
+                </p>
+              )}
+              {status !== 'damaged' && (
+                <form
+                  className="space-y-4"
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    submit();
+                  }}
+                >
+                  <Field
+                    id="vault-passphrase"
+                    label={creating ? 'New local passphrase' : 'Local passphrase'}
+                    helperText={
+                      creating
+                        ? 'Use at least 15 characters, ideally several unrelated words. Save it somewhere you can find again.'
+                        : 'Use the passphrase you created in this Chrome profile.'
+                    }
+                  >
+                    {(control) => (
+                      <TextInput
+                        {...control}
+                        type="password"
+                        value={phrase}
+                        disabled={busy}
+                        required
+                        minLength={PASSPHRASE_MIN_LENGTH}
+                        maxLength={256}
+                        autoComplete={creating ? 'new-password' : 'current-password'}
+                        onChange={(event) => setPhrase(event.target.value)}
+                      />
+                    )}
+                  </Field>
+                  {creating && (
+                    <>
+                      <Field id="vault-repeat" label="Confirm local passphrase">
+                        {(control) => (
+                          <TextInput
+                            {...control}
+                            type="password"
+                            value={repeat}
+                            disabled={busy}
+                            required
+                            minLength={PASSPHRASE_MIN_LENGTH}
+                            maxLength={256}
+                            autoComplete="new-password"
+                            onChange={(event) => setRepeat(event.target.value)}
+                          />
+                        )}
+                      </Field>
+                      <Checkbox
+                        label="I agree to save these inputs encrypted on this device and understand that a forgotten passphrase cannot be recovered."
                         checked={accepted}
                         disabled={busy}
                         onChange={(event) => setAccepted(event.target.checked)}
                       />
-                      <span>
-                        I agree to save these inputs encrypted on this device and understand that a forgotten
-                        passphrase cannot be recovered.
-                      </span>
-                    </label>
-                  </>
-                )}
-                <button className="btn-primary w-full mt-4" disabled={busy} type="submit">
-                  {busy ? 'Working…' : creating ? 'Protect saved inputs' : 'Unlock'}
-                </button>
-              </form>
-            )}
-            <DataProtectionDetails status={status} />
-          </section>
+                    </>
+                  )}
+                  <Button type="submit" isFullWidth icon="lock" isLoading={busy}>
+                    {creating ? 'Protect saved inputs' : 'Unlock'}
+                  </Button>
+                </form>
+              )}
+              <DataProtectionDetails status={status} />
+            </div>
+          </Card>
         )}
         {status && status !== 'setup' && (
           <DeleteSavedData

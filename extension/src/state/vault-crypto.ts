@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { appStateSchema } from './contracts';
-import type { AppState } from './contracts';
+import { storedAppStateSchema } from './contracts';
+import type { AppState, StoredAppState } from './contracts';
 
 export const VAULT_ITERATIONS = 600_000;
 export const MAX_VAULT_BYTES = 512 * 1024;
@@ -102,11 +102,11 @@ export async function deriveVaultKey(passphrase: string, identity: VaultIdentity
   }
 }
 export async function encryptVault(
-  state: AppState,
+  state: AppState | StoredAppState,
   identity: VaultIdentity,
   session: VaultSessionKey,
 ): Promise<VaultEnvelope> {
-  const value = appStateSchema.parse(state);
+  const value = storedAppStateSchema.parse(state);
   if (session.id !== identity.id) throw new Error('Vault session changed.');
   decodeBytes(identity.salt, 16);
   const bytes = encoder.encode(JSON.stringify(value));
@@ -137,7 +137,7 @@ export async function encryptVault(
     bytes.fill(0);
   }
 }
-export async function decryptVault(input: unknown, session: VaultSessionKey): Promise<AppState> {
+export async function decryptVault(input: unknown, session: VaultSessionKey): Promise<StoredAppState> {
   const envelope = vaultEnvelopeSchema.parse(input);
   if (session.id !== envelope.id) throw new Error('Vault session changed.');
   decodeBytes(envelope.salt, 16);
@@ -152,7 +152,8 @@ export async function decryptVault(input: unknown, session: VaultSessionKey): Pr
     ),
   );
   try {
-    const state = appStateSchema.parse(
+    // Pilot-era (schema 1) vaults stay readable; the state service migrates them on first use.
+    const state = storedAppStateSchema.parse(
       JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(plaintext)),
     );
     if (state.revision !== envelope.revision) throw new Error('Vault revision does not match.');

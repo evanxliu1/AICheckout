@@ -16,19 +16,19 @@ const scenes = [
     name: 'wallet',
     title: 'Your cards. Your choice.',
     copy: 'Select the products you already own. No card numbers or bank connection.',
-    alt: 'Actual wallet selection with Quicksilver and Blue Cash Everyday selected and zero sample annual spend.',
+    alt: 'Actual wallet selection: seven card products grouped by issuer, all selected, with zero sample online retail spend.',
   },
   {
     name: 'comparison',
     title: 'Compare a $100 purchase.',
     copy: 'For this sample: eligible online goods and $0 annual spend. Actual rewards depend on issuer terms.',
-    alt: 'Actual result for a sample $100 eligible purchase: Blue Cash Everyday $3.00 and Quicksilver $1.50.',
+    alt: 'Actual result for a sample $100 eligible Best Buy purchase: Blue Cash Everyday $3.00 on U.S. online retail purchases, then Double Cash and Active Cash $2.00.',
   },
   {
     name: 'uncertainty',
     title: 'Keep unknowns visible.',
     copy: 'Leave annual spend blank to see a reward range. Confirming the conditions can change which card comes first.',
-    alt: 'Actual result with unknown annual usage: Blue Cash Everyday ranges from $1.00 to $3.00; Quicksilver estimates $1.50.',
+    alt: 'Actual result with unknown annual spend: Blue Cash Everyday ranges from $1.00 to $3.00, so Double Cash leads at $2.00 and the order may change.',
   },
   {
     name: 'subtotal',

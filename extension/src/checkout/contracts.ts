@@ -8,7 +8,8 @@ const readingFields = z.strictObject({
   currency: z.literal('USD'),
   amountCents: z.number().int().positive().max(MAX_AMOUNT_CENTS),
   kind: z.enum(['total', 'estimated-total', 'subtotal']),
-  extractorVersion: z.enum(['bestbuy-summary-v1', 'newegg-summary-v1']),
+  // Must equal the bundled adapter's version for the merchant (refined below).
+  extractorVersion: z.string().regex(/^[a-z0-9]+-summary-v[0-9]+$/),
 });
 const matchingReader = (value: { merchantId: (typeof MERCHANT_IDS)[number]; extractorVersion: string }) =>
   value.extractorVersion === MERCHANTS[value.merchantId].extractorVersion;
