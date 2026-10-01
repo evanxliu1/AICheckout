@@ -160,7 +160,7 @@ export async function reviewRoutes(
       }
     },
   );
-  app.post('/sources', { bodyLimit: 262144 }, async (request) => {
+  app.post('/sources', { bodyLimit: 524288 }, async (request) => {
     const value = input(captureSourceInputSchema, request.body);
     return sourceDocumentSchema.parse(
       await rpc('capture_catalog_source', bearer(request), {

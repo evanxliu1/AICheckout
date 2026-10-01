@@ -7,8 +7,8 @@ export const SOURCE_POLICY_VERSION = 'pilot-sources.1';
 export const citationSchema = z.strictObject({
   documentId: z.uuid(),
   contentHash: z.string().regex(/^[a-f0-9]{64}$/),
-  start: z.number().int().min(0).max(60000),
-  end: z.number().int().positive().max(60000),
+  start: z.number().int().min(0).max(120_000), // MAX_SOURCE_BODY_CHARS
+  end: z.number().int().positive().max(120_000),
   quote: z.string().min(1).max(1600),
 });
 const evidence = z.array(citationSchema).max(6);

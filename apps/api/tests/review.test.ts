@@ -183,10 +183,27 @@ describe('review API boundaries', () => {
           method: 'POST',
           url: '/v1/review/sources',
           headers,
-          payload: JSON.stringify({ body: 'a'.repeat(270000) }),
+          payload: JSON.stringify({ body: 'a'.repeat(530000) }),
         })
       ).statusCode,
     ).toBe(413);
+    // A long issuer PDF capture (~75,000 characters) fits; over 120,000 characters is rejected as invalid.
+    expect(
+      (
+        await instance.inject({
+          method: 'POST',
+          url: '/v1/review/sources',
+          headers,
+          payload: JSON.stringify({
+            sourceKey: 'long-terms',
+            title: 'Long terms',
+            url: 'https://issuer.example/terms',
+            checkedOn: '2026-09-25',
+            body: 'a'.repeat(120001),
+          }),
+        })
+      ).statusCode,
+    ).toBe(400);
     expect(rpc).not.toHaveBeenCalled();
   });
   it('limits review requests even when a caller changes X-Forwarded-For', async () => {
