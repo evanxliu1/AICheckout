@@ -1,12 +1,14 @@
-import contentFile from './content.ts?script&iife';
 import { probeSchema } from './contracts';
 import type { CartSnapshot } from './contracts';
 import { isSupportedCheckout } from './page-reader';
 import { merchantForCheckout } from './merchants';
 
+/** Built from content.ts by the content-script plugin in vite.config.ts (an IIFE, no imports). */
+const contentFile = 'src/checkout/content.js';
+
 const copy = {
   'unsupported-page':
-    'Open a Best Buy US cart or checkout, or the Newegg US cart, then read it again. You can also enter the amount manually.',
+    'Open a Best Buy US cart or checkout, the Newegg US cart, or the Amazon US cart, then read it again. You can also enter the amount manually.',
   'empty-cart': 'The cart has no amount to compare. Add an item or enter a purchase amount manually.',
   'summary-missing':
     'No readable order summary was found. Wait for the cart to load, retry, or enter the amount manually.',

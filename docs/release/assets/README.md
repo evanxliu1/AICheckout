@@ -1,14 +1,14 @@
 # Release media
 
-Prepared September 26, 2026 for the default offline extension 2.0.0 and catalog `2026-09-25.pilot.2`. Open [the gallery](index.html) to review the screenshots, promotion, icon inspection, recording and transcript together. This packet is not a submitted listing or evidence of live retailer/model behavior.
+Regenerated October 1, 2026 for the default offline extension 2.0.0 (Helios popup) and catalog `2026-09-29.real.1`. Open [the gallery](index.html) to review the screenshots, promotion, icon inspection, recording and transcript together. This packet is not a submitted listing or evidence of live retailer/model behavior.
 
 ## Deliverables
 
 | File | Use |
 | --- | --- |
-| [1-wallet-640x400.png](1-wallet-640x400.png) | Owned-card selection and sample annual spend |
-| [2-comparison-640x400.png](2-comparison-640x400.png) | Conditional $3.00 / $1.50 estimates for a synthetic $100 eligible purchase |
-| [3-uncertainty-640x400.png](3-uncertainty-640x400.png) | Unknown annual usage produces a $1.00–$3.00 range |
+| [1-wallet-640x400.png](1-wallet-640x400.png) | The seven card products grouped by issuer, all selected as a sample |
+| [2-comparison-640x400.png](2-comparison-640x400.png) | A synthetic $100 eligible Best Buy purchase: Blue Cash Everyday $3.00 with its rule in the issuer's words and conditions |
+| [3-uncertainty-640x400.png](3-uncertainty-640x400.png) | Unknown annual spend toward the cap produces a $1.00–$3.00 range, so Double Cash leads at $2.00 |
 | [4-subtotal-640x400.png](4-subtotal-640x400.png) | Controlled Newegg fixture explicitly excludes tax/shipping from its subtotal |
 | [5-locked-640x400.png](5-locked-640x400.png) | Passphrase unlock after locking saved inputs |
 | [promo-440x280.png](promo-440x280.png) | Required small promotional brand image |
@@ -26,7 +26,7 @@ The roughly 40-second MP4 is 960×720 H.264. It contains an actual 360×600 exte
 
 ## Provenance and validity
 
-The store images and shopper recording are bound to ZIP SHA-256 **`5c8800d4b22fb79a2dae33b3017f9f4f8788002072e9afff62e46a2aa6036c0d`**. [capture-manifest.json](capture-manifest.json) records the actual native target viewport, browser version, staged input descriptions, source hashes and artifact identity. [demo-chapters.json](demo-chapters.json) records timed explanations and the matching artifact; [verification.json](verification.json) records file-format/hash checks, desktop/mobile gallery checks, actual video playback and caption loading.
+The store images and shopper recording are bound to ZIP SHA-256 **`6b779c4e7cfddeac6341fe5bcf4bf50a2676e5e7daf679d17472cbf7221b1f98`**. [capture-manifest.json](capture-manifest.json) records the actual native target viewport, browser version, staged input descriptions, source hashes and artifact identity. [demo-chapters.json](demo-chapters.json) records timed explanations and the matching artifact; [verification.json](verification.json) records file-format/hash checks, desktop/mobile gallery checks, actual video playback and caption loading.
 
 The full-stack recording has separate [source/build and cleanup evidence](full-stack-capture.json) and [media hashes/playback checks](full-stack-media.json); the extension ZIP does not identify the server or review app. It is 1280×960 H.264 and preserves the unscaled 1280×800 application with an explanatory footer. It uses local disposable accounts, invented terms and intercepted responses; it does not make a live model call or establish model quality. Its reproduction command is `npm run release:portfolio`, with the existing disposable local Supabase stack available. See [the complete procedure](full-stack-demo.md).
 
@@ -53,3 +53,14 @@ python3 -m http.server 4174 --bind 127.0.0.1 --directory docs/release/assets
 Open the local address printed by the server. Stop it when finished. File-based viewing can block caption loading; the included transcript remains readable. The verifier starts and closes its own temporary loopback server and writes inspection screenshots under `/tmp/aicheckout-release-media-inspection`.
 
 Chrome's [image requirements](https://developer.chrome.com/docs/webstore/images) permit 640×400 or 1280×800 screenshots and require the small promotional image. The original-density 640px format was chosen because Chromium's enlarged native-target capture produced repeated tiles; those drafts were discarded. These assets still need the final [release gates](../README.md), accurate dashboard declarations and Google's review. No optional marquee or YouTube upload is claimed.
+
+## Reproducing the pinned artifact
+
+Generate release media only from a clean checkout of the commit being released, with a fresh install:
+
+```sh
+git worktree add --detach /path/to/clean-checkout HEAD   # or a fresh clone
+cd /path/to/clean-checkout && npm ci && npm run release:media
+```
+
+A working copy with local edits, untracked files, or a non-`npm ci` install can produce a different ZIP and therefore a different pinned hash. The build does not depend on the checkout's location: the content script is bundled at a fixed path (see `extension/vite.config.ts`). The hash above was produced this way and reproduced by `npm ci && npm run build --workspace=ai-checkout-extension && npm run package --workspace=ai-checkout-extension` in a second fresh worktree at a different path.

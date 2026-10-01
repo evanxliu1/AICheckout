@@ -1,6 +1,6 @@
 # Release preparation
 
-Prepared September 26, 2026 against extension 2.0.0 and catalog `2026-09-25.pilot.2`. These are reviewable drafts and operating instructions, **not evidence of submission or deployment**. See the [design doc](../design.md) for architecture and roadmap.
+Updated October 1, 2026 for extension 2.0.0 (Helios popup) and catalog `2026-09-29.real.1` (seven cards; Best Buy, Newegg and Amazon US). These are reviewable drafts and operating instructions, **not evidence of submission or deployment**. See the [design doc](../design.md) for architecture and roadmap.
 
 ## Contents
 

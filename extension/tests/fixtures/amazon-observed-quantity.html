@@ -1,0 +1,57 @@
+<!-- Redacted DOM fixture for the bounded Amazon US cart reader; not broad checkout coverage.
+Structure follows two logged-out observations of www.amazon.com/gp/cart/view.html with one item, after increasing its quantity to 2
+(2026-09-30, extension/scripts/observe-amazon-cart.mjs), after increasing the quantity to 2: the ancestor chain, ids, classes and
+data-name of the buy-box subtotal and of the quantity stepper are as recorded; intermediate wrappers
+without ids are kept, item content is removed. The subtotal amount is the one observed in the second run.
+The "offer banner" is SYNTHETIC: a card offer showing "Current subtotal" appeared in the first run's
+screenshot but its markup was not recorded and it was absent in the second run. It is shaped as a
+lookalike (same data-name and label wording) outside the buy box, to prove scoping. -->
+<div id="sc-page-content" class="a-section a-spacing-none sc-fifteen-hundred-desktop-max-width">
+  <div class="sc-offer-banner">
+    <div data-name="Subtotals" class="a-row sc-subtotal">
+      <span id="sc-subtotal-label-offer" class="a-size-medium">Subtotal (1 item):</span><span id="sc-subtotal-amount-offer">$1.00</span>
+    </div>
+    <span>Current subtotal:</span> <span>$13.98</span>
+  </div>
+  <div id="sc-retail-cart-container" class="a-fixed-right-flipped-grid">
+    <div class="a-fixed-right-grid-inner">
+      <div id="sc-cart-column" class="a-fixed-right-grid-col sc-retail-cart-column-spacing a-col-left">
+        <div id="sc-active-cart" data-name="Active Cart" class="a-cardui sc-card-style sc-list celwidget sc-grid-view sc-grid-full-width">
+          <div class="sc-list-item-content">
+            <div class="a-row a-grid-vertical-align a-grid-top sc-list-item-content-inner">
+              <div class="sc-item-content-group">
+                <div class="a-row sc-action-links">
+                  <span class="sc-action-quantity"><span class="sc-quantity-stepper">
+                    <fieldset class="a-declarative a-stepper-expanding-fieldset"><div class="a-stepper-inner-container"><div class="a-stepper-controls"><div class="a-declarative"><span></span></div></div></div></fieldset>
+                  </span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="proceed-to-checkout-desktop-container" class="a-fixed-right-grid-col a-col-right">
+        <div id="sc-buy-box-panel">
+          <div id="sc-buy-box" class="a-cardui sc-card-style celwidget sc-card-spacing-top-none">
+            <div class="a-cardui-body a-scroller-none">
+              <form id="gutterCartViewForm" method="get" action="/checkout/entry/cart">
+                <div class="a-box-group sc-buy-box-group">
+                  <div class="a-section a-spacing-top-micro sc-sss-spinner-box sc-hidden"><span class="a-spinner a-spinner-small sc-sss-spinner"></span></div>
+                  <div class="a-section a-spacing-top-micro sc-buy-box-inner-box">
+                    <h3 class="a-spacing-none a-text-normal">
+                      <div data-name="Subtotals" class="a-row a-spacing-mini sc-subtotal sc-subtotal-buybox"><span id="sc-subtotal-label-buybox" class="a-size-medium sc-number-of-items">
+                        Subtotal (2 items):</span><span id="sc-subtotal-amount-buybox" class="sc-price-container a-text-bold">&nbsp;<span class="a-size-medium a-color-base sc-price sc-white-space-nowrap">$13.98</span></span>
+                      </div>
+                    </h3>
+                    <label><input type="checkbox" name="isGift"> This order contains a gift</label>
+                    <span class="a-button a-button-primary"><input type="submit" name="proceedToRetailCheckout" value="Proceed to checkout"></span>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

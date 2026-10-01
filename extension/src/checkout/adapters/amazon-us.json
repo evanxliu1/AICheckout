@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "merchantId": "amazon-us",
+  "name": "Amazon US",
+  "extractorVersion": "amazon-summary-v1",
+  "observed": {
+    "on": "2026-09-30",
+    "note": "Two logged-out www.amazon.com carts with one item, then quantity 2 (extension/scripts/observe-amazon-cart.mjs; structure only). The subtotal is a [data-name=Subtotals] row inside #sc-buy-box with id-tagged label and amount spans; no other subtotal row was present. A quantity update shows a spinner in the item stepper while the subtotal is stale. The empty cart shows h3.sc-your-amazon-cart-is-empty inside #sc-active-cart."
+  },
+  "match": {
+    "hosts": ["www.amazon.com"],
+    "paths": ["^/gp/cart/view\\.html$", "^/cart/?$"]
+  },
+  "summary": {
+    "selector": "#sc-buy-box [data-name=\"Subtotals\"]",
+    "maxCount": 2
+  },
+  "emptyCart": {
+    "selector": "#sc-active-cart h3.sc-your-amazon-cart-is-empty",
+    "text": "Your Amazon Cart is empty"
+  },
+  "loading": {
+    "busyAncestor": "[aria-busy=\"true\"]",
+    "checkMatchedRows": true,
+    "indicators": [".a-stepper-controls .a-spinner", ".sc-sss-spinner-box:not(.sc-hidden)"]
+  },
+  "rows": {
+    "selector": null,
+    "max": 1
+  },
+  "label": {
+    "selectors": [":scope > [id^=\"sc-subtotal-label-\"]"],
+    "single": true
+  },
+  "amount": {
+    "selector": ":scope > [id^=\"sc-subtotal-amount-\"]"
+  },
+  "labels": [
+    {
+      "pattern": "^Subtotal \\([0-9]{1,4} items?\\):$",
+      "caseInsensitive": false,
+      "kind": "subtotal"
+    }
+  ],
+  "pending": [],
+  "requiredKinds": ["subtotal"],
+  "duplicates": "ambiguous",
+  "combine": "per-summary"
+}

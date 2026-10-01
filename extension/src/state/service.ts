@@ -1,6 +1,7 @@
 import { compareRewards } from '../domain';
 import { CATALOG_TIMEOUT_MS } from '@ai-checkout/catalog-client';
-import { appStateSchema, emptyState, requestSchema, validateWallet } from './contracts';
+import { emptyState, requestSchema, storedAppStateSchema, validateWallet } from './contracts';
+import { migrateState } from './migrate';
 import type { AppState, CheckoutResponse } from './contracts';
 import type { CartSnapshot } from '../checkout/contracts';
 import { CatalogUpdateError, currentCatalog, prepareCatalogUpdate } from './catalog';
@@ -65,9 +66,13 @@ export function createStateService(
     await storage.remove(LEGACY_KEYS);
     const saved = (await storage.get(STATE_KEY))[STATE_KEY];
     if (saved === undefined) return emptyState();
-    const parsed = appStateSchema.safeParse(saved);
+    const parsed = storedAppStateSchema.safeParse(saved);
     if (!parsed.success) throw new Error('Saved data could not be read. Delete local data to start again.');
-    return parsed.data;
+    if (parsed.data.schemaVersion === 2) return parsed.data;
+    // Pilot-era state: migrate once and persist; its notice waits in pendingNotice until shown.
+    const migrated = migrateState(parsed.data);
+    await storage.set({ [STATE_KEY]: migrated.state });
+    return migrated.state;
   }
   async function validateCart(cart: CartSnapshot | null, now: number) {
     if (!cart || !cartReader || cart.capturedAt > now || now - cart.capturedAt >= CART_MAX_AGE_MS) {
@@ -138,7 +143,14 @@ export function createStateService(
       }
       const state = await load();
       const now = clock();
-      if (request.type === 'checkout:get-state') return await response(state, now);
+      if (request.type === 'checkout:get-state') {
+        const result = await response(state, now);
+        // Show a pending notice only when nothing else is shown; clear it once it has been shown.
+        if (!result.ok || result.notice || !result.state.pendingNotice) return result;
+        const shown = { ...result.state, pendingNotice: null };
+        await storage.set({ [STATE_KEY]: shown });
+        return { ...result, state: shown, notice: result.state.pendingNotice };
+      }
       if (request.expectedRevision !== state.revision) {
         return {
           ok: false,

@@ -1,5 +1,5 @@
-import { appStateSchema, emptyState, requestSchema } from './contracts';
-import type { AppState, CheckoutResponse } from './contracts';
+import { appStateSchema, emptyState, requestSchema, storedAppStateSchema } from './contracts';
+import type { CheckoutResponse, StoredAppState } from './contracts';
 import { createStateService, STATE_KEY } from './service';
 import type { CartReader, StateStorage } from './service';
 import {
@@ -48,7 +48,7 @@ export function createVaultService(
     const saved = await record();
     if (saved === undefined) return 'setup';
     const envelope = vaultEnvelopeSchema.safeParse(saved);
-    if (!envelope.success) return appStateSchema.safeParse(saved).success ? 'migration' : 'damaged';
+    if (!envelope.success) return storedAppStateSchema.safeParse(saved).success ? 'migration' : 'damaged';
     const key = await sessionKey();
     if (!key.success || key.data.id !== envelope.data.id) return 'locked';
     try {
@@ -110,13 +110,14 @@ export function createVaultService(
         }
         if (value.type === 'checkout:vault-create') {
           const saved = await record();
-          if (saved !== undefined && !appStateSchema.safeParse(saved).success) {
+          if (saved !== undefined && !storedAppStateSchema.safeParse(saved).success) {
             return {
               ok: false,
               error: 'Saved data already exists. Unlock it, or explicitly delete it to start again.',
             };
           }
-          const state: AppState = saved === undefined ? emptyState() : appStateSchema.parse(saved);
+          const state: StoredAppState =
+            saved === undefined ? emptyState() : storedAppStateSchema.parse(saved);
           const identity = newVaultIdentity(),
             key = await deriveVaultKey(value.passphrase, identity);
           const encrypted = await encryptVault(state, identity, key);

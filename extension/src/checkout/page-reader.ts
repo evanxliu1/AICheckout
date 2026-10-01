@@ -1,8 +1,8 @@
 import { parseUsd } from '@ai-checkout/rewards-core/money';
 import { MERCHANTS, merchantForCheckout } from './merchants';
-import type { MerchantId } from './merchants';
+import { SITE_ADAPTERS, type AmountKind, type MerchantId, type SiteAdapter } from './adapters';
 
-export type AmountKind = 'total' | 'estimated-total' | 'subtotal';
+export type { AmountKind };
 export type PageRead =
   | {
       status: 'found';
@@ -10,7 +10,7 @@ export type PageRead =
       currency: 'USD';
       amountCents: number;
       kind: AmountKind;
-      extractorVersion: (typeof MERCHANTS)[MerchantId]['extractorVersion'];
+      extractorVersion: string;
     }
   | {
       status: 'unavailable';
@@ -23,11 +23,13 @@ export type PageRead =
         | 'page-loading';
     };
 
+type Unavailable = Extract<PageRead, { status: 'unavailable' }>;
+
 export function isSupportedCheckout(rawUrl: string): boolean {
   return merchantForCheckout(rawUrl) !== null;
 }
 
-const unavailable = (reason: Extract<PageRead, { status: 'unavailable' }>['reason']): PageRead => ({
+const unavailable = (reason: Unavailable['reason']): Unavailable => ({
   status: 'unavailable',
   reason,
 });
@@ -76,7 +78,8 @@ function cellText(element: Element): string {
     if (
       !(node instanceof Element) ||
       !visible(node) ||
-      /^(SCRIPT|STYLE|NOSCRIPT|INPUT|SELECT|TEXTAREA)$/.test(node.tagName)
+      /^(SCRIPT|STYLE|NOSCRIPT|INPUT|SELECT|TEXTAREA|OPTION|BUTTON)$/.test(node.tagName) ||
+      node.hasAttribute('contenteditable')
     )
       return '';
     return Array.from(node.childNodes, read).join('');
@@ -86,118 +89,113 @@ function cellText(element: Element): string {
   return text;
 }
 
-const labels: Record<string, AmountKind> = {
-  total: 'total',
-  'order total': 'total',
-  'estimated total': 'estimated-total',
-  subtotal: 'subtotal',
-  'item subtotal': 'subtotal',
-  'items subtotal': 'subtotal',
-};
+type Entry = { kind: AmountKind; amountCents: number | null };
 
-function readBestBuy(document: Document): PageRead {
-  // Observed on the live Best Buy US cart on 2026-09-25. Semantic fallback preserves
-  // the same table contract; arbitrary numbers elsewhere on the page are never used.
-  const tables = [
-    ...document.querySelectorAll(
-      'table[data-testid="order-summary__price-summary-table"], table[aria-label="Order Summary"]',
-    ),
-  ].filter(visible);
-  if (!tables.length) return unavailable('summary-missing');
-  if (tables.length > 3) return unavailable('ambiguous-amount');
-  const candidates: Candidate[] = [];
-  try {
-    for (const table of tables) {
-      if (table.closest('[aria-busy="true"]')) return unavailable('page-loading');
-      const rows = [...table.querySelectorAll('tr')].filter(visible);
-      if (rows.length > 30) return unavailable('ambiguous-amount');
-      for (const row of rows) {
-        const heading = row.querySelector('th[scope="row"]') ?? row.querySelector('th');
-        if (!heading) continue;
-        const kind = labels[cellText(heading).toLowerCase().replace(/:$/, '').trim()];
-        if (!kind) continue;
-        const cells = row.querySelectorAll('td');
-        if (cells.length !== 1) return unavailable('ambiguous-amount');
-        // USD is constrained by the supported US merchant and a visible dollar sign.
-        // A bare number, range, installment price, or dual-currency quote is ambiguous.
-        const parsed = amount(cellText(cells[0]));
-        if ('reason' in parsed) return unavailable(parsed.reason);
-        candidates.push({ kind, ...parsed });
-      }
-    }
-  } catch {
-    return unavailable('ambiguous-amount');
-  }
+/** Prefer totals over subtotals; every preferred amount must agree. */
+function resolve(candidates: Candidate[]): Candidate | Unavailable {
   const totals = candidates.filter((c) => c.kind !== 'subtotal');
   const preferred = totals.length ? totals : candidates;
   if (!preferred.length) return unavailable('summary-missing');
   if (new Set(preferred.map((c) => c.amountCents)).size !== 1) return unavailable('ambiguous-amount');
-  const candidate = preferred.find((c) => c.kind === 'total') ?? preferred[0];
-  return found('best-buy-us', candidate);
+  return preferred.find((c) => c.kind === 'total') ?? preferred[0];
 }
 
-function readNewegg(document: Document): PageRead {
-  // Observed 2026-09-26: selected subtotal and an explicit TBD estimated total.
-  // Read only the two amount rows; never inspect the delivery address or promotion form.
-  const summaries = [...document.querySelectorAll('.summary-side')].filter(visible);
-  if (!summaries.length) {
-    const empty = [...document.querySelectorAll('.cart-empty > h3')].filter(visible);
-    return unavailable(
-      empty.some((el) => cellText(el) === 'Your cart is currently empty.') ? 'empty-cart' : 'summary-missing',
-    );
-  }
-  if (summaries.length > 3) return unavailable('ambiguous-amount');
-  const candidates: Candidate[] = [];
-  for (const summary of summaries) {
-    if (summary.closest('[aria-busy="true"]')) return unavailable('page-loading');
-    const rows = [...summary.querySelectorAll(':scope > .summary-wrap > .summary-content > ul > li')].filter(
-      visible,
-    );
-    if (rows.length > 30) return unavailable('ambiguous-amount');
-    let subtotal: number | undefined;
-    let total: number | null | undefined;
-    for (const row of rows) {
-      const headings = row.querySelectorAll(':scope > label');
-      if (!headings.length) continue;
-      const label = cellText(headings[0]);
-      if (label !== 'Selected Subtotal' && label !== 'Est. Total') continue;
-      const cells = row.querySelectorAll(':scope > span');
-      if (headings.length !== 1 || cells.length !== 1) return unavailable('ambiguous-amount');
-      if (row.closest('[aria-busy="true"]') || [...row.querySelectorAll('[aria-busy="true"]')].some(visible))
-        return unavailable('page-loading');
-      const raw = cellText(cells[0]);
-      if (label === 'Est. Total' && raw === 'TBD') {
-        if (total !== undefined) return unavailable('ambiguous-amount');
-        total = null;
-        continue;
-      }
+/** Reads one summary's labelled amount rows according to the adapter. */
+function readSummary(adapter: SiteAdapter, summary: Element): Entry[] | Unavailable {
+  const busy = adapter.loading.busyAncestor;
+  if (summary.closest(busy)) return unavailable('page-loading');
+  const rows = (
+    adapter.rows.selector ? [...summary.querySelectorAll(adapter.rows.selector)] : [summary]
+  ).filter(visible);
+  if (rows.length > adapter.rows.max) return unavailable('ambiguous-amount');
+  const entries: Entry[] = [];
+  for (const row of rows) {
+    let labelEls: Element[] = [];
+    for (const selector of adapter.label.selectors) {
+      labelEls = [...row.querySelectorAll(selector)];
+      if (labelEls.length) break;
+    }
+    if (!labelEls.length) continue;
+    const text = cellText(labelEls[0]);
+    const kind = adapter.labels.find((l) =>
+      new RegExp(l.pattern, l.caseInsensitive ? 'i' : '').test(text),
+    )?.kind;
+    if (!kind) continue;
+    const cells = row.querySelectorAll(adapter.amount.selector);
+    if ((adapter.label.single && labelEls.length !== 1) || cells.length !== 1)
+      return unavailable('ambiguous-amount');
+    if (
+      adapter.loading.checkMatchedRows &&
+      (row.closest(busy) || [...row.querySelectorAll(busy)].some(visible))
+    )
+      return unavailable('page-loading');
+    // USD is constrained by the supported US merchant and a visible dollar sign. A bare number,
+    // range, installment price, or dual-currency quote is ambiguous.
+    const raw = cellText(cells[0]);
+    let amountCents: number | null;
+    if (adapter.pending.some((p) => p.kind === kind && p.text === raw)) amountCents = null;
+    else {
       const parsed = amount(raw);
       if ('reason' in parsed) return unavailable(parsed.reason);
-      if (label === 'Selected Subtotal') {
-        if (subtotal !== undefined) return unavailable('ambiguous-amount');
-        subtotal = parsed.amountCents;
-      } else {
-        if (total !== undefined) return unavailable('ambiguous-amount');
-        total = parsed.amountCents;
-      }
+      amountCents = parsed.amountCents;
     }
-    if (subtotal === undefined || total === undefined) return unavailable('summary-missing');
-    candidates.push(
-      total === null
-        ? { kind: 'subtotal', amountCents: subtotal }
-        : { kind: 'estimated-total', amountCents: total },
-    );
+    const seen = entries.find((e) => e.kind === kind);
+    if (seen && (adapter.duplicates === 'ambiguous' || seen.amountCents !== amountCents))
+      return unavailable('ambiguous-amount');
+    entries.push({ kind, amountCents });
   }
-  if (new Set(candidates.map((c) => `${c.kind}:${c.amountCents}`)).size !== 1)
+  if (adapter.requiredKinds.some((kind) => !entries.some((e) => e.kind === kind)))
+    return unavailable('summary-missing');
+  return entries;
+}
+
+/** The one generic interpreter for every bundled SiteAdapter. */
+export function readWithAdapter(adapter: SiteAdapter, document: Document): PageRead {
+  if (adapter.loading.indicators.some((s) => [...document.querySelectorAll(s)].some(visible)))
+    return unavailable('page-loading');
+  const summaries = [...document.querySelectorAll(adapter.summary.selector)].filter(visible);
+  if (!summaries.length) {
+    const empty = adapter.emptyCart;
+    // Bounded: at most five candidate headings; oversized text simply doesn't match.
+    const matches = (el: Element) => {
+      try {
+        return cellText(el) === empty!.text;
+      } catch {
+        return false;
+      }
+    };
+    const isEmpty =
+      empty && [...document.querySelectorAll(empty.selector)].filter(visible).slice(0, 5).some(matches);
+    return unavailable(isEmpty ? 'empty-cart' : 'summary-missing');
+  }
+  if (summaries.length > adapter.summary.maxCount) return unavailable('ambiguous-amount');
+  const pooled: Candidate[] = [],
+    resolved: Candidate[] = [];
+  for (const summary of summaries) {
+    const entries = readSummary(adapter, summary);
+    if (!Array.isArray(entries)) return entries;
+    const candidates = entries.filter((e): e is Candidate => e.amountCents !== null);
+    if (adapter.combine === 'pool-rows') pooled.push(...candidates);
+    else {
+      const one = resolve(candidates);
+      if ('status' in one) return one;
+      resolved.push(one);
+    }
+  }
+  if (adapter.combine === 'pool-rows') {
+    const one = resolve(pooled);
+    return 'status' in one ? one : found(adapter.merchantId, one);
+  }
+  if (new Set(resolved.map((c) => `${c.kind}:${c.amountCents}`)).size !== 1)
     return unavailable('ambiguous-amount');
-  return found('newegg-us', candidates[0]);
+  return found(adapter.merchantId, resolved[0]);
 }
 
 export function readCheckoutPage(document: Document, url: string): PageRead {
   const merchant = merchantForCheckout(url);
   if (!merchant) return unavailable('unsupported-page');
   try {
-    return merchant === 'newegg-us' ? readNewegg(document) : readBestBuy(document);
+    return readWithAdapter(SITE_ADAPTERS[merchant], document);
   } catch {
     return unavailable('ambiguous-amount');
   }

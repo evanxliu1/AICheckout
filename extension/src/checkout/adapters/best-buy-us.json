@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "merchantId": "best-buy-us",
+  "name": "Best Buy US",
+  "extractorVersion": "bestbuy-summary-v1",
+  "observed": {
+    "on": "2026-09-25",
+    "note": "Live unauthenticated Best Buy US cart: one Order Summary table of th/td rows. A semantic aria-label fallback keeps the same table contract; numbers elsewhere on the page are never used."
+  },
+  "match": { "hosts": ["bestbuy.com", "www.bestbuy.com"], "paths": ["^/cart/?$", "^/checkout(?:/.*)?$"] },
+  "summary": {
+    "selector": "table[data-testid=\"order-summary__price-summary-table\"], table[aria-label=\"Order Summary\"]",
+    "maxCount": 3
+  },
+  "emptyCart": null,
+  "loading": { "busyAncestor": "[aria-busy=\"true\"]", "checkMatchedRows": false, "indicators": [] },
+  "rows": { "selector": "tr", "max": 30 },
+  "label": { "selectors": ["th[scope=\"row\"]", "th"], "single": false },
+  "amount": { "selector": "td" },
+  "labels": [
+    { "pattern": "^(?:order )?total\\s*:?$", "caseInsensitive": true, "kind": "total" },
+    { "pattern": "^estimated total\\s*:?$", "caseInsensitive": true, "kind": "estimated-total" },
+    { "pattern": "^(?:items? )?subtotal\\s*:?$", "caseInsensitive": true, "kind": "subtotal" }
+  ],
+  "pending": [],
+  "requiredKinds": [],
+  "duplicates": "allow-equal",
+  "combine": "pool-rows"
+}

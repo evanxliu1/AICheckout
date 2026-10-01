@@ -4,6 +4,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { openNativePopup } from './native-popup';
 import { createNativeVault, createVault, deleteNativeVault, deleteVault } from './vault';
+import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2';
 
 test('capture real release UI and record the staged offline shopper walkthrough', async ({
   browserName,
@@ -79,7 +80,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     await popup.evaluate(
       "document.querySelector('[aria-labelledby=wallet-heading]').scrollIntoView({block:'start'})",
     );
-    await capture('wallet', ['Capital One Quicksilver', 'American Express Blue Cash Everyday']);
+    await capture('wallet', ['Citi', 'Capital One Quicksilver', 'American Express Blue Cash Everyday']);
     await popup.click('Save cards');
     await expect.poll(popup.text).toContain('Read cart amount');
     await popup.fill('purchase-amount', '100');
@@ -101,7 +102,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     await capture('uncertainty', [
       'Compare the conditions',
       '$1.00–$3.00',
-      'Annual online retail spend is unknown.',
+      'Your online retail spend toward this year’s bonus limit is unknown.',
     ]);
     await popup.click('Edit cards');
     await expect.poll(popup.text).toContain('online retail spend in');
@@ -132,10 +133,10 @@ test('capture real release UI and record the staged offline shopper walkthrough'
           browser: context.browser()?.version(),
           artifactSha256: inventory.sha256,
           extensionVersion: '2.0.0',
-          catalogVersion: '2026-09-25.pilot.2',
-          catalogExpiresAt: '2026-10-25T00:00:00.000Z',
+          catalogVersion: CATALOG_V2.version,
+          catalogExpiresAt: CATALOG_V2.expiresAt,
           source:
-            'Actual native toolbar popup; two owned-card synthetic selections; intercepted Newegg summary fixture.',
+            'Actual native toolbar popup; all seven card products selected as a sample; intercepted Newegg summary fixture.',
           liveMerchant: false,
           network: 'HTTP blocked except the in-memory route fixture; no model requests.',
           amountsAre: 'Conditional estimates using sample inputs, not customer savings or earned rewards.',
