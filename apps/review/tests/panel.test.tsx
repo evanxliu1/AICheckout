@@ -32,6 +32,12 @@ it('requires the explicit review acknowledgement and note even for an implicit f
   await user.click(screen.getByRole('checkbox'));
   await user.type(screen.getByLabelText('Review note'), 'Checked all synthetic source terms.');
   await user.click(publish);
+  // A confirmation dialog opens with focus on the safe action; only its Publish release publishes.
+  const dialog = await screen.findByRole('dialog', { name: /Publish/ });
+  expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Cancel' }));
+  expect(handlers.onPublish).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name: 'Publish release' }));
+  expect(dialog.isConnected).toBe(false);
   expect(handlers.onPublish).toHaveBeenCalledExactlyOnceWith('Checked all synthetic source terms.');
   expect((screen.getByRole('checkbox') as HTMLInputElement).checked).toBe(false);
 });
@@ -71,6 +77,7 @@ it('summarizes v2 rules and validates v2 JSON edits with the schema union', asyn
   expect(screen.getAllByText(/1% is paid when the balance is paid\./)).toHaveLength(2);
   expect(screen.getAllByText(/Excludes bnpl\./)).toHaveLength(1);
   await user.click(screen.getByText('Correct draft data'));
+  await user.click(screen.getByRole('tab', { name: 'JSON' }));
   const broken = structuredClone(v2);
   broken.cards[0].rules[0].paidOnPaymentBps = 900;
   fireEvent.change(screen.getByLabelText('Catalog JSON'), { target: { value: JSON.stringify(broken) } });
@@ -82,4 +89,62 @@ it('summarizes v2 rules and validates v2 JSON edits with the schema union', asyn
   fireEvent.change(screen.getByLabelText('Catalog JSON'), { target: { value: JSON.stringify(edited) } });
   await user.click(screen.getByRole('button', { name: 'Save draft revision' }));
   expect(handlers.onUpdate).toHaveBeenCalledWith(edited, null);
+});
+
+it('edits a v2 rule field by field with live schema validation and saves one revision', async () => {
+  const detail = reviewFixture();
+  detail.draft.catalog = structuredClone(CATALOG_V2);
+  const handlers = panel(detail),
+    user = userEvent.setup();
+  await user.click(screen.getByText('Correct draft data'));
+  expect(screen.getByRole('tab', { name: 'Cards and rules', selected: true })).toBeTruthy();
+  await user.click(screen.getByText('Citi Double Cash', { selector: '.editor-card .ac-disclosure__title' }));
+  const paid = screen.getByLabelText('Paid when balance is paid (bps)', {
+    selector: '#edit-cards-0-rules-0-paidOnPaymentBps',
+  });
+  fireEvent.change(paid, { target: { value: '300' } });
+  expect(paid.getAttribute('aria-invalid')).toBe('true');
+  expect(screen.getAllByText(/paid-on-payment portion cannot exceed the rate/).length).toBeGreaterThan(0);
+  const save = screen.getByRole('button', { name: 'Save structured edits' }) as HTMLButtonElement;
+  expect(save.disabled).toBe(true);
+  fireEvent.change(paid, { target: { value: '50' } });
+  expect(save.disabled).toBe(false);
+  expect(screen.getByText('1 field edited since the saved revision.')).toBeTruthy();
+  expect(handlers.onDirty).toHaveBeenLastCalledWith(true);
+  await user.click(save);
+  const saved = handlers.onUpdate.mock.calls[0] as unknown as [typeof CATALOG_V2, null];
+  expect(saved[0].cards[0].rules[0].paidOnPaymentBps).toBe(50);
+  expect(saved[1]).toBeNull();
+});
+it('captures every missing source in one step from loaded files', async () => {
+  const detail = reviewFixture();
+  detail.sources = detail.sources.slice(0, 1);
+  detail.draft.source_document_ids = [detail.sources[0].id];
+  const onCaptureMany = vi.fn(async () => {});
+  render(
+    <DraftPanel
+      detail={detail}
+      busy={false}
+      onDirty={vi.fn()}
+      onUpdate={vi.fn(async () => {})}
+      onCapture={vi.fn(async () => {})}
+      onCaptureMany={onCaptureMany}
+      onPublish={vi.fn(async () => {})}
+    />,
+  );
+  const user = userEvent.setup();
+  await user.click(screen.getByText('Capture all missing sources'));
+  const missing = detail.draft.catalog.sources.slice(1);
+  const files = [
+    ...missing.map(
+      (source) => new File([`Terms for ${source.id}`], `${source.id}.txt`, { type: 'text/plain' }),
+    ),
+    new File(['ignored'], 'other.txt', { type: 'text/plain' }),
+  ];
+  await user.upload(screen.getByLabelText('Load capture files'), files);
+  expect(await screen.findByText(/Loaded 2 files; ignored 1/)).toBeTruthy();
+  await user.click(screen.getByRole('button', { name: 'Capture 2 of 2 missing sources and attach' }));
+  expect(onCaptureMany).toHaveBeenCalledWith(
+    missing.map((source) => ({ sourceKey: source.id, body: `Terms for ${source.id}` })),
+  );
 });

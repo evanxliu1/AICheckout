@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
 import { createReviewApi, type createReviewAuth } from './client';
+import { AlertInline, ApplicationState, Button, Field, Icon, TextInput } from '@ai-checkout/ui';
 import ReviewWorkspace from './ReviewWorkspace';
 
 type Auth = ReturnType<typeof createReviewAuth>;
@@ -64,60 +65,67 @@ export default function App({ auth }: { auth: Auth }) {
 
   return (
     <>
-      <a className="skip-link" href="#main">
+      <a className="skip-link ac-link ac-link--inline ac-link--primary" href="#main">
         Skip to review
       </a>
       <header className="app-header">
         <a className="brand" href="/review/">
+          <Icon name="shopping-cart" size={24} />
           AI Checkout
         </a>
         <span className="header-context">Catalog review</span>
         {session && (
           <div className="account">
             <span>{session.user.email}</span>
-            <button className="quiet" disabled={!!working} onClick={() => void signOut()}>
+            <Button size="small" color="secondary" disabled={!!working} onClick={() => void signOut()}>
               Sign out
-            </button>
+            </Button>
           </div>
         )}
       </header>
       {!initialized ? (
         <main id="main" className="sign-in">
-          <p role="status">Checking your session…</p>
+          <ApplicationState status="loading" titleTag="h1" title="Checking your session…" />
         </main>
       ) : !session ? (
-        <main id="main" className="sign-in">
+        <main id="main" className="sign-in stack">
           <h1>Review the terms behind every estimate.</h1>
           <p>Sign in to compare draft reward rules with their sources and approve a catalog release.</p>
-          <form onSubmit={(event) => void signIn(event)}>
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              autoComplete="username"
-              required
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              disabled={!!working}
-            />
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              disabled={!!working}
-            />
+          <form className="stack" onSubmit={(event) => void signIn(event)}>
+            <Field id="email" label="Email">
+              {(control) => (
+                <TextInput
+                  {...control}
+                  type="email"
+                  autoComplete="username"
+                  required
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  disabled={!!working}
+                />
+              )}
+            </Field>
+            <Field id="password" label="Password">
+              {(control) => (
+                <TextInput
+                  {...control}
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  disabled={!!working}
+                />
+              )}
+            </Field>
             {error && (
-              <p className="alert error" role="alert">
+              <AlertInline color="critical" role="alert">
                 {error}
-              </p>
+              </AlertInline>
             )}
-            <button className="primary" disabled={!!working}>
-              {working === 'in' ? 'Signing in…' : 'Sign in'}
-            </button>
+            <Button type="submit" isFullWidth isLoading={working === 'in'}>
+              Sign in
+            </Button>
           </form>
           <p className="muted small">
             Access is limited to appointed reviewers. Your session stays in this tab’s memory; refreshing
@@ -126,29 +134,36 @@ export default function App({ auth }: { auth: Auth }) {
         </main>
       ) : working === 'out' ? (
         <main id="main" className="sign-in">
-          <p role="status">Signing out…</p>
+          <ApplicationState status="loading" titleTag="h1" title="Signing out…" />
         </main>
       ) : accessError ? (
-        <main id="main" className="sign-in">
-          <h1>{accessError === 401 ? 'Your session ended.' : 'Reviewer access is required.'}</h1>
-          <p>
+        <main id="main" className="sign-in stack">
+          <ApplicationState
+            status="error"
+            titleTag="h1"
+            title={accessError === 401 ? 'Your session ended.' : 'Reviewer access is required.'}
+            actions={
+              <Button color="secondary" onClick={() => setAccessError(null)}>
+                Check access again
+              </Button>
+            }
+          >
             {accessError === 401
               ? 'Sign out, then sign in again to continue.'
               : 'Ask the project operator to grant this account reviewer access.'}
-          </p>
-          <button onClick={() => setAccessError(null)}>Check access again</button>
+          </ApplicationState>
           {error && (
-            <p role="alert" className="alert error">
+            <AlertInline color="critical" role="alert">
               {error}
-            </p>
+            </AlertInline>
           )}
         </main>
       ) : (
         <>
           {error && (
-            <p role="alert" className="alert error global-error">
+            <AlertInline color="critical" role="alert">
               {error}
-            </p>
+            </AlertInline>
           )}
           <ReviewWorkspace key={session.user.id} api={api} />
         </>
