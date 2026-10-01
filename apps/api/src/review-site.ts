@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import fastifyStatic from '@fastify/static';
 import { reviewConfigSchema, type ReviewConfig } from '@ai-checkout/catalog-review';
+import { staticErrorHandling } from './static-errors.ts';
 
 export async function reviewSite(
   app: FastifyInstance,
@@ -18,6 +19,7 @@ export async function reviewSite(
       .header('X-Content-Type-Options', 'nosniff')
       .header('Cache-Control', 'no-store');
   });
+  staticErrorHandling(app, 'review_site_request_failed');
   app.get('/config.json', async () => safeConfig);
   await app.register(fastifyStatic, {
     root,

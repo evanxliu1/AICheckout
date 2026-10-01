@@ -46,6 +46,7 @@ packages/catalog-review/  Shared curation/review contracts
 packages/ui/              React components built to the Helios design system specs
 apps/api/                 Fastify API; curation harness in src/curation/
 apps/review/              React review app
+apps/site/                Public site: overview, results, architecture, privacy, support
 evals/curation/           Evaluation corpus, scorer docs, baseline
 supabase/                 Migrations, seed, SQL tests
 docs/                     Design doc, release materials, verification notes
