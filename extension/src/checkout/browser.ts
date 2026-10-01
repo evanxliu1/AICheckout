@@ -1,8 +1,10 @@
-import contentFile from './content.ts?script&iife';
 import { probeSchema } from './contracts';
 import type { CartSnapshot } from './contracts';
 import { isSupportedCheckout } from './page-reader';
 import { merchantForCheckout } from './merchants';
+
+/** Built from content.ts by the content-script plugin in vite.config.ts (an IIFE, no imports). */
+const contentFile = 'src/checkout/content.js';
 
 const copy = {
   'unsupported-page':

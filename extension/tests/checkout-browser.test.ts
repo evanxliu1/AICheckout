@@ -1,6 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { webcrypto } from 'node:crypto';
-vi.mock('../src/checkout/content.ts?script&iife', () => ({ default: 'src/checkout/content.js' }));
 import { readActiveCheckout, validateActiveCheckout } from '../src/checkout/browser';
 
 const execute = vi.fn();
