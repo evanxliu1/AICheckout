@@ -25,7 +25,7 @@ Every known claim needs a citation with immutable document ID/hash and an exact,
 | Spending | 0 micro-USD; metered calls rejected before invocation |
 | Attempts | At most 2; retry transient/rate-limit errors only |
 | Attempt / total deadline | 10 seconds / 15 seconds |
-| Input | At most 3 captured documents; 60,000 characters each; 96,000 combined JSON bytes |
+| Input | At most 3 captured documents; 120,000 characters each (the capture limit, `MAX_SOURCE_BODY_CHARS`); 96,000 combined JSON bytes |
 | Input admission | 48,000 estimated tokens; conservative UTF-8 byte estimate including prompt/schema and framing allowance |
 | Requested output | 4,096 tokens; at most 65,536 returned text bytes |
 | Retry delay | 250 ms within the total deadline |

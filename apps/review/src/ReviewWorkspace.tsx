@@ -189,10 +189,13 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
         signal,
       );
       await refresh(detail.draft.id, signal);
-      if (!signal.aborted)
+      if (!signal.aborted) {
         setNotice(
           `Published ${release.version} as release ${release.sequence}. Extensions can now request these reviewed terms.`,
         );
+        // The dialog's opener is gone or disabled after publication; land on the refreshed heading.
+        requestAnimationFrame(() => heading.current?.focus({ preventScroll: true }));
+      }
     });
   }
 

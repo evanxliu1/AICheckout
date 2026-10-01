@@ -74,12 +74,23 @@ Sources: `src/styles.css` (layout only, `--token-*` values), `src/App.tsx`, `src
   rate, paid-on-payment portion, cap kind/amount/period/after-cap rate, activation, promotion end,
   U.S.-only. Every edit is validated with the shared Zod schema; messages appear on the field
   (`aria-invalid`, described error) and in a critical summary. A disclosure previews the edited
-  catalog against the published one. Schema 1 drafts keep the JSON editor and the extraction panel.
+  catalog against the published one. Numeric fields accept digits only; a newly chosen spend cap
+  starts blank so the issuer's real amount, period and after-cap rate must be typed. There is no
+  implicit submit: only **Save structured edits** saves. The problem summary is not a live region; it
+  names the card and rule of each problem and offers to open a collapsed card at the field. Schema 1
+  drafts keep the JSON editor and the extraction panel.
+- **Unsaved input is never discarded silently.** Every save and capture creates a revision from the
+  saved draft and reloads it, so each is disabled while another editor (JSON, Cards and rules, either
+  capture form) has unsaved input, with the reason shown next to the button.
+- **Capture hashes**: each captured source shows its SHA-256, and loaded or pasted capture text shows
+  whether it matches the corpus manifest (`evals/curation/real/manifest.json`), which catches a
+  mislabelled file before it is attached. Files too large to be a capture are skipped unread.
 - **Approval**: a `Card` with the acknowledgement `Checkbox`, a Review note field, and "Publish
   reviewed terms". Publishing opens a warning `Modal` ("Publish {version}?") that restates the
   revision, cards, sources, changed-field count, expiry and the note. Focus starts on **Cancel**
   (`initialFocusRef`); **Publish release** is the only action that publishes. Esc, the dismiss button
-  and the overlay close it and return focus.
+  and the overlay close it and return focus. After publication focus moves to the refreshed draft
+  heading.
 - **Notices**: success `AlertInline` (role status) after saves, captures and publication; critical
   `AlertInline` (role alert) with "Reload latest draft" for stale or failed actions.
 - **Extraction panel** (schema 1 only): native controls styled with the same tokens; its regions are

@@ -18,8 +18,28 @@ import {
 import { catalogChanges, publicationIssues, ruleSummaries } from './comparison';
 import ChangesTable from './ChangesTable';
 import StructuredEditor from './StructuredEditor';
+import { manifestComparison, sha256 } from './manifest';
 
 export type CaptureItem = { sourceKey: string; body: string };
+type Editor = 'json' | 'structured' | 'single' | 'multi';
+const EDITOR_NAMES: Record<Editor, string> = {
+  json: 'the JSON editor',
+  structured: 'the Cards and rules editor',
+  single: 'Capture source evidence',
+  multi: 'Capture all missing sources',
+};
+/**
+ * Each save or capture creates a revision from the saved draft and reloads it, which would discard
+ * unsaved input elsewhere. So an action is blocked while another editor has unsaved input, and says
+ * why.
+ */
+function blockedBy(dirty: Record<Editor, boolean>, self: Editor) {
+  const others = (Object.keys(dirty) as Editor[]).filter((editor) => editor !== self && dirty[editor]);
+  if (!others.length) return undefined;
+  return `Save or discard the unsaved input in ${others.map((editor) => EDITOR_NAMES[editor]).join(' and ')} first; this action would discard it.`;
+}
+/** Files larger than this many bytes cannot hold an allowed capture (at most 4 bytes per character). */
+const MAX_CAPTURE_FILE_BYTES = MAX_SOURCE_BODY_CHARS * 4;
 
 function sourceMatches(detail: ReviewDetail, sourceId: string) {
   const source = detail.draft.catalog.sources.find((s) => s.id === sourceId)!;
@@ -40,17 +60,31 @@ function sourceMatches(detail: ReviewDetail, sourceId: string) {
 function CaptureMissingSources({
   detail,
   busy,
+  blockedReason,
   onCaptureMany,
   onDirty,
 }: {
   detail: ReviewDetail;
   busy: boolean;
+  blockedReason?: string;
   onCaptureMany: (items: CaptureItem[]) => Promise<void>;
   onDirty: (value: boolean) => void;
 }) {
   const missing = detail.draft.catalog.sources.filter((source) => !sourceMatches(detail, source.id));
   const [texts, setTexts] = useState<Record<string, string>>({});
   const [loadNote, setLoadNote] = useState('');
+  const [hashes, setHashes] = useState<Record<string, string | undefined>>({});
+  useEffect(() => {
+    let current = true;
+    void Promise.all(
+      Object.entries(texts).map(async ([id, text]) => [id, text ? await sha256(text) : undefined] as const),
+    ).then((entries) => {
+      if (current) setHashes(Object.fromEntries(entries));
+    });
+    return () => {
+      current = false;
+    };
+  }, [texts]);
   const filled = missing.filter((source) => (texts[source.id] ?? '').trim());
   const tooLong = missing.filter((source) => (texts[source.id] ?? '').length > MAX_SOURCE_BODY_CHARS);
   useEffect(() => onDirty(Object.values(texts).some((text) => text.length > 0)), [texts, onDirty]);
@@ -60,13 +94,16 @@ function CaptureMissingSources({
     const files = [...(event.target.files ?? [])];
     const next = { ...texts };
     const matched: string[] = [],
-      ignored: string[] = [];
+      ignored: string[] = [],
+      oversized: string[] = [];
     for (const file of files) {
       const id = file.name.replace(/\.txt$/i, '');
-      if (missing.some((source) => source.id === id)) {
+      if (!missing.some((source) => source.id === id)) ignored.push(file.name);
+      else if (file.size > MAX_CAPTURE_FILE_BYTES) oversized.push(file.name);
+      else {
         next[id] = await file.text();
         matched.push(id);
-      } else ignored.push(file.name);
+      }
     }
     setTexts(next);
     setLoadNote(
@@ -74,7 +111,7 @@ function CaptureMissingSources({
         ignored.length
           ? `; ignored ${ignored.length} that match no missing source (${ignored.join(', ')})`
           : ''
-      }.`,
+      }${oversized.length ? `; skipped ${oversized.length} too large to be a capture (${oversized.join(', ')})` : ''}.`,
     );
     event.target.value = '';
   }
@@ -83,7 +120,7 @@ function CaptureMissingSources({
       className="stack"
       onSubmit={(event: FormEvent) => {
         event.preventDefault();
-        if (busy || !filled.length || tooLong.length) return;
+        if (busy || blockedReason || !filled.length || tooLong.length) return;
         void onCaptureMany(filled.map((source) => ({ sourceKey: source.id, body: texts[source.id] })));
       }}
     >
@@ -116,12 +153,22 @@ function CaptureMissingSources({
       )}
       {missing.map((source) => {
         const text = texts[source.id] ?? '';
+        const hash = text ? hashes[source.id] : undefined;
+        const comparison = manifestComparison(source.id, hash);
         return (
           <Field
             key={source.id}
             id={`capture-${source.id}`}
             label={`${source.title} (${source.id})`}
-            helperText={`Checked ${source.checkedOn}. ${text.length.toLocaleString('en-US')} characters.`}
+            helperText={`Checked ${source.checkedOn}. ${text.length.toLocaleString('en-US')} characters.${
+              hash ? ` SHA-256 ${hash.slice(0, 12)}…` : ''
+            }${
+              comparison === 'matches'
+                ? ' Matches the corpus manifest capture.'
+                : comparison === 'differs'
+                  ? ' Differs from the corpus manifest capture: check that this is the right file.'
+                  : ''
+            }`}
             error={
               text.length > MAX_SOURCE_BODY_CHARS
                 ? `Too long: at most ${MAX_SOURCE_BODY_CHARS.toLocaleString('en-US')} characters.`
@@ -141,9 +188,19 @@ function CaptureMissingSources({
           </Field>
         );
       })}
-      <Button type="submit" icon="check-circle" disabled={busy || !filled.length || tooLong.length > 0}>
+      <Button
+        type="submit"
+        icon="check-circle"
+        disabled={busy || !!blockedReason || !filled.length || tooLong.length > 0}
+        aria-describedby={blockedReason ? 'capture-many-blocked' : undefined}
+      >
         {`Capture ${filled.length} of ${missing.length} missing sources and attach`}
       </Button>
+      {blockedReason && (
+        <p id="capture-many-blocked" className="small muted">
+          {blockedReason}
+        </p>
+      )}
     </form>
   );
 }
@@ -177,8 +234,15 @@ export function DraftPanel({
   const [reviewing, setReviewing] = useState(false);
   const cancelRef = useRef<HTMLButtonElement>(null);
   const [now, setNow] = useState(Date.now);
-  const dirty = edited !== original || body.length > 0 || structuredDirty || captureDirty,
+  const editors: Record<Editor, boolean> = {
+    json: edited !== original,
+    structured: structuredDirty,
+    single: body.length > 0,
+    multi: captureDirty,
+  };
+  const dirty = Object.values(editors).some(Boolean),
     editable = detail.draft.status === 'draft';
+  const blocked = (self: Editor) => blockedBy(editors, self);
   const issues = publicationIssues(detail, now),
     changes = catalogChanges(detail.published?.catalog ?? null, detail.draft.catalog);
   if (dirty) issues.push('Save or discard your edits before approving this revision.');
@@ -206,12 +270,21 @@ export function DraftPanel({
   }
   function discard() {
     setEdited(original);
-    setBody('');
     setInputError('');
     setConfirmed(false);
   }
+  function discardSource() {
+    setBody('');
+    setConfirmed(false);
+  }
   const jsonEditor = (
-    <form className="stack" onSubmit={(event) => void save(event)}>
+    <form
+      className="stack"
+      onSubmit={(event) => {
+        if (blocked('json')) return void event.preventDefault();
+        void save(event);
+      }}
+    >
       <p>
         Update the proposed catalog, then save a new revision. Keep only supported rules and exact source
         references. Dates must reflect a real review of the terms.
@@ -232,13 +305,22 @@ export function DraftPanel({
         )}
       </Field>
       <div className="row">
-        <Button type="submit" disabled={busy || edited === original || !!body || structuredDirty}>
+        <Button
+          type="submit"
+          disabled={busy || edited === original || !!blocked('json')}
+          aria-describedby={blocked('json') ? 'json-blocked' : undefined}
+        >
           Save draft revision
         </Button>
         <Button color="secondary" disabled={busy || edited === original} onClick={discard}>
           Discard edits
         </Button>
       </div>
+      {blocked('json') && (
+        <p id="json-blocked" className="small muted">
+          {blocked('json')}
+        </p>
+      )}
     </form>
   );
   return (
@@ -351,6 +433,16 @@ export function DraftPanel({
                     {matches ? 'Matching evidence captured' : 'Matching evidence needed'}
                   </Badge>
                   {doc && (
+                    <p className="small muted">
+                      Captured SHA-256 <code className="hash">{doc.content_hash.slice(0, 12)}…</code>
+                      {manifestComparison(source.id, doc.content_hash) === 'matches'
+                        ? ' · matches the corpus manifest'
+                        : manifestComparison(source.id, doc.content_hash) === 'differs'
+                          ? ' · differs from the corpus manifest'
+                          : ''}
+                    </p>
+                  )}
+                  {doc && (
                     <Disclosure title="Captured text" open={index === 0}>
                       <pre className="source-text">{doc.body}</pre>
                       <p className="small muted">
@@ -367,6 +459,7 @@ export function DraftPanel({
               <CaptureMissingSources
                 detail={detail}
                 busy={busy}
+                blockedReason={blocked('multi')}
                 onCaptureMany={onCaptureMany}
                 onDirty={setCaptureDirty}
               />
@@ -378,6 +471,7 @@ export function DraftPanel({
                 className="stack"
                 onSubmit={(event) => {
                   event.preventDefault();
+                  if (blocked('single')) return;
                   setConfirmed(false);
                   void onCapture(sourceKey, body);
                 }}
@@ -426,15 +520,24 @@ export function DraftPanel({
                   )}
                 </Field>
                 <div className="row">
-                  <Button type="submit" disabled={busy || !body.trim() || edited !== original}>
+                  <Button
+                    type="submit"
+                    disabled={busy || !body.trim() || !!blocked('single')}
+                    aria-describedby={blocked('single') ? 'capture-blocked' : undefined}
+                  >
                     Capture and attach evidence
                   </Button>
                   {body && (
-                    <Button color="secondary" disabled={busy} onClick={discard}>
+                    <Button color="secondary" disabled={busy} onClick={discardSource}>
                       Discard unsaved source text
                     </Button>
                   )}
                 </div>
+                {blocked('single') && (
+                  <p id="capture-blocked" className="small muted">
+                    {blocked('single')}
+                  </p>
+                )}
               </form>
             </Disclosure>
           )}
@@ -454,7 +557,8 @@ export function DraftPanel({
                       <StructuredEditor
                         catalog={detail.draft.catalog}
                         published={detail.published?.catalog ?? null}
-                        busy={busy || edited !== original || !!body}
+                        busy={busy || edited !== original}
+                        blockedReason={blocked('structured')}
                         onDirty={setStructuredDirty}
                         onSave={(catalog) => {
                           setConfirmed(false);

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DraftPanel } from '../src/ReviewWorkspace';
 import { CATALOG_V2 } from '@ai-checkout/rewards-core';
@@ -17,6 +17,7 @@ function panel(detail = reviewFixture()) {
     onDirty: vi.fn(),
     onUpdate: vi.fn(async () => {}),
     onCapture: vi.fn(async () => {}),
+    onCaptureMany: vi.fn(async () => {}),
     onPublish: vi.fn(async () => {}),
   };
   render(<DraftPanel detail={detail} busy={false} {...handlers} />);
@@ -147,4 +148,158 @@ it('captures every missing source in one step from loaded files', async () => {
   expect(onCaptureMany).toHaveBeenCalledWith(
     missing.map((source) => ({ sourceKey: source.id, body: `Terms for ${source.id}` })),
   );
+});
+
+/** The real v2 catalog with no source captured yet. */
+function v2Detail() {
+  const detail = reviewFixture();
+  detail.draft.catalog = structuredClone(CATALOG_V2);
+  detail.sources = [];
+  detail.draft.source_document_ids = [];
+  return detail;
+}
+async function openCiti(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(screen.getByText('Correct draft data'));
+  await user.click(screen.getByText('Citi Double Cash', { selector: '.editor-card .ac-disclosure__title' }));
+}
+const button = (name: string | RegExp) => screen.getByRole('button', { name }) as HTMLButtonElement;
+
+it('blocks both capture actions, with a reason, while structured or JSON edits are unsaved', async () => {
+  const handlers = panel(v2Detail()),
+    user = userEvent.setup();
+  await openCiti(user);
+  fireEvent.change(screen.getByLabelText('Rate (bps)', { selector: '#edit-cards-0-rules-0-rateBps' }), {
+    target: { value: '210' },
+  });
+  await user.click(screen.getByText('Capture all missing sources'));
+  fireEvent.change(screen.getAllByRole('textbox', { name: /\(citi-double-cash-product\)/ })[0], {
+    target: { value: 'Pasted terms' },
+  });
+  const many = button(/^Capture 1 of \d+ missing sources and attach$/);
+  expect(many.disabled).toBe(true);
+  expect(many.getAttribute('aria-describedby')).toBe('capture-many-blocked');
+  expect(document.getElementById('capture-many-blocked')!.textContent).toMatch(
+    /Save or discard the unsaved input in the Cards and rules editor first/,
+  );
+  await user.click(screen.getByText('Capture source evidence'));
+  fireEvent.change(screen.getByLabelText('Text from the source'), { target: { value: 'More terms' } });
+  const single = button('Capture and attach evidence');
+  expect(single.disabled).toBe(true);
+  expect(document.getElementById('capture-blocked')!.textContent).toMatch(/Cards and rules editor/);
+  fireEvent.submit(single.closest('form')!);
+  expect(handlers.onCapture).not.toHaveBeenCalled();
+  expect(handlers.onCaptureMany).not.toHaveBeenCalled();
+
+  // Discarding the structured edits is not enough while the other capture still has text.
+  await user.click(button('Discard structured edits'));
+  expect(button(/^Capture 1 of/).disabled).toBe(true);
+  await user.click(button('Discard unsaved source text'));
+  expect(button(/^Capture 1 of/).disabled).toBe(false);
+
+  // JSON edits block captures the same way.
+  await user.click(screen.getByRole('tab', { name: 'JSON' }));
+  const json = screen.getByLabelText('Catalog JSON') as HTMLTextAreaElement;
+  fireEvent.change(json, { target: { value: json.value.replace('"version": "', '"version": "x') } });
+  expect(button(/^Capture 1 of/).disabled).toBe(true);
+  expect(document.getElementById('capture-many-blocked')!.textContent).toMatch(/the JSON editor/);
+});
+
+it('blocks saving draft edits, with a reason, while capture text is loaded', async () => {
+  const handlers = panel(v2Detail()),
+    user = userEvent.setup();
+  await user.click(screen.getByText('Capture all missing sources'));
+  await user.upload(screen.getByLabelText('Load capture files'), [
+    new File(['Citi terms'], 'citi-double-cash-product.txt', { type: 'text/plain' }),
+  ]);
+  expect(await screen.findByText(/Loaded 1 file/)).toBeTruthy();
+  await openCiti(user);
+  fireEvent.change(screen.getByLabelText('Rate (bps)', { selector: '#edit-cards-0-rules-0-rateBps' }), {
+    target: { value: '210' },
+  });
+  const save = button('Save structured edits');
+  expect(save.disabled).toBe(true);
+  expect(document.getElementById('structured-blocked')!.textContent).toMatch(
+    /unsaved input in Capture all missing sources first/,
+  );
+  await user.click(save);
+  expect(handlers.onUpdate).not.toHaveBeenCalled();
+
+  await user.click(button('Discard structured edits'));
+  await user.click(screen.getByRole('tab', { name: 'JSON' }));
+  const json = screen.getByLabelText('Catalog JSON') as HTMLTextAreaElement;
+  fireEvent.change(json, { target: { value: json.value.replace('"version": "', '"version": "x') } });
+  const saveJson = button('Save draft revision');
+  expect(saveJson.disabled).toBe(true);
+  expect(document.getElementById('json-blocked')!.textContent).toMatch(/Capture all missing sources/);
+  fireEvent.submit(saveJson.closest('form')!);
+  expect(handlers.onUpdate).not.toHaveBeenCalled();
+});
+
+it('starts a new spend cap blank, so the reviewer must enter the issuer values', async () => {
+  panel(v2Detail());
+  const c = CATALOG_V2.cards.findIndex((card) => card.id === 'citi-double-cash');
+  const r = CATALOG_V2.cards[c].rules.findIndex((rule) => rule.cap.kind !== 'spend');
+  const user = userEvent.setup();
+  await openCiti(user);
+  fireEvent.change(screen.getByLabelText('Spend cap', { selector: `#edit-cards-${c}-rules-${r}-cap` }), {
+    target: { value: 'spend' },
+  });
+  const amount = screen.getByLabelText('Cap amount (cents)') as HTMLInputElement;
+  const period = screen.getByLabelText('Cap period') as HTMLSelectElement;
+  const after = screen.getByLabelText('Rate after cap (bps)') as HTMLInputElement;
+  expect([amount.value, period.value, after.value]).toEqual(['', '', '']);
+  expect(amount.getAttribute('aria-invalid')).toBe('true');
+  expect(after.getAttribute('aria-invalid')).toBe('true');
+  expect(button('Save structured edits').disabled).toBe(true);
+});
+
+it('accepts digits only in numeric fields and never saves on Enter', async () => {
+  const handlers = panel(v2Detail()),
+    user = userEvent.setup();
+  await openCiti(user);
+  const rate = screen.getByLabelText('Rate (bps)', {
+    selector: '#edit-cards-0-rules-0-rateBps',
+  }) as HTMLInputElement;
+  for (const value of ['0x10', '1e3', ' 200', '2.5', '-1']) {
+    fireEvent.change(rate, { target: { value } });
+    expect(rate.value).toBe(value);
+    expect(rate.getAttribute('aria-invalid')).toBe('true');
+    expect(screen.getAllByText('Enter a whole number using digits only.').length).toBeGreaterThan(0);
+    expect(button('Save structured edits').disabled).toBe(true);
+  }
+  await user.clear(rate);
+  await user.type(rate, '210{Enter}');
+  expect(rate.getAttribute('aria-invalid')).toBeNull();
+  expect(button('Save structured edits').disabled).toBe(false);
+  expect(handlers.onUpdate).not.toHaveBeenCalled();
+});
+
+it('names the card for problems in a collapsed card and opens it to the field', async () => {
+  panel(v2Detail());
+  const user = userEvent.setup();
+  await openCiti(user);
+  fireEvent.change(
+    screen.getByLabelText('Paid when balance is paid (bps)', {
+      selector: '#edit-cards-0-rules-0-paidOnPaymentBps',
+    }),
+    { target: { value: '900' } },
+  );
+  await user.click(screen.getByText('Citi Double Cash', { selector: '.editor-card .ac-disclosure__title' }));
+  const summary = screen.getByText(/problem to fix|problems to fix/).closest('.ac-alert')!;
+  expect(summary.getAttribute('role')).toBeNull();
+  expect(summary.textContent).toMatch(/Citi Double Cash · rule [a-z0-9-]+ · paidOnPaymentBps/);
+  expect(summary.textContent).not.toMatch(/edit in JSON/);
+  await user.click(screen.getByRole('button', { name: 'Open Citi Double Cash' }));
+  await waitFor(() => expect(document.activeElement?.id).toBe('edit-cards-0-rules-0-paidOnPaymentBps'));
+});
+
+it('skips capture files too large to be a capture without reading them', async () => {
+  panel(v2Detail());
+  const user = userEvent.setup();
+  await user.click(screen.getByText('Capture all missing sources'));
+  const big = new File(['x'.repeat(480_001)], 'citi-double-cash-product.txt', { type: 'text/plain' });
+  const read = vi.spyOn(big, 'text');
+  await user.upload(screen.getByLabelText('Load capture files'), [big]);
+  expect(await screen.findByText(/Loaded 0 files; skipped 1 too large to be a capture/)).toBeTruthy();
+  expect(read).not.toHaveBeenCalled();
 });
