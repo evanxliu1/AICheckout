@@ -89,7 +89,7 @@ describe('authenticated passphrase encryption', () => {
       encrypted = await encryptVault(legacy, identity, key);
     await expect(decryptVault({ ...encrypted, ciphertext: 'AAA=' }, key)).rejects.toThrow();
     await expect(
-      encryptVault({ ...legacy, schemaVersion: 2 } as unknown as AppState, identity, key),
+      encryptVault({ ...legacy, schemaVersion: 99 } as unknown as AppState, identity, key),
     ).rejects.toThrow();
   });
 });

@@ -43,8 +43,7 @@ export const purchaseSchema = z.strictObject({
   paymentPath: z.enum(PAYMENT_PATHS).optional(),
 });
 
-export const appStateSchema = z.strictObject({
-  schemaVersion: z.literal(1),
+const stateFields = {
   revision: z
     .number()
     .int()
@@ -62,8 +61,15 @@ export const appStateSchema = z.strictObject({
       cartId: z.string().uuid().nullable().default(null),
     })
     .nullable(),
-});
+};
+/** Current state (schema 2: catalog v2 era). Everything written is this shape. */
+export const appStateSchema = z.strictObject({ schemaVersion: z.literal(2), ...stateFields });
 export type AppState = z.infer<typeof appStateSchema>;
+/** State saved by the pilot (catalog v1) releases; migrated on first read by migrateState. */
+export const appStateV1Schema = z.strictObject({ schemaVersion: z.literal(1), ...stateFields });
+/** Anything the extension may find in storage: current or pilot-era state. */
+export const storedAppStateSchema = z.discriminatedUnion('schemaVersion', [appStateSchema, appStateV1Schema]);
+export type StoredAppState = z.infer<typeof storedAppStateSchema>;
 export const requestSchema = z.discriminatedUnion('type', [
   z.strictObject({ type: z.literal('checkout:get-state') }),
   z.strictObject({
@@ -161,7 +167,7 @@ export const responseSchema = z.discriminatedUnion('ok', [
 
 export function emptyState(): AppState {
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     revision: 0,
     wallet: { cards: [], defaultCardId: null },
     purchase: null,

@@ -1,6 +1,7 @@
 import { compareRewards } from '../domain';
 import { CATALOG_TIMEOUT_MS } from '@ai-checkout/catalog-client';
-import { appStateSchema, emptyState, requestSchema, validateWallet } from './contracts';
+import { emptyState, requestSchema, storedAppStateSchema, validateWallet } from './contracts';
+import { migrateState } from './migrate';
 import type { AppState, CheckoutResponse } from './contracts';
 import type { CartSnapshot } from '../checkout/contracts';
 import { CatalogUpdateError, currentCatalog, prepareCatalogUpdate } from './catalog';
@@ -61,13 +62,19 @@ export function createStateService(
       clearTimeout(timer!);
     }
   }
+  let migrationNotice: string | null = null;
   async function load(): Promise<AppState> {
     await storage.remove(LEGACY_KEYS);
     const saved = (await storage.get(STATE_KEY))[STATE_KEY];
     if (saved === undefined) return emptyState();
-    const parsed = appStateSchema.safeParse(saved);
+    const parsed = storedAppStateSchema.safeParse(saved);
     if (!parsed.success) throw new Error('Saved data could not be read. Delete local data to start again.');
-    return parsed.data;
+    if (parsed.data.schemaVersion === 2) return parsed.data;
+    // Pilot-era state: migrate once, persist, and tell the next response why limits went away.
+    const migrated = migrateState(parsed.data);
+    await storage.set({ [STATE_KEY]: migrated.state });
+    migrationNotice = migrated.notice;
+    return migrated.state;
   }
   async function validateCart(cart: CartSnapshot | null, now: number) {
     if (!cart || !cartReader || cart.capturedAt > now || now - cart.capturedAt >= CART_MAX_AGE_MS) {
@@ -138,7 +145,12 @@ export function createStateService(
       }
       const state = await load();
       const now = clock();
-      if (request.type === 'checkout:get-state') return await response(state, now);
+      if (request.type === 'checkout:get-state') {
+        const result = await response(state, now);
+        const notice = migrationNotice;
+        migrationNotice = null;
+        return notice && result.ok && !result.notice ? { ...result, notice } : result;
+      }
       if (request.expectedRevision !== state.revision) {
         return {
           ok: false,
