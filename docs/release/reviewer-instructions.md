@@ -5,9 +5,9 @@ Draft for the final release. Shopper features need no login, payment, bank conne
 ## Preconditions
 
 - Record extension version, ZIP SHA-256, catalog version/expiry, Chrome version, OS and test date. Use the exact intended artifact in normal Chrome for release evidence.
-- The current `.2` pilot expires October 25, 2026 at 00:00 UTC (the UI shows local time). After expiry, obtain genuinely reverified terms before testing successful comparisons. Do not edit dates or bypass expiry.
+- The bundled catalog `2026-09-29.real.1` expires October 29, 2026 at 00:00 UTC (the UI shows local time). After expiry, obtain genuinely reverified terms before testing successful comparisons. Do not edit dates or bypass expiry.
 - Use a fresh disposable Chrome profile or deliberately clear extension data first. Avoid real card/account details and redact any evidence.
-- The figures below are demonstration arithmetic under the current pilot rules, not a promise about a purchase or a future catalog.
+- The figures below are demonstration arithmetic under the current catalog rules, not a promise about a purchase or a future catalog.
 
 ## Manual two-card demonstration
 

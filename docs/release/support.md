@@ -12,7 +12,7 @@ Preparation status: the contact and policy URL must be filled and the final rele
 3. Confirm or correct the amount. If it is a subtotal, tax and shipping are excluded; enter the final charge when available or knowingly compare the subtotal only.
 4. Choose the online-retail eligibility assumption, confirm the listed exclusions, and choose **Compare my cards**.
 
-The supported card products are Capital One Quicksilver and American Express Blue Cash Everyday. Other benefits and card products are outside the current scope. Rewards depend on issuer terms and how the transaction posts; the extension cannot guarantee a category or reward.
+The supported card products are Citi Double Cash, Wells Fargo Active Cash, Capital One Quicksilver, Capital One Savor, Chase Freedom Unlimited, and American Express Blue Cash Everyday and Blue Cash Preferred. Other benefits and card products are outside the current scope. Rewards depend on issuer terms and how the transaction posts; the extension cannot guarantee a category or reward.
 
 ## Common issues
 

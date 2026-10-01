@@ -1,6 +1,6 @@
 # Release media
 
-Prepared September 26, 2026 for the default offline extension 2.0.0 and catalog `2026-09-25.pilot.2`. Open [the gallery](index.html) to review the screenshots, promotion, icon inspection, recording and transcript together. This packet is not a submitted listing or evidence of live retailer/model behavior.
+Regenerated October 1, 2026 for the default offline extension 2.0.0 (Helios popup) and catalog `2026-09-29.real.1`. Open [the gallery](index.html) to review the screenshots, promotion, icon inspection, recording and transcript together. This packet is not a submitted listing or evidence of live retailer/model behavior.
 
 ## Deliverables
 

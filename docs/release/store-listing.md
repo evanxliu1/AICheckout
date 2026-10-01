@@ -20,7 +20,7 @@ The short description matches the current manifest. Choose the current dashboard
 
 Compare estimated rewards on the cards you already own before paying for an eligible purchase.
 
-AI Checkout currently models Capital One Quicksilver and American Express Blue Cash Everyday for supported US retail purchases. Choose your cards, confirm the purchase amount and eligibility, and see each card's estimated reward with the rates, conditions and sources behind it.
+AI Checkout currently models seven cash-back cards (Citi Double Cash, Wells Fargo Active Cash, Capital One Quicksilver and Savor, Chase Freedom Unlimited, and American Express Blue Cash Everyday and Blue Cash Preferred) for Best Buy, Newegg and Amazon US purchases. Choose your cards, confirm the purchase amount and eligibility, and see each card's estimated reward with the rates, conditions and sources behind it.
 
 Features:
 
