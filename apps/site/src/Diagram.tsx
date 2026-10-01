@@ -68,7 +68,7 @@ const wide: Layout = (() => {
           [x(0) + w / 2, middle + H / 2],
           [x(0) + w / 2, bottom],
         ],
-        label: { x: x(0) + w / 2 + 8, y: middle + H / 2 - 10, text: 'the only request' },
+        label: { x: x(0) + w / 2 + 8, y: middle + H / 2 - 10, text: 'on request, hosted builds' },
       },
       {
         points: [
@@ -110,7 +110,7 @@ const tall: Layout = (() => {
     { id: 'review', x, y: y(3), w, label: ['Human review', 'of every change'], tone: 'human' },
     { id: 'publish', x, y: y(4), w, label: ['Explicit publication'], tone: 'human' },
     { id: 'db', x, y: y(5) + 16, w, label: ['PostgreSQL:', 'immutable releases'], tone: 'store' },
-    { id: 'api', x, y: y(6) + 16, w, label: ['GET /v1/catalog', '(the only request)'] },
+    { id: 'api', x, y: y(6) + 16, w, label: ['GET /v1/catalog', '(on request, hosted builds)'] },
     { id: 'catalog', x, y: y(7) + 64, w, label: ['Cached or bundled catalog'], tone: 'store' },
     { id: 'engine', x, y: y(8) + 64, w, label: ['Deterministic rewards engine'] },
     { id: 'worker', x, y: y(9) + 64, w, label: ['Service worker'] },
@@ -247,7 +247,9 @@ export function SystemsDiagram() {
       <Figure layout={tall} className="diagram--tall" titleId="diagram-tall-title" />
       <figcaption className="muted small">
         Blue: the language model. Green: human decisions. Gray: stored releases. The arrow from the API to the
-        extension is the only network request the extension makes.
+        extension is the only network request the extension can make: one catalog GET when you choose Check
+        for updated terms, in builds configured with the hosted catalog. The default build makes none and uses
+        the catalog bundled with it.
       </figcaption>
     </figure>
   );

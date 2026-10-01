@@ -31,21 +31,20 @@ type Renderer = { renderPage: (id: string) => { head: string; body: string } };
 
 function staticPages(): Plugin {
   let dev: ViteDevServer | undefined;
+  // Build only: one SSR server loads the TSX renderer (and its workspace imports) for every page.
+  // Pages are transformed concurrently, so the promise is cached, not the server.
+  let ssr: Promise<ViteDevServer> | undefined;
   async function renderer(): Promise<Renderer> {
-    if (dev) return (await dev.ssrLoadModule('/src/render.tsx')) as Renderer;
-    // Build: a throwaway SSR server loads the TSX renderer (and its workspace imports) once per page.
-    const server = await createServer({
-      root,
-      configFile: false,
-      logLevel: 'error',
-      server: { middlewareMode: true, hmr: false, ws: false },
-      appType: 'custom',
-    });
-    try {
-      return (await server.ssrLoadModule('/src/render.tsx')) as Renderer;
-    } finally {
-      await server.close();
-    }
+    const server =
+      dev ??
+      (await (ssr ??= createServer({
+        root,
+        configFile: false,
+        logLevel: 'error',
+        server: { middlewareMode: true, hmr: false, ws: false },
+        appType: 'custom',
+      })));
+    return (await server.ssrLoadModule('/src/render.tsx')) as Renderer;
   }
   return {
     name: 'ai-checkout-static-pages',
@@ -68,6 +67,11 @@ function staticPages(): Plugin {
         const { head, body } = (await renderer()).renderPage(id);
         return html.replace('<!--page-head-->', head).replace('<!--page-body-->', body);
       },
+    },
+    async closeBundle() {
+      const server = ssr;
+      ssr = undefined;
+      await (await server)?.close();
     },
     async generateBundle() {
       for (const [fileName, source] of Object.entries(COPIED))

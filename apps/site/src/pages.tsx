@@ -270,8 +270,8 @@ function Results(): Rendered {
               reviewer agents checked them against the captures.
             </li>
             <li>
-              <strong>Small sample:</strong> seven cards (n=7), 37 cases, two repeats per case (one for Opus).
-              Variants such as prompt injections are planted edits of real pages.
+              <strong>Small sample:</strong> seven cards (n=7), 37 cases, two repeats per case (one for Opus
+              on dev). Variants such as prompt injections are planted edits of real pages.
             </li>
             <li>
               <strong>Noise is about ±3 points.</strong> Repeat-to-repeat differences reached 5.8 points;
@@ -304,8 +304,8 @@ function Results(): Rendered {
 
         <Section id="heldout" title="Held-out split">
           <p>
-            Chase Freedom Unlimited and American Express Blue Cash Everyday and Preferred: 17 cases, run once
-            per chosen configuration after the prompts were frozen.
+            Chase Freedom Unlimited and American Express Blue Cash Everyday and Preferred: 17 cases, two
+            repeats per chosen configuration (34 runs), run after the prompts were frozen.
           </p>
           <Table
             caption="Held-out results by model, prompt and source selection"
@@ -443,8 +443,9 @@ function Architecture(): Rendered {
             <li>PostgreSQL stores each release immutably; publication is one transaction.</li>
             <li>The API serves the current release at GET /v1/catalog.</li>
             <li>
-              The extension caches the catalog (or uses the one bundled with it) and its engine ranks your
-              cards for the purchase, with the cart amount read only when you click.
+              The extension uses the catalog bundled with it, or, in hosted builds, the latest one it
+              downloaded when you chose Check for updated terms. Its engine ranks your cards for the purchase,
+              with the cart amount read only when you click.
             </li>
           </ol>
         </Section>
@@ -494,21 +495,43 @@ function Privacy(): Rendered {
   return {
     title: 'Privacy · AI Checkout',
     description:
-      'What the AI Checkout extension keeps on your device, what it sends (only a request for the card catalog), and what it never collects.',
+      'What the AI Checkout extension keeps on your device, the one request it can make (for the card catalog, when you ask), and what it never collects.',
     body: (
       <>
         <PageIntro eyebrow="Privacy" title="Your inputs stay on your device">
           <p>
-            AI Checkout has no account and no analytics. What you enter is encrypted in your Chrome profile,
-            and the only thing the extension fetches is the published card catalog.
+            AI Checkout has no account and no analytics. What you enter is encrypted in your Chrome profile.
+            The only request the extension can make is for the published card catalog, and only when you ask
+            it to check for updated terms.
           </p>
         </PageIntro>
         <Section id="sent" title="What leaves your device">
           <ul className="prose-list">
             <li>
-              <strong>Only a request for the card catalog.</strong> The extension fetches the published
-              catalog with a GET from the AI Checkout API at a fixed address. The request carries no cookies,
-              no referrer, and none of your cards, amounts or page addresses.
+              <strong>Only a request for the card catalog.</strong> It depends on the build:
+              <ul className="prose-list nested">
+                <li>
+                  The default build (the one you get with <strong>Build from source</strong>) makes no network
+                  request at all. It uses the card terms packaged with it.
+                </li>
+                <li>
+                  Builds configured with the hosted catalog (<code>npm run build:hosted</code>, and the
+                  planned Chrome Web Store release) show <strong>Check for updated terms</strong>. Each time
+                  you choose it, the extension sends one GET request for the published catalog to a fixed
+                  address on the AI Checkout API. It never fetches on its own.
+                </li>
+              </ul>
+              The request carries no cookies, no referrer, and none of your cards, amounts or page addresses.
+              Like any web request, it reveals your IP address, your browser’s user agent and the time of the
+              request, which the API host records in its access logs.
+            </li>
+            <li>
+              <strong>Who operates it.</strong> The API is run by the AI Checkout project (
+              <Link href={REPO} isExternal>
+                github.com/evanxliu1/AICheckout
+              </Link>
+              ). It is hosted on Render, and the catalog is stored in Supabase. Access logs are kept according
+              to the hosting providers’ log retention; deleting your data in the extension cannot delete them.
             </li>
             <li>
               <strong>No analytics, tracking or advertising.</strong> Nothing about your use is reported, sold
@@ -526,9 +549,12 @@ function Privacy(): Rendered {
             <li>Spending you report toward a card’s cap, with its date, and activation choices.</li>
             <li>Your latest purchase inputs: merchant, amount, date and eligibility choices.</li>
             <li>
-              After a cart read: the amount, its kind (total or subtotal), the merchant, the capture time and
-              a hash used to detect that the page changed.
+              After a cart read: the amount and currency, its kind (total, estimated total or subtotal), the
+              merchant and reader, the capture time, a random capture identifier, the tab and document
+              identifiers, and a hash of the page identity used to detect that the page changed (a freshness
+              check, not anonymization).
             </li>
+            <li>In hosted builds, the most recent catalog you downloaded.</li>
           </ul>
           <p>It is not synced to other devices, and it is not a purchase history.</p>
         </Section>
@@ -561,8 +587,8 @@ function Privacy(): Rendered {
         </Section>
         <Section id="site" title="This website">
           <p>
-            This site sets no cookies, runs no analytics and loads nothing from other domains. The hosting
-            provider may keep standard request logs.
+            This site sets no cookies, runs no analytics and loads nothing from other domains. It is served by
+            the same API on Render, whose access logs record IP address, user agent and request time.
           </p>
         </Section>
       </>
@@ -590,7 +616,7 @@ function Support(): Rendered {
     ],
     [
       'Terms expired',
-      'The catalog is valid for 30 days. Update the extension or let it refresh the catalog; don’t change your computer’s date.',
+      'Card terms are valid for 30 days. In hosted builds choose Check for updated terms; otherwise install a newer release. Don’t change your computer’s date.',
     ],
     [
       'Forgot the passphrase',
@@ -656,10 +682,20 @@ function Support(): Rendered {
           <AlertInline color="critical" title="Never include" role="none">
             <p>
               Your passphrase, card numbers, bank credentials, full cart addresses, product lists, home
-              address or unredacted screenshots. GitHub issues are public; for a security concern, ask for a
-              private contact without the details.
+              address or unredacted screenshots. GitHub issues are public.
             </p>
           </AlertInline>
+          <p>
+            For a security vulnerability, don’t open a public issue: report it privately through{' '}
+            <Link href={`${REPO}/security/advisories/new`} isExternal>
+              GitHub private vulnerability reporting
+            </Link>{' '}
+            (see{' '}
+            <Link href={`${REPO}/blob/main/SECURITY.md`} isExternal>
+              SECURITY.md
+            </Link>
+            ).
+          </p>
           <p>
             <Link href={`${REPO}/issues`} variant="standalone" icon="arrow-right" isExternal>
               Open an issue on GitHub

@@ -2,6 +2,7 @@ import { afterEach, expect, it } from 'vitest';
 import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { request as httpRequest } from 'node:http';
 import { createApp } from '../src/app.ts';
 import { SITE_CSP } from '../src/public-site.ts';
 
@@ -120,4 +121,93 @@ it('never serves dotfiles or files outside the site build', async () => {
     expect(response.body).not.toContain('PRIVATE_SENTINEL');
   }
   expect((await site.inject('/missing/')).statusCode).toBe(404);
+});
+
+/** Sends a raw request path over a real socket; inject() would normalize it first. */
+async function raw(
+  instance: { listen: (options: { port: number; host: string }) => Promise<string> },
+  path: string,
+  headers: Record<string, string> = {},
+) {
+  const address = await instance.listen({ port: 0, host: '127.0.0.1' });
+  const { port } = new URL(address);
+  return new Promise<{ status: number; body: string; headers: Record<string, unknown> }>(
+    (resolve, reject) => {
+      const request = httpRequest({ host: '127.0.0.1', port, path, method: 'GET', headers }, (response) => {
+        let body = '';
+        response.setEncoding('utf8');
+        response.on('data', (chunk) => (body += chunk));
+        response.on('end', () =>
+          resolve({ status: response.statusCode ?? 0, body, headers: response.headers }),
+        );
+      });
+      request.on('error', reject);
+      request.end();
+    },
+  );
+}
+
+it('keeps raw, non-normalized paths away from reserved routes and outside files', async () => {
+  for (const path of [
+    '/results/../../outside.txt',
+    '/%2e%2e/outside.txt',
+    '/results/%2e%2e/%2e%2e/outside.txt',
+    '/..%2foutside.txt',
+    '/%76%31/unknown',
+    '//v1/catalog',
+    '/v1/./catalog',
+    '/review/../v1/catalog',
+    '//health',
+    '/assets/..%2f..%2fv1%2fcatalog',
+  ]) {
+    const site = await app();
+    const response = await raw(site, path);
+    expect(response.status, path).toBeGreaterThanOrEqual(400);
+    expect(response.status, path).toBeLessThan(500);
+    expect(response.body).not.toMatch(/PRIVATE_SENTINEL|SITE_SHADOW/);
+    expect(response.body).not.toContain(path);
+    await site.close();
+  }
+});
+
+it('answers unknown paths with a fixed JSON 404 that does not echo the path', async () => {
+  const site = await app();
+  for (const path of ['/missing/', '/no-such-page', '/v1/<script>', '/review/missing.js']) {
+    const response = await site.inject(path);
+    expect(response.statusCode).toBe(404);
+    expect(response.json()).toEqual({ error: 'not_found' });
+  }
+  expect((await site.inject({ method: 'POST', url: '/anything' })).json()).toEqual({ error: 'not_found' });
+});
+
+it('keeps client errors from the file sender as client errors', async () => {
+  const site = await app();
+  const range = await site.inject({ url: '/assets/site-abc123.css', headers: { range: 'bytes=500-600' } });
+  expect(range.statusCode).toBe(416);
+  const ifMatch = await site.inject({ url: '/assets/site-abc123.css', headers: { 'if-match': '"nope"' } });
+  expect(ifMatch.statusCode).toBe(412);
+  const unmodified = await site.inject({
+    url: '/assets/site-abc123.css',
+    headers: { 'if-unmodified-since': 'Thu, 01 Jan 1970 00:00:00 GMT' },
+  });
+  expect(unmodified.statusCode).toBe(412);
+});
+
+it('keeps the immutable cache header on a revalidated hashed asset', async () => {
+  const site = await app();
+  const first = await site.inject('/assets/site-abc123.css');
+  const again = await site.inject({
+    url: '/assets/site-abc123.css',
+    headers: { 'if-none-match': String(first.headers.etag) },
+  });
+  expect(again.statusCode).toBe(304);
+  expect(again.headers['cache-control']).toBe('public, max-age=31536000, immutable');
+});
+
+it('refuses to start when SITE_DIST_DIR has no built site', async () => {
+  const empty = await mkdtemp(join(tmpdir(), 'checkout-empty-site-'));
+  directories.push(empty);
+  const instance = createApp({ readCatalog: async () => null, siteRoot: empty });
+  instances.push(instance);
+  await expect(instance.ready()).rejects.toThrow(/index\.html/);
 });

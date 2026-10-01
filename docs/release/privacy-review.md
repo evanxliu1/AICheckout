@@ -26,6 +26,8 @@ Internal review, September 26, 2026. This is an implementation audit, not legal 
 
 **R4 — Match the final build.** The present public policy/listing describe no remote catalog endpoint. If the release enables one, name its purpose and operator, disclose request metadata and actual retention/providers, add the exact-origin justification, verify headers/logging, and rerun the configured-build/browser/package checks. The extension's local delete button cannot delete hosting access logs or external support messages.
 
+R4 status (phase 3, M5): the draft policy and the public site's privacy page now describe both builds, name the operator (the AI Checkout project, github.com/evanxliu1/AICheckout) and providers (Render hosts the API; Supabase stores the catalog), disclose the request metadata (IP address, user agent, request time in the host's access logs) and defer retention to the providers' log retention. Still open before release: confirm the providers' actual log retention, the store listing's exact-origin justification, and the configured-build/browser/package checks on the release build.
+
 These are concrete release gates. Wording that admits a gap does not resolve the underlying gap. No remote data transfer, blanket permission or analytics feature should be added merely to make the policy more elaborate.
 
 ## Final verification record

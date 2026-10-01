@@ -2,6 +2,7 @@ import { afterEach, expect, it } from 'vitest';
 import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { request as httpRequest } from 'node:http';
 import { createApp } from '../src/app.ts';
 
 const config = {
@@ -77,4 +78,28 @@ it('refuses a server-only secret in the browser configuration at startup', async
   });
   instances.push(app);
   await expect(app.ready()).rejects.toThrow();
+});
+
+it('answers non-canonical review paths with a 404 rather than a server error', async () => {
+  const app = await site();
+  const address = await app.listen({ port: 0, host: '127.0.0.1' });
+  const { port } = new URL(address);
+  for (const path of [
+    '/review/../',
+    '/review/%2e%2e/',
+    '/review//',
+    '/review/..%2f',
+    '/review/./index.html',
+  ]) {
+    const status = await new Promise<number>((resolve, reject) => {
+      const request = httpRequest({ host: '127.0.0.1', port, path }, (response) => {
+        response.resume();
+        resolve(response.statusCode ?? 0);
+      });
+      request.on('error', reject);
+      request.end();
+    });
+    expect(status, path).toBeGreaterThanOrEqual(400);
+    expect(status, path).toBeLessThan(500);
+  }
 });

@@ -43,6 +43,22 @@ it('states on the privacy page that only the catalog request leaves the device a
   expect(privacy).toContain('No analytics, tracking or advertising.');
   for (const merchant of ['Amazon US', 'Best Buy US', 'Newegg US']) expect(privacy).toContain(merchant);
   expect(privacy).toMatch(/encrypted with a key derived from a passphrase/);
+  // The request depends on the build, and its metadata, operator and providers are named.
+  expect(privacy).toMatch(/default build .* makes no network\s+request/);
+  expect(privacy).toContain('npm run build:hosted');
+  expect(privacy).toContain('Check for updated terms');
+  expect(privacy).toMatch(/IP address, your browser’s user agent and the time of the\s+request/);
+  expect(privacy).toContain('github.com/evanxliu1/AICheckout');
+  expect(privacy).toMatch(/hosted on Render, and the catalog is stored in Supabase/);
+  expect(privacy).toContain('hosting providers’ log retention');
+  for (const field of ['currency', 'random capture identifier', 'tab and document'])
+    expect(privacy).toContain(field);
+});
+
+it('sends security reports to private vulnerability reporting, not public issues', () => {
+  const support = rendered.find((page) => page.id === 'support')!.body;
+  expect(support).toContain('/security/advisories/new');
+  expect(support).toContain('SECURITY.md');
 });
 
 it('shows the install placeholder, not a store link, until the listing exists', () => {
