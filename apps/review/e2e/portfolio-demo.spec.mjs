@@ -130,7 +130,7 @@ test('record the real local review, extraction and separate publication flow', a
     const apply = page.getByRole('button', { name: 'Apply reviewed extraction to draft' });
     await expect(apply).toBeVisible();
     await expect(apply).toBeDisabled();
-    await page.locator('.extraction-result').scrollIntoViewIfNeeded();
+    await page.getByRole('region', { name: 'Extraction result' }).scrollIntoViewIfNeeded();
     await hold('extracted');
     const run = ok(await request(path, { token: reviewer.token })).runs[0];
     expect(run.outcome).toBe('evidence_valid');
@@ -140,13 +140,17 @@ test('record the real local review, extraction and separate publication flow', a
       'Inspect facts and exact quotations',
       'Each field points to a saved source span. Matching evidence is a mechanical check, not proof of correct interpretation.',
     );
-    await page.locator('.extracted-facts').scrollIntoViewIfNeeded();
+    await page
+      .getByRole('region', { name: 'Extraction result' })
+      .getByRole('term')
+      .first()
+      .scrollIntoViewIfNeeded();
     await hold('evidence', 6000);
     chapter(
       'Review every condition',
       'A reviewer identifies which existing rules cover a condition and records a reason before applying anything.',
     );
-    await page.locator('.condition-review').scrollIntoViewIfNeeded();
+    await page.getByRole('region', { name: 'Conditions and exclusions' }).scrollIntoViewIfNeeded();
     await page.getByLabel('How is condition 1 covered?').selectOption('existing-rules');
     await page.getByRole('checkbox', { name: 'quicksilver-base', exact: true }).check();
     await page
@@ -157,7 +161,7 @@ test('record the real local review, extraction and separate publication flow', a
       'Approve a draft change',
       'The proposed rate changes from 1.5% to the invented 2.5%. A review note and fresh acknowledgement are required.',
     );
-    await page.locator('.apply-extraction').scrollIntoViewIfNeeded();
+    await page.getByRole('form', { name: 'Proposed draft change' }).scrollIntoViewIfNeeded();
     await page
       .getByLabel('Extraction review note')
       .fill('Checked all synthetic facts and source spans. Demonstration only; not issuer validation.');
@@ -212,6 +216,9 @@ test('record the real local review, extraction and separate publication flow', a
     await expect(publish).toBeEnabled();
     await hold('publication', 5000);
     await publish.click();
+    await expect(page.getByRole('dialog', { name: /^Publish / })).toBeVisible();
+    await hold('confirmation', 3000);
+    await page.getByRole('dialog').getByRole('button', { name: 'Publish release' }).click();
     await expect(page.getByText(`Published ${catalog.version} as release`, { exact: false })).toBeVisible();
     const release = ok(await request('/v1/catalog')).release;
     expect(release.catalog.version).toBe(catalog.version);

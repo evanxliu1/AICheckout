@@ -7,6 +7,8 @@ import {
 } from '@ai-checkout/rewards-core';
 
 export const MAX_REVIEW_RESPONSE_BYTES = 8 * 1024 * 1024;
+/** Longest captured source text. Issuer terms PDFs run to about 75,000 characters. */
+export const MAX_SOURCE_BODY_CHARS = 120_000;
 export const draftIdSchema = z.uuid();
 export const sequenceSchema = z.number().int().positive().max(Number.MAX_SAFE_INTEGER).nullable();
 export const hashSchema = z.string().regex(/^[a-f0-9]{64}$/);
@@ -20,7 +22,7 @@ export const captureSourceInputSchema = z.strictObject({
   title: sourceSchema.shape.title,
   url: sourceSchema.shape.url,
   checkedOn: sourceSchema.shape.checkedOn,
-  body: z.string().min(1).max(60000),
+  body: z.string().min(1).max(MAX_SOURCE_BODY_CHARS),
 });
 export const createDraftInputSchema = z.strictObject({
   catalog: catalogSchema,
@@ -43,7 +45,7 @@ export const sourceDocumentSchema = z.strictObject({
   title: sourceSchema.shape.title,
   url: sourceSchema.shape.url,
   checked_on: sourceSchema.shape.checkedOn,
-  body: z.string().min(1).max(60000),
+  body: z.string().min(1).max(MAX_SOURCE_BODY_CHARS),
   content_hash: hashSchema,
   created_by: z.uuid().nullable(),
   created_at: timestamp,

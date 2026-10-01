@@ -50,7 +50,7 @@ test('real review: access control, evidence, stale approval, publication, memory
     expect(await page.locator('img').count()).toBe(0);
     const fresh = ok(await request(`/v1/review/drafts/${draft.id}`, { token: reviewer.token }));
     expect(fresh.published.sequence).toBe(published.sequence);
-    await page.getByRole('checkbox').check();
+    await page.getByRole('checkbox', { name: /I checked the full source terms/ }).check();
     await page
       .getByLabel('Review note')
       .fill('Checked every synthetic term and condition for this browser test.');
@@ -67,11 +67,13 @@ test('real review: access control, evidence, stale approval, publication, memory
       }),
     );
     await page.getByRole('button', { name: 'Publish reviewed terms' }).click();
+    await expect(page.getByRole('dialog', { name: /^Publish / })).toBeVisible();
+    await page.getByRole('dialog').getByRole('button', { name: 'Publish release' }).click();
     await expect(page.getByRole('alert')).toContainText('draft or published catalog changed');
     expect(ok(await request('/v1/catalog')).release.sequence).toBe(published.sequence);
     await page.getByRole('button', { name: 'Reload latest draft' }).click();
     await expect(page.getByRole('alert')).toHaveCount(0);
-    await expect(page.getByRole('checkbox')).not.toBeChecked();
+    await expect(page.getByRole('checkbox', { name: /I checked the full source terms/ })).not.toBeChecked();
     await expect(page.getByLabel('Review note')).toHaveValue('');
     await expect(page.getByRole('button', { name: 'Publish reviewed terms' })).toBeDisabled();
 
@@ -91,12 +93,16 @@ test('real review: access control, evidence, stale approval, publication, memory
     ).toBeVisible();
     await signIn(reviewer);
     await expect(page.getByRole('heading', { name: draft.catalog.version, exact: true })).toBeVisible();
-    await page.getByRole('checkbox').check();
+    await page.getByRole('checkbox', { name: /I checked the full source terms/ }).check();
     await page
       .getByLabel('Review note')
       .fill('Reviewed the latest synthetic revision and all captured conditions.');
     await page.getByRole('button', { name: 'Publish reviewed terms' }).click();
-    await expect(page.getByRole('status')).toContainText(`Published ${draft.catalog.version}`);
+    await expect(page.getByRole('dialog', { name: /^Publish / })).toBeVisible();
+    await page.getByRole('dialog').getByRole('button', { name: 'Publish release' }).click();
+    await expect(page.getByRole('status').filter({ hasText: 'Published' })).toContainText(
+      `Published ${draft.catalog.version}`,
+    );
     const result = ok(await request('/v1/catalog')).release;
     expect(result.catalog.cards[0].rules[0].rateBps).toBe(250);
     expect(result.sequence).toBeGreaterThan(published.sequence);

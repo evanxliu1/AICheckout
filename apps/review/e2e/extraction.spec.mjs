@@ -70,11 +70,11 @@ test('extraction review: saved recovery, condition decisions, stale application,
     await expect(apply).toBeDisabled();
     await expect(page.getByText('Add an extraction review note of at least 10 characters.')).toBeVisible();
     await page
-      .locator('.extraction')
+      .getByRole('region', { name: 'Extract from captured terms' })
       .screenshot({ path: testInfo.outputPath('extraction-incomplete-desktop.png') });
     await page.setViewportSize({ width: 390, height: 844 });
     await page
-      .locator('.extraction')
+      .getByRole('region', { name: 'Extract from captured terms' })
       .screenshot({ path: testInfo.outputPath('extraction-incomplete-mobile.png') });
     await page.setViewportSize({ width: 1440, height: 1000 });
     const first = ok(await request(path, { token: reviewer.token })).runs[0];
@@ -126,9 +126,13 @@ test('extraction review: saved recovery, condition decisions, stale application,
     await reviewConditions();
     await expect(apply).toBeEnabled();
     // One desktop/mobile visual round, with clearly labeled synthetic source data.
-    await page.locator('.extraction').screenshot({ path: testInfo.outputPath('extraction-desktop.png') });
+    await page
+      .getByRole('region', { name: 'Extract from captured terms' })
+      .screenshot({ path: testInfo.outputPath('extraction-desktop.png') });
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.locator('.extraction').screenshot({ path: testInfo.outputPath('extraction-mobile.png') });
+    await page
+      .getByRole('region', { name: 'Extract from captured terms' })
+      .screenshot({ path: testInfo.outputPath('extraction-mobile.png') });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.setViewportSize({ width: 1440, height: 1000 });
     const data = {
@@ -176,6 +180,8 @@ test('extraction review: saved recovery, condition decisions, stale application,
       .getByLabel('Review note', { exact: true })
       .fill('Reviewed the new draft revision independently after applying the synthetic extraction.');
     await page.getByRole('button', { name: 'Publish reviewed terms' }).click();
+    await expect(page.getByRole('dialog', { name: /^Publish / })).toBeVisible();
+    await page.getByRole('dialog').getByRole('button', { name: 'Publish release' }).click();
     await expect(page.getByText(`Published ${catalog.version} as release`, { exact: false })).toBeVisible();
     expect(ok(await request('/v1/catalog')).release.catalog.cards[0].rules[0].rateBps).toBe(250);
     expect(errors).toEqual([]);

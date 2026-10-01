@@ -326,7 +326,7 @@ export function ExtractionResult({
     setConfirmed(false);
   }
   return (
-    <div className="extraction-result">
+    <section className="extraction-result" aria-label="Extraction result">
       <h3>{detail.draft.catalog.cards.find((card) => card.id === run.card_id)?.name ?? run.card_id}</h3>
       <p className={`source-status${run.trace?.status === 'evidence_valid' ? '' : ' missing'}`}>
         {run.trace
@@ -433,8 +433,8 @@ export function ExtractionResult({
               ))}
             </section>
           )}
-          <section className="condition-review">
-            <h3>Conditions and exclusions</h3>
+          <section className="condition-review" aria-labelledby="condition-review-heading">
+            <h3 id="condition-review-heading">Conditions and exclusions</h3>
             <p className="small">
               Keep every condition in view. If a condition needs behavior the current rules cannot express,
               leave it unresolved and correct the source or maintain the draft manually.
@@ -569,6 +569,7 @@ export function ExtractionResult({
       {usable && (
         <form
           className="apply-extraction"
+          aria-labelledby="apply-extraction-heading"
           onSubmit={(event) => {
             event.preventDefault();
             if (!disabled && confirmed && candidate.success) {
@@ -577,7 +578,7 @@ export function ExtractionResult({
             }
           }}
         >
-          <h3>Proposed draft change</h3>
+          <h3 id="apply-extraction-heading">Proposed draft change</h3>
           {changes.length ? (
             <table>
               <caption className="sr-only">Current draft and extracted proposal</caption>
@@ -653,6 +654,6 @@ export function ExtractionResult({
           </button>
         </form>
       )}
-    </div>
+    </section>
   );
 }
