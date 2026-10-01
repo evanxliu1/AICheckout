@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { draftIdSchema, type ReviewDetail, type ReviewQueue } from '@ai-checkout/catalog-review';
-import { catalogSchema, type Catalog } from '@ai-checkout/rewards-core';
+import type { Catalog } from '@ai-checkout/rewards-core';
+import { AlertInline, ApplicationState, Badge, Button } from '@ai-checkout/ui';
 import type { ReviewApi } from './client';
-import { catalogChanges, publicationIssues } from './comparison';
 import ExtractionPanel from './ExtractionPanel';
-import { ruleSummaries } from './comparison';
+import { DraftPanel, type CaptureItem } from './DraftPanel';
 
 export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
   const [queue, setQueue] = useState<ReviewQueue | null>(null),
@@ -136,6 +136,45 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
       if (!signal.aborted) setNotice('Evidence captured and attached to a new draft revision.');
     });
   }
+  /** Captures several sources, then attaches them all in one new draft revision. */
+  async function captureMany(items: CaptureItem[]) {
+    if (!detail || !items.length) return;
+    await perform(`Capturing ${items.length} sources…`, async (signal) => {
+      const captured = new Map<string, string>();
+      for (const item of items) {
+        const source = detail.draft.catalog.sources.find((value) => value.id === item.sourceKey);
+        if (!source) continue;
+        const doc = await api.capture(
+          {
+            sourceKey: source.id,
+            title: source.title,
+            url: source.url,
+            checkedOn: source.checkedOn,
+            body: item.body,
+          },
+          signal,
+        );
+        captured.set(source.id, doc.id);
+      }
+      const sourceDocumentIds = [
+        ...detail.sources.filter((value) => !captured.has(value.source_key)).map((value) => value.id),
+        ...captured.values(),
+      ];
+      await api.update(
+        detail.draft.id,
+        {
+          catalog: detail.draft.catalog,
+          baseSequence: detail.draft.base_sequence,
+          sourceDocumentIds,
+          expectedRevision: detail.draft.revision,
+        },
+        signal,
+      );
+      await refresh(detail.draft.id, signal);
+      if (!signal.aborted)
+        setNotice(`Captured ${captured.size} sources and attached them to a new draft revision.`);
+    });
+  }
   async function publish(note: string) {
     if (!detail) return;
     await perform('Publishing reviewed terms…', async (signal) => {
@@ -150,21 +189,30 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
         signal,
       );
       await refresh(detail.draft.id, signal);
-      if (!signal.aborted)
+      if (!signal.aborted) {
         setNotice(
           `Published ${release.version} as release ${release.sequence}. Extensions can now request these reviewed terms.`,
         );
+        // The dialog's opener is gone or disabled after publication; land on the refreshed heading.
+        requestAnimationFrame(() => heading.current?.focus({ preventScroll: true }));
+      }
     });
   }
 
   return (
     <main id="main" className="workspace" aria-busy={busy}>
-      <aside className="queue">
-        <div className="section-top">
-          <h2>Pending drafts</h2>
-          <button className="quiet" onClick={() => load(detail?.draft.id)} disabled={busy}>
+      <aside className="queue" aria-labelledby="queue-heading">
+        <div className="row">
+          <h2 id="queue-heading">Pending drafts</h2>
+          <Button
+            size="small"
+            color="tertiary"
+            icon="swap-vertical"
+            onClick={() => load(detail?.draft.id)}
+            disabled={busy}
+          >
             Reload
-          </button>
+          </Button>
         </div>
         {queue && (
           <p className="muted small">
@@ -177,6 +225,8 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
             {queue?.drafts.map((draft) => (
               <li key={draft.id}>
                 <button
+                  type="button"
+                  className="queue-item"
                   disabled={busy}
                   aria-current={detail?.draft.id === draft.id ? 'page' : undefined}
                   onClick={() => load(draft.id)}
@@ -191,28 +241,29 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
         {queue?.drafts.length === 0 && (
           <p>No pending drafts. New candidates appear here when they are saved for review.</p>
         )}
-        <p className="muted small queue-note">
+        <p className="muted small">
           Only the latest 30 pending drafts are shown. Opening a draft does not approve it.
         </p>
       </aside>
-      <section className="review-content" aria-label="Selected draft">
-        {pending && (
-          <p className="status" role="status">
-            {pending}
-          </p>
-        )}
+      <section className="review-content stack" aria-label="Selected draft">
+        {pending && <ApplicationState status="loading" titleTag="p" title={pending} align="left" />}
         {error && (
-          <div className="alert error" role="alert">
-            <p>{error}</p>
-            <button disabled={busy} onClick={() => load(detail?.draft.id)}>
-              Reload latest draft
-            </button>
-          </div>
+          <AlertInline
+            color="critical"
+            role="alert"
+            actions={
+              <Button size="small" color="secondary" disabled={busy} onClick={() => load(detail?.draft.id)}>
+                Reload latest draft
+              </Button>
+            }
+          >
+            {error}
+          </AlertInline>
         )}
         {notice && (
-          <p className="alert success" role="status">
+          <AlertInline color="success" role="status">
             {notice}
-          </p>
+          </AlertInline>
         )}
         {detail ? (
           <>
@@ -220,19 +271,20 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
               <h1 ref={heading} tabIndex={-1}>
                 {detail.draft.catalog.version}
               </h1>
-              <span className="status-label">
+              <Badge color={detail.draft.status === 'draft' ? 'highlight' : 'success'}>
                 {detail.draft.status === 'draft' ? 'Awaiting approval' : 'Published'}
-              </span>
+              </Badge>
             </div>
             <p className="muted">
               Revision {detail.draft.revision} · {detail.draft.catalog.cards.length} card{' '}
               {detail.draft.catalog.cards.length === 1 ? 'product' : 'products'} ·{' '}
               {detail.draft.catalog.sources.length}{' '}
-              {detail.draft.catalog.sources.length === 1 ? 'source' : 'sources'}
+              {detail.draft.catalog.sources.length === 1 ? 'source' : 'sources'} · catalog schema{' '}
+              {detail.draft.catalog.schemaVersion}
             </p>
             {detail.draft.catalog.schemaVersion === 2 ? (
-              <p className="muted">
-                This draft uses catalog schema 2. The v1 extraction panel applies only to schema 1 drafts.
+              <p className="muted small">
+                Extraction applies only to schema 1 drafts; edit schema 2 drafts with the editors below.
               </p>
             ) : (
               <ExtractionPanel
@@ -258,18 +310,16 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
               onDirty={setDirty}
               onUpdate={update}
               onCapture={capture}
+              onCaptureMany={captureMany}
               onPublish={publish}
             />
           </>
         ) : (
           !busy && (
-            <div className="empty">
-              <h1>Select a draft to review.</h1>
-              <p>
-                Compare its changes with the published catalog and inspect the captured issuer text before
-                approving.
-              </p>
-            </div>
+            <ApplicationState status="empty" titleTag="h1" title="Select a draft to review.">
+              Compare its changes with the published catalog and inspect the captured issuer text before
+              approving.
+            </ApplicationState>
           )
         )}
       </section>
@@ -277,332 +327,4 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
   );
 }
 
-export function DraftPanel({
-  detail,
-  busy,
-  onDirty,
-  onUpdate,
-  onCapture,
-  onPublish,
-}: {
-  detail: ReviewDetail;
-  busy: boolean;
-  onDirty: (value: boolean) => void;
-  onUpdate: (catalog: Catalog, baseSequence: number | null) => Promise<void>;
-  onCapture: (sourceKey: string, body: string) => Promise<void>;
-  onPublish: (note: string) => Promise<void>;
-}) {
-  const original = JSON.stringify(detail.draft.catalog, null, 2);
-  const [edited, setEdited] = useState(original),
-    [body, setBody] = useState('');
-  const [sourceKey, setSourceKey] = useState(detail.draft.catalog.sources[0]?.id ?? '');
-  const [confirmed, setConfirmed] = useState(false),
-    [note, setNote] = useState(''),
-    [inputError, setInputError] = useState('');
-  const [now, setNow] = useState(Date.now);
-  const dirty = edited !== original || body.length > 0,
-    editable = detail.draft.status === 'draft';
-  const issues = publicationIssues(detail, now),
-    changes = catalogChanges(detail.published?.catalog ?? null, detail.draft.catalog);
-  if (dirty) issues.push('Save or discard your edits before approving this revision.');
-  useEffect(() => onDirty(dirty), [dirty, onDirty]);
-  useEffect(() => {
-    const timer = window.setInterval(() => setNow(Date.now()), 10000);
-    return () => window.clearInterval(timer);
-  }, []);
-  async function save(event: React.FormEvent) {
-    event.preventDefault();
-    setInputError('');
-    setConfirmed(false);
-    try {
-      const parsed = catalogSchema.safeParse(JSON.parse(edited));
-      if (!parsed.success) {
-        const first = parsed.error.issues[0];
-        setInputError(`${first.path.join('.') || 'Catalog'}: ${first.message}`);
-        return;
-      }
-      await onUpdate(parsed.data, detail.draft.base_sequence);
-    } catch {
-      setInputError('The draft must be valid JSON. Check its syntax and try again.');
-    }
-  }
-  function discard() {
-    setEdited(original);
-    setBody('');
-    setInputError('');
-    setConfirmed(false);
-  }
-  return (
-    <>
-      {detail.draft.status === 'draft' && issues.length > 0 && (
-        <div className="alert warning">
-          <h2>Before you publish</h2>
-          <ul>
-            {issues.map((issue) => (
-              <li key={issue}>{issue}</li>
-            ))}
-          </ul>
-          {detail.draft.base_sequence !== detail.head && (
-            <button
-              disabled={busy || dirty}
-              onClick={() => {
-                setConfirmed(false);
-                void onUpdate(detail.draft.catalog, detail.head);
-              }}
-            >
-              Rebase draft for review
-            </button>
-          )}
-        </div>
-      )}
-      <div className="review-columns">
-        <section className="changes">
-          <h2>What changes</h2>
-          <p className="muted small">
-            {detail.published
-              ? `Compared with ${detail.published.version}.`
-              : 'This is the first published catalog; every field is new.'}{' '}
-            Review all conditions, including fields that stay the same.
-          </p>
-          {detail.published && Date.parse(detail.published.catalog.expiresAt) <= now && (
-            <p className="alert warning">
-              The published terms expired. They are shown here for comparison only.
-            </p>
-          )}
-          {changes.length ? (
-            <table>
-              <caption className="sr-only">Published and proposed catalog changes</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Field</th>
-                  <th scope="col">Published</th>
-                  <th scope="col">Proposed</th>
-                </tr>
-              </thead>
-              <tbody>
-                {changes.map((row) => (
-                  <tr key={row.key}>
-                    <th scope="row">{row.label}</th>
-                    <td>{row.before}</td>
-                    <td className="proposed">{row.after}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>No differences from the current published catalog.</p>
-          )}
-          <details className="full-data">
-            <summary>All proposed card rules</summary>
-            <p className="small muted">
-              Includes unchanged conditions. Rates apply only to eligible purchases; the catalog does not
-              establish a shopper’s eligibility.
-            </p>
-            {detail.draft.catalog.cards.map((card) => (
-              <article className="rule-summary" key={card.id}>
-                <h3>{card.name}</h3>
-                <ul>
-                  {ruleSummaries(card.rules).map(({ rule, title, conditions }) => (
-                    <li key={rule.id}>
-                      <strong>{title}</strong>
-                      <p>{conditions}</p>
-                      <p className="small muted">
-                        Rule: {rule.id} · Sources: {rule.sourceIds.join(', ')}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </details>
-          <details className="full-data">
-            <summary>Full draft data and approval identity</summary>
-            <p className="small">
-              Revision {detail.draft.revision}; reviewed against release {detail.head ?? 'none'}. Approval is
-              bound to the complete payload shown below.
-            </p>
-            <code className="hash">{detail.draft.catalog_hash}</code>
-            <pre>{original}</pre>
-          </details>
-        </section>
-        <section className="evidence">
-          <h2>Source evidence</h2>
-          <p className="muted small">
-            A capture records the source. Check the full issuer terms to confirm rates, eligibility, caps, and
-            exclusions.
-          </p>
-          {detail.draft.catalog.sources.map((source, index) => {
-            const doc = detail.sources.find((value) => value.source_key === source.id);
-            const matches =
-              doc &&
-              doc.title === source.title &&
-              doc.url === source.url &&
-              doc.checked_on === source.checkedOn;
-            return (
-              <article className="source" key={source.id}>
-                <h3>{source.title}</h3>
-                <a href={source.url} target="_blank" rel="noreferrer noopener">
-                  Read source terms
-                </a>
-                <p className="small muted">
-                  Checked {source.checkedOn} · {source.id}
-                </p>
-                <p className={matches ? 'source-status' : 'source-status missing'}>
-                  {matches ? 'Matching evidence captured' : 'Matching evidence needed'}
-                </p>
-                {doc && (
-                  <details open={index === 0}>
-                    <summary>Captured text</summary>
-                    <pre className="source-text">{doc.body}</pre>
-                    <p className="small muted">Captured {new Date(doc.created_at).toLocaleString('en-US')}</p>
-                  </details>
-                )}
-              </article>
-            );
-          })}
-          {editable && (
-            <details className="capture">
-              <summary>Capture source evidence</summary>
-              <form
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  setConfirmed(false);
-                  void onCapture(sourceKey, body);
-                }}
-              >
-                <label htmlFor="source-choice">Source to capture</label>
-                <select
-                  id="source-choice"
-                  value={sourceKey}
-                  disabled={busy}
-                  onChange={(event) => {
-                    if (body && !window.confirm('Discard the pasted text and choose another source?')) return;
-                    setSourceKey(event.target.value);
-                    setBody('');
-                    setConfirmed(false);
-                  }}
-                >
-                  {detail.draft.catalog.sources.map((source) => (
-                    <option key={source.id} value={source.id}>
-                      {source.title}
-                    </option>
-                  ))}
-                </select>
-                <label htmlFor="source-body">Text from the source</label>
-                <textarea
-                  id="source-body"
-                  rows={9}
-                  required
-                  maxLength={60000}
-                  value={body}
-                  disabled={busy}
-                  onChange={(event) => {
-                    setBody(event.target.value);
-                    setConfirmed(false);
-                  }}
-                  aria-describedby="source-help"
-                />
-                <p id="source-help" className="muted small">
-                  Paste the terms you checked on the date recorded above. Capture preserves that date; it does
-                  not refresh expired terms. Maximum 60,000 characters.
-                </p>
-                <button disabled={busy || !body.trim() || edited !== original}>
-                  Capture and attach evidence
-                </button>
-              </form>
-            </details>
-          )}
-        </section>
-      </div>
-      {editable && (
-        <>
-          <details className="editor">
-            <summary>Correct draft data</summary>
-            <p>
-              Update the proposed catalog, then save a new revision. Keep only supported rules and exact
-              source references. Dates must reflect a real review of the terms.
-            </p>
-            <form onSubmit={(event) => void save(event)}>
-              <label htmlFor="catalog-json">Catalog JSON</label>
-              <textarea
-                id="catalog-json"
-                className="code-input"
-                rows={16}
-                value={edited}
-                disabled={busy}
-                onChange={(event) => {
-                  setEdited(event.target.value);
-                  setConfirmed(false);
-                }}
-              />
-              {inputError && (
-                <p className="alert error" role="alert">
-                  {inputError}
-                </p>
-              )}
-              <div className="actions">
-                <button disabled={busy || edited === original || !!body}>Save draft revision</button>
-                <button type="button" className="quiet" disabled={busy || !dirty} onClick={discard}>
-                  Discard edits
-                </button>
-              </div>
-            </form>
-          </details>
-          {body && (
-            <button className="quiet" disabled={busy} onClick={discard}>
-              Discard unsaved source text
-            </button>
-          )}
-          <section className="approval">
-            <h2>Approve this revision</h2>
-            <p>
-              Publishing makes these rules available to every extension using this catalog. Confirm the
-              complete draft and its sources before continuing.
-            </p>
-            <form
-              onSubmit={(event) => {
-                event.preventDefault();
-                if (busy || !confirmed || issues.length > 0 || note.trim().length < 10) return;
-                setConfirmed(false);
-                void onPublish(note.trim());
-              }}
-            >
-              <label className="check">
-                <input
-                  type="checkbox"
-                  checked={confirmed}
-                  disabled={busy || issues.length > 0}
-                  onChange={(event) => setConfirmed(event.target.checked)}
-                />
-                <span>I checked the full source terms and all proposed rules and conditions.</span>
-              </label>
-              <label htmlFor="review-note">Review note</label>
-              <textarea
-                id="review-note"
-                rows={3}
-                minLength={10}
-                maxLength={2000}
-                required
-                value={note}
-                disabled={busy}
-                onChange={(event) => setNote(event.target.value)}
-                placeholder="Record what you checked and any deliberate limitations."
-              />
-              <div className="approval-bottom">
-                <p className="small muted">
-                  Approving {detail.draft.catalog.version}, revision {detail.draft.revision}.
-                </p>
-                <button
-                  className="primary"
-                  disabled={busy || !confirmed || issues.length > 0 || note.trim().length < 10}
-                >
-                  Publish reviewed terms
-                </button>
-              </div>
-            </form>
-          </section>
-        </>
-      )}
-    </>
-  );
-}
+export { DraftPanel } from './DraftPanel';

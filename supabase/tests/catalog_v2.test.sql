@@ -96,6 +96,11 @@ select set_config('test.terms',public.capture_catalog_source('test-terms','Synth
   (now() at time zone 'UTC')::date,'Synthetic v2 terms for tests only.')->>'id',true);
 select set_config('test.mcc',public.capture_catalog_source('test-mcc','Synthetic MCC lookup','https://mcc.example/best-buy',
   (now() at time zone 'UTC')::date,'Synthetic MCC lookup for tests only.')->>'id',true);
+-- Long issuer terms (the Citi terms PDF is about 75,000 characters) fit; the limit is 120,000.
+select lives_ok($q$select public.capture_catalog_source('test-long','Long terms','https://issuer.example/long',
+  (now() at time zone 'UTC')::date,repeat('x',100000))$q$,'a 100,000-character capture fits');
+select throws_ok($q$select public.capture_catalog_source('test-long2','Long terms 2','https://issuer.example/long2',
+  (now() at time zone 'UTC')::date,repeat('x',120001))$q$,'23514',null,'captures over 120,000 characters fail');
 select set_config('test.draft',public.save_catalog_draft(null,null,pg_temp.v2(),
   array[current_setting('test.terms')::uuid],(select release_sequence from public.catalog_head))::text,true);
 select throws_ok($q$select public.publish_catalog((current_setting('test.draft')::jsonb->>'id')::uuid,1,

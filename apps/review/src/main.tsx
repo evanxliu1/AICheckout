@@ -1,9 +1,12 @@
+import './zod-config';
 import { Component, StrictMode, type ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { reviewConfigSchema } from '@ai-checkout/catalog-review';
+import { ApplicationState, Button } from '@ai-checkout/ui';
 import { readBoundedJson } from '@ai-checkout/catalog-client';
 import { createReviewAuth } from './client';
 import App from './App';
+import '@ai-checkout/ui/styles.css';
 import './styles.css';
 
 class ReviewBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
@@ -14,9 +17,14 @@ class ReviewBoundary extends Component<{ children: ReactNode }, { failed: boolea
   render() {
     return this.state.failed ? (
       <main className="sign-in">
-        <h1>The review screen could not load.</h1>
-        <p>Reload to sign in and retrieve the latest draft.</p>
-        <button onClick={() => location.reload()}>Reload</button>
+        <ApplicationState
+          status="error"
+          titleTag="h1"
+          title="The review screen could not load."
+          actions={<Button onClick={() => location.reload()}>Reload</Button>}
+        >
+          Reload to sign in and retrieve the latest draft.
+        </ApplicationState>
       </main>
     ) : (
       this.props.children
@@ -26,7 +34,7 @@ class ReviewBoundary extends Component<{ children: ReactNode }, { failed: boolea
 const root = createRoot(document.getElementById('root')!);
 root.render(
   <main className="sign-in">
-    <p role="status">Loading catalog review…</p>
+    <ApplicationState status="loading" titleTag="h1" title="Loading catalog review…" />
   </main>,
 );
 try {
@@ -46,9 +54,14 @@ try {
 } catch {
   root.render(
     <main className="sign-in">
-      <h1>Catalog review is unavailable.</h1>
-      <p>Check the connection and server configuration, then reload.</p>
-      <button onClick={() => location.reload()}>Reload</button>
+      <ApplicationState
+        status="error"
+        titleTag="h1"
+        title="Catalog review is unavailable."
+        actions={<Button onClick={() => location.reload()}>Reload</Button>}
+      >
+        Check the connection and server configuration, then reload.
+      </ApplicationState>
     </main>,
   );
 }
