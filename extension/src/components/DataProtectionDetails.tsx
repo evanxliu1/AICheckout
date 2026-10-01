@@ -1,3 +1,4 @@
+import { Disclosure } from '@ai-checkout/ui';
 import type { VaultStatus } from '../state/vault-contracts';
 
 export default function DataProtectionDetails({ status = 'unlocked' }: { status?: VaultStatus }) {
@@ -10,9 +11,8 @@ export default function DataProtectionDetails({ status = 'unlocked' }: { status?
           ? 'The saved record could not be validated, so its protection cannot be confirmed. New inputs are encrypted only after setup.'
           : 'Card selections, reported reward limits, purchase inputs and cart identifiers are encrypted in this Chrome profile.';
   return (
-    <details className="mt-4 supporting">
-      <summary className="cursor-pointer underline text-primary-700">Data and protection details</summary>
-      <p className="mt-2">
+    <Disclosure title="Data and protection details">
+      <p>
         {protection} These inputs are not sent to an AI provider. Cart reading uses the chosen tab’s address
         temporarily and saves amount metadata and a page-identity hash, without saving the full address,
         product names or payment fields.
@@ -28,6 +28,6 @@ export default function DataProtectionDetails({ status = 'unlocked' }: { status?
         browser history or external backups. Card-source links open issuer websites; optional term updates,
         when configured, contact the catalog service without your purchase inputs.
       </p>
-    </details>
+    </Disclosure>
   );
 }

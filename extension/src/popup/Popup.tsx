@@ -4,8 +4,19 @@ import WalletEditor from '../components/WalletEditor';
 import ComparisonResult from '../components/ComparisonResult';
 import DataProtectionDetails from '../components/DataProtectionDetails';
 import DeleteSavedData from '../components/DeleteSavedData';
-import { catalogMerchantIds, formatUsd, parseUsd } from '../domain';
-import type { Eligibility, Wallet } from '../domain';
+import {
+  AlertInline,
+  ApplicationState,
+  Button,
+  Card,
+  Checkbox,
+  Field,
+  Select,
+  TextInput,
+} from '@ai-checkout/ui';
+import PopupHeader from '../components/PopupHeader';
+import { catalogMerchantIds, formatUsd, parseUsd, usageInputs } from '../domain';
+import type { Eligibility, PaymentPath, Wallet } from '../domain';
 import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
 import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY } from '../state/service';
@@ -31,14 +42,31 @@ export default function Popup({
   const [merchantId, setMerchantId] = useState<string>('best-buy-us');
   const [eligible, setEligible] = useState(false);
   const [onlineRetail, setOnlineRetail] = useState<Eligibility>('unknown');
+  const [paymentPath, setPaymentPath] = useState<PaymentPath>('card');
   const [dirty, setDirty] = useState(false);
   const [cartId, setCartId] = useState<string | null>(null);
   const resultAnchor = useRef<HTMLDivElement>(null);
   const catalog = currentCatalog(view?.state ?? emptyState());
-  const bceCard = view?.state.wallet.cards.find((c) => c.cardId === 'amex-blue-cash-everyday');
-  const bceUsage = bceCard?.usage.find(
-    (u) => u.ruleId === 'bce-online-retail' && u.recordedOn === localDate(Date.now()),
-  );
+  // Spend-capped bonuses the shopper can report, derived from the catalog rules.
+  const limitNotes = (view?.state.wallet.cards ?? []).flatMap((owned) => {
+    const card = catalog.cards.find((c) => c.id === owned.cardId);
+    if (!card) return [];
+    return usageInputs(catalog, card.id)
+      .filter((rule) => rule.needsSpend)
+      .map((rule) => {
+        const usage = owned.usage.find(
+          (u) => u.ruleId === rule.ruleId && u.recordedOn === localDate(Date.now()),
+        );
+        return {
+          key: rule.ruleId,
+          text: `${card.shortName} ${rule.label} spend: ${
+            usage?.spentCents != null
+              ? `${formatUsd(usage.spentCents)} reported today. Edit if it changed.`
+              : 'unknown. You can add it in Edit cards.'
+          }`,
+        };
+      });
+  });
 
   useEffect(() => {
     if (!dirty && !editing && view?.comparison) {
@@ -67,6 +95,7 @@ export default function Popup({
     // Restored results are labeled saved; a new comparison requires renewed confirmation.
     setEligible(false);
     setOnlineRetail(next.state.purchase?.onlineRetail ?? 'unknown');
+    setPaymentPath(next.state.purchase?.paymentPath ?? 'card');
     setDirty(false);
     setEditing(next.state.wallet.cards.length === 0);
   }, []);
@@ -225,6 +254,7 @@ export default function Popup({
           purchasedOn: localDate(Date.now()),
           eligiblePurchase: 'eligible',
           onlineRetail,
+          paymentPath,
         },
       });
       setView(next);
@@ -260,39 +290,45 @@ export default function Popup({
       setPending(null);
     }
   }
+  const cart = cartId ? view?.state.cart : null;
+  const ownedNames = (view?.state.wallet.cards ?? [])
+    .map((c) => catalog.cards.find((p) => p.id === c.cardId)?.shortName ?? 'Unavailable card')
+    .join(' · ');
   return (
     <ErrorBoundary>
-      <main className="checkout-popup text-gray-900">
-        <header className="px-4 py-3 bg-white border-b border-gray-200">
-          <h1 className="text-xl font-bold">AI Checkout</h1>
-          <p className="supporting mt-1">Compare rewards on cards you own.</p>
-        </header>
+      <main className="checkout-popup">
+        <PopupHeader />
         <div className="p-4 space-y-4">
           {vaultError && (
-            <p role="alert" className="error-message">
+            <AlertInline color="critical" role="alert">
               {vaultError}
-            </p>
+            </AlertInline>
           )}
           {error && (
-            <div role="alert" className="error-message">
-              <p>{error}</p>
-              <button className="underline font-medium mt-2" disabled={busy} onClick={() => void load()}>
-                Reload saved inputs
-              </button>
-            </div>
+            <AlertInline
+              color="critical"
+              role="alert"
+              actions={
+                <Button size="small" color="secondary" disabled={busy} onClick={() => void load()}>
+                  Reload saved inputs
+                </Button>
+              }
+            >
+              {error}
+            </AlertInline>
           )}
-          {!view && !error && (
-            <p role="status" className="supporting">
-              Loading your cards…
-            </p>
-          )}
+          {!view && !error && <ApplicationState status="loading" titleTag="h2" title="Loading your cards…" />}
           {view?.notice && (
-            <div role="status" className="supporting">
-              <p>{view.notice}</p>
-              <button className="text-primary-700 underline mt-2" disabled={busy} onClick={() => void load()}>
-                Load saved inputs
-              </button>
-            </div>
+            <AlertInline
+              role="status"
+              actions={
+                <Button size="small" color="secondary" disabled={busy} onClick={() => void load()}>
+                  Load saved inputs
+                </Button>
+              }
+            >
+              {view.notice}
+            </AlertInline>
           )}
           {view &&
             (editing ? (
@@ -306,163 +342,191 @@ export default function Popup({
               />
             ) : (
               <>
-                <section className="surface" aria-label="Saved cards">
-                  <div className="flex items-center justify-between gap-3">
-                    <h2 className="font-semibold">Your cards</h2>
-                    <button
-                      className="text-primary-700 underline text-sm"
-                      disabled={busy}
-                      onClick={() => {
-                        setEditing(true);
-                        setError('');
-                      }}
-                    >
-                      Edit cards
-                    </button>
-                  </div>
-                  <p className="supporting mt-1">
-                    {view.state.wallet.cards
-                      .map(
-                        (c) => catalog.cards.find((p) => p.id === c.cardId)?.shortName ?? 'Unavailable card',
-                      )
-                      .join(' · ') || 'No cards selected.'}
-                  </p>
-                  {bceCard && (
-                    <p className="supporting mt-2">
-                      Blue Cash Everyday online retail spend:{' '}
-                      {bceUsage?.spentCents != null
-                        ? `${formatUsd(bceUsage.spentCents)} reported today. Edit if it changed.`
-                        : 'unknown. You can add it in Edit cards.'}
-                    </p>
-                  )}
-                </section>
-                <section className="surface" aria-labelledby="purchase-heading">
-                  <h2 id="purchase-heading" className="text-lg font-semibold">
-                    Your purchase
-                  </h2>
-                  <label htmlFor="purchase-merchant" className="field-label mt-4">
-                    Merchant
-                  </label>
-                  <select
-                    id="purchase-merchant"
-                    className="field-input"
-                    value={merchantId}
-                    disabled={busy}
-                    onChange={(e) => {
-                      setMerchantId(e.target.value);
-                      setAmount('');
-                      setCartId(null);
-                      setOnlineRetail('unknown');
-                      setEligible(false);
-                      setDirty(true);
-                      setError('');
-                    }}
-                    aria-describedby="merchant-help"
-                  >
-                    {!MERCHANT_IDS.some((id) => id === merchantId) && (
-                      <option value={merchantId}>Unsupported saved merchant</option>
-                    )}
-                    {MERCHANT_IDS.map((id) => (
-                      <option key={id} value={id}>
-                        {merchantName(id)}
-                      </option>
-                    ))}
-                  </select>
-                  <p id="merchant-help" className="supporting mt-2">
-                    Choose the merchant for manual entry. Reading a supported cart selects its merchant for
-                    you.
-                  </p>
-                  {!catalogMerchantIds(catalog).includes(merchantId) && (
-                    <p role="status" className="supporting mt-2">
-                      Your current card terms do not cover {merchantName(merchantId)}. Check for updated terms
-                      or an extension update.
-                    </p>
-                  )}
-                  <button className="btn-secondary mt-3" disabled={busy} onClick={() => void readCart()}>
-                    {pending === 'read' ? 'Reading cart…' : 'Read cart amount'}
-                  </button>
-                  {cartId && view.state.cart && (
-                    <div className="supporting mt-3" role="status">
-                      <p>
-                        Read {formatUsd(view.state.cart.amountCents)} as{' '}
-                        {view.state.cart.kind === 'estimated-total'
-                          ? 'an estimated total'
-                          : view.state.cart.kind === 'subtotal'
-                            ? 'a subtotal before tax and shipping'
-                            : 'the order total'}
-                        . Confirm or correct the amount below. The page is checked again before comparing.
-                      </p>
-                      {view.state.cart.kind === 'subtotal' && (
-                        <p className="mt-2">
-                          The final charge is not known. Enter the amount you’ll charge when it is available,
-                          or compare this subtotal only.
-                        </p>
-                      )}
-                      <button
-                        className="underline text-primary-700 mt-2"
+                <Card as="section" hasBorder aria-labelledby="saved-cards-heading">
+                  <div className="card-body space-y-2">
+                    <div className="flex items-center justify-between gap-3">
+                      <h2 id="saved-cards-heading" className="section-title">
+                        Your cards
+                      </h2>
+                      <Button
+                        size="small"
+                        color="tertiary"
+                        icon="credit-card"
                         disabled={busy}
                         onClick={() => {
-                          setCartId(null);
-                          setDirty(true);
-                          setEligible(false);
+                          setEditing(true);
+                          setError('');
                         }}
                       >
-                        Use manual entry instead
-                      </button>
+                        Edit cards
+                      </Button>
                     </div>
-                  )}
-                  <form
-                    className="mt-4"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      void compare();
-                    }}
-                  >
-                    <label htmlFor="purchase-amount" className="field-label">
-                      Purchase amount (USD)
-                    </label>
-                    <input
-                      id="purchase-amount"
-                      type="text"
-                      inputMode="decimal"
-                      maxLength={14}
-                      value={amount}
-                      disabled={busy}
-                      onChange={(e) => {
-                        setAmount(e.target.value);
-                        setDirty(true);
-                        setEligible(false);
-                      }}
-                      className="field-input"
-                      placeholder="0.00"
-                    />
-                    <label htmlFor="online-eligibility" className="field-label mt-4">
-                      Online retail bonus eligibility
-                    </label>
-                    <select
-                      id="online-eligibility"
-                      className="field-input"
-                      value={onlineRetail}
-                      disabled={busy}
-                      onChange={(e) => {
-                        setOnlineRetail(e.target.value as Eligibility);
-                        setDirty(true);
-                      }}
-                      aria-describedby="online-help"
+                    <p>{ownedNames || 'No cards selected.'}</p>
+                    {limitNotes.map((note) => (
+                      <p key={note.key} className="supporting">
+                        {note.text}
+                      </p>
+                    ))}
+                  </div>
+                </Card>
+                <Card as="section" hasBorder aria-labelledby="purchase-heading">
+                  <div className="card-body space-y-4">
+                    <h2 id="purchase-heading" className="section-title">
+                      Your purchase
+                    </h2>
+                    <Field
+                      id="purchase-merchant"
+                      label="Merchant"
+                      helperText="Choose the merchant for manual entry. Reading a supported cart selects its merchant for you."
                     >
-                      <option value="unknown">I’m not sure</option>
-                      <option value="eligible">Eligible goods, paid directly online</option>
-                      <option value="ineligible">In-store payment or other excluded channel</option>
-                    </select>
-                    <p id="online-help" className="supporting mt-2">
-                      The bonus applies to physical goods paid for online at a US retailer. Services, in-store
-                      payment and third-party installment plans are excluded. The merchant must report an
-                      internet transaction.
-                    </p>
-                    <label className="flex items-start gap-3 text-sm mt-4">
-                      <input
-                        className="mt-1"
-                        type="checkbox"
+                      {(control) => (
+                        <Select
+                          {...control}
+                          value={merchantId}
+                          disabled={busy}
+                          onChange={(e) => {
+                            setMerchantId(e.target.value);
+                            setAmount('');
+                            setCartId(null);
+                            setOnlineRetail('unknown');
+                            setEligible(false);
+                            setDirty(true);
+                            setError('');
+                          }}
+                        >
+                          {!MERCHANT_IDS.some((id) => id === merchantId) && (
+                            <option value={merchantId}>Unsupported saved merchant</option>
+                          )}
+                          {MERCHANT_IDS.map((id) => (
+                            <option key={id} value={id}>
+                              {merchantName(id)}
+                            </option>
+                          ))}
+                        </Select>
+                      )}
+                    </Field>
+                    {!catalogMerchantIds(catalog).includes(merchantId) && (
+                      <AlertInline color="warning" role="status">
+                        Your current card terms do not cover {merchantName(merchantId)}. Check for updated
+                        terms or an extension update.
+                      </AlertInline>
+                    )}
+                    <Button
+                      color="secondary"
+                      icon="shopping-cart"
+                      isLoading={pending === 'read'}
+                      disabled={busy && pending !== 'read'}
+                      onClick={() => void readCart()}
+                    >
+                      Read cart amount
+                    </Button>
+                    {cart && (
+                      <AlertInline
+                        color="highlight"
+                        role="status"
+                        actions={
+                          <Button
+                            size="small"
+                            color="tertiary"
+                            icon="arrow-right"
+                            iconPosition="trailing"
+                            disabled={busy}
+                            onClick={() => {
+                              setCartId(null);
+                              setDirty(true);
+                              setEligible(false);
+                            }}
+                          >
+                            Use manual entry instead
+                          </Button>
+                        }
+                      >
+                        <p>
+                          Read {formatUsd(cart.amountCents)} as{' '}
+                          {cart.kind === 'estimated-total'
+                            ? 'an estimated total'
+                            : cart.kind === 'subtotal'
+                              ? 'a subtotal before tax and shipping'
+                              : 'the order total'}
+                          . Confirm or correct the amount below. The page is checked again before comparing.
+                        </p>
+                        {cart.kind === 'subtotal' && (
+                          <p className="mt-2">
+                            The final charge is not known. Enter the amount you’ll charge when it is
+                            available, or compare this subtotal only.
+                          </p>
+                        )}
+                      </AlertInline>
+                    )}
+                    <form
+                      className="space-y-4"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        void compare();
+                      }}
+                    >
+                      <Field id="purchase-amount" label="Purchase amount (USD)">
+                        {(control) => (
+                          <TextInput
+                            {...control}
+                            inputMode="decimal"
+                            maxLength={14}
+                            value={amount}
+                            disabled={busy}
+                            placeholder="0.00"
+                            onChange={(e) => {
+                              setAmount(e.target.value);
+                              setDirty(true);
+                              setEligible(false);
+                            }}
+                          />
+                        )}
+                      </Field>
+                      <Field
+                        id="payment-path"
+                        label="How you will pay"
+                        helperText="Paying through PayPal, a digital wallet or buy now, pay later can change which bonuses apply."
+                      >
+                        {(control) => (
+                          <Select
+                            {...control}
+                            value={paymentPath}
+                            disabled={busy}
+                            onChange={(e) => {
+                              setPaymentPath(e.target.value as PaymentPath);
+                              setDirty(true);
+                            }}
+                          >
+                            <option value="card">Card entered at checkout</option>
+                            <option value="paypal">PayPal or another payment account</option>
+                            <option value="digital-wallet">Digital wallet (Apple Pay, Google Pay)</option>
+                            <option value="bnpl">Buy now, pay later (Affirm, Klarna)</option>
+                          </Select>
+                        )}
+                      </Field>
+                      <Field
+                        id="online-eligibility"
+                        label="Online retail bonus eligibility"
+                        helperText="The bonus applies to physical goods paid for online at a US retailer. Services, in-store payment and third-party installment plans are excluded. The merchant must report an internet transaction."
+                      >
+                        {(control) => (
+                          <Select
+                            {...control}
+                            value={onlineRetail}
+                            disabled={busy}
+                            onChange={(e) => {
+                              setOnlineRetail(e.target.value as Eligibility);
+                              setDirty(true);
+                            }}
+                          >
+                            <option value="unknown">I’m not sure</option>
+                            <option value="eligible">Eligible goods, paid directly online</option>
+                            <option value="ineligible">In-store payment or other excluded channel</option>
+                          </Select>
+                        )}
+                      </Field>
+                      <Checkbox
+                        label="I confirmed the amount is for eligible purchases, excluding gift cards, cash equivalents, fees and rewards-covered amounts."
                         checked={eligible}
                         disabled={busy}
                         onChange={(e) => {
@@ -470,20 +534,17 @@ export default function Popup({
                           setDirty(true);
                         }}
                       />
-                      <span>
-                        I confirmed the amount is for eligible purchases, excluding gift cards, cash
-                        equivalents, fees and rewards-covered amounts.
-                      </span>
-                    </label>
-                    <button
-                      className="btn-primary w-full mt-5"
-                      type="submit"
-                      disabled={busy || !view.state.wallet.cards.length}
-                    >
-                      {pending === 'compare' ? 'Comparing…' : 'Compare my cards'}
-                    </button>
-                  </form>
-                </section>
+                      <Button
+                        type="submit"
+                        isFullWidth
+                        isLoading={pending === 'compare'}
+                        disabled={(busy && pending !== 'compare') || !view.state.wallet.cards.length}
+                      >
+                        Compare my cards
+                      </Button>
+                    </form>
+                  </div>
+                </Card>
                 {!dirty && view.comparison && (
                   <div ref={resultAnchor} tabIndex={-1} aria-label="Comparison result">
                     <ComparisonResult
@@ -500,26 +561,29 @@ export default function Popup({
                 )}
               </>
             ))}
-          <footer className="supporting pt-2">
+          <footer className="supporting space-y-3 pt-2">
             <p>
               Cards and purchase inputs stay on this device. This comparison works offline and requires no API
               key.
             </p>
-            <p className="mt-2">Card terms expire {new Date(catalog.expiresAt).toLocaleString('en-US')}.</p>
-            <div className="flex flex-col items-start gap-3 mt-3">
+            <p>Card terms expire {new Date(catalog.expiresAt).toLocaleString('en-US')}.</p>
+            <div className="flex flex-wrap gap-2">
               {onLock && (
-                <button className="text-primary-700 underline" disabled={busy} onClick={onLock}>
+                <Button size="small" color="secondary" icon="lock" disabled={busy} onClick={onLock}>
                   Lock saved inputs
-                </button>
+                </Button>
               )}
               {view?.catalogUpdatesAvailable && (
-                <button
-                  className="text-primary-700 underline"
-                  disabled={busy || editing}
+                <Button
+                  size="small"
+                  color="secondary"
+                  icon="swap-vertical"
+                  isLoading={pending === 'catalog'}
+                  disabled={(busy && pending !== 'catalog') || editing}
                   onClick={() => void refreshCatalog()}
                 >
-                  {pending === 'catalog' ? 'Checking terms…' : 'Check for updated terms'}
-                </button>
+                  Check for updated terms
+                </Button>
               )}
             </div>
             {onLock && <DataProtectionDetails />}

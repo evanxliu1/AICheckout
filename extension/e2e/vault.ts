@@ -57,6 +57,7 @@ export async function readVaultState(target: InspectionTarget) {
 export async function mutateVaultState(target: InspectionTarget, mutate: (state: AppState) => void) {
   const { envelope, key } = await snapshot(target),
     state = await decryptVault(envelope, key);
+  if (state.schemaVersion !== 2) throw new Error('Open the popup once so pilot-era state is migrated.');
   mutate(state);
   const encrypted = await encryptVault(state, envelope, key);
   await target.evaluate((value) => chrome.storage.local.set({ checkoutStateV1: value }), encrypted);

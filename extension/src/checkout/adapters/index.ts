@@ -1,7 +1,7 @@
 import { siteAdapterSchema, type MerchantId, type SiteAdapter } from './schema';
-import bestBuy from './best-buy-us.json';
-import newegg from './newegg-us.json';
-import amazon from './amazon-us.json';
+import bestBuy from './best-buy-us.json' with { type: 'json' };
+import newegg from './newegg-us.json' with { type: 'json' };
+import amazon from './amazon-us.json' with { type: 'json' };
 
 export * from './schema';
 

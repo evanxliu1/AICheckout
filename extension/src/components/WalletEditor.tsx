@@ -1,7 +1,20 @@
 import { useState } from 'react';
+import { AlertInline, Button, Card, Checkbox, Field, Fieldset, Select, TextInput } from '@ai-checkout/ui';
 import { parseUsd, usageInputs } from '../domain';
 import type { Catalog, RuleUsage, Wallet } from '../domain';
 import { localDate } from '../state/service';
+
+type Input = { spend: string; activation: RuleUsage['activation'] };
+
+/** Cards grouped by issuer, in catalog order (a v1 catalog has no issuer field). */
+function byIssuer(catalog: Catalog) {
+  const groups = new Map<string, Catalog['cards']>();
+  for (const card of catalog.cards) {
+    const issuer = 'issuer' in card ? card.issuer : 'Cards';
+    groups.set(issuer, [...(groups.get(issuer) ?? []), card] as Catalog['cards']);
+  }
+  return [...groups];
+}
 
 export default function WalletEditor({
   wallet,
@@ -20,19 +33,17 @@ export default function WalletEditor({
   const year = Number(recordedOn.slice(0, 4));
   const [selected, setSelected] = useState(wallet.cards.map((c) => c.cardId));
   const [defaultId, setDefaultId] = useState(wallet.defaultCardId ?? wallet.cards[0]?.cardId ?? '');
-  const [inputs, setInputs] = useState<
-    Record<string, { spend: string; activation: RuleUsage['activation'] }>
-  >(() =>
+  const [inputs, setInputs] = useState<Record<string, Input>>(() =>
     Object.fromEntries(
       catalog.cards.flatMap((card) =>
-        (card.rules as { id: string }[]).map((rule) => {
+        usageInputs(catalog, card.id).map(({ ruleId }) => {
           const saved = wallet.cards
             .find((c) => c.cardId === card.id)
             ?.usage.find(
-              (u) => u.ruleId === rule.id && u.recordedOn === recordedOn && u.calendarYear === year,
+              (u) => u.ruleId === ruleId && u.recordedOn === recordedOn && u.calendarYear === year,
             );
           return [
-            rule.id,
+            ruleId,
             {
               spend: saved?.spentCents != null ? (saved.spentCents / 100).toFixed(2) : '',
               activation: saved?.activation ?? 'unknown',
@@ -44,6 +55,10 @@ export default function WalletEditor({
   );
   const [error, setError] = useState('');
   const unavailable = wallet.cards.filter((owned) => !catalog.cards.some((card) => card.id === owned.cardId));
+  const shortName = (id: string) => catalog.cards.find((card) => card.id === id)?.shortName;
+  const update = (ruleId: string, change: Partial<Input>) =>
+    setInputs((current) => ({ ...current, [ruleId]: { ...current[ruleId], ...change } }));
+
   function toggle(id: string) {
     const next = selected.includes(id) ? selected.filter((c) => c !== id) : [...selected, id];
     setSelected(next);
@@ -64,21 +79,16 @@ export default function WalletEditor({
       const usage: RuleUsage[] = [];
       for (const rule of usageInputs(catalog, card.id)) {
         const input = inputs[rule.ruleId];
-        const spentCents = input.spend.trim() ? parseUsd(input.spend) : null;
-        if (input.spend.trim() && spentCents === null) {
+        const spentCents = rule.needsSpend && input.spend.trim() ? parseUsd(input.spend) : null;
+        if (rule.needsSpend && input.spend.trim() && spentCents === null) {
           setError(
-            `Enter a dollar amount up to $100,000 for ${card.shortName}, or leave its annual spend blank.`,
+            `Enter a dollar amount up to $100,000 for ${card.shortName}, or leave its ${rule.label} spend blank.`,
           );
           return;
         }
-        if (spentCents !== null || input.activation !== 'unknown')
-          usage.push({
-            ruleId: rule.ruleId,
-            calendarYear: year,
-            recordedOn,
-            spentCents: rule.needsSpend ? spentCents : null,
-            activation: rule.needsActivation ? input.activation : 'unknown',
-          });
+        const activation = rule.needsActivation ? input.activation : 'unknown';
+        if (spentCents !== null || activation !== 'unknown')
+          usage.push({ ruleId: rule.ruleId, calendarYear: year, recordedOn, spentCents, activation });
       }
       cards.push({ cardId: card.id, usage });
     }
@@ -88,142 +98,134 @@ export default function WalletEditor({
       setError(err instanceof Error ? err.message : 'Your cards could not be saved. Try again.');
     }
   }
+
+  const limits = catalog.cards
+    .filter((card) => selected.includes(card.id))
+    .flatMap((card) => usageInputs(catalog, card.id).map((rule) => ({ card, rule })));
   return (
-    <section aria-labelledby="wallet-heading" className="surface">
-      <h2 id="wallet-heading" className="text-lg font-semibold">
-        Your cards
-      </h2>
-      <p className="supporting mt-1">
-        Choose cards you already own. Only product names are saved; no card numbers.
-      </p>
+    <Card as="section" hasBorder aria-labelledby="wallet-heading">
       <form
+        className="card-body space-y-4"
         onSubmit={(e) => {
           e.preventDefault();
           void save();
         }}
       >
-        <fieldset disabled={busy} className="mt-4 space-y-3">
-          <legend className="sr-only">Owned cards</legend>
-          {catalog.cards.map((card) => (
-            <label key={card.id} className="flex items-start gap-3 text-sm cursor-pointer">
-              <input
-                className="mt-1"
-                type="checkbox"
+        <div>
+          <h2 id="wallet-heading" className="section-title">
+            Your cards
+          </h2>
+          <p className="supporting mt-1">
+            Choose cards you already own. Only product names are saved; no card numbers.
+          </p>
+        </div>
+        {byIssuer(catalog).map(([issuer, cards]) => (
+          <Fieldset key={issuer} legend={issuer} disabled={busy}>
+            {cards.map((card) => (
+              <Checkbox
+                key={card.id}
+                label={card.name}
                 checked={selected.includes(card.id)}
                 onChange={() => toggle(card.id)}
               />
-              <span>{card.name}</span>
-            </label>
-          ))}
-          {unavailable.map((owned) => (
-            <label key={owned.cardId} className="flex items-start gap-3 text-sm">
-              <input
-                className="mt-1"
-                type="checkbox"
+            ))}
+          </Fieldset>
+        ))}
+        {unavailable.length > 0 && (
+          <Fieldset legend="No longer in the card terms" disabled={busy}>
+            {unavailable.map((owned) => (
+              <Checkbox
+                key={owned.cardId}
+                label={`Unavailable card: ${owned.cardId}. Uncheck to remove it.`}
                 checked={selected.includes(owned.cardId)}
                 onChange={() => toggle(owned.cardId)}
               />
-              <span>Unavailable card: {owned.cardId}. Uncheck to remove it.</span>
-            </label>
-          ))}
-        </fieldset>
-        {selected.length > 1 && (
-          <div className="mt-4">
-            <label htmlFor="default-card" className="field-label">
-              Preferred card when rewards tie
-            </label>
-            <select
-              id="default-card"
-              value={defaultId}
-              disabled={busy}
-              onChange={(e) => setDefaultId(e.target.value)}
-              className="field-input"
-            >
-              {selected.map((id) => (
-                <option key={id} value={id}>
-                  {catalog.cards.find((card) => card.id === id)?.shortName ?? `Unavailable: ${id}`}
-                </option>
-              ))}
-            </select>
-          </div>
+            ))}
+          </Fieldset>
         )}
-        {catalog.cards
-          .filter((card) => selected.includes(card.id))
-          .flatMap((card) =>
-            usageInputs(catalog, card.id).map(({ ruleId, label, needsSpend, needsActivation }) => {
-              return (
-                <div key={ruleId} className="mt-4">
-                  {needsSpend && (
-                    <>
-                      <label htmlFor={`spend-${ruleId}`} className="field-label">
-                        {card.shortName} {label} spend in {year}
-                      </label>
-                      <input
-                        id={`spend-${ruleId}`}
+        {selected.length > 1 && (
+          <Field id="default-card" label="Preferred card when rewards tie">
+            {(control) => (
+              <Select
+                {...control}
+                value={defaultId}
+                disabled={busy}
+                onChange={(e) => setDefaultId(e.target.value)}
+              >
+                {selected.map((id) => (
+                  <option key={id} value={id}>
+                    {shortName(id) ?? `Unavailable: ${id}`}
+                  </option>
+                ))}
+              </Select>
+            )}
+          </Field>
+        )}
+        {limits.length > 0 && (
+          <div className="space-y-4">
+            <h3 className="section-title">Bonus limits</h3>
+            {limits.map(({ card, rule }) => (
+              <div key={rule.ruleId} className="space-y-3">
+                {rule.needsSpend && (
+                  <Field
+                    id={`spend-${rule.ruleId}`}
+                    label={`${card.shortName} ${rule.label} spend in ${year}`}
+                    helperText="Optional USD, across your card account. Leave blank if unsure; 0 means none used. Update before each purchase. Becomes unknown tomorrow."
+                  >
+                    {(control) => (
+                      <TextInput
+                        {...control}
                         inputMode="decimal"
-                        type="text"
                         maxLength={14}
-                        value={inputs[ruleId].spend}
+                        value={inputs[rule.ruleId].spend}
                         disabled={busy}
-                        onChange={(e) =>
-                          setInputs({ ...inputs, [ruleId]: { ...inputs[ruleId], spend: e.target.value } })
-                        }
-                        className="field-input"
                         placeholder="Unknown"
-                        aria-describedby={`spend-help-${ruleId}`}
+                        onChange={(e) => update(rule.ruleId, { spend: e.target.value })}
                       />
-                      <p id={`spend-help-${ruleId}`} className="supporting mt-2">
-                        Optional USD, across your card account. Leave blank if unsure; 0 means none used.
-                        Update before each purchase. Becomes unknown tomorrow.
-                      </p>
-                    </>
-                  )}
-                  {needsActivation && (
-                    <>
-                      <label htmlFor={`activation-${ruleId}`} className="field-label mt-3">
-                        {card.shortName} {label} bonus activation
-                      </label>
-                      <select
-                        id={`activation-${ruleId}`}
-                        className="field-input"
+                    )}
+                  </Field>
+                )}
+                {rule.needsActivation && (
+                  <Field
+                    id={`activation-${rule.ruleId}`}
+                    label={`${card.shortName} ${rule.label} bonus activation`}
+                  >
+                    {(control) => (
+                      <Select
+                        {...control}
                         disabled={busy}
-                        value={inputs[ruleId].activation}
+                        value={inputs[rule.ruleId].activation}
                         onChange={(e) =>
-                          setInputs({
-                            ...inputs,
-                            [ruleId]: {
-                              ...inputs[ruleId],
-                              activation: e.target.value as RuleUsage['activation'],
-                            },
-                          })
+                          update(rule.ruleId, { activation: e.target.value as RuleUsage['activation'] })
                         }
                       >
                         <option value="unknown">I’m not sure</option>
                         <option value="active">I confirmed it is active</option>
                         <option value="inactive">Not active</option>
-                      </select>
-                    </>
-                  )}
-                </div>
-              );
-            }),
-          )}
-        {error && (
-          <p role="alert" className="error-message mt-3">
-            {error}
-          </p>
+                      </Select>
+                    )}
+                  </Field>
+                )}
+              </div>
+            ))}
+          </div>
         )}
-        <div className="flex gap-2 mt-5">
-          <button className="btn-primary" disabled={busy} type="submit">
-            {busy ? 'Saving…' : 'Save cards'}
-          </button>
+        {error && (
+          <AlertInline color="critical" role="alert">
+            {error}
+          </AlertInline>
+        )}
+        <div className="flex gap-2">
+          <Button type="submit" isLoading={busy}>
+            Save cards
+          </Button>
           {onCancel && (
-            <button className="btn-secondary" disabled={busy} type="button" onClick={onCancel}>
+            <Button color="secondary" disabled={busy} onClick={onCancel}>
               Cancel
-            </button>
+            </Button>
           )}
         </div>
       </form>
-    </section>
+    </Card>
   );
 }

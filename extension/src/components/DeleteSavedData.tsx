@@ -1,27 +1,25 @@
 import { useState } from 'react';
+import { Button, Checkbox, Disclosure } from '@ai-checkout/ui';
 
 export default function DeleteSavedData({ busy, onDelete }: { busy: boolean; onDelete: () => void }) {
   const [confirmed, setConfirmed] = useState(false);
   return (
-    <details className="supporting mt-4" id="delete-saved-data">
-      <summary className="cursor-pointer underline text-red-800">Delete saved data</summary>
-      <p className="mt-2">
-        This removes your cards, purchase inputs and saved terms from this extension. It cannot be undone. No
-        passphrase is needed to delete.
-      </p>
-      <label className="flex items-start gap-3 mt-3">
-        <input
-          type="checkbox"
-          className="mt-1"
+    <Disclosure title="Delete saved data" id="delete-saved-data">
+      <div className="space-y-3">
+        <p>
+          This removes your cards, purchase inputs and saved terms from this extension. It cannot be undone.
+          No passphrase is needed to delete.
+        </p>
+        <Checkbox
+          label="I want to permanently delete this extension’s local data."
           checked={confirmed}
           disabled={busy}
           onChange={(event) => setConfirmed(event.target.checked)}
         />
-        <span>I want to permanently delete this extension’s local data.</span>
-      </label>
-      <button className="text-red-800 underline mt-3" disabled={busy || !confirmed} onClick={onDelete}>
-        Delete all local data
-      </button>
-    </details>
+        <Button color="critical" icon="trash" disabled={busy || !confirmed} onClick={onDelete}>
+          Delete all local data
+        </Button>
+      </div>
+    </Disclosure>
   );
 }
