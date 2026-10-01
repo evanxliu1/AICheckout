@@ -106,3 +106,16 @@ describe('pilot state migration (schema 1 → 2)', () => {
     expect(read.state.wallet.cards[1].usage.map((u) => u.ruleId)).toEqual(['bce-online-retail', 'bce-base']);
   });
 });
+
+describe('pending migration notice', () => {
+  it('survives a worker restart until a response can show it', async () => {
+    data[STATE_KEY] = pilotState([row('bce-retired-rule')]);
+    // A lifecycle event migrates first, without any response to the popup.
+    await createStateService(storage, () => now).invalidateTab(1);
+    expect((data[STATE_KEY] as { pendingNotice: string }).pendingNotice).toBe(MIGRATION_NOTICE);
+    const restarted = createStateService(storage, () => now);
+    expect(ok(await restarted({ type: 'checkout:get-state' })).notice).toBe(MIGRATION_NOTICE);
+    expect((data[STATE_KEY] as { pendingNotice: string | null }).pendingNotice).toBeNull();
+    expect(ok(await restarted({ type: 'checkout:get-state' })).notice).toBeNull();
+  });
+});

@@ -53,6 +53,8 @@ const stateFields = {
   purchase: purchaseSchema.nullable(),
   catalog: cachedCatalogSchema.default(emptyCatalogCache),
   cart: cartSnapshotSchema.nullable().default(null),
+  /** A notice that must reach the shopper once (e.g. why migration dropped limits); kept until shown. */
+  pendingNotice: z.string().min(1).max(300).nullable().default(null),
   comparison: z
     .strictObject({
       inputRevision: z.number().int().nonnegative(),
@@ -173,6 +175,7 @@ export function emptyState(): AppState {
     purchase: null,
     comparison: null,
     cart: null,
+    pendingNotice: null,
     catalog: emptyCatalogCache(),
   };
 }

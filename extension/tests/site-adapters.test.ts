@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { MERCHANT_IDS, SITE_ADAPTERS, siteAdapterSchema } from '../src/checkout/adapters';
-import { MERCHANTS } from '../src/checkout/merchants';
+import { MERCHANT_IDS, SITE_ADAPTERS } from '../src/checkout/adapters';
+import { siteAdapterSchema } from '../src/checkout/adapters/schema';
+import { MERCHANTS, merchantForCheckout } from '../src/checkout/merchants';
 
 describe('bundled site adapters', () => {
   it.each(MERCHANT_IDS)('%s is a valid spec with usable selectors and patterns', (id) => {
@@ -31,5 +32,22 @@ describe('bundled site adapters', () => {
       }).success,
     ).toBe(false);
     expect(siteAdapterSchema.safeParse({ ...base, merchantId: 'walmart-us' }).success).toBe(false);
+    for (const selector of ['body', 'html, table', ':root', '*'])
+      expect(siteAdapterSchema.safeParse({ ...base, summary: { ...base.summary, selector } }).success).toBe(
+        false,
+      );
+    for (const bad of ['^(a+)+$', '^(\\w*)*x$', '^(a)\\1$', '^(?<n>a)\\k<n>$'])
+      expect(
+        siteAdapterSchema.safeParse({ ...base, match: { ...base.match, paths: [bad] } }).success,
+        bad,
+      ).toBe(false);
+  });
+  it('gives every adapter its own hosts, so no URL matches two adapters', () => {
+    const hosts = MERCHANT_IDS.flatMap((id) => SITE_ADAPTERS[id].match.hosts);
+    expect(new Set(hosts).size).toBe(hosts.length);
+  });
+  it('rejects overlong paths before any pattern runs', () => {
+    expect(merchantForCheckout(`https://www.amazon.com/cart${'/'.repeat(300)}`)).toBeNull();
+    expect(merchantForCheckout('https://www.amazon.com/cart')).toBe('amazon-us');
   });
 });

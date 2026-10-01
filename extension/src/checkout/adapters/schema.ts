@@ -1,11 +1,8 @@
 import { z } from 'zod';
 
-/** Merchants with a bundled adapter. Adapters ship inside the extension package and are never
- * downloaded (Chrome Web Store remote-code policy). */
-export const MERCHANT_IDS = ['best-buy-us', 'newegg-us', 'amazon-us'] as const;
-export type MerchantId = (typeof MERCHANT_IDS)[number];
-export const AMOUNT_KINDS = ['total', 'estimated-total', 'subtotal'] as const;
-export type AmountKind = (typeof AMOUNT_KINDS)[number];
+import { AMOUNT_KINDS, MERCHANT_IDS } from './ids';
+
+export { AMOUNT_KINDS, MERCHANT_IDS, type AmountKind, type MerchantId } from './ids';
 
 const compiles = (value: string) => {
   try {
@@ -16,7 +13,21 @@ const compiles = (value: string) => {
   }
 };
 const selector = z.string().min(1).max(300);
-const pattern = z.string().min(2).max(200).startsWith('^').endsWith('$').refine(compiles, 'Invalid pattern');
+/** A summary must be a specific element, never the whole document. */
+const summarySelector = selector.refine(
+  (value) => value.split(',').every((part) => !/^(?:html|body|:root|\*)$/i.test(part.trim())),
+  'Summary selectors must target a specific element, not html, body, :root or *.',
+);
+/** Anchored, compiling, and free of backreferences and nested quantifiers (catastrophic backtracking). */
+const pattern = z
+  .string()
+  .min(2)
+  .max(200)
+  .startsWith('^')
+  .endsWith('$')
+  .refine(compiles, 'Invalid pattern')
+  .refine((value) => !/\\[1-9]|\\k</.test(value), 'Backreferences are not allowed.')
+  .refine((value) => !/\([^()]*[+*][^()]*\)\s*[+*{]/.test(value), 'Nested quantifiers are not allowed.');
 
 /**
  * A declarative, versioned description of one merchant's visible order summary. The generic
@@ -38,7 +49,7 @@ export const siteAdapterSchema = z.strictObject({
     /** Anchored path patterns; HTTPS, no credentials, and no port are required for every adapter. */
     paths: z.array(pattern).min(1).max(5),
   }),
-  summary: z.strictObject({ selector, maxCount: z.number().int().min(1).max(5) }),
+  summary: z.strictObject({ selector: summarySelector, maxCount: z.number().int().min(1).max(5) }),
   /** Shown instead of a summary when the cart is empty. */
   emptyCart: z.strictObject({ selector, text: z.string().min(1).max(100) }).nullable(),
   loading: z.strictObject({

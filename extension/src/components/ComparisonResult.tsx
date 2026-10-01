@@ -51,9 +51,9 @@ function uncertaintyCopy(code: Uncertainty, label: string): string {
     'annual-usage-unknown': `Your ${label} spend toward this year’s bonus limit is unknown.`,
     'cap-usage-unknown': `Your ${label} spend toward this period’s bonus limit is unknown.`,
     'online-category-unknown': 'Online retail eligibility is unconfirmed.',
-    'activation-unknown': 'Bonus activation is unconfirmed.',
-    'cap-unstated': 'The issuer does not state a spend limit for this bonus.',
-    'payment-path-uncertain': 'This payment method may not earn the bonus.',
+    'activation-unknown': `Activation of the ${label} bonus is unconfirmed.`,
+    'cap-unstated': `The issuer does not state a spend limit for the ${label} bonus.`,
+    'payment-path-uncertain': `This payment method may not earn the ${label} bonus.`,
   }[code];
 }
 
@@ -72,7 +72,28 @@ function EstimateRow({
   const rules: RewardRuleV2[] = catalog.schemaVersion === 2 ? (card.rules as RewardRuleV2[]) : [];
   const applied = rules.find((r) => r.id === estimate.appliedRuleId);
   const base = rules.find((r) => r.category === 'all-purchases');
-  const label = applied ? CATEGORY_LABELS[applied.category] : 'online retail';
+  // v1 catalogs have one bonus kind; name it from the card's own rule rather than assuming it.
+  const v1Bonus =
+    catalog.schemaVersion === 1
+      ? catalog.cards.find((c) => c.id === estimate.cardId)?.rules.find((r) => r.category !== 'all-eligible')
+      : undefined;
+  const label = CATEGORY_LABELS[applied?.category ?? v1Bonus?.category ?? 'all-purchases'];
+  // Each uncertainty names the category of the rule(s) it comes from.
+  const mayApply = rules.filter((r) =>
+    estimate.rules?.some((s) => s.ruleId === r.id && s.status === 'may-apply'),
+  );
+  const sourceOf: Record<Uncertainty, (r: RewardRuleV2) => boolean> = {
+    'annual-usage-unknown': (r) => r.cap.kind === 'spend',
+    'cap-usage-unknown': (r) => r.cap.kind === 'spend',
+    'cap-unstated': (r) => r.cap.kind === 'unstated',
+    'activation-unknown': (r) => r.activation === 'enroll-once' || r.activation === 'recurring',
+    'online-category-unknown': (r) => r.category === 'online-retail',
+    'payment-path-uncertain': () => true,
+  };
+  const labelFor = (code: Uncertainty) => {
+    const names = [...new Set(mayApply.filter(sourceOf[code]).map((r) => CATEGORY_LABELS[r.category]))];
+    return names.length ? names.join(' or ') : label;
+  };
   const bonus = estimate.maxBonusSpendCents > 0 && estimate.bonusRateBps !== null;
   const rate = bonus ? estimate.bonusRateBps! : estimate.baseRateBps;
   const notApplying = (estimate.rules ?? []).filter((r) => statusCopy[r.status]);
@@ -131,7 +152,7 @@ function EstimateRow({
       )}
       {estimate.uncertainties.map((code) => (
         <p key={code} className="supporting">
-          {uncertaintyCopy(code, label)}
+          {uncertaintyCopy(code, labelFor(code))}
         </p>
       ))}
       {notApplying.length > 0 && (
@@ -175,7 +196,7 @@ export default function ComparisonResult({
   const single = result.estimates.length === 1;
   const sources = catalog.sources.filter((s) => result.estimates.some((e) => e.sourceIds.includes(s.id)));
   return (
-    <Card as="section" hasBorder aria-labelledby="comparison-heading" aria-live="polite">
+    <Card hasBorder>
       <div className="card-body space-y-3">
         <h2 id="comparison-heading" className="section-title">
           {single

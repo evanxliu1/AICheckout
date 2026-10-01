@@ -27,6 +27,7 @@ export function migrateState(saved: StoredAppState): { state: AppState; notice: 
       revision: saved.revision + 1,
       wallet: { ...saved.wallet, cards },
       comparison: null,
+      pendingNotice: dropped ? MIGRATION_NOTICE : null,
     },
     notice: dropped ? MIGRATION_NOTICE : null,
   };

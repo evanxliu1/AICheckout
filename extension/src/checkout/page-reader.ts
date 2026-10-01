@@ -78,7 +78,8 @@ function cellText(element: Element): string {
     if (
       !(node instanceof Element) ||
       !visible(node) ||
-      /^(SCRIPT|STYLE|NOSCRIPT|INPUT|SELECT|TEXTAREA)$/.test(node.tagName)
+      /^(SCRIPT|STYLE|NOSCRIPT|INPUT|SELECT|TEXTAREA|OPTION|BUTTON)$/.test(node.tagName) ||
+      node.hasAttribute('contenteditable')
     )
       return '';
     return Array.from(node.childNodes, read).join('');
@@ -149,17 +150,22 @@ function readSummary(adapter: SiteAdapter, summary: Element): Entry[] | Unavaila
 }
 
 /** The one generic interpreter for every bundled SiteAdapter. */
-function readWithAdapter(adapter: SiteAdapter, document: Document): PageRead {
+export function readWithAdapter(adapter: SiteAdapter, document: Document): PageRead {
   if (adapter.loading.indicators.some((s) => [...document.querySelectorAll(s)].some(visible)))
     return unavailable('page-loading');
   const summaries = [...document.querySelectorAll(adapter.summary.selector)].filter(visible);
   if (!summaries.length) {
     const empty = adapter.emptyCart;
+    // Bounded: at most five candidate headings; oversized text simply doesn't match.
+    const matches = (el: Element) => {
+      try {
+        return cellText(el) === empty!.text;
+      } catch {
+        return false;
+      }
+    };
     const isEmpty =
-      empty &&
-      [...document.querySelectorAll(empty.selector)]
-        .filter(visible)
-        .some((el) => cellText(el) === empty.text);
+      empty && [...document.querySelectorAll(empty.selector)].filter(visible).slice(0, 5).some(matches);
     return unavailable(isEmpty ? 'empty-cart' : 'summary-missing');
   }
   if (summaries.length > adapter.summary.maxCount) return unavailable('ambiguous-amount');

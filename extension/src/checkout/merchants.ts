@@ -19,6 +19,8 @@ export function merchantForCheckout(rawUrl: string): MerchantId | null {
   try {
     const url = new URL(rawUrl);
     if (url.protocol !== 'https:' || url.username || url.password || url.port) return null;
+    // Bound the input before any adapter path pattern runs.
+    if (url.pathname.length > 200) return null;
     return (
       MERCHANT_IDS.find((id) => {
         const { hosts, paths } = SITE_ADAPTERS[id].match;

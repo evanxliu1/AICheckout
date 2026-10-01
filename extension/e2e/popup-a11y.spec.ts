@@ -92,8 +92,7 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
         published_at: expired.verifiedAt,
       };
       state.wallet = { defaultCardId: null, cards: [{ cardId: 'capital-one-quicksilver', usage: [] }] };
-      state.comparison = null;
-      state.purchase = null;
+      // Keep the earlier saved comparison: the expired-terms alert must still stay on screen.
       state.revision += 1;
     });
     await page.reload();
@@ -102,6 +101,9 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
     await page.getByRole('button', { name: 'Compare my cards' }).click();
     await expect(page.getByText(/These card terms have expired/)).toBeVisible();
+    // Regression: the stale-result timer must not clear an unavailable result.
+    await page.waitForTimeout(1500);
+    await expect(page.getByRole('alert').filter({ hasText: /These card terms have expired/ })).toBeVisible();
     await check('catalog-expired');
 
     // Locked.

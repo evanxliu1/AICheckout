@@ -62,7 +62,6 @@ export function createStateService(
       clearTimeout(timer!);
     }
   }
-  let migrationNotice: string | null = null;
   async function load(): Promise<AppState> {
     await storage.remove(LEGACY_KEYS);
     const saved = (await storage.get(STATE_KEY))[STATE_KEY];
@@ -70,10 +69,9 @@ export function createStateService(
     const parsed = storedAppStateSchema.safeParse(saved);
     if (!parsed.success) throw new Error('Saved data could not be read. Delete local data to start again.');
     if (parsed.data.schemaVersion === 2) return parsed.data;
-    // Pilot-era state: migrate once, persist, and tell the next response why limits went away.
+    // Pilot-era state: migrate once and persist; its notice waits in pendingNotice until shown.
     const migrated = migrateState(parsed.data);
     await storage.set({ [STATE_KEY]: migrated.state });
-    migrationNotice = migrated.notice;
     return migrated.state;
   }
   async function validateCart(cart: CartSnapshot | null, now: number) {
@@ -147,9 +145,11 @@ export function createStateService(
       const now = clock();
       if (request.type === 'checkout:get-state') {
         const result = await response(state, now);
-        const notice = migrationNotice;
-        migrationNotice = null;
-        return notice && result.ok && !result.notice ? { ...result, notice } : result;
+        // Show a pending notice only when nothing else is shown; clear it once it has been shown.
+        if (!result.ok || result.notice || !result.state.pendingNotice) return result;
+        const shown = { ...result.state, pendingNotice: null };
+        await storage.set({ [STATE_KEY]: shown });
+        return { ...result, state: shown, notice: result.state.pendingNotice };
       }
       if (request.expectedRevision !== state.revision) {
         return {

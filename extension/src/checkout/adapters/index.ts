@@ -1,15 +1,16 @@
-import { siteAdapterSchema, type MerchantId, type SiteAdapter } from './schema';
+import type { SiteAdapter } from './schema';
+import type { MerchantId } from './ids';
 import bestBuy from './best-buy-us.json' with { type: 'json' };
 import newegg from './newegg-us.json' with { type: 'json' };
 import amazon from './amazon-us.json' with { type: 'json' };
 
-export * from './schema';
+export * from './ids';
+export type { SiteAdapter } from './schema';
 
-/** Bundled adapters, validated when the module loads (and at build time by vite.config.ts). */
-export const SITE_ADAPTERS: Record<MerchantId, SiteAdapter> = {
-  'best-buy-us': siteAdapterSchema.parse(bestBuy),
-  'newegg-us': siteAdapterSchema.parse(newegg),
-  'amazon-us': siteAdapterSchema.parse(amazon),
-};
-for (const [id, adapter] of Object.entries(SITE_ADAPTERS))
-  if (adapter.merchantId !== id) throw new Error(`Adapter ${id} declares ${adapter.merchantId}`);
+/** Bundled adapter specs. They are validated against siteAdapterSchema at build time
+ * (vite.config.ts) and in tests, not at runtime, so zod never ships in the content script. */
+export const SITE_ADAPTERS = {
+  'best-buy-us': bestBuy,
+  'newegg-us': newegg,
+  'amazon-us': amazon,
+} as Record<MerchantId, SiteAdapter>;

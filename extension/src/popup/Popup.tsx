@@ -68,8 +68,11 @@ export default function Popup({
       });
   });
 
+  // Move to a result only right after the shopper compares, not when a saved result is restored.
+  const justCompared = useRef(false);
   useEffect(() => {
-    if (!dirty && !editing && view?.comparison) {
+    if (justCompared.current && !dirty && !editing && view?.comparison) {
+      justCompared.current = false;
       resultAnchor.current?.focus({ preventScroll: true });
       resultAnchor.current?.scrollIntoView({ block: 'start' });
     }
@@ -128,7 +131,14 @@ export default function Popup({
   }, [restore]);
 
   useEffect(() => {
-    if (!view?.comparison || !view.state.comparison) return;
+    // Only a ready result computed from the current inputs can go stale; an unavailable result
+    // (e.g. expired terms) must stay visible even if an older saved comparison exists.
+    if (
+      view?.comparison?.status !== 'ready' ||
+      !view.state.comparison ||
+      view.state.comparison.inputRevision !== view.state.revision
+    )
+      return;
     const midnight = new Date();
     midnight.setHours(24, 0, 0, 0);
     const remaining =
@@ -257,6 +267,7 @@ export default function Popup({
           paymentPath,
         },
       });
+      justCompared.current = true;
       setView(next);
       setDirty(false);
     } catch (err) {
@@ -545,20 +556,31 @@ export default function Popup({
                     </form>
                   </div>
                 </Card>
-                {!dirty && view.comparison && (
-                  <div ref={resultAnchor} tabIndex={-1} aria-label="Comparison result">
-                    <ComparisonResult
-                      catalog={catalog}
-                      result={view.comparison}
-                      purchase={view.state.purchase}
-                      subtotalOnly={
-                        view.state.cart?.kind === 'subtotal' &&
-                        view.state.cart.amountCents === view.state.purchase?.amountCents
-                      }
-                      maxAgeMinutes={view.state.comparison?.cartId ? 5 : 15}
-                    />
-                  </div>
-                )}
+                {/* Always mounted, so screen readers announce a result when it appears. */}
+                <div aria-live="polite">
+                  {!dirty && view.comparison && (
+                    <div
+                      ref={resultAnchor}
+                      tabIndex={-1}
+                      {...(view.comparison.status === 'ready'
+                        ? { role: 'region', 'aria-labelledby': 'comparison-heading' }
+                        : {})}
+                    >
+                      <ComparisonResult
+                        catalog={catalog}
+                        result={view.comparison}
+                        purchase={view.state.purchase}
+                        subtotalOnly={
+                          view.state.cart?.kind === 'subtotal' &&
+                          view.state.cart.amountCents === view.state.purchase?.amountCents
+                        }
+                        maxAgeMinutes={
+                          (view.state.comparison?.cartId ? CART_MAX_AGE_MS : RESULT_MAX_AGE_MS) / 60_000
+                        }
+                      />
+                    </div>
+                  )}
+                </div>
               </>
             ))}
           <footer className="supporting space-y-3 pt-2">

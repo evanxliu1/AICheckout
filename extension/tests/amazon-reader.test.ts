@@ -15,22 +15,25 @@ beforeEach(() => {
 });
 
 describe('observed Amazon US cart summary', () => {
-  it('reads the buy-box subtotal and never the offer banner or item price', () => {
+  it('reads the buy-box subtotal and never a lookalike subtotal outside it', () => {
     expect(read()).toEqual({
       status: 'found',
       merchantId: 'amazon-us',
       currency: 'USD',
-      amountCents: 649,
+      amountCents: 699,
       kind: 'subtotal',
       extractorVersion: 'amazon-summary-v1',
     });
     expect(probeSchema.parse({ url, reading: read() }).reading).toEqual(read());
-    document.querySelector('#sc-new-upsell td:last-child')!.textContent = '$999.99';
-    expect(read()).toMatchObject({ amountCents: 649 });
+    // The offer banner carries the same data-name and label wording; only the buy box is read.
+    document.querySelector('#sc-subtotal-amount-offer')!.textContent = '$999.99';
+    expect(read()).toMatchObject({ amountCents: 699 });
+    document.querySelector('.sc-offer-banner')!.remove();
+    expect(read()).toMatchObject({ amountCents: 699 });
   });
   it('follows a quantity change', () => {
     document.body.innerHTML = quantity;
-    expect(read()).toMatchObject({ amountCents: 1298, kind: 'subtotal' });
+    expect(read()).toMatchObject({ amountCents: 1398, kind: 'subtotal' });
   });
   it('recognizes the observed empty cart without consulting other prices', () => {
     document.body.innerHTML = empty + '<p>Subtotal: $19.99</p>';
@@ -61,21 +64,21 @@ describe('observed Amazon US cart summary', () => {
     amountCell().textContent = '€6.49';
     expect(read()).toMatchObject({ reason: 'unsupported-currency' });
   });
-  it('accepts an equal active-cart subtotal and rejects a conflicting one', () => {
+  it('accepts a repeated equal buy-box subtotal and rejects a conflicting one', () => {
     const extra = (value: string) =>
-      `<div data-name="Subtotals" class="sc-subtotal sc-subtotal-activecart"><span id="sc-subtotal-label-activecart">Subtotal (1 item):</span><span id="sc-subtotal-amount-activecart">${value}</span></div>`;
-    document.querySelector('.sc-active-cart')!.insertAdjacentHTML('beforeend', extra('$6.49'));
-    expect(read()).toMatchObject({ amountCents: 649 });
+      `<div data-name="Subtotals"><span id="sc-subtotal-label-x">Subtotal (1 item):</span><span id="sc-subtotal-amount-x">${value}</span></div>`;
+    document.querySelector('.sc-buy-box-inner-box')!.insertAdjacentHTML('beforeend', extra('$6.99'));
+    expect(read()).toMatchObject({ amountCents: 699 });
     document.body.innerHTML = subtotal;
-    document.querySelector('.sc-active-cart')!.insertAdjacentHTML('beforeend', extra('$7.00'));
+    document.querySelector('.sc-buy-box-inner-box')!.insertAdjacentHTML('beforeend', extra('$7.00'));
     expect(read()).toMatchObject({ reason: 'ambiguous-amount' });
   });
   it('ignores a hidden summary and never reads form values', () => {
     document.body.insertAdjacentHTML(
       'beforeend',
-      '<div hidden><div class="sc-active-cart"><div data-name="Subtotals"><span id="sc-subtotal-label-x">Subtotal (9 items):</span><span id="sc-subtotal-amount-x">$900.00</span></div></div></div><input value="$5.00">',
+      '<div hidden><div id="sc-buy-box"><div data-name="Subtotals"><span id="sc-subtotal-label-x">Subtotal (9 items):</span><span id="sc-subtotal-amount-x">$900.00</span></div></div></div><input value="$5.00">',
     );
-    expect(read()).toMatchObject({ amountCents: 649 });
+    expect(read()).toMatchObject({ amountCents: 699 });
   });
   it.each([
     ['https://www.amazon.com/cart', 'amazon-us'],
