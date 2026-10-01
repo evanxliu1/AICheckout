@@ -3,6 +3,7 @@ import { catalogResponseSchema } from '@ai-checkout/rewards-core';
 import { reviewRoutes } from './review-routes.ts';
 import type { ReviewRpc } from './review-repository.ts';
 import { reviewSite } from './review-site.ts';
+import { publicSite } from './public-site.ts';
 import type { ReviewConfig } from '@ai-checkout/catalog-review';
 import type { CurationExecution } from './curation/service.ts';
 
@@ -14,6 +15,7 @@ export function createApp({
   reviewLimit,
   reviewRoot,
   reviewConfig,
+  siteRoot,
   curation,
   shutdownSignal,
   curationLimit,
@@ -25,6 +27,8 @@ export function createApp({
   reviewLimit?: number;
   reviewRoot?: string;
   reviewConfig?: ReviewConfig;
+  /** Built public site (apps/site/dist), served at `/` behind the API and review routes. */
+  siteRoot?: string;
   curation?: CurationExecution;
   shutdownSignal?: AbortSignal;
   curationLimit?: number;
@@ -61,6 +65,7 @@ export function createApp({
     });
   if (reviewRoot && reviewConfig)
     void app.register(reviewSite, { prefix: '/review', root: reviewRoot, config: reviewConfig });
+  if (siteRoot) void app.register(publicSite, { root: siteRoot });
   app.get('/v1/catalog', async (_request, reply) => {
     reply.header('Cache-Control', 'no-store').header('X-Content-Type-Options', 'nosniff');
     try {

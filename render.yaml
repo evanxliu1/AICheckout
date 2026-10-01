@@ -1,11 +1,11 @@
-# Render Blueprint: catalog API + review app served from one Node process.
+# Render Blueprint: catalog API, review app and public site served from one Node process.
 # Secrets (SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY) are entered in the Render dashboard.
 services:
   - type: web
     name: ai-checkout-api
     runtime: node
     plan: free
-    buildCommand: npm ci && npm run build --workspace=@ai-checkout/api --workspace=@ai-checkout/review
+    buildCommand: npm ci && npm run build --workspace=@ai-checkout/api --workspace=@ai-checkout/review --workspace=@ai-checkout/site
     startCommand: node apps/api/dist/index.js
     healthCheckPath: /health
     autoDeploy: true
@@ -16,6 +16,8 @@ services:
         value: 0.0.0.0
       - key: REVIEW_DIST_DIR
         value: apps/review/dist
+      - key: SITE_DIST_DIR
+        value: apps/site/dist
       - key: CURATION_ADAPTER
         value: disabled
       - key: CURATION_ALLOW_METERED

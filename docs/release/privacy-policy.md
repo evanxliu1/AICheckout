@@ -1,6 +1,6 @@
 # AI Checkout privacy policy — draft
 
-**Not published.** This draft describes the current default extension build without a remote catalog endpoint. Resolve [the recorded privacy findings](privacy-review.md), fill the public placeholders, and remove this preparation notice only after the final implementation and policy agree.
+**Not published.** This draft describes both the default extension build (no network request) and builds configured with the hosted catalog (`npm run build:hosted`, the intended store release), which make one catalog request when the user asks. Resolve [the recorded privacy findings](privacy-review.md), fill the public placeholders, and remove this preparation notice only after the final implementation and policy agree.
 
 Effective date: **[[EFFECTIVE_DATE]]**
 Operator: **[[PUBLISHER_NAME]]**
@@ -18,6 +18,7 @@ After you accept the setup disclosure and choose a local passphrase, the extensi
 - Optional reward-limit information you report, such as annual online-retail spend, its date/year and applicable activation status.
 - Your latest saved purchase inputs: merchant, USD amount, date and eligibility selections.
 - Information needed to restore or invalidate a comparison, including catalog version, revision and timestamps. Reward amounts are calculated from these inputs.
+- In hosted builds, the most recently downloaded published catalog (public card terms, no personal data).
 - When you read a supported cart: amount, currency, amount type (total, estimated total or subtotal), merchant/reader identifiers, capture time, a random capture identifier, tab/document identifiers and a hash of the page identity.
 
 After you request a cart read, the extension examines bounded visible summary labels and amounts (on Amazon US, only the cart page's order-summary subtotal label and amount). It accesses the current tab URL in memory to check the merchant and whether the page changed. It does not save that raw URL, query string or page HTML. The stored hash is a freshness identifier; it is not a promise of anonymization. A captured cart may be rechecked when you compare or reopen a saved comparison while temporary page access remains available.
@@ -31,6 +32,12 @@ These inputs are used to calculate and explain estimates, retain your chosen car
 The comparison flow makes no network request. Opening a card-source link takes you to the issuer's website, which operates under its own privacy policy. Your browser and the Chrome Web Store may handle installation/update information under their own terms. Ordinary merchant browsing is also separate from the extension.
 
 AI-assisted catalog maintenance is a separate administrator tool. This extension does not send your wallet or purchase inputs to that tool or to a model. Its calculations use the rules packaged with the extension.
+
+## Catalog updates (hosted builds only)
+
+The default build makes no network request; it uses the card terms packaged with it. Builds configured with the hosted catalog show **Check for updated terms**. Each time you choose it, and only then, the extension sends one HTTPS GET request for the published catalog to a fixed address on the AI Checkout API (`https://ai-checkout-api.onrender.com/v1/catalog`). It never fetches in the background.
+
+The request carries no cookies, no referrer and none of your cards, amounts, purchase inputs or page addresses. Like any web request it reveals your IP address, your browser's user agent and the time of the request, which the API host records in its access logs. The API is operated by the AI Checkout project (github.com/evanxliu1/AICheckout), hosted on Render, with the catalog stored in Supabase. Access logs are retained according to those hosting providers' log retention; deleting your data in the extension cannot delete them.
 
 ## Retention, changes and deletion
 
@@ -52,4 +59,4 @@ If earlier unencrypted inputs exist, setup asks you to protect or delete them be
 
 For privacy questions, contact **[[SUPPORT_EMAIL]]**. Do not send card numbers, payment credentials, complete cart pages or unredacted shopping screenshots. Any information you choose to send through a support channel is handled separately from local extension storage; the final support channel's provider, retention and deletion practices must be disclosed before this policy is published.
 
-Changes to data handling will be reflected in this policy and the extension's relevant disclosures. A future release that contacts a catalog service requires an updated policy describing that service and its request metadata before distribution.
+Changes to data handling will be reflected in this policy and the extension's relevant disclosures. Any additional network request, or a change to the catalog service, its operator or providers, requires an updated policy before distribution.
