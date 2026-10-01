@@ -24,7 +24,7 @@ AI Checkout currently models seven cash-back cards (Citi Double Cash, Wells Farg
 
 Features:
 
-- Read the visible cart summary on Best Buy US or the Newegg US secure cart after opening the extension from Chrome's toolbar.
+- Read the visible cart summary on Best Buy US, the Newegg US secure cart, or the Amazon US cart after opening the extension from Chrome's toolbar. On Amazon it reads only the cart page's order-summary subtotal ("Subtotal (N items)" and its amount), and only when you click **Read cart amount**.
 - Choose the merchant and enter or correct a USD amount manually.
 - See when a captured amount is only a subtotal. Tax and shipping are excluded from subtotal comparisons until you enter the final charge.
 - Report annual online-retail spending for Blue Cash Everyday, or leave it unknown and see the resulting uncertainty.
@@ -38,7 +38,7 @@ Scope and limitations:
 
 This is a small rewards comparison tool, not a full card-benefits catalog or payment service. It does not apply for cards, link a bank, process a payment, or place an order. Issuer eligibility and merchant coding affect actual rewards. Unknown eligibility or annual-cap usage may change which card is best. Offers, fees, financing, rewards-covered amounts and unsupported categories are excluded. Card terms expire under a maintenance policy; expired terms block comparisons until an updated extension is available. Dollar amounts are estimates and may differ from statement rewards.
 
-Supported reading is limited to Best Buy's observed US cart-summary structure and `secure.newegg.com/shop/cart`. Other pages may require manual entry. Authenticated checkout, international sites and mobile layouts are not verified. AI Checkout is an independent project and is not affiliated with the named issuers or retailers.
+Supported reading is limited to Best Buy's observed US cart-summary structure, `secure.newegg.com/shop/cart`, and the Amazon US cart page (`www.amazon.com/gp/cart/view.html` or `/cart`), where only the buy-box subtotal is read; tax and shipping are not part of it. Other pages may require manual entry. Authenticated checkout, international sites and mobile layouts are not verified. AI Checkout is an independent project and is not affiliated with the named issuers or retailers.
 
 ## Single purpose — dashboard copy
 

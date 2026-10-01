@@ -24,8 +24,8 @@ Draft for the final release. Shopper features need no login, payment, bank conne
 Use a temporary anonymous cart; do not submit an order, enter payment details, or sign in just to run this test.
 
 1. Add one ordinary physical item through the retailer's public interface and wait for its cart to finish updating. The recorded historical products/prices are not required and may change.
-2. On Best Buy's US cart or `https://secure.newegg.com/shop/cart`, open the actual toolbar popup and choose **Read cart amount**. Confirm the amount against the visible summary and confirm automatic merchant selection.
-3. For Newegg with **Est. Total: TBD**, expect a **subtotal before tax and shipping** message. The result must also say **Newegg US subtotal** and exclude tax/shipping. No numeric final-total live claim follows from this test.
+2. On Best Buy's US cart, `https://secure.newegg.com/shop/cart`, or `https://www.amazon.com/cart`, open the actual toolbar popup and choose **Read cart amount**. Confirm the amount against the visible summary and confirm automatic merchant selection.
+3. For Newegg with **Est. Total: TBD**, and always for Amazon (whose cart shows a subtotal only), expect a **subtotal before tax and shipping** message. The result must also say **Newegg US subtotal** (or **Amazon US subtotal**) and exclude tax/shipping. No numeric final-total live claim follows from this test.
 4. Only if the item/channel assumptions fit the stated conditions, confirm them and compare. Otherwise leave eligibility unknown and check the uncertainty instead. Historical $249.99/$499.98 subtotals are examples, not fixed expected live prices.
 5. Change quantity on the merchant page. The former capture must not produce an unchanged trusted estimate. Read again, verify the new amount, and reconfirm.
 6. Remove all temporary items and wait for the empty-cart state. Record cleanup. A click on Remove alone is not evidence of cleanup.

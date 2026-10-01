@@ -20,7 +20,7 @@ After you accept the setup disclosure and choose a local passphrase, the extensi
 - Information needed to restore or invalidate a comparison, including catalog version, revision and timestamps. Reward amounts are calculated from these inputs.
 - When you read a supported cart: amount, currency, amount type (total, estimated total or subtotal), merchant/reader identifiers, capture time, a random capture identifier, tab/document identifiers and a hash of the page identity.
 
-After you request a cart read, the extension examines bounded visible summary labels and amounts. It accesses the current tab URL in memory to check the merchant and whether the page changed. It does not save that raw URL, query string or page HTML. The stored hash is a freshness identifier; it is not a promise of anonymization. A captured cart may be rechecked when you compare or reopen a saved comparison while temporary page access remains available.
+After you request a cart read, the extension examines bounded visible summary labels and amounts (on Amazon US, only the cart page's order-summary subtotal label and amount). It accesses the current tab URL in memory to check the merchant and whether the page changed. It does not save that raw URL, query string or page HTML. The stored hash is a freshness identifier; it is not a promise of anonymization. A captured cart may be rechecked when you compare or reopen a saved comparison while temporary page access remains available.
 
 The extension does not read card numbers, security codes, bank credentials, addresses, payment-field values or product names for this flow. It does not request your browsing-history list. It saves the current working purchase, not a transaction-history log.
 

@@ -8,7 +8,7 @@ Preparation status: the contact and policy URL must be filled and the final rele
 ## Getting started
 
 1. Open AI Checkout from Chrome's toolbar. Read the setup disclosure, choose and confirm a local passphrase of at least 15 characters, accept the disclosure, and choose **Protect saved inputs**. Then choose the supported card products you already own and save them. No card number or account login is needed.
-2. Open a supported Best Buy US cart or the Newegg US secure cart and choose **Read cart amount**. For manual entry, choose **Merchant** and enter a USD amount.
+2. Open a supported Best Buy US cart, the Newegg US secure cart, or the Amazon US cart and choose **Read cart amount**. For manual entry, choose **Merchant** and enter a USD amount.
 3. Confirm or correct the amount. If it is a subtotal, tax and shipping are excluded; enter the final charge when available or knowingly compare the subtotal only.
 4. Choose the online-retail eligibility assumption, confirm the listed exclusions, and choose **Compare my cards**.
 
@@ -19,7 +19,7 @@ The supported card products are Citi Double Cash, Wells Fargo Active Cash, Capit
 | What you see | What to do |
 | --- | --- |
 | Cart cannot be read | Open the toolbar on the supported cart, wait for its summary, and retry. Unsupported or changed page structures require manual entry. The extension does not reload the merchant page. |
-| Unsupported page | Use the Best Buy US cart or `https://secure.newegg.com/shop/cart`; product listings, other countries and other Newegg checkout routes are outside the reader scope. |
+| Unsupported page | Use the Best Buy US cart, `https://secure.newegg.com/shop/cart`, or `https://www.amazon.com/cart`; product listings, other countries, Amazon checkout pages and other Newegg checkout routes are outside the reader scope. |
 | Subtotal / total TBD | This is not the final charge. Enter the charge once known, or use the explicitly labeled subtotal estimate. |
 | “Compare the conditions” or a range | Eligibility or reward-cap usage is unknown. Review the displayed assumptions and issuer sources. Do not enter zero spend unless it is accurate. |
 | Saved cart changed or expired | Read again and confirm the current amount. Navigation, quantity changes and time limits can invalidate a capture. |
