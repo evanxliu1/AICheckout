@@ -57,8 +57,5 @@ research_notes/
 /evals/curation/expansion/extractions/
 /evals/curation/expansion/parts/
 /evals/curation/expansion/extractions-*/
-# Draft labels, product notes and verifier packets quote issuer text beyond 25 words (anchors up to 400
-# characters, some issuer wordings); local until their quotes are trimmed.
-/evals/curation/expansion/corpus.draft.json
-/evals/curation/expansion/product-notes.json
-/evals/curation/expansion/verify/
+# Draft labels, product notes, verifier packets and verification findings are committed: every quote in them is
+# at most 25 words (scripts/check-expansion-quotes.mjs checks them against the captures before a commit).

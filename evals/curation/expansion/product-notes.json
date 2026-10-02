@@ -1,0 +1,3936 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/draft-expansion-labels.mjs",
+  "description": "Structured hints the extraction schema cannot express, from the research drafts (summaries and conditions clipped to 25 words). An anchored hint cites a quote of at most 25 words that resolves in the captures (research-quote: the research quoted it; keyword-search: a capture sentence with the rate and a keyword, which a verifier must confirm says what the hint says). Unanchored hints cite the research. draftNotes record what drafting dropped.",
+  "cards": [
+    {
+      "cardId": "amex-gold",
+      "issuer": "American Express",
+      "hints": [],
+      "draftNotes": [
+        "rules.1 (dining, \"4X Membership Rewards® points per dollar spent on purchases \") cap: anchor kept, but no 25-word window states the cap amount ($5,000); check the value against its anchor",
+        "rules.2 (supermarkets, \"4X Membership Rewards® points per dollar spent at US superma\") cap: anchor kept, but no 25-word window states the cap amount ($2,500); check the value against its anchor"
+      ]
+    },
+    {
+      "cardId": "amex-platinum",
+      "issuer": "American Express",
+      "hints": [],
+      "draftNotes": [
+        "rules.1 (travel-portal, \"eligible travel purchases\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($500,000))",
+        "rules.3 (travel-portal, \"2X Membership Rewards® Points on American Express Travel® On\") rateBps: a quote over 25 words was dropped (no 25-word window carries the rate (200 bps))"
+      ]
+    },
+    {
+      "cardId": "amex-delta-skymiles-blue",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Delta Purchases",
+          "rate": "2X",
+          "cap": "none stated",
+          "conditions": "Delta Purchases = charged directly with Delta as merchant of record (delta.com, Fly Delta app, phone, counters; incl. Delta Vacations and Delta Stays); excludes Delta…",
+          "merchants": [
+            "Delta"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "2X Miles at Restaurants and on Delta Purchases‡"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"Eligible purchases\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "amex-delta-skymiles-gold",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Delta Purchases",
+          "rate": "2X",
+          "cap": "none stated",
+          "conditions": "Delta Purchases = charged directly with Delta as merchant of record (delta.com, Fly Delta app, phone, counters; incl. Delta Vacations and Delta Stays); excludes Delta…",
+          "merchants": [
+            "Delta"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/amex.json",
+          "researchSources": [
+            "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
+            "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/delta-skymiles-gold-american-express-card/25330-10-0"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "amex-delta-skymiles-platinum",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Delta Purchases",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "Delta Purchases = charged directly with Delta as merchant of record (delta.com, Fly Delta app, phone, counters; incl. Delta Vacations and Delta Stays); excludes Delta…",
+          "merchants": [
+            "Delta"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "3X miles on Delta Purchases‡"
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (other, \"Delta Purchases\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "amex-delta-skymiles-reserve",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Delta Purchases",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "Delta Purchases = charged directly with Delta as merchant of record (delta.com, Fly Delta app, phone, counters; incl. Delta Vacations and Delta Stays); excludes Delta…",
+          "merchants": [
+            "Delta"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/amex.json",
+          "researchSources": [
+            "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
+            "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/delta-skymiles-reserve-american-express-card/25330-10-0"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "amex-hilton-honors",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Hilton portfolio hotels and resorts",
+          "rate": "7X",
+          "cap": "none stated",
+          "conditions": "Charged directly with a property in the Hilton portfolio (booking must be via a Hilton-operated channel; incidentals if charged to room)",
+          "merchants": [
+            "Hilton"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/amex.json",
+          "researchSources": [
+            "https://www.americanexpress.com/us/credit-cards/card/hilton-honors/",
+            "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/hilton-honors-credit-card/25330-10-0"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"Eligible purchases\"): rule dropped (no resolving quote)",
+        "issue ambiguous: dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "amex-hilton-honors-surpass",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Hilton portfolio hotels and resorts",
+          "rate": "12X",
+          "cap": "none stated",
+          "conditions": "Charged directly with a property in the Hilton portfolio (booking must be via a Hilton-operated channel; incidentals if charged to room)",
+          "merchants": [
+            "Hilton"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/amex.json",
+          "researchSources": [
+            "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
+            "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/hilton-honors-surpass-credit-card/25330-10-0"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"eligible purchases\") rateBps: a quote over 25 words was dropped (no 25-word window carries the rate (300 bps))",
+        "rules.0 (all-purchases, \"eligible purchases\") rateBps: a quote over 25 words was dropped (no 25-word window carries the rate (300 bps))",
+        "rules.0 (all-purchases, \"eligible purchases\") rateBps: value dropped (no resolving quote)",
+        "rules.0 (all-purchases, \"eligible purchases\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "amex-hilton-honors-aspire",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Hilton portfolio hotels and resorts",
+          "rate": "14X",
+          "cap": "none stated",
+          "conditions": "Charged directly with a property in the Hilton portfolio (booking must be via a Hilton-operated channel; incidentals if charged to room)",
+          "merchants": [
+            "Hilton"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Card Members can earn 14X Points on purchases made directly with hotels and resorts within the Hilton portfolio.‡"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Car rentals purchased directly from select major car rental companies (list at americanexpress.com/rewards-info)",
+          "rate": "7X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Hilton"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Card Members can earn 7X Points on purchases of Flights booked directly with airlines or flights booked through American Express Travel, Car rentals purchased directly"
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (travel-portal, \"Select Travel Purchases\"): rule dropped (no resolving quote)",
+        "rules.6 (other, \"eligible Hilton purchases\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "amex-marriott-bonvoy-bevy",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Marriott Bonvoy properties",
+          "rate": "6X",
+          "cap": "none stated",
+          "conditions": "Charged directly with participating Marriott Bonvoy properties, standalone Marriott retail, and Marriott-branded online stores",
+          "merchants": [
+            "Marriott"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "6X points at hotels participating in Marriott Bonvoy®‡"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "amex-marriott-bonvoy-brilliant",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Marriott Bonvoy properties",
+          "rate": "6X",
+          "cap": "none stated",
+          "conditions": "Charged directly with participating Marriott Bonvoy properties, standalone Marriott retail, and Marriott-branded online stores",
+          "merchants": [
+            "Marriott"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "6X points at hotels participating in Marriott Bonvoy®‡"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-customized-cash-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "6% (3% base + 3% first-year bonus)",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "First year from account opening only; cardholder selects category, may change once per calendar month via Online/Mobile Banking. Online shopping choice = \"purchases made online…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "3%",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "Cardholder selects category; change once per calendar month. Online shopping choice = \"purchases made online via a website or a digital application (an app)\", identified…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+            "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/cash-back-category-choices/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+            "https://www.bankofamerica.com/credit-cards/"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/unlimited-cash-back-credit-card/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+            "https://www.bankofamerica.com/credit-cards/",
+            "https://upgradedpoints.com/news/bofa-rewards-program-launch/"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-travel-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/travel-rewards-credit-card/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+            "https://www.bankofamerica.com/credit-cards/"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-premium-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+            "https://www.bankofamerica.com/credit-cards/"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-premium-rewards-elite",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+            "https://www.bankofamerica.com/credit-cards/"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-students",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "6% (3% base + 3% first-year bonus)",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "First year from account opening only; cardholder selects category, may change once per calendar month via Online/Mobile Banking. Online shopping choice = \"purchases made online…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "3%",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "Cardholder selects category; change once per calendar month. Online shopping choice = \"purchases made online via a website or a digital application (an app)\", identified…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/student-cash-back-credit-card/",
+            "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/cash-back-category-choices/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards-students",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-travel-rewards-students",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-secured",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "6% (3% base + 3% first-year bonus)",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "First year from account opening only; cardholder selects category, may change once per calendar month via Online/Mobile Banking. Online shopping choice = \"purchases made online…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "3%",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "Cardholder selects category; change once per calendar month. Online shopping choice = \"purchases made online via a website or a digital application (an app)\", identified…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/cash-back-secured-credit-card/",
+            "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/cash-back-category-choices/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards-secured",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-travel-rewards-secured",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-susan-g-komen-customized-cash-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "6% (3% base + 3% first-year bonus)",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "First year from account opening only; cardholder selects category, may change once per calendar month via Online/Mobile Banking. Online shopping choice = \"purchases made online…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "3%",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "Cardholder selects category; change once per calendar month. Online shopping choice = \"purchases made online via a website or a digital application (an app)\", identified…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/susan-komen-credit-card/",
+            "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/cash-back-category-choices/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.2 (gas, \"Gas & Electric Vehicle (EV) Charging Stations\") limitedTime: value dropped (no resolving quote)",
+        "rules.3 (ev-charging, \"Gas & Electric Vehicle (EV) Charging Stations\") limitedTime: value dropped (no resolving quote)",
+        "rules.4 (online-retail, \"Online Shopping\") limitedTime: value dropped (no resolving quote)",
+        "rules.5 (dining, \"Dining\") limitedTime: value dropped (no resolving quote)",
+        "rules.6 (other, \"Travel\") limitedTime: value dropped (no resolving quote)",
+        "rules.7 (drugstores, \"Drug Stores\") limitedTime: value dropped (no resolving quote)",
+        "rules.8 (other, \"Home Improvement/Furnishings\") limitedTime: value dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "boa-atmos-rewards-ascent",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible Alaska Airlines and Hawaiian Airlines purchases",
+          "rate": "3 points per $1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Alaska Airlines / Hawaiian Airlines (Atmos Rewards)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "3 Points: Earn 3 points for every $1 of eligible Alaska Airlines and Hawaiian Airlines Purchases."
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "Atmos 10% rewards boost with eligible Bank of America account",
+          "rate": "+10% points",
+          "cap": "none stated",
+          "conditions": "Requires eligible BofA account; card-specific feature, distinct from BofA Rewards tiers",
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "You can also earn a 10% rewards bonus on all points earned on card purchases if you have an eligible Bank of America® account."
+        }
+      ],
+      "draftNotes": [
+        "rules.6 (other, \"Digital Goods Media – Books, Movies, Digital artwork/images,\") rateBps: a quote over 25 words was dropped (no 25-word window carries the rate (200 bps))"
+      ]
+    },
+    {
+      "cardId": "boa-atmos-rewards-summit",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "10% points bonus with eligible Bank of America account",
+          "rate": "+10% points",
+          "cap": "none stated",
+          "conditions": "Requires eligible BofA account",
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Plus, earn a 10% rewards bonus on all points earned from card purchases if you have an eligible Bank of America® account."
+        }
+      ],
+      "draftNotes": [
+        "rules.3 (other, \"Earn 3 points for every $1 of eligible foreign transaction N\") rateBps: value dropped (no resolving quote)",
+        "rules.3 (other, \"Earn 3 points for every $1 of eligible foreign transaction N\") usMerchantsOnly: value dropped (no resolving quote)",
+        "rules.3 (other, \"Earn 3 points for every $1 of eligible foreign transaction N\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "boa-royal-one",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible Royal Caribbean, Celebrity Cruises and Silversea purchases",
+          "rate": "3 points per $1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Royal Caribbean Group (Royal Caribbean, Celebrity, Silversea)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "3 points per dollar spent on eligible Royal Caribbean®, Celebrity Cruises® and Silversea® purchases"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-royal-one-plus",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible Royal Caribbean, Celebrity Cruises and Silversea purchases",
+          "rate": "4 points per $1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Royal Caribbean Group (Royal Caribbean, Celebrity, Silversea)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "4 points per dollar spent on eligible Royal Caribbean®, Celebrity Cruises® and Silversea® purchases"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-allways-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Allegiant purchases (air, hotel, car rental, attractions)",
+          "rate": "3 points per $1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Allegiant Air"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "3 points per $1 spent on Allegiant purchases (air, hotel, car rental and attractions)"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-air-france-klm",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible Air France, KLM and SkyTeam member airline purchases",
+          "rate": "3 miles per $1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Air France-KLM (Flying Blue)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 3 Miles for every $1 spent on eligible Air France, KLM Royal Dutch Airlines and SkyTeam member airline purchases."
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"1.5 Miles: Earn 1.5 miles for every $1 of Net Purchases char\") activation: value dropped (no resolving quote)",
+        "rules.1 (dining, \"3 Miles: Earn 3 miles (not in addition to 1.5 miles) for eve\") activation: value dropped (no resolving quote)",
+        "rules.2 (other, \"3 Miles: Earn 3 miles (not in addition to 1.5 miles) for eve\") activation: value dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "boa-norwegian-cruise-line-world-mastercard",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Norwegian purchases",
+          "rate": "3 points per $1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Norwegian Cruise Line"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 3 points (consisting of 2 bonus points and 1 base point) for every $1 spent on eligible Net Purchases charged through Norwegian Cruise Line."
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-mastercard-titanium",
+      "issuer": "Barclays",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-mastercard-black",
+      "issuer": "Barclays",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-mastercard-gold",
+      "issuer": "Barclays",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-gm-rewards-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"eligible GM purchases\" (vehicles, certified service, parts, accessories, SiriusXM, GM Energy, company store, insurance, OnStar per T&C)",
+          "rate": "7X card + up to 3X from GM Rewards = \"up to 10x\"",
+          "cap": "none stated",
+          "conditions": "Extra 3X awarded by GM Rewards program (member-status related); product page references \"Qualifying GM Purchases greater than $499\" in a footnote - meaning unclear.",
+          "merchants": [
+            "General Motors (GM Rewards)"
+          ],
+          "membership": "Extra 3X awarded by GM Rewards program (member-status related); product page references \"Qualifying GM Purchases greater than $499\" in a footnote - meaning unclear.",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/barclays.json",
+          "researchSources": [
+            "https://cards.barclaycardus.com/banking/cards/",
+            "https://cards.barclaycardus.com/banking/cards/general-motors/",
+            "https://www.barclaycardus.com/applycontent/TnCs.jsp?47943",
+            "https://www.paymentsjournal.com/in-the-exit-row-barclays-leaves-two-airline-cards-shifts-focus-to-gm/"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (other, \"new or certified pre-owned vehicles or customer-paid Certifi\") rateBps: a quote over 25 words was dropped (no 25-word window carries the rate (1000 bps))",
+        "rules.0 (other, \"new or certified pre-owned vehicles or customer-paid Certifi\") rateBps: a quote over 25 words was dropped (no 25-word window carries the rate (1000 bps))",
+        "rules.0 (other, \"new or certified pre-owned vehicles or customer-paid Certifi\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "barclays-jetblue-card",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"eligible JetBlue purchases\"",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "6X/3X JetBlue definition per T&C: jetblue.com, JetBlue reservations/airport, JetBlue Vacations, TrueBlue Travel (truebluetravel.com) with exclusions.",
+          "merchants": [
+            "JetBlue"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "3X on JetBlue, JetBlue Vacations and TrueBlue TravelTM Purchases"
+        }
+      ],
+      "draftNotes": [
+        "exclusion \"Balance transfers, cash advances, fees, interest charges, and…\": dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "barclays-jetblue-plus",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"eligible JetBlue purchases\"",
+          "rate": "6X",
+          "cap": "none stated",
+          "conditions": "6X/3X JetBlue definition per T&C: jetblue.com, JetBlue reservations/airport, JetBlue Vacations, TrueBlue Travel (truebluetravel.com) with exclusions.",
+          "merchants": [
+            "JetBlue"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "6X on JetBlue, JetBlue Vacations and TrueBlue TravelTM Purchases"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-jetblue-premier",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"eligible JetBlue purchases\"",
+          "rate": "6X",
+          "cap": "none stated",
+          "conditions": "6X/3X JetBlue definition per T&C: jetblue.com, JetBlue reservations/airport, JetBlue Vacations, TrueBlue Travel (truebluetravel.com) with exclusions.",
+          "merchants": [
+            "JetBlue"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "6X on JetBlue, JetBlue Vacations and TrueBlue TravelTM Purchases"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-breeze-easy-visa",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Breeze \"Nicer Bundles and Nicest Bundles\"",
+          "rate": "up to 10X (5X when you buy + 5X when you fly)",
+          "cap": "none stated",
+          "conditions": "Fly portion earned via BreezePoints program.",
+          "merchants": [
+            "Breeze Airways"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "on Nicer Bundles and Nicest Bundles - 5X when you buy, plus 5X when you fly2,3"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Breeze \"Nice Bundles\"",
+          "rate": "up to 4X (2X buy + 2X fly)",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Breeze Airways"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/barclays.json",
+          "researchSources": [
+            "https://cards.barclaycardus.com/banking/cards/",
+            "https://cards.barclaycardus.com/banking/cards/breeze-airways/",
+            "https://www.barclaycardus.com/applycontent/TnCs.jsp?48953"
+          ]
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Breeze \"No Flex Fares\"",
+          "rate": "up to 2X (1X buy + 1X fly)",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Breeze Airways"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/barclays.json",
+          "researchSources": [
+            "https://cards.barclaycardus.com/banking/cards/",
+            "https://cards.barclaycardus.com/banking/cards/breeze-airways/",
+            "https://www.barclaycardus.com/applycontent/TnCs.jsp?48953"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-wyndham-rewards-earner",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"eligible purchases made at Hotels by Wyndham including Wyndham Travel Bundles\"",
+          "rate": "5X",
+          "cap": "none stated",
+          "conditions": "T&C also includes Caesars Rewards hotels and some resorts in Trademark Collection.",
+          "merchants": [
+            "Wyndham Rewards"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "on eligible purchases made at Hotels by Wyndham including Wyndham Travel Bundles.3"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-wyndham-rewards-earner-plus",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Hotels by Wyndham including Wyndham Travel Bundles\"",
+          "rate": "6X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Wyndham Rewards"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "on eligible purchases made at Hotels by Wyndham including Wyndham Travel Bundles.3"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-wyndham-rewards-earner-premier",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"eligible purchases made at Hotels by Wyndham including Wyndham Travel Bundles\"",
+          "rate": "8X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Wyndham Rewards"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "on eligible purchases made at Hotels by Wyndham including Wyndham Travel Bundles.3"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-upromise-world-mastercard",
+      "issuer": "Barclays",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-frontier-airlines-world-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Purchases directly from Frontier Airlines",
+          "rate": "5X (card); page advertises \"up to 17x\" incl. 12X Frontier Miles member earning on non-Basic fares",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Frontier Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "5 Miles for every $1 spent on eligible Net Purchases made with your Card Account on tickets, goods and services purchased directly from Frontier Airlines"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-lufthansa-miles-more-world-elite",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Miles & More partner airline tickets\"",
+          "rate": "2X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Lufthansa Miles & More"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "spent on Miles & More partner airline tickets, and 1 Mile per $1 on all other purchases2"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-emirates-skywards-rewards",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"tickets, goods and services purchased directly from Emirates\" (emirates.com / Emirates offices)",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "Inflight purchases excluded.",
+          "merchants": [
+            "Emirates Skywards"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "3 Skywards Miles for every $1 (USD 1) spent on eligible Net Purchases made with your Card Account on tickets, goods and services purchased directly"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-emirates-skywards-premium",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"tickets, goods and services purchased directly from Emirates\" (emirates.com / Emirates offices)",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "Inflight purchases excluded.",
+          "merchants": [
+            "Emirates Skywards"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "3 Skywards Miles for every $1 (USD 1) spent on eligible Net Purchases made with your Card Account on tickets, goods and services purchased directly"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"all other purchases\") rateBps: value dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "barclays-carnival-rewards-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Carnival purchases\"",
+          "rate": "3X card (\"up to 6x\" incl. up to 3X via Carnival Rewards program)",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Carnival Cruise Line"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "3X on Carnival Cruise Line Purchases"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-capital-vacations-world-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"all eligible Capital Vacations purchases\"",
+          "rate": "5X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Capital Vacations"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "For every $1 spent on all eligible Capital Vacations purchases2"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-rci-elite-rewards-world-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"all eligible RCI purchases\"",
+          "rate": "5X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "RCI"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "for every $1 spent on all eligible RCI purchases2"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \" \"): issuerWording is blank; add the capture's wording"
+      ]
+    },
+    {
+      "cardId": "barclays-barnes-noble-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Barnes & Noble stores and \"bn.com\", Paper Source, B. Dalton, Bookstop, Bookstar, Doubleday and other listed affiliates",
+          "rate": "5% back",
+          "cap": "none stated",
+          "conditions": "Per T&C includes bn.com online.",
+          "merchants": [
+            "Barnes & Noble"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "a 5% rebate, reflected as a credit on your Account statement, on Net Purchases made using the Account at any Barnes & Noble, Paper Source,"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "barclays-gap-encore-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Gap Inc. family of brands\" (in-store, online e.g. gap.com/oldnavy.com, outlet; U.S. incl. Puerto Rico)",
+          "rate": "5X (T&C: 25 points per $1)",
+          "cap": "none stated",
+          "conditions": "Online coverage per Gap Encore T&C; assumed same across sibling cards.",
+          "merchants": [
+            "Gap"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "at the Gap Inc. family of brands3"
+        }
+      ],
+      "draftNotes": [
+        "rules.2 (other, \"Our brands in locations outside of the United States and Pue\"): issuerWording is not verbatim in the captures; replace it with the capture's wording",
+        "rules.4 (other, \"Apparel/clothing store Net Purchases outside our Family of B\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "barclays-old-navy-encore-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Gap Inc. family of brands\" (in-store, online e.g. gap.com/oldnavy.com, outlet; U.S. incl. Puerto Rico)",
+          "rate": "5X (T&C: 25 points per $1)",
+          "cap": "none stated",
+          "conditions": "Online coverage per Gap Encore T&C; assumed same across sibling cards.",
+          "merchants": [
+            "Old Navy (Gap Inc.)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "at the Gap Inc. family of brands3"
+        }
+      ],
+      "draftNotes": [
+        "rules.3 (other, \"Apparel/clothing store Net Purchases outside our Family of B\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "barclays-banana-republic-encore-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Gap Inc. family of brands\" (in-store, online e.g. gap.com/oldnavy.com, outlet; U.S. incl. Puerto Rico)",
+          "rate": "5X (T&C: 25 points per $1)",
+          "cap": "none stated",
+          "conditions": "Online coverage per Gap Encore T&C; assumed same across sibling cards.",
+          "merchants": [
+            "Banana Republic (Gap Inc.)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "at the Gap Inc. family of brands3"
+        }
+      ],
+      "draftNotes": [
+        "rules.4 (other, \"Apparel/clothing store Net Purchases outside our Family of B\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "barclays-athleta-encore-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Gap Inc. family of brands\" (in-store, online e.g. gap.com/oldnavy.com, outlet; U.S. incl. Puerto Rico)",
+          "rate": "5X (T&C: 25 points per $1)",
+          "cap": "none stated",
+          "conditions": "Online coverage per Gap Encore T&C; assumed same across sibling cards.",
+          "merchants": [
+            "Athleta (Gap Inc.)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "at the Gap Inc. family of brands3"
+        }
+      ],
+      "draftNotes": [
+        "rules.4 (other, \"Apparel Purchases Outside our Family of Brands in locations \"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "barclays-aarp-travel-rewards-mastercard",
+      "issuer": "Barclays",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "barclays-aarp-essential-rewards-mastercard",
+      "issuer": "Barclays",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-venture-x",
+      "issuer": "Capital One",
+      "hints": [],
+      "draftNotes": [
+        "rules.1 (travel-portal, \"hotels and rental cars booked through Capital One Travel\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "capital-one-venture",
+      "issuer": "Capital One",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-ventureone",
+      "issuer": "Capital One",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-quicksilverone",
+      "issuer": "Capital One",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-quicksilver-student",
+      "issuer": "Capital One",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-quicksilver-secured",
+      "issuer": "Capital One",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-savorone",
+      "issuer": "Capital One",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-savor-student",
+      "issuer": "Capital One",
+      "hints": [],
+      "draftNotes": [
+        "rules.5 (travel-portal, \"hotels, vacation rentals and rental cars booked through Capi\") rateBps: value dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "capital-one-t-mobile-visa",
+      "issuer": "Capital One",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Phones, devices and accessories at T-Mobile.com, T-Life app, T-Mobile stores and Authorized Retailers",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "Excludes EIP payments, wireless service, fees; no enhanced earn via 3rd-party digital wallets",
+          "merchants": [
+            "T-Mobile"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "cardholders earn 5% back in T-Mobile Rewards on net Qualifying Purchases (purchases minus any credits or returns) made online at T-Mobile.com and in the T-Life"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-kohls-rewards-visa",
+      "issuer": "Capital One",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Kohl's stores or Kohls.com, excluding gift cards",
+          "rate": "7.5%",
+          "cap": "none stated",
+          "conditions": "Card must be linked to Kohl's Rewards account",
+          "merchants": [
+            "Kohl's"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/capital-one.json",
+          "researchSources": [
+            "https://www.capitalone.com/credit-cards/",
+            "https://card-apis.capitalone.com/protected/149354/product/?id=ALL&channel=UNS&v=0b58b9247495ab59f505dbd5c7d14dab2684a7df",
+            "https://disclosures.capitalone.com/disclosure.40895.en-US.html"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "capital-one-rei-co-op-mastercard",
+      "issuer": "Capital One",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "REI retail locations and REI.com (incl. gift cards, classes, REI Cooperative Action Fund donations)",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "REI Co-op membership required to hold card and to redeem",
+          "merchants": [
+            "REI"
+          ],
+          "membership": "REI Co-op membership required to hold card and to redeem",
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "You will also earn 5% in REI Co-op Mastercard Rewards for donations made to the 501(c)(3) REI Cooperative Action Fund at REIfund.org or in-store at"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (other, \"You will earn 5% in REI Co-op Mastercard Rewards on net purc\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "capital-one-williams-sonoma-key-rewards-visa",
+      "issuer": "Capital One",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Williams Sonoma, WS Home, Pottery Barn (Kids/Teen), west elm, Rejuvenation, Mark & Graham",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "10% for first 30 days as new cardmember / intro in-store; GreenRow and Dormify excluded; U.S./PR only",
+          "merchants": [
+            "Williams-Sonoma, Inc. (Williams Sonoma)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, west elm,"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-pottery-barn-key-rewards-visa",
+      "issuer": "Capital One",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Williams Sonoma, WS Home, Pottery Barn (Kids/Teen), west elm, Rejuvenation, Mark & Graham",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "10% for first 30 days as new cardmember / intro in-store; GreenRow and Dormify excluded; U.S./PR only",
+          "merchants": [
+            "Williams-Sonoma, Inc. (Pottery Barn)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, west elm,"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "rules.3 (other, \"5% back in Rewards for Net Eligible Purchases made at Willia\"): issuerWording is not verbatim in the captures; replace it with the capture's wording",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "capital-one-west-elm-key-rewards-visa",
+      "issuer": "Capital One",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Williams Sonoma, WS Home, Pottery Barn (Kids/Teen), west elm, Rejuvenation, Mark & Graham",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "10% for first 30 days as new cardmember / intro in-store; GreenRow and Dormify excluded; U.S./PR only",
+          "merchants": [
+            "Williams-Sonoma, Inc. (West Elm)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, west elm,"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-key-rewards-visa",
+      "issuer": "Capital One",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Williams Sonoma, WS Home, Pottery Barn (Kids/Teen), west elm, Rejuvenation, Mark & Graham",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "10% for first 30 days as new cardmember / intro in-store; GreenRow and Dormify excluded; U.S./PR only",
+          "merchants": [
+            "Williams-Sonoma, Inc."
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, west elm,"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-bjs-one-mastercard",
+      "issuer": "Capital One",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible purchases in-club at BJ's front-end registers, BJs.com, BJ's app",
+          "rate": "3%",
+          "cap": "none stated",
+          "conditions": "Excludes BJ's Gas, alcohol, tobacco, gift cards, membership fees, etc.",
+          "merchants": [
+            "BJ's Wholesale Club"
+          ],
+          "membership": "Excludes BJ's Gas, alcohol, tobacco, gift cards, membership fees, etc.",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/capital-one.json",
+          "researchSources": [
+            "https://disclosures.capitalone.com/disclosure.40483.en-US.html",
+            "https://card-apis.capitalone.com/protected/149354/product/?id=ALL&channel=UNS&v=0b58b9247495ab59f505dbd5c7d14dab2684a7df",
+            "https://www.capitalone.com/credit-cards/"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-bjs-one-plus-mastercard",
+      "issuer": "Capital One",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible purchases in-club at BJ's front-end registers, BJs.com, BJ's app",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "Excludes BJ's Gas, alcohol, tobacco, gift cards, membership fees, etc.",
+          "merchants": [
+            "BJ's Wholesale Club"
+          ],
+          "membership": "Excludes BJ's Gas, alcohol, tobacco, gift cards, membership fees, etc.",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/capital-one.json",
+          "researchSources": [
+            "https://disclosures.capitalone.com/disclosure.40486.en-US.html",
+            "https://card-apis.capitalone.com/protected/149354/product/?id=ALL&channel=UNS&v=0b58b9247495ab59f505dbd5c7d14dab2684a7df",
+            "https://www.capitalone.com/credit-cards/"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-bass-pro-shops-club-card",
+      "issuer": "Capital One",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Bass Pro Shops, Cabela's, Mack's Prairie Wings stores/catalogs/websites, White River Marine Group dealers",
+          "rate": "2 points/$ Classic; 3 Silver; 5 Black",
+          "cap": "none stated",
+          "conditions": "Tier by Net Purchases and creditworthiness (Silver requires >= $10,000 Net Purchases); third-party wallets earn base only",
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/capital-one.json",
+          "researchSources": [
+            "https://disclosures.capitalone.com/disclosure.41822.en-US.html",
+            "https://card-apis.capitalone.com/protected/149354/product/?id=ALL&channel=UNS&v=0b58b9247495ab59f505dbd5c7d14dab2684a7df",
+            "https://www.capitalone.com/credit-cards/"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "pointValueHundredthsOfCent: a quote over 25 words was dropped (no 25-word window carries a cash value)",
+        "pointValueHundredthsOfCent: value dropped (no resolving quote)",
+        "rules.2 (other, \"Participating Stores\") limitedTime: a quote over 25 words was dropped (no 25-word window carries a time limit)",
+        "rules.2 (other, \"Participating Stores\") limitedTime: value dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "capital-one-cabelas-club-card",
+      "issuer": "Capital One",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Bass Pro Shops, Cabela's, Mack's Prairie Wings stores/catalogs/websites, White River Marine Group dealers",
+          "rate": "2 points/$ Classic; 3 Silver; 5 Black",
+          "cap": "none stated",
+          "conditions": "Tier by Net Purchases and creditworthiness (Silver requires >= $10,000 Net Purchases); third-party wallets earn base only",
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/capital-one.json",
+          "researchSources": [
+            "https://disclosures.capitalone.com/disclosure.41826.en-US.html",
+            "https://card-apis.capitalone.com/protected/149354/product/?id=ALL&channel=UNS&v=0b58b9247495ab59f505dbd5c7d14dab2684a7df",
+            "https://www.capitalone.com/credit-cards/"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "pointValueHundredthsOfCent: a quote over 25 words was dropped (no 25-word window carries a cash value)",
+        "pointValueHundredthsOfCent: value dropped (no resolving quote)",
+        "rules.1 (other, \"Bass Pro Shops and Cabela’s purchases\") usMerchantsOnly: value dropped (no resolving quote)",
+        "rules.3 (other, \"bonus Points on select purchases\") rateBps: a quote over 25 words was dropped (no 25-word window carries the rate (1000 bps))"
+      ]
+    },
+    {
+      "cardId": "capital-one-union-plus-cash-rewards",
+      "issuer": "Capital One",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "capital-one-teamster-privilege-cash-rewards",
+      "issuer": "Capital One",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "chase-freedom-flex",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "rotating-quarterly",
+          "summary": "Quarterly bonus categories; Oct-Dec 2026: \"Grocery Stores (excluding Walmart® and Target®)\" and \"Dining\"",
+          "rate": "5%",
+          "cap": "$1,500 in combined purchases per quarter, then 1%",
+          "conditions": "Must activate each quarter (secondary sources: activate by Dec 14, 2026; Q4 also includes American Red Cross donations)",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Grocery Stores (excluding Walmart® and Target®)*"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Qualifying Lyft purchases",
+          "rate": "2%",
+          "cap": "none stated",
+          "conditions": "Promotional through 09/30/2027",
+          "merchants": [],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/chase.json",
+          "researchSources": [
+            "https://creditcards.chase.com/cash-back-credit-cards/freedom/flex",
+            "https://creditcards.chase.com/all-credit-cards",
+            "https://www.chase.com/rewardscategoryfaqs",
+            "https://www.nerdwallet.com/credit-cards/news/chase-5-bonus-categories-q4-2026"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (gas, \"Gas Stations\") activation: value dropped (no resolving quote)",
+        "rules.1 (gas, \"Gas Stations\") limitedTime: value dropped (no resolving quote)",
+        "rules.2 (transit, \"Public Transit\") activation: value dropped (no resolving quote)",
+        "rules.2 (transit, \"Public Transit\") limitedTime: value dropped (no resolving quote)",
+        "rules.3 (ev-charging, \"EV Charging\") activation: value dropped (no resolving quote)",
+        "rules.3 (ev-charging, \"EV Charging\") limitedTime: value dropped (no resolving quote)",
+        "rules.4 (entertainment, \"Select Live Entertainment\") activation: value dropped (no resolving quote)",
+        "rules.4 (entertainment, \"Select Live Entertainment\") limitedTime: value dropped (no resolving quote)",
+        "rules.5 (supermarkets, \"Grocery Stores\") activation: value dropped (no resolving quote)",
+        "rules.5 (supermarkets, \"Grocery Stores\") limitedTime: value dropped (no resolving quote)",
+        "rules.6 (dining, \"Dining\") activation: value dropped (no resolving quote)",
+        "rules.6 (dining, \"Dining\") limitedTime: value dropped (no resolving quote)",
+        "rules.7 (streaming, \"Top Streaming Services\") activation: value dropped (no resolving quote)",
+        "rules.7 (streaming, \"Top Streaming Services\") limitedTime: value dropped (no resolving quote)",
+        "rules.8 (other, \"United Way®\") activation: value dropped (no resolving quote)",
+        "rules.8 (other, \"United Way®\") limitedTime: value dropped (no resolving quote)",
+        "rules.9 (other, \"American Red Cross®\") activation: value dropped (no resolving quote)",
+        "rules.9 (other, \"American Red Cross®\") limitedTime: value dropped (no resolving quote)",
+        "exclusion \"travelers checks, foreign currency, money orders, or virtual…\": dropped (no resolving quote)",
+        "issue out-of-scope: dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "chase-sapphire-preferred",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Peloton purchases",
+          "rate": "5X",
+          "cap": "$5,000 in total purchases through 12/31/2027",
+          "conditions": "Promotional (product page)",
+          "merchants": [],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "5x on Peloton purchases"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Lyft",
+          "rate": "5X",
+          "cap": "none stated",
+          "conditions": "Promotional through 9/30/2027 (product page)",
+          "merchants": [],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 5x on Lyft rides through 9/30/27.*"
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (travel-portal, \"purchases made using your card through Chase Travel\"): issuerWording is not verbatim in the captures; replace it with the capture's wording",
+        "rules.2 (dining, \"dining at restaurants including takeout and eligible deliver\"): rule dropped (no resolving quote)",
+        "rules.3 (gas, \"gas stations\"): rule dropped (no resolving quote)",
+        "rules.4 (ev-charging, \"electric vehicle charging\"): rule dropped (no resolving quote)",
+        "rules.5 (streaming, \"top streaming services\"): rule dropped (no resolving quote)",
+        "rules.6 (online-retail, \"online grocery\"): rule dropped (no resolving quote)",
+        "rules.7 (other, \"all other travel\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "chase-sapphire-reserve",
+      "issuer": "Chase",
+      "hints": [],
+      "draftNotes": [
+        "rules.0 (travel-portal, \"on all purchases through Chase Travel, including The EditSM*\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "chase-freedom-rise",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Qualifying Lyft purchases",
+          "rate": "2%",
+          "cap": "none stated",
+          "conditions": "Promotional through 09/30/2027",
+          "merchants": [],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/chase.json",
+          "researchSources": [
+            "https://creditcards.chase.com/cash-back-credit-cards/freedom/rise",
+            "https://creditcards.chase.com/all-credit-cards"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "prime-visa",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Amazon.com, Audible.com, Whole Foods Market",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "Requires eligible Prime membership; without Prime, 3%",
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": "Requires eligible Prime membership; without Prime, 3%",
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn unlimited 5% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases with an eligible Prime membership.*"
+        }
+      ],
+      "draftNotes": [
+        "rules.9 (travel-portal, \"Chase Travel\") rateBps: value dropped (no resolving quote)",
+        "rules.9 (travel-portal, \"Chase Travel\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "amazon-visa",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Amazon.com, Audible.com, Whole Foods Market\"",
+          "rate": "3%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn unlimited 3% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases,* unlimited 2% back at gas stations, restaurants, and on local"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "doordash-rewards-mastercard",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"purchases made using your card directly through doordash.com and trycaviar.com or directly through the DoorDash and Caviar mobile applications\"",
+          "rate": "4%",
+          "cap": "none stated",
+          "conditions": "DashPass subscription fee purchases excluded",
+          "merchants": [
+            "DoorDash"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 4% cash back on DoorDash and Caviar orders, 3% cash back on dining when purchased directly from a restaurant, 2% cash back on grocery"
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (dining, \"dining when purchased directly from a restaurant\") rateBps: value dropped (no resolving quote)",
+        "rules.1 (dining, \"dining when purchased directly from a restaurant\"): rule dropped (no resolving quote)",
+        "rules.2 (supermarkets, \"grocery stores online or\u0000a0in-store\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "instacart-mastercard",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"qualifying purchases made using your card directly through Instacart.com or the Instacart mobile app\"",
+          "rate": "5%",
+          "cap": "First $6,000 per year (since April 30, 2025), then 1%",
+          "conditions": null,
+          "merchants": [
+            "Instacart"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 5% cash back on qualifying Instacart purchases on your first $6,000 spent annually*, 5% cash back on Chase Travel purchases*, and 2% cash back"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "disney-inspire-visa",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Purchases at DisneyPlus.com, Hulu.com, or Stream.ESPN.com",
+          "rate": "10%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Disney"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 10% on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com.*"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "disney-premier-visa",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com\"",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Disney"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com"
+        }
+      ],
+      "draftNotes": [
+        "rules.4 (dining, \"dining at restaurants including takeout and eligible deliver\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "disney-visa",
+      "issuer": "Chase",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "united-explorer",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible United purchases (incl. flights; page markets \"9x total miles\" on flights incl. 6x MileagePlus member earn)",
+          "rate": "3x card miles",
+          "cap": "none stated",
+          "conditions": "Basic Economy earns differently",
+          "merchants": [
+            "United Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "9x total miles on eligible United flights - 6x miles on the Primary Cardmember’s fare from United as a MileagePlus member, plus 3x miles on"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"all other travel and every day purchases\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "united-quest",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible United purchases (page markets \"10x total miles\" on flights incl. 6x MileagePlus member earn)",
+          "rate": "4x card miles",
+          "cap": "none stated",
+          "conditions": "Basic Economy earns differently",
+          "merchants": [
+            "United Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "10x total miles on eligible United flights - 6x miles on the Primary Cardmember's fare from United as a MileagePlus member, plus 4x miles on"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"all other travel and every day purchases\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "united-gateway",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible United purchases (page markets \"5x total miles\" on flights incl. member earn)",
+          "rate": "2x card miles",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "United Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "5x total miles on eligible United flights - 3x miles on the Primary Cardmember’s fare from United as a MileagePlus member, plus 2x miles on"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"all other travel and every day purchases\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "united-club",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible United purchases (page markets \"11x total miles\" on flights incl. 6x member earn)",
+          "rate": "5x card miles",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "United Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "11x total miles on eligible United flights - 6x miles on the Primary Cardmember's fare from United as a MileagePlus member, plus 5x miles on"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "southwest-rapid-rewards-plus",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"purchases made directly with Southwest Airlines®, including flight, inflight, Southwest® gift cards, and Getaways by Southwest™ packages\"",
+          "rate": "2X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Southwest Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 2 points for each dollar spent on Southwest Airlines purchases.*"
+        }
+      ],
+      "draftNotes": [
+        "rules.2 (other, \"Southwest Airlines purchases\"): rule dropped (no resolving quote)",
+        "rules.3 (all-purchases, \" \"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "southwest-rapid-rewards-premier",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Southwest Airlines purchases",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Southwest Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 3 points for each dollar spent on Southwest Airlines purchases.*"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \" \"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "southwest-rapid-rewards-priority",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"purchases made directly with Southwest Airlines®, including flight, inflight, Southwest® gift cards, and Getaways by Southwest™ packages\"",
+          "rate": "4X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Southwest Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 4 points for each dollar spent on Southwest Airlines purchases.*"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "ihg-one-rewards-premier-select",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Participating IHG hotels",
+          "rate": "12X card points",
+          "cap": "none stated",
+          "conditions": "Marketed 'up to 28X' total incl. member/status points",
+          "merchants": [
+            "IHG"
+          ],
+          "membership": "Marketed 'up to 28X' total incl. member/status points",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/chase.json",
+          "researchSources": [
+            "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier-select",
+            "https://creditcards.chase.com/all-credit-cards",
+            "https://media.chase.com/news/ihg-premier-select-card-portfolio-updates",
+            "https://www.ihgplc.com/en/news-and-media/news-releases/2026/chase-introduces-new-ihg-one-rewards-premier-select-credit-card-and-portfolio"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "ihg-one-rewards-premier",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Participating IHG hotels",
+          "rate": "10X card points",
+          "cap": "none stated",
+          "conditions": "Marketed 'up to 24X' total",
+          "merchants": [
+            "IHG"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/chase.json",
+          "researchSources": [
+            "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
+            "https://creditcards.chase.com/all-credit-cards",
+            "https://media.chase.com/news/ihg-premier-select-card-portfolio-updates"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: value dropped (no resolving quote)",
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "ihg-one-rewards",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "IHG Hotels and Resorts participating properties",
+          "rate": "5X card points",
+          "cap": "none stated",
+          "conditions": "Marketed 'up to 17X' total",
+          "merchants": [
+            "IHG"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/chase.json",
+          "researchSources": [
+            "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/one-rewards",
+            "https://creditcards.chase.com/all-credit-cards",
+            "https://media.chase.com/news/ihg-premier-select-card-portfolio-updates"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.4 (other, \"IHG® Hotels and Resorts\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "marriott-bonvoy-boundless",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Hotels participating in Marriott Bonvoy",
+          "rate": "6X",
+          "cap": "none stated",
+          "conditions": "Marketed up to 17X total",
+          "merchants": [
+            "Marriott"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 6X points for every $1 spent at over 7,000 hotels participating in Marriott Bonvoy® with the Marriott Bonvoy Boundless® credit card.*"
+        }
+      ],
+      "draftNotes": [
+        "rules.2 (supermarkets, \"grocery stores\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($6,000))",
+        "rules.3 (gas, \"gas stations\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($6,000))",
+        "rules.4 (dining, \"dining\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($6,000))"
+      ]
+    },
+    {
+      "cardId": "marriott-bonvoy-bountiful",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"hotels participating in Marriott Bonvoy®\"",
+          "rate": "6X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Marriott"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "total points at hotels participating in Marriott Bonvoy®*"
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (supermarkets, \"grocery stores\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($15,000))",
+        "rules.2 (dining, \"dining\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($15,000))"
+      ]
+    },
+    {
+      "cardId": "marriott-bonvoy-bold",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Hotels participating in Marriott Bonvoy",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Marriott"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 3X points for every $1 spent at over 7,000 hotels participating in Marriott Bonvoy® with the Marriott Bonvoy Bold® Credit Card.*"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Select food delivery (DoorDash, Caviar, Uber Eats, Postmates, Grubhub, Seamless, Delivery.com)",
+          "rate": "2X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Marriott"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 2X points for every $1 spent on rideshare and select food delivery.*"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "rules.5 (other, \"hotels participating in Marriott Bonvoy®\"): rule dropped (no resolving quote)",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "world-of-hyatt",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"qualifying purchases made at Hyatt hotels and resorts\"",
+          "rate": "4X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Hyatt"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/chase.json",
+          "researchSources": [
+            "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card",
+            "https://creditcards.chase.com/all-credit-cards"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "air-canada-aeroplan",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Air Canada purchases",
+          "rate": "3X card points",
+          "cap": "none stated",
+          "conditions": "Marketed 5X incl. 2X from Aeroplan 25K status",
+          "merchants": [
+            "Air Canada"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn up to 5X total points on purchases made directly with Air Canada and 3X points on travel purchases.* Plus, up to $100 in annual"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "british-airways-visa-signature",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"British Airways, Aer Lingus, and Iberia flight purchases\"",
+          "rate": "3 Avios/$1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "British Airways"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "In addition to the bonus, cardmembers earn 3 Avios for every $1 spent on British Airways, Aer Lingus, and Iberia flight purchases, and 2 Avios"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "aer-lingus-visa-signature",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"flight purchases made directly with Aer Lingus, British Airways, Iberia, and LEVEL\"",
+          "rate": "3 Avios/$1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Aer Lingus"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Avios for every $1 spent on Aer Lingus, British Airways, and Iberia flight purchases,* and 2 Avios for every $1 spent on stays booked directly"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "iberia-visa-signature",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"flight purchases made directly with Iberia, British Airways, LEVEL, and Aer Lingus\"",
+          "rate": "3 Avios/$1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Iberia"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Avios for every $1 spent on Iberia, British Airways, and Aer Lingus flight purchases, and 2 Avios for every $1 spent on stays booked directly"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "citi-strata",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "'eligible Self-Select Category of your choice' (Fitness Clubs, Select Streaming Services, Live Entertainment, Cosmetic Stores/Barber Shops/Hair Salons, or Pet Supply Stores)",
+          "rate": "3x",
+          "cap": "none stated",
+          "conditions": "Default is Select Streaming Services; primary cardmember may change once per calendar quarter at citi.com/selfselect",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "3 points per dollar spent on an eligible Self-Select Category of your choice2"
+        }
+      ],
+      "draftNotes": [
+        "rules.6 (entertainment, \"Live Entertainment\") activation: value dropped (no resolving quote)",
+        "rules.7 (other, \"Fitness Clubs\") activation: value dropped (no resolving quote)",
+        "rules.8 (other, \"Cosmetic Stores/Barber Shops/Hair Salons\") activation: value dropped (no resolving quote)",
+        "rules.9 (other, \"Pet Supply Stores\") activation: value dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "citi-strata-premier",
+      "issuer": "Citi",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-strata-elite",
+      "issuer": "Citi",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-costco-anywhere-visa",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'gas purchased at Costco warehouse locations worldwide'",
+          "rate": "5%",
+          "cap": "first $7,000 per year in combined Costco and other eligible gas and/or EV charging purchases, then 1%",
+          "conditions": "Costco membership required",
+          "merchants": [
+            "Costco"
+          ],
+          "membership": "Costco membership required",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "5% cash back on gas purchased at Costco warehouse locations worldwide."
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "'all other purchases from Costco and Costco.com'",
+          "rate": "2%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Costco"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "2% cash back on all other purchases from Costco and Costco.com."
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-aadvantage-platinum-select",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible American Airlines purchases' (items billed by American Airlines as merchant of record)",
+          "rate": "2x",
+          "cap": "none stated",
+          "conditions": "Excludes aadvantagecars.com and aadvantagehotels.com bookings",
+          "merchants": [
+            "American Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn 2 AAdvantage® miles for every $1 spent on eligible American Airlines purchases2"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-aadvantage-mileup",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible American Airlines purchases'",
+          "rate": "2x",
+          "cap": "none stated",
+          "conditions": "Billed by AA as merchant of record",
+          "merchants": [
+            "American Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn 2 AAdvantage® miles for every $1 spent on eligible American Airlines purchases2"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-aadvantage-executive",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible American Airlines purchases'",
+          "rate": "4x (5x after $150,000 in purchases in a calendar year, for the rest of that year)",
+          "cap": "none stated",
+          "conditions": "Billed by AA as merchant of record",
+          "merchants": [
+            "American Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn 4 AAdvantage® miles for every $1 spent on eligible American Airlines purchases"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-aadvantage-globe",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible American Airlines purchases'",
+          "rate": "3x",
+          "cap": "none stated",
+          "conditions": "Admirals Club food & beverage also earns 3x",
+          "merchants": [
+            "American Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn 3 AAdvantage® miles for every $1 spent on eligible American Airlines purchases2"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-att-points-plus",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'products and services purchased directly from AT&T, including payment of monthly phone or internet bills'",
+          "rate": "2x",
+          "cap": "none stated",
+          "conditions": "Excludes independent dealers/resellers",
+          "merchants": [
+            "AT&T"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "2 ThankYou Points for every $1 spent on products and services purchased directly from AT&T, including payment of monthly phone or internet bills."
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-my-best-buy-visa",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'qualifying Best Buy purchases' with Standard Credit",
+          "rate": "5% (2.5 points per $1)",
+          "cap": "none stated",
+          "conditions": "Only when choosing rewards ('Standard Credit') instead of promotional financing; subject to My Best Buy Program Terms; 'Online offer may vary'",
+          "merchants": [
+            "Best Buy"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Get 2.5 points per $1 spent (5% back in rewards) on qualifying Best Buy purchases when you choose Standard Credit with your My Best Buy®"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "New cardmember first day of purchases at Best Buy",
+          "rate": "10% total (extra 5 bonus points)",
+          "cap": "first day of purchases within first 14 days of account opening",
+          "conditions": "New accounts only; Standard Credit",
+          "merchants": [
+            "Best Buy"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/citi.json",
+          "researchSources": [
+            "https://www.citi.com/credit-cards/citi-best-buy-credit-cards",
+            "https://www.citi.com/credit-cards/citi-best-buy-credit-cards/additional-information",
+            "https://money.usnews.com/credit-cards/citi/my-best-buy-visa-card",
+            "https://www.nerdwallet.com/credit-cards/learn/best-buy-credit-card"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-wayfair-mastercard",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Wayfair family of websites, apps and stores (Wayfair, Joss & Main, AllModern, Birch Lane, Perigold)",
+          "rate": "7% (5% when promotional financing is applied)",
+          "cap": "none stated",
+          "conditions": "Excludes outlets, gift cards, services, shipping, taxes",
+          "merchants": [
+            "Wayfair"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "and Wayfair Mastercard® you will earn 7% in Rewards when you use your card at Wayfair's family of websites, mobile applications, and physical retail stores."
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "issue ambiguous: dropped (no resolving quote)",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "citi-tsc-visa",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible Tractor Supply purchases' (incl. TractorSupply.com, Petsense)",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Tractor Supply"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Cardholders earn 5 points per dollar on eligible Tractor Supply purchases (that’s 5% in Rewards) made using their TSC Store Credit Card or TSC Visa"
+        }
+      ],
+      "draftNotes": [
+        "pointValueHundredthsOfCent: a quote over 25 words was dropped (no 25-word window carries a cash value)",
+        "pointValueHundredthsOfCent: value dropped (no resolving quote)",
+        "rules.1 (gas, \"eligible gas station purchases\"): issuerWording is not verbatim in the captures; replace it with the capture's wording",
+        "rules.2 (supermarkets, \"eligible grocery store purchases\"): issuerWording is not verbatim in the captures; replace it with the capture's wording",
+        "rules.4 (other, \"eligible veterinary service purchases\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "citi-llbean-mastercard",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'L.L.Bean'",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "L.L.Bean"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases."
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "rules.2 (all-purchases, \"all other purchases\") rateBps: value dropped (no resolving quote)",
+        "rules.2 (all-purchases, \"all other purchases\"): rule dropped (no resolving quote)",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "citi-dillards-mastercard",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible Dillard's purchases'",
+          "rate": "2 points/$",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Dillard's"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/citi.json",
+          "researchSources": [
+            "https://www.citi.com/credit-cards/dillards-credit-cards"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-macys-amex",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Macy's purchases",
+          "rate": "2/3/5 points per $1 for Silver/Gold/Platinum Star Rewards members",
+          "cap": "none stated",
+          "conditions": "Tier depends on Macy's loyalty status",
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/citi.json",
+          "researchSources": [
+            "https://www.citi.com/credit-cards/citi-macys-credit-card"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.4 (other, \"purchases at Macy’s\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "citi-bloomingdales-amex",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Bloomingdale's purchases and 'anywhere American Express is accepted' (Loyallist tier)",
+          "rate": "3 points/$ (Top of the List: 4)",
+          "cap": "none stated",
+          "conditions": "Tier depends on Bloomingdale's Loyallist status; the page's breakdown between in-store and outside purchases is unclear",
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Bloomingdale’s American Express Cardholders earn 3 points for every $1 spent at Bloomingdale’s, bloomingdales.com, Bloomingdale’s The Outlet Store or anywhere American Express is accepted."
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (other, \"Bloomingdale’s\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "discover-it-cash-back",
+      "issuer": "Discover",
+      "hints": [
+        {
+          "type": "rotating-quarterly",
+          "summary": "Rotating quarterly categories, 'everyday purchases at different places you shop each quarter'. Q4 2026 (Oct 1 to Dec 31): Restaurants, Entertainment, Utilities (secondary)",
+          "rate": "5%",
+          "cap": "up to $1,500 in combined purchases per quarter when you activate ($75), then 1%",
+          "conditions": "Activation required each quarter and not retroactive. Cashback Match in the first year.",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate."
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Capital One Offers online shopping (accounts moved to Capital One)",
+          "rate": "up to 15%",
+          "cap": "varies by offer",
+          "conditions": "Secondary only (TPG). Depends on the merchant and the offer.",
+          "merchants": [],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/discover.json",
+          "researchSources": [
+            "https://www.discover.com/credit-cards/cash-back/it-card.html",
+            "https://www.discover.com/credit-cards/",
+            "https://www.discover.com/credit-cards/cash-back/cashback-calendar.html",
+            "https://www.discover.com/credit-cards/cash-back/cashback-bonus.html"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "discover-it-miles",
+      "issuer": "Discover",
+      "hints": [],
+      "draftNotes": [
+        "rewardCurrency: value dropped (no resolving quote)",
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "discover-it-chrome",
+      "issuer": "Discover",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "discover-it-student-cash-back",
+      "issuer": "Discover",
+      "hints": [
+        {
+          "type": "rotating-quarterly",
+          "summary": "Rotating quarterly categories, 'everyday purchases at different places you shop each quarter'. Q4 2026 (Oct 1 to Dec 31): Restaurants, Entertainment, Utilities (secondary)",
+          "rate": "5%",
+          "cap": "up to the quarterly maximum when you activate ($1,500 per the calendar page), then 1%",
+          "conditions": "Activation required each quarter. Cashback Match in the first year.",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "5% cash back on everyday purchases at different places you shop each quarter like grocery stores, restaurants, gas stations, and more, up to the quarterly"
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (supermarkets, \"Grocery Stores, Wholesale Clubs, and Select Streaming Servic\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($1,500))",
+        "rules.2 (streaming, \"Grocery Stores, Wholesale Clubs, and Select Streaming Servic\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($1,500))",
+        "rules.3 (dining, \"Restaurants and Home Improvement Stores\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($1,500))",
+        "rules.4 (other, \"Restaurants and Home Improvement Stores\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($1,500))",
+        "rules.5 (gas, \"Gas Stations, Transportation and Drug Stores\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($1,500))",
+        "rules.6 (ev-charging, \"Gas Stations, Transportation and Drug Stores\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($1,500))",
+        "rules.7 (transit, \"Gas Stations, Transportation and Drug Stores\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($1,500))",
+        "rules.8 (drugstores, \"Gas Stations, Transportation and Drug Stores\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($1,500))",
+        "rules.9 (dining, \"Restaurants, Entertainment and Utilities\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($1,500))",
+        "rules.10 (entertainment, \"Restaurants, Entertainment and Utilities\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($1,500))",
+        "rules.11 (other, \"Restaurants, Entertainment and Utilities\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($1,500))"
+      ]
+    },
+    {
+      "cardId": "discover-it-student-chrome",
+      "issuer": "Discover",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "discover-it-secured-cash-back",
+      "issuer": "Discover",
+      "hints": [
+        {
+          "type": "rotating-quarterly",
+          "summary": "Rotating quarterly categories ('Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate').…",
+          "rate": "5%",
+          "cap": "up to the quarterly maximum when you activate (amount not stated on the page)",
+          "conditions": "Activation required each quarter. Unlimited first-year Cashback Match.",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate."
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-premier-world-mastercard",
+      "issuer": "Synchrony",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-amazon-store-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Amazon.com and Whole Foods Market (\"5% back at Amazon.com, Whole Foods Market (In-Store Code usage required at Whole Foods Market), and more\")",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "Requires eligible Prime membership (Prime Store Card). Non-Prime Amazon Store Card earns no % back. Cannot be combined with Equal Monthly Payments or special financing…",
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": "Requires eligible Prime membership (Prime Store Card). Non-Prime Amazon Store Card earns no % back. Cannot be combined with Equal Monthly Payments or special financing…",
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Prime Store Card members with an eligible Prime membership can earn 5% back year-round at Amazon.com, Whole Foods Market (In-Store Code usage required at Whole"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card: usable only with Amazon (research flag).",
+          "merchants": [
+            "Amazon"
+          ],
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.amazon.com/Synchrony-Bank-Amazon-com-Store-Card/dp/B008A0GNA8",
+            "https://www.synchrony.com/amazon"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"All purchases (less returns and other credits) to which the \"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "synchrony-amazon-secured-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Amazon purchases (\"Prime rewards: 2% back on Amazon purchases with an eligible Prime membership\")",
+          "rate": "2%",
+          "cap": "none stated",
+          "conditions": "Requires eligible Prime membership (Prime Secured Card); security deposit required; Amazon Pay purchases excluded; % back cannot be combined with financing offers",
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": "Requires eligible Prime membership (Prime Secured Card); security deposit required; Amazon Pay purchases excluded; % back cannot be combined with financing offers",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership6"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card: usable only with Amazon (research flag).",
+          "merchants": [
+            "Amazon"
+          ],
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.amazon.com/Synchrony-Bank-Amazon-com-Store-Card/dp/B008A0GNA8",
+            "https://www.synchrony.com/amazon"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"All purchases (less returns and other credits) to which the \"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "synchrony-paypal-cashback-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "checkout-method",
+          "summary": "purchases made through your PayPal account online, and sending money to PayPal users (\"3% on Eligible Purchases you make using your Card Account through your…",
+          "rate": "3%",
+          "cap": "none stated (\"no maximum amount of Eligible Purchases\")",
+          "conditions": "card must be the linked payment method at PayPal checkout; authorized users earn 1.5% (unless they later add card to own PayPal)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "3% on Eligible Purchases you make using your Card Account through your PayPal account online, or when you use your Card Account to send money"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-venmo-credit-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "checkout-method",
+          "summary": "Pay with Venmo (\"when you check out with Venmo online\", pay a business profile, or P2P for goods and services)",
+          "rate": "3%",
+          "cap": "none stated",
+          "conditions": "card must be linked payment method in Venmo",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn 3% cash back when you check out with Venmo online, pay a business on Venmo, or pay someone for goods or services on Venmo."
+        },
+        {
+          "type": "checkout-method",
+          "summary": "Venmo P2P (not goods/services) or non-Venmo P2P classified as purchase",
+          "rate": "1%",
+          "cap": "none stated",
+          "conditions": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "made for a Venmo P2P (not for goods and services) or non-Venmo P2P will earn 1% Cash Rewards, but only if such transactions are classified"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: value dropped (no resolving quote)",
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "rules.2 (streaming, \"Entertainment\") rateBps: a quote over 25 words was dropped (no 25-word window carries the rate (300 bps))",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "synchrony-verizon-visa-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Verizon purchases (Verizon stores, Verizon online, phone, exclusive Authorized Retailers; devices and accessories)",
+          "rate": "4%",
+          "cap": "no limit",
+          "conditions": "excludes bill payments",
+          "merchants": [
+            "Verizon"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "4% in Verizon Dollars for every Net New Purchase made at a Verizon operated store, Verizon online, over the phone with a Verizon representative or"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Verizon Wireless / Fios bill payments",
+          "rate": "1%",
+          "cap": "no limit",
+          "conditions": "plus Verizon Loyalty adds 1% for paying bill with card (marketing page)",
+          "merchants": [
+            "Verizon"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "1% on Verizon wireless Account bill or Verizon Fios Account bill payment"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "synchrony-sams-club-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Sam's Club purchases",
+          "rate": "3% for Plus members; 1% for Club members",
+          "cap": "$5,000 Sam's Cash/yr overall",
+          "conditions": "excludes tobacco, prescriptions, gift/prepaid cards, cash equivalents",
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.synchrony.com/partner/sams-club",
+            "https://mysamscredit.com/best-gas/"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.3 (other, \"Sam’s Club purchases\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "synchrony-carecredit-rewards-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "CareCredit provider network purchases under $200",
+          "rate": "4 points/$",
+          "cap": "none stated",
+          "conditions": "purchases >= $200 in network where promotional financing applies earn no points",
+          "merchants": [
+            "CareCredit (Synchrony health network)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 4x points* at purchases under $200 with the CareCredit provider network, and on health & wellness and pet store purchases"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-onepay-cashrewards-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Walmart (US stores, Walmart-branded gas stations, Walmart app, Walmart.com) with Walmart+",
+          "rate": "5%",
+          "cap": "none stated (\"unlimited\")",
+          "conditions": "Walmart+ membership must be linked to the card by email; excludes Sam's Club and third-party marketplace sellers on Walmart.com",
+          "merchants": [
+            "OnePay / Walmart"
+          ],
+          "membership": "Walmart+ membership must be linked to the card by email; excludes Sam's Club and third-party marketplace sellers on Walmart.com",
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "OnePay Points are earned on Purchases as follows: (i) 5% on Purchases at Walmart for Walmart+ members whose Walmart+ membership is linked to their Account;"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Walmart without Walmart+",
+          "rate": "3%",
+          "cap": "none stated",
+          "conditions": "same Walmart definition",
+          "merchants": [
+            "OnePay / Walmart"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "3% Cash Back at Walmart: You earn OnePay Points equal to 3% of each $1 spent on Purchases at Walmart with your CashRewards Card (1.5%"
+        }
+      ],
+      "draftNotes": [
+        "exclusion \"transactions for cash substitutes (e.g. money orders or…\": dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "synchrony-mywalgreens-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Walgreens brand purchases at Walgreens, Duane Reade, Walgreens.com",
+          "rate": "10%",
+          "cap": "none stated",
+          "conditions": "exclusions apply; myWalgreens membership required",
+          "merchants": [
+            "Walgreens"
+          ],
+          "membership": "exclusions apply; myWalgreens membership required",
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "You will earn Walgreens Cash rewards equal to 10% of every USD spent for Eligible Purchases of retail products branded with Walgreens marks or logos"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "all other brands and pharmacy purchases at Walgreens",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "exclusions apply",
+          "merchants": [
+            "Walgreens"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "5% on all other brands and pharmacy purchases†"
+        }
+      ],
+      "draftNotes": [
+        "rules.5 (all-purchases, \"All Other Purchases\") rateBps: value dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "synchrony-tjx-rewards-platinum-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "TJX family of stores incl. tjmaxx.com, marshalls.com, sierra.com",
+          "rate": "5 points/$ (\"5% back in Rewards\")",
+          "cap": "\"No limit to what you can earn\"",
+          "conditions": null,
+          "merchants": [
+            "TJX (TJ Maxx, Marshalls, HomeGoods, Sierra, Homesense)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "5% back in Rewards Points every time you shop our family of stores."
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-mylowes-rewards-credit-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "eligible Lowe's store and Lowes.com purchases (\"5% off\")",
+          "rate": "5% discount",
+          "cap": "none stated",
+          "conditions": "choose 5% off OR special financing (6 months on $299+, or fixed-payment financing on $2,000+); cannot combine; secondary source",
+          "merchants": [
+            "Lowe's"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.synchrony.com/partner/lowes",
+            "https://upgradedpoints.com/credit-cards/reviews/mylowes-rewards-credit-card/"
+          ]
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card: usable only with Lowe's (research flag).",
+          "merchants": [
+            "Lowe's"
+          ],
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.synchrony.com/partner/lowes",
+            "https://upgradedpoints.com/credit-cards/reviews/mylowes-rewards-credit-card/"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "synchrony-newegg-store-credit-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Newegg purchases (\"4% off every day when you choose the discount option at checkout\")",
+          "rate": "4% discount",
+          "cap": "none stated",
+          "conditions": "must choose discount option instead of special financing (6 mo on $199+, 12 mo on $499+); excludes gift cards, warranties, taxes, shipping; may not stack…",
+          "merchants": [
+            "Newegg"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "When entering your Newegg Store Credit Card, you’ll be prompted to select either special financing (if eligible) or the 4% everyday discount."
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card: usable only with Newegg (research flag).",
+          "merchants": [
+            "Newegg"
+          ],
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.newegg.com/promotions/nepro/18-1881/index.html",
+            "https://kb.newegg.com/knowledge-base/accepted-payment-methods"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "synchrony-dicks-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "DICK'S Sporting Goods, House of Sport, Golf Galaxy, Public Lands, Going Going Gone!",
+          "rate": "10% (at least 3 ScoreCard Points/$)",
+          "cap": "none stated",
+          "conditions": "excludes special-financing purchases; ScoreCard account required",
+          "merchants": [
+            "DICK'S Sporting Goods"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.synchrony.com/contenthub/newsroom/dicks-sporting-goods-and-synchrony-level-up.html"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "synchrony-jcpenney-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "JCPenney purchases (\"7.5% Back in CashPass Rewards, 1.5 points for every dollar\")",
+          "rate": "7.5%",
+          "cap": "none stated",
+          "conditions": "tiered program: page shows 7.5% for Insider/Elite cardholders and 10% at VIP ($1,000 spend); qualifying purchases",
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 7.5% back in CashPass Rewards on JCPenney purchases with a JCPenney Credit Card."
+        }
+      ],
+      "draftNotes": [
+        "rules.4 (gas, \"gas station and grocery store purchases\") rateBps: value dropped (no resolving quote)",
+        "rules.5 (supermarkets, \"gas station and grocery store purchases\") rateBps: value dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "synchrony-belk-rewards-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Belk, Belk Market, Belk Outlet, belk.com purchases",
+          "rate": "tiered (Insider, Premier, Elite) - rates not on loaded official page",
+          "cap": "none stated",
+          "conditions": "tier based on calendar-year spend",
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Tier progression is based on your annual spend on eligible purchases made at Belk, Belk Market, Belk Outlet and belk.com with your Belk Rewards™ credit"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-ae-real-rewards-visa",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "AE and Aerie purchases (40 points per $1; marketed \"16% back in rewards\")",
+          "rate": "16% (40 pts/$)",
+          "cap": "none stated",
+          "conditions": "must use same email for loyalty and card accounts",
+          "merchants": [
+            "American Eagle Outfitters"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.synchrony.com/partner/ae-outfitters",
+            "https://www.synchrony.com/partner/american-eagle/mobile-wallet"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-at-home-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "At Home purchases, annual spend under $350",
+          "rate": "6%",
+          "cap": "none stated",
+          "conditions": null,
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 6% Back in Rewards on At Home purchases when you spend less than $350 annually.2"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "At Home purchases, annual spend over $350",
+          "rate": "7.5%",
+          "cap": "none stated",
+          "conditions": null,
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 7.5% Back in Rewards on At Home purchases when you spend more than $350 annually.2"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-chicos-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Chico's store, outlet and website purchases",
+          "rate": "7.5% (7.5 pts/$)",
+          "cap": "none stated",
+          "conditions": "limited exclusions apply",
+          "merchants": [
+            "Chico's"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "7.5% back in points on qualifying purchases made using your Chico’s Mastercard or Chico’s Credit Card at Chico’s, Chico’s Outlets, Chico’s Off The Rack stores"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-soma-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Soma store, outlet and website purchases",
+          "rate": "7.5% (7.5 pts/$)",
+          "cap": "none stated",
+          "conditions": "limited exclusions apply",
+          "merchants": [
+            "Soma"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "You can earn 7.5% back in points on qualifying purchases made using your Soma Mastercard or Soma Credit Card at Soma, Soma Outlets, and online"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-whbm-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "White House Black Market store, outlet and website purchases",
+          "rate": "7.5% (7.5 pts/$)",
+          "cap": "none stated",
+          "conditions": "limited exclusions apply",
+          "merchants": [
+            "White House Black Market"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.synchrony.com/partner/whbm"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (supermarkets, \"Grocery Store purchases\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "synchrony-jcrew-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "J.Crew & J.Crew Factory purchases",
+          "rate": "7.5% (GOLD) / 5% (NAVY)",
+          "cap": "none stated",
+          "conditions": "depends on J.Crew Passport tier",
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.synchrony.com/partner/jcrew"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-harbor-freight-credit-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Harbor Freight store and HarborFreight.com purchases",
+          "rate": "5% back in Harbor Freight Money",
+          "cap": "\"unlimited\"",
+          "conditions": "alternative: 0% equal monthly payments on $299+",
+          "merchants": [
+            "Harbor Freight"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn unlimited rewards with 5% back in Harbor Freight Money2 every time you shop"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card: usable only with Harbor Freight (research flag).",
+          "merchants": [
+            "Harbor Freight"
+          ],
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.synchrony.com/partner/harborfreight"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-phillips-66-credit-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "fuel at participating Phillips 66, Conoco, 76 stations",
+          "rate": "3 cents/gal (5 cents/gal via Fuel Forward App)",
+          "cap": "first 30 gallons per fuel purchase (app rate)",
+          "conditions": "limited-time: up to 15 cents/gal total via app through 12/31/2026",
+          "merchants": [
+            "Phillips 66"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "in Rewards when you swipe to pay at our fuel stations with your Phillips 66®, Conoco® or 76® Credit Card."
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card: usable only with Phillips 66 (research flag).",
+          "merchants": [
+            "Phillips 66"
+          ],
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.myphillips66card.com/"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (gas, \"You will earn Rewards in the amount of: (a) 5 cents off per \"): rule dropped (no resolving quote)",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "synchrony-techron-advantage-visa",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "fuel at participating Chevron and Texaco stations",
+          "rate": "3 cents/gal",
+          "cap": "none stated",
+          "conditions": "all Techron Advantage cards",
+          "merchants": [
+            "Chevron / Texaco"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "At participating Chevron and Texaco stations, the pump will automatically apply cents off per gallon when using your Techron Advantage Card to pay for fuel."
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: value dropped (no resolving quote)",
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "rules.0 (gas, \"3¢/gal. in everyday rewards\"): rule dropped (no resolving quote)",
+        "rules.1 (all-purchases, \"Visa Spend Fuel Discounts\"): rule dropped (no resolving quote)",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "synchrony-cathay-world-elite-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Cathay and HK Express purchases",
+          "rate": "3 Asia Miles/$",
+          "cap": "none stated",
+          "conditions": "Cathay membership must be linked",
+          "merchants": [
+            "Cathay Pacific"
+          ],
+          "membership": "Cathay membership must be linked",
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 3 Asia Miles per $1 spent on Cathay and HK Express purchases.1"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-virgin-red-rewards-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Virgin Atlantic, Virgin Hotels, Virgin Voyages",
+          "rate": "3 pts/$",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Virgin Red"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Spend $15,000 annually and earn a Personal Perk from Virgin Atlantic, Hotels or Voyages."
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "synchrony-sun-country-visa-signature",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Sun Country purchases",
+          "rate": "3 pts/$ (up to 5x incl. 2x from flying)",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Sun Country Airlines"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.synchrony.com/partner/sun-country",
+            "https://www.synchrony.com/partner/sun-country/benefits"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "us-bank-cash-plus",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "5% choice categories (\"two categories you choose\" each quarter) from: \"Fast food\", \"Home utilities\", \"TV, internet & streaming services\", \"Department stores\", \"Cell phone providers\", \"Electronics…",
+          "rate": "5%",
+          "cap": "first $2,000 in combined eligible net purchases each quarter across both 5% categories, then 1%",
+          "conditions": "Cardholder must choose and activate categories each quarter (Rewards Center, mobile app, or phone); selection opens 45 days before the quarter; categories lock 5 days…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "on your first $2,000 in combined eligible purchases each quarter on two categories you choose.3"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "2% everyday choice category (\"one everyday category you choose each quarter\") from: \"Grocery stores and grocery delivery\", \"Restaurants\", \"Gas stations and EV charging stations\"",
+          "rate": "2%",
+          "cap": "none stated (FAQ: 'no limits on your 2% or 1% cash back earnings')",
+          "conditions": "Chosen quarterly with the 5% picks. Grocery excludes discount stores/supercenters and wholesale clubs (Walmart, Target, warehouse clubs).",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "on one everyday category you choose each quarter, like gas stations and EV charging stations*, grocery stores* or restaurants.3"
+        }
+      ],
+      "draftNotes": [
+        "rules.16 (travel-portal, \"prepaid air, car and hotel reservations in the travel center\") rateBps: anchor kept, but no 25-word window states the rate (500 bps); check the value against its anchor"
+      ]
+    },
+    {
+      "cardId": "us-bank-smartly",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Smartly Earning Bonus, qualifying balance $10,000-$49,999 (\"Earn a total of 2.5%\", 25% bonus)",
+          "rate": "2.5% total",
+          "cap": "first $10,000 in eligible Net Purchases each billing cycle, then 2%",
+          "conditions": "Requires U.S. Bank Smartly Savings account plus qualifying balances in Smartly Checking and/or Safe Debit accounts. Bonus excludes education/school, gift cards (incl. discount gift card…",
+          "membership": "Requires U.S. Bank Smartly Savings account plus qualifying balances in Smartly Checking and/or Safe Debit accounts. Bonus excludes education/school, gift cards (incl. discount gift card…",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn a total of 2.5%"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "Smartly Earning Bonus, qualifying balance $50,000-$99,999 (\"Earn a total of 3%\", 50% bonus)",
+          "rate": "3% total",
+          "cap": "first $10,000 in eligible Net Purchases each billing cycle, then 2%",
+          "conditions": "Same relationship requirements as above.",
+          "membership": "Same relationship requirements as above.",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn a total of 3%"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "Smartly Earning Bonus, qualifying balance $100,000+ (\"Earn a total of 4%\", 100% bonus)",
+          "rate": "4% total",
+          "cap": "first $10,000 in eligible Net Purchases each billing cycle, then 2%",
+          "conditions": "Same relationship requirements as above.",
+          "membership": "Same relationship requirements as above.",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn a total of 4%"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "us-bank-altitude-go",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "us-bank-altitude-connect",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": [
+        "rules.3 (gas, \"gas station purchases\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "us-bank-shield",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "us-bank-cash-plus-secured",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "5% choice categories (\"two categories you choose\" each quarter) from: \"Fast food\", \"Home utilities\", \"TV, internet & streaming services\", \"Department stores\", \"Cell phone providers\", \"Electronics…",
+          "rate": "5%",
+          "cap": "first $2,000 in combined eligible net purchases each quarter across both 5% categories, then 1%",
+          "conditions": "Cardholder must choose and activate categories each quarter (Rewards Center, mobile app, or phone); selection opens 45 days before the quarter; categories lock 5 days…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "on your first $2,000 in combined eligible purchases each quarter in two categories you choose3"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "2% everyday choice category (\"one everyday category you choose each quarter\") from: \"Grocery stores and grocery delivery\", \"Restaurants\", \"Gas stations and EV charging stations\"",
+          "rate": "2%",
+          "cap": "none stated (FAQ: 'no limits on your 2% or 1% cash back earnings')",
+          "conditions": "Chosen quarterly with the 5% picks. Grocery excludes discount stores/supercenters and wholesale clubs (Walmart, Target, warehouse clubs).",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "on one everyday category you choose each quarter, like gas stations and EV charging stations*, grocery stores* or restaurants3"
+        }
+      ],
+      "draftNotes": [
+        "rules.16 (travel-portal, \"prepaid air, hotel and car reservations booked directly in t\") rateBps: anchor kept, but no 25-word window states the rate (500 bps); check the value against its anchor"
+      ]
+    },
+    {
+      "cardId": "us-bank-altitude-go-secured",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "us-bank-harley-davidson-visa-signature",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"At H-D & gas stations\"",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "H-D purchases identified by merchant; gas by Visa MCC.",
+          "merchants": [
+            "Harley-Davidson"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/us-bank.json",
+          "researchSources": [
+            "https://www.h-dvisa.com/credit/welcome.do"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "us-bank-harley-davidson-hog-elite",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"At H-D & gas stations\"",
+          "rate": "5X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Harley-Davidson"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/us-bank.json",
+          "researchSources": [
+            "https://www.h-dvisa.com/credit/harley-davidson-hog-elite-visa-signature-credit.do"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "pointValueHundredthsOfCent: value dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "us-bank-harley-davidson-secured",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"eligible Net Purchases\"): rule dropped (no resolving quote)",
+        "rules.1 (other, \"Lodging\"): rule dropped (no resolving quote)",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "us-bank-skypass-skyblue",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "us-bank-skypass-visa-signature",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Qualified Korean Air ticket purchases\" (Korean Air merchant of record, e.g. koreanair.com)",
+          "rate": "2X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Korean Air"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "cardmember earns 2 miles, and SKYPASS Select Visa Signature cardmember earns 3, for every $1 spent in eligible net purchases on qualified Korean Air ticket"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"Earn SKYPASS miles.\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "us-bank-skypass-select",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Qualified Korean Air ticket purchases\"",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "Korean Air must be merchant of record.",
+          "merchants": [
+            "Korean Air"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "3 Earn 3 miles for every $1 spent in eligible net purchases on qualified Korean Air ticket purchases."
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"eligible Net Purchases\"): rule dropped (no resolving quote)",
+        "rules.1 (dining, \"dining, including takeout and restaurant delivery\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "us-bank-state-farm-premier-cash-rewards",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": [
+        "rules.0 (other, \"Purchases classified as insurance\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($4,000))"
+      ]
+    },
+    {
+      "cardId": "us-bank-state-farm-good-neighbor",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "us-bank-state-farm-cash-rewards-secured",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "us-bank-edward-jones-triple-rewards",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "automatic-top-category",
+          "summary": "Top three spend categories each month, automatically determined from 18 categories: \"Charity & Non-Profits\", \"Clothing & Department Stores\", \"Dining\", \"Drugstores & Personal Care\", \"Electric Vehicle…",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "Automatic, no enrollment; determined per monthly statement. Excludes purchases at Amazon and discount stores/supercenters such as Target and Walmart. Travel Center purchases do not additionally…",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Clothing & Department Stores"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "us-bank-elan-fidelity-rewards",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": [
+        "pointValueHundredthsOfCent: a quote over 25 words was dropped (no 25-word window carries a cash value)",
+        "rules.0 (all-purchases, \"From the date you open your Account until your Account is cl\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "wells-fargo-autograph",
+      "issuer": "Wells Fargo",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "wells-fargo-autograph-journey",
+      "issuer": "Wells Fargo",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "wells-fargo-one-key",
+      "issuer": "Wells Fargo",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Expedia, Hotels.com and Vrbo",
+          "rate": "3%",
+          "cap": "none stated",
+          "conditions": "In OneKeyCash; per One Key+ footnote (same structure assumed), must be logged into One Key account; excludes resort fees/incidentals charged by suppliers",
+          "merchants": [
+            "Expedia"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/wells-fargo.json",
+          "researchSources": [
+            "https://creditcards.wellsfargo.com/one-key-credit-card/"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "wells-fargo-one-key-plus",
+      "issuer": "Wells Fargo",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Expedia, Hotels.com and Vrbo",
+          "rate": "3%",
+          "cap": "none stated",
+          "conditions": "OneKeyCash; '2% base plus 1% bonus'; must be logged into primary One Key account; excludes resort fees/incidentals/damage deposits charged by suppliers",
+          "merchants": [
+            "Expedia"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "3% (2% base plus 1% bonus) in OneKeyCash is earned per $1 spent on eligible net purchases (purchases minus returns and credits) resulting from eligible"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "wells-fargo-choice-privileges",
+      "issuer": "Wells Fargo",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Stays at participating Choice Hotels and Choice Privileges point purchases",
+          "rate": "5X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Choice Hotels"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "(2) You also earn 5 points per $1.00 spent on Qualifying Net Purchases of Choice Privileges Points made on the Card Account."
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "wells-fargo-choice-privileges-select",
+      "issuer": "Wells Fargo",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Stays at participating Choice Hotels and Choice Privileges point purchases",
+          "rate": "10X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Choice Hotels"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Eligible stays earn Choice Privileges members 10 points for each whole U.S."
+        }
+      ],
+      "draftNotes": []
+    }
+  ]
+}

@@ -3,11 +3,13 @@
 //   node scripts/draft-expansion-labels.mjs [--dir evals/curation/expansion]
 //
 // Reads cards.json, sources.json, manifest.json, captures/ and extractions/ (both gitignored), and the
-// research drafts. Writes (gitignored for now: anchors and some issuer wordings exceed the 25-word quote limit for
-// committed files, so these stay local until the quotes are trimmed):
+// research drafts. Every quote it writes (anchors, issuer wordings, hint anchors) is a verbatim span of a capture
+// of at most 25 words, so the outputs can be committed; free text from the research or the extraction (exclusion
+// text, hint summaries and conditions, card notes) is clipped to 25 words. Writes:
 //   corpus.draft.json   one base case per successfully extracted card, in the corpus v2 format,
 //                       annotationStatus "agent-drafted". Only values whose evidence resolves in the captures
-//                       are kept; anchors are the extraction's own resolving quotes, each <= 400 characters.
+//                       are kept; anchors are the extraction's own resolving quotes, a quote over 25 words cut to
+//                       its best 25-word window that still carries the value (the rate, the cap amount, ...).
 //   product-notes.json  per card: structured hints the extraction schema cannot express (merchant rules,
 //                       chosen or rotating categories, store-only cards, relationship tiers, checkout-method
 //                       rules), each with an anchor that resolves in the captures or marked `unanchored` with
@@ -19,6 +21,17 @@ import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { build } from 'esbuild';
+import {
+  ANY_AMOUNT,
+  ANY_RATE,
+  MAX_QUOTE_WORDS,
+  amountRegex,
+  clipWords,
+  keywordPatterns,
+  rateRegex,
+  rateRegexFromText,
+  shortAnchor,
+} from './lib/expansion-quotes.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const { values } = parseArgs({ options: { dir: { type: 'string', default: 'evals/curation/expansion' } } });
@@ -83,53 +96,149 @@ async function documentsFor(card) {
   return documents;
 }
 
+/** Longest capture line or sentence considered when searching for a hint anchor (it is then cut to 25 words). */
 const MAX_ANCHOR = 400;
-/** A resolving anchor of at most 400 characters: the quote itself, or its longest resolving word-boundary prefix. */
-function anchorFor(quote, input) {
-  const text = quote.trim().replace(/\s+/g, ' ');
-  if (!text || !resolveQuote(text, input)) return null;
-  if (text.length <= MAX_ANCHOR) return text;
-  const cut = text.slice(0, MAX_ANCHOR);
-  const prefix = cut.slice(0, cut.lastIndexOf(' ')).trim();
-  return prefix && resolveQuote(prefix, input) ? prefix : null;
+
+/** Anchor outcomes by kind (rule, currency, exclusion, hint, issuerWording, ...) and status, for the run summary. */
+const tally = {};
+const count = (kind, status) => {
+  tally[kind] ??= {};
+  tally[kind][status] = (tally[kind][status] ?? 0) + 1;
+};
+
+/**
+ * A resolving anchor of at most 25 words for `quote` (see shortAnchor), or null. `spec` names the tokens the
+ * anchor must keep; a shortened anchor that keeps only a fallback token, or a dropped one, is noted for the verifier.
+ */
+function anchorFor(quote, input, spec = {}, kind = 'other', notes = null, label = '') {
+  const result = shortAnchor(quote, input, spec);
+  if (result.status !== 'unresolved') count(kind, result.status);
+  if (notes && result.status === 'dropped')
+    notes.push(
+      `${label}: a quote over ${MAX_QUOTE_WORDS} words was dropped (no ${MAX_QUOTE_WORDS}-word window carries ${spec.what ?? 'the evidence'})`,
+    );
+  if (notes && result.status === 'mismatch')
+    notes.push(
+      `${label}: anchor kept, but no ${MAX_QUOTE_WORDS}-word window states ${spec.what}; check the value against its anchor`,
+    );
+  return result.text ?? null;
 }
-const anchorsFor = (quotes, input, max = 4) => {
+const anchorsFor = (quotes, input, spec, kind, notes, label, max = 4) => {
   const out = [];
   for (const quote of quotes) {
-    const anchor = anchorFor(quote, input);
+    const anchor = anchorFor(quote, input, spec, kind, notes, label);
     if (anchor && !out.includes(anchor)) out.push(anchor);
     if (out.length === max) break;
   }
   return out;
 };
 
+// ---- What an anchor must keep, per field -----------------------------------------------------------------
+const anyOf = (patterns) =>
+  patterns.length ? [new RegExp(patterns.map((p) => p.source).join('|'), 'i')] : [];
+const PERIOD = /\b(year|annual|quarter|month|billing|statement|cycle)/i;
+const NO_CAP =
+  /\bunlimited\b|\bno (cap|caps|limit|limits|maximum|max)\b|\bnot capped\b|\bno annual cap\b|\bno earning cap\b|\bwithout (a )?(cap|limit)/i;
+const ACTIVATE = /activat|enroll|regist|opt[- ]?in|sign[- ]?up|select|choose|choice|\bmember|\bmust\b/i;
+const NO_ACTIVATE =
+  /\bno (need|categories|activation|enrollment|sign[- ]?ups?)\b|\bautomatic|\b(don.t|do not|never) (need|have) to\b|\bno .{0,20}to (activate|enroll)|\bnot required\b/i;
+const US = /\bU\.?\s?S\.?(?=[\s,;:)-]|$)|\bUS\b|United States|domestic/i;
+const NON_US =
+  /worldwide|outside (of )?the U|foreign|international|abroad|anywhere|wherever|everywhere|around the world|globally/i;
+const LIMITED =
+  /limited[- ]time|promot|\boffer\b|through|until|\bends?\b|expire|first year|first \d+|within \d+|account open|introductory|\b20\d\d\b|January|February|March|April|May|June|July|August|September|October|November|December/i;
+const CURRENCY = {
+  'cash-back': /cash\s?back|cash rewards|statement credit|\bcash\b|%/i,
+  points: /\bpoints?\b|\bmiles?\b|rewards|\d\s*x\b/i,
+};
+const POINT_VALUE = /\$|\bcents?\b|¢|value|worth|redeem/i;
+
+const rateSpec = (bps, prefer) =>
+  bps === null
+    ? { prefer }
+    : {
+        required: [rateRegex(bps)],
+        prefer,
+        fallback: { required: [ANY_RATE] },
+        what: `the rate (${bps} bps)`,
+      };
+function capSpec(cap, prefer) {
+  if (cap?.kind === 'spend' && cap.amountCents)
+    return {
+      required: [amountRegex(cap.amountCents)],
+      prefer: [...prefer, PERIOD, ...(cap.rateAfterCapBps !== null ? [rateRegex(cap.rateAfterCapBps)] : [])],
+      fallback: { required: [ANY_AMOUNT] },
+      what: `the cap amount ($${(cap.amountCents / 100).toLocaleString('en-US')})`,
+    };
+  if (cap?.kind === 'none') return { required: [NO_CAP], prefer, what: 'that the rate is uncapped' };
+  return { prefer };
+}
+const valueSpec = (pattern, prefer, what) => (pattern ? { required: [pattern], prefer, what } : { prefer });
+
 /** Draft a reference from an extraction, keeping only values whose evidence resolves. */
 function draftReference(extraction, input, notes) {
-  const kept = (claim, label) => {
+  const kept = (claim, label, spec = {}) => {
     if (claim.value === null) return { value: null, anchors: [] };
-    const anchors = anchorsFor(claim.evidence, input);
+    const anchors = anchorsFor(claim.evidence, input, spec, 'value', notes, label);
     if (!anchors.length) {
       notes.push(`${label}: value dropped (no resolving quote)`);
       return { value: null, anchors: [] };
     }
     return { value: claim.value, anchors };
   };
-  let rewardCurrency = kept(extraction.rewardCurrency, 'rewardCurrency');
+  let rewardCurrency = kept(
+    extraction.rewardCurrency,
+    'rewardCurrency',
+    valueSpec(
+      CURRENCY[extraction.rewardCurrency.value],
+      [],
+      `the currency (${extraction.rewardCurrency.value})`,
+    ),
+  );
   if (rewardCurrency.value === null)
     notes.push('rewardCurrency: no anchored value; card left out of the corpus');
-  const pointValue = kept(extraction.pointValueHundredthsOfCent, 'pointValueHundredthsOfCent');
+  const pointValue = kept(
+    extraction.pointValueHundredthsOfCent,
+    'pointValueHundredthsOfCent',
+    valueSpec(POINT_VALUE, [], 'a cash value'),
+  );
   const rules = [];
   extraction.rules.forEach((rule, i) => {
     const label = `rules.${i} (${rule.category}, "${rule.issuerWording.slice(0, 60)}")`;
-    const rate = kept(rule.rateBps, `${label} rateBps`);
-    const cap = kept(rule.cap, `${label} cap`);
-    const activation = kept(rule.activation, `${label} activation`);
-    const usOnly = kept(rule.usMerchantsOnly, `${label} usMerchantsOnly`);
-    const limited = kept(rule.limitedTime, `${label} limitedTime`);
+    const prefer = keywordPatterns(`${rule.issuerWording} ${rule.category.replace(/-/g, ' ')}`);
+    const rate = kept(rule.rateBps, `${label} rateBps`, rateSpec(rule.rateBps.value, prefer));
+    const cap = kept(rule.cap, `${label} cap`, capSpec(rule.cap.value, prefer));
+    const activation = kept(
+      rule.activation,
+      `${label} activation`,
+      valueSpec(
+        { none: NO_ACTIVATE, 'enroll-once': ACTIVATE, recurring: ACTIVATE }[rule.activation.value],
+        prefer,
+        `the activation (${rule.activation.value})`,
+      ),
+    );
+    const usOnly = kept(
+      rule.usMerchantsOnly,
+      `${label} usMerchantsOnly`,
+      valueSpec(
+        rule.usMerchantsOnly.value === null ? null : rule.usMerchantsOnly.value ? US : NON_US,
+        prefer,
+        `the merchant location (${rule.usMerchantsOnly.value ? 'U.S. only' : 'not U.S. only'})`,
+      ),
+    );
+    const limited = kept(
+      rule.limitedTime,
+      `${label} limitedTime`,
+      valueSpec(LIMITED, prefer, 'a time limit'),
+    );
     const paid =
       rule.paidOnPaymentBps.value === 0
         ? { value: 0, anchors: [] }
-        : kept(rule.paidOnPaymentBps, `${label} paidOnPaymentBps`);
+        : kept(
+            rule.paidOnPaymentBps,
+            `${label} paidOnPaymentBps`,
+            rateSpec(rule.paidOnPaymentBps.value, prefer),
+          );
     const anchors = [
       ...new Set([
         ...rate.anchors,
@@ -155,7 +264,7 @@ function draftReference(extraction, input, notes) {
     if (paidValue !== null && rate.value !== null && paidValue > rate.value) paidValue = null;
     rules.push({
       category: rule.category,
-      issuerWording: rule.issuerWording,
+      issuerWording: issuerWordingFor(rule, input, prefer, notes, label),
       rateBps: rate.value,
       paidOnPaymentBps: paidValue,
       cap: capValue,
@@ -167,13 +276,24 @@ function draftReference(extraction, input, notes) {
   });
   const exclusions = [];
   for (const exclusion of extraction.exclusions) {
-    const anchors = anchorsFor([...exclusion.evidence, exclusion.text], input);
-    if (anchors.length) exclusions.push({ text: exclusion.text.slice(0, 200), anchors });
-    else notes.push(`exclusion "${exclusion.text.slice(0, 60)}": dropped (no resolving quote)`);
+    const label = `exclusion "${clipWords(exclusion.text, 8)}"`;
+    const keywords = keywordPatterns(exclusion.text);
+    const spec = { required: anyOf(keywords), prefer: keywords, what: 'a word of the exclusion' };
+    const anchors = anchorsFor(
+      [...exclusion.evidence, exclusion.text],
+      input,
+      spec,
+      'exclusion',
+      notes,
+      label,
+    );
+    if (anchors.length) exclusions.push({ text: clipWords(exclusion.text).slice(0, 200), anchors });
+    else notes.push(`${label}: dropped (no resolving quote)`);
   }
   const issues = [];
   for (const issue of extraction.issues) {
-    const anchors = anchorsFor(issue.evidence, input);
+    const spec = { prefer: keywordPatterns(issue.detail) };
+    const anchors = anchorsFor(issue.evidence, input, spec, 'issue', notes, `issue ${issue.code}`);
     if (issue.code !== 'missing' && !anchors.length) {
       notes.push(`issue ${issue.code}: dropped (no resolving quote)`);
       continue;
@@ -188,6 +308,30 @@ function draftReference(extraction, input, notes) {
     exclusions: exclusions.slice(0, 20),
     issues: issues.slice(0, 10),
   };
+}
+
+/**
+ * The rule's issuer wording as a verbatim span of at most 25 words. A wording that resolves is kept, or cut to
+ * its best window around the rate; one that does not resolve is not a quote and is clipped to 25 words, with a
+ * note asking the verifier for the capture's wording.
+ */
+function issuerWordingFor(rule, input, prefer, notes, label) {
+  const wording = rule.issuerWording.trim().replace(/\s+/g, ' ');
+  if (!wording) {
+    notes.push(`${label}: issuerWording is blank; add the capture's wording`);
+    return rule.issuerWording;
+  }
+  const spec = { ...rateSpec(rule.rateBps.value, prefer), fallback: { required: [] } };
+  const result = shortAnchor(wording, input, spec);
+  if (result.status === 'unresolved') {
+    count('issuerWording', 'not-verbatim');
+    notes.push(
+      `${label}: issuerWording is not verbatim in the captures; replace it with the capture's wording`,
+    );
+    return clipWords(wording);
+  }
+  count('issuerWording', result.status === 'mismatch' ? 'shortened' : result.status);
+  return result.text;
 }
 
 // ---- Product notes ---------------------------------------------------------------------------------------
@@ -248,7 +392,7 @@ function searchAnchor(input, rateText, keywords, required = null) {
   return best && resolveQuote(best.text, input) ? best.text : null;
 }
 
-/** The capture line (or sentence, if the line is long) around a resolving quote, so the anchor shows context. */
+/** The capture line (or sentence, if the line is long) around a resolving quote, so the anchor shows context; the caller cuts it to 25 words. */
 function widen(quote, input) {
   const span = resolveQuote(quote, input);
   if (!span) return null;
@@ -261,7 +405,7 @@ function widen(quote, input) {
   const sentence = sentences.find((text) => resolveQuote(quote, { documents: [{ id: 'x', body: text }] }));
   if (sentence && sentence.trim().length <= MAX_ANCHOR && resolveQuote(sentence.trim(), input))
     return sentence.trim();
-  return anchorFor(quote, input);
+  return quote;
 }
 
 const keywordsOf = (text) => [
@@ -274,17 +418,27 @@ function productHints(card, input) {
   // Closed-loop use is stated rarely and loosely; accept only an explicit "can only be used at/on" sentence.
   const STORE_ONLY = /\b(can|may) only be used\b|\bonly (be )?used (at|on|for)\b|\bonly accepted (at|on)\b/i;
   const add = (hint, quotes, keywords, rateText) => {
+    const rate = rateRegexFromText(rateText);
+    const prefer = keywordPatterns(keywords.join(' '));
+    const spec = {
+      required: [...(rate ? [rate] : []), ...(hint.type === 'closed-loop' ? [STORE_ONLY] : [])],
+      prefer,
+    };
+    // A capture line chosen for the hint, cut to its best 25-word window that keeps the rate.
+    const short = (line) => (line ? anchorFor(line, input, spec, 'hint') : null);
     let anchor = null,
       anchorMethod = null;
     for (const quote of quotes) {
-      anchor = anchorFor(quote, input) && widen(quote, input);
+      anchor = resolveQuote(quote, input) ? short(widen(quote, input)) || short(quote) : null;
       if (anchor) {
         anchorMethod = 'research-quote';
         break;
       }
     }
     if (!anchor && input.documents.length) {
-      anchor = searchAnchor(input, rateText, keywords, hint.type === 'closed-loop' ? STORE_ONLY : null);
+      anchor = short(
+        searchAnchor(input, rateText, keywords, hint.type === 'closed-loop' ? STORE_ONLY : null),
+      );
       if (anchor) anchorMethod = 'keyword-search';
     }
     hints.push(
@@ -306,14 +460,14 @@ function productHints(card, input) {
     const membership = /\b(member|membership|prime|costco|sam's|bj's|enroll|relationship|checking)\b/i.test(
       rule.conditions ?? '',
     )
-      ? (rule.conditions ?? '').slice(0, 300)
+      ? clipWords(rule.conditions ?? '')
       : null;
     const hint = {
       type,
-      summary: rule.category.slice(0, 300),
-      rate: rule.rate,
-      cap: rule.cap ?? null,
-      conditions: (rule.conditions ?? '').slice(0, 300) || null,
+      summary: clipWords(rule.category),
+      rate: clipWords(rule.rate),
+      cap: clipWords(rule.cap ?? null) ?? null,
+      conditions: clipWords(rule.conditions ?? '') || null,
       ...(type === 'merchant-specific'
         ? { merchants: card.coBrandPartner ? [card.coBrandPartner] : [], membership }
         : {}),
@@ -408,7 +562,7 @@ const corpus = corpusV2Schema.parse({
   version: 'expansion.draft.1',
   origin: 'real-issuer-captures',
   annotationStatus: 'agent-drafted',
-  description: `Catalog expansion: agent-drafted base labels converted from LLM extractions (${extractedWith}) of captured issuer pages. Only values whose quotes resolve in the captures are kept. Not verified; split is a placeholder. Generated by scripts/draft-expansion-labels.mjs.`,
+  description: `Catalog expansion: agent-drafted base labels converted from LLM extractions (${extractedWith}) of captured issuer pages. Only values whose quotes resolve in the captures are kept; every anchor is a verbatim span of at most 25 words. Not verified; split is a placeholder. Generated by scripts/draft-expansion-labels.mjs.`,
   cases,
 });
 await writeFile(join(dir, 'corpus.draft.json'), JSON.stringify(corpus, null, 2) + '\n');
@@ -419,7 +573,7 @@ await writeFile(
       schemaVersion: 1,
       generatedBy: 'scripts/draft-expansion-labels.mjs',
       description:
-        'Structured hints the extraction schema cannot express, from the research drafts. An anchored hint cites a quote that resolves in the captures (research-quote: the research quoted it; keyword-search: a capture sentence with the rate and a keyword, which a verifier must confirm says what the hint says). Unanchored hints cite the research. draftNotes record what drafting dropped.',
+        'Structured hints the extraction schema cannot express, from the research drafts (summaries and conditions clipped to 25 words). An anchored hint cites a quote of at most 25 words that resolves in the captures (research-quote: the research quoted it; keyword-search: a capture sentence with the rate and a keyword, which a verifier must confirm says what the hint says). Unanchored hints cite the research. draftNotes record what drafting dropped.',
       cards: productNotes,
     },
     null,
@@ -467,7 +621,7 @@ for (const issuer of issuers) {
     '7. **Product notes**: each hint (merchant-specific rules with merchant names and membership requirements, chosen-category options and caps, rotating quarters with dates and activation, store-only use, relationship tiers, checkout-method rules) is true per the captures; `keyword-search` anchors were chosen automatically and must actually support the hint; `unanchored` hints need a capture quote or should be dropped.',
     '8. **Draft notes**: values the drafting dropped (no resolving quote) may be real: re-check them.',
     '',
-    'Record fixes as: card id, field path, current value, corrected value, anchor quote (≤ 400 characters, verbatim from a capture).',
+    `Record findings in \`${relDir}/verification/<issuer-slug>.json\` in the format of \`${relDir}/verification/README.md\` (card verdict; each fix with field path, current value, corrected value and an anchor quote of at most ${MAX_QUOTE_WORDS} words, verbatim from a named capture). Quote nothing longer.`,
     '',
   ];
   for (const card of list) {
@@ -493,7 +647,7 @@ for (const issuer of issuers) {
           : `- \`${sourceId}\`: **not captured** (see capture-report.md)`,
       );
     }
-    for (const note of card.notes ?? []) lines.push(`- Note: ${note}`);
+    for (const note of card.notes ?? []) lines.push(`- Note: ${clipWords(note)}`);
     lines.push('');
     lines.push(
       `Extraction: ${run?.status ?? 'not run'}${run?.inputNotes?.length ? ` (input: ${run.inputNotes.join('; ')})` : ''}. Draft: ${item ? `${item.reference.rules.length} rules` : '**none**'}.`,
@@ -543,3 +697,4 @@ for (const entry of productNotes)
   }
 console.log(`corpus.draft.json: ${cases.length} cases of ${cards.length} cards`);
 console.log('product notes:', hintCounts);
+console.log('anchors (kept = within 25 words, shortened, mismatch = kept a fallback token, dropped):', tally);
