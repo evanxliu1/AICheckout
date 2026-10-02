@@ -18,6 +18,8 @@ export const configurationSchema = z.strictObject({
     /** Every vendor CLI version (`codex --version`, `claude --version`) the observations were collected
      * under, oldest first; "unrecorded" stands for observations saved before versions were recorded. */
     cliVersions: z.array(z.string().min(1).max(80)).max(20).optional(),
+    /** Codex only: "visible" when hidden reasoning tokens were left out of output tokens (absent = total). */
+    outputTokens: z.enum(['total', 'visible']).optional(),
   }),
   effort: key.nullable(),
   prompt: z.enum(Object.keys(PROMPTS) as [PromptVersion, ...PromptVersion[]]),

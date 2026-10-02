@@ -51,6 +51,7 @@ const CONFIGURATION_FLAGS = [
   '--selection',
   '--split',
   '--repeat',
+  '--codex-output-tokens',
 ];
 
 /** Earlier harness-failed attempts of a run, one JSON line each (statuses and timings only, no output). */
@@ -119,6 +120,8 @@ async function collect(
   options: {
     concurrency: number;
     live: boolean;
+    /** Live attempt/total deadlines; each trace records the limits it ran under. */
+    timeouts?: { attemptTimeoutMs: number; totalTimeoutMs: number };
     /** Called with everything collected so far after every few slots, so a crash loses little. */
     onProgress?: (observations: Observation[]) => Promise<void>;
   },
@@ -133,7 +136,7 @@ async function collect(
   const observations = await mapConcurrent(jobs, options.concurrency, async ({ value, repeat }, index) => {
     if (stopped) return undefined;
     const trace = await executeTask(task, value.input, providerFor(value), {
-      limits: options.live ? CODEX_LIMITS : { maxInputTokens: 64_000 },
+      limits: options.live ? { ...CODEX_LIMITS, ...options.timeouts } : { maxInputTokens: 64_000 },
     });
     const slot = slotOf({ caseId: value.item.id, repeat });
     if (options.live)
@@ -269,6 +272,7 @@ async function providerFor(
     model: provider.model,
     reasoningEffort: (effort ?? 'low') as CodexOptions['reasoningEffort'],
     bin,
+    outputTokens: provider.outputTokens ?? 'total',
   });
   return { providerFor: () => codex, cliVersion: await cliVersion(bin) };
 }
@@ -294,6 +298,9 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
       split: { type: 'string', default: 'dev' },
       'allow-heldout': { type: 'boolean', default: false },
       repeat: { type: 'string', default: '1' },
+      'codex-output-tokens': { type: 'string', default: 'total' },
+      'attempt-timeout-ms': { type: 'string' },
+      'total-timeout-ms': { type: 'string' },
       concurrency: { type: 'string', default: '3' },
       limit: { type: 'string' },
       case: { type: 'string', multiple: true },
@@ -354,6 +361,8 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
         throw new Error(`--prompt must be one of ${Object.keys(PROMPTS).join(', ')}.`);
       if (!(SELECTIONS as readonly string[]).includes(values.selection))
         throw new Error(`--selection must be one of ${SELECTIONS.join(', ')}.`);
+      if (!['total', 'visible'].includes(values['codex-output-tokens']))
+        throw new Error('--codex-output-tokens must be total or visible.');
       if (!['dev', 'heldout', 'all'].includes(values.split))
         throw new Error('--split must be dev, heldout, or all.');
       const live = values.provider !== 'fixture';
@@ -363,7 +372,14 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
         throw new Error('Fixture --model must be reference-echo.1 or abstain.2.');
       configuration = {
         provider: live
-          ? { id: PROVIDER_IDS[values.provider], model: values.model!, mode: 'subscription' }
+          ? {
+              id: PROVIDER_IDS[values.provider],
+              model: values.model!,
+              mode: 'subscription',
+              ...(values.provider === 'codex' && values['codex-output-tokens'] === 'visible'
+                ? { outputTokens: 'visible' as const }
+                : {}),
+            }
           : { id: 'fixture', model: fixtureModel, mode: 'fixture' },
         effort: live ? values.effort : null,
         prompt: values.prompt as PromptVersion,
@@ -454,7 +470,22 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
       );
     }
     const saved = existing;
+    const timeouts = {
+      attemptTimeoutMs: positiveInt(
+        'attempt-timeout-ms',
+        values['attempt-timeout-ms'],
+        CODEX_LIMITS.attemptTimeoutMs,
+        600_000,
+      ),
+      totalTimeoutMs: positiveInt(
+        'total-timeout-ms',
+        values['total-timeout-ms'],
+        CODEX_LIMITS.totalTimeoutMs,
+        900_000,
+      ),
+    };
     const collected = await collect(loaded, configuration, provider.providerFor, jobs, {
+      timeouts,
       concurrency,
       live,
       onProgress: async (observations) => {

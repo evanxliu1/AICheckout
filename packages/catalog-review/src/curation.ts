@@ -81,11 +81,12 @@ export const replySchema = z.strictObject({
   usage: usageSchema,
   providerResponse: providerResponseSchema.optional(),
 });
+/** Local subscription runs of high-effort models need long deadlines; the hosted ledger caps both far lower. */
 export const limitsSchema = z.strictObject({
   budgetMicrousd: z.number().int().min(0).max(1_000_000_000).default(0),
   maxAttempts: z.number().int().min(1).max(2).default(2),
-  attemptTimeoutMs: z.number().int().min(1).max(300_000).default(10_000),
-  totalTimeoutMs: z.number().int().min(1).max(600_000).default(15_000),
+  attemptTimeoutMs: z.number().int().min(1).max(600_000).default(10_000),
+  totalTimeoutMs: z.number().int().min(1).max(900_000).default(15_000),
   maxInputTokens: z.number().int().min(512).max(64_000).default(48_000),
   maxOutputTokens: z.number().int().min(128).max(8192).default(4096),
 });

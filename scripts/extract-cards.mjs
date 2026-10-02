@@ -1,13 +1,16 @@
 // Run the v2 LLM extraction on each expansion card's captured pages.
 //
-//   node scripts/extract-cards.mjs [--dir evals/curation/expansion] [--only id,id] [--concurrency 3]
-//     [--provider codex] [--model gpt-5.5] [--effort low] [--prompt guided.2] [--selection keyword-window.1]
+//   node scripts/extract-cards.mjs [--dir evals/curation/expansion] [--only id,id] [--concurrency 8]
+//     [--provider codex] [--model gpt-5.6-luna] [--effort xhigh] [--prompt guided.2] [--selection keyword-window.1]
+//     [--attempt-timeout-ms 600000] [--total-timeout-ms 900000] [--wait-minutes 15] [--codex-output-tokens visible]
 //
 // Reads <dir>/cards.json, <dir>/manifest.json, and the gitignored <dir>/captures/. Each card's trace goes to
 // the gitignored <dir>/extractions/<cardId>.json (it holds model quotes of issuer text); a summary without
 // issuer text goes to the committed <dir>/extraction-summary.json. Resumable: cards with a saved extraction
 // are skipped unless it ended in a timeout or provider error or a page it read was re-captured. A timeout or provider error is retried once. A
-// usage limit stops the run with exit status 3; run the same command again later to continue.
+// usage limit pauses the run for --wait-minutes and then resumes (0: stop with exit status 3; run the same
+// command again later to continue). A saved extraction made with another configuration is redone, so the whole
+// set always comes from one configuration.
 //
 // Input limits: the harness admits at most 4 documents and ~64k estimated input tokens. When a card's pages
 // exceed that with the chosen selection, the lowest-priority pages are dropped (the summary records which).
@@ -23,18 +26,24 @@ const { values } = parseArgs({
   options: {
     dir: { type: 'string', default: 'evals/curation/expansion' },
     only: { type: 'string' },
-    concurrency: { type: 'string', default: '3' },
+    concurrency: { type: 'string', default: '8' },
     provider: { type: 'string', default: 'codex' },
-    model: { type: 'string', default: 'gpt-5.5' },
-    effort: { type: 'string', default: 'low' },
+    model: { type: 'string', default: 'gpt-5.6-luna' },
+    effort: { type: 'string', default: 'xhigh' },
     prompt: { type: 'string', default: 'guided.2' },
     selection: { type: 'string', default: 'keyword-window.1' },
+    'attempt-timeout-ms': { type: 'string', default: '600000' },
+    'total-timeout-ms': { type: 'string', default: '900000' },
+    'wait-minutes': { type: 'string', default: '15' },
+    // Hidden reasoning out of output tokens, so xhigh reasoning does not trip the 8,192 output limit.
+    'codex-output-tokens': { type: 'string', default: 'visible' },
     'summary-only': { type: 'boolean', default: false },
   },
 });
 const concurrency = Number(values.concurrency);
-if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 3)
-  throw new Error('--concurrency must be 1 to 3.');
+if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 8)
+  throw new Error('--concurrency must be 1 to 8.');
+const waitMinutes = Number(values['wait-minutes']);
 
 // The harness is TypeScript; bundle the pieces this script needs, as scripts/evaluate-curation-v2.mjs does.
 const bundle = await build({
@@ -60,10 +69,11 @@ const harness = await import(
   `data:text/javascript;base64,${Buffer.from(bundle.outputFiles[0].text).toString('base64')}`
 );
 
-/** Same limits as live eval:v2 runs (apps/api/src/curation/v2/eval-cli.ts). */
+/** Live eval:v2 limits (apps/api/src/curation/v2/eval-cli.ts: 240 s / 480 s), with the timeouts raised by
+ * default (600 s per attempt, 900 s total) because xhigh effort takes ~4-5 minutes even on small cards. */
 const LIMITS = {
-  attemptTimeoutMs: 240_000,
-  totalTimeoutMs: 480_000,
+  attemptTimeoutMs: Number(values['attempt-timeout-ms']),
+  totalTimeoutMs: Number(values['total-timeout-ms']),
   maxInputTokens: 64_000,
   maxOutputTokens: 8192,
 };
@@ -96,6 +106,7 @@ const configuration = {
   effort: values.effort,
   prompt: values.prompt,
   selection: values.selection,
+  ...(values.provider === 'codex' ? { outputTokens: values['codex-output-tokens'] } : {}),
 };
 
 async function readSaved(cardId) {
@@ -177,6 +188,7 @@ async function providerFor() {
     const provider = await harness.createCodexProvider({
       model: configuration.model,
       reasoningEffort: configuration.effort,
+      outputTokens: configuration.outputTokens,
     });
     return { provider, cliVersion: await harness.cliVersion('codex') };
   }
@@ -265,76 +277,106 @@ if (values['summary-only']) {
 
 const { provider, cliVersion } = await providerFor();
 const task = harness.extractionTaskV2(configuration.prompt, configuration.selection);
-const saved = new Set(
-  (await readdir(outDir)).filter((name) => name.endsWith('.json')).map((n) => n.slice(0, -5)),
-);
-const queue = [];
-for (const card of cards) {
-  if (only && !only.has(card.id)) continue;
-  if (saved.has(card.id)) {
-    const previous = await readSaved(card.id);
-    // A saved extraction stands only while every page it read still matches the manifest.
-    const current =
-      previous?.documents.every(
-        (document) => sources.get(document.id)?.sha256 === (document.sourceSha256 ?? document.contentHash),
-      ) ?? false;
-    if (previous && current && !RETRYABLE.has(previous.trace.status)) continue;
-  }
-  queue.push(card);
-}
-console.log(
-  `${queue.length} cards to extract (${configuration.provider} ${configuration.model} ${configuration.effort}).`,
-);
+const sameConfiguration = (saved) =>
+  ['provider', 'model', 'effort', 'prompt', 'selection', 'outputTokens'].every(
+    (key) => saved?.[key] === configuration[key],
+  );
 
-let stopped = false,
-  next = 0,
-  done = 0;
-async function worker() {
-  while (!stopped && next < queue.length) {
-    const card = queue[next++];
-    const { input, notes } = await inputFor(card);
-    if (!input.documents.length) {
-      console.log(`${card.id}: no captured documents; skipped`);
-      continue;
+/** Cards still to extract: never extracted, extracted with another configuration or on re-captured pages, or
+ * ended in a timeout or provider error. */
+async function pending() {
+  const saved = new Set(
+    (await readdir(outDir)).filter((name) => name.endsWith('.json')).map((n) => n.slice(0, -5)),
+  );
+  const queue = [];
+  for (const card of cards) {
+    if (only && !only.has(card.id)) continue;
+    if (saved.has(card.id)) {
+      const previous = await readSaved(card.id);
+      // A saved extraction stands only while every page it read still matches the manifest.
+      const current =
+        previous?.documents.every(
+          (document) => sources.get(document.id)?.sha256 === (document.sourceSha256 ?? document.contentHash),
+        ) ?? false;
+      if (
+        previous &&
+        current &&
+        sameConfiguration(previous.configuration) &&
+        !RETRYABLE.has(previous.trace.status)
+      )
+        continue;
     }
-    const previous = await readSaved(card.id);
-    let trace,
-      attempts = previous?.attempts ?? 0;
-    for (let run = 0; run < 2; run++) {
-      trace = await harness.executeTask(task, input, provider, { limits: LIMITS });
-      attempts++;
-      if (rateLimited(trace) || !RETRYABLE.has(trace.status)) break;
-      console.log(`${card.id}: ${trace.status}; retrying once`);
-    }
-    if (rateLimited(trace)) {
-      stopped = true;
-      console.log(`${card.id}: usage limit reached; stopping. Run again later to resume.`);
-      break;
-    }
-    const record = {
-      schemaVersion: 1,
-      cardId: card.id,
-      configuration,
-      cliVersion,
-      notes,
-      attempts,
-      documents: input.documents.map(({ id, url, capturedOn, contentHash }) => ({
-        id,
-        url,
-        capturedOn,
-        contentHash,
-        sourceSha256: sources.get(id).sha256,
-      })),
-      trace,
-    };
-    await writeAtomic(join(outDir, `${card.id}.json`), JSON.stringify(record, null, 2) + '\n');
-    done++;
-    console.log(
-      `[${done}/${queue.length}] ${card.id}: ${trace.status} (${trace.durationMs} ms, ${trace.extraction?.rules.length ?? '-'} rules)`,
-    );
+    queue.push(card);
   }
+  return queue;
 }
-await Promise.all(Array.from({ length: Math.min(concurrency, queue.length) }, worker));
-const counts = await writeSummary();
-console.log(counts);
+
+/** Extract `queue` with `concurrency` workers. Returns true when a usage limit stopped the run. */
+async function run(queue) {
+  let stopped = false,
+    next = 0,
+    done = 0;
+  async function worker() {
+    while (!stopped && next < queue.length) {
+      const card = queue[next++];
+      const { input, notes } = await inputFor(card);
+      if (!input.documents.length) {
+        console.log(`${card.id}: no captured documents; skipped`);
+        continue;
+      }
+      const previous = await readSaved(card.id);
+      let trace,
+        attempts = sameConfiguration(previous?.configuration) ? (previous?.attempts ?? 0) : 0;
+      for (let attempt = 0; attempt < 2; attempt++) {
+        trace = await harness.executeTask(task, input, provider, { limits: LIMITS });
+        attempts++;
+        if (rateLimited(trace) || !RETRYABLE.has(trace.status)) break;
+        console.log(`${card.id}: ${trace.status}; retrying once`);
+      }
+      if (rateLimited(trace)) {
+        stopped = true;
+        console.log(`${card.id}: usage limit reached; stopping this pass.`);
+        break;
+      }
+      const record = {
+        schemaVersion: 1,
+        cardId: card.id,
+        configuration: { ...configuration, limits: LIMITS },
+        cliVersion,
+        notes,
+        attempts,
+        documents: input.documents.map(({ id, url, capturedOn, contentHash }) => ({
+          id,
+          url,
+          capturedOn,
+          contentHash,
+          sourceSha256: sources.get(id).sha256,
+        })),
+        trace,
+      };
+      await writeAtomic(join(outDir, `${card.id}.json`), JSON.stringify(record, null, 2) + '\n');
+      done++;
+      console.log(
+        `[${done}/${queue.length}] ${card.id}: ${trace.status} (${trace.durationMs} ms, ${trace.extraction?.rules.length ?? '-'} rules)`,
+      );
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(concurrency, queue.length) }, worker));
+  return stopped;
+}
+
+let stopped = false;
+for (;;) {
+  const queue = await pending();
+  console.log(
+    `${queue.length} cards to extract (${configuration.provider} ${configuration.model} ${configuration.effort}, concurrency ${concurrency}).`,
+  );
+  if (!queue.length) break;
+  stopped = await run(queue);
+  await writeSummary();
+  if (!stopped || !(waitMinutes > 0)) break;
+  console.log(`Usage limit: waiting ${waitMinutes} minutes before resuming.`);
+  await new Promise((resume) => setTimeout(resume, waitMinutes * 60_000));
+}
+console.log(await writeSummary());
 if (stopped) process.exitCode = EXIT_RATE_LIMITED;
