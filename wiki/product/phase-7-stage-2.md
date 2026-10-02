@@ -6,7 +6,7 @@ status: draft
 tags: [product, plan, phase-7, catalog, engine, extension]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:00:00Z
+  at: 2026-10-02T23:59:00Z
 stale_after: 2026-11-01T00:00:00Z
 sources:
   - resource: ../system/catalog-expansion.md
@@ -85,6 +85,7 @@ Start in parallel: M1, M3, M9, M11 (draft). After M1: M2, M4 and M8 in parallel.
 - **Files.** `catalog-overlay.json`, `merchants.json`, `scripts/lib/catalog-overlay.mjs` (Zod + coverage check), `check-expansion-quotes.mjs`.
 - **Acceptance.** Coverage check passes: no undisposed `other` rule, issue or hint; every anchor verbatim and ≤ 25 words, no adjacency run over 25; corpus files byte-identical.
 - **Risks.** Largest judgment workload of the stage; keep conventions in the general file so issuers agree. Brand names must not imply affiliation in the UI.
+- **Status (2026-10-02).** Implemented on branch `s2-m4-catalog-overlay`: overlay and merchants files, `scripts/lib/catalog-overlay.mjs` with tests, quote check extended; 2 cards held out (no base rate), no new categories, draft catalog 178 cards and about 601 KB ([catalog expansion](../system/catalog-expansion.md#catalog-overlay-m4), [decision](../decisions/2026-10-02-catalog-overlay-conventions.md)).
 
 ### M5 Catalog builder v3 and the 180-card catalog
 - **Scope.** `scripts/build-catalog-v3.mjs` (`npm run catalog:v3`, `catalog:v3:check` in CI) from `real/corpus.v2.json` (7 cards) + `expansion/corpus.json` + overlay + programs + merchants → `packages/rewards-core/src/catalog-v3.ts`; short rule IDs; version `2026-10-02.expansion.1`, `verifiedAt` 2026-10-02, `expiresAt` 2026-11-01. Build report `evals/curation/expansion/catalog-build-report.md` (held-out cards and why, byte size, per-feature counts). Seed regenerated from v3.

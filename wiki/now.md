@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:30:00Z
+  at: 2026-10-02T23:59:00Z
 ---
 
 # Now
 
-As of 2026-10-02T23:30Z.
+As of 2026-10-02T23:59Z.
 
 ## Current state
 
@@ -19,6 +19,8 @@ As of 2026-10-02T23:30Z.
 - **Curation model:** gpt-5.6-luna `xhigh` since 2026-10-02 ([decision](decisions/2026-10-02-gpt-5-6-luna-for-curation.md)). It is the `eval:v2 --provider codex` and `extract-cards.mjs` default on `main` since PR #16, and [`docs/evals/results.md`](../docs/evals/results.md) has its rows: dev 99.5%, held-out 98.3%, both marked added after ([reporting decision](decisions/2026-10-02-luna-results-per-split.md)).
 
 ## Active work
+
+- **Stage 2 M4 catalog overlay** on branch `s2-m4-catalog-overlay` (not merged): `evals/curation/expansion/catalog-overlay.json` and `merchants.json`, `scripts/lib/catalog-overlay.mjs` (coverage check plus an in-memory draft catalog v3 parsed by `catalogV3Schema`) with tests, quote check extended. Authored per issuer, independently verified and adjudicated (agent-verified); conventions O1–O19 in `verification/conventions/general.md`. 2 cards held out (Marriott Bonvoy Bold, U.S. Bank Shield), no new categories, no migration; draft catalog 178 cards, about 601 KB. Hand-offs to M2 and M5: [catalog expansion](system/catalog-expansion.md#catalog-overlay-m4), [decision](decisions/2026-10-02-catalog-overlay-conventions.md).
 
 - **M1 catalog v3 contract and migration** merged with PR #22 (migration pushed to hosted by the coordinator after merge): `catalogV3Schema` and types, `catalogV3Cases` (117, after the pre-merge review added `excludedBrandIds` and `sharedCapId`) agreeing with `valid_catalog_v3` in migration `20261002222425_catalog_v3` (also drafts ≤ 600 sources, captures ≤ 250,000 chars); full local DB suite green. Details and hand-offs to M2, M4, M6 and M8: [contract details decision](decisions/2026-10-02-catalog-v3-contract-details.md), [rewards engine](system/rewards-engine.md#catalog-v3-contract). After merge the coordinator runs `./scripts/db-push.sh`.
 - **Stage 2 M9 expansion eval** merged with PR #21: loader layout `expansion` and `eval:v2 --captures`, `scripts/expansion-pipeline-metrics.mjs`, `scripts/score-expansion-traces.mjs`, [`docs/evals/expansion.md`](../docs/evals/expansion.md) ([decision](decisions/2026-10-02-expansion-eval-design.md)). Pipeline: 5.9% of surviving draft rule-field values corrected, 54 draft rules removed, 182 added. Luna re-score (upper bound): 80.8% end to end on 173 cards. gpt-5.5 low (cross-model, neither drafted nor verified the labels; one repeat, visible output tokens): 76.2% end to end on all 173 (76.7% drafted, 69.1% undrafted), matched-rule field accuracy 94.3% (luna 94.8%), rule recall 81.6%, issue recall 15.4% (luna 56.9%), 11 false-clean, p50 28 s. The run directory is gitignored in this worktree.

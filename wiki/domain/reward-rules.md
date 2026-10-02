@@ -6,7 +6,7 @@ status: stable
 tags: [domain, rewards, engine]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:00:00Z
+  at: 2026-10-02T23:59:00Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
     title: Catalog v2 types (RewardRuleV2, RuleCap, PaymentPath, Uncertainty)
@@ -106,6 +106,8 @@ Stage 2 M1 adds the catalog v3 contract ([rewards engine](../system/rewards-engi
 | `requiredPaymentPaths` | The rule pays only through these paths; `excludedPaymentPaths` gains `venmo` |
 | `limitedTime.startsOn` | Rotating or future rules start on this date (Freedom Flex Q1 2027) |
 | Program value | Units convert to cents with the shopper's override, else the card's issuer-stated value, else the program's published estimate ([decision](../decisions/2026-10-02-points-valuation-published-estimates.md)); `none` means units only |
+
+**How the M4 overlay uses these fields** ([decision](../decisions/2026-10-02-catalog-overlay-conventions.md)): a brand-scoped rule always has category `other` and matches on brand alone; `excludedBrandIds` appear only on category rules; a statement that third-party payment accounts or wallets "may not" earn a bonus puts those paths in `excludedPaymentPaths` (the base rate is then counted for them); gates ask about the cardholder only, never about the purchase (financing, minimum amounts and store-brand items are noted or the rule is held out); the lowest tier every cardholder holds stays ungated; first-year and first-30-days rates are `limitedTime` with null dates.
 
 Statuses `not-accepted`, `not-started`, `choice-not-selected`, `condition-not-met` and uncertainties `choice-unknown`, `automatic-category`, `condition-unknown` are defined for M2.
 

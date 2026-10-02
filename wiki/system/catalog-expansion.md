@@ -6,7 +6,7 @@ status: draft
 tags: [system, catalog, curation, expansion, phase-7]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:30:00Z
+  at: 2026-10-02T23:59:00Z
 verified_commit: e940b6f
 ---
 
@@ -154,6 +154,19 @@ Milestone M3 of the [Stage 2 plan](../product/phase-7-stage-2.md), branch `s2-m3
 | `harley-davidson-visa-points` | — | none | 3 |
 | `edward-jones-loyalty-points` | — | none | 1 |
 
+## Catalog overlay (M4)
+
+Stage 2 M4 (branch `s2-m4-catalog-overlay`, 2026-10-02) adds [`catalog-overlay.json`](../../evals/curation/expansion/catalog-overlay.json) and [`merchants.json`](../../evals/curation/expansion/merchants.json), the product structure catalog v3 needs that the corpus labels cannot hold ([conventions decision](../decisions/2026-10-02-catalog-overlay-conventions.md)). The corpus, product notes and reward-programs files are unchanged (a test pins their SHA-256).
+
+- **Format and check.** [`scripts/lib/catalog-overlay.mjs`](../../scripts/lib/catalog-overlay.mjs): Zod schemas, `checkOverlay` (every expansion card has an entry; every `other` rule, rule without a rate, spend cap without an after-cap rate, issue and hint has a disposition; patches guarded by the corpus category and rate; brand, gate, choice and program references resolve) and `draftCatalogV3`, which builds an unpublished catalog v3 from the corpora, programs, merchants and overlay and parses it with `catalogV3Schema`. Tests: `scripts/lib/catalog-overlay.test.mjs`. `check-expansion-quotes.mjs` scans both files and checks every overlay anchor and added-rule wording verbatim against the captures.
+- **Process.** Eight authoring subagents wrote per-issuer fragments (Amex, Wells Fargo and Discover shared one), eight independent verifier subagents re-read them against the captures, and the coordinator adjudicated every finding; rules O1–O19 are in [`general.md`](../../evals/curation/expansion/verification/conventions/general.md) and each issuer's file has an "Overlay (Stage 2 M4)" section. Agent-verified, not human-verified.
+- **Counts.** 173 card entries, 2 held out (Marriott Bonvoy Bold, U.S. Bank Shield: no base rate). `other` rules (284): 149 brand-scoped, 31 recategorized (home improvement, department stores, electronics, transit, PayPal/Venmo checkout as `all-purchases`), 101 held out (65 not at retail, 23 with no v3 category, the rest outside the U.S., peer-to-peer, purchase-level conditions or a fractional rate), 3 with the held-out card. All rule patches: 406 modelled, 103 held out, 7 field-unstated, 3 card-held-out. Issues: 83 modelled, 5 field-unstated, 107 noted. Hints: 161 modelled, 34 noted, 2 card-held-out.
+- **Structure.** 140 brands; 14 gates (Prime, Amazon secured-card age, Sam's Club, Walmart+, Bank of America account for the Atmos boost, Gap Encore card level, CLUB, Macy's, Bloomingdale's, JCPenney, At Home, J.Crew, AAdvantage Executive spend, Smartly balance); 10 choices (Customized Cash ×4, Strata, Cash+ ×2 each, Edward Jones automatic); 4 closed-loop cards (Amazon Store, Amazon Secured, Newegg, Harbor Freight); 41 added rules (Freedom Flex Jan–Mar 2027 grocery and streaming from its product capture, tier and gated duplicates, Prime Visa without Prime, wholesale clubs); 18 store-credit cash-back programs; unit names and redemption brands for every program.
+- **Merchants.** The three v2 profiles unchanged plus `brandIds` (`amazon-us` → `amazon`, `best-buy-us` → `best-buy`, `newegg-us` → `newegg`).
+- **Categories.** No change: all four provisional v3 categories are used, none added, no migration.
+- **Draft catalog.** 178 cards, 820 rules (at most 17 per card), about 601 KB (57% of 1 MiB).
+- **For M5.** Rule IDs in the draft are long (`<cardId>-r<index>`); display names are corpus card names; Amex Platinum's $500,000 cap exceeds `MAX_AMOUNT_CENTS` and is carried as `unstated`; the Barnes & Noble 5% rebate sits in an unvalued points program; Discover's Q1 2027 categories were never captured.
+
 ## Remaining work
 
 Superseded on 2026-10-02 by the milestones in the [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md); the list below is the summary it was planned from.
@@ -174,6 +187,7 @@ Superseded on 2026-10-02 by the milestones in the [Phase 7 Stage 2 plan](../prod
 * [Cards](../domain/cards.md)
 * [Curation harness](curation-harness.md)
 * [Evaluation](evaluation.md)
+* [Decision: catalog overlay conventions](../decisions/2026-10-02-catalog-overlay-conventions.md)
 * [Decision: NerdWallet as the primary valuation publisher](../decisions/2026-10-02-nerdwallet-primary-valuation-publisher.md)
 * [Decision: gpt-5.6-luna for curation](../decisions/2026-10-02-gpt-5-6-luna-for-curation.md)
 * [Decision: 25-word expansion quotes and the verification format](../decisions/2026-10-02-expansion-quote-limit-and-verification-format.md)
