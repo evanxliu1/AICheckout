@@ -531,13 +531,49 @@ describe('catalog v3 engine: unvalued programs', () => {
     expect(order(result)).toEqual(['test-prime-visa', 'test-auto-top']);
     expect(result.rankingMayChange).toBe(true);
   });
-  it('puts a valued card that earns nothing before an unvalued card, even the default one', () => {
+  it('puts an unvalued card that guarantees units before a valued card that earns $0 at most', () => {
+    // Amazon Store Card without Prime: $0. Automatic top category: 100 miles guaranteed, no value.
     const result = ready({
       cards: [owned('test-auto-top'), owned('test-amazon-store')],
       purchase: { merchantId: 'amazon-us' },
-      wallet: { defaultCardId: 'test-auto-top', gates: [{ gateId: 'amazon-prime', optionId: 'not-member' }] },
+      wallet: { gates: [{ gateId: 'amazon-prime', optionId: 'not-member' }] },
     });
-    expect(order(result)).toEqual(['test-amazon-store', 'test-auto-top']);
+    expect(order(result)).toEqual(['test-auto-top', 'test-amazon-store']);
+    expect(units(result.estimates[0])).toEqual([100, 100]);
+    expect(result.preferredCardId).toBe('test-auto-top');
+    expect(result.rankingMayChange).toBe(false);
+    // With Prime the store card may earn cents, so it is ranked first again.
+    const prime = ready({
+      cards: [owned('test-auto-top'), owned('test-amazon-store')],
+      purchase: { merchantId: 'amazon-us' },
+      wallet: { gates: [{ gateId: 'amazon-prime', optionId: 'member' }] },
+    });
+    expect(order(prime)).toEqual(['test-amazon-store', 'test-auto-top']);
+  });
+  it('keeps a valued card that earns $0 before an unvalued card that guarantees no units', () => {
+    const catalog = structuredClone(CATALOG);
+    catalog.cards.push({
+      ...card('test-miles-store', 'test-airline-miles', [
+        rule('miles-store-amazon', {
+          category: 'other',
+          rateBps: 300,
+          brandIds: ['amazon'],
+          requires: [{ gateId: 'test-store-tier', optionIds: ['gold'] }],
+        }),
+      ]),
+      acceptance: { kind: 'closed-loop', brandIds: ['amazon'] },
+    });
+    const result = ready({
+      catalog,
+      cards: [owned('test-miles-store'), owned('test-amazon-store')],
+      purchase: { merchantId: 'amazon-us' },
+      wallet: {
+        defaultCardId: 'test-miles-store',
+        gates: [{ gateId: 'amazon-prime', optionId: 'not-member' }],
+      },
+    });
+    expect(units(result.estimates[1])).toEqual([0, 300]);
+    expect(order(result)).toEqual(['test-amazon-store', 'test-miles-store']);
     expect(result.rankingMayChange).toBe(true);
   });
   it('names an unvalued card when it is the only one, without a cent amount', () => {

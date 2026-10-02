@@ -500,8 +500,10 @@ function notAcceptedEstimate(card: CardProductV3, program: RewardProgram, wallet
 }
 
 /** Orders valued cards by guaranteed minimum cents, then unvalued cards by guaranteed minimum
- * units, each with the default card and then the card ID breaking ties. An unvalued card that
- * earns any units may beat a valued leader once the shopper sets a value, so it sets
+ * units, each with the default card and then the card ID breaking ties. Exception: a valued card
+ * whose maximum is $0 ranks below an unvalued card that guarantees units, since any positive value
+ * beats $0 (no value is assumed); it stays above unvalued cards that guarantee none. An unvalued
+ * card that earns any units may beat a valued leader once the shopper sets a value, so it sets
  * `rankingMayChange`; among unvalued cards only the same program's units are comparable. */
 function rankV3(
   estimates: CardEstimate[],
@@ -510,9 +512,13 @@ function rankV3(
   catalogVersion: string,
 ): Comparison {
   const valued = (e: CardEstimate) => e.unitValue != null;
+  // 0: valued and may earn cents; 1: unvalued with guaranteed units; 2: valued, $0 at most;
+  // 3: unvalued with no guaranteed units.
+  const tier = (e: CardEstimate) =>
+    valued(e) ? (e.maxRewardCents > 0 ? 0 : 2) : e.minRewardUnits! > 0 ? 1 : 3;
   estimates.sort(
     (a, b) =>
-      Number(valued(b)) - Number(valued(a)) ||
+      tier(a) - tier(b) ||
       (valued(a) ? b.minRewardCents - a.minRewardCents : b.minRewardUnits! - a.minRewardUnits!) ||
       Number(b.cardId === wallet.defaultCardId) - Number(a.cardId === wallet.defaultCardId) ||
       a.cardId.localeCompare(b.cardId, 'en'),

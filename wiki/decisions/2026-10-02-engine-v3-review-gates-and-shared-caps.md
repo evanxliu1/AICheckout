@@ -26,6 +26,7 @@ The pre-merge review of Stage 2 M2 (branch `s2-m2-engine-v3`, agent-verified) fo
 | --- | --- | --- |
 | Where gate answers live | `Wallet.gates` `[{gateId, optionId}]`, one answer per gate for every card (coordinator decision) | Per card (`WalletCard.gates`): allows contradictory answers and makes the UI ask the same question per card |
 | Guaranteed minimum with unanswered gates | The worst case, over the possible answers, of the best minimum each answer allows (answers grouped by which requirements they meet; at most 64 combinations per card, else the old base-to-rule ranges) | Base to rule per gated rule: understates cards whose every answer earns a bonus and can name a worse card (BCE over Prime Visa at Amazon) |
+| Valued card earning $0 against an unvalued card (coordinator decision) | Ranked below an unvalued card whose guaranteed units are above 0; above one that guarantees none | Every valued card first: names a card that earns nothing over one that surely earns something |
 | Shared cap spend row | The group's rule with the smallest ID (code-unit order) | First rule in catalog order: moves when rules are reordered. A row keyed by `sharedCapId`: changes the `RuleUsage` contract for one case |
 
 ## Decision
@@ -36,7 +37,7 @@ As in the "Chosen" column. The maximum is unchanged; `condition-unknown` is stil
 - `usageInputs` lists the combined spend on the smallest-ID rule (Cash+: `cash-plus-department-stores`; Freedom Flex: `flex-q4-department`). M6/M7 store and ask for it there.
 - M6 prunes wallet `gates`, card `choices`, usage rows and `valueOverrides` that a new catalog no longer has, since the engine throws on them.
 - Worst-case timing (2026-10-02, Node 24, Apple silicon): 180 cards with 30 rules each and every card at the 64-combination limit runs in about 13 ms; 180 fixture-sized cards in under 1 ms.
-- Open for the coordinator: an unvalued card is listed after every valued card even when the valued card earns nothing and the unvalued one earns units (the existing test "puts a valued card that earns nothing before an unvalued card"). The badge then names a card earning $0 with `rankingMayChange` set. Ranking a valued card whose maximum is 0 below an unvalued card that guarantees units would need no assumed value.
+- A valued card whose maximum is $0 at this purchase ranks below an unvalued card that guarantees units (any positive value beats $0; no value is assumed), and stays above an unvalued card that guarantees none. Valued cards that may earn cents still rank above every unvalued card. The Amazon Store Card without Prime now ranks below 100 guaranteed miles.
 
 ## Status
-Accepted 2026-10-02 (gates per wallet by the coordinator; the rest by the M2 pre-merge reviewer). In the [engine semantics decision](2026-10-02-engine-v3-semantics.md) it supersedes the per-card `gates` of the "Wallet inputs" row, the base-to-rule range for unanswered gates and the "Shared cap" row.
+Accepted 2026-10-02 (gates per wallet and the $0 ranking by the coordinator; the rest by the M2 pre-merge reviewer). In the [engine semantics decision](2026-10-02-engine-v3-semantics.md) it supersedes the per-card `gates` of the "Wallet inputs" row, the base-to-rule range for unanswered gates, the "Shared cap" row, and "after every valued card" in the unvalued-card row for valued cards earning $0.

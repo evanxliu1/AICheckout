@@ -107,7 +107,7 @@ Stage 2 M1 added the catalog v3 contract ([rewards engine](../system/rewards-eng
 | `requires` | Gates the cardholder must meet: membership, tier or relationship options (Prime, store loyalty tiers, Smartly balances). An answer outside the options is `condition-not-met`; no answer gives a range (`condition-unknown`) whose guaranteed minimum is the worst answer's best rule, not the base (Prime Visa at Amazon: 3–5%) |
 | `requiredPaymentPaths` | The rule pays only through these paths (otherwise `not-eligible`) and is then not `payment-path-uncertain`; `excludedPaymentPaths` gains `venmo` |
 | `limitedTime.startsOn` | Rotating or future rules start on this date (Freedom Flex Q1 2027); before it the rule is `not-started` |
-| Program value | Units convert to cents with the shopper's override, else the card's issuer-stated value, else the program's valuation ([decision](../decisions/2026-10-02-points-valuation-published-estimates.md)): cents = ⌊Σ spend × rate × value / 1,000,000⌋. `none` means units only: the card is listed after every valued card with `value-unknown`, never at an assumed 1¢ |
+| Program value | Units convert to cents with the shopper's override, else the card's issuer-stated value, else the program's valuation ([decision](../decisions/2026-10-02-points-valuation-published-estimates.md)): cents = ⌊Σ spend × rate × value / 1,000,000⌋. `none` means units only: the card is listed after every valued card that may earn cents (but before a valued card earning $0 when it guarantees units) with `value-unknown`, never at an assumed 1¢ |
 
 Shopper inputs for v3: per card the chosen options; per wallet the gate answers (they describe the cardholder, so one answer covers every card) and a value override for any points program.
 
