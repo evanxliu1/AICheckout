@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { CATALOG_TIMEOUT_MS } from '@ai-checkout/catalog-client';
-import { PILOT_CATALOG } from '../src/domain';
+import { PILOT_CATALOG, redateCatalog } from '../src/domain';
+import { CATALOG_V3_FIXTURE } from '../../packages/rewards-core/test-cases';
 import type { PublishedRelease } from '../src/domain';
 import { createStateService, localDate, STATE_KEY } from '../src/state/service';
 import type { StateStorage } from '../src/state/service';
@@ -192,6 +193,14 @@ describe('published catalog lifecycle', () => {
       return { release: next };
     });
     expect(await refresh()).toMatchObject({ ok: false });
+    expect(state().catalog.release).toBeNull();
+  });
+  it('refuses a catalog v3 release until the extension runs the v3 engine', async () => {
+    const catalog = redateCatalog(CATALOG_V3_FIXTURE, '2026-09-25');
+    fetchCatalog.mockResolvedValue({ release: { ...release(), catalog, version: catalog.version } });
+    const result = await refresh();
+    expect(result).toMatchObject({ ok: false });
+    if (!result.ok) expect(result.error).toContain('newer version of this extension');
     expect(state().catalog.release).toBeNull();
   });
   it('keeps all state unchanged if the atomic storage write fails', async () => {

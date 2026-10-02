@@ -6,7 +6,7 @@ status: stable
 tags: [ops, database, supabase, migrations]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T06:10:00Z
+  at: 2026-10-02T23:00:00Z
 sources:
   - resource: ../../package.json
     title: db:* scripts
@@ -30,8 +30,8 @@ Schema changes are new files in [`supabase/migrations/`](../../supabase/migratio
 
 | Item | Value |
 | --- | --- |
-| Migrations | 8 files as of 2026-10-02, `20260926032620_baseline_legacy_catalog.sql` to `20261001010350_source_body_limit.sql` |
-| pgTAP tests | [`supabase/tests/`](../../supabase/tests/) (`catalog`, `catalog_v2`, `curation`, `extraction_application`) |
+| Migrations | 8 on `main` as of 2026-10-02, `20260926032620_baseline_legacy_catalog.sql` to `20261001010350_source_body_limit.sql`; a 9th, `20261002222425_catalog_v3.sql`, is on branch `s2-m1-catalog-v3` (Stage 2 M1), not yet merged or pushed |
+| pgTAP tests | [`supabase/tests/`](../../supabase/tests/) (`catalog`, `catalog_v2`, `catalog_v3` on the M1 branch, `curation`, `extraction_application`) |
 | Seed | [`supabase/seed.sql`](../../supabase/seed.sql), generated from `packages/rewards-core/src/catalog-v2.ts`: one **unapproved** private draft, no users or secrets |
 | Hosted push | `./scripts/db-push.sh` runs `npx supabase db push --linked --skip-vault`; DB password from the macOS Keychain item `aicheckout-supabase-db` |
 | Hosted state | All 8 applied. The 6 that existed on 2026-09-28 were applied that day ([archive](../archive/phase2-goal.md)); `20260930225732_catalog_v2` and `20261001010350_source_body_limit` were pushed by the coordinating session with `./scripts/db-push.sh` (reported by the coordinator; consistent with hosted `/v1/catalog` serving a `schemaVersion: 2` release on 2026-10-02) |
@@ -53,7 +53,9 @@ Schema changes are new files in [`supabase/migrations/`](../../supabase/migratio
 6. `npm run db:lint` and `npm run db:advisors`
 7. `npm run supabase -- stop`
 
-This mirrors [`.github/workflows/database.yml`](../../.github/workflows/database.yml); full context in [Local setup](local-setup.md#database-suite-docker). Not run for this page on 2026-10-02 (needs Docker); only `npm run db:seed:check` was run (exit 0).
+This mirrors [`.github/workflows/database.yml`](../../.github/workflows/database.yml); full context in [Local setup](local-setup.md#database-suite-docker). Steps 1–6 ran green on 2026-10-02 on branch `s2-m1-catalog-v3` with `20261002222425_catalog_v3` applied.
+
+Every worktree uses the same Supabase `project_id`, so they share one local Docker stack; `db:reset` in one worktree replaces the schema another worktree is testing.
 
 ## Push to hosted (Evan or the authorized coordinating session)
 

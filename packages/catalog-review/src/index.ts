@@ -7,15 +7,17 @@ import {
 } from '@ai-checkout/rewards-core';
 
 export const MAX_REVIEW_RESPONSE_BYTES = 8 * 1024 * 1024;
-/** Longest captured source text. Issuer terms PDFs run to about 75,000 characters. */
-export const MAX_SOURCE_BODY_CHARS = 120_000;
+/** Longest captured source text. The largest expansion capture (2026-10-02) is 204,334 characters. */
+export const MAX_SOURCE_BODY_CHARS = 250_000;
+/** Most captures a draft can reference (`drafts.source_document_ids`); catalog v3 cites up to 600 sources. */
+export const MAX_DRAFT_SOURCES = 600;
 export const draftIdSchema = z.uuid();
 export const sequenceSchema = z.number().int().positive().max(Number.MAX_SAFE_INTEGER).nullable();
 export const hashSchema = z.string().regex(/^[a-f0-9]{64}$/);
 const timestamp = z.iso.datetime({ offset: true });
 const sourceIds = z
   .array(z.uuid())
-  .max(30)
+  .max(MAX_DRAFT_SOURCES)
   .refine((ids) => new Set(ids).size === ids.length);
 export const captureSourceInputSchema = z.strictObject({
   sourceKey: sourceSchema.shape.id,
@@ -79,7 +81,7 @@ export const reviewDetailSchema = z
     head: sequenceSchema,
     published: publishedReleaseSchema.nullable(),
     draft: draftSchema,
-    sources: z.array(sourceDocumentSchema).max(30),
+    sources: z.array(sourceDocumentSchema).max(MAX_DRAFT_SOURCES),
   })
   .refine(
     (detail) =>

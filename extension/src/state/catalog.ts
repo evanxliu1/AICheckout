@@ -32,6 +32,12 @@ export function prepareCatalogUpdate(state: AppState, input: unknown, now: numbe
     throw new CatalogUpdateError('Updated card terms could not be verified. Your saved terms were kept.');
   const incoming = parsed.data.release,
     previous = state.catalog.release;
+  // Catalog schema 3 is a contract only until the extension runs the v3 engine (Stage 2 M6), so a
+  // v3 release is refused like the earlier schema refused it, and the saved terms are kept.
+  if (incoming?.catalog.schemaVersion === 3)
+    throw new CatalogUpdateError(
+      'Updated card terms need a newer version of this extension. Your saved terms were kept.',
+    );
   const checked = { ...state, catalog: { ...state.catalog, lastCheckedAt: now } };
   if (!incoming) {
     if (previous)

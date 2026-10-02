@@ -16,9 +16,9 @@ export const ACTIVATION_LABELS: Record<RewardRuleV2['activation'], string> = {
   unstated: 'Activation is not mentioned on the issuer’s pages',
 };
 
-/** Merchant IDs a catalog covers, for either schema version. */
+/** Merchant IDs a catalog covers, for any schema version. */
 export function catalogMerchantIds(catalog: Catalog): string[] {
-  return catalog.schemaVersion === 2 ? catalog.merchants.map((m) => m.id) : catalog.merchantIds;
+  return catalog.schemaVersion === 1 ? catalog.merchantIds : catalog.merchants.map((m) => m.id);
 }
 
 /** Short shopper-facing names for rule categories. */
@@ -68,6 +68,8 @@ export function usageInputs(catalog: Catalog, cardId: string): UsageInput[] {
         needsActivation: rule.requiresActivation,
       }));
   }
+  // Catalog v3 usage inputs (brand scope, choices, gates) arrive with the v3 engine (Stage 2 M2).
+  if (catalog.schemaVersion === 3) return [];
   const card: CardProductV2 | undefined = catalog.cards.find((c) => c.id === cardId);
   return (card?.rules ?? [])
     .filter(
@@ -107,5 +109,16 @@ export function redateCatalog<T extends Catalog>(catalog: T, verifiedOn: string)
     for (const card of next.cards)
       for (const rule of card.rules)
         if (rule.limitedTime?.endsOn) rule.limitedTime.endsOn = shiftDate(rule.limitedTime.endsOn, days);
+  if (next.schemaVersion === 3) {
+    for (const card of next.cards)
+      for (const rule of card.rules) {
+        if (rule.limitedTime?.startsOn)
+          rule.limitedTime.startsOn = shiftDate(rule.limitedTime.startsOn, days);
+        if (rule.limitedTime?.endsOn) rule.limitedTime.endsOn = shiftDate(rule.limitedTime.endsOn, days);
+      }
+    for (const program of next.programs)
+      if (program.valuation.basis === 'published-estimate')
+        program.valuation.retrievedOn = shiftDate(program.valuation.retrievedOn, days);
+  }
   return next;
 }
