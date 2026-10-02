@@ -402,13 +402,28 @@ out('exclusions.json', {
   exclusions,
 });
 out('sources.json', { schemaVersion: 1, sources: [...sources.values()] });
-// Capture hints (scripts/capture-issuer-pages.mjs --hints): synchrony.com blocks headless Chromium but serves
-// static HTML; U.S. Bank rewards FAQs keep answers collapsed behind "Expand All".
+// Capture hints (scripts/capture-issuer-pages.mjs --hints). These hosts answer headless Chromium with an
+// "Access Denied" page but serve static HTML to a plain request; U.S. Bank rewards FAQs keep answers collapsed
+// behind "Expand All"; the Cash+ merchant list shows one category at a time in the browser but has all of them
+// in its static HTML; some pages render their content
+// late and need a wait.
+const REQUEST_HOSTS =
+  /^https:\/\/www\.(synchrony|synchronycredit|synchronybankterms|carecredit|jcpcreditcard|chevrontexacocards|statefarm|fidelity)\.com\//;
+const WAIT_FOR = {
+  'capital-one-quicksilverone-product': 'cash back',
+  'capital-one-quicksilver-student-product': 'cash back',
+  'citi-costco-anywhere-visa-product': 'Costco',
+  'discover-it-student-cash-back-product': 'Cashback',
+  'discover-it-secured-cash-back-product': 'Cashback',
+};
 const hints = {};
 for (const source of sources.values()) {
-  if (/^https:\/\/www\.synchrony\.com\//.test(source.url)) hints[source.id] = { request: true };
+  if (REQUEST_HOSTS.test(source.url)) hints[source.id] = { request: true };
   if (/rewards\.usbank\.com\/benefits\/card\/.*\/faqs/.test(source.url))
     hints[source.id] = { click: ['Expand All'] };
+  if (/cashplus\.usbank\.com\/cash-plus\/samplemerchants/.test(source.url))
+    hints[source.id] = { request: true };
+  if (WAIT_FOR[source.id]) hints[source.id] = { waitFor: WAIT_FOR[source.id] };
 }
 out('capture-hints.json', hints);
 const count = (list, key) => list.reduce((acc, x) => ((acc[x[key]] = (acc[x[key]] ?? 0) + 1), acc), {});
