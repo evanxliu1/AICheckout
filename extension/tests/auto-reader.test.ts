@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { DEBOUNCE_MS, MAX_SENDS, startAutoReader } from '../src/badge/auto-reader';
 import type { ReaderEnvironment } from '../src/badge/auto-reader';
 import { createBadgeFrame, frameMessage } from '../src/badge/frame';
+import { observeCart } from '../src/badge/observe';
 import type { PageRead } from '../src/checkout/page-reader';
 
 const found = (amountCents: number): PageRead => ({
@@ -21,6 +22,7 @@ function environment(overrides: Partial<ReaderEnvironment> = {}) {
   let nextTimer = 1;
   const visibility: (() => void)[] = [];
   let pageHide: (() => void) | null = null;
+  let pageShow: ((persisted: boolean) => void) | null = null;
   let hidden = false;
   let mounted = false;
   const frame = {
@@ -53,6 +55,9 @@ function environment(overrides: Partial<ReaderEnvironment> = {}) {
     onPageHide: (listener) => {
       pageHide = listener;
     },
+    onPageShow: (listener) => {
+      pageShow = listener;
+    },
     setTimeout: (callback) => {
       timers.set(nextTimer, callback);
       return nextTimer++;
@@ -83,6 +88,7 @@ function environment(overrides: Partial<ReaderEnvironment> = {}) {
       visibility.forEach((listener) => listener());
     },
     pageHide: () => pageHide?.(),
+    pageShow: (persisted: boolean) => pageShow?.(persisted),
   };
 }
 
@@ -218,6 +224,30 @@ describe('automatic cart reader', () => {
   });
 });
 
+describe('back/forward cache', () => {
+  it('pauses on pagehide and resumes on a restore, re-sending the reading', async () => {
+    const t = environment();
+    startAutoReader(t.env);
+    await t.flush();
+    expect(t.env.send).toHaveBeenCalledTimes(1);
+    t.pageHide();
+    expect(t.observing()).toBe(false);
+    t.mutate();
+    await t.flush();
+    expect(t.env.send).toHaveBeenCalledTimes(1);
+    t.pageShow(false); // an ordinary pageshow (not from the cache) changes nothing
+    expect(t.observing()).toBe(false);
+    t.pageShow(true);
+    await t.flush();
+    expect(t.observing()).toBe(true);
+    expect(t.env.send).toHaveBeenCalledTimes(2);
+    t.setReading(found(5446));
+    t.mutate();
+    await t.flush();
+    expect(t.env.send).toHaveBeenLastCalledWith({ type: 'cart:reading', reading: found(5446), framed: true });
+  });
+});
+
 describe('badge frame host', () => {
   it('accepts only size and hide messages of the exact shape', () => {
     expect(frameMessage({ source: 'ai-checkout-badge', type: 'hide' })).toEqual({
@@ -265,5 +295,27 @@ describe('badge frame host', () => {
     expect(frame.shown()).toBe(true);
     frame.hide();
     expect(document.querySelector('ai-checkout-badge')).toBeNull();
+  });
+});
+
+describe('cart observer', () => {
+  it('notices the page removing the badge host from <html>, not only <body> changes', async () => {
+    const frame = createBadgeFrame(document, (path) => `chrome-extension://ext/${path}`);
+    frame.show('n'.repeat(32));
+    const onChange = vi.fn();
+    const stop = observeCart(document, onChange);
+    document.querySelector('ai-checkout-badge')!.remove();
+    await Promise.resolve();
+    expect(onChange).toHaveBeenCalled();
+    expect(frame.shown()).toBe(false);
+    onChange.mockClear();
+    document.body.append(document.createElement('p'));
+    await Promise.resolve();
+    expect(onChange).toHaveBeenCalled();
+    stop();
+    onChange.mockClear();
+    document.body.append(document.createElement('p'));
+    await Promise.resolve();
+    expect(onChange).not.toHaveBeenCalled();
   });
 });
