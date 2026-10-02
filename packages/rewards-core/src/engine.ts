@@ -83,13 +83,15 @@ function validate(catalog: CatalogV1, wallet: Wallet, purchase: Purchase, now: n
   }
 }
 
-/** Compares owned cards for one purchase. Catalog v1 keeps its original rules; v2 is in engine-v2.ts. */
+/** Compares owned cards for one purchase. Catalog v1 keeps its original rules; v2 is in engine-v2.ts.
+ * Catalog v3 is a contract only until the v3 engine (Stage 2 M2), so it fails closed here. */
 export function compareRewards(
   catalog: Catalog,
   wallet: Wallet,
   purchase: Purchase,
   now: number,
 ): Comparison | UnavailableComparison {
+  if (catalog.schemaVersion === 3) throw new Error('Catalog schema 3 is not supported by this engine yet.');
   return catalog.schemaVersion === 2
     ? compareV2(catalog, wallet, purchase, now)
     : compareV1(catalog, wallet, purchase, now);

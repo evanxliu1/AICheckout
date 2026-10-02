@@ -306,7 +306,7 @@ it('skips capture files too large to be a capture without reading them', async (
   panel(v2Detail());
   const user = setup();
   await user.click(summary('Capture all missing sources'));
-  const big = new File(['x'.repeat(480_001)], 'citi-double-cash-product.txt', { type: 'text/plain' });
+  const big = new File(['x'.repeat(1_000_001)], 'citi-double-cash-product.txt', { type: 'text/plain' });
   const read = vi.spyOn(big, 'text');
   await user.upload(control('capture-files'), [big]);
   await waitFor(() => expect(text()).toMatch(/Loaded 0 files; skipped 1 too large to be a capture/));

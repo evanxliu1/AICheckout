@@ -6,7 +6,7 @@ status: stable
 tags: [domain, rewards, engine]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-02T23:00:00Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
     title: Catalog v2 types (RewardRuleV2, RuleCap, PaymentPath, Uncertainty)
@@ -89,6 +89,23 @@ Money is integer cents and rates are bps. Exact products are summed before trunc
 ## Citi pay-later
 
 Citi Double Cash earns 2% total on every purchase: 1% at purchase and 1% when the balance is paid. The catalog stores `rateBps: 200, paidOnPaymentBps: 100`. The estimate counts the full 200 bps and exposes `paidOnPaymentBps` on `CardEstimate`. The research report suggests showing it as "2% if paid (1% at purchase)"; how the extension words it is not covered here. The research report notes that the payment must be at least the minimum due, and that points need a current account.
+
+## Catalog v3 rule shapes (contract only)
+
+Stage 2 M1 adds the catalog v3 contract ([rewards engine](../system/rewards-engine.md#catalog-v3-contract)); the v3 engine that applies these is M2, so the meanings below are what the fields are for, not yet behavior.
+
+| Field or concept | Meaning |
+| --- | --- |
+| Base rule | The card's one `all-purchases` rule with no condition at all. Open-loop cards need exactly one; closed-loop store cards need none. Other `all-purchases` rules may carry conditions (PayPal Cashback's rate when paying through PayPal) |
+| `acceptance` | `open-loop`, or `closed-loop` with the brands where the card works (Amazon Store Card, Harbor Freight) |
+| `brandIds` | Merchant scope: the rule pays only at merchants carrying one of these brands (Prime Visa at Amazon and Whole Foods) |
+| `choice` | The rule pays only while that option of a card choice is in effect: `chosen` by the cardholder (Cash+, Customized Cash) or `automatic` top-spend categories (Edward Jones) |
+| `requires` | Gates the cardholder must meet: membership, tier or relationship options (Prime, store loyalty tiers, Smartly balances) |
+| `requiredPaymentPaths` | The rule pays only through these paths; `excludedPaymentPaths` gains `venmo` |
+| `limitedTime.startsOn` | Rotating or future rules start on this date (Freedom Flex Q1 2027) |
+| Program value | Units convert to cents with the shopper's override, else the card's issuer-stated value, else the program's published estimate ([decision](../decisions/2026-10-02-points-valuation-published-estimates.md)); `none` means units only |
+
+Statuses `not-accepted`, `not-started`, `choice-not-selected`, `condition-not-met` and uncertainties `choice-unknown`, `automatic-category`, `condition-unknown` are defined for M2.
 
 ## Gotchas
 

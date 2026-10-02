@@ -187,7 +187,8 @@ describe('review API boundaries', () => {
         })
       ).statusCode,
     ).toBe(413);
-    // A long issuer PDF capture (~75,000 characters) fits; over 120,000 characters is rejected as invalid.
+    // A long issuer capture (the largest expansion capture is 204,334 characters) fits; over 250,000
+    // characters is rejected as invalid.
     expect(
       (
         await instance.inject({
@@ -199,7 +200,7 @@ describe('review API boundaries', () => {
             title: 'Long terms',
             url: 'https://issuer.example/terms',
             checkedOn: '2026-09-25',
-            body: 'a'.repeat(120001),
+            body: 'a'.repeat(250001),
           }),
         })
       ).statusCode,

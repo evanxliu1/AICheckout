@@ -1,12 +1,12 @@
 ---
 type: System Component
 title: Rewards engine
-description: packages/rewards-core — the catalog v1/v2 Zod contract, the bundled 7-card catalog, compareRewards, rule applicability, uncertainty ranges and ranking.
+description: packages/rewards-core — the catalog v1/v2/v3 Zod contract, the bundled 7-card catalog, compareRewards, rule applicability, uncertainty ranges and ranking.
 status: stable
 tags: [system, rewards-core, catalog, engine]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-02T23:00:00Z
 stale_after: 2026-10-29T00:00:00Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
@@ -29,13 +29,15 @@ sources:
     title: Package README
   - resource: ../archive/phase2-goal.md
     title: Phase 3 decisions (archived)
+  - resource: ../decisions/2026-10-02-catalog-v3-contract-details.md
+    title: Catalog v3 contract details (M1)
 ---
 
 # Rewards engine
 
-`packages/rewards-core` (`@ai-checkout/rewards-core`) is pure TypeScript with no browser, network, database, model or clock access: callers pass the catalog, wallet, purchase and `now`. It owns the catalog contract (strict Zod, schema 1 and 2 as a discriminated union on `schemaVersion`), the bundled catalogs, and `compareRewards`, which ranks owned cards by **guaranteed minimum** reward and reports a range when a condition is unknown. Money is integer cents, rates are basis points, products are summed in BigInt and truncated once. The same contract is enforced in the extension, the API, the review app and, mirrored in SQL, the database ([Database](database.md)).
+`packages/rewards-core` (`@ai-checkout/rewards-core`) is pure TypeScript with no browser, network, database, model or clock access: callers pass the catalog, wallet, purchase and `now`. It owns the catalog contract (strict Zod, schemas 1, 2 and 3 as a discriminated union on `schemaVersion`), the bundled catalogs, and `compareRewards`, which ranks owned cards by **guaranteed minimum** reward and reports a range when a condition is unknown. Money is integer cents, rates are basis points, products are summed in BigInt and truncated once. The same contract is enforced in the extension, the API, the review app and, mirrored in SQL, the database ([Database](database.md)).
 
-Verified 2026-10-02 by reading the code; parity case counts verified by importing `test-cases.ts` with Node (28 v1, 53 v2). The bundled catalog expires 2026-10-29, hence `stale_after`.
+Verified 2026-10-02 by reading the code; parity case counts verified by importing `test-cases.ts` with Node (28 v1, 53 v2, 101 v3). Catalog v3 is a contract only (Stage 2 M1, branch `s2-m1-catalog-v3`): the v3 engine is M2. The bundled catalog expires 2026-10-29, hence `stale_after`.
 
 ## Facts
 
@@ -43,14 +45,15 @@ Verified 2026-10-02 by reading the code; parity case counts verified by importin
 | --- | --- | --- |
 | Bundled real catalog | `CATALOG_V2`, version `2026-09-29.real.1`, `verifiedAt` 2026-09-29, `expiresAt` 2026-10-29; 7 cards, 3 merchants (`best-buy-us`, `newegg-us`, `amazon-us`) | [`src/catalog-v2.ts`](../../packages/rewards-core/src/catalog-v2.ts) (generated, do not edit) |
 | Pilot catalog | `PILOT_CATALOG` (schema 1), kept for v1 tests and old cached releases | [`src/catalog.ts`](../../packages/rewards-core/src/catalog.ts) |
-| Size and age limits | `MAX_CATALOG_BYTES` 262,144; validity window ≤ 30 days (`CATALOG_MAX_AGE_MS`) | [`src/schema.ts`](../../packages/rewards-core/src/schema.ts) |
+| Size and age limits | `MAX_CATALOG_BYTES` 262,144 (v1, v2); `CATALOG_V3_LIMITS` (v3): 1,048,576 bytes, 300 cards, 600 sources, 100 merchants, 400 brands, 100 programs, 100 gates, 30 rules per card; validity window ≤ 30 days (`CATALOG_MAX_AGE_MS`) | [`src/schema.ts`](../../packages/rewards-core/src/schema.ts) |
 | Amount limit | `MAX_AMOUNT_CENTS` 10,000,000 | [`src/money.ts`](../../packages/rewards-core/src/money.ts) |
-| Reward categories | `all-purchases`, `online-retail`, `supermarkets`, `gas`, `ev-charging`, `dining`, `drugstores`, `entertainment`, `streaming`, `transit`, `travel-portal`, `entertainment-portal`, `other` | `REWARD_CATEGORIES` in [`src/types.ts`](../../packages/rewards-core/src/types.ts) |
-| Payment paths | `card` (default), `paypal`, `digital-wallet`, `bnpl` | `PAYMENT_PATHS` |
-| Uncertainty codes | `online-category-unknown`, `annual-usage-unknown`, `activation-unknown`, `cap-usage-unknown`, `cap-unstated`, `payment-path-uncertain` | `UNCERTAINTIES` |
-| Rule statuses (v2) | `applied`, `may-apply`, `base`, `not-at-merchant`, `not-eligible`, `expired`, `cap-reached` | `RuleStatus` |
+| Reward categories | `all-purchases`, `online-retail`, `supermarkets`, `gas`, `ev-charging`, `dining`, `drugstores`, `entertainment`, `streaming`, `transit`, `travel-portal`, `entertainment-portal`, `other`; v3 adds `electronics`, `department-stores`, `home-improvement`, `wholesale-clubs` (provisional; M4 finalizes) | `REWARD_CATEGORIES`, `REWARD_CATEGORIES_V3` in [`src/types.ts`](../../packages/rewards-core/src/types.ts) |
+| Merchant categories | `MERCHANT_CATEGORIES` (10); v3 adds `department-stores`, `home-improvement`, `wholesale-clubs` | `MERCHANT_CATEGORIES_V3` |
+| Payment paths | `card` (default), `paypal`, `digital-wallet`, `bnpl`; v3 adds `venmo` | `PAYMENT_PATHS`, `PAYMENT_PATHS_V3` |
+| Uncertainty codes | `online-category-unknown`, `annual-usage-unknown`, `activation-unknown`, `cap-usage-unknown`, `cap-unstated`, `payment-path-uncertain`; v3 adds `choice-unknown`, `automatic-category`, `condition-unknown` | `UNCERTAINTIES`, `UNCERTAINTIES_V3` |
+| Rule statuses | v2: `applied`, `may-apply`, `base`, `not-at-merchant`, `not-eligible`, `expired`, `cap-reached`; v3 adds `not-accepted`, `not-started`, `choice-not-selected`, `condition-not-met` | `RuleStatus`, `RULE_STATUSES_V3` |
 | Unavailable reasons | `catalog-expired`, `catalog-not-yet-valid`, `unsupported-merchant`, `no-owned-cards`, `unknown-owned-card`, `purchase-not-confirmed`, `ineligible-purchase` | `UnavailableComparison` |
-| Parity cases | `catalogCases` 28 (v1), `catalogV2Cases` 53 (v2) | [`test-cases.ts`](../../packages/rewards-core/test-cases.ts) |
+| Parity cases | `catalogCases` 28 (v1), `catalogV2Cases` 53 (v2), `catalogV3Cases` 101 (v3, from the synthetic `CATALOG_V3_FIXTURE`) | [`test-cases.ts`](../../packages/rewards-core/test-cases.ts) |
 
 ## Catalog v2 contract
 
@@ -61,6 +64,18 @@ Verified 2026-10-02 by reading the code; parity case counts verified by importin
 - **Merchant profile**: `onlineRetail`, `physicalGoods`, `usMerchant`, `expectedCategory` (`MERCHANT_CATEGORIES`), `mcc {code|null, confidence, sourceIds}`, `notes`.
 - **Invariants** (superRefine): unique merchant/card IDs, globally unique rule IDs; exactly one `all-purchases` rule per card with no spend cap, no `enroll-once`/`recurring` activation, no time limit, no excluded paths; bonus rate ≥ base; `paidOnPaymentBps` ≤ rate; `base ≤ rateAfterCapBps ≤ rate`; every source reference resolves; a stated MCC needs a source; an unknown MCC is `low` confidence; plus common window and size checks.
 - `publishedReleaseSchema` wraps a catalog with `sequence`, `version` (must equal the catalog's), `catalog_hash` (64-hex, identifies the DB payload; not a signature), `published_at` (inside the validity window). `catalogResponseSchema = {release: … | null}` is the `/v1/catalog` wire format.
+
+## Catalog v3 contract
+
+`catalogV3Schema` (decisions: [schema](../decisions/2026-10-02-catalog-v3-schema.md), [details](../decisions/2026-10-02-catalog-v3-contract-details.md)): `{schemaVersion: 3, version, verifiedAt, expiresAt, programs[1..100], brands[0..400], gates[0..100], merchants[1..100], sources[1..600], cards[1..300]}`.
+
+- **Program**: `id`, `name`, `currency` (`cash-back|points`), `unitName` (plural, e.g. "miles"), `valuation` = `{basis:'cash', valueHundredthsOfCent:100}` | `{basis:'published-estimate', valueHundredthsOfCent, publisher, url, retrievedOn}` | `{basis:'issuer-stated', valueHundredthsOfCent, sourceIds}` | `{basis:'none'}`, `redemptionBrandIds` (store-only rewards; empty = unrestricted). Values are 1–10,000 hundredths of a cent.
+- **Brand** `{id, name}`; **gate** `{id, question, options[2..10]{id,label}}` (membership, tier or relationship question shared across cards).
+- **Merchant**: v2 profile with `expectedCategory` from `MERCHANT_CATEGORIES_V3`, plus `brandIds`.
+- **Card**: `id`, `name`, `shortName`, `issuer`, `programId`, `statedValueHundredthsOfCent` (issuer-stated, points programs only; replaces v2 `pointValueHundredthsOfCent`; no `rewardCurrency`), `acceptance` = `{kind:'open-loop'}` | `{kind:'closed-loop', brandIds[1..]}`, `choices[0..5]` = `{id, kind: chosen|automatic, label, picks 1..5, options[2..30], defaultOptionIds}`, `rules[1..30]`, `exclusions[0..20]`.
+- **Rule**: v2 fields with `category` from `REWARD_CATEGORIES_V3`, `excludedPaymentPaths` ⊆ `paypal, venmo, digital-wallet, bnpl`, `limitedTime {startsOn|null, endsOn|null}|null`, plus `brandIds` (merchant scope), `choice {choiceId, optionId}|null`, `requires [{gateId, optionIds}]` (≤ 5), `requiredPaymentPaths` (⊆ `PAYMENT_PATHS_V3`).
+- **Invariants**: unique IDs per list, gate options, choices and choice options, globally unique rule IDs; every program, brand, gate, choice option and source reference resolves; cash back is valued as cash and nothing else is; a published estimate is read from 30 days before `verifiedAt` to the `expiresAt` date; open-loop cards have exactly one unconditional `all-purchases` rule (`isUnconditionalRuleV3`: no spend cap, enroll-once/recurring activation, time limit, excluded or required path, brands, choice or gate), closed-loop cards at most one; rates ≥ base and after-cap rules as v2 when a base exists; `startsOn ≤ endsOn`; a requirement lists some, not all, options of a gate, each gate once; a path cannot be both required and excluded; `picks` < options, defaults ≤ picks and none for `automatic`; plus the common window, source-age and size checks.
+- `compareRewards` throws for a v3 catalog until the v3 engine (M2); `usageInputs` returns none for v3; `redateCatalog` also moves `startsOn` and estimate `retrievedOn` dates.
 
 ## How compareRewards works (v2)
 
@@ -85,9 +100,11 @@ The v1 engine (`compareV1`) supports only one base `all-eligible` rule and at mo
 
 - `CATALOG_V2` is generated by `npm run catalog:v2` from `evals/curation/real/corpus.v2.json` gold labels, the capture manifest and `evals/curation/real/merchants.json` — never from model output. CI runs `catalog:v2:check`; editing the TS file by hand fails it.
 - Expiry is real: after 2026-10-29 the bundled catalog returns `catalog-expired` unless a newer published release is cached. Browser tests re-date it with `redateCatalog` via `VITE_E2E_CATALOG_DATE`.
-- Any Zod change must be mirrored in `catalog_private.valid_catalog_v2` (new migration) and covered by a parity case; `scripts/test-catalog-parity.mjs` runs both lists through both validators.
+- Any Zod change must be mirrored in the SQL validator for that version (new migration) and covered by a parity case; `scripts/test-catalog-parity.mjs` runs all three lists through both validators and compares the v3 category lists with their SQL functions.
+- `catalogSchema` accepts v3, so the extension's `prepareCatalogUpdate` refuses v3 releases explicitly until M6 wires the v3 engine.
+- v3 size is measured as `JSON.stringify` bytes in Zod and JSONB text bytes in SQL (spaces after `:` and `,`), so the SQL count is a little larger; stay well under 1 MiB.
 - `stableJson` is local equality, not PostgreSQL JSONB hashing.
-- The package has no test script of its own; its tests live in `extension/tests/rewards.test.ts`, `rewards-v2.test.ts`, `catalog-schema.test.ts`.
+- The package has no test script of its own; its tests live in `extension/tests/rewards.test.ts`, `rewards-v2.test.ts`, `catalog-schema.test.ts` (which also runs `catalogV3Cases`).
 
 ## Related
 

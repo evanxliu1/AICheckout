@@ -3,6 +3,7 @@ import {
   type Catalog,
   type RewardRule,
   type RewardRuleV2,
+  type RewardRuleV3,
   type RuleCap,
 } from '@ai-checkout/rewards-core';
 import type { ReviewDetail } from '@ai-checkout/catalog-review';
@@ -99,9 +100,16 @@ function fields(catalog: Catalog | null) {
       add(
         `${prefix}.currency`,
         `${card.id} · Reward currency`,
-        card.rewardCurrency === 'points'
-          ? `Points worth ${card.pointValueHundredthsOfCent! / 100}¢ each`
-          : 'Cash back',
+        // Catalog v3 cards name a program; the full v3 review view is Stage 2 M8.
+        'programId' in card
+          ? `Program ${card.programId}${
+              card.statedValueHundredthsOfCent === null
+                ? ''
+                : `, issuer-stated ${card.statedValueHundredthsOfCent / 100}¢ each`
+            }`
+          : card.rewardCurrency === 'points'
+            ? `Points worth ${card.pointValueHundredthsOfCent! / 100}¢ each`
+            : 'Cash back',
       );
       add(
         `${prefix}.exclusions`,
@@ -195,7 +203,7 @@ export function publicationIssues(detail: ReviewDetail, now: number): string[] {
 }
 
 /** One line per rule for the full-draft summary, for either schema version. */
-export function ruleSummaries(rules: RewardRule[] | RewardRuleV2[]) {
+export function ruleSummaries(rules: RewardRule[] | RewardRuleV2[] | RewardRuleV3[]) {
   return rules.map((rule) => {
     if ('requiresActivation' in rule) {
       return {
