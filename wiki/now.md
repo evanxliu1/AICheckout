@@ -30,7 +30,7 @@ As of 2026-10-02T20:30Z.
 - Enable GitHub private vulnerability reporting on the repository, which [`SECURITY.md`](../SECURITY.md) tells reporters to use (Evan, repository settings).
 - Verify the `orderConfirmation` URL patterns on a real order per retailer before the Web Store release (Evan).
 - The luna rows are one repeat each; a second repeat would firm up the comparison with gpt-5.5 (live run, Evan's call).
-- Stage 2 questions for Evan (freshness check after 2026-11-01, valuation publisher and unvalued programs, override precedence, cross-model eval, package READMEs): [plan](product/phase-7-stage-2.md#open-questions-for-evan).
+- Stage 2 open questions resolved by the coordinator on 2026-10-02 (hash-only freshness checks, one conservative valuation publisher, shopper override wins, gpt-5.5 low cross-model eval, package README fixes): [plan](product/phase-7-stage-2.md#decisions-on-the-plans-open-questions).
 - The hosted and bundled catalog expires 2026-10-29; Stage 2 M10 replaces it with catalog v3 (target 2026-10-28).
 - Human spot-check of the agent-verified labels: deferred by Evan on 2026-10-02.
 - Optional cleanup: remove the `m4fix` worktree (in a session scratchpad) and branch.
