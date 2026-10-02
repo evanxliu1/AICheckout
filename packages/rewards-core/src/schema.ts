@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { MAX_AMOUNT_CENTS } from './money.ts';
+import { isUnconditionalRuleV3 } from './rules-v3.ts';
 import {
   CAP_PERIODS,
   MERCHANT_CATEGORIES,
@@ -326,21 +327,8 @@ export const merchantProfileV3Schema = z.strictObject({
   brandIds: idListSchema(20),
 });
 
-/** A v3 rule with no condition of any kind: the card's base when its category is all-purchases. */
-export function isUnconditionalRuleV3(rule: z.infer<typeof rewardRuleV3Schema>): boolean {
-  return (
-    rule.cap.kind !== 'spend' &&
-    rule.activation !== 'enroll-once' &&
-    rule.activation !== 'recurring' &&
-    rule.limitedTime === null &&
-    rule.excludedPaymentPaths.length === 0 &&
-    rule.brandIds.length === 0 &&
-    rule.excludedBrandIds.length === 0 &&
-    rule.choice === null &&
-    rule.requires.length === 0 &&
-    rule.requiredPaymentPaths.length === 0
-  );
-}
+/** A v3 rule with no condition of any kind (zod-free, in rules-v3.ts so the engine can use it). */
+export { isUnconditionalRuleV3 };
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 export const catalogV3Schema = z

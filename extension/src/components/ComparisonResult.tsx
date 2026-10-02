@@ -6,18 +6,24 @@ import type {
   Comparison,
   Purchase,
   RewardRuleV2,
-  RuleStatus,
+  RuleStatusV3,
   UnavailableComparison,
-  Uncertainty,
+  UncertaintyV3,
 } from '../domain';
 import { merchantName } from '../checkout/merchants';
 import { amount, unavailableCopy } from './estimates';
 
-const statusCopy: Partial<Record<RuleStatus, string>> = {
+const statusCopy: Partial<Record<RuleStatusV3, string>> = {
   'not-at-merchant': 'Not at this merchant',
   'not-eligible': 'Not eligible for this purchase',
   expired: 'Promotion ended',
   'cap-reached': 'Spend limit reached',
+  // Catalog v3 statuses: placeholder copy, shown once the extension runs v3 catalogs (Stage 2 M6)
+  // and worded in Stage 2 M7.
+  'not-accepted': 'Card not accepted at this merchant',
+  'not-started': 'Promotion not started',
+  'choice-not-selected': 'Category not selected',
+  'condition-not-met': 'Condition not met',
 };
 const percent = (bps: number) => `${bps / 100}%`;
 const money = (cents: number) => formatUsd(cents);
@@ -30,7 +36,7 @@ const periodCopy: Record<string, string> = {
   'year-unspecified': 'per year',
 };
 
-function uncertaintyCopy(code: Uncertainty, label: string): string {
+function uncertaintyCopy(code: UncertaintyV3, label: string): string {
   return {
     'annual-usage-unknown': `Your ${label} spend toward this year’s bonus limit is unknown.`,
     'cap-usage-unknown': `Your ${label} spend toward this period’s bonus limit is unknown.`,
@@ -38,6 +44,11 @@ function uncertaintyCopy(code: Uncertainty, label: string): string {
     'activation-unknown': `Activation of the ${label} bonus is unconfirmed.`,
     'cap-unstated': `The issuer does not state a spend limit for the ${label} bonus.`,
     'payment-path-uncertain': `This payment method may not earn the ${label} bonus.`,
+    // Catalog v3 codes: placeholder copy, shown from Stage 2 M6 and worded in Stage 2 M7.
+    'choice-unknown': `Whether you chose the ${label} category is unknown.`,
+    'automatic-category': `The ${label} bonus applies only if it is your top spending category.`,
+    'condition-unknown': `The ${label} bonus needs a membership or status you have not confirmed.`,
+    'value-unknown': 'This card’s points have no value set.',
   }[code];
 }
 
@@ -66,15 +77,19 @@ export function EstimateRow({
   const mayApply = rules.filter((r) =>
     estimate.rules?.some((s) => s.ruleId === r.id && s.status === 'may-apply'),
   );
-  const sourceOf: Record<Uncertainty, (r: RewardRuleV2) => boolean> = {
+  const sourceOf: Record<UncertaintyV3, (r: RewardRuleV2) => boolean> = {
     'annual-usage-unknown': (r) => r.cap.kind === 'spend',
     'cap-usage-unknown': (r) => r.cap.kind === 'spend',
     'cap-unstated': (r) => r.cap.kind === 'unstated',
     'activation-unknown': (r) => r.activation === 'enroll-once' || r.activation === 'recurring',
     'online-category-unknown': (r) => r.category === 'online-retail',
     'payment-path-uncertain': () => true,
+    'choice-unknown': () => true,
+    'automatic-category': () => true,
+    'condition-unknown': () => true,
+    'value-unknown': () => true,
   };
-  const labelFor = (code: Uncertainty) => {
+  const labelFor = (code: UncertaintyV3) => {
     const names = [...new Set(mayApply.filter(sourceOf[code]).map((r) => CATEGORY_LABELS[r.category]))];
     return names.length ? names.join(' or ') : label;
   };
