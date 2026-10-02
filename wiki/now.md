@@ -5,21 +5,22 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T20:30:00Z
+  at: 2026-10-02T22:30:00Z
 ---
 
 # Now
 
-As of 2026-10-02T20:30Z.
+As of 2026-10-02T22:30Z.
 
 ## Current state
 
-- **`origin/main`** at `23d3d52` (PR #17, Phase 7 verification and the agent-verified corpus `expansion.v1`, merged; PR #16, capture, extraction and drafts, before it; PR #15, this wiki). Merged: PRs #4–#6 (Phase 2a–2c), #7–#12 (Phase 3 M1–M6 prep), #13 (3b automatic cart badge) and #14 (3b follow-ups: a removed badge host comes back at once, covered-click hint in a persistent status region, reader resumes after a back/forward-cache restore, README) ([roadmap](product/roadmap.md), [cart badge](system/cart-badge.md)).
+- **`origin/main`** at `4277f48` (PR #18, the Phase 7 Stage 2 plan; PR #17, Phase 7 verification and the agent-verified corpus `expansion.v1`, merged; PR #16, capture, extraction and drafts, before it; PR #15, this wiki). Merged: PRs #4–#6 (Phase 2a–2c), #7–#12 (Phase 3 M1–M6 prep), #13 (3b automatic cart badge) and #14 (3b follow-ups: a removed badge host comes back at once, covered-click hint in a persistent status region, reader resumes after a back/forward-cache restore, README) ([roadmap](product/roadmap.md), [cart badge](system/cart-badge.md)).
 - **Hosted:** site, results page, review app and `/v1/catalog` live at https://ai-checkout-api.onrender.com ([hosting](ops/hosting.md)). All 8 migrations are on hosted Supabase; the coordinating session pushed `20260930225732_catalog_v2` and `20261001010350_source_body_limit` with `./scripts/db-push.sh` ([database migrations](ops/database-migrations.md)). `/v1/catalog` serves release sequence 1, the 7-card catalog `2026-09-29.real.1`, published 2026-10-02T02:29Z, expiring 2026-10-29T00:00Z (checked 2026-10-02T05:58Z).
 - **Curation model:** gpt-5.6-luna `xhigh` since 2026-10-02 ([decision](decisions/2026-10-02-gpt-5-6-luna-for-curation.md)). It is the `eval:v2 --provider codex` and `extract-cards.mjs` default on `main` since PR #16, and [`docs/evals/results.md`](../docs/evals/results.md) has its rows: dev 99.5%, held-out 98.3%, both marked added after ([reporting decision](decisions/2026-10-02-luna-results-per-split.md)).
 
 ## Active work
 
+- **Stage 2 M9 expansion eval** on branch `s2-m9-expansion-eval` (from `4277f48`; committed, not pushed): loader layout `expansion` and `eval:v2 --captures`, `scripts/expansion-pipeline-metrics.mjs`, `scripts/score-expansion-traces.mjs`, [`docs/evals/expansion.md`](../docs/evals/expansion.md) ([decision](decisions/2026-10-02-expansion-eval-design.md)). Pipeline: 5.9% of surviving draft rule-field values corrected, 54 draft rules removed, 182 added. Luna re-score (upper bound): 80.8% end to end on 173 cards, 81.1% drafted, 77.0% undrafted. **Next:** the gpt-5.5 cross-model run (`node scripts/score-expansion-traces.mjs --print-command`; about 10–20 min at concurrency 8), then rerun the scorer with `--run` and edit section (c) of the page.
 - **Phase 7 Stage 2 plan** on branch `phase7-stage2-plan` (from `23d3d52`; committed, not pushed): [Phase 7 Stage 2 plan](product/phase-7-stage-2.md) with milestones M1–M11, decisions on [points valuation](decisions/2026-10-02-points-valuation-published-estimates.md) (Evan's approach) and [catalog v3](decisions/2026-10-02-catalog-v3-schema.md). Nothing implemented yet. Start in parallel: M1 (v3 contract and migration), M3 (valuation table), M9 (eval), M11 (pipeline design draft).
 - **Deadline.** The expansion captures are dated 2026-10-02, so a catalog citing them expires by 2026-11-01T00:00Z; hosted release 1 expires 2026-10-29. Publish target 2026-10-28.
 - Stage 1 facts (corpus counts, known gaps, judgment calls) are on [catalog expansion](system/catalog-expansion.md). Captures and luna traces are only in the `../AICheckout-expansion` worktree (gitignored).

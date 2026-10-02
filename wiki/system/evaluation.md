@@ -1,12 +1,12 @@
 ---
 type: System Component
 title: Evaluation
-description: The curation eval corpora, splits, variants, scorer versions and metrics, the eval CLIs, what is committed, and a short summary of the 2026-09-29 results and the 2026-10-02 gpt-5.6-luna rows.
+description: The curation eval corpora, splits, variants, scorer versions and metrics, the eval CLIs, what is committed, and a short summary of the 2026-09-29 results, the 2026-10-02 gpt-5.6-luna rows and the expansion eval.
 status: stable
 tags: [system, evaluation, llm, curation]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T06:40:00Z
+  at: 2026-10-02T22:30:00Z
 sources:
   - resource: ../../evals/curation/README.md
     title: Curation evaluations README
@@ -32,6 +32,12 @@ sources:
     title: Results summarizer
   - resource: ../../docs/evals/results.md
     title: Extraction v2 results (generated, read by the site)
+  - resource: ../../docs/evals/expansion.md
+    title: Expansion eval (generated JSON, hand-written page)
+  - resource: ../../scripts/score-expansion-traces.mjs
+    title: Expansion trace scorer
+  - resource: ../../scripts/expansion-pipeline-metrics.mjs
+    title: Expansion pipeline metrics
   - resource: ../archive/phase2-goal.md
     title: Phase 2 goal (archived)
 ---
@@ -48,6 +54,7 @@ The evals measure how well an LLM extracts the earning rules for a card from cap
 | --- | --- | --- | --- | --- | --- |
 | Real v2 | [`evals/curation/real/`](../../evals/curation/real/) | `real.v2.2` | 37 (7 base + 30 variants) | agent-verified (7 reviewer agents, 2026-09-29) | Benchmark; source of `CATALOG_V2` |
 | Fixture v2 | [`evals/curation/fixture.v2/`](../../evals/curation/fixture.v2/) | `fixture.v2.1` | 8 | agent-drafted, invented terms | Harness/scorer gate (`eval:v2 --check`); not a benchmark |
+| Expansion | [`evals/curation/expansion/`](../../evals/curation/expansion/) (`corpus.json`) | `expansion.v1` | 173 (no variants) | agent-verified (per-issuer verifier + adjudicator agents, 2026-10-02); seeded from gpt-5.6-luna drafts for 158 cards | Expansion eval ([`docs/evals/expansion.md`](../../docs/evals/expansion.md)); source of catalog v3. Loader layout `expansion`: every case held-out, up to 400 sources |
 | Synthetic v1 | [`evals/curation/corpus.v1.json`](../../evals/curation/corpus.v1.json) | `synthetic-curation.1` | 60 (30 Quicksilver dev, 30 BCE reserved) | agent-authored, awaiting human review | v1 contract `issuer-extraction.1`. Sources declare themselves invented, so a capable model abstains. Measures the harness only |
 
 ### Splits (real v2)
@@ -57,7 +64,7 @@ The evals measure how well an LLM extracts the earning rules for a card from cap
 | `dev` | Citi Double Cash, Wells Fargo Active Cash, Capital One Quicksilver, Capital One Savor | 20 | 69 |
 | `heldout` | Chase Freedom Unlimited, Amex BCE, Amex BCP | 17 | 77 |
 
-`corpus.ts` rejects a source used in both splits. `eval:v2` refuses `heldout`/`all` without `--allow-heldout`. Prompts are tuned only on dev.
+`corpus.ts` rejects a source used in both splits. `eval:v2` refuses `heldout`/`all` without `--allow-heldout`, and a split with no cases. Prompts are tuned only on dev. The expansion corpus has no dev split: `loadCorpusV2(dir, { layout: 'expansion' })` (picked by `eval:v2` when the directory has `corpus.json` and no `corpus.v2.json`) makes every case held-out ([decision](../decisions/2026-10-02-expansion-eval-design.md)).
 
 ### Variant kinds
 
@@ -100,9 +107,11 @@ Predicted rules are matched to reference rules by category. When a category has 
 | Command | Script → code | Does |
 | --- | --- | --- |
 | `npm run eval:v2 -- --check` | [`scripts/evaluate-curation-v2.mjs`](../../scripts/evaluate-curation-v2.mjs) → [`v2/eval-cli.ts`](../../apps/api/src/curation/v2/eval-cli.ts) | CI gate on fixture.v2: reference-echo must score 100%, abstention 0%. No model call |
-| `npm run eval:v2 -- --provider codex\|claude ...` | same | Live run. Options: `--prompt`, `--selection`, `--split`, `--repeat`, `--resume DIR`, `--replay FILE`. A usage limit exits with status 3 and the run can be resumed. `--provider codex` without `--model` runs the curation configuration (gpt-5.6-luna `xhigh`, `guided.2`, `keyword-window.1`; [live model runs](../ops/live-model-runs.md)) |
+| `npm run eval:v2 -- --provider codex\|claude ...` | same | Live run. Options: `--prompt`, `--selection`, `--split`, `--repeat`, `--corpus DIR`, `--captures DIR` (captures outside the corpus folder), `--resume DIR`, `--replay FILE`. A usage limit exits with status 3 and the run can be resumed. `--provider codex` without `--model` runs the curation configuration (gpt-5.6-luna `xhigh`, `guided.2`, `keyword-window.1`; [live model runs](../ops/live-model-runs.md)) |
 | `npm run eval:matrix` | [`scripts/run-eval-matrix.mjs`](../../scripts/run-eval-matrix.mjs) | Runs every config in [`matrix.dev.json`](../../evals/curation/matrix.dev.json) / [`matrix.heldout.json`](../../evals/curation/matrix.heldout.json) into `runs/matrix*/<slug>/`. Skips complete configs, resumes partial ones; `--wait-minutes` retries after usage limits |
 | `npm run eval:summarize` | [`scripts/summarize-evals.mjs`](../../scripts/summarize-evals.mjs) → `v2/summarize.ts` | Re-scores saved observations with the current scorer and labels, then writes `docs/evals/results.json` and the SVG charts. A `--split all` run becomes one row per split; `--added RUN-ID` marks a row added after its split was chosen. `results.md` is hand-written to match `results.json` (the site test checks each row) |
+| `node scripts/expansion-pipeline-metrics.mjs [--check]` | [`scripts/lib/expansion-metrics.mjs`](../../scripts/lib/expansion-metrics.mjs) | Draft → verified correction rates per field and issuer, rules removed/added, confirmed, dropped and undrafted cards, from committed files only. `--check` compares with `docs/evals/expansion.json` (also run by `npm test`) |
+| `node scripts/score-expansion-traces.mjs --captures DIR --traces DIR [--run DIR]` | [`scripts/lib/expansion-traces.mjs`](../../scripts/lib/expansion-traces.mjs) | Re-scores the saved luna `extract-cards.mjs` traces (hash-checked) on all, drafted and undrafted cards; with `--run`, scores the cross-model `eval:v2` run; writes `docs/evals/expansion.json`. `--print-command` prints the cross-model command |
 | `npm run eval:curation` | [`scripts/evaluate-curation.mjs`](../../scripts/evaluate-curation.mjs) → [`eval-cli.ts`](../../apps/api/src/curation/eval-cli.ts) | v1 evaluator: `--check`, `--mode replay\|ledger\|codex`, `--split development\|reserved\|all` (`--allow-reserved`) |
 
 Live providers run through vendor CLIs on subscriptions (`codex exec`, `claude -p`), not metered APIs. They are for local use only and must not be wired into the hosted API. Scoring rebuilds each case's context and rejects observations whose source hashes, prompt or selection differ from what the corpus produces.
@@ -115,7 +124,8 @@ Live providers run through vendor CLIs on subscriptions (`codex exec`, `claude -
 | `real/captures/`, `real/merchant-captures/`, `real/verification*.html` | **no** | Issuer page text is copyrighted. Re-capture with `scripts/capture-issuer-pages.mjs`. A hash mismatch fails loading |
 | `fixture.v2/captures/` | yes | Invented text |
 | `evals/curation/runs/` | **no** | Observations and reports (private) |
-| `docs/evals/results.{md,json,svg}`, `results-heldout.svg` | yes | Metrics only, no issuer text |
+| `docs/evals/results.{md,json,svg}`, `results-heldout.svg`, `expansion.{md,json}` | yes | Metrics only, no issuer text |
+| `expansion/captures/`, `expansion/extractions/` | **no** | Issuer text and model quotes; on 2026-10-02 only in the `AICheckout-expansion` worktree |
 | `evals/curation/baseline.v1.md` | yes | Synthetic v1 diagnostic summary |
 
 ## Results (2026-09-29 and 2026-10-02, summary)
@@ -137,6 +147,14 @@ Full tables, failure analysis and disclosures are in [`docs/evals/results.md`](.
 - The main held-out errors are `cap: none` asserted where the page is silent, and the BCE cap period.
 - Repeat noise reaches 5.8 points. Treat differences under about 3 points as ties.
 - gpt-5.6-luna `xhigh` ran all 37 cases once on 2026-10-02 (98.8% end-to-end overall); `results.md` reports it per split, marked added after: dev 99.5% (1 false-clean, Wells Fargo stale promo), held-out 98.3% (0 false-clean; 9 field errors: BCE cap period ×6, Chase `cap: none` ×3; `capPeriod` 16/22), p50 163 s / 192 s per case. On the expansion branch only until it merges. It became the curation model on 2026-10-02 ([decision](../decisions/2026-10-02-gpt-5-6-luna-for-curation.md), [reporting decision](../decisions/2026-10-02-luna-results-per-split.md)).
+
+## Expansion eval (2026-10-02, summary)
+
+Full page: [`docs/evals/expansion.md`](../../docs/evals/expansion.md). The expansion cards were never used for prompt tuning (`guided.2` dates from 2026-09-29).
+
+- **Pipeline (draft → verified):** 5.9% of rule-field values changed (321/5,448; `activation` 21.1%, `issuerWording` 12.3%, `rateBps` 4.6%); 54 of 735 draft rules removed, 182 rules added (61 on the 15 undrafted cards); 10 cards confirmed unchanged, 7 dropped.
+- **gpt-5.6-luna re-score, an upper bound** (labels seeded from the same traces): 80.8% end to end on all 173 cards, 81.1% on the 158 drafted, 77.0% on the 15 undrafted; rule recall 85.6%; 5 false-clean. Most of the gap is verifier-added rules and the activation convention.
+- **Cross-model run** (gpt-5.5 low, `guided.2`, `keyword-window.1`, all 173 cards): pending; the command is on the page.
 
 ## Gotchas
 
