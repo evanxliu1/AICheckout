@@ -1959,18 +1959,1445 @@
     }
   },
   "crossModel": {
-    "status": "pending",
-    "configuration": {
+    "status": "scored",
+    "all": {
+      "id": "all",
       "provider": "codex-cli",
       "model": "gpt-5.5",
       "effort": "low",
       "prompt": "guided.2",
       "selection": "keyword-window.1",
-      "codexOutputTokens": "visible",
-      "concurrency": 8,
-      "output": "evals/curation/runs/expansion/codex.gpt-5.5.low.guided.2.keyword-window.1.heldout"
+      "split": "heldout",
+      "repeat": 1,
+      "provenance": "live-collected",
+      "planned": 173,
+      "observed": 173,
+      "complete": true,
+      "rejected": false,
+      "labelsCollectedWith": [
+        "03989674a8858c9b3f610173702f5235423be0f0160c5d3b349e52bfbc5c68cf"
+      ],
+      "cliVersions": [
+        "codex-cli 0.158.0"
+      ],
+      "harness": {
+        "failed": 0,
+        "retriable": 0,
+        "attempts": 0
+      },
+      "promptTokenEstimate": 9968,
+      "providerOutputTokens": 1337,
+      "overall": {
+        "runs": 173,
+        "ruleRecall": {
+          "correct": 704,
+          "total": 863,
+          "rate": 0.8158
+        },
+        "rulePrecision": {
+          "correct": 704,
+          "total": 755,
+          "rate": 0.9325
+        },
+        "fieldAccuracy": {
+          "correct": 4236,
+          "total": 4491,
+          "rate": 0.9432
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 4236,
+          "total": 5559,
+          "rate": 0.762
+        },
+        "claimPrecision": {
+          "correct": 2015,
+          "total": 2316,
+          "rate": 0.87
+        },
+        "evidenceValidity": {
+          "correct": 3522,
+          "total": 3804,
+          "rate": 0.9259
+        },
+        "issueRecall": {
+          "correct": 30,
+          "total": 195,
+          "rate": 0.1538
+        },
+        "falseClean": 11,
+        "cardFieldAccuracy": {
+          "correct": 283,
+          "total": 346,
+          "rate": 0.8179
+        },
+        "unsupportedClaims": 301,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 10,
+            "total": 115,
+            "rate": 0.087
+          },
+          "conflicting": {
+            "correct": 1,
+            "total": 6,
+            "rate": 0.1667
+          },
+          "missing": {
+            "correct": 6,
+            "total": 14,
+            "rate": 0.4286
+          },
+          "out-of-scope": {
+            "correct": 13,
+            "total": 60,
+            "rate": 0.2167
+          }
+        },
+        "exclusionRecall": {
+          "correct": 313,
+          "total": 396,
+          "rate": 0.7904
+        },
+        "statuses": {
+          "needs_review": 151,
+          "evidence_valid": 22
+        },
+        "latencyMs": {
+          "p50": 28267,
+          "p95": 63852
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 661,
+            "total": 704,
+            "rate": 0.9389
+          },
+          "paidOnPaymentBps": {
+            "correct": 688,
+            "total": 704,
+            "rate": 0.9773
+          },
+          "capKind": {
+            "correct": 688,
+            "total": 704,
+            "rate": 0.9773
+          },
+          "capAmountCents": {
+            "correct": 87,
+            "total": 89,
+            "rate": 0.9775
+          },
+          "capPeriod": {
+            "correct": 88,
+            "total": 89,
+            "rate": 0.9888
+          },
+          "capRateAfterCapBps": {
+            "correct": 85,
+            "total": 89,
+            "rate": 0.9551
+          },
+          "activation": {
+            "correct": 543,
+            "total": 704,
+            "rate": 0.7713
+          },
+          "usMerchantsOnly": {
+            "correct": 697,
+            "total": 704,
+            "rate": 0.9901
+          },
+          "limitedTime": {
+            "correct": 699,
+            "total": 704,
+            "rate": 0.9929
+          }
+        }
+      },
+      "byRepeat": [
+        {
+          "runs": 173,
+          "ruleRecall": {
+            "correct": 704,
+            "total": 863,
+            "rate": 0.8158
+          },
+          "rulePrecision": {
+            "correct": 704,
+            "total": 755,
+            "rate": 0.9325
+          },
+          "fieldAccuracy": {
+            "correct": 4236,
+            "total": 4491,
+            "rate": 0.9432
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 4236,
+            "total": 5559,
+            "rate": 0.762
+          },
+          "claimPrecision": {
+            "correct": 2015,
+            "total": 2316,
+            "rate": 0.87
+          },
+          "evidenceValidity": {
+            "correct": 3522,
+            "total": 3804,
+            "rate": 0.9259
+          },
+          "issueRecall": {
+            "correct": 30,
+            "total": 195,
+            "rate": 0.1538
+          },
+          "falseClean": 11
+        }
+      ],
+      "byVariant": {
+        "none": {
+          "runs": 173,
+          "ruleRecall": {
+            "correct": 704,
+            "total": 863,
+            "rate": 0.8158
+          },
+          "rulePrecision": {
+            "correct": 704,
+            "total": 755,
+            "rate": 0.9325
+          },
+          "fieldAccuracy": {
+            "correct": 4236,
+            "total": 4491,
+            "rate": 0.9432
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 4236,
+            "total": 5559,
+            "rate": 0.762
+          },
+          "claimPrecision": {
+            "correct": 2015,
+            "total": 2316,
+            "rate": 0.87
+          },
+          "evidenceValidity": {
+            "correct": 3522,
+            "total": 3804,
+            "rate": 0.9259
+          },
+          "issueRecall": {
+            "correct": 30,
+            "total": 195,
+            "rate": 0.1538
+          },
+          "falseClean": 11
+        }
+      },
+      "byCategory": {
+        "other": {
+          "missedRules": 114,
+          "fieldErrors": 81,
+          "fields": {
+            "activation": 53,
+            "capKind": 5,
+            "usMerchantsOnly": 2,
+            "rateBps": 16,
+            "paidOnPaymentBps": 2,
+            "capRateAfterCapBps": 1,
+            "capAmountCents": 1,
+            "limitedTime": 1
+          }
+        },
+        "travel-portal": {
+          "missedRules": 7,
+          "fieldErrors": 14,
+          "fields": {
+            "rateBps": 4,
+            "capKind": 2,
+            "capAmountCents": 1,
+            "capPeriod": 1,
+            "capRateAfterCapBps": 1,
+            "activation": 3,
+            "paidOnPaymentBps": 1,
+            "usMerchantsOnly": 1
+          }
+        },
+        "card": {
+          "missedRules": 0,
+          "fieldErrors": 63,
+          "fields": {
+            "pointValueHundredthsOfCent": 37,
+            "rewardCurrency": 26
+          }
+        },
+        "gas": {
+          "missedRules": 4,
+          "fieldErrors": 14,
+          "fields": {
+            "rateBps": 3,
+            "activation": 9,
+            "paidOnPaymentBps": 1,
+            "capKind": 1
+          }
+        },
+        "supermarkets": {
+          "missedRules": 2,
+          "fieldErrors": 20,
+          "fields": {
+            "activation": 20
+          }
+        },
+        "ev-charging": {
+          "missedRules": 8,
+          "fieldErrors": 11,
+          "fields": {
+            "activation": 9,
+            "rateBps": 1,
+            "paidOnPaymentBps": 1
+          }
+        },
+        "online-retail": {
+          "missedRules": 2,
+          "fieldErrors": 7,
+          "fields": {
+            "activation": 7
+          }
+        },
+        "dining": {
+          "missedRules": 5,
+          "fieldErrors": 29,
+          "fields": {
+            "activation": 20,
+            "rateBps": 3,
+            "paidOnPaymentBps": 2,
+            "limitedTime": 3,
+            "capRateAfterCapBps": 1
+          }
+        },
+        "drugstores": {
+          "missedRules": 3,
+          "fieldErrors": 6,
+          "fields": {
+            "activation": 6
+          }
+        },
+        "all-purchases": {
+          "missedRules": 8,
+          "fieldErrors": 67,
+          "fields": {
+            "capKind": 6,
+            "activation": 33,
+            "rateBps": 15,
+            "paidOnPaymentBps": 8,
+            "usMerchantsOnly": 4,
+            "limitedTime": 1
+          }
+        },
+        "transit": {
+          "missedRules": 4,
+          "fieldErrors": 1,
+          "fields": {
+            "capKind": 1
+          }
+        },
+        "streaming": {
+          "missedRules": 1,
+          "fieldErrors": 3,
+          "fields": {
+            "rateBps": 1,
+            "paidOnPaymentBps": 1,
+            "activation": 1
+          }
+        },
+        "entertainment-portal": {
+          "missedRules": 0,
+          "fieldErrors": 1,
+          "fields": {
+            "capKind": 1
+          }
+        },
+        "entertainment": {
+          "missedRules": 1,
+          "fieldErrors": 1,
+          "fields": {
+            "capRateAfterCapBps": 1
+          }
+        }
+      },
+      "errors": {
+        "extraRules": {
+          "other": 6,
+          "travel-portal": 3,
+          "transit": 5,
+          "online-retail": 6,
+          "streaming": 5,
+          "dining": 2,
+          "all-purchases": 8,
+          "gas": 4,
+          "supermarkets": 4,
+          "drugstores": 5,
+          "ev-charging": 3
+        },
+        "missedRules": {
+          "other": 114,
+          "travel-portal": 7,
+          "gas": 4,
+          "ev-charging": 8,
+          "online-retail": 2,
+          "dining": 5,
+          "drugstores": 3,
+          "transit": 4,
+          "supermarkets": 2,
+          "all-purchases": 8,
+          "streaming": 1,
+          "entertainment": 1
+        },
+        "fieldErrors": {
+          "rateBps": 43,
+          "capKind": 16,
+          "capAmountCents": 2,
+          "capPeriod": 1,
+          "capRateAfterCapBps": 4,
+          "pointValueHundredthsOfCent": 37,
+          "activation": 161,
+          "paidOnPaymentBps": 16,
+          "rewardCurrency": 26,
+          "usMerchantsOnly": 7,
+          "limitedTime": 5
+        },
+        "quotesUnresolved": 282,
+        "quotesGiven": 3804
+      }
     },
-    "command": "npm run eval:v2 -- --provider codex --model gpt-5.5 --effort low --prompt guided.2 --selection keyword-window.1 --codex-output-tokens visible --corpus evals/curation/expansion --captures $EXPANSION_CAPTURES --split heldout --allow-heldout --concurrency 8 --output evals/curation/runs/expansion/codex.gpt-5.5.low.guided.2.keyword-window.1.heldout",
-    "note": "gpt-5.5 neither drafted nor verified the labels. Run from the repository root with EXPANSION_CAPTURES set to the local expansion captures folder; then rerun this script with --run."
+    "drafted": {
+      "id": "drafted",
+      "provider": "codex-cli",
+      "model": "gpt-5.5",
+      "effort": "low",
+      "prompt": "guided.2",
+      "selection": "keyword-window.1",
+      "split": "heldout",
+      "repeat": 1,
+      "provenance": "live-collected",
+      "planned": 158,
+      "observed": 158,
+      "complete": true,
+      "rejected": false,
+      "labelsCollectedWith": [
+        "03989674a8858c9b3f610173702f5235423be0f0160c5d3b349e52bfbc5c68cf"
+      ],
+      "cliVersions": [
+        "codex-cli 0.158.0"
+      ],
+      "harness": {
+        "failed": 0,
+        "retriable": 0,
+        "attempts": 0
+      },
+      "promptTokenEstimate": 10213,
+      "providerOutputTokens": 1373,
+      "overall": {
+        "runs": 158,
+        "ruleRecall": {
+          "correct": 659,
+          "total": 802,
+          "rate": 0.8217
+        },
+        "rulePrecision": {
+          "correct": 659,
+          "total": 707,
+          "rate": 0.9321
+        },
+        "fieldAccuracy": {
+          "correct": 3983,
+          "total": 4221,
+          "rate": 0.9436
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 3983,
+          "total": 5193,
+          "rate": 0.767
+        },
+        "claimPrecision": {
+          "correct": 1901,
+          "total": 2189,
+          "rate": 0.8684
+        },
+        "evidenceValidity": {
+          "correct": 3315,
+          "total": 3584,
+          "rate": 0.9249
+        },
+        "issueRecall": {
+          "correct": 28,
+          "total": 182,
+          "rate": 0.1538
+        },
+        "falseClean": 10,
+        "cardFieldAccuracy": {
+          "correct": 262,
+          "total": 316,
+          "rate": 0.8291
+        },
+        "unsupportedClaims": 288,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 8,
+            "total": 105,
+            "rate": 0.0762
+          },
+          "conflicting": {
+            "correct": 1,
+            "total": 6,
+            "rate": 0.1667
+          },
+          "missing": {
+            "correct": 6,
+            "total": 14,
+            "rate": 0.4286
+          },
+          "out-of-scope": {
+            "correct": 13,
+            "total": 57,
+            "rate": 0.2281
+          }
+        },
+        "exclusionRecall": {
+          "correct": 297,
+          "total": 375,
+          "rate": 0.792
+        },
+        "statuses": {
+          "needs_review": 137,
+          "evidence_valid": 21
+        },
+        "latencyMs": {
+          "p50": 28792,
+          "p95": 64325
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 618,
+            "total": 659,
+            "rate": 0.9378
+          },
+          "paidOnPaymentBps": {
+            "correct": 643,
+            "total": 659,
+            "rate": 0.9757
+          },
+          "capKind": {
+            "correct": 646,
+            "total": 659,
+            "rate": 0.9803
+          },
+          "capAmountCents": {
+            "correct": 87,
+            "total": 89,
+            "rate": 0.9775
+          },
+          "capPeriod": {
+            "correct": 88,
+            "total": 89,
+            "rate": 0.9888
+          },
+          "capRateAfterCapBps": {
+            "correct": 85,
+            "total": 89,
+            "rate": 0.9551
+          },
+          "activation": {
+            "correct": 509,
+            "total": 659,
+            "rate": 0.7724
+          },
+          "usMerchantsOnly": {
+            "correct": 653,
+            "total": 659,
+            "rate": 0.9909
+          },
+          "limitedTime": {
+            "correct": 654,
+            "total": 659,
+            "rate": 0.9924
+          }
+        }
+      },
+      "byRepeat": [
+        {
+          "runs": 158,
+          "ruleRecall": {
+            "correct": 659,
+            "total": 802,
+            "rate": 0.8217
+          },
+          "rulePrecision": {
+            "correct": 659,
+            "total": 707,
+            "rate": 0.9321
+          },
+          "fieldAccuracy": {
+            "correct": 3983,
+            "total": 4221,
+            "rate": 0.9436
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 3983,
+            "total": 5193,
+            "rate": 0.767
+          },
+          "claimPrecision": {
+            "correct": 1901,
+            "total": 2189,
+            "rate": 0.8684
+          },
+          "evidenceValidity": {
+            "correct": 3315,
+            "total": 3584,
+            "rate": 0.9249
+          },
+          "issueRecall": {
+            "correct": 28,
+            "total": 182,
+            "rate": 0.1538
+          },
+          "falseClean": 10
+        }
+      ],
+      "byVariant": {
+        "none": {
+          "runs": 158,
+          "ruleRecall": {
+            "correct": 659,
+            "total": 802,
+            "rate": 0.8217
+          },
+          "rulePrecision": {
+            "correct": 659,
+            "total": 707,
+            "rate": 0.9321
+          },
+          "fieldAccuracy": {
+            "correct": 3983,
+            "total": 4221,
+            "rate": 0.9436
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 3983,
+            "total": 5193,
+            "rate": 0.767
+          },
+          "claimPrecision": {
+            "correct": 1901,
+            "total": 2189,
+            "rate": 0.8684
+          },
+          "evidenceValidity": {
+            "correct": 3315,
+            "total": 3584,
+            "rate": 0.9249
+          },
+          "issueRecall": {
+            "correct": 28,
+            "total": 182,
+            "rate": 0.1538
+          },
+          "falseClean": 10
+        }
+      },
+      "byCategory": {
+        "other": {
+          "missedRules": 104,
+          "fieldErrors": 74,
+          "fields": {
+            "activation": 50,
+            "usMerchantsOnly": 1,
+            "rateBps": 14,
+            "paidOnPaymentBps": 2,
+            "capKind": 4,
+            "capRateAfterCapBps": 1,
+            "capAmountCents": 1,
+            "limitedTime": 1
+          }
+        },
+        "travel-portal": {
+          "missedRules": 7,
+          "fieldErrors": 13,
+          "fields": {
+            "rateBps": 4,
+            "capKind": 1,
+            "capAmountCents": 1,
+            "capPeriod": 1,
+            "capRateAfterCapBps": 1,
+            "activation": 3,
+            "paidOnPaymentBps": 1,
+            "usMerchantsOnly": 1
+          }
+        },
+        "card": {
+          "missedRules": 0,
+          "fieldErrors": 54,
+          "fields": {
+            "pointValueHundredthsOfCent": 35,
+            "rewardCurrency": 19
+          }
+        },
+        "gas": {
+          "missedRules": 4,
+          "fieldErrors": 13,
+          "fields": {
+            "rateBps": 3,
+            "activation": 8,
+            "paidOnPaymentBps": 1,
+            "capKind": 1
+          }
+        },
+        "supermarkets": {
+          "missedRules": 2,
+          "fieldErrors": 18,
+          "fields": {
+            "activation": 18
+          }
+        },
+        "ev-charging": {
+          "missedRules": 7,
+          "fieldErrors": 10,
+          "fields": {
+            "activation": 8,
+            "rateBps": 1,
+            "paidOnPaymentBps": 1
+          }
+        },
+        "online-retail": {
+          "missedRules": 2,
+          "fieldErrors": 6,
+          "fields": {
+            "activation": 6
+          }
+        },
+        "dining": {
+          "missedRules": 5,
+          "fieldErrors": 28,
+          "fields": {
+            "activation": 19,
+            "rateBps": 3,
+            "paidOnPaymentBps": 2,
+            "limitedTime": 3,
+            "capRateAfterCapBps": 1
+          }
+        },
+        "drugstores": {
+          "missedRules": 3,
+          "fieldErrors": 6,
+          "fields": {
+            "activation": 6
+          }
+        },
+        "all-purchases": {
+          "missedRules": 4,
+          "fieldErrors": 65,
+          "fields": {
+            "capKind": 6,
+            "activation": 31,
+            "rateBps": 15,
+            "paidOnPaymentBps": 8,
+            "usMerchantsOnly": 4,
+            "limitedTime": 1
+          }
+        },
+        "transit": {
+          "missedRules": 4,
+          "fieldErrors": 1,
+          "fields": {
+            "capKind": 1
+          }
+        },
+        "streaming": {
+          "missedRules": 0,
+          "fieldErrors": 3,
+          "fields": {
+            "rateBps": 1,
+            "paidOnPaymentBps": 1,
+            "activation": 1
+          }
+        },
+        "entertainment": {
+          "missedRules": 1,
+          "fieldErrors": 1,
+          "fields": {
+            "capRateAfterCapBps": 1
+          }
+        }
+      },
+      "errors": {
+        "extraRules": {
+          "other": 6,
+          "travel-portal": 3,
+          "transit": 5,
+          "online-retail": 5,
+          "streaming": 5,
+          "gas": 4,
+          "supermarkets": 4,
+          "drugstores": 5,
+          "ev-charging": 3,
+          "dining": 1,
+          "all-purchases": 7
+        },
+        "missedRules": {
+          "other": 104,
+          "travel-portal": 7,
+          "gas": 4,
+          "ev-charging": 7,
+          "online-retail": 2,
+          "dining": 5,
+          "drugstores": 3,
+          "transit": 4,
+          "supermarkets": 2,
+          "all-purchases": 4,
+          "entertainment": 1
+        },
+        "fieldErrors": {
+          "rateBps": 41,
+          "capKind": 13,
+          "capAmountCents": 2,
+          "capPeriod": 1,
+          "capRateAfterCapBps": 4,
+          "pointValueHundredthsOfCent": 35,
+          "activation": 150,
+          "paidOnPaymentBps": 16,
+          "usMerchantsOnly": 6,
+          "rewardCurrency": 19,
+          "limitedTime": 5
+        },
+        "quotesUnresolved": 269,
+        "quotesGiven": 3584
+      }
+    },
+    "undrafted": {
+      "id": "undrafted",
+      "provider": "codex-cli",
+      "model": "gpt-5.5",
+      "effort": "low",
+      "prompt": "guided.2",
+      "selection": "keyword-window.1",
+      "split": "heldout",
+      "repeat": 1,
+      "provenance": "live-collected",
+      "planned": 15,
+      "observed": 15,
+      "complete": true,
+      "rejected": false,
+      "labelsCollectedWith": [
+        "03989674a8858c9b3f610173702f5235423be0f0160c5d3b349e52bfbc5c68cf"
+      ],
+      "cliVersions": [
+        "codex-cli 0.158.0"
+      ],
+      "harness": {
+        "failed": 0,
+        "retriable": 0,
+        "attempts": 0
+      },
+      "promptTokenEstimate": 7383,
+      "providerOutputTokens": 953,
+      "overall": {
+        "runs": 15,
+        "ruleRecall": {
+          "correct": 45,
+          "total": 61,
+          "rate": 0.7377
+        },
+        "rulePrecision": {
+          "correct": 45,
+          "total": 48,
+          "rate": 0.9375
+        },
+        "fieldAccuracy": {
+          "correct": 253,
+          "total": 270,
+          "rate": 0.937
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 253,
+          "total": 366,
+          "rate": 0.6913
+        },
+        "claimPrecision": {
+          "correct": 114,
+          "total": 127,
+          "rate": 0.8976
+        },
+        "evidenceValidity": {
+          "correct": 207,
+          "total": 220,
+          "rate": 0.9409
+        },
+        "issueRecall": {
+          "correct": 2,
+          "total": 13,
+          "rate": 0.1538
+        },
+        "falseClean": 1,
+        "cardFieldAccuracy": {
+          "correct": 21,
+          "total": 30,
+          "rate": 0.7
+        },
+        "unsupportedClaims": 13,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 2,
+            "total": 10,
+            "rate": 0.2
+          },
+          "out-of-scope": {
+            "correct": 0,
+            "total": 3,
+            "rate": 0
+          }
+        },
+        "exclusionRecall": {
+          "correct": 16,
+          "total": 21,
+          "rate": 0.7619
+        },
+        "statuses": {
+          "needs_review": 14,
+          "evidence_valid": 1
+        },
+        "latencyMs": {
+          "p50": 23793,
+          "p95": 46804
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 43,
+            "total": 45,
+            "rate": 0.9556
+          },
+          "paidOnPaymentBps": {
+            "correct": 45,
+            "total": 45,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 42,
+            "total": 45,
+            "rate": 0.9333
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 34,
+            "total": 45,
+            "rate": 0.7556
+          },
+          "usMerchantsOnly": {
+            "correct": 44,
+            "total": 45,
+            "rate": 0.9778
+          },
+          "limitedTime": {
+            "correct": 45,
+            "total": 45,
+            "rate": 1
+          }
+        }
+      },
+      "byRepeat": [
+        {
+          "runs": 15,
+          "ruleRecall": {
+            "correct": 45,
+            "total": 61,
+            "rate": 0.7377
+          },
+          "rulePrecision": {
+            "correct": 45,
+            "total": 48,
+            "rate": 0.9375
+          },
+          "fieldAccuracy": {
+            "correct": 253,
+            "total": 270,
+            "rate": 0.937
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 253,
+            "total": 366,
+            "rate": 0.6913
+          },
+          "claimPrecision": {
+            "correct": 114,
+            "total": 127,
+            "rate": 0.8976
+          },
+          "evidenceValidity": {
+            "correct": 207,
+            "total": 220,
+            "rate": 0.9409
+          },
+          "issueRecall": {
+            "correct": 2,
+            "total": 13,
+            "rate": 0.1538
+          },
+          "falseClean": 1
+        }
+      ],
+      "byVariant": {
+        "none": {
+          "runs": 15,
+          "ruleRecall": {
+            "correct": 45,
+            "total": 61,
+            "rate": 0.7377
+          },
+          "rulePrecision": {
+            "correct": 45,
+            "total": 48,
+            "rate": 0.9375
+          },
+          "fieldAccuracy": {
+            "correct": 253,
+            "total": 270,
+            "rate": 0.937
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 253,
+            "total": 366,
+            "rate": 0.6913
+          },
+          "claimPrecision": {
+            "correct": 114,
+            "total": 127,
+            "rate": 0.8976
+          },
+          "evidenceValidity": {
+            "correct": 207,
+            "total": 220,
+            "rate": 0.9409
+          },
+          "issueRecall": {
+            "correct": 2,
+            "total": 13,
+            "rate": 0.1538
+          },
+          "falseClean": 1
+        }
+      },
+      "byCategory": {
+        "other": {
+          "missedRules": 10,
+          "fieldErrors": 7,
+          "fields": {
+            "capKind": 1,
+            "usMerchantsOnly": 1,
+            "rateBps": 2,
+            "activation": 3
+          }
+        },
+        "card": {
+          "missedRules": 0,
+          "fieldErrors": 9,
+          "fields": {
+            "rewardCurrency": 7,
+            "pointValueHundredthsOfCent": 2
+          }
+        },
+        "all-purchases": {
+          "missedRules": 4,
+          "fieldErrors": 2,
+          "fields": {
+            "activation": 2
+          }
+        },
+        "supermarkets": {
+          "missedRules": 0,
+          "fieldErrors": 2,
+          "fields": {
+            "activation": 2
+          }
+        },
+        "online-retail": {
+          "missedRules": 0,
+          "fieldErrors": 1,
+          "fields": {
+            "activation": 1
+          }
+        },
+        "entertainment-portal": {
+          "missedRules": 0,
+          "fieldErrors": 1,
+          "fields": {
+            "capKind": 1
+          }
+        },
+        "travel-portal": {
+          "missedRules": 0,
+          "fieldErrors": 1,
+          "fields": {
+            "capKind": 1
+          }
+        },
+        "streaming": {
+          "missedRules": 1,
+          "fieldErrors": 0,
+          "fields": {}
+        },
+        "gas": {
+          "missedRules": 0,
+          "fieldErrors": 1,
+          "fields": {
+            "activation": 1
+          }
+        },
+        "ev-charging": {
+          "missedRules": 1,
+          "fieldErrors": 1,
+          "fields": {
+            "activation": 1
+          }
+        },
+        "dining": {
+          "missedRules": 0,
+          "fieldErrors": 1,
+          "fields": {
+            "activation": 1
+          }
+        }
+      },
+      "errors": {
+        "extraRules": {
+          "dining": 1,
+          "all-purchases": 1,
+          "online-retail": 1
+        },
+        "missedRules": {
+          "other": 10,
+          "all-purchases": 4,
+          "streaming": 1,
+          "ev-charging": 1
+        },
+        "fieldErrors": {
+          "capKind": 3,
+          "rewardCurrency": 7,
+          "usMerchantsOnly": 1,
+          "rateBps": 2,
+          "activation": 11,
+          "pointValueHundredthsOfCent": 2
+        },
+        "quotesUnresolved": 13,
+        "quotesGiven": 220
+      }
+    },
+    "byIssuer": {
+      "American Express": {
+        "runs": 11,
+        "ruleRecall": {
+          "correct": 49,
+          "total": 53,
+          "rate": 0.9245
+        },
+        "rulePrecision": {
+          "correct": 49,
+          "total": 49,
+          "rate": 1
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 304,
+          "total": 336,
+          "rate": 0.9048
+        },
+        "cardFieldAccuracy": {
+          "correct": 18,
+          "total": 22,
+          "rate": 0.8182
+        },
+        "issueRecall": {
+          "correct": 2,
+          "total": 8,
+          "rate": 0.25
+        },
+        "falseClean": 0
+      },
+      "Bank of America": {
+        "runs": 19,
+        "ruleRecall": {
+          "correct": 91,
+          "total": 112,
+          "rate": 0.8125
+        },
+        "rulePrecision": {
+          "correct": 91,
+          "total": 91,
+          "rate": 1
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 626,
+          "total": 852,
+          "rate": 0.7347
+        },
+        "cardFieldAccuracy": {
+          "correct": 34,
+          "total": 38,
+          "rate": 0.8947
+        },
+        "issueRecall": {
+          "correct": 4,
+          "total": 10,
+          "rate": 0.4
+        },
+        "falseClean": 0
+      },
+      "Barclays": {
+        "runs": 26,
+        "ruleRecall": {
+          "correct": 94,
+          "total": 121,
+          "rate": 0.7769
+        },
+        "rulePrecision": {
+          "correct": 94,
+          "total": 96,
+          "rate": 0.9792
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 485,
+          "total": 726,
+          "rate": 0.668
+        },
+        "cardFieldAccuracy": {
+          "correct": 46,
+          "total": 52,
+          "rate": 0.8846
+        },
+        "issueRecall": {
+          "correct": 7,
+          "total": 35,
+          "rate": 0.2
+        },
+        "falseClean": 0
+      },
+      "Capital One": {
+        "runs": 20,
+        "ruleRecall": {
+          "correct": 63,
+          "total": 68,
+          "rate": 0.9265
+        },
+        "rulePrecision": {
+          "correct": 63,
+          "total": 63,
+          "rate": 1
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 369,
+          "total": 408,
+          "rate": 0.9044
+        },
+        "cardFieldAccuracy": {
+          "correct": 36,
+          "total": 40,
+          "rate": 0.9
+        },
+        "issueRecall": {
+          "correct": 0,
+          "total": 23,
+          "rate": 0
+        },
+        "falseClean": 5
+      },
+      "Chase": {
+        "runs": 29,
+        "ruleRecall": {
+          "correct": 110,
+          "total": 152,
+          "rate": 0.7237
+        },
+        "rulePrecision": {
+          "correct": 110,
+          "total": 120,
+          "rate": 0.9167
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 652,
+          "total": 951,
+          "rate": 0.6856
+        },
+        "cardFieldAccuracy": {
+          "correct": 50,
+          "total": 58,
+          "rate": 0.8621
+        },
+        "issueRecall": {
+          "correct": 3,
+          "total": 26,
+          "rate": 0.1154
+        },
+        "falseClean": 1
+      },
+      "Citi": {
+        "runs": 16,
+        "ruleRecall": {
+          "correct": 75,
+          "total": 81,
+          "rate": 0.9259
+        },
+        "rulePrecision": {
+          "correct": 75,
+          "total": 78,
+          "rate": 0.9615
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 448,
+          "total": 495,
+          "rate": 0.9051
+        },
+        "cardFieldAccuracy": {
+          "correct": 24,
+          "total": 32,
+          "rate": 0.75
+        },
+        "issueRecall": {
+          "correct": 3,
+          "total": 19,
+          "rate": 0.1579
+        },
+        "falseClean": 0
+      },
+      "Discover": {
+        "runs": 6,
+        "ruleRecall": {
+          "correct": 26,
+          "total": 27,
+          "rate": 0.963
+        },
+        "rulePrecision": {
+          "correct": 26,
+          "total": 46,
+          "rate": 0.5652
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 181,
+          "total": 201,
+          "rate": 0.9005
+        },
+        "cardFieldAccuracy": {
+          "correct": 11,
+          "total": 12,
+          "rate": 0.9167
+        },
+        "issueRecall": {
+          "correct": 0,
+          "total": 10,
+          "rate": 0
+        },
+        "falseClean": 2
+      },
+      "Synchrony": {
+        "runs": 23,
+        "ruleRecall": {
+          "correct": 76,
+          "total": 93,
+          "rate": 0.8172
+        },
+        "rulePrecision": {
+          "correct": 76,
+          "total": 85,
+          "rate": 0.8941
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 415,
+          "total": 564,
+          "rate": 0.7358
+        },
+        "cardFieldAccuracy": {
+          "correct": 24,
+          "total": 46,
+          "rate": 0.5217
+        },
+        "issueRecall": {
+          "correct": 3,
+          "total": 35,
+          "rate": 0.0857
+        },
+        "falseClean": 3
+      },
+      "U.S. Bank": {
+        "runs": 17,
+        "ruleRecall": {
+          "correct": 82,
+          "total": 115,
+          "rate": 0.713
+        },
+        "rulePrecision": {
+          "correct": 82,
+          "total": 88,
+          "rate": 0.9318
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 529,
+          "total": 780,
+          "rate": 0.6782
+        },
+        "cardFieldAccuracy": {
+          "correct": 30,
+          "total": 34,
+          "rate": 0.8824
+        },
+        "issueRecall": {
+          "correct": 5,
+          "total": 24,
+          "rate": 0.2083
+        },
+        "falseClean": 0
+      },
+      "Wells Fargo": {
+        "runs": 6,
+        "ruleRecall": {
+          "correct": 38,
+          "total": 41,
+          "rate": 0.9268
+        },
+        "rulePrecision": {
+          "correct": 38,
+          "total": 39,
+          "rate": 0.9744
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 227,
+          "total": 246,
+          "rate": 0.9228
+        },
+        "cardFieldAccuracy": {
+          "correct": 10,
+          "total": 12,
+          "rate": 0.8333
+        },
+        "issueRecall": {
+          "correct": 3,
+          "total": 5,
+          "rate": 0.6
+        },
+        "falseClean": 0
+      }
+    }
   }
 }

@@ -6,7 +6,7 @@ status: stable
 tags: [system, evaluation, llm, curation]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T22:30:00Z
+  at: 2026-10-02T23:00:00Z
 sources:
   - resource: ../../evals/curation/README.md
     title: Curation evaluations README
@@ -154,7 +154,7 @@ Full page: [`docs/evals/expansion.md`](../../docs/evals/expansion.md). The expan
 
 - **Pipeline (draft → verified):** 5.9% of rule-field values changed (321/5,448; `activation` 21.1%, `issuerWording` 12.3%, `rateBps` 4.6%); 54 of 735 draft rules removed, 182 rules added (61 on the 15 undrafted cards); 10 cards confirmed unchanged, 7 dropped.
 - **gpt-5.6-luna re-score, an upper bound** (labels seeded from the same traces): 80.8% end to end on all 173 cards, 81.1% on the 158 drafted, 77.0% on the 15 undrafted; rule recall 85.6%; 5 false-clean. Most of the gap is verifier-added rules and the activation convention.
-- **Cross-model run** (gpt-5.5 low, `guided.2`, `keyword-window.1`, all 173 cards): pending; the command is on the page.
+- **Cross-model run** (collected 2026-10-02, Codex CLI 0.158.0): gpt-5.5 low (cross-model, neither drafted nor verified the labels; one repeat, visible output tokens): 76.2% end to end on all 173 (76.7% drafted, 69.1% undrafted), matched-rule field accuracy 94.3% (luna 94.8%), rule recall 81.6%, issue recall 15.4% (luna 56.9%), 11 false-clean, p50 28 s. The labels may still favour luna-style output through anchoring on luna drafts.
 
 ## Gotchas
 

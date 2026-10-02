@@ -1,13 +1,13 @@
 # Expansion eval: 173 agent-verified cards
 
-Phase 7 Stage 2 milestone M9, measured 2026-10-02. Data: [`expansion.json`](expansion.json), which holds every number below. It is written by `scripts/score-expansion-traces.mjs`, and its `pipeline` section is checked against the committed files by `npm test`. No model was called for this page. The cross-model run is still pending.
+Phase 7 Stage 2 milestone M9, measured 2026-10-02. Data: [`expansion.json`](expansion.json), which holds every number below. It is written by `scripts/score-expansion-traces.mjs`, and its `pipeline` section is checked against the committed files by `npm test`. Sections (a) and (b) called no model. Section (c) is one live gpt-5.5 run collected 2026-10-02T22:31Z–22:42Z.
 
 ## Setup
 
 - **Corpus** `expansion.v1` (`evals/curation/expansion/corpus.json`): 173 cards from the ten largest U.S. issuers. The pages were captured on 2026-10-02 (321 sources; captures are gitignored and hash-checked at load). Labels are **agent-verified, not human-verified**. `scripts/draft-expansion-labels.mjs` drafted them from gpt-5.6-luna extractions, one Claude verifier agent per issuer checked them against the captures, and a second agent pass adjudicated the findings ([catalog expansion](../../wiki/system/catalog-expansion.md)).
 - **Never used for prompt tuning.** `guided.2` came out of the `real.v2.2` dev error analysis on 2026-09-29 (commit `0655c32`), and the prompt code (`apps/api/src/curation/v2/context.ts`) has not changed since. The expansion pages were captured later, on 2026-10-02. The eval loader therefore treats every expansion case as held-out (layout `expansion`), so any run on them needs `--allow-heldout`.
 - **Scorer** `v2-scorer.2`, unchanged, with the same metrics as [`results.md`](results.md). The expansion has no mechanical variants (no planted injections or conflicts).
-- This page reports three measurements separately. (a) The pipeline metrics show how much verification changed the drafts. (b) The re-scored luna traces measure agreement with labels seeded from those same traces, so they are an upper bound. (c) A cross-model run would use a model that neither drafted nor verified the labels (pending).
+- This page reports three measurements separately. (a) The pipeline metrics show how much verification changed the drafts. (b) The re-scored luna traces measure agreement with labels seeded from those same traces, so they are an upper bound. (c) A cross-model run uses gpt-5.5, which neither drafted nor verified the labels.
 
 ## (a) Pipeline metrics: draft → verified
 
@@ -92,18 +92,36 @@ By issuer:
 - Per issuer, end to end: Wells Fargo 99.6%, Discover 95.5%, Citi 92.5%, Capital One 91.2%, U.S. Bank 84.0%, Synchrony 81.6%, Amex 80.1%, Barclays 77.5%, Chase 72.0%, Bank of America 69.7% (`expansion.json` `lunaRescore.byIssuer`).
 - These numbers are not comparable with the `real.v2.2` rows in [`results.md`](results.md): the corpus, the labelling process and the card mix (102 points cards, merchant rules) all differ.
 
-## (c) Cross-model run: pending
+## (c) Cross-model run: gpt-5.5 low
 
-Decision 4 of the [Stage 2 plan](../../wiki/product/phase-7-stage-2.md#decisions-on-the-plans-open-questions) calls for a run of gpt-5.5 at effort `low`, prompt `guided.2`, selection `keyword-window.1`, through the Codex CLI, on all 173 cards, one repeat. gpt-5.5 neither drafted nor verified the labels. It has not been run yet. From the repository root, with `EXPANSION_CAPTURES` set to the local expansion captures folder:
+Decision 4 of the [Stage 2 plan](../../wiki/product/phase-7-stage-2.md#decisions-on-the-plans-open-questions) calls for this run: gpt-5.5, effort `low`, prompt `guided.2`, selection `keyword-window.1`, through Codex CLI 0.158.0 on a ChatGPT subscription, all 173 cards, **one repeat**, with **visible output tokens** (hidden reasoning tokens are not counted against the 8,192 limit; the Phase 2c gpt-5.5 rows counted total tokens). It was collected by `eval:v2` (`live-collected`) on 2026-10-02 between 22:31Z and 22:42Z at concurrency 8. All 173 slots completed, with no timeouts, provider errors or retries; the largest visible output was 5,920 tokens.
+
+gpt-5.5 neither drafted nor verified the labels, so this is the **less biased number**. It is not bias-free. The labels of 158 cards started from gpt-5.6-luna drafts, and anchoring on a draft can leave luna-style choices in place wherever the captures allow more than one reading, which favours luna. All labels are agent-verified, not human-verified.
+
+| Set | Model | Field acc. (e2e) | Field acc. (matched) | Rule recall | Rule prec. | Card fields | Claim prec. | Evidence valid | Issue recall | Exclusion recall | False-clean | p50 / p95 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| All 173 | **gpt-5.5 low** | **76.2%** (4236/5559) | 94.3% | 81.6% (704/863) | 93.3% | 81.8% | 87.0% | 92.6% | 15.4% (30/195) | 79.0% | 11 | 28 s / 64 s |
+| All 173 | luna (upper bound) | 80.8% (4493/5559) | 94.8% | 85.6% (739/863) | 90.3% | 83.5% | 83.7% | 97.6% | 56.9% (111/195) | 88.1% | 5 | 183 s / 340 s |
+| Drafted 158 | **gpt-5.5 low** | **76.7%** (3983/5193) | 94.4% | 82.2% (659/802) | 93.2% | 82.9% | 86.8% | 92.5% | 15.4% (28/182) | 79.2% | 10 | 29 s / 64 s |
+| Drafted 158 | luna (upper bound) | 81.1% (4211/5193) | 94.7% | 86.0% (690/802) | 90.1% | 85.8% | 83.4% | 97.6% | 60.4% (110/182) | 89.1% | 5 | 183 s / 353 s |
+| Undrafted 15 | **gpt-5.5 low** | **69.1%** (253/366) | 93.7% | 73.8% (45/61) | 93.8% | 70.0% | 89.8% | 94.1% | 15.4% (2/13) | 76.2% | 1 | 24 s / 47 s |
+| Undrafted 15 | luna | 77.0% (282/366) | 95.9% | 80.3% (49/61) | 94.2% | 60.0% | 89.0% | 97.5% | 7.7% (1/13) | 71.4% | 0 | 172 s / 274 s |
+
+- **On matched rules the two models tie** (94.3% vs 94.8%). The end-to-end gap of 4.6 points is mostly rule recall: gpt-5.5 missed 159 rules (114 `other`, the category that holds merchant- and partner-specific rules) against luna's 124. It has fewer extra rules (51 vs 79) and higher rule precision.
+- **Issues are gpt-5.5's weak point:** it found 15.4% of labelled issues against luna's 56.9% (`ambiguous` 10/115, `out-of-scope` 13/60, `missing` 6/14, `conflicting` 1/6). It also had 11 false-clean cards against luna's 5: Capital One 5, Synchrony 3, Discover 2, Chase 1. The issue labels came from luna-seeded drafts plus verifier additions, so part of this gap may be the anchoring bias above.
+- **Field errors (all 173):** `activation` 161, `rateBps` 43, `pointValueHundredthsOfCent` 37, `rewardCurrency` 26, `capKind` 16, `paidOnPaymentBps` 16, `usMerchantsOnly` 7, other cap parts 7, `limitedTime` 5.
+- **Undrafted cards** have no luna seeding, but n = 15 is too small to separate the models: luna leads end to end (77.0% vs 69.1%), and gpt-5.5 leads on card fields (70.0% vs 60.0%).
+- **Per issuer, end to end (gpt-5.5 / luna):** Amex 90.5% / 80.1%, Citi 90.5% / 92.5%, Capital One 90.4% / 91.2%, Wells Fargo 92.3% / 99.6%, Discover 90.0% / 95.5%, Synchrony 73.6% / 81.6%, Bank of America 73.5% / 69.7%, Chase 68.6% / 72.0%, U.S. Bank 67.8% / 84.0%, Barclays 66.8% / 77.5% (`expansion.json` `crossModel.byIssuer`).
+- **Speed:** gpt-5.5 low is about 6× faster per case (28 s vs 183 s at p50). The whole run took about 11 minutes.
+- With one repeat per model, and repeat noise of up to 5.8 points on `real.v2.2`, differences of a few points are not firm.
+
+Command (from the repository root, `EXPANSION_CAPTURES` = the local expansion captures folder; `node scripts/score-expansion-traces.mjs --print-command` prints it):
 
 ```sh
 npm run eval:v2 -- --provider codex --model gpt-5.5 --effort low --prompt guided.2 --selection keyword-window.1 --codex-output-tokens visible --corpus evals/curation/expansion --captures $EXPANSION_CAPTURES --split heldout --allow-heldout --concurrency 8 --output evals/curation/runs/expansion/codex.gpt-5.5.low.guided.2.keyword-window.1.heldout
 ```
 
-- `--codex-output-tokens visible` differs from the Phase 2c gpt-5.5 rows, which counted total tokens. Luna's largest expansion card needed 6,908 visible output tokens, and counting reasoning tokens as well could trip the 8,192-token limit on large cards for reasons unrelated to extraction.
-- Expected duration: about 10 to 20 minutes. gpt-5.5 low with `guided.2` and keyword-window took 25 s / 54 s (p50 / p95) per case on dev and 40 s / 55 s on held-out, and 173 cases at concurrency 8 is about 22 rounds. The per-case deadlines are 240 s / 480 s.
-- On a usage limit (exit 3), resume with `npm run eval:v2 -- --resume <output> --corpus evals/curation/expansion --captures $EXPANSION_CAPTURES --allow-heldout`.
-- Then rerun `scripts/score-expansion-traces.mjs` with `--run <output>`. It fills `crossModel` in `expansion.json` with the same all / drafted / undrafted breakdown, and this section should then be edited to match.
+The run directory is gitignored. `node scripts/score-expansion-traces.mjs --captures DIR --traces DIR --run <run dir>` re-scores it into `crossModel`.
 
 ## Reproduce
 

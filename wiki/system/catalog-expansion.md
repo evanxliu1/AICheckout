@@ -6,7 +6,7 @@ status: draft
 tags: [system, catalog, curation, expansion, phase-7]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T22:30:00Z
+  at: 2026-10-02T23:00:00Z
 verified_commit: e940b6f
 ---
 
@@ -54,7 +54,7 @@ Finding counts across the 180 extractions: `rate_not_in_evidence` 408 (on 98 car
 
 ## Eval (Stage 2 M9, 2026-10-02)
 
-[`docs/evals/expansion.md`](../../docs/evals/expansion.md), from committed files and the saved luna traces, no model call. Verification changed 5.9% of the surviving draft rule-field values (321/5,448), removed 54 of 735 draft rules and added 182 rules. Of the 21 undrafted cards, 15 are in the corpus and 6 were dropped; 1 drafted card was dropped. The luna traces score 80.8% end to end against the verified labels (81.1% on the 158 drafted cards, an upper bound because those labels were seeded from the same traces; 77.0% on the 15 undrafted). The gpt-5.5 cross-model run is pending.
+[`docs/evals/expansion.md`](../../docs/evals/expansion.md), from committed files and the saved luna traces, no model call. Verification changed 5.9% of the surviving draft rule-field values (321/5,448), removed 54 of 735 draft rules and added 182 rules. Of the 21 undrafted cards, 15 are in the corpus and 6 were dropped; 1 drafted card was dropped. The luna traces score 80.8% end to end against the verified labels (81.1% on the 158 drafted cards, an upper bound because those labels were seeded from the same traces; 77.0% on the 15 undrafted). The gpt-5.5 cross-model run (one repeat, 2026-10-02) scores 76.2% end to end on all 173 cards (76.7% drafted, 69.1% undrafted); on matched rules it ties luna (94.3% vs 94.8%), and it trails on rule recall (81.6%) and issue recall (15.4%).
 
 ## Verification (done 2026-10-02)
 
@@ -95,7 +95,7 @@ Known gaps in the verified labels:
 Superseded on 2026-10-02 by the milestones in the [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md); the list below is the summary it was planned from.
 
 1. Stage-2 engine and catalog work in [`packages/rewards-core`](rewards-engine.md): merchant-specific rules, cardholder-chosen and rotating categories, relationship tiers, closed-loop store cards, PayPal and Venmo rules, new merchant categories, points valuation; raise catalog limits from 30 cards / 30 sources (Zod `catalogV2Schema` and the SQL validator in `20260930225732_catalog_v2.sql`) to about 200 / 450 through a **new** migration (also check `MAX_CATALOG_BYTES`, 256 KiB, against the larger catalog); wallet search in the extension; gated rates (rule 17) and a redemption note type (rule 18).
-2. Evaluate on the 173 verified expansion cards plus the seven existing ones. Stage 2 M9 (2026-10-02): pipeline metrics and the luna re-score are in [`docs/evals/expansion.md`](../../docs/evals/expansion.md); the gpt-5.5 cross-model run is pending.
+2. Evaluate on the 173 verified expansion cards plus the seven existing ones. Stage 2 M9 (2026-10-02): pipeline metrics and the luna re-score are in [`docs/evals/expansion.md`](../../docs/evals/expansion.md); the gpt-5.5 cross-model run scores 76.2% end to end.
 3. Evan publishes the release in the review app.
 
 ## Gotchas
