@@ -6,19 +6,19 @@ status: draft
 tags: [system, catalog, curation, expansion, phase-7]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T01:00:00Z
+  at: 2026-10-02T20:30:00Z
 verified_commit: e940b6f
 ---
 
 # Catalog expansion (Phase 7)
 
-Phase 7 widens the card catalog to the consumer cards of the ten largest U.S. issuers ([scope decision](../decisions/2026-10-01-top-ten-issuer-card-expansion.md)). The capture, extraction and first drafts merged into `main` with PR #16 (`be5de25`, branch `phase7-catalog-expansion`). The 25-word drafts, the verification findings, the conventions and the agent-verified corpus are on branch `phase7-verify` (worktree `../AICheckout-expansion`, cut from `be5de25`; committed, not pushed), so the paths below are named, not linked. Engine work and the eval remain.
+Phase 7 widens the card catalog to the consumer cards of the ten largest U.S. issuers ([scope decision](../decisions/2026-10-01-top-ten-issuer-card-expansion.md)). The capture, extraction and first drafts merged into `main` with PR #16 (`be5de25`, branch `phase7-catalog-expansion`). The 25-word drafts, the verification findings, the conventions and the agent-verified corpus merged with PR #17 (`23d3d52`, branch `phase7-verify`); the paths below are in `evals/curation/expansion/` and `scripts/`. The gitignored captures and extraction traces are still only in the `../AICheckout-expansion` worktree. Stage 2 (engine, catalog v3, eval, release) is planned in the [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md).
 
 Read on 2026-10-02 from the `phase7-verify` worktree at `4b487da` (no model call, no re-capture).
 
 ## Facts
 
-| Item | Value | Where (expansion branch) |
+| Item | Value | Where |
 | --- | --- | --- |
 | Issuers | Chase, American Express, Citi, Capital One, Bank of America, Wells Fargo, Discover, U.S. Bank, Barclays, Synchrony | `docs/research/cards-2026/<issuer>.json` (agent research drafts, unverified) |
 | Cards | 180: 130 co-brand, 32 personal rewards, 10 secured, 8 student; 6 closed-loop store cards | `evals/curation/expansion/cards.json` |
@@ -32,7 +32,7 @@ Read on 2026-10-02 from the `phase7-verify` worktree at `4b487da` (no model call
 | Verification findings | One file per issuer, all 10 adjudicated (`apply-expansion-verification.mjs --check` clean): 1,215 findings accepted, 83 modified, 37 rejected; additions 187 rules, 62 exclusions, 85 issues, 203 product-note changes | `verification/<issuer-slug>.json`, format and verifier brief in `verification/README.md`, conventions in `verification/conventions/` |
 | Verified corpus | `corpus.json`, corpus v2 `expansion.v1`, `agent-verified`: 173 cards (180 − 7 dropped), 863 rules, 396 exclusions, 195 issues; at most 20 rules per card (`us-bank-edward-jones-triple-rewards` has exactly 20); no `cash-back` card has a point value; every category is a shared one | `corpus.json`, `product-notes.verified.json`, `verification-report.md` |
 
-Scripts (all on the expansion branch):
+Scripts (on `main` since PR #17):
 
 | Script | Does |
 | --- | --- |
@@ -87,6 +87,8 @@ Known gaps in the verified labels:
 - **Key Rewards** (Williams Sonoma, Pottery Barn, West Elm, Key Rewards Visa) are four near-duplicate cards with byte-identical captures and the same labels.
 
 ## Remaining work
+
+Superseded on 2026-10-02 by the milestones in the [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md); the list below is the summary it was planned from.
 
 1. Stage-2 engine and catalog work in [`packages/rewards-core`](rewards-engine.md): merchant-specific rules, cardholder-chosen and rotating categories, relationship tiers, closed-loop store cards, PayPal and Venmo rules, new merchant categories, points valuation; raise catalog limits from 30 cards / 30 sources (Zod `catalogV2Schema` and the SQL validator in `20260930225732_catalog_v2.sql`) to about 200 / 450 through a **new** migration (also check `MAX_CATALOG_BYTES`, 256 KiB, against the larger catalog); wallet search in the extension; gated rates (rule 17) and a redemption note type (rule 18).
 2. Evaluate on the 173 verified expansion cards plus the seven existing ones.
