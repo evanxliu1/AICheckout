@@ -55,6 +55,8 @@ for (const source of sources) {
     const wrong = WRONG_PAGE.exec(text.slice(0, 4000));
     if (wrong) flags.push(`check page: contains "${wrong[0]}"`);
     if (run?.status >= 400) flags.push(`HTTP ${run.status}`);
+    const rates = text.match(/\d(\.\d+)?\s*(%|x\b| ?points? (per|for every)|miles? per| ?percent)/gi) ?? [];
+    if (rates.length < 2) flags.push('info: few or no earn-rate figures (servicing, FAQ, or list page)');
   }
   rows.push({ source, entry, flags, attempts: attempts.get(source.id) ?? 0, hint: hints[source.id] });
 }
@@ -75,12 +77,12 @@ const lines = [
 for (const issuer of issuers) {
   const list = rows.filter((r) => r.source.issuer === issuer);
   const captured = list.filter((r) => r.entry).length;
-  const flagged = list.filter((r) => r.entry && r.flags.some((f) => !f.includes('expected'))).length;
+  const flagged = list.filter((r) => r.entry && r.flags.some((f) => !/expected|^info:/.test(f))).length;
   lines.push(`| ${issuer} | ${list.length} | ${captured} | ${list.length - captured} | ${flagged} |`);
 }
 const total = rows.filter((r) => r.entry).length;
 lines.push(
-  `| **All** | ${rows.length} | ${total} | ${rows.length - total} | ${rows.filter((r) => r.entry && r.flags.some((f) => !f.includes('expected'))).length} |`,
+  `| **All** | ${rows.length} | ${total} | ${rows.length - total} | ${rows.filter((r) => r.entry && r.flags.some((f) => !/expected|^info:/.test(f))).length} |`,
   '',
 );
 const cardsWithout = cards.filter((card) => !card.sourceIds.some((id) => manifest.has(id)));
