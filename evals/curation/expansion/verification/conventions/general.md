@@ -58,7 +58,7 @@ O12. **Caps.** A spend cap with no after-cap rate gets the base rate after the c
 
 O13. **Store credit.** Cash back spendable only with one merchant (Verizon Dollars, OneKeyCash, Walgreens Cash, REI, T-Mobile, Key Rewards, My Best Buy certificates and the like) moves from `cash-back` to its own cash-back program with `redemptionBrandIds` and an anchor; the card's `programId` names it. Store-only points programs keep their reward-programs.json program and get `redemptionBrandIds` in `programDetails`.
 
-O14. **Account-age promotions** (first-year rates, first 30 days) → `limitedTime` with null dates and no gate.
+O14. **Account-age promotions** (first-year rates, first 30 days) → `limitedTime` with null dates (the "no gate" part is replaced by O20).
 
 O15. **Anchors and notes.** Every patch that sets fields, added rule, choice, gate, closed-loop acceptance and store-credit program has at least one anchor: a verbatim span of at most 25 words from one of the card's own captures (gates and programs: any capture), not overlapping or abutting the item's other anchors into a run over 25 words. Notes are in the author's words, at most 60 words.
 
@@ -71,3 +71,9 @@ O17. **Lowest tier.** When every cardholder holds at least the lowest tier of a 
 O18. **Unsupported store credit.** A cash-back card moves to a store-credit program only when a capture says the rewards are spendable with that merchant; a conversion ratio alone is not enough (JCPenney and At Home stay on `cash-back`).
 
 O19. **Purchase-level conditions** (promotional financing chosen instead of rewards, a minimum purchase amount, items of the store's own brand, time of day) are not cardholder gates. A rate that depends on one is `noted` when the rule otherwise holds, or `rule-held-out` when keeping it would overstate the earn (Peloton over $150, Walgreens-brand 10%, Citi Nights 6X).
+
+### Pre-merge review (2026-10-02)
+
+O20. **Account-age rates are gated.** The engine reads only a rule's `limitedTime` dates, so a first-year, first-90-days or first-30-days rate with null dates would apply to every cardholder. Such a rule keeps its dateless `limitedTime` (O14) and also requires a per-card gate ("Did you open your ... account less than a year ago?", options for inside and after the period), anchored on the capture that states the period. Unanswered, it shows a range whose floor is the standing rate. The check rejects a dateless limited-time rule without a gate. This replaces O14's "no gate".
+
+O21. **Store-credit units are cents.** The engine counts a cash-back program's units in cents, so a store-credit program's `unitName` is "cents" (its `name` keeps the merchant's term, such as Verizon Dollars), except where one named unit is worth one cent (TJX Rewards Points). `programDetails` repeats each store-credit program's unit name and redemption brands.

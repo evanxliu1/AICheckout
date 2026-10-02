@@ -47,4 +47,4 @@ As in the "Chosen" column, written as rules O1–O19 in [`general.md`](../../eva
 - M2's engine must treat a rule with `brandIds` as matching on brand alone (category `other`), and `excludedBrandIds` on a category rule as removing those brands.
 
 ## Status
-Accepted 2026-10-02 by the M4 coordinator; Evan can revise any row.
+Accepted 2026-10-02 by the M4 coordinator; Evan can revise any row. Amended 2026-10-02 by the [pre-merge review](2026-10-02-catalog-overlay-review.md): account-age rates are gated (O20) and store-credit units are cents (O21).

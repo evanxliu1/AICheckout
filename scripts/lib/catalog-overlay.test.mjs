@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
+import { compareRewards } from '../../packages/rewards-core/src/engine.ts';
 import { catalogV3Schema } from '../../packages/rewards-core/src/schema.ts';
 import {
   checkOverlay,
@@ -171,4 +172,84 @@ test('every anchor is listed for the verbatim check', () => {
   const anchors = overlayAnchors(committed.overlay);
   assert.ok(anchors.length > 100);
   for (const [, anchor] of anchors) assert.match(anchor.sourceId, /^[a-z0-9][a-z0-9-]*$/);
+});
+
+test('an account-age rate with no dates needs a gate, since the engine would always apply it', () => {
+  const state = copy();
+  const patch = entry(state, 'synchrony-onepay-cashrewards-card').rules.find((p) => p.index === 1);
+  delete patch.set.requires;
+  assert.ok(
+    checkOverlay(state).includes(
+      'card synchrony-onepay-cashrewards-card rule 1: a limited-time rule with no dates needs a gate',
+    ),
+  );
+  const unpatched = copy();
+  const card = entry(unpatched, 'synchrony-jcpenney-mastercard');
+  card.rules = card.rules.filter((p) => p.index !== 2);
+  assert.ok(
+    checkOverlay(unpatched).includes(
+      'card synchrony-jcpenney-mastercard rule 2: a limited-time rule with no dates needs a gate',
+    ),
+  );
+});
+
+test('account-age gates leave a range when unanswered and the after answer earns the standing rate', () => {
+  const catalog = draft();
+  const card = catalog.cards.find((c) => c.id === 'boa-customized-cash-rewards');
+  const gateId = 'boa-customized-cash-rewards-first-year';
+  assert.equal(card.rules.filter((r) => r.requires.some((q) => q.gateId === gateId)).length, 7);
+  // Every bonus rule activated and no spend toward the shared quarterly cap yet.
+  const usage = card.rules.map((r) => ({
+    ruleId: r.id,
+    calendarYear: 2026,
+    recordedOn: '2026-10-15',
+    spentCents: 0,
+    activation: 'active',
+  }));
+  const earn = (gates) => {
+    const wallet = {
+      cards: [
+        {
+          cardId: card.id,
+          usage,
+          choices: [{ choiceId: 'choice-category', optionIds: ['online-shopping'] }],
+        },
+      ],
+      defaultCardId: null,
+      gates,
+    };
+    const purchase = {
+      merchantId: 'amazon-us',
+      currency: 'USD',
+      amountCents: 20_000,
+      purchasedOn: '2026-10-15',
+      eligiblePurchase: 'eligible',
+      onlineRetail: 'eligible',
+    };
+    const [estimate] = compareRewards(
+      catalog,
+      wallet,
+      purchase,
+      Date.parse('2026-10-15T12:00:00Z'),
+    ).estimates;
+    return [estimate.minRewardCents, estimate.maxRewardCents];
+  };
+  assert.deepEqual(earn([]), [600, 1200]);
+  assert.deepEqual(earn([{ gateId, optionId: 'after-first-year' }]), [600, 600]);
+  assert.deepEqual(earn([{ gateId, optionId: 'first-year' }]), [1200, 1200]);
+});
+
+test('store-credit cash-back programs count cents, and their programDetails repeat the program', () => {
+  for (const program of committed.overlay.programs) {
+    const detail = committed.overlay.programDetails.find((d) => d.programId === program.id);
+    assert.equal(detail.unitName, program.unitName, program.id);
+    assert.deepEqual(detail.redemptionBrandIds, program.redemptionBrandIds, program.id);
+    // TJX Rewards Points are worth one cent each (1,000 points = a $10 certificate).
+    assert.equal(program.unitName, program.id === 'tjx-rewards-certificates' ? 'Rewards Points' : 'cents');
+  }
+  const state = copy();
+  state.overlay.programDetails.find((d) => d.programId === 'verizon-dollars').unitName = 'Verizon Dollars';
+  assert.ok(
+    checkOverlay(state).includes('programDetails verizon-dollars: differs from the store-credit program'),
+  );
 });

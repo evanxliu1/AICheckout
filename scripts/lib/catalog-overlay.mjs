@@ -446,6 +446,13 @@ export function checkOverlay(inputs, { issuers = null } = {}) {
     detailIds.add(detail.programId);
     if (!basePrograms.has(detail.programId) && !storePrograms.has(detail.programId))
       problems.push(`programDetails ${detail.programId}: unknown program`);
+    const store = storePrograms.get(detail.programId);
+    if (
+      store &&
+      (store.unitName !== detail.unitName ||
+        store.redemptionBrandIds.join() !== detail.redemptionBrandIds.join())
+    )
+      problems.push(`programDetails ${detail.programId}: differs from the store-credit program`);
     for (const id of detail.redemptionBrandIds)
       if (!brandIds.has(id)) problems.push(`programDetails ${detail.programId}: unknown brand ${id}`);
   }
@@ -533,6 +540,13 @@ export function checkOverlay(inputs, { issuers = null } = {}) {
         problems.push(`${where}: rule-held-out applies to rules only`);
     };
 
+    // The engine reads only limitedTime dates, so an account-age rate with no dates would always apply (O20).
+    const dateless = (fields) =>
+      fields.limitedTime &&
+      !fields.limitedTime.startsOn &&
+      !fields.limitedTime.endsOn &&
+      !fields.requires?.length;
+    const datelessProblem = 'a limited-time rule with no dates needs a gate';
     const patched = new Map();
     for (const patch of entry.rules) {
       const where = `${at} rule ${patch.index}`;
@@ -561,6 +575,7 @@ export function checkOverlay(inputs, { issuers = null } = {}) {
           problems.push(`${where}: an other rule must be brand-scoped, recategorized or held out`);
         if (result.cap?.kind === 'spend' && result.cap.rateAfterCapBps === null)
           problems.push(`${where}: a spend cap needs an after-cap rate`);
+        if (dateless(result)) problems.push(`${where}: ${datelessProblem}`);
       }
     }
     if (!held)
@@ -571,6 +586,7 @@ export function checkOverlay(inputs, { issuers = null } = {}) {
           problems.push(`${at} rule ${index}: rule without a rate needs a disposition`);
         else if (rule.cap?.kind === 'spend' && rule.cap.rateAfterCapBps === null)
           problems.push(`${at} rule ${index}: spend cap without an after-cap rate needs a disposition`);
+        else if (dateless(rule)) problems.push(`${at} rule ${index}: ${datelessProblem}`);
       });
     else
       corpusRules.forEach((rule, index) => {
@@ -588,6 +604,7 @@ export function checkOverlay(inputs, { issuers = null } = {}) {
       checkFields(where, added);
       if (added.category === 'other' && !added.brandIds.length)
         problems.push(`${where}: an other rule must be brand-scoped`);
+      if (dateless(added)) problems.push(`${where}: ${datelessProblem}`);
     }
     const refOk = (ref) => (typeof ref === 'number' ? ref < corpusRules.length : keys.has(ref));
     const checkItems = (kind, list, count) => {
