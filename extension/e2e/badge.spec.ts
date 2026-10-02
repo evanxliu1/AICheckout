@@ -112,7 +112,7 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     const cart = await context.newPage();
     await cart.goto('https://www.bestbuy.com/cart');
     let badge = await badgeFrame(cart);
-    const pill = badge.getByRole('button', { name: /Use Blue Cash Everyday · \$0\.81 back on this cart/ });
+    let pill = badge.getByRole('button', { name: /Use Blue Cash Everyday · \$0\.81 back on this cart/ });
     await expect(pill).toBeVisible();
     await expect(pill).toContainText('Use Blue Cash Everyday · $0.81 back');
     await cart.screenshot({ path: testInfo.outputPath('bestbuy-collapsed.png') });
@@ -158,6 +158,12 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
       expect(await copy.getByRole('button').count()).toBe(0);
     }
     await cart.evaluate(() => document.querySelectorAll('iframe.page-copy').forEach((f) => f.remove()));
+    // A page that removes the badge host gets a new badge promptly (no body change needed).
+    await cart.evaluate(() => document.querySelector('ai-checkout-badge')?.remove());
+    await expect.poll(() => hasBadge(cart)).toBe(false);
+    badge = await badgeFrame(cart);
+    pill = badge.getByRole('button', { name: /Use Blue Cash Everyday · \$0\.81 back on this cart/ });
+    await expect(pill).toBeVisible({ timeout: 3000 });
     // Clickjacking guard: while the page makes the badge (nearly) invisible, pointer clicks on it are
     // ignored (IntersectionObserver v2); once it is fully visible again they work.
     await cart.evaluate(() => document.documentElement.style.setProperty('opacity', '0.05'));
@@ -165,6 +171,7 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     await pill.click({ force: true });
     await cart.waitForTimeout(300);
     await expect(badge.getByRole('heading', { name: 'Best card for this cart' })).toHaveCount(0);
+    await expect(badge.getByRole('status').filter({ hasText: 'Click ignored' })).toBeAttached();
     await cart.evaluate(() => document.documentElement.style.removeProperty('opacity'));
     await cart.waitForTimeout(400);
 

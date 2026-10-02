@@ -30,6 +30,13 @@ export default function BadgeApp() {
   const [expanded, setExpanded] = useState(false);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  /** A click was ignored by the clickjacking guard; say so briefly. */
+  const [covered, setCovered] = useState(false);
+  useEffect(() => {
+    if (!covered) return;
+    const timer = window.setTimeout(() => setCovered(false), 4000);
+    return () => window.clearTimeout(timer);
+  }, [covered]);
   const root = useRef<HTMLDivElement>(null);
   const pill = useRef<HTMLButtonElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -115,6 +122,7 @@ export default function BadgeApp() {
     if (event.detail > 0 && !unobscured.current) {
       event.preventDefault();
       event.stopPropagation();
+      setCovered(true);
     }
   };
 
@@ -180,6 +188,11 @@ export default function BadgeApp() {
       className={expanded ? 'badge-root badge-root--panel' : 'badge-root'}
       onClickCapture={guard}
     >
+      {covered && (
+        <p className="badge-covered" role="status">
+          Click ignored: the badge was covered or hidden. Try again when it is fully visible.
+        </p>
+      )}
       {expanded ? (
         <section className="badge-panel" aria-labelledby="badge-heading">
           <div className="badge-panel__header">

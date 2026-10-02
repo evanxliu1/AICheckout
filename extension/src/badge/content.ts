@@ -4,6 +4,7 @@ import { merchantForCheckout, merchantForOrderConfirmation } from '../checkout/m
 import { readCheckoutPage } from '../checkout/page-reader';
 import { startAutoReader } from './auto-reader';
 import { createBadgeFrame } from './frame';
+import { observeCart } from './observe';
 
 const frame = createBadgeFrame(document, (path) => chrome.runtime.getURL(path));
 startAutoReader({
@@ -15,17 +16,7 @@ startAutoReader({
   isCart: (url) => merchantForCheckout(url) !== null && merchantForOrderConfirmation(url) === null,
   isOrderConfirmation: (url) => merchantForOrderConfirmation(url) !== null,
   send: (message) => chrome.runtime.sendMessage(message),
-  observe: (onChange) => {
-    const observer = new MutationObserver(onChange);
-    observer.observe(document.body ?? document.documentElement, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ['aria-busy', 'class', 'hidden'],
-    });
-    return () => observer.disconnect();
-  },
+  observe: (onChange) => observeCart(document, onChange),
   frame,
   hidden: () => document.visibilityState === 'hidden',
   onVisibilityChange: (listener) => document.addEventListener('visibilitychange', listener),

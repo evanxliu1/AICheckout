@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { DEBOUNCE_MS, MAX_SENDS, startAutoReader } from '../src/badge/auto-reader';
 import type { ReaderEnvironment } from '../src/badge/auto-reader';
 import { createBadgeFrame, frameMessage } from '../src/badge/frame';
+import { observeCart } from '../src/badge/observe';
 import type { PageRead } from '../src/checkout/page-reader';
 
 const found = (amountCents: number): PageRead => ({
@@ -265,5 +266,27 @@ describe('badge frame host', () => {
     expect(frame.shown()).toBe(true);
     frame.hide();
     expect(document.querySelector('ai-checkout-badge')).toBeNull();
+  });
+});
+
+describe('cart observer', () => {
+  it('notices the page removing the badge host from <html>, not only <body> changes', async () => {
+    const frame = createBadgeFrame(document, (path) => `chrome-extension://ext/${path}`);
+    frame.show('n'.repeat(32));
+    const onChange = vi.fn();
+    const stop = observeCart(document, onChange);
+    document.querySelector('ai-checkout-badge')!.remove();
+    await Promise.resolve();
+    expect(onChange).toHaveBeenCalled();
+    expect(frame.shown()).toBe(false);
+    onChange.mockClear();
+    document.body.append(document.createElement('p'));
+    await Promise.resolve();
+    expect(onChange).toHaveBeenCalled();
+    stop();
+    onChange.mockClear();
+    document.body.append(document.createElement('p'));
+    await Promise.resolve();
+    expect(onChange).not.toHaveBeenCalled();
   });
 });
