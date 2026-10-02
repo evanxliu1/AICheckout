@@ -105,6 +105,15 @@ scrolls horizontally (checked by the popup accessibility test at 360 and 480 px)
   `role="alert"`), notices (`AlertInline`, `role="status"`), render failures (`ErrorBoundary` with an
   `ApplicationState` error and a reload action).
 
+## Cart badge (Phase 3b)
+
+- **Pill**: a single `button` fixed bottom-right in the merchant page, action blue (`--token-color-palette-blue-200`, hover blue-300) on a full pill radius with the high elevation shadow, credit-card icon and one line: "Use Blue Cash Everyday · $3.00 back". Its accessible name carries the whole message ("AI Checkout: use Blue Cash Everyday, $3.00 back on this cart. Show details"). Prompts use the same pill: "Pick your cards to see your best card", "Unlock to see your best card" (lock icon), "Can't read this cart — enter the amount".
+- **Panel** (360 px, white surface, overlay elevation, large radius): header with cart icon, the focusable heading "Best card for this cart" and an icon-only Collapse button; a scrolling body with the amount basis ("Based on $27.23 cart order total at Best Buy US."), an Amount field with Update / Use cart amount, the Payment method select, the ranked list (the popup's `EstimateRow`: amount, issuer rule, condition badges, the Citi pay-later note, rules that don't apply); a footer with **Dismiss for this tab** (secondary) and **Not on this site** (tertiary). Esc collapses and returns focus to the pill; nothing animates.
+- **Order question**: the panel opens itself with "Did you pay with {card}?" and Yes / Another card (a select) / Not sure, then "Order recorded" with the estimated extra cash back versus the default card.
+- **Frame**: the panel is an extension page in an iframe inside a closed shadow root; the iframe reports only its size, and the host clamps it to the window (the body scrolls). The page's CSS cannot restyle it.
+- **Onboarding tab** (on install): a 640 px column with the cart mark, "Welcome to AI Checkout", the wallet editor and a "You're set" confirmation that takes focus.
+- **Popup additions**: an **All-time** savings card (total, history disclosure, JSON export, delete) and a **Settings** disclosure (per-site badge `Toggle`s, passphrase protection on/off).
+
 ## Accessibility
 
 Every control has a visible label; helper and error text are wired with `aria-describedby`. Focus

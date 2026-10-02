@@ -61,9 +61,9 @@ function Home(): Rendered {
         <div className="hero">
           <PageIntro eyebrow="Chrome extension" title="Which card you already own earns the most here?">
             <p>
-              AI Checkout compares the cash-back cards in your wallet on the purchase in front of you and
-              shows the reward, the issuer rule behind it and its conditions. The math runs on your device; no
-              model and no account are involved at checkout.
+              On your cart, AI Checkout shows which of the cash-back cards in your wallet earns the most, with
+              the reward, the issuer rule behind it and its conditions. The math runs on your device; no model
+              and no account are involved at checkout.
             </p>
           </PageIntro>
           <Card hasBorder className="install">
@@ -84,24 +84,26 @@ function Home(): Rendered {
         <Section id="what" title="What it does">
           <ul className="feature-grid">
             <Card as="li" hasBorder className="feature">
-              <h3>Compares your cards</h3>
+              <h3>A badge on your cart</h3>
               <p>
-                Choose the cards you have once. At checkout, AI Checkout ranks them by the reward this
-                purchase is guaranteed to earn.
+                Choose the cards you have once. On a supported cart a small badge shows your best card and its
+                cash back (“Use Blue Cash Everyday · $3.00 back”), ranked by what the purchase is sure to
+                earn.
               </p>
             </Card>
             <Card as="li" hasBorder className="feature">
-              <h3>Reads the cart on request</h3>
+              <h3>Reads only the order summary</h3>
               <p>
-                On {MERCHANTS.join(', ').replace(/, (?=[^,]*$)/, ' and ')} it reads the order summary amount
-                when you click, and you confirm it. It never reads item names, addresses or payment fields.
+                On {MERCHANTS.join(', ').replace(/, (?=[^,]*$)/, ' and ')} it reads the cart’s order-summary
+                amount automatically, and nothing else: never item names, addresses or payment fields. Turn it
+                off for any site.
               </p>
             </Card>
             <Card as="li" hasBorder className="feature">
-              <h3>Shows its reasons</h3>
+              <h3>Shows its reasons, counts your savings</h3>
               <p>
-                Each estimate quotes the issuer’s rule and lists its conditions, the rules that do not apply
-                at this merchant, and links to the issuer’s pages.
+                Open the badge for every card’s estimate with the issuer’s rule and conditions. After an
+                order, one tap adds the extra cash back to your all-time total, kept on your device.
               </p>
             </Card>
           </ul>
@@ -500,9 +502,10 @@ function Privacy(): Rendered {
       <>
         <PageIntro eyebrow="Privacy" title="Your inputs stay on your device">
           <p>
-            AI Checkout has no account and no analytics. What you enter is encrypted in your Chrome profile.
-            The only request the extension can make is for the published card catalog, and only when you ask
-            it to check for updated terms.
+            AI Checkout has no account and no analytics. Your cards, settings and savings stay in your Chrome
+            profile, readable only by the extension, and can be encrypted with a passphrase. The only request
+            the extension can make is for the published card catalog, and only when you ask it to check for
+            updated terms.
           </p>
         </PageIntro>
         <Section id="sent" title="What leaves your device">
@@ -545,33 +548,67 @@ function Privacy(): Rendered {
         </Section>
         <Section id="stored" title="What stays on your device">
           <ul className="prose-list">
-            <li>The cards you selected and your preferred card when rewards tie.</li>
+            <li>
+              The cards you selected and your default card (it breaks ties and is the baseline for savings).
+            </li>
+            <li>Your badge settings: the sites where the badge is turned off.</li>
+            <li>
+              Your savings history: for each order you confirmed in the badge, the date, merchant, last cart
+              amount, recommended card, the card you said you used (or “not sure”) and the estimated cash
+              back. You can export it as JSON or delete it.
+            </li>
             <li>Spending you report toward a card’s cap, with its date, and activation choices.</li>
             <li>Your latest purchase inputs: merchant, amount, date and eligibility choices.</li>
             <li>
-              After a cart read: the amount and currency, its kind (total, estimated total or subtotal), the
-              merchant and reader, the capture time, a random capture identifier, the tab and document
-              identifiers, and a hash of the page identity used to detect that the page changed (a freshness
-              check, not anonymization).
+              After a manual cart read from the popup: the amount and currency, its kind (total, estimated
+              total or subtotal), the merchant and reader, the capture time, a random capture identifier, the
+              tab and document identifiers, and a hash of the page identity used to detect that the page
+              changed (a freshness check, not anonymization).
             </li>
             <li>In hosted builds, the most recent catalog you downloaded.</li>
           </ul>
-          <p>It is not synced to other devices, and it is not a purchase history.</p>
-        </Section>
-        <Section id="reads" title="Cart reads">
           <p>
-            On the Amazon US, Best Buy US and Newegg US carts, the extension reads the order-summary amount
-            only after you click <strong>Read cart amount</strong>, and you confirm it before comparing. It
-            does not read card numbers, security codes, addresses, payment fields or product names, and it
-            does not save the page or its address.
+            While a cart tab is open, the extension also keeps that tab’s latest cart amount and the card it
+            last recommended in Chrome’s session memory; it is cleared when the tab closes. Nothing is synced
+            to other devices.
           </p>
         </Section>
-        <Section id="vault" title="Encrypted storage">
+        <Section id="reads" title="The cart badge and cart reads">
+          <ul className="prose-list">
+            <li>
+              <strong>Only three sites: Amazon US, Best Buy US and Newegg US.</strong> The extension has
+              access to <code>www.amazon.com</code>, <code>bestbuy.com</code> and{' '}
+              <code>secure.newegg.com</code>, and runs its badge script only on their cart, checkout and
+              order-confirmation pages. No other website is accessed.
+            </li>
+            <li>
+              <strong>Only the order summary.</strong> On a cart it reads the order-summary amount when the
+              page loads and when the summary changes, and nothing else: no card numbers, security codes,
+              addresses, payment fields or product names. It does not save the page or its address.
+            </li>
+            <li>
+              <strong>Isolated badge.</strong> Your card names and amounts appear in a frame the store’s page
+              cannot read.
+            </li>
+            <li>
+              <strong>Orders by address only.</strong> When an order-confirmation page opens in the same tab
+              within three hours of a recommendation, the extension recognizes it from the page address alone
+              and asks once which card you paid with. The order page itself is never read.
+            </li>
+            <li>
+              Elsewhere, the toolbar popup reads a cart only when you click <strong>Read cart amount</strong>.
+            </li>
+          </ul>
+        </Section>
+        <Section id="vault" title="Optional passphrase protection">
           <p>
-            Saved inputs are encrypted with a key derived from a passphrase you choose; the passphrase is not
-            saved. The unlocked key stays in Chrome’s session memory until you lock, restart Chrome, or the
-            extension updates. A forgotten passphrase cannot be recovered: delete the saved data and start
-            again.
+            Protection is off by default: saved data is stored unencrypted in the extension’s storage, which
+            websites and the extension’s content scripts cannot read, but which someone with access to your
+            device could. Turn on <strong>Protect with a passphrase</strong> in Settings to encrypt it with a
+            key derived from a passphrase you choose; the passphrase is not saved. While locked, the badge
+            only asks you to unlock. The unlocked key stays in Chrome’s session memory until you lock, restart
+            Chrome, or the extension updates. A forgotten passphrase cannot be recovered: delete the saved
+            data and start again.
           </p>
           <p>
             Encryption does not protect a device that is already compromised or a profile someone else is
@@ -581,8 +618,9 @@ function Privacy(): Rendered {
         <Section id="delete" title="Deleting your data">
           <p>
             Open <strong>Delete saved data</strong> in the popup, confirm, and choose{' '}
-            <strong>Delete all local data</strong>. Uninstalling the extension also removes its storage.
-            Neither affects a retailer’s cart or your browser history.
+            <strong>Delete all local data</strong> (cards, settings and savings). To delete only the savings
+            history, use <strong>Delete savings history</strong>. Uninstalling the extension also removes its
+            storage. Neither affects a retailer’s cart or your browser history.
           </p>
         </Section>
         <Section id="site" title="This website">
@@ -599,8 +637,21 @@ function Privacy(): Rendered {
 function Support(): Rendered {
   const issues: [string, string][] = [
     [
+      'No badge on a cart',
+      'The badge appears on the Amazon US cart, Best Buy US cart and checkout, and the Newegg US cart once the order summary loads. Check Settings → Show the cart badge on, and whether you dismissed it in this tab.',
+    ],
+    ['“Pick your cards to see your best card”', 'No cards are saved yet. Click the badge to open setup.'],
+    [
+      '“Unlock to see your best card”',
+      'Passphrase protection is on and locked. Click the badge or the toolbar button and unlock.',
+    ],
+    [
       'The cart can’t be read',
-      'Open the popup on the cart page, wait for the order summary to load, and try again. If the page changed, type the amount yourself.',
+      'Wait for the order summary to load, or type the amount in the badge. In the popup, Read cart amount retries.',
+    ],
+    [
+      'The order question did not appear',
+      'Order pages are recognized by their address within three hours of a recommendation in the same tab, and these addresses are not yet verified for every store. That order is just not counted.',
     ],
     [
       'Unsupported page',
@@ -635,16 +686,20 @@ function Support(): Rendered {
         <Section id="start" title="Getting started">
           <ol className="prose-list">
             <li>
-              Open AI Checkout from Chrome’s toolbar, read the setup notice, and choose a local passphrase of
-              at least 15 characters.
-            </li>
-            <li>Select the supported cards you already have. No card number or login is needed.</li>
-            <li>
-              On a supported cart choose <strong>Read cart amount</strong>, or pick the merchant and type the
-              amount.
+              After installing, a setup tab opens. Pick the cash-back cards you have and your default card,
+              then save. No card number, login or passphrase is needed.
             </li>
             <li>
-              Confirm the amount and the conditions, then choose <strong>Compare my cards</strong>.
+              Open your cart on Amazon US, Best Buy US or Newegg US. The badge in the corner shows your best
+              card; click it for every card’s estimate, a payment-method choice and an editable amount.
+            </li>
+            <li>
+              After you order, the badge may ask once which card you paid with; your answer adds to your
+              all-time extra cash back in the toolbar popup.
+            </li>
+            <li>
+              For any other purchase, open the toolbar popup, pick the merchant, type the amount and choose{' '}
+              <strong>Compare my cards</strong>.
             </li>
           </ol>
         </Section>

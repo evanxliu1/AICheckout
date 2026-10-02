@@ -2,6 +2,8 @@
 
 Implemented and verified locally September 26, 2026. This records application behavior and its limits; it is not an independent security audit or Chrome Web Store approval. The final public identity, privacy/support URLs, installed-Chrome checks and other release gates remain in the [roadmap](../design.md#roadmap).
 
+**Phase 3b change (2026-10-01): protection is optional and off by default.** Without it, `checkoutStateV1` holds the validated AppState in plain local storage (restricted to trusted extension contexts, so pages and content scripts cannot read it). **Settings → Protect with a passphrase** converts it to the encrypted envelope described below; **Turn off passphrase protection** (passphrase required) decrypts it back in one write and drops the session key. Vault statuses are `unprotected | locked | unlocked | damaged`; existing vaults keep working until turned off. When locked, the cart badge shows only "Unlock to see your best card". The rest of this document describes the protected mode.
+
 ## Stored record and key lifetime
 
 The worker wraps the existing state service in `extension/src/state/vault-service.ts`. The same `checkoutStateV1` local-storage key now holds an authenticated encrypted envelope containing the complete validated AppState: selected products, reported limits, working purchase, cart metadata, saved-comparison metadata and optional downloaded catalog. No second plaintext state copy is written.

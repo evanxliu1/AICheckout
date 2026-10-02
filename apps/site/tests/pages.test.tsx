@@ -42,7 +42,7 @@ it('states on the privacy page that only the catalog request leaves the device a
   expect(privacy).toContain('Only a request for the card catalog.');
   expect(privacy).toContain('No analytics, tracking or advertising.');
   for (const merchant of ['Amazon US', 'Best Buy US', 'Newegg US']) expect(privacy).toContain(merchant);
-  expect(privacy).toMatch(/encrypted with a key derived from a passphrase/);
+  expect(privacy).toMatch(/encrypt it with a\s+key derived from a passphrase/);
   // The request depends on the build, and its metadata, operator and providers are named.
   expect(privacy).toMatch(/default build .* makes no network\s+request/);
   expect(privacy).toContain('npm run build:hosted');
@@ -53,6 +53,18 @@ it('states on the privacy page that only the catalog request leaves the device a
   expect(privacy).toContain('hosting providers’ log retention');
   for (const field of ['currency', 'random capture identifier', 'tab and document'])
     expect(privacy).toContain(field);
+  // The automatic badge: three hosts only, the summary only, an isolated frame, orders by URL only.
+  for (const text of [
+    'www.amazon.com',
+    'bestbuy.com',
+    'secure.newegg.com',
+    'Only the order summary.',
+    'Isolated badge.',
+    'Orders by address only.',
+    'savings history',
+    'Protection is off by default',
+  ])
+    expect(privacy).toContain(text);
 });
 
 it('sends security reports to private vulnerability reporting, not public issues', () => {
