@@ -11,8 +11,11 @@ import {
   draftSchema,
   draftIdSchema,
   reviewQueueSchema,
-  reviewDetailSchema,
+  reviewSummarySchema,
   startExtractionInputSchema,
+  MAX_CAPTURE_REQUEST_BYTES,
+  MAX_DRAFT_REQUEST_BYTES,
+  MAX_DRAFT_SOURCES,
 } from '@ai-checkout/catalog-review';
 import { ReviewError, type ReviewRpc } from './review-repository.ts';
 import { curationRunSchema, LedgerError } from './curation/ledger.ts';
@@ -88,11 +91,28 @@ export async function reviewRoutes(
     input(z.strictObject({}), request.query);
     return reviewQueueSchema.parse(await rpc('get_catalog_review', bearer(request), { p_draft_id: null }));
   });
+  // Source metadata only: a v3 draft's captures can total far more than the response cap. The
+  // review app reads one capture's text at a time from the route below.
   app.get('/drafts/:id', async (request) => {
     input(z.strictObject({}), request.query);
-    return reviewDetailSchema.parse(
-      await rpc('get_catalog_review', bearer(request), { p_draft_id: id(request) }),
+    const draftId = id(request);
+    const summary = reviewSummarySchema.parse(
+      await rpc('get_catalog_review_summary', bearer(request), { p_draft_id: draftId }),
     );
+    if (summary.draft.id !== draftId) throw new ReviewError(503, 'review_unavailable');
+    return summary;
+  });
+  app.get('/drafts/:id/sources/:sourceId', async (request) => {
+    input(z.strictObject({}), request.query);
+    const params = input(z.strictObject({ id: draftIdSchema, sourceId: draftIdSchema }), request.params);
+    const source = sourceDocumentSchema.parse(
+      await rpc('get_catalog_review_source', bearer(request), {
+        p_draft_id: params.id,
+        p_source_document_id: params.sourceId,
+      }),
+    );
+    if (source.id !== params.sourceId) throw new ReviewError(503, 'review_unavailable');
+    return source;
   });
   app.get('/runs/:id', async (request) => {
     input(z.strictObject({}), request.query);
@@ -160,19 +180,28 @@ export async function reviewRoutes(
       }
     },
   );
-  app.post('/sources', { bodyLimit: 524288 }, async (request) => {
-    const value = input(captureSourceInputSchema, request.body);
-    return sourceDocumentSchema.parse(
-      await rpc('capture_catalog_source', bearer(request), {
-        p_source_key: value.sourceKey,
-        p_title: value.title,
-        p_url: value.url,
-        p_checked_on: value.checkedOn,
-        p_body: value.body,
-      }),
-    );
-  });
-  app.post('/drafts', { bodyLimit: 270336 }, async (request) => {
+  // A draft cites up to 600 sources and the review app captures them one request each, so this route
+  // allows that many a minute; every other review route keeps the shared limit.
+  app.post(
+    '/sources',
+    {
+      bodyLimit: MAX_CAPTURE_REQUEST_BYTES,
+      config: { rateLimit: { max: MAX_DRAFT_SOURCES, timeWindow: 60000 } },
+    },
+    async (request) => {
+      const value = input(captureSourceInputSchema, request.body);
+      return sourceDocumentSchema.parse(
+        await rpc('capture_catalog_source', bearer(request), {
+          p_source_key: value.sourceKey,
+          p_title: value.title,
+          p_url: value.url,
+          p_checked_on: value.checkedOn,
+          p_body: value.body,
+        }),
+      );
+    },
+  );
+  app.post('/drafts', { bodyLimit: MAX_DRAFT_REQUEST_BYTES }, async (request) => {
     const value = input(createDraftInputSchema, request.body);
     return draftSchema.parse(
       await rpc('save_catalog_draft', bearer(request), {
@@ -184,7 +213,7 @@ export async function reviewRoutes(
       }),
     );
   });
-  app.put('/drafts/:id', { bodyLimit: 270336 }, async (request) => {
+  app.put('/drafts/:id', { bodyLimit: MAX_DRAFT_REQUEST_BYTES }, async (request) => {
     const draftId = id(request),
       value = input(updateDraftInputSchema, request.body);
     return draftSchema.parse(

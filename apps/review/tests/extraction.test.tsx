@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ExtractionReview } from '@ai-checkout/catalog-review/curation';
 import { ExtractionResult } from '../src/ExtractionPanel';
-import { reviewFixture } from './fixtures';
+import { reviewFixture, sourceDocument } from './fixtures';
 import { createReviewApi, ReviewApiError } from '../src/client';
 
 afterEach(() => {
@@ -22,7 +22,7 @@ function fixture() {
   const review: ExtractionReview = {
     blockers: [],
     application: null,
-    documents: [doc],
+    documents: [sourceDocument(doc)],
     proposedCatalog: structuredClone(detail.draft.catalog),
     run: {
       id: runId,

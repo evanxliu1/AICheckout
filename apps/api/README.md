@@ -38,7 +38,8 @@ Every review request requires `Authorization: Bearer <human access token>`. Supa
 | Route | Behavior |
 | --- | --- |
 | `GET /v1/review/` | Current head and up to 30 pending draft summaries |
-| `GET /v1/review/drafts/:id` | Exact draft revision/hash, captured source text, and joined published snapshot/head for comparison |
+| `GET /v1/review/drafts/:id` | Exact draft revision/hash, captured source metadata (length and hash, no text), and joined published snapshot/head for comparison |
+| `GET /v1/review/drafts/:id/sources/:sourceId` | One capture attached to the draft, with its text |
 | `POST /v1/review/sources` | Capture bounded supplied source text; does not fetch the URL |
 | `POST /v1/review/drafts` | Create a validated candidate with explicit source IDs and base sequence |
 | `PUT /v1/review/drafts/:id` | Revise a draft only when its expected revision still matches |

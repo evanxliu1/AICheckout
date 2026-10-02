@@ -1,5 +1,13 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { PILOT_CATALOG } from '@ai-checkout/rewards-core';
+import { CATALOG_V3_LIMITS, PILOT_CATALOG, catalogSchema } from '@ai-checkout/rewards-core';
+import {
+  MAX_CAPTURE_REQUEST_BYTES,
+  MAX_DRAFT_SOURCES,
+  MAX_REVIEW_RESPONSE_BYTES,
+  MAX_SOURCE_BODY_CHARS,
+  reviewSummarySchema,
+} from '@ai-checkout/catalog-review';
+import { largeCatalogV3 } from '../../../packages/rewards-core/large-catalog-fixture.ts';
 import { createApp } from '../src/app.ts';
 import { createReviewRepository, ReviewError } from '../src/review-repository.ts';
 
@@ -183,7 +191,7 @@ describe('review API boundaries', () => {
           method: 'POST',
           url: '/v1/review/sources',
           headers,
-          payload: JSON.stringify({ body: 'a'.repeat(530000) }),
+          payload: JSON.stringify({ body: 'a'.repeat(MAX_CAPTURE_REQUEST_BYTES) }),
         })
       ).statusCode,
     ).toBe(413);
@@ -227,6 +235,172 @@ describe('review API boundaries', () => {
     expect(limited.headers['retry-after']).toBeDefined();
     expect(rpc).toHaveBeenCalledTimes(2);
     expect((await instance.inject('/health')).statusCode).toBe(200);
+  });
+});
+
+describe('large catalog review (Stage 2 M8)', () => {
+  const sourceId = (n: number) => `20000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
+  const capture = {
+    id: sourceId(1),
+    source_key: 'long-terms',
+    title: 'Long terms',
+    url: 'https://issuer.example/terms',
+    checked_on: '2026-09-25',
+    content_hash: hash,
+    created_by: reviewerId,
+    created_at: '2026-09-25T00:00:00Z',
+  };
+  const summary = {
+    reviewerId,
+    head: null,
+    published: null,
+    draft: { ...draft, source_document_ids: [capture.id] },
+    sources: [{ ...capture, body_chars: 12 }],
+  };
+  it('serves the draft review from the summary RPC, with source metadata and no text', async () => {
+    const { instance, rpc } = app(vi.fn().mockResolvedValue(summary));
+    const response = await instance.inject({
+      url: `/v1/review/drafts/${draftId}`,
+      headers: { authorization },
+    });
+    expect(response.statusCode).toBe(200);
+    expect(response.json()).toEqual(summary);
+    expect(rpc).toHaveBeenCalledExactlyOnceWith('get_catalog_review_summary', token, { p_draft_id: draftId });
+    // A body is never passed through the summary, and a summary of another draft is refused.
+    for (const upstream of [
+      { ...summary, sources: [{ ...capture, body_chars: 12, body: 'Captured text' }] },
+      { ...summary, draft: { ...summary.draft, id: sourceId(9) } },
+    ]) {
+      rpc.mockResolvedValueOnce(upstream);
+      const refused = await instance.inject({
+        url: `/v1/review/drafts/${draftId}`,
+        headers: { authorization },
+      });
+      expect(refused.statusCode).toBe(503);
+      expect(refused.body).not.toContain('Captured text');
+    }
+  });
+  it('reads one attached capture with its text', async () => {
+    const document = { ...capture, body: 'Captured text' };
+    const { instance, rpc } = app(vi.fn().mockResolvedValue(document));
+    const url = `/v1/review/drafts/${draftId}/sources/${capture.id}`;
+    const response = await instance.inject({ url, headers: { authorization } });
+    expect(response.statusCode).toBe(200);
+    expect(response.json()).toEqual(document);
+    expect(rpc).toHaveBeenCalledExactlyOnceWith('get_catalog_review_source', token, {
+      p_draft_id: draftId,
+      p_source_document_id: capture.id,
+    });
+    rpc.mockResolvedValueOnce({ ...document, id: sourceId(2) });
+    expect((await instance.inject({ url, headers: { authorization } })).statusCode).toBe(503);
+    rpc.mockClear();
+    for (const bad of [`/v1/review/drafts/${draftId}/sources/nope`, `${url}?full=1`])
+      expect((await instance.inject({ url: bad, headers: { authorization } })).statusCode).toBe(400);
+    expect(rpc).not.toHaveBeenCalled();
+  });
+  it('accepts a 250,000-character capture however it is encoded, and nothing larger', async () => {
+    const { instance, rpc } = app(vi.fn().mockResolvedValue({ ...capture, body: 'stored' }));
+    const headers = { authorization, 'content-type': 'application/json' };
+    const send = (body: string) =>
+      instance.inject({
+        method: 'POST',
+        url: '/v1/review/sources',
+        headers,
+        payload: JSON.stringify({
+          sourceKey: 'long-terms',
+          title: capture.title,
+          url: capture.url,
+          checkedOn: '2026-09-25',
+          body,
+        }),
+      });
+    // Three bytes per character in UTF-8; six per control character once JSON-escaped.
+    for (const body of ['界'.repeat(MAX_SOURCE_BODY_CHARS), '\u0001'.repeat(MAX_SOURCE_BODY_CHARS)]) {
+      expect(Buffer.byteLength(JSON.stringify(body))).toBeGreaterThan(524288);
+      const response = await send(body);
+      expect(response.statusCode).toBe(200);
+      expect(rpc.mock.lastCall?.[2]).toMatchObject({ p_body: body });
+    }
+    expect((await send('界'.repeat(MAX_SOURCE_BODY_CHARS + 1))).statusCode).toBe(400);
+  });
+  it('saves a catalog v3 draft near 1 MiB that cites 600 captures', async () => {
+    let cards = 300,
+      catalog = largeCatalogV3({ cards, day: '2026-10-02' });
+    while (Buffer.byteLength(JSON.stringify(catalog)) > CATALOG_V3_LIMITS.bytes)
+      catalog = largeCatalogV3({ cards: --cards, day: '2026-10-02' });
+    expect(Buffer.byteLength(JSON.stringify(catalog))).toBeGreaterThan(0.95 * CATALOG_V3_LIMITS.bytes);
+    expect(catalogSchema.safeParse(catalog).success).toBe(true);
+    const saved = { ...draft, catalog };
+    const { instance, rpc } = app(vi.fn().mockResolvedValue(saved));
+    const sourceDocumentIds = Array.from({ length: MAX_DRAFT_SOURCES }, (_, i) => sourceId(i + 1));
+    const response = await instance.inject({
+      method: 'POST',
+      url: '/v1/review/drafts',
+      headers: { authorization },
+      payload: { catalog, sourceDocumentIds, baseSequence: null },
+    });
+    expect(response.statusCode).toBe(200);
+    expect(rpc.mock.lastCall?.[2]).toMatchObject({ p_source_document_ids: sourceDocumentIds });
+    const update = await instance.inject({
+      method: 'PUT',
+      url: `/v1/review/drafts/${draftId}`,
+      headers: { authorization },
+      payload: { catalog, sourceDocumentIds, baseSequence: null, expectedRevision: 1 },
+    });
+    expect(update.statusCode).toBe(200);
+  });
+  it('lets a reviewer capture a full draft of sources in one minute while other routes keep the limit', async () => {
+    const rpc = vi.fn(async (operation: string) =>
+      operation === 'capture_catalog_source' ? { ...capture, body: 'stored' } : queue,
+    );
+    const { instance } = app(rpc, 2);
+    const payload = {
+      sourceKey: 'long-terms',
+      title: capture.title,
+      url: capture.url,
+      checkedOn: '2026-09-25',
+    };
+    for (let i = 0; i < 5; i++)
+      expect(
+        (
+          await instance.inject({
+            method: 'POST',
+            url: '/v1/review/sources',
+            headers: { authorization },
+            payload: { ...payload, body: `Terms ${i}` },
+          })
+        ).statusCode,
+      ).toBe(200);
+    for (const status of [200, 200, 429])
+      expect((await instance.inject({ url: '/v1/review/', headers: { authorization } })).statusCode).toBe(
+        status,
+      );
+  });
+  it('keeps the largest possible summary under the review response cap', () => {
+    // Two catalogs at the v3 limit (draft and published) and 600 sources with the longest metadata;
+    // PostgreSQL's JSONB text adds a space after each ":" and ",", well under 1.5x.
+    const longest = {
+      ...capture,
+      source_key: 'a'.repeat(80),
+      title: 't'.repeat(200),
+      url: `https://issuer.example/${'u'.repeat(2020)}`,
+      body_chars: MAX_SOURCE_BODY_CHARS,
+    };
+    const catalogBytes = CATALOG_V3_LIMITS.bytes;
+    const sources = Array.from({ length: MAX_DRAFT_SOURCES }, (_, i) => ({
+      ...longest,
+      id: sourceId(i + 1),
+    }));
+    const metadata = JSON.stringify({ reviewerId, head: 1, sources, draft: { ...draft, catalog: null } });
+    expect(1.5 * (2 * catalogBytes + Buffer.byteLength(metadata))).toBeLessThan(MAX_REVIEW_RESPONSE_BYTES);
+    // The schema accepts that many sources.
+    expect(
+      reviewSummarySchema.safeParse({
+        ...summary,
+        draft: { ...summary.draft, source_document_ids: sources.map((source) => source.id) },
+        sources,
+      }).success,
+    ).toBe(true);
   });
 });
 
@@ -281,5 +455,17 @@ describe('review Data API adapter', () => {
       status: 503,
       message: 'review_unavailable',
     });
+  });
+});
+
+it('maps a missing capture to source_not_found', async () => {
+  const repository = createReviewRepository(
+    'http://127.0.0.1:54321',
+    'public-key',
+    vi.fn().mockResolvedValue(Response.json({ code: 'P0002' }, { status: 400 })),
+  );
+  await expect(repository('get_catalog_review_source', token, {})).rejects.toMatchObject({
+    status: 404,
+    code: 'source_not_found',
   });
 });

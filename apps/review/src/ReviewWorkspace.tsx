@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { draftIdSchema, type ReviewDetail, type ReviewQueue } from '@ai-checkout/catalog-review';
+import { draftIdSchema, type ReviewQueue, type ReviewSummary } from '@ai-checkout/catalog-review';
 import type { Catalog } from '@ai-checkout/rewards-core';
 import { AlertInline, ApplicationState, Badge, Button } from '@ai-checkout/ui';
 import type { ReviewApi } from './client';
@@ -7,9 +7,16 @@ import ExtractionPanel from './ExtractionPanel';
 import { DraftPanel, type CaptureItem } from './DraftPanel';
 import StartDraft from './StartDraft';
 
-export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
+export default function ReviewWorkspace({
+  api,
+  bundled,
+}: {
+  api: ReviewApi;
+  /** Catalogs offered by Start a new draft; defaults to the bundled ones. */
+  bundled?: Catalog[];
+}) {
   const [queue, setQueue] = useState<ReviewQueue | null>(null),
-    [detail, setDetail] = useState<ReviewDetail | null>(null);
+    [detail, setDetail] = useState<ReviewSummary | null>(null);
   const [pending, setPending] = useState('Loading drafts…'),
     [error, setError] = useState(''),
     [notice, setNotice] = useState('');
@@ -19,7 +26,13 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
   const controller = useRef<AbortController | null>(null),
     heading = useRef<HTMLHeadingElement>(null);
   const busy = !!pending;
-  const showDetail = useCallback((value: ReviewDetail | null) => {
+  const draftId = detail?.draft.id;
+  // Stable per draft, so the memoized source list is not redrawn on every keystroke.
+  const loadSource = useCallback(
+    (sourceId: string, signal: AbortSignal) => api.source(draftId!, sourceId, signal),
+    [api, draftId],
+  );
+  const showDetail = useCallback((value: ReviewSummary | null) => {
     setDetail(value);
     setGeneration((previous) => previous + 1);
     setDirty(false);
@@ -150,9 +163,10 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
     if (!detail || !items.length) return;
     await perform(`Capturing ${items.length} sources…`, async (signal) => {
       const captured = new Map<string, string>();
-      for (const item of items) {
+      for (const [index, item] of items.entries()) {
         const source = detail.draft.catalog.sources.find((value) => value.id === item.sourceKey);
         if (!source) continue;
+        if (items.length > 1) setPending(`Capturing source ${index + 1} of ${items.length}…`);
         const doc = await api.capture(
           {
             sourceKey: source.id,
@@ -341,6 +355,7 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
         {queue && (starting || (!detail && queue.drafts.length === 0)) ? (
           // Stays mounted while busy, so a failed create keeps the form, its input and focus.
           <StartDraft
+            bundled={bundled}
             head={queue.head}
             busy={busy}
             now={Date.now()}
@@ -366,9 +381,10 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
               {detail.draft.catalog.sources.length === 1 ? 'source' : 'sources'} · catalog schema{' '}
               {detail.draft.catalog.schemaVersion}
             </p>
-            {detail.draft.catalog.schemaVersion === 2 ? (
+            {detail.draft.catalog.schemaVersion !== 1 ? (
               <p className="muted small">
-                Extraction applies only to schema 1 drafts; edit schema 2 drafts with the editors below.
+                Extraction applies only to schema 1 drafts; edit schema {detail.draft.catalog.schemaVersion}{' '}
+                drafts with the editors below.
               </p>
             ) : (
               <ExtractionPanel
@@ -396,6 +412,7 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
               onCapture={capture}
               onCaptureMany={captureMany}
               onPublish={publish}
+              onLoadSource={loadSource}
             />
           </>
         ) : (

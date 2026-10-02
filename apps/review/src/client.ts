@@ -3,7 +3,7 @@ import { readBoundedJson } from '@ai-checkout/catalog-client';
 import {
   MAX_REVIEW_RESPONSE_BYTES,
   reviewQueueSchema,
-  reviewDetailSchema,
+  reviewSummarySchema,
   sourceDocumentSchema,
   draftSchema,
   type ReviewConfig,
@@ -24,6 +24,7 @@ const messages: Record<string, string> = {
   invalid_request: 'Some draft fields are invalid. Check the input and try again.',
   review_changed: 'The draft or published catalog changed. Reload it and review the changes again.',
   draft_not_found: 'This draft is no longer available. Return to the pending drafts.',
+  source_not_found: 'This capture is no longer attached to the draft. Reload the draft.',
   invalid_catalog_evidence:
     'The draft, dates, or captured evidence are not ready to publish. Reload and check them.',
   too_many_requests: 'Too many requests. Wait a minute, then try again.',
@@ -125,7 +126,14 @@ export function createReviewApi(
   return {
     queue: (signal: AbortSignal) => request('/', reviewQueueSchema, signal),
     detail: (id: string, signal: AbortSignal) =>
-      request(`/drafts/${encodeURIComponent(id)}`, reviewDetailSchema, signal),
+      request(`/drafts/${encodeURIComponent(id)}`, reviewSummarySchema, signal),
+    /** One attached capture with its text; the draft summary lists sources without text. */
+    source: (id: string, sourceId: string, signal: AbortSignal) =>
+      request(
+        `/drafts/${encodeURIComponent(id)}/sources/${encodeURIComponent(sourceId)}`,
+        sourceDocumentSchema,
+        signal,
+      ),
     capture: (body: unknown, signal: AbortSignal) =>
       request('/sources', sourceDocumentSchema, signal, 'POST', body),
     create: (body: unknown, signal: AbortSignal) => request('/drafts', draftSchema, signal, 'POST', body),

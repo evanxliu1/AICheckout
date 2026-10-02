@@ -160,7 +160,17 @@ try {
   draftIds.push(draft.id);
   const detail = ok(await review('GET', `/drafts/${draft.id}`, reviewer.token), 'Review exact draft');
   assert.equal(detail.draft.catalog_hash, draft.catalog_hash);
-  assert.equal(detail.sources[0].body, source.body);
+  // The review detail lists captures without their text (Stage 2 M8); one text is read on demand.
+  assert.equal(detail.sources[0].body, undefined);
+  assert.equal(detail.sources[0].body_chars, source.body.length);
+  const sourcePath = `/drafts/${draft.id}/sources/${detail.sources[0].id}`;
+  assert.equal(ok(await review('GET', sourcePath, reviewer.token), 'Read one capture').body, source.body);
+  assert.equal((await review('GET', sourcePath, ordinary.token)).status, 403);
+  assert.equal(
+    (await review('GET', `/drafts/${draft.id}/sources/${draft.id}`, reviewer.token)).status,
+    404,
+    'A capture not attached to the draft is not returned',
+  );
   const approval = {
     expectedRevision: draft.revision,
     expectedHash: draft.catalog_hash,

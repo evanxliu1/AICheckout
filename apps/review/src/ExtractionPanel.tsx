@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { draftIdSchema, type ReviewDetail, type StartExtractionInput } from '@ai-checkout/catalog-review';
+import { draftIdSchema, type ReviewSummary, type StartExtractionInput } from '@ai-checkout/catalog-review';
 import {
   applyExtractionInputSchema,
   type ApplyExtractionInput,
@@ -35,7 +35,7 @@ export default function ExtractionPanel({
   onApplied,
 }: {
   api: ReviewApi;
-  detail: ReviewDetail;
+  detail: ReviewSummary;
   busy: boolean;
   dirty: boolean;
   perform: Perform;
@@ -280,7 +280,7 @@ export function ExtractionResult({
   onApply,
 }: {
   review: ExtractionReview;
-  detail: ReviewDetail;
+  detail: ReviewSummary;
   disabled: boolean;
   onApply: (input: ApplyExtractionInput) => Promise<void>;
 }) {

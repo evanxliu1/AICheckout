@@ -1,14 +1,16 @@
 // Accessibility and CSP gate for the review app with a mocked backend (no Supabase needed): serves
 // the production build with the API's exact security headers, stubs sign-in and the review API, and
-// runs axe (WCAG 2.0/2.1 A and AA) on sign-in, the queue with a draft diff, the structured editor
-// and the publish confirmation, at 1280 px and 390 px. It also fails on any CSP violation.
+// runs axe (WCAG 2.0/2.1 A and AA) on sign-in, the queue with a draft diff, the structured editor,
+// the publish confirmation and a 180-card catalog v3 draft, at 1280 px and 390 px. It also fails on
+// any CSP violation.
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 import { createServer, type Server } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { CATALOG_V2, PILOT_CATALOG } from '../../../packages/rewards-core/src/index.ts';
+import { CATALOG_V2, PILOT_CATALOG, type Catalog } from '../../../packages/rewards-core/src/index.ts';
+import { largeCatalogV3 } from '../../../packages/rewards-core/large-catalog-fixture.ts';
 
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 const SUPABASE = 'https://mock-project.supabase.co';
@@ -66,8 +68,8 @@ function v2Catalog() {
   for (const source of catalog.sources) source.checkedOn = day;
   return catalog;
 }
-function detail(captured: boolean) {
-  const catalog = v2Catalog();
+const captureText = (title: string) => `Synthetic capture of ${title} for the accessibility test.`;
+function detail(captured: boolean, catalog: Catalog = v2Catalog()) {
   const sources = captured
     ? catalog.sources.map((source, i) => ({
         id: `20000000-0000-4000-8000-${String(i + 1).padStart(12, '0')}`,
@@ -75,7 +77,7 @@ function detail(captured: boolean) {
         title: source.title,
         url: source.url,
         checked_on: source.checkedOn,
-        body: `Synthetic capture of ${source.title} for the accessibility test.`,
+        body_chars: captureText(source.title).length,
         content_hash: 'a'.repeat(64),
         created_by: reviewerId,
         created_at: iso(0),
@@ -111,7 +113,11 @@ function detail(captured: boolean) {
   };
 }
 
-async function stubBackend(page: Page, captured: boolean, { empty = false } = {}) {
+async function stubBackend(
+  page: Page,
+  captured: boolean,
+  { empty = false, catalog }: { empty?: boolean; catalog?: Catalog } = {},
+) {
   const payload = Buffer.from(
     JSON.stringify({ sub: reviewerId, exp: Math.floor(Date.now() / 1000) + 3600 }),
   ).toString('base64url');
@@ -129,7 +135,7 @@ async function stubBackend(page: Page, captured: boolean, { empty = false } = {}
       }),
     }),
   );
-  const data = detail(captured);
+  const data = detail(captured, catalog);
   // An empty queue until the app creates a draft with POST /drafts; then that draft is the queue.
   let created = !empty;
   await page.route(`${origin}/v1/review/**`, (route) => {
@@ -142,6 +148,15 @@ async function stubBackend(page: Page, captured: boolean, { empty = false } = {}
       data.draft.source_document_ids = [];
       created = true;
       return route.fulfill({ contentType: 'application/json', body: JSON.stringify(data.draft) });
+    }
+    const source = /^\/v1\/review\/drafts\/[^/]+\/sources\/([^/]+)$/.exec(path);
+    if (source) {
+      const doc: Record<string, unknown> = { ...data.sources.find((item) => item.id === source[1])! };
+      delete doc.body_chars;
+      return route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify({ ...doc, body: captureText(String(doc.title)) }),
+      });
     }
     const body =
       path === '/v1/review/'
@@ -180,7 +195,7 @@ async function check(page: Page, state: string) {
   }
 }
 
-async function signIn(page: Page, captured: boolean, options?: { empty?: boolean }) {
+async function signIn(page: Page, captured: boolean, options?: { empty?: boolean; catalog?: Catalog }) {
   const violations: string[] = [];
   await page.exposeFunction('reportViolation', (value: string) => violations.push(value));
   await page.addInitScript(() =>
@@ -203,7 +218,11 @@ test('sign-in, queue with draft diff, structured editor: axe-clean, no CSP viola
   await page.getByLabel('Password', { exact: true }).fill('not-a-real-password');
   await page.getByRole('button', { name: 'Sign in', exact: true }).click();
   await expect(page.getByRole('heading', { name: /\.real\.2$/, level: 1 })).toBeVisible();
-  await expect(page.getByRole('table', { name: /Published and proposed catalog changes/ })).toBeVisible();
+  // The v2 draft against a v1 release changes hundreds of fields: one collapsed section per card.
+  await page.getByText(/^Citi Double Cash \(\d+ changed fields\)$/).click();
+  await expect(
+    page.getByRole('table', { name: /Published and proposed catalog changes: Citi/ }),
+  ).toBeVisible();
   await expect(page.getByText('Matching evidence needed').first()).toBeVisible();
   await check(page, 'queue-and-diff');
 
@@ -227,6 +246,8 @@ test('publish confirmation dialog: axe-clean, focus on Cancel, Esc closes', asyn
   await page.getByLabel('Password', { exact: true }).fill('not-a-real-password');
   await page.getByRole('button', { name: 'Sign in', exact: true }).click();
   await expect(page.getByText('Matching evidence captured').first()).toBeVisible();
+  await page.locator('.source-card summary').first().click();
+  await expect(page.getByText(/^Synthetic capture of .* for the accessibility test\.$/)).toBeVisible();
   await page.getByRole('checkbox', { name: /I checked the full source terms/ }).check();
   await page
     .getByLabel('Review note', { exact: true })
@@ -263,5 +284,40 @@ test('empty queue: start a draft from the bundled catalog, confirm, and land on 
   await expect(page.getByText(/Attach its source evidence with Capture all missing sources/)).toBeVisible();
   await expect(page.getByText('Matching evidence needed').first()).toBeVisible();
   await check(page, 'new-draft');
+  expect(violations).toEqual([]);
+});
+
+test('180-card catalog v3 draft: grouped changes, source search, bulk capture and editor are axe-clean', async ({
+  page,
+}) => {
+  const catalog = largeCatalogV3();
+  const violations = await signIn(page, false, { catalog });
+  await page.getByLabel('Email', { exact: true }).fill('reviewer@example.test');
+  await page.getByLabel('Password', { exact: true }).fill('not-a-real-password');
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1, name: catalog.version })).toBeVisible();
+  await expect(page.getByText(/changed fields in \d+ sections/)).toBeVisible();
+  await page.getByLabel('Find a card or section').fill('Synthetic Card 042');
+  await page.getByText(/^Synthetic Card 042 \(\d+ changed fields\)$/).click();
+  await expect(page.getByRole('table', { name: /Synthetic Card 042$/ })).toBeVisible();
+  await page.getByLabel('Find a source').fill('large-source-01');
+  await expect(page.getByText('10 of 340 sources match.')).toBeVisible();
+  await page.getByText('Capture all missing sources', { exact: true }).click();
+  await expect(page.getByLabel('Load a capture folder')).toBeVisible();
+  await check(page, 'large-v3-draft');
+
+  await page.getByText('Correct draft data', { exact: true }).click();
+  await page.getByText(/^Reward programs and point values/).click();
+  await page.getByLabel('Find a card', { exact: true }).fill('Card 007');
+  await page
+    .locator('summary')
+    .filter({ hasText: /^Synthetic Card 007$/ })
+    .click();
+  await page
+    .getByLabel('Only at brands (IDs, comma-separated; blank: any merchant)')
+    .first()
+    .fill('no-such-brand');
+  await expect(page.getByText('Rule references an absent brand.').first()).toBeVisible();
+  await check(page, 'large-v3-editor-with-errors');
   expect(violations).toEqual([]);
 });

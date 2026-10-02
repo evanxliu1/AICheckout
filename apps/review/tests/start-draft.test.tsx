@@ -2,7 +2,7 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CATALOG_V2 } from '@ai-checkout/rewards-core';
-import type { ReviewDetail } from '@ai-checkout/catalog-review';
+import type { ReviewSummary } from '@ai-checkout/catalog-review';
 import ReviewWorkspace from '../src/ReviewWorkspace';
 import type { ReviewApi } from '../src/client';
 import { reviewFixture } from './fixtures';
@@ -26,9 +26,9 @@ const button = (name: string) => {
 };
 
 /** A backend whose queue starts empty (or with `existing`) and that records created drafts. */
-function backend({ head = null, existing }: { head?: number | null; existing?: ReviewDetail } = {}) {
-  let created: ReviewDetail | undefined;
-  const queueOf = (detail?: ReviewDetail) =>
+function backend({ head = null, existing }: { head?: number | null; existing?: ReviewSummary } = {}) {
+  let created: ReviewSummary | undefined;
+  const queueOf = (detail?: ReviewSummary) =>
     detail
       ? [
           {
@@ -48,7 +48,7 @@ function backend({ head = null, existing }: { head?: number | null; existing?: R
       drafts: queueOf(created ?? existing),
     })),
     detail: vi.fn(async () => structuredClone((created ?? existing)!)),
-    create: vi.fn(async (body: { catalog: ReviewDetail['draft']['catalog'] }) => {
+    create: vi.fn(async (body: { catalog: ReviewSummary['draft']['catalog'] }) => {
       created = reviewFixture();
       created.head = head;
       created.draft.id = '30000000-0000-4000-8000-000000000009';

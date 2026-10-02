@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { publishedReleaseSchema } from '@ai-checkout/rewards-core';
+import { CATALOG_V3_LIMITS, publishedReleaseSchema } from '@ai-checkout/rewards-core';
 import { readBoundedJson } from '@ai-checkout/catalog-client';
 
 const headSchema = z
@@ -11,6 +11,11 @@ const headSchema = z
   )
   .length(1)
   .refine((rows) => rows[0].release_sequence === (rows[0].release?.sequence ?? null));
+
+/** Largest Data API response accepted for the head row. The catalog itself is limited to
+ * `CATALOG_V3_LIMITS.bytes` of `JSON.stringify` output (checked again by `publishedReleaseSchema`);
+ * PostgreSQL renders JSONB with a space after every `:` and `,`, so the wire form is larger. */
+export const MAX_CATALOG_READ_BYTES = 2 * CATALOG_V3_LIMITS.bytes;
 
 /** One joined query keeps the selected head and snapshot in the same DB statement. */
 export function createCatalogRepository(
@@ -44,6 +49,6 @@ export function createCatalogRepository(
       credentials: 'omit',
       headers: { apikey: publishableKey, Accept: 'application/json' },
     });
-    return headSchema.parse(await readBoundedJson(response))[0].release;
+    return headSchema.parse(await readBoundedJson(response, MAX_CATALOG_READ_BYTES))[0].release;
   };
 }

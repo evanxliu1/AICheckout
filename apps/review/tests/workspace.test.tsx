@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { ReviewDetail } from '@ai-checkout/catalog-review';
+import type { ReviewSummary } from '@ai-checkout/catalog-review';
 import ReviewWorkspace from '../src/ReviewWorkspace';
 import type { ReviewApi } from '../src/client';
 import { reviewFixture, now } from './fixtures';
@@ -16,7 +16,7 @@ afterEach(() => {
 });
 
 const docId = (n: number) => `40000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
-function workspace(detail: ReviewDetail) {
+function workspace(detail: ReviewSummary) {
   let nextDoc = 1;
   const api = {
     queue: vi.fn(async () => ({
@@ -51,7 +51,7 @@ function partlyCaptured() {
   detail.draft.source_document_ids = [detail.sources[0].id];
   return detail;
 }
-async function fillMissing(detail: ReviewDetail) {
+async function fillMissing(detail: ReviewSummary) {
   const user = userEvent.setup();
   await screen.findByRole('heading', { level: 1, name: detail.draft.catalog.version });
   await user.click(screen.getByText('Capture all missing sources'));

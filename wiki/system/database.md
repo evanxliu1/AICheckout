@@ -6,7 +6,7 @@ status: stable
 tags: [system, database, supabase, postgres, security]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:00:00Z
+  at: 2026-10-02T23:59:00Z
 sources:
   - resource: ../../supabase/migrations
     title: Migrations
@@ -30,7 +30,7 @@ sources:
 
 PostgreSQL 17 under Supabase (Auth + Data API). Two schemas: `public` holds the published, immutable catalog history and a single-row head pointer, readable by anyone; `catalog_private` holds reviewers, source captures, drafts, publications and the extraction ledger, is not exposed through the Data API, has RLS on with no client policies, and is reached only through narrow `SECURITY DEFINER` functions called via `SECURITY INVOKER` public wrappers. Publication is one transaction bound to an exact draft revision, payload hash and current head, so stale approvals fail rather than overwrite. Wallet and shopping data never enter this database.
 
-Verified 2026-10-02 by reading the migrations and tests. On branch `s2-m1-catalog-v3` (Stage 2 M1, not yet merged or pushed to hosted) the full local DB suite ran green with migration `20261002222425_catalog_v3` applied.
+Verified 2026-10-02 by reading the migrations and tests. `20261002222425_catalog_v3` (Stage 2 M1) is on `main` since PR #22. On branch `s2-m8-review-large-catalog` (Stage 2 M8, not yet merged or pushed to hosted) the full local DB suite ran green with `20261002230334_review_summary` applied.
 
 ## Facts
 
@@ -44,7 +44,8 @@ Verified 2026-10-02 by reading the migrations and tests. On branch `s2-m1-catalo
 | `20260926070014_reviewed_extraction_application` | `extraction_applications`; `list_draft_extractions`, `get_draft_extraction`, `apply_reviewed_extraction` |
 | `20260930225732_catalog_v2` | `valid_catalog_v2` mirroring `catalogV2Schema`; `valid_catalog` = v1 or v2; replaces CHECKs on `catalog_releases.catalog` and `drafts.catalog` |
 | `20261001010350_source_body_limit` | `source_documents.body` 1–120,000 chars (was 60,000), matching `MAX_SOURCE_BODY_CHARS` |
-| `20261002222425_catalog_v3` (branch `s2-m1-catalog-v3`) | `valid_catalog_v3` mirroring `catalogV3Schema`; `catalog_v3_reward_categories()`, `catalog_v3_merchant_categories()` (replaceable category lists), `catalog_v3_unconditional_rule()`; `valid_catalog` = v1, v2 or v3; `drafts.source_document_ids` ≤ 600 and `save_catalog_draft` to match; `source_documents.body` 1–250,000 chars |
+| `20261002222425_catalog_v3` | `valid_catalog_v3` mirroring `catalogV3Schema`; `catalog_v3_reward_categories()`, `catalog_v3_merchant_categories()` (replaceable category lists), `catalog_v3_unconditional_rule()`; `valid_catalog` = v1, v2 or v3; `drafts.source_document_ids` ≤ 600 and `save_catalog_draft` to match; `source_documents.body` 1–250,000 chars |
+| `20261002230334_review_summary` (branch `s2-m8-review-large-catalog`) | `get_catalog_review_summary(draft)`: the draft review with source metadata and `body_chars` instead of text; `get_catalog_review_source(draft, source)`: one capture attached to that draft (P0002 otherwise); public `SECURITY INVOKER` wrappers, execute for `authenticated` only. `get_catalog_review` unchanged ([decision](../decisions/2026-10-02-review-large-catalog.md)) |
 
 | Table | Key columns and constraints | Access |
 | --- | --- | --- |
@@ -102,10 +103,10 @@ Corrections are new drafts based on the current head; releases are never edited 
 
 | Command | What |
 | --- | --- |
-| `npm run db:test` | pgTAP: `supabase/tests/catalog.test.sql`, `catalog_v2.test.sql`, `catalog_v3.test.sql`, `curation.test.sql`, `extraction_application.test.sql` |
+| `npm run db:test` | pgTAP: `supabase/tests/catalog.test.sql`, `catalog_v2.test.sql`, `catalog_v3.test.sql`, `curation.test.sql`, `extraction_application.test.sql`, `review_summary.test.sql` |
 | `npm run db:test:concurrency` | Competing publication, expiry and session expiry while blocked (real row locks) |
 | `npm run db:test:catalog` | Zod/SQL parity |
-| `npm run db:test:http` | Signed sessions through the Node API: capture, save, review, publish, stale approval 409, sign-out revocation |
+| `npm run db:test:http` | Signed sessions through the Node API: capture, save, review (summary without text, one capture by ID), publish, stale approval 409, sign-out revocation |
 | `npm run db:test:curation[:http\|:application]` | Ledger races; compiled API with scoped login; concurrent application |
 | `npm run db:lint`, `npm run db:advisors` | `supabase db lint` on `public,catalog_private`; security advisors |
 
