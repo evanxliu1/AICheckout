@@ -3,6 +3,7 @@
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
 ## 2026-10-02
+* [Publish the gpt-5.6-luna run per split, marked added after, and make it the Codex default](./2026-10-02-luna-results-per-split.md) — The all-cases luna run becomes dev and held-out rows marked added after; matrix files unchanged; eval:v2 and extract-cards default to the curation configuration.
 * [Use gpt-5.6-luna at xhigh effort for curation](./2026-10-02-gpt-5-6-luna-for-curation.md) — Move curation from gpt-5.5 low to gpt-5.6-luna xhigh for frontier currency; accuracy ties, runs are much slower, one false-clean case.
 * [Adopt an LLM wiki plus AGENTS.md](./2026-10-02-llm-wiki-documentation.md) — wiki/ in Open Knowledge Format as the agent-facing documentation and memory system.
 

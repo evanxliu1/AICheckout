@@ -1,12 +1,12 @@
 ---
 type: System Component
 title: Evaluation
-description: The curation eval corpora, splits, variants, scorer versions and metrics, the eval CLIs, what is committed, and a short summary of the 2026-09-29 results.
+description: The curation eval corpora, splits, variants, scorer versions and metrics, the eval CLIs, what is committed, and a short summary of the 2026-09-29 results and the 2026-10-02 gpt-5.6-luna rows.
 status: stable
 tags: [system, evaluation, llm, curation]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T06:10:00Z
+  at: 2026-10-02T06:40:00Z
 sources:
   - resource: ../../evals/curation/README.md
     title: Curation evaluations README
@@ -100,9 +100,9 @@ Predicted rules are matched to reference rules by category. When a category has 
 | Command | Script → code | Does |
 | --- | --- | --- |
 | `npm run eval:v2 -- --check` | [`scripts/evaluate-curation-v2.mjs`](../../scripts/evaluate-curation-v2.mjs) → [`v2/eval-cli.ts`](../../apps/api/src/curation/v2/eval-cli.ts) | CI gate on fixture.v2: reference-echo must score 100%, abstention 0%. No model call |
-| `npm run eval:v2 -- --provider codex\|claude ...` | same | Live run. Options: `--prompt`, `--selection`, `--split`, `--repeat`, `--resume DIR`, `--replay FILE`. A usage limit exits with status 3 and the run can be resumed |
+| `npm run eval:v2 -- --provider codex\|claude ...` | same | Live run. Options: `--prompt`, `--selection`, `--split`, `--repeat`, `--resume DIR`, `--replay FILE`. A usage limit exits with status 3 and the run can be resumed. `--provider codex` without `--model` runs the curation configuration (gpt-5.6-luna `xhigh`, `guided.2`, `keyword-window.1`; [live model runs](../ops/live-model-runs.md)) |
 | `npm run eval:matrix` | [`scripts/run-eval-matrix.mjs`](../../scripts/run-eval-matrix.mjs) | Runs every config in [`matrix.dev.json`](../../evals/curation/matrix.dev.json) / [`matrix.heldout.json`](../../evals/curation/matrix.heldout.json) into `runs/matrix*/<slug>/`. Skips complete configs, resumes partial ones; `--wait-minutes` retries after usage limits |
-| `npm run eval:summarize` | [`scripts/summarize-evals.mjs`](../../scripts/summarize-evals.mjs) → `v2/summarize.ts` | Re-scores saved observations with the current scorer and labels, then writes `docs/evals/results.json` and the SVG charts |
+| `npm run eval:summarize` | [`scripts/summarize-evals.mjs`](../../scripts/summarize-evals.mjs) → `v2/summarize.ts` | Re-scores saved observations with the current scorer and labels, then writes `docs/evals/results.json` and the SVG charts. A `--split all` run becomes one row per split; `--added RUN-ID` marks a row added after its split was chosen. `results.md` is hand-written to match `results.json` (the site test checks each row) |
 | `npm run eval:curation` | [`scripts/evaluate-curation.mjs`](../../scripts/evaluate-curation.mjs) → [`eval-cli.ts`](../../apps/api/src/curation/eval-cli.ts) | v1 evaluator: `--check`, `--mode replay\|ledger\|codex`, `--split development\|reserved\|all` (`--allow-reserved`) |
 
 Live providers run through vendor CLIs on subscriptions (`codex exec`, `claude -p`), not metered APIs. They are for local use only and must not be wired into the hosted API. Scoring rebuilds each case's context and rejects observations whose source hashes, prompt or selection differ from what the corpus produces.
@@ -118,7 +118,7 @@ Live providers run through vendor CLIs on subscriptions (`codex exec`, `claude -
 | `docs/evals/results.{md,json,svg}`, `results-heldout.svg` | yes | Metrics only, no issuer text |
 | `evals/curation/baseline.v1.md` | yes | Synthetic v1 diagnostic summary |
 
-## Results (2026-09-29, summary)
+## Results (2026-09-29 and 2026-10-02, summary)
 
 Full tables, failure analysis and disclosures are in [`docs/evals/results.md`](../../docs/evals/results.md). End-to-end field accuracy:
 
@@ -127,6 +127,7 @@ Full tables, failure analysis and disclosures are in [`docs/evals/results.md`](.
 | Any model, `baseline.1` | 65–83% | 83.1% (gpt-6-astra, full) |
 | gpt-6-astra low, `guided.2` full | 99.0% | 97.2% |
 | gpt-5.5 low, `guided.2` keyword-window | 98.8% | 97.5% |
+| gpt-5.6-luna xhigh, `guided.2` keyword-window (curation model; one repeat, added 2026-10-02) | 99.5% | 98.3% |
 | claude-opus-5-5, `guided.2` keyword-window | 96.9% | 99.2% (added after other held-out results were seen) |
 | claude-sonnet-5, `guided.2` keyword-window | 94.4% | 93.2% |
 | claude-haiku-4-5, `guided.2` keyword-window | 93.4% | 90.9% |
@@ -135,7 +136,7 @@ Full tables, failure analysis and disclosures are in [`docs/evals/results.md`](.
 - Every guided row reports every planted injection (100% untrusted-instruction recall, dev and held-out).
 - The main held-out errors are `cap: none` asserted where the page is silent, and the BCE cap period.
 - Repeat noise reaches 5.8 points. Treat differences under about 3 points as ties.
-- Not yet in `docs/evals/results.md`: gpt-5.6-luna `xhigh`, `guided.2` keyword-window, all 37 cases in one run (2026-10-02): 98.8% end-to-end, 1 false-clean, `capPeriod` 16/22, about 3 min per case. It became the curation model on 2026-10-02 ([decision](../decisions/2026-10-02-gpt-5-6-luna-for-curation.md)).
+- gpt-5.6-luna `xhigh` ran all 37 cases once on 2026-10-02 (98.8% end-to-end overall); `results.md` reports it per split, marked added after: dev 99.5% (1 false-clean, Wells Fargo stale promo), held-out 98.3% (0 false-clean; 9 field errors: BCE cap period ×6, Chase `cap: none` ×3; `capPeriod` 16/22), p50 163 s / 192 s per case. On the expansion branch only until it merges. It became the curation model on 2026-10-02 ([decision](../decisions/2026-10-02-gpt-5-6-luna-for-curation.md), [reporting decision](../decisions/2026-10-02-luna-results-per-split.md)).
 
 ## Gotchas
 
