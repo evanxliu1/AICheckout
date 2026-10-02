@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { z } from 'zod';
 import { canonicalJson } from '../canonical.ts';
@@ -23,25 +23,25 @@ const anchors = z.array(anchor).min(1).max(4);
 const rule = ruleSchema.shape;
 const value = <T extends z.ZodType>(schema: T) => z.strictObject({ value: schema.nullable(), anchors });
 
-export const manifestSchema = z.strictObject({
-  schemaVersion: z.literal(1),
-  sources: z
-    .array(
-      z.strictObject({
-        id,
-        cardIds: z.array(z.string().min(1).max(80)).min(1).max(8),
-        issuer: z.string().min(1).max(80),
-        kind: z.string().min(1).max(80),
-        title: z.string().min(1).max(200),
-        url: z.url({ protocol: /^https$/ }).max(2048),
-        capturedOn: z.iso.date(),
-        sha256: z.string().regex(/^[a-f0-9]{64}$/),
-        length: z.number().int().positive(),
-      }),
-    )
-    .min(1)
-    .max(100),
+const manifestSourceSchema = z.strictObject({
+  id,
+  cardIds: z.array(z.string().min(1).max(80)).min(1).max(8),
+  issuer: z.string().min(1).max(80),
+  kind: z.string().min(1).max(80),
+  title: z.string().min(1).max(200),
+  url: z.url({ protocol: /^https$/ }).max(2048),
+  capturedOn: z.iso.date(),
+  sha256: z.string().regex(/^[a-f0-9]{64}$/),
+  length: z.number().int().positive(),
 });
+const manifestOf = (maxSources: number) =>
+  z.strictObject({
+    schemaVersion: z.literal(1),
+    sources: z.array(manifestSourceSchema).min(1).max(maxSources),
+  });
+export const manifestSchema = manifestOf(100);
+/** The catalog-expansion manifest (321 sources captured 2026-10-02) needs a larger limit. */
+export const EXPANSION_MAX_SOURCES = 400;
 export type Manifest = z.infer<typeof manifestSchema>;
 
 export const referenceRuleSchema = z.strictObject({
@@ -172,11 +172,43 @@ export function checkCase(item: CorpusCase, input: ExtractionV2Input) {
     fail('a conflicting-rate variant must expect a conflicting issue');
 }
 
+/**
+ * Corpus directory layouts. `v2` (the default: real, fixture) reads `corpus.v2.json` and a manifest of at
+ * most 100 sources. `expansion` (evals/curation/expansion) reads `corpus.json`, allows up to
+ * `EXPANSION_MAX_SOURCES` sources, and treats every case as held-out whatever its placeholder split says:
+ * those cards were never used for prompt tuning, so a run needs `--allow-heldout`.
+ */
+export type CorpusLayout = 'v2' | 'expansion';
+export interface LoadOptions {
+  layout?: CorpusLayout;
+  /** Directory of `<source id>.txt` captures; default `<dir>/captures`. */
+  captures?: string;
+}
+
+/** `v2` when the directory has `corpus.v2.json`, else `expansion` when it has `corpus.json`. */
+export async function detectLayout(dir: string): Promise<CorpusLayout> {
+  const has = (name: string) =>
+    access(join(dir, name)).then(
+      () => true,
+      () => false,
+    );
+  if (await has('corpus.v2.json')) return 'v2';
+  return (await has('corpus.json')) ? 'expansion' : 'v2';
+}
+
 /** Read a corpus directory (`corpus.v2.json`, `manifest.json`, `captures/`) and build every case's input. */
-export async function loadCorpusV2(dir: string): Promise<LoadedCorpus> {
+export async function loadCorpusV2(dir: string, options: LoadOptions = {}): Promise<LoadedCorpus> {
+  const layout = options.layout ?? 'v2',
+    capturesDir = options.captures ?? join(dir, 'captures');
   const json = async (name: string) => JSON.parse(await readFile(join(dir, name), 'utf8')) as unknown;
-  const corpus = corpusV2Schema.parse(await json('corpus.v2.json'));
-  const manifest = manifestSchema.parse(await json('manifest.json'));
+  const parsed = corpusV2Schema.parse(await json(layout === 'expansion' ? 'corpus.json' : 'corpus.v2.json'));
+  const corpus =
+    layout === 'expansion'
+      ? { ...parsed, cases: parsed.cases.map((item) => ({ ...item, split: 'heldout' as const })) }
+      : parsed;
+  const manifest = (layout === 'expansion' ? manifestOf(EXPANSION_MAX_SOURCES) : manifestSchema).parse(
+    await json('manifest.json'),
+  );
   const sources = new Map(manifest.sources.map((source) => [source.id, source]));
   if (sources.size !== manifest.sources.length) throw new Error('Duplicate source ID in manifest.');
 
@@ -185,7 +217,7 @@ export async function loadCorpusV2(dir: string): Promise<LoadedCorpus> {
     if (!bodies.has(sourceId)) {
       let text: string;
       try {
-        text = await readFile(join(dir, 'captures', `${sourceId}.txt`), 'utf8');
+        text = await readFile(join(capturesDir, `${sourceId}.txt`), 'utf8');
       } catch {
         throw new Error(`Capture ${sourceId} is missing; run the capture script first.`);
       }

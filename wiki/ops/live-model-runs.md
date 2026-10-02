@@ -6,7 +6,7 @@ status: stable
 tags: [ops, evals, llm]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T18:30:00Z
+  at: 2026-10-02T23:00:00Z
 sources:
   - resource: ../../evals/curation/README.md
     title: Curation evaluations
@@ -61,10 +61,14 @@ Live extraction evals call models only through vendor CLIs signed in to Evan's s
 1. Check the harness without a model: `npm run eval:v2 -- --check`.
 2. Smoke-test one or two cases with the curation model: `npm run eval:v2 -- --provider codex --split dev --limit 2` (gpt-5.6-luna, `xhigh`, `guided.2`, `keyword-window.1`, visible output tokens, 600 s / 900 s; about 3 min per case). Another model needs `--model` and keeps the older defaults (`--effort low --prompt guided.1 --selection full`, 240 s / 480 s), e.g. `--model gpt-5.5 --effort low --prompt guided.1 --selection keyword-window.1`.
 3. Full run: same command with `--repeat 2` (add `--concurrency N`; the plan used 3 for Codex). Since 2026-10-01 Evan prefers more concurrency over protecting subscription usage limits; local models are not used (directive 2026-09-29, [user directives](../product/user-directives.md)).
-4. If it exits with status 3, wait for the limit to reset and rerun with `--resume evals/curation/runs/<dir>` and the same `--corpus`. Only missing `caseId#repeat` slots run; files are rewritten as a superset.
+4. If it exits with status 3, wait for the limit to reset and rerun with `--resume evals/curation/runs/<dir>` and the same `--corpus` (and `--captures`). Only missing `caseId#repeat` slots run; files are rewritten as a superset.
 5. After a scorer bug fix, re-score without calling a model: `npm run eval:v2 -- --replay evals/curation/runs/<dir>/observations.json`.
 
 `--provider claude` takes `--effort low|medium|high|xhigh|max` and disables extended thinking (`MAX_THINKING_TOKENS=0`). `--split heldout` needs `--allow-heldout`. Full option list: [`evals/curation/README.md`](../../evals/curation/README.md).
+
+## Expansion cross-model run
+
+The 173-card expansion corpus is all held-out and its captures live outside the corpus folder (on 2026-10-02 in the `AICheckout-expansion` worktree). Print the command with `node scripts/score-expansion-traces.mjs --print-command`; it is gpt-5.5 `low`, `guided.2`, `keyword-window.1`, visible output tokens, `--corpus evals/curation/expansion --captures $EXPANSION_CAPTURES --split heldout --allow-heldout --concurrency 8`, about 10–20 minutes. Afterwards: `node scripts/score-expansion-traces.mjs --captures DIR --traces DIR --run <output>` ([expansion eval](../../docs/evals/expansion.md)). Run once on 2026-10-02 (22:31Z–22:42Z, 173/173 slots, about 11 minutes) into the gitignored `evals/curation/runs/expansion/` of the `AICheckout-s2-m9` worktree.
 
 ## Run the matrix
 
