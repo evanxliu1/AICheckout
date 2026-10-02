@@ -2,6 +2,7 @@
 //
 //   node scripts/capture-issuer-pages.mjs [--dir evals/curation/real] [--only id,id]
 //     [--sources sources.json] [--captures captures] [--manifest manifest.json]
+//     [--delay-ms 0] [--hints hints.json] [--report report.json]
 //
 // Reads <dir>/sources.json, saves each page's rendered text to <dir>/captures/<id>.txt (gitignored: issuer
 // text is copyrighted), and records URL, date, SHA-256, and length in <dir>/manifest.json (committed).
@@ -10,7 +11,15 @@
 //
 //   node scripts/capture-issuer-pages.mjs --sources merchant-sources.json \
 //     --captures merchant-captures --manifest merchant-manifest.json
-// HTML pages are rendered in headless Chromium with collapsed sections expanded; PDFs go through Ghostscript.
+// HTML pages are rendered in headless Chromium with collapsed sections expanded; PDFs go through Ghostscript
+// (also when a URL without a .pdf extension turns out to be a download).
+//
+// `--delay-ms` waits between pages. `--hints` names a JSON file of per-source capture hints,
+// `{ "<sourceId>": { "waitFor": "text", "click": ["button text", ...], "pdf": true, "request": true } }`:
+// `click` expands controls whose accessible name matches (never links, never forms), `waitFor` waits until
+// that text is on the page, `request` fetches the HTML without the browser (for hosts that block headless
+// Chromium but serve static HTML) and renders it with scripts and subresources off. `--report` writes each source's status and flags as JSON. Defaults change nothing for the
+// existing corpus.
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
@@ -28,8 +37,13 @@ const { values } = parseArgs({
     sources: { type: 'string', default: 'sources.json' },
     captures: { type: 'string', default: 'captures' },
     manifest: { type: 'string', default: 'manifest.json' },
+    'delay-ms': { type: 'string', default: '0' },
+    hints: { type: 'string' },
+    report: { type: 'string' },
   },
 });
+const delayMs = Number(values['delay-ms']);
+const hints = values.hints ? JSON.parse(await readFile(resolve(root, values.hints), 'utf8')) : {};
 const dir = resolve(root, values.dir);
 const { sources } = JSON.parse(await readFile(join(dir, values.sources), 'utf8'));
 const captures = join(dir, values.captures);
@@ -68,12 +82,28 @@ async function pdfText(context, url) {
   }
 }
 
-async function pageText(context, source) {
+/** Thrown when navigation starts a download (a PDF served without a .pdf URL). */
+class DownloadStarted extends Error {}
+
+async function pageText(context, source, hint = {}) {
   const page = await context.newPage();
   try {
-    const response = await page.goto(source.url, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+    let response;
+    try {
+      response = await page.goto(source.url, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+    } catch (error) {
+      if (error instanceof Error && /download is starting/i.test(error.message)) throw new DownloadStarted();
+      throw error;
+    }
+    if (/application\/pdf/i.test(response?.headers()['content-type'] ?? '')) throw new DownloadStarted();
     const status = response?.status() ?? 0;
     await page.waitForLoadState('networkidle', { timeout: 20_000 }).catch(() => {});
+    if (hint.waitFor)
+      await page
+        .getByText(hint.waitFor)
+        .first()
+        .waitFor({ timeout: 20_000 })
+        .catch(() => {});
     // Scroll through the page so lazy sections render. Locators only: some issuer pages disable page.evaluate.
     for (let i = 0; i < 40; i++) {
       await page.mouse.wheel(0, 800);
@@ -92,10 +122,47 @@ async function pageText(context, source) {
       const item = collapsed.nth(i);
       if (await item.isVisible().catch(() => false)) await item.click({ timeout: 2000 }).catch(() => {});
     }
+    // Hinted controls last, so the generic expansion above cannot toggle what they opened.
+    for (const name of hint.click ?? []) {
+      // A button with that name, or an element whose whole text is that name; never a link.
+      const control = page
+        .getByRole('button', { name })
+        .or(page.getByText(name, { exact: true }).locator('xpath=self::*[not(self::a)]'))
+        .first();
+      await control.click({ timeout: 5000 }).catch(() => {});
+      await page.waitForLoadState('networkidle', { timeout: 10_000 }).catch(() => {});
+    }
     await page.waitForTimeout(800);
     return { text: await page.locator('body').innerText(), status };
   } finally {
     await page.close();
+  }
+}
+
+/** Fetch static HTML outside the browser and take its rendered text with scripts and subresources disabled. */
+async function requestText(browser, context, url) {
+  const response = await context.request.get(url, {
+    timeout: 60_000,
+    headers: { accept: 'text/html,application/xhtml+xml', 'accept-language': 'en-US,en;q=0.9' },
+  });
+  // Open every <details>, and show every element's default display: without scripts, collapsed answers
+  // would stay hidden by the page's CSS. The style goes last in the document so it wins.
+  const html =
+    (await response.text()).replace(
+      // A shared `name` makes an exclusive accordion (one open at a time); drop it.
+      /<details\b([^>]*)>/gi,
+      (_tag, attributes) => `<details open${attributes.replace(/\sname\s*=\s*("[^"]*"|'[^']*'|\S+)/i, '')}>`,
+    ) +
+    '<style>* { display: revert !important; visibility: visible !important; max-height: none !important; } ' +
+    'head, script, style, noscript, template { display: none !important; }</style>';
+  const offline = await browser.newContext({ javaScriptEnabled: false });
+  try {
+    const page = await offline.newPage();
+    await page.route('**/*', (route) => route.abort());
+    await page.setContent(html, { waitUntil: 'domcontentloaded', timeout: 30_000 });
+    return { text: await page.locator('body').innerText(), status: response.status() };
+  } finally {
+    await offline.close();
   }
 }
 
@@ -116,15 +183,26 @@ const context = await browser.newContext({
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
 });
 const rows = [];
+const report = [];
+let first = true;
 try {
   for (const source of sources) {
     if (only && !only.has(source.id)) continue;
+    if (!first && delayMs > 0) await new Promise((done) => setTimeout(done, delayMs));
+    first = false;
     const flags = [];
+    const hint = hints[source.id] ?? {};
     try {
-      const pdf = /\.pdf($|\?)/i.test(source.url);
+      const pdf = hint.pdf === true || /\.pdf($|\?)/i.test(source.url);
       const result = pdf
         ? { text: await pdfText(context, source.url), status: 200 }
-        : await pageText(context, source);
+        : hint.request === true
+          ? await requestText(browser, context, source.url)
+          : await pageText(context, source, hint).catch(async (error) => {
+              if (!(error instanceof DownloadStarted)) throw error;
+              flags.push('pdf download');
+              return { text: await pdfText(context, source.url), status: 200 };
+            });
       const text = normalize(result.text);
       if (result.status >= 400) flags.push(`HTTP ${result.status}`);
       if (text.length < 2000) flags.push('short');
@@ -140,10 +218,11 @@ try {
         length: text.length,
       });
       rows.push(`${source.id.padEnd(36)} ${String(text.length).padStart(7)} chars ${flags.join('; ')}`);
+      report.push({ id: source.id, ok: true, status: result.status, length: text.length, flags });
     } catch (error) {
-      rows.push(
-        `${source.id.padEnd(36)} FAILED: ${error instanceof Error ? error.message.split('\n')[0] : error}`,
-      );
+      const message = error instanceof Error ? error.message.split('\n')[0] : String(error);
+      rows.push(`${source.id.padEnd(36)} FAILED: ${message}`);
+      report.push({ id: source.id, ok: false, error: message, flags });
       process.exitCode = 1;
     }
   }
@@ -158,4 +237,5 @@ const manifest = {
     .sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id)),
 };
 await writeFile(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
+if (values.report) await writeFile(join(dir, values.report), JSON.stringify(report, null, 2) + '\n');
 console.log(rows.join('\n'));
