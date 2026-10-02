@@ -125,6 +125,7 @@ Start in parallel: M1, M3, M9, M11 (draft). After M1: M2, M4 and M8 in parallel.
 ### M11 Card-expansion pipeline readiness
 - **Scope.** Decision record and plan page for the pipeline: a CLI in `tools/catalog-pipeline` (stages research → capture → extract → draft → verify → adjudicate → apply → overlay → build → eval, resumable per batch), the skill `.claude/skills/expand-catalog`, subagent definitions `card-researcher` and `card-verifier` (plus an adjudicator), a hash-only freshness check, the `rate_not_in_evidence` fix for "NX" multiples, and the boundary rule: product code (`extension`, `packages/*`, `apps/*`) never imports `tools/`, enforced by ESLint `no-restricted-imports` and a test. Existing `scripts/*expansion*` move into the CLI in the pipeline phase, not here.
 - **Acceptance.** Evan approves the design; the boundary lint rule lands with a failing-import test.
+- **Status (2026-10-02).** Drafted on branch `stage2-m11-pipeline-design`: [card-expansion pipeline design](../system/card-expansion-pipeline.md) (adds a `validate` stage, the `v2-validator.2` plan for "NX" multiples, and open questions), [decision record (proposed)](../decisions/2026-10-02-agent-driven-card-pipeline.md), draft `.claude/skills/expand-catalog/SKILL.md` and `.claude/agents/card-{researcher,verifier,adjudicator}.md`, the ESLint boundary rule and `scripts/lib/import-boundary.test.mjs`. Waiting for Evan's approval; finalize after M5.
 
 ## Risks across the stage
 

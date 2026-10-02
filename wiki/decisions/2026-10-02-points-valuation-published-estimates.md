@@ -42,4 +42,4 @@ The agent-verified expansion corpus (`expansion.v1`) has 102 points or miles car
 - The extraction validator gap (`rate_not_in_evidence` for "4X" quotes) is fixed separately in the pipeline work by recognising multiples; the catalog no longer needs the extraction to assume 1¢.
 
 ## Status
-Accepted 2026-10-02 by Evan Liu (approach); details 4–6 by the planning agent, in the [Stage 2 plan](../product/phase-7-stage-2.md).
+Accepted 2026-10-02 by Evan Liu (approach); details 4–6 by the planning agent, in the [Stage 2 plan](../product/phase-7-stage-2.md). Publisher chosen in milestone M3: [NerdWallet as the primary valuation publisher](2026-10-02-nerdwallet-primary-valuation-publisher.md) (2026-10-02).
