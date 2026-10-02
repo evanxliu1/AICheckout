@@ -41,3 +41,31 @@ it('re-scores saved run directories from their observations', async () => {
     await rm(dir, { recursive: true, force: true });
   }
 });
+
+it('reports a run over both splits as one row per split', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'summarize-v2-'));
+  const root = resolve(import.meta.dirname, '../../..');
+  try {
+    await runEvaluationV2Cli(
+      ['--corpus', FIXTURE, '--split', 'all', '--allow-heldout', '--output', join(dir, 'echo.all')],
+      root,
+    );
+    process.exitCode = 0;
+    const summary = await summarizeRuns(FIXTURE, [dir]);
+    expect(
+      summary.rows.map(({ id, split, planned, observed, complete }) => ({
+        id,
+        split,
+        planned,
+        observed,
+        complete,
+      })),
+    ).toEqual([
+      { id: 'echo.dev', split: 'dev', planned: 5, observed: 5, complete: true },
+      { id: 'echo.heldout', split: 'heldout', planned: 3, observed: 3, complete: true },
+    ]);
+    expect(summary.rows.every((r) => r.overall.endToEndFieldAccuracy.rate === 1)).toBe(true);
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});

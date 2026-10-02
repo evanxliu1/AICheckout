@@ -20,8 +20,15 @@ it('matches the published write-up for every configuration', () => {
   }
 });
 
-it('marks the run added after the held-out choice', () => {
+it('marks the runs added after the held-out choice', () => {
   const added = resultRows().filter((row) => row.addedAfter);
-  expect(added.map((row) => row.id)).toEqual(resultsFile.addedAfter);
-  expect(added.every((row) => row.split === 'heldout' && row.model.startsWith('claude-opus'))).toBe(true);
+  expect(added.map((row) => row.id).sort()).toEqual([...resultsFile.addedAfter].sort());
+  // Opus on held-out only; gpt-5.6-luna (the curation model since 2026-10-02) on both splits.
+  expect(
+    added.every(
+      (row) =>
+        (row.split === 'heldout' && row.model.startsWith('claude-opus')) ||
+        row.model.startsWith('gpt-5.6-luna'),
+    ),
+  ).toBe(true);
 });

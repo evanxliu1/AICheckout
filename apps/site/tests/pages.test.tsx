@@ -26,7 +26,7 @@ it('keeps the results page honest about what the numbers are', () => {
     'agent-verified, not human-verified',
     'n=7',
     '±3 points',
-    'Opus was added after',
+    'Opus and gpt-5.6-luna were added after',
     'Limitations',
     'docs/evals/results.md',
     'href="/results/results.svg"',
