@@ -326,6 +326,11 @@ export function applyVerification({ cards, draft, productNotes, files, captures 
       if (change.anchor) checkAnchor(change.anchor, `productNoteChanges.${i}.anchor`);
       if (change.adjudication?.anchor)
         checkAnchor(change.adjudication.anchor, `productNoteChanges.${i}.adjudication.anchor`);
+      if (change.adjudication?.replacement) {
+        const replacement = hintSchema.safeParse(change.adjudication.replacement);
+        if (!replacement.success)
+          fail(`productNoteChanges.${i}.adjudication.replacement: ${replacement.error.issues[0].message}`);
+      }
       const hints = notesById.get(card.id)?.hints ?? [];
       if (change.hintIndex !== undefined && change.hintIndex >= hints.length)
         fail(`productNoteChanges.${i}: no hint ${change.hintIndex}`);

@@ -110,6 +110,27 @@ test('a stale current value, a missing path, or an unknown card is an error', as
   assert.ok(result.errors.some((error) => /not in cards.json/.test(error)));
 });
 
+test('a modified product-note replacement must be a valid hint', async () => {
+  const result = applyVerification(
+    await load((data) => {
+      const change = card(data, 'acme-miles').productNoteChanges[0];
+      change.action = 'fix';
+      change.hint = { type: 'closed-loop', summary: 'Store only.' };
+      change.adjudication = {
+        decision: 'modified',
+        reason: 'Summary too long.',
+        replacement: {
+          type: 'closed-loop',
+          summary: Array.from({ length: 26 }, () => 'word').join(' '),
+        },
+      };
+    }),
+  );
+  assert.ok(
+    result.errors.some((error) => /productNoteChanges\.0\.adjudication\.replacement: .*25 words/.test(error)),
+  );
+});
+
 test('the schema enforces verdict rules', () => {
   const base = {
     schemaVersion: 1,

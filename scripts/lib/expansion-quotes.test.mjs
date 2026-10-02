@@ -19,7 +19,7 @@ import {
 
 // Synthetic issuer-style text (not a real capture).
 const SENTENCE =
-  'Earn 4X Example Rewards points per dollar spent on purchases at restaurants worldwide, on up to $50,000 in purchases per calendar year, then 1X points for the rest of the year.';
+  'Earn 4X Example Rewards points per dollar spent at restaurants worldwide, on up to $50,000 in purchases per calendar year, then 1X points for the rest of the year.';
 const body = `Intro line.\n${SENTENCE}\nPlus, earn a total of 7, for each dollar at Example Hotels.\n`;
 const input = { documents: [{ id: 'doc', body }] };
 
