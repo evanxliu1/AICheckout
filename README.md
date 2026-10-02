@@ -71,7 +71,7 @@ Load `extension/dist` from `chrome://extensions` with Developer mode on. For the
 
 Working: the extension on catalog v2 with 7 cash-back cards (Citi Double Cash, Wells Fargo Active Cash, Capital One Quicksilver and Savor, Chase Freedom Unlimited, Amex Blue Cash Everyday and Preferred) and 3 checkouts read through bundled site adapters (Amazon US, Best Buy US, Newegg US); the Helios UI across the extension, the review app and the public site; CI; and the hosted [site](https://ai-checkout-api.onrender.com/), [results page](https://ai-checkout-api.onrender.com/results/), [review app](https://ai-checkout-api.onrender.com/review/) and catalog API (Render + Supabase).
 
-Pending: publishing the 7-card catalog on the hosted review app, a deliberate human approval ([publish runbook](docs/release/publish-runbook.md)); until then `/v1/catalog` serves no release and the extension uses its bundled catalog. Next: human verification of the evaluation labels, terms-change detection, and a Chrome Web Store release. See the [roadmap](wiki/product/roadmap.md).
+Published: the 7-card catalog is release 1 on `/v1/catalog` (version `2026-09-29.real.1`, approved in the hosted review app on 2026-10-02; [publish runbook](docs/release/publish-runbook.md)). In progress: expanding the catalog to the main personal cards of the top 10 U.S. issuers. Next: terms-change detection and a Chrome Web Store release. See the [roadmap](wiki/product/roadmap.md).
 
 ## License
 
