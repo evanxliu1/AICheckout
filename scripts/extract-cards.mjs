@@ -6,7 +6,7 @@
 // Reads <dir>/cards.json, <dir>/manifest.json, and the gitignored <dir>/captures/. Each card's trace goes to
 // the gitignored <dir>/extractions/<cardId>.json (it holds model quotes of issuer text); a summary without
 // issuer text goes to the committed <dir>/extraction-summary.json. Resumable: cards with a saved extraction
-// are skipped unless it ended in a timeout or provider error. A timeout or provider error is retried once. A
+// are skipped unless it ended in a timeout or provider error or a page it read was re-captured. A timeout or provider error is retried once. A
 // usage limit stops the run with exit status 3; run the same command again later to continue.
 //
 // Input limits: the harness admits at most 4 documents and ~64k estimated input tokens. When a card's pages
@@ -273,7 +273,12 @@ for (const card of cards) {
   if (only && !only.has(card.id)) continue;
   if (saved.has(card.id)) {
     const previous = await readSaved(card.id);
-    if (previous && !RETRYABLE.has(previous.trace.status)) continue;
+    // A saved extraction stands only while every page it read still matches the manifest.
+    const current =
+      previous?.documents.every(
+        (document) => sources.get(document.id)?.sha256 === (document.sourceSha256 ?? document.contentHash),
+      ) ?? false;
+    if (previous && current && !RETRYABLE.has(previous.trace.status)) continue;
   }
   queue.push(card);
 }
@@ -318,6 +323,7 @@ async function worker() {
         url,
         capturedOn,
         contentHash,
+        sourceSha256: sources.get(id).sha256,
       })),
       trace,
     };

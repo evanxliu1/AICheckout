@@ -28,6 +28,7 @@ import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs, promisify } from 'node:util';
 import { chromium } from '@playwright/test';
+import { revealStaticHtml } from './lib/static-html.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const { values } = parseArgs({
@@ -145,16 +146,7 @@ async function requestText(browser, context, url) {
     timeout: 60_000,
     headers: { accept: 'text/html,application/xhtml+xml', 'accept-language': 'en-US,en;q=0.9' },
   });
-  // Open every <details>, and show every element's default display: without scripts, collapsed answers
-  // would stay hidden by the page's CSS. The style goes last in the document so it wins.
-  const html =
-    (await response.text()).replace(
-      // A shared `name` makes an exclusive accordion (one open at a time); drop it.
-      /<details\b([^>]*)>/gi,
-      (_tag, attributes) => `<details open${attributes.replace(/\sname\s*=\s*("[^"]*"|'[^']*'|\S+)/i, '')}>`,
-    ) +
-    '<style>* { display: revert !important; visibility: visible !important; max-height: none !important; } ' +
-    'head, script, style, noscript, template { display: none !important; }</style>';
+  const html = revealStaticHtml(await response.text());
   const offline = await browser.newContext({ javaScriptEnabled: false });
   try {
     const page = await offline.newPage();

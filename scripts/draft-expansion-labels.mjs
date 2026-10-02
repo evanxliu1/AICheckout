@@ -327,6 +327,12 @@ for (const card of cards) {
   const saved = await json(join(dir, 'extractions', `${card.id}.json`)).catch(() => null);
   let reference = null;
   if (!saved) notes.push('No extraction.');
+  else if (
+    !saved.documents.every(
+      (document) => manifestById.get(document.id)?.sha256 === (document.sourceSha256 ?? document.contentHash),
+    )
+  )
+    notes.push('Extraction read pages that were re-captured since: re-run the extraction.');
   else if (!saved.trace.extraction)
     notes.push(`Extraction status ${saved.trace.status}: no output to draft from.`);
   else {
