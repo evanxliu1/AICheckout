@@ -1,11 +1,15 @@
 import { needsActivation } from './engine-v2.ts';
+import { baseRuleV3, capHolder, ruleCoversMerchant } from './engine-v3.ts';
 import type {
   Catalog,
   CardProductV2,
   CardProduct,
   CatalogV2,
+  CatalogV3,
   RewardCategory,
+  RewardCategoryV3,
   RewardRuleV2,
+  RewardRuleV3,
 } from './types.ts';
 
 /** Shopper-facing activation wording; `unstated` is shown, not treated as a requirement. */
@@ -22,7 +26,7 @@ export function catalogMerchantIds(catalog: Catalog): string[] {
 }
 
 /** Short shopper-facing names for rule categories. */
-export const CATEGORY_LABELS: Record<RewardCategory | 'all-eligible' | 'us-online-retail', string> = {
+export const CATEGORY_LABELS: Record<RewardCategoryV3 | 'all-eligible' | 'us-online-retail', string> = {
   'all-purchases': 'all purchases',
   'all-eligible': 'all purchases',
   'online-retail': 'online retail',
@@ -38,6 +42,10 @@ export const CATEGORY_LABELS: Record<RewardCategory | 'all-eligible' | 'us-onlin
   'travel-portal': 'travel portal',
   'entertainment-portal': 'entertainment portal',
   other: 'other',
+  electronics: 'electronics store',
+  'department-stores': 'department store',
+  'home-improvement': 'home improvement',
+  'wholesale-clubs': 'wholesale club',
 };
 
 export type UsageInput = {
@@ -68,8 +76,7 @@ export function usageInputs(catalog: Catalog, cardId: string): UsageInput[] {
         needsActivation: rule.requiresActivation,
       }));
   }
-  // Catalog v3 usage inputs (brand scope, choices, gates) arrive with the v3 engine (Stage 2 M2).
-  if (catalog.schemaVersion === 3) return [];
+  if (catalog.schemaVersion === 3) return usageInputsV3(catalog, cardId);
   const card: CardProductV2 | undefined = catalog.cards.find((c) => c.id === cardId);
   return (card?.rules ?? [])
     .filter(
@@ -84,6 +91,44 @@ export function usageInputs(catalog: Catalog, cardId: string): UsageInput[] {
       needsSpend: rule.cap.kind === 'spend',
       needsActivation: needsActivation(rule),
     }));
+}
+
+/** Catalog v3: the brand names of a brand-scoped `other` or `all-purchases` rule, else its category. */
+function ruleLabelV3(catalog: CatalogV3, rule: RewardRuleV3) {
+  if ((rule.category === 'other' || rule.category === 'all-purchases') && rule.brandIds.length > 0)
+    return rule.brandIds.map((id) => catalog.brands.find((b) => b.id === id)?.name ?? id).join(' or ');
+  return CATEGORY_LABELS[rule.category];
+}
+
+/** Catalog v3: every non-base rule with a spend cap or activation that covers a catalog merchant.
+ * Rules sharing a cap (`sharedCapId`) record their combined spend once, on the group's rule with the
+ * smallest ID (`capHolder`), listed whenever any rule of the group covers a merchant; the other rules
+ * of the group are listed only for activation. */
+function usageInputsV3(catalog: CatalogV3, cardId: string): UsageInput[] {
+  const card = catalog.cards.find((c) => c.id === cardId);
+  if (!card) return [];
+  const base = baseRuleV3(card);
+  const covers = (rule: RewardRuleV3) => catalog.merchants.some((m) => ruleCoversMerchant(rule, m));
+  const activation = (rule: RewardRuleV3) =>
+    rule.activation === 'enroll-once' || rule.activation === 'recurring';
+  return card.rules.flatMap((rule) => {
+    if (rule === base) return [];
+    const group =
+      rule.sharedCapId === null ? [rule] : card.rules.filter((r) => r.sharedCapId === rule.sharedCapId);
+    const needsSpend = rule.cap.kind === 'spend' && capHolder(card, rule) === rule && group.some(covers);
+    const needsActivation = activation(rule) && covers(rule);
+    if (!needsSpend && !needsActivation) return [];
+    const labels = [...new Set(group.filter(covers).map((r) => ruleLabelV3(catalog, r)))];
+    return [
+      {
+        ruleId: rule.id,
+        label:
+          needsSpend && group.length > 1 ? `combined ${labels.join(' and ')}` : ruleLabelV3(catalog, rule),
+        needsSpend,
+        needsActivation,
+      },
+    ];
+  });
 }
 
 const DAY_MS = 24 * 60 * 60 * 1000;
