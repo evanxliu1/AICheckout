@@ -479,12 +479,12 @@ function Architecture(): Rendered {
           </p>
           <p>
             <Link
-              href={`${REPO}/blob/main/docs/design.md`}
+              href={`${REPO}/blob/main/wiki/system/architecture.md`}
               variant="standalone"
               icon="arrow-right"
               isExternal
             >
-              Design document on GitHub
+              Architecture notes on GitHub
             </Link>
           </p>
         </Section>

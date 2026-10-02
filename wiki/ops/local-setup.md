@@ -69,7 +69,7 @@ Run in the `llm-wiki` worktree on macOS with Node v24.6.0:
 | `npm run lint` | exit 0 |
 | `npx prettier --check .` (same as `format:check`) | exit 0 |
 | `npm run typecheck` | exit 0 |
-| `npm test` | exit 0; 702 Vitest tests in 43 files across five workspaces, plus 13 `node --test` tests |
+| `npm test` | exit 0; 714 Vitest tests in 43 files across five workspaces, plus 14 `node --test` tests (re-run at `7322dec`) |
 | `npm run db:seed:check` | exit 0 ("Database seed matches the bundled catalog.") |
 
 Not run 2026-10-02 (taken from `package.json` and CI): steps 7–9, everything that needs Docker, running the API, and loading the extension in Chrome.

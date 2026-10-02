@@ -40,7 +40,7 @@ sources:
 
 A Manifest V3 extension (`extension/`, Vite + `@crxjs/vite-plugin`, React 19, `@ai-checkout/ui`). The service worker owns all state in `chrome.storage`; the popup and onboarding pages are thin clients that send typed messages. State is plain local storage by default; a passphrase vault is optional. Carts are read by one generic interpreter driven by bundled, declarative site adapters. The automatic cart badge has its own page: [Cart badge](cart-badge.md).
 
-Verified 2026-10-02 by reading the code and running `npm test --workspace=ai-checkout-extension` (21 vitest files, 366 tests, plus 5 `node --test` package tests, all passing). Browser (Playwright) specs were not run for this page.
+Verified 2026-10-02 by reading the code and running `npm test --workspace=ai-checkout-extension` (21 vitest files, 378 tests, plus 6 `node --test` package tests, all passing; re-run at `7322dec`). Browser (Playwright) specs were not run for this page.
 
 ## Facts
 

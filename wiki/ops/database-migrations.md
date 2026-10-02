@@ -57,7 +57,7 @@ This mirrors [`.github/workflows/database.yml`](../../.github/workflows/database
 
 ## Push to hosted (Evan or the authorized coordinating session)
 
-A subagent stops at a merged PR and hands over these commands.
+A subagent stops at a ready branch and hands over these commands.
 
 1. Once per machine, store the DB password in the Keychain: `security add-generic-password -a "$USER" -s aicheckout-supabase-db -w` (prompts; nothing lands in shell history).
 2. After the PR merges to `main`: `./scripts/db-push.sh --dry-run` lists pending migrations.

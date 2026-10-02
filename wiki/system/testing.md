@@ -66,7 +66,7 @@ Local results on 2026-10-02 at `f6d3f79`:
 | ui vitest (+ icon check) | 1 | 36 | pass |
 | `test:scripts` | 1 | 8 | pass |
 
-Re-run on 2026-10-02 at `7322dec` (after PRs #13 and #14): extension vitest 21 files, 378 tests, pass. Other suites were not re-run.
+Re-run on 2026-10-02 at `7322dec` (after PRs #13 and #14), all pass: extension vitest 21 files / 378 tests, extension package test 6, api 13 / 250, review 6 / 41, site 2 / 9, ui 1 / 36, `test:scripts` 8.
 
 ## CI
 
