@@ -38,6 +38,14 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
           `${state} at ${width}px`,
         ).toEqual([]);
         expect(await target.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+        // The popup scrolls itself, so overflow inside it never widens the document.
+        expect(
+          await target.evaluate(() =>
+            Array.from(document.querySelectorAll('.checkout-popup, .badge-panel__body')).every(
+              (el) => el.scrollWidth <= el.clientWidth,
+            ),
+          ),
+        ).toBe(true);
         await target.screenshot({ path: testInfo.outputPath(`${state}-${width}.png`), fullPage: true });
       }
     }

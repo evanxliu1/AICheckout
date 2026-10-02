@@ -1,4 +1,4 @@
-/* Popup layout. Components and tokens come from @ai-checkout/ui/styles.css (Helios). */
+/* Popup layout. Components and tokens come from @ai-checkout/ui/styles.css (Ocean theme). */
 @tailwind components;
 @tailwind utilities;
 
@@ -41,17 +41,25 @@ body {
   height: 24px;
 }
 
+.popup-header .ac-icon,
+.onboarding__header .ac-icon {
+  color: var(--ac-color-navy);
+}
+
 .popup-title {
-  color: var(--token-color-foreground-strong);
+  color: var(--ac-color-navy);
+  font-family: var(--ac-font-display);
   font-size: var(--token-typography-display-300-font-size);
-  font-weight: var(--token-typography-font-weight-semibold);
+  font-weight: 800;
+  letter-spacing: -0.01em;
   line-height: var(--token-typography-display-300-line-height);
 }
 
 .section-title {
   color: var(--token-color-foreground-strong);
+  font-family: var(--ac-font-display);
   font-size: var(--token-typography-display-200-font-size);
-  font-weight: var(--token-typography-font-weight-semibold);
+  font-weight: var(--token-typography-font-weight-bold);
   line-height: var(--token-typography-display-200-line-height);
 }
 
@@ -67,10 +75,19 @@ body {
 
 .estimate-amount {
   color: var(--token-color-foreground-strong);
+  font-family: var(--ac-font-display);
   font-size: var(--token-typography-display-200-font-size);
-  font-weight: var(--token-typography-font-weight-semibold);
+  font-weight: var(--token-typography-font-weight-bold);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.estimate-delta {
+  margin-right: 8px;
+  color: var(--token-color-foreground-faint);
+  font-family: var(--token-typography-font-stack-text);
+  font-size: var(--token-typography-body-100-font-size);
+  font-weight: var(--token-typography-font-weight-medium);
 }
 
 .estimate-list {
@@ -81,6 +98,65 @@ body {
 
 .estimate-list > li + li {
   border-top: 1px solid var(--token-color-border-faint);
+}
+
+/* The clear winner: a navy block with the amount as the largest thing in the popup. Only white,
+ * the sky accent and the soft on-navy text are used on navy, all above 7:1. */
+.estimate-row--best {
+  padding: 16px;
+  color: var(--ac-color-on-navy-soft);
+  background: var(--ac-color-navy);
+  border-radius: var(--ac-radius-hero);
+}
+.estimate-list > .estimate-row--best + li {
+  margin-top: 4px;
+  border-top: 0;
+}
+.estimate-row--best .section-title,
+.estimate-row--best .estimate-amount {
+  color: var(--ac-color-on-navy);
+}
+.estimate-row--best .supporting {
+  color: var(--ac-color-on-navy-soft);
+}
+.estimate-amount--hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 8px;
+  row-gap: 4px;
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: normal;
+}
+/* Ranges ("$12.34–$56.78") are longer; keep them on one line at 360 px. */
+.estimate-amount--range {
+  font-size: 1.75rem;
+}
+.estimate-amount--hero > span {
+  overflow-wrap: anywhere;
+}
+.estimate-rate {
+  color: var(--ac-color-sky);
+  font-size: 1.25rem;
+  letter-spacing: 0;
+}
+.estimate-row--best .ac-badge--neutral-filled {
+  color: var(--ac-color-on-navy);
+  background: var(--ac-color-navy-line);
+}
+.estimate-row--best .ac-disclosure {
+  border-color: var(--ac-color-navy-line);
+}
+.estimate-row--best .ac-disclosure__summary,
+.estimate-row--best .ac-disclosure__icon,
+.estimate-row--best .ac-disclosure__content {
+  color: var(--ac-color-on-navy);
+}
+.estimate-row--best .ac-disclosure__summary:hover {
+  background-color: var(--ac-color-navy-strong);
 }
 
 .plain-list {

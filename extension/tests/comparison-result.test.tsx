@@ -1,9 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import ComparisonResult from '../src/components/ComparisonResult';
+import { lessThanBest, rowEmphasis } from '../src/components/estimates';
 import WalletEditor from '../src/components/WalletEditor';
 import { CATALOG_V2, compareRewards } from '../src/domain';
-import type { Comparison, Purchase } from '../src/domain';
+import type { CardEstimate, Comparison, Purchase } from '../src/domain';
 
 const now = Date.parse('2026-09-30T15:00:00Z');
 const purchase = (extra: Partial<Purchase> = {}): Purchase => ({
@@ -73,6 +74,39 @@ describe('comparison result on catalog v2', () => {
       screen.getAllByRole('link').every((link) => link.getAttribute('rel') === 'noopener noreferrer'),
     ).toBe(true);
   });
+  it('shows the clear winner as the hero with its rate, and how much less each other card earns', () => {
+    result();
+    const best = screen.getByRole('heading', { name: 'Double Cash' }).closest('li')!;
+    expect(best.classList.contains('estimate-row--best')).toBe(true);
+    expect(best.querySelector('.estimate-amount--hero')!.textContent).toBe('$2.00 2%');
+    const bce = screen.getByRole('heading', { name: 'Blue Cash Everyday' }).closest('li')!;
+    expect(bce.classList.contains('estimate-row--best')).toBe(false);
+    expect(within(bce).getByText('$0.50 less')).toBeTruthy();
+    expect(document.querySelectorAll('.estimate-row--best')).toHaveLength(1);
+  });
+  it('shows no hero and no differences when the ranking may change', () => {
+    const wallet = {
+      defaultCardId: null,
+      cards: [
+        { cardId: 'citi-double-cash', usage: [] },
+        { cardId: 'amex-blue-cash-everyday', usage: [] },
+      ],
+    };
+    const comparison = compareRewards(CATALOG_V2, wallet, purchase(), now) as Comparison;
+    expect(comparison.rankingMayChange).toBe(true);
+    render(<ComparisonResult catalog={CATALOG_V2} purchase={purchase()} result={comparison} />);
+    expect(screen.getByRole('heading', { name: 'Compare the conditions' })).toBeTruthy();
+    expect(document.querySelector('.estimate-row--best')).toBeNull();
+    expect(screen.queryByText(/ less$/)).toBeNull();
+  });
+  it('says "up to" on the hero rate when a single card’s estimate is a range', () => {
+    const wallet = { defaultCardId: null, cards: [{ cardId: 'amex-blue-cash-everyday', usage: [] }] };
+    const comparison = compareRewards(CATALOG_V2, wallet, purchase(), now) as Comparison;
+    render(<ComparisonResult catalog={CATALOG_V2} purchase={purchase()} result={comparison} />);
+    const hero = document.querySelector('.estimate-amount--hero')!;
+    expect(hero.classList.contains('estimate-amount--range')).toBe(true);
+    expect(hero.textContent).toBe('$1.00–$3.00 up to 3%');
+  });
   it('marks BCE online retail as not eligible with buy now, pay later', () => {
     result({ paymentPath: 'bnpl' });
     const bce = screen.getByRole('heading', { name: 'Blue Cash Everyday' }).closest('li')!;
@@ -114,5 +148,33 @@ describe('wallet editor on catalog v2', () => {
     fireEvent.click(screen.getByRole('checkbox', { name: 'American Express Blue Cash Everyday' }));
     expect(screen.getByLabelText(/Blue Cash Everyday online retail spend in 2026/)).toBeTruthy();
     expect(screen.queryByLabelText(/bonus activation/)).toBeNull();
+  });
+});
+
+describe('lessThanBest', () => {
+  const est = (min: number, max = min) => ({ minRewardCents: min, maxRewardCents: max }) as CardEstimate;
+  it('is the gap between two exact amounts', () => {
+    expect(lessThanBest(est(300), est(200))).toBe(100);
+  });
+  it('is undefined for ranges, ties and a row that earns as much', () => {
+    expect(lessThanBest(est(100, 300), est(50))).toBeUndefined();
+    expect(lessThanBest(est(300), est(100, 200))).toBeUndefined();
+    expect(lessThanBest(est(200), est(200))).toBeUndefined();
+  });
+});
+
+describe('rowEmphasis', () => {
+  const est = (min: number, max = min) => ({ minRewardCents: min, maxRewardCents: max }) as CardEstimate;
+  const cmp = (extra: Partial<Comparison>) =>
+    ({ estimates: [est(300), est(200)], tied: false, rankingMayChange: false, ...extra }) as Comparison;
+  it('marks the first row of a clear result as best and the rest with their difference', () => {
+    expect(rowEmphasis(cmp({}), 0)).toEqual({ best: true });
+    expect(rowEmphasis(cmp({}), 1)).toEqual({ best: false, deltaCents: 100 });
+  });
+  it('emphasizes nothing when tied or when the ranking may change', () => {
+    for (const extra of [{ tied: true }, { rankingMayChange: true }]) {
+      expect(rowEmphasis(cmp(extra), 0)).toEqual({ best: false });
+      expect(rowEmphasis(cmp(extra), 1)).toEqual({ best: false });
+    }
   });
 });

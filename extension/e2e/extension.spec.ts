@@ -46,6 +46,12 @@ test('packaged wallet: offline comparison, browser restart, expiry, and deletion
     await expect(popup.getByText('$3.00', { exact: true })).toBeInViewport();
     await popup.screenshot({ path: testInfo.outputPath('comparison-360.png') });
     expect(await popup.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    expect(
+      await popup.evaluate(() => {
+        const main = document.querySelector('.checkout-popup')!;
+        return main.scrollWidth <= main.clientWidth;
+      }),
+    ).toBe(true);
 
     // Restart the entire browser with the same profile. This guarantees a new worker
     // instead of assuming that a DevTools stop command terminated a debugged worker.

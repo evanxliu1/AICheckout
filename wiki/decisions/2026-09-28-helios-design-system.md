@@ -31,4 +31,4 @@ The extension popup, review app and public site needed one consistent, accessibl
 - CSP stays `style-src 'self'`: no inline styles or remote fonts. See [UI library](../system/ui-library.md).
 
 ## Status
-Accepted 2026-09-28 by Evan Liu. Recorded retroactively on 2026-10-02 from the archived plan; the body summarizes it, the archive holds the original wording.
+Accepted 2026-09-28 by Evan Liu. Recorded retroactively on 2026-10-02 from the archived plan; the body summarizes it, the archive holds the original wording. The Helios look (token values, system font) is superseded by [2026-10-02-ocean-theme](2026-10-02-ocean-theme.md); the component approach stands.

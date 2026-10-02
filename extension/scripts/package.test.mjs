@@ -177,6 +177,14 @@ test('extra files and symlinks fail closed, including symlinks under ignored nam
   }
 });
 
+test('bundled woff2 theme fonts are packaged; other font formats are not', (t) => {
+  const f = fixture(t);
+  f.put('assets/figtree-latin-wght-normal-Ab12.woff2', 'wOF2');
+  assert.doesNotThrow(() => inspectBuild(f.dist, '2.0.0'));
+  f.put('assets/figtree-latin-wght-normal-Ab12.ttf', 'ttf');
+  assert.throws(() => inspectBuild(f.dist, '2.0.0'), /Unexpected packaged file/);
+});
+
 test('missing references, private-key tripwires, dev clients and wrongly sized icons fail inspection', (t) => {
   const f = fixture(t);
   const asset = readFileSync(join(f.dist, 'assets/popup-test.js'));

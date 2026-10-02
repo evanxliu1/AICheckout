@@ -1,5 +1,5 @@
 /* The badge frame: a transparent page whose content decides the frame's size (posted to the
- * host). Helios tokens only; no animation, so reduced-motion needs nothing extra. */
+ * host). Theme tokens only; no animation, so reduced-motion needs nothing extra. */
 html,
 body.badge-body {
   margin: 0;
@@ -31,18 +31,23 @@ body.badge-body {
   font: inherit;
   font-weight: var(--token-typography-font-weight-semibold);
   text-align: left;
-  background: var(--token-color-palette-blue-200);
-  border: 1px solid var(--token-color-palette-blue-300);
+  background: var(--ac-color-navy);
+  border: 1px solid var(--ac-color-navy-strong);
   border-radius: 999px;
   box-shadow: var(--token-elevation-high-box-shadow);
   cursor: pointer;
 }
-.badge-pill span {
+.badge-pill > span {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.badge-pill__amount {
+  color: var(--ac-color-sky);
+  font-family: var(--ac-font-display);
+  font-weight: var(--token-typography-font-weight-bold);
+}
 .badge-pill:hover {
-  background: var(--token-color-palette-blue-300);
+  background: var(--ac-color-navy-strong);
 }
 .badge-pill:focus-visible {
   outline: 2px solid transparent;
@@ -70,6 +75,9 @@ body.badge-body {
 .badge-panel__header h2 {
   flex: 1;
   margin: 0;
+}
+.badge-panel__header .ac-icon {
+  color: var(--ac-color-navy);
 }
 .badge-panel__header h2:focus {
   outline: none;

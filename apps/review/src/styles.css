@@ -1,7 +1,7 @@
 /*
- * Review app layout on Helios tokens. Components (buttons, fields, alerts, badges, tables, tabs,
+ * Review app layout on the Ocean theme. Components (buttons, fields, alerts, badges, tables, tabs,
  * modal, disclosures) come from @ai-checkout/ui/styles.css. Every color, size, radius and shadow
- * here is a --token-* variable; the only raw values are layout measurements.
+ * here is a --token-* or --ac-* variable; the only raw values are layout measurements.
  */
 :root {
   color-scheme: light;
@@ -22,6 +22,8 @@ h2,
 h3 {
   margin: 0;
   color: var(--token-color-foreground-strong);
+  font-family: var(--ac-font-display);
+  font-weight: var(--token-typography-font-weight-bold);
   overflow-wrap: anywhere;
 }
 h1 {
@@ -95,25 +97,32 @@ p {
   align-items: center;
   gap: 12px 20px;
   padding: 16px 32px;
-  background: var(--token-color-surface-primary);
-  border-bottom: 1px solid var(--token-color-border-primary);
+  color: var(--ac-color-on-navy-soft);
+  background: var(--ac-color-navy);
 }
 .brand {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--token-color-foreground-strong);
+  color: var(--ac-color-on-navy);
+  font-family: var(--ac-font-display);
   font-size: var(--token-typography-display-300-font-size);
-  font-weight: var(--token-typography-font-weight-bold);
+  font-weight: 800;
+  letter-spacing: -0.01em;
   text-decoration: none;
+  border-radius: var(--token-border-radius-small);
 }
 .brand .ac-icon {
-  color: var(--token-color-foreground-action);
+  color: var(--ac-color-sky);
+}
+.brand:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: var(--token-focus-ring-action-box-shadow);
 }
 .header-context {
   padding-left: 20px;
-  color: var(--token-color-foreground-faint);
-  border-left: 1px solid var(--token-color-border-primary);
+  color: var(--ac-color-on-navy-soft);
+  border-left: 1px solid var(--ac-color-navy-line);
 }
 .account {
   display: flex;
@@ -171,8 +180,14 @@ p {
   background: var(--token-color-surface-interactive-hover);
 }
 .queue-item[aria-current='page'] {
-  background: var(--token-color-surface-action);
+  background: var(--token-color-surface-primary);
   border-color: var(--token-color-border-action);
+  box-shadow:
+    inset 3px 0 0 var(--ac-color-navy),
+    var(--token-elevation-low-box-shadow);
+}
+.queue-item[aria-current='page']:focus-visible {
+  box-shadow: var(--token-focus-ring-action-box-shadow);
 }
 .queue-item:focus-visible {
   outline: 2px solid transparent;

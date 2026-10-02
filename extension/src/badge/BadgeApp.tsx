@@ -5,7 +5,7 @@ import { AlertInline, Button, Field, Icon, Select, TextInput } from '@ai-checkou
 import { formatUsd, parseUsd } from '../domain';
 import type { PaymentPath } from '../domain';
 import { EstimateRow } from '../components/ComparisonResult';
-import { amount, unavailableCopy } from '../components/estimates';
+import { amount, rowEmphasis, unavailableCopy } from '../components/estimates';
 import { merchantName } from '../checkout/merchants';
 import type { BadgeAction, BadgeView } from './contracts';
 import { badgeRequest, postToHost } from './client';
@@ -150,10 +150,13 @@ export default function BadgeApp() {
 
   // Pill: always a button with the whole message in its accessible name.
   let pillText: string, pillLabel: string, pillAction: () => void;
+  // The reward part of a ready pill, shown in the accent colour.
+  let pillAmount: string | undefined;
   if (view.kind === 'ready') {
     const best = view.result.estimates.find((e) => e.cardId === view.result.preferredCardId)!;
     const name = view.catalog.cards.find((c) => c.id === best.cardId)?.shortName ?? best.cardId;
-    pillText = `Use ${name} · ${amount(best)} back`;
+    pillAmount = `${amount(best)} back`;
+    pillText = `Use ${name} · ${pillAmount}`;
     pillLabel = `${pillText} on this cart (AI Checkout). Show details`;
     pillAction = expand;
   } else if (view.kind === 'locked') {
@@ -249,7 +252,16 @@ export default function BadgeApp() {
           onClick={pillAction}
         >
           <Icon name={view.kind === 'locked' ? 'lock' : 'credit-card'} size={16} />
-          <span>{pillText}</span>
+          <span>
+            {pillAmount ? (
+              <>
+                {pillText.slice(0, -pillAmount.length)}
+                <span className="badge-pill__amount">{pillAmount}</span>
+              </>
+            ) : (
+              pillText
+            )}
+          </span>
         </button>
       )}
     </div>
@@ -387,12 +399,13 @@ function ReadyBody({
             </p>
           )}
           <ol className="estimate-list badge-ranking" aria-label="Your cards, best first">
-            {ready.result.estimates.map((estimate) => (
+            {ready.result.estimates.map((estimate, i) => (
               <EstimateRow
                 key={estimate.cardId}
                 catalog={ready.catalog}
                 estimate={estimate}
                 amountCents={ready.amountCents}
+                {...rowEmphasis(ready.result, i)}
               />
             ))}
           </ol>

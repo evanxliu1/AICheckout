@@ -11,7 +11,7 @@ import type {
   Uncertainty,
 } from '../domain';
 import { merchantName } from '../checkout/merchants';
-import { amount, unavailableCopy } from './estimates';
+import { amount, rowEmphasis, unavailableCopy } from './estimates';
 
 const statusCopy: Partial<Record<RuleStatus, string>> = {
   'not-at-merchant': 'Not at this merchant',
@@ -42,15 +42,20 @@ function uncertaintyCopy(code: Uncertainty, label: string): string {
 }
 
 /** One card's result: amount, the rule behind it in the issuer's words, its conditions, the rules
- * that don't apply here, and notes about uncertain inputs. */
+ * that don't apply here, and notes about uncertain inputs. `best` shows it as the clear winner;
+ * `deltaCents` is how much less it earns than the winner, when both amounts are exact. */
 export function EstimateRow({
   catalog,
   estimate,
   amountCents,
+  best = false,
+  deltaCents,
 }: {
   catalog: Catalog;
   estimate: CardEstimate;
   amountCents: number;
+  best?: boolean;
+  deltaCents?: number;
 }) {
   const card = catalog.cards.find((c) => c.id === estimate.cardId)!;
   const rules: RewardRuleV2[] = catalog.schemaVersion === 2 ? (card.rules as RewardRuleV2[]) : [];
@@ -82,11 +87,36 @@ export function EstimateRow({
   const rate = bonus ? estimate.bonusRateBps! : estimate.baseRateBps;
   const notApplying = (estimate.rules ?? []).filter((r) => statusCopy[r.status]);
   return (
-    <li className="py-3 space-y-2">
-      <div className="flex justify-between gap-4 items-baseline">
-        <h3 className="section-title">{card.shortName}</h3>
-        <span className="estimate-amount">{amount(estimate)}</span>
-      </div>
+    <li className={best ? 'estimate-row estimate-row--best space-y-2' : 'estimate-row py-3 space-y-2'}>
+      {best ? (
+        <>
+          <h3 className="section-title">{card.shortName}</h3>
+          <p
+            className={
+              estimate.minRewardCents === estimate.maxRewardCents
+                ? 'estimate-amount estimate-amount--hero'
+                : 'estimate-amount estimate-amount--hero estimate-amount--range'
+            }
+          >
+            <span>{amount(estimate)}</span>{' '}
+            <span className="estimate-rate">
+              {/* The bonus rate covers the whole amount only when the estimate is exact and fully in the bonus. */}
+              {estimate.minRewardCents !== estimate.maxRewardCents ||
+              (bonus && estimate.maxBonusSpendCents < amountCents)
+                ? `up to ${percent(rate)}`
+                : percent(rate)}
+            </span>
+          </p>
+        </>
+      ) : (
+        <div className="flex justify-between gap-4 items-baseline">
+          <h3 className="section-title">{card.shortName}</h3>
+          <span className="estimate-amount">
+            {deltaCents ? <span className="estimate-delta">{money(deltaCents)} less</span> : null}
+            <span>{amount(estimate)}</span>
+          </span>
+        </div>
+      )}
       {applied && base ? (
         <p>
           {bonus ? (
@@ -212,12 +242,13 @@ export default function ComparisonResult({
           <p className="supporting">Your preferred card breaks the tie: {preferred.shortName}.</p>
         )}
         <ul className="estimate-list">
-          {result.estimates.map((estimate) => (
+          {result.estimates.map((estimate, i) => (
             <EstimateRow
               key={estimate.cardId}
               catalog={catalog}
               estimate={estimate}
               amountCents={purchase?.amountCents ?? 0}
+              {...rowEmphasis(result, i)}
             />
           ))}
         </ul>

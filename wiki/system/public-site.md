@@ -6,7 +6,7 @@ status: stable
 tags: [system, site, static]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-02T23:05:00Z
 sources:
   - resource: ../../apps/site/vite.config.ts
     title: Site build and copied files
@@ -53,7 +53,7 @@ Verified 2026-10-02 by reading the code and running `npm test --workspace=@ai-ch
 
 1. `vite build` enumerates `PAGES` and calls `renderPage(id)` for each, producing `{head, body}` injected into the HTML shell ([`Layout.tsx`](../../apps/site/src/Layout.tsx)).
 2. [`results.ts`](../../apps/site/src/results.ts) reads the copied `results.json` and [`Chart.tsx`](../../apps/site/src/Chart.tsx) renders tables; the SVG charts are the committed files.
-3. Styles are Helios tokens only ([`site.css`](../../apps/site/src/site.css)).
+3. Styles use theme tokens only ([`site.css`](../../apps/site/src/site.css)); the home intro is a navy hero block with the install card beside it.
 
 ## Gotchas
 
