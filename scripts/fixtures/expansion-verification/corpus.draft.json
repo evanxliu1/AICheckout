@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 2,
+  "version": "expansion.draft.1",
+  "origin": "real-issuer-captures",
+  "annotationStatus": "agent-drafted",
+  "description": "Synthetic fixture.",
+  "cases": [
+    {
+      "id": "acme-cash",
+      "cardId": "acme-cash",
+      "cardName": "Acme Cash Card",
+      "issuer": "Acme Bank",
+      "split": "dev",
+      "sourceIds": ["acme-cash-terms"],
+      "reference": {
+        "rewardCurrency": { "value": "cash-back", "anchors": ["Earn 1% cash back on all other purchases."] },
+        "pointValueHundredthsOfCent": { "value": null, "anchors": [] },
+        "rules": [
+          {
+            "category": "supermarkets",
+            "issuerWording": "supermarkets",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": { "kind": "spend", "amountCents": 60000, "period": "calendar-year", "rateAfterCapBps": 100 },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": ["Earn 3% cash back at supermarkets"]
+          },
+          {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": ["Earn 1% cash back on all other purchases."]
+          },
+          {
+            "category": "dining",
+            "issuerWording": "gas stations",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": ["Earn 2% cash back at gas stations."]
+          }
+        ],
+        "exclusions": [],
+        "issues": []
+      }
+    },
+    {
+      "id": "acme-miles",
+      "cardId": "acme-miles",
+      "cardName": "Acme Miles Card",
+      "issuer": "Acme Bank",
+      "split": "dev",
+      "sourceIds": ["acme-miles-terms"],
+      "reference": {
+        "rewardCurrency": { "value": "points", "anchors": ["Earn 2X miles per dollar on every purchase."] },
+        "pointValueHundredthsOfCent": { "value": null, "anchors": [] },
+        "rules": [
+          {
+            "category": "all-purchases",
+            "issuerWording": "every purchase",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": ["Earn 2X miles per dollar on every purchase."]
+          }
+        ],
+        "exclusions": [
+          { "text": "Fees and interest charges", "anchors": ["Fees and interest charges do not earn miles."] }
+        ],
+        "issues": []
+      }
+    },
+    {
+      "id": "acme-store",
+      "cardId": "acme-store",
+      "cardName": "Acme Store Card",
+      "issuer": "Acme Bank",
+      "split": "dev",
+      "sourceIds": ["acme-store-terms"],
+      "reference": {
+        "rewardCurrency": { "value": "cash-back", "anchors": ["Earn 5% back on Acme Store purchases."] },
+        "pointValueHundredthsOfCent": { "value": null, "anchors": [] },
+        "rules": [
+          {
+            "category": "other",
+            "issuerWording": "Acme Store purchases",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": ["Earn 5% back on Acme Store purchases."]
+          }
+        ],
+        "exclusions": [],
+        "issues": []
+      }
+    }
+  ]
+}

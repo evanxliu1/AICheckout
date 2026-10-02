@@ -3,7 +3,7 @@
 //   node scripts/check-expansion-quotes.mjs [--dir evals/curation/expansion]
 //
 // Needs the local captures (gitignored). Scans every string of corpus.draft.json, corpus.json,
-// product-notes.json and verification/*.json, and every line or table cell of verify/*.md and
+// product-notes.json, product-notes.verified.json and verification/*.json, and every line or table cell of verify/*.md and
 // verification-report.md, for a run of more than 25 consecutive words that also appears in a capture (case-,
 // whitespace- and quotation-mark-insensitive). Also checks that every corpus anchor and issuer wording is at most
 // 25 words. Exits 1 and lists the offending strings if any.
@@ -37,7 +37,9 @@ if (!captureFiles.length) {
 const index = captureIndex(await Promise.all(captureFiles.map((path) => readFile(path, 'utf8'))));
 
 const jsonFiles = [
-  ...['corpus.draft.json', 'corpus.json', 'product-notes.json'].map((name) => join(dir, name)),
+  ...['corpus.draft.json', 'corpus.json', 'product-notes.json', 'product-notes.verified.json'].map((name) =>
+    join(dir, name),
+  ),
   ...(await list('verification', '.json')),
 ];
 const markdownFiles = [...(await list('verify', '.md')), join(dir, 'verification-report.md')];
