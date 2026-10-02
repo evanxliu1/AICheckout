@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "issuer": "Acme Bank",
+  "verifier": {
+    "agent": "claude-code-subagent",
+    "model": "fixture-model",
+    "date": "2026-10-02",
+    "filesRead": ["captures/acme-cash-terms.txt", "captures/acme-miles-terms.txt", "captures/acme-store-terms.txt"]
+  },
+  "adjudicator": {
+    "agent": "claude-code-subagent",
+    "model": "fixture-model",
+    "date": "2026-10-02",
+    "filesRead": ["verification/acme-bank.json", "captures/acme-cash-terms.txt"]
+  },
+  "cards": [
+    {
+      "cardId": "acme-cash",
+      "verdict": "fixed",
+      "fixes": [
+        {
+          "path": "reference.rules.0.cap.amountCents",
+          "current": 60000,
+          "corrected": 600000,
+          "anchor": { "sourceId": "acme-cash-terms", "quote": "on up to $6,000 in purchases per calendar year, then 1%." },
+          "note": "Cap is $6,000, not $600.",
+          "adjudication": { "decision": "accepted", "reason": "The quote states $6,000." }
+        },
+        {
+          "path": "reference.rules.1.rateBps",
+          "current": 100,
+          "corrected": 150,
+          "anchor": { "sourceId": "acme-cash-terms", "quote": "Earn 1% cash back on all other purchases." },
+          "note": "Base rate looks like 1.5%.",
+          "adjudication": { "decision": "rejected", "reason": "The quote states 1%." }
+        },
+        {
+          "path": "reference.rules.2.category",
+          "current": "dining",
+          "corrected": "gas",
+          "anchor": { "sourceId": "acme-cash-terms", "quote": "Earn 2% cash back at gas stations." },
+          "note": "Gas stations, not dining.",
+          "adjudication": { "decision": "accepted", "reason": "Correct category." }
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "Balance transfers and cash advances",
+          "anchors": [{ "sourceId": "acme-cash-terms", "quote": "Balance transfers and cash advances do not earn cash back." }],
+          "note": "Missing exclusion.",
+          "adjudication": { "decision": "accepted", "reason": "Stated in the terms." }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "drop",
+          "hintIndex": 0,
+          "note": "No partner-store rule in the captures.",
+          "adjudication": { "decision": "accepted", "reason": "Not in the captures." }
+        }
+      ]
+    },
+    {
+      "cardId": "acme-miles",
+      "verdict": "confirmed",
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": { "sourceId": "acme-miles-terms", "quote": "Earn 2X miles per dollar on every purchase." },
+          "note": "Stated.",
+          "adjudication": { "decision": "accepted", "reason": "Stated." }
+        }
+      ]
+    },
+    {
+      "cardId": "acme-store",
+      "verdict": "drop-card",
+      "reason": "Closed to new applicants per the capture.",
+      "verdictAdjudication": { "decision": "accepted", "reason": "The capture says so." }
+    }
+  ]
+}

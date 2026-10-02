@@ -5,22 +5,22 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T06:40:00Z
+  at: 2026-10-03T01:00:00Z
 ---
 
 # Now
 
-As of 2026-10-02T06:40Z (evening of 2026-10-01 Pacific).
+As of 2026-10-03T01:00Z.
 
 ## Current state
 
-- **`origin/main`** at `3439b9f` (PR #15, this wiki, merged). Merged: PRs #4–#6 (Phase 2a–2c), #7–#12 (Phase 3 M1–M6 prep), #13 (3b automatic cart badge) and #14 (3b follow-ups: a removed badge host comes back at once, covered-click hint in a persistent status region, reader resumes after a back/forward-cache restore, README) ([roadmap](product/roadmap.md), [cart badge](system/cart-badge.md)).
+- **`origin/main`** at `be5de25` (PR #16, Phase 7 capture, extraction and drafts, merged; PR #15, this wiki, before it). Merged: PRs #4–#6 (Phase 2a–2c), #7–#12 (Phase 3 M1–M6 prep), #13 (3b automatic cart badge) and #14 (3b follow-ups: a removed badge host comes back at once, covered-click hint in a persistent status region, reader resumes after a back/forward-cache restore, README) ([roadmap](product/roadmap.md), [cart badge](system/cart-badge.md)).
 - **Hosted:** site, results page, review app and `/v1/catalog` live at https://ai-checkout-api.onrender.com ([hosting](ops/hosting.md)). All 8 migrations are on hosted Supabase; the coordinating session pushed `20260930225732_catalog_v2` and `20261001010350_source_body_limit` with `./scripts/db-push.sh` ([database migrations](ops/database-migrations.md)). `/v1/catalog` serves release sequence 1, the 7-card catalog `2026-09-29.real.1`, published 2026-10-02T02:29Z, expiring 2026-10-29T00:00Z (checked 2026-10-02T05:58Z).
-- **Curation model:** gpt-5.6-luna `xhigh` since 2026-10-02 ([decision](decisions/2026-10-02-gpt-5-6-luna-for-curation.md)). On `phase7-catalog-expansion` it is the `eval:v2 --provider codex` and `extract-cards.mjs` default, and [`docs/evals/results.md`](../docs/evals/results.md) has its rows: dev 99.5%, held-out 98.3%, both marked added after ([reporting decision](decisions/2026-10-02-luna-results-per-split.md)). `main` gets both when the branch merges.
+- **Curation model:** gpt-5.6-luna `xhigh` since 2026-10-02 ([decision](decisions/2026-10-02-gpt-5-6-luna-for-curation.md)). It is the `eval:v2 --provider codex` and `extract-cards.mjs` default on `main` since PR #16, and [`docs/evals/results.md`](../docs/evals/results.md) has its rows: dev 99.5%, held-out 98.3%, both marked added after ([reporting decision](decisions/2026-10-02-luna-results-per-split.md)).
 
 ## Active work
 
-- **Phase 7 card expansion** on `phase7-catalog-expansion` (worktree `../AICheckout-expansion`, from `ff0c9f7`, merged with `main` `3439b9f`; committed, not pushed): 180 cards, 65 exclusions, 321 sources captured; luna extraction done (168 `needs_review`, 12 `evidence_valid`); draft labels for 159 cards (gitignored: quotes over 25 words). Next: trim draft quotes to 25 words so they can be committed, decide points valuation (fixes the `rate_not_in_evidence` validator gap), per-issuer verifier subagents, Stage-2 engine work and a new migration raising catalog limits, eval, then Evan publishes ([catalog expansion](system/catalog-expansion.md)). Evan pushes the branch and opens the PR.
+- **Phase 7 card expansion** on `phase7-verify` (worktree `../AICheckout-expansion`, from `main` `be5de25`; committed, not pushed): verification is done. Ten per-issuer findings files, verified by nine verifier subagents (a second opinion on Chase) and decided by eight adjudicators, plus general and per-issuer conventions ([decision](decisions/2026-10-02-expansion-verification-conventions.md)), produced `corpus.json` `expansion.v1`: 173 agent-verified cards (180 − 7 dropped), 863 rules, 396 exclusions, 195 issues; `check-expansion-quotes.mjs` passes. A pre-merge review (agent-verified) spot-checked 31 cards and found no label the captures contradict; it fixed one activation convention on four Customized Cash cards. A copyright adjacency fix followed: no two anchors of one item may overlap or abut into more than 25 consecutive capture words (checked by `check-expansion-quotes.mjs`, general rule 22); drafts regenerated, findings anchors shortened, labels unchanged apart from anchors except the Marriott Bonvoy Boundless 6X cap (`none` → null, rule 21). Known gaps: gated rates and redemption values (rules 17/18, Stage 2), Freedom Flex and Discover Q4 rules expire 2026-12-31, Upromise 1.529% has no integer rate, Marriott Bonvoy Bold has no base rate, Key Rewards are four near-duplicate cards, five judgment calls left as labelled (One Key portal, Chrome EV, Prime Visa Amazon, JCPenney maximum, inflight rebates) ([catalog expansion](system/catalog-expansion.md)). Next: decide points valuation (fixes the `rate_not_in_evidence` validator gap); Stage-2 engine work and a new migration raising catalog limits; eval; Evan publishes. Evan pushes the branch and opens the PR.
 
 ## Open questions and next steps
 

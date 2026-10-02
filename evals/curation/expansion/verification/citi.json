@@ -1,0 +1,1865 @@
+{
+  "schemaVersion": 1,
+  "issuer": "Citi",
+  "verifier": {
+    "agent": "claude-code-subagent",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-02",
+    "filesRead": [
+      "AGENTS.md",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verify/citi.md",
+      "evals/curation/expansion/corpus.draft.json",
+      "evals/curation/expansion/product-notes.json",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/schema.ts",
+      "apps/api/src/curation/v2/corpus.ts",
+      "wiki/system/catalog-expansion.md",
+      "evals/curation/real/corpus.v2.json",
+      "evals/curation/expansion/captures/citi-strata-product.txt",
+      "evals/curation/expansion/captures/citi-strata-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-strata-premier-product.txt",
+      "evals/curation/expansion/captures/citi-strata-premier-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-strata-elite-product.txt",
+      "evals/curation/expansion/captures/citi-strata-elite-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-costco-anywhere-visa-product.txt",
+      "evals/curation/expansion/captures/citi-costco-anywhere-visa-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-costco-anywhere-visa-categories.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-platinum-select-product.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-platinum-select-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-mileup-product.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-mileup-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-executive-product.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-executive-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-globe-product.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-globe-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-att-points-plus-product.txt",
+      "evals/curation/expansion/captures/citi-att-points-plus-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-my-best-buy-visa-product.txt",
+      "evals/curation/expansion/captures/citi-my-best-buy-visa-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-wayfair-mastercard-product.txt",
+      "evals/curation/expansion/captures/citi-wayfair-mastercard-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-tsc-visa-product.txt",
+      "evals/curation/expansion/captures/citi-llbean-mastercard-product.txt",
+      "evals/curation/expansion/captures/citi-dillards-mastercard-product.txt",
+      "evals/curation/expansion/captures/citi-macys-amex-product.txt",
+      "evals/curation/expansion/captures/citi-bloomingdales-amex-product.txt"
+    ]
+  },
+  "adjudicator": {
+    "agent": "claude-code-subagent",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-02",
+    "filesRead": [
+      "AGENTS.md",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/CONVENTIONS.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/citi.md",
+      "evals/curation/expansion/verification/citi.json",
+      "evals/curation/expansion/verify/citi.md",
+      "evals/curation/expansion/corpus.draft.json",
+      "evals/curation/expansion/product-notes.json",
+      "evals/curation/expansion/cards.json",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/schema.ts",
+      "apps/api/src/curation/v2/corpus.ts",
+      "evals/curation/expansion/captures/citi-strata-product.txt",
+      "evals/curation/expansion/captures/citi-strata-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-strata-premier-product.txt",
+      "evals/curation/expansion/captures/citi-strata-premier-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-strata-elite-product.txt",
+      "evals/curation/expansion/captures/citi-strata-elite-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-costco-anywhere-visa-product.txt",
+      "evals/curation/expansion/captures/citi-costco-anywhere-visa-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-costco-anywhere-visa-categories.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-platinum-select-product.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-platinum-select-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-mileup-product.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-mileup-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-executive-product.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-executive-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-globe-product.txt",
+      "evals/curation/expansion/captures/citi-aadvantage-globe-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-att-points-plus-product.txt",
+      "evals/curation/expansion/captures/citi-att-points-plus-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-my-best-buy-visa-product.txt",
+      "evals/curation/expansion/captures/citi-my-best-buy-visa-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-wayfair-mastercard-product.txt",
+      "evals/curation/expansion/captures/citi-wayfair-mastercard-rewards-terms.txt",
+      "evals/curation/expansion/captures/citi-tsc-visa-product.txt",
+      "evals/curation/expansion/captures/citi-llbean-mastercard-product.txt",
+      "evals/curation/expansion/captures/citi-dillards-mastercard-product.txt",
+      "evals/curation/expansion/captures/citi-macys-amex-product.txt",
+      "evals/curation/expansion/captures/citi-bloomingdales-amex-product.txt"
+    ]
+  },
+  "cards": [
+    {
+      "cardId": "citi-strata",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.6.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "citi-strata-product",
+            "quote": "choose which Self-Select Category to activate"
+          },
+          "note": "This Self-Select category earns 3X only after the primary cardmember chooses it at citi.com/selfselect or by phone (Streaming is the default); a one-time choice, changeable once per quarter.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Convention 6: a non-default Self-Select option needs a one-time choice at citi.com/selfselect; capture quote verified."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.7.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "citi-strata-product",
+            "quote": "choose which Self-Select Category to activate"
+          },
+          "note": "This Self-Select category earns 3X only after the primary cardmember chooses it at citi.com/selfselect or by phone (Streaming is the default); a one-time choice, changeable once per quarter.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Convention 6: a non-default Self-Select option needs a one-time choice at citi.com/selfselect; capture quote verified."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.8.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "citi-strata-product",
+            "quote": "choose which Self-Select Category to activate"
+          },
+          "note": "This Self-Select category earns 3X only after the primary cardmember chooses it at citi.com/selfselect or by phone (Streaming is the default); a one-time choice, changeable once per quarter.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Convention 6: a non-default Self-Select option needs a one-time choice at citi.com/selfselect; capture quote verified."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.9.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "citi-strata-product",
+            "quote": "choose which Self-Select Category to activate"
+          },
+          "note": "This Self-Select category earns 3X only after the primary cardmember chooses it at citi.com/selfselect or by phone (Streaming is the default); a one-time choice, changeable once per quarter.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Convention 6: a non-default Self-Select option needs a one-time choice at citi.com/selfselect; capture quote verified."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "citi-strata-product",
+            "quote": "When your account is opened, the default Self-Select Category is Select Streaming Services."
+          },
+          "note": "Added at adjudication. Convention 6: Select Streaming Services is the default Self-Select option, so it earns 3X with no action.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication per convention 6 (default option → none)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.4",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-strata-rewards-terms",
+              "quote": "Includes ticket purchases for live entertainment, including concerts, live sporting events, live theatrical productions, amusement parks, and orchestras."
+            }
+          ],
+          "note": "Added at the final consistency pass 2026-10-02 (general rule 19). The Live Entertainment Self-Select option covers only live-event tickets, part of the shared entertainment category.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule 19, final consistency pass 2026-10-02: The Live Entertainment Self-Select option covers only live-event tickets, part of the shared entertainment category."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-strata-rewards-terms",
+            "quote": "You may change your Self-Select Category once each calendar quarter"
+          },
+          "note": "Five Self-Select options at 3X, default Select Streaming Services, change once per calendar quarter: all stated in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Options, 3X rate, Streaming default and once-per-quarter change all stated in the terms."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "citi-strata-premier",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.issuerWording",
+          "current": "10 total ThankYou Points for each $1 spent on hotel, car rental and attraction bookings on the Citi Travel® site via cititravel.com or 1-833-737-1288 (TTY:",
+          "corrected": "Hotels, Car Rentals and Attractions booked on cititravel.com",
+          "anchor": {
+            "sourceId": "citi-strata-premier-product",
+            "quote": "10 points per dollar spent on Hotels, Car Rentals and Attractions booked on cititravel.com"
+          },
+          "note": "The draft wording is a whole sentence cut mid-parenthesis; the product page names the category.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product page names the category; the draft wording was a clipped sentence. Quote verified."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.issuerWording",
+          "current": "1 point per dollar spent on All Other Purchases2",
+          "corrected": "all other purchases",
+          "anchor": {
+            "sourceId": "citi-strata-premier-rewards-terms",
+            "quote": "1 ThankYou Point for each $1 spent on all other purchases"
+          },
+          "note": "The draft wording carries the footnote digit \"2\"; use the category name from the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote digit removed; \"all other purchases\" is verbatim in the terms."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "Points are not earned on cancelled Citi Travel bookings.",
+          "anchors": [
+            {
+              "sourceId": "citi-strata-premier-rewards-terms",
+              "quote": "Points are not earned on cancelled bookings."
+            }
+          ],
+          "note": "Stated in the Citi Travel definition of the terms; the draft lists only the cash-like exclusions.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Citi Travel paragraph says points are not earned on cancelled bookings."
+          }
+        },
+        {
+          "text": "No points on the portion of a Citi Travel hotel purchase offset by the $100 Annual Hotel Benefit.",
+          "anchors": [
+            {
+              "sourceId": "citi-strata-premier-rewards-terms",
+              "quote": "you won’t earn points on the portion of your purchase that is offset by the benefit"
+            }
+          ],
+          "note": "The terms say twice that the benefit-offset portion earns nothing.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the benefit-offset portion of a Citi Travel hotel purchase earns no points."
+          }
+        }
+      ],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "citi-strata-elite",
+      "verdict": "fixed",
+      "reason": "The rewards-terms capture is truncated: it repeats the product page with numbers blanked and lacks the additional-information terms. All rates are confirmed from the product page.",
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.issuerWording",
+          "current": "Hotels, Car Rentals, and Attractions booked on cititravel.com2",
+          "corrected": "Hotels, Car Rentals, and Attractions booked on cititravel.com",
+          "anchor": {
+            "sourceId": "citi-strata-elite-product",
+            "quote": "12 points per dollar spent on Hotels, Car Rentals, and Attractions booked on cititravel.com"
+          },
+          "note": "Drop the trailing footnote digit \"2\" from the issuer wording; rate unchanged and correct.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote digit removed; wording verbatim on the product page, rate unchanged."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "Air Travel booked on cititravel.com2",
+          "corrected": "Air Travel booked on cititravel.com",
+          "anchor": {
+            "sourceId": "citi-strata-elite-product",
+            "quote": "6 points per dollar spent on Air Travel booked on cititravel.com"
+          },
+          "note": "Drop the trailing footnote digit \"2\" from the issuer wording; rate unchanged and correct.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote digit removed; wording verbatim on the product page, rate unchanged."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.issuerWording",
+          "current": "Restaurants on Citi Nights® purchases, Friday and Saturday from 6 PM - 6 AM ET2",
+          "corrected": "Restaurants on Citi Nights® purchases, Friday and Saturday from 6 PM - 6 AM ET",
+          "anchor": {
+            "sourceId": "citi-strata-elite-product",
+            "quote": "6 points per dollar spent at Restaurants on Citi Nights® purchases, Friday and Saturday from 6 PM - 6 AM ET"
+          },
+          "note": "Drop the trailing footnote digit \"2\" from the issuer wording; rate unchanged and correct.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote digit removed; wording verbatim on the product page, rate unchanged."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.issuerWording",
+          "current": "Restaurants any other time2",
+          "corrected": "Restaurants any other time",
+          "anchor": {
+            "sourceId": "citi-strata-elite-product",
+            "quote": "3 points per dollar spent at Restaurants any other time"
+          },
+          "note": "Drop the trailing footnote digit \"2\" from the issuer wording; rate unchanged and correct.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote digit removed; wording verbatim on the product page, rate unchanged."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.issuerWording",
+          "current": "All Other Purchases2",
+          "corrected": "All Other Purchases",
+          "anchor": {
+            "sourceId": "citi-strata-elite-product",
+            "quote": "1.5 points per dollar spent on All Other Purchases"
+          },
+          "note": "Drop the trailing footnote digit \"2\" from the issuer wording; rate unchanged and correct.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote digit removed; wording verbatim on the product page, rate unchanged."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "citi-strata-elite-product",
+              "quote": "6X points at Restaurants on Citi Nights® purchases (Friday and Saturday from 6 p.m. – 6 a.m. ET)"
+            }
+          ],
+          "note": "The 6X restaurant rate applies only Friday and Saturday 6 PM to 6 AM ET; the schema cannot express a time window, so rules 2 and 3 both carry dining.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 6X Citi Nights window (Fri/Sat 6 PM-6 AM ET) cannot be expressed in the schema; out-of-scope is right."
+          }
+        }
+      ],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "citi-costco-anywhere-visa",
+      "verdict": "fixed",
+      "reason": "Rates check out against the product page and FAQ. The rewards-terms capture is a near-duplicate of the product page; the FAQ states every rate, so the evidence is sufficient.",
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.category",
+          "current": "gas",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "citi-costco-anywhere-visa-product",
+            "quote": "5% cash back on gas purchased at Costco warehouse locations worldwide."
+          },
+          "note": "Added at adjudication. Convention 4: the 5% gas rate pays only at Costco warehouses, a single merchant, so the category is other; Costco is named in the wording and the product note.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication per convention 4."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Goods and services provided by vendors other than Costco, including most Costco Travel purchases, are not eligible."
+            ]
+          },
+          "note": "Added at adjudication. The anchored sentence is the eligibility rule of the 0%-fee monthly payment plan offer, not of cash back rewards; the FAQ gives 3% on Costco Travel. No rewards ambiguity.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-costco-anywhere-visa-product",
+            "quote": "for the first $7,000 per year in combined Costco and other eligible gas and/or EV charging purchases"
+          },
+          "note": "5% Costco gas, combined $7,000 yearly cap with other gas/EV, 1% after; membership is required to apply per the FAQ.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "5% Costco gas within the combined $7,000 yearly gas/EV cap, then 1%; membership required to apply per the FAQ."
+          }
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "citi-costco-anywhere-visa-product",
+            "quote": "2% cash back on all other purchases from Costco and Costco.com."
+          },
+          "note": "Stated in the FAQ.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2% on other Costco and Costco.com purchases stated in the FAQ."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-platinum-select",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-aadvantage-platinum-select-rewards-terms",
+            "quote": "Eligible American Airlines purchases are items billed by American Airlines as the merchant of record."
+          },
+          "note": "2X on AA purchases (merchant of record), excluding aadvantagecars.com and aadvantagehotels.com bookings, per the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Merchant-of-record definition and the aadvantagecars/aadvantagehotels exclusion are in the terms."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-mileup",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Earn 2 AAdvantage® miles for every $1 spent on eligible American Airlines purchases2"
+            ]
+          },
+          "note": "Added at adjudication. Convention 11: the anchor only restates the 2X American Airlines rule, which the terms define (merchant of record); it states no ambiguity.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-aadvantage-mileup-rewards-terms",
+            "quote": "Eligible American Airlines purchases are items billed by American Airlines as the merchant of record."
+          },
+          "note": "2X on AA purchases billed by AA as merchant of record, per the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Merchant-of-record definition is in the terms."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-executive",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.cap",
+          "current": {
+            "kind": "spend",
+            "amountCents": 15000000,
+            "period": "calendar-year",
+            "rateAfterCapBps": 500
+          },
+          "corrected": null,
+          "anchor": {
+            "sourceId": "citi-aadvantage-executive-product",
+            "quote": "After you spend $150,000 in purchases in a calendar year, earn a total of 5 AAdvantage® miles"
+          },
+          "note": "The $150,000 is a threshold on all card purchases in a calendar year that raises AA purchases from 4X to 5X; it is not a spend cap on AA purchases. The amount itself is right. Flagged as an issue instead.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Convention 9: the $150,000 is a total-spend threshold that raises AA purchases to 5X, not a cap; cap null plus an out-of-scope issue."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.category",
+          "current": "other",
+          "corrected": "travel-portal",
+          "anchor": {
+            "sourceId": "citi-aadvantage-executive-rewards-terms",
+            "quote": "made on aadvantagehotels.com"
+          },
+          "note": "AAdvantage Hotels is a hotel booking site; the Globe draft maps the same rule to travel-portal. Keep the two cards consistent.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Convention 4: aadvantagehotels.com is a partner booking portal run by the card program → travel-portal; matches the Globe card. Copyright adjacency fix 2026-10-02: anchor quote shortened or replaced so that it does not run on from a neighbouring anchor into more than 25 consecutive capture words; the value is unchanged."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "travel-portal",
+            "issuerWording": "eligible AAdvantage Cars® bookings",
+            "rateBps": 1200,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-executive-product",
+              "quote": "Earn 12 AAdvantage® miles for every $1 spent on eligible AAdvantage Hotels® bookings and eligible AAdvantage Cars® bookings"
+            },
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "for a total of 12 AAdvantage® miles, for each $1 spent on eligible car rental purchases"
+            },
+            {
+              "sourceId": "citi-aadvantage-executive-product",
+              "quote": "No limit on the amount of miles you can earn"
+            }
+          ],
+          "note": "The draft misses the 12X rule for car rentals booked on aadvantagecars.com (its own section in the terms).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms have a separate 12X section for car rentals booked on aadvantagecars.com; travel-portal per convention 4. Quotes verified."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "Upon reaching $150,000 in spend on your Citi® / AAdvantage® Executive World Legend Mastercard in a calendar year"
+            }
+          ],
+          "note": "AA purchases rise from 4X to 5X for the rest of the calendar year once total card spend reaches $150,000; the cap schema cannot express a threshold on total spend.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Convention 9 out-of-scope issue for the $150,000 spend threshold."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-aadvantage-executive-rewards-terms",
+            "quote": "Eligible American Airlines purchases are items billed by American Airlines as the merchant of record."
+          },
+          "note": "4X on AA purchases, 5X after $150,000 total calendar-year spend, merchant-of-record definition: all in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4X, 5X after $150,000 calendar-year spend and the merchant-of-record definition are in the captures."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-globe",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.2.category",
+          "current": "dining",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "citi-aadvantage-globe-rewards-terms",
+            "quote": "AAdvantage® miles on American Airlines purchases benefit"
+          },
+          "note": "Admirals Club food and beverage earns 3X as part of the American Airlines purchases benefit, not as restaurant spend.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms award Admirals Club food and beverage 3X as part of the AA purchases benefit; single-merchant → other (convention 4). Copyright adjacency fix 2026-10-02: anchor quote shortened or replaced so that it does not run on from a neighbouring anchor into more than 25 consecutive capture words; the value is unchanged."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "eligible American Airlines purchases",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-globe-product",
+              "quote": "Earn 3 AAdvantage® miles for every $1 spent on eligible American Airlines purchases"
+            },
+            {
+              "sourceId": "citi-aadvantage-globe-rewards-terms",
+              "quote": "Eligible American Airlines purchases are items billed by American Airlines as the merchant of record."
+            },
+            {
+              "sourceId": "citi-aadvantage-globe-product",
+              "quote": "No limit on the amount of miles you can earn"
+            }
+          ],
+          "note": "The draft misses the card’s 3X American Airlines purchases rule, stated on the product page and in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3X on eligible American Airlines purchases is on the product page and in the terms; the draft lacked it."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-aadvantage-globe-product",
+            "quote": "Earn 3 AAdvantage® miles for every $1 spent on eligible American Airlines purchases"
+          },
+          "note": "3X on AA purchases; Admirals Club food and beverage also earns 3X under this benefit per the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3X AA purchases and Admirals Club food and beverage under that benefit are stated."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "citi-att-points-plus",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-att-points-plus-rewards-terms",
+            "quote": "Products and services purchased at independent wireless dealers, non-AT&T- owned stores or AT&T resellers"
+          },
+          "note": "2X on AT&T products and services bought directly from AT&T; dealer and reseller purchases are non-qualifying.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Direct-from-AT&T rule and the dealer/reseller non-qualifying purchases are in the terms."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "citi-my-best-buy-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.rateBps",
+          "current": 500,
+          "corrected": 250,
+          "anchor": {
+            "sourceId": "citi-my-best-buy-visa-rewards-terms",
+            "quote": "Get 2.5 points per $1 spent (5% back in rewards) on qualifying Best Buy purchases"
+          },
+          "note": "The capture states 2.5 points per $1; the draft recorded the 5% reward value (point = 2 cents) as the rate. Corpus convention: points rateBps = per-dollar multiple x 100; the stated value stays in pointValueHundredthsOfCent (200).",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "Convention 1: the terms state each rate as a percentage back (\"5% back in rewards\"), so rateBps is the percentage × 100 and the currency is cash-back; the draft rate stands."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.rateBps",
+          "current": 300,
+          "corrected": 150,
+          "anchor": {
+            "sourceId": "citi-my-best-buy-visa-rewards-terms",
+            "quote": "Get 1.5 points per $1 spent (3% back in rewards) on net purchases made at gas stations."
+          },
+          "note": "The capture states 1.5 points per $1; the draft recorded the 3% reward value. Corpus convention: points rateBps = per-dollar multiple x 100; the stated value stays in pointValueHundredthsOfCent (200).",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "Convention 1: the terms state each rate as a percentage back (\"5% back in rewards\"), so rateBps is the percentage × 100 and the currency is cash-back; the draft rate stands."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.rateBps",
+          "current": 200,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "citi-my-best-buy-visa-rewards-terms",
+            "quote": "Get 1 point per $1 spent (2% back in rewards) on net purchases made at restaurants, bars and grocery stores."
+          },
+          "note": "The capture states 1 point per $1; the draft recorded the 2% reward value. Corpus convention: points rateBps = per-dollar multiple x 100; the stated value stays in pointValueHundredthsOfCent (200).",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "Convention 1: the terms state each rate as a percentage back (\"5% back in rewards\"), so rateBps is the percentage × 100 and the currency is cash-back; the draft rate stands."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.rateBps",
+          "current": 200,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "citi-my-best-buy-visa-rewards-terms",
+            "quote": "Get 1 point per $1 spent (2% back in rewards) on net purchases made at restaurants, bars and grocery stores."
+          },
+          "note": "The capture states 1 point per $1; the draft recorded the 2% reward value. Corpus convention: points rateBps = per-dollar multiple x 100; the stated value stays in pointValueHundredthsOfCent (200).",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "Convention 1: the terms state each rate as a percentage back (\"5% back in rewards\"), so rateBps is the percentage × 100 and the currency is cash-back; the draft rate stands."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.rateBps",
+          "current": 100,
+          "corrected": 50,
+          "anchor": {
+            "sourceId": "citi-my-best-buy-visa-rewards-terms",
+            "quote": "Get 1 point per $2 spent (1% back in rewards) on net purchases outside Best Buy® or Pacific Kitchen & Home®"
+          },
+          "note": "The capture states 1 point per $2 (0.5 per $1); the draft recorded the 1% reward value. Corpus convention: points rateBps = per-dollar multiple x 100; the stated value stays in pointValueHundredthsOfCent (200).",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "Convention 1: the terms state each rate as a percentage back (\"5% back in rewards\"), so rateBps is the percentage × 100 and the currency is cash-back; the draft rate stands."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "citi-my-best-buy-visa-rewards-terms",
+            "quote": "Get 2.5 points per $1 spent (5% back in rewards) on qualifying Best Buy purchases"
+          },
+          "note": "Added at adjudication. Convention 1: the terms state every rate as a percentage back in rewards (5%/3%/2%/1%), so the card is recorded as cash-back at those percentages even though Best Buy tracks points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication per convention 1."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 200,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "citi-my-best-buy-visa-rewards-terms",
+            "quote": "Reward Certificates are coupons for discounts off future purchases at Best Buy® stores and BestBuy.com®."
+          },
+          "note": "Added at adjudication. With the rates recorded as percentages back (convention 1) a point value would double-count; null. The certificate value ($5 per 250 points) goes in the ambiguous issue.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication per conventions 1 and 3."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-my-best-buy-visa-rewards-terms",
+              "quote": "Reward Certificates are coupons for discounts off future purchases at Best Buy® stores and BestBuy.com®."
+            },
+            {
+              "sourceId": "citi-my-best-buy-visa-product",
+              "quote": "Choose rewards and earn a $5 reward certificate2 for every $100 spent at Best Buy® with your Card"
+            }
+          ],
+          "note": "Added at adjudication. Convention 8 by analogy: the percentage back is paid as Best Buy reward certificates usable only at Best Buy (or gift cards), so cash-back is an approximation.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication per convention 8."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-my-best-buy-visa-rewards-terms",
+            "quote": "Points associated with the My Best Buy® Credit Card are only awarded when you select Standard Credit."
+          },
+          "note": "2.5 points per $1 (5%) at Best Buy only with Standard Credit, not promotional financing; per the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Standard Credit condition for Best Buy points is stated in the terms."
+          }
+        },
+        {
+          "action": "drop",
+          "hintIndex": 1,
+          "note": "The 10% first-day rate is a one-time new-cardmember welcome offer (first day of purchases within 14 days of opening); welcome bonuses are out of scope.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 10% is an extra 5 bonus points on the first day of purchases for new accounts only: a welcome offer, out of scope."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "citi-wayfair-mastercard",
+      "verdict": "fixed",
+      "reason": "Not drafted. The captures (product page and terms) cover the Wayfair Credit Card and the Wayfair Mastercard together; the rules below are the Mastercard’s.",
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "citi-wayfair-mastercard-product",
+            "quote": "The Wayfair Mastercard® also earns 3% back4 in rewards at grocery stores"
+          },
+          "note": "Rewards are Reward Dollars earned as a percentage of spend (7%/3%/2%/1%); recorded as cash-back with an ambiguous issue, since Reward Dollars are not redeemable for cash.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Convention 8: Wayfair Reward Dollars are dollar-denominated store credit → cash-back with an ambiguous issue."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Wayfair's family of websites, mobile applications, and physical retail stores",
+            "rateBps": 700,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-wayfair-mastercard-rewards-terms",
+              "quote": "you will earn 7% in Rewards when you use your card at Wayfair's family of websites, mobile applications, and physical retail stores."
+            },
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "The Wayfair Family of Brands includes Wayfair, Joss & Main, AllModern, Birch Lane and Perigold."
+            },
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "You will automatically be enrolled in the Wayfair Rewards Program when your Wayfair Credit Card or Wayfair Mastercard® account is opened."
+            }
+          ],
+          "note": "7% at the Wayfair family of brands (5% when promotional financing is applied; see the product note).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "7% at the Wayfair family stated in the footnote terms; single merchant → other; automatic enrollment → activation none (convention 7)."
+          }
+        },
+        {
+          "rule": {
+            "category": "supermarkets",
+            "issuerWording": "grocery stores",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "3% at grocery stores; 2% for Qualifying Online Purchases not made at Sites or Stores"
+            },
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "You may only earn 1%, not 3%, for grocery or food purchases made at convenience stores, gas stations, warehouse clubs, supercenters, and discount stores"
+            },
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "You will automatically be enrolled in the Wayfair Rewards Program when your Wayfair Credit Card or Wayfair Mastercard® account is opened."
+            }
+          ],
+          "note": "3% at grocery stores outside Wayfair, per the footnote terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3% at grocery stores outside Wayfair stated in footnote 4."
+          }
+        },
+        {
+          "rule": {
+            "category": "online-retail",
+            "issuerWording": "Qualifying Online Purchases",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "3% at grocery stores; 2% for Qualifying Online Purchases not made at Sites or Stores"
+            },
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "Qualifying Online Purchases are those made via a computer network, but not all online transactions will be considered Qualifying Online Purchases."
+            },
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "You will automatically be enrolled in the Wayfair Rewards Program when your Wayfair Credit Card or Wayfair Mastercard® account is opened."
+            }
+          ],
+          "note": "2% on qualifying online purchases outside Wayfair sites and stores.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2% on Qualifying Online Purchases outside Wayfair stated in footnote 4; online-retail is the matching category."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "everywhere else",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "and 1% on all other Net Qualifying Purchases made with your Wayfair Mastercard®"
+            },
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "1% back4in rewards everywhere else"
+            },
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "You will automatically be enrolled in the Wayfair Rewards Program when your Wayfair Credit Card or Wayfair Mastercard® account is opened."
+            }
+          ],
+          "note": "Base 1% on all other purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "1% on all other Net Qualifying Purchases stated in footnote 4."
+          }
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "Returns, refunds, credit adjustments, unauthorized charges, balance transfers, cash advances, lottery tickets, gaming chips, interest and fees earn no Rewards.",
+          "anchors": [
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "Rewards are not earned on returns, refunds, promotions, or other credit adjustments, unauthorized or fraudulent charges"
+            },
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "balance transfers, cash advances or any other transaction treated like a cash advance, lottery tickets, gaming chips and similar transactions, interest, fees"
+            }
+          ],
+          "note": "General non-earning transactions from the rewards footnotes.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Non-earning transactions listed in the footnotes."
+          }
+        },
+        {
+          "text": "At Wayfair: outlet purchases, Wayfair Professional accounts, gift cards, services, donations, taxes and shipping or delivery fees earn no Rewards.",
+          "anchors": [
+            {
+              "sourceId": "citi-wayfair-mastercard-rewards-terms",
+              "quote": "purchases at outlet locations, purchases made by accounts enrolled in the Wayfair Professional program; gift cards, services"
+            },
+            {
+              "sourceId": "citi-wayfair-mastercard-rewards-terms",
+              "quote": "donations, Porch restaurant, taxes and any shipping or delivery fees"
+            }
+          ],
+          "note": "Wayfair-specific exclusions from the 7% terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Wayfair-specific non-earning purchases listed in the 7% terms."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "Reward Dollars have no cash value and are not redeemable for cash."
+            }
+          ],
+          "note": "Rates are percentages, but the reward currency is Wayfair Reward Dollars with no cash value; cash-back is an approximation.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Convention 8 ambiguous issue: Reward Dollars have no cash value and are usable only at Wayfair."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-wayfair-mastercard-rewards-terms",
+            "quote": "For purchases where promotional financing is applied, you will earn 5% in Rewards, not 7%, on Eligible Purchases."
+          },
+          "note": "7% at the Wayfair family (Wayfair, Joss & Main, AllModern, Birch Lane, Perigold), 5% with promotional financing; outlets, gift cards, services, shipping and taxes excluded.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "7%/5% with promotional financing and the exclusions are in the terms."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "citi-tsc-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "eligible gas station purchases",
+          "corrected": "gas stations",
+          "anchor": {
+            "sourceId": "citi-tsc-visa-product",
+            "quote": "3%in Rewards2\nat gas stations, grocery stores & on veterinary services"
+          },
+          "note": "Draft wording is not verbatim; the capture names the category \"gas stations\".",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "\"gas stations\" is verbatim in the capture; the draft wording was not."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.issuerWording",
+          "current": "eligible grocery store purchases",
+          "corrected": "grocery stores",
+          "anchor": {
+            "sourceId": "citi-tsc-visa-product",
+            "quote": "3%in Rewards2\nat gas stations, grocery stores & on veterinary services"
+          },
+          "note": "Draft wording is not verbatim; the capture names the category \"grocery stores\".",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "\"grocery stores\" is verbatim in the capture; the draft wording was not."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.issuerWording",
+          "current": "eligible veterinary service purchases",
+          "corrected": "veterinary service purchases",
+          "anchor": {
+            "sourceId": "citi-tsc-visa-product",
+            "quote": "earn an additional 3% in Rewards on gas stations, grocery stores, and on veterinary service purchases"
+          },
+          "note": "Draft wording is not verbatim; \"veterinary service purchases\" is.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "\"veterinary service purchases\" is verbatim in the capture; the draft wording was not."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "citi-tsc-visa-product",
+            "quote": "Cardholders earn 5 points per dollar on eligible Tractor Supply purchases (that’s 5% in Rewards)"
+          },
+          "note": "The capture equates 5 points per dollar with 5% in Rewards, i.e. 1 point = 1 cent in rewards (a reward value, not cash; same basis as the draft’s Best Buy and Macy’s values).",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "Convention 1: the capture states every rate as a percentage in Rewards (5%/3%/1%), so the card is recorded as cash-back and the point value stays null; convention 3: \"that's 5% in Rewards\" is an equivalence, not a stated redemption value."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "citi-tsc-visa-product",
+            "quote": "1% in Rewards on all other purchases"
+          },
+          "note": "Added at adjudication. Convention 1: the capture states the rates as percentages in Rewards (5% at Tractor Supply, 3% and 1% outside), so the currency is cash-back.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication per convention 1."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-tsc-visa-product",
+              "quote": "Cardholders earn 5 points per dollar on eligible Tractor Supply purchases (that’s 5% in Rewards)"
+            }
+          ],
+          "note": "Added at adjudication. Rewards are Tractor Supply points stated as a percentage in Rewards; the capture does not say how they are redeemed, so cash-back is an approximation.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication per conventions 1 and 8."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "'eligible Tractor Supply purchases': 5 points per dollar (5% in Rewards) with the TSC Store Card or TSC Visa",
+            "rate": "5%",
+            "cap": "none stated",
+            "conditions": null,
+            "merchants": [
+              "Tractor Supply"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "citi-tsc-visa-product",
+            "quote": "Cardholders earn 5 points per dollar on eligible Tractor Supply purchases (that’s 5% in Rewards) made using their TSC Store Credit Card or TSC Visa"
+          },
+          "note": "The capture does not say TractorSupply.com or Petsense purchases earn 5%; it only says the store card can be used there. Dropped that claim.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture does not say TractorSupply.com or Petsense purchases earn 5%; the fixed hint keeps only what is stated."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "citi-llbean-mastercard",
+      "verdict": "fixed",
+      "reason": "Not drafted. Only the product page was captured; it states all three rates and the Bean Bucks value but has no additional-information terms, so no exclusions or caps can be checked. Evidence is sufficient for the rates.",
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "citi-llbean-mastercard-product",
+            "quote": "1 Bean Buck = $1 savings on your future L.L.Bean purchases"
+          },
+          "note": "Rewards are Bean Bucks earned as a percentage of spend, 1 Bean Buck = $1 at L.L.Bean; recorded as cash-back with an ambiguous issue (store-only redemption).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Convention 8: Bean Bucks are dollar-denominated store credit (1 Bean Buck = $1 at L.L.Bean) → cash-back with an ambiguous issue."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "L.L.Bean",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-llbean-mastercard-product",
+              "quote": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases."
+            },
+            {
+              "sourceId": "citi-llbean-mastercard-product",
+              "quote": "5% at L.L.Bean."
+            }
+          ],
+          "note": "5% in Bean Bucks at L.L.Bean.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "5% at L.L.Bean stated; single merchant → other."
+          }
+        },
+        {
+          "rule": {
+            "category": "dining",
+            "issuerWording": "restaurants",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-llbean-mastercard-product",
+              "quote": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases."
+            }
+          ],
+          "note": "2% at restaurants.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2% at restaurants stated."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-llbean-mastercard-product",
+              "quote": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases."
+            },
+            {
+              "sourceId": "citi-llbean-mastercard-product",
+              "quote": "1% on all other purchases"
+            }
+          ],
+          "note": "1% on all other purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "1% on all other purchases stated."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-llbean-mastercard-product",
+              "quote": "1 Bean Buck = $1 in savings on L.L. Bean purchases."
+            }
+          ],
+          "note": "Bean Bucks are redeemable only at L.L.Bean; cash-back is an approximation of their value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Convention 8 ambiguous issue: Bean Bucks are usable only at L.L.Bean."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-llbean-mastercard-product",
+            "quote": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases."
+          },
+          "note": "5% at L.L.Bean is stated on the product page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "5% at L.L.Bean stated on the product page."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "citi-dillards-mastercard",
+      "verdict": "fixed",
+      "reason": "Only the product page was captured; its footnotes carry the earning terms. Rules, U.S.-only flags and the ambiguous point-value issue check out.",
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-dillards-mastercard-product",
+            "quote": "Dillard’s Mastercard members earn 2 points4 for every $1 spent on all eligible Dillard’s purchases."
+          },
+          "note": "Was unanchored; the FAQ states 2 points per $1 at Dillard’s for the Mastercard.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The FAQ states 2 points per $1 at Dillard’s for the Mastercard."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "citi-macys-amex",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Everyday Shopping at Macy’s",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-macys-amex-product",
+              "quote": "2 points per $1 spent for Silver members"
+            },
+            {
+              "sourceId": "citi-macys-amex-product",
+              "quote": "New credit cards are opened at Silver status."
+            }
+          ],
+          "note": "The draft dropped the Macy’s purchases rule. New cards open at Silver (2 points per $1); Gold 3 and Platinum 5 are in the relationship-tier hint.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "New cards open at Silver, which earns 2 points per $1 at Macy’s; single merchant → other; higher tiers stay in the hint and the out-of-scope issue."
+          }
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "Macy’s gift cards, services and fees earn no points.",
+          "anchors": [
+            {
+              "sourceId": "citi-macys-amex-product",
+              "quote": "Earn points on every Macy’s purchase (except gift cards, services and fees)."
+            }
+          ],
+          "note": "Stated in the card comparison.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Gift cards, services and fees earn no points per the comparison."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-macys-amex-product",
+              "quote": "Points add up to Star Money that you can use to purchase merchandise at Macy’s, Macy’s Backstage, or macys.com."
+            }
+          ],
+          "note": "Added at the final consistency pass 2026-10-02 (general rule 14). Points become Star Money usable only at Macy’s, Macy’s Backstage or macys.com (store-only points, general 8 and 14).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule 14, final consistency pass 2026-10-02: Points become Star Money usable only at Macy’s, Macy’s Backstage or macys.com (store-only points, general 8 and 14)."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "Macy's purchases: 2/3/5 points per $1 for Silver/Gold/Platinum; new cards start Silver",
+            "rate": "2/3/5 points per $1 for Silver/Gold/Platinum Star Rewards members",
+            "cap": "none stated",
+            "conditions": "Gold with $500-$1,199 and Platinum with $1,200+ annual Macy's spend on the card",
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "citi-macys-amex-product",
+            "quote": "Cardholders can access Gold status with $500 - $1,199 annual spend at Macy’s with their Card and Platinum status with $1,200+ annual spend"
+          },
+          "note": "Was unanchored; anchored and the tier thresholds added from the product page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Tier rates and the $500-$1,199 / $1,200+ thresholds are on the product page."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "citi-bloomingdales-amex",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": 50,
+          "anchor": {
+            "sourceId": "citi-bloomingdales-amex-product",
+            "quote": "5,000 Points = $25 Reward"
+          },
+          "note": "5,000 points = $25 reward, i.e. 0.5 cent per point (a store reward value; same basis as the draft’s Macy’s value).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Convention 3: 5,000 points = $25 Bloomingdale’s Reward is the issuer’s own store reward value → 50."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "Top of the List Unlocked2: 10 points per $1 spent",
+              "Top of the List Unlocked2: 4 points per $1 spent"
+            ]
+          },
+          "note": "Not a conflict: the page gives Top of the List Unlocked 10 points at Bloomingdale’s and 4 points outside Bloomingdale’s.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Not a conflict: 10 points is the Top of the List Unlocked rate at Bloomingdale’s, 4 points the rate outside."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Earn more points per dollar when you shop at Bloomingdale’s2",
+              "Top of the List Unlocked2: 10 points per $1 spent"
+            ]
+          },
+          "note": "Added at adjudication. Convention 11: this ambiguity about earning at Bloomingdale’s is moot now that the 3-point Bloomingdale’s rule is added; the tiers stay in the out-of-scope issue.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; conforms to CONVENTIONS.md."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Bloomingdale’s, bloomingdales.com, Bloomingdale’s The Outlet Store",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "Bloomingdale’s American Express Cardholders earn 3 points for every $1 spent at Bloomingdale’s, bloomingdales.com, Bloomingdale’s The Outlet Store"
+            },
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "Loyallists: 3 points per $1 spent"
+            }
+          ],
+          "note": "The draft dropped the Bloomingdale’s purchases rule (3 points per $1 at the Loyallist tier; higher tiers in the hint).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3 points per $1 at Bloomingdale’s at the Loyallist tier; single merchant → other."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "Rewards can be used online or in store at Bloomingdale’s"
+            }
+          ],
+          "note": "Added at the final consistency pass 2026-10-02 (general rule 14). Points become $25 Rewards usable only at Bloomingdale’s (store-only points, general 8 and 14).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule 14, final consistency pass 2026-10-02: Points become $25 Rewards usable only at Bloomingdale’s (store-only points, general 8 and 14)."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "Loyallist tiers: 3/4/10 points per $1 at Bloomingdale's, 3/4/4 outside (Loyallist / Top of the List / Unlocked)",
+            "rate": "3/4/10 points per $1 at Bloomingdale's; 3/4/4 elsewhere",
+            "cap": "none stated",
+            "conditions": "Tier depends on Bloomingdale's Loyallist status",
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "citi-bloomingdales-amex-product",
+            "quote": "10 points per $1 spent for Top of the List Unlocked"
+          },
+          "note": "The hint missed the Top of the List Unlocked tier (10 at Bloomingdale’s, 4 outside).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Tier rates in and outside Bloomingdale’s match the product page."
+          }
+        }
+      ]
+    }
+  ]
+}

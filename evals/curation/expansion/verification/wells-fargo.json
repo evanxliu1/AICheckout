@@ -1,0 +1,929 @@
+{
+  "schemaVersion": 1,
+  "issuer": "Wells Fargo",
+  "verifier": {
+    "agent": "claude-code-subagent",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-02",
+    "filesRead": [
+      "AGENTS.md",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verify/wells-fargo.md",
+      "evals/curation/expansion/corpus.draft.json",
+      "evals/curation/expansion/product-notes.json",
+      "evals/curation/expansion/cards.json",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/schema.ts",
+      "apps/api/src/curation/v2/corpus.ts",
+      "evals/curation/expansion/captures/wells-fargo-autograph-product.txt",
+      "evals/curation/expansion/captures/wells-fargo-autograph-pricing.txt",
+      "evals/curation/expansion/captures/wells-fargo-autograph-categories.txt",
+      "evals/curation/expansion/captures/wells-fargo-autograph-journey-product.txt",
+      "evals/curation/expansion/captures/wells-fargo-autograph-journey-pricing.txt",
+      "evals/curation/expansion/captures/wells-fargo-one-key-product.txt",
+      "evals/curation/expansion/captures/wells-fargo-one-key-plus-product.txt",
+      "evals/curation/expansion/captures/wells-fargo-choice-privileges-product.txt",
+      "evals/curation/expansion/captures/wells-fargo-choice-privileges-pricing.txt",
+      "evals/curation/expansion/captures/wells-fargo-choice-privileges-select-product.txt",
+      "evals/curation/expansion/captures/wells-fargo-choice-privileges-select-pricing.txt"
+    ]
+  },
+  "adjudicator": {
+    "agent": "claude-code-subagent",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-02",
+    "filesRead": [
+      "AGENTS.md",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/CONVENTIONS.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/corpus.draft.json",
+      "evals/curation/expansion/product-notes.json",
+      "evals/curation/expansion/cards.json",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/schema.ts",
+      "apps/api/src/curation/v2/corpus.ts",
+      "evals/curation/expansion/verification/wells-fargo.json",
+      "evals/curation/expansion/verification/conventions/wells-fargo.md",
+      "evals/curation/expansion/captures/wells-fargo-autograph-product.txt",
+      "evals/curation/expansion/captures/wells-fargo-autograph-pricing.txt",
+      "evals/curation/expansion/captures/wells-fargo-autograph-categories.txt",
+      "evals/curation/expansion/captures/wells-fargo-autograph-journey-product.txt",
+      "evals/curation/expansion/captures/wells-fargo-autograph-journey-pricing.txt",
+      "evals/curation/expansion/captures/wells-fargo-one-key-product.txt",
+      "evals/curation/expansion/captures/wells-fargo-one-key-plus-product.txt",
+      "evals/curation/expansion/captures/wells-fargo-choice-privileges-product.txt",
+      "evals/curation/expansion/captures/wells-fargo-choice-privileges-pricing.txt",
+      "evals/curation/expansion/captures/wells-fargo-choice-privileges-select-product.txt",
+      "evals/curation/expansion/captures/wells-fargo-choice-privileges-select-pricing.txt"
+    ]
+  },
+  "cards": [
+    {
+      "cardId": "wells-fargo-autograph",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "wells-fargo-autograph-product",
+            "quote": "Earn 20,000 bonus points when you spend $1,000 in purchases in the first 3 months1 – that’s a $200 cash redemption value"
+          },
+          "note": "The product page states a cash redemption value: 20,000 points = $200, i.e. 1 cent a point (also \"51,960 points x $0.01 per point\"). Rates stay per-point multiples (3X = 300).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states a cash redemption value ($200 for 20,000 points, and $0.01 per point): 1 cent a point (convention 3)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.issuerWording",
+          "current": "Gas",
+          "corrected": "electric vehicle charging stations",
+          "anchor": {
+            "sourceId": "wells-fargo-autograph-product",
+            "quote": "Gas: gas stations, automated fuel dispensers, and electric vehicle charging stations."
+          },
+          "note": "The EV-charging rule names the EV part of the Gas definition rather than the whole Gas heading.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The EV rule names the EV part of the Gas definition."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A missing issue with no anchor and no detail (convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: A missing issue with no anchor and no detail (convention 11)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "Person-to-person money transfers",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "Person-to-person money transfers"
+            }
+          ],
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the terms among transactions that do not earn Rewards Points."
+          }
+        },
+        {
+          "text": "Overdraft protection advances",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "Overdraft protection advances"
+            }
+          ],
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the terms among transactions that do not earn Rewards Points."
+          }
+        },
+        {
+          "text": "Disputed or illegal purchases",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "Disputed or illegal purchases"
+            }
+          ],
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the terms among transactions that do not earn Rewards Points."
+          }
+        },
+        {
+          "text": "Fees or interest that post to the account",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "Any kind of fees or interest that post to your Credit Card Account, such as:"
+            }
+          ],
+          "note": "Fees and interest never earn points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the terms among transactions that do not earn Rewards Points."
+          }
+        },
+        {
+          "text": "Gambling transactions",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "Any kind of gambling transactions you make, including:"
+            }
+          ],
+          "note": "Gambling never earns points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the terms among transactions that do not earn Rewards Points."
+          }
+        }
+      ],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "wells-fargo-autograph-journey",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A missing issue with no anchor and no detail (convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: A missing issue with no anchor and no detail (convention 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A missing issue with no anchor and no detail (convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: A missing issue with no anchor and no detail (convention 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A missing issue with no anchor and no detail (convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: A missing issue with no anchor and no detail (convention 11)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "Person-to-person money transfers",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-journey-pricing",
+              "quote": "Person-to-person money transfers"
+            }
+          ],
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the terms among transactions that do not earn Rewards Points."
+          }
+        },
+        {
+          "text": "Overdraft protection advances",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-journey-pricing",
+              "quote": "Overdraft protection advances"
+            }
+          ],
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the terms among transactions that do not earn Rewards Points."
+          }
+        },
+        {
+          "text": "Disputed or illegal purchases",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-journey-pricing",
+              "quote": "Disputed or illegal purchases"
+            }
+          ],
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the terms among transactions that do not earn Rewards Points."
+          }
+        },
+        {
+          "text": "Fees or interest that post to the account",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-journey-pricing",
+              "quote": "Any kind of fees or interest that post to your Credit Card Account, such as:"
+            }
+          ],
+          "note": "Fees and interest never earn points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the terms among transactions that do not earn Rewards Points."
+          }
+        },
+        {
+          "text": "Gambling transactions",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-journey-pricing",
+              "quote": "Any kind of gambling transactions you make, including:"
+            }
+          ],
+          "note": "Gambling never earns points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the terms among transactions that do not earn Rewards Points."
+          }
+        }
+      ],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "wells-fargo-one-key",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "wells-fargo-one-key-product",
+            "quote": "Other purchases: 1.5% in OneKeyCash is earned per $1 spent on other net purchases."
+          },
+          "note": "Rewards are percentages of spend in OneKeyCash, labelled cash-back as on the One Key+ draft (see the ambiguous issue). The capture is the One Key card page and complete; the draft dropped the card.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "OneKeyCash is dollar-denominated and stated as a percentage: cash-back with the ambiguous issue (convention 8)."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "travel-portal",
+            "issuerWording": "eligible accommodation rentals, activities, car rentals, cruises, flights, hotels, and packages booked through the U.S. version of Expedia, Hotels.com, or Vrbo",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": true,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "3% (1.5% base plus 1.5% bonus) in OneKeyCash is earned per $1 spent on eligible net purchases (purchases minus returns and credits) resulting from eligible"
+            },
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "rentals, activities, car rentals, cruises, flights, hotels, and packages booked through the U.S. version of Expedia, Hotels.com, or Vrbo"
+            }
+          ],
+          "note": "3% on Expedia, Hotels.com and Vrbo bookings made on the U.S. sites (same mapping as the One Key+ draft).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3% on Expedia, Hotels.com and Vrbo bookings on the U.S. sites; the card program's own booking sites, travel-portal (convention 4), as on One Key+. Copyright adjacency fix 2026-10-02: anchor quote shortened or replaced so that it does not run on from a neighbouring anchor into more than 25 consecutive capture words; the value is unchanged."
+          }
+        },
+        {
+          "rule": {
+            "category": "gas",
+            "issuerWording": "gas stations, automated fuel dispensers, and electric vehicle charging stations",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "3% (1.5% base plus 1.5% bonus) in OneKeyCash is earned per $1 spent on net purchases at retailers whose Mastercard merchant code is classified as:"
+            },
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "gas stations, automated fuel dispensers, and electric vehicle charging stations."
+            }
+          ],
+          "note": "3% at gas stations.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3% at gas stations, automated fuel dispensers and EV charging. Copyright adjacency fix 2026-10-02: anchor quote shortened or replaced so that it does not run on from a neighbouring anchor into more than 25 consecutive capture words; the value is unchanged."
+          }
+        },
+        {
+          "rule": {
+            "category": "ev-charging",
+            "issuerWording": "electric vehicle charging stations",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "3% (1.5% base plus 1.5% bonus) in OneKeyCash is earned per $1 spent on net purchases at retailers whose Mastercard merchant code is classified as:"
+            },
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "gas stations, automated fuel dispensers, and electric vehicle charging stations."
+            }
+          ],
+          "note": "3% at EV charging stations, part of the Gas category.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "EV charging is in the 3% Gas category. Copyright adjacency fix 2026-10-02: anchor quote shortened or replaced so that it does not run on from a neighbouring anchor into more than 25 consecutive capture words; the value is unchanged."
+          }
+        },
+        {
+          "rule": {
+            "category": "supermarkets",
+            "issuerWording": "grocery stores, supermarkets, delis and bakeries",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "3% (1.5% base plus 1.5% bonus) in OneKeyCash is earned per $1 spent on net purchases at retailers whose Mastercard merchant code is classified as:"
+            },
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "Groceries: grocery stores, supermarkets, delis and bakeries."
+            }
+          ],
+          "note": "3% on groceries.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3% at grocery stores, supermarkets, delis and bakeries."
+          }
+        },
+        {
+          "rule": {
+            "category": "dining",
+            "issuerWording": "eating places and restaurants, drinking places, fast food restaurants, and/or caterers",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "3% (1.5% base plus 1.5% bonus) in OneKeyCash is earned per $1 spent on net purchases at retailers whose Mastercard merchant code is classified as:"
+            },
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "Dining: eating places and restaurants, drinking places, fast food restaurants, and/or caterers."
+            }
+          ],
+          "note": "3% on dining.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3% at eating places, drinking places, fast food and caterers."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "Other purchases",
+            "rateBps": 150,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "Other purchases: 1.5% in OneKeyCash is earned per $1 spent on other net purchases."
+            }
+          ],
+          "note": "Base 1.5% on everything else.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "1.5% on other net purchases."
+          }
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "Cash advances and cash equivalents of any kind",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "Cash advances and cash equivalents of any kind do not earn OneKeyCash."
+            }
+          ],
+          "note": "Never earn OneKeyCash.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the footnote among transactions that do not earn rewards."
+          }
+        },
+        {
+          "text": "Balance transfers",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "balance transfers; disputes, illegal actions, and violations (such as disputed or illegal purchases or purchases that violate the terms of your agreements);"
+            }
+          ],
+          "note": "The bonus footnote lists balance transfers among purchases that do not earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the footnote among transactions that do not earn rewards."
+          }
+        },
+        {
+          "text": "Fees and interest of any kind",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "fees and interest of any kind (such as late fees, returned payment fees, monthly or annual fees);"
+            }
+          ],
+          "note": "Listed among purchases that do not earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the footnote among transactions that do not earn rewards."
+          }
+        },
+        {
+          "text": "Gambling transactions of any kind",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "gambling transactions of any kind (such as bets or wagers transmitted over the internet, casino gaming chips, lottery tickets or off-track wagers)."
+            }
+          ],
+          "note": "Listed among purchases that do not earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the footnote among transactions that do not earn rewards."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "*OneKeyCash is not redeemable for cash and can only be used on Expedia, Hotels.com and Vrbo."
+            }
+          ],
+          "note": "Rates are stated as percentages in OneKeyCash (dollar-denominated), labelled cash-back, but OneKeyCash cannot be redeemed for cash; only usable on Expedia, Hotels.com and Vrbo.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "OneKeyCash is usable only on Expedia, Hotels.com and Vrbo (convention 8)."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Expedia, Hotels.com and Vrbo bookings on the U.S. sites",
+            "rate": "3%",
+            "cap": "none stated",
+            "conditions": "1.5% base plus 1.5% bonus in OneKeyCash; PayPal, supplier charges and bookings not logged into the One Key account may not earn the bonus",
+            "merchants": [
+              "Expedia",
+              "Hotels.com",
+              "Vrbo"
+            ],
+            "membership": "One Key member account"
+          },
+          "anchor": {
+            "sourceId": "wells-fargo-one-key-product",
+            "quote": "3% (1.5% base plus 1.5% bonus) in OneKeyCash is earned per $1 spent on eligible net purchases (purchases minus returns and credits) resulting from eligible"
+          },
+          "note": "The One Key page states its own split (1.5% base plus 1.5% bonus) and the logged-in requirement; the hint assumed the One Key+ structure. Added Hotels.com and Vrbo to merchants.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The One Key page states its own 1.5% + 1.5% split and the logged-in requirement."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "wells-fargo-one-key-plus",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A missing issue with no anchor and no detail (convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: A missing issue with no anchor and no detail (convention 11)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "Balance transfers",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-plus-product",
+              "quote": "balance transfers; disputes, illegal actions, and violations (such as disputed or illegal purchases or purchases that violate the terms of your agreements);"
+            }
+          ],
+          "note": "The bonus footnote lists balance transfers among purchases that do not earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the footnote among transactions that do not earn rewards."
+          }
+        },
+        {
+          "text": "Fees and interest of any kind",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-plus-product",
+              "quote": "fees and interest of any kind (such as late fees, returned payment fees, monthly or annual fees);"
+            }
+          ],
+          "note": "Listed among purchases that do not earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the footnote among transactions that do not earn rewards."
+          }
+        },
+        {
+          "text": "Gambling transactions of any kind",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-plus-product",
+              "quote": "gambling transactions of any kind (such as bets or wagers transmitted over the internet, casino gaming chips, lottery tickets or off-track wagers)."
+            }
+          ],
+          "note": "Listed among purchases that do not earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed in the footnote among transactions that do not earn rewards."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-plus-product",
+              "quote": "*OneKeyCash is not redeemable for cash and can only be used on Expedia, Hotels.com and Vrbo."
+            }
+          ],
+          "note": "Rates are stated as percentages in OneKeyCash (dollar-denominated), labelled cash-back, but OneKeyCash cannot be redeemed for cash; only usable on Expedia, Hotels.com and Vrbo.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "OneKeyCash is usable only on Expedia, Hotels.com and Vrbo (convention 8)."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Expedia, Hotels.com and Vrbo bookings on the U.S. sites",
+            "rate": "3%",
+            "cap": "none stated",
+            "conditions": "2% base plus 1% bonus in OneKeyCash; PayPal, supplier charges and bookings not logged into the One Key account may not earn the bonus",
+            "merchants": [
+              "Expedia",
+              "Hotels.com",
+              "Vrbo"
+            ],
+            "membership": "One Key member account"
+          },
+          "anchor": {
+            "sourceId": "wells-fargo-one-key-plus-product",
+            "quote": "3% (2% base plus 1% bonus) in OneKeyCash is earned per $1 spent on eligible net purchases (purchases minus returns and credits) resulting from eligible"
+          },
+          "note": "Hint is true; merchants listed only Expedia, added Hotels.com and Vrbo.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint is true; Hotels.com and Vrbo belong in the merchant list."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "wells-fargo-choice-privileges",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.2.issuerWording",
+          "current": "Gas: gas stations, automated fuel dispensers, and electric vehicle charging stations",
+          "corrected": "electric vehicle charging stations",
+          "anchor": {
+            "sourceId": "wells-fargo-choice-privileges-product",
+            "quote": "Gas: gas stations, automated fuel dispensers, and electric vehicle charging stations."
+          },
+          "note": "The EV-charging rule names the EV part of the Gas definition, as on the Select card.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: The EV-charging rule names the EV part of the Gas definition, as on the Select card."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "Disputed or illegal purchases",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-pricing",
+              "quote": "Disputed or illegal purchases"
+            }
+          ],
+          "note": "Listed as not Qualifying Net Purchases; earn no points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed as not Qualifying Net Purchases."
+          }
+        },
+        {
+          "text": "Gambling charges",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-pricing",
+              "quote": "Bets or wagers you make online"
+            }
+          ],
+          "note": "Gambling charges are listed as not Qualifying Net Purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Online bets and wagers are listed as not Qualifying Net Purchases."
+          }
+        }
+      ],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "wells-fargo-choice-privileges-product",
+            "quote": "Five points (1 base point plus 4 bonus points) per $1 spent on qualifying stays made on the Card Account at eligible Choice hotel locations."
+          },
+          "note": "5X on Choice stays (and 5X on Choice Privileges point purchases, already anchored) is stated; anchored to the stays sentence.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "5X on qualifying Choice stays is stated."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Bonus points may not be earned when paying with a mobile or digital wallet, third-party payment account or online marketplace",
+            "rate": "1X instead of the bonus rate",
+            "conditions": "Applies to bonus categories only; base point still earned"
+          },
+          "anchor": {
+            "sourceId": "wells-fargo-choice-privileges-product",
+            "quote": "or if you use a mobile or digital wallet."
+          },
+          "note": "The product footnote says bonus points may not be earned with a mobile or digital wallet; relevant at online checkout.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product footnote and the terms say bonus points may not be earned with a mobile or digital wallet, online marketplace or third-party payment account."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "wells-fargo-choice-privileges-select",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.2.issuerWording",
+          "current": "Gas",
+          "corrected": "electric vehicle charging stations",
+          "anchor": {
+            "sourceId": "wells-fargo-choice-privileges-select-product",
+            "quote": "Gas: gas stations, automated fuel dispensers, and electric vehicle charging stations."
+          },
+          "note": "The EV-charging rule names the EV part of the Gas definition.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The EV rule names the EV part of the Gas definition."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "Receive 20 Elite Qualifying Nights guaranteeing you Choice Privileges Platinum Elite status and benefits each calendar year.",
+              "Within 14 days of opening your Card Account, you will receive 10 Elite Qualifying Nights (EQNs) in your Choice Privileges Rewards Account."
+            ]
+          },
+          "note": "The Elite Qualifying Nights conflict (20 on the product page, 10 in the terms) is about a non-earning benefit, out of scope for the labels.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: The Elite Qualifying Nights conflict (20 on the product page, 10 in the terms) is about a non-earning benefit, out of scope for the labels."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A missing issue with no anchor and no detail (convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: A missing issue with no anchor and no detail (convention 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A missing issue with no anchor and no detail (convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: A missing issue with no anchor and no detail (convention 11)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "Disputed or illegal purchases",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-pricing",
+              "quote": "Disputed or illegal purchases"
+            }
+          ],
+          "note": "Listed as not Qualifying Net Purchases; earn no points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed as not Qualifying Net Purchases."
+          }
+        },
+        {
+          "text": "Gambling charges",
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-pricing",
+              "quote": "Bets or wagers you make online"
+            }
+          ],
+          "note": "Gambling charges are listed as not Qualifying Net Purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Online bets and wagers are listed as not Qualifying Net Purchases."
+          }
+        }
+      ],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Stays at participating Choice Hotels and Choice Privileges point purchases",
+            "rate": "10X",
+            "cap": "none stated",
+            "conditions": "Stays billed by eligible Choice hotels, booked via choicehotels.com, the hotel or the Service Center",
+            "merchants": [
+              "Choice Hotels"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "wells-fargo-choice-privileges-select-product",
+            "quote": "Ten points (1 base point plus 9 bonus points) per $1 spent on qualifying stays made on the Card Account at eligible Choice hotel locations."
+          },
+          "note": "The keyword anchor was the Choice Privileges program’s own 10 points per dollar for members (footnote 4), not the card earn. Re-anchored to the card’s 10X stays sentence.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The keyword anchor was the Choice program's own member earn (convention 2); re-anchored to the card's 10X stays sentence."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Bonus points may not be earned when paying with a mobile or digital wallet, third-party payment account or online marketplace",
+            "rate": "1X instead of the bonus rate",
+            "conditions": "Applies to bonus categories only; base point still earned"
+          },
+          "anchor": {
+            "sourceId": "wells-fargo-choice-privileges-select-product",
+            "quote": "or if you use a mobile or digital wallet."
+          },
+          "note": "The product footnote says bonus points may not be earned with a mobile or digital wallet; relevant at online checkout.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product footnote and the terms say bonus points may not be earned with a mobile or digital wallet."
+          }
+        }
+      ]
+    }
+  ]
+}

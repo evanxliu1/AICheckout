@@ -6,7 +6,7 @@ status: stable
 tags: [ops, evals, llm]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T06:40:00Z
+  at: 2026-10-02T18:30:00Z
 sources:
   - resource: ../../evals/curation/README.md
     title: Curation evaluations
@@ -81,7 +81,7 @@ None of these were run for this page on 2026-10-02; they are taken from the scri
 
 - Never tune prompts on held-out results, never re-capture pages (hashes would invalidate labels), never edit corpus labels to fit a model (phase 2c rules, [archive](../archive/phase2-goal.md)).
 - Codex adds roughly 2.5–2.6k harness tokens per call; subscription models are not pinned snapshots. Both are stated limitations of the results.
-- The curation model since 2026-10-02 is gpt-5.6-luna at `--effort xhigh` ([decision](../decisions/2026-10-02-gpt-5-6-luna-for-curation.md)); expect about 3 min per case. It is the `eval:v2` Codex default only on the unmerged `phase7-catalog-expansion` branch (with visible-output-token accounting and the longer deadlines, commit `0ebb98c`); `main` at `3439b9f` still requires `--model` and has neither.
+- The curation model since 2026-10-02 is gpt-5.6-luna at `--effort xhigh` ([decision](../decisions/2026-10-02-gpt-5-6-luna-for-curation.md)); expect about 3 min per case. It is the `eval:v2` Codex default (with visible-output-token accounting and the longer deadlines, commit `0ebb98c`) on `main` since PR #16 (`be5de25`).
 - `--model` is required for Claude, and for Codex on `main`; on the expansion branch Codex defaults to the curation model. Unknown `--disable` feature flags are hard errors; the provider filters them against what the installed CLI reports.
 - A Codex run in which the agent executes a tool is rejected; each call runs in an empty read-only directory.
 - `observations.json` holds traces; keep `runs/` private and inspect before sharing anything from it.

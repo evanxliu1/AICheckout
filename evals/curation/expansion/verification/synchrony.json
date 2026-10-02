@@ -1,0 +1,3938 @@
+{
+  "schemaVersion": 1,
+  "issuer": "Synchrony",
+  "verifier": {
+    "agent": "claude-code-subagent",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-02",
+    "filesRead": [
+      "AGENTS.md",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verify/synchrony.md",
+      "evals/curation/expansion/corpus.draft.json",
+      "evals/curation/expansion/product-notes.json",
+      "evals/curation/expansion/cards.json",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/corpus.ts",
+      "apps/api/src/curation/v2/schema.ts",
+      "wiki/system/catalog-expansion.md",
+      "evals/curation/expansion/captures/synchrony-premier-world-mastercard-product.txt",
+      "evals/curation/expansion/captures/synchrony-premier-world-mastercard-rewards-terms.txt",
+      "evals/curation/expansion/captures/amazon-store-card-product.txt",
+      "evals/curation/expansion/captures/synchrony-amazon-store-card-pricing.txt",
+      "evals/curation/expansion/captures/synchrony-amazon-store-card-categories.txt",
+      "evals/curation/expansion/captures/synchrony-paypal-cashback-mastercard-product.txt",
+      "evals/curation/expansion/captures/synchrony-paypal-cashback-mastercard-rewards-terms.txt",
+      "evals/curation/expansion/captures/synchrony-paypal-cashback-mastercard-pricing.txt",
+      "evals/curation/expansion/captures/synchrony-venmo-credit-card-product.txt",
+      "evals/curation/expansion/captures/synchrony-venmo-credit-card-rewards-terms.txt",
+      "evals/curation/expansion/captures/synchrony-verizon-visa-card-product.txt",
+      "evals/curation/expansion/captures/synchrony-verizon-visa-card-rewards-terms.txt",
+      "evals/curation/expansion/captures/synchrony-verizon-visa-card-partner.txt",
+      "evals/curation/expansion/captures/synchrony-sams-club-mastercard-product.txt",
+      "evals/curation/expansion/captures/synchrony-sams-club-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-carecredit-rewards-mastercard-product.txt",
+      "evals/curation/expansion/captures/synchrony-carecredit-rewards-mastercard-pricing.txt",
+      "evals/curation/expansion/captures/synchrony-onepay-cashrewards-card-product.txt",
+      "evals/curation/expansion/captures/synchrony-onepay-cashrewards-card-rewards-terms.txt",
+      "evals/curation/expansion/captures/synchrony-onepay-cashrewards-card-pricing.txt",
+      "evals/curation/expansion/captures/synchrony-mywalgreens-mastercard-product.txt",
+      "evals/curation/expansion/captures/synchrony-mywalgreens-mastercard-rewards-terms.txt",
+      "evals/curation/expansion/captures/synchrony-mywalgreens-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-tjx-rewards-platinum-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-mylowes-rewards-credit-card-partner.txt",
+      "evals/curation/expansion/captures/synchrony-newegg-store-credit-card-product.txt",
+      "evals/curation/expansion/captures/synchrony-newegg-store-credit-card-categories.txt",
+      "evals/curation/expansion/captures/synchrony-dicks-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-jcpenney-mastercard-product.txt",
+      "evals/curation/expansion/captures/synchrony-jcpenney-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-belk-rewards-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-ae-real-rewards-visa-partner.txt",
+      "evals/curation/expansion/captures/synchrony-at-home-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-chicos-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-soma-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-whbm-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-jcrew-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-harbor-freight-credit-card-partner.txt",
+      "evals/curation/expansion/captures/synchrony-phillips-66-credit-card-product.txt",
+      "evals/curation/expansion/captures/synchrony-techron-advantage-visa-product.txt",
+      "evals/curation/expansion/captures/synchrony-cathay-world-elite-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-virgin-red-rewards-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-sun-country-visa-signature-partner.txt",
+      "evals/curation/expansion/captures/synchrony-sun-country-visa-signature-partner-2.txt"
+    ]
+  },
+  "adjudicator": {
+    "agent": "claude-code-subagent",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-02",
+    "filesRead": [
+      "AGENTS.md",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/CONVENTIONS.md",
+      "evals/curation/expansion/verification/conventions/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/synchrony.md",
+      "evals/curation/expansion/verification/synchrony.json",
+      "evals/curation/expansion/corpus.draft.json",
+      "evals/curation/expansion/product-notes.json",
+      "evals/curation/expansion/cards.json",
+      "evals/curation/expansion/verify/synchrony.md",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/schema.ts",
+      "apps/api/src/curation/v2/corpus.ts",
+      "packages/rewards-core/src/schema.ts",
+      "evals/curation/expansion/captures/amazon-store-card-product.txt",
+      "evals/curation/expansion/captures/synchrony-ae-real-rewards-visa-partner.txt",
+      "evals/curation/expansion/captures/synchrony-amazon-store-card-categories.txt",
+      "evals/curation/expansion/captures/synchrony-amazon-store-card-pricing.txt",
+      "evals/curation/expansion/captures/synchrony-at-home-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-belk-rewards-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-carecredit-rewards-mastercard-pricing.txt",
+      "evals/curation/expansion/captures/synchrony-carecredit-rewards-mastercard-product.txt",
+      "evals/curation/expansion/captures/synchrony-cathay-world-elite-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-chicos-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-dicks-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-harbor-freight-credit-card-partner.txt",
+      "evals/curation/expansion/captures/synchrony-jcpenney-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-jcpenney-mastercard-product.txt",
+      "evals/curation/expansion/captures/synchrony-jcrew-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-mylowes-rewards-credit-card-partner.txt",
+      "evals/curation/expansion/captures/synchrony-mywalgreens-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-mywalgreens-mastercard-product.txt",
+      "evals/curation/expansion/captures/synchrony-mywalgreens-mastercard-rewards-terms.txt",
+      "evals/curation/expansion/captures/synchrony-newegg-store-credit-card-categories.txt",
+      "evals/curation/expansion/captures/synchrony-newegg-store-credit-card-product.txt",
+      "evals/curation/expansion/captures/synchrony-onepay-cashrewards-card-pricing.txt",
+      "evals/curation/expansion/captures/synchrony-onepay-cashrewards-card-product.txt",
+      "evals/curation/expansion/captures/synchrony-onepay-cashrewards-card-rewards-terms.txt",
+      "evals/curation/expansion/captures/synchrony-paypal-cashback-mastercard-pricing.txt",
+      "evals/curation/expansion/captures/synchrony-paypal-cashback-mastercard-product.txt",
+      "evals/curation/expansion/captures/synchrony-paypal-cashback-mastercard-rewards-terms.txt",
+      "evals/curation/expansion/captures/synchrony-phillips-66-credit-card-product.txt",
+      "evals/curation/expansion/captures/synchrony-premier-world-mastercard-product.txt",
+      "evals/curation/expansion/captures/synchrony-premier-world-mastercard-rewards-terms.txt",
+      "evals/curation/expansion/captures/synchrony-sams-club-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-sams-club-mastercard-product.txt",
+      "evals/curation/expansion/captures/synchrony-soma-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-sun-country-visa-signature-partner.txt",
+      "evals/curation/expansion/captures/synchrony-sun-country-visa-signature-partner-2.txt",
+      "evals/curation/expansion/captures/synchrony-techron-advantage-visa-product.txt",
+      "evals/curation/expansion/captures/synchrony-tjx-rewards-platinum-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-venmo-credit-card-product.txt",
+      "evals/curation/expansion/captures/synchrony-venmo-credit-card-rewards-terms.txt",
+      "evals/curation/expansion/captures/synchrony-verizon-visa-card-partner.txt",
+      "evals/curation/expansion/captures/synchrony-verizon-visa-card-product.txt",
+      "evals/curation/expansion/captures/synchrony-verizon-visa-card-rewards-terms.txt",
+      "evals/curation/expansion/captures/synchrony-virgin-red-rewards-mastercard-partner.txt",
+      "evals/curation/expansion/captures/synchrony-whbm-mastercard-partner.txt"
+    ]
+  },
+  "cards": [
+    {
+      "cardId": "synchrony-premier-world-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.3",
+          "current": "You acknowledge that the Cashback Program is a promotional program as to which no consideration has been paid by you.",
+          "corrected": "you will automatically earn cash back in the form of a statement credit",
+          "anchor": {
+            "sourceId": "synchrony-premier-world-mastercard-rewards-terms",
+            "quote": "you will automatically earn cash back in the form of a statement credit"
+          },
+          "note": "Replaces the boilerplate \"promotional program\" sentence, which states no rule value, with the automatic-earning sentence that supports the activation value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The automatic-earning sentence supports the rule; the promotional-program boilerplate states no value."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.activation",
+          "current": "enroll-once",
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-premier-world-mastercard-rewards-terms",
+            "quote": "you will automatically earn cash back in the form of a statement credit"
+          },
+          "note": "Cash back is earned automatically (automatic enrollment on first use); no enrollment step, so activation is none, not enroll-once.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms: cash back is earned automatically; activation none (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.limitedTime",
+          "current": {
+            "endsOn": null
+          },
+          "corrected": null,
+          "anchor": {
+            "sourceId": "synchrony-premier-world-mastercard-rewards-terms",
+            "quote": "Make Purchases with your Synchrony Premier World Mastercard® and Earn 2% Cash Back."
+          },
+          "note": "The 2% is the standing rate. The \"promotional program\" wording is legal boilerplate (no consideration paid), not a limited-time offer; no end date or promo period exists.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 2% is the standing rate; \"promotional program\" is legal boilerplate, not a limited time (general convention 10)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "You acknowledge that the Cashback Program is a promotional program as to which no consideration has been paid by you."
+            ]
+          },
+          "note": "The missing issue is anchored on the boilerplate \"promotional program\" sentence; nothing the card needs is missing from the captures.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The missing issue is anchored only on boilerplate and states no problem (general convention 11)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "synchrony-amazon-store-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "untrusted-instruction",
+            "anchors": [
+              "I recommend you apply for the Amazon Prime Credit Card."
+            ]
+          },
+          "note": "The quoted sentence is customer-review text recommending the card to other shoppers, not an instruction addressed to the model; review text is not evidence and not an injection.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Customer-review text is not an untrusted instruction (general convention 11)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Prime Store Card members can earn 5% back at Amazon.com and Whole Foods Market"
+          },
+          "note": "Added at adjudication. The capture states the rate as a percentage back, so the currency is cash-back with rateBps = percent x 100 (general convention 1). Rewards points equal the applicable % of purchases and show as a dollar balance.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 10000,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "reflected as a dollar balance (versus a points balance), with $1 of rewards being equivalent to 1 rewards point"
+          },
+          "note": "Added at adjudication. Cash-back currency carries no point value (general convention 1: never convert with a point value; the catalog schema forbids a point value on a cash-back card). The rewards are already dollars, so the percentage is the whole rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "You may see rewards points referred to simply as rewards and reflected as a dollar balance (versus a points balance), with $1 of rewards being",
+          "note": "Added at adjudication. The old anchor supported the dropped 10000 value; the dollar-balance anchor replaces it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.1",
+          "current": "reflected as a dollar balance (versus a points balance), with $1 of rewards being equivalent to 1 rewards point",
+          "note": "Added at adjudication. The old anchor supported the dropped 10000 value; the dollar-balance anchor replaces it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.category",
+          "current": "online-retail",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Prime Store Card members can earn 5% back at Amazon.com and Whole Foods Market"
+          },
+          "note": "Added at adjudication. Pays only at Amazon.com, a single merchant (general convention 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.category",
+          "current": "supermarkets",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Prime Store Card members can earn 5% back at Amazon.com and Whole Foods Market"
+          },
+          "note": "Added at adjudication. Pays only at participating Whole Foods Market stores, a single merchant, not supermarkets in general (general convention 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Prime Store Card members with an eligible Prime membership can earn 5% back year-round at Amazon.com, Whole Foods Market (In-Store Code usage required at Whole",
+              "at participating Whole Foods Market physical stores, will result in you receiving rewards points equal to the applicable % of such purchases on your Amazon"
+            ]
+          },
+          "note": "Added at adjudication. The issue only repeats an earning sentence and states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Prime Store Card members can earn 5% back at Amazon.com and Whole Foods Market (In-Store Code required)12 with an eligible Prime membership"
+            ]
+          },
+          "note": "Added at adjudication. The issue only repeats an earning sentence and states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "and more"
+            ]
+          },
+          "note": "Added at the final consistency pass 2026-10-02 (general rule 16). The issue's only anchor is \"and more\", which states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule 16, final consistency pass 2026-10-02: an issue whose anchor does not state the problem is removed."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "with $1 of rewards being equivalent to 1 rewards point"
+            },
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "will result in your receiving rewards points equal to the applicable % of such purchases"
+            }
+          ],
+          "note": "Rewards points are dollar-denominated ($1 of rewards = 1 point) and earned as a percent of the purchase, so 5% back is 0.05 points per $1. The draft pairs rateBps 500 with a point value of 10000, which double-counts if multiplied; flagging for a decision on how such cards carry rate and point value.",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "Resolved by the conventions instead: 5% back is recorded as cash-back 500 and the point value is null (general convention 1), so there is no double count left to flag."
+          }
+        },
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "Prime Store Card members can earn 5% back at Amazon.com and Whole Foods Market (In-Store Code required)12 with an eligible Prime membership"
+            }
+          ],
+          "note": "Added at the final consistency pass 2026-10-02 (general rule 17). The 5% rates need an eligible Prime membership (a paid membership the cardholder may not have); labels keep the stated rate until the engine supports conditions.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule 17, final consistency pass 2026-10-02: The 5% rates need an eligible Prime membership (a paid membership the cardholder may not have); labels keep the stated rate until the engine supports conditions."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Prime Store Card members with an eligible Prime membership can earn 5% back year-round at Amazon.com, Whole Foods Market (In-Store Code usage required at Whole"
+          },
+          "note": "True: 5% at Amazon.com and Whole Foods requires an eligible Prime membership; cannot be combined with financing offers.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Section 2 of the terms and the product page tie the 5% to an eligible Prime membership."
+          }
+        },
+        {
+          "action": "fix",
+          "hintIndex": 1,
+          "hint": {
+            "type": "closed-loop",
+            "summary": "Usable for most purchases at Amazon.com, select physical Amazon stores, participating Whole Foods (In-Store Code) and Amazon Pay merchants; Amazon Pay earns nothing.",
+            "merchants": [
+              "Amazon"
+            ]
+          },
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores"
+          },
+          "note": "Store-only use is stated in the terms; the research flag becomes an anchored note naming where the card works.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Section 1 of the terms lists where Store Card accounts may be used; section 6 excludes Amazon Pay from earning."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-amazon-secured-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership6"
+          },
+          "note": "Added at adjudication. The capture states the rate as a percentage back, so the currency is cash-back with rateBps = percent x 100 (general convention 1).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 10000,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "reflected as a dollar balance (versus a points balance), with $1 of rewards being equivalent to 1 rewards point"
+          },
+          "note": "Added at adjudication. Cash-back currency carries no point value (general convention 1: never convert with a point value; the catalog schema forbids a point value on a cash-back card).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "You may see rewards points referred to simply as rewards and reflected as a dollar balance (versus a points balance), with $1 of rewards being",
+          "note": "Added at adjudication. The old anchor supported the dropped 10000 value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.1",
+          "current": "reflected as a dollar balance (versus a points balance), with $1 of rewards being equivalent to 1 rewards point",
+          "note": "Added at adjudication. The old anchor supported the dropped 10000 value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.category",
+          "current": "online-retail",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership6"
+          },
+          "note": "Added at adjudication. Pays only on Amazon purchases, a single merchant (general convention 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership6"
+            ]
+          },
+          "note": "Added at adjudication. The issue only repeats an earning sentence and states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "other",
+            "issuerWording": "purchases made at physical Amazon locations",
+            "rateBps": 200
+          },
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "For Secured Card accounts opened on or after January 1, 2021, the 2% back benefit may apply to purchases"
+            },
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "including 1-Click orders and purchases made at physical Amazon locations"
+            }
+          ],
+          "note": "The secured-card terms extend the 2% back benefit to purchases at physical Amazon locations (the store card has the same rule at 5%).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Section 3: for Secured Card accounts opened on or after 2021-01-01 the 2% applies, including purchases at physical Amazon locations."
+          }
+        },
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "supermarkets",
+            "issuerWording": "participating Whole Foods Markets",
+            "rateBps": 200
+          },
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "All purchases (less returns and other credits) to which the % back benefit applies, including eligible purchases at participating Whole Foods Markets"
+            },
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "For Secured Card accounts opened on or after January 1, 2021, the 2% back benefit may apply to purchases"
+            }
+          ],
+          "note": "Section 6 applies the % back benefit, including participating Whole Foods Markets, to the Store Card or Secured Card; for secured accounts the applicable % is 2%. Mapped to supermarkets as the store card draft does.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "Section 6 does extend the % back benefit to participating Whole Foods Markets for Secured Cards, but a single-merchant rule is other, not supermarkets (general convention 4).",
+            "replacement": {
+              "rule": {
+                "paidOnPaymentBps": 0,
+                "cap": null,
+                "activation": null,
+                "usMerchantsOnly": null,
+                "limitedTime": null,
+                "category": "other",
+                "issuerWording": "participating Whole Foods Markets",
+                "rateBps": 200
+              },
+              "anchors": [
+                {
+                  "sourceId": "amazon-store-card-product",
+                  "quote": "All purchases (less returns and other credits) to which the % back benefit applies, including eligible purchases at participating Whole Foods Markets"
+                },
+                {
+                  "sourceId": "amazon-store-card-product",
+                  "quote": "For Secured Card accounts opened on or after January 1, 2021, the 2% back benefit may apply to purchases"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "with $1 of rewards being equivalent to 1 rewards point"
+            },
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "will result in your receiving rewards points equal to the applicable % of such purchases"
+            }
+          ],
+          "note": "Rewards points are dollar-denominated ($1 of rewards = 1 point) and earned as a percent of the purchase, so 5% back is 0.05 points per $1. The draft pairs rateBps 500 with a point value of 10000, which double-counts if multiplied; flagging for a decision on how such cards carry rate and point value.",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "Resolved by the conventions instead: 2% back is recorded as cash-back 200 and the point value is null (general convention 1)."
+          }
+        },
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership"
+            }
+          ],
+          "note": "Added at the final consistency pass 2026-10-02 (general rule 17). The 2% rates need an eligible Prime membership (a paid membership the cardholder may not have); labels keep the stated rate until the engine supports conditions.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule 17, final consistency pass 2026-10-02: The 2% rates need an eligible Prime membership (a paid membership the cardholder may not have); labels keep the stated rate until the engine supports conditions."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership6"
+          },
+          "note": "True per the Amazon page: 2% back on Amazon purchases needs an eligible Prime membership.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Secured Card features list 2% back on Amazon purchases with an eligible Prime membership."
+          }
+        },
+        {
+          "action": "fix",
+          "hintIndex": 1,
+          "hint": {
+            "type": "closed-loop",
+            "summary": "Usable for most purchases at Amazon.com, select physical Amazon stores, participating Whole Foods (In-Store Code) and Amazon Pay merchants; Amazon Pay earns nothing.",
+            "merchants": [
+              "Amazon"
+            ]
+          },
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores"
+          },
+          "note": "Store-only use is stated in the shared Store Card / Secured Card terms; anchored.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Section 1 of the shared terms covers Secured Card accounts."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-paypal-cashback-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.category",
+          "current": "online-retail",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "synchrony-paypal-cashback-mastercard-rewards-terms",
+            "quote": "3%: Each Eligible Purchase made by you through your PayPal account online"
+          },
+          "note": "The 3% applies only when paying through a PayPal account (a checkout method), not to online retail in general; online-retail would overstate it. Kept as other with the checkout-method product note.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 3% pays only when checking out through a PayPal account, a single checkout method (general convention 4)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-paypal-cashback-mastercard-rewards-terms",
+            "quote": "Automatically earn Cash Rewards on each Eligible"
+          },
+          "note": "The terms say Cash Rewards are earned automatically on each Eligible Purchase; no enrollment, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards terms say Cash Rewards are earned automatically on each Eligible Purchase (general convention 7). Copyright adjacency fix 2026-10-02: anchor quote shortened or replaced so that it does not run on from a neighbouring anchor into more than 25 consecutive capture words; the value is unchanged."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-paypal-cashback-mastercard-rewards-terms",
+            "quote": "Automatically earn Cash Rewards on each Eligible"
+          },
+          "note": "The terms say Cash Rewards are earned automatically on each Eligible Purchase; no enrollment, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards terms say Cash Rewards are earned automatically on each Eligible Purchase (general convention 7). Copyright adjacency fix 2026-10-02: anchor quote shortened or replaced so that it does not run on from a neighbouring anchor into more than 25 consecutive capture words; the value is unchanged."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-paypal-cashback-mastercard-rewards-terms",
+            "quote": "Automatically earn Cash Rewards on each Eligible"
+          },
+          "note": "The terms say Cash Rewards are earned automatically on each Eligible Purchase; no enrollment, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards terms say Cash Rewards are earned automatically on each Eligible Purchase (general convention 7). Copyright adjacency fix 2026-10-02: anchor quote shortened or replaced so that it does not run on from a neighbouring anchor into more than 25 consecutive capture words; the value is unchanged."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-paypal-cashback-mastercard-rewards-terms",
+            "quote": "3% on Eligible Purchases you make using your Card Account through your PayPal account online, or when you use your Card Account to send money"
+          },
+          "note": "True: 3% when paying through the PayPal account online or sending money to PayPal users.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state 3% through the PayPal account online or when sending money to PayPal users."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-venmo-credit-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+            "quote": "will earn cash back rewards (referred to as “Cash Rewards”)"
+          },
+          "note": "Undrafted card: the rewards terms state cash back rewards (Cash Rewards), credited to the Venmo balance.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the card earns cash back rewards, transferred to the Venmo balance."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "dining",
+            "issuerWording": "Dining & Nightlife",
+            "rateBps": 300
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "Earn 3% on all Eligible Purchases made in Dining & Nightlife"
+            },
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "there is no maximum amount of Eligible Purchases that may earn Cash Rewards"
+            }
+          ],
+          "note": "Missing rule: 3% on Dining & Nightlife.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: 3% on Dining & Nightlife, no maximum."
+          }
+        },
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "entertainment",
+            "issuerWording": "Entertainment",
+            "rateBps": 300
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "Earn 3% on all Eligible Purchases made in Entertainment"
+            },
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "there is no maximum amount of Eligible Purchases that may earn Cash Rewards"
+            }
+          ],
+          "note": "Missing rule: 3% on Entertainment.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: 3% on Entertainment, no maximum."
+          }
+        },
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "streaming",
+            "issuerWording": "ongoing delivery of television/radio/streaming content on a subscription or fee basis",
+            "rateBps": 300
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "ongoing delivery of television/radio/streaming content on a subscription or fee basis"
+            },
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "3%: Entertainment. All Eligible Purchases made in Entertainment will earn 3% Cash Rewards."
+            },
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "there is no maximum amount of Eligible Purchases that may earn Cash Rewards"
+            }
+          ],
+          "note": "The issuer Entertainment category includes streaming subscriptions, so streaming earns 3% (the draft note dropped this for want of a short quote).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Entertainment definition includes streaming subscriptions, so streaming as a whole category earns 3%."
+          }
+        },
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "other",
+            "issuerWording": "Pay with Venmo",
+            "rateBps": 300
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "Earn 3% on all Eligible Purchases made when using your Card Account as your linked payment method when you check out with Venmo online"
+            },
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "there is no maximum amount of Eligible Purchases that may earn Cash Rewards"
+            }
+          ],
+          "note": "Missing rule: 3% when the card is the linked method for Venmo checkout, business-profile payments or goods-and-services P2P (a checkout method; see product notes).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: 3% as the linked method for Venmo checkout, business payments and goods-and-services P2P; other with the checkout-method note."
+          }
+        },
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "other",
+            "issuerWording": "Venmo P2P (not for goods and services) or non-Venmo P2P",
+            "rateBps": 100
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "Earn 1% on all Eligible Purchases made for a Venmo P2P (not for goods and services) or non-Venmo P2P"
+            },
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "but only if such transactions are classified as a purchase and not a cash advance"
+            }
+          ],
+          "note": "Missing rule: 1% on P2P transfers classified as purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: 1% on P2P transfers classified as purchases."
+          }
+        },
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "all-purchases",
+            "issuerWording": "all other Eligible Purchases",
+            "rateBps": 100
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "Earn 1% on all other Eligible Purchases"
+            },
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "there is no maximum amount of Eligible Purchases that may earn Cash Rewards"
+            }
+          ],
+          "note": "Missing base rule: 1% on everything else.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: 1% on all other Eligible Purchases."
+          }
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "cash advances, including non-Venmo P2P classified as a cash advance",
+          "anchors": [
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "Eligible Purchases do not include cash advances as defined in the agreement governing your Card Account"
+            },
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "non-Venmo P2P that are classified as a cash advance"
+            }
+          ],
+          "note": "Cash advances (including P2P classified as a cash advance) never earn.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms exclude cash advances, including non-Venmo P2P classified as a cash advance."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+              "quote": "Earn an Additional 1% Split Bonus on all Eligible Purchases made in Entertainment or Dining & Nightlife where the"
+            }
+          ],
+          "note": "An extra 1% in dining and entertainment when the cost is split with other Venmo users in the app; a conditional bonus the rule format cannot express.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Split Bonus is conditional on splitting the cost in the app; the rule format cannot express it."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-venmo-credit-card-product",
+            "quote": "Earn 3% cash back when you check out with Venmo online, pay a business on Venmo, or pay someone for goods or services on Venmo."
+          },
+          "note": "True per product page and terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product page and terms agree on the 3% Pay with Venmo uses."
+          }
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+            "quote": "made for a Venmo P2P (not for goods and services) or non-Venmo P2P will earn 1% Cash Rewards, but only if such transactions are classified"
+          },
+          "note": "True per the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state the 1% P2P rule."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-verizon-visa-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+            "quote": "The Rewards Program allows you to earn rewards (referred to as \"Verizon Dollars\") on purchases made with your Credit Card Account."
+          },
+          "note": "Undrafted card. Rewards are Verizon Dollars, a dollar-denominated balance earned as a percent of purchases and spent with Verizon (no cash value). Recorded as cash-back like Sam’s Cash and Walgreens Cash; points with no value is the alternative.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verizon Dollars are dollar-denominated store credit earned as a percentage, so cash-back (general convention 8); the merchant-only issue is added at adjudication."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "gas",
+            "issuerWording": "Gas purchases",
+            "rateBps": 400
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "4% in Verizon Dollars for every Net New Purchase of gas and at electric vehicle (“EV”) charging stations."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "Missing rule: 4% at gas stations.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms section 3 states the gas rate; no limit; automatic enrollment on opening the account (general convention 7)."
+          }
+        },
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "ev-charging",
+            "issuerWording": "EV charging station purchases",
+            "rateBps": 400
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "4% in Verizon Dollars for every Net New Purchase of gas and at electric vehicle (“EV”) charging stations."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "Missing rule: 4% at EV charging stations.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms section 3 states the EV charging rate; no limit; automatic enrollment on opening the account (general convention 7)."
+          }
+        },
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "supermarkets",
+            "issuerWording": "grocery stores and supermarkets",
+            "rateBps": 400
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "4% in Verizon Dollars for every Net New Purchase of groceries. Grocery purchases include purchases made at grocery stores and supermarkets."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "Missing rule: 4% on groceries.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms section 3 states the groceries rate; no limit; automatic enrollment on opening the account (general convention 7)."
+          }
+        },
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "dining",
+            "issuerWording": "restaurants",
+            "rateBps": 400
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "4% in Verizon Dollars for every Net New Purchase made at restaurants."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "Missing rule: 4% at restaurants.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms section 3 states the restaurants rate; no limit; automatic enrollment on opening the account (general convention 7)."
+          }
+        },
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "other",
+            "issuerWording": "Verizon purchases",
+            "rateBps": 400
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "4% in Verizon Dollars for every Net New Purchase made at a Verizon operated store, Verizon online, over the phone with a Verizon representative"
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "Missing rule: 4% on Verizon purchases (devices, accessories; not bill payments).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms section 3 states the Verizon purchases rate; no limit; automatic enrollment on opening the account (general convention 7)."
+          }
+        },
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "other",
+            "issuerWording": "payment of your Verizon Wireless Account bill and/or your Verizon Fios Account bill",
+            "rateBps": 100
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "1% in Verizon Dollars for every Net New Purchase made for the payment of your Verizon Wireless Account bill"
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "Missing rule: 1% on Verizon bill payments.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms section 3 states the bill payments rate; no limit; automatic enrollment on opening the account (general convention 7)."
+          }
+        },
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "all-purchases",
+            "issuerWording": "everywhere else Visa is accepted",
+            "rateBps": 100
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "1% in Verizon Dollars for all other Net New Purchases made on your Credit Card Account everywhere else Visa is accepted"
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "Missing base rule: 1% elsewhere.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms section 3 states the all other purchases rate; no limit; automatic enrollment on opening the account (general convention 7)."
+          }
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "unauthorized or fraudulent charges, debt cancellation products, cash advances, balance transfers, interest or fees",
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "Verizon Dollars are not earned on the following: unauthorized or fraudulent charges, the purchase of debt cancellation products, cash advances, balance transfers, interest or fees"
+            }
+          ],
+          "note": "Stated non-earning transactions.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Section 3 lists the non-earning transactions."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-product",
+              "quote": "3% for Verizon Shine Verizon Dollars program and 1% additional benefit for bill pay for cardholders."
+            }
+          ],
+          "note": "The product page also advertises a separate Verizon loyalty program (3% on bill pay paid in full and on time); not a card earning rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page bundles a separate Verizon loyalty earn; only the card earn is recorded (general convention 2)."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-partner",
+              "quote": "earn Verizon Dollars1 to redeem toward Verizon purchases or to use toward your monthly Verizon Wireless or Fios bill2"
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "Verizon Dollars have no cash value and are issued for rewards purposes only"
+            }
+          ],
+          "note": "Added at adjudication. Rewards are issued as store credit usable only with the merchant (general convention 8). Verizon Dollars redeem only toward Verizon purchases and bills.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; anchors checked."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+            "quote": "4% in Verizon Dollars for every Net New Purchase made at a Verizon operated store, Verizon online, over the phone with a Verizon representative or"
+          },
+          "note": "True per the rewards terms; bill payments excluded from this rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Section 3 states the 4% Verizon purchase rule and excludes bill payments."
+          }
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "synchrony-verizon-visa-card-partner",
+            "quote": "1% on Verizon Wireless Account bill or Verizon Fios Account bill payment"
+          },
+          "note": "True per partner page and terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Partner page and terms state 1% on bill payments."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-sams-club-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [],
+      "addedRules": [
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "other",
+            "issuerWording": "Sam’s Club purchases",
+            "rateBps": 300
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-sams-club-mastercard-product",
+              "quote": "Earn 3% back in Sam’s Cash on Sam’s Club purchases for Plus members. Club members earn 1%.*"
+            }
+          ],
+          "note": "Missing rule (dropped by the draft): 3% on Sam’s Club purchases for Plus members, 1% for Club members; the tier is recorded in the product note.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product page: 3% at Sam’s Club for Plus members (Club members 1%); single merchant, tier in the product note and the existing out-of-scope issue."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-sams-club-mastercard-product",
+              "quote": "the rewards program offers straightforward rewards via Sam’s Cash that you can use on your next purchases at Sam’s Club"
+            }
+          ],
+          "note": "Added at adjudication. Rewards are issued as store credit usable only with the merchant (general convention 8). Sam's Cash is spent on Sam's Club purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; anchors checked."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-sams-club-mastercard-product",
+            "quote": "Plus members earn 3% back in Sam’s Cash on Sam’s Club purchases with a Sam’s Club Mastercard®. Club members earn 1%."
+          },
+          "note": "True; anchored to the product page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product page states the Plus/Club tier rates."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-carecredit-rewards-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-carecredit-rewards-mastercard-product",
+            "quote": "You will automatically earn Reward Points when you use your account to make qualifying purchases."
+          },
+          "note": "Points are earned automatically; no enrollment, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "FAQ: Reward Points are earned automatically (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-carecredit-rewards-mastercard-product",
+            "quote": "You will automatically earn Reward Points when you use your account to make qualifying purchases."
+          },
+          "note": "Points are earned automatically; no enrollment, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "FAQ: Reward Points are earned automatically (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-carecredit-rewards-mastercard-product",
+            "quote": "You will automatically earn Reward Points when you use your account to make qualifying purchases."
+          },
+          "note": "Points are earned automatically; no enrollment, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "FAQ: Reward Points are earned automatically (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-carecredit-rewards-mastercard-product",
+            "quote": "You will automatically earn Reward Points when you use your account to make qualifying purchases."
+          },
+          "note": "Points are earned automatically; no enrollment, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "FAQ: Reward Points are earned automatically (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-carecredit-rewards-mastercard-product",
+            "quote": "You will automatically earn Reward Points when you use your account to make qualifying purchases."
+          },
+          "note": "Points are earned automatically; no enrollment, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "FAQ: Reward Points are earned automatically (general convention 7)."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "all-purchases",
+            "issuerWording": "Eligible Purchases made with your Account",
+            "rateBps": 100
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-carecredit-rewards-mastercard-product",
+              "quote": "You earn 1 point for every $1 you spend, except for the following purchases, which do not qualify"
+            },
+            {
+              "sourceId": "synchrony-carecredit-rewards-mastercard-pricing",
+              "quote": "you will automatically earn 1 Reward Point"
+            },
+            {
+              "sourceId": "synchrony-carecredit-rewards-mastercard-product",
+              "quote": "There is no limit to the number of points you can earn."
+            }
+          ],
+          "note": "Missing standing base rule: 1 point per $1. All draft rules are the Bonus Points offer that ends 12/31/27; after that (and where bonuses do not apply) the base is 1 point per $1.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product FAQ and program terms: the standing earn is 1 Reward Point per $1; the higher rates are a Bonus Points offer through 2027-12-31."
+          }
+        },
+        {
+          "rule": {
+            "category": "drugstores",
+            "issuerWording": "drug stores & pharmacies",
+            "rateBps": 400,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": {
+              "endsOn": "2027-12-31"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-carecredit-rewards-mastercard-product",
+              "quote": "The Health & Wellness category includes: Healthcare, drug stores & pharmacies, gym memberships"
+            },
+            {
+              "sourceId": "synchrony-carecredit-rewards-mastercard-product",
+              "quote": "Earn 4x points* at purchases under $200 with the CareCredit provider network, and on health & wellness and pet store purchases"
+            },
+            {
+              "sourceId": "synchrony-carecredit-rewards-mastercard-product",
+              "quote": "Bonus Points: Offer valid on qualifying purchases (minus any returns or adjustments) from 8/1/25 through 12/31/27."
+            }
+          ],
+          "note": "Added at adjudication. The 4x health & wellness category includes drug stores and pharmacies as a whole, so drugstores earn 4x through 2027-12-31.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; rate and wording checked against the capture."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-carecredit-rewards-mastercard-product",
+            "quote": "You will, however, earn 4 points per $1 on purchases under $200 in the CareCredit network through 12/31/27."
+          },
+          "note": "True; bonus offer through 12/31/27, and purchases of $200 or more in the network earn nothing.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "FAQ states 4 points per $1 under $200 in the network through 12/31/27."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-onepay-cashrewards-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "cash-back",
+          "corrected": "points",
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+            "quote": "When used, these terms have the same meaning as “OnePay Points”."
+          },
+          "note": "Marketing says cash back, but the terms define cash back as OnePay Points (1.5 points per $1 etc.), redeemable at a stated value.",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "The terms state each rate as a percentage cash back (1.5%, 3%, 5%) even though they are tracked as OnePay Points, so the currency stays cash-back (general convention 1)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+            "quote": "redeem at a value of $.01 per OnePay Point"
+          },
+          "note": "The terms state a cash redemption value of $0.01 per OnePay Point (statement credit or deposit). Rates stay as drafted: 1.5, 3 and 5 points per $1.",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "Cash-back currency carries no point value (general convention 1; the catalog schema forbids one on a cash-back card)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+            "quote": "cardholders automatically earn OnePay Points as rewards on Purchases"
+          },
+          "note": "Points are earned automatically; activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Pricing terms: cardholders automatically earn OnePay Points on Purchases (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+            "quote": "cardholders automatically earn OnePay Points as rewards on Purchases"
+          },
+          "note": "Points are earned automatically; activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Pricing terms: cardholders automatically earn OnePay Points on Purchases (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+            "quote": "cardholders automatically earn OnePay Points as rewards on Purchases"
+          },
+          "note": "Points are earned automatically; activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Pricing terms: cardholders automatically earn OnePay Points on Purchases (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+            "quote": "cardholders automatically earn OnePay Points as rewards on Purchases"
+          },
+          "note": "Points are earned automatically; activation is none.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The 5% needs the Walmart+ membership linked to the card account, a one-time step specific to this reward, so enroll-once (general convention 7); the other rules earn automatically.",
+            "corrected": "enroll-once",
+            "anchor": {
+              "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+              "quote": "Your Walmart+ membership must be linked to your Account to earn 5% on Walmart Purchases."
+            }
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.limitedTime",
+          "current": {
+            "endsOn": "2026-12-31"
+          },
+          "corrected": {
+            "endsOn": null
+          },
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-product",
+            "quote": "Earn 3% cash back on all other purchases for your first 90 days upon account opening."
+          },
+          "note": "Added at adjudication. The 3% runs for the first 90 days after account opening; 2026-12-31 is the last application date, not the end of the rate, so no end date is stated (general convention 10).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "transactions for cash substitutes (e.g., money orders or wire transfers)",
+          "anchors": [
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+              "quote": "transactions for cash substitutes (e.g., money orders or wire transfers)"
+            }
+          ],
+          "note": "Dropped by the draft for want of a resolving quote; the pricing capture states it verbatim.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The pricing capture states the cash-substitute exclusion verbatim."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+              "quote": "Your Walmart+ membership must be linked to your Account to earn 5% on Walmart Purchases."
+            }
+          ],
+          "note": "Added at the final consistency pass 2026-10-02 (general rule 17). The 5% Walmart rate needs a linked Walmart+ membership (a paid membership the cardholder may not have); non-members earn 3% at Walmart.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule 17, final consistency pass 2026-10-02: The 5% Walmart rate needs a linked Walmart+ membership (a paid membership the cardholder may not have); non-members earn 3% at Walmart."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+            "quote": "Your Walmart+ membership must be linked to your Account to earn 5% on Walmart Purchases."
+          },
+          "note": "True; Walmart means U.S. stores, Walmart gas stations, app and Walmart.com, excluding Sam’s Club and third-party sellers.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Pricing terms require the Walmart+ membership to be linked for 5%."
+          }
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+            "quote": "3% Cash Back at Walmart: You earn OnePay Points equal to 3% of each $1 spent on Purchases at Walmart with your CashRewards Card (1.5%"
+          },
+          "note": "True.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state 3% at Walmart."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-mywalgreens-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.5.rateBps",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+            "quote": "All Other Purchases. You will earn Walgreens Cash rewards equal to 1% of every USD spent for Eligible Purchases"
+          },
+          "note": "The terms state 1% on all other purchases; the draft dropped the value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms: 1% on All Other Purchases."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.category",
+          "current": "drugstores",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+            "quote": "Walgreens Credit Card to make Eligible Purchases at Walgreens Participating Stores or at walgreens.com."
+          },
+          "note": "The 5% pharmacy rate applies only at Walgreens and Duane Reade stores and walgreens.com, not at drugstores in general; a merchant rule, so other.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 5% pharmacy rate pays only at Walgreens stores and walgreens.com (general convention 4). Copyright adjacency fix 2026-10-02: anchor quote shortened or replaced so that it does not run on from a neighbouring anchor into more than 25 consecutive capture words; the value is unchanged."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "time, bonus Walgreens Cash rewards may be available for certain Eligible Purchases made using your Walgreens Credit Card and may include spending thresholds or limits,"
+            ]
+          },
+          "note": "Added at adjudication. The issue is anchored only on bonus-offer boilerplate and states no problem (general conventions 10 and 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+              "quote": "may only be used in conjunction with the myWalgreens Program"
+            }
+          ],
+          "note": "Added at adjudication. Rewards are issued as store credit usable only with the merchant (general convention 8). Walgreens Cash is redeemed through the myWalgreens Program.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; anchors checked."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+            "quote": "You will earn Walgreens Cash rewards equal to 10% of every USD spent for Eligible Purchases of retail products branded with Walgreens marks or logos"
+          },
+          "note": "True; at Walgreens Participating Stores or walgreens.com; myWalgreens membership required.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state 10% on Walgreens-branded products at Walgreens stores and walgreens.com."
+          }
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-product",
+            "quote": "5% on all other brands and pharmacy purchases†"
+          },
+          "note": "True.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product page states 5% on other brands and pharmacy purchases."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-tjx-rewards-platinum-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "synchrony-tjx-rewards-platinum-mastercard-partner",
+            "quote": "5% back in Rewards Points every time you shop our family of stores."
+          },
+          "note": "Added at adjudication. The capture states the rate as a percentage back, so the currency is cash-back with rateBps = percent x 100 (general convention 1). Rates stay 500/200/100.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "5% back in Rewards Points every time you shop our family of stores."
+            ]
+          },
+          "note": "Added at adjudication. The issue only repeats an earning sentence and states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-tjx-rewards-platinum-mastercard-partner",
+              "quote": "Once your Points equal or exceed 1,000 Points, a Rewards Certificate will be issued"
+            },
+            {
+              "sourceId": "synchrony-tjx-rewards-platinum-mastercard-partner",
+              "quote": "available when signed in on the TJ Maxx, Marshalls, or HomeGoods apps for you to scan and redeem in any of our family of stores"
+            }
+          ],
+          "note": "Added at adjudication. Rewards are issued as store credit usable only with the merchant (general convention 8). Rewards Certificates redeem in the TJX family of stores; no dollar value per certificate is stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; anchors checked."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-tjx-rewards-platinum-mastercard-partner",
+            "quote": "used at all U.S. and Puerto Rico-based TJX stores, inclusive of TJ Maxx, Marshalls, HomeGoods, Sierra, Homesense, and online at tjmaxx.com, marshalls.com, sierra.com"
+          },
+          "note": "True: 5 points per $1 across the TJX family of stores and the three websites; anchored to the store list.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The FAQ lists the TJX stores and websites where the card works."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-mylowes-rewards-credit-card",
+      "verdict": "drop-card",
+      "reason": "The only capture (Synchrony partner page) states no earning rate or reward currency, only account FAQs; the card cannot be labeled from the captures.",
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [],
+      "verdictAdjudication": {
+        "decision": "accepted",
+        "reason": "The only capture is an account FAQ that states no earn rate or currency (general convention 9)."
+      }
+    },
+    {
+      "cardId": "synchrony-newegg-store-credit-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "synchrony-newegg-store-credit-card-product",
+            "quote": "Use your Newegg Store Credit Card, enjoy 4% off every day on your purchase."
+          },
+          "note": "Undrafted card. The benefit is a 4% discount at checkout on Newegg purchases, economically a 4% instant cash return; recorded as cash-back (see the ambiguous issue).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 4% is an instant discount at checkout, recorded as cash-back with the ambiguous issue; it is not store credit, so general convention 8 does not apply."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "other",
+            "issuerWording": "4% everyday discount",
+            "rateBps": 400
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-newegg-store-credit-card-product",
+              "quote": "Get 4% off every day when you pay with your Newegg Store Credit Card."
+            },
+            {
+              "sourceId": "synchrony-newegg-store-credit-card-product",
+              "quote": "Simply choose the discount option at checkout."
+            }
+          ],
+          "note": "The 4% everyday discount on Newegg purchases, chosen at checkout instead of special financing.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product FAQ: 4% off every day on Newegg purchases when the discount option is chosen; single merchant, so other."
+          }
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "gift cards, warranties, prior purchases, taxes, or shipping charges",
+          "anchors": [
+            {
+              "sourceId": "synchrony-newegg-store-credit-card-product",
+              "quote": "The 4% discount does not apply to gift cards, warranties, prior purchases, taxes, or shipping charges."
+            }
+          ],
+          "note": "Stated exclusions from the discount.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product FAQ states these exclusions verbatim."
+          }
+        },
+        {
+          "text": "purchases using special financing",
+          "anchors": [
+            {
+              "sourceId": "synchrony-newegg-store-credit-card-product",
+              "quote": "This offer cannot be combined with financing."
+            }
+          ],
+          "note": "Choosing special financing forgoes the discount.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The footnote says the discount cannot be combined with financing."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-newegg-store-credit-card-product",
+              "quote": "you’ll be prompted to select either special financing (if eligible) or the 4% everyday discount."
+            }
+          ],
+          "note": "The card has no rewards program; the 4% is a point-of-sale discount selected instead of financing, so rewardCurrency cash-back is an interpretation.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The card has no rewards program; the discount-as-cash-back reading is flagged."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-newegg-store-credit-card-product",
+            "quote": "Get 4% off every day when you pay with your Newegg Store Credit Card."
+          },
+          "note": "True; the discount is selected at checkout as an alternative to financing.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product FAQ states the 4% discount chosen at checkout."
+          }
+        },
+        {
+          "action": "drop",
+          "hintIndex": 1,
+          "note": "No capture states that the card works only at Newegg (the name implies it, but the captures do not say so).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "No capture says the card works only at Newegg; an unanchored research flag is dropped."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-dicks-mastercard",
+      "verdict": "drop-card",
+      "reason": "The only capture (Synchrony partner page) holds a sign-in prompt and site navigation; it states no earning rate or reward currency, so the card cannot be labeled from the captures.",
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [],
+      "verdictAdjudication": {
+        "decision": "accepted",
+        "reason": "The only capture is a sign-in page with navigation; no earn rate (general convention 9)."
+      }
+    },
+    {
+      "cardId": "synchrony-jcpenney-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.rateBps",
+          "current": 100,
+          "corrected": 20,
+          "anchor": {
+            "sourceId": "synchrony-jcpenney-mastercard-product",
+            "quote": "If you're approved for the JCPenney Mastercard, enjoy 1% Back in CashPass Rewards on purchases everywhere else Mastercard® is accepted**"
+          },
+          "note": "At the stated 200 points = $10 (5 cents a point), 1% back is 0.2 points per $1, so rateBps is 20 under the points convention (multiple x 100); 100 converted the percent at an assumed 1 cent a point while also recording a 5-cent point value.",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "The capture states 1% back; rates stated as a percentage are recorded as percent x 100 with cash-back currency, never converted with a point value (general convention 1). 0.2 points per $1 is not stated anywhere."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.1",
+          "current": {
+            "category": "other",
+            "issuerWording": "qualifying JCPenney purchases",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": [
+              "Earn 5% back in CashPass Rewards"
+            ]
+          },
+          "note": "The 5% rate is the non-cardholder Member tier of JCPenney Rewards; new cardmembers start at Insider (7.5%), so it does not apply to this card.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "New cardmembers start at Insider tier; the 5% Member tier is for non-cardholders."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.rateBps",
+          "current": 750,
+          "corrected": 150,
+          "anchor": {
+            "sourceId": "synchrony-jcpenney-mastercard-product",
+            "quote": "1.5 points for every dollar you spend on qualifying purchases at JCPenney!**"
+          },
+          "note": "The capture states 7.5% back as 1.5 points per $1; rateBps is 150, not 750 (7.5% was recorded alongside a 5-cent point value).",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "The capture states 7.5% back; with cash-back currency the rate is 750 (general convention 1)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.rateBps",
+          "current": 1000,
+          "corrected": 200,
+          "anchor": {
+            "sourceId": "synchrony-jcpenney-mastercard-product",
+            "quote": "2 points for every dollar you spend after you spend $1,000 on qualifying purchases at JCPenney!**"
+          },
+          "note": "The capture states 10% back as 2 points per $1 after $1,000 of JCPenney spend; rateBps is 200, not 1000.",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "The capture states 10% back, so 200 would be a derived rate (general convention 1); the VIP rule is removed at adjudication anyway (general convention 9)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.issuerWording",
+          "current": "JCPenney purchases with a JCPenney Credit Card",
+          "corrected": "after you spend $1,000 on qualifying purchases at JCPenney",
+          "anchor": {
+            "sourceId": "synchrony-jcpenney-mastercard-product",
+            "quote": "2 points for every dollar you spend after you spend $1,000 on qualifying purchases at JCPenney!**"
+          },
+          "note": "Distinguishes the VIP rate (after $1,000 a year) from the 7.5% rule, which had the same wording.",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "The VIP rule is removed at adjudication: a rate that needs $1,000 of annual JCPenney spend is a threshold, recorded as an out-of-scope issue, not a rule (general convention 9)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.rateBps",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "synchrony-jcpenney-mastercard-product",
+            "quote": "5% Back in CashPass Rewards^"
+          },
+          "note": "At the stated 200 points = $10 (5 cents a point), 5% back on gas stations in the first 90 days is 1 point per $1, so 100.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The capture states 5% back on gas stations for the first 90 days; recorded as 500 with cash-back currency, not derived through a point value (general convention 1).",
+            "corrected": 500,
+            "anchor": {
+              "sourceId": "synchrony-jcpenney-mastercard-product",
+              "quote": "5% Back in CashPass Rewards^"
+            }
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.rateBps",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "synchrony-jcpenney-mastercard-product",
+            "quote": "5% Back in CashPass Rewards^"
+          },
+          "note": "At the stated 200 points = $10 (5 cents a point), 5% back on grocery stores in the first 90 days is 1 point per $1, so 100.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The capture states 5% back on grocery stores for the first 90 days; recorded as 500 with cash-back currency (general convention 1).",
+            "corrected": 500,
+            "anchor": {
+              "sourceId": "synchrony-jcpenney-mastercard-product",
+              "quote": "5% Back in CashPass Rewards^"
+            }
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "If you have a JCPenney Mastercard, you may need to activate your card before you use it."
+            ]
+          },
+          "note": "Card activation instructions are not a rewards ambiguity.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Card activation instructions are not a rewards ambiguity (general convention 7 and 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.3",
+          "current": {
+            "category": "other",
+            "issuerWording": "JCPenney purchases with a JCPenney Credit Card",
+            "rateBps": 1000,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": [
+              "Earn 10% back in CashPass Rewards on JCPenney purchases with a JCPenney Credit Card."
+            ]
+          },
+          "note": "Added at adjudication. The 10% VIP rate needs $1,000 of JCPenney spend in a calendar year; a spend threshold that raises the rate is an out-of-scope issue, not a rule (general convention 9). Keeping it would rank every cardholder at 10%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "synchrony-jcpenney-mastercard-product",
+            "quote": "Earn 7.5% back in CashPass Rewards on JCPenney purchases with a JCPenney Credit Card."
+          },
+          "note": "Added at adjudication. The capture states the rate as a percentage back, so the currency is cash-back with rateBps = percent x 100 (general convention 1). Rates are 100, 750 and 500 as stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 500,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "synchrony-jcpenney-mastercard-product",
+            "quote": "Earn 7.5% back in CashPass Rewards on JCPenney purchases with a JCPenney Credit Card."
+          },
+          "note": "Added at adjudication. Cash-back currency carries no point value (general convention 1: never convert with a point value; the catalog schema forbids a point value on a cash-back card).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "200 points = $10 CashPass",
+          "note": "Added at adjudication. The old anchor supported the dropped 500 value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.1",
+          "current": "Earn 7.5% back in CashPass Rewards on JCPenney purchases with a JCPenney Credit Card.",
+          "note": "Added at adjudication. The old anchor supported the dropped 500 value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "synchrony-jcpenney-mastercard-product",
+              "quote": "The maximum number of points that you can receive in a single purchase transaction at JCPenney Stores or jcp.com is 2,000 points"
+            }
+          ],
+          "note": "Per-transaction cap of 2,000 points at JCPenney; the rule cap format has no per-transaction period.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The footnote caps points at 2,000 per transaction; the cap format has no per-transaction period."
+          }
+        },
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "synchrony-jcpenney-mastercard-product",
+              "quote": "in CashPass Rewards on qualifying JCPenney purchases with your JCPenney Credit Card when you spend $1,000+ at JCPenney in a calendar year."
+            }
+          ],
+          "note": "Added at adjudication. The 10% VIP rate needs $1,000 of JCPenney spend in a calendar year, a spend threshold that raises the rate (general convention 9).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; anchors checked."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-jcpenney-mastercard-product",
+              "quote": "200 points = $10 CashPass Rewards issued in $10 increments"
+            }
+          ],
+          "note": "Added at adjudication. Rewards are issued as store credit usable only with the merchant (general convention 8). Rewards are JCPenney CashPass rewards issued in $10 increments.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; anchors checked."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "JCPenney purchases: 7.5% (1.5 points/$) for cardmembers; 10% (2 points/$) after $1,000 qualifying JCPenney spend in a calendar year (VIP)",
+            "merchants": [
+              "JCPenney"
+            ]
+          },
+          "anchor": {
+            "sourceId": "synchrony-jcpenney-mastercard-product",
+            "quote": "in CashPass Rewards on qualifying JCPenney purchases with your JCPenney Credit Card when you spend $1,000+ at JCPenney in a calendar year."
+          },
+          "note": "Adds the VIP tier and the points per dollar stated on the page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The page states 7.5% (1.5 points per $1) and 10% after $1,000 a year at VIP."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-belk-rewards-mastercard",
+      "verdict": "drop-card",
+      "reason": "The only capture (Synchrony partner page) states the point value and tier names but no earn rate for any purchase; the single drafted rule (Double Points offers) has no rate. Nothing rankable can be labeled from the captures.",
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [],
+      "verdictAdjudication": {
+        "decision": "accepted",
+        "reason": "The capture names tiers and the point value but no earn rate for any purchase (general convention 9)."
+      }
+    },
+    {
+      "cardId": "synchrony-ae-real-rewards-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.issuerWording",
+          "current": "Cardmembers who use their Real Rewards Visa credit card for purchases made outside of AE + Aerie locations, anywhere Visa is accepted, will earn 5",
+          "corrected": "purchases made outside of AE + Aerie locations, anywhere Visa is accepted",
+          "anchor": {
+            "sourceId": "synchrony-ae-real-rewards-visa-partner",
+            "quote": "purchases made outside of AE + Aerie locations, anywhere Visa is accepted"
+          },
+          "note": "The wording was a whole clipped sentence; the category name is this phrase.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The phrase names the category; the old wording was a clipped sentence."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.usMerchantsOnly",
+          "current": false,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "synchrony-ae-real-rewards-visa-partner",
+            "quote": "per $1 (USD) spent on net purchases (merchandise purchased minus discounts, returns, adjustments)"
+          },
+          "note": "No capture sentence says whether only U.S. merchants qualify; null. The added anchor carries the 5 points per $1 the old anchor cut off.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "No capture limits earning to U.S. merchants; the new anchor carries the 5 points per $1. Copyright adjacency fix 2026-10-02: anchor quote shortened or replaced so that it does not run on from a neighbouring anchor into more than 25 consecutive capture words; the value is unchanged."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "Real Rewards credit cardmembers earn 40 points per $1 spent with their Real Rewards credit card/Real Rewards Visa credit card.",
+          "corrected": "AE and Aerie purchases",
+          "anchor": {
+            "sourceId": "synchrony-ae-real-rewards-visa-partner",
+            "quote": "You must use the same email address for both your loyalty and credit card accounts to earn points on AE and Aerie purchases."
+          },
+          "note": "The 40 points per $1 rule is for AE and Aerie purchases; the wording was the whole sentence.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 40 points per $1 applies to AE and Aerie purchases; the wording names the merchants (general convention 4)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-ae-real-rewards-visa-partner",
+            "quote": "Upon providing an active email address, you are automatically a Real Rewards program member!"
+          },
+          "note": "Added at adjudication. Membership in the rewards program is automatic once an email address is given (general convention 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "synchrony-ae-real-rewards-visa-partner",
+            "quote": "Upon providing an active email address, you are automatically a Real Rewards program member!"
+          },
+          "note": "Added at adjudication. Membership in the rewards program is automatic once an email address is given (general convention 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Real Rewards credit cardmembers earn 40 points per $1 spent with their Real Rewards credit card/Real Rewards Visa credit card."
+            ]
+          },
+          "note": "Added at adjudication. The issue only repeats an earning sentence and states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "AE and Aerie purchases: 40 points per $1 with the card; same email required for loyalty and card accounts",
+            "rate": "40 pts/$",
+            "merchants": [
+              "American Eagle",
+              "Aerie"
+            ]
+          },
+          "anchor": {
+            "sourceId": "synchrony-ae-real-rewards-visa-partner",
+            "quote": "Real Rewards credit cardmembers earn 40 points per $1 spent with their Real Rewards credit card/Real Rewards Visa credit card."
+          },
+          "note": "The captures state 40 points per $1 but no \"16% back\"; summary limited to what the capture states.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 40 points per $1 and the same-email requirement; no 16% figure is stated."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-at-home-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "synchrony-at-home-mastercard-partner",
+            "quote": "Earn 6% Back in Rewards on At Home purchases when you spend less than $350 annually.2"
+          },
+          "note": "Added at adjudication. The capture states the rate as a percentage back, so the currency is cash-back with rateBps = percent x 100 (general convention 1). Rates stay 600 and 300.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "synchrony-at-home-mastercard-partner",
+            "quote": "Earn 6% Back in Rewards on At Home purchases when you spend less than $350 annually.2"
+          },
+          "note": "Added at adjudication. Cash-back currency carries no point value (general convention 1: never convert with a point value; the catalog schema forbids a point value on a cash-back card).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "$10 Reward for every 1,000 points earned2",
+          "note": "Added at adjudication. The old anchor supported the dropped 100 value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.1",
+          "current": "Earn 6% Back in Rewards on At Home purchases when you spend less than $350 annually.2",
+          "note": "Added at adjudication. The old anchor supported the dropped 100 value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.cap",
+          "current": {
+            "kind": "spend",
+            "amountCents": 35000,
+            "period": "year-unspecified",
+            "rateAfterCapBps": 750
+          },
+          "corrected": null,
+          "anchor": {
+            "sourceId": "synchrony-at-home-mastercard-partner",
+            "quote": "7.5% Back in Rewards on At Home purchases when you spend more than $350 annually.2"
+          },
+          "note": "Added at adjudication. The $350 is an annual spend threshold that raises the rate to 7.5%, not a cap; cap null plus an out-of-scope issue (general convention 9).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture. Copyright adjacency fix 2026-10-02: anchor quote shortened or replaced so that it does not run on from a neighbouring anchor into more than 25 consecutive capture words; the value is unchanged."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Earn 6% Back in Rewards on At Home purchases when you spend less than $350 annually.2",
+              "7.5% Back in Rewards on At Home purchases when you spend more than $350 annually.2"
+            ]
+          },
+          "note": "Added at adjudication. Replaced by an out-of-scope issue on the spend threshold (general convention 9); \"missing\" was the wrong code.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture. Copyright adjacency fix 2026-10-02: `current` rebased onto the regenerated draft, whose anchors were cut so they do not run on from each other; the target is unchanged."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "synchrony-at-home-mastercard-partner",
+              "quote": "7.5% Back in Rewards on At Home purchases when you spend more than $350 annually.2"
+            }
+          ],
+          "note": "Added at adjudication. At Home purchases earn 7.5% once annual At Home spend passes $350, a threshold that raises the rate (general convention 9).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; anchors checked. Copyright adjacency fix 2026-10-02: anchor quote shortened or replaced so that it does not run on from a neighbouring anchor into more than 25 consecutive capture words; the value is unchanged."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-at-home-mastercard-partner",
+              "quote": "Cardholders earn a $10 Reward for every 1,000 points earned. They are valid for 90 days from issue date."
+            }
+          ],
+          "note": "Added at adjudication. Rewards are issued as store credit usable only with the merchant (general convention 8). Rewards are At Home reward certificates valid for 90 days.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; anchors checked."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-at-home-mastercard-partner",
+            "quote": "Earn 6% Back in Rewards on At Home purchases when you spend less than $350 annually.2"
+          },
+          "note": "True.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The partner page states 6% under $350 a year."
+          }
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "synchrony-at-home-mastercard-partner",
+            "quote": "Earn 7.5% Back in Rewards on At Home purchases when you spend more than $350 annually.2"
+          },
+          "note": "True.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The partner page states 7.5% over $350 a year."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-chicos-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "synchrony-chicos-mastercard-partner",
+            "quote": "Once you have earned 1,000 points, you’ll receive a $10 Club Chico’s reward certificate"
+          },
+          "note": "1,000 points = $10 reward certificate, a stated value of 1 cent a point (same basis as the At Home and Soma point values).",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "The capture states every rate as a percentage back, so the currency is cash-back and carries no point value (general convention 1; the catalog schema forbids a point value on a cash-back card)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "synchrony-chicos-mastercard-partner",
+            "quote": "you will first need to be enrolled in the Club Chico’s rewards program if you are not already a member"
+          },
+          "note": "The card FAQ requires enrollment in Club Chico’s to apply and earn; enroll-once, as the Soma and WHBM drafts record for the same sentence.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Applicants must first enroll in Club Chico’s, a one-time store loyalty enrollment (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "synchrony-chicos-mastercard-partner",
+            "quote": "you will first need to be enrolled in the Club Chico’s rewards program if you are not already a member"
+          },
+          "note": "The card FAQ requires enrollment in Club Chico’s to apply and earn; enroll-once, as the Soma and WHBM drafts record for the same sentence.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Applicants must first enroll in Club Chico’s, a one-time store loyalty enrollment (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "synchrony-chicos-mastercard-partner",
+            "quote": "you will first need to be enrolled in the Club Chico’s rewards program if you are not already a member"
+          },
+          "note": "The card FAQ requires enrollment in Club Chico’s to apply and earn; enroll-once, as the Soma and WHBM drafts record for the same sentence.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Applicants must first enroll in Club Chico’s, a one-time store loyalty enrollment (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "synchrony-chicos-mastercard-partner",
+            "quote": "you will first need to be enrolled in the Club Chico’s rewards program if you are not already a member"
+          },
+          "note": "The card FAQ requires enrollment in Club Chico’s to apply and earn; enroll-once, as the Soma and WHBM drafts record for the same sentence.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Applicants must first enroll in Club Chico’s, a one-time store loyalty enrollment (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "synchrony-chicos-mastercard-partner",
+            "quote": "Chico’s Mastercard members also earn 2% back in points on Grocery Store and Restaurant purchases"
+          },
+          "note": "Added at adjudication. The capture states the rate as a percentage back, so the currency is cash-back with rateBps = percent x 100 (general convention 1). Rates stay 750/200/200/100.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.issuerWording",
+          "current": "qualifying purchases made using your Chico’s Mastercard",
+          "corrected": "at Chico’s, Chico’s Outlets, Chico’s Off The Rack stores and online at chicos.com",
+          "anchor": {
+            "sourceId": "synchrony-chicos-mastercard-partner",
+            "quote": "You can earn 7.5% back in points on qualifying purchases made using your Chico’s Mastercard or Chico’s Credit Card at Chico’s"
+          },
+          "note": "Added at adjudication. The wording now names the merchant the 7.5% pays at (general convention 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "enroll-once",
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "other",
+            "issuerWording": "White House Black Market and Soma stores",
+            "rateBps": 100
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-chicos-mastercard-partner",
+              "quote": "The Chico’s Mastercard can be used at White House Black Market and Soma stores and the Primary Chico’s cardmember will earn 1% back in points"
+            },
+            {
+              "sourceId": "synchrony-chicos-mastercard-partner",
+              "quote": "you will first need to be enrolled in the Club Chico’s rewards program if you are not already a member"
+            }
+          ],
+          "note": "Missing sister-brand rule (1 point per $1 at WHBM and Soma), as drafted for Soma.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The FAQ states 1% back in points at White House Black Market and Soma for the Primary cardmember."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-chicos-mastercard-partner",
+              "quote": "you’ll receive a $10 Club Chico’s reward certificate which can be used towards a future qualifying Chico’s purchase"
+            }
+          ],
+          "note": "Added at adjudication. Rewards are issued as store credit usable only with the merchant (general convention 8). Rewards are Club Chico’s certificates.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; anchors checked."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-chicos-mastercard-partner",
+            "quote": "7.5% back in points on qualifying purchases made using your Chico’s Mastercard or Chico’s Credit Card at Chico’s, Chico’s Outlets, Chico’s Off The Rack stores"
+          },
+          "note": "True.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The FAQ states 7.5% at Chico’s stores, outlets and chicos.com."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-soma-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "synchrony-soma-mastercard-partner",
+            "quote": "Once you have earned 500 points, you’ll receive a $5 Soma My Rewards certificate"
+          },
+          "note": "500 points = $5 reward certificate, a stated value of 1 cent a point.",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "The capture states every rate as a percentage back, so the currency is cash-back and carries no point value (general convention 1)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "synchrony-soma-mastercard-partner",
+            "quote": "You can earn 7.5% back in points on qualifying purchases made using your Soma Mastercard or Soma Credit Card"
+          },
+          "note": "Added at adjudication. The capture states the rate as a percentage back, so the currency is cash-back with rateBps = percent x 100 (general convention 1). Rates stay 750/200/200/100/100.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-soma-mastercard-partner",
+              "quote": "you’ll receive a $5 Soma My Rewards certificate which can be used towards a future qualifying Soma purchase"
+            }
+          ],
+          "note": "Added at adjudication. Rewards are issued as store credit usable only with the merchant (general convention 8). Rewards are Soma My Rewards certificates.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; anchors checked."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-soma-mastercard-partner",
+            "quote": "You can earn 7.5% back in points on qualifying purchases made using your Soma Mastercard or Soma Credit Card at Soma, Soma Outlets, and online"
+          },
+          "note": "True.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The FAQ states 7.5% at Soma stores, outlets and soma.com."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-whbm-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "synchrony-whbm-mastercard-partner",
+            "quote": "Once you have earned 1,000 points, you’ll receive a $10 WHBM Prestige reward certificate"
+          },
+          "note": "1,000 points = $10 reward certificate, a stated value of 1 cent a point.",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "The capture states every rate as a percentage back, so the currency is cash-back and carries no point value (general convention 1)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.1",
+          "current": "To activate your card, visit www.synchrony.com/activate.",
+          "corrected": "you will first need to be enrolled in the WHBM Prestige rewards program if you are not already a member",
+          "anchor": {
+            "sourceId": "synchrony-whbm-mastercard-partner",
+            "quote": "you will first need to be enrolled in the WHBM Prestige rewards program if you are not already a member"
+          },
+          "note": "The enroll-once anchor was the card-activation sentence (\"To activate your card\"), which is not a rewards enrollment; the loyalty-program enrollment sentence supports enroll-once.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Card activation is not rewards enrollment; the WHBM Prestige enrollment sentence supports enroll-once (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.anchors.1",
+          "current": "To activate your card, visit www.synchrony.com/activate.",
+          "corrected": "you will first need to be enrolled in the WHBM Prestige rewards program if you are not already a member",
+          "anchor": {
+            "sourceId": "synchrony-whbm-mastercard-partner",
+            "quote": "you will first need to be enrolled in the WHBM Prestige rewards program if you are not already a member"
+          },
+          "note": "The enroll-once anchor was the card-activation sentence (\"To activate your card\"), which is not a rewards enrollment; the loyalty-program enrollment sentence supports enroll-once.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Card activation is not rewards enrollment; the WHBM Prestige enrollment sentence supports enroll-once (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.anchors.1",
+          "current": "To activate your card, visit www.synchrony.com/activate.",
+          "corrected": "you will first need to be enrolled in the WHBM Prestige rewards program if you are not already a member",
+          "anchor": {
+            "sourceId": "synchrony-whbm-mastercard-partner",
+            "quote": "you will first need to be enrolled in the WHBM Prestige rewards program if you are not already a member"
+          },
+          "note": "The enroll-once anchor was the card-activation sentence (\"To activate your card\"), which is not a rewards enrollment; the loyalty-program enrollment sentence supports enroll-once.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Card activation is not rewards enrollment; the WHBM Prestige enrollment sentence supports enroll-once (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.anchors.1",
+          "current": "To activate your card, visit www.synchrony.com/activate.",
+          "corrected": "you will first need to be enrolled in the WHBM Prestige rewards program if you are not already a member",
+          "anchor": {
+            "sourceId": "synchrony-whbm-mastercard-partner",
+            "quote": "you will first need to be enrolled in the WHBM Prestige rewards program if you are not already a member"
+          },
+          "note": "The enroll-once anchor was the card-activation sentence (\"To activate your card\"), which is not a rewards enrollment; the loyalty-program enrollment sentence supports enroll-once.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Card activation is not rewards enrollment; the WHBM Prestige enrollment sentence supports enroll-once (general convention 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.0",
+          "current": "Earn 7.5 %",
+          "corrected": "back on WHBM, WHBM Outlet and whbm.com purchases (7.5 points per $1 spent)",
+          "anchor": {
+            "sourceId": "synchrony-whbm-mastercard-partner",
+            "quote": "back on WHBM, WHBM Outlet and whbm.com purchases (7.5 points per $1 spent)"
+          },
+          "note": "The rate anchor \"Earn 7.5 %\" names no purchases; this span ties 7.5 points per $1 to WHBM purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The new anchor ties the rate to its purchases."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.anchors.0",
+          "current": "Earn 2 %",
+          "corrected": "WHBM Mastercard members also earn 2% back in points on Grocery Store and Restaurant purchases",
+          "anchor": {
+            "sourceId": "synchrony-whbm-mastercard-partner",
+            "quote": "WHBM Mastercard members also earn 2% back in points on Grocery Store and Restaurant purchases"
+          },
+          "note": "Ties the 2% to grocery stores.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The new anchor ties the rate to its purchases."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.anchors.0",
+          "current": "Earn 2 %",
+          "corrected": "WHBM Mastercard members also earn 2% back in points on Grocery Store and Restaurant purchases",
+          "anchor": {
+            "sourceId": "synchrony-whbm-mastercard-partner",
+            "quote": "WHBM Mastercard members also earn 2% back in points on Grocery Store and Restaurant purchases"
+          },
+          "note": "Ties the 2% to restaurants.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The new anchor ties the rate to its purchases."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.anchors.0",
+          "current": "Earn 1 %",
+          "corrected": "1% back in points everywhere else Mastercard is accepted.",
+          "anchor": {
+            "sourceId": "synchrony-whbm-mastercard-partner",
+            "quote": "1% back in points everywhere else Mastercard is accepted."
+          },
+          "note": "Ties the 1% to all other purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The new anchor ties the rate to its purchases."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "Grocery Store purchases",
+          "corrected": "Grocery Store",
+          "anchor": {
+            "sourceId": "synchrony-whbm-mastercard-partner",
+            "quote": "WHBM Mastercard members also earn 2% back in points on Grocery Store and Restaurant purchases"
+          },
+          "note": "\"Grocery Store purchases\" is not verbatim in the capture (flagged in the draft notes); the capture names the category \"Grocery Store\".",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "\"Grocery Store purchases\" is not verbatim; \"Grocery Store\" is."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "synchrony-whbm-mastercard-partner",
+            "quote": "WHBM Mastercard members also earn 2% back in points on Grocery Store and Restaurant purchases"
+          },
+          "note": "Added at adjudication. The capture states the rate as a percentage back, so the currency is cash-back with rateBps = percent x 100 (general convention 1). Rates stay 750/200/200/100.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Grocery Store and Restaurant purchases"
+            ]
+          },
+          "note": "Added at adjudication. Anchored on a category name only; states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "enroll-once",
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "category": "other",
+            "issuerWording": "Chico’s and Soma stores",
+            "rateBps": 100
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-whbm-mastercard-partner",
+              "quote": "The WHBM Mastercard can be used at Chico’s and Soma stores and the Primary WHBM cardmember will earn 1% back in points"
+            },
+            {
+              "sourceId": "synchrony-whbm-mastercard-partner",
+              "quote": "you will first need to be enrolled in the WHBM Prestige rewards program if you are not already a member"
+            }
+          ],
+          "note": "Missing sister-brand rule (1 point per $1 at Chico’s and Soma), as drafted for Soma.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The FAQ states 1% back in points at Chico’s and Soma for the Primary cardmember."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-whbm-mastercard-partner",
+              "quote": "you’ll receive a $10 WHBM Prestige reward certificate which can be used towards a future qualifying WHBM purchase"
+            }
+          ],
+          "note": "Added at adjudication. Rewards are issued as store credit usable only with the merchant (general convention 8). Rewards are WHBM Prestige certificates.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; anchors checked."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-whbm-mastercard-partner",
+            "quote": "You can earn 7.5% back in points on qualifying purchases made using your WHBM Mastercard or WHBM Credit Card at WHBM, WHBM Outlets"
+          },
+          "note": "True; now anchored.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The FAQ states 7.5% at WHBM stores, outlets and WHBM.com."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-jcrew-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.rateBps",
+          "current": 750,
+          "corrected": 300,
+          "anchor": {
+            "sourceId": "synchrony-jcrew-mastercard-partner",
+            "quote": "Back for J.Crew Passport GOLD members (Equals 3 points per $1 spent)"
+          },
+          "note": "GOLD: 3 points per $1 (7.5%). The capture states the per-dollar points; rateBps is the multiple x 100. The percent had been recorded alongside the 2.5-cent point value (200 points = $5), double-counting it.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The capture states the rate as a percentage back; rates stated as a percentage are recorded as percent x 100 with cash-back currency (general convention 1), so the drafted rate stands. Modified only to add the percentage anchor.",
+            "corrected": 750,
+            "anchor": {
+              "sourceId": "synchrony-jcrew-mastercard-partner",
+              "quote": "GOLD Access cardmembers earn 7.5% back in rewards."
+            }
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.rateBps",
+          "current": 500,
+          "corrected": 200,
+          "anchor": {
+            "sourceId": "synchrony-jcrew-mastercard-partner",
+            "quote": "Back for J.Crew Passport NAVY members (Equals 2 points per $1 spent)"
+          },
+          "note": "NAVY: 2 points per $1 (5%). The capture states the per-dollar points; rateBps is the multiple x 100. The percent had been recorded alongside the 2.5-cent point value (200 points = $5), double-counting it.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The capture states the rate as a percentage back; rates stated as a percentage are recorded as percent x 100 with cash-back currency (general convention 1), so the drafted rate stands. Modified only to add the percentage anchor.",
+            "corrected": 500,
+            "anchor": {
+              "sourceId": "synchrony-jcrew-mastercard-partner",
+              "quote": "Cardmembers with NAVY Access earn 5% back in rewards"
+            }
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.rateBps",
+          "current": 250,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "synchrony-jcrew-mastercard-partner",
+            "quote": "Back for GAS & GROCERY STORE members (Equals 1 point per $1 spent)"
+          },
+          "note": "Gas: 1 point per $1 (2.5%). The capture states the per-dollar points; rateBps is the multiple x 100. The percent had been recorded alongside the 2.5-cent point value (200 points = $5), double-counting it.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The capture states the rate as a percentage back; rates stated as a percentage are recorded as percent x 100 with cash-back currency (general convention 1), so the drafted rate stands. Modified only to add the percentage anchor.",
+            "corrected": 250,
+            "anchor": {
+              "sourceId": "synchrony-jcrew-mastercard-partner",
+              "quote": "With the J.Crew Mastercard you earn 2.5% back in rewards on gas & grocery store purchases"
+            }
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.rateBps",
+          "current": 250,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "synchrony-jcrew-mastercard-partner",
+            "quote": "Back for GAS & GROCERY STORE members (Equals 1 point per $1 spent)"
+          },
+          "note": "Grocery: 1 point per $1 (2.5%). The capture states the per-dollar points; rateBps is the multiple x 100. The percent had been recorded alongside the 2.5-cent point value (200 points = $5), double-counting it.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The capture states the rate as a percentage back; rates stated as a percentage are recorded as percent x 100 with cash-back currency (general convention 1), so the drafted rate stands. Modified only to add the percentage anchor.",
+            "corrected": 250,
+            "anchor": {
+              "sourceId": "synchrony-jcrew-mastercard-partner",
+              "quote": "With the J.Crew Mastercard you earn 2.5% back in rewards on gas & grocery store purchases"
+            }
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.rateBps",
+          "current": 125,
+          "corrected": 50,
+          "anchor": {
+            "sourceId": "synchrony-jcrew-mastercard-partner",
+            "quote": "Back on all other purchases (Equals 1 point per $2 spent)"
+          },
+          "note": "All other: 1 point per $2, i.e. 0.5 per $1 (1.25%). The capture states the per-dollar points; rateBps is the multiple x 100. The percent had been recorded alongside the 2.5-cent point value (200 points = $5), double-counting it.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The capture states the rate as a percentage back; rates stated as a percentage are recorded as percent x 100 with cash-back currency (general convention 1), so the drafted rate stands. Modified only to add the percentage anchor.",
+            "corrected": 125,
+            "anchor": {
+              "sourceId": "synchrony-jcrew-mastercard-partner",
+              "quote": "1.25% on every other purchase where Mastercard is accepted."
+            }
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "synchrony-jcrew-mastercard-partner",
+            "quote": "Cardmembers with NAVY Access earn 5% back in rewards while GOLD Access cardmembers earn 7.5% back in rewards."
+          },
+          "note": "Added at adjudication. The capture states the rate as a percentage back, so the currency is cash-back with rateBps = percent x 100 (general convention 1).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 250,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "synchrony-jcrew-mastercard-partner",
+            "quote": "Cardmembers with NAVY Access earn 5% back in rewards while GOLD Access cardmembers earn 7.5% back in rewards."
+          },
+          "note": "Added at adjudication. Cash-back currency carries no point value (general convention 1: never convert with a point value; the catalog schema forbids a point value on a cash-back card).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "For every 200 points earned, you’ll get a $5 Reward to redeem in stores or online.",
+          "note": "Added at adjudication. The old anchor supported the dropped 250 value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.1",
+          "current": "Cardmembers with NAVY Access earn 5% back in rewards while GOLD Access cardmembers earn 7.5% back in rewards.",
+          "note": "Added at adjudication. The old anchor supported the dropped 250 value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Back for J.Crew Passport GOLD members",
+              "Back for J.Crew Passport NAVY members"
+            ]
+          },
+          "note": "Added at adjudication. Duplicates the out-of-scope tier issue with the wrong code (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-jcrew-mastercard-partner",
+              "quote": "For every 200 points earned, you’ll get a $5 Reward to redeem in stores or online."
+            }
+          ],
+          "note": "Added at adjudication. Rewards are issued as store credit usable only with the merchant (general convention 8). Rewards are J.Crew $5 Rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; anchors checked."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-jcrew-mastercard-partner",
+            "quote": "Cardmembers with NAVY Access earn 5% back in rewards while GOLD Access cardmembers earn 7.5% back in rewards."
+          },
+          "note": "True; now anchored (2 and 3 points per $1).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 5% for NAVY and 7.5% for GOLD Access cardmembers."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-harbor-freight-credit-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.category",
+          "current": "all-purchases",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "synchrony-harbor-freight-credit-card-partner",
+            "quote": "Earn 5 reward points for each $1 in net purchases charged to your Harbor Freight Tools Credit Card"
+          },
+          "note": "A private-label store card (no card network named): the 5 points per $1 is earned on Harbor Freight purchases, not all purchases; all-purchases would rank it at every merchant.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 5% is earned on purchases charged to a store card described only at Harbor Freight; single merchant, so other (general convention 4)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "synchrony-harbor-freight-credit-card-partner",
+            "quote": "Earn unlimited rewards with 5% back in Harbor Freight Money2 every time you shop"
+          },
+          "note": "Added at adjudication. The capture states the rate as a percentage back, so the currency is cash-back with rateBps = percent x 100 (general convention 1).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "synchrony-harbor-freight-credit-card-partner",
+            "quote": "Earn unlimited rewards with 5% back in Harbor Freight Money2 every time you shop"
+          },
+          "note": "Added at adjudication. Cash-back currency carries no point value (general convention 1: never convert with a point value; the catalog schema forbids a point value on a cash-back card).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "You earn 5 reward points for each $1 in net purchases (excluding equal pay purchases) charged to your Harbor Freight Credit Card, and receive $5",
+          "note": "Added at adjudication. The old anchor supported the dropped 100 value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.1",
+          "current": "Earn unlimited rewards with 5% back in Harbor Freight Money2 every time you shop",
+          "note": "Added at adjudication. The old anchor supported the dropped 100 value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-harbor-freight-credit-card-partner",
+              "quote": "bring your Harbor Freight Money reward certificate with you on your next trip to any Harbor Freight store"
+            }
+          ],
+          "note": "Added at adjudication. Rewards are issued as store credit usable only with the merchant (general convention 8). Harbor Freight Money certificates redeem in Harbor Freight stores only.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; anchors checked."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-harbor-freight-credit-card-partner",
+            "quote": "Earn unlimited rewards with 5% back in Harbor Freight Money2 every time you shop"
+          },
+          "note": "True: 5 points per $1, $5 certificate per 500 points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The partner page states 5% back in Harbor Freight Money."
+          }
+        },
+        {
+          "action": "fix",
+          "hintIndex": 1,
+          "hint": {
+            "type": "closed-loop",
+            "summary": "Private-label store card (no card network named); captures describe use only at Harbor Freight stores and HarborFreight.com.",
+            "merchants": [
+              "Harbor Freight"
+            ]
+          },
+          "anchor": {
+            "sourceId": "synchrony-harbor-freight-credit-card-partner",
+            "quote": "the Harbor Freight Credit Card can be used to make purchases at HarborFreight.com"
+          },
+          "note": "No capture says \"only\", but the card names no network and the page describes use at Harbor Freight stores and HarborFreight.com only.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "No capture says the card works only at Harbor Freight; the note now states only what the capture says: stores and HarborFreight.com, no network named, certificates in store only.",
+            "replacement": {
+              "type": "closed-loop",
+              "summary": "Store card: captures describe use at Harbor Freight stores and HarborFreight.com and name no card network; certificates redeem in stores only.",
+              "merchants": [
+                "Harbor Freight"
+              ]
+            },
+            "anchor": {
+              "sourceId": "synchrony-harbor-freight-credit-card-partner",
+              "quote": "the Harbor Freight Credit Card can be used to make purchases at HarborFreight.com"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-phillips-66-credit-card",
+      "verdict": "drop-card",
+      "reason": "Rewards are cents off per gallon (3 cents, or 5 cents via the app) at Phillips 66, Conoco and 76 stations, not a percentage or per-dollar rate; no rule can carry a rateBps.",
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [],
+      "verdictAdjudication": {
+        "decision": "accepted",
+        "reason": "Rewards are cents off per gallon at Phillips 66, Conoco and 76 stations (general convention 9)."
+      }
+    },
+    {
+      "cardId": "synchrony-techron-advantage-visa",
+      "verdict": "drop-card",
+      "reason": "Rewards are cents per gallon at Chevron and Texaco (3 cents everyday; Visa spend tiers of 2 cents per gallon per $100), not a percentage or per-dollar rate; no rule can carry a rateBps.",
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [],
+      "verdictAdjudication": {
+        "decision": "accepted",
+        "reason": "Rewards are cents off per gallon at Chevron and Texaco (general convention 9)."
+      }
+    },
+    {
+      "cardId": "synchrony-cathay-world-elite-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-cathay-world-elite-mastercard-partner",
+            "quote": "Earn 3 Asia Miles per $1 spent on Cathay and HK Express purchases.1"
+          },
+          "note": "True; Cathay membership must be linked to earn.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The partner page states 3 Asia Miles per $1 on Cathay and HK Express."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-virgin-red-rewards-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-virgin-red-rewards-mastercard-partner",
+            "quote": "Earn 3 Virgin Points for every $1 you spend with Virgin Atlantic, Virgin Hotels and Virgin Voyages."
+          },
+          "note": "True; the draft anchor (Personal Perk sentence) did not state the rate, replaced.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The new anchor states the 3 points per $1 rate; the old one did not."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-sun-country-visa-signature",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.rateBps",
+          "current": 500,
+          "corrected": 300,
+          "anchor": {
+            "sourceId": "synchrony-sun-country-visa-signature-partner-2",
+            "quote": "3x when you buy with your card, and 2x when you fly*."
+          },
+          "note": "The card earns 3x on Sun Country purchases; the other 2x of the \"up to 5x\" is earned by flying (the airline program), not by the card.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The card pays 3x; the other 2x of \"up to 5x\" comes from flying (general convention 2)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "synchrony-sun-country-visa-signature-partner-2",
+            "quote": "Points can be redeemed for flights, bags, seat assignments, hotels, car rentals, and more."
+          },
+          "note": "Added at adjudication. The only stated value is 100 points = $1 in Sun Country purchases, a travel-only redemption, so null (general convention 3).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "100 points equals $1 in Sun Country purchases.",
+          "note": "Added at adjudication. The old anchor supported the dropped travel-only value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.1",
+          "current": "Points can be redeemed for flights, bags, seat assignments, hotels, car rentals, and more.",
+          "note": "Added at adjudication. The old anchor supported the dropped travel-only value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication: a null point value carries no anchors."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. A missing issue with no anchors and no detail states no problem (general convention 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication to apply the conventions; checked against the capture."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-sun-country-visa-signature-partner-2",
+            "quote": "Earn up to 5x points per $1 on Sun Country purchases. 3x when you buy with your card, and 2x when you fly*."
+          },
+          "note": "True; now anchored.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states up to 5x on Sun Country purchases: 3x with the card, 2x when flying."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Points redeem at 100 points = $1 only toward Sun Country purchases (flights, bags, seats); no cash value stated.",
+            "merchants": [
+              "Sun Country Airlines"
+            ]
+          },
+          "anchor": {
+            "sourceId": "synchrony-sun-country-visa-signature-partner-2",
+            "quote": "100 points equals $1 in Sun Country purchases."
+          },
+          "note": "Added at adjudication. Records the travel-only redemption value left out of pointValueHundredthsOfCent (general convention 3).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication; anchor checked."
+          }
+        }
+      ]
+    }
+  ]
+}
