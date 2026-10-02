@@ -55,8 +55,9 @@ const { values } = parseArgs({
     only: { type: 'string' },
     concurrency: { type: 'string', default: '8' },
     provider: { type: 'string', default: 'codex' },
-    model: { type: 'string', default: CURATION.model },
-    effort: { type: 'string', default: CURATION.effort },
+    // The curation model and effort are Codex defaults; --provider claude needs --model and --effort.
+    model: { type: 'string' },
+    effort: { type: 'string' },
     prompt: { type: 'string', default: CURATION.prompt },
     selection: { type: 'string', default: CURATION.selection },
     'attempt-timeout-ms': { type: 'string', default: String(CURATION.attemptTimeoutMs) },
@@ -103,13 +104,18 @@ const sources = new Map(manifest.sources.map((source) => [source.id, source]));
 const only = values.only ? new Set(values.only.split(',')) : null;
 await mkdir(outDir, { recursive: true, mode: 0o700 });
 
+const codex = values.provider === 'codex';
+if (!codex && (!values.model || !values.effort))
+  throw new Error(`--provider ${values.provider} requires --model and --effort.`);
+if (!['total', 'visible'].includes(values['codex-output-tokens']))
+  throw new Error('--codex-output-tokens must be total or visible.');
 const configuration = {
   provider: values.provider,
-  model: values.model,
-  effort: values.effort,
+  model: values.model ?? CURATION.model,
+  effort: values.effort ?? CURATION.effort,
   prompt: values.prompt,
   selection: values.selection,
-  ...(values.provider === 'codex' ? { outputTokens: values['codex-output-tokens'] } : {}),
+  ...(codex ? { outputTokens: values['codex-output-tokens'] } : {}),
 };
 
 async function readSaved(cardId) {

@@ -513,6 +513,12 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
         900_000,
       ),
     };
+    // Live defaults depend on the model (defaultsFor), so say what is about to run before spending quota.
+    if (live)
+      console.log(
+        `Running ${experimentName(configuration)} (output tokens ${configuration.provider.outputTokens ?? 'total'}, ` +
+          `deadlines ${timeouts.attemptTimeoutMs / 1000}s/${timeouts.totalTimeoutMs / 1000}s): ${jobs.length} slots.`,
+      );
     const collected = await collect(loaded, configuration, provider.providerFor, jobs, {
       timeouts,
       concurrency,

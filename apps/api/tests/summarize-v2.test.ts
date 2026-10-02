@@ -1,4 +1,4 @@
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { expect, it } from 'vitest';
@@ -51,7 +51,11 @@ it('reports a run over both splits as one row per split', async () => {
       root,
     );
     process.exitCode = 0;
+    // One logged earlier failure on a held-out slot counts against the held-out row only.
+    const failure = { slot: 'example-dining-rewards#1', runId: 'r1', status: 'timed_out', durationMs: 1 };
+    await writeFile(join(dir, 'echo.all', 'failures.jsonl'), JSON.stringify(failure) + '\n');
     const summary = await summarizeRuns(FIXTURE, [dir]);
+    expect(summary.rows.map((r) => r.harness.attempts)).toEqual([0, 1]);
     expect(
       summary.rows.map(({ id, split, planned, observed, complete }) => ({
         id,

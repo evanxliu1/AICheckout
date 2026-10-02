@@ -135,12 +135,19 @@ interface SavedBundle {
 /**
  * A run over both splits (`--split all`) becomes one row per split, named like the matrix runs
  * (`<name>.dev`, `<name>.heldout`, with a trailing `.all` dropped), so it is reported as the others are.
+ * Each row keeps only its own split's observations and logged harness failures.
  */
-function bySplit(loaded: LoadedCorpus, name: string, bundle: SavedBundle): [string, SavedBundle][] {
-  if (bundle.configuration.split !== 'all') return [[name, bundle]];
+function bySplit(
+  loaded: LoadedCorpus,
+  name: string,
+  bundle: SavedBundle,
+  failures: Map<string, number>,
+): [string, SavedBundle, Map<string, number>][] {
+  if (bundle.configuration.split !== 'all') return [[name, bundle, failures]];
   const splitOf = new Map(loaded.cases.map(({ item }) => [item.id, item.split]));
   for (const o of bundle.observations)
     if (!splitOf.has(o.caseId)) throw new Error(`Unexpected observation for case ${o.caseId} in ${name}.`);
+  const caseOf = (slot: string) => slot.slice(0, slot.lastIndexOf('#'));
   return (['dev', 'heldout'] as const).map((split) => [
     `${name.replace(/\.all$/, '')}.${split}`,
     {
@@ -148,6 +155,7 @@ function bySplit(loaded: LoadedCorpus, name: string, bundle: SavedBundle): [stri
       configuration: { ...bundle.configuration, split },
       observations: bundle.observations.filter((o) => splitOf.get(o.caseId) === split),
     },
+    new Map([...failures].filter(([slot]) => splitOf.get(caseOf(slot)) === split)),
   ]);
 }
 
@@ -165,8 +173,13 @@ export async function summarizeRuns(corpusDir: string, dirs: string[]) {
       const raw = await readFile(join(dir, 'observations.json'), 'utf8').catch(() => undefined);
       if (!raw) continue;
       const failures = await failureCounts(dir);
-      for (const [id, bundle] of bySplit(loaded, name, JSON.parse(raw) as SavedBundle))
-        rows.push(summarizeReport(id, evaluate(loaded, bundle, { failures }), bundle));
+      for (const [id, bundle, splitFailures] of bySplit(
+        loaded,
+        name,
+        JSON.parse(raw) as SavedBundle,
+        failures,
+      ))
+        rows.push(summarizeReport(id, evaluate(loaded, bundle, { failures: splitFailures }), bundle));
     }
   }
   return {
