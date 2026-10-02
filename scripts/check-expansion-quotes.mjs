@@ -1,16 +1,19 @@
 // Check that the committed catalog-expansion files quote no issuer capture beyond 25 words.
 //
-//   node scripts/check-expansion-quotes.mjs [--dir evals/curation/expansion]
+//   node scripts/check-expansion-quotes.mjs [--dir evals/curation/expansion] [--captures <dir> ...]
 //
-// Needs the local captures (gitignored). Scans every string of corpus.draft.json, corpus.json,
-// product-notes.json, product-notes.verified.json and verification/*.json, and every line or table cell of verify/*.md,
+// Needs the local captures (gitignored), by default <dir>/captures; pass --captures once per capture folder to read
+// them from elsewhere (for example the expansion and real capture folders of another worktree). Scans every string of
+// corpus.draft.json, corpus.json, product-notes.json, product-notes.verified.json, reward-programs.json and
+// verification/*.json, and every line or table cell of verify/*.md,
 // verification-report.md, verification/README.md and verification/conventions/*.md, for a run of more than 25
 // consecutive words that also appears in a capture (case-, whitespace- and quotation-mark-insensitive). Quotes read
 // together count too: the strings (or anchor `quote`s) of one JSON array must not overlap or abut in a capture into
 // such a run, and neither may consecutive lines and cells of a markdown file. Also checks that every corpus anchor
-// and issuer wording is at most 25 words. Exits 1 and lists the offending strings if any.
+// and issuer wording is at most 25 words, and that every reward-programs.json anchor is verbatim in the capture it
+// names. Exits 1 and lists the offending strings if any.
 import { readdir, readFile } from 'node:fs/promises';
-import { join, relative, resolve } from 'node:path';
+import { basename, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import {
@@ -20,30 +23,45 @@ import {
   longCaptureRun,
   markdownUnits,
   quoteArraysOf,
+  resolves,
   stringsOf,
   wordCount,
 } from './lib/expansion-quotes.mjs';
+import { rewardProgramAnchors } from './lib/reward-programs.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const { values } = parseArgs({ options: { dir: { type: 'string', default: 'evals/curation/expansion' } } });
+const { values } = parseArgs({
+  options: {
+    dir: { type: 'string', default: 'evals/curation/expansion' },
+    captures: { type: 'string', multiple: true },
+  },
+});
 const dir = resolve(root, values.dir);
-const list = async (sub, ext) =>
-  (await readdir(join(dir, sub)).catch(() => []))
+const listIn = async (folder, ext) =>
+  (await readdir(folder).catch(() => []))
     .filter((name) => name.endsWith(ext))
     .sort()
-    .map((name) => join(dir, sub, name));
+    .map((name) => join(folder, name));
+const list = (sub, ext) => listIn(join(dir, sub), ext);
 
-const captureFiles = await list('captures', '.txt');
+const captureDirs = (values.captures ?? [join(dir, 'captures')]).map((folder) => resolve(root, folder));
+const captureFiles = (await Promise.all(captureDirs.map((folder) => listIn(folder, '.txt')))).flat();
 if (!captureFiles.length) {
-  console.error(`No captures in ${join(dir, 'captures')}: cannot check quotes.`);
+  console.error(`No captures in ${captureDirs.join(', ')}: cannot check quotes.`);
   process.exit(1);
 }
-const index = captureIndex(await Promise.all(captureFiles.map((path) => readFile(path, 'utf8'))));
+const bodies = await Promise.all(captureFiles.map((path) => readFile(path, 'utf8')));
+const index = captureIndex(bodies);
+const captureById = new Map(captureFiles.map((path, i) => [basename(path, '.txt'), bodies[i]]));
 
 const jsonFiles = [
-  ...['corpus.draft.json', 'corpus.json', 'product-notes.json', 'product-notes.verified.json'].map((name) =>
-    join(dir, name),
-  ),
+  ...[
+    'corpus.draft.json',
+    'corpus.json',
+    'product-notes.json',
+    'product-notes.verified.json',
+    'reward-programs.json',
+  ].map((name) => join(dir, name)),
   ...(await list('verification', '.json')),
 ];
 const markdownFiles = [
@@ -74,6 +92,13 @@ for (const path of jsonFiles) {
         `${relative(root, path)} ${at}: items ${run.texts.join(', ')} read together form a run of ${run.words}+ capture words`,
       );
   }
+  if (Array.isArray(data.programs) && Array.isArray(data.cards))
+    for (const [at, anchor] of rewardProgramAnchors(data)) {
+      const body = captureById.get(anchor.sourceId);
+      if (body === undefined) problems.push(`${relative(root, path)} ${at}: no capture ${anchor.sourceId}`);
+      else if (!resolves(anchor.quote, { documents: [{ id: anchor.sourceId, body }] }))
+        problems.push(`${relative(root, path)} ${at}: not verbatim in ${anchor.sourceId}`);
+    }
   for (const item of data.cases ?? [])
     for (const [at, value] of stringsOf(item.reference, `${item.id}.reference`))
       if (/\.(anchors\[\d+\]|issuerWording)$/.test(at) && wordCount(value) > MAX_QUOTE_WORDS)

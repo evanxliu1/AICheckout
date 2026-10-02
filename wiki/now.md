@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T20:30:00Z
+  at: 2026-10-02T23:30:00Z
 ---
 
 # Now
 
-As of 2026-10-02T20:30Z.
+As of 2026-10-02T23:30Z.
 
 ## Current state
 
@@ -20,6 +20,7 @@ As of 2026-10-02T20:30Z.
 
 ## Active work
 
+- **Stage 2 M3 (valuation table)** on branch `s2-m3-valuations` (from `4277f48`; committed, not pushed): `evals/curation/expansion/reward-programs.json` maps all 180 cards to 52 programs (24 NerdWallet estimates, 11 issuer-stated, 16 none, cash back); Zod check and tests in `scripts/lib/reward-programs.mjs`; quote check extended; agent-verified. Publisher: [decision](decisions/2026-10-02-nerdwallet-primary-valuation-publisher.md); table: [catalog expansion](system/catalog-expansion.md#reward-program-valuation-m3). Open for Evan: Aer Lingus and Iberia Avios stay unvalued unless he wants parity with British Airways; a second publisher would value U.S. Bank Altitude, SKYPASS, Lufthansa, Cathay, Frontier.
 - **Phase 7 Stage 2 plan** on branch `phase7-stage2-plan` (from `23d3d52`; committed, not pushed): [Phase 7 Stage 2 plan](product/phase-7-stage-2.md) with milestones M1–M11, decisions on [points valuation](decisions/2026-10-02-points-valuation-published-estimates.md) (Evan's approach) and [catalog v3](decisions/2026-10-02-catalog-v3-schema.md). Nothing implemented yet. Start in parallel: M1 (v3 contract and migration), M3 (valuation table), M9 (eval), M11 (pipeline design draft).
 - **Deadline.** The expansion captures are dated 2026-10-02, so a catalog citing them expires by 2026-11-01T00:00Z; hosted release 1 expires 2026-10-29. Publish target 2026-10-28.
 - Stage 1 facts (corpus counts, known gaps, judgment calls) are on [catalog expansion](system/catalog-expansion.md). Captures and luna traces are only in the `../AICheckout-expansion` worktree (gitignored).

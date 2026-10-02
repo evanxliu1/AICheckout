@@ -1,0 +1,2343 @@
+{
+  "schemaVersion": 1,
+  "version": "reward-programs.2026-10-02.1",
+  "annotationStatus": "agent-verified",
+  "description": "Reward-program valuation table for catalog v3 (Phase 7 Stage 2 M3). One program per reward currency; every expansion.v1 and real.v2.2 card maps to one program with a verbatim currency anchor of at most 25 words from its capture. Values are hundredths of a cent per unit: cash back 100; published estimates from one primary publisher (for bank currencies its baseline value, which is the issuer’s own travel-portal or fixed value, not a transfer value and not always the cash value; for airline and hotel currencies its median program value); otherwise an issuer-stated fixed redemption value from the captures, including credit toward the program’s own travel, cruise or store purchases (broader than corpus conventions 3 and 20, which govern card point values only; gift-card and up-to values excluded); otherwise none (no value is assumed). Card statedValueHundredthsOfCent repeats the corpus pointValueHundredthsOfCent and takes precedence over the program value. Numbers, URLs and dates only from the publisher.",
+  "primaryPublisher": {
+    "publisher": "NerdWallet",
+    "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+    "readOn": "2026-10-02"
+  },
+  "programs": [
+    {
+      "id": "cash-back",
+      "name": "Cash back",
+      "currency": "cash-back",
+      "valueHundredthsOfCent": 100,
+      "basis": "cash"
+    },
+    {
+      "id": "amex-membership-rewards",
+      "name": "American Express Membership Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "chase-ultimate-rewards",
+      "name": "Chase Ultimate Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "citi-thankyou",
+      "name": "Citi ThankYou Points",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "capital-one-miles",
+      "name": "Capital One miles",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "wells-fargo-rewards",
+      "name": "Wells Fargo Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "bank-of-america-points",
+      "name": "Bank of America points",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "discover-miles",
+      "name": "Discover miles",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "us-bank-altitude-points",
+      "name": "U.S. Bank Altitude points",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "delta-skymiles",
+      "name": "Delta SkyMiles",
+      "currency": "points",
+      "valueHundredthsOfCent": 120,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "united-mileageplus",
+      "name": "United MileagePlus miles",
+      "currency": "points",
+      "valueHundredthsOfCent": 120,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "american-aadvantage",
+      "name": "American Airlines AAdvantage miles",
+      "currency": "points",
+      "valueHundredthsOfCent": 170,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "southwest-rapid-rewards",
+      "name": "Southwest Rapid Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": 140,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "jetblue-trueblue",
+      "name": "JetBlue TrueBlue points",
+      "currency": "points",
+      "valueHundredthsOfCent": 140,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "atmos-rewards",
+      "name": "Atmos Rewards points (Alaska and Hawaiian Airlines)",
+      "currency": "points",
+      "valueHundredthsOfCent": 140,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "british-airways-avios",
+      "name": "British Airways Club Avios",
+      "currency": "points",
+      "valueHundredthsOfCent": 120,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "aer-lingus-avios",
+      "name": "Aer Lingus AerClub Avios",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "iberia-avios",
+      "name": "Iberia Club Avios",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "air-canada-aeroplan",
+      "name": "Air Canada Aeroplan points",
+      "currency": "points",
+      "valueHundredthsOfCent": 110,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "air-france-klm-flying-blue",
+      "name": "Air France KLM Flying Blue miles",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "emirates-skywards",
+      "name": "Emirates Skywards Miles",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "virgin-points",
+      "name": "Virgin Points (Virgin Atlantic Flying Club, Virgin Red)",
+      "currency": "points",
+      "valueHundredthsOfCent": 80,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "lufthansa-miles-and-more",
+      "name": "Lufthansa Miles & More miles",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "cathay-asia-miles",
+      "name": "Cathay Asia Miles",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "korean-air-skypass",
+      "name": "Korean Air SKYPASS miles",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "frontier-miles",
+      "name": "Frontier Miles",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "breeze-breezepoints",
+      "name": "Breeze Airways BreezePoints",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "sun-country-rewards",
+      "name": "Sun Country Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "issuer-stated",
+      "issuerStated": {
+        "sourceId": "synchrony-sun-country-visa-signature-partner-2",
+        "quote": "100 points equals $1 in Sun Country purchases."
+      }
+    },
+    {
+      "id": "allegiant-allways-points",
+      "name": "Allegiant Allways Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "issuer-stated",
+      "issuerStated": {
+        "sourceId": "boa-allways-rewards-product",
+        "quote": "Online Offer: 30,000 Bonus Points, equal to $300 off a future Allegiant trip,"
+      }
+    },
+    {
+      "id": "hilton-honors",
+      "name": "Hilton Honors points",
+      "currency": "points",
+      "valueHundredthsOfCent": 40,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "marriott-bonvoy",
+      "name": "Marriott Bonvoy points",
+      "currency": "points",
+      "valueHundredthsOfCent": 70,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "ihg-one-rewards",
+      "name": "IHG One Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": 60,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "world-of-hyatt",
+      "name": "World of Hyatt points",
+      "currency": "points",
+      "valueHundredthsOfCent": 180,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "wyndham-rewards",
+      "name": "Wyndham Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": 70,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "choice-privileges",
+      "name": "Choice Privileges points",
+      "currency": "points",
+      "valueHundredthsOfCent": 80,
+      "basis": "published-estimate",
+      "estimate": {
+        "publisher": "NerdWallet",
+        "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
+        "readOn": "2026-10-02"
+      }
+    },
+    {
+      "id": "royal-caribbean-royal-one",
+      "name": "Royal Caribbean Royal ONE Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "issuer-stated",
+      "issuerStated": {
+        "sourceId": "boa-royal-one-plus-product",
+        "quote": "60,000 bonus points, redeemable for $600 in onboard credit or cruise discounts"
+      }
+    },
+    {
+      "id": "norwegian-cruise-line-points",
+      "name": "Norwegian Cruise Line card points",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "issuer-stated",
+      "issuerStated": {
+        "sourceId": "boa-norwegian-cruise-line-world-mastercard-product",
+        "quote": "20,000 bonus points That’s enough for a $200 onboard credit or $200 off your next Norwegian cruise"
+      }
+    },
+    {
+      "id": "carnival-rewards-points",
+      "name": "Carnival Rewards Points",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "capital-vacations-rewards",
+      "name": "Capital Vacations card Rewards",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "rci-elite-rewards",
+      "name": "RCI Elite Rewards card Rewards",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "issuer-stated",
+      "issuerStated": {
+        "sourceId": "barclays-rci-elite-rewards-world-mastercard-pricing",
+        "quote": "Redemptions for Account statement credits start at 2,500 Rewards for a $25 credit."
+      }
+    },
+    {
+      "id": "gm-rewards-points",
+      "name": "GM Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "luxury-card-points",
+      "name": "Barclays Mastercard Titanium, Black and Gold points",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "barnes-noble-points",
+      "name": "Barnes & Noble Mastercard points",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "gap-encore-points",
+      "name": "Gap Inc. Encore points",
+      "currency": "points",
+      "valueHundredthsOfCent": 20,
+      "basis": "issuer-stated",
+      "issuerStated": {
+        "sourceId": "barclays-gap-encore-mastercard-product",
+        "quote": "500 points = $1 Reward"
+      }
+    },
+    {
+      "id": "bass-pro-club-points",
+      "name": "Bass Pro Shops and Cabela's CLUB points",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "issuer-stated",
+      "issuerStated": {
+        "sourceId": "capital-one-bass-pro-shops-club-card-pricing",
+        "quote": "One hundred (100) Points equates to one dollar that can be used toward purchases at Bass Pro Shops, Cabela’s and Mack's Prairie Wings"
+      }
+    },
+    {
+      "id": "dillards-rewards-points",
+      "name": "Dillard's Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": 66,
+      "basis": "issuer-stated",
+      "issuerStated": {
+        "sourceId": "citi-dillards-mastercard-product",
+        "quote": "$10 off3 rewards certificate for every 1,500 points earned3"
+      }
+    },
+    {
+      "id": "macys-star-rewards-points",
+      "name": "Macy's Star Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "issuer-stated",
+      "issuerStated": {
+        "sourceId": "citi-macys-amex-product",
+        "quote": "Once you reach 1,000 points, you’ll receive $10 in Star Money and can redeem your Star Money on Macy’s merchandise.2"
+      }
+    },
+    {
+      "id": "bloomingdales-loyallist-points",
+      "name": "Bloomingdale's Loyallist points",
+      "currency": "points",
+      "valueHundredthsOfCent": 50,
+      "basis": "issuer-stated",
+      "issuerStated": {
+        "sourceId": "citi-bloomingdales-amex-product",
+        "quote": "5,000 Points = $25 Reward"
+      }
+    },
+    {
+      "id": "american-eagle-real-rewards-points",
+      "name": "American Eagle Real Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "carecredit-reward-points",
+      "name": "CareCredit Rewards points",
+      "currency": "points",
+      "valueHundredthsOfCent": 100,
+      "basis": "issuer-stated",
+      "issuerStated": {
+        "sourceId": "synchrony-carecredit-rewards-mastercard-product",
+        "quote": "You can redeem your rewards points starting at 1,000 points. That’s $10!"
+      }
+    },
+    {
+      "id": "harley-davidson-visa-points",
+      "name": "Harley-Davidson Visa points",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    },
+    {
+      "id": "edward-jones-loyalty-points",
+      "name": "Edward Jones Loyalty Points",
+      "currency": "points",
+      "valueHundredthsOfCent": null,
+      "basis": "none"
+    }
+  ],
+  "cards": [
+    {
+      "cardId": "amex-gold",
+      "corpus": "expansion.v1",
+      "programId": "amex-membership-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amex-gold-product",
+        "quote": "1X Membership Rewards® point per dollar spent on all other eligible purchases."
+      }
+    },
+    {
+      "cardId": "amex-platinum",
+      "corpus": "expansion.v1",
+      "programId": "amex-membership-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amex-platinum-pricing",
+        "quote": "2x Membership Rewards® points on Cruise Bookings"
+      }
+    },
+    {
+      "cardId": "amex-delta-skymiles-blue",
+      "corpus": "expansion.v1",
+      "programId": "delta-skymiles",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amex-delta-skymiles-blue-pricing",
+        "quote": "All SkyMiles program rules apply to SkyMiles program membership, miles, offers, mile accrual, mile redemption, and travel benefits."
+      }
+    },
+    {
+      "cardId": "amex-delta-skymiles-gold",
+      "corpus": "expansion.v1",
+      "programId": "delta-skymiles",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amex-delta-skymiles-gold-pricing",
+        "quote": "All SkyMiles program rules apply to SkyMiles program membership, miles, offers, mile accrual, mile redemption and travel benefits."
+      }
+    },
+    {
+      "cardId": "amex-delta-skymiles-platinum",
+      "corpus": "expansion.v1",
+      "programId": "delta-skymiles",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amex-delta-skymiles-platinum-pricing",
+        "quote": "All SkyMiles program rules apply to SkyMiles program membership, miles, offers, mile accrual, mile redemption and travel benefits."
+      }
+    },
+    {
+      "cardId": "amex-delta-skymiles-reserve",
+      "corpus": "expansion.v1",
+      "programId": "delta-skymiles",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amex-delta-skymiles-reserve-pricing",
+        "quote": "Miles will be posted to the Basic Card Member's Delta SkyMiles account 8 to 12 weeks after the end of each month."
+      }
+    },
+    {
+      "cardId": "amex-hilton-honors",
+      "corpus": "expansion.v1",
+      "programId": "hilton-honors",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amex-hilton-honors-product",
+        "quote": "Earn 7X Hilton Honors Bonus Points on eligible Hilton purchases‡"
+      }
+    },
+    {
+      "cardId": "amex-hilton-honors-surpass",
+      "corpus": "expansion.v1",
+      "programId": "hilton-honors",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amex-hilton-honors-surpass-pricing",
+        "quote": "Hilton Honors Bonus Points you earn with your Card will be posted to your Hilton Honors account up to 12 weeks after the end of"
+      }
+    },
+    {
+      "cardId": "amex-hilton-honors-aspire",
+      "corpus": "expansion.v1",
+      "programId": "hilton-honors",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amex-hilton-honors-aspire-product",
+        "quote": "Earn 14X Hilton Honors Bonus Points on eligible Hilton purchases‡"
+      }
+    },
+    {
+      "cardId": "amex-marriott-bonvoy-bevy",
+      "corpus": "expansion.v1",
+      "programId": "marriott-bonvoy",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amex-marriott-bonvoy-bevy-pricing",
+        "quote": "You will receive 2 Marriott Bonvoy® points for each U.S. dollar of eligible purchases charged on your Marriott Bonvoy Bevy® American Express® Card."
+      }
+    },
+    {
+      "cardId": "amex-marriott-bonvoy-brilliant",
+      "corpus": "expansion.v1",
+      "programId": "marriott-bonvoy",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amex-marriott-bonvoy-brilliant-product",
+        "quote": "Card Members can earn 6X points on each dollar of eligible purchases at hotels participating in Marriott Bonvoy®.‡"
+      }
+    },
+    {
+      "cardId": "boa-customized-cash-rewards",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-customized-cash-rewards-pricing",
+        "quote": "Earn cash rewards when you use this card to make purchases"
+      }
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-unlimited-cash-rewards-product",
+        "quote": "Earn unlimited 1.5% cash back on all purchases"
+      }
+    },
+    {
+      "cardId": "boa-travel-rewards",
+      "corpus": "expansion.v1",
+      "programId": "bank-of-america-points",
+      "statedValueHundredthsOfCent": 60,
+      "anchor": {
+        "sourceId": "boa-travel-rewards-pricing",
+        "quote": "Earn points when you use this card to make purchases; returns, credits and adjustments to this card will be deducted from purchases, even if this"
+      }
+    },
+    {
+      "cardId": "boa-premium-rewards",
+      "corpus": "expansion.v1",
+      "programId": "bank-of-america-points",
+      "statedValueHundredthsOfCent": 100,
+      "anchor": {
+        "sourceId": "boa-premium-rewards-pricing",
+        "quote": "Earn points when you use this card to make purchases;"
+      }
+    },
+    {
+      "cardId": "boa-premium-rewards-elite",
+      "corpus": "expansion.v1",
+      "programId": "bank-of-america-points",
+      "statedValueHundredthsOfCent": 100,
+      "anchor": {
+        "sourceId": "boa-premium-rewards-elite-product",
+        "quote": "Earn unlimited points with flexible rewards"
+      }
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-students",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-customized-cash-rewards-students-product",
+        "quote": "6% cash back"
+      }
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards-students",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-unlimited-cash-rewards-students-product",
+        "quote": "Earn unlimited 1.5% cash back on all purchases"
+      }
+    },
+    {
+      "cardId": "boa-travel-rewards-students",
+      "corpus": "expansion.v1",
+      "programId": "bank-of-america-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-travel-rewards-students-product",
+        "quote": "Earn unlimited 1.5 points for every $1 you spend on everyday purchases."
+      }
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-secured",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-customized-cash-rewards-secured-pricing",
+        "quote": "1% Base Cash Rewards: Earn 1% cash back (equal to $0.01 for every $1) on Net Purchases charged to the card each billing cycle."
+      }
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards-secured",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-unlimited-cash-rewards-secured-product",
+        "quote": "Earn unlimited 1.5% cash back on all purchases"
+      }
+    },
+    {
+      "cardId": "boa-travel-rewards-secured",
+      "corpus": "expansion.v1",
+      "programId": "bank-of-america-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-travel-rewards-secured-product",
+        "quote": "Earn unlimited 1.5 points for every $1 you spend on everyday purchases."
+      }
+    },
+    {
+      "cardId": "boa-susan-g-komen-customized-cash-rewards",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-susan-g-komen-customized-cash-rewards-product",
+        "quote": "Unlimited 1% cash back on all other purchases"
+      }
+    },
+    {
+      "cardId": "boa-atmos-rewards-ascent",
+      "corpus": "expansion.v1",
+      "programId": "atmos-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-atmos-rewards-ascent-pricing",
+        "quote": "All points earned on the account will be credited to the primary cardholder's Atmos™ Rewards account."
+      }
+    },
+    {
+      "cardId": "boa-atmos-rewards-summit",
+      "corpus": "expansion.v1",
+      "programId": "atmos-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-atmos-rewards-summit-pricing",
+        "quote": "The bonus points and Global 25K Companion Award will be credited to the Primary Cardholder's Atmos™ Rewards program account within the first 2 billing cycles"
+      }
+    },
+    {
+      "cardId": "boa-royal-one",
+      "corpus": "expansion.v1",
+      "programId": "royal-caribbean-royal-one",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-royal-one-product",
+        "quote": "Enjoy Royal ONE RewardsSM Redeem your points for cruise discounts or onboard credit"
+      }
+    },
+    {
+      "cardId": "boa-royal-one-plus",
+      "corpus": "expansion.v1",
+      "programId": "royal-caribbean-royal-one",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-royal-one-plus-product",
+        "quote": "Enjoy Royal ONE RewardsSM Redeem your points for cruise discounts or onboard credit"
+      }
+    },
+    {
+      "cardId": "boa-allways-rewards",
+      "corpus": "expansion.v1",
+      "programId": "allegiant-allways-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-allways-rewards-product",
+        "quote": "3 points per $1 spent on Allegiant purchases (air, hotel, car rental and attractions)"
+      }
+    },
+    {
+      "cardId": "boa-air-france-klm",
+      "corpus": "expansion.v1",
+      "programId": "air-france-klm-flying-blue",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-air-france-klm-pricing",
+        "quote": "Allow 1 - 2 billing cycles from qualifying for the bonus miles and XP to post to the primary cardholder's Flying Blue account."
+      }
+    },
+    {
+      "cardId": "boa-norwegian-cruise-line-world-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "norwegian-cruise-line-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "boa-norwegian-cruise-line-world-mastercard-pricing",
+        "quote": "3 Points: Earn 3 points (consisting of 2 bonus points and 1 base point) for every $1 spent on eligible Net Purchases charged through Norwegian"
+      }
+    },
+    {
+      "cardId": "barclays-mastercard-titanium",
+      "corpus": "expansion.v1",
+      "programId": "luxury-card-points",
+      "statedValueHundredthsOfCent": 100,
+      "anchor": {
+        "sourceId": "barclays-mastercard-titanium-pricing",
+        "quote": "You earn 1 Point for every $1 spent on all Net Purchases made with your Account."
+      }
+    },
+    {
+      "cardId": "barclays-mastercard-black",
+      "corpus": "expansion.v1",
+      "programId": "luxury-card-points",
+      "statedValueHundredthsOfCent": 150,
+      "anchor": {
+        "sourceId": "barclays-mastercard-black-pricing",
+        "quote": "You earn 1 Point for every $1 spent on all Net Purchases made with your Account."
+      }
+    },
+    {
+      "cardId": "barclays-mastercard-gold",
+      "corpus": "expansion.v1",
+      "programId": "luxury-card-points",
+      "statedValueHundredthsOfCent": 200,
+      "anchor": {
+        "sourceId": "barclays-mastercard-gold-pricing",
+        "quote": "You earn 1 Point for every $1 spent on all Net Purchases made with your Account."
+      }
+    },
+    {
+      "cardId": "barclays-gm-rewards-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "gm-rewards-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-gm-rewards-mastercard-pricing",
+        "quote": "Please allow 4-6 weeks for the bonus Points to be deposited into your GM Rewards Member Account."
+      }
+    },
+    {
+      "cardId": "barclays-jetblue-card",
+      "corpus": "expansion.v1",
+      "programId": "jetblue-trueblue",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-jetblue-card-pricing",
+        "quote": "You earn 1 TrueBlue point for every $1 spent on all other Net Purchases made with your Card Account."
+      }
+    },
+    {
+      "cardId": "barclays-jetblue-plus",
+      "corpus": "expansion.v1",
+      "programId": "jetblue-trueblue",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-jetblue-plus-pricing",
+        "quote": "You earn 6 TrueBlue points for every $1 spent on eligible Net Purchases made with your Card Account on tickets, goods and services purchased directly"
+      }
+    },
+    {
+      "cardId": "barclays-jetblue-premier",
+      "corpus": "expansion.v1",
+      "programId": "jetblue-trueblue",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-jetblue-premier-pricing",
+        "quote": "You earn 6 TrueBlue points for every $1 spent on eligible Net Purchases made with your Card Account on tickets, goods and services purchased directly"
+      }
+    },
+    {
+      "cardId": "barclays-breeze-easy-visa",
+      "corpus": "expansion.v1",
+      "programId": "breeze-breezepoints",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-breeze-easy-visa-pricing",
+        "quote": "You earn 1 BreezePoint for every $1 spent on all other Net Purchases made with your Card Account."
+      }
+    },
+    {
+      "cardId": "barclays-wyndham-rewards-earner",
+      "corpus": "expansion.v1",
+      "programId": "wyndham-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-wyndham-rewards-earner-pricing",
+        "quote": "You will receive a 10% redemption discount when redeeming Wyndham Rewards points for Free Nights."
+      }
+    },
+    {
+      "cardId": "barclays-wyndham-rewards-earner-plus",
+      "corpus": "expansion.v1",
+      "programId": "wyndham-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-wyndham-rewards-earner-plus-product",
+        "quote": "Redeem your points for free nights at participating Wyndham Rewards properties"
+      }
+    },
+    {
+      "cardId": "barclays-wyndham-rewards-earner-premier",
+      "corpus": "expansion.v1",
+      "programId": "wyndham-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-wyndham-rewards-earner-premier-product",
+        "quote": "Redeem your points for free nights at participating Wyndham Rewards properties"
+      }
+    },
+    {
+      "cardId": "barclays-upromise-world-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-upromise-world-mastercard-pricing",
+        "quote": "\"Cash Back Rewards\" are the Program rewards currency earned for transactions made with your Card Account."
+      }
+    },
+    {
+      "cardId": "barclays-frontier-airlines-world-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "frontier-miles",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-frontier-airlines-world-mastercard-pricing",
+        "quote": "“Miles” are the Program rewards currency earned for transactions made with your Card Account and may be referred to as Travel Miles."
+      }
+    },
+    {
+      "cardId": "barclays-lufthansa-miles-more-world-elite",
+      "corpus": "expansion.v1",
+      "programId": "lufthansa-miles-and-more",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-product",
+        "quote": "Earn 2 Miles per $1 spent on Miles & More partner airline tickets, and 1 Mile per $1 on all other purchases2"
+      }
+    },
+    {
+      "cardId": "barclays-emirates-skywards-rewards",
+      "corpus": "expansion.v1",
+      "programId": "emirates-skywards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-emirates-skywards-rewards-pricing",
+        "quote": "You earn 3 Skywards Miles for every $1 (USD 1) spent on eligible Net Purchases made with your Card Account on tickets, goods and services"
+      }
+    },
+    {
+      "cardId": "barclays-emirates-skywards-premium",
+      "corpus": "expansion.v1",
+      "programId": "emirates-skywards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-emirates-skywards-premium-pricing",
+        "quote": "Skywards Miles earned through the use of your Card Account will be credited to your Membership Account."
+      }
+    },
+    {
+      "cardId": "barclays-carnival-rewards-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "carnival-rewards-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-carnival-rewards-mastercard-pricing",
+        "quote": "You earn 3 Carnival Rewards Points for every $1 spent on eligible Net Purchases made with your Card Account on Carnival Cruise Line."
+      }
+    },
+    {
+      "cardId": "barclays-capital-vacations-world-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "capital-vacations-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-capital-vacations-world-mastercard-pricing",
+        "quote": "You earn 2 Rewards for every $1 spent on eligible Net Purchases made with your Account on eligible RCI, travel, gas, and EV charging purchases."
+      }
+    },
+    {
+      "cardId": "barclays-rci-elite-rewards-world-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "rci-elite-rewards",
+      "statedValueHundredthsOfCent": 100,
+      "anchor": {
+        "sourceId": "barclays-rci-elite-rewards-world-mastercard-pricing",
+        "quote": "You earn 2 Rewards for every $1 spent on eligible Net Purchases made with your Account on eligible travel, gas, EV charging and rideshare."
+      }
+    },
+    {
+      "cardId": "barclays-barnes-noble-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "barnes-noble-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-barnes-noble-mastercard-pricing",
+        "quote": "“Points” are the Program rewards currency earned for transactions made with your Account."
+      }
+    },
+    {
+      "cardId": "barclays-gap-encore-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "gap-encore-points",
+      "statedValueHundredthsOfCent": 20,
+      "anchor": {
+        "sourceId": "barclays-gap-encore-mastercard-pricing",
+        "quote": "All other eligible Net Purchases: You will earn 5 points for every dollar spent using your Account if your Account is at the Mastercard level"
+      }
+    },
+    {
+      "cardId": "barclays-old-navy-encore-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "gap-encore-points",
+      "statedValueHundredthsOfCent": 20,
+      "anchor": {
+        "sourceId": "barclays-old-navy-encore-mastercard-pricing",
+        "quote": "to make a Qualifying Purchase at the Gap Inc. Family of Brands, in the United States, including Puerto Rico you will automatically earn 25 points"
+      }
+    },
+    {
+      "cardId": "barclays-banana-republic-encore-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "gap-encore-points",
+      "statedValueHundredthsOfCent": 20,
+      "anchor": {
+        "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
+        "quote": "to make a Qualifying Purchase at the Gap Inc. Family of Brands, in the United States, including Puerto Rico you will automatically earn 25 points"
+      }
+    },
+    {
+      "cardId": "barclays-athleta-encore-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "gap-encore-points",
+      "statedValueHundredthsOfCent": 20,
+      "anchor": {
+        "sourceId": "barclays-athleta-encore-mastercard-pricing",
+        "quote": "You must be an Encore Membership Program member to earn points, redeem for Rewards in the Rewards Marketplace, and enjoy other benefits of this Program."
+      }
+    },
+    {
+      "cardId": "barclays-aarp-travel-rewards-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-aarp-travel-rewards-mastercard-pricing",
+        "quote": "“Rewards” means the Program rewards currency earned for transactions made with your Account and may also be referred to as “cash back”."
+      }
+    },
+    {
+      "cardId": "barclays-aarp-essential-rewards-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "barclays-aarp-essential-rewards-mastercard-pricing",
+        "quote": "You earn rewards, or cash back, for Net Purchases made by you and/or any authorized user(s) of your Account as follows:"
+      }
+    },
+    {
+      "cardId": "capital-one-venture-x",
+      "corpus": "expansion.v1",
+      "programId": "capital-one-miles",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-venture-x-pricing",
+        "quote": "You will earn 10 miles per dollar on hotels and rental cars and 5 miles per dollar on flights and vacation rentals booked through Capital"
+      }
+    },
+    {
+      "cardId": "capital-one-venture",
+      "corpus": "expansion.v1",
+      "programId": "capital-one-miles",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-venture-pricing",
+        "quote": "You will earn 2 miles per dollar on net purchases (purchases minus any credits or returns) only."
+      }
+    },
+    {
+      "cardId": "capital-one-ventureone",
+      "corpus": "expansion.v1",
+      "programId": "capital-one-miles",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-ventureone-pricing",
+        "quote": "You will earn 1.25 miles per dollar on net purchases (purchases minus any credits or returns) only."
+      }
+    },
+    {
+      "cardId": "capital-one-quicksilverone",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-quicksilverone-product",
+        "quote": "Earn unlimited 1.5% cash back on every purchase."
+      }
+    },
+    {
+      "cardId": "capital-one-quicksilver-student",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-quicksilver-student-product",
+        "quote": "Earn unlimited 1.5% cash back on every purchase, every day."
+      }
+    },
+    {
+      "cardId": "capital-one-quicksilver-secured",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-quicksilver-secured-pricing",
+        "quote": "You can get your cash back upon request in the form of a statement credit or a check."
+      }
+    },
+    {
+      "cardId": "capital-one-savorone",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-savorone-pricing",
+        "quote": "You will earn 8% cash back on Capital One Entertainment purchases."
+      }
+    },
+    {
+      "cardId": "capital-one-savor-student",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-savor-student-pricing",
+        "quote": "You can get your cash back upon request in the form of a statement credit or a check."
+      }
+    },
+    {
+      "cardId": "capital-one-t-mobile-visa",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-t-mobile-visa-pricing",
+        "quote": "You will earn 2% back in T-Mobile Rewards on all other purchases."
+      }
+    },
+    {
+      "cardId": "capital-one-rei-co-op-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-rei-co-op-mastercard-pricing",
+        "quote": "You will earn 1.5% back in REI Co-op Mastercard Rewards on all other purchases made outside of REI."
+      }
+    },
+    {
+      "cardId": "capital-one-williams-sonoma-key-rewards-visa",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-williams-sonoma-key-rewards-visa-pricing",
+        "quote": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, west elm,"
+      }
+    },
+    {
+      "cardId": "capital-one-pottery-barn-key-rewards-visa",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+        "quote": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, west elm,"
+      }
+    },
+    {
+      "cardId": "capital-one-west-elm-key-rewards-visa",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-west-elm-key-rewards-visa-pricing",
+        "quote": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, west elm,"
+      }
+    },
+    {
+      "cardId": "capital-one-key-rewards-visa",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-key-rewards-visa-pricing",
+        "quote": "1% back in Rewards for Net Eligible Purchases made everywhere else Visa is accepted."
+      }
+    },
+    {
+      "cardId": "capital-one-bjs-one-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-bjs-one-mastercard-pricing",
+        "quote": "You will earn 3% back in BJ's One Credit Card Rewards on Eligible Purchases."
+      }
+    },
+    {
+      "cardId": "capital-one-bjs-one-plus-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-bjs-one-plus-mastercard-pricing",
+        "quote": "You will earn 5% back in BJ's One+ Credit Card Rewards on Eligible Purchases."
+      }
+    },
+    {
+      "cardId": "capital-one-bass-pro-shops-club-card",
+      "corpus": "expansion.v1",
+      "programId": "bass-pro-club-points",
+      "statedValueHundredthsOfCent": 100,
+      "anchor": {
+        "sourceId": "capital-one-bass-pro-shops-club-card-pricing",
+        "quote": "You will earn one (1) Point for every one dollar ($1.00) of Net Purchases made using your Account."
+      }
+    },
+    {
+      "cardId": "capital-one-cabelas-club-card",
+      "corpus": "expansion.v1",
+      "programId": "bass-pro-club-points",
+      "statedValueHundredthsOfCent": 100,
+      "anchor": {
+        "sourceId": "capital-one-cabelas-club-card-pricing",
+        "quote": "HOW CLUB POINTS ARE EARNED Bass Pro Shops and Cabela's are responsible for the operation and administration of the Bass Pro Shops and Cabela's CLUB"
+      }
+    },
+    {
+      "cardId": "capital-one-union-plus-cash-rewards",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-union-plus-cash-rewards-pricing",
+        "quote": "You will earn 1.5% cash back on net purchases (purchases minus any credits or returns) only."
+      }
+    },
+    {
+      "cardId": "capital-one-teamster-privilege-cash-rewards",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-teamster-privilege-cash-rewards-pricing",
+        "quote": "You will earn 1.5% cash back on net purchases (purchases minus any credits or returns) only."
+      }
+    },
+    {
+      "cardId": "chase-freedom-flex",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "chase-freedom-flex-product",
+        "quote": "Earn 5% cash back on up to $1,500 in rotating categories each quarter you activate."
+      }
+    },
+    {
+      "cardId": "chase-sapphire-preferred",
+      "corpus": "expansion.v1",
+      "programId": "chase-ultimate-rewards",
+      "statedValueHundredthsOfCent": 100,
+      "anchor": {
+        "sourceId": "chase-sapphire-preferred-rewards-terms",
+        "quote": "Chase Sapphire Preferred with Ultimate Rewards Program Agreement"
+      }
+    },
+    {
+      "cardId": "chase-sapphire-reserve",
+      "corpus": "expansion.v1",
+      "programId": "chase-ultimate-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "chase-sapphire-reserve-product",
+        "quote": "8x points on all purchases through Chase Travel, including The EditSM*"
+      }
+    },
+    {
+      "cardId": "chase-freedom-rise",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "chase-freedom-rise-product",
+        "quote": "With Chase Freedom Rise, you can establish credit and earn 1.5% cash back on all purchases.*"
+      }
+    },
+    {
+      "cardId": "prime-visa",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "prime-visa-rewards-terms",
+        "quote": "% back rewards are tracked as points"
+      }
+    },
+    {
+      "cardId": "amazon-visa",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amazon-visa-product",
+        "quote": "Earn unlimited 1% back on all other purchases anywhere Visa is accepted.*"
+      }
+    },
+    {
+      "cardId": "doordash-rewards-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "doordash-rewards-mastercard-product",
+        "quote": "Redeem your cash back as a statement credit or direct deposit into your checking or savings account."
+      }
+    },
+    {
+      "cardId": "instacart-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "instacart-mastercard-product",
+        "quote": "5% cash back on qualifying Instacart purchases on your first $6,000 spent annually*, 5% cash back on Chase Travel purchases*, and 2% cash back at"
+      }
+    },
+    {
+      "cardId": "disney-inspire-visa",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "disney-inspire-visa-product",
+        "quote": "Cardmembers earn 10% in Disney Rewards Dollars on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com."
+      }
+    },
+    {
+      "cardId": "disney-premier-visa",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "disney-premier-visa-product",
+        "quote": "Earn 5% in Disney Rewards Dollars on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com.*"
+      }
+    },
+    {
+      "cardId": "disney-visa",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "disney-visa-product",
+        "quote": "Earn 1% in Disney Rewards Dollars on all card purchases.*"
+      }
+    },
+    {
+      "cardId": "united-explorer",
+      "corpus": "expansion.v1",
+      "programId": "united-mileageplus",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "united-explorer-product",
+        "quote": "plus 3x miles on entire United purchase with United Explorer Card."
+      }
+    },
+    {
+      "cardId": "united-quest",
+      "corpus": "expansion.v1",
+      "programId": "united-mileageplus",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "united-quest-product",
+        "quote": "4x miles on all other eligible United purchases*"
+      }
+    },
+    {
+      "cardId": "united-gateway",
+      "corpus": "expansion.v1",
+      "programId": "united-mileageplus",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "united-gateway-product",
+        "quote": "plus 2x miles on entire United purchase with the United Gateway Card."
+      }
+    },
+    {
+      "cardId": "united-club",
+      "corpus": "expansion.v1",
+      "programId": "united-mileageplus",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "united-club-product",
+        "quote": "6x miles on the Primary Cardmember's fare from United as a MileagePlus member, plus 5x miles on entire United purchase with United Club Card."
+      }
+    },
+    {
+      "cardId": "southwest-rapid-rewards-plus",
+      "corpus": "expansion.v1",
+      "programId": "southwest-rapid-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "southwest-rapid-rewards-plus-product",
+        "quote": "Your points don't expire, a benefit of the Rapid Rewards program."
+      }
+    },
+    {
+      "cardId": "southwest-rapid-rewards-premier",
+      "corpus": "expansion.v1",
+      "programId": "southwest-rapid-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "southwest-rapid-rewards-premier-product",
+        "quote": "Your points don't expire, a benefit of the Rapid Rewards program."
+      }
+    },
+    {
+      "cardId": "southwest-rapid-rewards-priority",
+      "corpus": "expansion.v1",
+      "programId": "southwest-rapid-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "southwest-rapid-rewards-priority-product",
+        "quote": "Your points don't expire, a benefit of the Rapid Rewards program."
+      }
+    },
+    {
+      "cardId": "ihg-one-rewards-premier-select",
+      "corpus": "expansion.v1",
+      "programId": "ihg-one-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "ihg-one-rewards-premier-select-product",
+        "quote": "Earn IHG One Rewards points on every purchase."
+      }
+    },
+    {
+      "cardId": "ihg-one-rewards-premier",
+      "corpus": "expansion.v1",
+      "programId": "ihg-one-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "ihg-one-rewards-premier-product",
+        "quote": "Earn IHG One Rewards points on every purchase."
+      }
+    },
+    {
+      "cardId": "ihg-one-rewards",
+      "corpus": "expansion.v1",
+      "programId": "ihg-one-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "ihg-one-rewards-product",
+        "quote": "Up to 17X total points at IHG® Hotels and Resorts That's 5X points with this card.*"
+      }
+    },
+    {
+      "cardId": "marriott-bonvoy-boundless",
+      "corpus": "expansion.v1",
+      "programId": "marriott-bonvoy",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "marriott-bonvoy-boundless-product",
+        "quote": "Earn 6X points for every $1 spent at over 7,000 hotels participating in Marriott Bonvoy® with the Marriott Bonvoy Boundless® credit card.*"
+      }
+    },
+    {
+      "cardId": "marriott-bonvoy-bountiful",
+      "corpus": "expansion.v1",
+      "programId": "marriott-bonvoy",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "marriott-bonvoy-bountiful-product",
+        "quote": "Earn Unlimited Marriott Bonvoy® points and get free stays faster."
+      }
+    },
+    {
+      "cardId": "marriott-bonvoy-bold",
+      "corpus": "expansion.v1",
+      "programId": "marriott-bonvoy",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "marriott-bonvoy-bold-product",
+        "quote": "Earn 3X points for every $1 spent at over 7,000 hotels participating in Marriott Bonvoy® with the Marriott Bonvoy Bold® Credit Card.*"
+      }
+    },
+    {
+      "cardId": "world-of-hyatt",
+      "corpus": "expansion.v1",
+      "programId": "world-of-hyatt",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "world-of-hyatt-product",
+        "quote": "Plus, up to 5 Base Points from Hyatt per eligible $1 spent for being a World of Hyatt member."
+      }
+    },
+    {
+      "cardId": "air-canada-aeroplan",
+      "corpus": "expansion.v1",
+      "programId": "air-canada-aeroplan",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "air-canada-aeroplan-product",
+        "quote": "Redeem your points for flight rewards with Air Canada and Aeroplan's 45+ partner airlines to more than 1,300 destinations worldwide.*"
+      }
+    },
+    {
+      "cardId": "british-airways-visa-signature",
+      "corpus": "expansion.v1",
+      "programId": "british-airways-avios",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "british-airways-visa-signature-product",
+        "quote": "Earn 3 Avios for every $1 spent on British Airways, Aer Lingus, and Iberia flight purchases."
+      }
+    },
+    {
+      "cardId": "aer-lingus-visa-signature",
+      "corpus": "expansion.v1",
+      "programId": "aer-lingus-avios",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "aer-lingus-visa-signature-product",
+        "quote": "Earn 3 Avios for every $1 spent with Aer Lingus, British Airways, and Iberia flight purchases.*"
+      }
+    },
+    {
+      "cardId": "iberia-visa-signature",
+      "corpus": "expansion.v1",
+      "programId": "iberia-avios",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "iberia-visa-signature-product",
+        "quote": "Earn 3 Avios for every $1 spent on Iberia, British Airways, and Aer Lingus flight purchases.*"
+      }
+    },
+    {
+      "cardId": "citi-strata",
+      "corpus": "expansion.v1",
+      "programId": "citi-thankyou",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "1 ThankYou Point for each $1 spent on All Other Purchases"
+      }
+    },
+    {
+      "cardId": "citi-strata-premier",
+      "corpus": "expansion.v1",
+      "programId": "citi-thankyou",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-strata-premier-rewards-terms",
+        "quote": "10 total ThankYou Points for each $1 spent on hotel, car rental and attraction bookings on the Citi Travel® site via cititravel.com or 1-833-737-1288 (TTY:"
+      }
+    },
+    {
+      "cardId": "citi-strata-elite",
+      "corpus": "expansion.v1",
+      "programId": "citi-thankyou",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-strata-elite-product",
+        "quote": "including the ability to enjoy rewards through the ThankYou® Rewards program: 12X points on Hotels, Car Rentals, and Attractions booked through cititravel.com"
+      }
+    },
+    {
+      "cardId": "citi-costco-anywhere-visa",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-costco-anywhere-visa-product",
+        "quote": "Earn cash back rewards"
+      }
+    },
+    {
+      "cardId": "citi-aadvantage-platinum-select",
+      "corpus": "expansion.v1",
+      "programId": "american-aadvantage",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-aadvantage-platinum-select-rewards-terms",
+        "quote": "AAdvantage® miles are earned on purchases, except balance transfers, cash advances, checks that access your credit card account, items and services returned for credit, unauthorized"
+      }
+    },
+    {
+      "cardId": "citi-aadvantage-mileup",
+      "corpus": "expansion.v1",
+      "programId": "american-aadvantage",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-aadvantage-mileup-product",
+        "quote": "Earn 2 AAdvantage® miles for every $1 spent on eligible American Airlines purchases2"
+      }
+    },
+    {
+      "cardId": "citi-aadvantage-executive",
+      "corpus": "expansion.v1",
+      "programId": "american-aadvantage",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-aadvantage-executive-rewards-terms",
+        "quote": "AAdvantage® miles are earned on purchases, except balance transfers, cash advances, checks that access your credit card account, items and services returned for credit, unauthorized"
+      }
+    },
+    {
+      "cardId": "citi-aadvantage-globe",
+      "corpus": "expansion.v1",
+      "programId": "american-aadvantage",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-aadvantage-globe-product",
+        "quote": "Earn 6 AAdvantage® miles for every $1 spent on eligible AAdvantage Hotels™ bookings2"
+      }
+    },
+    {
+      "cardId": "citi-att-points-plus",
+      "corpus": "expansion.v1",
+      "programId": "citi-thankyou",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-att-points-plus-rewards-terms",
+        "quote": "3 ThankYou Points for every $1 spent at gas and electric vehicle (EV) charging stations."
+      }
+    },
+    {
+      "cardId": "citi-my-best-buy-visa",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-my-best-buy-visa-rewards-terms",
+        "quote": "Get 2.5 points per $1 spent (5% back in rewards) on qualifying Best Buy purchases"
+      }
+    },
+    {
+      "cardId": "citi-wayfair-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-wayfair-mastercard-product",
+        "quote": "The Wayfair Mastercard® also earns 3% back4 in rewards at grocery stores"
+      }
+    },
+    {
+      "cardId": "citi-tsc-visa",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-tsc-visa-product",
+        "quote": "Cardholders earn 5 points per dollar on eligible Tractor Supply purchases (that’s 5% in Rewards) made using their TSC Store Credit Card or TSC Visa"
+      }
+    },
+    {
+      "cardId": "citi-llbean-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-llbean-mastercard-product",
+        "quote": "1 Bean Buck = $1 savings on your future L.L.Bean purchases"
+      }
+    },
+    {
+      "cardId": "citi-dillards-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "dillards-rewards-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "citi-dillards-mastercard-product",
+        "quote": "Cardmembers get access to the Dillard’s Rewards program and earn points4 on eligible purchases4."
+      }
+    },
+    {
+      "cardId": "citi-macys-amex",
+      "corpus": "expansion.v1",
+      "programId": "macys-star-rewards-points",
+      "statedValueHundredthsOfCent": 100,
+      "anchor": {
+        "sourceId": "citi-macys-amex-product",
+        "quote": "Points add up to Star Money that you can use to purchase merchandise at Macy’s, Macy’s Backstage, or macys.com."
+      }
+    },
+    {
+      "cardId": "citi-bloomingdales-amex",
+      "corpus": "expansion.v1",
+      "programId": "bloomingdales-loyallist-points",
+      "statedValueHundredthsOfCent": 50,
+      "anchor": {
+        "sourceId": "citi-bloomingdales-amex-product",
+        "quote": "Bloomingdale’s American Express Cardholders earn 3 points for every $1 spent at Bloomingdale’s, bloomingdales.com, Bloomingdale’s The Outlet Store or anywhere American Express is accepted."
+      }
+    },
+    {
+      "cardId": "discover-it-cash-back",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "discover-it-cash-back-product",
+        "quote": "Plus, earn 1% cash back on all other purchases."
+      }
+    },
+    {
+      "cardId": "discover-it-miles",
+      "corpus": "expansion.v1",
+      "programId": "discover-miles",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "discover-it-miles-terms",
+        "quote": "You will earn unlimited one and a half (1.5) miles per dollar on net purchases (purchases minus any credits or returns) only."
+      }
+    },
+    {
+      "cardId": "discover-it-chrome",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "discover-it-chrome-product",
+        "quote": "You will earn 2% cash back on your first $1000 in combined purchases at gas stations (stand-alone) and restaurants each calendar quarter."
+      }
+    },
+    {
+      "cardId": "discover-it-student-cash-back",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "discover-it-student-cash-back-product",
+        "quote": "Earn 5% cash back on everyday purchases at different places you shop each quarter like grocery stores, restaurants, gas stations, and more, up to the"
+      }
+    },
+    {
+      "cardId": "discover-it-student-chrome",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "discover-it-student-chrome-product",
+        "quote": "Earn 2% cash back at gas stations and restaurants on up to $1,000 in combined purchases each quarter, automatically."
+      }
+    },
+    {
+      "cardId": "discover-it-secured-cash-back",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "discover-it-secured-cash-back-product",
+        "quote": "Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate."
+      }
+    },
+    {
+      "cardId": "synchrony-premier-world-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-premier-world-mastercard-rewards-terms",
+        "quote": "you will automatically earn cash back in the form of a statement credit"
+      }
+    },
+    {
+      "cardId": "synchrony-amazon-store-card",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amazon-store-card-product",
+        "quote": "Prime Store Card members can earn 5% back at Amazon.com and Whole Foods Market"
+      }
+    },
+    {
+      "cardId": "synchrony-amazon-secured-card",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amazon-store-card-product",
+        "quote": "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership6"
+      }
+    },
+    {
+      "cardId": "synchrony-paypal-cashback-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-paypal-cashback-mastercard-product",
+        "quote": "With the PayPal Cashback Mastercard, you earn unlimited 3% cash back1 when you checkout with PayPal and 1.5% on all other purchases"
+      }
+    },
+    {
+      "cardId": "synchrony-venmo-credit-card",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-venmo-credit-card-rewards-terms",
+        "quote": "will earn cash back rewards (referred to as “Cash Rewards”)"
+      }
+    },
+    {
+      "cardId": "synchrony-verizon-visa-card",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+        "quote": "4% in Verizon Dollars for every Net New Purchase of gas and at electric vehicle (“EV”) charging stations."
+      }
+    },
+    {
+      "cardId": "synchrony-sams-club-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-sams-club-mastercard-product",
+        "quote": "Earn 1% back in Sam’s Cash on other purchases.*"
+      }
+    },
+    {
+      "cardId": "synchrony-carecredit-rewards-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "carecredit-reward-points",
+      "statedValueHundredthsOfCent": 100,
+      "anchor": {
+        "sourceId": "synchrony-carecredit-rewards-mastercard-product",
+        "quote": "You will automatically earn Reward Points when you use your account to make qualifying purchases."
+      }
+    },
+    {
+      "cardId": "synchrony-onepay-cashrewards-card",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-onepay-cashrewards-card-product",
+        "quote": "Earn cash back on every purchase with the OnePay CashRewards Card."
+      }
+    },
+    {
+      "cardId": "synchrony-mywalgreens-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-mywalgreens-mastercard-product",
+        "quote": "Start earning 1% Walgreens Cash rewards storewide, even at the pharmacy!"
+      }
+    },
+    {
+      "cardId": "synchrony-tjx-rewards-platinum-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-tjx-rewards-platinum-mastercard-partner",
+        "quote": "5% back in Rewards Points every time you shop our family of stores."
+      }
+    },
+    {
+      "cardId": "synchrony-newegg-store-credit-card",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-newegg-store-credit-card-product",
+        "quote": "Use your Newegg Store Credit Card, enjoy 4% off every day on your purchase."
+      }
+    },
+    {
+      "cardId": "synchrony-jcpenney-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-jcpenney-mastercard-product",
+        "quote": "Earn 7.5% back in CashPass Rewards on JCPenney purchases with a JCPenney Credit Card."
+      }
+    },
+    {
+      "cardId": "synchrony-ae-real-rewards-visa",
+      "corpus": "expansion.v1",
+      "programId": "american-eagle-real-rewards-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-ae-real-rewards-visa-partner",
+        "quote": "Real Rewards credit cardmembers earn 40 points per $1 spent with their Real Rewards credit card/Real Rewards Visa credit card."
+      }
+    },
+    {
+      "cardId": "synchrony-at-home-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-at-home-mastercard-partner",
+        "quote": "3% back in Rewards3 everywhere else Mastercard® is accepted"
+      }
+    },
+    {
+      "cardId": "synchrony-chicos-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-chicos-mastercard-partner",
+        "quote": "Chico’s Mastercard members also earn 2% back in points on Grocery Store and Restaurant purchases"
+      }
+    },
+    {
+      "cardId": "synchrony-soma-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-soma-mastercard-partner",
+        "quote": "Soma Mastercard members also earn 2% back in points on Grocery Store and Restaurant purchases and 1% back in points everywhere else Mastercard is accepted¹."
+      }
+    },
+    {
+      "cardId": "synchrony-whbm-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-whbm-mastercard-partner",
+        "quote": "WHBM Mastercard members also earn 2% back in points on Grocery Store and Restaurant purchases"
+      }
+    },
+    {
+      "cardId": "synchrony-jcrew-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-jcrew-mastercard-partner",
+        "quote": "Cardmembers with NAVY Access earn 5% back in rewards while GOLD Access cardmembers earn 7.5% back in rewards."
+      }
+    },
+    {
+      "cardId": "synchrony-harbor-freight-credit-card",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-harbor-freight-credit-card-partner",
+        "quote": "Earn unlimited rewards with 5% back in Harbor Freight Money2 every time you shop"
+      }
+    },
+    {
+      "cardId": "synchrony-cathay-world-elite-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "cathay-asia-miles",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-cathay-world-elite-mastercard-partner",
+        "quote": "Earn 1 Asia Mile per $1 spent on everything else, where Mastercard is accepted worldwide.1"
+      }
+    },
+    {
+      "cardId": "synchrony-virgin-red-rewards-mastercard",
+      "corpus": "expansion.v1",
+      "programId": "virgin-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-virgin-red-rewards-mastercard-partner",
+        "quote": "Earn 3 Virgin Points for every $1 you spend with Virgin Atlantic, Virgin Hotels and Virgin Voyages."
+      }
+    },
+    {
+      "cardId": "synchrony-sun-country-visa-signature",
+      "corpus": "expansion.v1",
+      "programId": "sun-country-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "synchrony-sun-country-visa-signature-partner-2",
+        "quote": "How do I redeem my Sun Country rewards points?"
+      }
+    },
+    {
+      "cardId": "us-bank-cash-plus",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "us-bank-cash-plus-product",
+        "quote": "5% cash back"
+      }
+    },
+    {
+      "cardId": "us-bank-smartly",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "us-bank-smartly-product",
+        "quote": "Earn unlimited 2% cash back on every purchase.1"
+      }
+    },
+    {
+      "cardId": "us-bank-altitude-go",
+      "corpus": "expansion.v1",
+      "programId": "us-bank-altitude-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "us-bank-altitude-go-rewards-terms",
+        "quote": "U.S. Bank will credit your Account with Points as follows."
+      }
+    },
+    {
+      "cardId": "us-bank-altitude-connect",
+      "corpus": "expansion.v1",
+      "programId": "us-bank-altitude-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "us-bank-altitude-connect-rewards-terms",
+        "quote": "U.S. Bank will credit your Account with Points as follows."
+      }
+    },
+    {
+      "cardId": "us-bank-shield",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "us-bank-shield-product",
+        "quote": "Shield Cardmembers will earn 4% cash back for every $1 in eligible Net Purchases spent on prepaid air, car and hotel reservations in the Travel"
+      }
+    },
+    {
+      "cardId": "us-bank-cash-plus-secured",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "us-bank-cash-plus-secured-product",
+        "quote": "Build credit1 and earn cash back.2"
+      }
+    },
+    {
+      "cardId": "us-bank-altitude-go-secured",
+      "corpus": "expansion.v1",
+      "programId": "us-bank-altitude-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "us-bank-altitude-go-secured-rewards-terms",
+        "quote": "(1) 4 Points (1 base and 3 bonus Points) for every $1 on restaurant, fast-food restaurant and bar purchases on your first $2,000 each quarter."
+      }
+    },
+    {
+      "cardId": "us-bank-harley-davidson-visa-signature",
+      "corpus": "expansion.v1",
+      "programId": "harley-davidson-visa-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "us-bank-harley-davidson-visa-signature-product",
+        "quote": "1 point for all other eligible purchases during each billing cycle."
+      }
+    },
+    {
+      "cardId": "us-bank-harley-davidson-hog-elite",
+      "corpus": "expansion.v1",
+      "programId": "harley-davidson-visa-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "us-bank-harley-davidson-hog-elite-product",
+        "quote": "2 points for every $1 in eligible purchases during each billing cycle at merchants classified as restaurants, fast food, bars, hotels and other lodging."
+      }
+    },
+    {
+      "cardId": "us-bank-harley-davidson-secured",
+      "corpus": "expansion.v1",
+      "programId": "harley-davidson-visa-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "us-bank-harley-davidson-secured-product",
+        "quote": "1X POINT everywhere Visa is accepted1"
+      }
+    },
+    {
+      "cardId": "us-bank-skypass-skyblue",
+      "corpus": "expansion.v1",
+      "programId": "korean-air-skypass",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "skypass-visa-cards",
+        "quote": "SKYPASS SkyBlue Visa Card: Earn 2 miles for every $1 spent in eligible net purchases spent on rideshare or streaming subscription services."
+      }
+    },
+    {
+      "cardId": "us-bank-skypass-visa-signature",
+      "corpus": "expansion.v1",
+      "programId": "korean-air-skypass",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "skypass-visa-cards",
+        "quote": "Earn SKYPASS miles."
+      }
+    },
+    {
+      "cardId": "us-bank-skypass-select",
+      "corpus": "expansion.v1",
+      "programId": "korean-air-skypass",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "skypass-visa-cards",
+        "quote": "SKYPASS Select Visa Signature Card: Earn 2 miles for every $1 spent in eligible net purchases made at airlines, hotels, car rental companies,"
+      }
+    },
+    {
+      "cardId": "us-bank-state-farm-premier-cash-rewards",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "us-bank-state-farm-premier-cash-rewards-product",
+        "quote": "You will earn 3% cash back for every $1 of the first $4,000 spent annually on Purchases classified as insurance, starting with your January statement"
+      }
+    },
+    {
+      "cardId": "us-bank-state-farm-cash-rewards-secured",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "state-farm-credit-cards",
+        "quote": "Earn cash back on all eligible purchases."
+      }
+    },
+    {
+      "cardId": "us-bank-edward-jones-triple-rewards",
+      "corpus": "expansion.v1",
+      "programId": "edward-jones-loyalty-points",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "us-bank-edward-jones-triple-rewards-product",
+        "quote": "You will earn 2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each"
+      }
+    },
+    {
+      "cardId": "us-bank-elan-fidelity-rewards",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "us-bank-elan-fidelity-rewards-product",
+        "quote": "Earn unlimited 2% cash back1 when deposited into an eligible, Fidelity account2"
+      }
+    },
+    {
+      "cardId": "wells-fargo-autograph",
+      "corpus": "expansion.v1",
+      "programId": "wells-fargo-rewards",
+      "statedValueHundredthsOfCent": 100,
+      "anchor": {
+        "sourceId": "wells-fargo-autograph-pricing",
+        "quote": "You can earn unlimited Rewards Points, unless we tell you otherwise."
+      }
+    },
+    {
+      "cardId": "wells-fargo-autograph-journey",
+      "corpus": "expansion.v1",
+      "programId": "wells-fargo-rewards",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "wells-fargo-autograph-journey-product",
+        "quote": "Earn unlimited points that go the extra mile 5X points with hotels2 4X points with airlines2"
+      }
+    },
+    {
+      "cardId": "wells-fargo-one-key",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "wells-fargo-one-key-product",
+        "quote": "Other purchases: 1.5% in OneKeyCash is earned per $1 spent on other net purchases."
+      }
+    },
+    {
+      "cardId": "wells-fargo-one-key-plus",
+      "corpus": "expansion.v1",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "wells-fargo-one-key-plus-product",
+        "quote": "Other purchases: 2% in OneKeyCash is earned per $1 spent on other net purchases."
+      }
+    },
+    {
+      "cardId": "wells-fargo-choice-privileges",
+      "corpus": "expansion.v1",
+      "programId": "choice-privileges",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "wells-fargo-choice-privileges-pricing",
+        "quote": "You also earn 5 points per $1.00 spent on Qualifying Net Purchases of Choice Privileges Points made on the Card Account."
+      }
+    },
+    {
+      "cardId": "wells-fargo-choice-privileges-select",
+      "corpus": "expansion.v1",
+      "programId": "choice-privileges",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "wells-fargo-choice-privileges-select-pricing",
+        "quote": "You also earn 10 points per $1.00 spent on Qualifying Net Purchases of Choice Privileges Points made on the Card Account."
+      }
+    },
+    {
+      "cardId": "citi-double-cash",
+      "corpus": "real.v2.2",
+      "programId": "citi-thankyou",
+      "statedValueHundredthsOfCent": 100,
+      "anchor": {
+        "sourceId": "citi-double-cash-product",
+        "quote": "Cash back is earned in the form of ThankYou® Points"
+      }
+    },
+    {
+      "cardId": "wells-fargo-active-cash",
+      "corpus": "real.v2.2",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "wells-fargo-active-cash-product",
+        "quote": "Earn unlimited 2% cash rewards on purchases"
+      }
+    },
+    {
+      "cardId": "capital-one-quicksilver",
+      "corpus": "real.v2.2",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-quicksilver-product",
+        "quote": "Earn unlimited 1.5% cash back on every purchase, every day."
+      }
+    },
+    {
+      "cardId": "capital-one-savor",
+      "corpus": "real.v2.2",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "capital-one-savor-product",
+        "quote": "Earn unlimited 3% cash back at grocery stores, on dining, entertainment and popular streaming services"
+      }
+    },
+    {
+      "cardId": "chase-freedom-unlimited",
+      "corpus": "real.v2.2",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "chase-freedom-unlimited-product",
+        "quote": "Earn unlimited 1.5% cash back or more on all purchases"
+      }
+    },
+    {
+      "cardId": "amex-blue-cash-everyday",
+      "corpus": "real.v2.2",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amex-blue-cash-everyday-terms",
+        "quote": "3% cash back on the first of $6,000 of U.S. online retail purchases across the Card Account (then 1%)"
+      }
+    },
+    {
+      "cardId": "amex-blue-cash-preferred",
+      "corpus": "real.v2.2",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
+      "anchor": {
+        "sourceId": "amex-blue-cash-preferred-terms",
+        "quote": "6% cash back on the first $6,000 of eligible purchases in a calendar year (then 1%) at supermarkets located in the U.S."
+      }
+    }
+  ]
+}

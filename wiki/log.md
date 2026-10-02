@@ -3,6 +3,9 @@
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
 ## 2026-10-02
+* **Create** reward-program valuation table (Stage 2 M3, branch `s2-m3-valuations`): `reward-programs.json` (52 programs, 180 cards with ≤ 25-word currency anchors), `scripts/lib/reward-programs.mjs` and tests, `check-expansion-quotes.mjs --captures`. Pages: [catalog expansion](system/catalog-expansion.md#reward-program-valuation-m3), [now](now.md). (claude-code/claude-opus-5-5)
+* **Decision** [2026-10-02-nerdwallet-primary-valuation-publisher](decisions/2026-10-02-nerdwallet-primary-valuation-publisher.md) — NerdWallet baseline and program values as the one primary publisher; issuer-stated fixed values or none for the rest. Status line of the points-valuation record links it.
+* **Review** independent verifier subagent (agent-verified) re-read NerdWallet and the other candidates, all 180 anchors and every issuer-stated quote: no blocking errors; rationale reworded, issuer-stated scope documented, Norwegian quote extended, Sun Country and Royal ONE anchors replaced. (claude-code/claude-opus-5-5)
 * **Create** [Phase 7 Stage 2 plan](product/phase-7-stage-2.md) — milestones M1–M11 (v3 contract and migration, engine, valuation table, overlay, builder, extension state and UI, review app, eval, docs and publish, pipeline readiness) with dependencies, Evan steps and open questions; publish target 2026-10-28, hard limit 2026-11-01 from the capture date. (claude-code/claude-opus-5-5)
 * **Decision** [2026-10-02-points-valuation-published-estimates](decisions/2026-10-02-points-valuation-published-estimates.md) — published cents-per-point estimates per program, issuer-stated values first, per-program override (Evan's approach).
 * **Decision** [2026-10-02-catalog-v3-schema](decisions/2026-10-02-catalog-v3-schema.md) — catalog schema 3 from the untouched corpus plus a verified overlay, over extending v2.
