@@ -57,6 +57,11 @@ Sources: `src/styles.css` (layout only, `--token-*` values), `src/App.tsx`, `src
 - **Sign-in**: labelled `Field` + `TextInput`, full-width primary `Button` with a loading state,
   critical `AlertInline` for failures. Loading, session-ended and access-required states use
   `ApplicationState`.
+- **Start a new draft**: an `h1` page in the content area (automatic when the queue is empty, otherwise
+  from a secondary button under the queue): `Radio` choice between the bundled catalog (facts in a
+  bordered `Card` with a validity `Badge`) and pasted JSON (`Field` + textarea), critical `AlertInline`
+  for refusals, and a confirmation `Modal` with focus on **Cancel**. The new draft opens with focus on
+  its heading.
 - **Queue**: plain list of draft buttons; the current one uses the action surface and
   `aria-current="page"`. A tertiary Reload button.
 - **What changes**: Helios `Table` (row header = field, Published, Proposed) with a hidden caption;

@@ -154,6 +154,8 @@ Exit: all three frontends use `packages/ui` and Helios tokens; browser tests and
 
 ### Phase 3 execution plan (written 2026-09-30)
 
+**Status (2026-10-01):** M1 (`packages/ui`, #7), M2 (catalog v2, engine, database, #8), M3 (extension on v2, Helios popup, site adapters including Amazon US, #9), M4 (review app on Helios, structured editor, publish dialog, #10) and M5 (public site, #11) are merged and deployed. M6 is pending Evan's publication of the 7-card catalog in the hosted review app; `phase3-m6-prep` adds **Start a new draft**, the merchant MCC captures and [the publish runbook](../release/publish-runbook.md). After publication the coordinator verifies `/v1/catalog` and a live refresh of a hosted extension build.
+
 Sections 3a and 3 above are the goals. This is how to build them: six milestones, **one branch and one PR each, cut from the latest `main`**, merged before the next starts (M5 may run after M2 in any order). The coordinator reviews and merges each PR. Facts below were verified on `main` at 9df09aa.
 
 #### Decisions (do not re-litigate)

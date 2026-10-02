@@ -128,6 +128,7 @@ export function createReviewApi(
       request(`/drafts/${encodeURIComponent(id)}`, reviewDetailSchema, signal),
     capture: (body: unknown, signal: AbortSignal) =>
       request('/sources', sourceDocumentSchema, signal, 'POST', body),
+    create: (body: unknown, signal: AbortSignal) => request('/drafts', draftSchema, signal, 'POST', body),
     update: (id: string, body: unknown, signal: AbortSignal) =>
       request(`/drafts/${encodeURIComponent(id)}`, draftSchema, signal, 'PUT', body),
     publish: (id: string, body: unknown, signal: AbortSignal) =>

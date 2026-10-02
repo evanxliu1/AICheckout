@@ -5,6 +5,7 @@ import { AlertInline, ApplicationState, Badge, Button } from '@ai-checkout/ui';
 import type { ReviewApi } from './client';
 import ExtractionPanel from './ExtractionPanel';
 import { DraftPanel, type CaptureItem } from './DraftPanel';
+import StartDraft from './StartDraft';
 
 export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
   const [queue, setQueue] = useState<ReviewQueue | null>(null),
@@ -13,7 +14,8 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
     [error, setError] = useState(''),
     [notice, setNotice] = useState('');
   const [generation, setGeneration] = useState(0),
-    [dirty, setDirty] = useState(false);
+    [dirty, setDirty] = useState(false),
+    [starting, setStarting] = useState(false);
   const controller = useRef<AbortController | null>(null),
     heading = useRef<HTMLHeadingElement>(null);
   const busy = !!pending;
@@ -80,7 +82,13 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
   }
   async function refresh(id: string | undefined, signal: AbortSignal) {
     const nextQueue = await api.queue(signal);
-    const selected = id ?? nextQueue.drafts[0]?.id;
+    // Without an explicit draft, prefer the one in the URL (for example one just created).
+    const fromHash = draftIdSchema.safeParse(location.hash.slice(1));
+    const selected =
+      id ??
+      (fromHash.success && nextQueue.drafts.some((draft) => draft.id === fromHash.data)
+        ? fromHash.data
+        : nextQueue.drafts[0]?.id);
     const nextDetail = selected ? await api.detail(selected, signal) : null;
     if (!signal.aborted) {
       setQueue(nextQueue);
@@ -90,6 +98,7 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
   function load(id?: string) {
     if (dirty && !window.confirm('Discard unsaved draft or source edits and load the latest version?'))
       return;
+    setStarting(false);
     void perform('Loading draft…', (signal) => refresh(id, signal));
   }
   async function update(catalog: Catalog, baseSequence: number | null) {
@@ -175,6 +184,58 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
         setNotice(`Captured ${captured.size} sources and attached them to a new draft revision.`);
     });
   }
+  /** Creates a draft with no sources attached, reviewed against the current head, and opens it. */
+  async function create(catalog: Catalog) {
+    await perform('Creating draft…', async (signal) => {
+      const draft = await api.create(
+        { catalog, sourceDocumentIds: [], baseSequence: queue?.head ?? null },
+        signal,
+      );
+      // The draft exists now: leave the start form and record its id before loading it, so a failed
+      // load is retried by reloading this draft instead of creating another.
+      setStarting(false);
+      history.replaceState(null, '', `#${draft.id}`);
+      setQueue((current) =>
+        current && !current.drafts.some((queued) => queued.id === draft.id)
+          ? {
+              ...current,
+              drafts: [
+                {
+                  id: draft.id,
+                  revision: draft.revision,
+                  status: draft.status,
+                  updated_at: draft.updated_at,
+                  base_sequence: draft.base_sequence,
+                  version: draft.catalog.version,
+                },
+                ...current.drafts,
+              ],
+            }
+          : current,
+      );
+      await refresh(draft.id, signal);
+      if (!signal.aborted) {
+        setNotice(
+          `Draft ${catalog.version} created. Attach its source evidence with Capture all missing sources, then review it.`,
+        );
+        requestAnimationFrame(() => heading.current?.focus({ preventScroll: true }));
+      }
+    });
+  }
+  function startNew() {
+    if (dirty && !window.confirm('Discard unsaved draft or source edits and start a new draft?')) return;
+    setDirty(false);
+    setNotice('');
+    setError('');
+    setStarting(true);
+    requestAnimationFrame(() => document.getElementById('start-draft-heading')?.focus());
+  }
+  function cancelStart() {
+    setStarting(false);
+    requestAnimationFrame(() =>
+      (heading.current ?? document.getElementById('start-new-draft'))?.focus({ preventScroll: true }),
+    );
+  }
   async function publish(note: string) {
     if (!detail) return;
     await perform('Publishing reviewed terms…', async (signal) => {
@@ -241,6 +302,18 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
         {queue?.drafts.length === 0 && (
           <p>No pending drafts. New candidates appear here when they are saved for review.</p>
         )}
+        {queue && !starting && (detail || queue.drafts.length > 0) && (
+          <Button
+            id="start-new-draft"
+            size="small"
+            color="secondary"
+            icon="arrow-right"
+            disabled={busy}
+            onClick={startNew}
+          >
+            Start a new draft
+          </Button>
+        )}
         <p className="muted small">
           Only the latest 30 pending drafts are shown. Opening a draft does not approve it.
         </p>
@@ -265,7 +338,18 @@ export default function ReviewWorkspace({ api }: { api: ReviewApi }) {
             {notice}
           </AlertInline>
         )}
-        {detail ? (
+        {queue && (starting || (!detail && queue.drafts.length === 0)) ? (
+          // Stays mounted while busy, so a failed create keeps the form, its input and focus.
+          <StartDraft
+            head={queue.head}
+            busy={busy}
+            now={Date.now()}
+            queuedVersions={queue.drafts.map((draft) => draft.version)}
+            intro={starting ? undefined : 'No drafts are waiting for review.'}
+            onCreate={create}
+            onCancel={starting ? cancelStart : undefined}
+          />
+        ) : detail ? (
           <>
             <div className="draft-heading">
               <h1 ref={heading} tabIndex={-1}>

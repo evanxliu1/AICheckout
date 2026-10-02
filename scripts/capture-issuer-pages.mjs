@@ -1,9 +1,15 @@
 // Capture issuer pages as plain text for the extraction corpus.
 //
 //   node scripts/capture-issuer-pages.mjs [--dir evals/curation/real] [--only id,id]
+//     [--sources sources.json] [--captures captures] [--manifest manifest.json]
 //
 // Reads <dir>/sources.json, saves each page's rendered text to <dir>/captures/<id>.txt (gitignored: issuer
 // text is copyrighted), and records URL, date, SHA-256, and length in <dir>/manifest.json (committed).
+// The merchant MCC pages the catalog cites are captured the same way into separate files, so the eval
+// corpus (sources.json and manifest.json are bound into its hash) is untouched:
+//
+//   node scripts/capture-issuer-pages.mjs --sources merchant-sources.json \
+//     --captures merchant-captures --manifest merchant-manifest.json
 // HTML pages are rendered in headless Chromium with collapsed sections expanded; PDFs go through Ghostscript.
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -16,10 +22,17 @@ import { chromium } from '@playwright/test';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const { values } = parseArgs({
-  options: { dir: { type: 'string', default: 'evals/curation/real' }, only: { type: 'string' } },
+  options: {
+    dir: { type: 'string', default: 'evals/curation/real' },
+    only: { type: 'string' },
+    sources: { type: 'string', default: 'sources.json' },
+    captures: { type: 'string', default: 'captures' },
+    manifest: { type: 'string', default: 'manifest.json' },
+  },
 });
 const dir = resolve(root, values.dir);
-const { sources } = JSON.parse(await readFile(join(dir, 'sources.json'), 'utf8'));
+const { sources } = JSON.parse(await readFile(join(dir, values.sources), 'utf8'));
+const captures = join(dir, values.captures);
 const only = values.only ? new Set(values.only.split(',')) : null;
 const today = new Date().toISOString().slice(0, 10);
 const BOT_WALL =
@@ -86,8 +99,8 @@ async function pageText(context, source) {
   }
 }
 
-await mkdir(join(dir, 'captures'), { recursive: true });
-const manifestPath = join(dir, 'manifest.json');
+await mkdir(captures, { recursive: true });
+const manifestPath = join(dir, values.manifest);
 const previous = await readFile(manifestPath, 'utf8')
   .then((text) => JSON.parse(text).sources)
   .catch(() => []);
@@ -119,7 +132,7 @@ try {
       const sha256 = createHash('sha256').update(text, 'utf8').digest('hex');
       const old = byId.get(source.id);
       if (old && old.sha256 !== sha256) flags.push('CHANGED since last capture');
-      await writeFile(join(dir, 'captures', `${source.id}.txt`), text);
+      await writeFile(join(captures, `${source.id}.txt`), text);
       byId.set(source.id, {
         ...source,
         capturedOn: old?.sha256 === sha256 ? old.capturedOn : today,

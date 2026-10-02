@@ -654,7 +654,15 @@ export function DraftPanel({
                 {changes.length === 1 ? '' : 's'} compared with{' '}
                 {detail.published ? detail.published.version : 'no published release'}.
               </p>
-              <p>Terms expire {new Date(detail.draft.catalog.expiresAt).toLocaleString('en-US')}.</p>
+              <p>
+                Terms expire{' '}
+                {new Date(detail.draft.catalog.expiresAt).toLocaleString('en-US', {
+                  dateStyle: 'medium',
+                  timeStyle: 'short',
+                  timeZone: 'UTC',
+                })}{' '}
+                UTC.
+              </p>
               <p className="small muted">Review note: {note.trim()}</p>
             </div>
           </Modal>

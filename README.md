@@ -7,6 +7,8 @@ A Chrome extension that tells you which card you already own earns the most at c
   <img src="docs/release/assets/full-stack-evidence.png" width="49%" alt="Review app showing extracted reward facts, each linked to an exact source span" />
 </p>
 
+**Live:** [site](https://ai-checkout-api.onrender.com/) · [results](https://ai-checkout-api.onrender.com/results/) · [review app](https://ai-checkout-api.onrender.com/review/) (reviewers only) · [catalog API](https://ai-checkout-api.onrender.com/v1/catalog)
+
 [Shopper demo video](docs/release/assets/shopper-demo.mp4) · [Curation demo video](docs/release/assets/full-stack-demo.mp4) · [Design doc](docs/design.md)
 
 ## How it works
@@ -34,7 +36,7 @@ flowchart LR
 | Backend | Node 24 + Fastify API, Supabase Auth, PostgreSQL with RLS, a private review schema, and transactional publication ([schema](supabase/README.md)) |
 | Review app | React UI for source evidence, per-condition decisions, draft diffs against the published catalog, and separate publication ([app](apps/review/README.md)) |
 | Extension | React + TypeScript on Manifest V3 with minimal permissions, a cart reader that only runs when you click it, and state that survives popup closure and worker shutdown ([extension](extension/README.md)) |
-| Testing | ~430 unit/component tests, Playwright tests against the packaged extension and review app, SQL policy/concurrency tests, and CI for both stacks |
+| Testing | ~670 unit/component tests, Playwright tests against the packaged extension, review app and public site (with axe accessibility checks), SQL policy/concurrency tests, and CI for both stacks |
 
 ## Repository
 
@@ -66,9 +68,9 @@ Load `extension/dist` from `chrome://extensions` with Developer mode on. For the
 
 ## Status
 
-Working: the extension (2 cards: Quicksilver and Blue Cash Everyday; 2 merchants: Best Buy US and Newegg US), CI, and the hosted catalog API and review app at [ai-checkout-api.onrender.com](https://ai-checkout-api.onrender.com/health) (Render + Supabase).
+Working: the extension on catalog v2 with 7 cash-back cards (Citi Double Cash, Wells Fargo Active Cash, Capital One Quicksilver and Savor, Chase Freedom Unlimited, Amex Blue Cash Everyday and Preferred) and 3 checkouts read through bundled site adapters (Amazon US, Best Buy US, Newegg US); the Helios UI across the extension, the review app and the public site; CI; and the hosted [site](https://ai-checkout-api.onrender.com/), [results page](https://ai-checkout-api.onrender.com/results/), [review app](https://ai-checkout-api.onrender.com/review/) and catalog API (Render + Supabase).
 
-Next: human verification of the evaluation labels, a larger catalog built from the measured configuration, and a Chrome Web Store release. See the [roadmap](docs/design.md#roadmap).
+Pending: publishing the 7-card catalog on the hosted review app, a deliberate human approval ([publish runbook](docs/release/publish-runbook.md)); until then `/v1/catalog` serves no release and the extension uses its bundled catalog. Next: human verification of the evaluation labels, terms-change detection, and a Chrome Web Store release. See the [roadmap](docs/design.md#roadmap).
 
 ## License
 
