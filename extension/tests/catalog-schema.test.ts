@@ -44,8 +44,8 @@ describe('shared catalog schema', () => {
     });
     expect(moved.programs[1].valuation).toMatchObject({ retrievedOn: '2027-01-10' });
   });
-  it('fails closed on a v3 catalog until the v3 engine exists', () => {
-    expect(() =>
+  it('compares a v3 catalog with the v3 engine (Stage 2 M2)', () => {
+    expect(
       compareRewards(
         CATALOG_V3_FIXTURE,
         { cards: [{ cardId: 'test-points-card', usage: [] }], defaultCardId: null },
@@ -59,7 +59,7 @@ describe('shared catalog schema', () => {
         },
         Date.parse('2026-10-02T15:00:00Z'),
       ),
-    ).toThrow('Catalog schema 3');
+    ).toMatchObject({ status: 'ready', preferredCardId: 'test-points-card', notAccepted: [] });
   });
   it('keeps unknown annual usage separate from confirmed activation', () => {
     const catalog = structuredClone(PILOT_CATALOG);

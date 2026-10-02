@@ -1,0 +1,478 @@
+import { numeratorCents, numeratorUnits, portionNumerator } from './money.ts';
+import { integer, unavailableReason, unique, validatePurchaseAndWallet } from './engine-shared.ts';
+import { isUnconditionalRuleV3 } from './schema.ts';
+import {
+  PAYMENT_PATHS_V3,
+  UNCERTAINTIES_V3,
+  type CardEstimate,
+  type CardProductV3,
+  type CatalogV3,
+  type Comparison,
+  type MerchantProfileV3,
+  type Purchase,
+  type RewardProgram,
+  type RewardRuleV3,
+  type RuleStatusV3,
+  type RuleUsage,
+  type UnavailableComparison,
+  type UncertaintyV3,
+  type UnitValue,
+  type Wallet,
+  type WalletCard,
+} from './types.ts';
+
+/*
+ * Catalog v3 engine (Stage 2 M2). The v2 rules (engine-v2.ts) carry over: rules do not stack, each
+ * card earns its best applicable rule and never less than its base, an uncertain rule contributes a
+ * range from the base to the rule, spend past a cap earns rateAfterCapBps, and only usage recorded
+ * on the purchase date counts. v3 adds:
+ * - Value per unit: the shopper's override for the program, else the card's issuer-stated value,
+ *   else the program's valuation. Money is floor(Σ spend × rateBps × value / 1,000,000) in BigInt;
+ *   cash back (value 100) gives exactly the v2 amounts. A program with valuation `none` and no
+ *   override has no value: the card is estimated in units only (cents 0, `value-unknown`).
+ * - Merchant scope: `brandIds` must intersect the merchant's brands and `excludedBrandIds` must
+ *   not; a brand-scoped `other` or `all-purchases` rule needs no category match. A closed-loop card
+ *   outside its brands is `not-accepted` and left out of the ranking.
+ * - Choices: a `chosen` option the shopper selected applies, one they did not select is
+ *   `choice-not-selected`, an unanswered choice gives a range (`choice-unknown`); an `automatic`
+ *   option always gives a range (`automatic-category`).
+ * - Gates: an answer outside the required options is `condition-not-met`; no answer gives a range
+ *   (`condition-unknown`).
+ * - Payment paths: `requiredPaymentPaths` (PayPal Cashback through PayPal) must include the path,
+ *   and a rule that requires the path is not `payment-path-uncertain` for it.
+ * - Dates: `startsOn` after the purchase date is `not-started`; `endsOn` as in v2 (`expired`).
+ * - Shared caps: rules with the same `sharedCapId` share one spend cap. The spend toward it is
+ *   recorded on the group's first rule in catalog order (`capHolder`); activation stays per rule.
+ */
+
+const PORTALS = new Set(['travel-portal', 'entertainment-portal']);
+const YEARLY = new Set(['calendar-year', 'cardmember-year', 'year-unspecified']);
+const needsActivation = (rule: RewardRuleV3) =>
+  rule.activation === 'enroll-once' || rule.activation === 'recurring';
+
+/** The card's base: its one unconditional `all-purchases` rule (closed-loop cards may have none). */
+export function baseRuleV3(card: CardProductV3): RewardRuleV3 | undefined {
+  return card.rules.find((r) => r.category === 'all-purchases' && isUnconditionalRuleV3(r));
+}
+
+/** The rule whose usage row records the spend toward a shared cap: the group's first rule. */
+export function capHolder(card: CardProductV3, rule: RewardRuleV3): RewardRuleV3 {
+  return rule.sharedCapId === null ? rule : card.rules.find((r) => r.sharedCapId === rule.sharedCapId)!;
+}
+
+/** Whether a rule's merchant scope and category cover a merchant, before any purchase detail. */
+export function ruleCoversMerchant(rule: RewardRuleV3, merchant: MerchantProfileV3): boolean {
+  if (PORTALS.has(rule.category)) return false;
+  const brands = new Set(merchant.brandIds);
+  if (rule.brandIds.length > 0 && !rule.brandIds.some((id) => brands.has(id))) return false;
+  if (rule.excludedBrandIds.some((id) => brands.has(id))) return false;
+  if (rule.category === 'all-purchases') return true;
+  if (rule.category === 'other') return rule.brandIds.length > 0;
+  if (rule.category === 'online-retail') return merchant.onlineRetail && merchant.physicalGoods;
+  return rule.category === merchant.expectedCategory;
+}
+
+/** Whether a closed-loop card is accepted at the merchant; open-loop cards always are. */
+export function cardAcceptedAt(card: CardProductV3, merchant: MerchantProfileV3): boolean {
+  return (
+    card.acceptance.kind === 'open-loop' ||
+    card.acceptance.brandIds.some((id) => merchant.brandIds.includes(id))
+  );
+}
+
+/** The value per unit for a card: override, then the card's stated value, then the program's. */
+export function unitValueFor(
+  card: CardProductV3,
+  program: RewardProgram,
+  overrides: Wallet['valueOverrides'],
+): UnitValue | null {
+  const override = overrides?.find((o) => o.programId === program.id);
+  if (override) return { hundredthsOfCent: override.valueHundredthsOfCent, basis: 'override' };
+  if (card.statedValueHundredthsOfCent !== null)
+    return { hundredthsOfCent: card.statedValueHundredthsOfCent, basis: 'card-stated' };
+  if (program.valuation.basis === 'none') return null;
+  return { hundredthsOfCent: program.valuation.valueHundredthsOfCent, basis: program.valuation.basis };
+}
+
+function validateCatalog(catalog: CatalogV3, wallet: Wallet, purchase: Purchase) {
+  const sources = new Set(catalog.sources.map((s) => s.id));
+  const programs = new Map(catalog.programs.map((p) => [p.id, p]));
+  const gates = new Map(catalog.gates.map((g) => [g.id, g]));
+  if (
+    !catalog.version ||
+    !Number.isFinite(Date.parse(catalog.verifiedAt)) ||
+    Date.parse(catalog.expiresAt) <= Date.parse(catalog.verifiedAt) ||
+    !unique(catalog.cards.map((c) => c.id)) ||
+    !unique(catalog.merchants.map((m) => m.id)) ||
+    sources.size !== catalog.sources.length ||
+    programs.size !== catalog.programs.length ||
+    gates.size !== catalog.gates.length ||
+    (purchase.paymentPath !== undefined && !PAYMENT_PATHS_V3.includes(purchase.paymentPath))
+  )
+    throw new Error('Invalid comparison input.');
+  for (const program of catalog.programs)
+    if (
+      (program.valuation.basis !== 'none' && !integer(program.valuation.valueHundredthsOfCent, 1, 10_000)) ||
+      (program.currency === 'cash-back') !== (program.valuation.basis === 'cash')
+    )
+      throw new Error('Invalid catalog program.');
+  for (const card of catalog.cards) {
+    const bases = card.rules.filter((r) => r.category === 'all-purchases' && isUnconditionalRuleV3(r));
+    if (
+      !programs.has(card.programId) ||
+      (card.statedValueHundredthsOfCent !== null &&
+        (!integer(card.statedValueHundredthsOfCent, 1, 10_000) ||
+          programs.get(card.programId)!.currency !== 'points')) ||
+      (card.acceptance.kind === 'open-loop' ? bases.length !== 1 : bases.length > 1) ||
+      !unique(card.rules.map((r) => r.id)) ||
+      !unique(card.choices.map((c) => c.id))
+    )
+      throw new Error('Unsupported catalog rules.');
+    const baseBps = bases[0]?.rateBps ?? 0;
+    for (const rule of card.rules) {
+      const holder = capHolder(card, rule);
+      const choice = rule.choice && card.choices.find((c) => c.id === rule.choice!.choiceId);
+      if (
+        !integer(baseBps, 0, 10_000) ||
+        !integer(rule.rateBps, baseBps, 10_000) ||
+        !integer(rule.paidOnPaymentBps, 0, rule.rateBps) ||
+        (rule.cap.kind === 'spend' &&
+          (!integer(rule.cap.amountCents, 1, Number.MAX_SAFE_INTEGER) ||
+            !integer(rule.cap.rateAfterCapBps, 0, rule.rateBps))) ||
+        (rule.sharedCapId !== null &&
+          (rule.cap.kind !== 'spend' ||
+            holder.cap.kind !== 'spend' ||
+            holder.cap.amountCents !== rule.cap.amountCents ||
+            holder.cap.period !== rule.cap.period)) ||
+        (rule.choice !== null && !choice?.options.some((o) => o.id === rule.choice!.optionId)) ||
+        rule.requires.some((r) => !gates.has(r.gateId)) ||
+        !rule.sourceIds.length ||
+        rule.sourceIds.some((id) => !sources.has(id))
+      )
+        throw new Error('Invalid catalog rule.');
+    }
+  }
+  for (const owned of wallet.cards) {
+    const card = catalog.cards.find((c) => c.id === owned.cardId);
+    if (!card) continue;
+    if (owned.usage.some((u) => !card.rules.some((r) => r.id === u.ruleId)))
+      throw new Error('Invalid wallet usage.');
+    const choices = owned.choices ?? [];
+    if (
+      !unique(choices.map((c) => c.choiceId)) ||
+      choices.some((picked) => {
+        const choice = card.choices.find((c) => c.id === picked.choiceId);
+        return (
+          choice?.kind !== 'chosen' ||
+          !unique(picked.optionIds) ||
+          !integer(picked.optionIds.length, 1, choice.picks) ||
+          picked.optionIds.some((id) => !choice.options.some((o) => o.id === id))
+        );
+      })
+    )
+      throw new Error('Invalid wallet choices.');
+    const answers = owned.gates ?? [];
+    if (
+      !unique(answers.map((a) => a.gateId)) ||
+      answers.some((a) => !gates.get(a.gateId)?.options.some((o) => o.id === a.optionId))
+    )
+      throw new Error('Invalid wallet gates.');
+  }
+  const overrides = wallet.valueOverrides ?? [];
+  if (
+    !unique(overrides.map((o) => o.programId)) ||
+    overrides.some(
+      (o) => programs.get(o.programId)?.currency !== 'points' || !integer(o.valueHundredthsOfCent, 1, 10_000),
+    )
+  )
+    throw new Error('Invalid value override.');
+}
+
+type Context = {
+  card: CardProductV3;
+  owned: WalletCard;
+  merchant: MerchantProfileV3;
+  purchase: Purchase;
+  verifiedOn: string;
+  usageFor: (rule: RewardRuleV3) => RuleUsage | undefined;
+  /** Reward numerator in the card's shown measure: cents, or units when unvalued. */
+  measure: (numerator: bigint) => number;
+};
+
+type Option = {
+  rule: RewardRuleV3;
+  min: bigint;
+  max: bigint;
+  minBonusSpend: number;
+  maxBonusSpend: number;
+  uncertainties: UncertaintyV3[];
+  status: RuleStatusV3;
+};
+
+const big = {
+  max: (a: bigint, b: bigint) => (a > b ? a : b),
+  min: (a: bigint, b: bigint) => (a < b ? a : b),
+  desc: (a: bigint, b: bigint) => (a > b ? -1 : a < b ? 1 : 0),
+};
+
+/** Returns why a rule cannot apply here, or null when it may. */
+function blocked(rule: RewardRuleV3, ctx: Context): RuleStatusV3 | null {
+  const { card, owned, merchant, purchase } = ctx;
+  if (PORTALS.has(rule.category) || (rule.category === 'other' && rule.brandIds.length === 0))
+    return 'not-at-merchant';
+  const endsOn = rule.limitedTime?.endsOn;
+  if (endsOn && (endsOn < purchase.purchasedOn || endsOn < ctx.verifiedOn)) return 'expired';
+  const startsOn = rule.limitedTime?.startsOn;
+  if (startsOn && startsOn > purchase.purchasedOn) return 'not-started';
+  if (!ruleCoversMerchant(rule, merchant)) return 'not-at-merchant';
+  if (rule.category === 'online-retail' && purchase.onlineRetail === 'ineligible') return 'not-eligible';
+  if (rule.usMerchantsOnly && !merchant.usMerchant) return 'not-eligible';
+  const path = purchase.paymentPath ?? 'card';
+  if (path !== 'card' && rule.excludedPaymentPaths.includes(path)) return 'not-eligible';
+  if (rule.requiredPaymentPaths.length > 0 && !rule.requiredPaymentPaths.includes(path))
+    return 'not-eligible';
+  if (needsActivation(rule) && ctx.usageFor(rule)?.activation === 'inactive') return 'not-eligible';
+  if (rule.choice) {
+    const choice = card.choices.find((c) => c.id === rule.choice!.choiceId)!;
+    const picked = owned.choices?.find((c) => c.choiceId === choice.id);
+    if (choice.kind === 'chosen' && picked && !picked.optionIds.includes(rule.choice.optionId))
+      return 'choice-not-selected';
+  }
+  for (const requirement of rule.requires) {
+    const answer = owned.gates?.find((g) => g.gateId === requirement.gateId);
+    if (answer && !requirement.optionIds.includes(answer.optionId)) return 'condition-not-met';
+  }
+  return null;
+}
+
+function evaluate(rule: RewardRuleV3, ctx: Context, baseNumerator: bigint): Option {
+  const { card, owned, purchase } = ctx;
+  const amount = purchase.amountCents;
+  const usage = ctx.usageFor(rule);
+  const uncertain: UncertaintyV3[] = [];
+  if (rule.category === 'online-retail' && purchase.onlineRetail === 'unknown')
+    uncertain.push('online-category-unknown');
+  const path = purchase.paymentPath ?? 'card';
+  if (path !== 'card' && !rule.requiredPaymentPaths.includes(path)) uncertain.push('payment-path-uncertain');
+  if (needsActivation(rule) && usage?.activation !== 'active') uncertain.push('activation-unknown');
+  if (rule.cap.kind === 'unstated') uncertain.push('cap-unstated');
+  if (rule.choice) {
+    const choice = card.choices.find((c) => c.id === rule.choice!.choiceId)!;
+    if (choice.kind === 'automatic') uncertain.push('automatic-category');
+    else if (!owned.choices?.some((c) => c.choiceId === choice.id)) uncertain.push('choice-unknown');
+  }
+  if (rule.requires.some((r) => !owned.gates?.some((g) => g.gateId === r.gateId)))
+    uncertain.push('condition-unknown');
+
+  let minBonus = amount,
+    maxBonus = amount,
+    afterBps = rule.rateBps;
+  const capCodes: UncertaintyV3[] = [];
+  if (rule.cap.kind === 'spend') {
+    afterBps = rule.cap.rateAfterCapBps;
+    // A shared cap's spend is recorded once, on the group's first rule.
+    const spent = ctx.usageFor(capHolder(card, rule))?.spentCents ?? null;
+    if (spent === null) {
+      capCodes.push(YEARLY.has(rule.cap.period) ? 'annual-usage-unknown' : 'cap-usage-unknown');
+      minBonus = 0;
+      maxBonus = Math.min(amount, rule.cap.amountCents);
+    } else minBonus = maxBonus = Math.min(amount, Math.max(0, rule.cap.amountCents - spent));
+  }
+  const reward = (bonus: number) =>
+    portionNumerator([
+      { spendCents: bonus, bps: rule.rateBps },
+      { spendCents: amount - bonus, bps: afterBps },
+    ]);
+  const ruleMin = reward(minBonus),
+    ruleMax = reward(maxBonus);
+  const certain = uncertain.length === 0;
+  const min = certain ? ruleMin : big.min(baseNumerator, ruleMin);
+  const max = certain ? ruleMax : big.max(baseNumerator, ruleMax);
+  // Report only conditions that can move the shown amount (cents, or units when unvalued).
+  const moves = ctx.measure(max) > ctx.measure(min);
+  return {
+    rule,
+    min,
+    max,
+    minBonusSpend: certain ? minBonus : 0,
+    maxBonusSpend: maxBonus,
+    uncertainties: moves ? [...uncertain, ...capCodes] : [],
+    status: maxBonus === 0 ? 'cap-reached' : moves ? 'may-apply' : 'applied',
+  };
+}
+
+function estimateCard(
+  card: CardProductV3,
+  program: RewardProgram,
+  owned: WalletCard,
+  wallet: Wallet,
+  merchant: MerchantProfileV3,
+  purchase: Purchase,
+  verifiedOn: string,
+): CardEstimate {
+  const year = Number(purchase.purchasedOn.slice(0, 4));
+  const value = unitValueFor(card, program, wallet.valueOverrides);
+  const ctx: Context = {
+    card,
+    owned,
+    merchant,
+    purchase,
+    verifiedOn,
+    // Only same-day usage for this year counts; stale usage is unknown, not zero.
+    usageFor: (rule) =>
+      owned.usage.find(
+        (u) => u.ruleId === rule.id && u.calendarYear === year && u.recordedOn === purchase.purchasedOn,
+      ),
+    measure: (n) => (value ? numeratorCents(n, value.hundredthsOfCent) : numeratorUnits(n)),
+  };
+  const base = baseRuleV3(card);
+  const baseNumerator = base
+    ? portionNumerator([{ spendCents: purchase.amountCents, bps: base.rateBps }])
+    : 0n;
+  const statuses: { ruleId: string; status: RuleStatusV3 }[] = [];
+  const options: Option[] = [];
+  for (const rule of card.rules) {
+    if (rule === base) {
+      statuses.push({ ruleId: rule.id, status: 'base' });
+      continue;
+    }
+    const why = blocked(rule, ctx);
+    if (why) {
+      statuses.push({ ruleId: rule.id, status: why });
+      continue;
+    }
+    const option = evaluate(rule, ctx, baseNumerator);
+    options.push(option);
+    statuses.push({ ruleId: rule.id, status: option.status });
+  }
+  const byMin = [...options].sort(
+    (a, b) => big.desc(a.min, b.min) || big.desc(a.max, b.max) || b.rule.rateBps - a.rule.rateBps,
+  );
+  const byMax = [...options].sort(
+    (a, b) => big.desc(a.max, b.max) || big.desc(a.min, b.min) || b.rule.rateBps - a.rule.rateBps,
+  );
+  const floor = byMin[0],
+    ceiling = byMax[0];
+  // The base is always an option: no rule (e.g. a low after-cap rate) can pull a card below it.
+  const min = big.max(baseNumerator, floor?.min ?? baseNumerator),
+    max = big.max(baseNumerator, ceiling?.max ?? baseNumerator);
+  const codes = new Set(
+    options.filter((o) => ctx.measure(o.max) > ctx.measure(min)).flatMap((o) => o.uncertainties),
+  );
+  const maxUnits = numeratorUnits(max);
+  if (!value && maxUnits > 0) codes.add('value-unknown');
+  const shown = ceiling && ceiling.maxBonusSpend > 0 ? ceiling : undefined;
+  const applied = shown?.rule ?? base;
+  return {
+    cardId: card.id,
+    minRewardCents: value ? numeratorCents(min, value.hundredthsOfCent) : 0,
+    maxRewardCents: value ? numeratorCents(max, value.hundredthsOfCent) : 0,
+    baseRateBps: base?.rateBps ?? 0,
+    bonusRateBps: shown?.rule.rateBps ?? null,
+    minBonusSpendCents: shown && shown === floor ? shown.minBonusSpend : 0,
+    maxBonusSpendCents: shown?.maxBonusSpend ?? 0,
+    uncertainties: UNCERTAINTIES_V3.filter((code) => codes.has(code)),
+    sourceIds: [
+      ...new Set([...(base ? [base] : []), ...options.map((o) => o.rule)].flatMap((r) => r.sourceIds)),
+    ],
+    appliedRuleId: applied?.id,
+    paidOnPaymentBps: applied?.paidOnPaymentBps ?? 0,
+    rules: statuses,
+    programId: program.id,
+    minRewardUnits: numeratorUnits(min),
+    maxRewardUnits: maxUnits,
+    unitValue: value,
+  };
+}
+
+function notAcceptedEstimate(card: CardProductV3, program: RewardProgram, wallet: Wallet): CardEstimate {
+  return {
+    cardId: card.id,
+    minRewardCents: 0,
+    maxRewardCents: 0,
+    baseRateBps: baseRuleV3(card)?.rateBps ?? 0,
+    bonusRateBps: null,
+    minBonusSpendCents: 0,
+    maxBonusSpendCents: 0,
+    uncertainties: [],
+    sourceIds: [...new Set(card.rules.flatMap((r) => r.sourceIds))],
+    rules: card.rules.map((r) => ({ ruleId: r.id, status: 'not-accepted' })),
+    programId: program.id,
+    minRewardUnits: 0,
+    maxRewardUnits: 0,
+    unitValue: unitValueFor(card, program, wallet.valueOverrides),
+  };
+}
+
+/** Orders valued cards by guaranteed minimum cents, then unvalued cards by guaranteed minimum
+ * units, each with the default card and then the card ID breaking ties. An unvalued card that
+ * earns any units may beat a valued leader once the shopper sets a value, so it sets
+ * `rankingMayChange`; among unvalued cards only the same program's units are comparable. */
+function rankV3(
+  estimates: CardEstimate[],
+  notAccepted: CardEstimate[],
+  wallet: Wallet,
+  catalogVersion: string,
+): Comparison {
+  const valued = (e: CardEstimate) => e.unitValue != null;
+  estimates.sort(
+    (a, b) =>
+      Number(valued(b)) - Number(valued(a)) ||
+      (valued(a) ? b.minRewardCents - a.minRewardCents : b.minRewardUnits! - a.minRewardUnits!) ||
+      Number(b.cardId === wallet.defaultCardId) - Number(a.cardId === wallet.defaultCardId) ||
+      a.cardId.localeCompare(b.cardId, 'en'),
+  );
+  const first = estimates[0];
+  const others = estimates.slice(1);
+  const comparable = (e: CardEstimate) =>
+    valued(first) ? valued(e) : !valued(e) && e.programId === first.programId;
+  const mayBeat = (e: CardEstimate) =>
+    comparable(e)
+      ? valued(e)
+        ? e.maxRewardCents > first.minRewardCents
+        : e.maxRewardUnits! > first.minRewardUnits!
+      : e.maxRewardUnits! > 0;
+  const ties = (e: CardEstimate) =>
+    comparable(e) &&
+    (valued(e) ? e.minRewardCents === first.minRewardCents : e.minRewardUnits === first.minRewardUnits);
+  return {
+    status: 'ready',
+    catalogVersion,
+    estimates,
+    notAccepted,
+    preferredCardId: first.cardId,
+    rankingMayChange: others.some(mayBeat),
+    tied: others.some(ties),
+  };
+}
+
+export function compareV3(
+  catalog: CatalogV3,
+  wallet: Wallet,
+  purchase: Purchase,
+  now: number,
+): Comparison | UnavailableComparison {
+  validatePurchaseAndWallet(wallet, purchase, now);
+  validateCatalog(catalog, wallet, purchase);
+  const unavailable = unavailableReason(
+    catalog,
+    catalog.merchants.map((m) => m.id),
+    wallet,
+    purchase,
+    now,
+  );
+  if (unavailable) return unavailable;
+  const merchant = catalog.merchants.find((m) => m.id === purchase.merchantId)!;
+  const verifiedOn = catalog.verifiedAt.slice(0, 10);
+  const estimates: CardEstimate[] = [],
+    notAccepted: CardEstimate[] = [];
+  for (const owned of wallet.cards) {
+    const card = catalog.cards.find((c) => c.id === owned.cardId)!;
+    const program = catalog.programs.find((p) => p.id === card.programId)!;
+    if (cardAcceptedAt(card, merchant))
+      estimates.push(estimateCard(card, program, owned, wallet, merchant, purchase, verifiedOn));
+    else notAccepted.push(notAcceptedEstimate(card, program, wallet));
+  }
+  if (estimates.length === 0) return { status: 'unavailable', reason: 'no-accepted-card' };
+  return rankV3(estimates, notAccepted, wallet, catalog.version);
+}

@@ -6,7 +6,7 @@ status: stable
 tags: [system, rewards-core, catalog, engine]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:00:00Z
+  at: 2026-10-02T23:59:00Z
 stale_after: 2026-10-29T00:00:00Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
@@ -17,6 +17,8 @@ sources:
     title: compareRewards and v1 engine
   - resource: ../../packages/rewards-core/src/engine-v2.ts
     title: v2 engine
+  - resource: ../../packages/rewards-core/src/engine-v3.ts
+    title: v3 engine
   - resource: ../../packages/rewards-core/src/engine-shared.ts
     title: Validation, unavailability, ranking
   - resource: ../../packages/rewards-core/src/money.ts
@@ -31,13 +33,15 @@ sources:
     title: Phase 3 decisions (archived)
   - resource: ../decisions/2026-10-02-catalog-v3-contract-details.md
     title: Catalog v3 contract details (M1)
+  - resource: ../decisions/2026-10-02-engine-v3-semantics.md
+    title: Catalog v3 engine semantics (M2)
 ---
 
 # Rewards engine
 
 `packages/rewards-core` (`@ai-checkout/rewards-core`) is pure TypeScript with no browser, network, database, model or clock access: callers pass the catalog, wallet, purchase and `now`. It owns the catalog contract (strict Zod, schemas 1, 2 and 3 as a discriminated union on `schemaVersion`), the bundled catalogs, and `compareRewards`, which ranks owned cards by **guaranteed minimum** reward and reports a range when a condition is unknown. Money is integer cents, rates are basis points, products are summed in BigInt and truncated once. The same contract is enforced in the extension, the API, the review app and, mirrored in SQL, the database ([Database](database.md)).
 
-Verified 2026-10-02 by reading the code; parity case counts verified by importing `test-cases.ts` with Node (28 v1, 53 v2, 101 v3). Catalog v3 is a contract only (Stage 2 M1, branch `s2-m1-catalog-v3`): the v3 engine is M2. The bundled catalog expires 2026-10-29, hence `stale_after`.
+Verified 2026-10-02 by reading the code; parity case counts verified by importing `test-cases.ts` with Node (28 v1, 53 v2, 117 v3). The v3 engine is Stage 2 M2 (branch `s2-m2-engine-v3`); the extension still refuses v3 releases until M6. The bundled catalog expires 2026-10-29, hence `stale_after`.
 
 ## Facts
 
@@ -50,10 +54,11 @@ Verified 2026-10-02 by reading the code; parity case counts verified by importin
 | Reward categories | `all-purchases`, `online-retail`, `supermarkets`, `gas`, `ev-charging`, `dining`, `drugstores`, `entertainment`, `streaming`, `transit`, `travel-portal`, `entertainment-portal`, `other`; v3 adds `electronics`, `department-stores`, `home-improvement`, `wholesale-clubs` (provisional; M4 finalizes) | `REWARD_CATEGORIES`, `REWARD_CATEGORIES_V3` in [`src/types.ts`](../../packages/rewards-core/src/types.ts) |
 | Merchant categories | `MERCHANT_CATEGORIES` (10); v3 adds `department-stores`, `home-improvement`, `wholesale-clubs` | `MERCHANT_CATEGORIES_V3` |
 | Payment paths | `card` (default), `paypal`, `digital-wallet`, `bnpl`; v3 adds `venmo` | `PAYMENT_PATHS`, `PAYMENT_PATHS_V3` |
-| Uncertainty codes | `online-category-unknown`, `annual-usage-unknown`, `activation-unknown`, `cap-usage-unknown`, `cap-unstated`, `payment-path-uncertain`; v3 adds `choice-unknown`, `automatic-category`, `condition-unknown` | `UNCERTAINTIES`, `UNCERTAINTIES_V3` |
+| Uncertainty codes | `online-category-unknown`, `annual-usage-unknown`, `activation-unknown`, `cap-usage-unknown`, `cap-unstated`, `payment-path-uncertain`; v3 adds `choice-unknown`, `automatic-category`, `condition-unknown`, `value-unknown` | `UNCERTAINTIES`, `UNCERTAINTIES_V3` |
 | Rule statuses | v2: `applied`, `may-apply`, `base`, `not-at-merchant`, `not-eligible`, `expired`, `cap-reached`; v3 adds `not-accepted`, `not-started`, `choice-not-selected`, `condition-not-met` | `RuleStatus`, `RULE_STATUSES_V3` |
-| Unavailable reasons | `catalog-expired`, `catalog-not-yet-valid`, `unsupported-merchant`, `no-owned-cards`, `unknown-owned-card`, `purchase-not-confirmed`, `ineligible-purchase` | `UnavailableComparison` |
-| Parity cases | `catalogCases` 28 (v1), `catalogV2Cases` 53 (v2), `catalogV3Cases` 101 (v3, from the synthetic `CATALOG_V3_FIXTURE`) | [`test-cases.ts`](../../packages/rewards-core/test-cases.ts) |
+| Unavailable reasons | `catalog-expired`, `catalog-not-yet-valid`, `unsupported-merchant`, `no-owned-cards`, `unknown-owned-card`, `purchase-not-confirmed`, `ineligible-purchase`; v3 adds `no-accepted-card` | `UnavailableComparison` |
+| Parity cases | `catalogCases` 28 (v1), `catalogV2Cases` 53 (v2), `catalogV3Cases` 117 (v3, from the synthetic `CATALOG_V3_FIXTURE`) | [`test-cases.ts`](../../packages/rewards-core/test-cases.ts) |
+| Engine tests | `rewards.test.ts` (v1), `rewards-v2.test.ts`, `rewards-v3.test.ts` (70: every v3 status and uncertainty, ladders at the three merchants, value precedence, shared caps, usage inputs) | [`extension/tests/`](../../extension/tests/rewards-v3.test.ts) |
 
 ## Catalog v2 contract
 
@@ -75,7 +80,7 @@ Verified 2026-10-02 by reading the code; parity case counts verified by importin
 - **Card**: `id`, `name`, `shortName`, `issuer`, `programId`, `statedValueHundredthsOfCent` (issuer-stated, points programs only; replaces v2 `pointValueHundredthsOfCent`; no `rewardCurrency`), `acceptance` = `{kind:'open-loop'}` | `{kind:'closed-loop', brandIds[1..]}`, `choices[0..5]` = `{id, kind: chosen|automatic, label, picks 1..5, options[2..30], defaultOptionIds}`, `rules[1..30]`, `exclusions[0..20]`.
 - **Rule**: v2 fields with `category` from `REWARD_CATEGORIES_V3`, `excludedPaymentPaths` ⊆ `paypal, venmo, digital-wallet, bnpl`, `limitedTime {startsOn|null, endsOn|null}|null`, plus `brandIds` (merchant scope), `excludedBrandIds` (never at these brands; disjoint from `brandIds`), `sharedCapId` (card-scoped ID of a combined spend cap), `choice {choiceId, optionId}|null`, `requires [{gateId, optionIds}]` (≤ 5), `requiredPaymentPaths` (⊆ `PAYMENT_PATHS_V3`).
 - **Invariants**: unique IDs per list, gate options, choices and choice options, globally unique rule IDs; every program, brand, gate, choice option and source reference resolves; cash back is valued as cash and nothing else is; a published estimate is read from 30 days before `verifiedAt` to the `expiresAt` date; open-loop cards have exactly one unconditional `all-purchases` rule (`isUnconditionalRuleV3`: no spend cap, enroll-once/recurring activation, time limit, excluded or required path, brands or excluded brands, choice or gate), closed-loop cards at most one; rates ≥ base and after-cap rules as v2 when a base exists; `startsOn ≤ endsOn`; a requirement lists some, not all, options of a gate, each gate once; a path cannot be both required and excluded, nor a brand both in scope and excluded; rules sharing a cap ID on one card all have spend caps with the same amount and period; `picks` < options, defaults ≤ picks and none for `automatic`; plus the common window, source-age and size checks.
-- `compareRewards` throws for a v3 catalog until the v3 engine (M2); `usageInputs` returns none for v3; `redateCatalog` also moves `startsOn` and estimate `retrievedOn` dates.
+- `compareRewards` runs v3 catalogs through `compareV3` (below); `usageInputs` covers v3; `redateCatalog` also moves `startsOn` and estimate `retrievedOn` dates.
 
 ## How compareRewards works (v2)
 
@@ -94,6 +99,19 @@ Verified 2026-10-02 by reading the code; parity case counts verified by importin
 
 Usage rows count only for the same calendar year **and** the same `recordedOn` date as the purchase; older usage is treated as unknown, not zero. Activation `unstated` is treated as `none` (coordinator decision 2026-10-01, recorded in the archived [Phase 3 plan](../archive/phase2-goal.md); the [Decisions](../decisions/index.md) directory owns any later record).
 
+## How compareRewards works (v3)
+
+[`engine-v3.ts:compareV3`](../../packages/rewards-core/src/engine-v3.ts) keeps the v2 steps (validation, `unavailableReason`, rules do not stack, uncertain rules give a base-to-rule range, after-cap rates, same-day usage) and adds, per the [engine semantics decision](../decisions/2026-10-02-engine-v3-semantics.md):
+
+- **Inputs.** `WalletCard.choices` `[{choiceId, optionIds}]` (complete selection of a `chosen` choice, 1 to `picks`), `WalletCard.gates` `[{gateId, optionId}]`, `Wallet.valueOverrides` `[{programId, valueHundredthsOfCent}]` (points programs, 1–10,000). All optional; v1/v2 ignore them; unknown IDs throw (`Invalid wallet choices.`, `Invalid wallet gates.`, `Invalid value override.`). `Purchase.paymentPath` accepts `venmo` (a v2 catalog still rejects it).
+- **Acceptance.** A closed-loop card whose `brandIds` miss the merchant's goes to `Comparison.notAccepted` (every rule `not-accepted`), not `estimates`; if no owned card is accepted the result is `no-accepted-card`.
+- **Base.** The unconditional `all-purchases` rule (`baseRuleV3`); a closed-loop card may have none (base reward 0).
+- **Blocking order** (`blocked`): portal, or `other` without brands → `not-at-merchant`; `endsOn` before the purchase or `verifiedAt` date → `expired`; `startsOn` after the purchase date → `not-started`; brand scope or excluded brand or category (`ruleCoversMerchant`: brand-scoped `other`/`all-purchases` need only the brand) → `not-at-merchant`; online retail ruled out, U.S.-only, excluded path, required path not used, known-inactive activation → `not-eligible`; a selected choice without this option → `choice-not-selected`; a gate answered outside the required options → `condition-not-met`.
+- **Ranges** (`evaluate`): the v2 codes, except no `payment-path-uncertain` when the rule requires that path; `automatic-category` for an automatic choice; `choice-unknown` for an unanswered chosen choice (defaults are not assumed); `condition-unknown` for an unanswered gate. A shared cap reads its spend from the group's first rule (`capHolder`).
+- **Money.** Per range end one BigInt numerator Σ spend × bps; units = ⌊n / 10,000⌋; cents = ⌊n × value / 1,000,000⌋ with value = override → card `statedValueHundredthsOfCent` → program valuation (`unitValueFor`). A program with valuation `none` and no override has no value: cents 0, `unitValue: null`, `value-unknown`. Codes and `may-apply` are reported when they move the shown amount (cents, or units when unvalued).
+- **Estimate fields** added for v3: `programId`, `minRewardUnits`, `maxRewardUnits`, `unitValue` `{hundredthsOfCent, basis: override | card-stated | cash | published-estimate | issuer-stated}` or null; `appliedRuleId` is absent only for a base-less card with nothing applicable.
+- **Ranking** (`rankV3`): valued cards by minimum cents, then unvalued cards by minimum units; default card, then card ID break ties. `rankingMayChange` when another valued card's maximum beats a valued leader's minimum, or any unvalued card earns units (or, among unvalued cards, a same-program card's maximum beats the leader's minimum, any units from another program). `tied` compares only comparable cards. `preferredCardId` always names one accepted card.
+
 The v1 engine (`compareV1`) supports only one base `all-eligible` rule and at most one `us-online-retail` bonus with an annual cap; see [`README.md`](../../packages/rewards-core/README.md).
 
 ## Gotchas
@@ -101,10 +119,11 @@ The v1 engine (`compareV1`) supports only one base `all-eligible` rule and at mo
 - `CATALOG_V2` is generated by `npm run catalog:v2` from `evals/curation/real/corpus.v2.json` gold labels, the capture manifest and `evals/curation/real/merchants.json` — never from model output. CI runs `catalog:v2:check`; editing the TS file by hand fails it.
 - Expiry is real: after 2026-10-29 the bundled catalog returns `catalog-expired` unless a newer published release is cached. Browser tests re-date it with `redateCatalog` via `VITE_E2E_CATALOG_DATE`.
 - Any Zod change must be mirrored in the SQL validator for that version (new migration) and covered by a parity case; `scripts/test-catalog-parity.mjs` runs all three lists through both validators and compares the v3 category lists with their SQL functions.
-- `catalogSchema` accepts v3, so the extension's `prepareCatalogUpdate` refuses v3 releases explicitly until M6 wires the v3 engine.
+- `catalogSchema` accepts v3, so the extension's `prepareCatalogUpdate` refuses v3 releases explicitly until M6 wires the v3 engine into the extension state; the extension's `responseSchema` still lists only the v2 codes.
+- v3 wallet inputs that reference IDs a catalog no longer has make `compareV3` throw (as v2 usage rows do); M6 prunes them on catalog updates.
 - v3 size is measured as `JSON.stringify` bytes in Zod and JSONB text bytes in SQL (spaces after `:` and `,`), so the SQL count is a little larger; stay well under 1 MiB.
 - `stableJson` is local equality, not PostgreSQL JSONB hashing.
-- The package has no test script of its own; its tests live in `extension/tests/rewards.test.ts`, `rewards-v2.test.ts`, `catalog-schema.test.ts` (which also runs `catalogV3Cases`).
+- The package has no test script of its own; its tests live in `extension/tests/rewards.test.ts`, `rewards-v2.test.ts`, `rewards-v3.test.ts`, `catalog-schema.test.ts` (which also runs `catalogV3Cases`).
 
 ## Related
 

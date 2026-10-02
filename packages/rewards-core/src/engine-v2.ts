@@ -57,7 +57,9 @@ function validateCatalog(catalog: CatalogV2, wallet: Wallet, purchase: Purchase)
     !unique(catalog.merchants.map((m) => m.id)) ||
     !unique([...sources]) ||
     sources.size !== catalog.sources.length ||
-    (purchase.paymentPath !== undefined && !PAYMENT_PATHS.includes(purchase.paymentPath))
+    // `venmo` exists only in catalog v3.
+    (purchase.paymentPath !== undefined &&
+      !(PAYMENT_PATHS as readonly string[]).includes(purchase.paymentPath))
   )
     throw new Error('Invalid comparison input.');
   for (const card of catalog.cards) {
@@ -115,7 +117,7 @@ function blocked(
   } else if (rule.category !== merchant.expectedCategory) return 'not-at-merchant';
   if (rule.usMerchantsOnly && !merchant.usMerchant) return 'not-eligible';
   const path = purchase.paymentPath ?? 'card';
-  if (path !== 'card' && rule.excludedPaymentPaths.includes(path)) return 'not-eligible';
+  if (path !== 'card' && (rule.excludedPaymentPaths as string[]).includes(path)) return 'not-eligible';
   if (needsActivation(rule) && usage?.activation === 'inactive') return 'not-eligible';
   return null;
 }

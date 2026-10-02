@@ -72,6 +72,7 @@ Start in parallel: M1, M3, M9, M11 (draft). After M1: M2, M4 and M8 in parallel.
 - **Tests.** Table tests per feature, ranking ladders at `amazon-us`, `best-buy-us`, `newegg-us` with fixture cards (Prime Visa vs Amazon Store Card vs BCE; My Best Buy Visa; Cash+ with electronics chosen; PayPal Cashback with `paypal`; Freedom Flex before and after 2026-12-31), points vs cash ordering under overrides.
 - **Acceptance.** v2 results byte-identical for `CATALOG_V2` cases; every new status and uncertainty covered; no floats in money paths.
 - **Risks.** Range explosion when choices and gates are unknown: the badge must still name one card; keep `rankingMayChange` semantics.
+- **Status (2026-10-02).** Implemented on branch `s2-m2-engine-v3`: `compareV3`, wallet inputs, `usageInputs` for v3, 70 tests in `extension/tests/rewards-v3.test.ts`, v1/v2 byte-identical; unvalued programs rank after valued cards in units ([decision](../decisions/2026-10-02-engine-v3-semantics.md)).
 
 ### M3 Reward-program valuation table
 - **Scope.** `evals/curation/expansion/reward-programs.json`: every program the 180 cards earn, with value (hundredths of a cent), basis, publisher, URL, date read; card → program map with a ≤ 25-word currency anchor per card. One researcher subagent with web access collects values; an independent subagent re-reads every cited page; an adjudicator settles differences. Numbers, URLs and dates only.

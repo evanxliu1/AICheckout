@@ -6,7 +6,7 @@ status: stable
 tags: [domain, rewards, engine]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:00:00Z
+  at: 2026-10-02T23:59:00Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
     title: Catalog v2 types (RewardRuleV2, RuleCap, PaymentPath, Uncertainty)
@@ -14,6 +14,8 @@ sources:
     title: Catalog v2 engine (compareV2)
   - resource: ../../packages/rewards-core/src/engine-shared.ts
     title: Shared validation and ranking (rankEstimates)
+  - resource: ../../packages/rewards-core/src/engine-v3.ts
+    title: Catalog v3 engine (compareV3)
   - resource: ../../packages/rewards-core/README.md
     title: Rewards core README
   - resource: ../../docs/research/cashback-card-terms-2026.md
@@ -90,24 +92,24 @@ Money is integer cents and rates are bps. Exact products are summed before trunc
 
 Citi Double Cash earns 2% total on every purchase: 1% at purchase and 1% when the balance is paid. The catalog stores `rateBps: 200, paidOnPaymentBps: 100`. The estimate counts the full 200 bps and exposes `paidOnPaymentBps` on `CardEstimate`. The research report suggests showing it as "2% if paid (1% at purchase)"; how the extension words it is not covered here. The research report notes that the payment must be at least the minimum due, and that points need a current account.
 
-## Catalog v3 rule shapes (contract only)
+## Catalog v3 rules
 
-Stage 2 M1 adds the catalog v3 contract ([rewards engine](../system/rewards-engine.md#catalog-v3-contract)); the v3 engine that applies these is M2, so the meanings below are what the fields are for, not yet behavior.
+Stage 2 M1 added the catalog v3 contract ([rewards engine](../system/rewards-engine.md#catalog-v3-contract)) and M2 the engine that applies it (`compareV3` in [`engine-v3.ts`](../../packages/rewards-core/src/engine-v3.ts); [semantics decision](../decisions/2026-10-02-engine-v3-semantics.md)). The v2 behavior above carries over; v3 adds:
 
 | Field or concept | Meaning |
 | --- | --- |
 | Base rule | The card's one `all-purchases` rule with no condition at all. Open-loop cards need exactly one; closed-loop store cards need none. Other `all-purchases` rules may carry conditions (PayPal Cashback's rate when paying through PayPal) |
-| `acceptance` | `open-loop`, or `closed-loop` with the brands where the card works (Amazon Store Card, Harbor Freight) |
-| `brandIds` | Merchant scope: the rule pays only at merchants carrying one of these brands (Prime Visa at Amazon and Whole Foods) |
-| `excludedBrandIds` | The rule never pays at merchants carrying one of these brands (Freedom Flex grocery "excluding Walmart and Target", Edward Jones top categories excluding Amazon); a base rule has none |
-| `sharedCapId` | Rules of one card with the same ID share one spend cap (Cash+ "$2,000 in combined purchases" across both 5% picks, Freedom Flex and Discover quarters, Customized Cash); each has a spend cap with the same amount and period |
-| `choice` | The rule pays only while that option of a card choice is in effect: `chosen` by the cardholder (Cash+, Customized Cash) or `automatic` top-spend categories (Edward Jones) |
-| `requires` | Gates the cardholder must meet: membership, tier or relationship options (Prime, store loyalty tiers, Smartly balances) |
-| `requiredPaymentPaths` | The rule pays only through these paths; `excludedPaymentPaths` gains `venmo` |
-| `limitedTime.startsOn` | Rotating or future rules start on this date (Freedom Flex Q1 2027) |
-| Program value | Units convert to cents with the shopper's override, else the card's issuer-stated value, else the program's published estimate ([decision](../decisions/2026-10-02-points-valuation-published-estimates.md)); `none` means units only |
+| `acceptance` | `open-loop`, or `closed-loop` with the brands where the card works (Amazon Store Card, Harbor Freight). Elsewhere the card is `not-accepted` and left out of the ranking (`Comparison.notAccepted`); with no accepted card the result is `no-accepted-card` |
+| `brandIds` | Merchant scope: the rule pays only at merchants carrying one of these brands (Prime Visa at Amazon and Whole Foods); otherwise `not-at-merchant`. A brand-scoped `other` or `all-purchases` rule needs no category match |
+| `excludedBrandIds` | The rule never pays at merchants carrying one of these brands (`not-at-merchant`; Freedom Flex grocery "excluding Walmart and Target", Edward Jones top categories excluding Amazon); a base rule has none |
+| `sharedCapId` | Rules of one card with the same ID share one spend cap (Cash+ "$2,000 in combined purchases" across both 5% picks, Freedom Flex and Discover quarters, Customized Cash); each has a spend cap with the same amount and period. The spend toward it is recorded on the group's first rule |
+| `choice` | The rule pays only while that option of a card choice is in effect: `chosen` by the cardholder (Cash+, Customized Cash) or `automatic` top-spend categories (Edward Jones). A chosen option the shopper did not select is `choice-not-selected`; an unanswered choice gives a range (`choice-unknown`, defaults not assumed); an automatic option always gives a range (`automatic-category`) |
+| `requires` | Gates the cardholder must meet: membership, tier or relationship options (Prime, store loyalty tiers, Smartly balances). An answer outside the options is `condition-not-met`; no answer gives a range (`condition-unknown`) |
+| `requiredPaymentPaths` | The rule pays only through these paths (otherwise `not-eligible`) and is then not `payment-path-uncertain`; `excludedPaymentPaths` gains `venmo` |
+| `limitedTime.startsOn` | Rotating or future rules start on this date (Freedom Flex Q1 2027); before it the rule is `not-started` |
+| Program value | Units convert to cents with the shopper's override, else the card's issuer-stated value, else the program's valuation ([decision](../decisions/2026-10-02-points-valuation-published-estimates.md)): cents = ⌊Σ spend × rate × value / 1,000,000⌋. `none` means units only: the card is listed after every valued card with `value-unknown`, never at an assumed 1¢ |
 
-Statuses `not-accepted`, `not-started`, `choice-not-selected`, `condition-not-met` and uncertainties `choice-unknown`, `automatic-category`, `condition-unknown` are defined for M2.
+Shopper inputs for v3: per card the chosen options and gate answers, per wallet a value override for any points program.
 
 ## Gotchas
 

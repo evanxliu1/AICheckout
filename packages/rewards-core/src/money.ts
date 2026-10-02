@@ -42,6 +42,12 @@ export function rewardCents(
 /** Sum of spend × rate over non-overlapping portions of one purchase, truncated to a cent once.
  * Used by catalog v2, where the after-cap rate need not equal the base rate. */
 export function portionRewardCents(portions: { spendCents: number; bps: number }[]): number {
+  return Number(portionNumerator(portions) / 10_000n);
+}
+
+/** Exact Σ spendCents × bps over non-overlapping portions of one purchase: reward units × 10,000.
+ * Catalog v3 converts it once, to units or to cents, so nothing is rounded twice. */
+export function portionNumerator(portions: { spendCents: number; bps: number }[]): bigint {
   let numerator = 0n,
     total = 0;
   for (const { spendCents, bps } of portions) {
@@ -57,5 +63,22 @@ export function portionRewardCents(portions: { spendCents: number; bps: number }
     numerator += BigInt(spendCents) * BigInt(bps);
   }
   if (total > MAX_AMOUNT_CENTS) throw new Error('Invalid reward operands.');
+  return numerator;
+}
+
+/** Reward units (points, miles, or cents for cash back) from a `portionNumerator`, floored. */
+export function numeratorUnits(numerator: bigint): number {
   return Number(numerator / 10_000n);
+}
+
+/** Cents from a `portionNumerator` at a value per unit in hundredths of a cent:
+ * floor(Σ spend × rateBps × value / 1,000,000). Cash back (value 100) equals `portionRewardCents`. */
+export function numeratorCents(numerator: bigint, valueHundredthsOfCent: number): number {
+  if (
+    !Number.isSafeInteger(valueHundredthsOfCent) ||
+    valueHundredthsOfCent < 1 ||
+    valueHundredthsOfCent > 10_000
+  )
+    throw new Error('Invalid reward operands.');
+  return Number((numerator * BigInt(valueHundredthsOfCent)) / 1_000_000n);
 }

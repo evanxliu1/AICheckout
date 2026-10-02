@@ -309,14 +309,41 @@ export interface RuleUsage {
   activation: 'active' | 'inactive' | 'unknown';
 }
 
+/** Catalog v3: the options of one `chosen` card choice the shopper says are in effect. A choice
+ * with no entry is unknown. */
+export interface WalletChoice {
+  choiceId: string;
+  /** The complete selection: 1 to `picks` options of the choice. */
+  optionIds: string[];
+}
+
+/** Catalog v3: the shopper's answer to one gate question for this card. No entry is unknown. */
+export interface WalletGate {
+  gateId: string;
+  optionId: string;
+}
+
+/** Catalog v3: the shopper's own value for one points program, in hundredths of a cent per unit
+ * (1 to 10,000). It wins over issuer-stated values and published estimates. */
+export interface ValueOverride {
+  programId: string;
+  valueHundredthsOfCent: number;
+}
+
 export interface WalletCard {
   cardId: string;
   usage: RuleUsage[];
+  /** Catalog v3 only; ignored by v1 and v2. */
+  choices?: WalletChoice[];
+  /** Catalog v3 only; ignored by v1 and v2. */
+  gates?: WalletGate[];
 }
 
 export interface Wallet {
   cards: WalletCard[];
   defaultCardId: string | null;
+  /** Catalog v3 only (points programs); ignored by v1 and v2. */
+  valueOverrides?: ValueOverride[];
 }
 
 export interface Purchase {
@@ -327,8 +354,8 @@ export interface Purchase {
   purchasedOn: string;
   eligiblePurchase: Eligibility;
   onlineRetail: Eligibility;
-  /** Catalog v2 only; defaults to `card`. */
-  paymentPath?: PaymentPath;
+  /** Catalog v2 and v3; defaults to `card`. `venmo` exists only in v3 (a v2 catalog rejects it). */
+  paymentPath?: PaymentPathV3;
 }
 
 export const UNCERTAINTIES = [
@@ -349,12 +376,22 @@ export const UNCERTAINTIES_V3 = [
   'automatic-category',
   /** The rule needs a membership, tier or relationship the shopper has not confirmed. */
   'condition-unknown',
+  /** The card's program has no value (no override, issuer-stated value or estimate): the estimate
+   * is in units only and its cent amounts are 0. */
+  'value-unknown',
 ] as const;
 export type UncertaintyV3 = (typeof UNCERTAINTIES_V3)[number];
 
 /** Why a v2 rule did or did not count for this purchase. */
 export type RuleStatus =
   'applied' | 'may-apply' | 'base' | 'not-at-merchant' | 'not-eligible' | 'expired' | 'cap-reached';
+
+/** Where a v3 card's value per unit comes from, in precedence order: the shopper's override,
+ * the card's issuer-stated value, then the program's valuation. */
+export interface UnitValue {
+  hundredthsOfCent: number;
+  basis: 'override' | 'card-stated' | 'cash' | 'published-estimate' | 'issuer-stated';
+}
 
 export interface CardEstimate {
   cardId: string;
@@ -364,23 +401,38 @@ export interface CardEstimate {
   bonusRateBps: number | null;
   minBonusSpendCents: number;
   maxBonusSpendCents: number;
-  uncertainties: Uncertainty[];
+  /** v1 and v2 report only `UNCERTAINTIES`; v3 may add the `UNCERTAINTIES_V3` codes. */
+  uncertainties: UncertaintyV3[];
   sourceIds: string[];
   /** Catalog v2 only: the rule this estimate is about. That is the bonus rule with the highest
    * possible reward here (it sets `maxRewardCents`, `bonusRateBps` and the bonus spend), or the
-   * base rule when no bonus can add anything. */
+   * base rule when no bonus can add anything. Catalog v3 as well, except a closed-loop card with
+   * no base and no rule that can add anything, where it is absent. */
   appliedRuleId?: string;
   /** Catalog v2 only: the part of `appliedRuleId`'s rate earned when the balance is paid
    * (Citi Double Cash: 100 of 200). */
   paidOnPaymentBps?: number;
-  rules?: { ruleId: string; status: RuleStatus }[];
+  /** v2 reports only `RuleStatus`; v3 may add the `RULE_STATUSES_V3` codes. */
+  rules?: { ruleId: string; status: RuleStatusV3 }[];
+  /** Catalog v3 only: the card's reward program. */
+  programId?: string;
+  /** Catalog v3 only: reward units (points, miles, or cents for cash back), floored. */
+  minRewardUnits?: number;
+  maxRewardUnits?: number;
+  /** Catalog v3 only: the value used for the cent amounts; null when the program has none, in
+   * which case the cent amounts are 0 and `value-unknown` is reported when units are earned. */
+  unitValue?: UnitValue | null;
 }
 
 export interface Comparison {
   status: 'ready';
   catalogVersion: string;
-  /** Ordered by conservative estimate; the default card breaks exact ties. */
+  /** Ordered by conservative estimate; the default card breaks exact ties. Catalog v3: cards with
+   * a value first, then unvalued cards by units (see `compareV3`). */
   estimates: CardEstimate[];
+  /** Catalog v3 only: owned closed-loop cards not accepted at this merchant, left out of the
+   * ranking; every rule has status `not-accepted` and the amounts are 0. */
+  notAccepted?: CardEstimate[];
   preferredCardId: string;
   /** True when missing information could produce a different best card. */
   rankingMayChange: boolean;
@@ -396,5 +448,7 @@ export interface UnavailableComparison {
     | 'no-owned-cards'
     | 'unknown-owned-card'
     | 'purchase-not-confirmed'
-    | 'ineligible-purchase';
+    | 'ineligible-purchase'
+    /** Catalog v3 only: every owned card is a closed-loop card not accepted at this merchant. */
+    | 'no-accepted-card';
 }
