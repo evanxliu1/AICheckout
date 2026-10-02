@@ -68,12 +68,22 @@ export default function BadgeApp() {
     if (!node) return;
     const post = () => {
       const box = node.getBoundingClientRect();
-      postToHost({ type: 'size', width: box.width, height: box.height, expanded });
+      // Report the panel's natural height (its scrolling body at full length), not the height it
+      // was clamped to, so the host can size the frame up to the window.
+      const body = node.querySelector<HTMLElement>('.badge-panel__body');
+      const height = body ? box.height - body.clientHeight + body.scrollHeight : box.height;
+      postToHost({ type: 'size', width: box.width, height, expanded });
     };
     post();
     const observer = new ResizeObserver(post);
     observer.observe(node);
-    return () => observer.disconnect();
+    // Content inside the scrolling body (e.g. an opened disclosure) changes its natural height.
+    const changes = new MutationObserver(post);
+    changes.observe(node, { subtree: true, childList: true, attributes: true, characterData: true });
+    return () => {
+      observer.disconnect();
+      changes.disconnect();
+    };
   }, [expanded, view]);
 
   const collapse = useCallback(() => {

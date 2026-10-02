@@ -1,8 +1,10 @@
 import { chromium, expect, test } from '@playwright/test';
+import { closeOnboarding } from './onboarding';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { openNativePopup } from './native-popup';
-import { createNativeVault } from './vault';
+import { startNativePopup } from './vault';
+import { BADGE_ORIGINS } from './hosts';
 
 test('Newegg native capture distinguishes subtotal, follows quantity changes and clears switched-merchant inputs', async ({
   browserName,
@@ -20,6 +22,7 @@ test('Newegg native capture distinguishes subtotal, follows quantity changes and
   });
   try {
     const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+    await closeOnboarding(context);
     const id = new URL(worker.url()).host;
     const merchant = await context.newPage();
     await merchant.route('https://secure.newegg.com/shop/cart', (route) =>
@@ -30,7 +33,7 @@ test('Newegg native capture distinguishes subtotal, follows quantity changes and
     );
     await merchant.goto('https://secure.newegg.com/shop/cart');
     let popup = await openNativePopup(context, merchant, id);
-    await createNativeVault(popup);
+    await startNativePopup(popup);
     await popup.evaluate(
       "document.querySelectorAll('fieldset input[type=checkbox]').forEach(box => box.click())",
     );
@@ -98,7 +101,7 @@ test('Newegg native capture distinguishes subtotal, follows quantity changes and
       expect(await preview.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
       await preview.screenshot({ path: testInfo.outputPath(`merchant-form-${width}.png`), fullPage: true });
     }
-    expect((await worker.evaluate(() => chrome.permissions.getAll())).origins ?? []).toEqual([]);
+    expect((await worker.evaluate(() => chrome.permissions.getAll())).origins?.sort()).toEqual(BADGE_ORIGINS);
   } finally {
     await context.close();
   }

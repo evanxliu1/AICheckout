@@ -24,6 +24,10 @@ export default function Onboarding() {
     }
   }, []);
   useEffect(() => void load(), [load]);
+  // Move to the confirmation once it renders (an effect, so it also runs in a background tab).
+  useEffect(() => {
+    if (done) document.getElementById('onboarding-done')?.focus();
+  }, [done]);
   async function save(wallet: Wallet) {
     if (!view) return;
     setBusy(true);
@@ -37,7 +41,6 @@ export default function Onboarding() {
         }),
       );
       setDone(true);
-      requestAnimationFrame(() => document.getElementById('onboarding-done')?.focus());
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Your cards could not be saved. Try again.');
     } finally {

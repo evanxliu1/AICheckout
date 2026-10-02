@@ -9,6 +9,8 @@ body.badge-body {
 }
 .badge-root {
   display: inline-block;
+  /* Intrinsic size, independent of the frame's current size, which follows it. */
+  width: max-content;
   max-width: 360px;
   padding: 4px;
   box-sizing: border-box;
@@ -19,6 +21,7 @@ body.badge-body {
 }
 .badge-pill {
   display: inline-flex;
+  white-space: nowrap;
   align-items: center;
   gap: 8px;
   max-width: 352px;
@@ -34,6 +37,10 @@ body.badge-body {
   box-shadow: var(--token-elevation-high-box-shadow);
   cursor: pointer;
 }
+.badge-pill span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .badge-pill:hover {
   background: var(--token-color-palette-blue-300);
 }
@@ -44,7 +51,9 @@ body.badge-body {
 .badge-panel {
   display: flex;
   flex-direction: column;
+  /* The frame is clamped to the merchant window; the body scrolls inside it. */
   max-height: calc(100vh - 8px);
+  box-sizing: border-box;
   overflow: hidden;
   background: var(--token-color-surface-primary);
   border: 1px solid var(--token-color-border-primary);

@@ -1,9 +1,17 @@
 import { chromium, expect, test } from '@playwright/test';
+import { closeOnboarding } from './onboarding';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { openNativePopup } from './native-popup';
-import { createNativeVault, createVault, deleteNativeVault, deleteVault } from './vault';
+import {
+  deleteNativeVault,
+  deleteVault,
+  protectNativeVault,
+  protectVault,
+  startNativePopup,
+  startPopup,
+} from './vault';
 import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2';
 
 test('capture real release UI and record the staged offline shopper walkthrough', async ({
@@ -46,6 +54,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     // All HTTP traffic is blocked except this exact in-memory merchant fixture.
     await context.route('**/*', (route) => route.abort());
     const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+    await closeOnboarding(context);
     const id = new URL(worker.url()).host,
       merchant = await context.newPage();
     await merchant.route('https://secure.newegg.com/shop/cart', (route) =>
@@ -71,7 +80,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
         ),
       });
     }
-    await createNativeVault(popup);
+    await startNativePopup(popup);
     await popup.evaluate(
       "document.querySelectorAll('fieldset input[type=checkbox]').forEach(box=>box.click())",
     );
@@ -118,11 +127,12 @@ test('capture real release UI and record the staged offline shopper walkthrough'
       '$7.49',
       '$3.74',
     ]);
+    await protectNativeVault(popup);
     await popup.click('Lock saved inputs');
     await capture('locked', ['Unlock your saved inputs', 'Local passphrase']);
     expect(await popup.text()).not.toContain('$7.49');
     await deleteNativeVault(popup);
-    await expect.poll(popup.text).toContain('Protect your saved inputs');
+    await startNativePopup(popup);
     expect(await worker.evaluate(() => chrome.storage.local.get(null))).toEqual({});
     expect(await worker.evaluate(() => chrome.storage.session.get(null))).toEqual({});
     writeFileSync(
@@ -173,6 +183,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
   try {
     await demo.setOffline(true);
     const worker = demo.serviceWorkers()[0] ?? (await demo.waitForEvent('serviceworker'));
+    await closeOnboarding(demo);
     const page = await demo.newPage(),
       video = page.video();
     if (!video) throw new Error('Demo recording was not created');
@@ -183,12 +194,11 @@ test('capture real release UI and record the staged offline shopper walkthrough'
       await page.waitForTimeout(seconds * 1000);
     };
     await page.goto(`chrome-extension://${new URL(worker.url()).host}/src/popup/index.html`);
-    await expect(page.getByLabel('New local passphrase', { exact: true })).toBeVisible();
+    await startPopup(page);
     await pause(
       'Staged offline demo. Actual extension page; sample inputs; no live retailer or model call.',
       4,
     );
-    await createVault(page);
     await page.getByRole('checkbox', { name: 'Capital One Quicksilver', exact: true }).check();
     await page.getByRole('checkbox', { name: 'American Express Blue Cash Everyday', exact: true }).check();
     await page.getByLabel(/Blue Cash Everyday online retail spend/).fill('0');
@@ -214,6 +224,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     await page.getByRole('button', { name: 'Compare my cards' }).click();
     await expect(page.getByText('$1.00–$3.00', { exact: true })).toBeVisible();
     await pause('Unknown annual usage produces a $1.00–$3.00 range; the best card may change.', 5);
+    await protectVault(page);
     await page.getByRole('button', { name: 'Lock saved inputs' }).click();
     await expect(page.getByLabel('Local passphrase', { exact: true })).toBeVisible();
     await pause('Lock hides private inputs and clears the session key. The local record stays encrypted.', 4);
@@ -222,7 +233,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     await pause('Deletion requires explicit confirmation and can be done without the forgotten phrase.', 4);
     await page.getByText('Delete saved data', { exact: true }).click();
     await deleteVault(page);
-    await expect(page.getByLabel('New local passphrase', { exact: true })).toBeVisible();
+    await startPopup(page);
     expect(await page.evaluate(() => chrome.storage.local.get(null))).toEqual({});
     expect(await page.evaluate(() => chrome.storage.session.get(null))).toEqual({});
     await pause(
