@@ -6,7 +6,7 @@ status: stable
 tags: [product, roadmap]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T06:10:00Z
+  at: 2026-10-02T18:30:00Z
 sources:
   - resource: ../archive/phase2-goal.md
     title: Phase 2–6 plan (archived; full step lists and exit criteria)
@@ -30,7 +30,7 @@ Phases from the archived [Phase 2–6 plan](../archive/phase2-goal.md), which ke
 | 4 Terms-change detection | Weekly GitHub Action re-captures sources, opens an issue with hashes and short excerpts | Not started |
 | 5 Ship | Chrome Web Store listing (Evan pays and submits), demo video | Not started |
 | 6 Site coverage harness | LLM drafts site adapters from captured carts; execution-based validation; remote kill switch; drift detection | Not started; design in the archived plan |
-| 7 Card expansion | 180 consumer cards of the top-10 U.S. issuers: capture, gpt-5.6-luna extraction, verified labels, engine support for points and merchant-specific rules, larger catalog limits, wallet search | In progress on `phase7-catalog-expansion` (unmerged): captures and extraction done; labels, verification, engine work and eval remain. See [catalog expansion](../system/catalog-expansion.md) and [decision](../decisions/2026-10-01-top-ten-issuer-card-expansion.md) |
+| 7 Card expansion | 180 consumer cards of the top-10 U.S. issuers: capture, gpt-5.6-luna extraction, verified labels, engine support for points and merchant-specific rules, larger catalog limits, wallet search | In progress: captures, extraction and drafts merged (PR #16); 25-word drafts and the verification format on `phase7-verify`; verification, engine work and eval remain. See [catalog expansion](../system/catalog-expansion.md) and [decision](../decisions/2026-10-01-top-ten-issuer-card-expansion.md) |
 
 Also pending: a human verification pass over the agent-verified labels ([decision](../decisions/2026-09-29-agent-verified-labels.md)), and real-order checks of the `orderConfirmation` URL patterns before the store release.
 

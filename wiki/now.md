@@ -5,22 +5,22 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T06:40:00Z
+  at: 2026-10-02T18:30:00Z
 ---
 
 # Now
 
-As of 2026-10-02T06:40Z (evening of 2026-10-01 Pacific).
+As of 2026-10-02T18:30Z.
 
 ## Current state
 
-- **`origin/main`** at `3439b9f` (PR #15, this wiki, merged). Merged: PRs #4–#6 (Phase 2a–2c), #7–#12 (Phase 3 M1–M6 prep), #13 (3b automatic cart badge) and #14 (3b follow-ups: a removed badge host comes back at once, covered-click hint in a persistent status region, reader resumes after a back/forward-cache restore, README) ([roadmap](product/roadmap.md), [cart badge](system/cart-badge.md)).
+- **`origin/main`** at `be5de25` (PR #16, Phase 7 capture, extraction and drafts, merged; PR #15, this wiki, before it). Merged: PRs #4–#6 (Phase 2a–2c), #7–#12 (Phase 3 M1–M6 prep), #13 (3b automatic cart badge) and #14 (3b follow-ups: a removed badge host comes back at once, covered-click hint in a persistent status region, reader resumes after a back/forward-cache restore, README) ([roadmap](product/roadmap.md), [cart badge](system/cart-badge.md)).
 - **Hosted:** site, results page, review app and `/v1/catalog` live at https://ai-checkout-api.onrender.com ([hosting](ops/hosting.md)). All 8 migrations are on hosted Supabase; the coordinating session pushed `20260930225732_catalog_v2` and `20261001010350_source_body_limit` with `./scripts/db-push.sh` ([database migrations](ops/database-migrations.md)). `/v1/catalog` serves release sequence 1, the 7-card catalog `2026-09-29.real.1`, published 2026-10-02T02:29Z, expiring 2026-10-29T00:00Z (checked 2026-10-02T05:58Z).
-- **Curation model:** gpt-5.6-luna `xhigh` since 2026-10-02 ([decision](decisions/2026-10-02-gpt-5-6-luna-for-curation.md)). On `phase7-catalog-expansion` it is the `eval:v2 --provider codex` and `extract-cards.mjs` default, and [`docs/evals/results.md`](../docs/evals/results.md) has its rows: dev 99.5%, held-out 98.3%, both marked added after ([reporting decision](decisions/2026-10-02-luna-results-per-split.md)). `main` gets both when the branch merges.
+- **Curation model:** gpt-5.6-luna `xhigh` since 2026-10-02 ([decision](decisions/2026-10-02-gpt-5-6-luna-for-curation.md)). It is the `eval:v2 --provider codex` and `extract-cards.mjs` default on `main` since PR #16, and [`docs/evals/results.md`](../docs/evals/results.md) has its rows: dev 99.5%, held-out 98.3%, both marked added after ([reporting decision](decisions/2026-10-02-luna-results-per-split.md)).
 
 ## Active work
 
-- **Phase 7 card expansion** on `phase7-catalog-expansion` (worktree `../AICheckout-expansion`, from `ff0c9f7`, merged with `main` `3439b9f`; committed, not pushed): 180 cards, 65 exclusions, 321 sources captured; luna extraction done (168 `needs_review`, 12 `evidence_valid`); draft labels for 159 cards (gitignored: quotes over 25 words). Next: trim draft quotes to 25 words so they can be committed, decide points valuation (fixes the `rate_not_in_evidence` validator gap), per-issuer verifier subagents, Stage-2 engine work and a new migration raising catalog limits, eval, then Evan publishes ([catalog expansion](system/catalog-expansion.md)). Evan pushes the branch and opens the PR.
+- **Phase 7 card expansion** on `phase7-verify` (worktree `../AICheckout-expansion`, from `main` `be5de25`; committed, not pushed): draft labels for 159 of 180 cards now committed with every capture quote cut to 25 words (`check-expansion-quotes.mjs` passes); verification findings format, verifier brief (`evals/curation/expansion/verification/README.md`) and `apply-expansion-verification.mjs` ready ([decision](decisions/2026-10-02-expansion-quote-limit-and-verification-format.md)). Next: per-issuer verifier subagents, then a second adjudicating agent per file, then the apply step; decide points valuation (fixes the `rate_not_in_evidence` validator gap); Stage-2 engine work and a new migration raising catalog limits; eval; Evan publishes ([catalog expansion](system/catalog-expansion.md)). Evan pushes the branch and opens the PR.
 
 ## Open questions and next steps
 
