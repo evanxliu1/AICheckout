@@ -28,8 +28,8 @@ function frameMessage(data: unknown): FrameMessage | null {
 
 export function createBadgeFrame(doc: Document, getUrl: (path: string) => string) {
   const win = doc.defaultView!;
-  const src = getUrl(BADGE_PAGE);
-  const origin = new URL(src).origin;
+  const page = getUrl(BADGE_PAGE);
+  const origin = new URL(page).origin;
   let host: HTMLElement | null = null,
     frame: HTMLIFrameElement | null = null,
     expanded = false;
@@ -55,8 +55,14 @@ export function createBadgeFrame(doc: Document, getUrl: (path: string) => string
       resize(message.width, message.height);
     }
   }
-  function show() {
-    if (host) return;
+  /** The frame exists and the page has not removed it. */
+  const shown = () => !!host && host.isConnected;
+  /** Creates the frame with the worker's nonce in its URL fragment; the fragment stays inside the
+   * closed shadow root. Without a nonce, an existing frame is kept. */
+  function show(nonce?: string) {
+    if (shown() && !nonce) return;
+    if (host) hide();
+    if (!nonce) return;
     // A custom element name: generic page selectors such as `div { … }` do not match it, and the
     // styles below are inline !important, so page CSS cannot hide or move the badge.
     host = doc.createElement('ai-checkout-badge');
@@ -70,7 +76,7 @@ export function createBadgeFrame(doc: Document, getUrl: (path: string) => string
     });
     const root = host.attachShadow({ mode: 'closed' });
     frame = doc.createElement('iframe');
-    frame.src = src;
+    frame.src = `${page}#${nonce}`;
     frame.title = 'AI Checkout';
     important(frame, {
       border: '0',
@@ -93,6 +99,6 @@ export function createBadgeFrame(doc: Document, getUrl: (path: string) => string
     frame = null;
     expanded = false;
   }
-  return { show, hide, expanded: () => expanded, frameMessage };
+  return { show, hide, shown, expanded: () => expanded, frameMessage };
 }
 export { frameMessage };

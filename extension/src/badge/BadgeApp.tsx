@@ -1,13 +1,13 @@
 // The badge inside its iframe: a compact pill that expands into a panel. Everything with card data
 // renders here, in the extension's own origin; the merchant page only ever sees the frame.
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AlertInline, Button, Field, Icon, Select, TextInput } from '@ai-checkout/ui';
 import { formatUsd, parseUsd } from '../domain';
 import type { PaymentPath } from '../domain';
 import { EstimateRow } from '../components/ComparisonResult';
 import { amount, unavailableCopy } from '../components/estimates';
 import { merchantName } from '../checkout/merchants';
-import type { BadgeRequest, BadgeView } from './contracts';
+import type { BadgeAction, BadgeView } from './contracts';
 import { badgeRequest, postToHost } from './client';
 
 const PAYMENT_LABELS: Record<PaymentPath, string> = {
@@ -18,6 +18,13 @@ const PAYMENT_LABELS: Record<PaymentPath, string> = {
 };
 const KIND_LABELS = { total: 'order total', 'estimated-total': 'estimated total', subtotal: 'subtotal' };
 
+/** IntersectionObserver v2 (Chrome 74+): reports whether the element is visible and unobscured. */
+function supportsVisibilityTracking() {
+  return (
+    typeof IntersectionObserverEntry !== 'undefined' && 'isVisible' in IntersectionObserverEntry.prototype
+  );
+}
+
 export default function BadgeApp() {
   const [view, setView] = useState<BadgeView | null>(null);
   const [expanded, setExpanded] = useState(false);
@@ -27,7 +34,7 @@ export default function BadgeApp() {
   const pill = useRef<HTMLButtonElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
 
-  const apply = useCallback((request: BadgeRequest) => {
+  const apply = useCallback((request: BadgeAction) => {
     setBusy(true);
     return badgeRequest(request)
       .then((reply) => {
@@ -86,6 +93,31 @@ export default function BadgeApp() {
     };
   }, [expanded, view]);
 
+  // Clickjacking guard (IntersectionObserver v2): pointer clicks count only while Chrome reports the
+  // frame fully visible, unobscured and untransformed. Keyboard activation is unaffected.
+  const unobscured = useRef<boolean>(!supportsVisibilityTracking());
+  useEffect(() => {
+    // The body is the frame's whole viewport: page elements over the frame, opacity or transforms
+    // on it make it "not visible"; the panel scrolling inside does not.
+    const node = document.body;
+    if (!supportsVisibilityTracking()) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[entries.length - 1] as IntersectionObserverEntry & { isVisible?: boolean };
+        unobscured.current = entry.isVisible === true;
+      },
+      { threshold: [0], trackVisibility: true, delay: 100 } as IntersectionObserverInit,
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [view?.kind, expanded]);
+  const guard = (event: React.MouseEvent) => {
+    if (event.detail > 0 && !unobscured.current) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
+
   const collapse = useCallback(() => {
     setExpanded(false);
     requestAnimationFrame(() => pill.current?.focus());
@@ -114,36 +146,40 @@ export default function BadgeApp() {
     const best = view.result.estimates.find((e) => e.cardId === view.result.preferredCardId)!;
     const name = view.catalog.cards.find((c) => c.id === best.cardId)?.shortName ?? best.cardId;
     pillText = `Use ${name} · ${amount(best)} back`;
-    pillLabel = `AI Checkout: use ${name}, ${amount(best)} back on this cart. Show details`;
+    pillLabel = `${pillText} on this cart (AI Checkout). Show details`;
     pillAction = expand;
   } else if (view.kind === 'locked') {
     pillText = view.order ? 'Unlock to record this order' : 'Unlock to see your best card';
-    pillLabel = `AI Checkout: ${pillText}. Opens AI Checkout`;
+    pillLabel = `${pillText} (AI Checkout). Opens AI Checkout`;
     pillAction = () => open('popup');
   } else if (view.kind === 'no-cards') {
     pillText = 'Pick your cards to see your best card';
-    pillLabel = `AI Checkout: ${pillText}. Opens setup`;
+    pillLabel = `${pillText} (AI Checkout). Opens setup`;
     pillAction = () => open('onboarding');
   } else if (view.kind === 'damaged') {
     pillText = 'Open AI Checkout to fix saved data';
-    pillLabel = `AI Checkout: ${pillText}`;
+    pillLabel = `${pillText} (AI Checkout)`;
     pillAction = () => open('popup');
   } else if (view.kind === 'unreadable') {
     pillText = 'Can’t read this cart — enter the amount';
-    pillLabel = `AI Checkout: ${pillText}. Show details`;
+    pillLabel = `${pillText} (AI Checkout). Show details`;
     pillAction = expand;
   } else if (view.kind === 'unavailable') {
     pillText = 'Card terms need attention';
-    pillLabel = `AI Checkout: ${pillText}. Show details`;
+    pillLabel = `${pillText} (AI Checkout). Show details`;
     pillAction = expand;
   } else {
     pillText = 'Did you pay with your recommended card?';
-    pillLabel = `AI Checkout: ${pillText} Show question`;
+    pillLabel = `${pillText} (AI Checkout). Show question`;
     pillAction = expand;
   }
 
   return (
-    <div ref={root} className={expanded ? 'badge-root badge-root--panel' : 'badge-root'}>
+    <div
+      ref={root}
+      className={expanded ? 'badge-root badge-root--panel' : 'badge-root'}
+      onClickCapture={guard}
+    >
       {expanded ? (
         <section className="badge-panel" aria-labelledby="badge-heading">
           <div className="badge-panel__header">
@@ -216,7 +252,7 @@ function PanelBody({
 }: {
   view: Exclude<BadgeView, { kind: 'hidden' }>;
   busy: boolean;
-  apply: (request: BadgeRequest) => Promise<unknown>;
+  apply: (request: BadgeAction) => Promise<unknown>;
   open: (target: 'popup' | 'onboarding') => void;
 }) {
   if (view.kind === 'ready' || view.kind === 'unreadable')
@@ -254,7 +290,7 @@ function ReadyBody({
 }: {
   view: Extract<BadgeView, { kind: 'ready' | 'unreadable' }>;
   busy: boolean;
-  apply: (request: BadgeRequest) => Promise<unknown>;
+  apply: (request: BadgeAction) => Promise<unknown>;
 }) {
   const ready = view.kind === 'ready' ? view : null;
   const [draft, setDraft] = useState(ready ? (ready.amountCents / 100).toFixed(2) : '');
@@ -365,7 +401,7 @@ function OrderBody({
 }: {
   view: Extract<BadgeView, { kind: 'order' }>;
   busy: boolean;
-  apply: (request: BadgeRequest) => Promise<unknown>;
+  apply: (request: BadgeAction) => Promise<unknown>;
 }) {
   const [choosing, setChoosing] = useState(false);
   const others = view.cards.filter((card) => card.id !== view.recommendedCardId);

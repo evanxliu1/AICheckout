@@ -5,10 +5,15 @@ import { createBadgeService } from './badge-service';
 import { BADGE_PAGE, ONBOARDING_PAGE, POPUP_PAGE } from '../badge/contracts';
 import { routeMessage } from './routing';
 
-const ready = Promise.all([
-  chrome.storage.local.setAccessLevel({ accessLevel: 'TRUSTED_CONTEXTS' }),
-  chrome.storage.session.setAccessLevel({ accessLevel: 'TRUSTED_CONTEXTS' }),
-]);
+/** Content scripts and pages must never read wallet storage. Applied every time the worker starts
+ * (top level), and again on install and browser startup, before any message is handled. */
+const restrictStorage = () =>
+  Promise.all([
+    chrome.storage.local.setAccessLevel({ accessLevel: 'TRUSTED_CONTEXTS' }),
+    chrome.storage.session.setAccessLevel({ accessLevel: 'TRUSTED_CONTEXTS' }),
+  ]);
+const ready = restrictStorage();
+chrome.runtime.onStartup?.addListener(() => void restrictStorage().catch(() => undefined));
 const handle = createVaultService(
   chrome.storage.local,
   chrome.storage.session,
@@ -101,6 +106,7 @@ chrome.tabs.onRemoved.addListener((tabId) => {
   void badge.removed(tabId).catch(() => undefined);
 });
 chrome.runtime.onInstalled.addListener((details) => {
+  void restrictStorage().catch(() => undefined);
   // First install: pick cards in a full tab, so the badge has something to compare.
   if (details.reason === 'install')
     void chrome.tabs.create({ url: chrome.runtime.getURL(ONBOARDING_PAGE) }).catch(() => undefined);

@@ -19,26 +19,43 @@ const merchantId = z.enum(MERCHANT_IDS);
 
 /** From the content script. It carries the adapter's reading only; never card or wallet data. */
 export const contentMessageSchema = z.discriminatedUnion('type', [
-  z.strictObject({ type: z.literal('cart:reading'), reading: probeSchema.shape.reading }),
-  z.strictObject({ type: z.literal('order:page') }),
+  z.strictObject({
+    type: z.literal('cart:reading'),
+    reading: probeSchema.shape.reading,
+    /** The content script already shows a frame (keep its nonce) or needs a new one. */
+    framed: z.boolean(),
+  }),
+  z.strictObject({ type: z.literal('order:page'), framed: z.boolean() }),
 ]);
 export type ContentMessage = z.infer<typeof contentMessageSchema>;
-export type ContentReply = { show: boolean };
+/** `nonce`: only when a new badge frame should be created; it goes into the frame's URL fragment
+ * (inside the closed shadow root) and must accompany every badge:* request from that frame. */
+export type ContentReply = { show: boolean; nonce?: string };
+export const NONCE_PATTERN = /^[A-Za-z0-9_-]{32}$/;
 
-/** From the badge iframe. The worker identifies the tab from the sender, never from the message. */
+/** From the badge iframe. The worker identifies the tab from the sender, never from the message,
+ * and accepts only the frame its content script created (the nonce for that tab). */
+const nonce = z.string().regex(NONCE_PATTERN);
 export const badgeRequestSchema = z.discriminatedUnion('type', [
-  z.strictObject({ type: z.literal('badge:get') }),
-  z.strictObject({ type: z.literal('badge:set-amount'), amountCents: money.positive().nullable() }),
-  z.strictObject({ type: z.literal('badge:set-payment'), paymentPath: z.enum(PAYMENT_PATHS) }),
-  z.strictObject({ type: z.literal('badge:dismiss') }),
-  z.strictObject({ type: z.literal('badge:disable-site') }),
+  z.strictObject({ type: z.literal('badge:get'), nonce }),
+  z.strictObject({ type: z.literal('badge:set-amount'), nonce, amountCents: money.positive().nullable() }),
+  z.strictObject({ type: z.literal('badge:set-payment'), nonce, paymentPath: z.enum(PAYMENT_PATHS) }),
+  z.strictObject({ type: z.literal('badge:dismiss'), nonce }),
+  z.strictObject({ type: z.literal('badge:disable-site'), nonce }),
   z.strictObject({
     type: z.literal('badge:answer-order'),
+    nonce,
     answer: z.enum(['yes', 'other', 'unsure']),
     cardId: z.string().min(1).max(100).nullable(),
   }),
-  z.strictObject({ type: z.literal('badge:open'), target: z.enum(['popup', 'onboarding']) }),
+  z.strictObject({ type: z.literal('badge:open'), nonce, target: z.enum(['popup', 'onboarding']) }),
 ]);
+/** A badge request as the iframe writes it, before its nonce is attached. */
+export type BadgeAction = BadgeRequest extends infer R
+  ? R extends { nonce: string }
+    ? Omit<R, 'nonce'>
+    : never
+  : never;
 export type BadgeRequest = z.infer<typeof badgeRequestSchema>;
 
 export const settingsSchema = z.strictObject({
@@ -72,8 +89,11 @@ export const tabEntrySchema = z.strictObject({
   paymentPath: z.enum(PAYMENT_PATHS),
   /** The last recommendation shown in this tab, for order detection. */
   recommendation: recommendationSchema.nullable(),
-  /** An order page followed a recommendation: ask once which card paid. */
+  /** An order page followed a recommendation: ask once which card paid (until ORDER_WINDOW_MS
+   * after the order page, or the next cart reading). */
   orderPrompt: recommendationSchema.nullable(),
+  /** The current badge frame's nonce; a new frame replaces it. */
+  frameNonce: z.string().regex(NONCE_PATTERN).nullable().default(null),
 });
 export type TabEntry = z.infer<typeof tabEntrySchema>;
 export const tabStoreSchema = z.record(z.string().regex(/^[0-9]{1,10}$/), tabEntrySchema);

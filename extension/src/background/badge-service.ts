@@ -44,7 +44,15 @@ const newEntry = (merchantId: MerchantId): TabEntry => ({
   paymentPath: 'card',
   recommendation: null,
   orderPrompt: null,
+  frameNonce: null,
 });
+/** 32 URL-safe characters (192 random bits). */
+function newNonce() {
+  const bytes = crypto.getRandomValues(new Uint8Array(24));
+  return btoa(String.fromCharCode(...bytes))
+    .replaceAll('+', '-')
+    .replaceAll('/', '_');
+}
 const cardName = (catalog: Catalog, id: string | null) =>
   id ? (catalog.cards.find((card) => card.id === id)?.shortName ?? null) : null;
 
@@ -95,6 +103,24 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
   }
   const visible = (entry: TabEntry, current: Settings) =>
     !entry.dismissed && !current.disabledMerchants.includes(entry.merchantId);
+  /** A pending order question, until ORDER_WINDOW_MS after the order page. */
+  const livePrompt = (entry: TabEntry | undefined) => {
+    const prompt = entry?.orderPrompt;
+    return prompt && clock() - prompt.at >= 0 && clock() - prompt.at < ORDER_WINDOW_MS ? prompt : null;
+  };
+  /** The reply to the content script: show or not, and a fresh frame nonce when it needs a frame. */
+  async function reply(
+    tabId: number,
+    entry: TabEntry,
+    show: boolean,
+    framed: boolean,
+  ): Promise<ContentReply> {
+    if (!show) return { show: false };
+    if (framed && entry.frameNonce) return { show: true };
+    const nonce = newNonce();
+    await saveTab(tabId, { ...entry, frameNonce: nonce });
+    return { show: true, nonce };
+  }
 
   /** A reading or order page from the content script in this tab's top frame at `url`. */
   function content(input: unknown, tabId: number, url: string): Promise<ContentReply> {
@@ -103,29 +129,35 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
       if (!message.success) return { show: false };
       const current = await settings();
       const entry = (await tabs())[String(tabId)];
+      const framed = message.data.framed;
       if (message.data.type === 'order:page') {
         const merchantId = merchantForOrderConfirmation(url);
-        if (!merchantId) return { show: false };
-        const recent = entry?.recommendation;
+        if (!merchantId || !entry || entry.merchantId !== merchantId) return { show: false };
+        const recent = entry.recommendation;
         if (
-          entry &&
           recent &&
           recent.purchase.merchantId === merchantId &&
           clock() - recent.at >= 0 &&
           clock() - recent.at < ORDER_WINDOW_MS
         ) {
           // One question per recommendation: it moves from "shown" to "ask".
-          await saveTab(tabId, { ...entry, recommendation: null, orderPrompt: { ...recent, at: clock() } });
+          const asked = { ...entry, recommendation: null, orderPrompt: { ...recent, at: clock() } };
+          await saveTab(tabId, asked);
           notify(tabId);
-          return { show: !current.disabledMerchants.includes(merchantId) };
+          return reply(tabId, asked, visible(asked, current), framed);
         }
-        return { show: !!entry?.orderPrompt && !current.disabledMerchants.includes(merchantId) };
+        // A reload of the order page shows the same pending question, never a second one.
+        if (livePrompt(entry)) return reply(tabId, entry, visible(entry, current), framed);
+        if (entry.orderPrompt) await saveTab(tabId, { ...entry, orderPrompt: null });
+        return { show: false };
       }
       const merchantId = merchantForCheckout(url);
       const reading = message.data.reading;
       if (!merchantId || (reading.status === 'found' && reading.merchantId !== merchantId))
         return { show: false };
-      const base = entry && entry.merchantId === merchantId ? entry : newEntry(merchantId);
+      // A new cart ends any order question from an earlier purchase in this tab.
+      const base =
+        entry && entry.merchantId === merchantId ? { ...entry, orderPrompt: null } : newEntry(merchantId);
       let next: TabEntry;
       if (reading.status === 'found') {
         const same =
@@ -147,7 +179,7 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
       } else next = { ...base, reading: null, unreadable: true };
       await saveTab(tabId, next);
       notify(tabId);
-      return { show: reading.status === 'found' && visible(next, current) };
+      return reply(tabId, next, reading.status === 'found' && visible(next, current), framed);
     });
   }
 
@@ -155,10 +187,15 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
     const entry = (await tabs())[String(tabId)];
     if (!entry || !visible(entry, await settings())) return { kind: 'hidden' };
     const snapshot = await vault.snapshot();
-    if (snapshot.status === 'locked') return { kind: 'locked', order: !!entry.orderPrompt };
+    if (snapshot.status === 'locked') return { kind: 'locked', order: !!livePrompt(entry) };
     if (snapshot.status === 'damaged' || !snapshot.state) return { kind: 'damaged' };
     const state = snapshot.state,
       catalog = currentCatalog(state);
+    if (entry.orderPrompt && !livePrompt(entry)) {
+      // Expired: the question is dropped, never asked later.
+      await saveTab(tabId, { ...entry, orderPrompt: null });
+      return { kind: 'hidden' };
+    }
     if (entry.orderPrompt) {
       const cards = state.wallet.cards.map((owned) => ({
         id: owned.cardId,
@@ -209,7 +246,7 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
     choice: 'yes' | 'other' | 'unsure',
     cardId: string | null,
   ): Promise<BadgeReply> {
-    const prompt = entry.orderPrompt;
+    const prompt = livePrompt(entry);
     if (!prompt) return { ok: false, error: 'There is no order to record.' };
     const snapshot = await vault.snapshot();
     if (!snapshot.state)
@@ -248,13 +285,12 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
       const request = badgeRequestSchema.safeParse(input);
       if (!request.success) return { ok: false, error: 'This request could not be read.' };
       const value = request.data;
-      if (value.type === 'badge:open') {
-        await open(value.target);
-        return { ok: true, view: await view(tabId) };
-      }
       const entry = (await tabs())[String(tabId)];
-      if (!entry) return { ok: true, view: { kind: 'hidden' } };
-      if (value.type === 'badge:set-amount')
+      // Only the frame this tab's content script created (its nonce) may act or see card data.
+      if (!entry || !entry.frameNonce || entry.frameNonce !== value.nonce)
+        return { ok: false, error: 'This badge is out of date. Reload the page.' };
+      if (value.type === 'badge:open') await open(value.target);
+      else if (value.type === 'badge:set-amount')
         await saveTab(tabId, { ...entry, amountOverrideCents: value.amountCents });
       else if (value.type === 'badge:set-payment')
         await saveTab(tabId, { ...entry, paymentPath: value.paymentPath });

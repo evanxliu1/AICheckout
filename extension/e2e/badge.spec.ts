@@ -112,7 +112,7 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     const cart = await context.newPage();
     await cart.goto('https://www.bestbuy.com/cart');
     let badge = await badgeFrame(cart);
-    const pill = badge.getByRole('button', { name: /use Blue Cash Everyday, \$0\.81 back on this cart/ });
+    const pill = badge.getByRole('button', { name: /Use Blue Cash Everyday · \$0\.81 back on this cart/ });
     await expect(pill).toBeVisible();
     await expect(pill).toContainText('Use Blue Cash Everyday · $0.81 back');
     await cart.screenshot({ path: testInfo.outputPath('bestbuy-collapsed.png') });
@@ -137,6 +137,36 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     });
     expect(exposure).toMatchObject({ host: true, shadowRoot: false, iframeInDom: 0, frameReadable: false });
     expect(exposure.text).not.toMatch(/Blue Cash|Double Cash/);
+    // A page-made copy of the badge page (it is web-accessible on these hosts) gets nothing:
+    // it lacks the nonce the content script gave its own frame.
+    await cart.evaluate((src) => {
+      for (const hash of ['', '#' + 'a'.repeat(32)]) {
+        const copy = document.createElement('iframe');
+        copy.src = src + hash;
+        copy.className = 'page-copy';
+        document.body.append(copy);
+      }
+    }, `chrome-extension://${id}/src/badge/index.html`);
+    await expect
+      .poll(() => cart.frames().filter((f) => f.url().includes('/src/badge/index.html')).length)
+      .toBe(3);
+    await cart.waitForTimeout(1000);
+    for (const copy of cart
+      .frames()
+      .filter((f) => f.url().includes('/src/badge/index.html') && f !== badge)) {
+      expect(await copy.evaluate(() => document.body.innerText.trim())).toBe('');
+      expect(await copy.getByRole('button').count()).toBe(0);
+    }
+    await cart.evaluate(() => document.querySelectorAll('iframe.page-copy').forEach((f) => f.remove()));
+    // Clickjacking guard: while the page makes the badge (nearly) invisible, pointer clicks on it are
+    // ignored (IntersectionObserver v2); once it is fully visible again they work.
+    await cart.evaluate(() => document.documentElement.style.setProperty('opacity', '0.05'));
+    await cart.waitForTimeout(400);
+    await pill.click({ force: true });
+    await cart.waitForTimeout(300);
+    await expect(badge.getByRole('heading', { name: 'Best card for this cart' })).toHaveCount(0);
+    await cart.evaluate(() => document.documentElement.style.removeProperty('opacity'));
+    await cart.waitForTimeout(400);
 
     await pill.click();
     await expect(badge.getByRole('heading', { name: 'Best card for this cart' })).toBeFocused();
@@ -162,7 +192,7 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     await expect(badge.getByRole('heading', { name: 'Best card for this cart' })).toBeVisible();
     await badge.getByRole('button', { name: 'Collapse' }).click();
     // Buy now, pay later excludes Amex online retail, so Double Cash leads.
-    await expect(badge.getByRole('button', { name: /use Double Cash, \$1\.08 back/ })).toBeVisible();
+    await expect(badge.getByRole('button', { name: /Use Double Cash · \$1\.08 back/ })).toBeVisible();
     await badge.getByRole('button', { name: /Show details/ }).click();
     await badge.getByLabel('Payment method').selectOption('card');
     await badge.getByLabel('Amount (USD)').fill('100');

@@ -22,6 +22,8 @@ export function routeMessage(
   const type = (request as { type?: unknown } | null)?.type;
   if (typeof type !== 'string') return { kind: 'ignore' };
   if (/^(checkout|settings):/.test(type)) {
+    // Savings are recorded only by the worker itself, from a one-tap answer in the badge.
+    if (type === 'checkout:record-savings') return { kind: 'deny' };
     // Only the extension's own popup and onboarding pages; never a page or content script.
     return sender.id === runtimeId && pageUrls.some((page) => exact(sender.url, page))
       ? { kind: 'page' }

@@ -25,14 +25,6 @@ export default defineConfig(({ mode }) => {
   const configured = {
     ...structuredClone(manifest),
     host_permissions: BADGE_HOSTS.map((host) => `https://${host}/*`),
-    // Same entry crxjs generated for its `?script` import, so the packaged manifest is unchanged.
-    web_accessible_resources: [
-      {
-        matches: ['http://*/*', 'https://*/*'],
-        resources: ['src/checkout/content.js'],
-        use_dynamic_url: false,
-      },
-    ],
   };
   if (endpoint) {
     const url = new URL(endpoint);
@@ -95,8 +87,11 @@ export default defineConfig(({ mode }) => {
       generated.content_scripts = [
         { matches: BADGE_MATCHES, js: ['src/badge/content.js'], run_at: 'document_idle', all_frames: false },
       ];
+      // The manual reader (src/checkout/content.js) needs no web-accessible entry: it is injected
+      // with chrome.scripting.executeScript({ files }), which pages cannot request.
+      // The badge page stays at a static URL (use_dynamic_url: false) because the worker identifies
+      // its sender by that URL; a per-frame nonce (URL fragment) stops page-made copies instead.
       generated.web_accessible_resources = [
-        ...(generated.web_accessible_resources ?? []),
         {
           matches: BADGE_HOSTS.map((host) => `https://${host}/*`),
           resources: ['src/badge/index.html'],

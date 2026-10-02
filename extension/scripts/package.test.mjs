@@ -29,11 +29,6 @@ function fixture(t) {
   manifest.background.service_worker = 'service-worker-loader.js';
   manifest.host_permissions = [...BADGE_HOST_PERMISSIONS];
   manifest.web_accessible_resources = [
-    {
-      matches: ['http://*/*', 'https://*/*'],
-      resources: ['src/checkout/content.js'],
-      use_dynamic_url: false,
-    },
     { matches: [...BADGE_HOST_PERMISSIONS], resources: ['src/badge/index.html'], use_dynamic_url: false },
   ];
   manifest.content_scripts = [
@@ -127,7 +122,7 @@ test('unexpected permissions, entry paths and manifest capabilities cannot repla
       m.content_scripts[0].all_frames = true;
     },
     (m) => {
-      m.web_accessible_resources[1].matches = ['<all_urls>'];
+      m.web_accessible_resources[0].matches = ['<all_urls>'];
     },
     (m) => {
       m.background.service_worker = '../outside.js';
@@ -199,4 +194,28 @@ test('missing references, private-key tripwires, dev clients and wrongly sized i
   f.put('assets/popup-test.js', asset);
   f.put('public/icons/icon16.png', readFileSync(join(f.dist, 'public/icons/icon128.png')));
   assert.throws(() => inspectBuild(f.dist, '2.0.0'), /Invalid 16px PNG/);
+});
+
+test('the badge reach is exactly these hosts and pages (widening it must change this test)', () => {
+  assert.deepEqual(BADGE_HOST_PERMISSIONS, [
+    'https://bestbuy.com/*',
+    'https://secure.newegg.com/*',
+    'https://www.amazon.com/*',
+    'https://www.bestbuy.com/*',
+  ]);
+  assert.deepEqual(BADGE_MATCHES, [
+    'https://www.amazon.com/gp/cart/view.html*',
+    'https://www.amazon.com/cart*',
+    'https://www.amazon.com/gp/buy/thankyou/*',
+    'https://www.amazon.com/checkout/*',
+    'https://www.bestbuy.com/cart*',
+    'https://bestbuy.com/cart*',
+    'https://www.bestbuy.com/checkout*',
+    'https://bestbuy.com/checkout*',
+    'https://secure.newegg.com/shop/cart*',
+    'https://secure.newegg.com/shop/checkout*',
+    'https://secure.newegg.com/shop/thankyou*',
+    'https://secure.newegg.com/shop/thank-you*',
+    'https://secure.newegg.com/shop/orderconfirmation*',
+  ]);
 });

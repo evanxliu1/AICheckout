@@ -26,6 +26,9 @@ describe('worker routing by sender', () => {
     for (const sender of [badge, content, { ...popup, id: 'other' }])
       expect(routeMessage({ type: 'checkout:get-state' }, sender, ids)).toEqual({ kind: 'deny' });
   });
+  it('never lets a page record savings (worker-internal only)', () => {
+    expect(routeMessage({ type: 'checkout:record-savings' }, popup, ids)).toEqual({ kind: 'deny' });
+  });
   it('lets the badge iframe use badge:* for its own tab only, identified by Chrome', () => {
     expect(routeMessage({ type: 'badge:get', tabId: 99 }, badge, ids)).toEqual({ kind: 'badge', tabId: 7 });
     expect(routeMessage({ type: 'badge:get' }, { ...badge, frameId: 0 }, ids)).toEqual({ kind: 'deny' });

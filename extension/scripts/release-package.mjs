@@ -155,11 +155,6 @@ export function inspectBuild(directory, expectedVersion) {
   );
   invariant(
     same(manifest.web_accessible_resources, [
-      {
-        matches: ['http://*/*', 'https://*/*'],
-        resources: ['src/checkout/content.js'],
-        use_dynamic_url: false,
-      },
       { matches: BADGE_HOST_PERMISSIONS, resources: ['src/badge/index.html'], use_dynamic_url: false },
     ]),
     'Unexpected web-accessible resources.',

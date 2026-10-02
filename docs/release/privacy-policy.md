@@ -12,7 +12,7 @@ AI Checkout compares estimated rewards on supported credit-card products that yo
 
 ## Information handled on your device
 
-The extension saves the following in its local Chrome profile storage, which only the extension itself can read (web pages and the extension's own content scripts cannot). By default it is stored unencrypted; if you turn on **Protect with a passphrase** in Settings, it is encrypted with your passphrase (see Storage protection).
+The extension saves the following in its local Chrome profile storage, which the extension restricts to its own pages and service worker each time it starts, so web pages and its own content scripts cannot read it (confirmed by the browser tests on Chromium 153; the extension supports Chrome 120 and later). By default it is stored unencrypted; if you turn on **Protect with a passphrase** in Settings, it is encrypted with your passphrase (see Storage protection).
 
 - The card product identifiers you select and your default card (used to break ties and as the baseline for savings).
 - Your badge settings: the sites where the badge is turned off.
@@ -25,7 +25,7 @@ The extension saves the following in its local Chrome profile storage, which onl
 
 **Automatic cart badge.** On `www.amazon.com`, `bestbuy.com`/`www.bestbuy.com` and `secure.newegg.com` only, a script packaged with the extension runs on the cart, checkout and order-confirmation pages (declared address patterns). On a cart page it reads the visible order-summary amount through a bundled site adapter (on Amazon US, only the cart page's "Subtotal (N items)" label and amount) when the page loads and when the summary changes, and passes only the merchant, amount, amount type and reader version to the extension. The badge's card names and amounts are shown in an isolated frame that the merchant page cannot read. While a tab is open the extension keeps, in Chrome's session memory, that tab's latest cart amount, your typed amount and payment choice, whether you dismissed the badge, and the card it last recommended; this is cleared when the tab closes or Chrome restarts.
 
-**Order recognition.** If an order-confirmation page of the same site opens in that tab within three hours of a recommendation, the extension recognizes it from the page address alone (the page is never read) and the badge asks once which card you paid with. Your answer is saved to the savings history above; if you dismiss the question nothing is saved.
+**Order recognition.** If an order-confirmation page of the same site opens in that tab within three hours of a recommendation, the extension recognizes it from the page address alone (the page is never read; the page must have loaded at that address, not reached it by an in-page change) and the badge asks once which card you paid with. Reloading the order page shows the same question; it is never asked twice. An unanswered question expires three hours after the order page or as soon as another cart is read in that tab. Your answer is saved to the savings history above; if you dismiss the question nothing is saved.
 
 **Manual reads.** After you request a cart read from the toolbar popup, the extension examines bounded visible summary labels and amounts. It accesses the current tab URL in memory to check the merchant and whether the page changed. It does not save that raw URL, query string or page HTML. The stored hash is a freshness identifier; it is not a promise of anonymization. A captured cart may be rechecked when you compare or reopen a saved comparison.
 

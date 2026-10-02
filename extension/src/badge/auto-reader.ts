@@ -3,24 +3,31 @@
 // adapter (never anything else), sends only the reading, and learns only whether to show the badge.
 import type { PageRead } from '../checkout/page-reader';
 
+/** At most one summary read per interval, however often the page changes (a throttle). */
 export const DEBOUNCE_MS = 500;
-/** Readings per page load; a page that keeps changing stops being observed after this many. */
-export const MAX_READS = 120;
+/** Changed readings sent per page load. Unchanged reads are free, so a page that mutates
+ * constantly keeps being observed; one whose amount keeps changing stops after this many. */
+export const MAX_SENDS = 120;
 
 export interface BadgeFrameControl {
-  show(): void;
+  /** Creates the frame with the worker's nonce (or keeps an existing one). */
+  show(nonce?: string): void;
   hide(): void;
+  /** The frame exists and is still in the page. */
+  shown(): boolean;
   /** The shopper has the panel open: keep it while the cart is briefly unreadable. */
   expanded(): boolean;
 }
+export type ReaderMessage =
+  { type: 'cart:reading'; reading: PageRead; framed: boolean } | { type: 'order:page'; framed: boolean };
 export interface ReaderEnvironment {
   url(): string;
+  /** The document's own URL when it loaded (in-page navigation changes url() but not this). */
+  initialUrl(): string;
   read(): PageRead;
   isCart(url: string): boolean;
   isOrderConfirmation(url: string): boolean;
-  send(
-    message: { type: 'cart:reading'; reading: PageRead } | { type: 'order:page' },
-  ): Promise<{ show?: unknown } | undefined>;
+  send(message: ReaderMessage): Promise<{ show?: unknown; nonce?: unknown } | undefined>;
   /** Calls back on summary-relevant DOM changes; returns a disconnect function. */
   observe(onChange: () => void): () => void;
   frame: BadgeFrameControl;
@@ -35,24 +42,34 @@ const key = (reading: PageRead) =>
   reading.status === 'found'
     ? `found:${reading.merchantId}:${reading.amountCents}:${reading.kind}:${reading.extractorVersion}`
     : `unavailable:${reading.reason}`;
+/** Show with the worker's nonce for a new frame; an existing frame keeps its own. */
+function apply(frame: BadgeFrameControl, reply: { show?: unknown; nonce?: unknown } | undefined) {
+  if (reply?.show !== true) return false;
+  if (typeof reply.nonce === 'string') frame.show(reply.nonce);
+  return true;
+}
 
 export function startAutoReader(env: ReaderEnvironment) {
   const startUrl = env.url();
   let stopped = false;
   if (env.isOrderConfirmation(startUrl)) {
-    // URL-only order detection: the page is never read. The worker decides whether to ask.
+    // URL-only order detection: the page is never read. Only a document that loaded at the order
+    // URL counts, not an in-page navigation to it; the worker decides whether to ask.
+    if (env.initialUrl() !== startUrl) return { stop: () => void (stopped = true), sends: () => 0 };
     void env
-      .send({ type: 'order:page' })
+      .send({ type: 'order:page', framed: env.frame.shown() })
       .then((reply) => {
-        if (!stopped && reply?.show === true) env.frame.show();
+        if (!stopped) apply(env.frame, reply);
       })
       .catch(() => undefined);
-    return { stop: () => void (stopped = true), reads: () => 0 };
+    return { stop: () => void (stopped = true), sends: () => 0 };
   }
-  if (!env.isCart(startUrl)) return { stop: () => void (stopped = true), reads: () => 0 };
+  if (!env.isCart(startUrl)) return { stop: () => void (stopped = true), sends: () => 0 };
 
-  let reads = 0,
+  let sends = 0,
     lastKey = '',
+    /** The worker's last answer: the badge should be showing. */
+    wanted = false,
     timer: number | null = null,
     disconnect: (() => void) | null = null;
   function stop() {
@@ -71,20 +88,22 @@ export function startAutoReader(env: ReaderEnvironment) {
       stop();
       return;
     }
-    if (++reads > MAX_READS) {
+    const reading = env.read();
+    const next = key(reading);
+    // An unchanged reading is not re-sent, unless the page removed a frame that should show.
+    if (next === lastKey && !(wanted && !env.frame.shown())) return;
+    if (++sends > MAX_SENDS) {
       stop();
       return;
     }
-    const reading = env.read();
-    const next = key(reading);
-    if (next === lastKey) return;
     lastKey = next;
     void env
-      .send({ type: 'cart:reading', reading })
+      .send({ type: 'cart:reading', reading, framed: env.frame.shown() })
       .then((reply) => {
         if (stopped || lastKey !== next) return;
-        if (reply?.show === true) env.frame.show();
-        else if (!(reading.status === 'unavailable' && env.frame.expanded())) env.frame.hide();
+        wanted = apply(env.frame, reply);
+        if (wanted) return;
+        if (!(reading.status === 'unavailable' && env.frame.expanded())) env.frame.hide();
       })
       .catch(() => undefined);
   }
@@ -108,5 +127,5 @@ export function startAutoReader(env: ReaderEnvironment) {
   env.onPageHide(stop);
   check();
   connect();
-  return { stop, reads: () => reads };
+  return { stop, sends: () => sends };
 }

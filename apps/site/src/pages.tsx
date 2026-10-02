@@ -593,7 +593,8 @@ function Privacy(): Rendered {
             <li>
               <strong>Orders by address only.</strong> When an order-confirmation page opens in the same tab
               within three hours of a recommendation, the extension recognizes it from the page address alone
-              and asks once which card you paid with. The order page itself is never read.
+              and asks once which card you paid with; an unanswered question expires after three hours or at
+              the next cart. The order page itself is never read.
             </li>
             <li>
               Elsewhere, the toolbar popup reads a cart only when you click <strong>Read cart amount</strong>.

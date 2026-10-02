@@ -120,7 +120,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
       .toBe(true);
     const badgeFrame = mock.frames().find((f) => f.url().includes('/src/badge/index.html'))!;
     await expect(
-      badgeFrame.getByRole('button', { name: /use Blue Cash Everyday, \$3\.00 back/ }),
+      badgeFrame.getByRole('button', { name: /Use Blue Cash Everyday · \$3\.00 back/ }),
     ).toBeVisible();
     await mock.waitForTimeout(300);
     const badgeShot = await mock.screenshot();

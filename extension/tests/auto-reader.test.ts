@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { DEBOUNCE_MS, MAX_READS, startAutoReader } from '../src/badge/auto-reader';
+import { DEBOUNCE_MS, MAX_SENDS, startAutoReader } from '../src/badge/auto-reader';
 import type { ReaderEnvironment } from '../src/badge/auto-reader';
 import { createBadgeFrame, frameMessage } from '../src/badge/frame';
 import type { PageRead } from '../src/checkout/page-reader';
@@ -22,13 +22,25 @@ function environment(overrides: Partial<ReaderEnvironment> = {}) {
   const visibility: (() => void)[] = [];
   let pageHide: (() => void) | null = null;
   let hidden = false;
-  const frame = { show: vi.fn(), hide: vi.fn(), expanded: vi.fn(() => false) };
+  let mounted = false;
+  const frame = {
+    show: vi.fn((nonce?: string) => {
+      if (nonce) mounted = true;
+    }),
+    hide: vi.fn(() => {
+      mounted = false;
+    }),
+    shown: vi.fn(() => mounted),
+    expanded: vi.fn(() => false),
+  };
+  let initial: string | null = null;
   const env: ReaderEnvironment = {
     url: () => url,
+    initialUrl: () => initial ?? url,
     read: vi.fn(() => reading),
     isCart: (value) => value.endsWith('/cart'),
     isOrderConfirmation: (value) => value.includes('thank-you'),
-    send: vi.fn(async () => ({ show: true })),
+    send: vi.fn(async (message) => (message.framed ? { show: true } : { show: true, nonce: 'n'.repeat(32) })),
     observe: vi.fn((callback) => {
       onChange = callback;
       return () => {
@@ -53,6 +65,8 @@ function environment(overrides: Partial<ReaderEnvironment> = {}) {
     frame,
     setReading: (value: PageRead) => (reading = value),
     setUrl: (value: string) => (url = value),
+    setInitialUrl: (value: string) => (initial = value),
+    removeFrame: () => (mounted = false),
     mutate: () => onChange?.(),
     observing: () => onChange !== null,
     flush: async () => {
@@ -78,12 +92,13 @@ describe('automatic cart reader', () => {
     startAutoReader(t.env);
     await Promise.resolve();
     await Promise.resolve();
-    expect(t.env.send).toHaveBeenCalledWith({ type: 'cart:reading', reading: found(2723) });
-    expect(t.frame.show).toHaveBeenCalledOnce();
+    expect(t.env.send).toHaveBeenCalledWith({ type: 'cart:reading', reading: found(2723), framed: false });
+    // A new frame is created with the worker's nonce.
+    expect(t.frame.show).toHaveBeenCalledExactlyOnceWith('n'.repeat(32));
   });
-  it('debounces DOM changes, re-sends only when the reading changes, and stops after a bound', async () => {
+  it('throttles DOM changes and re-sends only changed readings', async () => {
     const t = environment();
-    const reader = startAutoReader(t.env);
+    startAutoReader(t.env);
     await t.flush();
     for (let i = 0; i < 5; i++) t.mutate();
     expect(t.pending()).toBe(1);
@@ -93,13 +108,60 @@ describe('automatic cart reader', () => {
     t.setReading(found(5446));
     t.mutate();
     await t.flush();
-    expect(t.env.send).toHaveBeenLastCalledWith({ type: 'cart:reading', reading: found(5446) });
-    for (let i = 0; i < MAX_READS + 5; i++) {
+    expect(t.env.send).toHaveBeenLastCalledWith({ type: 'cart:reading', reading: found(5446), framed: true });
+  });
+  it('keeps observing a page that mutates for minutes, and still follows a quantity change', async () => {
+    vi.useFakeTimers();
+    try {
+      const t = environment({
+        setTimeout: (callback, ms) => window.setTimeout(callback, ms),
+        clearTimeout: (id) => window.clearTimeout(id),
+      });
+      startAutoReader(t.env);
+      // A carousel or timer mutates the page every 100 ms for 90 seconds; the amount never changes.
+      for (let ms = 0; ms < 90_000; ms += 100) {
+        t.mutate();
+        await vi.advanceTimersByTimeAsync(100);
+      }
+      expect(t.env.send).toHaveBeenCalledTimes(1);
+      expect(t.observing()).toBe(true);
+      t.setReading(found(5446));
+      t.mutate();
+      await vi.advanceTimersByTimeAsync(DEBOUNCE_MS);
+      expect(t.env.send).toHaveBeenLastCalledWith({
+        type: 'cart:reading',
+        reading: found(5446),
+        framed: true,
+      });
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+  it('stops after a bound of changed readings', async () => {
+    const t = environment();
+    const reader = startAutoReader(t.env);
+    await t.flush();
+    for (let i = 0; i < MAX_SENDS + 5; i++) {
+      t.setReading(found(1000 + i));
       t.mutate();
       await t.flush();
     }
-    expect(reader.reads()).toBe(MAX_READS + 1);
+    expect(reader.sends()).toBe(MAX_SENDS + 1);
     expect(t.observing()).toBe(false);
+  });
+  it('asks for a new frame when the page removed the badge', async () => {
+    const t = environment();
+    startAutoReader(t.env);
+    await t.flush();
+    t.removeFrame();
+    t.mutate();
+    await t.flush();
+    expect(t.env.send).toHaveBeenLastCalledWith({
+      type: 'cart:reading',
+      reading: found(2723),
+      framed: false,
+    });
+    expect(t.frame.show).toHaveBeenCalledTimes(2);
   });
   it('hides the badge on an unreadable cart unless the shopper has the panel open', async () => {
     const t = environment();
@@ -124,10 +186,17 @@ describe('automatic cart reader', () => {
     order.setUrl('https://www.bestbuy.com/checkout/r/thank-you');
     startAutoReader(order.env);
     await order.flush();
-    expect(order.env.send).toHaveBeenCalledWith({ type: 'order:page' });
+    expect(order.env.send).toHaveBeenCalledWith({ type: 'order:page', framed: false });
     expect(order.env.read).not.toHaveBeenCalled();
     expect(order.env.observe).not.toHaveBeenCalled();
     expect(order.frame.show).toHaveBeenCalledOnce();
+    // An in-page navigation to an order URL (not the document's own URL) does not count.
+    const pushed = environment();
+    pushed.setInitialUrl('https://www.bestbuy.com/checkout/r/payment');
+    pushed.setUrl('https://www.bestbuy.com/checkout/r/thank-you');
+    startAutoReader(pushed.env);
+    await pushed.flush();
+    expect(pushed.env.send).not.toHaveBeenCalled();
   });
   it('stops observing while hidden or after page hide, and leaves a cart reached by in-page navigation', async () => {
     const t = environment();
@@ -173,6 +242,9 @@ describe('badge frame host', () => {
   it('puts the extension iframe inside a closed shadow root outside <body>, and ignores page messages', () => {
     const frame = createBadgeFrame(document, (path) => `chrome-extension://ext/${path}`);
     frame.show();
+    expect(document.querySelector('ai-checkout-badge')).toBeNull(); // no nonce, no frame
+    frame.show('n'.repeat(32));
+    expect(frame.shown()).toBe(true);
     const host = document.documentElement.lastElementChild as HTMLElement;
     expect(host.tagName.toLowerCase()).toBe('ai-checkout-badge');
     expect(host.shadowRoot).toBeNull();
@@ -186,7 +258,12 @@ describe('badge frame host', () => {
       }),
     );
     expect(frame.expanded()).toBe(false);
+    // A page that removes the host gets a new one on the next show.
+    host.remove();
+    expect(frame.shown()).toBe(false);
+    frame.show('m'.repeat(32));
+    expect(frame.shown()).toBe(true);
     frame.hide();
-    expect(document.documentElement.contains(host)).toBe(false);
+    expect(document.querySelector('ai-checkout-badge')).toBeNull();
   });
 });

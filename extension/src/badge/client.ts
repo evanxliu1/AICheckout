@@ -1,9 +1,14 @@
-import type { BadgeReply, BadgeRequest } from './contracts';
+import type { BadgeAction, BadgeReply } from './contracts';
 import { BADGE_MESSAGE_SOURCE } from './pages';
 
-export async function badgeRequest(request: BadgeRequest): Promise<BadgeReply> {
+/** Given by the content script that created this frame (URL fragment); copies made by a page
+ * have none, and the worker rejects them. */
+const frameNonce = location.hash.slice(1);
+
+export async function badgeRequest(action: BadgeAction): Promise<BadgeReply> {
   try {
-    const reply = (await chrome.runtime.sendMessage(request)) as BadgeReply | undefined;
+    const reply = (await chrome.runtime.sendMessage({ ...action, nonce: frameNonce })) as
+      BadgeReply | undefined;
     if (!reply || typeof reply !== 'object' || !('ok' in reply))
       return { ok: false, error: 'AI Checkout did not respond. Reload the page.' };
     return reply;

@@ -8,6 +8,9 @@ import { createBadgeFrame } from './frame';
 const frame = createBadgeFrame(document, (path) => chrome.runtime.getURL(path));
 startAutoReader({
   url: () => location.href,
+  initialUrl: () =>
+    (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined)?.name ??
+    location.href,
   read: () => readCheckoutPage(document, location.href),
   isCart: (url) => merchantForCheckout(url) !== null && merchantForOrderConfirmation(url) === null,
   isOrderConfirmation: (url) => merchantForOrderConfirmation(url) !== null,

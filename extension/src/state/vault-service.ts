@@ -129,7 +129,8 @@ export function createVaultService(
           return { ok: true, status: 'unprotected' };
         }
         if (value.type === 'checkout:vault-lock') {
-          await session.clear();
+          // Only the key: per-tab badge state in session storage is not wallet data.
+          await session.remove([VAULT_SESSION_KEY]);
           return { ok: true, status: await status() };
         }
         if (value.type === 'checkout:vault-create') {
