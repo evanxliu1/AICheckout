@@ -11,18 +11,8 @@ import type {
   Uncertainty,
 } from '../domain';
 import { merchantName } from '../checkout/merchants';
+import { amount, unavailableCopy } from './estimates';
 
-const unavailableCopy: Record<UnavailableComparison['reason'], string> = {
-  'catalog-expired':
-    'These card terms have expired. Check for updated terms or an extension update before comparing again.',
-  'catalog-not-yet-valid': 'These card terms are not yet valid. Check your device’s date.',
-  'unsupported-merchant':
-    'These card terms do not cover this merchant. Check for updated terms or an extension update.',
-  'no-owned-cards': 'Add a card you own before comparing rewards.',
-  'unknown-owned-card': 'A saved card is missing from this catalog. Review your cards before comparing.',
-  'purchase-not-confirmed': 'Confirm that the amount covers eligible purchases before comparing.',
-  'ineligible-purchase': 'This purchase is not eligible for these reward estimates.',
-};
 const statusCopy: Partial<Record<RuleStatus, string>> = {
   'not-at-merchant': 'Not at this merchant',
   'not-eligible': 'Not eligible for this purchase',
@@ -40,12 +30,6 @@ const periodCopy: Record<string, string> = {
   'year-unspecified': 'per year',
 };
 
-function amount(estimate: CardEstimate) {
-  return estimate.minRewardCents === estimate.maxRewardCents
-    ? money(estimate.minRewardCents)
-    : `${money(estimate.minRewardCents)}–${money(estimate.maxRewardCents)}`;
-}
-
 function uncertaintyCopy(code: Uncertainty, label: string): string {
   return {
     'annual-usage-unknown': `Your ${label} spend toward this year’s bonus limit is unknown.`,
@@ -59,7 +43,7 @@ function uncertaintyCopy(code: Uncertainty, label: string): string {
 
 /** One card's result: amount, the rule behind it in the issuer's words, its conditions, the rules
  * that don't apply here, and notes about uncertain inputs. */
-function EstimateRow({
+export function EstimateRow({
   catalog,
   estimate,
   amountCents,

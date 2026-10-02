@@ -1,9 +1,11 @@
 import { chromium, expect, test } from '@playwright/test';
+import { closeOnboarding } from './onboarding';
 import type { BrowserContext, Page } from '@playwright/test';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { openNativePopup } from './native-popup';
-import { createNativeVault, readVaultState } from './vault';
+import { readVaultState, startNativePopup } from './vault';
+import { BADGE_ORIGINS } from './hosts';
 import { launchLifecycleBrowser } from './lifecycle-browser';
 
 async function merchantFixture(context: BrowserContext) {
@@ -19,7 +21,7 @@ async function merchantFixture(context: BrowserContext) {
 }
 async function chooseCard(context: BrowserContext, merchant: Page, id: string) {
   const popup = await openNativePopup(context, merchant, id);
-  await createNativeVault(popup);
+  await startNativePopup(popup);
   await popup.evaluate("document.querySelector('input[type=checkbox]').click()");
   await popup.click('Save cards');
   await expect.poll(popup.text).toContain('Read cart amount');
@@ -48,6 +50,7 @@ test('popup closure preserves an unconfirmed capture; navigation invalidates it 
   });
   try {
     const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+    await closeOnboarding(context);
     const id = new URL(worker.url()).host,
       merchant = await merchantFixture(context);
     let popup = await chooseCard(context, merchant, id);
@@ -107,9 +110,10 @@ test('popup closure preserves an unconfirmed capture; navigation invalidates it 
           return false;
         }
       }, tabId);
-    expect(await canRead(cartTab)).toBe(false);
+    expect(await canRead(cartTab)).toBe(false); // activeTab access ended with the navigation.
     await merchant.goto('https://www.bestbuy.com/cart');
-    expect(await canRead(cartTab)).toBe(false); // Returning does not revive the old grant.
+    // Supported carts are readable through the badge's host permission, never other sites.
+    expect(await canRead(cartTab)).toBe(true);
     popup = await openNativePopup(context, merchant, id);
     await expect.poll(popup.text).toContain('Read cart amount');
     expect(await popup.text()).not.toContain('Your card estimate');
@@ -135,6 +139,7 @@ test('a real idle worker stop preserves saved comparison and revalidates the car
     context = browser.contexts()[0];
   try {
     const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+    await closeOnboarding(context);
     const id = new URL(worker.url()).host;
     let merchant = await merchantFixture(context);
     let popup = await chooseCard(context, merchant, id);
@@ -192,7 +197,7 @@ test('a real idle worker stop preserves saved comparison and revalidates the car
     expect(await popup.text()).not.toContain('Your card estimate');
     const permissions = await restarted.evaluate(() => chrome.permissions.getAll());
     expect(permissions.permissions?.sort()).toEqual(['activeTab', 'scripting', 'storage']);
-    expect(permissions.origins ?? []).toEqual([]);
+    expect(permissions.origins?.sort()).toEqual(BADGE_ORIGINS);
     await popup.close();
   } finally {
     try {

@@ -34,59 +34,85 @@ const pattern = z
  * interpreter (page-reader.ts) applies the same safety rules to every adapter: visible text
  * only, no form values or item names, bounded rows and text, ambiguity → unavailable.
  */
-export const siteAdapterSchema = z.strictObject({
-  schemaVersion: z.literal(1),
-  merchantId: z.enum(MERCHANT_IDS),
-  name: z.string().min(1).max(60),
-  /** Bumped whenever the reading contract changes; part of every captured cart snapshot. */
-  extractorVersion: z.string().regex(/^[a-z0-9]+-summary-v[0-9]+$/),
-  observed: z.strictObject({ on: z.iso.date(), note: z.string().min(1).max(500) }),
-  match: z.strictObject({
-    hosts: z
-      .array(z.string().regex(/^[a-z0-9.-]+$/))
+export const siteAdapterSchema = z
+  .strictObject({
+    schemaVersion: z.literal(1),
+    merchantId: z.enum(MERCHANT_IDS),
+    name: z.string().min(1).max(60),
+    /** Bumped whenever the reading contract changes; part of every captured cart snapshot. */
+    extractorVersion: z.string().regex(/^[a-z0-9]+-summary-v[0-9]+$/),
+    observed: z.strictObject({ on: z.iso.date(), note: z.string().min(1).max(500) }),
+    match: z.strictObject({
+      hosts: z
+        .array(z.string().regex(/^[a-z0-9.-]+$/))
+        .min(1)
+        .max(5),
+      /** Anchored path patterns; HTTPS, no credentials, and no port are required for every adapter. */
+      paths: z.array(pattern).min(1).max(5),
+    }),
+    /**
+     * Chrome match patterns for the automatic badge's content script: the cart pages and the order
+     * confirmation pages, on this adapter's hosts only (refined below). The build derives the
+     * manifest's content_scripts, host_permissions and web_accessible_resources from these.
+     */
+    matchPatterns: z
+      .array(z.string().regex(/^https:\/\/[a-z0-9.-]+\/[A-Za-z0-9._/*-]*$/))
       .min(1)
-      .max(5),
-    /** Anchored path patterns; HTTPS, no credentials, and no port are required for every adapter. */
-    paths: z.array(pattern).min(1).max(5),
-  }),
-  summary: z.strictObject({ selector: summarySelector, maxCount: z.number().int().min(1).max(5) }),
-  /** Shown instead of a summary when the cart is empty. */
-  emptyCart: z.strictObject({ selector, text: z.string().min(1).max(100) }).nullable(),
-  loading: z.strictObject({
-    /** A summary (or matched row) inside an element matching this is still loading. */
-    busyAncestor: selector,
-    /** Also treat busy descendants of a matched row as loading. */
-    checkMatchedRows: z.boolean(),
-    /** Any visible element matching one of these means the cart is updating. */
-    indicators: z.array(selector).max(5),
-  }),
-  /** Rows inside each summary; null when the summary element is itself the only row. */
-  rows: z.strictObject({ selector: selector.nullable(), max: z.number().int().min(1).max(50) }),
-  label: z.strictObject({
-    /** Tried in order; the first selector with a match supplies the label. */
-    selectors: z.array(selector).min(1).max(3),
-    /** More than one label element in a matched row is ambiguous. */
-    single: z.boolean(),
-  }),
-  /** Exactly one amount cell per matched row. */
-  amount: z.strictObject({ selector }),
-  labels: z
-    .array(
-      z.strictObject({
-        pattern,
-        caseInsensitive: z.boolean(),
-        kind: z.enum(AMOUNT_KINDS),
-      }),
-    )
-    .min(1)
-    .max(10),
-  /** Exact cell text that means "not yet known" for a kind (Newegg shows "TBD"). */
-  pending: z.array(z.strictObject({ kind: z.enum(AMOUNT_KINDS), text: z.string().min(1).max(20) })).max(3),
-  /** Kinds every summary must show (present or pending), else the summary is incomplete. */
-  requiredKinds: z.array(z.enum(AMOUNT_KINDS)).max(3),
-  /** A second row with an already-seen kind: always ambiguous, or allowed when amounts agree. */
-  duplicates: z.enum(['ambiguous', 'allow-equal']),
-  /** Pool rows from all summaries, or resolve each summary and require them to agree. */
-  combine: z.enum(['pool-rows', 'per-summary']),
-});
+      .max(6),
+    /**
+     * Order-confirmation paths, matched against the URL only (the page is never read), so the badge
+     * can ask once which card paid. `verified: false` until checked on a real order.
+     */
+    orderConfirmation: z.strictObject({
+      verified: z.boolean(),
+      note: z.string().min(1).max(300),
+      paths: z.array(pattern).min(1).max(3),
+    }),
+    summary: z.strictObject({ selector: summarySelector, maxCount: z.number().int().min(1).max(5) }),
+    /** Shown instead of a summary when the cart is empty. */
+    emptyCart: z.strictObject({ selector, text: z.string().min(1).max(100) }).nullable(),
+    loading: z.strictObject({
+      /** A summary (or matched row) inside an element matching this is still loading. */
+      busyAncestor: selector,
+      /** Also treat busy descendants of a matched row as loading. */
+      checkMatchedRows: z.boolean(),
+      /** Any visible element matching one of these means the cart is updating. */
+      indicators: z.array(selector).max(5),
+    }),
+    /** Rows inside each summary; null when the summary element is itself the only row. */
+    rows: z.strictObject({ selector: selector.nullable(), max: z.number().int().min(1).max(50) }),
+    label: z.strictObject({
+      /** Tried in order; the first selector with a match supplies the label. */
+      selectors: z.array(selector).min(1).max(3),
+      /** More than one label element in a matched row is ambiguous. */
+      single: z.boolean(),
+    }),
+    /** Exactly one amount cell per matched row. */
+    amount: z.strictObject({ selector }),
+    labels: z
+      .array(
+        z.strictObject({
+          pattern,
+          caseInsensitive: z.boolean(),
+          kind: z.enum(AMOUNT_KINDS),
+        }),
+      )
+      .min(1)
+      .max(10),
+    /** Exact cell text that means "not yet known" for a kind (Newegg shows "TBD"). */
+    pending: z.array(z.strictObject({ kind: z.enum(AMOUNT_KINDS), text: z.string().min(1).max(20) })).max(3),
+    /** Kinds every summary must show (present or pending), else the summary is incomplete. */
+    requiredKinds: z.array(z.enum(AMOUNT_KINDS)).max(3),
+    /** A second row with an already-seen kind: always ambiguous, or allowed when amounts agree. */
+    duplicates: z.enum(['ambiguous', 'allow-equal']),
+    /** Pool rows from all summaries, or resolve each summary and require them to agree. */
+    combine: z.enum(['pool-rows', 'per-summary']),
+  })
+  .refine(
+    (adapter) =>
+      adapter.matchPatterns.every((value) =>
+        adapter.match.hosts.includes(new URL(value.replace('*', 'x')).hostname),
+      ),
+    'Content-script match patterns must stay on the adapter hosts.',
+  );
 export type SiteAdapter = z.infer<typeof siteAdapterSchema>;

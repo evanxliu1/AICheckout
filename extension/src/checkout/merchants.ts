@@ -31,3 +31,23 @@ export function merchantForCheckout(rawUrl: string): MerchantId | null {
     return null;
   }
 }
+
+/** The merchant whose order-confirmation URL pattern matches (URL only; the page is never read). */
+export function merchantForOrderConfirmation(rawUrl: string): MerchantId | null {
+  try {
+    const url = new URL(rawUrl);
+    if (url.protocol !== 'https:' || url.username || url.password || url.port) return null;
+    if (url.pathname.length > 200) return null;
+    return (
+      MERCHANT_IDS.find((id) => {
+        const adapter = SITE_ADAPTERS[id];
+        return (
+          adapter.match.hosts.includes(url.hostname) &&
+          adapter.orderConfirmation.paths.some((path) => new RegExp(path).test(url.pathname))
+        );
+      }) ?? null
+    );
+  } catch {
+    return null;
+  }
+}

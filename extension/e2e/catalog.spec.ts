@@ -1,9 +1,11 @@
 import { chromium, expect, test } from '@playwright/test';
+import { closeOnboarding } from './onboarding';
 import { execFileSync } from 'node:child_process';
 import { createServer } from 'node:https';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { deleteVault, createVault, unlockVault, readVaultState } from './vault';
+import { deleteVault, startPopup, readVaultState } from './vault';
+import { BADGE_ORIGINS } from './hosts';
 import { PILOT_CATALOG } from '../../packages/rewards-core/src/catalog';
 import { redateCatalog } from '../../packages/rewards-core/src/catalog-helpers';
 import type { PublishedRelease } from '../../packages/rewards-core/src/schema';
@@ -84,10 +86,11 @@ test('published catalog: HTTPS refresh, changed rules, rollback rejection, offli
   try {
     context = await launch();
     const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+    await closeOnboarding(context);
     const popupUrl = `chrome-extension://${new URL(worker.url()).host}/src/popup/index.html`;
     const page = await context.newPage();
     await page.goto(popupUrl);
-    await createVault(page);
+    await startPopup(page);
     const errors: string[] = [];
     page.on('pageerror', (error) => errors.push(error.message));
     await page.getByRole('checkbox', { name: 'Capital One Quicksilver', exact: true }).check();
@@ -133,13 +136,13 @@ test('published catalog: HTTPS refresh, changed rules, rollback rejection, offli
     await context.setOffline(true);
     const reopened = await context.newPage();
     await reopened.goto(popupUrl);
-    await unlockVault(reopened);
     await expect(reopened.getByText('$2.00', { exact: true })).toBeVisible();
     const permissions = await reopened.evaluate(() => chrome.permissions.getAll());
-    expect(permissions.origins).toEqual(['https://127.0.0.1:9443/*']);
+    // The supported carts' hosts (automatic badge) and the one configured catalog origin.
+    expect(permissions.origins?.sort()).toEqual([...BADGE_ORIGINS, 'https://127.0.0.1:9443/*'].sort());
     expect(errors).toEqual([]);
     await deleteVault(reopened);
-    await expect(reopened.getByLabel('New local passphrase', { exact: true })).toBeVisible();
+    await startPopup(reopened);
     expect(await reopened.evaluate(() => chrome.storage.local.get(null))).toEqual({});
   } finally {
     await context?.close();

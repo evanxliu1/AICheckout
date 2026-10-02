@@ -7,23 +7,61 @@
     "on": "2026-09-25",
     "note": "Live unauthenticated Best Buy US cart: one Order Summary table of th/td rows. A semantic aria-label fallback keeps the same table contract; numbers elsewhere on the page are never used."
   },
-  "match": { "hosts": ["bestbuy.com", "www.bestbuy.com"], "paths": ["^/cart/?$", "^/checkout(?:/.*)?$"] },
+  "match": {
+    "hosts": ["bestbuy.com", "www.bestbuy.com"],
+    "paths": ["^/cart/?$", "^/checkout(?:/.*)?$"]
+  },
   "summary": {
     "selector": "table[data-testid=\"order-summary__price-summary-table\"], table[aria-label=\"Order Summary\"]",
     "maxCount": 3
   },
   "emptyCart": null,
-  "loading": { "busyAncestor": "[aria-busy=\"true\"]", "checkMatchedRows": false, "indicators": [] },
-  "rows": { "selector": "tr", "max": 30 },
-  "label": { "selectors": ["th[scope=\"row\"]", "th"], "single": false },
-  "amount": { "selector": "td" },
+  "loading": {
+    "busyAncestor": "[aria-busy=\"true\"]",
+    "checkMatchedRows": false,
+    "indicators": []
+  },
+  "rows": {
+    "selector": "tr",
+    "max": 30
+  },
+  "label": {
+    "selectors": ["th[scope=\"row\"]", "th"],
+    "single": false
+  },
+  "amount": {
+    "selector": "td"
+  },
   "labels": [
-    { "pattern": "^(?:order )?total\\s*:?$", "caseInsensitive": true, "kind": "total" },
-    { "pattern": "^estimated total\\s*:?$", "caseInsensitive": true, "kind": "estimated-total" },
-    { "pattern": "^(?:items? )?subtotal\\s*:?$", "caseInsensitive": true, "kind": "subtotal" }
+    {
+      "pattern": "^(?:order )?total\\s*:?$",
+      "caseInsensitive": true,
+      "kind": "total"
+    },
+    {
+      "pattern": "^estimated total\\s*:?$",
+      "caseInsensitive": true,
+      "kind": "estimated-total"
+    },
+    {
+      "pattern": "^(?:items? )?subtotal\\s*:?$",
+      "caseInsensitive": true,
+      "kind": "subtotal"
+    }
   ],
   "pending": [],
   "requiredKinds": [],
   "duplicates": "allow-equal",
-  "combine": "pool-rows"
+  "combine": "pool-rows",
+  "matchPatterns": [
+    "https://www.bestbuy.com/cart*",
+    "https://bestbuy.com/cart*",
+    "https://www.bestbuy.com/checkout*",
+    "https://bestbuy.com/checkout*"
+  ],
+  "orderConfirmation": {
+    "verified": false,
+    "note": "Unverified guess (Best Buy's order thank-you page under /checkout/r/); Evan checks it on a real order before release. Only the URL is matched; the page is never read.",
+    "paths": ["^/checkout/r/thank-?you(?:/.*)?$"]
+  }
 }

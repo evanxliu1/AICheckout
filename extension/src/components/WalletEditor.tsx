@@ -144,7 +144,11 @@ export default function WalletEditor({
           </Fieldset>
         )}
         {selected.length > 1 && (
-          <Field id="default-card" label="Preferred card when rewards tie">
+          <Field
+            id="default-card"
+            label="Default card"
+            helperText="The card you would use anyway. It breaks ties and is the baseline for your all-time extra cash back."
+          >
             {(control) => (
               <Select
                 {...control}

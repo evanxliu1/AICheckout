@@ -1,6 +1,12 @@
 import { compareRewards } from '../domain';
 import { CATALOG_TIMEOUT_MS } from '@ai-checkout/catalog-client';
-import { emptyState, requestSchema, storedAppStateSchema, validateWallet } from './contracts';
+import {
+  emptyState,
+  MAX_SAVINGS_ENTRIES,
+  requestSchema,
+  storedAppStateSchema,
+  validateWallet,
+} from './contracts';
 import { migrateState } from './migrate';
 import type { AppState, CheckoutResponse } from './contracts';
 import type { CartSnapshot } from '../checkout/contracts';
@@ -151,11 +157,30 @@ export function createStateService(
         await storage.set({ [STATE_KEY]: shown });
         return { ...result, state: shown, notice: result.state.pendingNotice };
       }
+      if (request.type === 'checkout:record-savings') {
+        // Written by the worker from a one-tap answer; it does not race the shopper's form inputs,
+        // so it needs no expected revision. Newest first, bounded.
+        const next: AppState = {
+          ...state,
+          revision: state.revision + 1,
+          savings: [request.entry, ...state.savings.filter((e) => e.id !== request.entry.id)].slice(
+            0,
+            MAX_SAVINGS_ENTRIES,
+          ),
+        };
+        await storage.set({ [STATE_KEY]: next });
+        return success(next);
+      }
       if (request.expectedRevision !== state.revision) {
         return {
           ok: false,
           error: 'Your saved inputs changed in another window. Reopen the extension before saving.',
         };
+      }
+      if (request.type === 'checkout:delete-savings') {
+        const next: AppState = { ...state, revision: state.revision + 1, savings: [] };
+        await storage.set({ [STATE_KEY]: next });
+        return await response(next, now);
       }
       if (request.type === 'checkout:refresh-catalog') {
         if (!fetchCatalog)
@@ -276,6 +301,15 @@ export function createStateService(
   }
   const service = (request: unknown): Promise<CheckoutResponse> => {
     const task = queue.then(() => handle(request));
+    queue = task.then(
+      () => undefined,
+      () => undefined,
+    );
+    return task;
+  };
+  /** The saved state (migrated if needed), read in the same queue as writes. */
+  service.read = (): Promise<AppState> => {
+    const task = queue.then(load);
     queue = task.then(
       () => undefined,
       () => undefined,
