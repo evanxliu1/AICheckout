@@ -31,4 +31,4 @@ A measurable corpus needed a fixed card set, and the product only runs at online
 - See [cards](../domain/cards.md) and [reward rules](../domain/reward-rules.md).
 
 ## Status
-Accepted 2026-09-28 by Evan Liu. Recorded retroactively on 2026-10-02 from the archived plan; the body summarizes it, the archive holds the original wording.
+Accepted 2026-09-28 by Evan Liu. Recorded retroactively on 2026-10-02 from the archived plan; the body summarizes it, the archive holds the original wording. The card list is being widened by [Expand the catalog to the top-10 U.S. issuers' consumer cards](2026-10-01-top-ten-issuer-card-expansion.md) (2026-10-01, in progress); the checkout-scope rule stands.

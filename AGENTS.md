@@ -41,9 +41,9 @@ Adapted from [Andrej Karpathy's guidelines](https://github.com/multica-ai/andrej
 These are standing user directives; the dated record is in [wiki/product/user-directives.md](wiki/product/user-directives.md).
 
 - **No model at checkout, no model write path.** The engine is deterministic; the LLM only drafts catalog changes that a human reviews, applies and publishes as separate steps.
-- **Hosted actions belong to Evan.** Never sign in to hosted services, push migrations to hosted Supabase, merge PRs, or publish a catalog release; give Evan exact commands instead. Evan publishes catalogs himself in the review app.
+- **Hosted actions belong to Evan.** Subagents never merge PRs, push `main` or push migrations to hosted Supabase; they stop at a ready branch and hand over exact commands. The coordinating session may merge PRs, push `main` and run `./scripts/db-push.sh` when Evan has authorized it (standing since 2026-09-29). Nobody but Evan signs in to hosted services or publishes a catalog release; he publishes catalogs himself in the review app.
 - **Never edit an applied migration.** Add a new one (`npm run supabase -- migration new <name>`); mirror catalog validators in Zod and SQL and keep the parity cases passing.
-- **Live models run locally through subscription CLIs only** (Codex, Claude Code). No paid API calls; curation is never enabled on Render.
+- **Live models run locally through subscription CLIs only**: Claude models through Claude Code CLI subagents, OpenAI models through Codex. No local models, no paid API calls; curation is never enabled on Render. Curation and extraction runs use `gpt-5.6-luna` at `xhigh` ([decision](wiki/decisions/2026-10-02-gpt-5-6-luna-for-curation.md)).
 - **Eval integrity.** Never re-capture issuer pages, edit corpus labels to fit results, or tune prompts on held-out data. New prompt versions are new files; never edit a released one.
 - **Copyrighted sources.** Issuer captures stay gitignored; commit only URLs, hashes, labels and quotes of 25 words or fewer.
 - **Reviews by subagents.** Verification and review steps go to independent subagents; record provenance honestly (`agent-verified`, not `human-verified`).

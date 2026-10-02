@@ -1,12 +1,12 @@
 ---
 type: Runbook
 title: Database migrations
-description: Create a Supabase migration, test it locally, keep the seed in sync, and hand the hosted push to Evan or the coordinator.
+description: Create a Supabase migration, test it locally, keep the seed in sync, and push it to hosted Supabase (Evan, or the coordinating session when authorized).
 status: stable
 tags: [ops, database, supabase, migrations]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-02T06:10:00Z
 sources:
   - resource: ../../package.json
     title: db:* scripts
@@ -24,7 +24,7 @@ sources:
 
 # Database migrations
 
-Schema changes are new files in [`supabase/migrations/`](../../supabase/migrations/), created with the Supabase CLI and never edited once applied. They are verified against the local Docker stack with the full DB suite, then pushed to hosted Supabase after merge by Evan or the coordinator with [`scripts/db-push.sh`](../../scripts/db-push.sh). Agents never push migrations or sign in to hosted services.
+Schema changes are new files in [`supabase/migrations/`](../../supabase/migrations/), created with the Supabase CLI and never edited once applied. They are verified against the local Docker stack with the full DB suite, then pushed to hosted Supabase after merge with [`scripts/db-push.sh`](../../scripts/db-push.sh) by Evan or by the coordinating session when Evan has authorized it (standing since 2026-09-29, see [user directives](../product/user-directives.md)). Subagents never push migrations, and no agent signs in to hosted services.
 
 ## Facts
 
@@ -34,7 +34,7 @@ Schema changes are new files in [`supabase/migrations/`](../../supabase/migratio
 | pgTAP tests | [`supabase/tests/`](../../supabase/tests/) (`catalog`, `catalog_v2`, `curation`, `extraction_application`) |
 | Seed | [`supabase/seed.sql`](../../supabase/seed.sql), generated from `packages/rewards-core/src/catalog-v2.ts`: one **unapproved** private draft, no users or secrets |
 | Hosted push | `./scripts/db-push.sh` runs `npx supabase db push --linked --skip-vault`; DB password from the macOS Keychain item `aicheckout-supabase-db` |
-| Hosted state | All 6 migrations that existed on 2026-09-28 were applied ([archive](../archive/phase2-goal.md)). Whether the two later ones are applied is not recorded in the repo; check with `--dry-run` |
+| Hosted state | All 8 applied. The 6 that existed on 2026-09-28 were applied that day ([archive](../archive/phase2-goal.md)); `20260930225732_catalog_v2` and `20261001010350_source_body_limit` were pushed by the coordinating session with `./scripts/db-push.sh` (reported by the coordinator; consistent with hosted `/v1/catalog` serving a `schemaVersion: 2` release on 2026-10-02) |
 
 ## Create a migration
 
@@ -55,9 +55,9 @@ Schema changes are new files in [`supabase/migrations/`](../../supabase/migratio
 
 This mirrors [`.github/workflows/database.yml`](../../.github/workflows/database.yml); full context in [Local setup](local-setup.md#database-suite-docker). Not run for this page on 2026-10-02 (needs Docker); only `npm run db:seed:check` was run (exit 0).
 
-## Push to hosted (Evan or coordinator only)
+## Push to hosted (Evan or the authorized coordinating session)
 
-The agent stops at a merged PR and hands over these commands.
+A subagent stops at a merged PR and hands over these commands.
 
 1. Once per machine, store the DB password in the Keychain: `security add-generic-password -a "$USER" -s aicheckout-supabase-db -w` (prompts; nothing lands in shell history).
 2. After the PR merges to `main`: `./scripts/db-push.sh --dry-run` lists pending migrations.
@@ -66,7 +66,7 @@ The agent stops at a merged PR and hands over these commands.
 
 ## Gotchas
 
-- The auto-mode classifier blocks agents from pushing migrations to the hosted database; that is intended. Give Evan the exact commands instead.
+- The auto-mode classifier may block an agent from pushing migrations to the hosted database; that is intended for subagents. Give Evan (or the coordinator) the exact commands instead.
 - `db:reset` is local only. Never point it, or any test script, at the hosted project.
 - The Supabase CLI on this project needs the DB password; the login-role fallback fails (2026-09-28), hence the Keychain wrapper.
 - The catalog validator exists in both SQL and Zod (`packages/rewards-core`); `db:test:catalog` runs the shared parity cases, so a validator change needs both sides.

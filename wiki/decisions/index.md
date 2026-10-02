@@ -3,9 +3,11 @@
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
 ## 2026-10-02
+* [Use gpt-5.6-luna at xhigh effort for curation](./2026-10-02-gpt-5-6-luna-for-curation.md) — Move curation from gpt-5.5 low to gpt-5.6-luna xhigh for frontier currency; accuracy ties, runs are much slower, one false-clean case.
 * [Adopt an LLM wiki plus AGENTS.md](./2026-10-02-llm-wiki-documentation.md) — wiki/ in Open Knowledge Format as the agent-facing documentation and memory system.
 
 ## 2026-10-01
+* [Expand the catalog to the top-10 U.S. issuers' consumer cards](./2026-10-01-top-ten-issuer-card-expansion.md) — Personal rewards, co-branded, student and secured cards of ten issuers (180 cards); no business cards.
 * [Treat activation `unstated` as `none`](./2026-10-01-activation-unstated-as-none.md) — Unstated activation no longer adds an `activation-unknown` uncertainty; only `enroll-once`/`recurring` rules ask the shopper to confirm.
 * [Show the best card automatically on supported carts; make the vault optional](./2026-10-01-automatic-cart-badge.md) — Zero-click badge on supported carts, local-first storage with an optional passphrase vault, URL-only order detection for savings.
 

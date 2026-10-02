@@ -6,10 +6,13 @@ status: stable
 tags: [system, extension, badge, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T04:00:00Z
+  at: 2026-10-02T06:10:00Z
+verified_commit: 7322dec
 sources:
   - resource: ../../extension/src/badge/content.ts
     title: Badge content script
+  - resource: ../../extension/src/badge/observe.ts
+    title: Cart and badge-host observer
   - resource: ../../extension/src/badge/auto-reader.ts
     title: Automatic reader
   - resource: ../../extension/src/badge/frame.ts
@@ -32,9 +35,9 @@ sources:
 
 # Cart badge
 
-On a supported cart page the extension shows, without a click, the best owned card and its estimated cash back in a small pill bottom-right; clicking expands a panel with every owned card ranked, the applied rule and conditions, a payment-method selector and an editable amount. Built on branch `phase3b-auto-badge` (commits `25658e0`, `79f0e50`). The content script never receives card or wallet data: it sends the adapter's reading to the worker and learns only `{show: boolean}`; card data reaches only the badge iframe, an extension page in a closed shadow root.
+On a supported cart page the extension shows, without a click, the best owned card and its estimated cash back in a small pill bottom-right; clicking expands a panel with every owned card ranked, the applied rule and conditions, a payment-method selector and an editable amount. Built on branch `phase3b-auto-badge` (PR #13) with follow-ups on `phase3b-followups` (PR #14); both merged to `main` on 2026-10-02 (`7322dec`). The content script never receives card or wallet data: it sends the adapter's reading to the worker and learns only `{show: boolean}`; card data reaches only the badge iframe, an extension page in a closed shadow root.
 
-Verified 2026-10-02 by reading the code and running the extension unit tests (`auto-reader.test.ts`, `badge-routing.test.ts`, `badge-service.test.ts` pass). `e2e/badge.spec.ts` was not run for this page.
+Verified 2026-10-02 against `7322dec` by reading the code and running the extension unit tests (21 files, 378 tests pass, including `auto-reader.test.ts`, `badge-routing.test.ts`, `badge-service.test.ts`). `e2e/badge.spec.ts` was not run for this page.
 
 ## Facts
 
@@ -44,7 +47,7 @@ Verified 2026-10-02 by reading the code and running the extension unit tests (`a
 | Iframe page | `src/badge/index.html`, web-accessible only on `https://<adapter host>/*` | same |
 | Debounce | 500 ms after DOM mutations | [`auto-reader.ts:DEBOUNCE_MS`](../../extension/src/badge/auto-reader.ts) |
 | Read budget | 120 changed readings sent per page load, then observation stops (unchanged readings do not count) | `auto-reader.ts:MAX_SENDS` |
-| Observed mutations | `childList`, `subtree`, `characterData`, attributes `aria-busy`, `class`, `hidden` | [`content.ts`](../../extension/src/badge/content.ts) |
+| Observed mutations | In `<body>`: `childList`, `subtree`, `characterData`, attributes `aria-busy`, `class`, `hidden`. On `<html>`: direct `childList` only, so removing the badge host is noticed at once | [`observe.ts:observeCart`](../../extension/src/badge/observe.ts) |
 | Per-tab session | `checkoutBadgeTabsV1` in `chrome.storage.session` | [`contracts.ts:BADGE_TABS_KEY`](../../extension/src/badge/contracts.ts) |
 | Order window | 3 h from the last recommendation, same tab, same merchant | `ORDER_WINDOW_MS` |
 | Host element | `<ai-checkout-badge>`, `position: fixed`, 16 px margin, `z-index: 2147483647`, all styles inline `!important`, appended to `<html>` (outside `<body>`) | [`frame.ts:createBadgeFrame`](../../extension/src/badge/frame.ts) |
@@ -54,7 +57,7 @@ Verified 2026-10-02 by reading the code and running the extension unit tests (`a
 
 ### Reading
 
-[`auto-reader.ts:startAutoReader`](../../extension/src/badge/auto-reader.ts) is DOM-free for testing; [`content.ts`](../../extension/src/badge/content.ts) supplies the page. On a cart URL it reads via `readCheckoutPage` (the same adapter interpreter as the popup, see [Extension](extension.md#site-adapters)), keys the reading, and sends `cart:reading` only when the key changes. It pauses while the tab is hidden, stops on `pagehide`, and hides the badge if a single-page navigation leaves the cart. An `unavailable` reading hides the pill unless the panel is expanded (the panel then says "Can't read this cart — enter the amount"). On an order-confirmation URL it sends `order:page` once and never reads the page.
+[`auto-reader.ts:startAutoReader`](../../extension/src/badge/auto-reader.ts) is DOM-free for testing; [`content.ts`](../../extension/src/badge/content.ts) supplies the page. On a cart URL it reads via `readCheckoutPage` (the same adapter interpreter as the popup, see [Extension](extension.md#site-adapters)), keys the reading, and sends `cart:reading` only when the key changes. It pauses while the tab is hidden and on `pagehide`; a `pageshow` from the back/forward cache (`persisted: true`) resumes it and re-sends the reading, because the navigation cleared it in the worker. It stops for good and hides the badge if a single-page navigation leaves the cart. An unchanged reading is not re-sent unless the worker wanted the badge shown and the page removed the frame; that re-send gets a new frame. An `unavailable` reading hides the pill unless the panel is expanded (the panel then says "Can't read this cart — enter the amount"). On an order-confirmation URL it sends `order:page` once and never reads the page.
 
 ### Message routing
 
@@ -94,7 +97,7 @@ Pill texts by view: `Use {card} · {$x} back`, `Unlock to see your best card` (o
 ## Gotchas
 
 - **Frame nonce.** For each new badge frame the worker issues a 32-char nonce (`NONCE_PATTERN`), passed in the frame URL fragment inside the closed shadow root and stored as `frameNonce` in the tab entry. Every `badge:*` request must carry the current nonce, so page-made copies of the web-accessible badge page get nothing. A removed host is recreated with a new nonce ([`contracts.ts`](../../extension/src/badge/contracts.ts), `badge-service.ts`).
-- **Click guard.** Pointer clicks in the frame count only while IntersectionObserver v2 reports it visible (anti-clickjacking).
+- **Click guard.** Pointer clicks in the frame count only while IntersectionObserver v2 reports it visible (anti-clickjacking). An ignored click shows "Click ignored: the badge was covered or hidden…" for about 4 s in a `role="status"` paragraph that is always in the DOM (visually hidden when empty), so screen readers announce it ([`BadgeApp.tsx`](../../extension/src/badge/BadgeApp.tsx)).
 - Locking the vault removes only the session key; badge tab state survives.
 
 - Order-confirmation paths are unverified guesses for all three adapters (`orderConfirmation.verified: false`). A wrong path only means no savings prompt. Open until checked on real orders.
@@ -108,8 +111,8 @@ Pill texts by view: `Use {card} · {$x} back`, `Unlock to see your best card` (o
 
 | Layer | Tests |
 | --- | --- |
-| Unit | `extension/tests/auto-reader.test.ts`, `badge-routing.test.ts`, `badge-service.test.ts` |
-| Browser | `extension/e2e/badge.spec.ts`: onboarding, each supported cart, live updates on quantity change, closed shadow + cross-origin iframe, dismiss, per-site off, order savings, axe on badge and panel; no-cards and locked prompts. Fixture pages are served at the real hosts via `context.route`. |
+| Unit | `extension/tests/auto-reader.test.ts` (includes back/forward-cache resume and `observeCart` host removal), `badge-routing.test.ts`, `badge-service.test.ts` |
+| Browser | `extension/e2e/badge.spec.ts`: onboarding, each supported cart, live updates on quantity change, closed shadow + cross-origin iframe, a removed host coming back without a body change, the covered-click status message, dismiss, per-site off, order savings, axe on badge and panel; no-cards and locked prompts. Fixture pages are served at the real hosts via `context.route`. |
 
 ## Related
 

@@ -6,7 +6,7 @@ status: stable
 tags: [ops, hosting, render, supabase]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-02T06:10:00Z
 sources:
   - resource: ../../render.yaml
     title: Render Blueprint
@@ -22,7 +22,7 @@ sources:
 
 # Hosting
 
-One Render web service, `ai-checkout-api`, runs a single Node process that serves the catalog API (`/v1/catalog`, `/v1/review/*`), the review app (`/review/`) and the public site (`/`). Data and reviewer auth live in a hosted Supabase project. Render auto-deploys `main`; migrations reach hosted Supabase only when Evan or the coordinator runs [`scripts/db-push.sh`](../../scripts/db-push.sh). Why this setup: [decision](../decisions/2026-09-28-render-and-hosted-supabase.md).
+One Render web service, `ai-checkout-api`, runs a single Node process that serves the catalog API (`/v1/catalog`, `/v1/review/*`), the review app (`/review/`) and the public site (`/`). Data and reviewer auth live in a hosted Supabase project. Render auto-deploys `main`; migrations reach hosted Supabase only when Evan, or the coordinating session with his authorization, runs [`scripts/db-push.sh`](../../scripts/db-push.sh). Why this setup: [decision](../decisions/2026-09-28-render-and-hosted-supabase.md).
 
 ## Facts
 
@@ -35,7 +35,8 @@ One Render web service, `ai-checkout-api`, runs a single Node process that serve
 | Health check | `/health` | `render.yaml` |
 | Auto-deploy | `autoDeploy: true` on the linked branch (`main`) | `render.yaml`, [archive](../archive/phase2-goal.md) |
 | Database | Hosted Supabase (Postgres, Auth, Data API); public sign-ups disabled; one provisioned reviewer (as of 2026-09-28) | [archive](../archive/phase2-goal.md) |
-| Hosted state 2026-09-28 | `/health` 200, `/v1/catalog` 200 with `{"release":null}`, `/v1/review/` 401 unauthenticated, `/review/` serves the app | [archive](../archive/phase2-goal.md); not re-checked for this page |
+| Hosted state 2026-09-28 | `/health` 200, `/v1/catalog` 200 with `{"release":null}`, `/v1/review/` 401 unauthenticated, `/review/` serves the app | [archive](../archive/phase2-goal.md) |
+| Published catalog | `/v1/catalog` serves release sequence 1, version `2026-09-29.real.1` (7 cards, 17 sources), `published_at` 2026-10-02T02:29:41Z, expires 2026-10-29T00:00:00Z | `GET /v1/catalog`, checked 2026-10-02T05:58Z |
 
 ## Environment variables (names only)
 
@@ -58,7 +59,7 @@ Optional variables read by [`apps/api/src/index.ts`](../../apps/api/src/index.ts
 ## How a change reaches production
 
 1. Code merges to `main`; Render rebuilds and restarts `ai-checkout-api` (auto-deploy).
-2. If the change adds a migration, Evan or the coordinator pushes it after merge ([Database migrations](database-migrations.md)). Agents never push migrations and never sign in to Render or Supabase.
+2. If the change adds a migration, Evan or the authorized coordinating session pushes it after merge ([Database migrations](database-migrations.md)). Subagents never push migrations; no agent signs in to Render or Supabase.
 3. Catalog content changes only when Evan publishes a reviewed draft in the hosted review app (human approval by design).
 4. The extension talks to production only when built with `npm run build:hosted --workspace=ai-checkout-extension`.
 

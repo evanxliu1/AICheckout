@@ -7,5 +7,5 @@ alwaysApply: true
 
 1. Follow `AGENTS.md` at the repository root in full. Cursor loads it automatically; this rule exists so the wiki protocol below is never skipped.
 2. Session protocol: read `wiki/now.md` and `wiki/index.md` first; finish by updating `wiki/now.md`, appending to `wiki/log.md`, updating affected wiki pages, and running `python3 scripts/lint_wiki.py`.
-3. Never push migrations, merge PRs, sign in to hosted services or publish a catalog; never edit an applied migration.
+3. Never push migrations, merge PRs or push `main` (only the coordinating session may, when Evan has authorized it); never sign in to hosted services or publish a catalog; never edit an applied migration.
 4. Never re-capture issuer pages, edit corpus labels, or tune prompts on held-out data; keep issuer captures out of git.

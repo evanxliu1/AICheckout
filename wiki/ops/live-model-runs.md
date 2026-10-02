@@ -6,7 +6,7 @@ status: stable
 tags: [ops, evals, llm]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-02T06:10:00Z
 sources:
   - resource: ../../evals/curation/README.md
     title: Curation evaluations
@@ -57,7 +57,7 @@ Live extraction evals call models only through vendor CLIs signed in to Evan's s
 
 1. Check the harness without a model: `npm run eval:v2 -- --check`.
 2. Smoke-test one or two cases, e.g. `npm run eval:v2 -- --provider codex --model gpt-5.5 --effort low --prompt guided.1 --selection keyword-window.1 --split dev --limit 2`.
-3. Full run: same command with `--repeat 2` (add `--concurrency N`; the plan used 3 for Codex, 1 for local models).
+3. Full run: same command with `--repeat 2` (add `--concurrency N`; the plan used 3 for Codex). Since 2026-10-01 Evan prefers more concurrency over protecting subscription usage limits; local models are not used (directive 2026-09-29, [user directives](../product/user-directives.md)).
 4. If it exits with status 3, wait for the limit to reset and rerun with `--resume evals/curation/runs/<dir>` and the same `--corpus`. Only missing `caseId#repeat` slots run; files are rewritten as a superset.
 5. After a scorer bug fix, re-score without calling a model: `npm run eval:v2 -- --replay evals/curation/runs/<dir>/observations.json`.
 
@@ -77,6 +77,7 @@ None of these were run for this page on 2026-10-02; they are taken from the scri
 
 - Never tune prompts on held-out results, never re-capture pages (hashes would invalidate labels), never edit corpus labels to fit a model (phase 2c rules, [archive](../archive/phase2-goal.md)).
 - Codex adds roughly 2.5–2.6k harness tokens per call; subscription models are not pinned snapshots. Both are stated limitations of the results.
+- The curation model since 2026-10-02 is gpt-5.6-luna at `--effort xhigh` ([decision](../decisions/2026-10-02-gpt-5-6-luna-for-curation.md)); expect about 3 min per case. Its runs so far used the unmerged `phase7-catalog-expansion` branch, which adds visible-output-token accounting and longer local deadlines for high-effort models (commit `0ebb98c`); `main` at `7322dec` does not have them yet.
 - `--model` is required for Codex. Unknown `--disable` feature flags are hard errors; the provider filters them against what the installed CLI reports.
 - A Codex run in which the agent executes a tool is rejected; each call runs in an empty read-only directory.
 - `observations.json` holds traces; keep `runs/` private and inspect before sharing anything from it.

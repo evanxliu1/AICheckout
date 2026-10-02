@@ -20,6 +20,7 @@ How the code works. One page per component; name code by path and symbol.
 * [API](api.md) — Fastify routes, catalog read, review auth, static hosting and security headers.
 * [Curation harness](curation-harness.md) — bounded LLM extraction kernel, v1/v2 contracts, providers, budgets and ledger.
 * [Evaluation](evaluation.md) — curation eval corpora, splits, variants, scorer versions, metrics, CLIs and results summary.
+* [Catalog expansion](catalog-expansion.md) — Phase 7, in progress: 180 cards of the top-10 U.S. issuers; research, capture, extraction, draft labels, findings and remaining work.
 * [Database](database.md) — Supabase schema, releases and head, private review/curation tables, RLS, `publish_catalog`, Zod parity.
 * [Review app](review-app.md) — maintainer SPA for drafts, source capture, extraction review and explicit publication.
 * [Public site](public-site.md) — static landing, results, architecture, privacy and support pages served at `/`.

@@ -6,7 +6,7 @@ status: stable
 tags: [system, testing, ci]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-02T06:10:00Z
 sources:
   - resource: ../../package.json
     title: Root scripts
@@ -66,6 +66,8 @@ Local results on 2026-10-02 at `f6d3f79`:
 | ui vitest (+ icon check) | 1 | 36 | pass |
 | `test:scripts` | 1 | 8 | pass |
 
+Re-run on 2026-10-02 at `7322dec` (after PRs #13 and #14): extension vitest 21 files, 378 tests, pass. Other suites were not re-run.
+
 ## CI
 
 | Workflow | Name | Steps in order |
@@ -73,7 +75,7 @@ Local results on 2026-10-02 at `f6d3f79`:
 | [`extension.yml`](../../.github/workflows/extension.yml) | Application checks | wiki lint; `npm ci`; lint; format:check; typecheck; `npm test`; `eval:curation --check`; `eval:v2 --check`; `catalog:v2:check`; `npm audit --audit-level=high`; build; Playwright install; review a11y; ui browser; site browser; extension browser; `test:catalog:browser`; `test:package:browser`; uploads `chrome-extension` and `browser-test-results` artifacts |
 | [`database.yml`](../../.github/workflows/database.yml) | Database checks | `npm ci`; audit; `db:seed:check`; `db:start:api`; `db:test`; `db:test:concurrency`; `db:test:catalog`; `db:test:http`; `db:test:curation`; build api + review; `db:test:curation:http`; `db:test:curation:application`; review browser; `db:lint`; `db:advisors`; stop |
 
-Both trigger on every `push` and `pull_request`. The wiki-lint step and the pre-commit hook were added with the `llm-wiki` branch (added with the wiki on 2026-10-02). The pre-commit hook in [`.githooks/pre-commit`](../../.githooks/pre-commit) runs only the wiki linter (enable with `git config core.hooksPath .githooks`; inferred, check [Local setup](../ops/local-setup.md)).
+Both trigger on every `push` and `pull_request`. The wiki-lint step and the pre-commit hook were added with the `llm-wiki` branch on 2026-10-02. The pre-commit hook in [`.githooks/pre-commit`](../../.githooks/pre-commit) runs only the wiki linter. Enable it with `git config core.hooksPath .githooks`; in Evan's clone it is already set in the shared `.git/config`, so it applies to every worktree. The path is relative to each worktree, and Git silently skips a hook file that does not exist, so worktrees on branches without `.githooks/` (anything not yet merged with the wiki) run no pre-commit hook at all.
 
 ## How the browser layer works
 

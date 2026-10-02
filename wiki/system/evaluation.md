@@ -6,7 +6,7 @@ status: stable
 tags: [system, evaluation, llm, curation]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-02T06:10:00Z
 sources:
   - resource: ../../evals/curation/README.md
     title: Curation evaluations README
@@ -135,6 +135,7 @@ Full tables, failure analysis and disclosures are in [`docs/evals/results.md`](.
 - Every guided row reports every planted injection (100% untrusted-instruction recall, dev and held-out).
 - The main held-out errors are `cap: none` asserted where the page is silent, and the BCE cap period.
 - Repeat noise reaches 5.8 points. Treat differences under about 3 points as ties.
+- Not yet in `docs/evals/results.md`: gpt-5.6-luna `xhigh`, `guided.2` keyword-window, all 37 cases in one run (2026-10-02): 98.8% end-to-end, 1 false-clean, `capPeriod` 16/22, about 3 min per case. It became the curation model on 2026-10-02 ([decision](../decisions/2026-10-02-gpt-5-6-luna-for-curation.md)).
 
 ## Gotchas
 
