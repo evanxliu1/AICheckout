@@ -223,7 +223,7 @@ The check reads no page text into any committed file or model. It never edits a 
    - `<n> (?:bonus )?(?:points|miles|stars|pts)\b` followed within 6 words by `per|for (?:every|each) $1|dollar` (`3 points per $1`, `2 miles for every dollar`).
    It returns nothing for amounts (`$4`), counts not tied to spending (`60,000 bonus points`: the digit and comma guards reject it, and no per-dollar phrase follows) or percentages.
 2. In the rate check, `stated` = `percentsIn` values, plus `multiplesIn` values **only when** `output.rewardCurrency.value` is `points`. The pass rule is unchanged: the rate equals one stated value or the sum of all stated values (so "1X base plus 3X bonus" supports 400).
-3. Register validators by version: `VALIDATORS = { 'v2-validator.1': validateExtractionV2, 'v2-validator.2': validateExtractionV2_2 }`; `extractionTaskV2(prompt, selection, validator = 'v2-validator.1')`; record `versions.validator` in new traces (absent means `.1`). `eval:v2` keeps `.1` as its default, so published results and `--check` do not move; `--validator v2-validator.2` is opt-in, and `--replay` can re-validate saved traces under `.2` with no model call. Any `.2` numbers are published as new, labelled rows, never as replacements.
+3. Register validators by version: `VALIDATORS = { 'v2-validator.1': validateExtractionV2, 'v2-validator.2': validateExtractionV2_2 }`; `extractionTaskV2(prompt, selection, validator = 'v2-validator.1')`. The validator is recorded as a top-level trace field `validator`, written only for `.2` (absent means `.1`). It must not go into `context.versions`: the context hash covers `versions`, and `evaluate` rejects a saved trace whose context hash differs from the recomputed one, so adding a key there would break replay and resume of every published run. `eval:v2` keeps `.1` as its default, so published results and `--check` do not move; `--validator v2-validator.2` is opt-in. Today `--replay` scores the stored `status` and does not re-validate, so re-validating saved traces under `.2` needs a new opt-in flag that writes a new, labelled report and never rewrites saved observations. Any `.2` numbers are published as new, labelled rows, never as replacements.
 4. The pipeline's validate stage uses `.2`. Because validation is its own stage, switching versions re-validates saved luna traces without re-extracting.
 5. Tests: the current `percentsIn` cases unchanged; new `multiplesIn` cases (positive: `4X`, `1.5x`, `2×`, `3 times`, `3 points per $1`, `2 miles for every dollar`; negative: `$4`, `60,000 bonus points`, `4 percent` as a multiple, `X` inside a word, a cash-back card's `2X`); a regression test that `.1` findings on the fixture corpus are identical before and after.
 
@@ -242,19 +242,19 @@ loop:
                     then `pipeline accept <stage> --issuer <slug>` to gate and record its output
     kind: queue  -> resolve the review-queue items the session owns; ask Evan only for owner=evan
     kind: wait   -> usage limit; report and stop, or wait as told
-    kind: handoff -> run `pipeline handoff`, commit, open the PR, stop
+    kind: handoff -> run `pipeline handoff`, commit, stop (who opens the PR: open question 4)
 pipeline status               # human summary: per stage counts, queue, metrics
 ```
 
 Work packets name files and card IDs only; the subagent reads captures itself. A verifier and its adjudicator are always separate subagent runs, and the adjudicator never sees the verifier's reasoning beyond the findings file. The session commits after each accepted stage (state records, committed outputs), so a stopped run resumes from git.
 
-CLI commands (Phase 8): `init`, `status [--json]`, `next [--json]`, `run [<stage>] [--only ids] [--concurrency N] [--wait-minutes N]`, `accept <stage> [--issuer slug]`, `review [--json]`, `freshness`, `metrics`, `handoff`. There is no `publish`.
+CLI commands (Phase 8): `init`, `status [--json]`, `next [--json]`, `run [<stage>] [--only ids] [--concurrency N] [--wait-minutes N]`, `accept <stage> [--issuer slug]`, `freshness`, `metrics`, `handoff`. There is no `publish`.
 
 ## Boundary rule
 
 The pipeline is maintainer tooling. It may import product packages (`@ai-checkout/rewards-core` schemas, the curation harness, `@ai-checkout/catalog-review` limits) so its gates use the same validators as the product. Product code never imports it: **`extension/**`, `packages/**` and `apps/**` may not import any path into `tools/` or the package `@ai-checkout/catalog-pipeline`**. The pipeline writes data files (corpus, overlay, `catalog-v3.ts`) that product code imports by its own paths; that is the only direction of flow.
 
-Enforced since 2026-10-02 (before the workspace exists) by ESLint `no-restricted-imports` in [`eslint.config.js`](../../eslint.config.js) (`PRODUCT_CODE`, `TOOLS_IMPORT_PATTERNS`: any relative specifier `(./|../)*tools/…`, and `@ai-checkout/catalog-pipeline[/…]`) and tested by [`scripts/lib/import-boundary.test.mjs`](../../scripts/lib/import-boundary.test.mjs), which lints forbidden and allowed imports with the real config (`npm run test:scripts`). Limits: the rule sees static `import`/`export … from`, not `require()` or dynamic `import()`; product code uses neither for local modules today. When the workspace is created, `tools/*` is added to the root `workspaces` and to the `lint` script.
+Enforced since 2026-10-02 (before the workspace exists) by ESLint `no-restricted-imports` in [`eslint.config.js`](../../eslint.config.js) (`PRODUCT_CODE`, `TOOLS_IMPORT_PATTERNS`: any relative specifier `(./|../)*tools/…`, and `@ai-checkout/catalog-pipeline[/…]`) and tested by [`scripts/lib/import-boundary.test.mjs`](../../scripts/lib/import-boundary.test.mjs), which lints forbidden and allowed imports with the real config (`npm run test:scripts`). Limits: the rule sees static `import`/`export … from`, not `require()` or dynamic `import()`; product code uses neither for local modules today. The pattern also matches a local folder named `tools` inside product code (`./tools/x`); none exists, and such a folder would fail lint loudly rather than slip through. When the workspace is created, `tools/*` is added to the root `workspaces` and to the `lint` script.
 
 ## Metrics the pipeline reports
 
@@ -287,6 +287,17 @@ The shared core starts inside `tools/catalog-pipeline/src/core/` and moves to it
 4. **Who publishes the PR.** The pipeline stops at a committed branch. Should the session open the PR (and the coordinator merge it under the standing authorization), or stop before the PR?
 5. **Overlay authoring agent.** M4 decides how overlay entries are authored; should Phase 8 add a fourth subagent (`card-overlay-author`) or reuse the verifier in an authoring mode?
 6. **Research web access.** `card-researcher` is the only agent with web access. Allow it to read third-party sites (to discover cards) or issuer domains only?
+
+### Coordinator recommendations (2026-10-02, pending Evan's approval)
+
+Answers proposed by the coordinating session. None is in force until Evan approves; the sections above still describe the draft as written.
+
+1. **Batch layout: yes.** New batches go under `evals/curation/batches/<batch>/`; `evals/curation/expansion/` is frozen as `expansion.v1` and never rewritten.
+2. **Noisy pages: allow a versioned capture normalizer.** It strips known volatile blocks before hashing. The normalizer version is recorded per capture, the raw capture is kept, and hashes are compared only within one normalizer version.
+3. **Convention changes: re-adjudicate only**, unless the change alters what a verifier must check. Such a convention entry is marked `reverify: true` in the convention file, which makes `verify` stale for the affected cards as well.
+4. **PR: the session opens it.** The coordinating session merges it when Evan has authorized merges; a subagent never merges.
+5. **Overlay authoring: decide after M4.** Default: a dedicated overlay-author subagent writes entries and the existing `card-verifier` checks them, so authoring and checking stay separate.
+6. **Research web access:** third-party sites only to discover candidate card names, never as evidence for any value. All values come from issuer pages.
 
 ## Related
 

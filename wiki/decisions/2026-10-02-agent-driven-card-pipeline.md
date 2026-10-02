@@ -43,7 +43,7 @@ Details, schemas, gates and the stage-to-script map: [card-expansion pipeline](.
 - The Stage 1 scripts move into the CLI as stage modules in Phase 8; until then they stay in `scripts/` unchanged.
 - `.claude/skills/` and `.claude/agents/` are committed (draft definitions now); everything else under `.claude/` (local settings, agent worktrees) is gitignored.
 - The boundary lint rule exists before the workspace, so no product import of `tools/` can appear in between.
-- Open questions on the design page (batch layout, noisy pages under hash-only freshness, re-verification on convention changes, PR ownership, overlay authoring agent, research web scope) are Evan's to answer before Phase 8.
+- Open questions on the design page (batch layout, noisy pages under hash-only freshness, re-verification on convention changes, PR ownership, overlay authoring agent, research web scope) are Evan's to answer before Phase 8; the coordinator's recommended answers (2026-10-02) are on that page, pending his approval.
 
 ## Status
 Proposed 2026-10-02 by the M11 agent (claude-code/claude-opus-5-5). Evan approves or amends; on approval this becomes `accepted` and the design page leaves draft once Stage 2 M5 has settled the overlay and builder.
