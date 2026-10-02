@@ -50,6 +50,18 @@ Product notes:
 - rotating-quarterly (anchored, research-quote): Rotating quarterly categories, 'everyday purchases at different places you shop each quarter'. Q4 2026 (Oct 1 to Dec 31): Restaurants, Entertainment, Utilities (secondary) — 5%
 - merchant-specific (unanchored): Capital One Offers online shopping (accounts moved to Capital One) — up to 15%
 
+Draft notes:
+- rules.1 (supermarkets): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.2 (streaming): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.3 (dining): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.4 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.5 (gas): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.6 (transit): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.7 (drugstores): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.8 (ev-charging): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.9 (entertainment): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.10 (other): an anchor that ran on from another was shortened (no 25+ word run)
+
 ## Discover it Miles Credit Card (`discover-it-miles`)
 
 personal-rewards; annual fee $0; research currency: miles
@@ -86,6 +98,10 @@ Currency: cash-back; point value: —.
 | 4 | travel-portal | Capital One Travel | 500 | 0 | — | — | — | — |
 
 Exclusions: 4; issues: ambiguous, missing, missing.
+
+Draft notes:
+- rules.0 (all-purchases): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.0 (all-purchases): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Discover it Student Cash Back (`discover-it-student-cash-back`)
 
@@ -153,6 +169,10 @@ Currency: cash-back; point value: —.
 
 Exclusions: 2; issues: out-of-scope, ambiguous, missing.
 
+Draft notes:
+- rules.1 (gas): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.2 (dining): an anchor that ran on from another was shortened (no 25+ word run)
+
 ## Discover it Secured Cash Back (`discover-it-secured-cash-back`)
 
 secured; annual fee $0; research currency: cash-back
@@ -187,3 +207,14 @@ Exclusions: 2; issues: ambiguous, ambiguous, out-of-scope, out-of-scope, missing
 
 Product notes:
 - rotating-quarterly (anchored, research-quote): Rotating quarterly categories ('Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate').… — 5%
+
+Draft notes:
+- rules.1 (supermarkets): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.2 (streaming): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.4 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.5 (gas): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.6 (ev-charging): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.7 (transit): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.8 (drugstores): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.9 (entertainment): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.12 (other): an anchor that ran on from another was shortened (no 25+ word run)

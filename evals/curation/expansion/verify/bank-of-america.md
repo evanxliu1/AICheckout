@@ -54,6 +54,16 @@ Product notes:
 - cardholder-chosen-category (anchored, research-quote): Choice category, one of: "Gas and EV charging stations", "Online shopping, including cable, internet, phone plans and streaming", "Dining", "Travel", "Drug stores and pharmacies", "Home… — 3%
 - relationship-tier (unanchored): BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026) — +10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards
 
+Draft notes:
+- rules.1 (supermarkets): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.3 (gas): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.5 (ev-charging): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.7 (online-retail): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.9 (dining): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.11 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.13 (drugstores): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.15 (other): an anchor that ran on from another was shortened (no 25+ word run)
+
 ## Bank of America Unlimited Cash Rewards credit card (`boa-unlimited-cash-rewards`)
 
 personal-rewards; annual fee $0; research currency: cash-back
@@ -74,6 +84,9 @@ Exclusions: 5; issues: missing, missing.
 
 Product notes:
 - relationship-tier (unanchored): BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026) — +10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards
+
+Draft notes:
+- exclusions.4: an anchor that ran on from another was dropped (no 25+ word run)
 
 ## Bank of America Travel Rewards credit card (`boa-travel-rewards`)
 
@@ -97,6 +110,9 @@ Exclusions: 1; issues: ambiguous.
 Product notes:
 - relationship-tier (unanchored): BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026) — +10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards
 
+Draft notes:
+- rules.1 (travel-portal): an anchor that ran on from another was shortened (no 25+ word run)
+
 ## Bank of America Premium Rewards credit card (`boa-premium-rewards`)
 
 personal-rewards; annual fee $95; research currency: points
@@ -119,6 +135,9 @@ Exclusions: 1; issues: ambiguous, missing.
 
 Product notes:
 - relationship-tier (unanchored): BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026) — +10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards
+
+Draft notes:
+- exclusions.0: an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Bank of America Premium Rewards Elite credit card (`boa-premium-rewards-elite`)
 
@@ -174,6 +193,16 @@ Product notes:
 - cardholder-chosen-category (anchored, research-quote): Choice category, one of: "Gas and EV charging stations", "Online shopping, including cable, internet, phone plans and streaming", "Dining", "Travel", "Drug stores and pharmacies", "Home… — 6% (3% base + 3% first-year bonus)
 - cardholder-chosen-category (anchored, research-quote): Choice category, one of: "Gas and EV charging stations", "Online shopping, including cable, internet, phone plans and streaming", "Dining", "Travel", "Drug stores and pharmacies", "Home… — 3%
 - relationship-tier (unanchored): BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026) — +10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards
+
+Draft notes:
+- rules.0 (gas): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.1 (ev-charging): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.2 (online-retail): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.3 (dining): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.4 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.5 (drugstores): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.6 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.7 (supermarkets): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Bank of America Unlimited Cash Rewards credit card for Students (`boa-unlimited-cash-rewards-students`)
 
@@ -245,6 +274,16 @@ Product notes:
 - cardholder-chosen-category (anchored, research-quote): Choice category, one of: "Gas and EV charging stations", "Online shopping, including cable, internet, phone plans and streaming", "Dining", "Travel", "Drug stores and pharmacies", "Home… — 6% (3% base + 3% first-year bonus)
 - cardholder-chosen-category (anchored, research-quote): Choice category, one of: "Gas and EV charging stations", "Online shopping, including cable, internet, phone plans and streaming", "Dining", "Travel", "Drug stores and pharmacies", "Home… — 3%
 - relationship-tier (unanchored): BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026) — +10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards
+
+Draft notes:
+- rules.1 (supermarkets): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.2 (gas): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.3 (online-retail): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.4 (dining): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.5 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.6 (drugstores): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.7 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- exclusions.5: an anchor that ran on from another was dropped (no 25+ word run)
 
 ## Bank of America Unlimited Cash Rewards Secured credit card (`boa-unlimited-cash-rewards-secured`)
 
@@ -326,6 +365,14 @@ Draft notes:
 - rules.6 (other, "Travel") limitedTime: value dropped (no resolving quote)
 - rules.7 (drugstores, "Drug Stores") limitedTime: value dropped (no resolving quote)
 - rules.8 (other, "Home Improvement/Furnishings") limitedTime: value dropped (no resolving quote)
+- rules.1 (supermarkets): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.2 (gas): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.3 (ev-charging): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.4 (online-retail): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.5 (dining): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.6 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.7 (drugstores): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.8 (other): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Atmos Rewards Ascent Visa Signature credit card (`boa-atmos-rewards-ascent`)
 
@@ -358,6 +405,8 @@ Product notes:
 
 Draft notes:
 - rules.6 (other, "Digital Goods Media – Books, Movies, Digital artwork/images,") rateBps: a quote over 25 words was dropped (no 25-word window carries the rate (200 bps))
+- rules.7 (dining): an anchor that ran on from another was shortened (no 25+ word run)
+- exclusions.0: an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Atmos Rewards Summit Visa Infinite credit card (`boa-atmos-rewards-summit`)
 
@@ -412,6 +461,10 @@ Exclusions: 5; issues: missing, missing, ambiguous.
 Product notes:
 - merchant-specific (anchored, keyword-search): Eligible Royal Caribbean, Celebrity Cruises and Silversea purchases — 3 points per $1
 
+Draft notes:
+- exclusions.4: an anchor that ran on from another was dropped (no 25+ word run)
+- issues.0 (missing): an anchor that ran on from another was shortened (no 25+ word run)
+
 ## Royal ONE Plus Visa Signature credit card (`boa-royal-one-plus`)
 
 co-brand; co-brand: Royal Caribbean Group (Royal Caribbean, Celebrity, Silversea); annual fee $99; research currency: points
@@ -463,6 +516,9 @@ Exclusions: 1; issues: missing, missing, missing, ambiguous.
 Product notes:
 - merchant-specific (anchored, keyword-search): Allegiant purchases (air, hotel, car rental, attractions) — 3 points per $1
 
+Draft notes:
+- exclusions.0: an anchor that ran on from another was shortened (no 25+ word run)
+
 ## Air France KLM Visa Signature credit card (`boa-air-france-klm`)
 
 co-brand; co-brand: Air France-KLM (Flying Blue); annual fee $89; research currency: miles
@@ -513,3 +569,6 @@ Exclusions: 6; issues: missing, missing, missing.
 
 Product notes:
 - merchant-specific (anchored, keyword-search): Norwegian purchases — 3 points per $1
+
+Draft notes:
+- exclusions.5: an anchor that ran on from another was dropped (no 25+ word run)

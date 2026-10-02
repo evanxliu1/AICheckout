@@ -77,6 +77,9 @@ Currency: points; point value: —.
 
 Exclusions: 12; issues: missing.
 
+Draft notes:
+- exclusions.11: an anchor that ran on from another was shortened (no 25+ word run)
+
 ## Citi Strata Elite Card (`citi-strata-elite`)
 
 personal-rewards; annual fee $595; research currency: points
@@ -127,6 +130,9 @@ Exclusions: 0; issues: missing, ambiguous, out-of-scope.
 Product notes:
 - merchant-specific (anchored, research-quote): 'gas purchased at Costco warehouse locations worldwide' — 5%
 - merchant-specific (anchored, research-quote): 'all other purchases from Costco and Costco.com' — 2%
+
+Draft notes:
+- rules.4 (other): an anchor that ran on from another was dropped (no 25+ word run)
 
 ## Citi / AAdvantage Platinum Select World Elite Mastercard (`citi-aadvantage-platinum-select`)
 
@@ -222,6 +228,9 @@ Exclusions: 12; issues: missing.
 
 Product notes:
 - merchant-specific (anchored, research-quote): 'eligible American Airlines purchases' — 3x
+
+Draft notes:
+- exclusions.11: an anchor that ran on from another was shortened (no 25+ word run)
 
 ## AT&T Points Plus Card from Citi (`citi-att-points-plus`)
 
@@ -389,6 +398,7 @@ Product notes:
 
 Draft notes:
 - rules.4 (other, "purchases at Macy’s"): rule dropped (no resolving quote)
+- issues.0 (out-of-scope): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Bloomingdale's American Express Card (`citi-bloomingdales-amex`)
 

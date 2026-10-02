@@ -38,6 +38,7 @@ Exclusions: 4; issues: missing, missing.
 
 Draft notes:
 - rules.1 (travel-portal, "hotels and rental cars booked through Capital One Travel"): issuerWording is not verbatim in the captures; replace it with the capture's wording
+- pointValueHundredthsOfCent: an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Capital One Venture Rewards (`capital-one-venture`)
 
@@ -439,6 +440,7 @@ Draft notes:
 - pointValueHundredthsOfCent: value dropped (no resolving quote)
 - rules.1 (other, "Bass Pro Shops and Cabela’s purchases") usMerchantsOnly: value dropped (no resolving quote)
 - rules.3 (other, "bonus Points on select purchases") rateBps: a quote over 25 words was dropped (no 25-word window carries the rate (1000 bps))
+- rules.3 (other): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Union Plus Cash Rewards Credit Card (`capital-one-union-plus-cash-rewards`)
 

@@ -111,6 +111,9 @@ Exclusions: 1; issues: out-of-scope, missing, missing.
 Product notes:
 - checkout-method (anchored, research-quote): purchases made through your PayPal account online, and sending money to PayPal users ("3% on Eligible Purchases you make using your Card Account through your… — 3%
 
+Draft notes:
+- issues.0 (out-of-scope): an anchor that ran on from another was shortened (no 25+ word run)
+
 ## Venmo Credit Card (`synchrony-venmo-credit-card`)
 
 co-brand; co-brand: Venmo (PayPal); annual fee $0; research currency: cash-back
@@ -230,6 +233,8 @@ Product notes:
 
 Draft notes:
 - exclusion "transactions for cash substitutes (e.g. money orders or…": dropped (no resolving quote)
+- rewardCurrency: an anchor that ran on from another was shortened (no 25+ word run)
+- rules.3 (other): an anchor that ran on from another was dropped (no 25+ word run)
 
 ## myWalgreens Mastercard / myWalgreens Credit Card (`synchrony-mywalgreens-mastercard`)
 
@@ -261,6 +266,7 @@ Product notes:
 
 Draft notes:
 - rules.5 (all-purchases, "All Other Purchases") rateBps: value dropped (no resolving quote)
+- exclusions.4: an anchor that ran on from another was shortened (no 25+ word run)
 
 ## TJX Rewards Platinum Mastercard / TJX Rewards Credit Card (`synchrony-tjx-rewards-platinum-mastercard`)
 
@@ -429,6 +435,10 @@ Exclusions: 0; issues: missing.
 Product notes:
 - relationship-tier (anchored, keyword-search): At Home purchases, annual spend under $350 — 6%
 - relationship-tier (anchored, keyword-search): At Home purchases, annual spend over $350 — 7.5%
+
+Draft notes:
+- rules.0 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- issues.0 (missing): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Chico's Mastercard / Chico's Credit Card (`synchrony-chicos-mastercard`)
 

@@ -104,6 +104,9 @@ Exclusions: 1; issues: missing.
 Product notes:
 - merchant-specific (anchored, research-quote): Expedia, Hotels.com and Vrbo — 3%
 
+Draft notes:
+- rules.0 (travel-portal): an anchor that ran on from another was shortened (no 25+ word run)
+
 ## Choice Privileges Mastercard (`wells-fargo-choice-privileges`)
 
 co-brand; co-brand: Choice Hotels; annual fee $0; research currency: points

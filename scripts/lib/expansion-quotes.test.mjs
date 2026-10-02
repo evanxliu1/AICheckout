@@ -6,10 +6,13 @@ import {
   amountRegex,
   bestWindow,
   captureIndex,
+  captureSpans,
   clipWords,
+  joinedCaptureRun,
   keywordPatterns,
   longCaptureRun,
   markdownUnits,
+  quoteArraysOf,
   rateRegex,
   rateRegexFromText,
   shortAnchor,
@@ -104,5 +107,44 @@ test('stringsOf and markdownUnits enumerate the units to check', () => {
   assert.deepEqual(
     markdownUnits('# T\n| a | b |').map(([, unit]) => unit.trim()),
     ['# T', '', 'a', 'b', ''],
+  );
+});
+
+test('joinedCaptureRun finds quotes that overlap or abut into a run over 25 words, in any order', () => {
+  const words = Array.from({ length: 60 }, (_, i) => `w${i}`);
+  const index = captureIndex([`${words.join(' ')}.`]);
+  const span = (from, to) => words.slice(from, to).join(' ');
+  assert.deepEqual(captureSpans(span(3, 8), index), [{ doc: 0, start: 3, end: 8 }]);
+  assert.deepEqual(captureSpans(`${span(3, 7)} w7`.replace(/^w3/, '3'), index), [
+    { doc: 0, start: 3, end: 8 },
+  ]);
+  // Consecutive quotes of 20 + 20 words, either order; overlapping windows of 25 words.
+  assert.equal(joinedCaptureRun([span(0, 20), span(20, 40)], index).words, 40);
+  assert.deepEqual(joinedCaptureRun([span(20, 40), 'unrelated', span(0, 20)], index).texts, [0, 2]);
+  assert.equal(joinedCaptureRun([span(0, 25), span(1, 26)], index).words, 26);
+  // A one-word gap, or a union within 25 words, is fine.
+  assert.equal(joinedCaptureRun([span(0, 20), span(21, 41)], index), null);
+  assert.equal(joinedCaptureRun([span(0, 15), span(15, 25)], index), null);
+  // Quotation marks around a quote do not hide it.
+  assert.ok(joinedCaptureRun([`“${span(0, 20)}”`, `"${span(20, 30)}"`], index));
+});
+
+test('quoteArraysOf lists arrays of two or more strings or anchor quotes', () => {
+  const data = {
+    anchors: ['a', 'b'],
+    one: ['c'],
+    refs: [
+      { sourceId: 's', quote: 'd' },
+      { sourceId: 's', quote: 'e' },
+    ],
+    nested: [{ anchors: ['f', 'g'] }],
+  };
+  assert.deepEqual(
+    [...quoteArraysOf(data)].map(([path, texts]) => [path, texts]),
+    [
+      ['$.anchors', ['a', 'b']],
+      ['$.refs', ['d', 'e']],
+      ['$.nested[0].anchors', ['f', 'g']],
+    ],
   );
 });

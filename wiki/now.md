@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:00:00Z
+  at: 2026-10-03T01:00:00Z
 ---
 
 # Now
 
-As of 2026-10-02T23:00Z.
+As of 2026-10-03T01:00Z.
 
 ## Current state
 
@@ -20,7 +20,7 @@ As of 2026-10-02T23:00Z.
 
 ## Active work
 
-- **Phase 7 card expansion** on `phase7-verify` (worktree `../AICheckout-expansion`, from `main` `be5de25`; committed, not pushed): verification is done. Ten per-issuer findings files, verified by nine verifier subagents (a second opinion on Chase) and decided by eight adjudicators, plus general and per-issuer conventions ([decision](decisions/2026-10-02-expansion-verification-conventions.md)), produced `corpus.json` `expansion.v1`: 173 agent-verified cards (180 − 7 dropped), 863 rules, 396 exclusions, 195 issues; `check-expansion-quotes.mjs` passes. A pre-merge review (agent-verified) spot-checked 31 cards and found no label the captures contradict; it fixed one activation convention on four Customized Cash cards. Known gaps: gated rates and redemption values (rules 17/18, Stage 2), Freedom Flex and Discover Q4 rules expire 2026-12-31, Upromise 1.529% has no integer rate, Marriott Bonvoy Bold has no base rate, Key Rewards are four near-duplicate cards ([catalog expansion](system/catalog-expansion.md)). Next: decide points valuation (fixes the `rate_not_in_evidence` validator gap); Stage-2 engine work and a new migration raising catalog limits; eval; Evan publishes. Evan pushes the branch and opens the PR.
+- **Phase 7 card expansion** on `phase7-verify` (worktree `../AICheckout-expansion`, from `main` `be5de25`; committed, not pushed): verification is done. Ten per-issuer findings files, verified by nine verifier subagents (a second opinion on Chase) and decided by eight adjudicators, plus general and per-issuer conventions ([decision](decisions/2026-10-02-expansion-verification-conventions.md)), produced `corpus.json` `expansion.v1`: 173 agent-verified cards (180 − 7 dropped), 863 rules, 396 exclusions, 195 issues; `check-expansion-quotes.mjs` passes. A pre-merge review (agent-verified) spot-checked 31 cards and found no label the captures contradict; it fixed one activation convention on four Customized Cash cards. A copyright adjacency fix followed: no two anchors of one item may overlap or abut into more than 25 consecutive capture words (checked by `check-expansion-quotes.mjs`, general rule 22); drafts regenerated, findings anchors shortened, labels unchanged apart from anchors except the Marriott Bonvoy Boundless 6X cap (`none` → null, rule 21). Known gaps: gated rates and redemption values (rules 17/18, Stage 2), Freedom Flex and Discover Q4 rules expire 2026-12-31, Upromise 1.529% has no integer rate, Marriott Bonvoy Bold has no base rate, Key Rewards are four near-duplicate cards, five judgment calls left as labelled (One Key portal, Chrome EV, Prime Visa Amazon, JCPenney maximum, inflight rebates) ([catalog expansion](system/catalog-expansion.md)). Next: decide points valuation (fixes the `rate_not_in_evidence` validator gap); Stage-2 engine work and a new migration raising catalog limits; eval; Evan publishes. Evan pushes the branch and opens the PR.
 
 ## Open questions and next steps
 

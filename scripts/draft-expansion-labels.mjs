@@ -26,7 +26,10 @@ import {
   ANY_RATE,
   MAX_QUOTE_WORDS,
   amountRegex,
+  captureIndex,
+  captureSpans,
   clipWords,
+  longCaptureRun,
   keywordPatterns,
   rateRegex,
   rateRegexFromText,
@@ -112,6 +115,7 @@ const count = (kind, status) => {
  */
 function anchorFor(quote, input, spec = {}, kind = 'other', notes = null, label = '') {
   const result = shortAnchor(quote, input, spec);
+  if (result.text) specsOf.set(result.text, [...(specsOf.get(result.text) ?? []), spec]);
   if (result.status !== 'unresolved') count(kind, result.status);
   if (notes && result.status === 'dropped')
     notes.push(
@@ -132,6 +136,97 @@ const anchorsFor = (quotes, input, spec, kind, notes, label, max = 4) => {
   }
   return out;
 };
+
+/** The specs each anchor text was cut for (what it must keep), for the current card. */
+const specsOf = new Map();
+
+/** True when `spans` (capture word spans) overlap or abut into a run of more than 25 words. */
+function longRun(spans) {
+  const sorted = [...spans].sort((a, b) => a.doc - b.doc || a.start - b.start);
+  let run = null;
+  for (const span of sorted) {
+    if (run && run.doc === span.doc && span.start <= run.end) run.end = Math.max(run.end, span.end);
+    else run = { ...span };
+    if (run.end - run.start > MAX_QUOTE_WORDS) return true;
+  }
+  return false;
+}
+
+/** True when `piece` still carries what its original anchor carried for every spec it was cut for. */
+function keepsEvidence(piece, original, specs) {
+  const all = (patterns, text) => patterns.every((pattern) => pattern.test(text));
+  return specs.every((spec) => {
+    if (spec.required?.length && all(spec.required, original)) return all(spec.required, piece);
+    if (spec.fallback?.required?.length && all(spec.fallback.required, original))
+      return all(spec.fallback.required, piece);
+    const prefer = spec.prefer ?? [];
+    return !prefer.some((pattern) => pattern.test(original)) || prefer.some((pattern) => pattern.test(piece));
+  });
+}
+
+/**
+ * Anchors of one item read together must not form a run of more than 25 consecutive capture words (two cut
+ * windows of one sentence, or consecutive sentences). Earlier anchors win; a later one that overlaps or abuts
+ * them into a longer run is cut to its longest part clear of them (with a one-word gap) that still carries its
+ * evidence, or dropped.
+ */
+function separateAnchors(texts, input, notes, label) {
+  input.index ??= captureIndex(input.documents.map((document) => document.body));
+  const kept = [];
+  const spans = [];
+  // Overlapping or abutting spans, or (for a quote whose first words happen to continue the one before) the
+  // anchors joined as text.
+  const runsOn = (text) =>
+    longRun([...spans, ...captureSpans(text, input.index)]) ||
+    Boolean(longCaptureRun([...kept, text].join(' '), input.index));
+  for (const text of texts) {
+    const own = captureSpans(text, input.index);
+    if (!runsOn(text)) {
+      kept.push(text);
+      spans.push(...own);
+      continue;
+    }
+    const words = text.split(' ');
+    const blocked = new Set();
+    for (const span of own)
+      for (const other of spans)
+        if (other.doc === span.doc)
+          for (let i = 0; i < words.length; i++)
+            if (span.start + i >= other.start - 1 && span.start + i <= other.end) blocked.add(i);
+    const parts = [];
+    let from = null;
+    for (let i = 0; i <= words.length; i++) {
+      if (i < words.length && !blocked.has(i)) from ??= i;
+      else if (from !== null) {
+        parts.push(words.slice(from, i).join(' '));
+        from = null;
+      }
+    }
+    for (let k = 1; k <= 3 && k < words.length; k++)
+      parts.push(words.slice(k).join(' '), words.slice(0, -k).join(' '));
+    const piece = parts
+      .filter((part) => part.split(' ').length >= 3)
+      .sort((a, b) => b.split(' ').length - a.split(' ').length)
+      .find(
+        (part) =>
+          resolveQuote(part, input) && keepsEvidence(part, text, specsOf.get(text) ?? []) && !runsOn(part),
+      );
+    if (piece && !kept.includes(piece)) {
+      count('adjacent', 'shortened');
+      kept.push(piece);
+      spans.push(...captureSpans(piece, input.index));
+      notes.push(
+        `${label}: an anchor that ran on from another was shortened (no ${MAX_QUOTE_WORDS}+ word run)`,
+      );
+    } else {
+      count('adjacent', 'dropped');
+      notes.push(
+        `${label}: an anchor that ran on from another was dropped (no ${MAX_QUOTE_WORDS}+ word run)`,
+      );
+    }
+  }
+  return kept;
+}
 
 // ---- What an anchor must keep, per field -----------------------------------------------------------------
 const anyOf = (patterns) =>
@@ -177,6 +272,7 @@ const valueSpec = (pattern, prefer, what) => (pattern ? { required: [pattern], p
 
 /** Draft a reference from an extraction, keeping only values whose evidence resolves. */
 function draftReference(extraction, input, notes) {
+  specsOf.clear();
   const kept = (claim, label, spec = {}) => {
     if (claim.value === null) return { value: null, anchors: [] };
     const anchors = anchorsFor(claim.evidence, input, spec, 'value', notes, label);
@@ -301,6 +397,14 @@ function draftReference(extraction, input, notes) {
     issues.push({ code: issue.code, anchors });
   }
   if (rewardCurrency.value === null || !rules.length) return null;
+  for (const [item, label] of [
+    [rewardCurrency, 'rewardCurrency'],
+    [pointValue, 'pointValueHundredthsOfCent'],
+    ...rules.map((rule, i) => [rule, `rules.${i} (${rule.category})`]),
+    ...exclusions.map((exclusion, i) => [exclusion, `exclusions.${i}`]),
+    ...issues.map((issue, i) => [issue, `issues.${i} (${issue.code})`]),
+  ])
+    item.anchors = separateAnchors(item.anchors, input, notes, label);
   return {
     rewardCurrency,
     pointValueHundredthsOfCent: pointValue,

@@ -3576,6 +3576,26 @@
             "decision": "accepted",
             "reason": "Added at adjudication; see note."
           }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.cap",
+          "current": {
+            "kind": "none",
+            "amountCents": null,
+            "period": null,
+            "rateAfterCapBps": null
+          },
+          "corrected": null,
+          "anchor": {
+            "sourceId": "marriott-bonvoy-boundless-product",
+            "quote": "Earn 6X points for every $1 spent at over 7,000 hotels participating in Marriott Bonvoy® with the Marriott Bonvoy Boundless® credit card.*"
+          },
+          "note": "Added by the coordinator under general convention 21 (2026-10-02): no Boundless capture states that the 6X hotel rate is uncapped; the only \"unlimited\" wording is a section heading above a capped 3X rate. The captures are silent, so the cap is null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Coordinator decision 2026-10-02 (general convention 21); captures re-read for any no-cap statement on this rate."
+          }
         }
       ],
       "addedRules": [],
@@ -3963,12 +3983,12 @@
           "corrected": 300,
           "anchor": {
             "sourceId": "air-canada-aeroplan-product",
-            "quote": "including 3X points on Air Canada purchases with your card, plus an additional 2X points from Air Canada when traveling as an Aeroplan 25K member.*"
+            "quote": "NEW! Up to 5x total points per $1 spent on Air Canada purchases, including 3X points on Air Canada purchases with your card, plus an"
           },
           "note": "The card earns 3X on Air Canada purchases; the marketed 5X adds 2X from Air Canada for Aeroplan 25K members, which is status earn, not card earn.",
           "adjudication": {
             "decision": "accepted",
-            "reason": "Checked against the capture; the finding is correct."
+            "reason": "Checked against the capture; the finding is correct. Copyright adjacency fix 2026-10-02: anchor quote shortened or replaced so that it does not run on from a neighbouring anchor into more than 25 consecutive capture words; the value is unchanged."
           }
         },
         {

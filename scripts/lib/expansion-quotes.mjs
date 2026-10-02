@@ -109,11 +109,13 @@ export { quotePattern, resolveQuote };
 
 // ---- Committed-file check --------------------------------------------------------------------------------
 const QUOTE_FORMS = { '‘': "'", '’': "'", '“': '"', '”': '"' };
+/** Lower-cased words, either quotation-mark form the same, quotation marks and markdown emphasis at word edges dropped. */
 const normalWords = (text) =>
   text
     .toLowerCase()
     .replace(/[‘’“”]/g, (mark) => QUOTE_FORMS[mark])
     .split(/\s+/)
+    .map((word) => word.replace(/^["'`*_]+|["'`*_]+$/g, ''))
     .filter(Boolean);
 const wordHash = (word) => {
   let h = 0x811c9dc5;
@@ -146,13 +148,20 @@ function runHashes(hashes, size) {
 export function captureIndex(bodies, limit = MAX_QUOTE_WORDS) {
   const size = limit + 1;
   const texts = [];
+  const lists = [];
   const runs = new Set();
-  for (const body of bodies) {
+  const at = new Map(); // word -> [capture, position] pairs
+  for (const [doc, body] of bodies.entries()) {
     const list = normalWords(body);
+    lists.push(list);
     texts.push(` ${list.join(' ')} `);
     for (const h of runHashes(list.map(wordHash), size)) runs.add(h);
+    list.forEach((word, position) => {
+      if (!at.has(word)) at.set(word, []);
+      at.get(word).push([doc, position]);
+    });
   }
-  return { size, runs, texts };
+  return { size, runs, texts, lists, at };
 }
 
 /** The first run of more than `limit` words of `text` that appears verbatim in a capture, or null. */
@@ -186,3 +195,67 @@ export const markdownUnits = (text) =>
     .flatMap((line, i) =>
       (line.trim().startsWith('|') ? line.split(/(?<!\\)\|/) : [line]).map((unit) => [`line ${i + 1}`, unit]),
     );
+
+/**
+ * Where `text` occurs verbatim in the captures, as word spans { doc, start, end } (end exclusive). A quote may
+ * start or end inside a capture word ("X points" from "4X points"), so the first and last words of a quote of
+ * three or more words only need to end or start that capture word.
+ */
+export function captureSpans(text, index) {
+  const list = normalWords(text);
+  if (!list.length) return [];
+  const pivot = list.length >= 3 ? 1 : 0;
+  const spans = [];
+  for (const [doc, position] of index.at.get(list[pivot]) ?? []) {
+    const start = position - pivot;
+    const words = index.lists[doc];
+    if (start < 0 || start + list.length > words.length) continue;
+    const fits = list.every((word, i) => {
+      const seen = words[start + i];
+      if (list.length >= 3 && i === 0) return seen.endsWith(word);
+      if (list.length >= 3 && i === list.length - 1) return seen.startsWith(word);
+      return seen === word;
+    });
+    if (fits) spans.push({ doc, start, end: start + list.length });
+  }
+  return spans;
+}
+
+/**
+ * The longest run of more than `limit` consecutive capture words formed by `texts` read together (quotes that
+ * overlap or abut in one capture, in any order), or null. Returns { words, texts } with the indices of the
+ * texts that form it.
+ */
+export function joinedCaptureRun(texts, index, limit = MAX_QUOTE_WORDS) {
+  const spans = texts.flatMap((text, i) => captureSpans(text, index).map((span) => ({ ...span, i })));
+  spans.sort((a, b) => a.doc - b.doc || a.start - b.start);
+  let best = null;
+  let run = null;
+  for (const span of spans) {
+    if (run && run.doc === span.doc && span.start <= run.end) {
+      run.end = Math.max(run.end, span.end);
+      run.texts.add(span.i);
+    } else run = { doc: span.doc, start: span.start, end: span.end, texts: new Set([span.i]) };
+    const words = run.end - run.start;
+    if (words > limit && run.texts.size > 1 && (!best || words > best.words))
+      best = { words, texts: [...run.texts].sort((a, b) => a - b), doc: run.doc, start: run.start };
+  }
+  if (best) return best;
+  if (texts.some((text) => longCaptureRun(text, index))) return null; // reported on its own
+  const joined = longCaptureRun(texts.join(' '), index);
+  return joined ? { words: index.size, texts: texts.map((_, i) => i), run: joined } : null;
+}
+
+/** The quote text of a JSON array element: the string itself, or an anchor object's `quote`. */
+const quoteOf = (item) =>
+  typeof item === 'string' ? item : typeof item?.quote === 'string' ? item.quote : null;
+
+/** Every JSON array holding two or more quote-bearing elements, with its path and the elements' texts. */
+export function* quoteArraysOf(value, path = '$') {
+  if (Array.isArray(value)) {
+    const texts = value.map(quoteOf);
+    if (texts.filter((text) => text !== null).length > 1) yield [path, texts.map((text) => text ?? '')];
+    for (const [i, item] of value.entries()) yield* quoteArraysOf(item, `${path}[${i}]`);
+  } else if (value && typeof value === 'object')
+    for (const [key, item] of Object.entries(value)) yield* quoteArraysOf(item, `${path}.${key}`);
+}

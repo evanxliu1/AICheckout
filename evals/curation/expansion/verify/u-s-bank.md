@@ -56,6 +56,14 @@ Product notes:
 
 Draft notes:
 - rules.16 (travel-portal, "prepaid air, car and hotel reservations in the travel center") rateBps: anchor kept, but no 25-word window states the rate (500 bps); check the value against its anchor
+- rules.2 (dining): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.3 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.4 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.5 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.6 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.7 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.8 (entertainment): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.11 (other): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## U.S. Bank Smartly Visa Signature Card (`us-bank-smartly`)
 
@@ -101,6 +109,9 @@ Currency: points; point value: —.
 | 5 | streaming | qualifying streaming subscription service purchases | 200 | 0 | none | — | — | — |
 
 Exclusions: 1; issues: missing.
+
+Draft notes:
+- rules.1 (dining): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## U.S. Bank Altitude Connect Visa Signature Card (`us-bank-altitude-connect`)
 
@@ -295,6 +306,9 @@ Currency: points; point value: —.
 
 Exclusions: 1; issues: missing.
 
+Draft notes:
+- exclusions.0: an anchor that ran on from another was shortened (no 25+ word run)
+
 ## SKYPASS Visa Signature Card (`us-bank-skypass-visa-signature`)
 
 co-brand; co-brand: Korean Air; annual fee $99; research currency: miles
@@ -372,6 +386,7 @@ Exclusions: 8; issues: ambiguous, out-of-scope.
 
 Draft notes:
 - rules.0 (other, "Purchases classified as insurance") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($4,000))
+- rules.0 (other): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## State Farm Good Neighbor Visa Card (`us-bank-state-farm-good-neighbor`)
 

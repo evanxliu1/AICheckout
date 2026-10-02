@@ -41,6 +41,7 @@ Exclusions: 2; issues: missing.
 Draft notes:
 - rules.1 (dining, "4X Membership Rewards® points per dollar spent on purchases ") cap: anchor kept, but no 25-word window states the cap amount ($5,000); check the value against its anchor
 - rules.2 (supermarkets, "4X Membership Rewards® points per dollar spent at US superma") cap: anchor kept, but no 25-word window states the cap amount ($2,500); check the value against its anchor
+- exclusions.0: an anchor that ran on from another was shortened (no 25+ word run)
 
 ## The Platinum Card from American Express (`amex-platinum`)
 
@@ -66,6 +67,7 @@ Exclusions: 2; issues: ambiguous, out-of-scope, missing.
 Draft notes:
 - rules.1 (travel-portal, "eligible travel purchases") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($500,000))
 - rules.3 (travel-portal, "2X Membership Rewards® Points on American Express Travel® On") rateBps: a quote over 25 words was dropped (no 25-word window carries the rate (200 bps))
+- rules.3 (travel-portal): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Delta SkyMiles Blue American Express Card (`amex-delta-skymiles-blue`)
 
@@ -142,6 +144,7 @@ Product notes:
 
 Draft notes:
 - rules.1 (other, "Delta Purchases"): rule dropped (no resolving quote)
+- rules.1 (other): an anchor that ran on from another was dropped (no 25+ word run)
 
 ## Delta SkyMiles Reserve American Express Card (`amex-delta-skymiles-reserve`)
 
@@ -163,6 +166,9 @@ Exclusions: 2; issues: missing.
 
 Product notes:
 - merchant-specific (unanchored): Delta Purchases — 3X
+
+Draft notes:
+- exclusions.0: an anchor that ran on from another was dropped (no 25+ word run)
 
 ## Hilton Honors American Express Card (`amex-hilton-honors`)
 
@@ -191,6 +197,7 @@ Product notes:
 Draft notes:
 - rules.0 (all-purchases, "Eligible purchases"): rule dropped (no resolving quote)
 - issue ambiguous: dropped (no resolving quote)
+- rules.1 (dining): an anchor that ran on from another was dropped (no 25+ word run)
 
 ## Hilton Honors American Express Surpass Card (`amex-hilton-honors-surpass`)
 
@@ -222,6 +229,7 @@ Draft notes:
 - rules.0 (all-purchases, "eligible purchases") rateBps: a quote over 25 words was dropped (no 25-word window carries the rate (300 bps))
 - rules.0 (all-purchases, "eligible purchases") rateBps: value dropped (no resolving quote)
 - rules.0 (all-purchases, "eligible purchases"): rule dropped (no resolving quote)
+- rules.4 (online-retail): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Hilton Honors American Express Aspire Card (`amex-hilton-honors-aspire`)
 
@@ -276,6 +284,9 @@ Exclusions: 2; issues: ambiguous, missing, missing, out-of-scope.
 
 Product notes:
 - merchant-specific (anchored, keyword-search): Marriott Bonvoy properties — 6X
+
+Draft notes:
+- rules.2 (supermarkets): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Marriott Bonvoy Brilliant American Express Card (`amex-marriott-bonvoy-brilliant`)
 

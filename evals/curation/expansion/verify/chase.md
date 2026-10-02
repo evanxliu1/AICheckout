@@ -684,6 +684,9 @@ Exclusions: 0; issues: ambiguous, missing, missing.
 Product notes:
 - merchant-specific (unanchored): "qualifying purchases made at Hyatt hotels and resorts" — 4X
 
+Draft notes:
+- rules.3 (transit): an anchor that ran on from another was dropped (no 25+ word run)
+
 ## Chase Air Canada Aeroplan Card (`air-canada-aeroplan`)
 
 co-brand; co-brand: Air Canada; annual fee $195; research currency: points

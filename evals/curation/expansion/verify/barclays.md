@@ -125,6 +125,7 @@ Product notes:
 
 Draft notes:
 - exclusion "Balance transfers, cash advances, fees, interest charges, and…": dropped (no resolving quote)
+- rules.1 (dining): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## JetBlue Plus Card (`barclays-jetblue-plus`)
 
@@ -152,6 +153,10 @@ Exclusions: 1; issues: missing, ambiguous, missing, out-of-scope.
 Product notes:
 - merchant-specific (anchored, keyword-search): "eligible JetBlue purchases" — 6X
 
+Draft notes:
+- rules.3 (dining): an anchor that ran on from another was shortened (no 25+ word run)
+- issues.3 (out-of-scope): an anchor that ran on from another was shortened (no 25+ word run)
+
 ## JetBlue Premier Card (`barclays-jetblue-premier`)
 
 co-brand; co-brand: JetBlue; annual fee $499; research currency: points
@@ -177,6 +182,10 @@ Exclusions: 1; issues: missing, ambiguous, out-of-scope.
 
 Product notes:
 - merchant-specific (anchored, keyword-search): "eligible JetBlue purchases" — 6X
+
+Draft notes:
+- rules.3 (dining): an anchor that ran on from another was shortened (no 25+ word run)
+- issues.2 (out-of-scope): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Breeze Easy Visa Credit Card (`barclays-breeze-easy-visa`)
 
@@ -206,6 +215,11 @@ Product notes:
 - merchant-specific (anchored, research-quote): Breeze "Nicer Bundles and Nicest Bundles" — up to 10X (5X when you buy + 5X when you fly)
 - merchant-specific (unanchored): Breeze "Nice Bundles" — up to 4X (2X buy + 2X fly)
 - merchant-specific (unanchored): Breeze "No Flex Fares" — up to 2X (1X buy + 1X fly)
+
+Draft notes:
+- rules.1 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.2 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.3 (other): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Wyndham Rewards Earner Card (`barclays-wyndham-rewards-earner`)
 
@@ -521,6 +535,10 @@ Product notes:
 Draft notes:
 - rules.2 (other, "Our brands in locations outside of the United States and Pue"): issuerWording is not verbatim in the captures; replace it with the capture's wording
 - rules.4 (other, "Apparel/clothing store Net Purchases outside our Family of B"): issuerWording is not verbatim in the captures; replace it with the capture's wording
+- rules.1 (other): an anchor that ran on from another was dropped (no 25+ word run)
+- rules.2 (other): an anchor that ran on from another was dropped (no 25+ word run)
+- rules.3 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.4 (other): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Old Navy Encore Mastercard (`barclays-old-navy-encore-mastercard`)
 
@@ -550,6 +568,10 @@ Product notes:
 
 Draft notes:
 - rules.3 (other, "Apparel/clothing store Net Purchases outside our Family of B"): issuerWording is not verbatim in the captures; replace it with the capture's wording
+- rules.0 (other): an anchor that ran on from another was dropped (no 25+ word run)
+- rules.1 (other): an anchor that ran on from another was dropped (no 25+ word run)
+- rules.2 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.3 (other): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Banana Republic Encore Mastercard (`barclays-banana-republic-encore-mastercard`)
 
@@ -578,6 +600,10 @@ Product notes:
 
 Draft notes:
 - rules.4 (other, "Apparel/clothing store Net Purchases outside our Family of B"): issuerWording is not verbatim in the captures; replace it with the capture's wording
+- rules.1 (other): an anchor that ran on from another was dropped (no 25+ word run)
+- rules.2 (other): an anchor that ran on from another was dropped (no 25+ word run)
+- rules.3 (other): an anchor that ran on from another was shortened (no 25+ word run)
+- rules.4 (other): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## Athleta Encore Mastercard (`barclays-athleta-encore-mastercard`)
 
@@ -607,6 +633,10 @@ Product notes:
 
 Draft notes:
 - rules.4 (other, "Apparel Purchases Outside our Family of Brands in locations "): issuerWording is not verbatim in the captures; replace it with the capture's wording
+- rules.1 (other): an anchor that ran on from another was dropped (no 25+ word run)
+- rules.2 (other): an anchor that ran on from another was dropped (no 25+ word run)
+- rules.3 (other): an anchor that ran on from another was dropped (no 25+ word run)
+- rules.4 (other): an anchor that ran on from another was shortened (no 25+ word run)
 
 ## AARP Travel Rewards Mastercard from Barclays (`barclays-aarp-travel-rewards-mastercard`)
 

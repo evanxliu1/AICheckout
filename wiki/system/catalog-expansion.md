@@ -6,8 +6,8 @@ status: draft
 tags: [system, catalog, curation, expansion, phase-7]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:00:00Z
-verified_commit: 4b487da
+  at: 2026-10-03T01:00:00Z
+verified_commit: e940b6f
 ---
 
 # Catalog expansion (Phase 7)
@@ -70,6 +70,10 @@ Process ([decision](../decisions/2026-10-02-expansion-verification-conventions.m
 | Wells Fargo | 6 | 0 | 6 | 0 |
 | **Total** | 180 | 10 | 163 | 7 |
 
+**Copyright adjacency fix (2026-10-02).** A reviewer found anchors that are within 25 words each but, read together, repeat up to 50 consecutive capture words: two cut windows of one sentence that overlap, or consecutive sentences that abut. `check-expansion-quotes.mjs` now also checks every JSON array of quotes (strings or anchor `quote`s) for spans that overlap or abut into a run of more than 25 capture words, reads consecutive markdown lines and cells as one text, and scans `verification/README.md` and `verification/conventions/*.md` (general rule 22). Before the fix it flagged 154 anchor arrays in `corpus.json` (67 distinct passages: 30 abutting, 37 overlapping), 119 in `corpus.draft.json` (49 passages) and 79 in the findings files. `draft-expansion-labels.mjs` now keeps the first anchor and cuts a later one that runs on from it to its longest part clear of it (one-word gap) that still carries its evidence, or drops it (101 anchors cut, 19 dropped). In the findings, 83 findings had an anchor quote shortened or replaced by an equivalent draft anchor (reason marked "copyright adjacency fix 2026-10-02"), and 21 accepted fixes had their `current` rebased onto the regenerated drafts (removals of rules, issues or anchors the drafts now cut). Labels are unchanged apart from anchors (compared programmatically, 173 cases), except one rule-21 fix below.
+
+**Caps (rule 21).** Of 332 rules with `cap.kind: "none"`, 298 have a no-cap anchor; of the other 34, 33 are backed by a capture sentence (card-wide terms such as "no limit to the total points you can earn", "No Mileage Cap", "unlimited 2X"); `marriott-bonvoy-boundless` 6X hotels had only a section heading, so its cap is now null (accepted finding in `chase.json`). The reviewer's examples (Prime Visa, Costco Anywhere, Atmos Ascent base rate, Gap Encore) all have such a statement and keep `none`. No airline or hotel card has a point value (rule 20).
+
 Dropped: `capital-one-kohls-rewards-visa`, `synchrony-mylowes-rewards-credit-card`, `synchrony-dicks-mastercard`, `synchrony-belk-rewards-mastercard` and `us-bank-state-farm-good-neighbor` (captures state no earn rate); `synchrony-phillips-66-credit-card` and `synchrony-techron-advantage-visa` (cents-per-gallon fuel rewards).
 
 Known gaps in the verified labels:
@@ -79,6 +83,7 @@ Known gaps in the verified labels:
 - **Time-limited rotating rules.** Chase Freedom Flex and the Discover it rotating cards keep only the Q4 2026 categories, which end 2026-12-31; the corpus needs a refresh before then.
 - **Upromise 1.529%** (`barclays-upromise-world-mastercard`, linked College Savings Plan) has `rateBps` null, because 152.9 bps is not an integer; the base rule is 125.
 - **Marriott Bonvoy Bold** (Chase) has no base rate: the captures state none, and the anchorless `missing` issue was removed under rule 16.
+- **Judgment calls left as labelled (2026-10-02, coordinator):** One Key's Expedia/Hotels.com/Vrbo portal rule has `usMerchantsOnly: true` (bookings through the U.S. version of the sites); Discover it Chrome has no separate EV-charging rule, EV charging is treated as inside its gas rule; Prime Visa's Amazon rule has `usMerchantsOnly: null`; the JCPenney Mastercard per-transaction maximum is not modelled as a cap; inflight purchase rebates (statement credits on airline cards) are not earning rules and are left out.
 - **Key Rewards** (Williams Sonoma, Pottery Barn, West Elm, Key Rewards Visa) are four near-duplicate cards with byte-identical captures and the same labels.
 
 ## Remaining work
@@ -89,7 +94,7 @@ Known gaps in the verified labels:
 
 ## Gotchas
 
-- Captures and extraction traces stay gitignored (`evals/curation/expansion/captures/`, `extractions/`). The drafts, packets and findings are committed only because every quote in them is at most 25 words; run `node scripts/check-expansion-quotes.mjs` before committing a change to them.
+- Captures and extraction traces stay gitignored (`evals/curation/expansion/captures/`, `extractions/`). The drafts, packets and findings are committed only because every quote in them is at most 25 words; run `node scripts/check-expansion-quotes.mjs` before committing a change to them. The 25-word limit also applies to quotes read together: anchors of one item must not overlap or abut in the capture into a longer run (general rule 22).
 - The cut keeps the longest window (25 words) around the value's token, so an anchor may start or end mid-clause; verifiers must read the capture around it. A long quote that only states another rate or amount than the draft is kept and flagged as a mismatch (how the `amex-gold` cap errors show up), not dropped.
 - `loadCorpusV2` reads `corpus.v2.json` and a manifest of at most 100 sources; the expansion has 321 sources and writes `corpus.json`. The eval step needs a loader or limits that fit.
 - `extract-cards.mjs` redoes any saved extraction made with another configuration, so a set always comes from one configuration; the gitignored `extractions-gpt55/` (90 files on 2026-10-02) holds traces from an earlier configuration, by its name gpt-5.5. It was kept: `draft-expansion-labels.mjs` reads only `extractions/`, and the draft outputs from that trial were overwritten by the luna run's.
