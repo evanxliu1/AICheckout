@@ -205,7 +205,7 @@ export function pipelineMetrics({ cards, draft, corpus, files }) {
       cardFieldCorrectionRate:
         'changed values / drafted cards × 2 (rewardCurrency, pointValueHundredthsOfCent)',
       draftRulesUnchangedRate: 'draft rules kept with every compared value unchanged / draft rules',
-      confirmed: 'verifier verdict "confirmed": no fix or addition at all',
+      confirmed: 'verifier verdict "confirmed": no label fix or addition (product-note changes allowed)',
       valuesUnchanged: 'drafted card whose rule and card values are all unchanged (anchors may differ)',
     },
     totals: summary(total),

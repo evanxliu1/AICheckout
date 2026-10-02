@@ -19,7 +19,7 @@ Phase 7 Stage 2 milestone M9, measured 2026-10-02. Data: [`expansion.json`](expa
 | In the verified corpus | 173 |
 | Drafted (labels seeded from a luna extraction) | 158 |
 | Undrafted (no anchored draft; the verifier wrote every label from the captures) | 15 |
-| Confirmed unchanged (verdict `confirmed`: no fix or addition at all) | 10 |
+| Confirmed unchanged (verdict `confirmed`: no label fix or addition; 3 had product-note changes only) | 10 |
 | Drafted cards whose values all stayed the same (anchors may differ) | 34 |
 | Dropped by verification (1 drafted, 6 undrafted) | 7 |
 
