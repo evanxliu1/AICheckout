@@ -1,3 +1,18 @@
+---
+type: Source Document
+title: Phase 2–6 plan and hand-off (2026-10-01)
+description: Pre-wiki working plan for Phases 2–6 including Phase 3/3b decisions and milestones; historical reference only.
+status: deprecated
+archived: 2026-10-02
+superseded_by: ../product/roadmap.md
+tags: [archive, source]
+generated:
+  by: human:evanxliu1 (pre-wiki, agent-assisted)
+  at: 2026-10-02T02:30:00Z
+---
+
+> Archived under the [archive policy](../guides/archive-policy.md). Describes the project as of 2026-10-01; not current instructions. Superseded by [now.md](../now.md), [Roadmap](../product/roadmap.md), [decisions](../decisions/index.md).
+
 # Goal: measured LLM extraction on real issuer terms, then a useful product
 
 Written 2026-09-28 as a hand-off for a fresh session. Read this file first, then `docs/design.md` and `docs/research/cashback-card-terms-2026.md`.

@@ -9,7 +9,7 @@ A Chrome extension that tells you which card you already own earns the most at c
 
 **Live:** [site](https://ai-checkout-api.onrender.com/) · [results](https://ai-checkout-api.onrender.com/results/) · [review app](https://ai-checkout-api.onrender.com/review/) (reviewers only) · [catalog API](https://ai-checkout-api.onrender.com/v1/catalog)
 
-[Shopper demo video](docs/release/assets/shopper-demo.mp4) · [Curation demo video](docs/release/assets/full-stack-demo.mp4) · [Design doc](docs/design.md)
+[Shopper demo video](docs/release/assets/shopper-demo.mp4) · [Curation demo video](docs/release/assets/full-stack-demo.mp4) · [Architecture](wiki/system/architecture.md) · [Development wiki](wiki/index.md)
 
 ## How it works
 
@@ -51,7 +51,8 @@ apps/review/              React review app
 apps/site/                Public site: overview, results, architecture, privacy, support
 evals/curation/           Evaluation corpus, scorer docs, baseline
 supabase/                 Migrations, seed, SQL tests
-docs/                     Design doc, release materials, verification notes
+docs/                     Release and store materials, verification notes, eval results, research
+wiki/                     Development wiki: state, decisions, architecture, runbooks (start at wiki/now.md)
 ```
 
 ## Run it
