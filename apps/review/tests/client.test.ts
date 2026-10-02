@@ -63,3 +63,17 @@ it('reads one capture with its text and refuses a summary that carries source te
     code: 'review_unavailable',
   });
 });
+it('reports how long a rate-limited request should wait, bounded to a minute', async () => {
+  const api = createReviewApi(async () => 'token', vi.fn());
+  const refused = (headers: Record<string, string>) => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(Response.json({ error: 'too_many_requests' }, { status: 429, headers })),
+    );
+    return api.capture({}, new AbortController().signal).catch((error) => error);
+  };
+  expect(await refused({ 'Retry-After': '12' })).toMatchObject({ status: 429, retryAfterMs: 12000 });
+  expect(await refused({ 'Retry-After': '9999' })).toMatchObject({ retryAfterMs: 60000 });
+  expect(await refused({ 'Retry-After': 'soon' })).toMatchObject({ retryAfterMs: undefined });
+  expect(await refused({})).toMatchObject({ retryAfterMs: undefined });
+});

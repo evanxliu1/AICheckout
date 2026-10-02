@@ -53,7 +53,7 @@ Verified 2026-10-02 by reading the code and running `npm test --workspace=@ai-ch
 | --- | --- |
 | Default body limit | 256 KiB (per-route overrides: sources 1,516,384 bytes = 250,000 chars × 6 + 16 KiB (`MAX_CAPTURE_REQUEST_BYTES`), drafts 1,114,112 bytes = 1 MiB catalog + 64 KiB (`MAX_DRAFT_REQUEST_BYTES`), apply 192 KiB, extraction 4 KiB, publish 16 KiB) |
 | Request / connection timeout | 10 s / 10 s |
-| Review rate limit | 60 requests/min per IP per process (in-memory, `trustProxy` off); `POST /sources` 600/min (one draft's sources) |
+| Review rate limit | 60 requests/min per IP per process (in-memory, `trustProxy` off); `POST /sources` 200/min (`MAX_CAPTURES_PER_MINUTE`; up to ~1.5 MB each, accepted before the token is verified, so kept well under one 600-source draft a minute; 429 carries `Retry-After`) |
 | Catalog read timeout | 7 s (`AbortSignal.timeout`) |
 | Catalog read cap | 2 MiB for the Data API row (`MAX_CATALOG_READ_BYTES`; JSONB text adds spaces); the catalog itself ≤ 1 MiB for v3 |
 | Request log fields | request ID, route template, method, status, duration (no bodies, tokens or source text) |

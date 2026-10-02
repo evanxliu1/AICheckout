@@ -70,7 +70,7 @@ Blockers enforced in the UI and again by the API/database: invalid schema, missi
 
 - Reviewer membership is provisioned by the operator in `catalog_private.reviewers`; normal users see nothing and cannot self-enroll ([Database](database.md#authority)).
 - The v1 extraction panel is hidden for schema 2 and 3 drafts; v2 extraction into drafts does not exist yet ([Curation harness](curation-harness.md#gotchas)).
-- Capturing 340 sources is 340 `POST /v1/review/sources` requests then one draft save; `/sources` allows 600 a minute. Captures are idempotent, so a capture run that fails part way can be repeated; nothing is attached until all succeed.
+- Capturing 340 sources is 340 `POST /v1/review/sources` requests then one draft save; `/sources` allows 200 a minute, and on a 429 the app waits for `Retry-After` (up to 10 times per capture) and retries the same capture, so 340 sources take about two minutes. Captures are idempotent, so a capture run that fails part way can be repeated; nothing is attached until all succeed.
 - A capture folder must hold `<source id>.txt` files exactly as captured (the hash is of the UTF-8 text); other files are skipped and counted.
 - The structured editor edits choices, the answers a rule requires, acceptance and new IDs only through the JSON editor.
 - Captured text is rendered as inert text, never HTML.

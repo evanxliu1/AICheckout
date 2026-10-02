@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { CATALOG_V3_LIMITS, PILOT_CATALOG, catalogSchema } from '@ai-checkout/rewards-core';
 import {
   MAX_CAPTURE_REQUEST_BYTES,
+  MAX_CAPTURES_PER_MINUTE,
   MAX_DRAFT_SOURCES,
   MAX_REVIEW_RESPONSE_BYTES,
   MAX_SOURCE_BODY_CHARS,
@@ -375,6 +376,30 @@ describe('large catalog review (Stage 2 M8)', () => {
       expect((await instance.inject({ url: '/v1/review/', headers: { authorization } })).statusCode).toBe(
         status,
       );
+  });
+  it('limits captures to MAX_CAPTURES_PER_MINUTE and says when to retry', async () => {
+    const rpc = vi.fn(async () => ({ ...capture, body: 'stored' }));
+    const { instance } = app(rpc);
+    const send = () =>
+      instance.inject({
+        method: 'POST',
+        url: '/v1/review/sources',
+        headers: { authorization },
+        payload: {
+          sourceKey: 'long-terms',
+          title: capture.title,
+          url: capture.url,
+          checkedOn: '2026-09-25',
+          body: 'Terms',
+        },
+      });
+    expect(MAX_CAPTURES_PER_MINUTE).toBeLessThan(MAX_DRAFT_SOURCES);
+    for (let i = 0; i < MAX_CAPTURES_PER_MINUTE; i++) expect((await send()).statusCode).toBe(200);
+    const limited = await send();
+    expect(limited.statusCode).toBe(429);
+    expect(limited.json()).toEqual({ error: 'too_many_requests' });
+    expect(Number(limited.headers['retry-after'])).toBeGreaterThan(0);
+    expect(rpc).toHaveBeenCalledTimes(MAX_CAPTURES_PER_MINUTE);
   });
   it('keeps the largest possible summary under the review response cap', () => {
     // Two catalogs at the v3 limit (draft and published) and 600 sources with the longest metadata;

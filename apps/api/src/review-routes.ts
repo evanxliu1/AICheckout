@@ -15,7 +15,7 @@ import {
   startExtractionInputSchema,
   MAX_CAPTURE_REQUEST_BYTES,
   MAX_DRAFT_REQUEST_BYTES,
-  MAX_DRAFT_SOURCES,
+  MAX_CAPTURES_PER_MINUTE,
 } from '@ai-checkout/catalog-review';
 import { ReviewError, type ReviewRpc } from './review-repository.ts';
 import { curationRunSchema, LedgerError } from './curation/ledger.ts';
@@ -181,12 +181,14 @@ export async function reviewRoutes(
     },
   );
   // A draft cites up to 600 sources and the review app captures them one request each, so this route
-  // allows that many a minute; every other review route keeps the shared limit.
+  // has its own, higher limit (the app waits and retries on 429); every other review route keeps the
+  // shared limit. It stays well below 600/min because each request may carry ~1.5 MB and is accepted
+  // before the database verifies the token.
   app.post(
     '/sources',
     {
       bodyLimit: MAX_CAPTURE_REQUEST_BYTES,
-      config: { rateLimit: { max: MAX_DRAFT_SOURCES, timeWindow: 60000 } },
+      config: { rateLimit: { max: MAX_CAPTURES_PER_MINUTE, timeWindow: 60000 } },
     },
     async (request) => {
       const value = input(captureSourceInputSchema, request.body);

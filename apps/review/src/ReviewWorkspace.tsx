@@ -2,10 +2,28 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { draftIdSchema, type ReviewQueue, type ReviewSummary } from '@ai-checkout/catalog-review';
 import type { Catalog } from '@ai-checkout/rewards-core';
 import { AlertInline, ApplicationState, Badge, Button } from '@ai-checkout/ui';
-import type { ReviewApi } from './client';
+import { ReviewApiError, type ReviewApi } from './client';
 import ExtractionPanel from './ExtractionPanel';
 import { DraftPanel, type CaptureItem } from './DraftPanel';
 import StartDraft from './StartDraft';
+
+/** Consecutive rate-limit waits allowed for one capture before the bulk capture gives up. */
+const MAX_RATE_LIMIT_WAITS = 10;
+/** Resolves after `ms`, or rejects as soon as `signal` aborts. */
+function pause(ms: number, signal: AbortSignal) {
+  return new Promise<void>((resolve, reject) => {
+    if (signal.aborted) return reject(signal.reason);
+    const timer = setTimeout(() => {
+      signal.removeEventListener('abort', abort);
+      resolve();
+    }, ms);
+    function abort() {
+      clearTimeout(timer);
+      reject(signal.reason);
+    }
+    signal.addEventListener('abort', abort, { once: true });
+  });
+}
 
 export default function ReviewWorkspace({
   api,
@@ -167,17 +185,35 @@ export default function ReviewWorkspace({
         const source = detail.draft.catalog.sources.find((value) => value.id === item.sourceKey);
         if (!source) continue;
         if (items.length > 1) setPending(`Capturing source ${index + 1} of ${items.length}…`);
-        const doc = await api.capture(
-          {
-            sourceKey: source.id,
-            title: source.title,
-            url: source.url,
-            checkedOn: source.checkedOn,
-            body: item.body,
-          },
-          signal,
-        );
-        captured.set(source.id, doc.id);
+        const body = {
+          sourceKey: source.id,
+          title: source.title,
+          url: source.url,
+          checkedOn: source.checkedOn,
+          body: item.body,
+        };
+        // `/sources` allows MAX_CAPTURES_PER_MINUTE requests; past it, wait as the server asks and
+        // retry the same capture (identical captures are deduplicated by the database).
+        for (let waits = 0; ; waits++) {
+          try {
+            const doc = await api.capture(body, signal);
+            captured.set(source.id, doc.id);
+            break;
+          } catch (failure) {
+            if (
+              signal.aborted ||
+              !(failure instanceof ReviewApiError) ||
+              failure.status !== 429 ||
+              waits >= MAX_RATE_LIMIT_WAITS
+            )
+              throw failure;
+            const wait = failure.retryAfterMs ?? 15000;
+            setPending(
+              `Capturing source ${index + 1} of ${items.length}: waiting ${Math.ceil(wait / 1000)} s for the capture rate limit…`,
+            );
+            await pause(wait, signal);
+          }
+        }
       }
       const sourceDocumentIds = [
         ...detail.sources.filter((value) => !captured.has(value.source_key)).map((value) => value.id),
