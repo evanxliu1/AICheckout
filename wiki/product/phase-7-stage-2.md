@@ -6,7 +6,7 @@ status: draft
 tags: [product, plan, phase-7, catalog, engine, extension]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T20:30:00Z
+  at: 2026-10-02T23:00:00Z
 stale_after: 2026-11-01T00:00:00Z
 sources:
   - resource: ../system/catalog-expansion.md
@@ -114,7 +114,8 @@ Start in parallel: M1, M3, M9, M11 (draft). After M1: M2, M4 and M8 in parallel.
 - **Scope.** Loader option for the 321-source manifest (no scorer change). Two measurements, reported separately: (a) **pipeline metrics** from committed files: draft → verified correction rate per field and issuer, rules added and removed by verifiers, cards confirmed unchanged (10 of 173), cards dropped (7) and undrafted (21); (b) **re-scored saved luna traces** with `v2-scorer.2`, labelled agreement with labels seeded from luna drafts, an upper bound, plus (c) a **cross-model live run** of a model that neither drafted nor verified the labels. Results to `docs/evals/expansion.{md,json}`; the expansion cards were never used for prompt tuning, and that is stated.
 - **Files.** `apps/api/src/curation/v2/corpus.ts` (option), `scripts/score-expansion-traces.mjs`, `scripts/expansion-pipeline-metrics.mjs`, `docs/evals/expansion.*`.
 - **Acceptance.** Every number reproducible from saved traces or committed files; the bias disclosure appears next to the luna number; `eval:v2 --check` unchanged.
-- **Evan.** Start (or authorize) the cross-model run: `npm run eval:v2 -- --provider codex --model <model> --corpus evals/curation/expansion/corpus.json` from the worktree with the captures.
+- **Evan.** Start (or authorize) the cross-model run; the command is printed by `node scripts/score-expansion-traces.mjs --print-command` and in [`docs/evals/expansion.md`](../../docs/evals/expansion.md) (`--corpus evals/curation/expansion --captures DIR --split heldout --allow-heldout`).
+- **Status (2026-10-02).** Implemented on branch `s2-m9-expansion-eval`: loader layout and `--captures`, both scripts, `docs/evals/expansion.*` with all three sections; the gpt-5.5 cross-model run (collected 2026-10-02) scores 76.2% end to end ([decision](../decisions/2026-10-02-expansion-eval-design.md)). Undrafted cards: 21 of 180, of which 15 are in the corpus.
 
 ### M10 Docs, site, publish
 - **Scope.** Wiki pages ([rewards engine](../system/rewards-engine.md), [reward rules](../domain/reward-rules.md), [cards](../domain/cards.md), [merchants](../domain/merchants.md), [extension](../system/extension.md), [cart badge](../system/cart-badge.md), [review app](../system/review-app.md), [database](../system/database.md), [evaluation](../system/evaluation.md), [catalog expansion](../system/catalog-expansion.md)); a catalog release runbook in `wiki/ops/`; README and site copy (seven cards → 180); stale package READMEs (decision 5).
@@ -124,6 +125,7 @@ Start in parallel: M1, M3, M9, M11 (draft). After M1: M2, M4 and M8 in parallel.
 ### M11 Card-expansion pipeline readiness
 - **Scope.** Decision record and plan page for the pipeline: a CLI in `tools/catalog-pipeline` (stages research → capture → extract → draft → verify → adjudicate → apply → overlay → build → eval, resumable per batch), the skill `.claude/skills/expand-catalog`, subagent definitions `card-researcher` and `card-verifier` (plus an adjudicator), a hash-only freshness check, the `rate_not_in_evidence` fix for "NX" multiples, and the boundary rule: product code (`extension`, `packages/*`, `apps/*`) never imports `tools/`, enforced by ESLint `no-restricted-imports` and a test. Existing `scripts/*expansion*` move into the CLI in the pipeline phase, not here.
 - **Acceptance.** Evan approves the design; the boundary lint rule lands with a failing-import test.
+- **Status (2026-10-02).** Drafted on branch `stage2-m11-pipeline-design`: [card-expansion pipeline design](../system/card-expansion-pipeline.md) (adds a `validate` stage, the `v2-validator.2` plan for "NX" multiples, and open questions), [decision record (proposed)](../decisions/2026-10-02-agent-driven-card-pipeline.md), draft `.claude/skills/expand-catalog/SKILL.md` and `.claude/agents/card-{researcher,verifier,adjudicator}.md`, the ESLint boundary rule and `scripts/lib/import-boundary.test.mjs`. Waiting for Evan's approval; finalize after M5.
 
 ## Risks across the stage
 
