@@ -63,7 +63,7 @@ export function autoPurchase(
   amountCents: number,
   paymentPath: TabEntry['paymentPath'],
   now: number,
-): Purchase {
+): Purchase & { paymentPath: TabEntry['paymentPath'] } {
   const profile =
     catalog.schemaVersion === 2 ? catalog.merchants.find((m) => m.id === merchantId) : undefined;
   return {

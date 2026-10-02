@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { CATALOG_V2, PILOT_CATALOG } from '@ai-checkout/rewards-core';
+import { CATALOG_V2, CATALOG_V3_LIMITS, PILOT_CATALOG } from '@ai-checkout/rewards-core';
+import { largeCatalogV3 } from '../../../packages/rewards-core/large-catalog-fixture.ts';
 import { createCatalogFetcher, readBoundedJson } from '@ai-checkout/catalog-client';
 import { createApp } from '../src/app.ts';
 import { createCatalogRepository } from '../src/catalog-repository.ts';
@@ -92,6 +93,29 @@ describe('catalog transport and database adapter', () => {
     expect(new URL(url).searchParams.get('select')).toContain('!catalog_head_release_sequence_fkey');
     expect(options.headers).toEqual({ apikey: 'public-key', Accept: 'application/json' });
     expect(options.redirect).toBe('error');
+  });
+  it('reads and serves a catalog v3 release near the 1 MiB limit (Stage 2 M8)', async () => {
+    let cards = 300,
+      catalog = largeCatalogV3({ cards, day: '2026-10-02' });
+    while (Buffer.byteLength(JSON.stringify(catalog)) > CATALOG_V3_LIMITS.bytes)
+      catalog = largeCatalogV3({ cards: --cards, day: '2026-10-02' });
+    const large = { ...release, catalog, version: catalog.version, published_at: '2026-10-02T01:00:00Z' };
+    // PostgreSQL writes JSONB with a space after each ":" and ",", so the row is larger than the catalog.
+    const body = JSON.stringify([{ release_sequence: 1, release: large }])
+      .replaceAll('":', '": ')
+      .replaceAll(',"', ', "');
+    expect(Buffer.byteLength(body)).toBeGreaterThan(CATALOG_V3_LIMITS.bytes);
+    const read = createCatalogRepository(
+      'https://example.supabase.co',
+      'public-key',
+      async () => new Response(body, { headers: { 'content-type': 'application/json' } }),
+    );
+    const server = createApp({ readCatalog: read, clock: () => Date.parse('2026-10-03T00:00:00Z') });
+    apps.push(server);
+    const response = await server.inject('/v1/catalog');
+    expect(response.statusCode).toBe(200);
+    expect(response.json().release.version).toBe(catalog.version);
+    expect(Buffer.byteLength(response.body)).toBeGreaterThan(0.95 * CATALOG_V3_LIMITS.bytes);
   });
   it('rejects a missing row or inconsistent head instead of serving an arbitrary release', async () => {
     for (const rows of [[], [{ release_sequence: 2, release }], [{ release_sequence: 1, release: null }]]) {

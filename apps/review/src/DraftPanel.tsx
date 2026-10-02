@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
-import type { ReviewDetail } from '@ai-checkout/catalog-review';
+import { memo, useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
+import type { ReviewSummary, SourceSummary } from '@ai-checkout/catalog-review';
+import type { SourceDocument } from '@ai-checkout/catalog-review/curation';
 import { MAX_SOURCE_BODY_CHARS } from '@ai-checkout/catalog-review';
 import { catalogSchema, type Catalog } from '@ai-checkout/rewards-core';
 import {
@@ -14,13 +15,17 @@ import {
   Modal,
   Select,
   Tabs,
+  TextInput,
 } from '@ai-checkout/ui';
 import { catalogChanges, publicationIssues, ruleSummaries } from './comparison';
 import ChangesTable from './ChangesTable';
+import LazyDisclosure from './LazyDisclosure';
 import StructuredEditor from './StructuredEditor';
 import { manifestComparison, sha256 } from './manifest';
 
 export type CaptureItem = { sourceKey: string; body: string };
+/** Reads one attached capture's text; the draft summary lists sources without text. */
+export type LoadSource = (sourceDocumentId: string, signal: AbortSignal) => Promise<SourceDocument>;
 type Editor = 'json' | 'structured' | 'single' | 'multi';
 const EDITOR_NAMES: Record<Editor, string> = {
   json: 'the JSON editor',
@@ -40,8 +45,18 @@ function blockedBy(dirty: Record<Editor, boolean>, self: Editor) {
 }
 /** Files larger than this many bytes cannot hold an allowed capture (at most 4 bytes per character). */
 const MAX_CAPTURE_FILE_BYTES = MAX_SOURCE_BODY_CHARS * 4;
+/** Up to this many missing sources get a paste field each; more are loaded from files only. */
+const PASTE_FIELD_LIMIT = 30;
+/** Up to this many sources are listed without a search field. */
+const SOURCE_SEARCH_THRESHOLD = 12;
+/** "a, b, c and 4 more" for a note about skipped files. */
+function names(values: string[], shown = 5) {
+  return values.length > shown
+    ? `${values.slice(0, shown).join(', ')} and ${values.length - shown} more`
+    : values.join(', ');
+}
 
-function sourceMatches(detail: ReviewDetail, sourceId: string) {
+function sourceMatches(detail: ReviewSummary, sourceId: string) {
   const source = detail.draft.catalog.sources.find((s) => s.id === sourceId)!;
   const doc = detail.sources.find((value) => value.source_key === source.id);
   return !!(
@@ -54,8 +69,10 @@ function sourceMatches(detail: ReviewDetail, sourceId: string) {
 
 /**
  * One step to attach evidence for every source the draft cites but has not captured yet: load the
- * saved capture files (named `<source-id>.txt`) or paste text, then capture them all and attach
- * them in a single draft revision.
+ * saved capture files (named `<source id>.txt`) one by one or as a whole folder, or paste text, then
+ * capture them all and attach them in a single draft revision. Loaded files are checked against the
+ * SHA-256 in the corpus manifests (real, merchant and expansion); a file whose hash differs is not
+ * loaded. Pasted text that differs is only flagged.
  */
 function CaptureMissingSources({
   detail,
@@ -64,7 +81,7 @@ function CaptureMissingSources({
   onCaptureMany,
   onDirty,
 }: {
-  detail: ReviewDetail;
+  detail: ReviewSummary;
   busy: boolean;
   blockedReason?: string;
   onCaptureMany: (items: CaptureItem[]) => Promise<void>;
@@ -72,49 +89,78 @@ function CaptureMissingSources({
 }) {
   const missing = detail.draft.catalog.sources.filter((source) => !sourceMatches(detail, source.id));
   const [texts, setTexts] = useState<Record<string, string>>({});
-  const [loadNote, setLoadNote] = useState('');
   const [hashes, setHashes] = useState<Record<string, string | undefined>>({});
-  useEffect(() => {
-    let current = true;
-    void Promise.all(
-      Object.entries(texts).map(async ([id, text]) => [id, text ? await sha256(text) : undefined] as const),
-    ).then((entries) => {
-      if (current) setHashes(Object.fromEntries(entries));
-    });
-    return () => {
-      current = false;
-    };
-  }, [texts]);
+  const [loadNote, setLoadNote] = useState('');
+  /** Text per source as last set, for discarding stale hash results. */
+  const latest = useRef<Record<string, string>>({});
+  const paste = missing.length <= PASTE_FIELD_LIMIT;
   const filled = missing.filter((source) => (texts[source.id] ?? '').trim());
   const tooLong = missing.filter((source) => (texts[source.id] ?? '').length > MAX_SOURCE_BODY_CHARS);
   useEffect(() => onDirty(Object.values(texts).some((text) => text.length > 0)), [texts, onDirty]);
   if (!missing.length) return <p className="muted small">Every source has matching captured evidence.</p>;
 
-  async function load(event: ChangeEvent<HTMLInputElement>) {
-    const files = [...(event.target.files ?? [])];
-    const next = { ...texts };
+  function setText(id: string, text: string) {
+    setTexts((current) => ({ ...current, [id]: text }));
+    latest.current[id] = text;
+    void (text ? sha256(text) : Promise.resolve(undefined)).then((hash) => {
+      // Only if the text is still the one hashed.
+      if (latest.current[id] === text) setHashes((known) => ({ ...known, [id]: hash }));
+    });
+  }
+  async function load(list: FileList | null, input: HTMLInputElement) {
+    const files = [...(list ?? [])];
+    const next = { ...texts },
+      nextHashes = { ...hashes };
     const matched: string[] = [],
       ignored: string[] = [],
-      oversized: string[] = [];
+      oversized: string[] = [],
+      differs: string[] = [];
+    let other = 0,
+      inManifest = 0;
     for (const file of files) {
+      if (!/\.txt$/i.test(file.name)) {
+        other++;
+        continue;
+      }
       const id = file.name.replace(/\.txt$/i, '');
       if (!missing.some((source) => source.id === id)) ignored.push(file.name);
       else if (file.size > MAX_CAPTURE_FILE_BYTES) oversized.push(file.name);
       else {
-        next[id] = await file.text();
-        matched.push(id);
+        const text = await file.text(),
+          hash = await sha256(text);
+        const comparison = manifestComparison(id, hash);
+        if (comparison === 'differs') differs.push(file.name);
+        else {
+          next[id] = text;
+          nextHashes[id] = hash;
+          matched.push(id);
+          if (comparison === 'matches') inManifest++;
+        }
       }
     }
     setTexts(next);
+    setHashes(nextHashes);
+    latest.current = { ...next };
     setLoadNote(
       `Loaded ${matched.length} file${matched.length === 1 ? '' : 's'}${
-        ignored.length
-          ? `; ignored ${ignored.length} that match no missing source (${ignored.join(', ')})`
+        ignored.length ? `; ignored ${ignored.length} that match no missing source (${names(ignored)})` : ''
+      }${oversized.length ? `; skipped ${oversized.length} too large to be a capture (${names(oversized)})` : ''}${
+        other ? `; skipped ${other} that are not .txt files` : ''
+      }.${
+        differs.length
+          ? ` Refused ${differs.length} whose SHA-256 differs from the corpus manifest (${names(differs)}): check that ${differs.length === 1 ? 'it is' : 'they are'} the right file${differs.length === 1 ? '' : 's'}.`
           : ''
-      }${oversized.length ? `; skipped ${oversized.length} too large to be a capture (${oversized.join(', ')})` : ''}.`,
+      }${
+        matched.length
+          ? ` ${inManifest} of ${matched.length} match${inManifest === 1 ? 'es' : ''} a corpus manifest${
+              matched.length - inManifest ? `; ${matched.length - inManifest} are not in one` : ''
+            }.`
+          : ''
+      }`,
     );
-    event.target.value = '';
+    input.value = '';
   }
+  const stillMissing = missing.filter((source) => !(texts[source.id] ?? '').trim());
   return (
     <form
       className="stack"
@@ -126,76 +172,134 @@ function CaptureMissingSources({
     >
       <p>
         {missing.length} source{missing.length === 1 ? ' needs' : 's need'} captured evidence before
-        publication. Load the saved capture files (named <code>&lt;source id&gt;.txt</code>) or paste each
-        source’s text. All filled sources are captured and attached in one new draft revision.
+        publication. Load the saved capture files (named <code>&lt;source id&gt;.txt</code>), or the folder
+        that holds them{paste ? ', or paste each source’s text' : ''}. All loaded sources are captured and
+        attached in one new draft revision.
       </p>
-      <Field
-        id="capture-files"
-        label="Load capture files"
-        helperText="Text files only; nothing is uploaded until you capture."
-      >
-        {(control) => (
-          <input
-            {...control}
-            className="ac-form-text-input"
-            type="file"
-            accept=".txt,text/plain"
-            multiple
-            disabled={busy}
-            onChange={(event) => void load(event)}
-          />
-        )}
-      </Field>
+      <div className="editor-grid">
+        <Field
+          id="capture-files"
+          label="Load capture files"
+          helperText="Text files only; nothing is uploaded until you capture."
+        >
+          {(control) => (
+            <input
+              {...control}
+              className="ac-form-text-input"
+              type="file"
+              accept=".txt,text/plain"
+              multiple
+              disabled={busy}
+              onChange={(event) => void load(event.target.files, event.target)}
+            />
+          )}
+        </Field>
+        <Field
+          id="capture-folder"
+          label="Load a capture folder"
+          helperText="Every <source id>.txt in the folder; other files are skipped."
+        >
+          {(control) => (
+            <input
+              {...control}
+              // Not in React's input types; the browser picks a folder and lists its files.
+              ref={(element) => element?.setAttribute('webkitdirectory', '')}
+              className="ac-form-text-input"
+              type="file"
+              multiple
+              disabled={busy}
+              onChange={(event) => void load(event.target.files, event.target)}
+            />
+          )}
+        </Field>
+      </div>
       {loadNote && (
         <AlertInline role="status" color="neutral">
           {loadNote}
         </AlertInline>
       )}
-      {missing.map((source) => {
-        const text = texts[source.id] ?? '';
-        const hash = text ? hashes[source.id] : undefined;
-        const comparison = manifestComparison(source.id, hash);
-        return (
-          <Field
-            key={source.id}
-            id={`capture-${source.id}`}
-            label={`${source.title} (${source.id})`}
-            helperText={`Checked ${source.checkedOn}. ${text.length.toLocaleString('en-US')} characters.${
-              hash ? ` SHA-256 ${hash.slice(0, 12)}…` : ''
-            }${
-              comparison === 'matches'
-                ? ' Matches the corpus manifest capture.'
-                : comparison === 'differs'
-                  ? ' Differs from the corpus manifest capture: check that this is the right file.'
-                  : ''
-            }`}
-            error={
-              text.length > MAX_SOURCE_BODY_CHARS
-                ? `Too long: at most ${MAX_SOURCE_BODY_CHARS.toLocaleString('en-US')} characters.`
-                : undefined
-            }
+      {paste ? (
+        missing.map((source) => {
+          const text = texts[source.id] ?? '';
+          const hash = text ? hashes[source.id] : undefined;
+          const comparison = manifestComparison(source.id, hash);
+          return (
+            <Field
+              key={source.id}
+              id={`capture-${source.id}`}
+              label={`${source.title} (${source.id})`}
+              helperText={`Checked ${source.checkedOn}. ${text.length.toLocaleString('en-US')} characters.${
+                hash ? ` SHA-256 ${hash.slice(0, 12)}…` : ''
+              }${
+                comparison === 'matches'
+                  ? ' Matches the corpus manifest capture.'
+                  : comparison === 'differs'
+                    ? ' Differs from the corpus manifest capture: check that this is the right file.'
+                    : ''
+              }`}
+              error={
+                text.length > MAX_SOURCE_BODY_CHARS
+                  ? `Too long: at most ${MAX_SOURCE_BODY_CHARS.toLocaleString('en-US')} characters.`
+                  : undefined
+              }
+            >
+              {(control) => (
+                <textarea
+                  {...control}
+                  className="ac-form-text-input textarea"
+                  rows={3}
+                  value={text}
+                  disabled={busy}
+                  onChange={(event) => setText(source.id, event.target.value)}
+                />
+              )}
+            </Field>
+          );
+        })
+      ) : (
+        <>
+          <p className="small">
+            {filled.length.toLocaleString('en-US')} of {missing.length.toLocaleString('en-US')} missing
+            sources have text loaded.
+          </p>
+          {stillMissing.length > 0 && filled.length > 0 && (
+            <Disclosure title={`Sources still without text (${stillMissing.length})`}>
+              <ul className="source-ids">
+                {stillMissing.map((source) => (
+                  <li key={source.id}>
+                    <code>{source.id}</code> · {source.title}
+                  </li>
+                ))}
+              </ul>
+              <p className="small muted">Load their files, or capture one at a time below.</p>
+            </Disclosure>
+          )}
+        </>
+      )}
+      <div className="row">
+        <Button
+          type="submit"
+          icon="check-circle"
+          disabled={busy || !!blockedReason || !filled.length || tooLong.length > 0}
+          aria-describedby={blockedReason ? 'capture-many-blocked' : undefined}
+        >
+          {`Capture ${filled.length} of ${missing.length} missing sources and attach`}
+        </Button>
+        {!paste && filled.length > 0 && (
+          <Button
+            color="secondary"
+            disabled={busy}
+            onClick={() => {
+              setTexts({});
+              setHashes({});
+              latest.current = {};
+              setLoadNote('');
+            }}
           >
-            {(control) => (
-              <textarea
-                {...control}
-                className="ac-form-text-input textarea"
-                rows={3}
-                value={text}
-                disabled={busy}
-                onChange={(event) => setTexts({ ...texts, [source.id]: event.target.value })}
-              />
-            )}
-          </Field>
-        );
-      })}
-      <Button
-        type="submit"
-        icon="check-circle"
-        disabled={busy || !!blockedReason || !filled.length || tooLong.length > 0}
-        aria-describedby={blockedReason ? 'capture-many-blocked' : undefined}
-      >
-        {`Capture ${filled.length} of ${missing.length} missing sources and attach`}
-      </Button>
+            Clear loaded files
+          </Button>
+        )}
+      </div>
       {blockedReason && (
         <p id="capture-many-blocked" className="small muted">
           {blockedReason}
@@ -205,6 +309,138 @@ function CaptureMissingSources({
   );
 }
 
+/** One captured text, read from the API when its disclosure is first opened. */
+function CapturedText({ doc, loadSource }: { doc: SourceSummary; loadSource: LoadSource }) {
+  const [state, setState] = useState<{ body?: string; error?: string }>({});
+  const active = useRef<AbortController | null>(null);
+  useEffect(() => () => active.current?.abort(), []);
+  return (
+    <LazyDisclosure
+      title={`Captured text (${doc.body_chars.toLocaleString('en-US')} characters)`}
+      onOpen={() => {
+        if (state.body !== undefined || active.current) return;
+        const controller = new AbortController();
+        active.current = controller;
+        setState({});
+        loadSource(doc.id, controller.signal).then(
+          (source) => {
+            active.current = null;
+            if (!controller.signal.aborted) setState({ body: source.body });
+          },
+          (failure: unknown) => {
+            active.current = null;
+            if (!controller.signal.aborted)
+              setState({
+                error: failure instanceof Error ? failure.message : 'The capture could not be loaded.',
+              });
+          },
+        );
+      }}
+    >
+      {() => (
+        <>
+          {state.body !== undefined ? (
+            <pre className="source-text">{state.body}</pre>
+          ) : state.error ? (
+            <AlertInline color="critical" role="alert">
+              {state.error} Close and open this section to try again.
+            </AlertInline>
+          ) : (
+            <p className="small muted" role="status">
+              Loading the captured text…
+            </p>
+          )}
+          <p className="small muted">Captured {new Date(doc.created_at).toLocaleString('en-US')}</p>
+        </>
+      )}
+    </LazyDisclosure>
+  );
+}
+
+/** Every source the draft cites, with its capture status; searchable when the list is long. Memoized
+ * so typing elsewhere in the panel does not redraw hundreds of source cards. */
+const SourceEvidence = memo(function SourceEvidence({
+  detail,
+  loadSource,
+}: {
+  detail: ReviewSummary;
+  loadSource: LoadSource;
+}) {
+  const [query, setQuery] = useState('');
+  const sources = detail.draft.catalog.sources;
+  const matching = sources.filter((source) => sourceMatches(detail, source.id)).length;
+  const inManifest = detail.sources.filter(
+    (doc) => manifestComparison(doc.source_key, doc.content_hash) === 'matches',
+  ).length;
+  const needle = query.trim().toLowerCase();
+  const shown = needle
+    ? sources.filter((source) =>
+        [source.id, source.title, source.url].some((value) => value.toLowerCase().includes(needle)),
+      )
+    : sources;
+  return (
+    <>
+      <p className="small">
+        {matching} of {sources.length} source{sources.length === 1 ? ' has' : 's have'} matching captured
+        evidence{inManifest ? `; ${inManifest} match${inManifest === 1 ? 'es' : ''} a corpus manifest` : ''}.
+      </p>
+      {sources.length > SOURCE_SEARCH_THRESHOLD && (
+        <>
+          <Field id="source-search" label="Find a source" helperText="Search by source ID, title or URL.">
+            {(control) => (
+              <TextInput
+                {...control}
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            )}
+          </Field>
+          <p className="small muted" role="status">
+            {needle ? `${shown.length} of ${sources.length} sources match.` : ''}
+          </p>
+        </>
+      )}
+      {shown.map((source) => {
+        const doc = detail.sources.find((value) => value.source_key === source.id);
+        const matches = sourceMatches(detail, source.id);
+        const comparison = doc ? manifestComparison(source.id, doc.content_hash) : undefined;
+        return (
+          <Card as="article" hasBorder key={source.id}>
+            <div className="source-card stack-tight">
+              <h3>{source.title}</h3>
+              <Link href={source.url} isExternal>
+                Read source terms
+              </Link>
+              <p className="small muted">
+                Checked {source.checkedOn} · {source.id}
+              </p>
+              <Badge
+                size="small"
+                color={matches ? 'success' : 'warning'}
+                icon={matches ? 'check-circle' : 'alert-triangle'}
+              >
+                {matches ? 'Matching evidence captured' : 'Matching evidence needed'}
+              </Badge>
+              {doc && (
+                <p className="small muted">
+                  Captured SHA-256 <code className="hash">{doc.content_hash.slice(0, 12)}…</code>
+                  {comparison === 'matches'
+                    ? ' · matches the corpus manifest'
+                    : comparison === 'differs'
+                      ? ' · differs from the corpus manifest'
+                      : ''}
+                </p>
+              )}
+              {doc && <CapturedText doc={doc} loadSource={loadSource} />}
+            </div>
+          </Card>
+        );
+      })}
+    </>
+  );
+});
+
 export function DraftPanel({
   detail,
   busy,
@@ -213,16 +449,18 @@ export function DraftPanel({
   onCapture,
   onCaptureMany,
   onPublish,
+  onLoadSource,
 }: {
-  detail: ReviewDetail;
+  detail: ReviewSummary;
   busy: boolean;
   onDirty: (value: boolean) => void;
   onUpdate: (catalog: Catalog, baseSequence: number | null) => Promise<void>;
   onCapture: (sourceKey: string, body: string) => Promise<void>;
   onCaptureMany?: (items: CaptureItem[]) => Promise<void>;
   onPublish: (note: string) => Promise<void>;
+  onLoadSource: LoadSource;
 }) {
-  const original = JSON.stringify(detail.draft.catalog, null, 2);
+  const original = useMemo(() => JSON.stringify(detail.draft.catalog, null, 2), [detail.draft.catalog]);
   const [edited, setEdited] = useState(original),
     [body, setBody] = useState('');
   const [sourceKey, setSourceKey] = useState(detail.draft.catalog.sources[0]?.id ?? '');
@@ -243,8 +481,11 @@ export function DraftPanel({
   const dirty = Object.values(editors).some(Boolean),
     editable = detail.draft.status === 'draft';
   const blocked = (self: Editor) => blockedBy(editors, self);
-  const issues = publicationIssues(detail, now),
-    changes = catalogChanges(detail.published?.catalog ?? null, detail.draft.catalog);
+  const issues = publicationIssues(detail, now);
+  const changes = useMemo(
+    () => catalogChanges(detail.published?.catalog ?? null, detail.draft.catalog),
+    [detail.published, detail.draft.catalog],
+  );
   if (dirty) issues.push('Save or discard your edits before approving this revision.');
   const canPublish = !busy && confirmed && issues.length === 0 && note.trim().length >= 10;
   useEffect(() => onDirty(dirty), [dirty, onDirty]);
@@ -369,41 +610,45 @@ export function DraftPanel({
             </AlertInline>
           )}
           {changes.length ? (
-            <div className="table-scroll">
-              <ChangesTable rows={changes} caption="Published and proposed catalog changes" />
-            </div>
+            <ChangesTable rows={changes} caption="Published and proposed catalog changes" />
           ) : (
             <p>No differences from the current published catalog.</p>
           )}
-          <Disclosure title="All proposed card rules">
-            <p className="small muted">
-              Includes unchanged conditions. Rates apply only to eligible purchases; the catalog does not
-              establish a shopper’s eligibility.
-            </p>
-            {detail.draft.catalog.cards.map((card) => (
-              <article className="rule-summary" key={card.id}>
-                <h3>{card.name}</h3>
-                <ul>
-                  {ruleSummaries(card.rules).map(({ rule, title, conditions }) => (
-                    <li key={rule.id}>
-                      <strong>{title}</strong>
-                      <p>{conditions}</p>
-                      <p className="small muted">
-                        Rule: {rule.id} · Sources: {rule.sourceIds.join(', ')}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </Disclosure>
+          <LazyDisclosure title={`All proposed card rules (${detail.draft.catalog.cards.length} cards)`}>
+            {() => (
+              <>
+                <p className="small muted">
+                  Includes unchanged conditions. Rates apply only to eligible purchases; the catalog does not
+                  establish a shopper’s eligibility.
+                </p>
+                {detail.draft.catalog.cards.map((card) => (
+                  <article className="rule-summary" key={card.id}>
+                    <h3>{card.name}</h3>
+                    <ul>
+                      {ruleSummaries(card.rules).map(({ rule, title, conditions }) => (
+                        <li key={rule.id}>
+                          <strong>{title}</strong>
+                          <p>{conditions}</p>
+                          <p className="small muted">
+                            Rule: {rule.id} · Sources: {rule.sourceIds.join(', ')}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                ))}
+              </>
+            )}
+          </LazyDisclosure>
           <Disclosure title="Full draft data and approval identity">
             <p className="small">
               Revision {detail.draft.revision}; reviewed against release {detail.head ?? 'none'}. Approval is
-              bound to the complete payload shown below.
+              bound to the complete payload, shown when you open it below.
             </p>
             <code className="hash">{detail.draft.catalog_hash}</code>
-            <pre className="code-block">{original}</pre>
+            <LazyDisclosure title="Show the complete draft JSON">
+              {() => <pre className="code-block">{original}</pre>}
+            </LazyDisclosure>
           </Disclosure>
         </section>
         <section className="stack" aria-labelledby="evidence-heading">
@@ -412,48 +657,6 @@ export function DraftPanel({
             A capture records the source. Check the full issuer terms to confirm rates, eligibility, caps, and
             exclusions.
           </p>
-          {detail.draft.catalog.sources.map((source, index) => {
-            const doc = detail.sources.find((value) => value.source_key === source.id);
-            const matches = sourceMatches(detail, source.id);
-            return (
-              <Card as="article" hasBorder key={source.id}>
-                <div className="source-card stack-tight">
-                  <h3>{source.title}</h3>
-                  <Link href={source.url} isExternal>
-                    Read source terms
-                  </Link>
-                  <p className="small muted">
-                    Checked {source.checkedOn} · {source.id}
-                  </p>
-                  <Badge
-                    size="small"
-                    color={matches ? 'success' : 'warning'}
-                    icon={matches ? 'check-circle' : 'alert-triangle'}
-                  >
-                    {matches ? 'Matching evidence captured' : 'Matching evidence needed'}
-                  </Badge>
-                  {doc && (
-                    <p className="small muted">
-                      Captured SHA-256 <code className="hash">{doc.content_hash.slice(0, 12)}…</code>
-                      {manifestComparison(source.id, doc.content_hash) === 'matches'
-                        ? ' · matches the corpus manifest'
-                        : manifestComparison(source.id, doc.content_hash) === 'differs'
-                          ? ' · differs from the corpus manifest'
-                          : ''}
-                    </p>
-                  )}
-                  {doc && (
-                    <Disclosure title="Captured text" open={index === 0}>
-                      <pre className="source-text">{doc.body}</pre>
-                      <p className="small muted">
-                        Captured {new Date(doc.created_at).toLocaleString('en-US')}
-                      </p>
-                    </Disclosure>
-                  )}
-                </div>
-              </Card>
-            );
-          })}
           {editable && onCaptureMany && (
             <Disclosure title="Capture all missing sources">
               <CaptureMissingSources
@@ -541,12 +744,13 @@ export function DraftPanel({
               </form>
             </Disclosure>
           )}
+          <SourceEvidence detail={detail} loadSource={onLoadSource} />
         </section>
       </div>
       {editable && (
         <>
           <Disclosure title="Correct draft data">
-            {detail.draft.catalog.schemaVersion === 2 ? (
+            {detail.draft.catalog.schemaVersion !== 1 ? (
               <Tabs
                 label="Draft editors"
                 tabs={[

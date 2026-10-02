@@ -1,8 +1,10 @@
-import { useRef, useState } from 'react';
-import { CATALOG_V2, catalogSchema, type Catalog } from '@ai-checkout/rewards-core';
+import { useMemo, useRef, useState } from 'react';
+import { catalogSchema, type Catalog } from '@ai-checkout/rewards-core';
 import { AlertInline, Badge, Button, Card, Checkbox, Field, Fieldset, Modal, Radio } from '@ai-checkout/ui';
+import { bundledCatalogs } from './bundled';
 
-type Source = 'bundled' | 'json';
+/** Index of a bundled catalog, or pasted JSON. */
+type Source = number | 'json';
 
 /** Why a catalog cannot start a draft now: not valid yet or already expired. */
 function catalogTimingIssue(catalog: Catalog, now: number) {
@@ -16,11 +18,12 @@ const date = (value: string) =>
   ' UTC';
 
 /**
- * Starts a new draft from the catalog bundled in this app or from pasted catalog JSON. The draft is
- * created with no sources attached; "Capture all missing sources" attaches them afterwards. Creating
- * a draft publishes nothing.
+ * Starts a new draft from a catalog bundled in this app (the v3 catalog first once it is bundled,
+ * then v2) or from pasted catalog JSON. The draft is created with no sources attached; "Capture all
+ * missing sources" attaches them afterwards. Creating a draft publishes nothing.
  */
 export default function StartDraft({
+  bundled: bundledProp,
   head,
   busy,
   now,
@@ -29,6 +32,8 @@ export default function StartDraft({
   intro,
   queuedVersions = [],
 }: {
+  /** Catalogs offered, newest first; defaults to the ones `@ai-checkout/rewards-core` bundles. */
+  bundled?: Catalog[];
   /** Versions of drafts already waiting for review; creating another of the same needs confirmation. */
   queuedVersions?: string[];
   /** Shown above the explanation, for example when no draft is waiting. */
@@ -39,14 +44,21 @@ export default function StartDraft({
   onCreate: (catalog: Catalog) => Promise<void>;
   onCancel?: () => void;
 }) {
-  const [source, setSource] = useState<Source>('bundled');
+  const bundled = useMemo(() => bundledProp ?? bundledCatalogs(), [bundledProp]);
+  // The newest bundled catalog that can be used now, else the newest one, else pasted JSON.
+  const [source, setSource] = useState<Source>(() => {
+    if (!bundled.length) return 'json';
+    const usable = bundled.findIndex((catalog) => !catalogTimingIssue(catalog, now));
+    return usable === -1 ? 0 : usable;
+  });
   const [json, setJson] = useState('');
   const [error, setError] = useState('');
   const [pending, setPending] = useState<Catalog | null>(null);
   const [duplicateConfirmed, setDuplicateConfirmed] = useState(false);
   const duplicate = pending !== null && queuedVersions.includes(pending.version);
   const cancelRef = useRef<HTMLButtonElement>(null);
-  const bundledIssue = catalogTimingIssue(CATALOG_V2, now);
+  const chosen = source === 'json' ? undefined : bundled[source];
+  const bundledIssue = chosen && catalogTimingIssue(chosen, now);
 
   function review() {
     setError('');
@@ -54,10 +66,10 @@ export default function StartDraft({
     // Validity is checked when you choose Create draft, not when the page was drawn.
     const at = Date.now();
     let catalog: Catalog;
-    if (source === 'bundled') {
-      const issue = catalogTimingIssue(CATALOG_V2, at);
+    if (chosen) {
+      const issue = catalogTimingIssue(chosen, at);
       if (issue) return setError(`The bundled catalog cannot start a draft. ${issue}`);
-      catalog = CATALOG_V2;
+      catalog = chosen;
     } else {
       let value: unknown;
       try {
@@ -88,13 +100,20 @@ export default function StartDraft({
         review every change and publish it as separate steps.
       </p>
       <Fieldset legend="Start from">
-        <Radio
-          name="draft-source"
-          label="The catalog bundled with this app"
-          checked={source === 'bundled'}
-          disabled={busy}
-          onChange={() => setSource('bundled')}
-        />
+        {bundled.map((catalog, index) => (
+          <Radio
+            key={catalog.version}
+            name="draft-source"
+            label={
+              bundled.length === 1
+                ? 'The catalog bundled with this app'
+                : `Bundled catalog ${catalog.version} (schema ${catalog.schemaVersion}, ${catalog.cards.length} cards)`
+            }
+            checked={source === index}
+            disabled={busy}
+            onChange={() => setSource(index)}
+          />
+        ))}
         <Radio
           name="draft-source"
           label="Catalog JSON I paste"
@@ -103,26 +122,30 @@ export default function StartDraft({
           onChange={() => setSource('json')}
         />
       </Fieldset>
-      {source === 'bundled' ? (
+      {chosen ? (
         <Card hasBorder as="div">
           <dl className="catalog-facts">
             <div>
               <dt>Version</dt>
-              <dd>{CATALOG_V2.version}</dd>
+              <dd>{chosen.version}</dd>
+            </div>
+            <div>
+              <dt>Schema</dt>
+              <dd>{chosen.schemaVersion}</dd>
             </div>
             <div>
               <dt>Cards</dt>
               <dd>
-                {CATALOG_V2.cards.length} ({CATALOG_V2.sources.length} sources to capture)
+                {chosen.cards.length} ({chosen.sources.length} sources to capture)
               </dd>
             </div>
             <div>
               <dt>Verified</dt>
-              <dd>{date(CATALOG_V2.verifiedAt)}</dd>
+              <dd>{date(chosen.verifiedAt)}</dd>
             </div>
             <div>
               <dt>Expires</dt>
-              <dd>{date(CATALOG_V2.expiresAt)}</dd>
+              <dd>{date(chosen.expiresAt)}</dd>
             </div>
             <div>
               <dt>Status</dt>
@@ -139,7 +162,7 @@ export default function StartDraft({
         <Field
           id="start-draft-json"
           label="Catalog JSON"
-          helperText="Validated against the catalog schema (version 1 or 2) before the draft is created."
+          helperText="Validated against the catalog schema (version 1, 2 or 3) before the draft is created."
         >
           {(control) => (
             <textarea

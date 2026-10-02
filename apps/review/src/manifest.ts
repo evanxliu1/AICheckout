@@ -1,11 +1,16 @@
-// SHA-256 of each saved capture: the real-terms corpus (evals/curation/real/manifest.json) and the
-// merchant MCC pages the catalog cites (merchant-manifest.json). URLs, dates and hashes only, no page
-// text. The review app compares captures with them to catch a mislabelled file.
+// SHA-256 of each saved capture: the real-terms corpus (evals/curation/real/manifest.json), the
+// merchant MCC pages the catalog cites (merchant-manifest.json) and the Stage 2 expansion corpus
+// (evals/curation/expansion/manifest.json). URLs, dates and hashes only, no page text. The review app
+// compares captures with them to catch a mislabelled or changed file.
 import manifest from '../../../evals/curation/real/manifest.json';
 import merchantManifest from '../../../evals/curation/real/merchant-manifest.json';
+import expansionManifest from '../../../evals/curation/expansion/manifest.json';
 
 const hashes = new Map(
-  [...manifest.sources, ...merchantManifest.sources].map((source) => [source.id, source.sha256]),
+  [...manifest.sources, ...merchantManifest.sources, ...expansionManifest.sources].map((source) => [
+    source.id,
+    source.sha256,
+  ]),
 );
 export const manifestHash = (sourceId: string) => hashes.get(sourceId);
 
@@ -19,7 +24,8 @@ export async function sha256(text: string) {
   }
 }
 
-/** "matches" / "differs" when the corpus manifest has this source, otherwise undefined. */
+/** "matches" / "differs" when a corpus manifest has this source, otherwise undefined. A source in
+ * two manifests (`chase-rewards-category-faq`) has the same hash in both. */
 export function manifestComparison(sourceId: string, hash: string | undefined) {
   const expected = manifestHash(sourceId);
   if (!expected || !hash) return undefined;

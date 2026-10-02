@@ -11,6 +11,7 @@ export const unavailableCopy: Record<UnavailableComparison['reason'], string> = 
   'unknown-owned-card': 'A saved card is missing from this catalog. Review your cards before comparing.',
   'purchase-not-confirmed': 'Confirm that the amount covers eligible purchases before comparing.',
   'ineligible-purchase': 'This purchase is not eligible for these reward estimates.',
+  'no-accepted-card': 'None of your cards is accepted at this store.',
 };
 
 /** "$3.00", or "$1.00–$3.00" when conditions are unknown. */
