@@ -172,6 +172,11 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     await cart.waitForTimeout(300);
     await expect(badge.getByRole('heading', { name: 'Best card for this cart' })).toHaveCount(0);
     await expect(badge.getByRole('status').filter({ hasText: 'Click ignored' })).toBeAttached();
+    // The status region stays in place; only its text appears and clears (after about 4 s).
+    await expect(badge.getByRole('status').filter({ hasText: 'Click ignored' })).toHaveCount(0, {
+      timeout: 6000,
+    });
+    await expect(badge.locator('p[role="status"]').first()).toBeAttached();
     await cart.evaluate(() => document.documentElement.style.removeProperty('opacity'));
     await cart.waitForTimeout(400);
 

@@ -22,6 +22,7 @@ function environment(overrides: Partial<ReaderEnvironment> = {}) {
   let nextTimer = 1;
   const visibility: (() => void)[] = [];
   let pageHide: (() => void) | null = null;
+  let pageShow: ((persisted: boolean) => void) | null = null;
   let hidden = false;
   let mounted = false;
   const frame = {
@@ -54,6 +55,9 @@ function environment(overrides: Partial<ReaderEnvironment> = {}) {
     onPageHide: (listener) => {
       pageHide = listener;
     },
+    onPageShow: (listener) => {
+      pageShow = listener;
+    },
     setTimeout: (callback) => {
       timers.set(nextTimer, callback);
       return nextTimer++;
@@ -84,6 +88,7 @@ function environment(overrides: Partial<ReaderEnvironment> = {}) {
       visibility.forEach((listener) => listener());
     },
     pageHide: () => pageHide?.(),
+    pageShow: (persisted: boolean) => pageShow?.(persisted),
   };
 }
 
@@ -216,6 +221,30 @@ describe('automatic cart reader', () => {
     startAutoReader(u.env);
     u.pageHide();
     expect(u.observing()).toBe(false);
+  });
+});
+
+describe('back/forward cache', () => {
+  it('pauses on pagehide and resumes on a restore, re-sending the reading', async () => {
+    const t = environment();
+    startAutoReader(t.env);
+    await t.flush();
+    expect(t.env.send).toHaveBeenCalledTimes(1);
+    t.pageHide();
+    expect(t.observing()).toBe(false);
+    t.mutate();
+    await t.flush();
+    expect(t.env.send).toHaveBeenCalledTimes(1);
+    t.pageShow(false); // an ordinary pageshow (not from the cache) changes nothing
+    expect(t.observing()).toBe(false);
+    t.pageShow(true);
+    await t.flush();
+    expect(t.observing()).toBe(true);
+    expect(t.env.send).toHaveBeenCalledTimes(2);
+    t.setReading(found(5446));
+    t.mutate();
+    await t.flush();
+    expect(t.env.send).toHaveBeenLastCalledWith({ type: 'cart:reading', reading: found(5446), framed: true });
   });
 });
 

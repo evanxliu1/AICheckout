@@ -20,7 +20,8 @@ startAutoReader({
   frame,
   hidden: () => document.visibilityState === 'hidden',
   onVisibilityChange: (listener) => document.addEventListener('visibilitychange', listener),
-  onPageHide: (listener) => window.addEventListener('pagehide', listener, { once: true }),
+  onPageHide: (listener) => window.addEventListener('pagehide', listener),
+  onPageShow: (listener) => window.addEventListener('pageshow', (event) => listener(event.persisted)),
   setTimeout: (callback, ms) => window.setTimeout(callback, ms),
   clearTimeout: (id) => window.clearTimeout(id),
 });

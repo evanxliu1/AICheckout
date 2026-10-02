@@ -188,11 +188,10 @@ export default function BadgeApp() {
       className={expanded ? 'badge-root badge-root--panel' : 'badge-root'}
       onClickCapture={guard}
     >
-      {covered && (
-        <p className="badge-covered" role="status">
-          Click ignored: the badge was covered or hidden. Try again when it is fully visible.
-        </p>
-      )}
+      {/* Always present, so screen readers announce the text when it appears. */}
+      <p className={covered ? 'badge-covered' : 'ac-visually-hidden'} role="status">
+        {covered ? 'Click ignored: the badge was covered or hidden. Try again when it is fully visible.' : ''}
+      </p>
       {expanded ? (
         <section className="badge-panel" aria-labelledby="badge-heading">
           <div className="badge-panel__header">
