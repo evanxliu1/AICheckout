@@ -317,7 +317,8 @@ export interface WalletChoice {
   optionIds: string[];
 }
 
-/** Catalog v3: the shopper's answer to one gate question for this card. No entry is unknown. */
+/** Catalog v3: the shopper's answer to one gate question. Gates describe the cardholder (a Prime
+ * membership, a bank relationship), so one answer applies to every card. No entry is unknown. */
 export interface WalletGate {
   gateId: string;
   optionId: string;
@@ -335,8 +336,6 @@ export interface WalletCard {
   usage: RuleUsage[];
   /** Catalog v3 only; ignored by v1 and v2. */
   choices?: WalletChoice[];
-  /** Catalog v3 only; ignored by v1 and v2. */
-  gates?: WalletGate[];
 }
 
 export interface Wallet {
@@ -344,6 +343,8 @@ export interface Wallet {
   defaultCardId: string | null;
   /** Catalog v3 only (points programs); ignored by v1 and v2. */
   valueOverrides?: ValueOverride[];
+  /** Catalog v3 only: gate answers for the cardholder, shared by every card; ignored by v1 and v2. */
+  gates?: WalletGate[];
 }
 
 export interface Purchase {

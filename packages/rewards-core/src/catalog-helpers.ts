@@ -101,8 +101,8 @@ function ruleLabelV3(catalog: CatalogV3, rule: RewardRuleV3) {
 }
 
 /** Catalog v3: every non-base rule with a spend cap or activation that covers a catalog merchant.
- * Rules sharing a cap (`sharedCapId`) record their combined spend once, on the group's first rule
- * (`capHolder`), which is listed whenever any rule of the group covers a merchant; the other rules
+ * Rules sharing a cap (`sharedCapId`) record their combined spend once, on the group's rule with the
+ * smallest ID (`capHolder`), listed whenever any rule of the group covers a merchant; the other rules
  * of the group are listed only for activation. */
 function usageInputsV3(catalog: CatalogV3, cardId: string): UsageInput[] {
   const card = catalog.cards.find((c) => c.id === cardId);

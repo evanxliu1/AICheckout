@@ -43,4 +43,4 @@ As in the "Chosen" column. Money is `floor(Σ spend × rateBps × value / 1,000,
 - M5's golden ladders should expect unvalued cards (U.S. Bank Altitude, SKYPASS, Lufthansa and others) below every valued card unless an override is set.
 
 ## Status
-Accepted 2026-10-02 by the M2 implementing agent within the Stage 2 plan; the coordinator or Evan can revise any row before M6/M7 build on it.
+Accepted 2026-10-02 by the M2 implementing agent within the Stage 2 plan; the coordinator or Evan can revise any row before M6/M7 build on it. Partly superseded 2026-10-02 by [gates per wallet, worst-answer minimum and smallest-ID shared-cap holder](2026-10-02-engine-v3-review-gates-and-shared-caps.md) (per-card gates, base-to-rule range for unanswered gates, shared-cap holder).

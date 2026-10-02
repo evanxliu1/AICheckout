@@ -102,14 +102,14 @@ Stage 2 M1 added the catalog v3 contract ([rewards engine](../system/rewards-eng
 | `acceptance` | `open-loop`, or `closed-loop` with the brands where the card works (Amazon Store Card, Harbor Freight). Elsewhere the card is `not-accepted` and left out of the ranking (`Comparison.notAccepted`); with no accepted card the result is `no-accepted-card` |
 | `brandIds` | Merchant scope: the rule pays only at merchants carrying one of these brands (Prime Visa at Amazon and Whole Foods); otherwise `not-at-merchant`. A brand-scoped `other` or `all-purchases` rule needs no category match |
 | `excludedBrandIds` | The rule never pays at merchants carrying one of these brands (`not-at-merchant`; Freedom Flex grocery "excluding Walmart and Target", Edward Jones top categories excluding Amazon); a base rule has none |
-| `sharedCapId` | Rules of one card with the same ID share one spend cap (Cash+ "$2,000 in combined purchases" across both 5% picks, Freedom Flex and Discover quarters, Customized Cash); each has a spend cap with the same amount and period. The spend toward it is recorded on the group's first rule |
+| `sharedCapId` | Rules of one card with the same ID share one spend cap (Cash+ "$2,000 in combined purchases" across both 5% picks, Freedom Flex and Discover quarters, Customized Cash); each has a spend cap with the same amount and period. The spend toward it is recorded on the group's rule with the smallest ID |
 | `choice` | The rule pays only while that option of a card choice is in effect: `chosen` by the cardholder (Cash+, Customized Cash) or `automatic` top-spend categories (Edward Jones). A chosen option the shopper did not select is `choice-not-selected`; an unanswered choice gives a range (`choice-unknown`, defaults not assumed); an automatic option always gives a range (`automatic-category`) |
-| `requires` | Gates the cardholder must meet: membership, tier or relationship options (Prime, store loyalty tiers, Smartly balances). An answer outside the options is `condition-not-met`; no answer gives a range (`condition-unknown`) |
+| `requires` | Gates the cardholder must meet: membership, tier or relationship options (Prime, store loyalty tiers, Smartly balances). An answer outside the options is `condition-not-met`; no answer gives a range (`condition-unknown`) whose guaranteed minimum is the worst answer's best rule, not the base (Prime Visa at Amazon: 3–5%) |
 | `requiredPaymentPaths` | The rule pays only through these paths (otherwise `not-eligible`) and is then not `payment-path-uncertain`; `excludedPaymentPaths` gains `venmo` |
 | `limitedTime.startsOn` | Rotating or future rules start on this date (Freedom Flex Q1 2027); before it the rule is `not-started` |
 | Program value | Units convert to cents with the shopper's override, else the card's issuer-stated value, else the program's valuation ([decision](../decisions/2026-10-02-points-valuation-published-estimates.md)): cents = ⌊Σ spend × rate × value / 1,000,000⌋. `none` means units only: the card is listed after every valued card with `value-unknown`, never at an assumed 1¢ |
 
-Shopper inputs for v3: per card the chosen options and gate answers, per wallet a value override for any points program.
+Shopper inputs for v3: per card the chosen options; per wallet the gate answers (they describe the cardholder, so one answer covers every card) and a value override for any points program.
 
 ## Gotchas
 

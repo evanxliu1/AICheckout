@@ -18,7 +18,8 @@ const statusCopy: Partial<Record<RuleStatusV3, string>> = {
   'not-eligible': 'Not eligible for this purchase',
   expired: 'Promotion ended',
   'cap-reached': 'Spend limit reached',
-  // Catalog v3 statuses (shown once the extension runs v3 catalogs, Stage 2 M7).
+  // Catalog v3 statuses: placeholder copy, shown once the extension runs v3 catalogs (Stage 2 M6)
+  // and worded in Stage 2 M7.
   'not-accepted': 'Card not accepted at this merchant',
   'not-started': 'Promotion not started',
   'choice-not-selected': 'Category not selected',
@@ -43,7 +44,7 @@ function uncertaintyCopy(code: UncertaintyV3, label: string): string {
     'activation-unknown': `Activation of the ${label} bonus is unconfirmed.`,
     'cap-unstated': `The issuer does not state a spend limit for the ${label} bonus.`,
     'payment-path-uncertain': `This payment method may not earn the ${label} bonus.`,
-    // Catalog v3 codes (worded in Stage 2 M7).
+    // Catalog v3 codes: placeholder copy, shown from Stage 2 M6 and worded in Stage 2 M7.
     'choice-unknown': `Whether you chose the ${label} category is unknown.`,
     'automatic-category': `The ${label} bonus applies only if it is your top spending category.`,
     'condition-unknown': `The ${label} bonus needs a membership or status you have not confirmed.`,

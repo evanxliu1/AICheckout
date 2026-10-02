@@ -168,6 +168,12 @@ const usage = (ruleId: string, extra: Partial<RuleUsage> = {}, on = today): Rule
 });
 const known = (ruleId: string, spentCents = 0, on = today) =>
   usage(ruleId, { activation: 'active', spentCents }, on);
+/** Usage rows for a rule in a shared cap: its own activation, and the group's spend on the
+ * holder (the group's rule with the smallest ID, e.g. `cash-plus-department-stores`). */
+const shared = (ruleId: string, holderId: string, spentCents = 0, on = today): RuleUsage[] => [
+  usage(ruleId, { activation: 'active' }, on),
+  usage(holderId, { spentCents }, on),
+];
 const owned = (cardId: string, extra: Partial<WalletCard> = {}): WalletCard => ({
   cardId,
   usage: [],
@@ -283,7 +289,7 @@ describe('catalog v3 engine: rule statuses', () => {
         cards: [
           owned('test-cash-plus', {
             ...cashPlusElectronics,
-            usage: [known('cash-plus-electronics', 200_000)],
+            usage: shared('cash-plus-electronics', 'cash-plus-department-stores', 200_000),
           }),
         ],
       },
@@ -317,7 +323,8 @@ describe('catalog v3 engine: rule statuses', () => {
     [
       'condition-not-met: the shopper answered a gate outside the required options',
       {
-        cards: [owned('test-prime-visa', { gates: [{ gateId: 'amazon-prime', optionId: 'not-member' }] })],
+        cards: [owned('test-prime-visa')],
+        wallet: { gates: [{ gateId: 'amazon-prime', optionId: 'not-member' }] },
         purchase: { merchantId: 'amazon-us' },
       },
       'prime-amazon',
@@ -366,7 +373,7 @@ describe('catalog v3 engine: uncertainties', () => {
         cards: [
           owned('test-cash-plus', {
             choices: [{ choiceId: 'five-percent', optionIds: ['electronics'] }],
-            usage: [usage('cash-plus-electronics', { spentCents: 0 })],
+            usage: [usage('cash-plus-department-stores', { spentCents: 0 })],
           }),
         ],
       },
@@ -397,7 +404,7 @@ describe('catalog v3 engine: uncertainties', () => {
     [
       'condition-unknown',
       { cards: [owned('test-prime-visa')], purchase: { merchantId: 'amazon-us' } },
-      [100, 500],
+      [300, 500],
     ],
     ['value-unknown', { cards: [owned('test-auto-top')] }, [0, 0]],
   ];
@@ -414,7 +421,7 @@ describe('catalog v3 engine: uncertainties', () => {
       cards: [
         owned('test-cash-plus', {
           choices: [{ choiceId: 'five-percent', optionIds: ['electronics', 'department-stores'] }],
-          usage: [known('cash-plus-electronics')],
+          usage: shared('cash-plus-electronics', 'cash-plus-department-stores'),
         }),
       ],
     });
@@ -423,11 +430,17 @@ describe('catalog v3 engine: uncertainties', () => {
     expect(statusOf(estimate, 'cash-plus-electronics')).toBe('applied');
     expect(estimate.appliedRuleId).toBe('cash-plus-electronics');
   });
-  it('gives the base-to-best range for a gate with two rated answers', () => {
-    // Prime Visa: 5% with Prime, 3% without; the gate unanswered spans base to 5%.
+  it('guarantees the worst answer of an unanswered gate whose every answer earns a bonus', () => {
+    // Prime Visa: 5% with Prime, 3% without; whichever the answer, at least 3%, not the 1% base.
     const estimate = only({ cards: [owned('test-prime-visa')], purchase: { merchantId: 'amazon-us' } });
+    expect(cents(estimate)).toEqual([300, 500]);
     expect(statusOf(estimate, 'prime-amazon-no-prime')).toBe('may-apply');
     expect(estimate.uncertainties).toEqual(['condition-unknown']);
+    expect([estimate.bonusRateBps, estimate.minBonusSpendCents]).toEqual([500, 0]);
+    // The store card earns nothing without Prime, so its minimum stays 0.
+    expect(
+      cents(only({ cards: [owned('test-amazon-store')], purchase: { merchantId: 'amazon-us' } })),
+    ).toEqual([0, 500]);
   });
 });
 
@@ -520,12 +533,9 @@ describe('catalog v3 engine: unvalued programs', () => {
   });
   it('puts a valued card that earns nothing before an unvalued card, even the default one', () => {
     const result = ready({
-      cards: [
-        owned('test-auto-top'),
-        owned('test-amazon-store', { gates: [{ gateId: 'amazon-prime', optionId: 'not-member' }] }),
-      ],
+      cards: [owned('test-auto-top'), owned('test-amazon-store')],
       purchase: { merchantId: 'amazon-us' },
-      wallet: { defaultCardId: 'test-auto-top' },
+      wallet: { defaultCardId: 'test-auto-top', gates: [{ gateId: 'amazon-prime', optionId: 'not-member' }] },
     });
     expect(order(result)).toEqual(['test-amazon-store', 'test-auto-top']);
     expect(result.rankingMayChange).toBe(true);
@@ -552,24 +562,24 @@ describe('catalog v3 engine: ranking ladders', () => {
     const gates = gate ? [{ gateId: 'amazon-prime', optionId: gate }] : [];
     return {
       cards: [
-        owned('test-prime-visa', { gates }),
-        owned('test-amazon-store', { gates }),
+        owned('test-prime-visa'),
+        owned('test-amazon-store'),
         owned('test-bce', { usage: gate ? [known('bce-online')] : [] }),
       ],
       purchase: { merchantId: 'amazon-us' },
-      wallet: { defaultCardId },
+      wallet: { defaultCardId, gates },
     };
   };
-  it('amazon-us, Prime unknown: ranges for Prime Visa and the store card, BCE named on the tie', () => {
+  it('amazon-us, Prime unknown: Prime Visa named at 3% or more, the store card 0–5%', () => {
     const result = ready(amazonWallet());
     expect(result.estimates.map((e) => [e.cardId, ...cents(e)])).toEqual([
+      ['test-prime-visa', 300, 500],
       ['test-bce', 100, 300],
-      ['test-prime-visa', 100, 500],
       ['test-amazon-store', 0, 500],
     ]);
-    expect(result.preferredCardId).toBe('test-bce');
+    expect(result.preferredCardId).toBe('test-prime-visa');
     expect(result.rankingMayChange).toBe(true);
-    expect(result.tied).toBe(true);
+    expect(result.tied).toBe(false);
     expect(result.notAccepted).toEqual([]);
   });
   it('amazon-us, Prime member: Prime Visa and the store card tie at 5%; the default card breaks it', () => {
@@ -595,20 +605,25 @@ describe('catalog v3 engine: ranking ladders', () => {
     expect(result.estimates[2].appliedRuleId).toBeUndefined();
   });
 
-  const bestBuyCards = (extra: { tier?: string; cashPlus?: string[] } = {}) => [
-    owned('test-my-best-buy-visa', {
-      gates: extra.tier ? [{ gateId: 'my-best-buy-tier', optionId: extra.tier }] : [],
-    }),
+  const bestBuy = (
+    extra: { tier?: string; cashPlus?: string[] } = {},
+    wallet: Partial<Wallet> = {},
+  ): Setup => ({
+    cards: bestBuyCards(extra),
+    wallet: { gates: extra.tier ? [{ gateId: 'my-best-buy-tier', optionId: extra.tier }] : [], ...wallet },
+  });
+  const bestBuyCards = (extra: { cashPlus?: string[] } = {}) => [
+    owned('test-my-best-buy-visa'),
     owned('test-cash-plus', {
       choices: extra.cashPlus ? [{ choiceId: 'five-percent', optionIds: extra.cashPlus }] : [],
-      usage: extra.cashPlus ? [known('cash-plus-electronics')] : [],
+      usage: extra.cashPlus ? shared('cash-plus-electronics', 'cash-plus-department-stores') : [],
     }),
     owned('test-amazon-store'),
     owned('test-bce'),
     owned('test-freedom-flex'),
   ];
   it('best-buy-us, nothing answered: My Best Buy Visa named, the Amazon store card left out', () => {
-    const result = ready({ cards: bestBuyCards() });
+    const result = ready(bestBuy());
     expect(result.estimates.map((e) => [e.cardId, ...cents(e)])).toEqual([
       ['test-my-best-buy-visa', 500, 600],
       ['test-bce', 100, 300],
@@ -622,7 +637,7 @@ describe('catalog v3 engine: ranking ladders', () => {
     expect(result.estimates[0].programId).toBe('test-best-buy-rewards');
   });
   it('best-buy-us, Cash+ with electronics chosen and a Plus membership', () => {
-    const result = ready({ cards: bestBuyCards({ tier: 'plus', cashPlus: ['electronics', 'fast-food'] }) });
+    const result = ready(bestBuy({ tier: 'plus', cashPlus: ['electronics', 'fast-food'] }));
     expect(result.estimates.slice(0, 2).map((e) => [e.cardId, ...cents(e)])).toEqual([
       ['test-my-best-buy-visa', 600, 600],
       ['test-cash-plus', 500, 500],
@@ -630,8 +645,9 @@ describe('catalog v3 engine: ranking ladders', () => {
     expect(result.rankingMayChange).toBe(false);
   });
   it('best-buy-us, free membership: Cash+ ties My Best Buy Visa at 5%, the default card wins', () => {
-    const cards = bestBuyCards({ tier: 'core', cashPlus: ['electronics'] });
-    const result = ready({ cards, wallet: { defaultCardId: 'test-cash-plus' } });
+    const result = ready(
+      bestBuy({ tier: 'core', cashPlus: ['electronics'] }, { defaultCardId: 'test-cash-plus' }),
+    );
     expect(order(result).slice(0, 2)).toEqual(['test-cash-plus', 'test-my-best-buy-visa']);
     expect(result.tied).toBe(true);
     expect(statusOf(result.estimates[1], 'mbb-best-buy-elite')).toBe('condition-not-met');
@@ -692,7 +708,13 @@ describe('catalog v3 engine: Freedom Flex quarters and shared caps', () => {
     });
   it('before 2026-12-31: the Q4 electronics rule applies and Q1 has not started', () => {
     const e = flex(
-      { cards: [owned('test-freedom-flex', { usage: [known('flex-q4-electronics', 0, '2026-12-15')] })] },
+      {
+        cards: [
+          owned('test-freedom-flex', {
+            usage: shared('flex-q4-electronics', 'flex-q4-department', 0, '2026-12-15'),
+          }),
+        ],
+      },
       december,
       '2026-12-15',
     );
@@ -722,7 +744,11 @@ describe('catalog v3 engine: Freedom Flex quarters and shared caps', () => {
     // $200 with $100 of the $1,500 left: $100 at 5% + $100 at 1% = $6.00.
     const e = flex(
       {
-        cards: [owned('test-freedom-flex', { usage: [known('flex-q4-electronics', 140_000, '2026-12-15')] })],
+        cards: [
+          owned('test-freedom-flex', {
+            usage: shared('flex-q4-electronics', 'flex-q4-department', 140_000, '2026-12-15'),
+          }),
+        ],
         purchase: { amountCents: 20_000 },
       },
       december,
@@ -731,24 +757,23 @@ describe('catalog v3 engine: Freedom Flex quarters and shared caps', () => {
     expect(cents(e)).toEqual([600, 600]);
     expect([e.minBonusSpendCents, e.maxBonusSpendCents]).toEqual([10_000, 10_000]);
   });
-  it('counts spend recorded on the group’s first rule against every rule sharing the cap', () => {
+  it('counts spend recorded on the group’s holder (smallest rule ID) against every rule sharing the cap', () => {
     const e = flex(
       {
         cards: [
           owned('test-freedom-flex', {
             usage: [
-              known('flex-q4-electronics', 150_000, '2026-12-15'),
-              // The department rule's own spend row is not where the shared cap is recorded.
-              known('flex-q4-department', 0, '2026-12-15'),
+              known('flex-q4-department', 150_000, '2026-12-15'),
+              // The electronics rule's own spend row is not where the shared cap is recorded.
+              known('flex-q4-electronics', 0, '2026-12-15'),
             ],
           }),
         ],
-        purchase: { merchantId: 'test-department-us' },
       },
       december,
       '2026-12-15',
     );
-    expect(statusOf(e, 'flex-q4-department')).toBe('cap-reached');
+    expect(statusOf(e, 'flex-q4-electronics')).toBe('cap-reached');
     expect(cents(e)).toEqual([100, 100]);
   });
 });
@@ -787,7 +812,9 @@ describe('catalog v3 engine: inputs and compatibility', () => {
       ],
     ],
   ])('rejects wallet gates with %s', (_, gates) => {
-    expect(() => compare({ cards: [owned('test-prime-visa', { gates })] })).toThrow('Invalid wallet gates.');
+    expect(() => compare({ cards: [owned('test-prime-visa')], wallet: { gates } })).toThrow(
+      'Invalid wallet gates.',
+    );
   });
   it('accepts Venmo for v3 but not for a v2 catalog', () => {
     expect(only({ cards: [owned('test-bce')], purchase: { paymentPath: 'venmo' } }).uncertainties).toContain(
@@ -817,26 +844,32 @@ describe('catalog v3 engine: inputs and compatibility', () => {
 
 describe('catalog v3 usageInputs', () => {
   const inputs = (cardId: string) => usageInputs(CATALOG, cardId);
-  it('records a shared cap once, on the group’s first rule, and activation per rule', () => {
+  it('records a shared cap once, on the group’s rule with the smallest ID, and activation per rule', () => {
     expect(inputs('test-cash-plus')).toEqual([
       {
         ruleId: 'cash-plus-electronics',
-        label: 'combined electronics store and department store',
-        needsSpend: true,
+        label: 'electronics store',
+        needsSpend: false,
         needsActivation: true,
       },
       {
         ruleId: 'cash-plus-department-stores',
-        label: 'department store',
-        needsSpend: false,
+        label: 'combined electronics store and department store',
+        needsSpend: true,
         needsActivation: true,
       },
     ]);
+    // Reordering the group's rules in a release does not move the spend row.
+    const reordered = structuredClone(CATALOG);
+    reordered.cards.find((c) => c.id === 'test-cash-plus')!.rules.reverse();
+    expect(usageInputs(reordered, 'test-cash-plus').find((i) => i.needsSpend)!.ruleId).toBe(
+      'cash-plus-department-stores',
+    );
   });
   it('lists rotating rules and capped bonuses, and nothing for uncapped brand rules', () => {
     expect(inputs('test-freedom-flex').map((i) => [i.ruleId, i.needsSpend, i.needsActivation])).toEqual([
-      ['flex-q4-electronics', true, true],
-      ['flex-q4-department', false, true],
+      ['flex-q4-electronics', false, true],
+      ['flex-q4-department', true, true],
       ['flex-q1-online', true, true],
     ]);
     expect(inputs('test-bce')).toEqual([
@@ -849,5 +882,273 @@ describe('catalog v3 usageInputs', () => {
   it('omits rules that cover no catalog merchant', () => {
     // The fixture's Q4 dining and Q1 supermarket rules: no dining or supermarket merchant.
     expect(inputs('test-rotating')).toEqual([]);
+  });
+});
+
+describe('catalog v3 engine: review edge cases', () => {
+  const edge = structuredClone(CATALOG);
+  edge.programs.push({
+    id: 'test-other-miles',
+    name: 'Test Other Miles',
+    currency: 'points',
+    unitName: 'miles',
+    valuation: { basis: 'none' },
+    redemptionBrandIds: [],
+  });
+  edge.merchants.push({
+    ...structuredClone(CATALOG.merchants[0]),
+    id: 'test-overseas',
+    name: 'Overseas electronics',
+    usMerchant: false,
+    brandIds: [],
+  });
+  edge.cards.push(
+    card('test-miles-flat', 'test-airline-miles', [rule('miles-flat-base', { rateBps: 200 })]),
+    card('test-miles-flat-2', 'test-airline-miles', [rule('miles-flat-2-base', { rateBps: 200 })]),
+    card('test-other-flat', 'test-other-miles', [rule('other-flat-base', { rateBps: 150 })]),
+    {
+      ...card('test-gated-choice', 'cash-back', [
+        rule('gc-base'),
+        rule('gc-member', {
+          category: 'electronics',
+          rateBps: 500,
+          choice: { choiceId: 'pick', optionId: 'electronics' },
+          requires: [{ gateId: 'amazon-prime', optionIds: ['member'] }],
+        }),
+        rule('gc-not-member', {
+          category: 'electronics',
+          rateBps: 300,
+          choice: { choiceId: 'pick', optionId: 'electronics' },
+          requires: [{ gateId: 'amazon-prime', optionIds: ['not-member'] }],
+        }),
+        rule('gc-two-gates', {
+          category: 'electronics',
+          rateBps: 400,
+          requires: [
+            { gateId: 'amazon-prime', optionIds: ['member'] },
+            { gateId: 'test-store-tier', optionIds: ['gold'] },
+          ],
+        }),
+      ]),
+      choices: [
+        {
+          id: 'pick',
+          kind: 'chosen',
+          label: 'One 5% category',
+          picks: 1,
+          options: [
+            { id: 'electronics', label: 'Electronics' },
+            { id: 'dining', label: 'Dining' },
+          ],
+          defaultOptionIds: [],
+        },
+      ],
+    },
+    card('test-card-only', 'cash-back', [
+      rule('card-only-base'),
+      rule('card-only-bonus', { category: 'electronics', rateBps: 200, requiredPaymentPaths: ['card'] }),
+    ]),
+  );
+  const at = (setup: Setup) => ready({ catalog: edge, ...setup });
+
+  it('is a valid catalog v3', () => {
+    expect(catalogV3Schema.safeParse(edge).success).toBe(true);
+  });
+
+  it('starts and ends rotating rules on the purchase’s local date, whatever the UTC time', () => {
+    const catalog = datedCatalog('2026-12-01', '2027-01-15');
+    const rows = (on: string) => shared('flex-q4-electronics', 'flex-q4-department', 0, on);
+    // 2026-12-31 in California is already 2027-01-01 in UTC: Q4 still applies.
+    const lastDay = only({
+      cards: [owned('test-freedom-flex', { usage: rows('2026-12-31') })],
+      catalog,
+      purchase: { purchasedOn: '2026-12-31' },
+      at: Date.parse('2027-01-01T04:30:00Z'),
+    });
+    expect(statusOf(lastDay, 'flex-q4-electronics')).toBe('applied');
+    expect(statusOf(lastDay, 'flex-q1-online')).toBe('not-started');
+    expect(cents(lastDay)).toEqual([500, 500]);
+    // 2027-01-01 in Tokyo is still 2026-12-31 in UTC: Q4 has ended and Q1 has started.
+    const firstDay = only({
+      cards: [owned('test-freedom-flex')],
+      catalog,
+      purchase: { purchasedOn: '2027-01-01', merchantId: 'newegg-us' },
+      at: Date.parse('2026-12-31T16:00:00Z'),
+    });
+    expect(statusOf(firstDay, 'flex-q4-electronics')).toBe('expired');
+    expect(statusOf(firstDay, 'flex-q1-online')).toBe('may-apply');
+    // The day before startsOn is not started; startsOn itself is.
+    const before = only({ cards: [owned('test-freedom-flex')], purchase: { purchasedOn: '2026-09-30' } });
+    expect(statusOf(before, 'flex-q4-electronics')).toBe('not-started');
+    const start = only({ cards: [owned('test-freedom-flex')], purchase: { purchasedOn: '2026-10-01' } });
+    expect(statusOf(start, 'flex-q4-electronics')).toBe('may-apply');
+  });
+
+  it('uses a shared cap up exactly: the last dollar of headroom, then none, then over', () => {
+    const flexAt = (spent: number) =>
+      only({
+        cards: [
+          owned('test-freedom-flex', { usage: shared('flex-q4-electronics', 'flex-q4-department', spent) }),
+        ],
+      });
+    const last = flexAt(140_000); // $100 purchase, $100 of headroom
+    expect(cents(last)).toEqual([500, 500]);
+    expect([last.minBonusSpendCents, last.maxBonusSpendCents]).toEqual([10_000, 10_000]);
+    expect(statusOf(last, 'flex-q4-electronics')).toBe('applied');
+    for (const spent of [150_000, 160_000]) {
+      const used = flexAt(spent);
+      expect(cents(used)).toEqual([100, 100]);
+      expect(statusOf(used, 'flex-q4-electronics')).toBe('cap-reached');
+      expect(used.uncertainties).toEqual([]);
+    }
+    // One cent of headroom: 1¢ × 5% + $99.99 × 1% = 100.04¢, floored once.
+    expect(cents(flexAt(149_999))).toEqual([100, 100]);
+  });
+
+  it('ranks an all-unvalued wallet by units, comparing units only within one program', () => {
+    const same = at({ cards: [owned('test-auto-top'), owned('test-miles-flat')] });
+    expect(same.estimates.map((e) => [e.cardId, ...cents(e), ...units(e)])).toEqual([
+      ['test-miles-flat', 0, 0, 200, 200],
+      ['test-auto-top', 0, 0, 100, 300],
+    ]);
+    expect(
+      same.estimates.every((e) => e.unitValue === null && e.uncertainties.includes('value-unknown')),
+    ).toBe(true);
+    expect([same.preferredCardId, same.rankingMayChange, same.tied]).toEqual([
+      'test-miles-flat',
+      true,
+      false,
+    ]);
+    const tie = at({ cards: [owned('test-miles-flat-2'), owned('test-miles-flat')] });
+    expect([tie.preferredCardId, tie.rankingMayChange, tie.tied]).toEqual(['test-miles-flat', false, true]);
+    // Other programs' miles are not comparable: never a tie, and they may win once valued.
+    const mixed = at({ cards: [owned('test-other-flat'), owned('test-miles-flat')] });
+    expect(order(mixed)).toEqual(['test-miles-flat', 'test-other-flat']);
+    expect([mixed.rankingMayChange, mixed.tied]).toEqual([true, false]);
+  });
+
+  it('combines an unanswered gate with an unanswered choice', () => {
+    const gc = (wallet: Partial<Wallet> = {}, choices: WalletCard['choices'] = []) =>
+      at({ cards: [owned('test-gated-choice', { choices })], wallet }).estimates[0];
+    const neither = gc();
+    expect(cents(neither)).toEqual([100, 500]); // without the choice, any answer may leave the base
+    expect(neither.uncertainties).toEqual(['choice-unknown', 'condition-unknown']);
+    expect(statusOf(neither, 'gc-member')).toBe('may-apply');
+    const chosen = gc({}, [{ choiceId: 'pick', optionIds: ['electronics'] }]);
+    expect(cents(chosen)).toEqual([300, 500]); // chosen: 3% or 5% depending on Prime
+    expect(chosen.uncertainties).toEqual(['condition-unknown']);
+    const notMember = gc({ gates: [{ gateId: 'amazon-prime', optionId: 'not-member' }] });
+    expect(statusOf(notMember, 'gc-member')).toBe('condition-not-met');
+    expect(cents(notMember)).toEqual([100, 300]);
+    const dining = gc({ gates: [{ gateId: 'amazon-prime', optionId: 'member' }] }, [
+      { choiceId: 'pick', optionIds: ['dining'] },
+    ]);
+    expect(statusOf(dining, 'gc-member')).toBe('choice-not-selected');
+    expect(cents(dining)).toEqual([100, 400]); // only the two-gate rule may still apply
+  });
+
+  it('blocks a rule with two gates when one is answered wrong and the other is unanswered', () => {
+    const e = at({
+      cards: [owned('test-gated-choice')],
+      wallet: { gates: [{ gateId: 'amazon-prime', optionId: 'not-member' }] },
+    }).estimates[0];
+    expect(statusOf(e, 'gc-two-gates')).toBe('condition-not-met');
+    const both = at({
+      cards: [owned('test-gated-choice')],
+      wallet: {
+        gates: [
+          { gateId: 'amazon-prime', optionId: 'member' },
+          { gateId: 'test-store-tier', optionId: 'gold' },
+        ],
+      },
+    }).estimates[0];
+    expect(statusOf(both, 'gc-two-gates')).toBe('applied');
+    expect(cents(both)).toEqual([400, 500]);
+  });
+
+  it('applies gate answers to every card in the wallet', () => {
+    const result = at({
+      cards: [owned('test-prime-visa'), owned('test-amazon-store')],
+      purchase: { merchantId: 'amazon-us' },
+      wallet: { gates: [{ gateId: 'amazon-prime', optionId: 'member' }] },
+    });
+    expect(result.estimates.map((e) => [e.cardId, ...cents(e)])).toEqual([
+      ['test-amazon-store', 500, 500],
+      ['test-prime-visa', 500, 500],
+    ]);
+  });
+
+  it('keeps usMerchantsOnly in v3', () => {
+    const e = at({
+      cards: [owned('test-bce', { usage: [known('bce-online')] })],
+      purchase: { merchantId: 'test-overseas' },
+    }).estimates[0];
+    expect(statusOf(e, 'bce-online')).toBe('not-eligible');
+    expect(cents(e)).toEqual([100, 100]);
+  });
+
+  it('blocks a rule that requires the card path when paying another way', () => {
+    const by = (paymentPath: Purchase['paymentPath']) =>
+      at({ cards: [owned('test-card-only')], purchase: { paymentPath } }).estimates[0];
+    expect(statusOf(by('card'), 'card-only-bonus')).toBe('applied');
+    expect(cents(by('card'))).toEqual([200, 200]);
+    expect(statusOf(by('paypal'), 'card-only-bonus')).toBe('not-eligible');
+    expect(statusOf(by('venmo'), 'card-only-bonus')).toBe('not-eligible');
+  });
+
+  it('names an accepted unvalued card over a closed-loop card that is not accepted', () => {
+    const result = at({ cards: [owned('test-amazon-store'), owned('test-auto-top')], wallet: {} });
+    expect(result.preferredCardId).toBe('test-auto-top');
+    expect(result.notAccepted!.map((e) => e.cardId)).toEqual(['test-amazon-store']);
+    expect(compare({ cards: [owned('test-amazon-store')], purchase: { merchantId: 'newegg-us' } })).toEqual({
+      status: 'unavailable',
+      reason: 'no-accepted-card',
+    });
+  });
+
+  it.each([
+    [
+      'choices that are not a list',
+      { cards: [owned('test-cash-plus', { choices: 'x' as never })] },
+      'choices',
+    ],
+    [
+      'a choice without options',
+      { cards: [owned('test-cash-plus', { choices: [{ choiceId: 'five-percent' } as never] })] },
+      'choices',
+    ],
+    [
+      'gates that are not a list',
+      { cards: [owned('test-prime-visa')], wallet: { gates: 'x' as never } },
+      'gates',
+    ],
+    [
+      'a gate answer without an option',
+      { cards: [owned('test-prime-visa')], wallet: { gates: [{ gateId: 'amazon-prime' } as never] } },
+      'gates',
+    ],
+    [
+      'overrides that are not a list',
+      { cards: [owned('test-prime-visa')], wallet: { valueOverrides: {} as never } },
+      'override',
+    ],
+    [
+      'an override that is not an object',
+      { cards: [owned('test-prime-visa')], wallet: { valueOverrides: [null as never] } },
+      'override',
+    ],
+  ])('rejects %s with the engine’s own error', (_, setup, kind) => {
+    const message = {
+      choices: 'Invalid wallet choices.',
+      gates: 'Invalid wallet gates.',
+      override: 'Invalid value override.',
+    }[kind]!;
+    expect(() => compare(setup as Setup)).toThrow(message);
+  });
+
+  it('rejects a cash-back program whose cash value is not 100', () => {
+    const catalog = structuredClone(CATALOG);
+    catalog.programs[0].valuation = { basis: 'cash', valueHundredthsOfCent: 150 as 100 };
+    expect(() => compare({ cards: [owned('test-bce')], catalog })).toThrow('Invalid catalog program.');
   });
 });

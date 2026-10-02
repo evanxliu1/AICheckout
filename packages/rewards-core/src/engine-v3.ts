@@ -1,6 +1,6 @@
 import { numeratorCents, numeratorUnits, portionNumerator } from './money.ts';
 import { integer, unavailableReason, unique, validatePurchaseAndWallet } from './engine-shared.ts';
-import { isUnconditionalRuleV3 } from './schema.ts';
+import { isUnconditionalRuleV3 } from './rules-v3.ts';
 import {
   PAYMENT_PATHS_V3,
   UNCERTAINTIES_V3,
@@ -19,6 +19,7 @@ import {
   type UnitValue,
   type Wallet,
   type WalletCard,
+  type WalletGate,
 } from './types.ts';
 
 /*
@@ -36,13 +37,15 @@ import {
  * - Choices: a `chosen` option the shopper selected applies, one they did not select is
  *   `choice-not-selected`, an unanswered choice gives a range (`choice-unknown`); an `automatic`
  *   option always gives a range (`automatic-category`).
- * - Gates: an answer outside the required options is `condition-not-met`; no answer gives a range
- *   (`condition-unknown`).
+ * - Gates: answers are per wallet (they describe the cardholder, not a card). An answer outside the
+ *   required options is `condition-not-met`; no answer gives a range (`condition-unknown`) whose
+ *   guaranteed minimum is the worst case over the possible answers, not the base.
  * - Payment paths: `requiredPaymentPaths` (PayPal Cashback through PayPal) must include the path,
  *   and a rule that requires the path is not `payment-path-uncertain` for it.
  * - Dates: `startsOn` after the purchase date is `not-started`; `endsOn` as in v2 (`expired`).
  * - Shared caps: rules with the same `sharedCapId` share one spend cap. The spend toward it is
- *   recorded on the group's first rule in catalog order (`capHolder`); activation stays per rule.
+ *   recorded on the group's rule with the smallest ID (`capHolder`), so reordering rules in a
+ *   release does not move it; activation stays per rule.
  */
 
 const PORTALS = new Set(['travel-portal', 'entertainment-portal']);
@@ -55,9 +58,13 @@ export function baseRuleV3(card: CardProductV3): RewardRuleV3 | undefined {
   return card.rules.find((r) => r.category === 'all-purchases' && isUnconditionalRuleV3(r));
 }
 
-/** The rule whose usage row records the spend toward a shared cap: the group's first rule. */
+/** The rule whose usage row records the spend toward a shared cap: the group's rule with the
+ * smallest ID (code-unit order), which does not depend on the order of the card's rules. */
 export function capHolder(card: CardProductV3, rule: RewardRuleV3): RewardRuleV3 {
-  return rule.sharedCapId === null ? rule : card.rules.find((r) => r.sharedCapId === rule.sharedCapId)!;
+  if (rule.sharedCapId === null) return rule;
+  return card.rules
+    .filter((r) => r.sharedCapId === rule.sharedCapId)
+    .reduce((holder, r) => (r.id < holder.id ? r : holder));
 }
 
 /** Whether a rule's merchant scope and category cover a merchant, before any purchase detail. */
@@ -94,6 +101,9 @@ export function unitValueFor(
   return { hundredthsOfCent: program.valuation.valueHundredthsOfCent, basis: program.valuation.basis };
 }
 
+const isObject = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
+
 function validateCatalog(catalog: CatalogV3, wallet: Wallet, purchase: Purchase) {
   const sources = new Set(catalog.sources.map((s) => s.id));
   const programs = new Map(catalog.programs.map((p) => [p.id, p]));
@@ -113,7 +123,8 @@ function validateCatalog(catalog: CatalogV3, wallet: Wallet, purchase: Purchase)
   for (const program of catalog.programs)
     if (
       (program.valuation.basis !== 'none' && !integer(program.valuation.valueHundredthsOfCent, 1, 10_000)) ||
-      (program.currency === 'cash-back') !== (program.valuation.basis === 'cash')
+      (program.currency === 'cash-back') !== (program.valuation.basis === 'cash') ||
+      (program.valuation.basis === 'cash' && program.valuation.valueHundredthsOfCent !== 100)
     )
       throw new Error('Invalid catalog program.');
   for (const card of catalog.cards) {
@@ -159,6 +170,14 @@ function validateCatalog(catalog: CatalogV3, wallet: Wallet, purchase: Purchase)
       throw new Error('Invalid wallet usage.');
     const choices = owned.choices ?? [];
     if (
+      !Array.isArray(choices) ||
+      !choices.every(
+        (c) =>
+          isObject(c) &&
+          typeof c.choiceId === 'string' &&
+          Array.isArray(c.optionIds) &&
+          c.optionIds.every((id) => typeof id === 'string'),
+      ) ||
       !unique(choices.map((c) => c.choiceId)) ||
       choices.some((picked) => {
         const choice = card.choices.find((c) => c.id === picked.choiceId);
@@ -171,15 +190,19 @@ function validateCatalog(catalog: CatalogV3, wallet: Wallet, purchase: Purchase)
       })
     )
       throw new Error('Invalid wallet choices.');
-    const answers = owned.gates ?? [];
-    if (
-      !unique(answers.map((a) => a.gateId)) ||
-      answers.some((a) => !gates.get(a.gateId)?.options.some((o) => o.id === a.optionId))
-    )
-      throw new Error('Invalid wallet gates.');
   }
+  const answers = wallet.gates ?? [];
+  if (
+    !Array.isArray(answers) ||
+    !answers.every((a) => isObject(a) && typeof a.gateId === 'string' && typeof a.optionId === 'string') ||
+    !unique(answers.map((a) => a.gateId)) ||
+    answers.some((a) => !gates.get(a.gateId)?.options.some((o) => o.id === a.optionId))
+  )
+    throw new Error('Invalid wallet gates.');
   const overrides = wallet.valueOverrides ?? [];
   if (
+    !Array.isArray(overrides) ||
+    !overrides.every((o) => isObject(o) && typeof o.programId === 'string') ||
     !unique(overrides.map((o) => o.programId)) ||
     overrides.some(
       (o) => programs.get(o.programId)?.currency !== 'points' || !integer(o.valueHundredthsOfCent, 1, 10_000),
@@ -194,6 +217,8 @@ type Context = {
   merchant: MerchantProfileV3;
   purchase: Purchase;
   verifiedOn: string;
+  /** The wallet's gate answers, shared by every card. */
+  gates: WalletGate[];
   usageFor: (rule: RewardRuleV3) => RuleUsage | undefined;
   /** Reward numerator in the card's shown measure: cents, or units when unvalued. */
   measure: (numerator: bigint) => number;
@@ -207,6 +232,11 @@ type Option = {
   maxBonusSpend: number;
   uncertainties: UncertaintyV3[];
   status: RuleStatusV3;
+  /** Requirements on gates the shopper has not answered. */
+  open: RewardRuleV3['requires'];
+  /** `min` and `minBonusSpend` once every open requirement is known to be met. */
+  minIfMet: bigint;
+  minBonusSpendIfMet: number;
 };
 
 const big = {
@@ -239,7 +269,7 @@ function blocked(rule: RewardRuleV3, ctx: Context): RuleStatusV3 | null {
       return 'choice-not-selected';
   }
   for (const requirement of rule.requires) {
-    const answer = owned.gates?.find((g) => g.gateId === requirement.gateId);
+    const answer = ctx.gates.find((g) => g.gateId === requirement.gateId);
     if (answer && !requirement.optionIds.includes(answer.optionId)) return 'condition-not-met';
   }
   return null;
@@ -261,8 +291,8 @@ function evaluate(rule: RewardRuleV3, ctx: Context, baseNumerator: bigint): Opti
     if (choice.kind === 'automatic') uncertain.push('automatic-category');
     else if (!owned.choices?.some((c) => c.choiceId === choice.id)) uncertain.push('choice-unknown');
   }
-  if (rule.requires.some((r) => !owned.gates?.some((g) => g.gateId === r.gateId)))
-    uncertain.push('condition-unknown');
+  const open = rule.requires.filter((r) => !ctx.gates.some((g) => g.gateId === r.gateId));
+  if (open.length > 0) uncertain.push('condition-unknown');
 
   let minBonus = amount,
     maxBonus = amount,
@@ -286,6 +316,7 @@ function evaluate(rule: RewardRuleV3, ctx: Context, baseNumerator: bigint): Opti
   const ruleMin = reward(minBonus),
     ruleMax = reward(maxBonus);
   const certain = uncertain.length === 0;
+  const certainIfMet = uncertain.length === (open.length > 0 ? 1 : 0);
   const min = certain ? ruleMin : big.min(baseNumerator, ruleMin);
   const max = certain ? ruleMax : big.max(baseNumerator, ruleMax);
   // Report only conditions that can move the shown amount (cents, or units when unvalued).
@@ -298,10 +329,77 @@ function evaluate(rule: RewardRuleV3, ctx: Context, baseNumerator: bigint): Opti
     maxBonusSpend: maxBonus,
     uncertainties: moves ? [...uncertain, ...capCodes] : [],
     status: maxBonus === 0 ? 'cap-reached' : moves ? 'may-apply' : 'applied',
+    open,
+    minIfMet: certainIfMet ? ruleMin : big.min(baseNumerator, ruleMin),
+    minBonusSpendIfMet: certainIfMet ? minBonus : 0,
   };
 }
 
+/** Most answer combinations enumerated for a card's unanswered gates. Real cards need a handful
+ * (one or two gates, two or three distinct answers each); past this the card falls back to the
+ * conservative base-to-rule ranges, which keeps a 180-card wallet fast (2026-10-02 review). */
+const MAX_GATE_COMBINATIONS = 64;
+
+/**
+ * The card's guaranteed numerator and the rule that sets it. With every gate answered (or none
+ * involved) that is the best option's minimum. With unanswered gates it is the worst case over the
+ * possible answers of the best minimum each answer allows, so a gate whose every answer earns a
+ * bonus (Prime member 5%, not a member 3%) does not drop the minimum to the base. Answers are
+ * grouped by which requirements they meet, which keeps the enumeration small.
+ */
+function guaranteed(
+  options: Option[],
+  baseNumerator: bigint,
+  catalog: CatalogV3,
+): { min: bigint; floor?: Option; floorBonusSpend: number } {
+  const best = (candidates: { option: Option; min: bigint; bonus: number }[]) => {
+    const top = candidates.sort(
+      (a, b) =>
+        big.desc(a.min, b.min) ||
+        big.desc(a.option.max, b.option.max) ||
+        b.option.rule.rateBps - a.option.rule.rateBps,
+    )[0];
+    return {
+      min: big.max(baseNumerator, top?.min ?? baseNumerator),
+      floor: top?.option,
+      floorBonusSpend: top?.bonus ?? 0,
+    };
+  };
+  const all = options.map((o) => ({ option: o, min: o.min, bonus: o.minBonusSpend }));
+  const gateIds = [...new Set(options.flatMap((o) => o.open.map((r) => r.gateId)))];
+  if (gateIds.length === 0) return best(all);
+  const answerSets = gateIds.map((gateId) => {
+    const requirements = options.flatMap((o) => o.open.filter((r) => r.gateId === gateId));
+    const classes = new Map<string, string>();
+    for (const { id } of catalog.gates.find((g) => g.id === gateId)!.options) {
+      const key = requirements.map((r) => (r.optionIds.includes(id) ? 1 : 0)).join('');
+      if (!classes.has(key)) classes.set(key, id);
+    }
+    return [...classes.values()];
+  });
+  if (answerSets.reduce((n, set) => n * set.length, 1) > MAX_GATE_COMBINATIONS) return best(all);
+  let worst: ReturnType<typeof best> | undefined;
+  const visit = (index: number, answers: Map<string, string>) => {
+    if (index === gateIds.length) {
+      const allowed = options
+        .filter((o) => o.open.every((r) => r.optionIds.includes(answers.get(r.gateId)!)))
+        .map((o) =>
+          o.open.length > 0
+            ? { option: o, min: o.minIfMet, bonus: o.minBonusSpendIfMet }
+            : { option: o, min: o.min, bonus: o.minBonusSpend },
+        );
+      const result = best(allowed);
+      if (!worst || result.min < worst.min) worst = result;
+      return;
+    }
+    for (const answer of answerSets[index]) visit(index + 1, new Map(answers).set(gateIds[index], answer));
+  };
+  visit(0, new Map());
+  return worst!;
+}
+
 function estimateCard(
+  catalog: CatalogV3,
   card: CardProductV3,
   program: RewardProgram,
   owned: WalletCard,
@@ -318,6 +416,7 @@ function estimateCard(
     merchant,
     purchase,
     verifiedOn,
+    gates: wallet.gates ?? [],
     // Only same-day usage for this year counts; stale usage is unknown, not zero.
     usageFor: (rule) =>
       owned.usage.find(
@@ -345,17 +444,13 @@ function estimateCard(
     options.push(option);
     statuses.push({ ruleId: rule.id, status: option.status });
   }
-  const byMin = [...options].sort(
-    (a, b) => big.desc(a.min, b.min) || big.desc(a.max, b.max) || b.rule.rateBps - a.rule.rateBps,
-  );
   const byMax = [...options].sort(
     (a, b) => big.desc(a.max, b.max) || big.desc(a.min, b.min) || b.rule.rateBps - a.rule.rateBps,
   );
-  const floor = byMin[0],
-    ceiling = byMax[0];
+  const ceiling = byMax[0];
   // The base is always an option: no rule (e.g. a low after-cap rate) can pull a card below it.
-  const min = big.max(baseNumerator, floor?.min ?? baseNumerator),
-    max = big.max(baseNumerator, ceiling?.max ?? baseNumerator);
+  const { min, floor, floorBonusSpend } = guaranteed(options, baseNumerator, catalog);
+  const max = big.max(baseNumerator, ceiling?.max ?? baseNumerator);
   const codes = new Set(
     options.filter((o) => ctx.measure(o.max) > ctx.measure(min)).flatMap((o) => o.uncertainties),
   );
@@ -369,7 +464,7 @@ function estimateCard(
     maxRewardCents: value ? numeratorCents(max, value.hundredthsOfCent) : 0,
     baseRateBps: base?.rateBps ?? 0,
     bonusRateBps: shown?.rule.rateBps ?? null,
-    minBonusSpendCents: shown && shown === floor ? shown.minBonusSpend : 0,
+    minBonusSpendCents: shown && shown === floor ? floorBonusSpend : 0,
     maxBonusSpendCents: shown?.maxBonusSpend ?? 0,
     uncertainties: UNCERTAINTIES_V3.filter((code) => codes.has(code)),
     sourceIds: [
@@ -470,7 +565,7 @@ export function compareV3(
     const card = catalog.cards.find((c) => c.id === owned.cardId)!;
     const program = catalog.programs.find((p) => p.id === card.programId)!;
     if (cardAcceptedAt(card, merchant))
-      estimates.push(estimateCard(card, program, owned, wallet, merchant, purchase, verifiedOn));
+      estimates.push(estimateCard(catalog, card, program, owned, wallet, merchant, purchase, verifiedOn));
     else notAccepted.push(notAcceptedEstimate(card, program, wallet));
   }
   if (estimates.length === 0) return { status: 'unavailable', reason: 'no-accepted-card' };
