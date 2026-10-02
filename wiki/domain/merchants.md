@@ -1,0 +1,61 @@
+---
+type: Domain Concept
+title: Merchants
+description: The three merchant profiles in catalog v2 (Best Buy, Newegg, Amazon), their expected category and MCC with confidence, and the caveats that make bonuses uncertain.
+status: stable
+tags: [domain, merchants, mcc]
+generated:
+  by: claude-code/claude-opus-5-5
+  at: 2026-10-02T03:00:00Z
+sources:
+  - resource: ../../evals/curation/real/merchants.json
+    title: Merchant profiles (input to the catalog builder)
+  - resource: ../../packages/rewards-core/src/catalog-v2.ts
+    title: CATALOG_V2 merchants
+  - resource: ../../packages/rewards-core/src/types.ts
+    title: MerchantProfile type
+  - resource: ../../docs/research/cashback-card-terms-2026.md
+    title: Research report, section on electronics retailers (checked 2026-09-28)
+stale_after: 2026-10-29T00:00:00Z
+---
+
+# Merchants
+
+A merchant profile says what the engine may assume about a retailer: whether it is online retail selling physical goods, whether it is U.S., which merchant category it is expected to code as, and the predicted MCC with a confidence level. The catalog has three profiles. The MCC is a prediction. It is never observed at checkout. None of the seven [cards](cards.md) pays a bonus on the expected categories, so the deciding test at these merchants is the Amex online-retail channel rule (see [Reward rules](reward-rules.md)).
+
+## Facts
+
+| `id` | Online retail | Physical goods | U.S. | `expectedCategory` | MCC | Confidence | MCC source |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `best-buy-us` | yes | yes | yes | electronics | 5732 | low | CheckMCC community lookup, undated (checked 2026-09-28) |
+| `newegg-us` | yes | yes | yes | electronics | 5732 | low | CheckMCC community lookup, undated (checked 2026-09-28) |
+| `amazon-us` | yes | yes | yes | general-merchandise | null | low | none collected |
+
+MCC 5732 is the network code for electronics stores. The research report found no evidence for the alternatives 5734, 5999 or 5311, and no data that separates online coding from in-store coding.
+
+## Caveats (recorded in profile `notes`)
+
+| Merchant | Caveat |
+| --- | --- |
+| Best Buy | Online retail only when paid online. Buy online, pick up in store counts only if Best Buy codes it as online. Geek Squad services and protection plans may count as services, not retail (inference, not confirmed by Amex) |
+| Newegg | Newegg Marketplace third-party sellers may post differently. No evidence either way |
+| Amazon | Amex names Amazon.com as an eligible online retailer and says online superstores such as Amazon are not supermarkets. Third-party marketplace sellers may post differently. Digital goods and services are not physical goods |
+
+**Marketplace caveat.** Amex's terms say a purchase "may not" earn additional rewards when the merchant uses a third party to sell or to process the transaction. Marketplace items (Newegg Marketplace, Amazon third-party sellers) are therefore uncertain, not ineligible. The profile does not model per-item sellers. The flag lives only in `notes`.
+
+## How it works
+
+- Profiles are authored in [`evals/curation/real/merchants.json`](../../evals/curation/real/merchants.json) and copied into `CATALOG_V2.merchants` by [`scripts/build-catalog-v2.mjs`](../../scripts/build-catalog-v2.mjs). Merchant MCC page captures are gitignored (`evals/curation/real/merchant-captures/`). Only `merchant-manifest.json` and `merchant-sources.json` are committed.
+- A purchase at a merchant not in `merchants` returns `unsupported-merchant`.
+- `expectedCategory` gates MCC-group rules. With `electronics` or `general-merchandise`, no supermarket, gas, dining or other category rule can apply.
+
+## Gotchas
+
+- The research report recommends the label "community, medium-low confidence". The catalog stores `low`.
+- Browser cart observations do not show how a transaction will post. The shopper's `onlineRetail` answer and the payment path decide whether BCE's 3% is certain or a range.
+
+## Related
+
+* [Reward rules](reward-rules.md)
+* [Cards](cards.md)
+* [Glossary](glossary.md)
