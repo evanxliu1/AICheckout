@@ -3,7 +3,7 @@ import { readBoundedJson } from '@ai-checkout/catalog-client';
 import {
   MAX_REVIEW_RESPONSE_BYTES,
   reviewQueueSchema,
-  reviewDetailSchema,
+  reviewSummarySchema,
   sourceDocumentSchema,
   draftSchema,
   type ReviewConfig,
@@ -24,6 +24,7 @@ const messages: Record<string, string> = {
   invalid_request: 'Some draft fields are invalid. Check the input and try again.',
   review_changed: 'The draft or published catalog changed. Reload it and review the changes again.',
   draft_not_found: 'This draft is no longer available. Return to the pending drafts.',
+  source_not_found: 'This capture is no longer attached to the draft. Reload the draft.',
   invalid_catalog_evidence:
     'The draft, dates, or captured evidence are not ready to publish. Reload and check them.',
   too_many_requests: 'Too many requests. Wait a minute, then try again.',
@@ -45,7 +46,9 @@ export class ReviewApiError extends Error {
   readonly status: number;
   readonly code: string;
   readonly runId?: string;
-  constructor(status: number, code: string, runId?: string) {
+  /** For a 429: how long the server asked to wait (`Retry-After`), in milliseconds. */
+  readonly retryAfterMs?: number;
+  constructor(status: number, code: string, runId?: string, retryAfterMs?: number) {
     super(
       messages[code] ??
         'The request did not finish. Reload the draft before retrying a change or publication.',
@@ -53,7 +56,14 @@ export class ReviewApiError extends Error {
     this.status = status;
     this.code = code;
     this.runId = runId;
+    this.retryAfterMs = retryAfterMs;
   }
+}
+/** `Retry-After` in seconds as milliseconds, bounded to 1–60 s; undefined when absent or not a number. */
+function retryAfter(headers: Headers) {
+  const value = headers.get('retry-after');
+  if (!value || !/^\d{1,4}$/.test(value.trim())) return undefined;
+  return Math.min(60, Math.max(1, Number(value))) * 1000;
 }
 export function createReviewAuth(config: ReviewConfig) {
   return createClient(config.supabaseUrl, config.publishableKey, {
@@ -112,7 +122,12 @@ export function createReviewApi(
         } catch {
           /* Do not display server or database details. */
         }
-        throw new ReviewApiError(response.status, code, runId);
+        throw new ReviewApiError(
+          response.status,
+          code,
+          runId,
+          response.status === 429 ? retryAfter(response.headers) : undefined,
+        );
       }
       return schema.parse(await readBoundedJson(response, MAX_REVIEW_RESPONSE_BYTES));
     } catch (error) {
@@ -125,7 +140,14 @@ export function createReviewApi(
   return {
     queue: (signal: AbortSignal) => request('/', reviewQueueSchema, signal),
     detail: (id: string, signal: AbortSignal) =>
-      request(`/drafts/${encodeURIComponent(id)}`, reviewDetailSchema, signal),
+      request(`/drafts/${encodeURIComponent(id)}`, reviewSummarySchema, signal),
+    /** One attached capture with its text; the draft summary lists sources without text. */
+    source: (id: string, sourceId: string, signal: AbortSignal) =>
+      request(
+        `/drafts/${encodeURIComponent(id)}/sources/${encodeURIComponent(sourceId)}`,
+        sourceDocumentSchema,
+        signal,
+      ),
     capture: (body: unknown, signal: AbortSignal) =>
       request('/sources', sourceDocumentSchema, signal, 'POST', body),
     create: (body: unknown, signal: AbortSignal) => request('/drafts', draftSchema, signal, 'POST', body),

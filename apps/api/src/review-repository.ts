@@ -3,6 +3,8 @@ import { MAX_REVIEW_RESPONSE_BYTES } from '@ai-checkout/catalog-review';
 
 export type ReviewOperation =
   | 'get_catalog_review'
+  | 'get_catalog_review_summary'
+  | 'get_catalog_review_source'
   | 'capture_catalog_source'
   | 'save_catalog_draft'
   | 'publish_catalog'
@@ -77,7 +79,11 @@ export function createReviewRepository(
       if (code === 'P0002')
         throw new ReviewError(
           404,
-          operation === 'get_curation_run' ? 'curation_run_not_found' : 'draft_not_found',
+          operation === 'get_curation_run'
+            ? 'curation_run_not_found'
+            : operation === 'get_catalog_review_source'
+              ? 'source_not_found'
+              : 'draft_not_found',
         );
       if (['22023', '23514', '23503', '23502'].includes(String(code)))
         throw new ReviewError(422, 'invalid_catalog_evidence');
