@@ -36,7 +36,7 @@ Verified 2026-10-02 by reading the workflows and scripts, and by running the uni
 | Extension unit (vitest + package inspection) | `npm test --workspace=ai-checkout-extension` | |
 | API unit | `npm test --workspace=@ai-checkout/api` | |
 | Review / site / ui unit | `npm test --workspace=@ai-checkout/review` (or `/site`, `/ui`) | |
-| Script unit tests | `npm run test:scripts` (`scripts/lib/*.test.mjs`) | |
+| Script unit tests | `npm run test:scripts` (`scripts/lib/*.test.mjs`) | Includes `import-boundary.test.mjs`, which lints sample imports with the real ESLint config: product code may not import `tools/` or `@ai-checkout/catalog-pipeline` ([pipeline design](card-expansion-pipeline.md#boundary-rule)) |
 | Lint, format, types | `npm run lint`, `npm run format:check`, `npm run typecheck` | |
 | Generated files current | `npm run catalog:v2:check`, `npm run db:seed:check` | |
 | Eval plumbing (no model) | `npm run eval:curation -- --check`, `npm run eval:v2 -- --check` | |
