@@ -1,7 +1,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { loadCorpusV2, type LoadedCorpus } from './corpus.ts';
-import { evaluate, isHarnessFailure, RETRY_CAP, slotOf, type Report } from './evaluate.ts';
+import { evaluate, isHarnessFailure, RETRY_CAP, slotOf, type Report, type Split } from './evaluate.ts';
 import { RULE_FIELDS, SCORER_VERSION, type CaseScore, type Fraction, type Summary } from './score.ts';
 
 /**
@@ -128,6 +128,37 @@ export function summarizeReport(id: string, report: Report, bundle: { observatio
 }
 export type RunRow = ReturnType<typeof summarizeReport>;
 
+interface SavedBundle {
+  configuration: { split: Split };
+  observations: { caseId: string }[];
+}
+/**
+ * A run over both splits (`--split all`) becomes one row per split, named like the matrix runs
+ * (`<name>.dev`, `<name>.heldout`, with a trailing `.all` dropped), so it is reported as the others are.
+ * Each row keeps only its own split's observations and logged harness failures.
+ */
+function bySplit(
+  loaded: LoadedCorpus,
+  name: string,
+  bundle: SavedBundle,
+  failures: Map<string, number>,
+): [string, SavedBundle, Map<string, number>][] {
+  if (bundle.configuration.split !== 'all') return [[name, bundle, failures]];
+  const splitOf = new Map(loaded.cases.map(({ item }) => [item.id, item.split]));
+  for (const o of bundle.observations)
+    if (!splitOf.has(o.caseId)) throw new Error(`Unexpected observation for case ${o.caseId} in ${name}.`);
+  const caseOf = (slot: string) => slot.slice(0, slot.lastIndexOf('#'));
+  return (['dev', 'heldout'] as const).map((split) => [
+    `${name.replace(/\.all$/, '')}.${split}`,
+    {
+      ...bundle,
+      configuration: { ...bundle.configuration, split },
+      observations: bundle.observations.filter((o) => splitOf.get(o.caseId) === split),
+    },
+    new Map([...failures].filter(([slot]) => splitOf.get(caseOf(slot)) === split)),
+  ]);
+}
+
 /** Every run directory (one with observations.json) under `dirs`, re-scored against `corpus`. */
 export async function summarizeRuns(corpusDir: string, dirs: string[]) {
   const loaded: LoadedCorpus = await loadCorpusV2(corpusDir);
@@ -141,9 +172,14 @@ export async function summarizeRuns(corpusDir: string, dirs: string[]) {
       const dir = join(base, name);
       const raw = await readFile(join(dir, 'observations.json'), 'utf8').catch(() => undefined);
       if (!raw) continue;
-      const bundle = JSON.parse(raw) as { observations: unknown[] };
-      const report = evaluate(loaded, bundle, { failures: await failureCounts(dir) });
-      rows.push(summarizeReport(name, report, bundle));
+      const failures = await failureCounts(dir);
+      for (const [id, bundle, splitFailures] of bySplit(
+        loaded,
+        name,
+        JSON.parse(raw) as SavedBundle,
+        failures,
+      ))
+        rows.push(summarizeReport(id, evaluate(loaded, bundle, { failures: splitFailures }), bundle));
     }
   }
   return {

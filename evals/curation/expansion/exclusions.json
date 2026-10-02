@@ -1,0 +1,468 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/build-expansion-cards.mjs",
+  "exclusions": [
+    {
+      "id": "amex-blue-cash-everyday",
+      "name": "Blue Cash Everyday Card from American Express",
+      "issuer": "American Express",
+      "reason": "Already labeled in evals/curation/real (7-card corpus).",
+      "research": "docs/research/cards-2026/amex.json"
+    },
+    {
+      "id": "amex-blue-cash-preferred",
+      "name": "Blue Cash Preferred Card from American Express",
+      "issuer": "American Express",
+      "reason": "Already labeled in evals/curation/real (7-card corpus).",
+      "research": "docs/research/cards-2026/amex.json"
+    },
+    {
+      "id": null,
+      "name": "American Express Green Card (now 'Classic Green')",
+      "issuer": "American Express",
+      "reason": "Closed to new applicants (or not offered): Removed from americanexpress.com July 23, 2026; product URL /card/green/ now redirects to the card listing (verified). Existing accounts renamed American Express Classic Green Card Aug 20, 2026 (secondary: doctorofcredit.com, insideflyer.com, thepointsparty.com). Historical earn: 3X travel/transit/restaurants, $150 fee (secondary, not re-verified).",
+      "research": "docs/research/cards-2026/amex.json"
+    },
+    {
+      "id": null,
+      "name": "Amex EveryDay Credit Card",
+      "issuer": "American Express",
+      "reason": "Closed to new applicants (or not offered): Closed to new applicants Sept 25, 2024 (secondary: upgradedpoints.com, doctorofcredit.com). Product page shows 'Loading Error' (verified 2026-10-01).",
+      "research": "docs/research/cards-2026/amex.json"
+    },
+    {
+      "id": null,
+      "name": "Amex EveryDay Preferred Credit Card",
+      "issuer": "American Express",
+      "reason": "Closed to new applicants (or not offered): Closed Sept 25, 2024 (secondary). Product page shows 'Loading Error'.",
+      "research": "docs/research/cards-2026/amex.json"
+    },
+    {
+      "id": null,
+      "name": "Cash Magnet Card",
+      "issuer": "American Express",
+      "reason": "Closed to new applicants (or not offered): Closed Sept 25, 2024 (secondary). Product page shows 'Loading Error'. Was flat 1.5% cash back.",
+      "research": "docs/research/cards-2026/amex.json"
+    },
+    {
+      "id": null,
+      "name": "Free Spirit Travel More World Elite Mastercard / Free Spirit Travel Mastercard",
+      "issuer": "Bank of America",
+      "reason": "Closed to new applicants (or not offered): Closed to new applicants after Spirit Airlines ceased operations (reported May 2, 2026); existing accounts being converted to Customized Cash Rewards (secondary: Upgraded Points https://upgradedpoints.com/news/spirit-airlines-credit-card-conversion-plan/, The Points Guy). Not listed on bankofamerica.com/credit-cards/ as of 2026-10-01.",
+      "research": "docs/research/cards-2026/bank-of-america.json"
+    },
+    {
+      "id": null,
+      "name": "Alaska Airlines Visa Signature (legacy)",
+      "issuer": "Bank of America",
+      "reason": "Closed to new applicants (or not offered): Superseded by Atmos Rewards Ascent/Summit; legacy name no longer on hub (inferred from hub listing; verify conversion status).",
+      "research": "docs/research/cards-2026/bank-of-america.json"
+    },
+    {
+      "id": null,
+      "name": "Royal Caribbean Visa Signature / Celebrity Cruises Visa Signature (legacy)",
+      "issuer": "Bank of America",
+      "reason": "Closed to new applicants (or not offered): Superseded by Royal ONE / Royal ONE Plus (inferred; not verified on official page).",
+      "research": "docs/research/cards-2026/bank-of-america.json"
+    },
+    {
+      "id": null,
+      "name": "AAdvantage Aviator Red World Elite Mastercard (and other Barclays AAdvantage Aviator cards)",
+      "issuer": "Barclays",
+      "reason": "Closed to new applicants (or not offered): Closed to new applicants Oct 2025; existing accounts transitioned to Citi on Apr 24, 2026 (secondary: OMAAT, CNBC Select, NerdWallet). Product page URL now 404s on Barclays.",
+      "research": "docs/research/cards-2026/barclays.json"
+    },
+    {
+      "id": null,
+      "name": "Hawaiian Airlines World Elite Mastercard (Barclays-branded)",
+      "issuer": "Barclays",
+      "reason": "Closed to new applicants (or not offered): Removed from Barclays online lineup when HawaiianMiles joined Atmos Rewards (Oct 1, 2025). A Bank of Hawaii-branded version, still issued by Barclays, was reported available in Jan 2026 ($99 fee, 3X Alaska/Hawaiian, 2X gas/dining/grocery). Alaska/BofA announced (Apr 2026) BofA will become sole Atmos card issuer; no timeline (secondary: Frequent Miler, Platinum Flyer). Barclays URL now 404s.",
+      "research": "docs/research/cards-2026/barclays.json"
+    },
+    {
+      "id": null,
+      "name": "Barclays View Mastercard",
+      "issuer": "Barclays",
+      "reason": "Closed to new applicants (or not offered): Official page still live (3X restaurants, 2X internet/streaming/phone/TV and grocery, 1X other) but no apply/pre-qualify CTA and not on the browse page; TPG (2021) says it is only for conversions from the old Barclaycard with Apple Rewards. Treated as not open to new applicants.",
+      "research": "docs/research/cards-2026/barclays.json"
+    },
+    {
+      "id": null,
+      "name": "Holland America Line Rewards Visa / Princess Cruises Rewards Visa",
+      "issuer": "Barclays",
+      "reason": "Closed to new applicants (or not offered): Not on Barclays browse page; the product URLs tried show 'Unfortunately this offer has expired.' URLs were guessed, so status should be confirmed.",
+      "research": "docs/research/cards-2026/barclays.json"
+    },
+    {
+      "id": null,
+      "name": "Priceline VIP Rewards Visa",
+      "issuer": "Barclays",
+      "reason": "Closed to new applicants (or not offered): Not on Barclays browse page; a web-search summary (unattributed secondary) said it was removed from Barclays offerings in July 2026; unverified.",
+      "research": "docs/research/cards-2026/barclays.json"
+    },
+    {
+      "id": null,
+      "name": "Barclaycard Arrival Plus World Elite Mastercard",
+      "issuer": "Barclays",
+      "reason": "Closed to new applicants (or not offered): Long closed to new applicants (secondary: NerdWallet).",
+      "research": "docs/research/cards-2026/barclays.json"
+    },
+    {
+      "id": "capital-one-ventureone-good-credit",
+      "name": "Capital One VentureOne Rewards for Good Credit",
+      "issuer": "Capital One",
+      "reason": "Merged into capital-one-ventureone: a \"for Good Credit\" variant with the same earn rates and no welcome bonus.",
+      "research": "docs/research/cards-2026/capital-one.json",
+      "mergedInto": "capital-one-ventureone"
+    },
+    {
+      "id": "capital-one-quicksilver",
+      "name": "Capital One Quicksilver Rewards",
+      "issuer": "Capital One",
+      "reason": "Already labeled in evals/curation/real (7-card corpus).",
+      "research": "docs/research/cards-2026/capital-one.json"
+    },
+    {
+      "id": "capital-one-quicksilver-good-credit",
+      "name": "Capital One Quicksilver Rewards for Good Credit",
+      "issuer": "Capital One",
+      "reason": "Merged into capital-one-quicksilver: a \"for Good Credit\" variant with the same earn rates and no welcome bonus (the main card is already labeled in evals/curation/real).",
+      "research": "docs/research/cards-2026/capital-one.json",
+      "mergedInto": "capital-one-quicksilver"
+    },
+    {
+      "id": "capital-one-savor",
+      "name": "Capital One Savor Rewards",
+      "issuer": "Capital One",
+      "reason": "Already labeled in evals/curation/real (7-card corpus).",
+      "research": "docs/research/cards-2026/capital-one.json"
+    },
+    {
+      "id": "capital-one-savor-good-credit",
+      "name": "Capital One Savor Rewards for Good Credit",
+      "issuer": "Capital One",
+      "reason": "Merged into capital-one-savor: a \"for Good Credit\" variant with the same earn rates and no welcome bonus (the main card is already labeled in evals/curation/real).",
+      "research": "docs/research/cards-2026/capital-one.json",
+      "mergedInto": "capital-one-savor"
+    },
+    {
+      "id": "capital-one-platinum",
+      "name": "Capital One Platinum",
+      "issuer": "Capital One",
+      "reason": "Earns no rewards: Credit-building card with no rewards.",
+      "research": "docs/research/cards-2026/capital-one.json"
+    },
+    {
+      "id": "capital-one-platinum-secured",
+      "name": "Capital One Platinum Secured",
+      "issuer": "Capital One",
+      "reason": "Earns no rewards: Secured credit-building card with no rewards.",
+      "research": "docs/research/cards-2026/capital-one.json"
+    },
+    {
+      "id": "discover-it-cash-back",
+      "name": "Discover it Cash Back",
+      "issuer": "Capital One",
+      "reason": "Duplicate: a Discover card (Capital One owns Discover). Kept under Discover; its Capital One disclosure page is added as a source.",
+      "research": "docs/research/cards-2026/capital-one.json",
+      "mergedInto": "discover-it-cash-back"
+    },
+    {
+      "id": "discover-it-secured-cash-back",
+      "name": "Discover it Secured Cash Back",
+      "issuer": "Capital One",
+      "reason": "Duplicate: a Discover card (Capital One owns Discover). Kept under Discover; its Capital One disclosure page is added as a source.",
+      "research": "docs/research/cards-2026/capital-one.json",
+      "mergedInto": "discover-it-secured-cash-back"
+    },
+    {
+      "id": "discover-it-chrome",
+      "name": "Discover it Chrome",
+      "issuer": "Capital One",
+      "reason": "Duplicate: a Discover card (Capital One owns Discover). Kept under Discover; its Capital One disclosure page is added as a source.",
+      "research": "docs/research/cards-2026/capital-one.json",
+      "mergedInto": "discover-it-chrome"
+    },
+    {
+      "id": "discover-it-miles",
+      "name": "Discover it Miles",
+      "issuer": "Capital One",
+      "reason": "Duplicate: a Discover card (Capital One owns Discover). Kept under Discover; its Capital One disclosure page is added as a source.",
+      "research": "docs/research/cards-2026/capital-one.json",
+      "mergedInto": "discover-it-miles"
+    },
+    {
+      "id": null,
+      "name": "Capital One SavorOne (legacy $0 version)",
+      "issuer": "Capital One",
+      "reason": "Closed to new applicants (or not offered): Believed renamed to Savor in late 2024 (not verified this session); the name 'SavorOne Rewards' is now the $39 fair-credit card. Legacy accounts keep 3% dining/entertainment/streaming/grocery.",
+      "research": "docs/research/cards-2026/capital-one.json"
+    },
+    {
+      "id": null,
+      "name": "Capital One Savor ($95 annual fee legacy version, 4% dining/entertainment)",
+      "issuer": "Capital One",
+      "reason": "Closed to new applicants (or not offered): Closed to new applicants; not in product API. Rates for legacy holders not verified.",
+      "research": "docs/research/cards-2026/capital-one.json"
+    },
+    {
+      "id": null,
+      "name": "Capital One Walmart Rewards Mastercard",
+      "issuer": "Capital One",
+      "reason": "Closed to new applicants (or not offered): Walmart ended Capital One partnership (CNBC 2025-06-09); new Walmart cards are OnePay/Synchrony. Not in Capital One product API.",
+      "research": "docs/research/cards-2026/capital-one.json"
+    },
+    {
+      "id": null,
+      "name": "Discover it Student Cash Back / Discover it Student Chrome",
+      "issuer": "Capital One",
+      "reason": "Closed to new applicants (or not offered): Not in Capital One product API; secondary (US News) says Student Chrome is no longer available to new applicants.",
+      "research": "docs/research/cards-2026/capital-one.json"
+    },
+    {
+      "id": "chase-freedom-unlimited",
+      "name": "Chase Freedom Unlimited Credit Card",
+      "issuer": "Chase",
+      "reason": "Already labeled in evals/curation/real (7-card corpus).",
+      "research": "docs/research/cards-2026/chase.json"
+    },
+    {
+      "id": "chase-slate-edge",
+      "name": "Chase Slate Edge Credit Card",
+      "issuer": "Chase",
+      "reason": "Earns no rewards: Credit-building card with no purchase rewards.",
+      "research": "docs/research/cards-2026/chase.json"
+    },
+    {
+      "id": null,
+      "name": "Chase Freedom (original)",
+      "issuer": "Chase",
+      "reason": "Closed to new applicants (or not offered): Closed to new applicants; replaced by Freedom Flex. Existing cardholders still get rotating 5% categories (CNBC Select, secondary).",
+      "research": "docs/research/cards-2026/chase.json"
+    },
+    {
+      "id": null,
+      "name": "Chase Sapphire (non-Preferred)",
+      "issuer": "Chase",
+      "reason": "Closed to new applicants (or not offered): Closed to new applicants; existing accounts only (general knowledge, not verified this session).",
+      "research": "docs/research/cards-2026/chase.json"
+    },
+    {
+      "id": null,
+      "name": "Chase Freedom Student",
+      "issuer": "Chase",
+      "reason": "Closed to new applicants (or not offered): Closed to new applicants; Freedom Rise is the current starter card (general knowledge, not verified this session).",
+      "research": "docs/research/cards-2026/chase.json"
+    },
+    {
+      "id": null,
+      "name": "IHG One Rewards Traveler",
+      "issuer": "Chase",
+      "reason": "Closed to new applicants (or not offered): Not closed but renamed to IHG One Rewards Credit Card (Chase press release).",
+      "research": "docs/research/cards-2026/chase.json"
+    },
+    {
+      "id": null,
+      "name": "Slate (balance transfer)",
+      "issuer": "Chase",
+      "reason": "Closed to new applicants (or not offered): Open, but no purchase rewards; excluded from cards list as out of scope (pricing & terms LGC63300).",
+      "research": "docs/research/cards-2026/chase.json"
+    },
+    {
+      "id": "citi-double-cash",
+      "name": "Citi Double Cash Card",
+      "issuer": "Citi",
+      "reason": "Already labeled in evals/curation/real (7-card corpus).",
+      "research": "docs/research/cards-2026/citi.json"
+    },
+    {
+      "id": "citi-secured-mastercard",
+      "name": "Citi Secured Mastercard",
+      "issuer": "Citi",
+      "reason": "Earns no rewards: Secured card; no rewards advertised.",
+      "research": "docs/research/cards-2026/citi.json"
+    },
+    {
+      "id": null,
+      "name": "Citi Custom Cash Card",
+      "issuer": "Citi",
+      "reason": "Closed to new applicants (or not offered): Citi page: 'no longer accepting applications ... as of May 28, 2026'; existing cardmembers unaffected (secondary sources say cardholders keep 5% on the top eligible category each billing cycle; the $500 cycle cap is unverified in this pass). Secondary: upgradedpoints.com, awardwallet.com, usnews.",
+      "research": "docs/research/cards-2026/citi.json"
+    },
+    {
+      "id": null,
+      "name": "Citi Rewards+ Card",
+      "issuer": "Citi",
+      "reason": "Closed to new applicants (or not offered): Product URL now redirects to the Citi Strata® Card page; replaced by Strata in 2025.",
+      "research": "docs/research/cards-2026/citi.json"
+    },
+    {
+      "id": null,
+      "name": "Citi Premier Card",
+      "issuer": "Citi",
+      "reason": "Closed to new applicants (or not offered): Renamed/replaced by Citi Strata Premier®; bonus terms still reference it.",
+      "research": "docs/research/cards-2026/citi.json"
+    },
+    {
+      "id": null,
+      "name": "Citi Prestige Card",
+      "issuer": "Citi",
+      "reason": "Closed to new applicants (or not offered): Product URL returns 'Page Not Found'; closed to new applicants for years but still referenced in Strata Elite terms.",
+      "research": "docs/research/cards-2026/citi.json"
+    },
+    {
+      "id": null,
+      "name": "Citi Strata Student / Citi Rewards+ Student",
+      "issuer": "Citi",
+      "reason": "Closed to new applicants (or not offered): Referenced in Strata bonus exclusion; product URLs tried return 'Page Not Found'. No Citi student card appears on the view-all page.",
+      "research": "docs/research/cards-2026/citi.json"
+    },
+    {
+      "id": null,
+      "name": "Discover it Secured (original 2% gas/restaurants version)",
+      "issuer": "Discover",
+      "reason": "Closed to new applicants (or not offered): Applications closed 2026-06-02. Replaced by the relaunched Discover it Secured Cash Back (5% rotating). Existing cardholders keep their cards. A FICO forum thread says existing holders could ask to switch to rotating 5%.",
+      "research": "docs/research/cards-2026/discover.json"
+    },
+    {
+      "id": null,
+      "name": "NHL Discover it",
+      "issuer": "Discover",
+      "reason": "Closed to new applicants (or not offered): Co-brand with the same 5% rotating structure, plus NHL team designs and perks. Status unclear: no current official page was found (discover.com/credit-cards/nhl/ returns 404), it is not on the discover.com cards index, and US News, WalletHub, and MaxRewards list it as unavailable. CreditOdds still names it as eligible for the Q4 2026 categories (existing holders). Treat as closed to new applicants unless confirmed.",
+      "research": "docs/research/cards-2026/discover.json"
+    },
+    {
+      "id": null,
+      "name": "Discover it Business",
+      "issuer": "Discover",
+      "reason": "Closed to new applicants (or not offered): Excluded (business card); listed only for completeness.",
+      "research": "docs/research/cards-2026/discover.json"
+    },
+    {
+      "id": null,
+      "name": "Synchrony Plus World Mastercard",
+      "issuer": "Synchrony",
+      "reason": "Closed to new applicants (or not offered): 1% cash back, $0 annual fee; 'By invitation only' on synchrony.com/financing/synchrony-mastercards.",
+      "research": "docs/research/cards-2026/synchrony.json"
+    },
+    {
+      "id": null,
+      "name": "Synchrony Preferred Mastercard",
+      "issuer": "Synchrony",
+      "reason": "Closed to new applicants (or not offered): Credit-builder, no rewards; 'By invitation only'.",
+      "research": "docs/research/cards-2026/synchrony.json"
+    },
+    {
+      "id": null,
+      "name": "eBay Mastercard (Synchrony)",
+      "issuer": "Synchrony",
+      "reason": "Closed to new applicants (or not offered): Synchrony eBay page says the eBay Mastercard Rewards Program ended March 24, 2026 and the card can no longer be used for purchases.",
+      "research": "docs/research/cards-2026/synchrony.json"
+    },
+    {
+      "id": null,
+      "name": "Crate and Barrel | CB2 Mastercard (Synchrony)",
+      "issuer": "Synchrony",
+      "reason": "Closed to new applicants (or not offered): Synchrony page says accounts may have been transferred to Imprint; no longer a Synchrony product.",
+      "research": "docs/research/cards-2026/synchrony.json"
+    },
+    {
+      "id": null,
+      "name": "Sam's Club Credit Card (store card)",
+      "issuer": "Synchrony",
+      "reason": "Closed to new applicants (or not offered): Still open but does not earn Sam's Cash; excluded as no-rewards.",
+      "research": "docs/research/cards-2026/synchrony.json"
+    },
+    {
+      "id": null,
+      "name": "Norwegian Reward Mastercard (Norwegian Air)",
+      "issuer": "Synchrony",
+      "reason": "Closed to new applicants (or not offered): Launched with Synchrony Nov 5, 2019 (2% Norwegian flights/dining/grocery, 1% other); no current partner page in Synchrony sitemap; status unverified, likely discontinued.",
+      "research": "docs/research/cards-2026/synchrony.json"
+    },
+    {
+      "id": "us-bank-secured-visa",
+      "name": "U.S. Bank Secured Visa Card",
+      "issuer": "U.S. Bank",
+      "reason": "Earns no rewards: Secured credit-building card with no rewards.",
+      "research": "docs/research/cards-2026/us-bank.json"
+    },
+    {
+      "id": "us-bank-edward-jones-flex-balance",
+      "name": "Edward Jones Everyday Solutions Flex Balance Mastercard",
+      "issuer": "U.S. Bank",
+      "reason": "Earns no rewards: Research found no official page and no rewards (annual statement credit only).",
+      "research": "docs/research/cards-2026/us-bank.json"
+    },
+    {
+      "id": null,
+      "name": "Kroger Rewards World Elite Mastercard / Kroger Rewards Prepaid family (Kroger, Ralphs, Fred Meyer, King Soopers, etc. co-brands)",
+      "issuer": "U.S. Bank",
+      "reason": "Closed to new applicants (or not offered): Closed to new applicants ~May 2026 (Doctor of Credit, secondary). U.S. Bank press release (July 29, 2026) says Kroger co-brand accounts convert to U.S. Bank Smartly Visa, completing fall 2026. Source: https://www.usbank.com/about-us-bank/news-and-stories/article-library/us-bank-announces-transition-of-kroger-co-brand-card-program.html",
+      "research": "docs/research/cards-2026/us-bank.json"
+    },
+    {
+      "id": null,
+      "name": "U.S. Bank Altitude Reserve Visa Infinite Card",
+      "issuer": "U.S. Bank",
+      "reason": "Closed to new applicants (or not offered): Closed to new applicants Nov 11, 2024 (secondary: Upgraded Points, Frequent Miler). Existing cards still in use; benefit changes Dec 15, 2025 reported.",
+      "research": "docs/research/cards-2026/us-bank.json"
+    },
+    {
+      "id": null,
+      "name": "REI Co-op Mastercard",
+      "issuer": "U.S. Bank",
+      "reason": "Closed to new applicants (or not offered): Not U.S. Bank anymore: moved to Capital One in 2022 (secondary).",
+      "research": "docs/research/cards-2026/us-bank.json"
+    },
+    {
+      "id": null,
+      "name": "U.S. Bank College Visa / student cards",
+      "issuer": "U.S. Bank",
+      "reason": "Closed to new applicants (or not offered): No dedicated U.S. Bank student card found on usbank.com credit card listing; secondary sources say the College Visa is no longer offered. Student group has 0 cards.",
+      "research": "docs/research/cards-2026/us-bank.json"
+    },
+    {
+      "id": "wells-fargo-active-cash",
+      "name": "Wells Fargo Active Cash Card",
+      "issuer": "Wells Fargo",
+      "reason": "Already labeled in evals/curation/real (7-card corpus).",
+      "research": "docs/research/cards-2026/wells-fargo.json"
+    },
+    {
+      "id": "wells-fargo-reflect",
+      "name": "Wells Fargo Reflect Card",
+      "issuer": "Wells Fargo",
+      "reason": "Earns no rewards: No rewards program (balance-transfer / intro-APR card).",
+      "research": "docs/research/cards-2026/wells-fargo.json"
+    },
+    {
+      "id": null,
+      "name": "Bilt Mastercard (Wells Fargo-issued)",
+      "issuer": "Wells Fargo",
+      "reason": "Closed to new applicants (or not offered): Secondary sources (Kiplinger, One Mile at a Time, Thrifty Traveler): Wells Fargo stopped new applications Nov 5, 2025; Bilt moved to Cardless (Bilt Card 2.0) in Feb 2026; WF Bilt accounts not opted into Cardless were converted to Wells Fargo Autograph around Feb 7, 2026. No longer a Wells Fargo card.",
+      "research": "docs/research/cards-2026/wells-fargo.json"
+    },
+    {
+      "id": null,
+      "name": "Wells Fargo Attune Card",
+      "issuer": "Wells Fargo",
+      "reason": "Closed to new applicants (or not offered): Secondary (Frequent Miler, Jun 19, 2026; CreditOdds): closed to new applicants ~June 15, 2026. Was $0 fee, 4% on self-care, sports/recreation/entertainment, planet-friendly categories, 1% other. Existing cardholders keep benefits. Not listed on creditcards.wellsfargo.com on 2026-10-01.",
+      "research": "docs/research/cards-2026/wells-fargo.json"
+    },
+    {
+      "id": null,
+      "name": "Wells Fargo Cash Back College Card",
+      "issuer": "Wells Fargo",
+      "reason": "Closed to new applicants (or not offered): Secondary (WalletHub): no longer offered; Wells Fargo has no student card.",
+      "research": "docs/research/cards-2026/wells-fargo.json"
+    },
+    {
+      "id": null,
+      "name": "Wells Fargo Secured Card",
+      "issuer": "Wells Fargo",
+      "reason": "Closed to new applicants (or not offered): Secondary (NerdWallet, WalletHub): closed to new applicants since ~2019; no current secured card.",
+      "research": "docs/research/cards-2026/wells-fargo.json"
+    }
+  ]
+}

@@ -55,6 +55,8 @@ const eventSchema = z.discriminatedUnion('type', [
     usage: z.object({
       input_tokens: z.number().int().min(0),
       output_tokens: z.number().int().min(0),
+      /** The part of output_tokens spent on hidden reasoning (newer CLIs report it). */
+      reasoning_output_tokens: z.number().int().min(0).optional(),
     }),
   }),
   z.object({ type: z.literal('turn.failed'), error: z.object({ message: z.string() }).optional() }),
@@ -66,6 +68,12 @@ export interface CodexOptions {
   reasoningEffort?: z.infer<typeof effortSchema>;
   /** Path to the codex binary; defaults to `codex` on PATH. */
   bin?: string;
+  /**
+   * `total` (default) reports output tokens as the CLI does, hidden reasoning included. `visible` subtracts the
+   * reported reasoning tokens, like the Claude provider (thinking off) counts only the final message, so a
+   * high-effort model's reasoning does not trip the runner's output-token limit. Record the choice with results.
+   */
+  outputTokens?: 'total' | 'visible';
 }
 
 /** Feature names the installed CLI accepts; unknown `--disable` flags are hard errors. */
@@ -81,7 +89,7 @@ function failureFor(message: string): ProviderFailure {
 }
 
 /** Parse `codex exec --json` output into the runner's reply shape. */
-export function parseCodexEvents(stdout: string) {
+export function parseCodexEvents(stdout: string, outputTokens: 'total' | 'visible' = 'total') {
   let text: string | undefined, usage: { inputTokens: number; outputTokens: number } | undefined;
   for (const line of stdout.split('\n')) {
     if (!line.trim()) continue;
@@ -97,7 +105,13 @@ export function parseCodexEvents(stdout: string) {
     else if (event.type === 'item.completed' && TOOL_ITEMS.has(event.item.type))
       throw new ProviderFailure('permanent'); // A tool ran; the run is no longer a pure extraction.
     else if (event.type === 'turn.completed')
-      usage = { inputTokens: event.usage.input_tokens, outputTokens: event.usage.output_tokens };
+      usage = {
+        inputTokens: event.usage.input_tokens,
+        outputTokens:
+          outputTokens === 'visible'
+            ? Math.max(0, event.usage.output_tokens - (event.usage.reasoning_output_tokens ?? 0))
+            : event.usage.output_tokens,
+      };
     else if (event.type === 'turn.failed') throw failureFor(event.error?.message ?? '');
     else if (event.type === 'error') throw failureFor(event.message ?? '');
   }
@@ -180,7 +194,7 @@ export async function createCodexProvider(options: CodexOptions): Promise<Extrac
           });
           child.stdin.end(request.user);
         });
-        return parseCodexEvents(stdout);
+        return parseCodexEvents(stdout, options.outputTokens ?? 'total');
       } finally {
         await rm(dir, { recursive: true, force: true });
       }

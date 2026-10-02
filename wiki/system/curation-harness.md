@@ -6,7 +6,7 @@ status: stable
 tags: [system, curation, llm, extraction, harness]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-02T06:40:00Z
 sources:
   - resource: ../../apps/api/src/curation/runner.ts
     title: executeTask and provider interface
@@ -73,12 +73,12 @@ Default limits (`limitsSchema`, overridable per run within the bounds):
 | --- | --- | --- |
 | `budgetMicrousd` | 0 | ≤ 1e9 |
 | `maxAttempts` | 2 | 1–2 |
-| `attemptTimeoutMs` / `totalTimeoutMs` | 10,000 / 15,000 | ≤ 300,000 / ≤ 600,000 |
+| `attemptTimeoutMs` / `totalTimeoutMs` | 10,000 / 15,000 | ≤ 600,000 / ≤ 900,000 (raised for local high-effort runs on the expansion branch, `0ebb98c`) |
 | `maxInputTokens` (estimate) | 48,000 | 512–64,000 |
 | `maxOutputTokens` | 4,096 | 128–8,192 |
 | Returned text | 65,536 bytes | fixed |
 
-The v2 eval CLI uses `CODEX_LIMITS` for live providers: 240 s attempt, 480 s total, 64,000 input tokens, 8,192 output tokens ([`v2/eval-cli.ts`](../../apps/api/src/curation/v2/eval-cli.ts)).
+The v2 eval CLI uses `CODEX_LIMITS` for live providers: 240 s attempt, 480 s total, 64,000 input tokens, 8,192 output tokens ([`v2/eval-cli.ts`](../../apps/api/src/curation/v2/eval-cli.ts)). Runs of the curation model (gpt-5.6-luna) default to 600 s / 900 s instead ([`curation-model.ts`](../../apps/api/src/curation/curation-model.ts), [live model runs](../ops/live-model-runs.md)).
 
 ## Providers
 

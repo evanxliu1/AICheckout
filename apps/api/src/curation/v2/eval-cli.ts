@@ -5,6 +5,7 @@ import { parseArgs } from 'node:util';
 import { createClaudeProvider, type ClaudeOptions } from '../claude.ts';
 import { cliVersion } from '../cli-version.ts';
 import { createCodexProvider, type CodexOptions } from '../codex.ts';
+import { CURATION_DEFAULTS } from '../curation-model.ts';
 import { executeTask, type ExtractionProvider } from '../runner.ts';
 import { PROMPTS, type PromptVersion } from './context.ts';
 import { loadCorpusV2, type LoadedCase, type LoadedCorpus } from './corpus.ts';
@@ -51,6 +52,7 @@ const CONFIGURATION_FLAGS = [
   '--selection',
   '--split',
   '--repeat',
+  '--codex-output-tokens',
 ];
 
 /** Earlier harness-failed attempts of a run, one JSON line each (statuses and timings only, no output). */
@@ -119,6 +121,8 @@ async function collect(
   options: {
     concurrency: number;
     live: boolean;
+    /** Live attempt/total deadlines; each trace records the limits it ran under. */
+    timeouts?: { attemptTimeoutMs: number; totalTimeoutMs: number };
     /** Called with everything collected so far after every few slots, so a crash loses little. */
     onProgress?: (observations: Observation[]) => Promise<void>;
   },
@@ -133,7 +137,7 @@ async function collect(
   const observations = await mapConcurrent(jobs, options.concurrency, async ({ value, repeat }, index) => {
     if (stopped) return undefined;
     const trace = await executeTask(task, value.input, providerFor(value), {
-      limits: options.live ? CODEX_LIMITS : { maxInputTokens: 64_000 },
+      limits: options.live ? { ...CODEX_LIMITS, ...options.timeouts } : { maxInputTokens: 64_000 },
     });
     const slot = slotOf({ caseId: value.item.id, repeat });
     if (options.live)
@@ -269,9 +273,29 @@ async function providerFor(
     model: provider.model,
     reasoningEffort: (effort ?? 'low') as CodexOptions['reasoningEffort'],
     bin,
+    outputTokens: provider.outputTokens ?? 'total',
   });
   return { providerFor: () => codex, cliVersion: await cliVersion(bin) };
 }
+
+/**
+ * Option defaults. `--provider codex` with no `--model`, or with the curation model, starts from the
+ * curation configuration (curation-model.ts); any other model keeps the Phase 2c defaults and needs `--model`.
+ */
+export function defaultsFor(provider: string, model: string | undefined) {
+  if (provider === 'codex' && (model === undefined || model === CURATION_DEFAULTS.model))
+    return CURATION_DEFAULTS;
+  return {
+    model: undefined,
+    effort: 'low',
+    prompt: 'guided.1',
+    selection: 'full',
+    codexOutputTokens: 'total',
+  } as const;
+}
+const isCurationModel = (configuration: Configuration) =>
+  configuration.provider.id === PROVIDER_IDS.codex &&
+  configuration.provider.model === CURATION_DEFAULTS.model;
 
 const positiveInt = (name: string, raw: string | undefined, fallback: number, max = Infinity) => {
   if (raw === undefined) return fallback;
@@ -288,12 +312,16 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
     options: {
       provider: { type: 'string', default: 'fixture' },
       model: { type: 'string' },
-      effort: { type: 'string', default: 'low' },
-      prompt: { type: 'string', default: 'guided.1' },
-      selection: { type: 'string', default: 'full' },
+      // Defaults for effort, prompt, selection and output tokens depend on the model (see defaultsFor).
+      effort: { type: 'string' },
+      prompt: { type: 'string' },
+      selection: { type: 'string' },
       split: { type: 'string', default: 'dev' },
       'allow-heldout': { type: 'boolean', default: false },
       repeat: { type: 'string', default: '1' },
+      'codex-output-tokens': { type: 'string' },
+      'attempt-timeout-ms': { type: 'string' },
+      'total-timeout-ms': { type: 'string' },
       concurrency: { type: 'string', default: '3' },
       limit: { type: 'string' },
       case: { type: 'string', multiple: true },
@@ -313,6 +341,12 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
     await check(loaded);
     return undefined;
   }
+  const defaults = defaultsFor(values.provider, values.model);
+  const model = values.model ?? defaults.model,
+    effort = values.effort ?? defaults.effort,
+    prompt = values.prompt ?? defaults.prompt,
+    selection = values.selection ?? defaults.selection,
+    outputTokens = values['codex-output-tokens'] ?? defaults.codexOutputTokens;
   const concurrency = positiveInt('concurrency', values.concurrency, 3, 8);
   const limit = positiveInt('limit', values.limit, Infinity);
 
@@ -350,24 +384,33 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
     } else {
       if (!(values.provider in PROVIDER_IDS))
         throw new Error(`--provider must be one of ${Object.keys(PROVIDER_IDS).join(', ')}.`);
-      if (!(values.prompt in PROMPTS))
+      if (!(prompt in PROMPTS))
         throw new Error(`--prompt must be one of ${Object.keys(PROMPTS).join(', ')}.`);
-      if (!(SELECTIONS as readonly string[]).includes(values.selection))
+      if (!(SELECTIONS as readonly string[]).includes(selection))
         throw new Error(`--selection must be one of ${SELECTIONS.join(', ')}.`);
+      if (!['total', 'visible'].includes(outputTokens))
+        throw new Error('--codex-output-tokens must be total or visible.');
       if (!['dev', 'heldout', 'all'].includes(values.split))
         throw new Error('--split must be dev, heldout, or all.');
       const live = values.provider !== 'fixture';
-      const fixtureModel = values.model ?? 'reference-echo.1';
-      if (live && !values.model) throw new Error(`--provider ${values.provider} requires --model.`);
+      const fixtureModel = model ?? 'reference-echo.1';
+      if (live && !model) throw new Error(`--provider ${values.provider} requires --model.`);
       if (!live && !['reference-echo.1', 'abstain.2'].includes(fixtureModel))
         throw new Error('Fixture --model must be reference-echo.1 or abstain.2.');
       configuration = {
         provider: live
-          ? { id: PROVIDER_IDS[values.provider], model: values.model!, mode: 'subscription' }
+          ? {
+              id: PROVIDER_IDS[values.provider],
+              model: model!,
+              mode: 'subscription',
+              ...(values.provider === 'codex' && outputTokens === 'visible'
+                ? { outputTokens: 'visible' as const }
+                : {}),
+            }
           : { id: 'fixture', model: fixtureModel, mode: 'fixture' },
-        effort: live ? values.effort : null,
-        prompt: values.prompt as PromptVersion,
-        selection: values.selection as Configuration['selection'],
+        effort: live ? effort : null,
+        prompt: prompt as PromptVersion,
+        selection: selection as Configuration['selection'],
         split: values.split as Split,
         repeat: positiveInt('repeat', values.repeat, 1, 10),
       };
@@ -454,7 +497,30 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
       );
     }
     const saved = existing;
+    // Runs of the curation model (new or resumed) get its longer deadlines unless a flag says otherwise.
+    const deadlines = isCurationModel(configuration) ? CURATION_DEFAULTS : CODEX_LIMITS;
+    const timeouts = {
+      attemptTimeoutMs: positiveInt(
+        'attempt-timeout-ms',
+        values['attempt-timeout-ms'],
+        deadlines.attemptTimeoutMs,
+        600_000,
+      ),
+      totalTimeoutMs: positiveInt(
+        'total-timeout-ms',
+        values['total-timeout-ms'],
+        deadlines.totalTimeoutMs,
+        900_000,
+      ),
+    };
+    // Live defaults depend on the model (defaultsFor), so say what is about to run before spending quota.
+    if (live)
+      console.log(
+        `Running ${experimentName(configuration)} (output tokens ${configuration.provider.outputTokens ?? 'total'}, ` +
+          `deadlines ${timeouts.attemptTimeoutMs / 1000}s/${timeouts.totalTimeoutMs / 1000}s): ${jobs.length} slots.`,
+      );
     const collected = await collect(loaded, configuration, provider.providerFor, jobs, {
+      timeouts,
       concurrency,
       live,
       onProgress: async (observations) => {

@@ -174,7 +174,7 @@ function Home(): Rendered {
 
         <Section id="measured" title="How well the model reads terms">
           <p>
-            The catalog pipeline was measured on real issuer terms for the seven cards, across five models and
+            The catalog pipeline was measured on real issuer terms for the seven cards, across six models and
             three prompts. <Link href="/results/">See the results, including what they don’t show</Link>
           </p>
         </Section>
@@ -252,7 +252,7 @@ function Results(): Rendered {
   return {
     title: 'Results: how well models read card terms · AI Checkout',
     description:
-      'Extraction results on real issuer terms for seven cards: five models, three prompts, dev and held-out splits, with limitations.',
+      'Extraction results on real issuer terms for seven cards: six models, three prompts, dev and held-out splits, with limitations.',
     body: (
       <>
         <PageIntro eyebrow="Evaluation" title="How well models read card terms">
@@ -273,7 +273,8 @@ function Results(): Rendered {
             </li>
             <li>
               <strong>Small sample:</strong> seven cards (n=7), 37 cases, two repeats per case (one for Opus
-              on dev). Variants such as prompt injections are planted edits of real pages.
+              on dev and for gpt-5.6-luna). Variants such as prompt injections are planted edits of real
+              pages.
             </li>
             <li>
               <strong>Noise is about ±3 points.</strong> Repeat-to-repeat differences reached 5.8 points;
@@ -281,8 +282,10 @@ function Results(): Rendered {
             </li>
             {added.length ? (
               <li>
-                <strong>Opus was added after.</strong> Claude Opus 5.5 was run on the held-out split after the
-                other held-out results had been seen; it was never part of the original choice.
+                <strong>Opus and gpt-5.6-luna were added after.</strong> Claude Opus 5.5 was run on the
+                held-out split after the other held-out results had been seen, and gpt-5.6-luna (xhigh effort,
+                the curation model since 2026-10-02) on both splits after all of them; neither was part of the
+                original choice.
               </li>
             ) : null}
           </ul>

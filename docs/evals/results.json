@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-30T00:04:25.537Z",
+  "generatedAt": "2026-10-02T06:16:52.646Z",
   "scorerVersion": "v2-scorer.2",
   "retryCap": 2,
   "corpus": {
@@ -13,7 +13,9 @@
     "d0a4df5296ceeb2520e1987f09e1eb09f7a93c61f433004c2f831b2c7dd3adb6"
   ],
   "addedAfter": [
-    "claude.claude-opus-5-5.low.guided.2.keyword-window.1.heldout"
+    "claude.claude-opus-5-5.low.guided.2.keyword-window.1.heldout",
+    "codex.gpt-5.6-luna.xhigh.guided.2.keyword-window.1.dev",
+    "codex.gpt-5.6-luna.xhigh.guided.2.keyword-window.1.heldout"
   ],
   "incomplete": [],
   "rejected": [],
@@ -15948,6 +15950,807 @@
         },
         "quotesUnresolved": 1,
         "quotesGiven": 1177
+      }
+    },
+    {
+      "id": "codex.gpt-5.6-luna.xhigh.guided.2.keyword-window.1.dev",
+      "provider": "codex-cli",
+      "model": "gpt-5.6-luna",
+      "effort": "xhigh",
+      "prompt": "guided.2",
+      "selection": "keyword-window.1",
+      "split": "dev",
+      "repeat": 1,
+      "provenance": "live-collected",
+      "planned": 20,
+      "observed": 20,
+      "complete": true,
+      "rejected": false,
+      "labelsCollectedWith": [
+        "d0a4df5296ceeb2520e1987f09e1eb09f7a93c61f433004c2f831b2c7dd3adb6"
+      ],
+      "cliVersions": [
+        "codex-cli 0.158.0"
+      ],
+      "harness": {
+        "failed": 0,
+        "retriable": 0,
+        "attempts": 0
+      },
+      "promptTokenEstimate": 11684,
+      "providerOutputTokens": 1289,
+      "overall": {
+        "runs": 20,
+        "ruleRecall": {
+          "correct": 69,
+          "total": 69,
+          "rate": 1
+        },
+        "rulePrecision": {
+          "correct": 69,
+          "total": 69,
+          "rate": 1
+        },
+        "fieldAccuracy": {
+          "correct": 412,
+          "total": 414,
+          "rate": 0.9952
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 412,
+          "total": 414,
+          "rate": 0.9952
+        },
+        "claimPrecision": {
+          "correct": 241,
+          "total": 246,
+          "rate": 0.9797
+        },
+        "evidenceValidity": {
+          "correct": 435,
+          "total": 453,
+          "rate": 0.9603
+        },
+        "issueRecall": {
+          "correct": 12,
+          "total": 12,
+          "rate": 1
+        },
+        "falseClean": 1,
+        "cardFieldAccuracy": {
+          "correct": 40,
+          "total": 40,
+          "rate": 1
+        },
+        "unsupportedClaims": 5,
+        "issueRecallByCode": {
+          "conflicting": {
+            "correct": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "untrusted-instruction": {
+            "correct": 8,
+            "total": 8,
+            "rate": 1
+          }
+        },
+        "exclusionRecall": {
+          "correct": 15,
+          "total": 20,
+          "rate": 0.75
+        },
+        "statuses": {
+          "needs_review": 18,
+          "evidence_valid": 2
+        },
+        "latencyMs": {
+          "p50": 162912,
+          "p95": 198981
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 69,
+            "total": 69,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "correct": 68,
+            "total": 69,
+            "rate": 0.9855
+          },
+          "capKind": {
+            "correct": 69,
+            "total": 69,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 68,
+            "total": 69,
+            "rate": 0.9855
+          },
+          "usMerchantsOnly": {
+            "correct": 69,
+            "total": 69,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 69,
+            "total": 69,
+            "rate": 1
+          }
+        }
+      },
+      "byRepeat": [
+        {
+          "runs": 20,
+          "ruleRecall": {
+            "correct": 69,
+            "total": 69,
+            "rate": 1
+          },
+          "rulePrecision": {
+            "correct": 69,
+            "total": 69,
+            "rate": 1
+          },
+          "fieldAccuracy": {
+            "correct": 412,
+            "total": 414,
+            "rate": 0.9952
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 412,
+            "total": 414,
+            "rate": 0.9952
+          },
+          "claimPrecision": {
+            "correct": 241,
+            "total": 246,
+            "rate": 0.9797
+          },
+          "evidenceValidity": {
+            "correct": 435,
+            "total": 453,
+            "rate": 0.9603
+          },
+          "issueRecall": {
+            "correct": 12,
+            "total": 12,
+            "rate": 1
+          },
+          "falseClean": 1
+        }
+      ],
+      "byVariant": {
+        "conflicting-rate": {
+          "runs": 4,
+          "ruleRecall": {
+            "correct": 13,
+            "total": 13,
+            "rate": 1
+          },
+          "rulePrecision": {
+            "correct": 13,
+            "total": 13,
+            "rate": 1
+          },
+          "fieldAccuracy": {
+            "correct": 78,
+            "total": 78,
+            "rate": 1
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 78,
+            "total": 78,
+            "rate": 1
+          },
+          "claimPrecision": {
+            "correct": 41,
+            "total": 43,
+            "rate": 0.9535
+          },
+          "evidenceValidity": {
+            "correct": 82,
+            "total": 89,
+            "rate": 0.9213
+          },
+          "issueRecall": {
+            "correct": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "falseClean": 0
+        },
+        "injection": {
+          "runs": 8,
+          "ruleRecall": {
+            "correct": 26,
+            "total": 26,
+            "rate": 1
+          },
+          "rulePrecision": {
+            "correct": 26,
+            "total": 26,
+            "rate": 1
+          },
+          "fieldAccuracy": {
+            "correct": 156,
+            "total": 156,
+            "rate": 1
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 156,
+            "total": 156,
+            "rate": 1
+          },
+          "claimPrecision": {
+            "correct": 92,
+            "total": 94,
+            "rate": 0.9787
+          },
+          "evidenceValidity": {
+            "correct": 174,
+            "total": 179,
+            "rate": 0.9721
+          },
+          "issueRecall": {
+            "correct": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "falseClean": 0
+        },
+        "none": {
+          "runs": 4,
+          "ruleRecall": {
+            "correct": 13,
+            "total": 13,
+            "rate": 1
+          },
+          "rulePrecision": {
+            "correct": 13,
+            "total": 13,
+            "rate": 1
+          },
+          "fieldAccuracy": {
+            "correct": 78,
+            "total": 78,
+            "rate": 1
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 78,
+            "total": 78,
+            "rate": 1
+          },
+          "claimPrecision": {
+            "correct": 46,
+            "total": 47,
+            "rate": 0.9787
+          },
+          "evidenceValidity": {
+            "correct": 77,
+            "total": 82,
+            "rate": 0.939
+          },
+          "issueRecall": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "falseClean": 0
+        },
+        "stale-promo": {
+          "runs": 4,
+          "ruleRecall": {
+            "correct": 17,
+            "total": 17,
+            "rate": 1
+          },
+          "rulePrecision": {
+            "correct": 17,
+            "total": 17,
+            "rate": 1
+          },
+          "fieldAccuracy": {
+            "correct": 100,
+            "total": 102,
+            "rate": 0.9804
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 100,
+            "total": 102,
+            "rate": 0.9804
+          },
+          "claimPrecision": {
+            "correct": 62,
+            "total": 62,
+            "rate": 1
+          },
+          "evidenceValidity": {
+            "correct": 102,
+            "total": 103,
+            "rate": 0.9903
+          },
+          "issueRecall": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "falseClean": 1
+        }
+      },
+      "byCategory": {
+        "gas": {
+          "missedRules": 0,
+          "fieldErrors": 2,
+          "fields": {
+            "paidOnPaymentBps": 1,
+            "activation": 1
+          }
+        }
+      },
+      "errors": {
+        "extraRules": {},
+        "missedRules": {},
+        "fieldErrors": {
+          "paidOnPaymentBps": 1,
+          "activation": 1
+        },
+        "quotesUnresolved": 18,
+        "quotesGiven": 453
+      }
+    },
+    {
+      "id": "codex.gpt-5.6-luna.xhigh.guided.2.keyword-window.1.heldout",
+      "provider": "codex-cli",
+      "model": "gpt-5.6-luna",
+      "effort": "xhigh",
+      "prompt": "guided.2",
+      "selection": "keyword-window.1",
+      "split": "heldout",
+      "repeat": 1,
+      "provenance": "live-collected",
+      "planned": 17,
+      "observed": 17,
+      "complete": true,
+      "rejected": false,
+      "labelsCollectedWith": [
+        "d0a4df5296ceeb2520e1987f09e1eb09f7a93c61f433004c2f831b2c7dd3adb6"
+      ],
+      "cliVersions": [
+        "codex-cli 0.158.0"
+      ],
+      "harness": {
+        "failed": 0,
+        "retriable": 0,
+        "attempts": 0
+      },
+      "promptTokenEstimate": 17342,
+      "providerOutputTokens": 1581,
+      "overall": {
+        "runs": 17,
+        "ruleRecall": {
+          "correct": 77,
+          "total": 77,
+          "rate": 1
+        },
+        "rulePrecision": {
+          "correct": 77,
+          "total": 79,
+          "rate": 0.9747
+        },
+        "fieldAccuracy": {
+          "correct": 519,
+          "total": 528,
+          "rate": 0.983
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 519,
+          "total": 528,
+          "rate": 0.983
+        },
+        "claimPrecision": {
+          "correct": 228,
+          "total": 247,
+          "rate": 0.9231
+        },
+        "evidenceValidity": {
+          "correct": 490,
+          "total": 500,
+          "rate": 0.98
+        },
+        "issueRecall": {
+          "correct": 11,
+          "total": 11,
+          "rate": 1
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 34,
+          "total": 34,
+          "rate": 1
+        },
+        "unsupportedClaims": 19,
+        "issueRecallByCode": {
+          "conflicting": {
+            "correct": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "missing": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "untrusted-instruction": {
+            "correct": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "exclusionRecall": {
+          "correct": 12,
+          "total": 12,
+          "rate": 1
+        },
+        "statuses": {
+          "needs_review": 15,
+          "evidence_valid": 2
+        },
+        "latencyMs": {
+          "p50": 191507,
+          "p95": 263358
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 77,
+            "total": 77,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "correct": 77,
+            "total": 77,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 74,
+            "total": 77,
+            "rate": 0.961
+          },
+          "capAmountCents": {
+            "correct": 22,
+            "total": 22,
+            "rate": 1
+          },
+          "capPeriod": {
+            "correct": 16,
+            "total": 22,
+            "rate": 0.7273
+          },
+          "capRateAfterCapBps": {
+            "correct": 22,
+            "total": 22,
+            "rate": 1
+          },
+          "activation": {
+            "correct": 77,
+            "total": 77,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "correct": 77,
+            "total": 77,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 77,
+            "total": 77,
+            "rate": 1
+          }
+        }
+      },
+      "byRepeat": [
+        {
+          "runs": 17,
+          "ruleRecall": {
+            "correct": 77,
+            "total": 77,
+            "rate": 1
+          },
+          "rulePrecision": {
+            "correct": 77,
+            "total": 79,
+            "rate": 0.9747
+          },
+          "fieldAccuracy": {
+            "correct": 519,
+            "total": 528,
+            "rate": 0.983
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 519,
+            "total": 528,
+            "rate": 0.983
+          },
+          "claimPrecision": {
+            "correct": 228,
+            "total": 247,
+            "rate": 0.9231
+          },
+          "evidenceValidity": {
+            "correct": 490,
+            "total": 500,
+            "rate": 0.98
+          },
+          "issueRecall": {
+            "correct": 11,
+            "total": 11,
+            "rate": 1
+          },
+          "falseClean": 0
+        }
+      ],
+      "byVariant": {
+        "conflicting-rate": {
+          "runs": 3,
+          "ruleRecall": {
+            "correct": 13,
+            "total": 13,
+            "rate": 1
+          },
+          "rulePrecision": {
+            "correct": 13,
+            "total": 13,
+            "rate": 1
+          },
+          "fieldAccuracy": {
+            "correct": 88,
+            "total": 90,
+            "rate": 0.9778
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 88,
+            "total": 90,
+            "rate": 0.9778
+          },
+          "claimPrecision": {
+            "correct": 34,
+            "total": 37,
+            "rate": 0.9189
+          },
+          "evidenceValidity": {
+            "correct": 80,
+            "total": 83,
+            "rate": 0.9639
+          },
+          "issueRecall": {
+            "correct": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "falseClean": 0
+        },
+        "injection": {
+          "runs": 6,
+          "ruleRecall": {
+            "correct": 26,
+            "total": 26,
+            "rate": 1
+          },
+          "rulePrecision": {
+            "correct": 26,
+            "total": 27,
+            "rate": 0.963
+          },
+          "fieldAccuracy": {
+            "correct": 175,
+            "total": 180,
+            "rate": 0.9722
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 175,
+            "total": 180,
+            "rate": 0.9722
+          },
+          "claimPrecision": {
+            "correct": 78,
+            "total": 87,
+            "rate": 0.8966
+          },
+          "evidenceValidity": {
+            "correct": 156,
+            "total": 161,
+            "rate": 0.9689
+          },
+          "issueRecall": {
+            "correct": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "falseClean": 0
+        },
+        "none": {
+          "runs": 3,
+          "ruleRecall": {
+            "correct": 13,
+            "total": 13,
+            "rate": 1
+          },
+          "rulePrecision": {
+            "correct": 13,
+            "total": 13,
+            "rate": 1
+          },
+          "fieldAccuracy": {
+            "correct": 90,
+            "total": 90,
+            "rate": 1
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 90,
+            "total": 90,
+            "rate": 1
+          },
+          "claimPrecision": {
+            "correct": 40,
+            "total": 40,
+            "rate": 1
+          },
+          "evidenceValidity": {
+            "correct": 78,
+            "total": 79,
+            "rate": 0.9873
+          },
+          "issueRecall": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "falseClean": 0
+        },
+        "remove-cap": {
+          "runs": 2,
+          "ruleRecall": {
+            "correct": 9,
+            "total": 9,
+            "rate": 1
+          },
+          "rulePrecision": {
+            "correct": 9,
+            "total": 10,
+            "rate": 0.9
+          },
+          "fieldAccuracy": {
+            "correct": 60,
+            "total": 60,
+            "rate": 1
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 60,
+            "total": 60,
+            "rate": 1
+          },
+          "claimPrecision": {
+            "correct": 28,
+            "total": 32,
+            "rate": 0.875
+          },
+          "evidenceValidity": {
+            "correct": 81,
+            "total": 81,
+            "rate": 1
+          },
+          "issueRecall": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "falseClean": 0
+        },
+        "stale-promo": {
+          "runs": 3,
+          "ruleRecall": {
+            "correct": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "rulePrecision": {
+            "correct": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "fieldAccuracy": {
+            "correct": 106,
+            "total": 108,
+            "rate": 0.9815
+          },
+          "endToEndFieldAccuracy": {
+            "correct": 106,
+            "total": 108,
+            "rate": 0.9815
+          },
+          "claimPrecision": {
+            "correct": 48,
+            "total": 51,
+            "rate": 0.9412
+          },
+          "evidenceValidity": {
+            "correct": 95,
+            "total": 96,
+            "rate": 0.9896
+          },
+          "issueRecall": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "falseClean": 0
+        }
+      },
+      "byCategory": {
+        "dining": {
+          "missedRules": 0,
+          "fieldErrors": 1,
+          "fields": {
+            "capKind": 1
+          }
+        },
+        "drugstores": {
+          "missedRules": 0,
+          "fieldErrors": 1,
+          "fields": {
+            "capKind": 1
+          }
+        },
+        "travel-portal": {
+          "missedRules": 0,
+          "fieldErrors": 1,
+          "fields": {
+            "capKind": 1
+          }
+        },
+        "online-retail": {
+          "missedRules": 0,
+          "fieldErrors": 3,
+          "fields": {
+            "capPeriod": 3
+          }
+        },
+        "gas": {
+          "missedRules": 0,
+          "fieldErrors": 3,
+          "fields": {
+            "capPeriod": 3
+          }
+        }
+      },
+      "errors": {
+        "extraRules": {
+          "entertainment": 2
+        },
+        "missedRules": {},
+        "fieldErrors": {
+          "capKind": 3,
+          "capPeriod": 6
+        },
+        "quotesUnresolved": 10,
+        "quotesGiven": 500
       }
     }
   ]

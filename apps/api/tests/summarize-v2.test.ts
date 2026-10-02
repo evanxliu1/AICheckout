@@ -1,4 +1,4 @@
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { expect, it } from 'vitest';
@@ -37,6 +37,38 @@ it('re-scores saved run directories from their observations', async () => {
     expect(abstain).toMatchObject({ model: 'abstain.2', observed: 2, complete: false });
     expect(abstain.overall.ruleRecall.rate).toBe(0);
     expect(abstain.errors.missedRules).not.toEqual({});
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
+it('reports a run over both splits as one row per split', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'summarize-v2-'));
+  const root = resolve(import.meta.dirname, '../../..');
+  try {
+    await runEvaluationV2Cli(
+      ['--corpus', FIXTURE, '--split', 'all', '--allow-heldout', '--output', join(dir, 'echo.all')],
+      root,
+    );
+    process.exitCode = 0;
+    // One logged earlier failure on a held-out slot counts against the held-out row only.
+    const failure = { slot: 'example-dining-rewards#1', runId: 'r1', status: 'timed_out', durationMs: 1 };
+    await writeFile(join(dir, 'echo.all', 'failures.jsonl'), JSON.stringify(failure) + '\n');
+    const summary = await summarizeRuns(FIXTURE, [dir]);
+    expect(summary.rows.map((r) => r.harness.attempts)).toEqual([0, 1]);
+    expect(
+      summary.rows.map(({ id, split, planned, observed, complete }) => ({
+        id,
+        split,
+        planned,
+        observed,
+        complete,
+      })),
+    ).toEqual([
+      { id: 'echo.dev', split: 'dev', planned: 5, observed: 5, complete: true },
+      { id: 'echo.heldout', split: 'heldout', planned: 3, observed: 3, complete: true },
+    ]);
+    expect(summary.rows.every((r) => r.overall.endToEndFieldAccuracy.rate === 1)).toBe(true);
   } finally {
     await rm(dir, { recursive: true, force: true });
   }

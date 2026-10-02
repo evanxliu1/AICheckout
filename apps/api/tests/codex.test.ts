@@ -135,3 +135,11 @@ it('requires both a final message and usage', () => {
     usage: { inputTokens: 5, outputTokens: 2 },
   });
 });
+
+it('parseCodexEvents can leave hidden reasoning out of output tokens', () => {
+  const events =
+    '{"type":"item.completed","item":{"type":"agent_message","text":"{}"}}\n' +
+    '{"type":"turn.completed","usage":{"input_tokens":5,"output_tokens":9000,"reasoning_output_tokens":8000}}';
+  expect(parseCodexEvents(events).usage).toEqual({ inputTokens: 5, outputTokens: 9000 });
+  expect(parseCodexEvents(events, 'visible').usage).toEqual({ inputTokens: 5, outputTokens: 1000 });
+});
