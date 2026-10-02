@@ -22,29 +22,6 @@ import { parseArgs } from 'node:util';
 import { build } from 'esbuild';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const { values } = parseArgs({
-  options: {
-    dir: { type: 'string', default: 'evals/curation/expansion' },
-    only: { type: 'string' },
-    concurrency: { type: 'string', default: '8' },
-    provider: { type: 'string', default: 'codex' },
-    model: { type: 'string', default: 'gpt-5.6-luna' },
-    effort: { type: 'string', default: 'xhigh' },
-    prompt: { type: 'string', default: 'guided.2' },
-    selection: { type: 'string', default: 'keyword-window.1' },
-    'attempt-timeout-ms': { type: 'string', default: '600000' },
-    'total-timeout-ms': { type: 'string', default: '900000' },
-    'wait-minutes': { type: 'string', default: '15' },
-    // Hidden reasoning out of output tokens, so xhigh reasoning does not trip the 8,192 output limit.
-    'codex-output-tokens': { type: 'string', default: 'visible' },
-    'summary-only': { type: 'boolean', default: false },
-  },
-});
-const concurrency = Number(values.concurrency);
-if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 8)
-  throw new Error('--concurrency must be 1 to 8.');
-const waitMinutes = Number(values['wait-minutes']);
-
 // The harness is TypeScript; bundle the pieces this script needs, as scripts/evaluate-curation-v2.mjs does.
 const bundle = await build({
   absWorkingDir: root,
@@ -56,6 +33,7 @@ const bundle = await build({
       export { createCodexProvider } from './apps/api/src/curation/codex.ts';
       export { createClaudeProvider } from './apps/api/src/curation/claude.ts';
       export { cliVersion } from './apps/api/src/curation/cli-version.ts';
+      export { CURATION_DEFAULTS } from './apps/api/src/curation/curation-model.ts';
     `,
     resolveDir: root,
     loader: 'ts',
@@ -69,8 +47,33 @@ const harness = await import(
   `data:text/javascript;base64,${Buffer.from(bundle.outputFiles[0].text).toString('base64')}`
 );
 
-/** Live eval:v2 limits (apps/api/src/curation/v2/eval-cli.ts: 240 s / 480 s), with the timeouts raised by
- * default (600 s per attempt, 900 s total) because xhigh effort takes ~4-5 minutes even on small cards. */
+// Defaults are the project's curation configuration (apps/api/src/curation/curation-model.ts).
+const CURATION = harness.CURATION_DEFAULTS;
+const { values } = parseArgs({
+  options: {
+    dir: { type: 'string', default: 'evals/curation/expansion' },
+    only: { type: 'string' },
+    concurrency: { type: 'string', default: '8' },
+    provider: { type: 'string', default: 'codex' },
+    model: { type: 'string', default: CURATION.model },
+    effort: { type: 'string', default: CURATION.effort },
+    prompt: { type: 'string', default: CURATION.prompt },
+    selection: { type: 'string', default: CURATION.selection },
+    'attempt-timeout-ms': { type: 'string', default: String(CURATION.attemptTimeoutMs) },
+    'total-timeout-ms': { type: 'string', default: String(CURATION.totalTimeoutMs) },
+    'wait-minutes': { type: 'string', default: '15' },
+    // Hidden reasoning out of output tokens, so xhigh reasoning does not trip the 8,192 output limit.
+    'codex-output-tokens': { type: 'string', default: CURATION.codexOutputTokens },
+    'summary-only': { type: 'boolean', default: false },
+  },
+});
+const concurrency = Number(values.concurrency);
+if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 8)
+  throw new Error('--concurrency must be 1 to 8.');
+const waitMinutes = Number(values['wait-minutes']);
+
+/** Live eval:v2 limits (apps/api/src/curation/v2/eval-cli.ts), with the curation model's deadlines by default
+ * (600 s per attempt, 900 s total) because xhigh effort takes ~4-5 minutes even on small cards. */
 const LIMITS = {
   attemptTimeoutMs: Number(values['attempt-timeout-ms']),
   totalTimeoutMs: Number(values['total-timeout-ms']),
