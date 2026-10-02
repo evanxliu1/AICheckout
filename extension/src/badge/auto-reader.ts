@@ -34,6 +34,8 @@ export interface ReaderEnvironment {
   hidden(): boolean;
   onVisibilityChange(listener: () => void): void;
   onPageHide(listener: () => void): void;
+  /** `persisted`: the page came back from the back/forward cache. */
+  onPageShow(listener: (persisted: boolean) => void): void;
   setTimeout(callback: () => void, ms: number): number;
   clearTimeout(id: number): void;
 }
@@ -70,6 +72,8 @@ export function startAutoReader(env: ReaderEnvironment) {
     lastKey = '',
     /** The worker's last answer: the badge should be showing. */
     wanted = false,
+    /** Between pagehide and a back/forward-cache restore. */
+    paused = false,
     timer: number | null = null,
     disconnect: (() => void) | null = null;
   function stop() {
@@ -81,7 +85,7 @@ export function startAutoReader(env: ReaderEnvironment) {
   }
   function check() {
     timer = null;
-    if (stopped || env.hidden()) return;
+    if (stopped || paused || env.hidden()) return;
     if (!env.isCart(env.url())) {
       // A single-page navigation left the cart.
       env.frame.hide();
@@ -108,11 +112,11 @@ export function startAutoReader(env: ReaderEnvironment) {
       .catch(() => undefined);
   }
   function schedule() {
-    if (stopped || timer !== null) return;
+    if (stopped || paused || timer !== null) return;
     timer = env.setTimeout(check, DEBOUNCE_MS);
   }
   function connect() {
-    if (!stopped && !disconnect) disconnect = env.observe(schedule);
+    if (!stopped && !paused && !disconnect) disconnect = env.observe(schedule);
   }
   env.onVisibilityChange(() => {
     if (stopped) return;
@@ -124,7 +128,23 @@ export function startAutoReader(env: ReaderEnvironment) {
       schedule();
     }
   });
-  env.onPageHide(stop);
+  // Leaving the page pauses the reader; a back/forward-cache restore resumes it and re-sends the
+  // reading (navigation cleared it in the worker).
+  env.onPageHide(() => {
+    if (stopped) return;
+    paused = true;
+    if (timer !== null) env.clearTimeout(timer);
+    timer = null;
+    disconnect?.();
+    disconnect = null;
+  });
+  env.onPageShow((persisted) => {
+    if (!persisted || !paused || stopped) return;
+    paused = false;
+    lastKey = '';
+    connect();
+    check();
+  });
   check();
   connect();
   return { stop, sends: () => sends };
