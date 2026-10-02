@@ -24,8 +24,9 @@ const obsoleteKeys = [
 const lockedMessage = 'Unlock your saved data before continuing.';
 type Response = VaultResponse | CheckoutResponse;
 
-/** One queue owns lifecycle events, vault transitions and domain writes. The only
- * durable state is an authenticated envelope; the usable key lives in session memory. */
+/** One queue owns lifecycle events, vault transitions and domain writes. Saved state is plain
+ * local storage by default; with the optional passphrase vault it is an authenticated envelope
+ * whose usable key lives in session memory only. */
 export function createVaultService(
   local: StateStorage,
   session: StateStorage,
@@ -46,9 +47,9 @@ export function createVaultService(
   async function status(): Promise<VaultStatus> {
     await local.remove(obsoleteKeys);
     const saved = await record();
-    if (saved === undefined) return 'setup';
+    if (saved === undefined) return 'unprotected';
     const envelope = vaultEnvelopeSchema.safeParse(saved);
-    if (!envelope.success) return storedAppStateSchema.safeParse(saved).success ? 'migration' : 'damaged';
+    if (!envelope.success) return storedAppStateSchema.safeParse(saved).success ? 'unprotected' : 'damaged';
     const key = await sessionKey();
     if (!key.success || key.data.id !== envelope.data.id) return 'locked';
     try {
@@ -65,15 +66,23 @@ export function createVaultService(
     await session.clear();
     await local.clear();
   }
+  /** Plain state (or nothing yet) when the vault is off; the decrypted envelope when it is on. */
+  const isPlain = (saved: unknown) => saved === undefined || storedAppStateSchema.safeParse(saved).success;
   const protectedStorage: StateStorage = {
     get: async (key) => {
       if (key !== STATE_KEY) throw new Error('Unsupported state key.');
+      const saved = await record();
+      if (isPlain(saved)) return saved === undefined ? {} : { [STATE_KEY]: saved };
       const unlocked = await ready();
       return { [STATE_KEY]: await decryptVault(unlocked.envelope, unlocked.key) };
     },
     set: async (items) => {
       if (Object.keys(items).length !== 1 || !Object.hasOwn(items, STATE_KEY))
         throw new Error('Unsupported state write.');
+      if (isPlain(await record())) {
+        await local.set({ [STATE_KEY]: appStateSchema.parse(items[STATE_KEY]) });
+        return;
+      }
       const unlocked = await ready();
       const encrypted = await encryptVault(
         appStateSchema.parse(items[STATE_KEY]),
@@ -102,10 +111,26 @@ export function createVaultService(
         if (value.type === 'checkout:vault-status') return { ok: true, status: await status() };
         if (value.type === 'checkout:vault-delete') {
           await clear();
-          return { ok: true, status: 'setup' };
+          return { ok: true, status: 'unprotected' };
+        }
+        if (value.type === 'checkout:vault-remove') {
+          const envelope = vaultEnvelopeSchema.safeParse(await record());
+          if (!envelope.success) return { ok: false, error: 'Passphrase protection is already off.' };
+          let state: StoredAppState;
+          try {
+            const key = await deriveVaultKey(value.passphrase, envelope.data);
+            state = await decryptVault(envelope.data, key);
+          } catch {
+            return { ok: false, error: 'Could not turn off protection. Check your passphrase.' };
+          }
+          // One key replacement: the plain record replaces the envelope; then the key is dropped.
+          await local.set({ [STATE_KEY]: state });
+          await session.remove([VAULT_SESSION_KEY]);
+          return { ok: true, status: 'unprotected' };
         }
         if (value.type === 'checkout:vault-lock') {
-          await session.clear();
+          // Only the key: per-tab badge state in session storage is not wallet data.
+          await session.remove([VAULT_SESSION_KEY]);
           return { ok: true, status: await status() };
         }
         if (value.type === 'checkout:vault-create') {
@@ -157,7 +182,10 @@ export function createVaultService(
           catalogUpdatesAvailable: !!fetchCatalog,
         };
       }
-      if ((await status()) !== 'unlocked') return { ok: false, error: lockedMessage };
+      const current = await status();
+      if (current === 'damaged')
+        return { ok: false, error: 'Saved data could not be read. You can delete it to start again.' };
+      if (current === 'locked') return { ok: false, error: lockedMessage };
       return await stateService(normal.data);
     } catch {
       return {
@@ -169,8 +197,16 @@ export function createVaultService(
   const service = (input: unknown) => serial(() => handle(input));
   service.invalidateTab = (tabId: number) =>
     serial(async () => {
-      if ((await status()) === 'unlocked') await stateService.invalidateTab(tabId);
+      const current = await status();
+      if (current === 'unlocked' || current === 'unprotected') await stateService.invalidateTab(tabId);
       // Locked captures are validated against the exact tab/document and age on unlock/use.
+    });
+  /** The current status and, when readable, the saved state. For the badge, which only reads. */
+  service.snapshot = () =>
+    serial(async () => {
+      const current = await status();
+      if (current !== 'unlocked' && current !== 'unprotected') return { status: current, state: null };
+      return { status: current, state: await stateService.read() };
     });
   return service;
 }

@@ -1,10 +1,12 @@
 import { chromium, expect, test } from '@playwright/test';
+import { closeOnboarding } from './onboarding';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { openNativePopup } from './native-popup';
-import { createNativeVault, deleteNativeVault } from './vault';
+import { deleteNativeVault, startNativePopup } from './vault';
+import { BADGE_ORIGINS } from './hosts';
 import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2';
 
 test('the inspected upload ZIP installs and completes a native comparison', async ({
@@ -56,6 +58,7 @@ test('the inspected upload ZIP installs and completes a native comparison', asyn
   });
   try {
     const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+    await closeOnboarding(context);
     const id = new URL(worker.url()).host;
     const merchant = await context.newPage();
     await merchant.route('https://www.bestbuy.com/cart', (route) =>
@@ -66,11 +69,10 @@ test('the inspected upload ZIP installs and completes a native comparison', asyn
     );
     await merchant.goto('https://www.bestbuy.com/cart');
     const popup = await openNativePopup(context, merchant, id);
-    await expect.poll(popup.text).toContain('Protect your saved inputs');
-    writeFileSync(testInfo.outputPath('zip-protection-setup.png'), await popup.screenshot());
-    await createNativeVault(popup);
+    await startNativePopup(popup);
+    writeFileSync(testInfo.outputPath('zip-setup.png'), await popup.screenshot());
     await popup.evaluate(
-      "document.querySelectorAll('fieldset input[type=checkbox]').forEach(box => box.click())",
+      "document.querySelectorAll('[aria-labelledby=wallet-heading] fieldset input[type=checkbox]').forEach(box => box.click())",
     );
     await expect.poll(popup.text).toContain('online retail spend in');
     await popup.fill('spend-bce-online-retail', '0');
@@ -95,12 +97,12 @@ test('the inspected upload ZIP installs and completes a native comparison', asyn
     } else await expect.poll(popup.text).toContain('These card terms have expired');
     const permissions = await worker.evaluate(() => chrome.permissions.getAll());
     expect(permissions.permissions?.sort()).toEqual(['activeTab', 'scripting', 'storage']);
-    expect(permissions.origins ?? []).toEqual(
-      inventory.catalogOrigin ? [`${inventory.catalogOrigin}/*`] : [],
+    expect(permissions.origins?.sort()).toEqual(
+      [...BADGE_ORIGINS, ...(inventory.catalogOrigin ? [`${inventory.catalogOrigin}/*`] : [])].sort(),
     );
     writeFileSync(testInfo.outputPath('zip-comparison.png'), await popup.screenshot());
     await deleteNativeVault(popup);
-    await expect.poll(popup.text).toContain('Protect your saved inputs');
+    await startNativePopup(popup);
     expect(await worker.evaluate(() => chrome.storage.local.get(null))).toEqual({});
     expect(await worker.evaluate(() => chrome.storage.session.get(null))).toEqual({});
     writeFileSync(

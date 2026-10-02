@@ -38,7 +38,14 @@ beforeEach(() => {
     { read, validate: async () => undefined },
   );
   vi.stubGlobal('chrome', {
-    runtime: { sendMessage: vi.fn(handle) },
+    runtime: {
+      // Settings go to the badge service in the worker; the rest to the state service.
+      sendMessage: vi.fn((request: { type: string }) =>
+        request.type.startsWith('settings:')
+          ? Promise.resolve({ ok: true, settings: { schemaVersion: 1, disabledMerchants: [] } })
+          : handle(request),
+      ),
+    },
     storage: { onChanged: { addListener: vi.fn(), removeListener: vi.fn() } },
   });
 });
@@ -142,7 +149,16 @@ describe('offline comparison popup', () => {
     expect(await screen.findByText('$1.50')).toBeTruthy();
   });
   it('recovers from a disconnected worker', async () => {
-    vi.mocked(chrome.runtime.sendMessage).mockRejectedValueOnce(new Error('disconnected'));
+    const send = vi.mocked(chrome.runtime.sendMessage);
+    const original = send.getMockImplementation()!;
+    let failed = false;
+    send.mockImplementation(((request: { type: string }) => {
+      if (!failed && request.type === 'checkout:get-state') {
+        failed = true;
+        return Promise.reject(new Error('disconnected'));
+      }
+      return (original as (r: unknown) => unknown)(request);
+    }) as never);
     render(<Popup />);
     fireEvent.click(await screen.findByRole('button', { name: 'Reload saved inputs' }));
     expect(await screen.findByLabelText('Purchase amount (USD)')).toBeTruthy();

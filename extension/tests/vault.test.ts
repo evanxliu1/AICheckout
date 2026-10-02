@@ -95,19 +95,21 @@ describe('authenticated passphrase encryption', () => {
 });
 
 describe('protected storage lifecycle', () => {
-  it('requires setup/consent; saves only ciphertext and keeps the usable key out of local storage', async () => {
+  it('works unprotected by default; protecting encrypts the same state and keeps the key off disk', async () => {
     const local = memory(),
       session = memory(),
       service = createVaultService(local.api, session.api, clock);
-    expect(await service({ type: 'checkout:vault-status' })).toEqual({ ok: true, status: 'setup' });
-    expect(await service({ type: 'checkout:get-state' })).toMatchObject({ ok: false });
-    expect(await service({ ...create, disclosureVersion: undefined })).toMatchObject({ ok: false });
-    expect(local.read()).toEqual({});
-    expect(await service(create)).toEqual({ ok: true, status: 'unlocked' });
+    expect(await service({ type: 'checkout:vault-status' })).toEqual({ ok: true, status: 'unprotected' });
+    expect(await service({ type: 'checkout:get-state' })).toMatchObject({ ok: true, state: emptyState() });
     expect(await service({ type: 'checkout:save-wallet', expectedRevision: 0, wallet })).toMatchObject({
       ok: true,
       state: { wallet },
     });
+    // Plain local storage (readable only by trusted extension contexts) until protection is on.
+    expect(JSON.stringify(local.read())).toContain('quicksilver');
+    expect((await service.snapshot()).state).toMatchObject({ wallet });
+    expect(await service({ ...create, disclosureVersion: undefined })).toMatchObject({ ok: false });
+    expect(await service(create)).toEqual({ ok: true, status: 'unlocked' });
     const disk = JSON.stringify(local.read()),
       ram = session.read()[VAULT_SESSION_KEY] as { key: string };
     expect(disk).not.toContain('quicksilver');
@@ -138,13 +140,14 @@ describe('protected storage lifecycle', () => {
     expect(await service({ type: 'checkout:vault-lock' })).toEqual({ ok: true, status: 'locked' });
     expect(session.read()).toEqual({});
   });
-  it('migrates the same state key only after consent and preserves every validated input', async () => {
+  it('uses earlier plain state unprotected and encrypts the same key on request, keeping every input', async () => {
     const local = memory({ [STATE_KEY]: legacy, openaiKey: 'obsolete-test-key' }),
       session = memory();
     const service = createVaultService(local.api, session.api, clock);
-    expect(await service({ type: 'checkout:vault-status' })).toEqual({ ok: true, status: 'migration' });
+    expect(await service({ type: 'checkout:vault-status' })).toEqual({ ok: true, status: 'unprotected' });
     expect(local.read()[STATE_KEY]).toEqual(legacy);
     expect(local.read()).not.toHaveProperty('openaiKey');
+    expect(await service({ type: 'checkout:get-state' })).toMatchObject({ ok: true, state: legacy });
     expect(await service(create)).toEqual({ ok: true, status: 'unlocked' });
     expect(Object.keys(local.read())).toEqual([STATE_KEY]);
     expect(await service({ type: 'checkout:get-state' })).toMatchObject({ ok: true, state: legacy });
@@ -202,7 +205,7 @@ describe('protected storage lifecycle', () => {
     expect(local.read()).toHaveProperty(STATE_KEY);
     expect(await service({ type: 'checkout:vault-delete', confirmed: true })).toEqual({
       ok: true,
-      status: 'setup',
+      status: 'unprotected',
     });
     expect(local.read()).toEqual({});
     expect(session.read()).toEqual({});
@@ -261,9 +264,54 @@ describe('protected storage lifecycle', () => {
       capturedAt: clock(),
     });
     expect(await read).toMatchObject({ ok: true });
-    expect(await deletion).toEqual({ ok: true, status: 'setup' });
+    expect(await deletion).toEqual({ ok: true, status: 'unprotected' });
     expect(local.read()).toEqual({});
     expect(session.read()).toEqual({});
+  });
+});
+
+describe('optional protection', () => {
+  it('turns protection off only with the passphrase, keeping the same state in plain storage', async () => {
+    const local = memory(),
+      session = memory(),
+      service = createVaultService(local.api, session.api, clock);
+    expect(await service({ type: 'checkout:vault-remove', passphrase: phrase })).toMatchObject({ ok: false });
+    await service(create);
+    await service({ type: 'checkout:save-wallet', expectedRevision: 0, wallet });
+    const encrypted = local.read();
+    expect(
+      await service({ type: 'checkout:vault-remove', passphrase: 'incorrect but long enough' }),
+    ).toMatchObject({ ok: false });
+    expect(local.read()).toEqual(encrypted);
+    expect(await service({ type: 'checkout:vault-remove', passphrase: phrase })).toEqual({
+      ok: true,
+      status: 'unprotected',
+    });
+    expect(session.read()).toEqual({});
+    expect(local.read()[STATE_KEY]).toMatchObject({ schemaVersion: 2, wallet });
+    expect(await service({ type: 'checkout:get-state' })).toMatchObject({ ok: true, state: { wallet } });
+  });
+  it('keeps a locked vault closed to the badge snapshot and to normal requests', async () => {
+    const local = memory(),
+      session = memory(),
+      service = createVaultService(local.api, session.api, clock);
+    await service(create);
+    await service({ type: 'checkout:save-wallet', expectedRevision: 0, wallet });
+    await service({ type: 'checkout:vault-lock' });
+    expect(await service.snapshot()).toEqual({ status: 'locked', state: null });
+    expect(await service({ type: 'checkout:get-state' })).toMatchObject({ ok: false });
+    expect(await service(unlock)).toEqual({ ok: true, status: 'unlocked' });
+    expect((await service.snapshot()).state).toMatchObject({ wallet });
+  });
+  it('reports damaged plain state instead of overwriting it', async () => {
+    const local = memory({ [STATE_KEY]: { schemaVersion: 2, revision: 'x' } }),
+      session = memory(),
+      service = createVaultService(local.api, session.api, clock);
+    expect(await service({ type: 'checkout:vault-status' })).toEqual({ ok: true, status: 'damaged' });
+    expect(await service({ type: 'checkout:save-wallet', expectedRevision: 0, wallet })).toMatchObject({
+      ok: false,
+    });
+    expect(await service.snapshot()).toEqual({ status: 'damaged', state: null });
   });
 });
 

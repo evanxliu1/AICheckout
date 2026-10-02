@@ -23,14 +23,17 @@ const privateView = {
   catalogUpdatesAvailable: false,
 };
 beforeEach(() => {
-  status = 'setup';
+  status = 'unprotected';
   listeners = new Set();
   send.mockReset();
   send.mockImplementation(async (request: { type: string }) => {
     if (request.type === 'checkout:vault-create' || request.type === 'checkout:vault-unlock')
       status = 'unlocked';
     if (request.type === 'checkout:vault-lock') status = 'locked';
-    if (request.type === 'checkout:vault-delete') status = 'setup';
+    if (request.type === 'checkout:vault-delete' || request.type === 'checkout:vault-remove')
+      status = 'unprotected';
+    if (request.type === 'settings:get')
+      return { ok: true, settings: { schemaVersion: 1, disabledMerchants: [] } };
     return request.type === 'checkout:get-state' ? privateView : { ok: true, status };
   });
   vi.stubGlobal('chrome', {
@@ -56,46 +59,48 @@ function emitLock() {
 }
 
 describe('local protection gate', () => {
-  it('requires matching passphrases and explicit disclosure acceptance before requesting setup or reading private inputs', async () => {
+  it('opens straight into the popup by default and protects from Settings only after confirmation', async () => {
     render(<VaultGate />);
-    await screen.findByLabelText('New local passphrase');
-    expect(screen.getByText(/After you choose a passphrase and accept setup/)).toBeTruthy();
-    expect(send.mock.calls.map(([request]) => request.type)).toEqual(['checkout:vault-status']);
+    await screen.findByLabelText('Purchase amount (USD)');
+    expect(screen.getByText('Quicksilver')).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Lock saved inputs' })).toBeNull();
+    fireEvent.click(screen.getByText('Settings'));
+    expect(screen.getByText('Passphrase protection: off')).toBeTruthy();
     fillSetup('different words entered here');
-    fireEvent.click(screen.getByRole('button', { name: 'Protect saved inputs' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Protect with a passphrase' }));
     expect(await screen.findByRole('alert')).toHaveProperty(
       'textContent',
       expect.stringContaining('do not match'),
     );
     fillSetup();
-    fireEvent.click(screen.getByRole('button', { name: 'Protect saved inputs' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Protect with a passphrase' }));
     expect(await screen.findByRole('alert')).toHaveProperty(
       'textContent',
-      expect.stringContaining('Confirm how'),
+      expect.stringContaining('cannot be recovered'),
     );
-    expect(send).toHaveBeenCalledTimes(1);
-    fireEvent.click(screen.getByRole('checkbox', { name: /I agree to save/ }));
-    fireEvent.click(screen.getByRole('button', { name: 'Protect saved inputs' }));
-    await screen.findByLabelText('Purchase amount (USD)');
-    expect(send).toHaveBeenCalledWith({
-      type: 'checkout:vault-create',
-      passphrase: phrase,
-      disclosureVersion: 1,
-    });
-    expect(screen.queryByLabelText('New local passphrase')).toBeNull();
-    expect(screen.getByText('Data and protection details')).toBeTruthy();
+    expect(send.mock.calls.some(([request]) => request.type === 'checkout:vault-create')).toBe(false);
+    fireEvent.click(screen.getByRole('checkbox', { name: /cannot be recovered/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Protect with a passphrase' }));
+    await vi.waitFor(() =>
+      expect(send).toHaveBeenCalledWith({
+        type: 'checkout:vault-create',
+        passphrase: phrase,
+        disclosureVersion: 1,
+      }),
+    );
   });
-  it('explains migration before exposing old financial inputs', async () => {
-    status = 'migration';
+  it('lets an existing vault user turn protection off with the current passphrase', async () => {
+    status = 'unlocked';
     render(<VaultGate />);
-    expect(await screen.findByText(/Your earlier inputs are not encrypted yet/)).toBeTruthy();
-    expect(screen.getByText(/Your earlier saved inputs are still unencrypted/)).toBeTruthy();
-    expect(screen.queryByLabelText('Purchase amount (USD)')).toBeNull();
-    fillSetup();
-    fireEvent.click(screen.getByRole('checkbox', { name: /I agree to save/ }));
-    fireEvent.click(screen.getByRole('button', { name: 'Protect saved inputs' }));
     await screen.findByLabelText('Purchase amount (USD)');
-    expect(screen.getByText('Quicksilver')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Lock saved inputs' })).toBeTruthy();
+    fireEvent.click(screen.getByText('Settings'));
+    expect(screen.getByText('Passphrase protection: on')).toBeTruthy();
+    fireEvent.change(screen.getByLabelText('Current passphrase'), { target: { value: phrase } });
+    fireEvent.click(screen.getByRole('button', { name: 'Turn off passphrase protection' }));
+    await vi.waitFor(() =>
+      expect(send).toHaveBeenCalledWith({ type: 'checkout:vault-remove', passphrase: phrase }),
+    );
   });
   it('clears a wrong passphrase and allows a successful unlock retry', async () => {
     status = 'locked';
@@ -161,7 +166,7 @@ describe('local protection gate', () => {
     expect(screen.getByRole('alert').textContent).toContain('could not be saved');
     expect(screen.queryByLabelText('Purchase amount (USD)')).toBeNull();
   });
-  it('requires explicit reset confirmation for damaged data and returns to setup', async () => {
+  it('requires explicit reset confirmation for damaged data and then starts fresh', async () => {
     status = 'damaged';
     render(<VaultGate />);
     await screen.findByText('Saved data could not be read');
@@ -171,7 +176,7 @@ describe('local protection gate', () => {
     expect((remove as HTMLButtonElement).disabled).toBe(true);
     fireEvent.click(screen.getByRole('checkbox', { name: /I want to permanently delete/ }));
     fireEvent.click(remove);
-    await screen.findByLabelText('New local passphrase');
+    await screen.findByLabelText('Purchase amount (USD)');
     expect(send).toHaveBeenCalledWith({ type: 'checkout:vault-delete', confirmed: true });
   });
   it('recovers from a worker connection failure without exposing the wallet', async () => {
@@ -180,7 +185,7 @@ describe('local protection gate', () => {
     expect((await screen.findByRole('alert')).textContent).toContain('could not connect');
     expect(screen.queryByLabelText('Purchase amount (USD)')).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: 'Retry' }));
-    await screen.findByLabelText('New local passphrase');
+    await screen.findByLabelText('Purchase amount (USD)');
     expect(screen.queryByRole('alert')).toBeNull();
   });
 });

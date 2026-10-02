@@ -1,8 +1,10 @@
 import { chromium, expect, test } from '@playwright/test';
+import { closeOnboarding } from './onboarding';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { openNativePopup } from './native-popup';
-import { createNativeVault } from './vault';
+import { startNativePopup } from './vault';
+import { BADGE_ORIGINS } from './hosts';
 
 test('native action grants temporary access, reads a cart and rejects changed totals', async ({
   browserName,
@@ -20,6 +22,7 @@ test('native action grants temporary access, reads a cart and rejects changed to
   });
   try {
     const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+    await closeOnboarding(context);
     const id = new URL(worker.url()).host;
     const merchant = await context.newPage();
     await merchant.route('https://www.bestbuy.com/cart', (route) =>
@@ -29,20 +32,11 @@ test('native action grants temporary access, reads a cart and rejects changed to
       }),
     );
     await merchant.goto('https://www.bestbuy.com/cart');
-    // No persistent host permissions and no access before the Chrome action.
-    const denied = await worker.evaluate(async () => {
-      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-      try {
-        await chrome.scripting.executeScript({ target: { tabId: tab.id! }, func: () => document.title });
-        return false;
-      } catch {
-        return true;
-      }
-    });
-    expect(denied).toBe(true);
+    // Host permissions cover only the supported carts (for the automatic badge).
+    expect((await worker.evaluate(() => chrome.permissions.getAll())).origins?.sort()).toEqual(BADGE_ORIGINS);
 
     const popup = await openNativePopup(context, merchant, id);
-    await createNativeVault(popup);
+    await startNativePopup(popup);
     // Actual isolated page scripts cannot retrieve either disk state or the
     // in-memory unlock key, even with activeTab access to read this merchant.
     const storageAccess = await worker.evaluate(async () => {
@@ -95,7 +89,7 @@ test('native action grants temporary access, reads a cart and rejects changed to
     await popup.click('Compare my cards');
     await expect.poll(popup.text).toContain('$0.80');
     const permissions = await worker.evaluate(() => chrome.permissions.getAll());
-    expect(permissions.origins ?? []).toEqual([]);
+    expect(permissions.origins?.sort()).toEqual(BADGE_ORIGINS);
     await popup.close();
   } finally {
     await context.close();

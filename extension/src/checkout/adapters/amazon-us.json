@@ -45,5 +45,16 @@
   "pending": [],
   "requiredKinds": ["subtotal"],
   "duplicates": "ambiguous",
-  "combine": "per-summary"
+  "combine": "per-summary",
+  "matchPatterns": [
+    "https://www.amazon.com/gp/cart/view.html*",
+    "https://www.amazon.com/cart*",
+    "https://www.amazon.com/gp/buy/thankyou/*",
+    "https://www.amazon.com/checkout/*"
+  ],
+  "orderConfirmation": {
+    "verified": false,
+    "note": "Unverified guess from public descriptions of Amazon's thank-you page; Evan checks it on a real order before release. Only the URL is matched; the page is never read.",
+    "paths": ["^/gp/buy/thankyou(?:/.*)?$", "^/checkout/(?:p/[^/]{1,120}/)?thankyou(?:/.*)?$"]
+  }
 }

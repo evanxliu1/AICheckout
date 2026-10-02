@@ -4,7 +4,11 @@ import WalletEditor from '../components/WalletEditor';
 import ComparisonResult from '../components/ComparisonResult';
 import DataProtectionDetails from '../components/DataProtectionDetails';
 import DeleteSavedData from '../components/DeleteSavedData';
+import BadgeSettings from '../components/BadgeSettings';
+import ProtectionSettings from '../components/ProtectionSettings';
+import SavingsHistory from '../components/SavingsHistory';
 import {
+  Disclosure,
   AlertInline,
   ApplicationState,
   Button,
@@ -30,12 +34,19 @@ export default function Popup({
   onLock,
   onDelete,
   vaultError,
-}: { onLock?: () => void; onDelete?: () => void; vaultError?: string } = {}) {
+  protection = 'off',
+}: {
+  onLock?: () => void;
+  onDelete?: () => void;
+  vaultError?: string;
+  /** Optional passphrase protection (off by default). */
+  protection?: 'off' | 'on';
+} = {}) {
   const [view, setView] = useState<View | null>(null);
   const [editing, setEditing] = useState(false);
-  const [pending, setPending] = useState<'load' | 'read' | 'save' | 'compare' | 'delete' | 'catalog' | null>(
-    null,
-  );
+  const [pending, setPending] = useState<
+    'load' | 'read' | 'save' | 'compare' | 'delete' | 'catalog' | 'savings' | null
+  >(null);
   const busy = pending !== null;
   const [error, setError] = useState('');
   const [amount, setAmount] = useState('');
@@ -283,6 +294,20 @@ export default function Popup({
       restore(await checkoutRequest({ type: 'checkout:clear' }));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Local data could not be deleted. Try again.');
+    } finally {
+      setPending(null);
+    }
+  }
+  async function deleteSavings() {
+    if (!view) return;
+    setPending('savings');
+    setError('');
+    try {
+      restore(
+        await checkoutRequest({ type: 'checkout:delete-savings', expectedRevision: view.state.revision }),
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'The history could not be deleted. Try again.');
     } finally {
       setPending(null);
     }
@@ -583,10 +608,29 @@ export default function Popup({
                 </div>
               </>
             ))}
+          {view && !editing && view.state.wallet.cards.length > 0 && (
+            <SavingsHistory
+              entries={view.state.savings}
+              catalog={catalog}
+              busy={busy}
+              onDelete={() => void deleteSavings()}
+            />
+          )}
+          <Disclosure title="Settings" id="popup-settings">
+            <div className="space-y-4">
+              <BadgeSettings />
+              <section className="space-y-2" aria-labelledby="protection-heading">
+                <h2 id="protection-heading" className="section-title">
+                  Passphrase protection: {protection === 'on' ? 'on' : 'off'}
+                </h2>
+                <ProtectionSettings protection={protection} />
+              </section>
+            </div>
+          </Disclosure>
           <footer className="supporting space-y-3 pt-2">
             <p>
-              Cards and purchase inputs stay on this device. This comparison works offline and requires no API
-              key.
+              Cards, purchase inputs and savings stay on this device. This comparison works offline and
+              requires no API key.
             </p>
             <p>Card terms expire {new Date(catalog.expiresAt).toLocaleString('en-US')}.</p>
             <div className="flex flex-wrap gap-2">
@@ -608,7 +652,7 @@ export default function Popup({
                 </Button>
               )}
             </div>
-            {onLock && <DataProtectionDetails />}
+            <DataProtectionDetails protection={protection} />
             <DeleteSavedData busy={busy} onDelete={() => (onDelete ? onDelete() : void clear())} />
           </footer>
         </div>

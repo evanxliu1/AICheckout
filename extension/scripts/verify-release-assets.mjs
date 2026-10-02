@@ -28,7 +28,7 @@ for (const entry of inventory.files)
     hash(readFileSync(resolve(root, 'extension/dist', entry.path))) === entry.sha256,
     `Build changed: ${entry.path}`,
   );
-assert(manifest.frames.length === 5, 'Expected five store screenshots');
+assert(manifest.frames.length === 6, 'Expected six store screenshots');
 for (const item of [...manifest.frames, manifest.promotional]) {
   const data = readFileSync(resolve(assets, item.file));
   assert(hash(data) === item.sha256, `Changed image: ${item.file}`);

@@ -1,0 +1,122 @@
+/* The badge frame: a transparent page whose content decides the frame's size (posted to the
+ * host). Helios tokens only; no animation, so reduced-motion needs nothing extra. */
+html,
+body.badge-body {
+  margin: 0;
+  background: transparent;
+  color-scheme: light;
+  overflow: hidden;
+}
+.badge-root {
+  display: inline-block;
+  /* Intrinsic size, independent of the frame's current size, which follows it. */
+  width: max-content;
+  max-width: 360px;
+  padding: 4px;
+  box-sizing: border-box;
+}
+.badge-root--panel {
+  display: block;
+  width: 360px;
+}
+.badge-pill {
+  display: inline-flex;
+  white-space: nowrap;
+  align-items: center;
+  gap: 8px;
+  max-width: 352px;
+  min-height: 40px;
+  padding: 8px 14px;
+  color: var(--token-color-foreground-high-contrast);
+  font: inherit;
+  font-weight: var(--token-typography-font-weight-semibold);
+  text-align: left;
+  background: var(--token-color-palette-blue-200);
+  border: 1px solid var(--token-color-palette-blue-300);
+  border-radius: 999px;
+  box-shadow: var(--token-elevation-high-box-shadow);
+  cursor: pointer;
+}
+.badge-pill span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.badge-pill:hover {
+  background: var(--token-color-palette-blue-300);
+}
+.badge-pill:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: var(--token-focus-ring-action-box-shadow);
+}
+.badge-panel {
+  display: flex;
+  flex-direction: column;
+  /* The frame is clamped to the merchant window; the body scrolls inside it. */
+  max-height: calc(100vh - 8px);
+  box-sizing: border-box;
+  overflow: hidden;
+  background: var(--token-color-surface-primary);
+  border: 1px solid var(--token-color-border-primary);
+  border-radius: var(--token-border-radius-large);
+  box-shadow: var(--token-elevation-overlay-box-shadow);
+}
+.badge-panel__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--token-color-border-primary);
+}
+.badge-panel__header h2 {
+  flex: 1;
+  margin: 0;
+}
+.badge-panel__header h2:focus {
+  outline: none;
+}
+.badge-panel__body {
+  padding: 12px;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+}
+.badge-panel__body p {
+  margin: 0;
+}
+.badge-panel__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--token-color-border-primary);
+}
+.badge-amount {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+.badge-amount > :first-child {
+  flex: 1;
+}
+.badge-amount__actions,
+.badge-answers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.badge-ranking {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.badge-covered {
+  margin: 0 0 6px;
+  padding: 6px 10px;
+  max-width: 340px;
+  color: var(--token-color-foreground-strong);
+  font-size: var(--token-typography-body-100-font-size);
+  background: var(--token-color-surface-warning);
+  border: 1px solid var(--token-color-border-warning);
+  border-radius: var(--token-border-radius-medium);
+  white-space: normal;
+}

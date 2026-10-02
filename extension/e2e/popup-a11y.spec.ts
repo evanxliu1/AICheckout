@@ -1,9 +1,10 @@
 // Accessibility gate for the popup: axe (WCAG 2.0/2.1 A and AA) on every main state at the
+import { closeOnboarding } from './onboarding';
 // popup's 360 px default width and at 480 px, plus a screenshot of each state for review.
 import AxeBuilder from '@axe-core/playwright';
 import { chromium, expect, test, type Page } from '@playwright/test';
 import { resolve } from 'node:path';
-import { createVault, mutateVaultState } from './vault';
+import { mutateVaultState, protectVault, startPopup } from './vault';
 import { PILOT_CATALOG } from '../../packages/rewards-core/src/catalog';
 import { redateCatalog } from '../../packages/rewards-core/src/catalog-helpers';
 
@@ -22,6 +23,7 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
   try {
     await context.setOffline(true);
     const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+    await closeOnboarding(context);
     const url = `chrome-extension://${new URL(worker.url()).host}/src/popup/index.html`;
     const page = await context.newPage();
     const errors: string[] = [];
@@ -41,11 +43,7 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
     }
 
     await page.goto(url);
-    await expect(page.getByRole('heading', { name: 'Protect your saved inputs' })).toBeVisible();
-    await check('vault-setup');
-
-    await createVault(page);
-    await expect(page.getByRole('heading', { name: 'Your cards' })).toBeVisible();
+    await startPopup(page);
     await check('wallet-setup');
 
     for (const name of ['Citi Double Cash', 'Capital One Quicksilver', 'American Express Blue Cash Everyday'])
@@ -96,7 +94,6 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
       state.revision += 1;
     });
     await page.reload();
-    // The session key survives a reload, so the popup reopens unlocked.
     await page.getByLabel('Purchase amount (USD)').fill('100');
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
     await page.getByRole('button', { name: 'Compare my cards' }).click();
@@ -106,7 +103,12 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
     await expect(page.getByRole('alert').filter({ hasText: /These card terms have expired/ })).toBeVisible();
     await check('catalog-expired');
 
-    // Locked.
+    // Settings (badge sites, optional protection), then protected and locked.
+    await page.getByText('Settings', { exact: true }).click();
+    await expect(page.getByRole('switch', { name: 'Best Buy US' })).toBeChecked();
+    await check('settings');
+    await page.getByText('Settings', { exact: true }).click();
+    await protectVault(page);
     await page.getByRole('button', { name: 'Lock saved inputs' }).click();
     await expect(page.getByLabel('Local passphrase', { exact: true })).toBeVisible();
     await check('vault-locked');
