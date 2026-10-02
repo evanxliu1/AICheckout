@@ -6,7 +6,7 @@ status: stable
 tags: [product, directives, memory]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T06:10:00Z
+  at: 2026-10-02T20:30:00Z
 ---
 
 # User directives
@@ -15,6 +15,10 @@ Standing instructions from the owner, newest first. A directive stays in force u
 
 | Date | Directive | Scope | Source |
 | --- | --- | --- | --- |
+| 2026-10-02 | Finish Phase 7 Stage 2 completely: the expansion corpus becomes a published catalog the extension ranks correctly, docs current, ready for the card-expansion pipeline. Then a card-expansion pipeline (CLI, skill, subagents), then a merchant-expansion pipeline, then the Web Store release and terms-change detection. | Roadmap | [Stage 2 plan](phase-7-stage-2.md), chat 2026-10-02 |
+| 2026-10-02 | Value points with published cents-per-point estimates per rewards program, labelled as estimates with source and date; the shopper can override per program; issuer-stated cash values take precedence over estimates; rank by cash-equivalent value. | Catalog, engine, extension | [Decision](../decisions/2026-10-02-points-valuation-published-estimates.md) |
+| 2026-10-02 | Keep every merchant and store card in the expansion, including the four Key Rewards cards. | Catalog | Chat, 2026-10-02 |
+| 2026-10-02 | Defer the human spot-check of the agent-verified labels. | Labels | Chat, 2026-10-02 |
 | 2026-10-02 | Move curation to gpt-5.6-luna at `xhigh` effort to keep the app on frontier models. | LLM, curation | [Decision](../decisions/2026-10-02-gpt-5-6-luna-for-curation.md) |
 | 2026-10-02 | The wiki is for development. Do not distill, move or edit the Chrome Web Store extension's public docs (`docs/release/`, `docs/verification/`, `extension/README.md`); link to them. Package READMEs stay intact. | Documentation | Chat, 2026-10-02 |
 | 2026-10-02 | Keep every `CLAUDE.md` gitignored (local assistant notes), including the root importer. | Repo config | Chat, 2026-10-02 |
