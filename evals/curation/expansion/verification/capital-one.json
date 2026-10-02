@@ -1,0 +1,2210 @@
+{
+  "schemaVersion": 1,
+  "issuer": "Capital One",
+  "verifier": {
+    "agent": "claude-code-subagent",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-02",
+    "filesRead": [
+      "AGENTS.md",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verify/capital-one.md",
+      "evals/curation/expansion/corpus.draft.json",
+      "evals/curation/expansion/product-notes.json",
+      "evals/curation/expansion/cards.json",
+      "evals/curation/expansion/verification/chase.json",
+      "scripts/lib/expansion-verification.mjs",
+      "scripts/lib/expansion-quotes.mjs",
+      "scripts/apply-expansion-verification.mjs",
+      "apps/api/src/curation/v2/corpus.ts",
+      "apps/api/src/curation/v2/schema.ts",
+      "evals/curation/expansion/captures/capital-one-venture-x-product.txt",
+      "evals/curation/expansion/captures/capital-one-venture-x-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-venture-product.txt",
+      "evals/curation/expansion/captures/capital-one-venture-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-ventureone-product.txt",
+      "evals/curation/expansion/captures/capital-one-ventureone-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-quicksilverone-product.txt",
+      "evals/curation/expansion/captures/capital-one-quicksilverone-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-quicksilver-student-product.txt",
+      "evals/curation/expansion/captures/capital-one-quicksilver-student-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-quicksilver-secured-product.txt",
+      "evals/curation/expansion/captures/capital-one-quicksilver-secured-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-savorone-product.txt",
+      "evals/curation/expansion/captures/capital-one-savorone-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-savor-student-product.txt",
+      "evals/curation/expansion/captures/capital-one-savor-student-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-t-mobile-visa-product.txt",
+      "evals/curation/expansion/captures/capital-one-t-mobile-visa-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-kohls-rewards-visa-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-rei-co-op-mastercard-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-williams-sonoma-key-rewards-visa-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-pottery-barn-key-rewards-visa-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-west-elm-key-rewards-visa-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-key-rewards-visa-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-bjs-one-mastercard-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-bjs-one-plus-mastercard-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-bass-pro-shops-club-card-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-cabelas-club-card-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-union-plus-cash-rewards-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-teamster-privilege-cash-rewards-pricing.txt"
+    ]
+  },
+  "adjudicator": {
+    "agent": "claude-code-subagent",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-02",
+    "filesRead": [
+      "AGENTS.md",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/capital-one.md",
+      "evals/curation/expansion/verification/capital-one.json",
+      "evals/curation/expansion/verification/citi.json",
+      "evals/curation/expansion/verify/capital-one.md",
+      "evals/curation/expansion/corpus.draft.json",
+      "evals/curation/expansion/product-notes.json",
+      "evals/curation/expansion/cards.json",
+      "evals/curation/real/corpus.v2.json",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/schema.ts",
+      "apps/api/src/curation/v2/corpus.ts",
+      "evals/curation/expansion/captures/capital-one-bass-pro-shops-club-card-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-bjs-one-mastercard-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-bjs-one-plus-mastercard-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-cabelas-club-card-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-key-rewards-visa-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-kohls-rewards-visa-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-pottery-barn-key-rewards-visa-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-quicksilver-secured-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-quicksilver-secured-product.txt",
+      "evals/curation/expansion/captures/capital-one-quicksilver-student-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-quicksilver-student-product.txt",
+      "evals/curation/expansion/captures/capital-one-quicksilverone-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-quicksilverone-product.txt",
+      "evals/curation/expansion/captures/capital-one-rei-co-op-mastercard-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-savor-student-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-savor-student-product.txt",
+      "evals/curation/expansion/captures/capital-one-savorone-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-savorone-product.txt",
+      "evals/curation/expansion/captures/capital-one-t-mobile-visa-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-t-mobile-visa-product.txt",
+      "evals/curation/expansion/captures/capital-one-teamster-privilege-cash-rewards-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-union-plus-cash-rewards-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-venture-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-venture-product.txt",
+      "evals/curation/expansion/captures/capital-one-venture-x-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-venture-x-product.txt",
+      "evals/curation/expansion/captures/capital-one-ventureone-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-ventureone-product.txt",
+      "evals/curation/expansion/captures/capital-one-west-elm-key-rewards-visa-pricing.txt",
+      "evals/curation/expansion/captures/capital-one-williams-sonoma-key-rewards-visa-pricing.txt"
+    ]
+  },
+  "cards": [
+    {
+      "cardId": "capital-one-venture-x",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "capital-one-venture-x-pricing",
+            "quote": "Rates for these other redemption options vary and can change in the sole discretion of Capital One."
+          },
+          "note": "No cash redemption value is stated: cash, check and gift-card redemption rates vary at Capital One’s discretion. The 1-cent value came from the travel-redemption formula (cost × 100 miles), which is a travel value, not a cash value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capture checked: the only fixed figure is the travel-redemption formula (cost x 100 miles); cash, check and gift-card rates vary. General 3 and capital-one convention: null."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "Simply multiply the cost of your travel purchase by 100.",
+          "note": "This sentence gives the miles needed for a travel redemption, not a cash redemption value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capture checked: the sentence is the travel-redemption formula, not a cash value (general 3)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.1",
+          "current": "For example, if your travel purchase costs $200, you would multiply that by 100 to determine you need 20,000 miles to redeem.",
+          "note": "This sentence gives the miles needed for a travel redemption, not a cash redemption value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capture checked: the sentence is the travel-redemption formula, not a cash value (general 3)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "hotels and rental cars booked through Capital One Travel",
+          "corrected": "hotels & rental cars booked through Capital One Travel",
+          "anchor": {
+            "sourceId": "capital-one-venture-x-product",
+            "quote": "Miles on hotels & rental cars booked through Capital One Travel"
+          },
+          "note": "The draft wording is not verbatim (the terms run hotels and rental cars into the flights clause); the product page names the 10X category this way.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms run hotels and rental cars into the flights clause; the product page heading \"hotels & rental cars booked through Capital One Travel\" is verbatim and names the 10X category."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.0",
+          "current": "and rental cars and 5 miles per dollar on flights and vacation rentals booked through Capital One Travel using this Rewards card account, and 2",
+          "corrected": "and 2 miles per dollar on all other purchases",
+          "anchor": {
+            "sourceId": "capital-one-venture-x-pricing",
+            "quote": "and 2 miles per dollar on all other purchases"
+          },
+          "note": "The first anchor was cut before the base rate; this span states 2 miles per dollar on all other purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The old first anchor stops at \"and 2\"; the new span states the 2X base rate verbatim."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.exclusions.1",
+          "current": {
+            "text": "Tickets purchased through the Capital One cardholder exclusive pre-sales and tickets purchased directly through the Capital One Hall or Capital One Arena ticketing services are…",
+            "anchors": [
+              "purchased through the Capital One cardholder exclusive pre-sales and tickets purchased directly through the Capital One Hall or Capital One Arena ticketing services are excluded."
+            ]
+          },
+          "note": "Added at adjudication. Pre-sale and Capital One Hall/Arena tickets are only excluded from the 5X Capital One Entertainment rate; they are still purchases and earn the 2X base, so they are not a never-earn exclusion.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. The terms exclude these tickets from Entertainment qualifying purchases, not from rewards."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-venture",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "capital-one-venture-pricing",
+            "quote": "Rates for these other redemption options vary and can change in the sole discretion of Capital One."
+          },
+          "note": "No cash redemption value is stated: cash, check and gift-card redemption rates vary at Capital One’s discretion. The 1-cent value came from the travel-redemption formula (cost × 100 miles), which is a travel value, not a cash value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capture checked: the only fixed figure is the travel-redemption formula (cost x 100 miles); cash, check and gift-card rates vary. General 3 and capital-one convention: null."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "For example, if your travel purchase costs $200, you would multiply that by 100 to determine you need 20,000 miles to redeem.",
+          "note": "This sentence gives the miles needed for a travel redemption, not a cash redemption value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capture checked: the sentence is the travel-redemption formula, not a cash value (general 3)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-ventureone",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "capital-one-ventureone-pricing",
+            "quote": "Rates for these other redemption options vary and can change in the sole discretion of Capital One."
+          },
+          "note": "No cash redemption value is stated: cash, check and gift-card redemption rates vary at Capital One’s discretion. The 1-cent value came from the travel-redemption formula (cost × 100 miles), which is a travel value, not a cash value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capture checked: the only fixed figure is the travel-redemption formula (cost x 100 miles); cash, check and gift-card rates vary. General 3 and capital-one convention: null."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "Simply multiply the cost of your travel purchase by 100.",
+          "note": "This sentence gives the miles needed for a travel redemption, not a cash redemption value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capture checked: the sentence is the travel-redemption formula, not a cash value (general 3)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "Capital One Travel",
+          "corrected": "hotels, vacation rentals and rental cars booked through Capital One Travel",
+          "anchor": {
+            "sourceId": "capital-one-ventureone-product",
+            "quote": "Earn unlimited 5 miles per dollar on hotels, vacation rentals and rental cars booked through Capital One Travel"
+          },
+          "note": "The 5X rule covers only hotels, vacation rentals and rental cars booked through Capital One Travel, not all Capital One Travel purchases (flights earn the base rate).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product page and terms limit the 5X to hotels, vacation rentals and rental cars booked through Capital One Travel; the corrected wording is verbatim from the product page."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-quicksilverone",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.rateBps",
+          "current": null,
+          "corrected": 500,
+          "anchor": {
+            "sourceId": "capital-one-quicksilverone-pricing",
+            "quote": "You will earn 5% cash back on hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel"
+          },
+          "note": "The rewards terms state 5% on these Capital One Travel bookings; the draft dropped the rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state 5% on hotels, rental cars and vacation rentals booked through Capital One Travel."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.rateBps",
+          "current": null,
+          "corrected": 500,
+          "anchor": {
+            "sourceId": "capital-one-quicksilverone-pricing",
+            "quote": "You will earn 5% cash back on Capital One Entertainment purchases."
+          },
+          "note": "The rewards terms state 5% on Capital One Entertainment purchases; the draft dropped the rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state 5% on Capital One Entertainment purchases."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.0",
+          "current": "back on hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel using this Rewards card account, and 1.5%",
+          "corrected": "1.5% cash back on all other purchases",
+          "anchor": {
+            "sourceId": "capital-one-quicksilverone-pricing",
+            "quote": "1.5% cash back on all other purchases"
+          },
+          "note": "The first anchor was cut before it said what the 1.5% applies to.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The new span states the 1.5% base rate verbatim; the old one was cut mid-sentence."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "Earn unlimited 1.5% cash back on every purchase.",
+              "You will earn 5% cash back on hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel using this"
+            ]
+          },
+          "note": "Not a conflict: the product page headline (1.5% on every purchase) does not say portal bookings earn only 1.5%; the terms add a higher portal rate. The rate is now set from the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Not a conflict: the headline 1.5% is the base rate and the terms add the portal rate; moot once the 5% is labelled (general 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "Earn unlimited 1.5% cash back on every purchase.",
+              "You will earn 5% cash back on Capital One Entertainment purchases."
+            ]
+          },
+          "note": "Not a conflict: the headline base rate is compatible with a higher Capital One Entertainment rate stated in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Not a conflict: the headline base rate and the 5% Entertainment rate coexist (general 11)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-quicksilver-secured",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.rateBps",
+          "current": null,
+          "corrected": 500,
+          "anchor": {
+            "sourceId": "capital-one-quicksilver-secured-pricing",
+            "quote": "You will earn 5% cash back on hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel"
+          },
+          "note": "The rewards terms state 5% on these Capital One Travel bookings; the draft dropped the rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state 5% on hotels, rental cars and vacation rentals booked through Capital One Travel."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.rateBps",
+          "current": null,
+          "corrected": 500,
+          "anchor": {
+            "sourceId": "capital-one-quicksilver-secured-pricing",
+            "quote": "You will earn 5% cash back on Capital One Entertainment purchases."
+          },
+          "note": "The rewards terms state 5% on Capital One Entertainment purchases; the draft dropped the rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state 5% on Capital One Entertainment purchases."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.0",
+          "current": "back on hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel using this Rewards card account, and 1.5%",
+          "corrected": "1.5% cash back on all other purchases",
+          "anchor": {
+            "sourceId": "capital-one-quicksilver-secured-pricing",
+            "quote": "1.5% cash back on all other purchases"
+          },
+          "note": "The first anchor was cut before it said what the 1.5% applies to.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The new span states the 1.5% base rate verbatim; the old one was cut mid-sentence."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "Earn unlimited 1.5% cash back on every purchase, every day",
+              "You will earn 5% cash back on hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel using this"
+            ]
+          },
+          "note": "Not a conflict: the product page headline (1.5% on every purchase) does not say portal bookings earn only 1.5%; the terms add a higher portal rate. The rate is now set from the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Not a conflict: the headline 1.5% is the base rate and the terms add the portal rate; moot once the 5% is labelled (general 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "Earn unlimited 1.5% cash back on every purchase, every day",
+              "You will earn 5% cash back on Capital One Entertainment purchases."
+            ]
+          },
+          "note": "Not a conflict: the headline base rate is compatible with a higher Capital One Entertainment rate stated in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Not a conflict: the headline base rate and the 5% Entertainment rate coexist (general 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-quicksilver-student",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.0",
+          "current": "You will earn 5% cash back on hotels, vacation rentals and rental cars booked through Capital One Travel using this Rewards card account, and 1.5%",
+          "corrected": "1.5% cash back on all other purchases",
+          "anchor": {
+            "sourceId": "capital-one-quicksilver-student-pricing",
+            "quote": "1.5% cash back on all other purchases"
+          },
+          "note": "All values are right; only the base-rate anchor was cut before it said what the 1.5% applies to.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capture checked: the new span states the 1.5% base rate; the old anchor stopped at \"and 1.5%\"."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-savorone",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.0",
+          "current": "You will earn 8% cash back on purchases made through the Capital One Entertainment ticketing platform using this Rewards card account, 5% cash back on",
+          "corrected": "and 1% cash back on all other purchases",
+          "anchor": {
+            "sourceId": "capital-one-savorone-pricing",
+            "quote": "and 1% cash back on all other purchases"
+          },
+          "note": "All values are right; the base-rate anchor quoted the 8% and 5% clauses and never stated the 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capture checked: the old anchor quoted the 8% and 5% clauses; the new span states the 1% base rate."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-savor-student",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.5.rateBps",
+          "current": null,
+          "corrected": 500,
+          "anchor": {
+            "sourceId": "capital-one-savor-student-pricing",
+            "quote": "5% cash back on hotels, vacation rentals and rental cars booked through Capital One Travel using this Rewards card account"
+          },
+          "note": "The terms (and the product page) state 5% on these Capital One Travel bookings; the draft dropped the rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state 5% on hotels, vacation rentals and rental cars booked through Capital One Travel."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-t-mobile-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-t-mobile-visa-pricing",
+              "quote": "Accumulated T-Mobile Rewards may only be redeemed to pay your T-Mobile wireless bill or for purchases of phones, devices, or accessories"
+            }
+          ],
+          "note": "Added at adjudication. T-Mobile Rewards are a percentage back usable only with T-Mobile (wireless bill or devices), not cash.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 8 and capital-one convention: store-only rewards get an ambiguous issue."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "capital-one-t-mobile-visa-pricing",
+            "quote": "earn 5% back in T-Mobile Rewards on net Qualifying Purchases (purchases minus any credits or returns) made online at T-Mobile.com and in the T-Life app"
+          },
+          "note": "True per the terms: phones, devices and accessories; EIP, wireless service and fees excluded; no enhanced earn via third-party wallets.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms confirm 5% at T-Mobile.com, T-Life, stores and Authorized Retailers on phones, devices and accessories, with the stated exclusions."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "capital-one-kohls-rewards-visa",
+      "verdict": "drop-card",
+      "reason": "The only capture (the Kohl’s Rewards Visa / Kohl’s Credit Card application terms) has no rewards program section and states no earning rate, so no rule or currency can be verified.",
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [],
+      "verdictAdjudication": {
+        "decision": "accepted",
+        "reason": "Capture checked: the only capture is the Kohl’s Rewards Visa / Kohl’s Credit Card application terms, with APRs and fees but no rewards section or earn rate. General 9: drop; there is no draft to fix."
+      }
+    },
+    {
+      "cardId": "capital-one-rei-co-op-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.issuerWording",
+          "current": "You will earn 5% in REI Co-op Mastercard Rewards on net purchases (purchases minus any credits or returns) made at REI retail locations and REI.com.…",
+          "corrected": "REI retail locations and REI.com",
+          "anchor": {
+            "sourceId": "capital-one-rei-co-op-mastercard-pricing",
+            "quote": "made at REI retail locations and REI.com"
+          },
+          "note": "The draft wording ends in an ellipsis and is not verbatim; replaced with the capture’s name for the 5% merchants.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft wording ends in an ellipsis; \"REI retail locations and REI.com\" is verbatim."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.cap",
+          "current": null,
+          "corrected": {
+            "kind": "none",
+            "amountCents": null,
+            "period": null,
+            "rateAfterCapBps": null
+          },
+          "anchor": {
+            "sourceId": "capital-one-rei-co-op-mastercard-pricing",
+            "quote": "There is no cap to the amount of rewards you can earn on purchases"
+          },
+          "note": "The terms state no cap on rewards; the donation rule was left with a null cap while the other rules have none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state no cap on rewards earned on purchases; aligns the donation rule with the others."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.issuerWording",
+          "current": "1.5% back in REI Co-op Mastercard Rewards on all other purchases made outside of REI. Earnings will apply to net purchases (purchases minus any credits",
+          "corrected": "all other purchases made outside of REI",
+          "anchor": {
+            "sourceId": "capital-one-rei-co-op-mastercard-pricing",
+            "quote": "all other purchases made outside of REI"
+          },
+          "note": "The draft wording ran into the next sentence; the capture’s category name is shorter.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft wording ran into the next sentence; the shorter span is verbatim."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "You will also earn 5% in REI Co-op Mastercard Rewards for donations made to the 501(c)(3) REI Cooperative Action Fund at REIfund.org or in-store at",
+              "There is no cap to the amount of rewards you can earn on purchases and your REI Co-op Mastercard Rewards are yours for the life"
+            ]
+          },
+          "note": "Added at adjudication. The anchors state the 5% donation rule and the no-cap sentence; neither states a problem, and both are labelled as rules (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. Its anchors state no ambiguity."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-rei-co-op-mastercard-pricing",
+              "quote": "Accumulated rewards may only be used to pay for purchases made at REI retail locations or REI.com."
+            }
+          ],
+          "note": "Added at adjudication. REI Co-op Mastercard Rewards are a percentage back usable only at REI.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 8 and capital-one convention: store-only rewards get an ambiguous issue."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "capital-one-rei-co-op-mastercard-pricing",
+            "quote": "Purchases include full-price and discount-price items, REI gift cards, paid REI classes and events, services and fees."
+          },
+          "note": "True per the terms: 5% at REI stores and REI.com including gift cards and classes, and on REI Cooperative Action Fund donations; REI Co-op membership needed to hold the card and redeem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms list REI gift cards, classes and events at 5%, donations to the REI Cooperative Action Fund at 5%, and require REI Co-op membership."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "capital-one-williams-sonoma-key-rewards-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "For new cardholders only, additional 5% bonus in Rewards for Net Eligible Purchases made at Williams-Sonoma, Inc. Brands",
+            "rateBps": 1000,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": null
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-williams-sonoma-key-rewards-visa-pricing",
+              "quote": "are not otherwise eligible to earn Rewards at Williams Sonoma Stores (at 10% within first 30 days or 5% thereafter)"
+            },
+            {
+              "sourceId": "capital-one-williams-sonoma-key-rewards-visa-pricing",
+              "quote": "additional 5% bonus in Rewards for Net Eligible Purchases made at Williams-Sonoma, Inc. Brands during the first 30 days from credit card account opening."
+            }
+          ],
+          "note": "Missing first-30-days rule: new cardholders earn an additional 5% (10% total, as the terms state) at Williams-Sonoma, Inc. Brands for 30 days after account opening. Limited time with no fixed end date.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: new cardholders get an additional 5% at Williams-Sonoma, Inc. Brands for 30 days after opening (10% total, stated as such); limited time with no fixed date (general 10)."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-williams-sonoma-key-rewards-visa-pricing",
+              "quote": "Purchases made with third-party payment accounts, including but not limited to Apple Pay, PayPal and Venmo, may earn 1% back in Rewards."
+            }
+          ],
+          "note": "Added at adjudication. Wallet and third-party payment purchases \"may\" earn only 1%, so the 5% and 4% rates are uncertain at those checkouts; same issue as the West Elm card on this shared disclosure.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. Capital-one convention: the Key Rewards cards share one disclosure and carry the same labels."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-williams-sonoma-key-rewards-visa-pricing",
+              "quote": "International purchases (outside of United States and Puerto Rico), including at Williams Sonoma Stores, are eligible to earn Rewards everywhere Visa is accepted (at 4%"
+            },
+            {
+              "sourceId": "capital-one-williams-sonoma-key-rewards-visa-pricing",
+              "quote": "are not otherwise eligible to earn Rewards at Williams Sonoma Stores (at 10% within first 30 days or 5% thereafter)"
+            }
+          ],
+          "note": "Added at adjudication. The international carve-out names Williams Sonoma Stores while the 5% covers all Williams-Sonoma, Inc. Brands; unclear whether it applies to every brand. Same issue as the sibling cards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. Capital-one convention: the Key Rewards cards share one disclosure and carry the same labels."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-williams-sonoma-key-rewards-visa-pricing",
+              "quote": "Reward Certificates may only be redeemed on qualifying purchases using your Account in all Williams-Sonoma, Inc. Brands."
+            }
+          ],
+          "note": "Added at adjudication. Key Rewards are a percentage back paid as Reward Certificates usable only at Williams-Sonoma, Inc. Brands, not cash.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 8 and capital-one convention: store-only rewards get an ambiguous issue."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "capital-one-williams-sonoma-key-rewards-visa-pricing",
+            "quote": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, west elm,"
+          },
+          "note": "The terms list these brands (plus Rejuvenation and Mark & Graham) at 5%, 10% in the first 30 days, GreenRow and Dormify excluded, international purchases at the stores not eligible.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms list these brands plus Rejuvenation and Mark & Graham at 5%, GreenRow and Dormify excluded, and international purchases at the stores not eligible."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Purchases paid through third-party payment accounts such as Apple Pay, PayPal and Venmo may earn only 1% back",
+            "rate": "1%",
+            "conditions": "Applies to otherwise bonus-eligible purchases"
+          },
+          "anchor": {
+            "sourceId": "capital-one-williams-sonoma-key-rewards-visa-pricing",
+            "quote": "Purchases made with third-party payment accounts, including but not limited to Apple Pay, PayPal and Venmo, may earn 1% back in Rewards."
+          },
+          "note": "Checkout-method rule stated in the terms; the hints did not have it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms say third-party payment accounts (Apple Pay, PayPal, Venmo) may earn 1%; quote verified."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "capital-one-west-elm-key-rewards-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.4",
+          "current": {
+            "code": "out-of-scope",
+            "anchors": [
+              "Purchases will only qualify towards earning Rewards once they have shipped."
+            ]
+          },
+          "note": "Added at adjudication. Rewards counting once items ship is posting timing, not an earning rule the schema cannot express.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. Its anchor states no out-of-scope rate or condition."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "For new cardholders only, additional 5% bonus in Rewards for Net Eligible Purchases made at Williams-Sonoma, Inc. Brands",
+            "rateBps": 1000,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": null
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-west-elm-key-rewards-visa-pricing",
+              "quote": "are not otherwise eligible to earn Rewards at Williams Sonoma Stores (at 10% within first 30 days or 5% thereafter)"
+            },
+            {
+              "sourceId": "capital-one-west-elm-key-rewards-visa-pricing",
+              "quote": "additional 5% bonus in Rewards for Net Eligible Purchases made at Williams-Sonoma, Inc. Brands during the first 30 days from credit card account opening."
+            }
+          ],
+          "note": "Missing first-30-days rule: new cardholders earn an additional 5% (10% total, as the terms state) at Williams-Sonoma, Inc. Brands for 30 days after account opening. Limited time with no fixed end date.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: new cardholders get an additional 5% at Williams-Sonoma, Inc. Brands for 30 days after opening (10% total, stated as such); limited time with no fixed date (general 10)."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-west-elm-key-rewards-visa-pricing",
+              "quote": "Reward Certificates may only be redeemed on qualifying purchases using your Account in all Williams-Sonoma, Inc. Brands."
+            }
+          ],
+          "note": "Added at adjudication. Key Rewards are a percentage back paid as Reward Certificates usable only at Williams-Sonoma, Inc. Brands, not cash.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 8 and capital-one convention: store-only rewards get an ambiguous issue."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "capital-one-west-elm-key-rewards-visa-pricing",
+            "quote": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, west elm,"
+          },
+          "note": "The terms list these brands (plus Rejuvenation and Mark & Graham) at 5%, 10% in the first 30 days, GreenRow and Dormify excluded, international purchases at the stores not eligible.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms list these brands plus Rejuvenation and Mark & Graham at 5%, GreenRow and Dormify excluded, and international purchases at the stores not eligible."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Purchases paid through third-party payment accounts such as Apple Pay, PayPal and Venmo may earn only 1% back",
+            "rate": "1%",
+            "conditions": "Applies to otherwise bonus-eligible purchases"
+          },
+          "anchor": {
+            "sourceId": "capital-one-west-elm-key-rewards-visa-pricing",
+            "quote": "Purchases made with third-party payment accounts, including but not limited to Apple Pay, PayPal and Venmo, may earn 1% back in Rewards."
+          },
+          "note": "Checkout-method rule stated in the terms; the hints did not have it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms say third-party payment accounts (Apple Pay, PayPal, Venmo) may earn 1%; quote verified."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "capital-one-key-rewards-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.category",
+          "current": "other",
+          "corrected": "all-purchases",
+          "anchor": {
+            "sourceId": "capital-one-key-rewards-visa-pricing",
+            "quote": "1% back in Rewards for Net Eligible Purchases made everywhere else Visa is accepted."
+          },
+          "note": "The 1% rule is the base rate on all other purchases, not a merchant rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "\"Everywhere else Visa is accepted\" is the 1% base on all other purchases (all-purchases), as on the three sibling drafts."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.usMerchantsOnly",
+          "current": null,
+          "corrected": true,
+          "anchor": {
+            "sourceId": "capital-one-key-rewards-visa-pricing",
+            "quote": "are not otherwise eligible to earn Rewards at Williams Sonoma Stores (at 10% within first 30 days or 5% thereafter)"
+          },
+          "note": "International purchases (outside the U.S. and Puerto Rico) at the brands do not earn the 5%; the sibling drafts of this shared disclosure already mark it true.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "International purchases at the stores do not earn the 5%; matches the sibling drafts (see the international ambiguity issue)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "For new cardholders only, additional 5% bonus in Rewards for Net Eligible Purchases made at Williams-Sonoma, Inc. Brands",
+            "rateBps": 1000,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": null
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-key-rewards-visa-pricing",
+              "quote": "are not otherwise eligible to earn Rewards at Williams Sonoma Stores (at 10% within first 30 days or 5% thereafter)"
+            },
+            {
+              "sourceId": "capital-one-key-rewards-visa-pricing",
+              "quote": "additional 5% bonus in Rewards for Net Eligible Purchases made at Williams-Sonoma, Inc. Brands during the first 30 days from credit card account opening."
+            }
+          ],
+          "note": "Missing first-30-days rule: new cardholders earn an additional 5% (10% total, as the terms state) at Williams-Sonoma, Inc. Brands for 30 days after account opening. Limited time with no fixed end date.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: new cardholders get an additional 5% at Williams-Sonoma, Inc. Brands for 30 days after opening (10% total, stated as such); limited time with no fixed date (general 10)."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-key-rewards-visa-pricing",
+              "quote": "Purchases made with third-party payment accounts, including but not limited to Apple Pay, PayPal and Venmo, may earn 1% back in Rewards."
+            }
+          ],
+          "note": "Added at adjudication. Wallet and third-party payment purchases \"may\" earn only 1%, so the 5% and 4% rates are uncertain at those checkouts; same issue as the West Elm card on this shared disclosure.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. Capital-one convention: the Key Rewards cards share one disclosure and carry the same labels."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-key-rewards-visa-pricing",
+              "quote": "Reward Certificates may only be redeemed on qualifying purchases using your Account in all Williams-Sonoma, Inc. Brands."
+            }
+          ],
+          "note": "Added at adjudication. Key Rewards are a percentage back paid as Reward Certificates usable only at Williams-Sonoma, Inc. Brands, not cash.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 8 and capital-one convention: store-only rewards get an ambiguous issue."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "capital-one-key-rewards-visa-pricing",
+            "quote": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, west elm,"
+          },
+          "note": "The terms list these brands (plus Rejuvenation and Mark & Graham) at 5%, 10% in the first 30 days, GreenRow and Dormify excluded, international purchases at the stores not eligible.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms list these brands plus Rejuvenation and Mark & Graham at 5%, GreenRow and Dormify excluded, and international purchases at the stores not eligible."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Purchases paid through third-party payment accounts such as Apple Pay, PayPal and Venmo may earn only 1% back",
+            "rate": "1%",
+            "conditions": "Applies to otherwise bonus-eligible purchases"
+          },
+          "anchor": {
+            "sourceId": "capital-one-key-rewards-visa-pricing",
+            "quote": "Purchases made with third-party payment accounts, including but not limited to Apple Pay, PayPal and Venmo, may earn 1% back in Rewards."
+          },
+          "note": "Checkout-method rule stated in the terms; the hints did not have it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms say third-party payment accounts (Apple Pay, PayPal, Venmo) may earn 1%; quote verified."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "capital-one-pottery-barn-key-rewards-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+            "quote": "For every $10 of Rewards you earn, you will receive a $10 Rewards Certificate following a 30-day vesting period."
+          },
+          "note": "Undrafted card. Rewards are a percentage back paid as dollar Reward Certificates (usable only at Williams-Sonoma, Inc. Brands), as for the three sibling Key Rewards cards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Undrafted card: the terms pay a percentage back as dollar Reward Certificates, as on the siblings; cash-back per general 8."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Williams-Sonoma, Inc. Brands",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": true,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, west elm,"
+            },
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "are not otherwise eligible to earn Rewards at Williams Sonoma Stores (at 10% within first 30 days or 5% thereafter)"
+            }
+          ],
+          "note": "Built from the capture (no draft): 5% at Williams-Sonoma, Inc. Brands; international purchases at the stores do not earn it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Built from the shared Key Rewards terms; rate, category and international scope match the capture and the three sibling drafts."
+          }
+        },
+        {
+          "rule": {
+            "category": "supermarkets",
+            "issuerWording": "grocery stores",
+            "rateBps": 400,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": false,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "4% back in Rewards for Net Eligible Purchases made at grocery stores."
+            },
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "International purchases (outside of United States and Puerto Rico), including at Williams Sonoma Stores, are eligible to earn Rewards everywhere Visa is accepted (at 4%"
+            }
+          ],
+          "note": "Built from the capture: 4% at grocery stores; international purchases earn by MCC.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Built from the shared Key Rewards terms; rate, category and international scope match the capture and the three sibling drafts."
+          }
+        },
+        {
+          "rule": {
+            "category": "dining",
+            "issuerWording": "restaurants, including food delivery services",
+            "rateBps": 400,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": false,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "You will also earn 4% back on purchases made at restaurants, including food delivery services."
+            },
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "International purchases (outside of United States and Puerto Rico), including at Williams Sonoma Stores, are eligible to earn Rewards everywhere Visa is accepted (at 4%"
+            }
+          ],
+          "note": "Built from the capture: 4% at restaurants including food delivery.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Built from the shared Key Rewards terms; rate, category and international scope match the capture and the three sibling drafts."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "everywhere else Visa is accepted",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": false,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "1% back in Rewards for Net Eligible Purchases made everywhere else Visa is accepted."
+            },
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "International purchases (outside of United States and Puerto Rico), including at Williams Sonoma Stores, are eligible to earn Rewards everywhere Visa is accepted (at 4%"
+            }
+          ],
+          "note": "Built from the capture: 1% base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Built from the shared Key Rewards terms; rate, category and international scope match the capture and the three sibling drafts."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "For new cardholders only, additional 5% bonus in Rewards for Net Eligible Purchases made at Williams-Sonoma, Inc. Brands",
+            "rateBps": 1000,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": null
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "are not otherwise eligible to earn Rewards at Williams Sonoma Stores (at 10% within first 30 days or 5% thereafter)"
+            },
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "additional 5% bonus in Rewards for Net Eligible Purchases made at Williams-Sonoma, Inc. Brands during the first 30 days from credit card account opening."
+            }
+          ],
+          "note": "Missing first-30-days rule: new cardholders earn an additional 5% (10% total, as the terms state) at Williams-Sonoma, Inc. Brands for 30 days after account opening. Limited time with no fixed end date.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: new cardholders get an additional 5% at Williams-Sonoma, Inc. Brands for 30 days after opening (10% total, stated as such); limited time with no fixed date (general 10)."
+          }
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "Cash advances and balance transfers",
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "Cash advances and balance transfers are not considered purchases and will not earn Rewards."
+            }
+          ],
+          "note": "Stated exclusion in the shared Key Rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Stated never-earn item in the shared Key Rewards terms; quote verified."
+          }
+        },
+        {
+          "text": "Purchases made using promotional financing plans",
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "Purchases made using promotional financing plans are not eligible to earn Rewards."
+            }
+          ],
+          "note": "Stated exclusion in the shared Key Rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Stated never-earn item in the shared Key Rewards terms; quote verified."
+          }
+        },
+        {
+          "text": "Items or portions of items purchased with Rewards, gift cards or merchandise cards",
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "Rewards cannot be earned on items or portions of items purchased with any Rewards, gift cards or merchandise cards."
+            }
+          ],
+          "note": "Stated exclusion in the shared Key Rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Stated never-earn item in the shared Key Rewards terms; quote verified."
+          }
+        },
+        {
+          "text": "Taxes, shipping, gift wrap, monogramming, and items or services fulfilled by third parties",
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "Taxes, shipping, gift wrap, monogramming, and items/services fulfilled by third parties (including warranties, eGiftcards, mobile Point of Sale and Square purchases) are not eligible to"
+            }
+          ],
+          "note": "Stated exclusion in the shared Key Rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Stated never-earn item in the shared Key Rewards terms; quote verified."
+          }
+        },
+        {
+          "text": "Installation Services, volume gift card purchases, bulk orders, donations and bag fees",
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "Installation Services, volume gift card purchases, bulk orders, donations and bag fees are also not eligible to earn rewards."
+            }
+          ],
+          "note": "Stated exclusion in the shared Key Rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Stated never-earn item in the shared Key Rewards terms; quote verified."
+          }
+        },
+        {
+          "text": "Purchases and redemptions at GreenRow and Dormify",
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "The Program excludes purchases and redemptions at GreenRow and Dormify."
+            }
+          ],
+          "note": "Stated exclusion in the shared Key Rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Stated never-earn item in the shared Key Rewards terms; quote verified."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "Purchases made with third-party payment accounts, including but not limited to Apple Pay, PayPal and Venmo, may earn 1% back in Rewards."
+            }
+          ],
+          "note": "Added at adjudication. Wallet and third-party payment purchases \"may\" earn only 1%, so the 5% and 4% rates are uncertain at those checkouts; same issue as the West Elm card on this shared disclosure.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. Capital-one convention: the Key Rewards cards share one disclosure and carry the same labels."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "International purchases (outside of United States and Puerto Rico), including at Williams Sonoma Stores, are eligible to earn Rewards everywhere Visa is accepted (at 4%"
+            },
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "are not otherwise eligible to earn Rewards at Williams Sonoma Stores (at 10% within first 30 days or 5% thereafter)"
+            }
+          ],
+          "note": "Added at adjudication. The international carve-out names Williams Sonoma Stores while the 5% covers all Williams-Sonoma, Inc. Brands; unclear whether it applies to every brand. Same issue as the sibling cards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. Capital-one convention: the Key Rewards cards share one disclosure and carry the same labels."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+              "quote": "Reward Certificates may only be redeemed on qualifying purchases using your Account in all Williams-Sonoma, Inc. Brands."
+            }
+          ],
+          "note": "Added at adjudication. Key Rewards are a percentage back paid as Reward Certificates usable only at Williams-Sonoma, Inc. Brands, not cash.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 8 and capital-one convention: store-only rewards get an ambiguous issue."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+            "quote": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, west elm,"
+          },
+          "note": "The terms list these brands (plus Rejuvenation and Mark & Graham) at 5%, 10% in the first 30 days, GreenRow and Dormify excluded, international purchases at the stores not eligible.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms list these brands plus Rejuvenation and Mark & Graham at 5%, GreenRow and Dormify excluded, and international purchases at the stores not eligible."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Purchases paid through third-party payment accounts such as Apple Pay, PayPal and Venmo may earn only 1% back",
+            "rate": "1%",
+            "conditions": "Applies to otherwise bonus-eligible purchases"
+          },
+          "anchor": {
+            "sourceId": "capital-one-pottery-barn-key-rewards-visa-pricing",
+            "quote": "Purchases made with third-party payment accounts, including but not limited to Apple Pay, PayPal and Venmo, may earn 1% back in Rewards."
+          },
+          "note": "Checkout-method rule stated in the terms; the hints did not have it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms say third-party payment accounts (Apple Pay, PayPal, Venmo) may earn 1%; quote verified."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "capital-one-bjs-one-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.issuerWording",
+          "current": "BJ's One Credit Card Rewards on Eligible Purchases",
+          "corrected": "Eligible Purchases",
+          "anchor": {
+            "sourceId": "capital-one-bjs-one-mastercard-pricing",
+            "quote": "You will earn 3% back in BJ's One Credit Card Rewards on Eligible Purchases."
+          },
+          "note": "The category the issuer names is \"Eligible Purchases\" (BJ’s in-club registers, BJs.com, BJ’s app); the draft included the currency name.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "General 4: a single-merchant rule names the merchant in issuerWording; \"Eligible Purchases\" alone does not. The terms' definition of Eligible Purchases names BJ’s and is verbatim.",
+            "corrected": "in-club at BJ's front-end registers, on BJs.com or via the BJ's app",
+            "anchor": {
+              "sourceId": "capital-one-bjs-one-mastercard-pricing",
+              "quote": "in-club at BJ's front-end registers, on BJs.com or via the BJ's app"
+            }
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "BJ's One Credit Card Rewards on all other purchases made outside of BJ’s",
+          "corrected": "all other purchases made outside of BJ’s",
+          "anchor": {
+            "sourceId": "capital-one-bjs-one-mastercard-pricing",
+            "quote": "all other purchases made outside of BJ’s"
+          },
+          "note": "Shorter category name, matching the BJ’s One+ draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Shorter verbatim span naming the category, matching the One+ draft."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-bjs-one-mastercard-pricing",
+              "quote": "propane, BJ’s Gas®, online optical purchases, BJ's membership fees and add-ons,"
+            },
+            {
+              "sourceId": "capital-one-bjs-one-mastercard-pricing",
+              "quote": "Purchases at BJ’s Clubs, BJ’s Gas®, BJs.com, BJ’s app, and B2B and Global Sales Transactions are not considered transactions made “outside of BJ’s.”"
+            }
+          ],
+          "note": "BJ’s Gas is excluded from Eligible Purchases and also not \"outside of BJ’s\", so the terms give it no earn rate at all; unclear whether it earns anything.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capture checked: BJ’s Gas is excluded from Eligible Purchases and is not \"outside of BJ’s\", so no rate applies to it; a real gap."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-bjs-one-mastercard-pricing",
+              "quote": "Rewards may be used to pay for purchases and membership fees made in-club at BJ’s front-end registers, or on BJs.com or the BJ’s app."
+            }
+          ],
+          "note": "Added at adjudication. BJ’s One Credit Card Rewards are a percentage back usable only at BJ’s (purchases and membership fees).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 8 and capital-one convention: store-only rewards get an ambiguous issue."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Eligible purchases in-club at BJ's front-end registers, BJs.com, BJ's app",
+            "rate": "3%",
+            "cap": "none stated",
+            "conditions": "Excludes BJ's Gas, alcohol, tobacco, gift cards, membership fees, etc.",
+            "merchants": [
+              "BJ's Wholesale Club"
+            ],
+            "membership": "Active BJ's Membership in your name required to apply"
+          },
+          "anchor": {
+            "sourceId": "capital-one-bjs-one-mastercard-pricing",
+            "quote": "in-club at BJ's front-end registers, on BJs.com or via the BJ's app"
+          },
+          "note": "Hint is true and now anchored; the membership field held the exclusions list instead of the membership requirement (an active BJ’s Membership is required to apply).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: Eligible Purchases are at BJ’s front-end registers, BJs.com and the app; an active BJ’s Membership is needed to apply. The old membership field held the exclusions."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "capital-one-bjs-one-plus-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "You will earn 5% back in BJ's One+ Credit Card Rewards on Eligible Purchases.",
+              "You will earn 2% back in BJ's One+ Credit Card Rewards on all other purchases made outside of BJ’s with your BJ's One+ Credit Card."
+            ]
+          },
+          "note": "Spurious \"missing\" issue: its anchors state the earn rates, which are fully given; the BJ’s One terms (identical apart from rates) have no such issue.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Its anchors state earn rates that are labelled in full; nothing is missing (general 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "You will earn 2% back in BJ's One+ Credit Card Rewards on all other purchases made outside of BJ’s with your BJ's One+ Credit Card."
+            ]
+          },
+          "note": "Spurious \"missing\" issue: its anchors state the earn rates, which are fully given; the BJ’s One terms (identical apart from rates) have no such issue.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Its anchors state earn rates that are labelled in full; nothing is missing (general 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "You will earn 2% back in BJ's One+ Credit Card Rewards on all other purchases made outside of BJ’s with your BJ's One+ Credit Card."
+            ]
+          },
+          "note": "Spurious \"missing\" issue: its anchors state the earn rates, which are fully given; the BJ’s One terms (identical apart from rates) have no such issue.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Its anchors state earn rates that are labelled in full; nothing is missing (general 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "You will earn 5% back in BJ's One+ Credit Card Rewards on Eligible Purchases."
+            ]
+          },
+          "note": "Spurious \"missing\" issue: its anchors state the earn rates, which are fully given; the BJ’s One terms (identical apart from rates) have no such issue.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Its anchors state earn rates that are labelled in full; nothing is missing (general 11)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.issuerWording",
+          "current": "Eligible Purchases",
+          "corrected": "in-club at BJ's front-end registers, on BJs.com or via the BJ's app",
+          "anchor": {
+            "sourceId": "capital-one-bjs-one-plus-mastercard-pricing",
+            "quote": "in-club at BJ's front-end registers, on BJs.com or via the BJ's app"
+          },
+          "note": "Added at adjudication. General 4: name the merchant in the single-merchant rule's wording; same as the BJ’s One card.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 4."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-bjs-one-plus-mastercard-pricing",
+              "quote": "propane, BJ’s Gas®, online optical purchases, BJ's membership fees and add-ons,"
+            },
+            {
+              "sourceId": "capital-one-bjs-one-plus-mastercard-pricing",
+              "quote": "Purchases at BJ’s Clubs, BJ’s Gas®, BJs.com, BJ’s app, and B2B and Global Sales Transactions are not considered transactions made “outside of BJ’s.”"
+            }
+          ],
+          "note": "BJ’s Gas is excluded from Eligible Purchases and also not \"outside of BJ’s\", so the terms give it no earn rate at all; unclear whether it earns anything.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capture checked: BJ’s Gas is excluded from Eligible Purchases and is not \"outside of BJ’s\", so no rate applies to it; a real gap."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-bjs-one-plus-mastercard-pricing",
+              "quote": "Rewards may be used to pay for purchases and membership fees made in-club at BJ’s front-end registers, or on BJs.com or the BJ’s app."
+            }
+          ],
+          "note": "Added at adjudication. BJ’s One Credit Card Rewards are a percentage back usable only at BJ’s (purchases and membership fees).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 8 and capital-one convention: store-only rewards get an ambiguous issue."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Eligible purchases in-club at BJ's front-end registers, BJs.com, BJ's app",
+            "rate": "5%",
+            "cap": "none stated",
+            "conditions": "Excludes BJ's Gas, alcohol, tobacco, gift cards, membership fees, etc.",
+            "merchants": [
+              "BJ's Wholesale Club"
+            ],
+            "membership": "Active BJ's Membership in your name required to apply"
+          },
+          "anchor": {
+            "sourceId": "capital-one-bjs-one-plus-mastercard-pricing",
+            "quote": "in-club at BJ's front-end registers, on BJs.com or via the BJ's app"
+          },
+          "note": "Hint is true and now anchored; the membership field held the exclusions list instead of the membership requirement (an active BJ’s Membership is required to apply).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: Eligible Purchases are at BJ’s front-end registers, BJs.com and the app; an active BJ’s Membership is needed to apply. The old membership field held the exclusions."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "capital-one-bass-pro-shops-club-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.rateBps",
+          "current": null,
+          "corrected": 200,
+          "anchor": {
+            "sourceId": "capital-one-bass-pro-shops-club-card-pricing",
+            "quote": "Classic level cardholders will earn an additional one (1) Point (for a total of two (2) Points) for every dollar ($1.00) of Net Purchases"
+          },
+          "note": "Every new account starts at CLUB Classic (automatic enrollment), which earns 2 points per dollar in total at Bass Pro Shops, Cabela’s and Mack’s Prairie Wings; Silver (3) and Black (5) are spend-qualified tiers kept in the product note.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Every account is enrolled automatically at CLUB Classic, which totals 2 points per dollar at the stores; Silver and Black need spend thresholds (general 9: product note plus out-of-scope issue)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "CLUB cardholders that make purchases at Bass Pro Shops stores and its merchandising subsidiaries (U.S and Canada locations), through Bass Pro Shops catalogs, or online",
+          "corrected": "Bass Pro Shops and Cabela’s purchases",
+          "anchor": {
+            "sourceId": "capital-one-bass-pro-shops-club-card-pricing",
+            "quote": "Bass Pro Shops and Cabela’s purchases"
+          },
+          "note": "The draft wording was a cut sentence naming only Bass Pro Shops; the terms’ category name covers both brands.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft wording was a cut sentence naming only Bass Pro Shops; \"Bass Pro Shops and Cabela’s purchases\" is the terms’ own purchase type."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.3",
+          "current": {
+            "category": "other",
+            "issuerWording": "select purchases",
+            "rateBps": null,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": {
+              "endsOn": null
+            },
+            "anchors": [
+              "Points do not have a scheduled expiration date and there is no maximum number of Points that can be earned in the Program.",
+              "We may periodically, and at our discretion, offer you the opportunity to earn bonus Points on select purchases."
+            ]
+          },
+          "note": "Not a card earning rule: the terms describe discretionary, targeted bonus-point offers, and \"ten (10) Points\" is only an example. Out of scope like other targeted offers.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capture checked: the promotional point offers are discretionary and targeted, and 10 points is an example; not a standing earn rule."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "capital-one-bass-pro-shops-club-card-pricing",
+            "quote": "One hundred (100) Points equates to one dollar that can be used toward purchases at Bass Pro Shops, Cabela’s and Mack's Prairie Wings"
+          },
+          "note": "Added at adjudication. 100 CLUB Points equal one dollar toward purchases at the stores: a fixed store-dollar value for a store card (general 3). Not redeemable for cash.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 3 allows a stated store-dollar value for a store card."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.2",
+          "current": {
+            "category": "other",
+            "issuerWording": "Participating Stores",
+            "rateBps": null,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": [
+              "Points do not have a scheduled expiration date and there is no maximum number of Points that can be earned in the Program."
+            ]
+          },
+          "note": "Added at adjudication. Participating Stores are third parties the program nominates and changes at any time, at a rate the terms never state; like the promotional offers, not a standing earn rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. No rate and no named merchant in the capture; discretionary like the removed promotional rule."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "capital-one-bass-pro-shops-club-card-pricing",
+              "quote": "CLUB Silver level requires at least $10,000 in Net Purchases within a year, and CLUB Black level requires at least $25,000 in Net Purchases"
+            }
+          ],
+          "note": "Added at adjudication. CLUB Silver (3 points) and Black (5 points) store rates depend on yearly spend thresholds; the labels carry the Classic rate and the tiers are in the product note.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 9: spend thresholds that raise a rate are an out-of-scope issue."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-bass-pro-shops-club-card-pricing",
+              "quote": "You may not redeem Points for cash or to make payments on your Account."
+            },
+            {
+              "sourceId": "capital-one-bass-pro-shops-club-card-pricing",
+              "quote": "One hundred (100) Points equates to one dollar that can be used toward purchases at Bass Pro Shops, Cabela’s and Mack's Prairie Wings"
+            }
+          ],
+          "note": "Added at adjudication. CLUB Points are usable only at Bass Pro Shops, Cabela’s and Mack’s Prairie Wings, never as cash.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 8 and capital-one convention: store-only rewards get an ambiguous issue."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "capital-one-bass-pro-shops-club-card-pricing",
+            "quote": "CLUB Black level cardholders will earn an additional four (4) Points (for a total of five (5) Points) for every dollar ($1.00) of Net Purchases"
+          },
+          "note": "Tiers 2/3/5 points per dollar at Bass Pro Shops, Cabela’s, Mack’s Prairie Wings and participating White River Marine Group dealers; Silver needs $10,000 and Black $25,000 Net Purchases a year; wallets earn base only.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: 2/3/5 points per dollar for Classic/Silver/Black at Bass Pro Shops, Cabela’s, Mack’s Prairie Wings and White River Marine dealers; Silver $10,000 and Black $25,000 a year."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Purchases paid through third-party payment accounts or mobile or digital wallets earn only the base rate",
+            "rate": "1 point per dollar",
+            "conditions": "Enhanced rate and promotions do not apply"
+          },
+          "anchor": {
+            "sourceId": "capital-one-bass-pro-shops-club-card-pricing",
+            "quote": "You will not receive the enhanced rewards earn rate, promotions or be able to redeem rewards on otherwise eligible purchases when you pay through third-party"
+          },
+          "note": "Checkout-method rule stated in the terms (the tier hint mentions it only in its conditions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: third-party accounts and digital wallets get only the base rate; quote verified."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "capital-one-cabelas-club-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.rateBps",
+          "current": null,
+          "corrected": 200,
+          "anchor": {
+            "sourceId": "capital-one-cabelas-club-card-pricing",
+            "quote": "Classic level cardholders will earn an additional one (1) Point (for a total of two (2) Points) for every dollar ($1.00) of Net Purchases"
+          },
+          "note": "Every new account starts at CLUB Classic (automatic enrollment), which earns 2 points per dollar in total at Bass Pro Shops, Cabela’s and Mack’s Prairie Wings; Silver (3) and Black (5) are spend-qualified tiers kept in the product note.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Every account is enrolled automatically at CLUB Classic, which totals 2 points per dollar at the stores; Silver and Black need spend thresholds (general 9: product note plus out-of-scope issue)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.usMerchantsOnly",
+          "current": null,
+          "corrected": false,
+          "anchor": {
+            "sourceId": "capital-one-cabelas-club-card-pricing",
+            "quote": "Cabela’s stores and its merchandising subsidiaries (U.S and Canada locations)"
+          },
+          "note": "U.S. and Canada locations both earn the store rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. and Canada store locations both earn the store rate; matches the Bass Pro draft."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.3",
+          "current": {
+            "category": "other",
+            "issuerWording": "bonus Points on select purchases",
+            "rateBps": 1000,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": {
+              "endsOn": null
+            },
+            "anchors": [
+              "For example, specified account holders may earn ten (10) Points for every dollar ($1.00) spent on a qualifying purchase.",
+              "We may periodically, and at our discretion, offer you the opportunity to earn bonus Points on select purchases."
+            ]
+          },
+          "note": "Not a card earning rule: the terms describe discretionary, targeted bonus-point offers, and \"ten (10) Points\" is only an example. Out of scope like other targeted offers.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capture checked: the promotional point offers are discretionary and targeted, and 10 points is an example; not a standing earn rule."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "capital-one-cabelas-club-card-pricing",
+            "quote": "One hundred (100) Points equates to one dollar that can be used toward purchases at Bass Pro Shops, Cabela’s and Mack's Prairie Wings"
+          },
+          "note": "Added at adjudication. 100 CLUB Points equal one dollar toward purchases at the stores: a fixed store-dollar value for a store card (general 3). Not redeemable for cash.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 3 allows a stated store-dollar value for a store card."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Added at adjudication. Convention 11: this missing issue has no anchor and no detail, so it states no problem.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General convention 11."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.2",
+          "current": {
+            "category": "other",
+            "issuerWording": "Participating Stores",
+            "rateBps": null,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": [
+              "Points do not have a scheduled expiration date and there is no maximum number of Points that can be earned in the Program.",
+              "When your Account is approved by Capital One, you will automatically be enrolled in the Program at the CLUB Classic cardholder level."
+            ]
+          },
+          "note": "Added at adjudication. Participating Stores are third parties the program nominates and changes at any time, at a rate the terms never state; like the promotional offers, not a standing earn rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. No rate and no named merchant in the capture; discretionary like the removed promotional rule."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "capital-one-cabelas-club-card-pricing",
+              "quote": "CLUB Silver level requires at least $10,000 in Net Purchases within a year, and CLUB Black level requires at least $25,000 in Net Purchases"
+            }
+          ],
+          "note": "Added at adjudication. CLUB Silver (3 points) and Black (5 points) store rates depend on yearly spend thresholds; the labels carry the Classic rate and the tiers are in the product note.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 9: spend thresholds that raise a rate are an out-of-scope issue."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-cabelas-club-card-pricing",
+              "quote": "You may not redeem Points for cash or to make payments on your Account."
+            },
+            {
+              "sourceId": "capital-one-cabelas-club-card-pricing",
+              "quote": "One hundred (100) Points equates to one dollar that can be used toward purchases at Bass Pro Shops, Cabela’s and Mack's Prairie Wings"
+            }
+          ],
+          "note": "Added at adjudication. CLUB Points are usable only at Bass Pro Shops, Cabela’s and Mack’s Prairie Wings, never as cash.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Added at adjudication. General 8 and capital-one convention: store-only rewards get an ambiguous issue."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "capital-one-cabelas-club-card-pricing",
+            "quote": "CLUB Black level cardholders will earn an additional four (4) Points (for a total of five (5) Points) for every dollar ($1.00) of Net Purchases"
+          },
+          "note": "Tiers 2/3/5 points per dollar at Bass Pro Shops, Cabela’s, Mack’s Prairie Wings and participating White River Marine Group dealers; Silver needs $10,000 and Black $25,000 Net Purchases a year; wallets earn base only.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: 2/3/5 points per dollar for Classic/Silver/Black at Bass Pro Shops, Cabela’s, Mack’s Prairie Wings and White River Marine dealers; Silver $10,000 and Black $25,000 a year."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Purchases paid through third-party payment accounts or mobile or digital wallets earn only the base rate",
+            "rate": "1 point per dollar",
+            "conditions": "Enhanced rate and promotions do not apply"
+          },
+          "anchor": {
+            "sourceId": "capital-one-cabelas-club-card-pricing",
+            "quote": "You will not receive the enhanced rewards earn rate, promotions or be able to redeem rewards on otherwise eligible purchases when you pay through third-party"
+          },
+          "note": "Checkout-method rule stated in the terms (the tier hint mentions it only in its conditions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms: third-party accounts and digital wallets get only the base rate; quote verified."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "capital-one-union-plus-cash-rewards",
+      "verdict": "confirmed",
+      "reason": null,
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-teamster-privilege-cash-rewards",
+      "verdict": "confirmed",
+      "reason": null,
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    }
+  ]
+}
