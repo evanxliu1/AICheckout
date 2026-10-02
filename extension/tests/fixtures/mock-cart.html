@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sample cart</title>
+<!-- Neutral sample cart for store imagery: no retailer branding. It uses the Best Buy adapter's
+summary-table contract (served at the Best Buy cart URL in the media capture) so the actual badge appears. -->
+<style>
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#1f2937;background:#f3f4f6}
+main{padding:20px 16px}
+h1{margin:0 0 4px;font-size:22px}
+.muted{margin:0 0 16px;color:#6b7280;font-size:14px}
+.item,.summary{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:14px 16px;margin-bottom:12px}
+.item{display:flex;gap:12px;align-items:center}
+.thumb{width:56px;height:56px;border-radius:6px;background:#e5e7eb}
+.item p{margin:0;font-size:14px}
+h2{margin:0 0 8px;font-size:16px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-weight:400;padding:4px 0}
+td{text-align:right;padding:4px 0}
+tr:last-child th,tr:last-child td{font-weight:700;border-top:1px solid #e5e7eb;padding-top:8px}
+</style>
+</head>
+<body>
+<main>
+  <h1>Your cart</h1>
+  <p class="muted">Sample cart · 1 item</p>
+  <div class="item"><div class="thumb" aria-hidden="true"></div><p>Sample item<br><span class="muted">Qty 1</span></p></div>
+  <section class="summary">
+    <h2>Order summary</h2>
+    <table data-testid="order-summary__price-summary-table">
+      <tr><th scope="row">Subtotal</th><td>$92.59</td></tr>
+      <tr><th scope="row">Estimated tax</th><td>$7.41</td></tr>
+      <tr><th scope="row">Total</th><td>$100.00</td></tr>
+    </table>
+  </section>
+</main>
+</body>
+</html>

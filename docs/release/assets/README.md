@@ -1,6 +1,6 @@
 # Release media
 
-Regenerated October 1, 2026 for the default offline extension 2.0.0 (Helios popup) and catalog `2026-09-29.real.1`. Open [the gallery](index.html) to review the screenshots, promotion, icon inspection, recording and transcript together. This packet is not a submitted listing or evidence of live retailer/model behavior.
+Regenerated October 1, 2026 for extension 2.0.0 with the automatic cart badge (Phase 3b; passphrase protection optional) and catalog `2026-09-29.real.1`. Open [the gallery](index.html) to review the screenshots, promotion, icon inspection, recording and transcript together. This packet is not a submitted listing or evidence of live retailer/model behavior.
 
 ## Deliverables
 
@@ -10,7 +10,8 @@ Regenerated October 1, 2026 for the default offline extension 2.0.0 (Helios popu
 | [2-comparison-640x400.png](2-comparison-640x400.png) | A synthetic $100 eligible Best Buy purchase: Blue Cash Everyday $3.00 with its rule in the issuer's words and conditions |
 | [3-uncertainty-640x400.png](3-uncertainty-640x400.png) | Unknown annual spend toward the cap produces a $1.00–$3.00 range, so Double Cash leads at $2.00 |
 | [4-subtotal-640x400.png](4-subtotal-640x400.png) | Controlled Newegg fixture explicitly excludes tax/shipping from its subtotal |
-| [5-locked-640x400.png](5-locked-640x400.png) | Passphrase unlock after locking saved inputs |
+| [5-locked-640x400.png](5-locked-640x400.png) | Passphrase unlock after locking saved inputs (optional protection, turned on in Settings) |
+| [6-badge-640x400.png](6-badge-640x400.png) | The automatic cart badge ("Use Blue Cash Everyday · $3.00 back") on a neutral sample cart with a $100.00 total; no retailer branding |
 | [promo-440x280.png](promo-440x280.png) | Required small promotional brand image |
 | [icon-inspection.png](icon-inspection.png) | Existing cart identity simplified for 16/48/128px exports; light/dark inspection |
 | [shopper-demo.mp4](shopper-demo.mp4) | Actual offline extension-page walkthrough, with persistent sample-data labeling and timed explanations |
@@ -20,13 +21,13 @@ Regenerated October 1, 2026 for the default offline extension 2.0.0 (Helios popu
 
 The screenshots are opaque 24-bit RGB PNGs at 640×400. The promotion is the same format at 440×280. The icon source is [cart-mark.svg](../../../extension/assets/cart-mark.svg); its 128px export uses 96px artwork with 16px transparent padding on each side. The prior gradient/text bitmap is replaced by a crisp cart mark in the existing action blue; no new product functionality is implied by that artwork.
 
-Each screenshot combines a presentation caption with the top 400 CSS pixels of an actual 360px native-popup capture at its original pixel density. The interface text and geometry are not recreated or retouched. The full original captures are under `captures/`; the crop and source hash are recorded in [assets-manifest.json](assets-manifest.json). A full-height inspection view is not represented as a native popup. The left presentation panel and “sample inputs” label are outside the application UI.
+Screenshots 1–5 combine a presentation caption with the top 400 CSS pixels of an actual 360px native-popup capture at its original pixel density. Screenshot 6 shows the actual packaged badge on a neutral sample cart page ([mock-cart.html](../../../extension/tests/fixtures/mock-cart.html), served in memory at a supported cart URL so the content script runs) at 360×400 CSS pixels. The interface text and geometry are not recreated or retouched. The full original captures are under `captures/`; the crop and source hash are recorded in [assets-manifest.json](assets-manifest.json). A full-height inspection view is not represented as a native popup. The left presentation panel and “sample inputs” label are outside the application UI.
 
 The roughly 40-second MP4 is 960×720 H.264. It contains an actual 360×600 extension-page interaction recording at its original size alongside captions. The underlying [WebM](shopper-demo.webm) is retained for provenance; it has no presentation captions and is not the stand-alone public demonstration. This recording is not a native-toolbar video, a live merchant test, a full-stack review recording or live LLM evaluation. The shopper calculation remains offline, and both local/session stores were empty after confirmed deletion.
 
 ## Provenance and validity
 
-The store images and shopper recording are bound to ZIP SHA-256 **`6b779c4e7cfddeac6341fe5bcf4bf50a2676e5e7daf679d17472cbf7221b1f98`**. [capture-manifest.json](capture-manifest.json) records the actual native target viewport, browser version, staged input descriptions, source hashes and artifact identity. [demo-chapters.json](demo-chapters.json) records timed explanations and the matching artifact; [verification.json](verification.json) records file-format/hash checks, desktop/mobile gallery checks, actual video playback and caption loading.
+The store images and shopper recording are bound to ZIP SHA-256 **`89f3cde5164129125826677e2f9ff445f1850549e537a248ad17295cda8f59e1`**. [capture-manifest.json](capture-manifest.json) records the actual native target viewport, browser version, staged input descriptions, source hashes and artifact identity. [demo-chapters.json](demo-chapters.json) records timed explanations and the matching artifact; [verification.json](verification.json) records file-format/hash checks, desktop/mobile gallery checks, actual video playback and caption loading.
 
 The full-stack recording has separate [source/build and cleanup evidence](full-stack-capture.json) and [media hashes/playback checks](full-stack-media.json); the extension ZIP does not identify the server or review app. It is 1280×960 H.264 and preserves the unscaled 1280×800 application with an explanatory footer. It uses local disposable accounts, invented terms and intercepted responses; it does not make a live model call or establish model quality. Its reproduction command is `npm run release:portfolio`, with the existing disposable local Supabase stack available. See [the complete procedure](full-stack-demo.md).
 

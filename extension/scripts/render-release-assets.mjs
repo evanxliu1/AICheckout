@@ -39,8 +39,17 @@ const scenes = [
   {
     name: 'locked',
     title: 'Lock your saved inputs.',
-    copy: 'A local passphrase protects saved inputs. Unlock after restarting Chrome, or delete and start again if you forget it.',
+    copy: 'Optional: protect saved inputs with a local passphrase. Unlock after restarting Chrome, or delete and start again if you forget it.',
     alt: 'Actual locked popup asks for the local passphrase and exposes data details and deletion.',
+  },
+  {
+    name: 'badge',
+    title: 'Your best card, on your cart.',
+    copy: 'On supported carts a small badge shows which of your cards earns the most. Click it for every card and the terms behind it.',
+    alt: 'Actual cart badge on a neutral sample cart with a $100.00 total: Use Blue Cash Everyday · $3.00 back.',
+    note: 'Actual badge on a sample cart page.',
+    composition:
+      'Actual packaged badge on a neutral sample cart page (no retailer branding) served at a supported cart URL, 360×400 CSS pixels at 2× scale, without text or geometry alteration. Explanatory left panel is presentation, not application UI.',
   },
 ];
 const icon = `data:image/png;base64,${readFileSync(resolve(root, 'extension/public/icons/icon128.png')).toString('base64')}`;
@@ -57,7 +66,7 @@ try {
     const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${escape(scene.title)} — AI Checkout</title><style>
 *{box-sizing:border-box}html,body{margin:0;width:640px;height:400px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{display:grid;grid-template-columns:280px 360px;width:640px;height:400px;background:#1d4ed8;color:#fff}.copy{position:relative;padding:24px}header{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:600}header img{width:32px;height:32px}.story{margin-top:30px}h1{margin:0;font-size:28px;line-height:1.14;letter-spacing:-.025em;font-weight:650}p{margin:16px 0 0;font-size:15px;line-height:1.5;color:#dbeafe}.note{position:absolute;left:24px;right:24px;bottom:20px;margin:0;font-size:12px;line-height:1.4;color:#dbeafe}.actual{width:360px;height:400px;overflow:hidden;background:#f9fafb;}.actual img{display:block;width:360px;height:auto;max-width:none}</style></head>
 <body><!-- THESIS: show one actual feature with its conditions and honest sample data. OWN-WORLD: incumbent blue, white, system type and real popup pixels. STORY: understand the capability and inspect it. FIRST VIEWPORT: blue explanatory column beside a 1:1 CSS-pixel native popup detail. FORM: existing brand and interface, not a redesign. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md -->
-<main><section class="copy"><header><img src="${icon}" alt="">AI Checkout</header><div class="story"><h1>${escape(scene.title)}</h1><p>${escape(scene.copy)}</p></div><p class="note">Actual popup detail.<br>Sample inputs; not earned rewards.</p></section><div class="actual"><img src="${img}" alt="${escape(scene.alt)}"></div></main></body></html>`;
+<main><section class="copy"><header><img src="${icon}" alt="">AI Checkout</header><div class="story"><h1>${escape(scene.title)}</h1><p>${escape(scene.copy)}</p></div><p class="note">${escape(scene.note ?? 'Actual popup detail.')}<br>Sample inputs; not earned rewards.</p></section><div class="actual"><img src="${img}" alt="${escape(scene.alt)}"></div></main></body></html>`;
     await page.setContent(html);
     await page.locator('img').evaluateAll((images) => Promise.all(images.map((img) => img.decode())));
     const fits = await page.evaluate(() => {
@@ -81,6 +90,7 @@ try {
       capture: `captures/${scene.name}.png`,
       captureSha256: frame.sha256,
       composition:
+        scene.composition ??
         'Actual native capture at 360 CSS pixels wide; top 400 CSS pixels shown without text or geometry alteration. Explanatory left panel is presentation, not application UI.',
       alt: scene.alt,
     });
@@ -193,7 +203,7 @@ try {
   const gallery = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Checkout release media</title><style>
 *{box-sizing:border-box}body{margin:0;background:#f9fafb;color:#111827;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:960px;margin:auto;padding:32px 24px}h1{font-size:32px;line-height:1.2}h2{font-size:22px;margin:40px 0 12px}p{max-width:72ch}a{color:#1d4ed8}figure{margin:0}figure img{display:block;width:100%;max-width:640px;height:auto}figcaption{margin:8px 0 24px;font-size:14px;color:#4b5563}.promo{max-width:440px}video{width:960px;max-width:100%;height:auto;background:#fff}.transcript{max-width:72ch}.transcript li{margin-bottom:12px}code{overflow-wrap:anywhere}a:focus-visible,video:focus-visible{outline:2px solid #1d4ed8;outline-offset:3px}@media(max-width:700px){main{padding:20px 16px}h1{font-size:28px}}</style></head><body><main>
 <h1>AI Checkout release media</h1><p>Reviewable assets for extension 2.0.0. These use the actual packaged interface and synthetic inputs. The Newegg scene uses a controlled fixture. Nothing here establishes customer savings, a live retailer check, deployment, model accuracy or store approval.</p><p>Artifact SHA-256: <code>${capture.artifactSha256}</code>. The current catalog expires October 25, 2026 UTC; reverify terms and recapture before publishing an updated build.</p>
-${results.map((result, index) => `<section><h2>${escape(scenes[index].title)}</h2><figure><a href="${result.file}"><img src="${result.file}" alt="${escape(result.alt)}"></a><figcaption>640 × 400. Actual popup detail with a presentation caption. <a href="${result.capture}">Full original native capture</a>.</figcaption></figure></section>`).join('')}
+${results.map((result, index) => `<section><h2>${escape(scenes[index].title)}</h2><figure><a href="${result.file}"><img src="${result.file}" alt="${escape(result.alt)}"></a><figcaption>640 × 400. Actual extension UI detail with a presentation caption. <a href="${result.capture}">Full original native capture</a>.</figcaption></figure></section>`).join('')}
 <section><h2>Promotional image</h2><figure class="promo"><a href="promo-440x280.png"><img src="promo-440x280.png" alt="AI Checkout cart mark and name on the blue brand background"></a><figcaption>440 × 280; a brand image, not a product screenshot.</figcaption></figure><p><a href="icon-inspection.png">Inspect 16, 48 and 128px icons on light and dark backgrounds</a>.</p></section>
 <section><h2>Offline shopper walkthrough</h2><p>Actual 360 × 600 extension-page recording, placed at its original size beside explanatory captions in a 960 × 720 video. It demonstrates manual comparison, uncertainty, locking and deletion with sample inputs. It is separate from the native-toolbar captures above. There is no audio narration; visible captions and the transcript identify each step.</p><div class="demo"><video controls preload="metadata"><source src="shopper-demo.mp4" type="video/mp4"><track default kind="captions" src="shopper-demo.vtt" srclang="en" label="English"></video><ol class="transcript">${chapters.chapters.map((chapter) => `<li><strong>${timestamp(chapter.atSeconds).slice(3, 8)}</strong> ${escape(chapter.caption)}</li>`).join('')}</ol></div><p><a href="shopper-demo.mp4">MP4 recording</a> · <a href="shopper-demo.vtt">Captions</a> · <a href="assets-manifest.json">Asset provenance</a></p></section>
 <p>The separate <a href="full-stack-demo.md">full-stack recording and transcript</a> show the actual local review/API/database flow with simulated model responses. Hosted deployment and live model evaluation remain pending. See <a href="../portfolio-demo.md">the portfolio evidence plan</a> and <a href="../README.md">remaining release requirements</a>.</p></main></body></html>`;
@@ -238,7 +248,7 @@ ${results.map((result, index) => `<section><h2>${escape(scenes[index].title)}</h
       2,
     ) + '\n',
   );
-  console.log('Rendered five 640×400 store screenshots, captions, gallery and asset provenance.');
+  console.log('Rendered six 640×400 store screenshots, captions, gallery and asset provenance.');
 } finally {
   await browser.close();
 }

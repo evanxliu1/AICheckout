@@ -35,7 +35,7 @@ test('Newegg native capture distinguishes subtotal, follows quantity changes and
     let popup = await openNativePopup(context, merchant, id);
     await startNativePopup(popup);
     await popup.evaluate(
-      "document.querySelectorAll('fieldset input[type=checkbox]').forEach(box => box.click())",
+      "document.querySelectorAll('[aria-labelledby=wallet-heading] fieldset input[type=checkbox]').forEach(box => box.click())",
     );
     await expect.poll(popup.text).toContain('online retail spend in');
     await popup.fill('spend-bce-online-retail', '0');

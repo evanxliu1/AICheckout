@@ -74,7 +74,7 @@ Chrome requires a narrow purpose, permission explanations and consistent privacy
 
 ## Prepared assets
 
-The [local gallery](assets/index.html) and [asset record](assets/README.md) contain five 640×400 screenshots covering wallet selection, a confirmed comparison, unknown cap usage, a controlled Newegg subtotal and locked inputs. Each pairs explanatory copy with an actual native-popup detail at its original scale. Sample inputs and the crop are labeled; these are not earned rewards or live-retailer evidence.
+The [local gallery](assets/index.html) and [asset record](assets/README.md) contain six 640×400 screenshots covering wallet selection, a confirmed comparison, unknown cap usage, a controlled Newegg subtotal, locked inputs and the automatic cart badge on a neutral sample cart. Each pairs explanatory copy with an actual extension UI detail at its original scale. Sample inputs and the crop are labeled; these are not earned rewards or live-retailer evidence.
 
 The 440×280 promotional PNG and shared cart icon are also prepared. The 128×128 icon contains 96×96 artwork with 16px transparent padding; the 16px, 48px and 128px exports were inspected on light and dark backgrounds. Image formats, dimensions, source hashes and the current ZIP association pass local checks. The media visual review returned **ship**, with no material fixes.
 
