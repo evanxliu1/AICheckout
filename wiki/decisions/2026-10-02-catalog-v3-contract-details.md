@@ -1,7 +1,7 @@
 ---
 type: Decision
 title: Catalog v3 contract details for Stage 2 M1
-description: Choices made while implementing the catalog v3 Zod schema and SQL validator — separate v3 enums, per-version size limits, categories as replaceable SQL functions, the unconditional-base rule, the program valuation union, the published-estimate date window, and refusing v3 releases in the extension until the v3 engine ships.
+description: Choices made while implementing the catalog v3 Zod schema and SQL validator — separate v3 enums, per-version size limits, categories as replaceable SQL functions, the unconditional-base rule, brand exclusions and shared caps, the program valuation union, the published-estimate date window, and refusing v3 releases in the extension until the v3 engine ships.
 status: accepted
 tags: [decision, catalog, schema, database, phase-7]
 generated:
@@ -33,6 +33,7 @@ The [catalog v3 decision](2026-10-02-catalog-v3-schema.md) fixes the shape (prog
 | Point value fields | Program `valuation` union: `cash` (literal 100, only and always for `cash-back` programs), `published-estimate` (value, publisher, HTTPS URL, `retrievedOn`), `issuer-stated` (value, source IDs), `none` (units only). Card keeps `statedValueHundredthsOfCent` (points programs only). The card's `rewardCurrency` is dropped; the program's `currency` replaces it | Flat optional fields would allow an estimate without a publisher or a cash program with another value |
 | Estimate date | `retrievedOn` between 30 days before `verifiedAt` and the `expiresAt` date | Requiring it on or before `verifiedAt` (like sources) would reject values M3 reads after the 2026-10-02 capture date that the catalog is verified on |
 | Gates and choices | Gates are catalog-level questions with 2–10 options; a rule `requires` some, not all, options of up to 5 distinct gates. Choices are per card (≤ 5), `chosen` or `automatic`, `picks` fewer than options, defaults only for `chosen`; a rule names one `{choiceId, optionId}` | Per-card gates would duplicate shared questions (Prime, BofA Rewards) across cards |
+| Brand exclusions and combined caps (added in the pre-merge review) | Rule `excludedBrandIds` (resolves, disjoint from `brandIds`, none on a base) and card-scoped `sharedCapId` (every rule with the ID has a spend cap of the same amount and period) | Without them M4 must drop "excluding Walmart and Target" (Freedom Flex, Carnival), Edward Jones's Amazon/Walmart/Target exclusion and the combined caps of Cash+, Customized Cash, Freedom Flex, Discover and Southwest, and per-rule caps overstate the headroom left |
 | Provisional categories | `electronics`, `department-stores`, `home-improvement`, `wholesale-clubs` (reward and merchant lists; `electronics` was already a merchant category) | Others named by options (travel, utilities, fitness) never apply at the retail checkouts the extension supports; M4 adds any it needs |
 | Extension before M6 | `prepareCatalogUpdate` refuses a v3 release and keeps saved terms; `compareRewards` throws for v3 | Accepting v3 in the shared `catalogSchema` would otherwise let the current extension cache a release its engine cannot run |
 | Size measure | Zod counts `JSON.stringify` bytes, SQL `octet_length(payload::text)` (JSONB text adds spaces), as in v2 | An exact match is not available in SQL; M5 targets ≤ 75% of the limit, far from the boundary |
@@ -43,6 +44,7 @@ As in the "Chosen" column. Draft source references rise to 600 (`drafts` CHECK, 
 ## Consequences
 - M2 adds the v3 engine and widens `Purchase.paymentPath` and estimate types to the `*_V3` enums; until then a v3 catalog cannot be compared.
 - M6 removes the extension's v3 refusal and raises the catalog client's response cap (`MAX_RESPONSE_BYTES` is still `MAX_CATALOG_BYTES` + 2 KiB); M8 raises the API's draft body limit (270,336 bytes) and shows v3 fields in the review app (it shows only the program today).
+- M4 handles, without contract changes: spend caps whose after-cap rate the corpus leaves null (9 rules: Southwest, Discover it Student, Instacart, State Farm) by stating the base rate with a disposition; caps on rewards earned rather than spend (Sam's Club's $5,000 Sam's Cash a year) as `noted`; store-credit cash back (Verizon Dollars, OneKeyCash, Walgreens Cash, Key Rewards and My Best Buy certificates) as separate `cash-back` programs with `redemptionBrandIds`, since M3's table maps them all to `cash-back`; percentage boosts (Atmos +10% with a BofA account) as gated duplicate rules; account-age promotions (first-year 6%, first 30 days) as `limitedTime` without dates or a gate.
 - M4 extends categories by replacing the two SQL functions in a new migration and the TS constants in the same PR; `db:test:catalog` fails if they differ.
 
 ## Status

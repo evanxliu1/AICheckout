@@ -299,6 +299,8 @@ export const rewardRuleV3Schema = z.strictObject({
     .strictObject({ startsOn: z.iso.date().nullable(), endsOn: z.iso.date().nullable() })
     .nullable(),
   brandIds: idListSchema(20),
+  excludedBrandIds: idListSchema(20),
+  sharedCapId: catalogIdSchema.nullable(),
   choice: z.strictObject({ choiceId: catalogIdSchema, optionId: catalogIdSchema }).nullable(),
   requires: z.array(z.strictObject({ gateId: catalogIdSchema, optionIds: idListSchema(10).min(1) })).max(5),
   requiredPaymentPaths: z.array(z.enum(PAYMENT_PATHS_V3)).max(5).refine(unique),
@@ -333,6 +335,7 @@ export function isUnconditionalRuleV3(rule: z.infer<typeof rewardRuleV3Schema>):
     rule.limitedTime === null &&
     rule.excludedPaymentPaths.length === 0 &&
     rule.brandIds.length === 0 &&
+    rule.excludedBrandIds.length === 0 &&
     rule.choice === null &&
     rule.requires.length === 0 &&
     rule.requiredPaymentPaths.length === 0
@@ -457,6 +460,23 @@ export const catalogV3Schema = z
           reject('Rule references an absent source.', [...rulePath, 'sourceIds']);
         if (missing(rule.brandIds, brandIds))
           reject('Rule references an absent brand.', [...rulePath, 'brandIds']);
+        if (missing(rule.excludedBrandIds, brandIds))
+          reject('Rule excludes an absent brand.', [...rulePath, 'excludedBrandIds']);
+        if (rule.excludedBrandIds.some((id) => rule.brandIds.includes(id)))
+          reject('A brand cannot be both in scope and excluded.', [...rulePath, 'excludedBrandIds']);
+        if (rule.sharedCapId !== null) {
+          const shared = card.rules.find((r) => r.sharedCapId === rule.sharedCapId)!;
+          if (
+            rule.cap.kind !== 'spend' ||
+            shared.cap.kind !== 'spend' ||
+            rule.cap.amountCents !== shared.cap.amountCents ||
+            rule.cap.period !== shared.cap.period
+          )
+            reject('Rules sharing a cap need spend caps with the same amount and period.', [
+              ...rulePath,
+              'sharedCapId',
+            ]);
+        }
         const { startsOn, endsOn } = rule.limitedTime ?? { startsOn: null, endsOn: null };
         if (startsOn !== null && endsOn !== null && startsOn > endsOn)
           reject('A limited-time rule cannot end before it starts.', [...rulePath, 'limitedTime']);

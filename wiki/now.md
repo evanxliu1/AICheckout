@@ -21,7 +21,7 @@ As of 2026-10-02T23:00Z.
 ## Active work
 
 - **Phase 7 Stage 2** ([plan](product/phase-7-stage-2.md), merged in PR #18): M1, M3, M9 and M11 run in parallel.
-- **M1 catalog v3 contract and migration** on branch `s2-m1-catalog-v3` (from `4277f48`; committed, not pushed or merged): `catalogV3Schema` and types, `catalogV3Cases` (101) agreeing with `valid_catalog_v3` in migration `20261002222425_catalog_v3` (also drafts ≤ 600 sources, captures ≤ 250,000 chars); full local DB suite green. Details and hand-offs to M2, M4, M6 and M8: [contract details decision](decisions/2026-10-02-catalog-v3-contract-details.md), [rewards engine](system/rewards-engine.md#catalog-v3-contract). After merge the coordinator runs `./scripts/db-push.sh`.
+- **M1 catalog v3 contract and migration** on branch `s2-m1-catalog-v3` (from `4277f48`; committed, not pushed or merged): `catalogV3Schema` and types, `catalogV3Cases` (117, after the pre-merge review added `excludedBrandIds` and `sharedCapId`) agreeing with `valid_catalog_v3` in migration `20261002222425_catalog_v3` (also drafts ≤ 600 sources, captures ≤ 250,000 chars); full local DB suite green. Details and hand-offs to M2, M4, M6 and M8: [contract details decision](decisions/2026-10-02-catalog-v3-contract-details.md), [rewards engine](system/rewards-engine.md#catalog-v3-contract). After merge the coordinator runs `./scripts/db-push.sh`.
 - **Deadline.** The expansion captures are dated 2026-10-02, so a catalog citing them expires by 2026-11-01T00:00Z; hosted release 1 expires 2026-10-29. Publish target 2026-10-28.
 - Stage 1 facts (corpus counts, known gaps, judgment calls) are on [catalog expansion](system/catalog-expansion.md). Captures and luna traces are only in the `../AICheckout-expansion` worktree (gitignored).
 

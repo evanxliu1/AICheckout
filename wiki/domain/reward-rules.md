@@ -99,6 +99,8 @@ Stage 2 M1 adds the catalog v3 contract ([rewards engine](../system/rewards-engi
 | Base rule | The card's one `all-purchases` rule with no condition at all. Open-loop cards need exactly one; closed-loop store cards need none. Other `all-purchases` rules may carry conditions (PayPal Cashback's rate when paying through PayPal) |
 | `acceptance` | `open-loop`, or `closed-loop` with the brands where the card works (Amazon Store Card, Harbor Freight) |
 | `brandIds` | Merchant scope: the rule pays only at merchants carrying one of these brands (Prime Visa at Amazon and Whole Foods) |
+| `excludedBrandIds` | The rule never pays at merchants carrying one of these brands (Freedom Flex grocery "excluding Walmart and Target", Edward Jones top categories excluding Amazon); a base rule has none |
+| `sharedCapId` | Rules of one card with the same ID share one spend cap (Cash+ "$2,000 in combined purchases" across both 5% picks, Freedom Flex and Discover quarters, Customized Cash); each has a spend cap with the same amount and period |
 | `choice` | The rule pays only while that option of a card choice is in effect: `chosen` by the cardholder (Cash+, Customized Cash) or `automatic` top-spend categories (Edward Jones) |
 | `requires` | Gates the cardholder must meet: membership, tier or relationship options (Prime, store loyalty tiers, Smartly balances) |
 | `requiredPaymentPaths` | The rule pays only through these paths; `excludedPaymentPaths` gains `venmo` |

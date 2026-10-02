@@ -302,6 +302,8 @@ const v3Rule = (id: string, overrides: Partial<RewardRuleV3> = {}): RewardRuleV3
   limitedTime: null,
   sourceIds: ['test-terms'],
   brandIds: [],
+  excludedBrandIds: [],
+  sharedCapId: null,
   choice: null,
   requires: [],
   requiredPaymentPaths: [],
@@ -363,6 +365,7 @@ export const CATALOG_V3_FIXTURE: CatalogV3 = {
     { id: 'best-buy', name: 'Best Buy' },
     { id: 'newegg', name: 'Newegg' },
     { id: 'test-store', name: 'Test Store' },
+    { id: 'walmart', name: 'Walmart' },
   ],
   gates: [
     {
@@ -514,6 +517,7 @@ export const CATALOG_V3_FIXTURE: CatalogV3 = {
           cap: quarterCap,
           activation: 'recurring',
           choice: { choiceId: 'five-percent', optionId: 'electronics' },
+          sharedCapId: 'cash-plus-five-percent',
         }),
         v3Rule('cash-plus-department-stores', {
           category: 'department-stores',
@@ -521,6 +525,7 @@ export const CATALOG_V3_FIXTURE: CatalogV3 = {
           cap: quarterCap,
           activation: 'recurring',
           choice: { choiceId: 'five-percent', optionId: 'department-stores' },
+          sharedCapId: 'cash-plus-five-percent',
         }),
         v3Rule('cash-plus-fast-food', {
           category: 'dining',
@@ -528,6 +533,7 @@ export const CATALOG_V3_FIXTURE: CatalogV3 = {
           cap: quarterCap,
           activation: 'recurring',
           choice: { choiceId: 'five-percent', optionId: 'fast-food' },
+          sharedCapId: 'cash-plus-five-percent',
         }),
       ],
       exclusions: [],
@@ -549,6 +555,7 @@ export const CATALOG_V3_FIXTURE: CatalogV3 = {
           cap: { ...quarterCap, amountCents: 150_000 },
           activation: 'recurring',
           limitedTime: { startsOn: '2026-10-01', endsOn: '2026-12-31' },
+          sharedCapId: 'rotating-q4',
         }),
         v3Rule('rotating-q1', {
           category: 'supermarkets',
@@ -556,6 +563,7 @@ export const CATALOG_V3_FIXTURE: CatalogV3 = {
           cap: { ...quarterCap, amountCents: 150_000 },
           activation: 'recurring',
           limitedTime: { startsOn: '2027-01-01', endsOn: '2027-03-31' },
+          excludedBrandIds: ['walmart'],
         }),
       ],
       exclusions: [],
@@ -684,6 +692,15 @@ const copies = (catalog: CatalogV3, count: number, exclusions: string[] = []) =>
     };
   });
 const longExclusions = Array.from({ length: 20 }, () => 'x'.repeat(600));
+const extraSources = (count: number) =>
+  Array.from({ length: count }, (_, i) => ({
+    id: `extra-source-${i}`,
+    title: `Extra source ${i}`,
+    url: `https://issuer.example/extra/${i}`,
+    checkedOn: '2026-10-02',
+  }));
+const extraBrands = (count: number) =>
+  Array.from({ length: count }, (_, i) => ({ id: `extra-brand-${i}`, name: `Extra brand ${i}` }));
 
 /** Catalog v3 contract cases, run against Zod (extension tests, parity script) and SQL (parity script). */
 export const catalogV3Cases: Case[] = [
@@ -941,6 +958,37 @@ export const catalogV3Cases: Case[] = [
   invalidV3('rule without sources', (c) => {
     v3RuleOf(c, 'test-points-card', 'points-dining').sourceIds = [];
   }),
+  invalidV3('rule excludes an absent brand', (c) => {
+    v3RuleOf(c, 'test-rotating', 'rotating-q1').excludedBrandIds = ['absent'];
+  }),
+  invalidV3('duplicate excluded brand', (c) => {
+    v3RuleOf(c, 'test-rotating', 'rotating-q1').excludedBrandIds = ['walmart', 'walmart'];
+  }),
+  invalidV3('brand both in scope and excluded', (c) => {
+    v3RuleOf(c, 'test-prime-visa', 'prime-amazon').excludedBrandIds = ['amazon'];
+  }),
+  invalidV3('only base excludes a brand', (c) => {
+    v3RuleOf(c, 'test-points-card', 'points-base').excludedBrandIds = ['walmart'];
+  }),
+  validV3('one shared-cap ID on two cards with different caps', (c) => {
+    const rule = v3RuleOf(c, 'test-cash-plus', 'cash-plus-fast-food');
+    rule.sharedCapId = 'rotating-q4';
+    rule.cap = { ...quarterCap, amountCents: 100_000 };
+    v3RuleOf(c, 'test-cash-plus', 'cash-plus-electronics').sharedCapId = null;
+    v3RuleOf(c, 'test-cash-plus', 'cash-plus-department-stores').sharedCapId = null;
+  }),
+  invalidV3('shared cap on a rule without a spend cap', (c) => {
+    v3RuleOf(c, 'test-points-card', 'points-dining').sharedCapId = 'points-shared';
+  }),
+  invalidV3('shared cap with a different amount', (c) => {
+    v3RuleOf(c, 'test-cash-plus', 'cash-plus-fast-food').cap = { ...quarterCap, amountCents: 100_000 };
+  }),
+  invalidV3('shared cap with a different period', (c) => {
+    v3RuleOf(c, 'test-cash-plus', 'cash-plus-electronics').cap = { ...quarterCap, period: 'month' };
+  }),
+  invalidV3('shared cap where one rule has no spend cap', (c) => {
+    v3RuleOf(c, 'test-cash-plus', 'cash-plus-department-stores').cap = { kind: 'unstated' };
+  }),
   invalidV3('rule brand absent', (c) => {
     v3RuleOf(c, 'test-prime-visa', 'prime-amazon').brandIds = ['absent'];
   }),
@@ -1028,6 +1076,39 @@ export const catalogV3Cases: Case[] = [
   }),
   invalidV3('credential-bearing source URL', (c) => {
     c.sources[0].url = 'https://user:password@issuer.example/v3';
+  }),
+  validV3('600 sources', (c) => {
+    c.sources.push(...extraSources(600 - c.sources.length));
+  }),
+  invalidV3('601 sources', (c) => {
+    c.sources.push(...extraSources(601 - c.sources.length));
+  }),
+  validV3('400 brands', (c) => {
+    c.brands.push(...extraBrands(400 - c.brands.length));
+  }),
+  invalidV3('401 brands', (c) => {
+    c.brands.push(...extraBrands(401 - c.brands.length));
+  }),
+  invalidV3('101 programs', (c) => {
+    c.programs.push(
+      ...Array.from({ length: 101 - c.programs.length }, (_, i) => ({
+        ...c.programs[3],
+        id: `extra-program-${i}`,
+      })),
+    );
+  }),
+  invalidV3('101 gates', (c) => {
+    c.gates.push(
+      ...Array.from({ length: 101 - c.gates.length }, (_, i) => ({ ...c.gates[0], id: `extra-gate-${i}` })),
+    );
+  }),
+  invalidV3('101 merchants', (c) => {
+    c.merchants.push(
+      ...Array.from({ length: 101 - c.merchants.length }, (_, i) => ({
+        ...c.merchants[2],
+        id: `extra-merchant-${i}`,
+      })),
+    );
   }),
   invalidV3('31 rules on a card', (c) => {
     const card = v3Card(c, 'test-points-card');

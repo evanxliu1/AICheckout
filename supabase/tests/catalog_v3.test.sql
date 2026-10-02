@@ -39,22 +39,22 @@ create function pg_temp.v3(ver text default 'test-v3.1') returns jsonb language 
        "exclusions":["Balance transfers"],"rules":[
         {"id":"visa-base","category":"all-purchases","issuerWording":"every purchase","rateBps":100,"paidOnPaymentBps":0,
          "cap":{"kind":"none"},"activation":"none","usMerchantsOnly":false,"excludedPaymentPaths":[],"limitedTime":null,
-         "sourceIds":["test-terms"],"brandIds":[],"choice":null,"requires":[],"requiredPaymentPaths":[]},
+         "sourceIds":["test-terms"],"brandIds":[],"excludedBrandIds":[],"sharedCapId":null,"choice":null,"requires":[],"requiredPaymentPaths":[]},
         {"id":"visa-amazon","category":"other","issuerWording":"Amazon with Prime","rateBps":500,"paidOnPaymentBps":0,
          "cap":{"kind":"none"},"activation":"none","usMerchantsOnly":false,"excludedPaymentPaths":["venmo"],
          "limitedTime":{"startsOn":"2026-01-01","endsOn":null},"sourceIds":["test-terms"],"brandIds":["amazon"],
-         "choice":null,"requires":[{"gateId":"amazon-prime","optionIds":["member"]}],"requiredPaymentPaths":[]},
+         "excludedBrandIds":[],"sharedCapId":null,"choice":null,"requires":[{"gateId":"amazon-prime","optionIds":["member"]}],"requiredPaymentPaths":[]},
         {"id":"visa-electronics","category":"electronics","issuerWording":"chosen electronics","rateBps":300,
          "paidOnPaymentBps":0,"cap":{"kind":"spend","amountCents":250000,"period":"quarter","rateAfterCapBps":100},
          "activation":"enroll-once","usMerchantsOnly":false,"excludedPaymentPaths":[],"limitedTime":null,
-         "sourceIds":["test-terms"],"brandIds":[],"choice":{"choiceId":"pick","optionId":"electronics"},"requires":[],
+         "sourceIds":["test-terms"],"brandIds":[],"excludedBrandIds":[],"sharedCapId":null,"choice":{"choiceId":"pick","optionId":"electronics"},"requires":[],
          "requiredPaymentPaths":[]}]},
       {"id":"test-store","name":"Test Store Card","shortName":"Store","issuer":"Test Bank","programId":"cash-back",
        "statedValueHundredthsOfCent":null,"acceptance":{"kind":"closed-loop","brandIds":["amazon"]},"choices":[],
        "exclusions":[],"rules":[
         {"id":"store-amazon","category":"other","issuerWording":"Amazon purchases","rateBps":300,"paidOnPaymentBps":0,
          "cap":{"kind":"none"},"activation":"none","usMerchantsOnly":false,"excludedPaymentPaths":[],"limitedTime":null,
-         "sourceIds":["test-terms"],"brandIds":["amazon"],"choice":null,"requires":[],"requiredPaymentPaths":["card"]}]}
+         "sourceIds":["test-terms"],"brandIds":["amazon"],"excludedBrandIds":[],"sharedCapId":null,"choice":null,"requires":[],"requiredPaymentPaths":["card"]}]}
     ]'::jsonb);
 $$;
 create function pg_temp.valid(payload jsonb) returns boolean language sql as $$
@@ -76,6 +76,12 @@ select ok(pg_temp.valid(jsonb_set(pg_temp.v3(),'{cards,1,rules}',
   'a closed-loop card may have one base');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.v3(),'{cards,0,rules,1,requires,0,gateId}','"absent"')),'absent gate fails');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.v3(),'{cards,0,rules,1,brandIds}','["absent"]')),'absent rule brand fails');
+select ok(not pg_temp.valid(jsonb_set(pg_temp.v3(),'{cards,0,rules,2,excludedBrandIds}','["absent"]')),
+  'absent excluded brand fails');
+select ok(pg_temp.valid(jsonb_set(pg_temp.v3(),'{cards,0,rules,2,sharedCapId}','"visa-quarterly"')),
+  'a spend-capped rule may name a shared cap');
+select ok(not pg_temp.valid(jsonb_set(pg_temp.v3(),'{cards,0,rules,1,sharedCapId}','"visa-quarterly"')),
+  'a shared cap on a rule without a spend cap fails');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.v3(),'{cards,0,rules,2,choice,optionId}','"absent"')),'absent choice option fails');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.v3(),'{cards,0,programId}','"absent"')),'absent program fails');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.v3(),'{cards,1,statedValueHundredthsOfCent}','100')),

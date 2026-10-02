@@ -249,6 +249,12 @@ export interface RewardRuleV3 extends Omit<
   limitedTime: { startsOn: string | null; endsOn: string | null } | null;
   /** Merchant scope: when non-empty, the rule applies only at merchants with one of these brands. */
   brandIds: string[];
+  /** The rule never applies at merchants with one of these brands (Freedom Flex grocery
+   * "excluding Walmart and Target"); disjoint from `brandIds`. */
+  excludedBrandIds: string[];
+  /** Rules of one card with the same ID share one spend cap ("$1,500 in combined purchases");
+   * each such rule has a spend cap with the same amount and period. */
+  sharedCapId: string | null;
   /** The rule earns only while this option of one of the card's choices is in effect. */
   choice: { choiceId: string; optionId: string } | null;
   /** Every listed gate must be answered with one of its `optionIds`. */

@@ -1,7 +1,8 @@
 -- Catalog schema 3 (decision wiki/decisions/2026-10-02-catalog-v3-schema.md): reward programs with
 -- point values, brands, gates, merchant brand scope, closed-loop cards, chosen and automatic
--- categories, rule start dates, required payment paths and Venmo, and larger limits (300 cards,
--- 600 sources, 100 merchants, 400 brands, 100 programs, 100 gates, 30 rules per card, 1 MiB).
+-- categories, rule start dates, excluded brands, shared spend caps, required payment paths and Venmo,
+-- and larger limits (300 cards, 600 sources, 100 merchants, 400 brands, 100 programs, 100 gates,
+-- 30 rules per card, 1 MiB).
 -- Mirrors catalogV3Schema in packages/rewards-core/src/schema.ts; scripts/test-catalog-parity.mjs
 -- runs the same cases against both. Schemas 1 and 2 stay valid for existing releases and drafts.
 -- Also raises draft source references to 600 and captured source text to 250,000 characters.
@@ -26,7 +27,8 @@ create function catalog_private.catalog_v3_unconditional_rule(rule jsonb)
 returns boolean language sql immutable security invoker set search_path = '' as $$
   select rule#>>'{cap,kind}' <> 'spend' and rule->>'activation' not in ('enroll-once', 'recurring')
     and jsonb_typeof(rule->'limitedTime') = 'null' and jsonb_array_length(rule->'excludedPaymentPaths') = 0
-    and jsonb_array_length(rule->'brandIds') = 0 and jsonb_typeof(rule->'choice') = 'null'
+    and jsonb_array_length(rule->'brandIds') = 0 and jsonb_array_length(rule->'excludedBrandIds') = 0
+    and jsonb_typeof(rule->'choice') = 'null'
     and jsonb_array_length(rule->'requires') = 0 and jsonb_array_length(rule->'requiredPaymentPaths') = 0;
 $$;
 
@@ -143,8 +145,8 @@ begin
           "rules":{"type":"array","minItems":1,"maxItems":30,"items":{
             "type":"object","additionalProperties":false,
             "required":["id","category","issuerWording","rateBps","paidOnPaymentBps","cap","activation",
-              "usMerchantsOnly","excludedPaymentPaths","limitedTime","sourceIds","brandIds","choice","requires",
-              "requiredPaymentPaths"],
+              "usMerchantsOnly","excludedPaymentPaths","limitedTime","sourceIds","brandIds","excludedBrandIds",
+              "sharedCapId","choice","requires","requiredPaymentPaths"],
             "properties":{
               "id":{"$ref":"#/$defs/id"},
               "category":{"type":"string"},
@@ -169,6 +171,8 @@ begin
                   "endsOn":{"oneOf":[{"type":"null"},{"$ref":"#/$defs/date"}]}}}]},
               "sourceIds":{"allOf":[{"$ref":"#/$defs/sourceIds"},{"minItems":1}]},
               "brandIds":{"$ref":"#/$defs/brandIds"},
+              "excludedBrandIds":{"$ref":"#/$defs/brandIds"},
+              "sharedCapId":{"oneOf":[{"type":"null"},{"$ref":"#/$defs/id"}]},
               "choice":{"oneOf":[{"type":"null"},{"type":"object","additionalProperties":false,
                 "required":["choiceId","optionId"],
                 "properties":{"choiceId":{"$ref":"#/$defs/id"},"optionId":{"$ref":"#/$defs/id"}}}]},
@@ -289,6 +293,15 @@ begin
              or (base is not null and (rule#>>'{cap,rateAfterCapBps}')::integer < (base->>'rateBps')::integer)))
          or exists(select 1 from jsonb_array_elements_text(rule->'sourceIds') id where id <> all(source_ids))
          or exists(select 1 from jsonb_array_elements_text(rule->'brandIds') id where id <> all(brand_ids))
+         or exists(select 1 from jsonb_array_elements_text(rule->'excludedBrandIds') id where id <> all(brand_ids))
+         or exists(select 1 from jsonb_array_elements_text(rule->'excludedBrandIds') id
+                   where id in (select jsonb_array_elements_text(rule->'brandIds')))
+         -- Rules sharing a cap: each has a spend cap with the same amount and period.
+         or (jsonb_typeof(rule->'sharedCapId') = 'string' and (rule#>>'{cap,kind}' <> 'spend' or exists(
+               select 1 from jsonb_array_elements(card->'rules') other
+               where other->>'sharedCapId' = rule->>'sharedCapId'
+                 and (other#>>'{cap,kind}' <> 'spend' or other#>>'{cap,amountCents}' <> rule#>>'{cap,amountCents}'
+                      or other#>>'{cap,period}' <> rule#>>'{cap,period}'))))
          or (jsonb_typeof(rule#>'{limitedTime,startsOn}') = 'string' and jsonb_typeof(rule#>'{limitedTime,endsOn}') = 'string'
              and (rule#>>'{limitedTime,startsOn}')::date > (rule#>>'{limitedTime,endsOn}')::date)
          or (jsonb_typeof(rule->'choice') = 'object' and not exists(
