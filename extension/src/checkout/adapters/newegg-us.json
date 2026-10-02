@@ -7,19 +7,65 @@
     "on": "2026-09-26",
     "note": "Newegg US cart summary: a selected subtotal row and an Est. Total row that shows TBD until an address is known. Only those two rows are read; never the delivery address or promotion form."
   },
-  "match": { "hosts": ["secure.newegg.com"], "paths": ["^/shop/cart/?$"] },
-  "summary": { "selector": ".summary-side", "maxCount": 3 },
-  "emptyCart": { "selector": ".cart-empty > h3", "text": "Your cart is currently empty." },
-  "loading": { "busyAncestor": "[aria-busy=\"true\"]", "checkMatchedRows": true, "indicators": [] },
-  "rows": { "selector": ":scope > .summary-wrap > .summary-content > ul > li", "max": 30 },
-  "label": { "selectors": [":scope > label"], "single": true },
-  "amount": { "selector": ":scope > span" },
+  "match": {
+    "hosts": ["secure.newegg.com"],
+    "paths": ["^/shop/cart/?$"]
+  },
+  "summary": {
+    "selector": ".summary-side",
+    "maxCount": 3
+  },
+  "emptyCart": {
+    "selector": ".cart-empty > h3",
+    "text": "Your cart is currently empty."
+  },
+  "loading": {
+    "busyAncestor": "[aria-busy=\"true\"]",
+    "checkMatchedRows": true,
+    "indicators": []
+  },
+  "rows": {
+    "selector": ":scope > .summary-wrap > .summary-content > ul > li",
+    "max": 30
+  },
+  "label": {
+    "selectors": [":scope > label"],
+    "single": true
+  },
+  "amount": {
+    "selector": ":scope > span"
+  },
   "labels": [
-    { "pattern": "^Selected Subtotal$", "caseInsensitive": false, "kind": "subtotal" },
-    { "pattern": "^Est\\. Total$", "caseInsensitive": false, "kind": "estimated-total" }
+    {
+      "pattern": "^Selected Subtotal$",
+      "caseInsensitive": false,
+      "kind": "subtotal"
+    },
+    {
+      "pattern": "^Est\\. Total$",
+      "caseInsensitive": false,
+      "kind": "estimated-total"
+    }
   ],
-  "pending": [{ "kind": "estimated-total", "text": "TBD" }],
+  "pending": [
+    {
+      "kind": "estimated-total",
+      "text": "TBD"
+    }
+  ],
   "requiredKinds": ["subtotal", "estimated-total"],
   "duplicates": "ambiguous",
-  "combine": "per-summary"
+  "combine": "per-summary",
+  "matchPatterns": [
+    "https://secure.newegg.com/shop/cart*",
+    "https://secure.newegg.com/shop/checkout*",
+    "https://secure.newegg.com/shop/thankyou*",
+    "https://secure.newegg.com/shop/thank-you*",
+    "https://secure.newegg.com/shop/orderconfirmation*"
+  ],
+  "orderConfirmation": {
+    "verified": false,
+    "note": "Unverified guess for Newegg's order confirmation page; Evan checks it on a real order before release. Only the URL is matched; the page is never read.",
+    "paths": ["^/shop/(?:checkout/)?(?:thank-?you|orderconfirmation)(?:/.*)?$"]
+  }
 }

@@ -97,3 +97,27 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Onboarding tab */
+.onboarding-body {
+  background: var(--token-color-page-faint);
+}
+.onboarding {
+  box-sizing: border-box;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+  overflow-wrap: anywhere;
+}
+:where(.onboarding) :where(h1, h2, h3, p) {
+  margin: 0;
+}
+.onboarding__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.onboarding__body h2:focus {
+  outline: none;
+}

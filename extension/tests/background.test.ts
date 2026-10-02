@@ -3,7 +3,7 @@ vi.mock('../src/checkout/browser', () => ({ readActiveCheckout: vi.fn(), validat
 
 type Listener = (
   request: unknown,
-  sender: { id?: string; url?: string },
+  sender: { id?: string; url?: string; tab?: { id: number }; frameId?: number },
   sendResponse: (response: unknown) => void,
 ) => boolean | undefined;
 afterEach(() => {
@@ -23,7 +23,10 @@ async function background(accessFails?: 'local' | 'session') {
           listener = handler;
         },
       },
+      onInstalled: { addListener: vi.fn() },
+      sendMessage: vi.fn(async () => undefined),
     },
+    action: { openPopup: vi.fn() },
     storage: Object.fromEntries(
       ['local', 'session'].map((area) => [
         area,
@@ -55,7 +58,7 @@ describe('worker message authorization', () => {
         respond,
       ),
     ).toBe(true);
-    await vi.waitFor(() => expect(respond).toHaveBeenCalledWith({ ok: true, status: 'setup' }));
+    await vi.waitFor(() => expect(respond).toHaveBeenCalledWith({ ok: true, status: 'unprotected' }));
     expect(get).toHaveBeenCalledOnce();
     for (const storage of [chrome.storage.local, chrome.storage.session]) {
       expect(storage.setAccessLevel).toHaveBeenCalledWith({ accessLevel: 'TRUSTED_CONTEXTS' });
@@ -65,6 +68,13 @@ describe('worker message authorization', () => {
     { id: 'our-extension', url: 'https://www.bestbuy.com/cart' },
     { id: 'another-extension', url: 'chrome-extension://our-extension/src/popup/index.html' },
     { id: 'our-extension', url: 'chrome-extension://our-extension/arbitrary.html' },
+    // The badge iframe is an extension page but gets only badge:* requests.
+    {
+      id: 'our-extension',
+      url: 'chrome-extension://our-extension/src/badge/index.html',
+      tab: { id: 3 },
+      frameId: 2,
+    },
     {},
   ])('rejects a page or unrecognized sender without reading storage', async (sender) => {
     const { listener, get } = await background();

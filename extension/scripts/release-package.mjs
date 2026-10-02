@@ -20,6 +20,17 @@ const invariant = (value, message) => {
   if (!value) throw new Error(message);
 };
 const same = (left, right) => JSON.stringify(left) === JSON.stringify(right);
+/** The automatic badge's reach comes from the bundled site adapters: their hosts and pages only. */
+const adapterDirectory = new URL('../src/checkout/adapters/', import.meta.url);
+const adapters = readdirSync(adapterDirectory)
+  .filter((name) => name.endsWith('.json'))
+  .sort()
+  .map((name) => JSON.parse(readFileSync(new URL(name, adapterDirectory), 'utf8')));
+export const BADGE_HOST_PERMISSIONS = [...new Set(adapters.flatMap((a) => a.match.hosts))]
+  .sort()
+  .map((host) => `https://${host}/*`);
+export const BADGE_MATCHES = adapters.flatMap((a) => a.matchPatterns);
+const PAGES = ['src/popup/index.html', 'src/badge/index.html', 'src/onboarding/index.html'];
 const manifestKeys = [
   'manifest_version',
   'name',
@@ -32,6 +43,7 @@ const manifestKeys = [
   'action',
   'icons',
   'web_accessible_resources',
+  'content_scripts',
 ];
 const ignored = (path) =>
   path === '.vite/manifest.json' ||
@@ -39,9 +51,13 @@ const ignored = (path) =>
   /(^|\/)\.DS_Store$/.test(path) ||
   /^icons\/icon(16|48|128)\.png$/.test(path);
 const runtime = (path) =>
-  ['manifest.json', 'service-worker-loader.js', 'src/popup/index.html', 'src/checkout/content.js'].includes(
-    path,
-  ) ||
+  [
+    'manifest.json',
+    'service-worker-loader.js',
+    'src/checkout/content.js',
+    'src/badge/content.js',
+    ...PAGES,
+  ].includes(path) ||
   /^assets\/[a-zA-Z0-9_.-]+\.(js|css)$/.test(path) ||
   /^public\/icons\/icon(16|48|128)\.png$/.test(path);
 
@@ -95,13 +111,16 @@ export function inspectBuild(directory, expectedVersion) {
       same([...manifest.permissions].sort(), ['activeTab', 'scripting', 'storage']),
     'Unexpected extension permissions.',
   );
+  // Exactly the supported carts' hosts, plus at most one catalog origin (hosted builds).
   invariant(
-    Array.isArray(manifest.host_permissions) && manifest.host_permissions.length <= 1,
+    Array.isArray(manifest.host_permissions) &&
+      same(manifest.host_permissions.slice(0, BADGE_HOST_PERMISSIONS.length), BADGE_HOST_PERMISSIONS) &&
+      manifest.host_permissions.length <= BADGE_HOST_PERMISSIONS.length + 1,
     'Unexpected host permissions.',
   );
   let catalogOrigin = null;
-  if (manifest.host_permissions.length) {
-    const permission = manifest.host_permissions[0];
+  if (manifest.host_permissions.length > BADGE_HOST_PERMISSIONS.length) {
+    const permission = manifest.host_permissions[BADGE_HOST_PERMISSIONS.length];
     const url = new URL(permission);
     invariant(
       url.protocol === 'https:' &&
@@ -113,6 +132,7 @@ export function inspectBuild(directory, expectedVersion) {
         permission === `${url.origin}/*`,
       'Catalog permission must be one exact HTTPS origin.',
     );
+    invariant(!BADGE_HOST_PERMISSIONS.includes(permission), 'Unexpected host permissions.');
     catalogOrigin = url.origin;
   }
   invariant(
@@ -140,13 +160,21 @@ export function inspectBuild(directory, expectedVersion) {
         resources: ['src/checkout/content.js'],
         use_dynamic_url: false,
       },
+      { matches: BADGE_HOST_PERMISSIONS, resources: ['src/badge/index.html'], use_dynamic_url: false },
     ]),
     'Unexpected web-accessible resources.',
+  );
+  invariant(
+    same(manifest.content_scripts, [
+      { matches: BADGE_MATCHES, js: ['src/badge/content.js'], run_at: 'document_idle', all_frames: false },
+    ]),
+    'Unexpected content scripts.',
   );
   for (const path of [
     'service-worker-loader.js',
     'src/checkout/content.js',
-    'src/popup/index.html',
+    'src/badge/content.js',
+    ...PAGES,
     ...Object.values(expectedIcons),
   ]) {
     invariant(files.get(path)?.length, `Missing packaged entry: ${path}`);
@@ -178,12 +206,14 @@ export function inspectBuild(directory, expectedVersion) {
       `Development reference in ${path}`,
     );
   }
-  const html = files.get('src/popup/index.html').toString();
-  for (const [, reference] of html.matchAll(/(?:src|href)=["']([^"']+)["']/g)) {
-    invariant(
-      reference.startsWith('/assets/') && files.has(reference.slice(1)),
-      `Unexpected/missing popup asset: ${reference}`,
-    );
+  for (const page of PAGES) {
+    const html = files.get(page).toString();
+    for (const [, reference] of html.matchAll(/(?:src|href)=["']([^"']+)["']/g)) {
+      invariant(
+        reference.startsWith('/assets/') && files.has(reference.slice(1)),
+        `Unexpected/missing page asset: ${reference}`,
+      );
+    }
   }
   return { manifest, catalogOrigin, files };
 }

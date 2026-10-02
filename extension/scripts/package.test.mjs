@@ -14,7 +14,7 @@ import {
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { test } from 'node:test';
-import { inspectBuild, packageExtension } from './release-package.mjs';
+import { BADGE_HOST_PERMISSIONS, BADGE_MATCHES, inspectBuild, packageExtension } from './release-package.mjs';
 
 function fixture(t) {
   const root = mkdtempSync(join(tmpdir(), 'aicheckout-package-test-'));
@@ -27,12 +27,17 @@ function fixture(t) {
   };
   const manifest = JSON.parse(readFileSync(new URL('../manifest.json', import.meta.url), 'utf8'));
   manifest.background.service_worker = 'service-worker-loader.js';
+  manifest.host_permissions = [...BADGE_HOST_PERMISSIONS];
   manifest.web_accessible_resources = [
     {
       matches: ['http://*/*', 'https://*/*'],
       resources: ['src/checkout/content.js'],
       use_dynamic_url: false,
     },
+    { matches: [...BADGE_HOST_PERMISSIONS], resources: ['src/badge/index.html'], use_dynamic_url: false },
+  ];
+  manifest.content_scripts = [
+    { matches: [...BADGE_MATCHES], js: ['src/badge/content.js'], run_at: 'document_idle', all_frames: false },
   ];
   const save = () => put('manifest.json', JSON.stringify(manifest));
   save();
@@ -40,7 +45,9 @@ function fixture(t) {
   put('assets/worker-test.js', 'export const ready = true;');
   put('assets/popup-test.js', 'document.body.textContent = "fixture";');
   put('src/checkout/content.js', 'globalThis.reader = true;');
-  put('src/popup/index.html', '<script type="module" src="/assets/popup-test.js"></script>');
+  put('src/badge/content.js', 'globalThis.badge = true;');
+  for (const page of ['src/popup/index.html', 'src/badge/index.html', 'src/onboarding/index.html'])
+    put(page, '<script type="module" src="/assets/popup-test.js"></script>');
   for (const size of [16, 48, 128])
     put(
       `public/icons/icon${size}.png`,
@@ -94,13 +101,33 @@ test('unexpected permissions, entry paths and manifest capabilities cannot repla
       m.permissions.push('tabs');
     },
     (m) => {
-      m.host_permissions = ['https://*.example.com/*'];
+      m.host_permissions = [...BADGE_HOST_PERMISSIONS, 'https://*.example.com/*'];
     },
     (m) => {
-      m.host_permissions = ['http://catalog.example/*'];
+      m.host_permissions = [...BADGE_HOST_PERMISSIONS, 'http://catalog.example/*'];
     },
     (m) => {
-      m.host_permissions = ['https://user:password@catalog.example/*'];
+      m.host_permissions = [...BADGE_HOST_PERMISSIONS, 'https://user:password@catalog.example/*'];
+    },
+    (m) => {
+      // Another retailer's host is never added without an adapter.
+      m.host_permissions = [
+        ...BADGE_HOST_PERMISSIONS,
+        'https://www.walmart.com/*',
+        'https://catalog.example/*',
+      ];
+    },
+    (m) => {
+      m.host_permissions = BADGE_HOST_PERMISSIONS.slice(1);
+    },
+    (m) => {
+      m.content_scripts[0].matches.push('https://*/*');
+    },
+    (m) => {
+      m.content_scripts[0].all_frames = true;
+    },
+    (m) => {
+      m.web_accessible_resources[1].matches = ['<all_urls>'];
     },
     (m) => {
       m.background.service_worker = '../outside.js';
@@ -110,6 +137,9 @@ test('unexpected permissions, entry paths and manifest capabilities cannot repla
     },
     (m) => {
       m.content_scripts = [{ matches: ['<all_urls>'], js: ['assets/popup-test.js'] }];
+    },
+    (m) => {
+      delete m.content_scripts;
     },
     (m) => {
       m.version = '2.0.1';
@@ -126,7 +156,7 @@ test('unexpected permissions, entry paths and manifest capabilities cannot repla
 
 test('one configured HTTPS catalog origin is recorded explicitly', (t) => {
   const f = fixture(t);
-  f.manifest.host_permissions = ['https://catalog.example:8443/*'];
+  f.manifest.host_permissions = [...BADGE_HOST_PERMISSIONS, 'https://catalog.example:8443/*'];
   f.save();
   const result = f.package();
   assert.equal(JSON.parse(readFileSync(result.inventory)).catalogOrigin, 'https://catalog.example:8443');
@@ -156,7 +186,7 @@ test('missing references, private-key tripwires, dev clients and wrongly sized i
   const f = fixture(t);
   const asset = readFileSync(join(f.dist, 'assets/popup-test.js'));
   rmSync(join(f.dist, 'assets/popup-test.js'));
-  assert.throws(() => inspectBuild(f.dist, '2.0.0'), /missing popup asset/);
+  assert.throws(() => inspectBuild(f.dist, '2.0.0'), /missing page asset/);
   for (const text of [
     'sk-proj-' + 'x'.repeat(40),
     'sb_secret_' + 'x'.repeat(40),

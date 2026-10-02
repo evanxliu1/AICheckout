@@ -43,6 +43,26 @@ export const purchaseSchema = z.strictObject({
   paymentPath: z.enum(PAYMENT_PATHS).optional(),
 });
 
+/** One order the shopper confirmed after a badge recommendation. Amounts are estimates: the cart
+ * amount is the last cart reading (tax and shipping may differ), rewards are guaranteed minimums. */
+export const savingsEntrySchema = z.strictObject({
+  id: z.string().uuid(),
+  date: z.iso.date(),
+  recordedAt: z.number().int().nonnegative(),
+  merchantId: id,
+  cartAmountCents: money.positive(),
+  recommendedCardId: id,
+  /** null: the shopper was not sure which card they used. */
+  usedCardId: id.nullable(),
+  estimatedRewardCents: money.nullable(),
+  /** What the default card would have earned; null when no default card was set. */
+  baselineRewardCents: money.nullable(),
+  /** estimatedRewardCents − baselineRewardCents; null when either is unknown. May be negative. */
+  extraCents: z.number().int().min(-MAX_AMOUNT_CENTS).max(MAX_AMOUNT_CENTS).nullable(),
+});
+export type SavingsEntry = z.infer<typeof savingsEntrySchema>;
+export const MAX_SAVINGS_ENTRIES = 500;
+
 const stateFields = {
   revision: z
     .number()
@@ -53,6 +73,8 @@ const stateFields = {
   purchase: purchaseSchema.nullable(),
   catalog: cachedCatalogSchema.default(emptyCatalogCache),
   cart: cartSnapshotSchema.nullable().default(null),
+  /** Orders recorded from the badge's one-tap question, newest first. */
+  savings: z.array(savingsEntrySchema).max(MAX_SAVINGS_ENTRIES).default([]),
   /** A notice that must reach the shopper once (e.g. why migration dropped limits); kept until shown. */
   pendingNotice: z.string().min(1).max(300).nullable().default(null),
   comparison: z
@@ -91,6 +113,12 @@ export const requestSchema = z.discriminatedUnion('type', [
     cartId: z.string().uuid().nullable().optional(),
   }),
   z.strictObject({ type: z.literal('checkout:clear') }),
+  /** Internal: the worker records an order answered in the badge (never sent by a page). */
+  z.strictObject({ type: z.literal('checkout:record-savings'), entry: savingsEntrySchema }),
+  z.strictObject({
+    type: z.literal('checkout:delete-savings'),
+    expectedRevision: z.number().int().nonnegative(),
+  }),
 ]);
 export type CheckoutRequest = z.infer<typeof requestSchema>;
 export type CheckoutResponse =
@@ -176,6 +204,7 @@ export function emptyState(): AppState {
     comparison: null,
     cart: null,
     pendingNotice: null,
+    savings: [],
     catalog: emptyCatalogCache(),
   };
 }
