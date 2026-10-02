@@ -220,6 +220,84 @@ Sections 3a and 3 above are the goals. This is how to build them: six milestones
 
 Exit for Phase 3: the hosted site, review app, and extension all run on Helios and catalog v2; the 7-card catalog is published and served; Amazon, Best Buy, and Newegg carts read through bundled adapters; all CI green.
 
+### Phase 3b: automatic cart badge (written 2026-10-01)
+
+Evan's request: work like Honey or Capital One Shopping. On a supported cart the extension shows, without a click, which card to use and how much cash back it earns. One branch `phase3b-auto-badge`, cut from `main` after Phase 3 (M1–M5 and M6 prep merged).
+
+#### Decisions (Evan + coordinator; do not re-litigate)
+
+- **Zero-click.** On a supported cart page a small badge appears automatically with the single best owned card and its cash back for this cart. No "Read cart amount" click and no amount confirmation.
+- **Badge only by default.** A compact pill bottom-right ("Use Blue Cash Everyday · $3.00 back"). Clicking it expands a panel:
+  - the ranked cash back of every owned card (ranges where uncertain), with the applied rule, its conditions and the Citi pay-later note;
+  - a payment-method selector;
+  - an editable amount ("Based on $X cart subtotal");
+  - "Not on this site" and dismiss.
+  Dismiss lasts for the tab session. A per-site off switch lives in settings.
+- **No accounts; local-first.** Cards, settings and savings history are kept in `chrome.storage.local`. The passphrase vault becomes **optional and off by default** ("Protect with a passphrase" in settings).
+  - Existing vault users keep it until they turn it off; the popup offers that.
+  - When the vault is on and locked, the badge says "Unlock to see your best card" and opens the popup to unlock.
+  - Optional cloud sync is a future phase: noted here, not built.
+- **Permissions.**
+  - Host permissions and content scripts cover only the three supported hosts, using the adapters' exact hosts: `www.amazon.com`, `bestbuy.com`, `www.bestbuy.com`, `secure.newegg.com`.
+  - `activeTab` stays for manual reads elsewhere. No other hosts (plus the catalog origin in hosted builds, as before).
+  - Manifest inspection and package tests are updated accordingly.
+- **Isolation.**
+  - The badge and panel are an extension page (`src/badge/index.html`, web-accessible only on those hosts) in an iframe inside a closed shadow-root host element.
+  - The content script never receives card or wallet data. It reads the cart summary with the existing adapter interpreter and forwards `{merchantId, amountCents, kind, extractorVersion}` to the service worker.
+  - The iframe gets its view from the service worker through `chrome.runtime`.
+  - iframe→content-script `postMessage` carries only size and visibility, with strict origin and shape checks. Page scripts cannot read card names.
+- **Reading.**
+  - Read on load and on DOM changes (MutationObserver, debounced about 500 ms, bounded work), always through the adapter, and never outside the summary region.
+  - Show the badge only when the adapter returns `found`. Ambiguous or unavailable readings show nothing; an already expanded panel says "Can't read this cart — enter the amount".
+- **Engine defaults in auto mode.** `eligiblePurchase: 'eligible'` (the supported carts are physical-goods retailers), `onlineRetail` from the merchant profile, payment path `card` (changeable in the panel).
+- **Onboarding.**
+  - On install an extension tab (onboarding page on `@ai-checkout/ui`) opens to pick cards and a default card.
+  - With no cards the badge says "Pick your cards to see your best card" and opens onboarding.
+  - The toolbar popup remains for editing cards, settings, savings and manual comparisons.
+- **All-time savings ("detect completed orders").** The agent never places an order, so confirmation pages are never observed.
+  - Detection:
+    - Order completion is recognized by **URL pattern only**: per-adapter `orderConfirmation` paths, documented as **unverified** until Evan checks them on a real order.
+    - It must be the same tab, within a few hours of a cart where a recommendation was shown.
+    - The order page DOM is never read.
+  - Prompt: the badge then asks once: "Did you pay with {recommended card}?" Yes / Another card (pick) / Not sure.
+  - Record, kept locally:
+    - `{date, merchantId}`;
+    - `cartAmountCents`, labelled an estimate: the last cart amount, before tax and shipping;
+    - `recommendedCardId` and `usedCardId|null`;
+    - `estimatedRewardCents` for the used card, `baselineRewardCents` for the default card, and `extraCents`.
+  - The popup shows "All-time: $X extra cash back (estimated, vs your default card)", a history list, JSON export and delete.
+- **Privacy.** Everything stays on the device. The site privacy page, `docs/release/privacy-policy.md`, `store-listing.md` (host-permission justification for the three hosts, automatic summary reads, URL-only order detection, local savings) and the support docs are updated.
+
+#### Milestones (one branch; logical commits)
+
+1. **Plan** (this section).
+2. **Vault optional.**
+   - Plaintext local state by default. Vault statuses become `unprotected | locked | unlocked | damaged`, with protect and unprotect actions; existing vaults keep working.
+   - Settings move into the popup: per-site badge switches, protection.
+   - Savings history joins app state (encrypted when the vault is on).
+3. **Adapters and manifest.**
+   - Per-adapter `matchPatterns` (content-script match patterns) and `orderConfirmation` paths (unverified).
+   - The build derives `content_scripts`, `host_permissions` and the badge's `web_accessible_resources` from the adapters.
+   - Package inspection allows exactly those hosts.
+4. **Content script and service-worker routing.**
+   - The automatic reader (debounced, bounded, stops when hidden or unloaded, no network).
+   - A per-tab badge session in `chrome.storage.session`.
+   - Sender checks per caller: the content script may only report readings and order pages; the badge iframe may only use `badge:*`; extension pages may use the full API.
+5. **Badge iframe UI.** Pill and panel (ranked list, rules, payment path, editable amount, dismiss, per-site off); locked, no-cards and unreadable states; the one-tap order prompt; size messages to the host.
+6. **Onboarding page** opened on install; **savings view** in the popup (total, history, export, delete).
+7. **Tests.**
+   - Unit: content-script logic, savings math, vault-optional migration, routing.
+   - e2e (fixtures served at the real hosts):
+     - the badge's card and amount, and an update when the quantity changes;
+     - the no-cards prompt, the locked prompt, dismiss and per-site off;
+     - the order-URL prompt recording savings;
+     - closed shadow plus cross-origin iframe;
+     - axe on the badge and panel.
+   - Manifest and package tests.
+8. **Docs and media.** Privacy and support pages, policy and store listing; a store screenshot of the badge on a neutral mock cart; release media regenerated.
+
+Open item: the `orderConfirmation` URL patterns are educated guesses and must be verified by Evan on a real order for each retailer before the store release. Until then a missed confirmation page only means no savings prompt.
+
 ### 4. Terms-change detection
 
 Scheduled GitHub Action (weekly) runs the capture script, compares hashes to `manifest.json`, and opens an issue listing changed sources with a text diff summary. Re-extraction then runs locally via Codex and goes through human review. Captured text must not be committed or posted publicly in the issue (post hashes and short changed-line excerpts only).
