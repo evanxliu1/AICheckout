@@ -46,13 +46,13 @@ Each milestone is one branch and one PR cut from the latest `main`; independent 
 | --- | --- | --- | --- |
 | M1 | Catalog v3 contract and migration | — | none (coordinator pushes the migration) |
 | M2 | Engine v3 | M1 | none |
-| M3 | Reward-program valuation table | — (start now) | answer open question 2 |
+| M3 | Reward-program valuation table | — (start now) | none (resolved: decision 2) |
 | M4 | Catalog overlay: merchants, brands, choices, gates, rotating, checkout methods, issue dispositions | M1 | none |
 | M5 | Catalog builder v3 and the 180-card catalog | M1, M2, M3, M4 | none |
 | M6 | Extension state and engine wiring | M1, M2 | none |
 | M7 | Extension UI: wallet search, card options, value display, badge | M6 (M5 for real-data browser tests) | none |
 | M8 | Review app and API for the large catalog | M1 (M5 for real-data tests) | none |
-| M9 | Expansion eval | — (start now) | start the cross-model run (open question 4) |
+| M9 | Expansion eval | — (start now) | none (coordinator starts the run; decision 4) |
 | M10 | Docs, site, publish | M5–M9 | publish the release in the review app |
 | M11 | Card-expansion pipeline readiness | — (draft now, finalize after M5) | approve the design |
 
@@ -77,8 +77,8 @@ Start in parallel: M1, M3, M9, M11 (draft). After M1: M2, M4 and M8 in parallel.
 - **Scope.** `evals/curation/expansion/reward-programs.json`: every program the 180 cards earn, with value (hundredths of a cent), basis, publisher, URL, date read; card → program map with a ≤ 25-word currency anchor per card. One researcher subagent with web access collects values; an independent subagent re-reads every cited page; an adjudicator settles differences. Numbers, URLs and dates only.
 - **Files.** `reward-programs.json`, `scripts/lib/reward-programs.mjs` (Zod), `scripts/check-expansion-quotes.mjs` (scan the new file), tests in `scripts/lib/*.test.mjs`.
 - **Acceptance.** Every corpus card maps to one program; every published estimate has URL and date within 30 days; issuer-stated corpus values are carried, not replaced; quote check passes.
-- **Risks.** Publishers disagree widely (transferable currencies 1.0–2.0¢); pick one primary publisher (open question 2). Some programs have no published estimate.
-- **Evan.** Open question 2.
+- **Risks.** Publishers disagree widely (transferable currencies 1.0–2.0¢); pick one primary publisher (decision 2). Some programs have no published estimate.
+- **Evan.** Resolved (decision 2).
 
 ### M4 Catalog overlay
 - **Scope.** `evals/curation/expansion/catalog-overlay.json` (and `merchants.json` for brands and the three existing merchant profiles with `brandIds`): for every card, the base rule choice where needed, `acceptance`, choices, gates, rotating schedules (Freedom Flex Q1 2027 from its product note with `startsOn` 2027-01-01), checkout-method rules (PayPal Cashback, Venmo, Key Rewards, Bass Pro/Cabela's, Choice Privileges), store-only redemption labels; for every `other` rule a disposition (brand scope, new category, or `not-at-retail`); for every issue a disposition (`modelled`, `field-unstated`, `rule-held-out`, `card-held-out`, `noted`). Final list of new reward categories (for example `electronics` for Cash+ "Electronics stores" at Best Buy and Newegg); add one only when a rule or option names it. Authored by per-issuer subagents, checked by independent verifier subagents, adjudicated; per-issuer notes in `verification/conventions/`.
@@ -117,7 +117,7 @@ Start in parallel: M1, M3, M9, M11 (draft). After M1: M2, M4 and M8 in parallel.
 - **Evan.** Start (or authorize) the cross-model run: `npm run eval:v2 -- --provider codex --model <model> --corpus evals/curation/expansion/corpus.json` from the worktree with the captures.
 
 ### M10 Docs, site, publish
-- **Scope.** Wiki pages ([rewards engine](../system/rewards-engine.md), [reward rules](../domain/reward-rules.md), [cards](../domain/cards.md), [merchants](../domain/merchants.md), [extension](../system/extension.md), [cart badge](../system/cart-badge.md), [review app](../system/review-app.md), [database](../system/database.md), [evaluation](../system/evaluation.md), [catalog expansion](../system/catalog-expansion.md)); a catalog release runbook in `wiki/ops/`; README and site copy (seven cards → 180); stale package READMEs if Evan agrees (open question 5).
+- **Scope.** Wiki pages ([rewards engine](../system/rewards-engine.md), [reward rules](../domain/reward-rules.md), [cards](../domain/cards.md), [merchants](../domain/merchants.md), [extension](../system/extension.md), [cart badge](../system/cart-badge.md), [review app](../system/review-app.md), [database](../system/database.md), [evaluation](../system/evaluation.md), [catalog expansion](../system/catalog-expansion.md)); a catalog release runbook in `wiki/ops/`; README and site copy (seven cards → 180); stale package READMEs (decision 5).
 - **Publish steps.** (1) Coordinator confirms both migrations on hosted and `main` deployed on Render. (2) Evan, in the hosted review app: start a draft from `CATALOG_V3`, attach all captures from the local capture folders, review, publish with a note, before 2026-10-28. (3) Coordinator checks `GET /v1/catalog` serves `2026-10-02.expansion.1` and a `build:hosted` extension refreshes to it (closes the Phase 3 M6 check).
 - **Acceptance.** Linter clean; release live; roadmap marks Stage 2 done.
 
@@ -127,18 +127,20 @@ Start in parallel: M1, M3, M9, M11 (draft). After M1: M2, M4 and M8 in parallel.
 
 ## Risks across the stage
 
-- **Deadline.** The 2026-11-01 expiry is fixed by the capture date; slipping past 2026-10-28 leaves no valid hosted catalog. Freshness after that needs open question 1.
+- **Deadline.** The 2026-11-01 expiry is fixed by the capture date; slipping past 2026-10-28 leaves no valid hosted catalog. Freshness after that uses hash-only checks (decision 1).
 - **Rotating rules.** Freedom Flex and Discover Q4 rules end 2026-12-31; any catalog published after 2026-11-01 needs Q1 2027 data (Freedom Flex known; Discover not captured).
 - **Label trust.** All labels and the overlay are agent-verified; Evan deferred a human spot-check on 2026-10-02.
 - **Estimates as numbers.** Published valuations are opinions; the UI must never present them as issuer facts.
 
-## Open questions for Evan
+## Decisions on the plan's open questions
 
-1. **Freshness after 2026-11-01.** May the pipeline run a hash-only check (fetch into a temporary folder, compare SHA-256 with the manifest, never overwrite captures) so unchanged pages get a new `checkedOn`, and changed pages go back through extraction and verification? Without it, the 180-card catalog cannot be valid after 2026-11-01.
-2. **Valuation publisher.** One primary publisher for estimates (a conservative cash-like one or a higher travel-redemption one), and what to show for a program with no published estimate: an issuer-stated travel-only value from the captures where one exists, else units only with a prompt to set a value (recommended), or an assumed 1¢.
-3. **Override precedence.** Should a shopper's override for a program also replace an issuer-stated value on a card (planned), or only the estimate?
-4. **Cross-model eval.** Which model and who starts it; recommended gpt-5.5 low through Codex on all 173 cards (claude-opus-5-5 verified the labels, so it is not independent).
-5. **Package READMEs.** May M10 correct stale facts in `supabase/`, `apps/api/`, curation and `rewards-core` READMEs, which the 2026-10-02 directive keeps as package entry points?
+Resolved by the coordinator on 2026-10-02 under Evan's instruction to follow the coordinator's recommendations and finish Stage 2 completely; Evan may override any of them.
+
+1. **Freshness after 2026-11-01: yes, hash-only checks.** The pipeline may fetch pages into a temporary folder and compare SHA-256 with the manifest. It never overwrites a capture or a corpus label. Unchanged pages get a new `checkedOn`; changed pages are re-captured as a new dated capture and go back through extraction and verification. The eval corpora (`real.v2.2`, `expansion.v1`) stay frozen.
+2. **Valuation publisher: one conservative primary publisher** with per-program published values (cash-like rather than best-case travel redemptions), recorded with URL and retrieval date; M3 picks the publisher with the widest program coverage and documents why. Programs with no published estimate use an issuer-stated value from the captures where one exists; otherwise the card shows points only with a prompt to set a value. Never an assumed 1¢.
+3. **Override precedence: the shopper's override wins**, including over an issuer-stated value; it is the shopper's own valuation.
+4. **Cross-model eval: gpt-5.5 low guided.2 keyword-window.1 through Codex on all 173 cards.** The coordinator starts it; if the session's permission check blocks the long run, Evan runs the printed command.
+5. **Package READMEs: yes**, M10 corrects stale facts in them; they stay package entry points.
 
 ## Related
 
