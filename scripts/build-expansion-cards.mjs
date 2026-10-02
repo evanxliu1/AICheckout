@@ -320,6 +320,8 @@ const NOTES = {
     'Relaunched in 2026 with rotating 5% categories; the old 2% gas/restaurants version is closed.',
   'synchrony-amazon-secured-card':
     'Secured version of the Amazon Store Card, described on the same Amazon page; separate product.',
+  'synchrony-amazon-store-card':
+    'The amazon.com capture includes customer reviews after the issuer terms; review text is not evidence.',
   'capital-one-union-plus-cash-rewards': 'Affinity card for union members.',
   'capital-one-teamster-privilege-cash-rewards': 'Affinity card for Teamsters members.',
 };

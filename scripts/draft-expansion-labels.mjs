@@ -214,8 +214,12 @@ function researchQuotes(text) {
   return out;
 }
 
-/** Sentences of the captures that carry the rate and one of the keywords. */
-function searchAnchor(input, rateText, keywords) {
+/**
+ * The capture sentence that best supports a hint: it must carry the rate (when one is given) and any `required`
+ * pattern, and it ranks by how many distinct keywords it contains (at least two when two are available), then
+ * by shortness.
+ */
+function searchAnchor(input, rateText, keywords, required = null) {
   const number = /(\d+(?:\.\d+)?)\s*(%|x\b|X\b| points?| miles?)/.exec(rateText ?? '');
   const ratePattern = number
     ? new RegExp(
@@ -223,22 +227,40 @@ function searchAnchor(input, rateText, keywords) {
         'i',
       )
     : null;
-  const words = keywords.filter((word) => word.length >= 4 && !STOP.has(word.toLowerCase()));
+  const words = [
+    ...new Set(keywords.filter((word) => word.length >= 4 && !STOP.has(word.toLowerCase()))),
+  ].map((w) => new RegExp(`\\b${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i'));
   if (!words.length) return null;
-  const wordPattern = new RegExp(
-    `\\b(${words.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`,
-    'i',
-  );
+  const need = Math.min(2, words.length);
   let best = null;
   for (const document of input.documents)
     for (const line of document.body.split('\n'))
       for (const sentence of line.split(/(?<=[.!?])\s+/)) {
         const text = sentence.trim();
         if (text.length < 20 || text.length > MAX_ANCHOR) continue;
-        if ((ratePattern && !ratePattern.test(text)) || !wordPattern.test(text)) continue;
-        if (!best || text.length < best.length) best = text;
+        if ((ratePattern && !ratePattern.test(text)) || (required && !required.test(text))) continue;
+        const hits = words.filter((word) => word.test(text)).length;
+        if (hits < need) continue;
+        if (!best || hits > best.hits || (hits === best.hits && text.length < best.text.length))
+          best = { text, hits };
       }
-  return best && resolveQuote(best, input) ? best : null;
+  return best && resolveQuote(best.text, input) ? best.text : null;
+}
+
+/** The capture line (or sentence, if the line is long) around a resolving quote, so the anchor shows context. */
+function widen(quote, input) {
+  const span = resolveQuote(quote, input);
+  if (!span) return null;
+  const body = input.documents.find((document) => document.id === span.documentId).body;
+  const lineStart = body.lastIndexOf('\n', span.start - 1) + 1;
+  const lineEnd = body.indexOf('\n', span.end);
+  const line = body.slice(lineStart, lineEnd === -1 ? undefined : lineEnd).trim();
+  if (line.length <= MAX_ANCHOR && resolveQuote(line, input)) return line;
+  const sentences = line.split(/(?<=[.!?])\s+/);
+  const sentence = sentences.find((text) => resolveQuote(quote, { documents: [{ id: 'x', body: text }] }));
+  if (sentence && sentence.trim().length <= MAX_ANCHOR && resolveQuote(sentence.trim(), input))
+    return sentence.trim();
+  return anchorFor(quote, input);
 }
 
 const keywordsOf = (text) => [
@@ -248,18 +270,20 @@ const keywordsOf = (text) => [
 function productHints(card, input) {
   const card0 = research.get(card.id);
   const hints = [];
+  // Closed-loop use is stated rarely and loosely; accept only an explicit "can only be used at/on" sentence.
+  const STORE_ONLY = /\b(can|may) only be used\b|\bonly (be )?used (at|on|for)\b|\bonly accepted (at|on)\b/i;
   const add = (hint, quotes, keywords, rateText) => {
     let anchor = null,
       anchorMethod = null;
     for (const quote of quotes) {
-      anchor = anchorFor(quote, input);
+      anchor = anchorFor(quote, input) && widen(quote, input);
       if (anchor) {
         anchorMethod = 'research-quote';
         break;
       }
     }
     if (!anchor && input.documents.length) {
-      anchor = searchAnchor(input, rateText, keywords);
+      anchor = searchAnchor(input, rateText, keywords, hint.type === 'closed-loop' ? STORE_ONLY : null);
       if (anchor) anchorMethod = 'keyword-search';
     }
     hints.push(
@@ -275,7 +299,8 @@ function productHints(card, input) {
   };
   for (const rule of card0?.rewardsSummary ?? []) {
     const all = `${rule.category} ${rule.conditions ?? ''} ${rule.cap ?? ''}`;
-    const type = HINT_TYPES[rule.ruleType] ?? (/\b(paypal|venmo)\b/i.test(all) ? 'checkout-method' : null);
+    const type =
+      HINT_TYPES[rule.ruleType] ?? (/\b(paypal|venmo)\b/i.test(rule.category) ? 'checkout-method' : null);
     if (!type) continue;
     const membership = /\b(member|membership|prime|costco|sam's|bj's|enroll|relationship|checking)\b/i.test(
       rule.conditions ?? '',
@@ -311,7 +336,7 @@ function productHints(card, input) {
         merchants: card.coBrandPartner ? [card.coBrandPartner] : [],
       },
       [],
-      [...keywordsOf(card.coBrandPartner ?? ''), 'only'],
+      keywordsOf(card.coBrandPartner ?? ''),
       null,
     );
   return hints;

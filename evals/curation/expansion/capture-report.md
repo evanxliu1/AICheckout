@@ -50,4 +50,5 @@ Cards: 180; with at least one capture: 180; with none: 0.
 - **Capital One** application terms come from `disclosures.capitalone.com/disclosure.<productId>.en-US.html` with the product IDs found in the research; partner cards (Kohl’s, REI, Key Rewards, BJ’s, Bass Pro, Cabela’s, union cards) have only that page because their product pages are application flows.
 - **Discover rotating calendar** (`cashback-calendar.html`), down during research, loaded and lists the 2026 quarters; the stale `cashback-bonus.html` page and the alternate calendar URL were not used.
 - **Citi retail-card terms** (`citiretailservices.citibankonline.com/apply/...`) are application flows or HTML shells and were not used; Citi store cards rely on the citi.com product page.
+- **Amazon Store Card page** (`amazon-store-card-product`, amazon.com) includes customer reviews below the issuer terms. Review text is not issuer evidence: verifiers must reject any label or anchor that comes from it.
 - **Wells Fargo One Key terms** (`/credit-cards/terms/onekey/`) return an error page and were dropped; One Key cards use the product page footnotes.
