@@ -6,7 +6,7 @@ status: stable
 tags: [system, extension, badge, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:30:00Z
+  at: 2026-10-03T02:50:00Z
 verified_commit: 7322dec
 sources:
   - resource: ../../extension/src/badge/content.ts
@@ -37,7 +37,15 @@ sources:
 
 On a supported cart page the extension shows, without a click, the best owned card and its estimated cash back in a small pill bottom-right; clicking expands a panel with every owned card ranked, the applied rule and conditions, a payment-method selector and an editable amount. Built on branch `phase3b-auto-badge` (PR #13) with follow-ups on `phase3b-followups` (PR #14); both merged to `main` on 2026-10-02 (`7322dec`). The content script never receives card or wallet data: it sends the adapter's reading to the worker and learns only `{show: boolean}`; card data reaches only the badge iframe, an extension page in a closed shadow root.
 
-Stage 2 M7 (branch `s2-m7-extension-ui`, verified 2026-10-03 with the unit tests and `e2e/badge.spec.ts`): the panel uses the v3 result wording of the popup (units with value basis, cards not accepted here, ranking note) and `badgeCatalog` is `catalogSlice` for the owned cards and this merchant. Verified 2026-10-02 against `7322dec` by reading the code and running the extension unit tests (21 files, 378 tests pass, including `auto-reader.test.ts`, `badge-routing.test.ts`, `badge-service.test.ts`). The Stage 2 M6 changes (trimmed catalog in the `ready` view, catalog from the vault snapshot) were verified on branch `s2-m6-extension-state` with the unit tests and `e2e/badge.spec.ts` (passed).
+Verified 2026-10-02 against `7322dec` by reading the code and running the extension unit tests (21 files, 378 tests pass, including `auto-reader.test.ts`, `badge-routing.test.ts`, `badge-service.test.ts`). The Stage 2 M6 changes (trimmed catalog in the `ready` view, catalog from the vault snapshot) were verified on branch `s2-m6-extension-state` with the unit tests and `e2e/badge.spec.ts` (passed), and merged with PR #26. Since PR #27 the badge ranks against the bundled 178-card `CATALOG_V3` (only the owned cards' slice reaches the iframe).
+
+Stage 2 M7 (branch `s2-m7-extension-ui`, PR #30; verified 2026-10-03 with the unit tests and `e2e/badge.spec.ts`) words the v3 states in the badge with the popup's code ([`BadgeApp.tsx`](../../extension/src/badge/BadgeApp.tsx) reuses `EstimateRow` from `ComparisonResult.tsx` and the wording in `estimates.ts`; [decision](../decisions/2026-10-03-extension-ui-v3.md)), and `badgeCatalog` is `catalogSlice` for the owned cards and this merchant:
+
+- **Pill:** dollars for cash, store rewards and valued points (a published estimate is marked `est.`), units for a program without a value (texts below).
+- **Panel rows:** dollars first, then for points the units and value per unit labelled "Estimate", "Issuer-stated" or "Your value"; an unvalued program in units ("Shown in units because this program has no value set").
+- **Conditions:** an unanswered gate or chosen category is shown as a range with the question or option it depends on; a ranking note (`rankingNote`) appears when conditions or missing values could change the first card.
+- **Store cards not accepted here** are listed after the ranking, one line each ("works only at …", `notAcceptedLines`).
+- **Payment method:** the selector offers Venmo only when the catalog in effect is v3 (see `set-payment` below).
 
 ## Facts
 

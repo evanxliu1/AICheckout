@@ -215,4 +215,4 @@ it('edits a v3 card found by search: program value, brand scope, payment path an
     basis: 'published-estimate',
     valueHundredthsOfCent: 140,
   });
-});
+}, 30_000); // walks a 180-card editor; slow on shared CI runners

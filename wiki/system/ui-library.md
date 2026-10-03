@@ -6,7 +6,7 @@ status: stable
 tags: [system, ui, helios, accessibility]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:30:00Z
+  at: 2026-10-03T02:40:00Z
 sources:
   - resource: ../../packages/ui/src/index.ts
     title: Component exports
@@ -24,7 +24,7 @@ sources:
 
 `packages/ui` (`@ai-checkout/ui`) is this repo's own React 19 component set, written to the public [Helios](https://helios.hashicorp.design) component specs (HashiCorp's Ember-only library is not used) and styled only with `--token-*` CSS variables from `@hashicorp/design-system-tokens` 5.1.0. Icons are path data from `@hashicorp/flight-icons` 5.2.0 copied into a generated TS file. It is consumed as TypeScript source by the extension popup, onboarding and badge iframe, the review app and the public site. Light theme only (the token package ships no dark theme). Usage examples and licence notes: [`packages/ui/README.md`](../../packages/ui/README.md).
 
-Verified 2026-10-03 on branch `s2-m7-extension-ui` by running `npm test --workspace=@ai-checkout/ui` (39 tests plus the icon staleness check) and the gallery Playwright spec (6 passed).
+Verified 2026-10-03 on branch `s2-m7-extension-ui` after merging `main` (M10 part 1, Tailwind 4) by running `npm test --workspace=@ai-checkout/ui` (40 tests plus the icon staleness check) and the gallery Playwright spec (6 passed).
 
 ## Facts
 
@@ -49,7 +49,7 @@ Verified 2026-10-03 on branch `s2-m7-extension-ui` by running `npm test --worksp
 
 - CSP: components use no inline styles or `<style>` tags, but checkbox, radio, toggle and select use Helios token `data:` images, so consumers need `img-src 'self' data:` (the review app and site CSPs allow it; see [API](api.md#security-headers)).
 - `npm test` fails if `src/icons.generated.ts` is stale relative to `ICONS`.
-- The extension's Tailwind theme maps to `--token-*` variables so remaining utilities are tokens ([`extension/tailwind.config.js`](../../extension/tailwind.config.js)).
+- The extension's Tailwind 4 `@theme` maps colors, fonts, type sizes, weights, radii and shadows to `--token-*` variables so remaining utilities are tokens ([`extension/src/styles/globals.css`](../../extension/src/styles/globals.css); [decision](../decisions/2026-10-03-tailwind-4.md)).
 
 ## Tests
 

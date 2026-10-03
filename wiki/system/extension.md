@@ -6,7 +6,7 @@ status: stable
 tags: [system, extension, chrome, mv3]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:30:00Z
+  at: 2026-10-03T02:50:00Z
 sources:
   - resource: ../../extension/vite.config.ts
     title: Build plugins and generated manifest
@@ -44,7 +44,7 @@ sources:
 
 A Manifest V3 extension (`extension/`, Vite + `@crxjs/vite-plugin`, React 19, `@ai-checkout/ui`). The service worker owns all state in `chrome.storage`; the popup and onboarding pages are thin clients that send typed messages. State is plain local storage by default; a passphrase vault is optional. Carts are read by one generic interpreter driven by bundled, declarative site adapters. The automatic cart badge has its own page: [Cart badge](cart-badge.md).
 
-Verified 2026-10-03 on branch `s2-m7-extension-ui` (Stage 2 M7, merged with `main` after M5) by running `npm test --workspace=ai-checkout-extension` (28 vitest files, 680 tests, plus 6 `node --test` package tests) and the Playwright specs (`npm run test:browser`: 14 passed, 3 skipped by design; `npm run test:catalog:browser` and `test:package:browser` passed). Earlier: verified 2026-10-02 on branch `s2-m6-extension-state` (Stage 2 M6) by reading the code and running `npm test --workspace=ai-checkout-extension` (23 vitest files, 608 tests including the rewards engine suites, plus 6 `node --test` package tests) and the Playwright specs (`npm run test:browser`: 10 passed, 3 skipped by design; `npm run test:catalog:browser` and `test:package:browser` passed).
+Verified 2026-10-03 on branch `s2-m7-extension-ui` (Stage 2 M7, merged with `main` after M5 and again after M10 part 1 and Tailwind 4) by running `npm test --workspace=ai-checkout-extension` (28 vitest files, 688 tests, plus 6 `node --test` package tests) and the Playwright specs (`npm run test:browser`: 14 passed, 3 skipped by design; `npm run test:catalog:browser` and `test:package:browser` passed). Earlier: verified 2026-10-02 on branch `s2-m6-extension-state` (Stage 2 M6, merged with PR #26; M5 merged with PR #27 made `CATALOG_V3` the bundled catalog) by reading the code and running `npm test --workspace=ai-checkout-extension` (23 vitest files, 608 tests including the rewards engine suites, plus 6 `node --test` package tests) and the Playwright specs (`npm run test:browser`: 10 passed, 3 skipped by design; `npm run test:catalog:browser` and `test:package:browser` passed).
 
 ## Facts
 
@@ -117,6 +117,7 @@ Each merchant is a JSON spec in [`src/checkout/adapters/`](../../extension/src/c
 - Both content scripts are built by a custom esbuild IIFE plugin so the packaged hash does not depend on the checkout path.
 - Only the worker chunk carries the bundled catalog: with `CATALOG_V3` it is 587,077 bytes (52,727 gzip; 42,737 with `CATALOG_V2`), the upload ZIP 208,313 bytes (166,831). Popup, onboarding and content-script chunks import no catalog; check with `grep -l 2026-10-02.expansion.1 -r extension/dist` after a build.
 - The wallet editor lists all 178 bundled cards by issuer and refuses to save more than `MAX_WALLET_CARDS` (20, `state/keys.ts`, also the schema limit); native-popup browser specs pick cards by name (`checkCards`, `REAL_CARD_NAMES` in `e2e/native-popup.ts`), never by position. Unit tests that fix the clock use dates from 2026-10-02 (the bundle's `verifiedAt`); `popup.test.tsx` mocks only `Date.now`, so its date must not be later than the real date.
+- Styling is Tailwind 4 through `@tailwindcss/postcss` ([`postcss.config.js`](../../extension/postcss.config.js), with autoprefixer); the theme is CSS-first in [`src/styles/globals.css`](../../extension/src/styles/globals.css) (`@theme inline` on `--token-*`, no preflight, unlayered utilities, sources limited to `src/`). `space-y-*` keeps Tailwind 3's selector (top margin on each shown child after the first, at class specificity) and a small PostCSS step drops Tailwind 4's own `space-y` rules. Other utilities added later follow Tailwind 4 semantics (`border` sets a solid style, `ring` is 1 px, `hover:` only on hover-capable devices, `space-x`/`divide-*` use the zero-specificity form). The root `package.json` pins `lightningcss` only so npm 11 keeps its platform binaries in the lockfile ([decision](../decisions/2026-10-03-tailwind-4.md)).
 - `VITE_E2E_CATALOG_DATE` re-dates the bundled catalog for browser tests; the build refuses it unless the output dir is not `dist` (it uses `dist-e2e`).
 - `checkout:record-savings` is worker-internal: `routeMessage` denies it from every sender, pages included (since `1fd1e31`, covered by `tests/badge-routing.test.ts`).
 - `orderConfirmation.verified` is `false` for all three adapters: the paths are guesses until checked on a real order.

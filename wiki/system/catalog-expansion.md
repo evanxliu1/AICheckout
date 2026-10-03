@@ -1,18 +1,18 @@
 ---
 type: System Component
 title: Catalog expansion (Phase 7)
-description: The in-progress pipeline that grows the catalog from seven cards to the consumer cards of the top-10 U.S. issuers — research, capture, LLM extraction, draft labels with 25-word quotes, per-issuer agent verification and adjudication, and the 173-card agent-verified corpus `expansion.v1` — with results, known gaps and the remaining work.
+description: How the catalog grew from seven cards to 178 cards of the top-10 U.S. issuers — research, capture, LLM extraction, draft labels with 25-word quotes, per-issuer agent verification and adjudication, the 173-card agent-verified corpus `expansion.v1`, valuation, overlay and the catalog v3 build — with results, known gaps and the release still to publish.
 status: draft
 tags: [system, catalog, curation, expansion, phase-7]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T00:50:00Z
+  at: 2026-10-03T02:00:00Z
 verified_commit: e940b6f
 ---
 
 # Catalog expansion (Phase 7)
 
-Phase 7 widens the card catalog to the consumer cards of the ten largest U.S. issuers ([scope decision](../decisions/2026-10-01-top-ten-issuer-card-expansion.md)). The capture, extraction and first drafts merged into `main` with PR #16 (`be5de25`, branch `phase7-catalog-expansion`). The 25-word drafts, the verification findings, the conventions and the agent-verified corpus merged with PR #17 (`23d3d52`, branch `phase7-verify`); the paths below are in `evals/curation/expansion/` and `scripts/`. The gitignored captures and extraction traces are still only in the `../AICheckout-expansion` worktree. Stage 2 (engine, catalog v3, eval, release) is planned in the [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md).
+Phase 7 widens the card catalog to the consumer cards of the ten largest U.S. issuers ([scope decision](../decisions/2026-10-01-top-ten-issuer-card-expansion.md)). The capture, extraction and first drafts merged into `main` with PR #16 (`be5de25`, branch `phase7-catalog-expansion`). The 25-word drafts, the verification findings, the conventions and the agent-verified corpus merged with PR #17 (`23d3d52`, branch `phase7-verify`); the paths below are in `evals/curation/expansion/` and `scripts/`. The gitignored captures and extraction traces are still only in the `../AICheckout-expansion` worktree. Stage 2 (engine, catalog v3, eval, release) is planned in the [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md); as of 2026-10-03 M1–M6, M8, M9 and the M11 draft are merged (PRs #18–#27), the extension bundles the 178-card `CATALOG_V3`, M7 (extension UI) is in progress and the hosted release is M10 ([catalog release](../ops/catalog-release.md)).
 
 Read on 2026-10-02 from the `phase7-verify` worktree at `4b487da` (no model call, no re-capture).
 
@@ -92,7 +92,7 @@ Known gaps in the verified labels:
 
 ## Reward-program valuation (M3)
 
-Milestone M3 of the [Stage 2 plan](../product/phase-7-stage-2.md), branch `s2-m3-valuations` (2026-10-02). `evals/curation/expansion/reward-programs.json` maps each of the 180 cards (173 `expansion.v1`, 7 `real.v2.2`) to one of 52 programs, with a verbatim currency anchor of at most 25 words from one of the card's captures, and gives each program a value in hundredths of a cent per unit. Publisher choice and the issuer-stated rule: [decision](../decisions/2026-10-02-nerdwallet-primary-valuation-publisher.md).
+Milestone M3 of the [Stage 2 plan](../product/phase-7-stage-2.md), branch `s2-m3-valuations` (2026-10-02, merged with PR #20). `evals/curation/expansion/reward-programs.json` maps each of the 180 cards (173 `expansion.v1`, 7 `real.v2.2`) to one of 52 programs, with a verbatim currency anchor of at most 25 words from one of the card's captures, and gives each program a value in hundredths of a cent per unit. Publisher choice and the issuer-stated rule: [decision](../decisions/2026-10-02-nerdwallet-primary-valuation-publisher.md).
 
 - **Bases.** `cash` (the one `cash-back` program, 100; all 77 cards the corpora label `cash-back`, since their rates are already percentages); `published-estimate` (24 programs, NerdWallet, read 2026-10-02, URL in the file); `issuer-stated` (11 programs, a fixed redemption value quoted from a capture); `none` (16 programs: no value, the extension shows units only and asks the shopper). No value is assumed.
 - **Card-level values.** `statedValueHundredthsOfCent` repeats the corpus `pointValueHundredthsOfCent` (19 cards, e.g. `boa-travel-rewards` 60, Luxury Card 100/150/200) and wins over the program value, after the shopper's override.
@@ -156,7 +156,7 @@ Milestone M3 of the [Stage 2 plan](../product/phase-7-stage-2.md), branch `s2-m3
 
 ## Catalog overlay (M4)
 
-Stage 2 M4 (branch `s2-m4-catalog-overlay`, 2026-10-02) adds [`catalog-overlay.json`](../../evals/curation/expansion/catalog-overlay.json) and [`merchants.json`](../../evals/curation/expansion/merchants.json), the product structure catalog v3 needs that the corpus labels cannot hold ([conventions decision](../decisions/2026-10-02-catalog-overlay-conventions.md)). The corpus, product notes and reward-programs files are unchanged (a test pins their SHA-256).
+Stage 2 M4 (branch `s2-m4-catalog-overlay`, 2026-10-02, merged with PR #25) adds [`catalog-overlay.json`](../../evals/curation/expansion/catalog-overlay.json) and [`merchants.json`](../../evals/curation/expansion/merchants.json), the product structure catalog v3 needs that the corpus labels cannot hold ([conventions decision](../decisions/2026-10-02-catalog-overlay-conventions.md)). The corpus, product notes and reward-programs files are unchanged (a test pins their SHA-256).
 
 - **Format and check.** [`scripts/lib/catalog-overlay.mjs`](../../scripts/lib/catalog-overlay.mjs): Zod schemas, `checkOverlay` (every expansion card has an entry; every `other` rule, rule without a rate, spend cap without an after-cap rate, issue and hint has a disposition; patches guarded by the corpus category and rate; brand, gate, choice and program references resolve) and `draftCatalogV3`, which builds an unpublished catalog v3 from the corpora, programs, merchants and overlay and parses it with `catalogV3Schema`. Tests: `scripts/lib/catalog-overlay.test.mjs`. `check-expansion-quotes.mjs` scans both files and checks every overlay anchor and added-rule wording verbatim against the captures.
 - **Process.** Eight authoring subagents wrote per-issuer fragments (Amex, Wells Fargo and Discover shared one), eight independent verifier subagents re-read them against the captures, and the coordinator adjudicated every finding; rules O1–O21 are in [`general.md`](../../evals/curation/expansion/verification/conventions/general.md) and each issuer's file has an "Overlay (Stage 2 M4)" section. Agent-verified, not human-verified.
@@ -170,7 +170,7 @@ Stage 2 M4 (branch `s2-m4-catalog-overlay`, 2026-10-02) adds [`catalog-overlay.j
 
 ## Catalog v3 build (M5)
 
-Stage 2 M5 (branch `s2-m5-catalog-v3-build`, 2026-10-02) builds the release catalog `CATALOG_V3` ([`packages/rewards-core/src/catalog-v3.ts`](../../packages/rewards-core/src/catalog-v3.ts)) with `npm run catalog:v3` ([`scripts/build-catalog-v3.mjs`](../../scripts/build-catalog-v3.mjs), logic and tests in `scripts/lib/catalog-v3.mjs`); CI runs `catalog:v3:check`. Every count below is in the generated [build report](../../evals/curation/expansion/catalog-build-report.md) ([decision](../decisions/2026-10-02-catalog-v3-build.md)).
+Stage 2 M5 (branch `s2-m5-catalog-v3-build`, 2026-10-02, merged with PR #27) builds the release catalog `CATALOG_V3` ([`packages/rewards-core/src/catalog-v3.ts`](../../packages/rewards-core/src/catalog-v3.ts)) with `npm run catalog:v3` ([`scripts/build-catalog-v3.mjs`](../../scripts/build-catalog-v3.mjs), logic and tests in `scripts/lib/catalog-v3.mjs`); CI runs `catalog:v3:check`. Every count below is in the generated [build report](../../evals/curation/expansion/catalog-build-report.md) ([decision](../decisions/2026-10-02-catalog-v3-build.md)).
 
 - **Catalog.** Version `2026-10-02.expansion.1`, verified 2026-10-02, expires 2026-11-01T00:00Z (the 30-day maximum). 178 cards (171 expansion, 7 real), 820 rules (at most 17 per card), 328 sources, 70 programs (cash 19, published estimate 24, issuer-stated 11, none 16), 140 brands, 24 gates, 10 choices on 8 cards, 4 closed-loop cards, 19 cards with an issuer-stated value. Size 602,441 bytes JSON (57.5% of 1 MiB) and 643,327 bytes JSONB text (61.4%, the SQL measure; equal to the computed value in the parity harness).
 - **Not in the catalog.** Held out by the overlay: `marriott-bonvoy-bold`, `us-bank-shield` (no base rate). Dropped in verification, never in the corpus: 5 cards with no stated earn rate and 2 fuel cards (cents per gallon).
@@ -202,7 +202,7 @@ Stage 2 M5 (branch `s2-m5-catalog-v3-build`, 2026-10-02) builds the release cata
 
 - **Reviewer observations (no change made).** Closed-loop store cards with no stated cap guarantee $0 and rank below a flat 2% card (rule 21 plus the engine; M7 should show the 5%). NerdWallet values for bank currencies have no local capture. Customized Cash choice rules are also `enroll-once` (see M4 hand-off). My Best Buy certificates count at full cash value (O13).
 - **Extension bundle.** After merging M6, M5 switched the extension's bundled fallback to `CATALOG_V3`. Under newest-valid-wins an installed extension with cached release 1 moves to it on update; the seven real cards keep their IDs and all 26 rule IDs, and usage rows are compared in v3 form, so their wallets keep every reported limit (test in `state-migration.test.ts`; [decision](../decisions/2026-10-03-bundled-catalog-v3.md)). Worker chunk 42,737 → 587,077 bytes; pages unchanged.
-- **For M7 and M10.** M7: wallet search (178 cards in the editor), editors for choices, gates and point values. M10 publish: Evan starts a draft from `CATALOG_V3` in the review app and loads the capture folders `evals/curation/real/captures`, `evals/curation/real/merchant-captures` and `evals/curation/expansion/captures`: 328 sources, all present on Evan's machine on 2026-10-02 (312 expansion, 15 real, 2 merchant; `chase-rewards-category-faq` is in both the expansion and real folders with the same hash). The catalog expires 2026-11-01T00:00Z, so it must publish before then (target 2026-10-28).
+- **For M7 and M10.** M7: wallet search (178 cards in the editor), editors for choices, gates and point values. M10 publish, step by step in the [catalog release runbook](../ops/catalog-release.md): Evan starts a draft from `CATALOG_V3` in the review app and loads the capture folders `evals/curation/real/captures`, `evals/curation/real/merchant-captures` and `evals/curation/expansion/captures`: 328 sources, all present on Evan's machine on 2026-10-02 (312 expansion, 15 real, 2 merchant; `chase-rewards-category-faq` is in both the expansion and real folders with the same hash). The catalog expires 2026-11-01T00:00Z, so it must publish before then (target 2026-10-28).
 
 ## Remaining work
 
@@ -210,7 +210,7 @@ Superseded on 2026-10-02 by the milestones in the [Phase 7 Stage 2 plan](../prod
 
 1. Stage-2 engine and catalog work in [`packages/rewards-core`](rewards-engine.md): merchant-specific rules, cardholder-chosen and rotating categories, relationship tiers, closed-loop store cards, PayPal and Venmo rules, new merchant categories, points valuation; raise catalog limits from 30 cards / 30 sources (Zod `catalogV2Schema` and the SQL validator in `20260930225732_catalog_v2.sql`) to about 200 / 450 through a **new** migration (also check `MAX_CATALOG_BYTES`, 256 KiB, against the larger catalog); wallet search in the extension; gated rates (rule 17) and a redemption note type (rule 18).
 2. Evaluate on the 173 verified expansion cards plus the seven existing ones. Stage 2 M9 (2026-10-02): pipeline metrics and the luna re-score are in [`docs/evals/expansion.md`](../../docs/evals/expansion.md); the gpt-5.5 cross-model run scores 76.2% end to end.
-3. Evan publishes the release in the review app.
+3. Evan publishes the release in the review app ([catalog release](../ops/catalog-release.md); target 2026-10-28, hard limit 2026-11-01T00:00Z).
 
 ## Gotchas
 

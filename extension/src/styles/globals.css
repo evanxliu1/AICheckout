@@ -1,6 +1,69 @@
 /* Popup layout. Components and tokens come from @ai-checkout/ui/styles.css (Helios). */
-@tailwind components;
-@tailwind utilities;
+/* Tailwind 4, layout utilities only. Its design scales are replaced (not extended) by Helios
+ * tokens, so any color, type, radius or shadow utility resolves to a --token-* variable. No
+ * preflight: components bring their own resets. Utilities stay unlayered, as in Tailwind 3. */
+@import 'tailwindcss/theme.css' layer(theme);
+@tailwind utilities source(none);
+@source '../**/*.{ts,tsx,html}';
+
+@theme inline {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-page: var(--token-color-page-faint);
+  --color-surface: var(--token-color-surface-primary);
+  --color-surface-faint: var(--token-color-surface-faint);
+  --color-surface-strong: var(--token-color-surface-strong);
+  --color-strong: var(--token-color-foreground-strong);
+  --color-primary: var(--token-color-foreground-primary);
+  --color-faint: var(--token-color-foreground-faint);
+  --color-action: var(--token-color-foreground-action);
+  --color-critical: var(--token-color-foreground-critical-on-surface);
+  --color-success: var(--token-color-foreground-success-on-surface);
+  --color-border: var(--token-color-border-primary);
+  --color-border-faint: var(--token-color-border-faint);
+
+  --font-*: initial;
+  --font-sans: var(--token-typography-font-stack-text);
+  --font-mono: var(--token-typography-font-stack-code);
+  --font-weight-normal: var(--token-typography-font-weight-regular);
+  --font-weight-medium: var(--token-typography-font-weight-medium);
+  --font-weight-semibold: var(--token-typography-font-weight-semibold);
+  --font-weight-bold: var(--token-typography-font-weight-bold);
+
+  --text-*: initial;
+  --text-xs: var(--token-typography-body-100-font-size);
+  --text-xs--line-height: var(--token-typography-body-100-line-height);
+  --text-sm: var(--token-typography-body-200-font-size);
+  --text-sm--line-height: var(--token-typography-body-200-line-height);
+  --text-base: var(--token-typography-body-300-font-size);
+  --text-base--line-height: var(--token-typography-body-300-line-height);
+  --text-lg: var(--token-typography-display-300-font-size);
+  --text-lg--line-height: var(--token-typography-display-300-line-height);
+  --text-xl: var(--token-typography-display-400-font-size);
+  --text-xl--line-height: var(--token-typography-display-400-line-height);
+
+  --radius-*: initial;
+  --radius: var(--token-border-radius-medium);
+  --radius-none: 0;
+  --radius-sm: var(--token-border-radius-small);
+  --radius-lg: var(--token-border-radius-large);
+
+  --shadow-*: initial;
+  --shadow-none: none;
+  --shadow-low: var(--token-elevation-low-box-shadow);
+  --shadow-mid: var(--token-elevation-mid-box-shadow);
+}
+
+/* Tailwind 3's space-y: a top margin on each shown child after the first, at class specificity
+ * (Tailwind 4's zero-specificity bottom margins would lose to the margin resets below). */
+@utility space-y-* {
+  & > :not([hidden]) ~ :not([hidden]) {
+    margin-top: --spacing(--value(number));
+    margin-top: --value([length]);
+    margin-bottom: 0;
+  }
+}
 
 body {
   margin: 0;
