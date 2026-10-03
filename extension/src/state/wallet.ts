@@ -2,6 +2,28 @@ import { stableJson } from '../domain';
 import type { Catalog, CardProductV3 } from '../domain';
 import type { WalletState } from './contracts';
 
+/** A rule in v3 form for comparing terms across catalog versions: a v2 rule gets the v3 fields with
+ * the values that leave its meaning unchanged (no brands, shared cap, choice, gate or required
+ * payment path; `limitedTime` without a start). Release 1's real cards keep their rule IDs and terms
+ * in catalog v3, so their usage rows survive the switch to the v3 bundle. v3 rules are returned as
+ * they are; v1 rules keep their other differences and so never match a v3 rule. */
+function ruleTerms(rule: Record<string, unknown>): string {
+  if ('brandIds' in rule) return stableJson(rule);
+  const limitedTime = rule.limitedTime as { endsOn: string | null } | null | undefined;
+  return stableJson({
+    ...rule,
+    ...(limitedTime === undefined
+      ? {}
+      : { limitedTime: limitedTime && { startsOn: null, endsOn: limitedTime.endsOn } }),
+    brandIds: [],
+    excludedBrandIds: [],
+    sharedCapId: null,
+    choice: null,
+    requires: [],
+    requiredPaymentPaths: [],
+  });
+}
+
 export interface ReconciledWallet {
   wallet: WalletState;
   /** Usage rows (reported spend or activation) were dropped. */
@@ -14,7 +36,8 @@ export interface ReconciledWallet {
  * answers and point values whose IDs the catalog lacks, so those are dropped. Owned cards the
  * catalog lacks stay; comparisons report them (`unknown-owned-card`) until the shopper removes them.
  * With `before` (the catalog the wallet was saved under), a usage row is also dropped when its rule
- * changed, even under the same ID, because the reported limit was for the old terms. Chosen
+ * changed, even under the same ID, because the reported limit was for the old terms (compared in v3
+ * form, `ruleTerms`, so a v2 rule carried unchanged into v3 keeps its rows). Chosen
  * categories, gate answers and point values describe the shopper, not the terms, so they stay
  * while their IDs still resolve. v1 and v2 catalogs have none of them. */
 export function reconcileWallet(wallet: WalletState, after: Catalog, before?: Catalog): ReconciledWallet {
@@ -30,7 +53,7 @@ export function reconcileWallet(wallet: WalletState, after: Catalog, before?: Ca
       if (!next) return false;
       if (!before) return true;
       const old = oldRules?.find((r) => r.id === row.ruleId);
-      return !!old && stableJson(old) === stableJson(next);
+      return !!old && ruleTerms(old) === ruleTerms(next);
     });
     if (usage.length !== owned.usage.length) usageDropped = true;
     if (owned.choices === undefined) return { ...owned, usage };

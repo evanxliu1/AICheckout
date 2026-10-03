@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AlertInline, Button, Card, Checkbox, Field, Fieldset, Select, TextInput } from '@ai-checkout/ui';
 import { parseUsd, usageInputs } from '../domain';
 import type { Catalog, RuleUsage, Wallet } from '../domain';
-import { localDate } from '../state/keys';
+import { localDate, MAX_WALLET_CARDS } from '../state/keys';
 
 type Input = { spend: string; activation: RuleUsage['activation'] };
 
@@ -68,6 +68,10 @@ export default function WalletEditor({
     setError('');
     if (recordedOn !== localDate(Date.now())) {
       setError('The date changed. Close and reopen the card editor before entering today’s reward limits.');
+      return;
+    }
+    if (selected.length > MAX_WALLET_CARDS) {
+      setError(`Choose up to ${MAX_WALLET_CARDS} cards. You have ${selected.length} selected.`);
       return;
     }
     if (selected.some((id) => !catalog.cards.some((card) => card.id === id))) {

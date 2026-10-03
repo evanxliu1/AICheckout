@@ -1,7 +1,8 @@
 // @vitest-environment node
 // Which catalog is in effect (coordinator decision, 2026-10-02): of the cached published release and
-// the bundled catalog, the one valid now, and the newer one when both are. Here the bundle is a v3
-// catalog verified 2026-10-02, standing in for the M5 bundle, and the cached release is the v2
+// the bundled catalog, the one valid now, and the newer one when both are. Here the bundle is the small
+// v3 fixture verified 2026-10-02, standing in for the M5 bundle (`CATALOG_V3`, also verified
+// 2026-10-02; state-migration.test.ts runs the real one), and the cached release is the v2
 // catalog of hosted release 1 (verified 2026-09-29) or a newer v3 release.
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { PublishedRelease } from '../src/domain';
@@ -16,7 +17,7 @@ vi.mock('../src/domain', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../src/domain')>();
   const { CATALOG_V3_FIXTURE: fixture } = await import('../../packages/rewards-core/test-cases');
   // Only the bundled fallback in state/catalog.ts reads this export as `BUNDLED_CATALOG`.
-  return { ...actual, CATALOG_V2: { ...structuredClone(fixture), version: 'bundled-v3.1' } };
+  return { ...actual, CATALOG_V3: { ...structuredClone(fixture), version: 'bundled-v3.1' } };
 });
 
 const realV2 = (await vi.importActual<typeof import('../src/domain')>('../src/domain')).CATALOG_V2;

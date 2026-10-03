@@ -4,13 +4,16 @@ import { createStateService } from '../src/state/service';
 import { emptyState } from '../src/state/contracts';
 import Popup from '../src/popup/Popup';
 import type { AppState, CatalogCache } from '../src/state/contracts';
-import { PILOT_CATALOG } from '../src/domain';
+import { CATALOG_V3, PILOT_CATALOG } from '../src/domain';
+import WalletEditor from '../src/components/WalletEditor';
 
 let data: Record<string, unknown>;
 const read = vi.fn();
 beforeEach(() => {
   HTMLElement.prototype.scrollIntoView = vi.fn();
-  vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-09-30T15:00:00Z'));
+  // The bundled catalog v3 is valid from 2026-10-02. Only Date.now is mocked; the popup's stale-result
+  // timer takes midnight from the real clock, so this must not be later than the real date.
+  vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-10-02T15:00:00Z'));
   data = {
     checkoutStateV1: {
       ...emptyState(),
@@ -180,5 +183,31 @@ describe('offline comparison popup', () => {
     expect(await screen.findByRole('button', { name: 'Save cards' })).toBeTruthy();
     expect(screen.queryByText('$1.50')).toBeNull();
     expect(data).toEqual({});
+  });
+});
+
+describe('wallet editor with the bundled catalog v3', () => {
+  it('refuses more than 20 cards with a clear message instead of a rejected save', async () => {
+    const onSave = vi.fn(async () => undefined);
+    render(
+      <WalletEditor
+        catalog={CATALOG_V3}
+        wallet={{ defaultCardId: null, cards: [] }}
+        busy={false}
+        onSave={onSave}
+      />,
+    );
+    const boxes = screen.getAllByRole('checkbox');
+    expect(boxes).toHaveLength(CATALOG_V3.cards.length);
+    boxes.slice(0, 21).forEach((box) => fireEvent.click(box));
+    fireEvent.click(screen.getByRole('button', { name: 'Save cards' }));
+    expect((await screen.findByRole('alert')).textContent).toBe(
+      'Choose up to 20 cards. You have 21 selected.',
+    );
+    expect(onSave).not.toHaveBeenCalled();
+    fireEvent.click(boxes[20]);
+    fireEvent.click(screen.getByRole('button', { name: 'Save cards' }));
+    await vi.waitFor(() => expect(onSave).toHaveBeenCalledTimes(1));
+    expect((onSave.mock.calls[0] as unknown as [{ cards: unknown[] }])[0].cards).toHaveLength(20);
   });
 });

@@ -49,7 +49,7 @@ One npm workspace (root `package-lock.json`) covers `extension/`, `packages/*` a
 4. `npm run format:check` (Prettier; fix with `npm run format`). `docs/` and build output are excluded by [`.prettierignore`](../../.prettierignore).
 5. `npm run typecheck` (every workspace's `typecheck`).
 6. `npm test` (every workspace's Vitest suite, the extension package test, the `packages/ui` icon check, then `test:scripts` = `node --test scripts/lib/*.test.mjs`).
-7. Offline eval gates, no model call: `npm run eval:curation -- --check`, `npm run eval:v2 -- --check`, `npm run catalog:v2:check`.
+7. Offline eval gates, no model call: `npm run eval:curation -- --check`, `npm run eval:v2 -- --check`, `npm run catalog:v2:check`, `npm run catalog:v3:check`.
 8. `npm run build` (every workspace's `build`; the extension lands in `extension/dist/`).
 9. Browser tests, after `npx playwright install chromium`:
    - `npm run test:browser --workspace=@ai-checkout/ui`

@@ -9,6 +9,7 @@ import {
 } from '../domain';
 import type { Catalog, Comparison, UnavailableComparison } from '../domain';
 import { cartSnapshotSchema } from '../checkout/contracts';
+import { MAX_WALLET_CARDS } from './keys';
 
 const id = z.string().min(1).max(100);
 const eligibility = z.enum(['eligible', 'ineligible', 'unknown']);
@@ -40,7 +41,7 @@ const usageSchema = (max: number) =>
 const cardsSchema = <T extends z.ZodType<{ cardId: string }>>(card: T) =>
   z
     .array(card)
-    .max(20)
+    .max(MAX_WALLET_CARDS)
     .refine((cards) => unique(cards.map((c) => c.cardId)));
 const defaultOwned = (w: { defaultCardId: string | null; cards: { cardId: string }[] }) =>
   w.defaultCardId === null || w.cards.some((c) => c.cardId === w.defaultCardId);

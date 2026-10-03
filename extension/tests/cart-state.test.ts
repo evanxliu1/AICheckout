@@ -9,6 +9,7 @@ import {
 import { emptyState } from '../src/state/contracts';
 import type { AppState, CheckoutResponse } from '../src/state/contracts';
 import type { CartSnapshot } from '../src/checkout/contracts';
+import { CATALOG_V3 } from '../src/domain';
 
 let data: Record<string, unknown>;
 let now: number;
@@ -46,7 +47,7 @@ function purchase() {
   };
 }
 beforeEach(() => {
-  now = Date.parse('2026-09-30T15:00:00Z');
+  now = Date.parse('2026-10-03T15:00:00Z');
   data = {
     [STATE_KEY]: {
       ...emptyState(),
@@ -171,7 +172,8 @@ describe('durable cart workflow', () => {
     expect(reopened.notice).toContain('expired');
   });
   it('rechecks catalog validity after waiting for the page', async () => {
-    now = Date.parse('2026-10-28T23:59:59Z');
+    // One second before the bundled catalog expires.
+    now = Date.parse(CATALOG_V3.expiresAt) - 1000;
     read.mockResolvedValue({ ...(await read()), capturedAt: now });
     const captured = await capture();
     const input = purchase();
@@ -191,7 +193,7 @@ describe('durable cart workflow', () => {
     } else expect(result.error).toContain('date changed');
   });
   it('does not cross a local date boundary while waiting for the page', async () => {
-    now = new Date('2026-09-30T23:59:59').getTime();
+    now = new Date('2026-10-03T23:59:59').getTime();
     read.mockResolvedValue({ ...(await read()), capturedAt: now });
     const captured = await capture();
     const input = purchase();

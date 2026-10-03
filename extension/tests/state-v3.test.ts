@@ -4,7 +4,7 @@
 // refresh rules for v3 releases, pruning stale wallet inputs, and the badge's trimmed catalog.
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createCatalogFetcher, MAX_RESPONSE_BYTES } from '@ai-checkout/catalog-client';
-import { CATALOG_V2, CATALOG_V3_LIMITS, redateCatalog } from '../src/domain';
+import { CATALOG_V2, CATALOG_V3, CATALOG_V3_LIMITS, redateCatalog } from '../src/domain';
 import type { CatalogV3, PublishedRelease } from '../src/domain';
 import { CATALOG_V3_FIXTURE } from '../../packages/rewards-core/test-cases';
 import { largeCatalogV3 } from '../../packages/rewards-core/large-catalog-fixture';
@@ -21,6 +21,7 @@ import {
   MAX_VAULT_BYTES,
   newVaultIdentity,
 } from '../src/state/vault-crypto';
+import { reconcileWallet } from '../src/state/wallet';
 import { badgeCatalog, createBadgeService } from '../src/background/badge-service';
 import type { BadgeView } from '../src/badge/contracts';
 
@@ -62,7 +63,8 @@ function release(catalog: PublishedRelease['catalog'], sequence = 1): PublishedR
   };
 }
 const v3 = (version = 'test-v3.1') => ({ ...structuredClone(CATALOG_V3_FIXTURE), version });
-const v2Catalog = redateCatalog(CATALOG_V2, '2026-10-01');
+// Verified the same day as the bundled catalog v3, so a cached release of it stays in effect (a tie).
+const v2Catalog = redateCatalog(CATALOG_V2, DAY);
 const purchase = (merchantId = 'best-buy-us') => ({
   merchantId,
   currency: 'USD' as const,
@@ -471,6 +473,28 @@ describe('pruning on catalog update', () => {
       expect(
         await service({ type: 'checkout:save-wallet', expectedRevision: first.state.revision, wallet }),
       ).toMatchObject({ ok: false });
+  });
+});
+
+describe('release 1 (v2) to the bundled catalog v3', () => {
+  const realCards = (): WalletState => ({
+    defaultCardId: null,
+    cards: CATALOG_V2.cards.map((card) => ({ cardId: card.id, usage: card.rules.map((r) => usage(r.id)) })),
+  });
+  it('keeps every usage row: the real cards keep their rule IDs and terms in v3', () => {
+    const result = reconcileWallet(realCards(), CATALOG_V3, CATALOG_V2);
+    expect(result).toMatchObject({ usageDropped: false, optionsDropped: false });
+    expect(result.wallet).toEqual(realCards());
+  });
+  it('still drops a row whose rule changed under the same ID, or gained v3 structure', () => {
+    const changed = structuredClone(CATALOG_V3);
+    const bce = changed.cards.find((c) => c.id === 'amex-blue-cash-everyday')!;
+    bce.rules.find((r) => r.id === 'bce-online-retail')!.rateBps += 100;
+    bce.rules.find((r) => r.id === 'bce-gas')!.requiredPaymentPaths = ['card'];
+    const result = reconcileWallet(realCards(), changed, CATALOG_V2);
+    expect(result.usageDropped).toBe(true);
+    const kept = result.wallet.cards.find((c) => c.cardId === 'amex-blue-cash-everyday')!.usage;
+    expect(kept.map((u) => u.ruleId)).toEqual(['bce-base', 'bce-supermarkets']);
   });
 });
 
