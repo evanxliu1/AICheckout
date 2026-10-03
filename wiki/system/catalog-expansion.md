@@ -168,6 +168,41 @@ Stage 2 M4 (branch `s2-m4-catalog-overlay`, 2026-10-02) adds [`catalog-overlay.j
 - **Pre-merge review (2026-10-02, agent-verified).** Rankings at the three merchants hand-checked for 22 wallets with the merged engine. Two fixes ([decision](../decisions/2026-10-02-catalog-overlay-review.md)): account-age rates (Customized Cash first-year 6%, OnePay first-90-days 3% everywhere, Key Rewards first 30 days, JCPenney first 90 days) were always applied because the engine reads only `limitedTime` dates, so OnePay outranked Double Cash for every holder; they now need per-card gates (O20), and the check rejects a dateless limited-time rule without one. Store-credit unit names said dollars while the engine counts cents (O21).
 - **For M5.** Rule IDs in the draft are long (`<cardId>-r<index>`); display names are corpus card names; Amex Platinum's $500,000 cap exceeds `MAX_AMOUNT_CENTS` and is carried as `unstated`; the Barnes & Noble 5% rebate sits in an unvalued points program; Discover's Q1 2027 categories were never captured; `programDetails` repeats the store-credit programs (use either, the check keeps them equal); BofA Customized Cash choice rules are also `enroll-once`, so a shopper who answers the choice still sees `activation-unknown` until the rule's activation is recorded.
 
+## Catalog v3 build (M5)
+
+Stage 2 M5 (branch `s2-m5-catalog-v3-build`, 2026-10-02) builds the release catalog `CATALOG_V3` ([`packages/rewards-core/src/catalog-v3.ts`](../../packages/rewards-core/src/catalog-v3.ts)) with `npm run catalog:v3` ([`scripts/build-catalog-v3.mjs`](../../scripts/build-catalog-v3.mjs), logic and tests in `scripts/lib/catalog-v3.mjs`); CI runs `catalog:v3:check`. Every count below is in the generated [build report](../../evals/curation/expansion/catalog-build-report.md) ([decision](../decisions/2026-10-02-catalog-v3-build.md)).
+
+- **Catalog.** Version `2026-10-02.expansion.1`, verified 2026-10-02, expires 2026-11-01T00:00Z (the 30-day maximum). 178 cards (171 expansion, 7 real), 820 rules (at most 17 per card), 328 sources, 70 programs (cash 19, published estimate 24, issuer-stated 11, none 16), 140 brands, 24 gates, 10 choices on 8 cards, 4 closed-loop cards, 19 cards with an issuer-stated value. Size 602,441 bytes JSON (57.5% of 1 MiB) and 643,327 bytes JSONB text (61.4%, the SQL measure; equal to the computed value in the parity harness).
+- **Not in the catalog.** Held out by the overlay: `marriott-bonvoy-bold`, `us-bank-shield` (no base rate). Dropped in verification, never in the corpus: 5 cards with no stated earn rate and 2 fuel cards (cents per gallon).
+- **Real cards** keep release 1's names, rule IDs and rule semantics; the build fails if they differ from `CATALOG_V2`. Double Cash earns ThankYou points at its stated 1¢ (M3), the value release 1 used. A test compares v2 and v3 engine results for the seven cards at the three merchants across six purchase variants.
+- **IDs and names.** Rule IDs are `<prefix>-base` or `<prefix>-<choice option, brand or category>` plus gate answer, required path and start month where present (`prime-amazon-member`, `cash-plus-electronic-stores`, `freedom-flex-supermarkets-2026-10`); the prefix is the card ID without issuer and network words. Short names drop the issuer and network words ("Customized Cash Rewards", "Hilton Honors Surpass").
+- **Quote limit.** Listed in one array, 8 corpus exclusions on 7 cards would join a neighbour into more than 25 capture words, so the catalog omits them (the corpus keeps them). `check-expansion-quotes.mjs` now scans the built catalog and the build report; pass the real capture folders too (`--captures` for `expansion/captures`, `real/captures`, `real/merchant-captures`).
+- **Checks.** Zod (`catalogV3Schema`), SQL (`valid_catalog_v3` and `valid_catalog` in `scripts/test-catalog-parity.mjs`, local stack, 2026-10-02), pgTAP with the v3 seed (218 tests), quote check (338 captures).
+- **Golden ladders** (`extension/tests/catalog-v3-golden.test.ts`, $100 on 2026-10-15). Hand-computed, then reviewed against the captures by an independent subagent: all 16 confirmed, no catalog, overlay or engine error; the reviewer added W17 (agent-verified, not human-verified).
+
+| Wallet | Amazon | Best Buy | Newegg |
+| --- | --- | --- | --- |
+| W1 seven release-1 cards | Double Cash 2% (tied with Active Cash; BCE 1–3%) | same | same |
+| W2 Prime member, BCE with cap room | Prime Visa 5%; Amazon Store Card 0–5% (cap unstated) | BCE 3%; store card not accepted | same as Best Buy |
+| W3 not a Prime member | Prime Visa 3%; store card $0 | Double Cash 2% | same |
+| W4 Prime unanswered | Prime Visa 3–5% | — | — |
+| W5 Cash+ electronics chosen and active, My Best Buy | Double Cash 2% | Cash+ 5%; My Best Buy 1–5% | Cash+ 5% |
+| W6 Newegg store card, Cash+ unanswered | Quicksilver 1.5% | Quicksilver 1.5%; Cash+ 1–5% | Quicksilver 1.5%; Newegg 0–4% |
+| W7 points cards at 1¢ | Venture X 2X (tied with Active Cash) | same | same |
+| W8 overrides UR 2.05¢, MR 1.5¢, miles 0.9¢ | Sapphire Preferred $2.05 | same | same |
+| W9 unvalued Altitude, SKYPASS | Quicksilver; unvalued cards after, in units | same | same |
+| W10 Altitude at 1.5¢ | Quicksilver tied with Altitude Go | same | same |
+| W11 Customized Cash online, after year one | Customized Cash 3% | same | same |
+| W12 Customized Cash online, first year | Customized Cash 6% | same | same |
+| W13 PayPal Cashback, Venmo card by checkout method | card: BCE 3%; PayPal: PayPal Cashback 3%; Venmo: Venmo card 3% | card: BCE 3% | card: BCE 3% |
+| W14 Smartly, tier unanswered | Double Cash 2% (Smartly 2–4%) | same | same |
+| W15 Smartly $100,000 tier | Smartly 4% | same | same |
+| W16 only store cards | Amazon Store Card 0–5% | no accepted card | Newegg 0–4% |
+| W17 Customized Cash, year unanswered | 3–6%; through PayPal 1% | 3–6% | 3–6% |
+
+- **Reviewer observations (no change made).** Closed-loop store cards with no stated cap guarantee $0 and rank below a flat 2% card (rule 21 plus the engine; M7 should show the 5%). NerdWallet values for bank currencies have no local capture. Customized Cash choice rules are also `enroll-once` (see M4 hand-off). My Best Buy certificates count at full cash value (O13).
+- **For M6, M7 and M10.** The extension still bundles `CATALOG_V2` (tree shaking keeps v3 out of `extension/dist`); M6 switches the fallback. M10 publish: Evan starts a draft from `CATALOG_V3` in the review app and loads the capture folders `evals/curation/real/captures`, `evals/curation/real/merchant-captures` and `evals/curation/expansion/captures`: 328 sources, all present on Evan's machine on 2026-10-02 (312 expansion, 15 real, 2 merchant; `chase-rewards-category-faq` is in both the expansion and real folders with the same hash). The catalog expires 2026-11-01T00:00Z, so it must publish before then (target 2026-10-28).
+
 ## Remaining work
 
 Superseded on 2026-10-02 by the milestones in the [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md); the list below is the summary it was planned from.

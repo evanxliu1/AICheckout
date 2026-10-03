@@ -52,7 +52,8 @@ One npm workspace repo (`extension`, `packages/*`, `apps/*`), Node 24, TypeScrip
 | Script | npm alias | Purpose |
 | --- | --- | --- |
 | [`build-catalog-v2.mjs`](../../scripts/build-catalog-v2.mjs) | `catalog:v2`, `catalog:v2:check` | Generates `packages/rewards-core/src/catalog-v2.ts` from gold labels; `--check` fails if stale |
-| [`generate-db-seed.mjs`](../../scripts/generate-db-seed.mjs) | `db:seed:generate`, `db:seed:check` | Writes `supabase/seed.sql` (one unapproved draft of the bundled v2 catalog) |
+| [`build-catalog-v3.mjs`](../../scripts/build-catalog-v3.mjs) | `catalog:v3`, `catalog:v3:check` | Generates `packages/rewards-core/src/catalog-v3.ts` and `evals/curation/expansion/catalog-build-report.md` from the corpora and the M3/M4 files (logic in `scripts/lib/catalog-v3.mjs`); `--check` fails if either is stale |
+| [`generate-db-seed.mjs`](../../scripts/generate-db-seed.mjs) | `db:seed:generate`, `db:seed:check` | Writes `supabase/seed.sql` (one unapproved draft of the bundled v3 catalog) |
 | [`test-catalog-parity.mjs`](../../scripts/test-catalog-parity.mjs) | `db:test:catalog` | Runs shared cases through Zod and SQL validators |
 | [`test-catalog-http.mjs`](../../scripts/test-catalog-http.mjs) | `db:test:http` | Signed-session review/publish flow over HTTP |
 | [`test-db-concurrency.mjs`](../../scripts/test-db-concurrency.mjs) | `db:test:concurrency` | Multi-connection publication races |
