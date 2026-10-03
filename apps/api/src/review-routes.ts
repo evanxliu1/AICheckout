@@ -1,4 +1,4 @@
-import type { FastifyInstance, FastifyRequest } from 'fastify';
+import type { FastifyInstance, FastifyReply, FastifyRequest, RequestPayload } from 'fastify';
 import rateLimit from '@fastify/rate-limit';
 import { z } from 'zod';
 import { publishedReleaseSchema } from '@ai-checkout/rewards-core';
@@ -70,8 +70,10 @@ export async function reviewRoutes(
     bearer(request);
   });
   // Routes that accept large bodies verify the token before the body is read, so a caller without a
-  // valid session cannot push a ~1.5 MB capture or ~1.1 MB draft through to the database.
-  const signedIn = async (request: FastifyRequest) => {
+  // valid session cannot push a ~1.5 MB capture or ~1.1 MB draft through to the database. It is a
+  // preParsing hook, not onRequest: @fastify/rate-limit adds its onRequest hook after a route's own,
+  // and the check may call Supabase Auth, so it must run after the rate limit.
+  const verified = async (request: FastifyRequest) => {
     let valid: boolean;
     try {
       valid = await verifyToken(bearer(request));
@@ -80,6 +82,10 @@ export async function reviewRoutes(
       throw new ReviewError(503, 'review_unavailable');
     }
     if (!valid) throw new ReviewError(401, 'sign_in_required');
+  };
+  const signedIn = async (request: FastifyRequest, _reply: FastifyReply, payload: RequestPayload) => {
+    await verified(request);
+    return payload;
   };
   app.setErrorHandler((error, _request, reply) => {
     if (error instanceof ReviewError) return reply.code(error.status).send({ error: error.code });
@@ -148,7 +154,7 @@ export async function reviewRoutes(
   });
   app.post(
     '/drafts/:id/extractions/:runId/apply',
-    { bodyLimit: 196608, onRequest: signedIn },
+    { bodyLimit: 196608, preParsing: signedIn },
     async (request) => {
       input(z.strictObject({}), request.query);
       const params = input(z.strictObject({ id: draftIdSchema, runId: draftIdSchema }), request.params);
@@ -202,12 +208,12 @@ export async function reviewRoutes(
   // A draft cites up to 600 sources and the review app captures them one request each, so this route
   // has its own, higher limit (the app waits and retries on 429); every other review route keeps the
   // shared limit. It stays well below 600/min because each request may carry ~1.5 MB; the token is
-  // checked before the body is read.
+  // checked after the rate limit and before the body is read.
   app.post(
     '/sources',
     {
       bodyLimit: MAX_CAPTURE_REQUEST_BYTES,
-      onRequest: signedIn,
+      preParsing: signedIn,
       config: { rateLimit: { max: MAX_CAPTURES_PER_MINUTE, timeWindow: 60000 } },
     },
     async (request) => {
@@ -223,7 +229,7 @@ export async function reviewRoutes(
       );
     },
   );
-  app.post('/drafts', { bodyLimit: MAX_DRAFT_REQUEST_BYTES, onRequest: signedIn }, async (request) => {
+  app.post('/drafts', { bodyLimit: MAX_DRAFT_REQUEST_BYTES, preParsing: signedIn }, async (request) => {
     const value = input(createDraftInputSchema, request.body);
     return draftSchema.parse(
       await rpc('save_catalog_draft', bearer(request), {
@@ -235,7 +241,7 @@ export async function reviewRoutes(
       }),
     );
   });
-  app.put('/drafts/:id', { bodyLimit: MAX_DRAFT_REQUEST_BYTES, onRequest: signedIn }, async (request) => {
+  app.put('/drafts/:id', { bodyLimit: MAX_DRAFT_REQUEST_BYTES, preParsing: signedIn }, async (request) => {
     const draftId = id(request),
       value = input(updateDraftInputSchema, request.body);
     return draftSchema.parse(

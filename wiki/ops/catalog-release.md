@@ -83,8 +83,9 @@ All three folders are gitignored copyrighted text; never commit or upload them a
 | --- | --- |
 | `/health` times out | Render is waking the free instance; wait a minute and reload, then sign in again |
 | No `2026-10-02.expansion.1` option under **Start a new draft** | The deployed review app predates M5/M8, or the catalog expired. Coordinator checks the Render deploy of `main` |
-| A capture fails with `sign_in_required` | The session ended or the token was refused before the upload (the API checks it before reading the body). Reload, sign in, repeat steps 3–4 |
-| A capture fails with "could not be captured" or a length error | Check the hosted migrations include `20261002222425_catalog_v3` (captures up to 250,000 characters). Retrying is safe |
+| "Your session ended. Sign in again to continue." | The session ended or the token was refused before the upload (the API checks it before reading the body). Reload, sign in, repeat steps 3–4 |
+| "This input is too large…", "Some draft fields are invalid…" or "The draft, dates, or captured evidence are not ready to publish…" during capture | Check the hosted migrations include `20261002222425_catalog_v3` (captures up to 250,000 characters, drafts up to 600 sources) and that the file is the manifest's capture. Retrying is safe |
+| A capture stops with an unavailable error | Render or Supabase (including Auth, which the API asks to check the token) is down or restarting; wait and retry, nothing is attached until all captures succeed |
 | The capture keeps waiting on the rate limit for more than five minutes | Another tab or person is capturing too (the limit is shared per process); stop the other one, then retry |
 | Publish fails with a stale revision or head error | Someone saved or published in between: **Reload latest draft**, rebase if asked, review and approve again |
 | `/v1/catalog` still shows release 1 after publishing | Reload the review app and check the draft shows **Published**; if so and the endpoint is unchanged after a minute, tell the coordinator; do not publish again |

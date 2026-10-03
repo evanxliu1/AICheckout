@@ -20,16 +20,16 @@ Every known claim needs a citation with immutable document ID/hash and an exact,
 
 `runner.ts` accepts a narrow provider interface. Real adapters must send exactly the bounded context/schema, disable their own retries, honor the supplied abort signal and output-token ceiling, return actual usage/finish reason, and classify only retryable transport/provider failures as `ProviderFailure`. They must bound network response bytes before allocating/returning a body. Do not trust an adapter's `fixture` label from client input; provider identity/pricing is operator-controlled server configuration.
 
-| Limit | Default / fixed boundary |
-| --- | --- |
-| Spending | 0 micro-USD; metered calls rejected before invocation |
-| Attempts | At most 2; retry transient/rate-limit errors only |
-| Attempt / total deadline | 10 seconds / 15 seconds |
-| Input | At most 3 captured documents; 120,000 characters each (the capture limit, `MAX_SOURCE_BODY_CHARS`); 96,000 combined JSON bytes |
-| Input admission | 48,000 estimated tokens; conservative UTF-8 byte estimate including prompt/schema and framing allowance |
-| Requested output | 4,096 tokens; at most 65,536 returned text bytes |
-| Retry delay | 250 ms within the total deadline |
-| Trace errors | Stable categories and field paths; no raw exception messages |
+| Limit                    | Default / fixed boundary                                                                                                       |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| Spending                 | 0 micro-USD; metered calls rejected before invocation                                                                          |
+| Attempts                 | At most 2; retry transient/rate-limit errors only                                                                              |
+| Attempt / total deadline | 10 seconds / 15 seconds                                                                                                        |
+| Input                    | At most 3 captured documents; 120,000 characters each (the capture limit, `MAX_SOURCE_BODY_CHARS`); 96,000 combined JSON bytes |
+| Input admission          | 48,000 estimated tokens; conservative UTF-8 byte estimate including prompt/schema and framing allowance                        |
+| Requested output         | 4,096 tokens; at most 65,536 returned text bytes                                                                               |
+| Retry delay              | 250 ms within the total deadline                                                                                               |
+| Trace errors             | Stable categories and field paths; no raw exception messages                                                                   |
 
 No retry follows malformed JSON, invalid schemas/evidence, refusal, truncation, timeout, or cancellation. Cancellation/deadline returns even if an adapter leaves an asynchronous request unresolved; the adapter must also abort the underlying network operation. Synchronous JavaScript cannot be preempted, so elapsed time is rechecked before processing a result.
 

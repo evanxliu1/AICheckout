@@ -40,7 +40,7 @@ it('keeps the results page honest about what the numbers are', () => {
   for (const text of [
     'Expansion: 173 cards',
     'gpt-5.5 (low) at 76.2% end to end',
-    '97.5% for the same configuration on the seven-card held-out split',
+    '97.5% for the same model, effort, prompt and source selection on the seven-card held-out split',
     'not directly comparable',
     'agent-verified, one repeat',
     'is an upper bound, not an accuracy measure',

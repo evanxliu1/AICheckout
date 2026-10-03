@@ -501,13 +501,18 @@ it('maps a missing capture to source_not_found', async () => {
 });
 
 describe('token check before large review bodies', () => {
-  function guarded(valid: boolean | Error) {
+  function guarded(valid: boolean | Error, reviewLimit?: number) {
     const rpc = vi.fn().mockResolvedValue(queue);
     const verifyReviewToken = vi.fn(async () => {
       if (valid instanceof Error) throw valid;
       return valid;
     });
-    const instance = createApp({ readCatalog: async () => null, reviewRpc: rpc, verifyReviewToken });
+    const instance = createApp({
+      readCatalog: async () => null,
+      reviewRpc: rpc,
+      verifyReviewToken,
+      reviewLimit,
+    });
     apps.push(instance);
     return { instance, rpc, verifyReviewToken };
   }
@@ -530,6 +535,17 @@ describe('token check before large review bodies', () => {
     expect(response.json()).toEqual({ error: 'sign_in_required' });
     expect(verifyReviewToken).toHaveBeenCalledExactlyOnceWith(token);
     expect(rpc).not.toHaveBeenCalled();
+  });
+  it('rate-limits refused tokens before the check, so they cannot drive unlimited Auth calls', async () => {
+    const { instance, verifyReviewToken } = guarded(false, 2);
+    const send = (url: string) =>
+      instance.inject({ method: 'POST', url, headers: { authorization }, payload: { body: 'x' } });
+    for (const status of [401, 401, 429]) expect((await send('/v1/review/drafts')).statusCode).toBe(status);
+    expect(verifyReviewToken).toHaveBeenCalledTimes(2);
+    for (let i = 0; i < MAX_CAPTURES_PER_MINUTE; i++)
+      expect((await send('/v1/review/sources')).statusCode).toBe(401);
+    expect((await send('/v1/review/sources')).statusCode).toBe(429);
+    expect(verifyReviewToken).toHaveBeenCalledTimes(2 + MAX_CAPTURES_PER_MINUTE);
   });
   it('reports an unreachable Auth server as unavailable, not as signed out', async () => {
     const { instance, rpc } = guarded(new TypeError('fetch failed'));

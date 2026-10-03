@@ -1,4 +1,5 @@
 import { createHash, createPublicKey, verify, type JsonWebKey, type KeyObject } from 'node:crypto';
+import { readBoundedJson } from '@ai-checkout/catalog-client';
 
 /** Resolves true for a signed-in Supabase user's access token. A pre-check only: every review RPC
  * still verifies the token and checks reviewer membership and a live session in the database. */
@@ -28,9 +29,11 @@ function decodePart(part: string): Record<string, unknown> | undefined {
  * Verifies review tokens before a large request body is read. With asymmetric JWT signing keys
  * (ES256/RS256) the signature is checked locally against the project's JWKS, cached for 10 minutes.
  * When it cannot be checked locally (a legacy HS256 project, whose JWKS is empty, an unknown key
- * ID or an unreachable JWKS), Supabase Auth is asked once (`GET /auth/v1/user`) and a valid answer
- * is cached for up to a minute. A token that is malformed, expired, signed with a known key but
- * invalid, or refused by Auth resolves false.
+ * ID, an unreachable JWKS, or a valid signature whose issuer differs from `SUPABASE_URL`, as with a
+ * custom domain), Supabase Auth is asked once (`GET /auth/v1/user`) and a valid answer is cached for
+ * up to a minute. A token that is malformed, expired, signed with a known key but invalid, or refused
+ * by Auth (400, 401, 403) resolves false; any other Auth answer or a network failure throws, so the
+ * route reports the service as unavailable rather than signing the reviewer out.
  */
 export function createTokenVerifier(
   supabaseUrl: string,
@@ -53,10 +56,12 @@ export function createTokenVerifier(
         cache: 'no-store',
         headers: { apikey: publishableKey, Accept: 'application/json' },
       });
-      if (!response.ok) return;
-      const text = await response.text();
-      if (text.length > 65536) return;
-      const body = JSON.parse(text) as { keys?: unknown };
+      if (!response.ok) {
+        await response.body?.cancel();
+        return;
+      }
+      const body = (await readBoundedJson(response, 65536)) as { keys?: unknown } | null;
+      if (!body || typeof body !== 'object') return;
       const next = new Map<string, { key: KeyObject; alg: string }>();
       for (const jwk of Array.isArray(body.keys) ? body.keys : []) {
         if (!jwk || typeof jwk !== 'object') continue;
@@ -97,7 +102,8 @@ export function createTokenVerifier(
       headers: { apikey: publishableKey, Authorization: `Bearer ${token}`, Accept: 'application/json' },
     });
     await response.body?.cancel();
-    if (!response.ok) return false;
+    if ([400, 401, 403].includes(response.status)) return false;
+    if (!response.ok) throw new Error(`Auth answered ${response.status}.`);
     if (users.size >= USER_CACHE_MAX) users.delete(users.keys().next().value!);
     users.set(digest, clock() + USER_CACHE_TTL_MS);
     return true;
@@ -129,13 +135,11 @@ export function createTokenVerifier(
         } catch {
           valid = false;
         }
-        return (
-          valid &&
-          claims.iss === issuer &&
-          claims.role === 'authenticated' &&
-          typeof claims.sub === 'string' &&
-          claims.sub.length > 0
-        );
+        if (!valid || claims.role !== 'authenticated' || typeof claims.sub !== 'string' || !claims.sub)
+          return false;
+        // Signed by this project's key; a different issuer means SUPABASE_URL is not the URL Auth
+        // signs with (a custom domain, localhost vs 127.0.0.1), so let Auth decide.
+        if (claims.iss === issuer) return true;
       }
     }
     return askAuth(token);

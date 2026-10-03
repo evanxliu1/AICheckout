@@ -73,7 +73,7 @@ function Home(): Rendered {
   return {
     title: 'AI Checkout: the best card you already own, at checkout',
     description:
-      'A Chrome extension that compares the credit cards you already have at an online checkout, with rules reviewed by a human from the issuers’ own terms.',
+      'A Chrome extension that compares the credit cards you already have at an online checkout, with rules taken from the issuers’ own terms and each published release approved by a person.',
     body: (
       <>
         <div className="hero">
@@ -129,10 +129,12 @@ function Home(): Rendered {
         <Section id="how" title="How it decides">
           <ol className="steps">
             <li>
-              <strong>Rules from issuer terms, reviewed by a person.</strong> Each card’s earning rules
+              <strong>Rules from issuer terms, approved by a person.</strong> Each card’s earning rules
               (category, rate, spending cap, activation, U.S.-only, named merchants) come from a catalog built
               from the issuers’ published terms. A language model drafts changes with quotes, automated checks
-              verify every quote, and a person approves each release.{' '}
+              verify every quote, and a person approves each published release. The 178-card catalog bundled
+              today was checked against the captured terms by verifier agents; a person reviews it before it
+              is published as the next release.{' '}
               <Link href="/architecture/">How the catalog is maintained</Link>
             </li>
             <li>
@@ -446,10 +448,10 @@ function Results(): Rendered {
             <li>
               The less biased number is {cross?.model} at {percent(cross?.fieldAccuracy ?? null)} end to end
               {sevenCard
-                ? `, against ${percent(sevenCard.fieldAccuracy)} for the same configuration on the seven-card held-out split`
+                ? `, against ${percent(sevenCard.fieldAccuracy)} for the same model, effort, prompt and source selection on the seven-card held-out split (three cards, two repeats)`
                 : ''}
               . The two are not directly comparable: the expansion has points cards and merchant-specific
-              rules, and its labels were made differently.
+              rules, its labels were made differently, and output tokens were counted differently.
             </li>
             <li>
               On the rules each model did find, field accuracy is about 94% for both. Most of the end-to-end

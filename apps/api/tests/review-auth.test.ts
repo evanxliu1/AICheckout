@@ -73,7 +73,6 @@ describe('review token pre-check', () => {
   it.each([
     ['a forged signature', () => token({ key: other.privateKey })],
     ['an expired token', () => token({ payload: { ...claims, exp: now / 1000 - 1 } })],
-    ['another issuer', () => token({ payload: { ...claims, iss: 'https://evil.supabase.co/auth/v1' } })],
     ['the anon role', () => token({ payload: { ...claims, role: 'anon' } })],
     ['no subject', () => token({ payload: { ...claims, sub: '' } })],
     ['an algorithm that does not match the key', () => token({ alg: 'RS256', kid: 'ec-1' })],
@@ -81,6 +80,25 @@ describe('review token pre-check', () => {
     const { verify, userCalls } = setup();
     expect(await verify(make())).toBe(false);
     expect(userCalls()).toBe(0);
+  });
+  it('asks Auth when a validly signed token names another issuer (SUPABASE_URL not the signing URL)', async () => {
+    const other = token({ payload: { ...claims, iss: 'https://auth.custom.example/auth/v1' } });
+    const accepted = setup();
+    expect(await accepted.verify(other)).toBe(true);
+    expect(accepted.userCalls()).toBe(1);
+    const refused = setup({ userStatus: 401 });
+    expect(await refused.verify(other)).toBe(false);
+  });
+  it.each([500, 429, 502])(
+    'throws when Auth answers %i, so the route reports it as unavailable',
+    async (status) => {
+      const { verify } = setup({ keys: [], userStatus: status });
+      await expect(verify(hs256)).rejects.toThrow();
+    },
+  );
+  it.each([400, 403])('treats an Auth %i as an invalid token', async (status) => {
+    const { verify } = setup({ keys: [], userStatus: status });
+    expect(await verify(hs256)).toBe(false);
   });
   it.each(['', 'a.b', 'not.json.here', `${part({ alg: 'ES256' })}.${part({ sub: 'x' })}.sig`])(
     'rejects a malformed or exp-less token without any request (%s)',
