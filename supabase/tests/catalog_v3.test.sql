@@ -67,7 +67,7 @@ select ok(catalog_private.valid_catalog_v3(pg_temp.v3()),'synthetic v3 catalog p
 select ok(not catalog_private.valid_catalog_v2(pg_temp.v3()),'the v2 validator rejects a v3 catalog');
 select ok(not catalog_private.valid_catalog_v3(pg_temp.v3()||'{"schemaVersion":2}'),'the v3 validator rejects schema 2');
 select ok(coalesce((select pg_temp.valid(catalog) from catalog_private.drafts
-  where id='00000000-0000-4000-8000-000000000001'),false),'seeded v2 catalog still passes');
+  where id='00000000-0000-4000-8000-000000000001'),false),'seeded 178-card catalog v3 passes');
 select ok(not pg_temp.valid(pg_temp.v3()||'{"schemaVersion":4}'),'unknown schema version fails');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.v3(),'{cards,0,rules,0,brandIds}','["amazon"]')),
   'an open-loop card without an unconditional base fails');
