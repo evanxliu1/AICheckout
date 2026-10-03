@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-10-03
+* [The newest valid catalog is in effect, not always the cached release](./2026-10-03-newest-valid-catalog-wins.md) — Of the cached release and the bundled catalog, the one valid now and verified later; sequence rollback protection unchanged; a switch reconciles the wallet; partly supersedes the M6 extension state decision.
+
 ## 2026-10-02
 * [Extension state schema 3 for catalog v3 (Stage 2 M6)](./2026-10-02-extension-state-v3.md) — Catalog cache under its own plain key, wallet stamped with the catalog it was checked against and pruned by ID, responses carry the catalog so pages bundle none, badge gets only the owned cards' slice; supersedes the M1 "extension before M6" row.
 * [Catalog overlay pre-merge review: account-age gates and store-credit units](./2026-10-02-catalog-overlay-review.md) — Dateless account-age rates need a per-card gate because the engine reads only dates; store-credit cash-back units are cents; amends O14.

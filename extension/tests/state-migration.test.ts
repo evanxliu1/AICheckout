@@ -94,13 +94,17 @@ describe('pilot state migration (schema 1 → 3)', () => {
     if (compared.comparison?.status !== 'ready') throw new Error('not ready');
     expect(compared.comparison.estimates[0]).toMatchObject({ minRewardCents: 300, maxRewardCents: 300 });
   });
-  it('checks usage against a cached v1 release when one is saved', async () => {
+  it('checks usage against a cached v1 release when one is saved and newer than the bundle', async () => {
     const release = {
       sequence: 3,
       version: 'published.3',
-      catalog: { ...structuredClone(PILOT_CATALOG), version: 'published.3' },
+      catalog: {
+        ...structuredClone(PILOT_CATALOG),
+        version: 'published.3',
+        verifiedAt: '2026-09-30T00:00:00Z',
+      },
       catalog_hash: '3'.repeat(64),
-      published_at: '2026-09-25T12:00:00Z',
+      published_at: '2026-09-30T12:00:00Z',
     };
     data[STATE_KEY] = pilotState([row('bce-online-retail'), row('bce-base')], release);
     const read = ok(await createStateService(storage, () => now)({ type: 'checkout:get-state' }));

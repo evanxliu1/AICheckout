@@ -49,4 +49,4 @@ As in the "Chosen" column. The bundled fallback stays `CATALOG_V2` (imported onc
 - M7 builds the editors for choices, gates and point values; `WalletEditor` keeps the existing ones when saving cards. `purchaseSchema` and the badge payment selector still list the v2 payment paths (Venmo is M7).
 
 ## Status
-Accepted 2026-10-02 by the M6 implementing agent within the [Stage 2 plan](../product/phase-7-stage-2.md); the coordinator or Evan can revise any row. Supersedes the "Extension before M6" row of the [M1 contract details](2026-10-02-catalog-v3-contract-details.md).
+Accepted 2026-10-02 by the M6 implementing agent within the [Stage 2 plan](../product/phase-7-stage-2.md); the coordinator or Evan can revise any row. Supersedes the "Extension before M6" row of the [M1 contract details](2026-10-02-catalog-v3-contract-details.md). Partly superseded by [the newest valid catalog wins](2026-10-03-newest-valid-catalog-wins.md) (which catalog is in effect; the schema 2 → 3 cache choice).

@@ -108,8 +108,15 @@ describe('offline comparison popup', () => {
     expect(await screen.findByText('Saved estimate for a $260.00 Newegg US purchase.')).toBeTruthy();
     expect(screen.queryByText(/Subtotal only; tax and shipping/)).toBeNull();
   });
-  it('does not silently expand the scope of an older downloaded catalog', async () => {
-    const catalog = { ...PILOT_CATALOG, version: 'earlier-published', merchantIds: ['best-buy-us'] };
+  it('does not silently expand the scope of a newer downloaded catalog', async () => {
+    // Newer than the bundled catalog and valid, so it stays in effect (newest valid catalog wins).
+    const catalog = {
+      ...PILOT_CATALOG,
+      version: 'newer-published',
+      verifiedAt: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+      expiresAt: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toISOString(),
+      merchantIds: ['best-buy-us'],
+    };
     data.checkoutCatalogV1 = {
       lastCheckedAt: Date.now(),
       release: {

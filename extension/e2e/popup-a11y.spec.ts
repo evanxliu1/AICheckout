@@ -77,7 +77,7 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
     await expect(page.getByRole('alert')).toBeVisible();
     await check('cart-error');
 
-    // Expired terms: a cached published release past its expiry.
+    // An expired cached release gives way to the valid bundled terms (newest valid catalog wins).
     const day = 86_400_000;
     const expired = redateCatalog(PILOT_CATALOG, new Date(Date.now() - 2 * day).toISOString().slice(0, 10));
     expired.expiresAt = new Date(Date.now() - 60_000).toISOString().replace(/\.\d{3}Z$/, 'Z');
@@ -93,18 +93,37 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
     });
     await mutateVaultState(page, (state) => {
       state.wallet = { defaultCardId: null, cards: [{ cardId: 'capital-one-quicksilver', usage: [] }] };
-      // Keep the earlier saved comparison: the expired-terms alert must still stay on screen.
       state.revision += 1;
     });
     await page.reload();
     await page.getByLabel('Purchase amount (USD)').fill('100');
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
     await page.getByRole('button', { name: 'Compare my cards' }).click();
-    await expect(page.getByText(/These card terms have expired/)).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Your card estimate' })).toBeVisible();
+    await expect(page.getByText(/These card terms have expired/)).toHaveCount(0);
+
+    // An unavailable comparison: a saved card the catalog in effect lacks.
+    await mutateVaultState(page, (state) => {
+      state.wallet = {
+        defaultCardId: null,
+        cards: [
+          { cardId: 'capital-one-quicksilver', usage: [] },
+          { cardId: 'retired-test-card', usage: [] },
+        ],
+      };
+      // Keep the earlier saved comparison: the unavailable alert must still stay on screen.
+      state.revision += 1;
+    });
+    await page.reload();
+    await page.getByLabel('Purchase amount (USD)').fill('100');
+    await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
+    await page.getByRole('button', { name: 'Compare my cards' }).click();
+    const missing = /A saved card is missing from this catalog/;
+    await expect(page.getByRole('alert').filter({ hasText: missing })).toBeVisible();
     // Regression: the stale-result timer must not clear an unavailable result.
     await page.waitForTimeout(1500);
-    await expect(page.getByRole('alert').filter({ hasText: /These card terms have expired/ })).toBeVisible();
-    await check('catalog-expired');
+    await expect(page.getByRole('alert').filter({ hasText: missing })).toBeVisible();
+    await check('comparison-unavailable');
 
     // Settings (badge sites, optional protection), then protected and locked.
     await page.getByText('Settings', { exact: true }).click();

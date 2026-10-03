@@ -12,7 +12,7 @@ import {
 import { migrateState, reconcileState } from './migrate';
 import type { AppState, CatalogCache, CheckoutResponse } from './contracts';
 import type { CartSnapshot } from '../checkout/contracts';
-import { CatalogUpdateError, currentCatalog, prepareCatalogUpdate } from './catalog';
+import { catalogByVersion, CatalogUpdateError, currentCatalog, prepareCatalogUpdate } from './catalog';
 import { validateWallet } from './wallet';
 import {
   CART_MAX_AGE_MS,
@@ -80,28 +80,35 @@ export function createStateService(
       clearTimeout(timer!);
     }
   }
-  /** The saved state (migrated and reconciled with the catalog in effect) and the catalog cache. */
-  async function load(): Promise<{ state: AppState; cache: CatalogCache }> {
+  /** The saved state (migrated and reconciled with the catalog in effect at `now`), the catalog
+   * cache and the catalog in effect. */
+  async function load(now: number): Promise<{ state: AppState; cache: CatalogCache; catalog: Catalog }> {
     await storage.remove(LEGACY_KEYS);
     // The cache is public and can be fetched again: an unreadable one is ignored (bundled terms).
     const storedCache = catalogCacheSchema.safeParse((await storage.get(CATALOG_KEY))[CATALOG_KEY]);
     const saved = (await storage.get(STATE_KEY))[STATE_KEY];
-    if (saved === undefined)
-      return { state: emptyState(), cache: storedCache.success ? storedCache.data : emptyCatalogCache() };
+    if (saved === undefined) {
+      const cache = storedCache.success ? storedCache.data : emptyCatalogCache();
+      return { state: emptyState(), cache, catalog: currentCatalog(cache, now) };
+    }
     const parsed = storedAppStateSchema.safeParse(saved);
     if (!parsed.success) throw new Error('Saved data could not be read. Delete local data to start again.');
     if (parsed.data.schemaVersion !== 3) {
       // Earlier state: migrate once and persist in one write; a notice waits in pendingNotice.
-      const migrated = migrateState(parsed.data, storedCache.success ? storedCache.data : null);
+      const migrated = migrateState(parsed.data, storedCache.success ? storedCache.data : null, now);
       await storage.set({ [STATE_KEY]: migrated.state, [CATALOG_KEY]: migrated.cache });
-      return migrated;
+      return { ...migrated, catalog: currentCatalog(migrated.cache, now) };
     }
     const cache = storedCache.success ? storedCache.data : emptyCatalogCache();
-    const catalog = currentCatalog(cache);
-    if (parsed.data.walletCatalogVersion === catalog.version) return { state: parsed.data, cache };
-    const state = reconcileState(parsed.data, catalog);
+    const catalog = currentCatalog(cache, now);
+    if (parsed.data.walletCatalogVersion === catalog.version) return { state: parsed.data, cache, catalog };
+    const state = reconcileState(
+      parsed.data,
+      catalog,
+      catalogByVersion(cache, parsed.data.walletCatalogVersion),
+    );
     await storage.set({ [STATE_KEY]: state });
-    return { state, cache };
+    return { state, cache, catalog };
   }
   async function validateCart(cart: CartSnapshot | null, now: number) {
     if (!cart || !cartReader || cart.capturedAt > now || now - cart.capturedAt >= CART_MAX_AGE_MS) {
@@ -179,11 +186,15 @@ export function createStateService(
     try {
       if (request.type === 'checkout:clear') {
         await storage.clear();
-        return success(emptyState(), currentCatalog(emptyCatalogCache()), null, 'Local data deleted.');
+        return success(
+          emptyState(),
+          currentCatalog(emptyCatalogCache(), clock()),
+          null,
+          'Local data deleted.',
+        );
       }
-      const { state, cache } = await load();
-      const catalog = currentCatalog(cache);
       const now = clock();
+      const { state, cache, catalog } = await load(now);
       if (request.type === 'checkout:get-state') {
         const result = await response(state, catalog, now);
         // Show a pending notice only when nothing else is shown; clear it once it has been shown.
@@ -247,14 +258,15 @@ export function createStateService(
           clearTimeout(timer!);
           controller.abort();
         }
-        const update = prepareCatalogUpdate(state, cache, input, clock());
+        const checkedAt = clock();
+        const update = prepareCatalogUpdate(state, cache, input, checkedAt);
         // One write: the new cache and the wallet pruned for it land together or not at all.
         await storage.set(
           update.state
             ? { [STATE_KEY]: update.state, [CATALOG_KEY]: update.cache }
             : { [CATALOG_KEY]: update.cache },
         );
-        return success(update.state ?? state, currentCatalog(update.cache), null, update.notice);
+        return success(update.state ?? state, currentCatalog(update.cache, checkedAt), null, update.notice);
       }
       if (request.type === 'checkout:save-wallet') {
         if (!validateWallet(request.wallet, catalog))
@@ -350,8 +362,8 @@ export function createStateService(
   /** The saved state (migrated if needed) and the catalog in effect, read in the same queue as writes. */
   service.read = (): Promise<{ state: AppState; catalog: Catalog }> => {
     const task = queue.then(async () => {
-      const { state, cache } = await load();
-      return { state, catalog: currentCatalog(cache) };
+      const { state, catalog } = await load(clock());
+      return { state, catalog };
     });
     queue = task.then(
       () => undefined,
@@ -362,7 +374,7 @@ export function createStateService(
   // Browser lifecycle events enter the same queue as user writes.
   service.invalidateTab = (tabId: number): Promise<void> => {
     const task = queue.then(async () => {
-      const { state } = await load();
+      const { state } = await load(clock());
       if (state.cart?.tabId !== tabId) return;
       await storage.set({
         [STATE_KEY]: { ...state, revision: state.revision + 1, cart: null, comparison: null },

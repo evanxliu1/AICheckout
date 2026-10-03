@@ -170,8 +170,13 @@ describe('published catalog lifecycle', () => {
   ])('keeps the last snapshot on %s', async (failure) => {
     fetchCatalog.mockResolvedValue({ release: release(2) });
     ok(await refresh());
-    const before = structuredClone(data);
     const next = release(3);
+    if (failure === 'expired') {
+      // Loading at that time may switch to the valid bundled catalog; that write is not the refresh's.
+      now = Date.parse(next.catalog.expiresAt);
+      ok(await service()({ type: 'checkout:get-state' }));
+    }
+    const before = structuredClone(data);
     let response: unknown = { release: next };
     if (failure === 'rollback') response = { release: release(1) };
     if (failure === 'same sequence changed') {
@@ -182,9 +187,6 @@ describe('published catalog lifecycle', () => {
     }
     if (failure === 'missing release') response = { release: null };
     if (failure === 'invalid schema') next.catalog.cards[0].rules[0].rateBps = -1;
-    if (failure === 'expired') {
-      now = Date.parse(next.catalog.expiresAt);
-    }
     if (failure === 'future') next.published_at = '2026-09-26T00:00:00Z';
     fetchCatalog.mockResolvedValue(response);
     expect(await refresh()).toMatchObject({ ok: false });

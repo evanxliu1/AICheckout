@@ -188,7 +188,7 @@ export function createVaultService(
         return {
           ok: true,
           state: emptyState(),
-          catalog: currentCatalog(emptyCatalogCache()),
+          catalog: currentCatalog(emptyCatalogCache(), clock()),
           comparison: null,
           notice: 'Local data deleted.',
           catalogUpdatesAvailable: !!fetchCatalog,
