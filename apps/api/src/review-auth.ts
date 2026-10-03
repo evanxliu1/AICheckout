@@ -9,6 +9,11 @@ const JWKS_TTL_MS = 10 * 60_000;
 const JWKS_RETRY_MS = 60_000;
 const USER_CACHE_TTL_MS = 60_000;
 const USER_CACHE_MAX = 256;
+// Each Supabase call is capped below half of the server's 10 s requestTimeout, so a JWKS refresh plus
+// an Auth call still leave time to receive the body once the token is accepted.
+const FETCH_TIMEOUT_MS = 3000;
+// The database stays the authority on expiry; tolerate a small clock difference here, as PostgREST does.
+const CLOCK_SKEW_MS = 30_000;
 const ASYMMETRIC: Record<string, { hash: string; dsaEncoding?: 'ieee-p1363' }> = {
   ES256: { hash: 'sha256', dsaEncoding: 'ieee-p1363' },
   RS256: { hash: 'sha256' },
@@ -51,7 +56,7 @@ export function createTokenVerifier(
     keysAt = clock();
     try {
       const response = await fetcher(new URL('/auth/v1/.well-known/jwks.json', base), {
-        signal: AbortSignal.timeout(5000),
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
         redirect: 'error',
         cache: 'no-store',
         headers: { apikey: publishableKey, Accept: 'application/json' },
@@ -96,7 +101,7 @@ export function createTokenVerifier(
     if (until !== undefined && until > clock()) return true;
     users.delete(digest);
     const response = await fetcher(new URL('/auth/v1/user', base), {
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
       redirect: 'error',
       cache: 'no-store',
       headers: { apikey: publishableKey, Authorization: `Bearer ${token}`, Accept: 'application/json' },
@@ -116,7 +121,7 @@ export function createTokenVerifier(
       claims = decodePart(parts[1]!);
     if (!header || !claims) return false;
     const exp = claims.exp;
-    if (typeof exp !== 'number' || exp * 1000 <= clock()) return false;
+    if (typeof exp !== 'number' || exp * 1000 + CLOCK_SKEW_MS <= clock()) return false;
     const alg = header.alg,
       kid = header.kid;
     if (typeof alg === 'string' && ASYMMETRIC[alg] && typeof kid === 'string') {

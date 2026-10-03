@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { generateKeyPairSync, sign, type KeyObject } from 'node:crypto';
+import { createHmac, generateKeyPairSync, sign, type KeyObject } from 'node:crypto';
 import { createTokenVerifier } from '../src/review-auth.ts';
 
 const supabaseUrl = 'https://project.supabase.co';
@@ -72,7 +72,7 @@ describe('review token pre-check', () => {
   });
   it.each([
     ['a forged signature', () => token({ key: other.privateKey })],
-    ['an expired token', () => token({ payload: { ...claims, exp: now / 1000 - 1 } })],
+    ['a token expired beyond the 30 s skew', () => token({ payload: { ...claims, exp: now / 1000 - 31 } })],
     ['the anon role', () => token({ payload: { ...claims, role: 'anon' } })],
     ['no subject', () => token({ payload: { ...claims, sub: '' } })],
     ['an algorithm that does not match the key', () => token({ alg: 'RS256', kid: 'ec-1' })],
@@ -157,5 +157,74 @@ describe('review token pre-check', () => {
       clock: () => now,
     });
     await expect(verify(hs256)).rejects.toThrow();
+  });
+});
+
+describe('review token pre-check hardening', () => {
+  it('tolerates up to 30 s of clock skew past exp, and no more, without asking Auth', async () => {
+    const { verify, fetcher } = setup();
+    expect(await verify(token({ payload: { ...claims, exp: now / 1000 - 29 } }))).toBe(true);
+    const expired = setup();
+    expect(await expired.verify(token({ payload: { ...claims, exp: now / 1000 - 31 } }))).toBe(false);
+    expect(expired.fetcher).not.toHaveBeenCalled();
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+  it.each([
+    [
+      'HS256 keyed with the public key of a known kid',
+      () => {
+        const data = `${part({ alg: 'HS256', kid: 'ec-1', typ: 'JWT' })}.${part(claims)}`;
+        const secret = ec.publicKey.export({ format: 'pem', type: 'spki' });
+        return `${data}.${createHmac('sha256', secret).update(data).digest('base64url')}`;
+      },
+    ],
+    ['alg none with a known kid', () => `${part({ alg: 'none', kid: 'ec-1' })}.${part(claims)}.`],
+    ['alg none without a signature part', () => `${part({ alg: 'none' })}.${part(claims)}`],
+  ])('never accepts %s locally; only Auth can', async (_label, make) => {
+    const { verify, userCalls } = setup({ userStatus: 401 });
+    expect(await verify(make())).toBe(false);
+    expect(userCalls()).toBeLessThanOrEqual(1);
+  });
+  it('caches a positive Auth answer only for the exact token it was given', async () => {
+    let status = 200;
+    const fetcher = vi.fn(async (url: URL | RequestInfo) =>
+      new URL(String(url)).pathname === '/auth/v1/user'
+        ? Response.json({}, { status })
+        : Response.json({ keys: [] }),
+    );
+    const verify = createTokenVerifier(supabaseUrl, 'sb_publishable_test', {
+      fetcher: fetcher as unknown as typeof fetch,
+      clock: () => now,
+    });
+    expect(await verify(hs256)).toBe(true);
+    status = 401;
+    expect(await verify(hs256)).toBe(true);
+    // Same header and claims, different signature: a different token, so Auth is asked again.
+    expect(await verify(`${hs256.slice(0, hs256.lastIndexOf('.'))}.b3RoZXI`)).toBe(false);
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+  it('ignores a JWKS larger than 64 KiB and asks Auth instead', async () => {
+    const fetcher = vi.fn(async (url: URL | RequestInfo) =>
+      new URL(String(url)).pathname === '/auth/v1/user'
+        ? Response.json({}, { status: 401 })
+        : Response.json({ keys: [jwk(ec.publicKey, 'ec-1', 'ES256')], pad: 'x'.repeat(70_000) }),
+    );
+    const verify = createTokenVerifier(supabaseUrl, 'sb_publishable_test', {
+      fetcher: fetcher as unknown as typeof fetch,
+      clock: () => now,
+    });
+    expect(await verify(token())).toBe(false);
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+  it('bounds every Supabase call with a timeout, refuses redirects and keeps the token out of URLs', async () => {
+    const { verify, fetcher } = setup({ keys: [] });
+    const value = token();
+    await verify(value);
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    for (const [url, init] of fetcher.mock.calls as unknown as [URL, RequestInit][]) {
+      expect(init.signal).toBeInstanceOf(AbortSignal);
+      expect(init.redirect).toBe('error');
+      expect(String(url)).not.toContain(value.split('.')[2]);
+    }
   });
 });
