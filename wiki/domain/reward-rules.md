@@ -109,6 +109,8 @@ Stage 2 M1 added the catalog v3 contract ([rewards engine](../system/rewards-eng
 | `limitedTime.startsOn` | Rotating or future rules start on this date (Freedom Flex Q1 2027); before it the rule is `not-started` |
 | Program value | Units convert to cents with the shopper's override, else the card's issuer-stated value, else the program's valuation ([decision](../decisions/2026-10-02-points-valuation-published-estimates.md)): cents = ⌊Σ spend × rate × value / 1,000,000⌋. `none` means units only: the card is listed after every valued card that may earn cents (but before a valued card earning $0 when it guarantees units) with `value-unknown`, never at an assumed 1¢ |
 
+**How the M4 overlay uses these fields** ([decision](../decisions/2026-10-02-catalog-overlay-conventions.md)): a brand-scoped rule always has category `other` and matches on brand alone; `excludedBrandIds` appear only on category rules; a statement that third-party payment accounts or wallets "may not" earn a bonus puts those paths in `excludedPaymentPaths` (the base rate is then counted for them); gates ask about the cardholder only, never about the purchase (financing, minimum amounts and store-brand items are noted or the rule is held out); the lowest tier every cardholder holds stays ungated; first-year and first-30-days rates are `limitedTime` with null dates and a per-card account-age gate, since the engine reads only the dates ([review decision](../decisions/2026-10-02-catalog-overlay-review.md)); store-credit cash-back programs count units in cents.
+
 Shopper inputs for v3: per card the chosen options; per wallet the gate answers (they describe the cardholder, so one answer covers every card) and a value override for any points program.
 
 ## Gotchas

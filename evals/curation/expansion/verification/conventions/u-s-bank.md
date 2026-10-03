@@ -10,3 +10,42 @@ Issuer-specific decisions for U.S. Bank cards. They refine [general.md](general.
 - **SKYPASS** (2026-10-02). Korean Air ticket purchases (Korean Air as merchant of record) are an `other` rule at the card's Korean Air multiple (2X Visa Signature, 3X Select). Every card has a 1X base rule. The Visa Signature "2X miles on travel" headline covers only Korean Air, hotels and dining, so other travel earns the base.
 - **State Farm** (2026-10-02). The agent-application "up to 5%" first-year offer on insurance premiums is an `ambiguous` issue, not a rule and not a conflict, because no exact rate is stated. The standing 3% insurance rule is not limited-time. The Good Neighbor Visa states no earn rate and is dropped (general 9).
 - **Travel Center rules** (2026-10-02). These are prepaid air/hotel/car bookings in the U.S. Bank Travel Center. They are `travel-portal` at the total rate (base plus the additional 4%: 5% on Cash+ cards, 4% on Shield, 5X on Altitude Connect and Edward Jones).
+
+
+## Overlay (Stage 2 M4)
+
+Decisions for `../../catalog-overlay.json`, made by the issuer's overlay author on 2026-10-02 under the general overlay conventions (O1–O19), then checked by an independent verifier subagent and adjudicated by the M4 coordinator (agent-verified).
+
+- **Cash+ and Cash+ Secured choices** (2026-10-02). Two card choices per card. `five-percent-categories` is `chosen` with 2 picks and all 12 product-page options. `two-percent-category` is `chosen` with 1 pick and 3 options. Neither has defaults: with no selection, everything earns 1%. Activation stays `recurring` as labelled. The 7 kept 5% rules share `sharedCapId: five-percent-quarterly` ($2,000 per quarter, then 1%). The 2% gas option points at both the `gas` and the `ev-charging` rule.
+- **Cash+ option mapping** (2026-10-02). Electronic stores go to `electronics` and Department stores to `department-stores`. Fast food, Movie theaters, Restaurants, TV/internet/streaming and Ground transportation keep their corpus categories (O8). Select clothing stores is brand-scoped to the 13 chains on the sample-merchants page, because that page says the category covers only the listed merchants (O3 brand family). Rule-held-out: Cell phone, Home utilities and Gyms/fitness ("not at retail"), and Furniture stores and Sporting goods ("no v3 category"). Every held-out option stays in the choice list.
+- **Cash+ brand exclusions** (2026-10-02). Department stores exclude Walmart, Target and Costco, which the page names as not qualifying. Electronics exclude Verizon, AT&T, Target and Walmart, also named. The grocery and gas/EV options exclude `walmart`, `target`, `costco`, `sams-club` and `bjs-wholesale-club`, because discount stores/supercenters and wholesale clubs earn 1%. Costco, Sam's Club and BJ's stand in for the "wholesale clubs" class. The streaming option excludes the `paypal` path and the `amazon` brand, which is the conservative reading of "may not qualify".
+- **Altitude Go, Go Secured and Connect** (2026-10-02). The same five-brand exclusion goes on grocery, gas and EV rules, from the rewards-terms sentences saying those merchants earn only 1 point. Gas at grocery stores is left to merchant category, not brands. The Connect "travel category purchases" 4X rule maps to `transit`, so only its taxi, limousine and train part is represented. Connect's gas and EV rules share one $1,000 quarterly cap.
+- **Smartly** (2026-10-02). There is a new gate `us-bank-smartly-balance-tier` with options `none`, `10k-to-49k`, `50k-to-99k` and `100k-plus`. Three added all-purchases rules (250, 300 and 400 bps) require one tier each. Each has a spend cap of $10,000 per billing cycle, then 200, with activation `unstated`. The 2% unconditional base stays. The bonus does not apply to education, gift card, insurance, tax, B2B and bill-payment purchases, and those exclusions are not modelled.
+- **Shield** (2026-10-02). Card held out (O6). The only stated rate is the 4% Travel Center rate, and there is no base.
+- **Harley-Davidson** (2026-10-02). The H-D merchant rules are brand-scoped to `harley-davidson`, and the lodging rules are held out (not at retail). Points redeem only at H-D, so `harley-davidson-visa-points` gets `redemptionBrandIds: [harley-davidson]` under O13, with point value still null. Points per mile ridden are `noted`.
+- **SKYPASS** (2026-10-02). The Korean Air ticket rules are brand-scoped to `korean-air`. Hotels (Visa Signature) and airlines/hotels/car rental (Select) are held out (not at retail). `korean-air-skypass` uses unit "miles" with no redemption brands, because airline miles are travel-only under general 20.
+- **State Farm** (2026-10-02). Both insurance rules are held out (not at retail). The Secured card's missing after-cap rate therefore needs no handling, and its issue is `noted`. The agent-application "up to 5%" issues are `noted`.
+- **Edward Jones** (2026-10-02). There is one `automatic` choice, `top-three-categories`, with 3 picks and all 18 options. Kept option rules exclude Amazon, Target and Walmart. Mappings: Electronic & Appliance Stores to `electronics`; Hardware Stores (home supply warehouses, building materials, garden) to `home-improvement`; Clothing & Department Stores to `department-stores`. That last option is wider than department stores but pays at every department store, so mapping it only drops clothing and shoe stores, which is the conservative side. Held out: Furniture, Sundry Retail, Pet Shops, Specialty Food & Catering and Vehicle Sales/Parts ("no v3 category"), and Charity, Health Care and Travel ("not at retail"). The Loyalty Points value is `noted`.
+- **Fidelity** (2026-10-02). The Fidelity-deposit condition on the 2% value is `noted`, since it is a redemption condition. The card stays cash back.
+
+### Verification and adjudication (2026-10-02)
+
+The coordinator's resolution of each finding of the independent verifier subagent:
+
+1. **BJ's Wholesale Club was missing from the "wholesale clubs" exclusions.** `bjs-wholesale-club` is an existing shared brand. Resolved: added to all 15 rules that exclude the class.
+   - Cash+: rules 13, 15 and 17.
+   - Cash+ Secured: rules 12, 13 and 15.
+   - Altitude Go: rules 2, 3 and 4.
+   - Altitude Go Secured: rules 2, 3 and 4.
+   - Altitude Connect: rules 3, 4 and 5.
+2. **Edward Jones grocery (rule 5) did not exclude warehouse clubs.** Its description excludes discount and warehouse stores. Resolved: `costco`, `sams-club` and `bjs-wholesale-club` are excluded on top of Amazon, Target and Walmart, anchored on the Grocery Stores description.
+3. **Altitude Connect gas and EV (rules 3 and 4) did not share a cap.** The two rules carry one combined $1,000 quarterly cap. Resolved: both now have `sharedCapId: gas-ev-quarterly`, with how `shared-cap` and an anchor from the product page.
+4. **A second American Eagle brand ID.** `american-eagle-outfitters` duplicated the existing `american-eagle` ("American Eagle"). Resolved: the Select clothing stores brand scope on Cash+ and Cash+ Secured now uses `american-eagle`, and `american-eagle-outfitters` is gone from the fragment.
+5. **The Altitude Connect 4X travel rule (rule 2) was held out entirely.** Its taxi, limousine and train part is at retail. Resolved: changed from rule-held-out to modelled, with category `transit` and how `category`. The note says only the transit part is represented, not airlines, hotels, car rentals or cruises.
+6. **Edward Jones had no EV-charging rule.** Resolved: added rule `ej-ev-charging`.
+   - Category `ev-charging`, 300 bps, cap unstated, activation none.
+   - Same option (`ev-charging-gas`) of the automatic choice, excluding Amazon, Target and Walmart, and anchored on the option description.
+   - The card now has 13 rules, within the 30-rule limit. Issue 1 and hint 0 reference the new rule.
+7. **The Cash+ streaming note did not mention Amazon Music.** Resolved: kept the PayPal and Amazon exclusion. The note now says the sample list names Amazon Music as qualifying, so the exclusion may understate it.
+
+Open question 2 in section 2 (Costco and Sam's Club standing in for wholesale clubs) is settled by finding 1, which extends the class to BJ's.

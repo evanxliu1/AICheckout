@@ -32,3 +32,33 @@ Issuer-specific decisions for Capital One cards. They refine [general.md](genera
 ## Dropped cards
 
 - 2026-10-02: Kohl's Rewards Visa: the only capture is the joint Kohl's Rewards Visa / Kohl's Credit Card application terms. It has no rewards section and no earn rate, so the card is dropped (general 9). Re-add it only with a capture that states the rewards terms.
+
+
+## Overlay (Stage 2 M4)
+
+Decisions for `../../catalog-overlay.json`, made by the issuer's overlay author on 2026-10-02 under the general overlay conventions (O1–O19), then checked by an independent verifier subagent and adjudicated by the M4 coordinator (agent-verified).
+
+- 2026-10-02: Store-credit programs (O13). The four Key Rewards cards share one cash-back program, `key-rewards`, which can be redeemed only at the eight Williams-Sonoma, Inc. brands the terms list. T-Mobile Visa moves to `t-mobile-rewards` (T-Mobile), REI Co-op Mastercard to `rei-co-op-mastercard-rewards` (REI), and BJ's One and One+ share `bjs-credit-card-rewards` (BJ's Wholesale Club). All four programs use unitName "cents", matching cash back.
+- 2026-10-02: Key Rewards brand scope is the eight named brands: Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, West Elm, Rejuvenation and Mark & Graham. GreenRow and Dormify are left out of the scope rather than excluded. The program also excludes them from the 1% base, but the base must stay unconditional, so that exclusion is not modelled.
+- 2026-10-02: Key Rewards checkout methods (O10). The terms say purchases through third-party payment accounts, naming Apple Pay, PayPal and Venmo, "may earn 1%". So paypal, venmo and digital-wallet are excluded on all four bonus rules: the brand 5%, grocery 4%, restaurants 4% and the first-30-days 10%. We take the conservative reading of "may".
+- 2026-10-02: The Key Rewards first-30-days 10% at the brands is an account-age promotion (O14). It gets limitedTime with null dates, plus brand scope and the same wallet exclusions as the standing 5%.
+- 2026-10-02: The Key Rewards international carve-out (brand rates apply to U.S. and Puerto Rico purchases only) is `noted`, because the brand rules are already labelled U.S.-only.
+- 2026-10-02: Bass Pro Shops / Cabela's CLUB. One gate, `bass-pro-club-tier`, with options classic, silver and black. There is no "none" option: approval enrolls every cardholder at Classic. Corpus rule 1 (Classic 2X) is left ungated, because every cardholder holds at least Classic. The added `club-silver` (3X) and `club-black` (5X) rules are gated on their levels. Activation is none (upgrades are automatic) and the cap is none (no maximum points).
+- 2026-10-02: The CLUB store rules are scoped to Bass Pro Shops, Cabela's and Mack's Prairie Wings. Participating White River Marine Group dealers are independent dealers, not one merchant, so they get no brand. The terms say third-party payment accounts and mobile or digital wallets get only the base rate, so paypal, venmo and digital-wallet are excluded on all three tier rules.
+- 2026-10-02: `bass-pro-club-points` program details: unitName "points", with redemption brands Bass Pro Shops, Cabela's and Mack's Prairie Wings. Hospitality venues and boat dealers that also take points are left out.
+- 2026-10-02: BJ's One and One+ bonus rules are scoped to `bjs-wholesale-club`. An active BJ's membership is required to apply for the card, so every cardholder has one. That makes it a card-eligibility condition, not a gate (`noted` in the hint note). The BJ's Gas gap (no rate under the terms) stays `noted`, because the unconditional base cannot exclude a brand.
+- 2026-10-02: The T-Mobile Visa 5% is scoped to `t-mobile`. The terms say third-party digital wallets get no enhanced earn, so digital-wallet is excluded. Authorized Retailers get no brand.
+- 2026-10-02: The REI 5% is scoped to `rei`. The 5% on donations to the REI Cooperative Action Fund is held out (not at retail). REI Co-op membership is a condition for holding the card and redeeming rewards, not an earn gate.
+- 2026-10-02: SavorOne and Savor Students grocery 3% excludes Walmart and Target (O4). The anchor is the product-page footnote that excludes superstores such as Walmart and Target.
+- 2026-10-02: SavorOne and Savor Students checkout methods. Following the coordinator's O10 ruling, "may not" wording is read conservatively. The product-page footnote names third-party payment accounts and mobile or digital wallets, so paypal, venmo and digital-wallet are excluded on the grocery, dining, entertainment and streaming 3% rules. The footnote sits in the merchant category code explanation. The Capital One Travel and Entertainment portal rates are not code-based, so they keep no exclusion.
+- 2026-10-02: Venture X, Venture, VentureOne, the three Quicksilver cards, Union Plus and Teamster Privilege need no patches. Union Plus and Teamster have only the flat 1.5% base and no issues or hints. The Venture redemption issue is `noted`.
+
+### Verification and adjudication (2026-10-02)
+
+The coordinator's resolution of each finding of the independent verifier subagent:
+
+- **W1.** On both CLUB cards, the Mack's Prairie Wings anchor on rule 1 is now the span that names the Mack's store, catalogs and website as earning locations. It replaces the bare website address.
+- **W2.** The added `club-silver` and `club-black` rules on both CLUB cards now also carry that Mack's span, so their brand scope has an anchor that names the stores.
+- **W3.** The CLUB Classic 2X rule (corpus rule 1) is ungated on both cards. Approval enrolls every cardholder at Classic, so 2X is a guaranteed floor. Gating it would make a shopper who leaves the gate unanswered earn only the 1X base. The gate keeps all three options as a complete ladder, and only the Silver and Black rules require it. The rule's `how` is now brand-scope and checkout-method. The issue 0 and hint 0 notes are updated to match.
+- **W4.** The T-Mobile rule 1 note now says the 5% covers phones, devices and accessories only. Per the terms, wireless service (bill) and EIP payments earn 2%. Brand scope cannot separate them, so a T-Mobile bill checkout would show 5%. The rule itself is unchanged.
+- **W5.** The shared BJ's program is renamed "BJ's Credit Card Rewards".
