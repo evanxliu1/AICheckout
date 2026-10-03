@@ -244,3 +244,94 @@ test('catalog v3: the ranking follows chosen categories, point values and member
     await context.close();
   }
 });
+
+test('bundled catalog v3: real cards re-rank when a category, a point value or Prime membership changes', async ({
+  browserName,
+}, testInfo) => {
+  test.setTimeout(90_000);
+  expect(browserName).toBe('chromium');
+  const extension = resolve('dist-e2e');
+  const context = await chromium.launchPersistentContext(testInfo.outputPath('profile'), {
+    channel: 'chromium',
+    headless: true,
+    viewport: { width: 360, height: 600 },
+    args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`],
+  });
+  try {
+    await context.setOffline(true);
+    const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+    await closeOnboarding(context);
+    const popup = await context.newPage();
+    const errors: string[] = [];
+    popup.on('pageerror', (error) => errors.push(error.message));
+    await popup.goto(`chrome-extension://${new URL(worker.url()).host}/src/popup/index.html`);
+    await startPopup(popup);
+    // Bundled catalog 2026-10-02.expansion.1 (re-dated for the test). On $100 at Best Buy: Double Cash
+    // earns 200 ThankYou points (issuer-stated 1¢: $2.00); Cash+ earns 5% in two chosen categories.
+    await addCard(popup, 'Citi Double Cash');
+    await addCard(popup, 'U.S. Bank Cash+ Visa Signature Card');
+    await popup.getByRole('button', { name: 'Save cards' }).click();
+    const first = () => popup.locator('.estimate-list h3').first();
+    async function compare(merchant: string) {
+      await popup.getByLabel('Merchant').selectOption(merchant);
+      await popup.getByLabel('Purchase amount (USD)').fill('100');
+      await popup.getByLabel('Online retail bonus eligibility').selectOption('eligible');
+      await popup.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
+      await popup.getByRole('button', { name: 'Compare my cards' }).click();
+      await expect(popup.locator('.estimate-list')).toBeVisible();
+    }
+    async function edit(change: () => Promise<void>) {
+      await popup.getByRole('button', { name: 'Edit cards' }).click();
+      await change();
+      await popup.getByRole('button', { name: 'Save cards' }).click();
+      await expect(popup.getByRole('button', { name: 'Edit cards' })).toBeVisible();
+    }
+
+    await compare('best-buy-us');
+    await expect(first()).toHaveText('Double Cash');
+    await expect(popup.getByText('$1.00–$5.00', { exact: true })).toBeVisible();
+    await expect(
+      popup.getByText(/Earns more only if Electronic stores is one of your chosen categories/),
+    ).toBeVisible();
+
+    // Cash+ with Electronic stores chosen, activated, and no spend yet toward the shared limit.
+    await edit(async () => {
+      await popup.getByRole('checkbox', { name: 'Electronic stores' }).check();
+      await popup
+        .getByLabel(/Cash\+ Visa Signature electronics store bonus activation/)
+        .selectOption('active');
+      await popup.getByLabel(/Cash\+ Visa Signature combined .* spend in/).fill('0');
+    });
+    await compare('best-buy-us');
+    await expect(popup.getByRole('heading', { name: 'Use Cash+ Visa Signature' })).toBeVisible();
+
+    // ThankYou points at 3¢ (the shopper's own value) make Double Cash's 200 points $6.00.
+    await edit(async () => {
+      await popup.getByLabel('Your value for Citi ThankYou Points, in cents each').fill('3');
+    });
+    await compare('best-buy-us');
+    await expect(popup.getByRole('heading', { name: 'Use Double Cash' })).toBeVisible();
+    await expect(popup.getByText('$6.00', { exact: true })).toBeVisible();
+
+    // At Amazon with Prime Visa and ThankYou at 2¢ ($4.00): Prime unknown guarantees Prime Visa only
+    // 3% ($3.00), so Double Cash leads; answering "Prime member" (5%, $5.00) puts Prime Visa first.
+    await edit(async () => {
+      await addCard(popup, 'Prime Visa');
+      await popup.getByLabel('Your value for Citi ThankYou Points, in cents each').fill('2');
+    });
+    await compare('amazon-us');
+    await expect(first()).toHaveText('Double Cash');
+    await expect(popup.getByText('$3.00–$5.00', { exact: true })).toBeVisible();
+    await edit(async () => {
+      await popup
+        .getByRole('group', { name: 'Do you have an eligible Amazon Prime membership?' })
+        .getByRole('radio', { name: 'Yes, a Prime member', exact: true })
+        .check();
+    });
+    await compare('amazon-us');
+    await expect(popup.getByRole('heading', { name: 'Use Prime Visa' })).toBeVisible();
+    expect(errors).toEqual([]);
+  } finally {
+    await context.close();
+  }
+});

@@ -13,6 +13,16 @@ const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 
 /** Axe at the popup's default and widest widths, no horizontal scroll, and a screenshot. */
 async function axeCheck(target: Page, state: string, testInfo: TestInfo) {
+  // CSP `style-src 'self'`: no inline style rules or <style> elements in any state (Chrome leaves
+  // empty `style` attributes on some form controls; they carry no style).
+  expect(
+    await target.evaluate(() =>
+      Array.from(document.querySelectorAll('[style]:not([style=""]), style'), (e) =>
+        e.outerHTML.slice(0, 160),
+      ),
+    ),
+    `inline styles in ${state}`,
+  ).toEqual([]);
   for (const width of [360, 480]) {
     await target.setViewportSize({ width, height: 900 });
     const { violations } = await new AxeBuilder({ page: target }).withTags(TAGS).analyze();

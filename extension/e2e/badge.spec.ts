@@ -374,6 +374,10 @@ test('badge on catalog v3: points with their value basis, a store card not accep
     ).toBeVisible();
     await expect(badge.getByText(/Cards whose points have no value are listed last/)).toBeVisible();
     await axeBadge(badge, 'v3 panel');
+    // CSP `style-src 'self'`: the badge page uses no inline styles.
+    expect(
+      await badge.evaluate(() => document.querySelectorAll('[style]:not([style=""]), style').length),
+    ).toBe(0);
     await cart.screenshot({ path: testInfo.outputPath('v3-expanded.png') });
 
     // Venmo is offered with catalog v3 terms; the fixture's online bonus excludes it.
