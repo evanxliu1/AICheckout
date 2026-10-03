@@ -5,6 +5,7 @@ import pg from 'pg';
 import { createApp } from '../apps/api/src/app.ts';
 import { createCatalogRepository } from '../apps/api/src/catalog-repository.ts';
 import { createReviewRepository } from '../apps/api/src/review-repository.ts';
+import { createTokenVerifier } from '../apps/api/src/review-auth.ts';
 import { catalogResponseSchema } from '../packages/rewards-core/src/schema.ts';
 
 // This test deliberately ignores hosted environment variables. Privileged credentials
@@ -94,7 +95,11 @@ try {
     .rows[0].release_sequence;
   fixtureStarted = true;
   const readCatalog = createCatalogRepository(apiUrl, publicKey);
-  app = createApp({ readCatalog, reviewRpc: createReviewRepository(apiUrl, publicKey) });
+  app = createApp({
+    readCatalog,
+    reviewRpc: createReviewRepository(apiUrl, publicKey),
+    verifyReviewToken: createTokenVerifier(apiUrl, publicKey),
+  });
   address = await app.listen({ host: '127.0.0.1', port: 0 });
   const reviewer = await account(),
     ordinary = await account();
@@ -106,6 +111,17 @@ try {
   const tokenParts = reviewer.token.split('.');
   tokenParts[2] = (tokenParts[2][0] === 'A' ? 'B' : 'A') + tokenParts[2].slice(1);
   assert.equal((await review('GET', '/', tokenParts.join('.'))).status, 401);
+  // Large-body routes check the token before reading the body: against the JWKS when the project
+  // signs with asymmetric keys (the local CLI stack signs ES256), otherwise by asking Auth.
+  const forgedCapture = {
+    sourceKey: `forged-${randomUUID()}`,
+    title: 'Forged capture',
+    url: 'https://issuer.example/forged',
+    checkedOn: new Date().toISOString().slice(0, 10),
+    body: 'Not stored.',
+  };
+  assert.equal((await review('POST', '/sources', tokenParts.join('.'), forgedCapture)).status, 401);
+  assert.equal((await review('POST', '/sources', ordinary.token, forgedCapture)).status, 403);
   const queue = ok(await review('GET', '/', reviewer.token), 'Reviewer queue');
   assert.equal(queue.reviewerId, reviewer.id);
   console.log(
@@ -160,7 +176,17 @@ try {
   draftIds.push(draft.id);
   const detail = ok(await review('GET', `/drafts/${draft.id}`, reviewer.token), 'Review exact draft');
   assert.equal(detail.draft.catalog_hash, draft.catalog_hash);
-  assert.equal(detail.sources[0].body, source.body);
+  // The review detail lists captures without their text (Stage 2 M8); one text is read on demand.
+  assert.equal(detail.sources[0].body, undefined);
+  assert.equal(detail.sources[0].body_chars, source.body.length);
+  const sourcePath = `/drafts/${draft.id}/sources/${detail.sources[0].id}`;
+  assert.equal(ok(await review('GET', sourcePath, reviewer.token), 'Read one capture').body, source.body);
+  assert.equal((await review('GET', sourcePath, ordinary.token)).status, 403);
+  assert.equal(
+    (await review('GET', `/drafts/${draft.id}/sources/${draft.id}`, reviewer.token)).status,
+    404,
+    'A capture not attached to the draft is not returned',
+  );
   const approval = {
     expectedRevision: draft.revision,
     expectedHash: draft.catalog_hash,

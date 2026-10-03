@@ -6,7 +6,7 @@ status: stable
 tags: [system, site, static]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:05:00Z
+  at: 2026-10-03T03:40:00Z
 sources:
   - resource: ../../apps/site/vite.config.ts
     title: Site build and copied files
@@ -26,21 +26,21 @@ sources:
 
 `apps/site` (`@ai-checkout/site`) is a Vite multi-page build with no client router. A build plugin loads [`src/render.tsx`](../../apps/site/src/render.tsx) through a Vite SSR server and renders each page to static HTML with React and `@ai-checkout/ui`; the only shipped script is [`src/enhance.ts`](../../apps/site/src/enhance.ts) (keyboard-scrollable wide tables). The build copies the committed evaluation results and four release screenshots into `dist/`, so the results page always matches `docs/evals/`. The API serves `dist/` at `/` when `SITE_DIST_DIR` is set ([API](api.md)).
 
-Verified 2026-10-02 by reading the code and running `npm test --workspace=@ai-checkout/site` (2 files, 9 tests, passing). Browser specs not run.
+Verified 2026-10-03 on branch `s2-m10-docs-publish` (Stage 2 M10) by reading the code and running `npm test --workspace=@ai-checkout/site` (2 files, 10 tests, passing). Browser specs not run. Re-verified 2026-10-03 on `ui-ocean-theme` after merging `main` (`f383964`): site unit tests (10) and the site browser spec (6 passed, axe incl. the navy hero).
 
 ## Facts
 
 | Path | Page ID | Content |
 | --- | --- | --- |
-| `/` | `home` | What the extension does, how it decides, screenshots, supported cards and checkouts |
-| `/results/` | `results` | Evaluation tables and charts from `results.json` ([Evaluation](evaluation.md)) |
+| `/` | `home` | What the extension does, how it decides (including points valued by published estimates), screenshots, supported cards (178 by issuer, `ISSUERS` in [`pages.tsx`](../../apps/site/src/pages.tsx), checked against `CATALOG_V3` by a test) and checkouts |
+| `/results/` | `results` | Evaluation tables and charts from `results.json`, and the 173-card expansion section from `expansion.json`: the gpt-5.5 cross-model row, the luna upper bound and the same configuration's 7-card held-out score, with the not-comparable caveat ([Evaluation](evaluation.md)) |
 | `/architecture/` | `architecture` | Two-systems diagram (inline SVG, [`Diagram.tsx`](../../apps/site/src/Diagram.tsx)) and harness summary |
 | `/privacy/` | `privacy` | What stays on the device, the only network request, cart reads |
 | `/support/` | `support` | Getting started, issues, limitations |
 
 | Copied at build (`COPIED` in [`vite.config.ts`](../../apps/site/vite.config.ts)) | From |
 | --- | --- |
-| `results/results.json`, `results/results.svg`, `results/results-heldout.svg` | `docs/evals/` |
+| `results/results.json`, `results/results.svg`, `results/results-heldout.svg`, `results/expansion.json` | `docs/evals/` |
 | `media/1-wallet.png` … `media/4-subtotal.png` | release screenshot assets |
 
 | Item | Value |
@@ -60,6 +60,7 @@ Verified 2026-10-02 by reading the code and running `npm test --workspace=@ai-ch
 - Pages must not need inline style or script; the CSP blocks them and the browser test fails on any CSP violation.
 - The site can never answer `/v1`, `/review` or `/health` (see [API](api.md#gotchas)).
 - Updating eval numbers means regenerating `docs/evals/results.json` (`npm run eval:summarize`) and rebuilding the site; nothing is fetched at runtime.
+- TODO(after the Ocean theme): the screenshots (`media/1-wallet.png` still shows the seven-card setup) show the pre-M7, pre-Ocean UI. Deferred on 2026-10-03 (M10 part 2) until the Ocean theme lands; branch `ui-ocean-theme` was merged with `main` on 2026-10-03 and waits for Evan's merge, after which the site and Web Store media are regenerated once, in the final look. The support page's getting-started steps describe the M7 card search and questions since the M7 merge (2026-10-03).
 - The privacy and support pages describe extension behaviour; when the extension changes (for example the [Cart badge](cart-badge.md)), these pages need a matching edit.
 
 ## Tests

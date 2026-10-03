@@ -4,12 +4,14 @@
 import { compareRewards } from '../domain';
 import type { Catalog, Purchase, Wallet } from '../domain';
 import { merchantForCheckout, merchantForOrderConfirmation, type MerchantId } from '../checkout/merchants';
-import { currentCatalog } from '../state/catalog';
 import type { AppState, CheckoutResponse } from '../state/contracts';
 import type { StateStorage } from '../state/service';
-import { localDate } from '../state/service';
+import { localDate } from '../state/keys';
+import { enginePurchase, engineWallet } from '../state/wallet';
+import { catalogSlice } from '../state/catalog-slice';
 import type { VaultStatus } from '../state/vault-contracts';
-import { savingsEntry } from '../state/savings';
+import { cardEstimate, savingsEntry } from '../state/savings';
+import { rewardsWording } from '../components/estimates';
 import {
   BADGE_TABS_KEY,
   badgeRequestSchema,
@@ -26,7 +28,7 @@ export interface BadgeDeps {
   local: Pick<StateStorage, 'get' | 'set'>;
   session: Pick<StateStorage, 'get' | 'set'>;
   vault: {
-    snapshot: () => Promise<{ status: VaultStatus; state: AppState | null }>;
+    snapshot: () => Promise<{ status: VaultStatus; state: AppState | null; catalog: Catalog | null }>;
     handle: (request: unknown) => Promise<unknown>;
   };
   clock?: () => number;
@@ -63,18 +65,32 @@ export function autoPurchase(
   amountCents: number,
   paymentPath: TabEntry['paymentPath'],
   now: number,
-): Purchase {
+): Purchase & { paymentPath: TabEntry['paymentPath'] } {
   const profile =
-    catalog.schemaVersion === 2 ? catalog.merchants.find((m) => m.id === merchantId) : undefined;
-  return {
-    merchantId,
-    currency: 'USD',
-    amountCents,
-    purchasedOn: localDate(now),
-    eligiblePurchase: 'eligible',
-    onlineRetail: profile ? (profile.onlineRetail ? 'eligible' : 'ineligible') : 'unknown',
-    paymentPath,
-  };
+    catalog.schemaVersion === 1 ? undefined : catalog.merchants.find((m) => m.id === merchantId);
+  return enginePurchase(
+    {
+      merchantId,
+      currency: 'USD',
+      amountCents,
+      purchasedOn: localDate(now),
+      eligiblePurchase: 'eligible',
+      onlineRetail: profile ? (profile.onlineRetail ? 'eligible' : 'ineligible') : 'unknown',
+      paymentPath,
+    },
+    catalog,
+  );
+}
+
+/** The part of the catalog the badge iframe needs for one merchant: the owned cards, that merchant,
+ * and what those cards refer to (their programs, the brands and gates their rules name, the sources
+ * they cite). Never the whole catalog: with 180 cards it would be most of 1 MiB per view. */
+export function badgeCatalog(catalog: Catalog, wallet: Pick<Wallet, 'cards'>, merchantId: string): Catalog {
+  return catalogSlice(
+    catalog,
+    wallet.cards.map((c) => c.cardId),
+    [merchantId],
+  );
 }
 
 export function createBadgeService({ local, session, vault, clock = Date.now, open, notify }: BadgeDeps) {
@@ -188,9 +204,9 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
     if (!entry || !visible(entry, await settings())) return { kind: 'hidden' };
     const snapshot = await vault.snapshot();
     if (snapshot.status === 'locked') return { kind: 'locked', order: !!livePrompt(entry) };
-    if (snapshot.status === 'damaged' || !snapshot.state) return { kind: 'damaged' };
+    if (snapshot.status === 'damaged' || !snapshot.state || !snapshot.catalog) return { kind: 'damaged' };
     const state = snapshot.state,
-      catalog = currentCatalog(state);
+      catalog = snapshot.catalog;
     if (entry.orderPrompt && !livePrompt(entry)) {
       // Expired: the question is dropped, never asked later.
       await saveTab(tabId, { ...entry, orderPrompt: null });
@@ -213,7 +229,7 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
     if (!amountCents) return { kind: 'unreadable', merchantId: entry.merchantId };
     const now = clock();
     const purchase = autoPurchase(catalog, entry.merchantId, amountCents, entry.paymentPath, now);
-    const result = compareRewards(catalog, state.wallet, purchase, now);
+    const result = compareRewards(catalog, engineWallet(state.wallet, catalog), purchase, now);
     if (result.status === 'unavailable') return { kind: 'unavailable', merchantId: entry.merchantId, result };
     const recommendation = entry.recommendation;
     if (
@@ -233,9 +249,9 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
       amountKind: entry.reading?.kind ?? null,
       amountCents,
       amountEdited: entry.amountOverrideCents !== null,
-      paymentPath: entry.paymentPath,
+      paymentPath: purchase.paymentPath,
       result,
-      catalog,
+      catalog: badgeCatalog(catalog, state.wallet, entry.merchantId),
       wallet: state.wallet,
     };
   }
@@ -249,21 +265,31 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
     const prompt = livePrompt(entry);
     if (!prompt) return { ok: false, error: 'There is no order to record.' };
     const snapshot = await vault.snapshot();
-    if (!snapshot.state)
+    if (!snapshot.state || !snapshot.catalog)
       return { ok: false, error: 'Unlock AI Checkout to record this order, then answer again.' };
     const state = snapshot.state,
-      catalog = currentCatalog(state);
+      catalog = snapshot.catalog;
     const used = choice === 'yes' ? prompt.recommendedCardId : choice === 'other' ? cardId : null;
     if (used && !state.wallet.cards.some((owned) => owned.cardId === used))
       return { ok: false, error: 'Choose one of your cards.' };
+    const wallet = engineWallet(state.wallet, catalog) as Wallet,
+      now = clock();
     const entryRecord = savingsEntry({
       catalog,
-      wallet: state.wallet as Wallet,
+      wallet,
       purchase: prompt.purchase,
       recommendedCardId: prompt.recommendedCardId,
       usedCardId: used,
-      now: clock(),
+      now,
     });
+    // Named by what the two cards pay: cash back, or rewards with what they were counted at.
+    const compared = used
+      ? [used, state.wallet.defaultCardId].flatMap((id) => {
+          const estimate = id ? cardEstimate(catalog, wallet, prompt.purchase, id, now) : null;
+          return estimate ? [estimate] : [];
+        })
+      : [];
+    const wording = rewardsWording(compared, catalog);
     const saved = (await vault.handle({ type: 'checkout:record-savings', entry: entryRecord })) as
       CheckoutResponse | undefined;
     if (!saved || !saved.ok) return { ok: false, error: 'The order could not be saved. Try again.' };
@@ -275,6 +301,9 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
         extraCents: entryRecord.extraCents,
         usedCardName: cardName(catalog, used),
         baselineCardName: cardName(catalog, state.wallet.defaultCardId),
+        rewardTerm: wording.term,
+        // What was counted only when something was; why not, when a program has no value.
+        valueNote: entryRecord.extraCents !== null || wording.unvalued ? wording.note : null,
       },
     };
   }

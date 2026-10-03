@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { CATALOG_V2, type CatalogV1 } from '@ai-checkout/rewards-core';
 import { catalogChanges, publicationIssues, ruleSummaries } from '../src/comparison';
-import { reviewDetailSchema, reviewConfigSchema } from '@ai-checkout/catalog-review';
+import { reviewSummarySchema, reviewConfigSchema } from '@ai-checkout/catalog-review';
+import { CATALOG_V3_FIXTURE } from '../../../packages/rewards-core/test-cases.ts';
 import { reviewFixture, now } from './fixtures';
 
 describe('review comparison and eligibility', () => {
@@ -98,10 +99,82 @@ describe('review comparison and eligibility', () => {
       published_at: '2026-09-25T01:00:00Z',
     };
     detail.published.catalog.expiresAt = '2026-09-26T00:00:00Z';
-    expect(reviewDetailSchema.safeParse(detail).success).toBe(true);
+    expect(reviewSummarySchema.safeParse(detail).success).toBe(true);
     expect(publicationIssues(detail, now)).toEqual([]);
     detail.head = 2;
-    expect(reviewDetailSchema.safeParse(detail).success).toBe(false);
+    expect(reviewSummarySchema.safeParse(detail).success).toBe(false);
+  });
+  it('diffs every catalog v3 field and groups rows by card and section', () => {
+    const after = structuredClone(CATALOG_V3_FIXTURE);
+    const points = after.programs.find((program) => program.id === 'test-membership-points')!;
+    if (points.valuation.basis === 'published-estimate') points.valuation.valueHundredthsOfCent = 150;
+    after.brands[0].name = 'Amazon.com';
+    after.gates[0].options[1].label = 'Not a Prime member';
+    const prime = after.cards.find((card) => card.id === 'test-prime-visa')!;
+    prime.acceptance = { kind: 'closed-loop', brandIds: ['amazon'] };
+    const amazon = prime.rules.find((rule) => rule.id === 'prime-amazon')!;
+    amazon.brandIds = ['amazon'];
+    amazon.excludedBrandIds = ['walmart'];
+    amazon.requiredPaymentPaths = ['venmo'];
+    amazon.requires = [{ gateId: 'amazon-prime', optionIds: ['not-member'] }];
+    const cashPlus = after.cards.find((card) => card.id === 'test-cash-plus')!;
+    const electronics = cashPlus.rules.find((rule) => rule.id === 'cash-plus-electronics')!;
+    electronics.choice = { choiceId: 'five-percent', optionId: 'fast-food' };
+    electronics.sharedCapId = null;
+    electronics.limitedTime = { startsOn: '2027-01-01', endsOn: null };
+    cashPlus.choices[0].defaultOptionIds = ['electronics'];
+    const rows = catalogChanges(CATALOG_V3_FIXTURE, after);
+    const byLabel = Object.fromEntries(rows.map((row) => [row.label, [row.before, row.after, row.group]]));
+    expect(byLabel['test-membership-points (program) · Value per unit']).toEqual([
+      'Published estimate 1.2¢ each, by Example Valuations, read 2026-10-01 (https://valuations.example/points)',
+      'Published estimate 1.5¢ each, by Example Valuations, read 2026-10-01 (https://valuations.example/points)',
+      'programs',
+    ]);
+    expect(byLabel['amazon (brand) · Name']).toEqual(['Amazon', 'Amazon.com', 'brands']);
+    expect(byLabel['amazon-prime (question) · Answers'][1]).toBe(
+      'member: Prime member | not-member: Not a Prime member',
+    );
+    expect(byLabel['test-prime-visa · Accepted at']).toEqual([
+      'Any merchant (open loop)',
+      'Only brands amazon (closed loop)',
+      'cards.test-prime-visa',
+    ]);
+    expect(byLabel['Prime Visa · prime-amazon · Only at brands']).toEqual([
+      'amazon, whole-foods',
+      'amazon',
+      'cards.test-prime-visa',
+    ]);
+    expect(byLabel['Prime Visa · prime-amazon · Never at brands'].slice(0, 2)).toEqual(['None', 'walmart']);
+    expect(byLabel['Prime Visa · prime-amazon · Only when paying with'].slice(0, 2)).toEqual([
+      'Any payment path',
+      'venmo',
+    ]);
+    expect(byLabel['Prime Visa · prime-amazon · Requires'].slice(0, 2)).toEqual([
+      'amazon-prime is member',
+      'amazon-prime is not-member',
+    ]);
+    expect(byLabel['Cash Plus · cash-plus-electronics · Chosen category'].slice(0, 2)).toEqual([
+      'While five-percent is electronics',
+      'While five-percent is fast-food',
+    ]);
+    expect(byLabel['Cash Plus · cash-plus-electronics · Shared spend cap'].slice(0, 2)).toEqual([
+      'cash-plus-five-percent',
+      'Not shared',
+    ]);
+    expect(byLabel['Cash Plus · cash-plus-electronics · Limited time'].slice(0, 2)).toEqual([
+      'No',
+      'Starts 2027-01-01; ends on an unstated date',
+    ]);
+    expect(byLabel['test-cash-plus · Choice five-percent'][1]).toMatch(
+      /cardholder picks 2 of .*; default electronics$/,
+    );
+    expect(rows.find((row) => row.group === 'cards.test-cash-plus')?.groupLabel).toBe('Test Cash Plus');
+    expect(catalogChanges(CATALOG_V3_FIXTURE, structuredClone(CATALOG_V3_FIXTURE))).toEqual([]);
+    const summary = ruleSummaries(prime.rules).find((row) => row.rule.id === 'prime-amazon')!.conditions;
+    expect(summary).toContain('Only at amazon.');
+    expect(summary).toContain('Never at walmart.');
+    expect(summary).toContain('Requires amazon-prime is not-member.');
+    expect(summary).toContain('Only when paying with venmo.');
   });
   it.each(['sb_secret_not_for_browsers', 'legacy-service-role', ''])(
     'never accepts an administrative config key (%s)',

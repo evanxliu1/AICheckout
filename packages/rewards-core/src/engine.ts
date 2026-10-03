@@ -1,5 +1,6 @@
 import { MAX_AMOUNT_CENTS, rewardCents } from './money.ts';
 import { compareV2 } from './engine-v2.ts';
+import { compareV3 } from './engine-v3.ts';
 import { integer, rankEstimates, unavailableReason, unique } from './engine-shared.ts';
 import type {
   CardEstimate,
@@ -83,13 +84,15 @@ function validate(catalog: CatalogV1, wallet: Wallet, purchase: Purchase, now: n
   }
 }
 
-/** Compares owned cards for one purchase. Catalog v1 keeps its original rules; v2 is in engine-v2.ts. */
+/** Compares owned cards for one purchase. Catalog v1 keeps its original rules; v2 is in
+ * engine-v2.ts and v3 in engine-v3.ts. */
 export function compareRewards(
   catalog: Catalog,
   wallet: Wallet,
   purchase: Purchase,
   now: number,
 ): Comparison | UnavailableComparison {
+  if (catalog.schemaVersion === 3) return compareV3(catalog, wallet, purchase, now);
   return catalog.schemaVersion === 2
     ? compareV2(catalog, wallet, purchase, now)
     : compareV1(catalog, wallet, purchase, now);

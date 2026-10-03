@@ -4,14 +4,15 @@
 //
 // Needs the local captures (gitignored), by default <dir>/captures; pass --captures once per capture folder to read
 // them from elsewhere (for example the expansion and real capture folders of another worktree). Scans every string of
-// corpus.draft.json, corpus.json, product-notes.json, product-notes.verified.json, reward-programs.json and
-// verification/*.json, and every line or table cell of verify/*.md,
-// verification-report.md, verification/README.md and verification/conventions/*.md, for a run of more than 25
-// consecutive words that also appears in a capture (case-, whitespace- and quotation-mark-insensitive). Quotes read
-// together count too: the strings (or anchor `quote`s) of one JSON array must not overlap or abut in a capture into
-// such a run, and neither may consecutive lines and cells of a markdown file. Also checks that every corpus anchor
-// and issuer wording is at most 25 words, and that every reward-programs.json anchor is verbatim in the capture it
-// names. Exits 1 and lists the offending strings if any.
+// corpus.draft.json, corpus.json, product-notes.json, product-notes.verified.json, reward-programs.json,
+// catalog-overlay.json, merchants.json, verification/*.json and the built CATALOG_V3, and every line or table cell
+// of verify/*.md, verification-report.md, catalog-build-report.md, verification/README.md and
+// verification/conventions/*.md, for a run of more than 25 consecutive words that also appears in a capture (case-,
+// whitespace- and quotation-mark-insensitive). Quotes read together count too: the strings (or anchor `quote`s) of
+// one JSON array must not overlap or abut in a capture into such a run, and neither may consecutive lines and cells
+// of a markdown file. Also checks that every corpus anchor and issuer wording is at most 25 words, and that every
+// reward-programs.json anchor is verbatim in the capture it names, as must every catalog-overlay.json anchor. The
+// real cards of CATALOG_V3 quote the real captures: pass those folders too. Exits 1 and lists the offending strings.
 import { readdir, readFile } from 'node:fs/promises';
 import { basename, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -27,6 +28,8 @@ import {
   stringsOf,
   wordCount,
 } from './lib/expansion-quotes.mjs';
+import { overlayAnchors } from './lib/catalog-overlay.mjs';
+import { CATALOG_V3 } from '../packages/rewards-core/src/catalog-v3.ts';
 import { rewardProgramAnchors } from './lib/reward-programs.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -61,12 +64,15 @@ const jsonFiles = [
     'product-notes.json',
     'product-notes.verified.json',
     'reward-programs.json',
+    'catalog-overlay.json',
+    'merchants.json',
   ].map((name) => join(dir, name)),
   ...(await list('verification', '.json')),
 ];
 const markdownFiles = [
   ...(await list('verify', '.md')),
   join(dir, 'verification-report.md'),
+  join(dir, 'catalog-build-report.md'),
   join(dir, 'verification', 'README.md'),
   ...(await list(join('verification', 'conventions'), '.md')),
 ];
@@ -92,17 +98,49 @@ for (const path of jsonFiles) {
         `${relative(root, path)} ${at}: items ${run.texts.join(', ')} read together form a run of ${run.words}+ capture words`,
       );
   }
-  if (Array.isArray(data.programs) && Array.isArray(data.cards))
-    for (const [at, anchor] of rewardProgramAnchors(data)) {
-      const body = captureById.get(anchor.sourceId);
-      if (body === undefined) problems.push(`${relative(root, path)} ${at}: no capture ${anchor.sourceId}`);
-      else if (!resolves(anchor.quote, { documents: [{ id: anchor.sourceId, body }] }))
-        problems.push(`${relative(root, path)} ${at}: not verbatim in ${anchor.sourceId}`);
-    }
+  const anchored =
+    basename(path) === 'catalog-overlay.json'
+      ? overlayAnchors(data)
+      : basename(path) === 'reward-programs.json'
+        ? rewardProgramAnchors(data)
+        : [];
+  for (const [at, anchor] of anchored) {
+    const body = captureById.get(anchor.sourceId);
+    if (body === undefined) problems.push(`${relative(root, path)} ${at}: no capture ${anchor.sourceId}`);
+    else if (!resolves(anchor.quote, { documents: [{ id: anchor.sourceId, body }] }))
+      problems.push(`${relative(root, path)} ${at}: not verbatim in ${anchor.sourceId}`);
+  }
+  if (basename(path) === 'catalog-overlay.json') {
+    const corpus = JSON.parse(await readFile(join(dir, 'corpus.json'), 'utf8'));
+    const sourcesOf = new Map(corpus.cases.map((item) => [item.cardId, item.sourceIds]));
+    for (const card of data.cards ?? [])
+      for (const added of card.addedRules ?? []) {
+        const documents = (sourcesOf.get(card.cardId) ?? [])
+          .filter((id) => captureById.has(id))
+          .map((id) => ({ id, body: captureById.get(id) }));
+        if (!resolves(added.issuerWording, { documents }))
+          problems.push(
+            `${relative(root, path)} cards.${card.cardId}.addedRules.${added.key}.issuerWording: not verbatim in the card's captures`,
+          );
+      }
+  }
   for (const item of data.cases ?? [])
     for (const [at, value] of stringsOf(item.reference, `${item.id}.reference`))
       if (/\.(anchors\[\d+\]|issuerWording)$/.test(at) && wordCount(value) > MAX_QUOTE_WORDS)
         problems.push(`${relative(root, path)} ${at}: ${wordCount(value)} words`);
+}
+// The built catalog v3 joins corpus strings that the corpus keeps apart (a card's exclusions become one array).
+checked++;
+for (const [at, value] of stringsOf(CATALOG_V3, 'CATALOG_V3')) {
+  const run = longCaptureRun(value, index);
+  if (run) problems.push(`packages/rewards-core/src/catalog-v3.ts ${at}: quotes ${wordCount(run)}+ words`);
+}
+for (const [at, texts] of quoteArraysOf(CATALOG_V3, 'CATALOG_V3')) {
+  const run = joinedCaptureRun(texts, index);
+  if (run)
+    problems.push(
+      `packages/rewards-core/src/catalog-v3.ts ${at}: items ${run.texts.join(', ')} read together form a run of ${run.words}+ capture words`,
+    );
 }
 for (const path of markdownFiles) {
   const text = await readFile(path, 'utf8').catch(() => null);

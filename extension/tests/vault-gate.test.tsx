@@ -1,9 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import VaultGate from '../src/components/VaultGate';
+import { CATALOG_V2 } from '../src/domain';
 import { emptyState } from '../src/state/contracts';
 import { VAULT_SESSION_KEY } from '../src/state/vault-contracts';
 import type { VaultStatus } from '../src/state/vault-contracts';
+import { cardIndex } from '../src/state/catalog-slice';
 
 type Change = (changes: Record<string, chrome.storage.StorageChange>, area: string) => void;
 let status: VaultStatus, listeners: Set<Change>;
@@ -18,6 +20,8 @@ const privateView = {
       cards: [{ cardId: 'capital-one-quicksilver', usage: [] }],
     },
   },
+  catalog: CATALOG_V2,
+  cardIndex: cardIndex(CATALOG_V2),
   comparison: null,
   notice: null,
   catalogUpdatesAvailable: false,

@@ -1,5 +1,9 @@
 import { expect } from '@playwright/test';
 import type { BrowserContext, Page } from '@playwright/test';
+import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2';
+
+/** The seven cards of hosted release 1 (catalog v2); catalog v3 keeps their names, IDs and rules. */
+export const REAL_CARD_NAMES = CATALOG_V2.cards.map((card) => card.name);
 
 /** Chrome exposes toolbar popups as "other" targets, not Playwright Page objects.
  * Use the documented CDP transport rather than widening extension host permissions. */
@@ -97,6 +101,27 @@ export async function openNativePopup(context: BrowserContext, merchant: Page, e
       await evaluate(
         `(() => { const input = document.getElementById(${JSON.stringify(id)}); if (!input) throw Error('Input not found'); Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, ${JSON.stringify(value)}); input.dispatchEvent(new Event('input', { bubbles: true })); })()`,
       );
+    },
+    /** Adds cards in the wallet editor through its search field, picking each from the matches
+     * (the bundled catalog lists 178 cards). */
+    checkCards: async (names: readonly string[]) => {
+      for (const name of names) {
+        await evaluate(
+          `(() => { const input = document.getElementById('add-card'); Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, ${JSON.stringify(name)}); input.dispatchEvent(new Event('input', { bubbles: true })); })()`,
+        );
+        await expect
+          .poll(() =>
+            evaluate<boolean>(
+              `[...document.querySelectorAll('[role=option]')].some(o => o.textContent === ${JSON.stringify(name)})`,
+            ),
+          )
+          .toBe(true);
+        await evaluate(
+          `[...document.querySelectorAll('[role=option]')].find(o => o.textContent === ${JSON.stringify(name)}).click()`,
+        );
+      }
+      // Each added card's terms arrive from the worker before it can be saved.
+      await expect.poll(() => evaluate<string>('document.body.innerText')).not.toContain('loading its terms');
     },
     close: async () => {
       await cdp.send('Target.closeTarget', { targetId });

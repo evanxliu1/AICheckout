@@ -2,8 +2,8 @@
 // the content script reports readings and order pages and learns only whether to show the badge;
 // the badge iframe (an extension page) asks for its view and acts on it; nothing else is accepted.
 import { z } from 'zod';
-import { MAX_AMOUNT_CENTS, PAYMENT_PATHS } from '../domain';
-import type { Catalog, Comparison, PaymentPath, UnavailableComparison, Wallet } from '../domain';
+import { MAX_AMOUNT_CENTS, PAYMENT_PATHS_V3 } from '../domain';
+import type { Catalog, Comparison, PaymentPathV3, UnavailableComparison, Wallet } from '../domain';
 import { MERCHANT_IDS } from '../checkout/merchants';
 import { probeSchema } from '../checkout/contracts';
 import { purchaseSchema } from '../state/contracts';
@@ -39,7 +39,7 @@ const nonce = z.string().regex(NONCE_PATTERN);
 export const badgeRequestSchema = z.discriminatedUnion('type', [
   z.strictObject({ type: z.literal('badge:get'), nonce }),
   z.strictObject({ type: z.literal('badge:set-amount'), nonce, amountCents: money.positive().nullable() }),
-  z.strictObject({ type: z.literal('badge:set-payment'), nonce, paymentPath: z.enum(PAYMENT_PATHS) }),
+  z.strictObject({ type: z.literal('badge:set-payment'), nonce, paymentPath: z.enum(PAYMENT_PATHS_V3) }),
   z.strictObject({ type: z.literal('badge:dismiss'), nonce }),
   z.strictObject({ type: z.literal('badge:disable-site'), nonce }),
   z.strictObject({
@@ -86,7 +86,7 @@ export const tabEntrySchema = z.strictObject({
   unreadable: z.boolean(),
   dismissed: z.boolean(),
   amountOverrideCents: money.positive().nullable(),
-  paymentPath: z.enum(PAYMENT_PATHS),
+  paymentPath: z.enum(PAYMENT_PATHS_V3),
   /** The last recommendation shown in this tab, for order detection. */
   recommendation: recommendationSchema.nullable(),
   /** An order page followed a recommendation: ask once which card paid (until ORDER_WINDOW_MS
@@ -113,8 +113,9 @@ export type BadgeView =
       amountKind: 'total' | 'estimated-total' | 'subtotal' | null;
       amountCents: number;
       amountEdited: boolean;
-      paymentPath: PaymentPath;
+      paymentPath: PaymentPathV3;
       result: Comparison;
+      /** Only the owned cards, this merchant and what they refer to (`badgeCatalog`). */
       catalog: Catalog;
       wallet: Wallet;
     }
@@ -129,5 +130,9 @@ export type BadgeView =
       extraCents: number | null;
       usedCardName: string | null;
       baselineCardName: string | null;
+      /** "cash back" when both cards pay cash back, else "rewards" (`estimates.ts:rewardsWording`). */
+      rewardTerm: 'cash back' | 'rewards';
+      /** What non-cash rewards were counted at, or why the order is not counted; null for cash back. */
+      valueNote: string | null;
     };
 export type BadgeReply = { ok: true; view: BadgeView } | { ok: false; error: string };

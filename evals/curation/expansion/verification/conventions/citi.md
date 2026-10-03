@@ -15,3 +15,36 @@ Issuer-specific decisions for Citi cards. They refine [general.md](general.md) a
 - **Welcome offers** such as Best Buy's 10% on the first day of purchases (an extra 5 bonus points for new accounts) are out of scope, not `limitedTime` rules.
 - **Store-only points (general 14), final consistency pass 2026-10-02.** Macy's and Bloomingdale's keep their point values (100, 50) and now carry the `ambiguous` store-only issue: Star Money is usable only at Macy's, Macy's Backstage or macys.com; Rewards only at Bloomingdale's. Dillard's already carries an `ambiguous` issue on its pass-or-certificate redemption.
 - **Partial Self-Select option (general 19), final consistency pass 2026-10-02.** Strata's Live Entertainment option (live-event tickets only) maps to `entertainment` with an `ambiguous` issue anchored on the terms' definition.
+
+
+## Overlay (Stage 2 M4)
+
+Decisions for `../../catalog-overlay.json`, made by the issuer's overlay author on 2026-10-02 under the general overlay conventions (O1–O19), then checked by an independent verifier subagent and adjudicated by the M4 coordinator (agent-verified).
+
+- (2026-10-02) **Strata Self-Select** is one `chosen` choice `self-select`: one pick, five options, default Select Streaming Services. Streaming (r5) and Live Entertainment (r6) keep their categories and get `choice`. Fitness Clubs (r7) is held out as not at retail. Cosmetic Stores/Barber Shops/Hair Salons (r8) is held out as "no v3 category", because the captures describe cosmetic stores as retailers; barbers and salons are services. Pet Supply Stores (r9) is held out as "no v3 category". All five stay as options.
+- (2026-10-02) **Strata Premier** "air travel and other hotel purchases" (r1) is held out as not at retail.
+- (2026-10-02) **Strata Elite Citi Nights** 6X restaurants (r2) is held out. The engine has no time-of-day condition, and keeping the rule would show 6X at every restaurant. The 3X any-other-time rule stays.
+- (2026-10-02) **Costco Anywhere**: gas at Costco warehouses (r0) is held out as not at retail. Brand scope would pay 5% on every Costco purchase. Costco/Costco.com purchases (r5) get brand scope `costco`. 4% gas (r1) and EV charging (r2) share the cap `costco-gas-ev-7000`. r1 excludes Walmart, Target, Sam's Club and BJ's. The issuer's longer grocer list cannot be represented: there is a 20-brand limit and no brands are defined for those grocers. Travel (r4, including Costco Travel) is held out as not at retail. The Costco membership the card requires to apply is not a gate.
+- (2026-10-02) **AAdvantage cards**: American Airlines purchases get brand scope `american-airlines`. On Globe, Admirals Club food and beverage gets the same scope. Executive's $150,000 calendar-year threshold is the spend-status gate `citi-aadvantage-executive-150k-spend`: 4X requires `under-150k`, and the added 5X rule requires `reached-150k`. Both tiers have cap `none`, anchored on the terms sentence saying there is no maximum on miles.
+- (2026-10-02) **AT&T Points Plus**: purchases made directly from AT&T get brand scope `att`.
+- (2026-10-02) **My Best Buy Visa** moves to the store-credit program `my-best-buy-rewards` (redeemed at `best-buy`, anchored on the reward-certificate definition; points can also buy gift cards to other merchants). The 5% rule gets brand scope `best-buy`. The captures name no My Best Buy Plus/Total tiers, so there is no gate. The financing alternative (points only with Standard Credit) is `noted`. Pacific Kitchen & Home is not in scope, because the captures only exclude it from the 1% base.
+- (2026-10-02) **Wayfair Mastercard** moves to the store-credit program `wayfair-reward-dollars`, with redemption at `wayfair` only. This is a conservative reading, because the captures do not name where Reward Dollars are spent. The 7% rule is scoped to the five Family of Brands. The 5% rate under promotional financing is `noted`.
+- (2026-10-02) **L.L.Bean Mastercard** moves to the store-credit program `llbean-bean-bucks` (redeemed at `llbean`), and the 5% rule gets brand scope `llbean`.
+- (2026-10-02) **TSC Visa** stays on `cash-back`. The capture never says where TSC Rewards are redeemed, so no store-credit program is anchored. The Tractor Supply rule gets brand scope `tractor-supply`. Veterinary services (r4) are held out as not at retail.
+- (2026-10-02) **Dillard's**: brand scope `dillards`. The programDetails redemption is `dillards`.
+- (2026-10-02) **Macy's**: the tier gate `macys-star-rewards-tier` (silver/gold/platinum) carries one rule per tier, scoped to `macys` and `macys-backstage`: Silver is the corpus r4, and Gold 3X and Platinum 5X are added. Star Money redemption is `macys` and `macys-backstage`.
+- (2026-10-02) **Bloomingdale's**: the tier gate `bloomingdales-loyallist-tier` (loyallist/top-of-the-list/top-of-the-list-unlocked) gives these rates at `bloomingdales`: 3X (r1), 4X (added) and 10X (added). An added gated `all-purchases` 4X rule covers both upper tiers outside Bloomingdale's; its issuer wording is the heading of the outside-earn table. The unconditional 3X base stays. Redemption is at `bloomingdales`.
+
+### Verification and adjudication (2026-10-02)
+
+The coordinator's resolution of each finding of the independent verifier subagent:
+
+- **Error, Costco r0** (brand scope would pay 5% on all Costco purchases): accepted. r0 is `rule-held-out` as not at retail (warehouse fuel). The shared cap stays on r1 and r2, issue 0 now lists rules [1, 2], and hint 0's note says r0 is held out.
+- **W1, Costco r1 anchors for Target and BJ's**: accepted. I added anchors for both. The Walmart and Sam's Club lines were adjacent, so they are now one anchor rather than two abutting ones.
+- **W2, Costco grocer list**: the four retail exclusions stay. The note now says the issuer's longer list cannot be represented (20-brand limit, no brands defined).
+- **W3, Executive cap evidence**: accepted. The 5X rule's cap anchor is now the no-maximum sentence, not the section heading. The corpus cap on r1 was unstated, so r1 now also gets cap `none` with the same anchor.
+- **W4, Bloomingdale's `outside-top-tiers` wording**: accepted. The issuer wording is now the verbatim heading of the outside-earn table.
+- **W5 and W6, Best Buy financing and gift-card redemption**: the hint stays `noted`. Financing is a choice made per purchase, not a cardholder gate, so there is no gate in M4. The gift-card redemption path is mentioned in the issue note; the program follows O13.
+- **W7 and W8, Wayfair financing and redemption**: no change. The financing hint stays `noted`, and redemption stays at `wayfair` only as the conservative reading, which the issue note now says.
+
+The check was re-run: `OK: 16 cards for Citi.`

@@ -6,7 +6,7 @@ status: stable
 tags: [system, ui, helios, theme, accessibility]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:05:00Z
+  at: 2026-10-03T03:15:00Z
 sources:
   - resource: ../../packages/ui/src/index.ts
     title: Component exports
@@ -26,13 +26,13 @@ sources:
 
 `packages/ui` (`@ai-checkout/ui`) is this repo's own React 19 component set, written to the public [Helios](https://helios.hashicorp.design) component specs (HashiCorp's Ember-only library is not used) and styled only with `--token-*` CSS variables from `@hashicorp/design-system-tokens` 5.1.0, whose values the AI Checkout Ocean theme ([`src/theme.css`](../../packages/ui/src/theme.css), [decision](../decisions/2026-10-02-ocean-theme.md)) replaces. Icons are path data from `@hashicorp/flight-icons` 5.2.0 copied into a generated TS file. It is consumed as TypeScript source by the extension popup, onboarding and badge iframe, the review app and the public site. Light theme only. Usage examples and licence notes: [`packages/ui/README.md`](../../packages/ui/README.md).
 
-Verified 2026-10-02 by reading the code and running `npm test --workspace=@ai-checkout/ui` (36 tests plus the icon staleness check, passing) and the gallery browser test (axe at 360 and 1280 px) with the Ocean theme.
+Verified 2026-10-03 on branch `ui-ocean-theme` after merging `main` (`f383964`, M7 and Tailwind 4) by running `npm test --workspace=@ai-checkout/ui` (40 tests plus the icon staleness check) and the gallery Playwright spec (6 passed, axe at 360 and 1280 px) with the Ocean theme.
 
 ## Facts
 
 | Item | Value |
 | --- | --- |
-| Exports | `AlertInline`, `ApplicationState`, `Badge`, `Button`, `Card`, `Disclosure`, `Checkbox`, `Field`, `Fieldset`, `Radio`, `Select`, `TextInput`, `Toggle`, `Icon`, `Link`, `Modal`, `Table`, `Tabs`, `cx` ([`src/index.ts`](../../packages/ui/src/index.ts)) |
+| Exports | `AlertInline`, `ApplicationState`, `Badge`, `Button`, `Card`, `Combobox` (with `matchesSearch`, `normalizeSearch`), `Disclosure`, `Checkbox`, `Field`, `Fieldset`, `Radio`, `Select`, `TextInput`, `Toggle`, `Icon`, `Link`, `Modal`, `Table`, `Tabs`, `cx` ([`src/index.ts`](../../packages/ui/src/index.ts)) |
 | Styles | `import '@ai-checkout/ui/styles.css'` once per app: Helios tokens, color/elevation/focus-ring/typography helpers, the Ocean theme, component CSS ([`src/styles.css`](../../packages/ui/src/styles.css)) |
 | Theme | [`src/theme.css`](../../packages/ui/src/theme.css) overrides Helios semantic, palette, radius, elevation, focus, form-control and badge tokens and adds `--ac-color-navy` `#0c2a4d`, `--ac-color-sky` `#7cc4ff`, `--ac-color-on-navy`, `--ac-color-on-navy-soft` `#a9c6ea`, `--ac-color-navy-strong`, `--ac-color-navy-line`, `--ac-font-display`, `--ac-radius-hero`. Action blue on white is `#1d5fb4` |
 | Fonts | Figtree (text) and Bricolage Grotesque (display), `@fontsource-variable/*` 5.3.0 (SIL OFL 1.1), imported by `theme.css` and bundled as same-origin `woff2` files; no CSP change |
@@ -47,6 +47,7 @@ Verified 2026-10-02 by reading the code and running `npm test --workspace=@ai-ch
 - `Field` and `Fieldset` wire `id`, `aria-describedby` (helper, error and any extra IDs passed via `describedBy`) and `aria-invalid`; errors sit in a polite live region.
 - `Modal` traps focus, closes on Esc, restores focus and locks body scroll; built for one open modal at a time.
 - `Tabs` uses roving tabindex with arrow keys; `Table` supports optional sorting.
+- `Combobox` (Stage 2 M7, [`Combobox.tsx`](../../packages/ui/src/Combobox.tsx), matching in [`search.ts`](../../packages/ui/src/search.ts)) follows the WAI-ARIA editable combobox with list autocomplete: the field keeps focus, arrow keys move `aria-activedescendant` through the matches, Enter picks (or picks a single match), Escape closes the list then clears the text; matches are grouped (`role="group"` labelled by its group name) in an in-flow listbox (max 240 px, so nothing is clipped in a scrolling popup), and a polite status announces the count or the empty text. The field is cleared after a pick (an "add" picker). The active option uses the action surface with a 3 px navy bar on the left (the review queue's current-draft marker). Matching ignores case, accents and punctuation; every typed word must appear in the label, group or keywords. Helios has no React combobox; the styling reuses the form text input and tokens.
 
 ## Gotchas
 
@@ -54,12 +55,12 @@ Verified 2026-10-02 by reading the code and running `npm test --workspace=@ai-ch
 - `npm test` fails if `src/icons.generated.ts` is stale relative to `ICONS`.
 - Sky (`--ac-color-sky`) and on-navy text only pass contrast on navy. On white use `--token-color-foreground-action`; the axe checks in every app's browser suite catch misuse (the site's install card inside the navy hero needed its text colour reset).
 - The extension release package allows `assets/*.woff2` for the fonts ([`release-package.mjs`](../../extension/scripts/release-package.mjs)); other font formats fail packaging.
-- The extension's Tailwind theme maps to `--token-*` variables so remaining utilities are tokens ([`extension/tailwind.config.js`](../../extension/tailwind.config.js)).
+- The extension's Tailwind 4 `@theme inline` maps colors, fonts, type sizes, weights, radii and shadows to `--token-*` variables, plus the Ocean brand values (`navy`, `navy-strong`, `navy-line`, `sky`, `on-navy`, `on-navy-soft`, `font-display`, `radius-hero`) to `--ac-*`, so remaining utilities are theme tokens ([`extension/src/styles/globals.css`](../../extension/src/styles/globals.css); [decision](../decisions/2026-10-03-tailwind-4.md)).
 
 ## Tests
 
-- [`tests/components.test.tsx`](../../packages/ui/tests/components.test.tsx): roles, labels, keyboard behaviour.
-- [`e2e/gallery.spec.ts`](../../packages/ui/e2e/gallery.spec.ts): builds the gallery; axe (WCAG 2.1 A/AA) at 360 and 1280 px, modal focus trap and return, keyboard use of tabs, radios and sortable table. Runs in "Application checks" CI.
+- [`tests/components.test.tsx`](../../packages/ui/tests/components.test.tsx): roles, labels, keyboard behaviour (incl. the combobox: filtering, groups, active option, Enter, Escape, click, empty status).
+- [`e2e/gallery.spec.ts`](../../packages/ui/e2e/gallery.spec.ts): builds the gallery; axe (WCAG 2.1 A/AA) at 360 and 1280 px, modal focus trap and return, keyboard use of tabs, radios and sortable table, and the combobox open, active and empty (axe). Runs in "Application checks" CI.
 
 ## Related
 

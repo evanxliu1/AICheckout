@@ -291,6 +291,23 @@ p {
 .editor-card + .editor-card {
   margin-top: 16px;
 }
+/* Large catalogs (Stage 2 M8): one collapsed section per card or catalog part. */
+.change-groups,
+.source-ids {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.change-groups > li + li {
+  margin-top: 8px;
+}
+.source-ids {
+  max-height: 320px;
+  overflow: auto;
+}
+.source-ids > li + li {
+  margin-top: 4px;
+}
 .editor-rule {
   padding: 12px 0 0;
   border-top: 1px solid var(--token-color-border-faint);

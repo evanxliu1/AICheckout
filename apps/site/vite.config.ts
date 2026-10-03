@@ -20,6 +20,7 @@ export const COPIED: Record<string, string> = {
   'results/results.json': 'docs/evals/results.json',
   'results/results.svg': 'docs/evals/results.svg',
   'results/results-heldout.svg': 'docs/evals/results-heldout.svg',
+  'results/expansion.json': 'docs/evals/expansion.json',
   'media/1-wallet.png': 'docs/release/assets/1-wallet-640x400.png',
   'media/2-comparison.png': 'docs/release/assets/2-comparison-640x400.png',
   'media/3-uncertainty.png': 'docs/release/assets/3-uncertainty-640x400.png',

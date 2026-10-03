@@ -1,11 +1,15 @@
 import { needsActivation } from './engine-v2.ts';
+import { baseRuleV3, capHolder, enrolledByChoice, ruleCoversMerchant } from './engine-v3.ts';
 import type {
   Catalog,
   CardProductV2,
   CardProduct,
   CatalogV2,
+  CatalogV3,
   RewardCategory,
+  RewardCategoryV3,
   RewardRuleV2,
+  RewardRuleV3,
 } from './types.ts';
 
 /** Shopper-facing activation wording; `unstated` is shown, not treated as a requirement. */
@@ -16,13 +20,13 @@ export const ACTIVATION_LABELS: Record<RewardRuleV2['activation'], string> = {
   unstated: 'Activation is not mentioned on the issuer’s pages',
 };
 
-/** Merchant IDs a catalog covers, for either schema version. */
+/** Merchant IDs a catalog covers, for any schema version. */
 export function catalogMerchantIds(catalog: Catalog): string[] {
-  return catalog.schemaVersion === 2 ? catalog.merchants.map((m) => m.id) : catalog.merchantIds;
+  return catalog.schemaVersion === 1 ? catalog.merchantIds : catalog.merchants.map((m) => m.id);
 }
 
 /** Short shopper-facing names for rule categories. */
-export const CATEGORY_LABELS: Record<RewardCategory | 'all-eligible' | 'us-online-retail', string> = {
+export const CATEGORY_LABELS: Record<RewardCategoryV3 | 'all-eligible' | 'us-online-retail', string> = {
   'all-purchases': 'all purchases',
   'all-eligible': 'all purchases',
   'online-retail': 'online retail',
@@ -38,6 +42,10 @@ export const CATEGORY_LABELS: Record<RewardCategory | 'all-eligible' | 'us-onlin
   'travel-portal': 'travel portal',
   'entertainment-portal': 'entertainment portal',
   other: 'other',
+  electronics: 'electronics store',
+  'department-stores': 'department store',
+  'home-improvement': 'home improvement',
+  'wholesale-clubs': 'wholesale club',
 };
 
 export type UsageInput = {
@@ -68,6 +76,7 @@ export function usageInputs(catalog: Catalog, cardId: string): UsageInput[] {
         needsActivation: rule.requiresActivation,
       }));
   }
+  if (catalog.schemaVersion === 3) return usageInputsV3(catalog, cardId);
   const card: CardProductV2 | undefined = catalog.cards.find((c) => c.id === cardId);
   return (card?.rules ?? [])
     .filter(
@@ -82,6 +91,45 @@ export function usageInputs(catalog: Catalog, cardId: string): UsageInput[] {
       needsSpend: rule.cap.kind === 'spend',
       needsActivation: needsActivation(rule),
     }));
+}
+
+/** Catalog v3: the brand names of a brand-scoped `other` or `all-purchases` rule, else its category. */
+function ruleLabelV3(catalog: CatalogV3, rule: RewardRuleV3) {
+  if ((rule.category === 'other' || rule.category === 'all-purchases') && rule.brandIds.length > 0)
+    return rule.brandIds.map((id) => catalog.brands.find((b) => b.id === id)?.name ?? id).join(' or ');
+  return CATEGORY_LABELS[rule.category];
+}
+
+/** Catalog v3: every non-base rule with a spend cap or activation that covers a catalog merchant.
+ * Rules sharing a cap (`sharedCapId`) record their combined spend once, on the group's rule with the
+ * smallest ID (`capHolder`), listed whenever any rule of the group covers a merchant; the other rules
+ * of the group are listed only for activation. */
+function usageInputsV3(catalog: CatalogV3, cardId: string): UsageInput[] {
+  const card = catalog.cards.find((c) => c.id === cardId);
+  if (!card) return [];
+  const base = baseRuleV3(card);
+  const covers = (rule: RewardRuleV3) => catalog.merchants.some((m) => ruleCoversMerchant(rule, m));
+  const activation = (rule: RewardRuleV3) =>
+    rule.activation === 'enroll-once' || rule.activation === 'recurring';
+  return card.rules.flatMap((rule) => {
+    if (rule === base) return [];
+    const group =
+      rule.sharedCapId === null ? [rule] : card.rules.filter((r) => r.sharedCapId === rule.sharedCapId);
+    const needsSpend = rule.cap.kind === 'spend' && capHolder(card, rule) === rule && group.some(covers);
+    // A category the shopper chooses is its own enrollment (`enrolledByChoice`): asked once, as the choice.
+    const needsActivation = activation(rule) && !enrolledByChoice(card, rule) && covers(rule);
+    if (!needsSpend && !needsActivation) return [];
+    const labels = [...new Set(group.filter(covers).map((r) => ruleLabelV3(catalog, r)))];
+    return [
+      {
+        ruleId: rule.id,
+        label:
+          needsSpend && group.length > 1 ? `combined ${labels.join(' and ')}` : ruleLabelV3(catalog, rule),
+        needsSpend,
+        needsActivation,
+      },
+    ];
+  });
 }
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -107,5 +155,16 @@ export function redateCatalog<T extends Catalog>(catalog: T, verifiedOn: string)
     for (const card of next.cards)
       for (const rule of card.rules)
         if (rule.limitedTime?.endsOn) rule.limitedTime.endsOn = shiftDate(rule.limitedTime.endsOn, days);
+  if (next.schemaVersion === 3) {
+    for (const card of next.cards)
+      for (const rule of card.rules) {
+        if (rule.limitedTime?.startsOn)
+          rule.limitedTime.startsOn = shiftDate(rule.limitedTime.startsOn, days);
+        if (rule.limitedTime?.endsOn) rule.limitedTime.endsOn = shiftDate(rule.limitedTime.endsOn, days);
+      }
+    for (const program of next.programs)
+      if (program.valuation.basis === 'published-estimate')
+        program.valuation.retrievedOn = shiftDate(program.valuation.retrievedOn, days);
+  }
   return next;
 }

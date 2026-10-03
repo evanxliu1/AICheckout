@@ -28,10 +28,49 @@ test('cash back is one program at 100 and every cash-back card uses it', () => {
 
 test('issuer-stated corpus values are carried on their cards', () => {
   assert.equal(card(committed, 'boa-travel-rewards').statedValueHundredthsOfCent, 60);
-  assert.equal(card(committed, 'citi-double-cash').statedValueHundredthsOfCent, 100);
   const state = copy();
   card(state, 'boa-travel-rewards').statedValueHundredthsOfCent = 100;
   assert.deepEqual(check(state), ['card boa-travel-rewards: stated value 100 differs from corpus 60']);
+});
+
+test('Double Cash maps to cash back over its frozen points label (general rule 1)', () => {
+  const entry = card(committed, 'citi-double-cash');
+  assert.equal(entry.programId, 'cash-back');
+  assert.equal(entry.statedValueHundredthsOfCent, null);
+  assert.deepEqual(
+    [entry.corpusLabel.currency, entry.corpusLabel.pointValueHundredthsOfCent],
+    ['points', 100],
+  );
+  assert.deepEqual(
+    committed.table.cards.filter((entry) => entry.corpusLabel).map((entry) => entry.cardId),
+    ['citi-double-cash'],
+  );
+
+  const stale = copy();
+  card(stale, 'citi-double-cash').corpusLabel.pointValueHundredthsOfCent = 150;
+  assert.equal(check(stale).length, 1, 'only points at 1¢ may be overridden');
+  const label = copy();
+  for (const item of label.corpora[1].cases)
+    if (item.cardId === 'citi-double-cash') item.reference.pointValueHundredthsOfCent.value = 150;
+  assert.deepEqual(check(label), [
+    'card citi-double-cash: corpusLabel does not repeat the corpus label (points, 150)',
+  ]);
+  const points = copy();
+  card(points, 'citi-double-cash').programId = 'citi-thankyou';
+  assert.deepEqual(check(points), [
+    'card citi-double-cash: a corpusLabel override maps to cash-back with no stated value',
+  ]);
+  const anchor = copy();
+  card(anchor, 'citi-double-cash').anchor.quote = 'Cash back is earned in the form of ThankYou® Points';
+  assert.deepEqual(check(anchor), [
+    'card citi-double-cash: a corpusLabel override needs an anchor stating a percentage cash back',
+  ]);
+  const without = copy();
+  delete card(without, 'citi-double-cash').corpusLabel;
+  assert.deepEqual(check(without), [
+    'card citi-double-cash: stated value null differs from corpus 100',
+    'card citi-double-cash: corpus currency points but program cash-back is cash-back',
+  ]);
 });
 
 test('a missing, duplicated or unknown card fails', () => {

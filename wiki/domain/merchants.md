@@ -1,27 +1,29 @@
 ---
 type: Domain Concept
 title: Merchants
-description: The three merchant profiles in catalog v2 (Best Buy, Newegg, Amazon), their expected category and MCC with confidence, and the caveats that make bonuses uncertain.
+description: The three merchant profiles in catalog v2 (Best Buy, Newegg, Amazon), their expected category and MCC with confidence, the caveats that make bonuses uncertain, and their catalog v3 brands.
 status: stable
 tags: [domain, merchants, mcc]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-03T02:00:00Z
 sources:
   - resource: ../../evals/curation/real/merchants.json
     title: Merchant profiles (input to the catalog builder)
+  - resource: ../../evals/curation/expansion/merchants.json
+    title: Brands and merchant profiles for catalog v3
   - resource: ../../packages/rewards-core/src/catalog-v2.ts
     title: CATALOG_V2 merchants
   - resource: ../../packages/rewards-core/src/types.ts
     title: MerchantProfile type
   - resource: ../../docs/research/cashback-card-terms-2026.md
     title: Research report, section on electronics retailers (checked 2026-09-28)
-stale_after: 2026-10-29T00:00:00Z
+stale_after: 2026-11-01T00:00:00Z
 ---
 
 # Merchants
 
-A merchant profile says what the engine may assume about a retailer: whether it is online retail selling physical goods, whether it is U.S., which merchant category it is expected to code as, and the predicted MCC with a confidence level. The catalog has three profiles. The MCC is a prediction. It is never observed at checkout. None of the seven [cards](cards.md) pays a bonus on the expected categories, so the deciding test at these merchants is the Amex online-retail channel rule (see [Reward rules](reward-rules.md)).
+A merchant profile says what the engine may assume about a retailer: whether it is online retail selling physical goods, whether it is U.S., which merchant category it is expected to code as, and the predicted MCC with a confidence level. Both catalogs have the same three profiles. The MCC is a prediction. It is never observed at checkout. None of the seven release-1 [cards](cards.md) pays a bonus on the expected categories, so for them the deciding test is the Amex online-retail channel rule (see [Reward rules](reward-rules.md)). In the bundled catalog v3 (178 cards) brand-scoped rules and store cards also decide, and the `electronics` category pays at Best Buy and Newegg for the cards that offer it (U.S. Bank Cash+ and Cash+ Secured when chosen, Edward Jones Triple Rewards as an automatic top category); see [Catalog v3](#catalog-v3-stage-2-m4).
 
 ## Facts
 
@@ -48,6 +50,10 @@ MCC 5732 is the network code for electronics stores. The research report found n
 - Profiles are authored in [`evals/curation/real/merchants.json`](../../evals/curation/real/merchants.json) and copied into `CATALOG_V2.merchants` by [`scripts/build-catalog-v2.mjs`](../../scripts/build-catalog-v2.mjs). Merchant MCC page captures are gitignored (`evals/curation/real/merchant-captures/`). Only `merchant-manifest.json` and `merchant-sources.json` are committed.
 - A purchase at a merchant not in `merchants` returns `unsupported-merchant`.
 - `expectedCategory` gates MCC-group rules. With `electronics` or `general-merchandise`, no supermarket, gas, dining or other category rule can apply.
+
+## Catalog v3 (Stage 2 M4)
+
+[`evals/curation/expansion/merchants.json`](../../evals/curation/expansion/merchants.json) carries the same three profiles plus `brandIds` (`amazon-us` → `amazon`, `best-buy-us` → `best-buy`, `newegg-us` → `newegg`) and the 140 brands that overlay rules, closed-loop cards and store-credit programs refer to. A brand is a merchant name for matching only and implies no affiliation; UI copy must not present brands as partners. Rules scoped to `amazon`, `best-buy` or `newegg` (Prime Visa, Amazon Store Card, My Best Buy Visa, Newegg Store Credit Card) are the ones that change rankings at the supported merchants today ([overlay decision](../decisions/2026-10-02-catalog-overlay-conventions.md)).
 
 ## Gotchas
 

@@ -38,6 +38,8 @@
     "db:seed:check": "node scripts/generate-db-seed.mjs --check",
     "catalog:v2": "node scripts/build-catalog-v2.mjs",
     "catalog:v2:check": "node scripts/build-catalog-v2.mjs --check",
+    "catalog:v3": "node scripts/build-catalog-v3.mjs",
+    "catalog:v3:check": "node scripts/build-catalog-v3.mjs --check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:scripts": "node --test \"scripts/lib/*.test.mjs\"",
@@ -46,6 +48,7 @@
   },
   "devDependencies": {
     "@types/node": "24.6.1",
+    "lightningcss": "1.32.0",
     "pg": "8.23.0",
     "prettier": "3.9.9",
     "supabase": "2.118.0"

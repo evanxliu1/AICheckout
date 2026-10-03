@@ -8,7 +8,7 @@ import { createCodexProvider, type CodexOptions } from '../codex.ts';
 import { CURATION_DEFAULTS } from '../curation-model.ts';
 import { executeTask, type ExtractionProvider } from '../runner.ts';
 import { PROMPTS, type PromptVersion } from './context.ts';
-import { loadCorpusV2, type LoadedCase, type LoadedCorpus } from './corpus.ts';
+import { detectLayout, loadCorpusV2, type LoadedCase, type LoadedCorpus } from './corpus.ts';
 import {
   abstainingProviderV2,
   bundleSchema,
@@ -19,6 +19,7 @@ import {
   referenceProvider,
   retryableFailures,
   reportMarkdown,
+  selectCases,
   slotOf,
   SELECTIONS,
   type Configuration,
@@ -326,15 +327,25 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
       limit: { type: 'string' },
       case: { type: 'string', multiple: true },
       corpus: { type: 'string' },
+      captures: { type: 'string' },
       replay: { type: 'string' },
       resume: { type: 'string' },
       output: { type: 'string' },
       check: { type: 'boolean', default: false },
     },
   });
-  const loaded = await loadCorpusV2(
-    resolve(root, values.corpus ?? (values.check ? FIXTURE_CORPUS : REAL_CORPUS)),
-  );
+  // A directory with corpus.json and no corpus.v2.json (evals/curation/expansion) loads with the expansion
+  // layout: every case is held-out. Captures may live outside the corpus directory (--captures).
+  const corpusDir = resolve(root, values.corpus ?? (values.check ? FIXTURE_CORPUS : REAL_CORPUS));
+  const layout = await detectLayout(corpusDir);
+  const loaded = await loadCorpusV2(corpusDir, {
+    layout,
+    ...(values.captures ? { captures: resolve(root, values.captures) } : {}),
+  });
+  if (layout === 'expansion')
+    console.log(
+      `Corpus ${loaded.corpus.version}: expansion layout, ${loaded.cases.length} cases, all held-out.`,
+    );
   if (values.check) {
     if (values.provider !== 'fixture' || values.replay || values.resume)
       throw new Error('--check runs the fixture providers only.');
@@ -417,6 +428,10 @@ export async function runEvaluationV2Cli(args: string[], root: string): Promise<
     }
     if (configuration.split !== 'dev' && !values['allow-heldout'])
       throw new Error('Held-out cases need --allow-heldout. Never tune prompts on held-out results.');
+    if (!selectCases(loaded, configuration.split).length)
+      throw new Error(
+        `The corpus has no ${configuration.split} cases; the expansion corpus is all held-out.`,
+      );
     // The provider (and its CLI version) is resolved before any failure is logged, so a resume that cannot
     // run (a missing binary, for example) does not use up retries.
     const provider = await providerFor(configuration);

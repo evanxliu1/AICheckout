@@ -34,4 +34,4 @@ Two npm scripts regenerate hash-pinned media under `docs/release/assets/`. Rerun
 
 * [Local setup](local-setup.md)
 * [Helios design system decision](../decisions/2026-09-28-helios-design-system.md)
-* [Ocean theme decision](../decisions/2026-10-02-ocean-theme.md): the committed release media predate it and need a `release:media` rerun
+* [Ocean theme decision](../decisions/2026-10-02-ocean-theme.md): the committed release media predate it and the catalog v3 UI; after the merge rerun `release:media` (store screenshots, promo, shopper demo, and the site's `/media/*.png`, which `apps/site/vite.config.ts` copies from them) and `release:portfolio` (review app stills and video)

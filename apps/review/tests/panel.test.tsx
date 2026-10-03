@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import userEvent from '@testing-library/user-event';
 import { DraftPanel } from '../src/ReviewWorkspace';
 import { CATALOG_V2 } from '@ai-checkout/rewards-core';
-import { reviewFixture, now } from './fixtures';
+import { reviewFixture, now, sourceDocument } from './fixtures';
 
 beforeEach(() => {
   vi.spyOn(Date, 'now').mockReturnValue(now);
@@ -40,6 +40,7 @@ function panel(detail = reviewFixture()) {
     onCapture: vi.fn(async () => {}),
     onCaptureMany: vi.fn(async () => {}),
     onPublish: vi.fn(async () => {}),
+    onLoadSource: vi.fn(async (id: string) => sourceDocument(detail.sources.find((doc) => doc.id === id)!)),
   };
   render(<DraftPanel detail={detail} busy={false} {...handlers} />);
   return handlers;
@@ -63,10 +64,34 @@ it('requires the explicit review acknowledgement and note even for an implicit f
   expect(handlers.onPublish).toHaveBeenCalledExactlyOnceWith('Checked all synthetic source terms.');
   expect((screen.getByRole('checkbox') as HTMLInputElement).checked).toBe(false);
 });
-it('renders hostile source text as text, without executing or rendering embedded HTML', () => {
-  panel();
-  expect(screen.getAllByText(/Synthetic test evidence/)).toHaveLength(3);
+it('loads each captured text when opened and renders hostile text as text, without executing HTML', async () => {
+  const handlers = panel(),
+    user = setup();
+  expect(screen.queryAllByText(/Synthetic test evidence/)).toHaveLength(0);
+  expect(handlers.onLoadSource).not.toHaveBeenCalled();
+  for (const summary of document.querySelectorAll<HTMLElement>('.source-card summary'))
+    await user.click(summary);
+  await waitFor(() => expect(screen.getAllByText(/Synthetic test evidence/)).toHaveLength(3));
+  expect(handlers.onLoadSource).toHaveBeenCalledTimes(3);
   expect(document.querySelector('img')).toBeNull();
+  // Closing and reopening does not read the text again.
+  const first = document.querySelector<HTMLElement>('.source-card summary')!;
+  await user.click(first);
+  await user.click(first);
+  expect(handlers.onLoadSource).toHaveBeenCalledTimes(3);
+});
+it('reports a capture that cannot be loaded and retries when reopened', async () => {
+  const detail = reviewFixture();
+  const handlers = panel(detail),
+    user = setup();
+  handlers.onLoadSource.mockRejectedValueOnce(new Error('This capture is no longer attached to the draft.'));
+  const first = document.querySelector<HTMLElement>('.source-card summary')!;
+  await user.click(first);
+  expect(await screen.findByText(/no longer attached to the draft\. Close and open/)).toBeTruthy();
+  await user.click(first);
+  await user.click(first);
+  expect(await screen.findByText(/Synthetic test evidence/)).toBeTruthy();
+  expect(handlers.onLoadSource).toHaveBeenCalledTimes(2);
 });
 it('makes unsaved edits block publication and discarding them restores the exact saved revision', async () => {
   const handlers = panel(),
@@ -94,6 +119,7 @@ it('summarizes v2 rules and validates v2 JSON edits with the schema union', asyn
   detail.draft.catalog = v2;
   const handlers = panel(detail),
     user = setup();
+  await user.click(summary('All proposed card rules (7 cards)'));
   expect(screen.getAllByText(/1% is paid when the balance is paid\./)).toHaveLength(2);
   expect(screen.getAllByText(/Excludes bnpl\./)).toHaveLength(1);
   await user.click(summary('Correct draft data'));
@@ -148,6 +174,7 @@ it('captures every missing source in one step from loaded files', async () => {
       onCapture={vi.fn(async () => {})}
       onCaptureMany={onCaptureMany}
       onPublish={vi.fn(async () => {})}
+      onLoadSource={vi.fn()}
     />,
   );
   const user = setup();
@@ -224,10 +251,7 @@ it('blocks saving draft edits, with a reason, while capture text is loaded', asy
   const handlers = panel(v2Detail()),
     user = setup();
   await user.click(summary('Capture all missing sources'));
-  await user.upload(control('capture-files'), [
-    new File(['Citi terms'], 'citi-double-cash-product.txt', { type: 'text/plain' }),
-  ]);
-  await waitFor(() => expect(text()).toMatch(/Loaded 1 file/));
+  fireEvent.change(control('capture-citi-double-cash-product'), { target: { value: 'Citi terms' } });
   await openCiti(user);
   fireEvent.change(control('edit-cards-0-rules-0-rateBps'), {
     target: { value: '210' },
@@ -306,9 +330,27 @@ it('skips capture files too large to be a capture without reading them', async (
   panel(v2Detail());
   const user = setup();
   await user.click(summary('Capture all missing sources'));
-  const big = new File(['x'.repeat(480_001)], 'citi-double-cash-product.txt', { type: 'text/plain' });
+  const big = new File(['x'.repeat(1_000_001)], 'citi-double-cash-product.txt', { type: 'text/plain' });
   const read = vi.spyOn(big, 'text');
   await user.upload(control('capture-files'), [big]);
   await waitFor(() => expect(text()).toMatch(/Loaded 0 files; skipped 1 too large to be a capture/));
   expect(read).not.toHaveBeenCalled();
+});
+
+it('refuses a capture file whose SHA-256 differs from the corpus manifest', async () => {
+  const handlers = panel(v2Detail()),
+    user = setup();
+  await user.click(summary('Capture all missing sources'));
+  // citi-double-cash-product is in evals/curation/real/manifest.json with the real page's hash.
+  await user.upload(control('capture-files'), [
+    new File(['Not the captured Citi page'], 'citi-double-cash-product.txt', { type: 'text/plain' }),
+  ]);
+  await waitFor(() =>
+    expect(text()).toMatch(
+      /Loaded 0 files\. Refused 1 whose SHA-256 differs from the corpus manifest \(citi-double-cash-product\.txt\)/,
+    ),
+  );
+  expect((control('capture-citi-double-cash-product') as HTMLTextAreaElement).value).toBe('');
+  expect(button(/^Capture 0 of \d+ missing sources and attach$/).disabled).toBe(true);
+  expect(handlers.onDirty).not.toHaveBeenLastCalledWith(true);
 });

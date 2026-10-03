@@ -8,6 +8,7 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import { protectVault, startPopup } from './vault';
+import { addCard, cacheCatalogV3Fixture } from './wallet';
 
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 const extension = resolve('dist-e2e');
@@ -61,8 +62,8 @@ async function onboard(context: BrowserContext, id: string) {
     .toBe(true);
   const page = context.pages().find((p) => p.url().endsWith('/src/onboarding/index.html'))!;
   await expect(page.getByRole('heading', { name: 'Welcome to AI Checkout' })).toBeVisible();
-  await page.getByRole('checkbox', { name: 'Citi Double Cash', exact: true }).check();
-  await page.getByRole('checkbox', { name: 'American Express Blue Cash Everyday', exact: true }).check();
+  await addCard(page, 'Citi Double Cash');
+  await addCard(page, 'American Express Blue Cash Everyday');
   await page.getByLabel(/Blue Cash Everyday online retail spend/).fill('0');
   return page;
 }
@@ -263,7 +264,7 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     const popup = await context.newPage();
     await popup.setViewportSize({ width: 360, height: 900 });
     await popup.goto(popupUrl);
-    await expect(popup.getByRole('heading', { name: 'All-time: $0.55 extra cash back' })).toBeVisible();
+    await expect(popup.getByRole('heading', { name: 'All-time: $0.55 extra in rewards' })).toBeVisible();
     await popup.getByText('Order history (1)').click();
     await expect(popup.getByText(/Best Buy US · \$54\.46 cart/)).toBeVisible();
     await popup.screenshot({ path: testInfo.outputPath('savings.png'), fullPage: true });
@@ -313,7 +314,7 @@ test('badge prompts: no cards opens onboarding; a locked vault asks to unlock', 
     const popup = await context.newPage();
     await popup.goto(popupUrl);
     await startPopup(popup);
-    await popup.getByRole('checkbox', { name: 'Capital One Quicksilver', exact: true }).check();
+    await addCard(popup, 'Capital One Quicksilver');
     await popup.getByRole('button', { name: 'Save cards' }).click();
     await protectVault(popup);
     await popup.getByRole('button', { name: 'Lock saved inputs' }).click();
@@ -322,6 +323,96 @@ test('badge prompts: no cards opens onboarding; a locked vault asks to unlock', 
     await expect(badge.getByRole('button', { name: /Unlock to see your best card/ })).toBeVisible();
     await cart.screenshot({ path: testInfo.outputPath('locked.png') });
     expect(await cart.evaluate(() => document.documentElement.innerText)).not.toMatch(/Quicksilver/);
+  } finally {
+    await context.close();
+  }
+});
+
+test('badge on catalog v3: points with their value basis, a store card not accepted, Venmo, axe', async ({
+  browserName,
+}, testInfo) => {
+  test.setTimeout(90_000);
+  expect(browserName).toBe('chromium');
+  const { context, popupUrl } = await launch(testInfo);
+  try {
+    const popup = await context.newPage();
+    await popup.goto(popupUrl);
+    await startPopup(popup);
+    await cacheCatalogV3Fixture(popup);
+    await startPopup(popup);
+    // Synthetic fixture cards. At Best Buy ($27.23): Points earns 3 points per $1 online (81 points
+    // at the 1.2¢ estimate, $0.98); Auto Top's miles have no value; the Amazon Store Card works only
+    // at Amazon.
+    for (const name of ['Test Points Card', 'Test Automatic Top Category', 'Test Amazon Store Card'])
+      await addCard(popup, name);
+    await popup.getByRole('button', { name: 'Save cards' }).click();
+    await expect(popup.getByRole('button', { name: 'Edit cards' })).toBeVisible();
+
+    const cart = await context.newPage();
+    await cart.goto('https://www.bestbuy.com/cart');
+    const badge = await badgeFrame(cart);
+    const pill = badge.getByRole('button', {
+      name: 'Use Points · estimated $0.98 in points on this cart (AI Checkout). Show details',
+    });
+    await expect(pill).toBeVisible();
+    await expect(pill).toContainText('Use Points · est. $0.98 in points');
+    await axeBadge(badge, 'v3 collapsed badge');
+    await cart.screenshot({ path: testInfo.outputPath('v3-collapsed.png') });
+    await pill.click();
+    await expect(badge.getByRole('heading', { name: 'Best card for this cart' })).toBeFocused();
+    const ranking = badge.getByRole('list', { name: 'Your cards, best first' });
+    await expect(ranking.getByRole('listitem')).toHaveCount(2);
+    await expect(ranking.getByRole('listitem').first()).toContainText('81 points at 1.2¢ each.');
+    await expect(ranking.getByRole('listitem').first()).toContainText('Estimate');
+    await expect(ranking.getByRole('listitem').nth(1)).toContainText(
+      'Test Airline Miles has no published value',
+    );
+    await expect(
+      badge.getByText('Amazon Store works only at Amazon, so it is not compared here.'),
+    ).toBeVisible();
+    await expect(badge.getByText(/Cards whose points have no value are listed last/)).toBeVisible();
+    await axeBadge(badge, 'v3 panel');
+    // CSP `style-src 'self'`: the badge page uses no inline styles.
+    expect(
+      await badge.evaluate(() => document.querySelectorAll('[style]:not([style=""]), style').length),
+    ).toBe(0);
+    await cart.screenshot({ path: testInfo.outputPath('v3-expanded.png') });
+
+    // Venmo is offered with catalog v3 terms; the fixture's online bonus excludes it.
+    await badge.getByLabel('Payment method').selectOption('venmo');
+    await expect(badge.getByLabel('Payment method')).toHaveValue('venmo');
+    await expect(ranking.getByRole('listitem').first()).toContainText('27 points at 1.2¢ each.');
+    await axeBadge(badge, 'v3 panel with Venmo');
+    // The widest amounts (largest purchase, a range in units) stay inside the 360 px panel.
+    await badge.getByLabel('Amount (USD)').fill('99999.99');
+    await badge.getByRole('button', { name: 'Update' }).click();
+    await expect(ranking.getByRole('listitem').nth(1)).toContainText(/\d{2},\d{3}.* miles/);
+    expect(
+      await badge.evaluate(() => {
+        const body = document.querySelector('.badge-panel__body')!;
+        return body.scrollWidth <= body.clientWidth;
+      }),
+    ).toBe(true);
+    await cart.screenshot({ path: testInfo.outputPath('v3-expanded-max.png') });
+    await badge.getByLabel('Amount (USD)').fill('27.23');
+    await badge.getByRole('button', { name: 'Update' }).click();
+    await expect(ranking.getByRole('listitem').first()).toContainText('27 points at 1.2¢ each.');
+    await badge.getByRole('button', { name: 'Collapse' }).click();
+    await expect(
+      badge.getByRole('button', { name: /Use Points · estimated \$0\.32 in points/ }),
+    ).toBeVisible();
+
+    // The order line names points as rewards with the value they were counted at, not cash back.
+    await cart.goto(ORDER_PAGE);
+    const order = await badgeFrame(cart);
+    await expect(order.getByText(/all-time rewards total/)).toBeVisible();
+    await order.getByRole('button', { name: 'Yes', exact: true }).click();
+    await expect(
+      order.getByText(
+        /^About \$0\.00 more in rewards than Points, your default card \(estimated\)\. Counts .+ at 1\.2¢ each \(estimate\)\./,
+      ),
+    ).toBeVisible();
+    await axeBadge(order, 'v3 order recorded');
   } finally {
     await context.close();
   }

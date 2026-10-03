@@ -1,5 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest';
+import { CATALOG_V3 } from '../src/domain';
 import { emptyState } from '../src/state/contracts';
 import type { AppState } from '../src/state/contracts';
 import { createVaultService } from '../src/state/vault-service';
@@ -40,6 +41,7 @@ const wallet = {
 };
 const legacy: AppState = {
   ...emptyState(),
+  walletCatalogVersion: CATALOG_V3.version,
   wallet,
   purchase: {
     merchantId: 'newegg-us',
@@ -288,7 +290,7 @@ describe('optional protection', () => {
       status: 'unprotected',
     });
     expect(session.read()).toEqual({});
-    expect(local.read()[STATE_KEY]).toMatchObject({ schemaVersion: 2, wallet });
+    expect(local.read()[STATE_KEY]).toMatchObject({ schemaVersion: 3, wallet });
     expect(await service({ type: 'checkout:get-state' })).toMatchObject({ ok: true, state: { wallet } });
   });
   it('keeps a locked vault closed to the badge snapshot and to normal requests', async () => {
@@ -298,7 +300,7 @@ describe('optional protection', () => {
     await service(create);
     await service({ type: 'checkout:save-wallet', expectedRevision: 0, wallet });
     await service({ type: 'checkout:vault-lock' });
-    expect(await service.snapshot()).toEqual({ status: 'locked', state: null });
+    expect(await service.snapshot()).toEqual({ status: 'locked', state: null, catalog: null });
     expect(await service({ type: 'checkout:get-state' })).toMatchObject({ ok: false });
     expect(await service(unlock)).toEqual({ ok: true, status: 'unlocked' });
     expect((await service.snapshot()).state).toMatchObject({ wallet });
@@ -311,16 +313,18 @@ describe('optional protection', () => {
     expect(await service({ type: 'checkout:save-wallet', expectedRevision: 0, wallet })).toMatchObject({
       ok: false,
     });
-    expect(await service.snapshot()).toEqual({ status: 'damaged', state: null });
+    expect(await service.snapshot()).toEqual({ status: 'damaged', state: null, catalog: null });
   });
 });
 
 describe('pilot-era (schema 1) vault migration', () => {
-  it('decrypts a v1 envelope, migrates once, and re-encrypts schema 2 with a bumped revision', async () => {
+  it('decrypts a v1 envelope, migrates once, and re-encrypts schema 3 with a bumped revision', async () => {
     const identity = newVaultIdentity(),
       key = await deriveVaultKey(phrase, identity);
+    const { walletCatalogVersion: _unused, ...fields } = legacy;
+    void _unused;
     const pilot = {
-      ...legacy,
+      ...fields,
       schemaVersion: 1,
       revision: 7,
       wallet: {
@@ -350,7 +354,7 @@ describe('pilot-era (schema 1) vault migration', () => {
     const read = await service({ type: 'checkout:get-state' });
     expect(read).toMatchObject({ ok: true, notice: expect.stringContaining('review your cards') });
     const stored = await decryptVault(local.read()[STATE_KEY], session.read()[VAULT_SESSION_KEY] as never);
-    expect(stored).toMatchObject({ schemaVersion: 2, revision: 8, pendingNotice: null });
+    expect(stored).toMatchObject({ schemaVersion: 3, revision: 8, pendingNotice: null });
     expect(stored.wallet.cards[0].usage).toEqual([]);
   });
 });

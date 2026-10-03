@@ -19,13 +19,14 @@ import {
   TextInput,
 } from '@ai-checkout/ui';
 import PopupHeader from '../components/PopupHeader';
+import { PAYMENT_LABELS } from '../components/estimates';
+import { unvaluedPrograms } from '../components/wallet-options';
 import { catalogMerchantIds, formatUsd, parseUsd, usageInputs } from '../domain';
-import type { Eligibility, PaymentPath, Wallet } from '../domain';
+import type { Eligibility, PaymentPathV3, Wallet } from '../domain';
 import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
-import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY } from '../state/service';
+import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY } from '../state/keys';
 import { emptyState } from '../state/contracts';
-import { currentCatalog } from '../state/catalog';
 import { MERCHANT_IDS, merchantName } from '../checkout/merchants';
 
 type View = Extract<CheckoutResponse, { ok: true }>;
@@ -53,15 +54,16 @@ export default function Popup({
   const [merchantId, setMerchantId] = useState<string>('best-buy-us');
   const [eligible, setEligible] = useState(false);
   const [onlineRetail, setOnlineRetail] = useState<Eligibility>('unknown');
-  const [paymentPath, setPaymentPath] = useState<PaymentPath>('card');
+  const [paymentPath, setPaymentPath] = useState<PaymentPathV3>('card');
   const [dirty, setDirty] = useState(false);
   const [cartId, setCartId] = useState<string | null>(null);
   const resultAnchor = useRef<HTMLDivElement>(null);
-  const catalog = currentCatalog(view?.state ?? emptyState());
+  // The catalog in effect comes from the worker with every response; pages bundle none.
+  const catalog = view?.catalog;
   // Spend-capped bonuses the shopper can report, derived from the catalog rules.
   const limitNotes = (view?.state.wallet.cards ?? []).flatMap((owned) => {
-    const card = catalog.cards.find((c) => c.id === owned.cardId);
-    if (!card) return [];
+    const card = catalog?.cards.find((c) => c.id === owned.cardId);
+    if (!catalog || !card) return [];
     return usageInputs(catalog, card.id)
       .filter((rule) => rule.needsSpend)
       .map((rule) => {
@@ -109,7 +111,9 @@ export default function Popup({
     // Restored results are labeled saved; a new comparison requires renewed confirmation.
     setEligible(false);
     setOnlineRetail(next.state.purchase?.onlineRetail ?? 'unknown');
-    setPaymentPath(next.state.purchase?.paymentPath ?? 'card');
+    // Venmo is offered only with catalog v3 terms.
+    const path = next.state.purchase?.paymentPath ?? 'card';
+    setPaymentPath(path === 'venmo' && next.catalog.schemaVersion !== 3 ? 'card' : path);
     setDirty(false);
     setEditing(next.state.wallet.cards.length === 0);
   }, []);
@@ -155,7 +159,7 @@ export default function Popup({
     const remaining =
       Math.min(
         view.state.comparison.computedAt + RESULT_MAX_AGE_MS,
-        Date.parse(catalog.expiresAt),
+        Date.parse(view.catalog.expiresAt),
         midnight.getTime(),
         view.state.comparison.cartId && view.state.cart
           ? view.state.cart.capturedAt + CART_MAX_AGE_MS
@@ -177,20 +181,24 @@ export default function Popup({
       Math.max(0, remaining),
     );
     return () => window.clearTimeout(timer);
-  }, [view, catalog.expiresAt]);
+  }, [view]);
 
   useEffect(() => {
     const onChange = (changes: Record<string, chrome.storage.StorageChange>, area: string) => {
       if (area !== 'local' || !changes[STATE_KEY]) return;
       const next = changes[STATE_KEY].newValue;
       if (next === undefined) {
-        restore({
-          ok: true,
-          state: emptyState(),
-          comparison: null,
-          notice: 'Local data deleted.',
-          catalogUpdatesAvailable: view?.catalogUpdatesAvailable ?? false,
-        });
+        // Until the next response, the catalog shown is the one this page last received.
+        if (view)
+          restore({
+            ok: true,
+            state: emptyState(),
+            catalog: view.catalog,
+            cardIndex: view.cardIndex,
+            comparison: null,
+            notice: 'Local data deleted.',
+            catalogUpdatesAvailable: view.catalogUpdatesAvailable,
+          });
       } else if (next.revision !== view?.state.revision) {
         setView((current) =>
           current
@@ -207,7 +215,7 @@ export default function Popup({
     };
     chrome.storage.onChanged.addListener(onChange);
     return () => chrome.storage.onChanged.removeListener(onChange);
-  }, [restore, view?.state.revision, view?.catalogUpdatesAvailable]);
+  }, [restore, view]);
 
   async function readCart() {
     if (!view) return;
@@ -232,6 +240,8 @@ export default function Popup({
     }
   }
 
+  const loadCards = (cardIds: string[]) =>
+    checkoutRequest({ type: 'checkout:catalog-cards', cardIds }).then((next) => next.catalog);
   async function saveWallet(wallet: Wallet) {
     if (!view) return;
     setPending('save');
@@ -327,8 +337,9 @@ export default function Popup({
     }
   }
   const cart = cartId ? view?.state.cart : null;
+  const unvalued = view ? unvaluedPrograms(view.catalog, view.state.wallet) : [];
   const ownedNames = (view?.state.wallet.cards ?? [])
-    .map((c) => catalog.cards.find((p) => p.id === c.cardId)?.shortName ?? 'Unavailable card')
+    .map((c) => catalog?.cards.find((p) => p.id === c.cardId)?.shortName ?? 'Unavailable card')
     .join(' · ');
   return (
     <ErrorBoundary>
@@ -370,7 +381,9 @@ export default function Popup({
             (editing ? (
               <WalletEditor
                 key={view.state.revision}
-                catalog={catalog}
+                catalog={view.catalog}
+                index={view.cardIndex}
+                loadCards={loadCards}
                 wallet={view.state.wallet}
                 busy={busy}
                 onSave={saveWallet}
@@ -398,6 +411,13 @@ export default function Popup({
                       </Button>
                     </div>
                     <p>{ownedNames || 'No cards selected.'}</p>
+                    {unvalued.length > 0 && (
+                      <p className="supporting">
+                        No published value for {unvalued.map((p) => p.name).join(', ')}. Those cards show
+                        points or miles only and are listed last until you set a value under Point values in
+                        Edit cards.
+                      </p>
+                    )}
                     {limitNotes.map((note) => (
                       <p key={note.key} className="supporting">
                         {note.text}
@@ -441,7 +461,7 @@ export default function Popup({
                         </Select>
                       )}
                     </Field>
-                    {!catalogMerchantIds(catalog).includes(merchantId) && (
+                    {!catalogMerchantIds(view.catalog).includes(merchantId) && (
                       <AlertInline color="warning" role="status">
                         Your current card terms do not cover {merchantName(merchantId)}. Check for updated
                         terms or an extension update.
@@ -521,7 +541,7 @@ export default function Popup({
                       <Field
                         id="payment-path"
                         label="How you will pay"
-                        helperText="Paying through PayPal, a digital wallet or buy now, pay later can change which bonuses apply."
+                        helperText={`Paying through PayPal${view.catalog.schemaVersion === 3 ? ', Venmo' : ''}, a digital wallet or buy now, pay later can change which bonuses apply.`}
                       >
                         {(control) => (
                           <Select
@@ -529,14 +549,17 @@ export default function Popup({
                             value={paymentPath}
                             disabled={busy}
                             onChange={(e) => {
-                              setPaymentPath(e.target.value as PaymentPath);
+                              setPaymentPath(e.target.value as PaymentPathV3);
                               setDirty(true);
                             }}
                           >
-                            <option value="card">Card entered at checkout</option>
-                            <option value="paypal">PayPal or another payment account</option>
-                            <option value="digital-wallet">Digital wallet (Apple Pay, Google Pay)</option>
-                            <option value="bnpl">Buy now, pay later (Affirm, Klarna)</option>
+                            {Object.entries(PAYMENT_LABELS)
+                              .filter(([value]) => value !== 'venmo' || view.catalog.schemaVersion === 3)
+                              .map(([value, label]) => (
+                                <option key={value} value={value}>
+                                  {label}
+                                </option>
+                              ))}
                           </Select>
                         )}
                       </Field>
@@ -592,7 +615,7 @@ export default function Popup({
                         : {})}
                     >
                       <ComparisonResult
-                        catalog={catalog}
+                        catalog={view.catalog}
                         result={view.comparison}
                         purchase={view.state.purchase}
                         subtotalOnly={
@@ -611,7 +634,7 @@ export default function Popup({
           {view && !editing && view.state.wallet.cards.length > 0 && (
             <SavingsHistory
               entries={view.state.savings}
-              catalog={catalog}
+              cards={view.cardIndex}
               busy={busy}
               onDelete={() => void deleteSavings()}
             />
@@ -632,7 +655,7 @@ export default function Popup({
               Cards, purchase inputs and savings stay on this device. This comparison works offline and
               requires no API key.
             </p>
-            <p>Card terms expire {new Date(catalog.expiresAt).toLocaleString('en-US')}.</p>
+            {catalog && <p>Card terms expire {new Date(catalog.expiresAt).toLocaleString('en-US')}.</p>}
             <div className="flex flex-wrap gap-2">
               {onLock && (
                 <Button size="small" color="secondary" icon="lock" disabled={busy} onClick={onLock}>

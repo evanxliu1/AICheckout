@@ -2,7 +2,10 @@
 // the coverage check against the corpora. Every card of the expansion and real corpora maps to exactly one program
 // with a currency anchor of at most 25 words; programs carry a value in hundredths of a cent per unit from a
 // published estimate (publisher, URL, date read), an issuer-stated fixed redemption value (with its quote), cash back
-// at 100, or none. Card-level issuer-stated values repeat the corpus `pointValueHundredthsOfCent` unchanged.
+// at 100, or none. Card-level issuer-stated values repeat the corpus `pointValueHundredthsOfCent` unchanged, except
+// for a card with a `corpusLabel` override: its frozen eval label says points at a stated 1¢ while its terms state a
+// percentage cash back, so general rule 1 maps it to `cash-back` (Citi Double Cash, coordinator decision 2026-10-03).
+// The override repeats the label it replaces and is allowed only where the engine's cents cannot change.
 // Verbatim checks against the captures are in scripts/check-expansion-quotes.mjs (captures are local only).
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -61,12 +64,23 @@ export const programSchema = z.discriminatedUnion('basis', [
   }),
 ]);
 
+/**
+ * The corpus label a card's mapping departs from, repeated so a label change fails the check, with why. Only
+ * points at a stated 1¢ may become cash back (rates in basis points mean the same cents either way).
+ */
+const corpusLabelSchema = z.strictObject({
+  currency: z.literal('points'),
+  pointValueHundredthsOfCent: z.literal(100),
+  reason: z.string().trim().min(1).max(600),
+});
+
 export const programCardSchema = z.strictObject({
   cardId: id,
   corpus: z.string().min(1),
   programId: id,
   statedValueHundredthsOfCent: value.nullable(),
   anchor: anchorSchema,
+  corpusLabel: corpusLabelSchema.optional(),
 });
 
 export const rewardProgramsSchema = z.strictObject({
@@ -141,7 +155,16 @@ export function checkRewardPrograms(table, corpora, { asOf }) {
       continue;
     }
     if (card.corpus !== truth.corpus) problems.push(`${at}: corpus is ${truth.corpus}, not ${card.corpus}`);
-    if (card.statedValueHundredthsOfCent !== truth.pointValue)
+    const label = card.corpusLabel;
+    if (label && (label.currency !== truth.currency || label.pointValueHundredthsOfCent !== truth.pointValue))
+      problems.push(
+        `${at}: corpusLabel does not repeat the corpus label (${truth.currency}, ${truth.pointValue})`,
+      );
+    if (label && (card.programId !== 'cash-back' || card.statedValueHundredthsOfCent !== null))
+      problems.push(`${at}: a corpusLabel override maps to cash-back with no stated value`);
+    if (label && !/\d(\.\d+)?% cash back/i.test(card.anchor.quote))
+      problems.push(`${at}: a corpusLabel override needs an anchor stating a percentage cash back`);
+    if (!label && card.statedValueHundredthsOfCent !== truth.pointValue)
       problems.push(
         `${at}: stated value ${card.statedValueHundredthsOfCent} differs from corpus ${truth.pointValue}`,
       );
@@ -153,7 +176,7 @@ export function checkRewardPrograms(table, corpora, { asOf }) {
       continue;
     }
     used.add(program.id);
-    if (program.currency !== truth.currency)
+    if (!label && program.currency !== truth.currency)
       problems.push(
         `${at}: corpus currency ${truth.currency} but program ${program.id} is ${program.currency}`,
       );

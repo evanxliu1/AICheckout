@@ -1,9 +1,9 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { ReviewDetail } from '@ai-checkout/catalog-review';
+import type { ReviewSummary } from '@ai-checkout/catalog-review';
 import ReviewWorkspace from '../src/ReviewWorkspace';
-import type { ReviewApi } from '../src/client';
+import { ReviewApiError, type ReviewApi } from '../src/client';
 import { reviewFixture, now } from './fixtures';
 
 beforeEach(() => {
@@ -16,7 +16,7 @@ afterEach(() => {
 });
 
 const docId = (n: number) => `40000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
-function workspace(detail: ReviewDetail) {
+function workspace(detail: ReviewSummary) {
   let nextDoc = 1;
   const api = {
     queue: vi.fn(async () => ({
@@ -51,7 +51,7 @@ function partlyCaptured() {
   detail.draft.source_document_ids = [detail.sources[0].id];
   return detail;
 }
-async function fillMissing(detail: ReviewDetail) {
+async function fillMissing(detail: ReviewSummary) {
   const user = userEvent.setup();
   await screen.findByRole('heading', { level: 1, name: detail.draft.catalog.version });
   await user.click(screen.getByText('Capture all missing sources'));
@@ -86,6 +86,31 @@ it('captures every filled source, then attaches all of them in one revision of t
     },
     expect.any(AbortSignal),
   );
+});
+
+it('waits and retries a capture refused by the rate limit, then attaches every source', async () => {
+  const detail = partlyCaptured();
+  const api = workspace(detail);
+  api.capture.mockRejectedValueOnce(new ReviewApiError(429, 'too_many_requests', undefined, 5));
+  await fillMissing(detail);
+  await screen.findByText('Captured 2 sources and attached them to a new draft revision.');
+  expect(api.capture).toHaveBeenCalledTimes(3);
+  expect(api.capture.mock.calls[0][0]).toEqual(api.capture.mock.calls[1][0]);
+  expect(api.update).toHaveBeenCalledExactlyOnceWith(
+    detail.draft.id,
+    expect.objectContaining({ sourceDocumentIds: [detail.sources[0].id, docId(1), docId(2)] }),
+    expect.any(AbortSignal),
+  );
+});
+
+it('stops after repeated rate-limit refusals without attaching anything', async () => {
+  const detail = partlyCaptured();
+  const api = workspace(detail);
+  api.capture.mockRejectedValue(new ReviewApiError(429, 'too_many_requests', undefined, 1));
+  await fillMissing(detail);
+  expect(await screen.findByText('Too many requests. Wait a minute, then try again.')).toBeTruthy();
+  expect(api.capture).toHaveBeenCalledTimes(11);
+  expect(api.update).not.toHaveBeenCalled();
 });
 
 it('attaches nothing when a capture fails part way, and keeps the loaded texts', async () => {

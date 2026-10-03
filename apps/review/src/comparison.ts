@@ -1,32 +1,68 @@
 import {
   ACTIVATION_LABELS,
   type Catalog,
+  type RewardProgram,
   type RewardRule,
   type RewardRuleV2,
+  type RewardRuleV3,
   type RuleCap,
 } from '@ai-checkout/rewards-core';
-import type { ReviewDetail } from '@ai-checkout/catalog-review';
+import type { ReviewSummary } from '@ai-checkout/catalog-review';
 
 export interface ChangeRow {
   key: string;
   label: string;
   before: string;
   after: string;
+  /** Section the field belongs to: `catalog`, `merchants`, `programs`, `brands`, `gates`,
+   * `sources` or `cards.<card id>`, so a large diff can be shown one card at a time. */
+  group: string;
+  groupLabel: string;
 }
 const money = (cents: number) => `$${(cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
 const percent = (bps: number) => `${bps / 100}%`;
+const cents = (hundredths: number) => `${hundredths / 100}¢`;
+const list = (values: string[], empty: string) => [...values].sort().join(', ') || empty;
 
 function capText(cap: RuleCap) {
   if (cap.kind === 'none') return 'No cap';
   if (cap.kind === 'unstated') return 'Not stated by the issuer';
   return `${money(cap.amountCents)} per ${cap.period}, then ${percent(cap.rateAfterCapBps)}`;
 }
+function limitedText(limited: RewardRuleV2['limitedTime'] | RewardRuleV3['limitedTime']) {
+  if (!limited) return 'No';
+  const starts = 'startsOn' in limited && limited.startsOn ? `Starts ${limited.startsOn}; ends` : 'Ends';
+  return `${starts} ${limited.endsOn ?? 'on an unstated date'}`;
+}
+/** Plain-words value of a program's units; published estimates are labelled as opinions. */
+export function valuationText(program: RewardProgram) {
+  const { valuation } = program;
+  if (valuation.basis === 'cash') return 'Cash back: each unit is 1¢';
+  if (valuation.basis === 'published-estimate')
+    return `Published estimate ${cents(valuation.valueHundredthsOfCent)} each, by ${valuation.publisher}, read ${valuation.retrievedOn} (${valuation.url})`;
+  if (valuation.basis === 'issuer-stated')
+    return `Issuer-stated ${cents(valuation.valueHundredthsOfCent)} each (${list(valuation.sourceIds, 'no sources')})`;
+  return 'No value: shown in units until the shopper sets one';
+}
+const requiresText = (rule: RewardRuleV3) =>
+  rule.requires
+    .map((requirement) => `${requirement.gateId} is ${[...requirement.optionIds].sort().join(' or ')}`)
+    .sort()
+    .join('; ') || 'None';
+const choiceText = (rule: RewardRuleV3) =>
+  rule.choice ? `While ${rule.choice.choiceId} is ${rule.choice.optionId}` : 'Not tied to a choice';
 
 function fields(catalog: Catalog | null) {
-  const values = new Map<string, { label: string; value: string }>();
+  const values = new Map<string, { label: string; value: string; group: string; groupLabel: string }>();
   if (!catalog) return values;
+  let group = 'catalog',
+    groupLabel = 'Catalog';
+  const section = (id: string, label: string) => {
+    group = id;
+    groupLabel = label;
+  };
   const add = (key: string, label: string, value: string | number) =>
-    values.set(key, { label, value: String(value) });
+    values.set(key, { label, value: String(value), group, groupLabel });
   add('schemaVersion', 'Catalog schema', catalog.schemaVersion);
   add('version', 'Catalog version', catalog.version);
   add('verifiedAt', 'Verified at (UTC)', catalog.verifiedAt);
@@ -35,6 +71,7 @@ function fields(catalog: Catalog | null) {
     add('merchants', 'Supported merchants', [...catalog.merchantIds].sort().join(', '));
     for (const card of catalog.cards) {
       const prefix = `cards.${card.id}`;
+      section(prefix, card.name);
       add(`${prefix}.name`, `${card.id} · Card name`, card.name);
       add(`${prefix}.shortName`, `${card.id} · Short name`, card.shortName);
       for (const rule of card.rules) {
@@ -60,6 +97,7 @@ function fields(catalog: Catalog | null) {
       }
     }
   } else {
+    section('merchants', 'Merchants');
     add(
       'merchants',
       'Supported merchants',
@@ -90,19 +128,77 @@ function fields(catalog: Catalog | null) {
         })`,
       );
       add(`${key}.notes`, `${label} · Notes`, merchant.notes);
+      if ('brandIds' in merchant) add(`${key}.brands`, `${label} · Brands`, list(merchant.brandIds, 'None'));
+    }
+    if (catalog.schemaVersion === 3) {
+      section('programs', 'Reward programs');
+      for (const program of catalog.programs) {
+        const key = `programs.${program.id}`,
+          label = `${program.id} (program)`;
+        add(`${key}.name`, `${label} · Name`, program.name);
+        add(
+          `${key}.currency`,
+          `${label} · Units`,
+          program.currency === 'cash-back'
+            ? `Cash back (${program.unitName})`
+            : `Points (${program.unitName})`,
+        );
+        add(`${key}.valuation`, `${label} · Value per unit`, valuationText(program));
+        add(
+          `${key}.redemption`,
+          `${label} · Redeemable only at`,
+          list(program.redemptionBrandIds, 'Not limited to a store'),
+        );
+      }
+      section('brands', 'Brands');
+      for (const brand of catalog.brands)
+        add(`brands.${brand.id}.name`, `${brand.id} (brand) · Name`, brand.name);
+      section('gates', 'Membership and tier questions');
+      for (const gate of catalog.gates) {
+        add(`gates.${gate.id}.question`, `${gate.id} (question) · Question`, gate.question);
+        add(
+          `gates.${gate.id}.options`,
+          `${gate.id} (question) · Answers`,
+          gate.options.map((option) => `${option.id}: ${option.label}`).join(' | '),
+        );
+      }
     }
     for (const card of catalog.cards) {
       const prefix = `cards.${card.id}`;
+      section(prefix, card.name);
       add(`${prefix}.name`, `${card.id} · Card name`, card.name);
       add(`${prefix}.shortName`, `${card.id} · Short name`, card.shortName);
       add(`${prefix}.issuer`, `${card.id} · Issuer`, card.issuer);
       add(
         `${prefix}.currency`,
         `${card.id} · Reward currency`,
-        card.rewardCurrency === 'points'
-          ? `Points worth ${card.pointValueHundredthsOfCent! / 100}¢ each`
-          : 'Cash back',
+        'programId' in card
+          ? `Program ${card.programId}${
+              card.statedValueHundredthsOfCent === null
+                ? ''
+                : `, issuer-stated ${card.statedValueHundredthsOfCent / 100}¢ each`
+            }`
+          : card.rewardCurrency === 'points'
+            ? `Points worth ${card.pointValueHundredthsOfCent! / 100}¢ each`
+            : 'Cash back',
       );
+      if ('acceptance' in card) {
+        add(
+          `${prefix}.acceptance`,
+          `${card.id} · Accepted at`,
+          card.acceptance.kind === 'open-loop'
+            ? 'Any merchant (open loop)'
+            : `Only brands ${list(card.acceptance.brandIds, 'none')} (closed loop)`,
+        );
+        for (const choice of card.choices)
+          add(
+            `${prefix}.choices.${choice.id}`,
+            `${card.id} · Choice ${choice.id}`,
+            `${choice.label}: ${choice.kind === 'chosen' ? 'cardholder picks' : 'issuer picks by spend'} ${choice.picks} of ${choice.options
+              .map((option) => `${option.id} (${option.label})`)
+              .join(', ')}; default ${list(choice.defaultOptionIds, 'none')}`,
+          );
+      }
       add(
         `${prefix}.exclusions`,
         `${card.id} · Exclusions`,
@@ -122,20 +218,29 @@ function fields(catalog: Catalog | null) {
         add(`${key}.cap`, `${label} · Spend cap`, capText(rule.cap));
         add(`${key}.activation`, `${label} · Activation`, rule.activation);
         add(`${key}.usOnly`, `${label} · U.S. merchants only`, rule.usMerchantsOnly ? 'Yes' : 'No');
-        add(
-          `${key}.limitedTime`,
-          `${label} · Limited time`,
-          rule.limitedTime ? `Ends ${rule.limitedTime.endsOn ?? 'on an unstated date'}` : 'No',
-        );
+        add(`${key}.limitedTime`, `${label} · Limited time`, limitedText(rule.limitedTime));
         add(
           `${key}.excludedPaymentPaths`,
           `${label} · Excluded payment paths`,
           [...rule.excludedPaymentPaths].sort().join(', ') || 'None',
         );
+        if ('brandIds' in rule) {
+          add(`${key}.brands`, `${label} · Only at brands`, list(rule.brandIds, 'Any merchant'));
+          add(`${key}.excludedBrands`, `${label} · Never at brands`, list(rule.excludedBrandIds, 'None'));
+          add(`${key}.sharedCap`, `${label} · Shared spend cap`, rule.sharedCapId ?? 'Not shared');
+          add(`${key}.choice`, `${label} · Chosen category`, choiceText(rule));
+          add(`${key}.requires`, `${label} · Requires`, requiresText(rule));
+          add(
+            `${key}.requiredPaymentPaths`,
+            `${label} · Only when paying with`,
+            list(rule.requiredPaymentPaths, 'Any payment path'),
+          );
+        }
         add(`${key}.sources`, `${label} · Evidence references`, [...rule.sourceIds].sort().join(', '));
       }
     }
   }
+  section('sources', 'Sources');
   for (const source of catalog.sources) {
     const key = `sources.${source.id}`;
     add(`${key}.title`, `${source.id} · Source title`, source.title);
@@ -156,13 +261,15 @@ export function catalogChanges(before: Catalog | null, after: Catalog): ChangeRo
           {
             key,
             label: next?.label ?? old!.label,
+            group: next?.group ?? old!.group,
+            groupLabel: next?.groupLabel ?? old!.groupLabel,
             before: old?.value ?? 'Not present',
             after: next?.value ?? 'Removed',
           },
         ];
   });
 }
-export function publicationIssues(detail: ReviewDetail, now: number): string[] {
+export function publicationIssues(detail: ReviewSummary, now: number): string[] {
   const { draft, published, head, sources } = detail,
     issues: string[] = [];
   if (draft.status !== 'draft')
@@ -195,7 +302,7 @@ export function publicationIssues(detail: ReviewDetail, now: number): string[] {
 }
 
 /** One line per rule for the full-draft summary, for either schema version. */
-export function ruleSummaries(rules: RewardRule[] | RewardRuleV2[]) {
+export function ruleSummaries(rules: RewardRule[] | RewardRuleV2[] | RewardRuleV3[]) {
   return rules.map((rule) => {
     if ('requiresActivation' in rule) {
       return {
@@ -213,8 +320,20 @@ export function ruleSummaries(rules: RewardRule[] | RewardRuleV2[]) {
       `${ACTIVATION_LABELS[rule.activation]}.`,
       rule.paidOnPaymentBps ? `${percent(rule.paidOnPaymentBps)} is paid when the balance is paid.` : '',
       rule.usMerchantsOnly ? 'U.S. merchants only.' : '',
-      rule.limitedTime ? `Limited time, ends ${rule.limitedTime.endsOn ?? 'on an unstated date'}.` : '',
+      rule.limitedTime ? `Limited time: ${limitedText(rule.limitedTime).toLowerCase()}.` : '',
       rule.excludedPaymentPaths.length ? `Excludes ${rule.excludedPaymentPaths.join(', ')}.` : '',
+      ...('brandIds' in rule
+        ? [
+            rule.brandIds.length ? `Only at ${rule.brandIds.join(', ')}.` : '',
+            rule.excludedBrandIds.length ? `Never at ${rule.excludedBrandIds.join(', ')}.` : '',
+            rule.choice ? `${choiceText(rule)}.` : '',
+            rule.requires.length ? `Requires ${requiresText(rule)}.` : '',
+            rule.requiredPaymentPaths.length
+              ? `Only when paying with ${rule.requiredPaymentPaths.join(', ')}.`
+              : '',
+            rule.sharedCapId ? `Shares its spend cap (${rule.sharedCapId}).` : '',
+          ]
+        : []),
     ].filter(Boolean);
     return {
       rule,

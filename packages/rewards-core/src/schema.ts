@@ -1,16 +1,34 @@
 import { z } from 'zod';
 import { MAX_AMOUNT_CENTS } from './money.ts';
+import { isUnconditionalRuleV3 } from './rules-v3.ts';
 import {
   CAP_PERIODS,
   MERCHANT_CATEGORIES,
   EXCLUDABLE_PAYMENT_PATHS,
   REWARD_CATEGORIES,
+  REWARD_CATEGORIES_V3,
+  MERCHANT_CATEGORIES_V3,
+  PAYMENT_PATHS_V3,
+  EXCLUDABLE_PAYMENT_PATHS_V3,
   type Catalog,
   type CatalogV1,
   type CatalogV2,
+  type CatalogV3,
 } from './types.ts';
 
+/** Size limit for catalog schemas 1 and 2. */
 export const MAX_CATALOG_BYTES = 262_144;
+/** Catalog schema 3 limits, mirrored in `catalog_private.valid_catalog_v3`. */
+export const CATALOG_V3_LIMITS = {
+  bytes: 1_048_576,
+  cards: 300,
+  sources: 600,
+  merchants: 100,
+  brands: 400,
+  programs: 100,
+  gates: 100,
+  rulesPerCard: 30,
+} as const;
 export const CATALOG_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 export const catalogIdSchema = z
   .string()
@@ -56,10 +74,11 @@ const versionSchema = z
   .regex(/^[a-zA-Z0-9][a-zA-Z0-9._-]*$/);
 type Reject = (message: string, path?: (string | number)[]) => void;
 
-/** Checks shared by both schema versions: validity window, source dates, unique IDs, size. */
+/** Checks shared by every schema version: validity window, source dates, unique IDs, size. */
 function commonInvariants(
   catalog: { verifiedAt: string; expiresAt: string; sources: { id: string; checkedOn: string }[] },
   reject: Reject,
+  maxBytes: number = MAX_CATALOG_BYTES,
 ) {
   const verified = Date.parse(catalog.verifiedAt),
     expires = Date.parse(catalog.expiresAt);
@@ -72,7 +91,7 @@ function commonInvariants(
       reject('Source date must be within 30 days before verification.', ['sources', i, 'checkedOn']);
   });
   if (!unique(catalog.sources.map((s) => s.id))) reject('Source IDs must be unique.', ['sources']);
-  if (new TextEncoder().encode(JSON.stringify(catalog)).byteLength > MAX_CATALOG_BYTES)
+  if (new TextEncoder().encode(JSON.stringify(catalog)).byteLength > maxBytes)
     reject('Catalog is too large.');
 }
 
@@ -232,10 +251,257 @@ export const catalogV2Schema = z
     });
   }) satisfies z.ZodType<CatalogV2>;
 
-/** Either schema version, keyed by `schemaVersion`. Old cached v1 releases stay readable. */
+const optionSchema = z.strictObject({ id: catalogIdSchema, label: z.string().min(1).max(120) });
+const idListSchema = (max: number) => z.array(catalogIdSchema).max(max).refine(unique);
+const httpsUrlSchema = sourceSchema.shape.url;
+export const programValuationSchema = z.discriminatedUnion('basis', [
+  z.strictObject({ basis: z.literal('cash'), valueHundredthsOfCent: z.literal(100) }),
+  z.strictObject({
+    basis: z.literal('published-estimate'),
+    valueHundredthsOfCent: z.number().int().min(1).max(10_000),
+    publisher: z.string().min(1).max(120),
+    url: httpsUrlSchema,
+    retrievedOn: z.iso.date(),
+  }),
+  z.strictObject({
+    basis: z.literal('issuer-stated'),
+    valueHundredthsOfCent: z.number().int().min(1).max(10_000),
+    sourceIds: sourceIdsSchema.min(1),
+  }),
+  z.strictObject({ basis: z.literal('none') }),
+]);
+export const rewardProgramSchema = z.strictObject({
+  id: catalogIdSchema,
+  name: z.string().min(1).max(120),
+  currency: z.enum(['cash-back', 'points']),
+  unitName: z.string().min(1).max(60),
+  valuation: programValuationSchema,
+  redemptionBrandIds: idListSchema(20),
+});
+export const brandSchema = z.strictObject({ id: catalogIdSchema, name: z.string().min(1).max(120) });
+export const gateSchema = z.strictObject({
+  id: catalogIdSchema,
+  question: z.string().min(1).max(200),
+  options: z.array(optionSchema).min(2).max(10),
+});
+export const cardChoiceSchema = z.strictObject({
+  id: catalogIdSchema,
+  kind: z.enum(['chosen', 'automatic']),
+  label: z.string().min(1).max(200),
+  picks: z.number().int().min(1).max(5),
+  options: z.array(optionSchema).min(2).max(30),
+  defaultOptionIds: idListSchema(5),
+});
+export const rewardRuleV3Schema = z.strictObject({
+  ...rewardRuleV2Schema.shape,
+  category: z.enum(REWARD_CATEGORIES_V3),
+  excludedPaymentPaths: z.array(z.enum(EXCLUDABLE_PAYMENT_PATHS_V3)).max(4).refine(unique),
+  limitedTime: z
+    .strictObject({ startsOn: z.iso.date().nullable(), endsOn: z.iso.date().nullable() })
+    .nullable(),
+  brandIds: idListSchema(20),
+  excludedBrandIds: idListSchema(20),
+  sharedCapId: catalogIdSchema.nullable(),
+  choice: z.strictObject({ choiceId: catalogIdSchema, optionId: catalogIdSchema }).nullable(),
+  requires: z.array(z.strictObject({ gateId: catalogIdSchema, optionIds: idListSchema(10).min(1) })).max(5),
+  requiredPaymentPaths: z.array(z.enum(PAYMENT_PATHS_V3)).max(5).refine(unique),
+});
+export const cardProductV3Schema = z.strictObject({
+  id: catalogIdSchema,
+  name: z.string().min(1).max(120),
+  shortName: z.string().min(1).max(60),
+  issuer: z.string().min(1).max(80),
+  programId: catalogIdSchema,
+  statedValueHundredthsOfCent: z.number().int().min(1).max(10_000).nullable(),
+  acceptance: z.discriminatedUnion('kind', [
+    z.strictObject({ kind: z.literal('open-loop') }),
+    z.strictObject({ kind: z.literal('closed-loop'), brandIds: idListSchema(20).min(1) }),
+  ]),
+  choices: z.array(cardChoiceSchema).max(5),
+  rules: z.array(rewardRuleV3Schema).min(1).max(CATALOG_V3_LIMITS.rulesPerCard),
+  exclusions: z.array(z.string().min(1).max(600)).max(20),
+});
+export const merchantProfileV3Schema = z.strictObject({
+  ...merchantProfileSchema.shape,
+  expectedCategory: z.enum(MERCHANT_CATEGORIES_V3),
+  brandIds: idListSchema(20),
+});
+
+/** A v3 rule with no condition of any kind (zod-free, in rules-v3.ts so the engine can use it). */
+export { isUnconditionalRuleV3 };
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+export const catalogV3Schema = z
+  .strictObject({
+    schemaVersion: z.literal(3),
+    version: versionSchema,
+    verifiedAt: z.iso.datetime(),
+    expiresAt: z.iso.datetime(),
+    programs: z.array(rewardProgramSchema).min(1).max(CATALOG_V3_LIMITS.programs),
+    brands: z.array(brandSchema).max(CATALOG_V3_LIMITS.brands),
+    gates: z.array(gateSchema).max(CATALOG_V3_LIMITS.gates),
+    merchants: z.array(merchantProfileV3Schema).min(1).max(CATALOG_V3_LIMITS.merchants),
+    sources: z.array(sourceSchema).min(1).max(CATALOG_V3_LIMITS.sources),
+    cards: z.array(cardProductV3Schema).min(1).max(CATALOG_V3_LIMITS.cards),
+  })
+  .superRefine((catalog, ctx) => {
+    const reject: Reject = (message, path = []) => ctx.addIssue({ code: 'custom', message, path });
+    commonInvariants(catalog, reject, CATALOG_V3_LIMITS.bytes);
+    const sourceIds = new Set(catalog.sources.map((s) => s.id));
+    const brandIds = new Set(catalog.brands.map((b) => b.id));
+    const programs = new Map(catalog.programs.map((p) => [p.id, p]));
+    const gates = new Map(catalog.gates.map((g) => [g.id, g]));
+    const missing = (ids: string[], known: Set<string>) => ids.some((id) => !known.has(id));
+    for (const [list, name] of [
+      [catalog.programs, 'programs'],
+      [catalog.brands, 'brands'],
+      [catalog.gates, 'gates'],
+      [catalog.merchants, 'merchants'],
+      [catalog.cards, 'cards'],
+    ] as const)
+      if (!unique(list.map((item) => item.id))) reject(`IDs in ${name} must be unique.`, [name]);
+    if (!unique(catalog.cards.flatMap((c) => c.rules.map((r) => r.id))))
+      reject('Rule IDs must be globally unique.', ['cards']);
+
+    const verifiedOn = Date.parse(`${catalog.verifiedAt.slice(0, 10)}T00:00:00Z`);
+    const expiresOn = Date.parse(`${catalog.expiresAt.slice(0, 10)}T00:00:00Z`);
+    catalog.programs.forEach((program, index) => {
+      const path = ['programs', index];
+      const { valuation } = program;
+      if ((program.currency === 'cash-back') !== (valuation.basis === 'cash'))
+        reject('Cash-back programs, and only they, are valued as cash.', [...path, 'valuation']);
+      if (valuation.basis === 'issuer-stated' && missing(valuation.sourceIds, sourceIds))
+        reject('Program value references an absent source.', [...path, 'valuation', 'sourceIds']);
+      if (valuation.basis === 'published-estimate') {
+        const read = Date.parse(`${valuation.retrievedOn}T00:00:00Z`);
+        if (read < verifiedOn - 30 * DAY_MS || read > expiresOn)
+          reject('A published estimate must be read within 30 days before verification and before expiry.', [
+            ...path,
+            'valuation',
+            'retrievedOn',
+          ]);
+      }
+      if (missing(program.redemptionBrandIds, brandIds))
+        reject('Program references an absent brand.', [...path, 'redemptionBrandIds']);
+    });
+    catalog.gates.forEach((gate, index) => {
+      if (!unique(gate.options.map((o) => o.id))) reject('Gate option IDs must be unique.', ['gates', index]);
+    });
+    catalog.merchants.forEach((merchant, index) => {
+      const path = ['merchants', index];
+      if (missing(merchant.brandIds, brandIds))
+        reject('Merchant references an absent brand.', [...path, 'brandIds']);
+      if (missing(merchant.mcc.sourceIds, sourceIds))
+        reject('Merchant MCC references an absent source.', [...path, 'mcc', 'sourceIds']);
+      if (merchant.mcc.code !== null && merchant.mcc.sourceIds.length === 0)
+        reject('A stated MCC needs at least one source.', [...path, 'mcc']);
+      if (merchant.mcc.code === null && merchant.mcc.confidence !== 'low')
+        reject('An unknown MCC can only have low confidence.', [...path, 'mcc']);
+    });
+
+    catalog.cards.forEach((card, index) => {
+      const path = ['cards', index];
+      const program = programs.get(card.programId);
+      if (!program) reject('Card references an absent program.', [...path, 'programId']);
+      if (card.statedValueHundredthsOfCent !== null && program?.currency !== 'points')
+        reject('Only points programs can have an issuer-stated card value.', [
+          ...path,
+          'statedValueHundredthsOfCent',
+        ]);
+      if (card.acceptance.kind === 'closed-loop' && missing(card.acceptance.brandIds, brandIds))
+        reject('Closed-loop card references an absent brand.', [...path, 'acceptance']);
+      const choices = new Map(card.choices.map((c) => [c.id, c]));
+      if (choices.size !== card.choices.length)
+        reject('Choice IDs must be unique within a card.', [...path, 'choices']);
+      card.choices.forEach((choice, i) => {
+        const optionIds = new Set(choice.options.map((o) => o.id));
+        if (
+          optionIds.size !== choice.options.length ||
+          choice.picks >= choice.options.length ||
+          choice.defaultOptionIds.length > choice.picks ||
+          missing(choice.defaultOptionIds, optionIds) ||
+          (choice.kind === 'automatic' && choice.defaultOptionIds.length > 0)
+        )
+          reject('A choice needs unique options, fewer picks than options and valid defaults.', [
+            ...path,
+            'choices',
+            i,
+          ]);
+      });
+      const bases = card.rules.filter((r) => r.category === 'all-purchases' && isUnconditionalRuleV3(r));
+      const base = bases[0];
+      if (card.acceptance.kind === 'open-loop' ? bases.length !== 1 : bases.length > 1)
+        reject(
+          'An open-loop card needs exactly one unconditional all-purchases rule; a closed-loop card at most one.',
+          [...path, 'rules'],
+        );
+      card.rules.forEach((rule, i) => {
+        const rulePath = [...path, 'rules', i];
+        if (base && rule.rateBps < base.rateBps) reject('Bonus rate cannot be below the base.', rulePath);
+        if (rule.paidOnPaymentBps > rule.rateBps)
+          reject('The paid-on-payment portion cannot exceed the rate.', [...rulePath, 'paidOnPaymentBps']);
+        if (rule.cap.kind === 'spend' && rule.cap.rateAfterCapBps > rule.rateBps)
+          reject('The after-cap rate cannot exceed the rule rate.', [...rulePath, 'cap']);
+        if (base && rule.cap.kind === 'spend' && rule.cap.rateAfterCapBps < base.rateBps)
+          reject('The after-cap rate cannot be below the base rate.', [...rulePath, 'cap']);
+        if (missing(rule.sourceIds, sourceIds))
+          reject('Rule references an absent source.', [...rulePath, 'sourceIds']);
+        if (missing(rule.brandIds, brandIds))
+          reject('Rule references an absent brand.', [...rulePath, 'brandIds']);
+        if (missing(rule.excludedBrandIds, brandIds))
+          reject('Rule excludes an absent brand.', [...rulePath, 'excludedBrandIds']);
+        if (rule.excludedBrandIds.some((id) => rule.brandIds.includes(id)))
+          reject('A brand cannot be both in scope and excluded.', [...rulePath, 'excludedBrandIds']);
+        if (rule.sharedCapId !== null) {
+          const shared = card.rules.find((r) => r.sharedCapId === rule.sharedCapId)!;
+          if (
+            rule.cap.kind !== 'spend' ||
+            shared.cap.kind !== 'spend' ||
+            rule.cap.amountCents !== shared.cap.amountCents ||
+            rule.cap.period !== shared.cap.period
+          )
+            reject('Rules sharing a cap need spend caps with the same amount and period.', [
+              ...rulePath,
+              'sharedCapId',
+            ]);
+        }
+        const { startsOn, endsOn } = rule.limitedTime ?? { startsOn: null, endsOn: null };
+        if (startsOn !== null && endsOn !== null && startsOn > endsOn)
+          reject('A limited-time rule cannot end before it starts.', [...rulePath, 'limitedTime']);
+        if (rule.choice) {
+          const choice = choices.get(rule.choice.choiceId);
+          if (!choice?.options.some((o) => o.id === rule.choice?.optionId))
+            reject('Rule references an absent choice option.', [...rulePath, 'choice']);
+        }
+        if (!unique(rule.requires.map((r) => r.gateId)))
+          reject('A rule can require each gate once.', [...rulePath, 'requires']);
+        rule.requires.forEach((requirement, j) => {
+          const gate = gates.get(requirement.gateId);
+          if (
+            !gate ||
+            missing(requirement.optionIds, new Set(gate.options.map((o) => o.id))) ||
+            requirement.optionIds.length >= gate.options.length
+          )
+            reject('A requirement needs a known gate and some, not all, of its options.', [
+              ...rulePath,
+              'requires',
+              j,
+            ]);
+        });
+        if (rule.requiredPaymentPaths.some((p) => (rule.excludedPaymentPaths as string[]).includes(p)))
+          reject('A payment path cannot be both required and excluded.', [
+            ...rulePath,
+            'requiredPaymentPaths',
+          ]);
+      });
+    });
+  }) satisfies z.ZodType<CatalogV3>;
+
+/** Any schema version, keyed by `schemaVersion`. Old cached v1 and v2 releases stay readable. */
 export const catalogSchema = z.discriminatedUnion('schemaVersion', [
   catalogV1Schema,
   catalogV2Schema,
+  catalogV3Schema,
 ]) satisfies z.ZodType<Catalog>;
 
 /** Wire format from the public release API. Hash identifies the database JSONB payload;

@@ -5,7 +5,6 @@ import { AlertInline, ApplicationState, Card, Icon } from '@ai-checkout/ui';
 import WalletEditor from '../components/WalletEditor';
 import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
-import { currentCatalog } from '../state/catalog';
 import type { Wallet } from '../domain';
 import { MERCHANT_IDS, merchantName } from '../checkout/merchants';
 
@@ -75,7 +74,7 @@ export default function Onboarding() {
               </h2>
               <p>
                 Open a cart on {sites}. A small badge in the corner shows which of your cards earns the most
-                cash back on it. Click it for every card’s estimate and the terms behind it.
+                on it. Click it for every card’s estimate and the terms behind it.
               </p>
               <p className="supporting">
                 Your cards and settings stay on this device. AI Checkout reads only the cart’s order summary
@@ -92,12 +91,16 @@ export default function Onboarding() {
                 Pick the cards you have
               </h2>
               <p>
-                Choose the cash-back cards in your wallet and the one you use by default. No card numbers or
-                bank login, and no account: AI Checkout keeps this on your device.
+                Search for each card in your wallet and add it, then pick the one you use by default. No card
+                numbers or bank login, and no account: AI Checkout keeps this on your device.
               </p>
             </section>
             <WalletEditor
-              catalog={currentCatalog(view.state)}
+              catalog={view.catalog}
+              index={view.cardIndex}
+              loadCards={(cardIds) =>
+                checkoutRequest({ type: 'checkout:catalog-cards', cardIds }).then((next) => next.catalog)
+              }
               wallet={view.state.wallet}
               busy={busy}
               onSave={save}

@@ -3,7 +3,7 @@ import { closeOnboarding } from './onboarding';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { openNativePopup } from './native-popup';
+import { openNativePopup, REAL_CARD_NAMES } from './native-popup';
 import {
   deleteNativeVault,
   deleteVault,
@@ -12,7 +12,8 @@ import {
   startNativePopup,
   startPopup,
 } from './vault';
-import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2';
+import { CATALOG_V3 } from '../../packages/rewards-core/src/catalog-v3';
+import { addCard } from './wallet';
 
 test('capture real release UI and record the staged offline shopper walkthrough', async ({
   browserName,
@@ -82,10 +83,8 @@ test('capture real release UI and record the staged offline shopper walkthrough'
       });
     }
     await startNativePopup(popup);
-    await popup.evaluate(
-      "document.querySelectorAll('[aria-labelledby=wallet-heading] fieldset input[type=checkbox]').forEach(box=>box.click())",
-    );
-    await expect.poll(popup.text).toContain('online retail spend in');
+    await popup.checkCards(REAL_CARD_NAMES);
+    await expect.poll(popup.text).toContain('online retail spend this year');
     await popup.fill('spend-bce-online-retail', '0');
     await popup.evaluate(
       "document.querySelector('[aria-labelledby=wallet-heading]').scrollIntoView({block:'start'})",
@@ -142,7 +141,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     popup = await openNativePopup(context, merchant, id);
     await expect.poll(popup.text).toContain('Edit cards');
     await popup.click('Edit cards');
-    await expect.poll(popup.text).toContain('online retail spend in');
+    await expect.poll(popup.text).toContain('online retail spend this year');
     await popup.fill('spend-bce-online-retail', '');
     await popup.click('Save cards');
     await expect.poll(popup.text).toContain('Read cart amount');
@@ -153,7 +152,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
       'Your online retail spend toward this year’s bonus limit is unknown.',
     ]);
     await popup.click('Edit cards');
-    await expect.poll(popup.text).toContain('online retail spend in');
+    await expect.poll(popup.text).toContain('online retail spend this year');
     await popup.fill('spend-bce-online-retail', '0');
     await popup.click('Save cards');
     await expect.poll(popup.text).toContain('Read cart amount');
@@ -182,8 +181,8 @@ test('capture real release UI and record the staged offline shopper walkthrough'
           browser: context.browser()?.version(),
           artifactSha256: inventory.sha256,
           extensionVersion: '2.0.0',
-          catalogVersion: CATALOG_V2.version,
-          catalogExpiresAt: CATALOG_V2.expiresAt,
+          catalogVersion: CATALOG_V3.version,
+          catalogExpiresAt: CATALOG_V3.expiresAt,
           source:
             'Actual native toolbar popup; all seven card products selected as a sample; intercepted Newegg summary fixture.',
           liveMerchant: false,
@@ -238,8 +237,8 @@ test('capture real release UI and record the staged offline shopper walkthrough'
       'Staged offline demo. Actual extension page; sample inputs; no live retailer or model call.',
       4,
     );
-    await page.getByRole('checkbox', { name: 'Capital One Quicksilver', exact: true }).check();
-    await page.getByRole('checkbox', { name: 'American Express Blue Cash Everyday', exact: true }).check();
+    await addCard(page, 'Capital One Quicksilver');
+    await addCard(page, 'American Express Blue Cash Everyday');
     await page.getByLabel(/Blue Cash Everyday online retail spend/).fill('0');
     await pause('Choose two card products. Reported annual online-retail spend is $0 for this example.');
     await page.getByRole('button', { name: 'Save cards' }).click();

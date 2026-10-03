@@ -6,7 +6,7 @@ status: stable
 tags: [domain, rewards, engine]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-03T02:00:00Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
     title: Catalog v2 types (RewardRuleV2, RuleCap, PaymentPath, Uncertainty)
@@ -14,6 +14,8 @@ sources:
     title: Catalog v2 engine (compareV2)
   - resource: ../../packages/rewards-core/src/engine-shared.ts
     title: Shared validation and ranking (rankEstimates)
+  - resource: ../../packages/rewards-core/src/engine-v3.ts
+    title: Catalog v3 engine (compareV3)
   - resource: ../../packages/rewards-core/README.md
     title: Rewards core README
   - resource: ../../docs/research/cashback-card-terms-2026.md
@@ -22,7 +24,7 @@ sources:
 
 # Reward rules
 
-A catalog v2 rule is one earning rule as an issuer states it: a category, a total rate, the part of that rate paid only on payment, a cap, an activation requirement, a U.S.-only flag, any excluded payment paths, and an optional promotion end date. The engine (`compareV2` in [`engine-v2.ts`](../../packages/rewards-core/src/engine-v2.ts)) decides whether each rule applies at one merchant checkout. When it cannot be sure, it reports a range from the base reward to the bonus. Cards are ranked by guaranteed minimum. The rules for the seven real cards are listed in [Cards](cards.md).
+A catalog v2 rule is one earning rule as an issuer states it: a category, a total rate, the part of that rate paid only on payment, a cap, an activation requirement, a U.S.-only flag, any excluded payment paths, and an optional promotion end date. The engine (`compareV2` in [`engine-v2.ts`](../../packages/rewards-core/src/engine-v2.ts)) decides whether each rule applies at one merchant checkout. When it cannot be sure, it reports a range from the base reward to the bonus. Cards are ranked by guaranteed minimum. Catalog v3, which the extension bundles since 2026-10-03 (`CATALOG_V3`, 178 cards), keeps every v2 field and adds the merchant, choice, gate, payment-path and valuation concepts in [Catalog v3 rules](#catalog-v3-rules); `compareV3` applies them. The cards are summarized in [Cards](cards.md).
 
 ## Facts
 
@@ -89,6 +91,27 @@ Money is integer cents and rates are bps. Exact products are summed before trunc
 ## Citi pay-later
 
 Citi Double Cash earns 2% total on every purchase: 1% at purchase and 1% when the balance is paid. The catalog stores `rateBps: 200, paidOnPaymentBps: 100`. The estimate counts the full 200 bps and exposes `paidOnPaymentBps` on `CardEstimate`. The research report suggests showing it as "2% if paid (1% at purchase)"; how the extension words it is not covered here. The research report notes that the payment must be at least the minimum due, and that points need a current account.
+
+## Catalog v3 rules
+
+Stage 2 M1 added the catalog v3 contract ([rewards engine](../system/rewards-engine.md#catalog-v3-contract)) and M2 the engine that applies it (`compareV3` in [`engine-v3.ts`](../../packages/rewards-core/src/engine-v3.ts); [semantics decision](../decisions/2026-10-02-engine-v3-semantics.md)). The v2 behavior above carries over; v3 adds:
+
+| Field or concept | Meaning |
+| --- | --- |
+| Base rule | The card's one `all-purchases` rule with no condition at all. Open-loop cards need exactly one; closed-loop store cards need none. Other `all-purchases` rules may carry conditions (PayPal Cashback's rate when paying through PayPal) |
+| `acceptance` | `open-loop`, or `closed-loop` with the brands where the card works (Amazon Store Card, Harbor Freight). Elsewhere the card is `not-accepted` and left out of the ranking (`Comparison.notAccepted`); with no accepted card the result is `no-accepted-card` |
+| `brandIds` | Merchant scope: the rule pays only at merchants carrying one of these brands (Prime Visa at Amazon and Whole Foods); otherwise `not-at-merchant`. A brand-scoped `other` or `all-purchases` rule needs no category match |
+| `excludedBrandIds` | The rule never pays at merchants carrying one of these brands (`not-at-merchant`; Freedom Flex grocery "excluding Walmart and Target", Edward Jones top categories excluding Amazon); a base rule has none |
+| `sharedCapId` | Rules of one card with the same ID share one spend cap (Cash+ "$2,000 in combined purchases" across both 5% picks, Freedom Flex and Discover quarters, Customized Cash); each has a spend cap with the same amount and period. The spend toward it is recorded on the group's rule with the smallest ID |
+| `choice` | The rule pays only while that option of a card choice is in effect: `chosen` by the cardholder (Cash+, Customized Cash) or `automatic` top-spend categories (Edward Jones). A chosen option the shopper did not select is `choice-not-selected`; an unanswered choice gives a range (`choice-unknown`, defaults not assumed); an automatic option always gives a range (`automatic-category`) |
+| `requires` | Gates the cardholder must meet: membership, tier or relationship options (Prime, store loyalty tiers, Smartly balances). An answer outside the options is `condition-not-met`; no answer gives a range (`condition-unknown`) whose guaranteed minimum is the worst answer's best rule, not the base (Prime Visa at Amazon: 3–5%) |
+| `requiredPaymentPaths` | The rule pays only through these paths (otherwise `not-eligible`) and is then not `payment-path-uncertain`; `excludedPaymentPaths` gains `venmo` |
+| `limitedTime.startsOn` | Rotating or future rules start on this date (Freedom Flex Q1 2027); before it the rule is `not-started` |
+| Program value | Units convert to cents with the shopper's override, else the card's issuer-stated value, else the program's valuation ([decision](../decisions/2026-10-02-points-valuation-published-estimates.md)): cents = ⌊Σ spend × rate × value / 1,000,000⌋. `none` means units only: the card is listed after every valued card that may earn cents (but before a valued card earning $0 when it guarantees units) with `value-unknown`, never at an assumed 1¢ |
+
+**How the M4 overlay uses these fields** ([decision](../decisions/2026-10-02-catalog-overlay-conventions.md)): a brand-scoped rule always has category `other` and matches on brand alone; `excludedBrandIds` appear only on category rules; a statement that third-party payment accounts or wallets "may not" earn a bonus puts those paths in `excludedPaymentPaths` (the base rate is then counted for them); gates ask about the cardholder only, never about the purchase (financing, minimum amounts and store-brand items are noted or the rule is held out); the lowest tier every cardholder holds stays ungated; first-year and first-30-days rates are `limitedTime` with null dates and a per-card account-age gate, since the engine reads only the dates ([review decision](../decisions/2026-10-02-catalog-overlay-review.md)); store-credit cash-back programs count units in cents.
+
+Shopper inputs for v3: per card the chosen options; per wallet the gate answers (they describe the cardholder, so one answer covers every card) and a value override for any points program.
 
 ## Gotchas
 

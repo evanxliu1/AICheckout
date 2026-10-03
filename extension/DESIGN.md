@@ -58,7 +58,7 @@ icon; no HashiCorp branding is used.
 
 This document covers the protected-input gate, the wallet editor, the purchase form, the comparison
 result, and the shared cart identity under `extension/`. Sources: `src/styles/globals.css` (layout
-only), `tailwind.config.js` (token-mapped scales), `src/popup/Popup.tsx`, `src/components/*`.
+and the token-mapped Tailwind `@theme` scales), `src/popup/Popup.tsx`, `src/components/*`.
 
 **Key characteristics**
 
@@ -96,7 +96,8 @@ The popup is a single column: a white header (navy cart icon, navy Bricolage nam
 purpose), then 16 px padding
 and 16 px gaps between cards. Inside cards, fields stack with 16 px between groups; labels sit above
 controls with helper text between, per the Helios form spec. Estimate rows put the card name and
-amount on one baseline, separated by faint dividers. A clear winner (not tied, ranking stable) is
+amount on one baseline, separated by faint dividers; a wide amount moves under the name,
+right-aligned (`.estimate-head`). A clear winner (not tied, ranking stable) is
 instead a navy block with an 18 px radius: card name in white, the amount at 2.75rem in white
 Bricolage as the largest text in the popup, and its rate beside it in sky. When both amounts are
 exact, each other row shows "$X less" in faint ink before its amount. Long text wraps anywhere; the page never
@@ -108,10 +109,14 @@ scrolls horizontally (checked by the popup accessibility test at 360 and 480 px)
 - **Protected inputs** (`VaultGate`): a Card with the setup/unlock form (Field + TextInput, Checkbox
   for the acknowledgement, full-width primary Button with a loading state), a `Disclosure` with
   state-accurate protection details, and the deletion `Disclosure`.
-- **Wallet editor** (`WalletEditor`): one `Fieldset` per issuer (Citi, Wells Fargo, Capital One,
-  Chase, American Express) of card `Checkbox`es; a `Select` for the tie-break card; "Bonus limits"
-  fields derived from the catalog rules: a spend field for each spend-capped bonus that can apply at
-  a supported merchant, and an activation select only for enroll-once or recurring rules.
+- **Wallet editor** (`WalletEditor`, catalog v3 since Stage 2 M7): the "Add a card" `Combobox`
+  over the bundled cards grouped by issuer (active option on the action surface with a 3 px navy
+  bar), the owned list (`.wallet-list`, card name in semibold strong ink above its issuer, tertiary
+  Remove), a `Select` for the default card, then sections with Bricolage `subsection-title`
+  headings: "Card options" (chosen categories as `Checkbox`es), "About you" (gate questions as
+  `Radio`s with "Not sure"), "Bonus limits" (spend fields and activation selects derived from the
+  catalog rules) and "Point values" (program name, Estimate / Issuer-stated / "No published value"
+  `Badge`s, a cents field with "Reset to default" beside it in `.value-field`).
 - **Purchase form**: merchant `Select` (Best Buy, Newegg, Amazon), "Read cart amount" secondary
   button, the read result as a highlight `AlertInline` with "Use manual entry instead", amount
   `TextInput`, payment path `Select` (card, PayPal, digital wallet, buy now pay later), online retail
@@ -124,16 +129,20 @@ scrolls horizontally (checked by the popup accessibility test at 360 and 480 px)
   issuer's pages" for unstated activation; the pay-later note ("2% if the balance is paid (1% at
   purchase)"); uncertainty notes; and a collapsed `Disclosure` of "Rules that don't apply here" with
   the reason (not at this merchant, not eligible, promotion ended, spend limit reached). Sources sit
-  in a `Disclosure` of external `Link`s.
+  in a `Disclosure` of external `Link`s. Catalog v3 rows add the reward in units or store rewards,
+  a basis `Badge` (Estimate and Issuer-stated neutral, Your value highlight; on navy the neutral
+  badge is navy-line with white text) with the value lines, "Nothing is guaranteed" for a $0
+  minimum, and after the list the store cards not accepted here and, when the order may change,
+  the ranking note. The winner block uses 1.75rem for ranges, "Up to $x" and units.
 - **States**: loading (`ApplicationState`), errors and expired terms (critical `AlertInline`,
   `role="alert"`), notices (`AlertInline`, `role="status"`), render failures (`ErrorBoundary` with an
   `ApplicationState` error and a reload action).
 
 ## Cart badge (Phase 3b)
 
-- **Pill**: a single `button` fixed bottom-right in the merchant page, navy (`--ac-color-navy`, hover navy-strong) with white text on a full pill radius with the high elevation shadow, credit-card icon and one line: "Use Blue Cash Everyday · $3.00 back", where the reward ("$3.00 back", `.badge-pill__amount`) is sky Bricolage. Its accessible name carries the whole message ("Use Blue Cash Everyday · $3.00 back on this cart (AI Checkout). Show details"). Prompts use the same pill: "Pick your cards to see your best card", "Unlock to see your best card" (lock icon), "Can't read this cart — enter the amount".
-- **Panel** (360 px, white surface, overlay elevation, 16 px large radius): header with the navy cart icon, the focusable heading "Best card for this cart" and an icon-only Collapse button; a scrolling body with the amount basis ("Based on $27.23 cart order total at Best Buy US."), an Amount field with Update / Use cart amount, the Payment method select, the ranked list (the popup's `EstimateRow`, with the same navy winner hero and "$X less" deltas: amount, issuer rule, condition badges, the Citi pay-later note, rules that don't apply); a footer with **Dismiss for this tab** (secondary) and **Not on this site** (tertiary). Esc collapses and returns focus to the pill; nothing animates.
-- **Order question**: the panel opens itself with "Did you pay with {card}?" and Yes / Another card (a select) / Not sure, then "Order recorded" with the estimated extra cash back versus the default card.
+- **Pill**: a single `button` fixed bottom-right in the merchant page, navy (`--ac-color-navy`, hover navy-strong) with white text on a full pill radius with the high elevation shadow, credit-card icon and one line: "Use Blue Cash Everyday · $3.00 back", where the reward (`pillReward`: "$3.00 back", "$5.00 in store rewards", "est. $1.20 in miles", "1,000 miles"; `.badge-pill__amount`) is sky Bricolage. Its accessible name carries the whole message ("Use Blue Cash Everyday · $3.00 back on this cart (AI Checkout). Show details"). Prompts use the same pill: "Pick your cards to see your best card", "Unlock to see your best card" (lock icon), "Can't read this cart — enter the amount".
+- **Panel** (360 px, white surface, overlay elevation, 16 px large radius): header with the navy cart icon, the focusable heading "Best card for this cart" and an icon-only Collapse button; a scrolling body with the amount basis ("Based on $27.23 cart order total at Best Buy US."), an Amount field with Update / Use cart amount, the Payment method select, the ranked list (the popup's `EstimateRow`, with the same navy winner hero and "$X less" deltas: amount, issuer rule, condition badges, the Citi pay-later note, rules that don't apply; v3 rows add the basis badge and value lines), the ranking note when the order may change, and not-accepted store cards; a footer with **Dismiss for this tab** (secondary) and **Not on this site** (tertiary). Esc collapses and returns focus to the pill; nothing animates.
+- **Order question**: the panel opens itself with "Did you pay with {card}?" and Yes / Another card (a select) / Not sure, then "Order recorded" with the estimated extra versus the default card, called cash back when both cards pay cash back and rewards otherwise (with the value points or miles were counted at).
 - **Frame**: the panel is an extension page in an iframe inside a closed shadow root; the iframe reports only its size, and the host clamps it to the window (the body scrolls). The page's CSS cannot restyle it.
 - **Onboarding tab** (on install): a 640 px column with the cart mark, "Welcome to AI Checkout", the wallet editor and a "You're set" confirmation that takes focus.
 - **Popup additions**: an **All-time** savings card (total, history disclosure, JSON export, delete) and a **Settings** disclosure (per-site badge `Toggle`s, passphrase protection on/off).
@@ -144,7 +153,10 @@ Every control has a visible label; helper and error text are wired with `aria-de
 uses the theme's focus ring (1 px action blue inside a 3 px `#4a8ad6` ring) on every interactive element. Reduced motion shortens all animation and
 transitions. `e2e/popup-a11y.spec.ts` runs axe (WCAG 2.0/2.1 A and AA) on vault setup, wallet setup,
 bonus limits, purchase, comparison (collapsed and expanded), buy now pay later, cart-read error,
-expired terms and locked, at 360 and 480 px, and fails on any violation or horizontal scroll.
+expired terms and locked, at 360 and 480 px, plus the catalog v3 states (card search, wallet options,
+comparison, winner block, the widest amounts on a $99,999.99 purchase, no accepted card, onboarding)
+and the bundled catalog's longest card names; it fails on any violation, inline style, horizontal
+scroll, or overflow inside the popup.
 
 ## Cart identity
 

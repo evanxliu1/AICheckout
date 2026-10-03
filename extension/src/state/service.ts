@@ -1,21 +1,30 @@
 import { compareRewards } from '../domain';
 import { CATALOG_TIMEOUT_MS } from '@ai-checkout/catalog-client';
+import type { Catalog } from '../domain';
 import {
+  catalogCacheSchema,
+  emptyCatalogCache,
   emptyState,
   MAX_SAVINGS_ENTRIES,
   requestSchema,
   storedAppStateSchema,
-  validateWallet,
 } from './contracts';
-import { migrateState } from './migrate';
-import type { AppState, CheckoutResponse } from './contracts';
+import { migrateState, reconcileState } from './migrate';
+import type { AppState, CatalogCache, CheckoutResponse } from './contracts';
 import type { CartSnapshot } from '../checkout/contracts';
-import { CatalogUpdateError, currentCatalog, prepareCatalogUpdate } from './catalog';
+import { catalogByVersion, CatalogUpdateError, currentCatalog, prepareCatalogUpdate } from './catalog';
+import { enginePurchase, engineWallet, validateWallet } from './wallet';
+import { cardIndex, catalogSlice } from './catalog-slice';
+import {
+  CART_MAX_AGE_MS,
+  CART_READ_TIMEOUT_MS,
+  CATALOG_KEY,
+  localDate,
+  RESULT_MAX_AGE_MS,
+  STATE_KEY,
+} from './keys';
 
-export const STATE_KEY = 'checkoutStateV1';
-export const RESULT_MAX_AGE_MS = 15 * 60 * 1000;
-export const CART_MAX_AGE_MS = 5 * 60 * 1000;
-export const CART_READ_TIMEOUT_MS = 8_000;
+export { CART_MAX_AGE_MS, CART_READ_TIMEOUT_MS, CATALOG_KEY, localDate, RESULT_MAX_AGE_MS, STATE_KEY };
 export interface CartReader {
   read: () => Promise<CartSnapshot>;
   validate: (snapshot: CartSnapshot) => Promise<void>;
@@ -34,9 +43,26 @@ export interface StateStorage {
   remove(keys: string[]): Promise<void>;
   clear(): Promise<void>;
 }
-export function localDate(now: number): string {
-  const date = new Date(now);
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+/** A successful page response: the catalog in effect cut to the owned cards (and `extraCardIds`), with
+ * the index of every card for search, instead of the whole catalog (about 800 KB with catalog v3). */
+export function pageResponse(
+  state: AppState,
+  catalog: Catalog,
+  comparison: Extract<CheckoutResponse, { ok: true }>['comparison'],
+  notice: string | null,
+  catalogUpdatesAvailable: boolean,
+  extraCardIds: string[] = [],
+): CheckoutResponse {
+  return {
+    ok: true,
+    state,
+    catalog: catalogSlice(catalog, [...state.wallet.cards.map((c) => c.cardId), ...extraCardIds]),
+    cardIndex: cardIndex(catalog),
+    comparison,
+    notice,
+    catalogUpdatesAvailable,
+  };
 }
 
 /** Storage is authoritative. Reconnecting popups do not rely on worker memory. */
@@ -49,9 +75,11 @@ export function createStateService(
   let queue = Promise.resolve<unknown>(undefined);
   const success = (
     state: AppState,
+    catalog: Catalog,
     comparison: Extract<CheckoutResponse, { ok: true }>['comparison'] = null,
     notice: string | null = null,
-  ): CheckoutResponse => ({ ok: true, state, comparison, notice, catalogUpdatesAvailable: !!fetchCatalog });
+    extraCardIds: string[] = [],
+  ): CheckoutResponse => pageResponse(state, catalog, comparison, notice, !!fetchCatalog, extraCardIds);
   async function bounded<T>(promise: Promise<T>): Promise<T> {
     let timer: ReturnType<typeof setTimeout>;
     try {
@@ -68,17 +96,36 @@ export function createStateService(
       clearTimeout(timer!);
     }
   }
-  async function load(): Promise<AppState> {
+  /** The saved state (migrated and reconciled with the catalog in effect at `now`), the catalog
+   * cache and the catalog in effect. */
+  async function load(now: number): Promise<{ state: AppState; cache: CatalogCache; catalog: Catalog }> {
     await storage.remove(LEGACY_KEYS);
+    // The cache is public and can be fetched again: an unreadable one is ignored (bundled terms).
+    const storedCache = catalogCacheSchema.safeParse((await storage.get(CATALOG_KEY))[CATALOG_KEY]);
     const saved = (await storage.get(STATE_KEY))[STATE_KEY];
-    if (saved === undefined) return emptyState();
+    if (saved === undefined) {
+      const cache = storedCache.success ? storedCache.data : emptyCatalogCache();
+      return { state: emptyState(), cache, catalog: currentCatalog(cache, now) };
+    }
     const parsed = storedAppStateSchema.safeParse(saved);
     if (!parsed.success) throw new Error('Saved data could not be read. Delete local data to start again.');
-    if (parsed.data.schemaVersion === 2) return parsed.data;
-    // Pilot-era state: migrate once and persist; its notice waits in pendingNotice until shown.
-    const migrated = migrateState(parsed.data);
-    await storage.set({ [STATE_KEY]: migrated.state });
-    return migrated.state;
+    if (parsed.data.schemaVersion !== 3) {
+      // Earlier state: migrate once and persist in one write; a notice waits in pendingNotice.
+      const migrated = migrateState(parsed.data, storedCache.success ? storedCache.data : null, now);
+      await storage.set({ [STATE_KEY]: migrated.state, [CATALOG_KEY]: migrated.cache });
+      return { ...migrated, catalog: currentCatalog(migrated.cache, now) };
+    }
+    const cache = storedCache.success ? storedCache.data : emptyCatalogCache();
+    const catalog = currentCatalog(cache, now);
+    if (parsed.data.walletCatalogVersion === catalog.version) return { state: parsed.data, cache, catalog };
+    const state = reconcileState(
+      parsed.data,
+      catalog,
+      now,
+      catalogByVersion(cache, parsed.data.walletCatalogVersion),
+    );
+    await storage.set({ [STATE_KEY]: state });
+    return { state, cache, catalog };
   }
   async function validateCart(cart: CartSnapshot | null, now: number) {
     if (!cart || !cartReader || cart.capturedAt > now || now - cart.capturedAt >= CART_MAX_AGE_MS) {
@@ -88,12 +135,16 @@ export function createStateService(
     if (clock() - cart.capturedAt >= CART_MAX_AGE_MS)
       throw new Error('The saved cart expired. Read it again.');
   }
-  async function response(state: AppState, now: number): Promise<CheckoutResponse> {
-    const catalog = currentCatalog(state);
+  async function response(state: AppState, catalog: Catalog, now: number): Promise<CheckoutResponse> {
     if (state.cart && (state.cart.capturedAt > now || now - state.cart.capturedAt >= CART_MAX_AGE_MS)) {
       const next = { ...state, revision: state.revision + 1, cart: null, comparison: null };
       await storage.set({ [STATE_KEY]: next });
-      return success(next, null, 'The saved cart expired. Read it again and confirm the current amount.');
+      return success(
+        next,
+        catalog,
+        null,
+        'The saved cart expired. Read it again and confirm the current amount.',
+      );
     }
     const saved = state.comparison;
     let notice: string | null = null;
@@ -116,6 +167,7 @@ export function createStateService(
             await storage.set({ [STATE_KEY]: next });
             return success(
               next,
+              catalog,
               null,
               'The saved cart changed or expired. Read it again and confirm the amount.',
             );
@@ -128,14 +180,25 @@ export function createStateService(
         ) {
           return success(
             state,
+            catalog,
             null,
             'Your saved comparison needs a refresh. Confirm the current amount and compare again.',
           );
         }
-        return success(state, compareRewards(catalog, state.wallet, state.purchase, checkedAt), notice);
+        return success(
+          state,
+          catalog,
+          compareRewards(
+            catalog,
+            engineWallet(state.wallet, catalog),
+            enginePurchase(state.purchase, catalog),
+            checkedAt,
+          ),
+          notice,
+        );
       }
     }
-    return success(state, null, notice);
+    return success(state, catalog, null, notice);
   }
   async function handle(input: unknown): Promise<CheckoutResponse> {
     const parsed = requestSchema.safeParse(input);
@@ -145,18 +208,25 @@ export function createStateService(
     try {
       if (request.type === 'checkout:clear') {
         await storage.clear();
-        return success(emptyState(), null, 'Local data deleted.');
+        return success(
+          emptyState(),
+          currentCatalog(emptyCatalogCache(), clock()),
+          null,
+          'Local data deleted.',
+        );
       }
-      const state = await load();
       const now = clock();
+      const { state, cache, catalog } = await load(now);
       if (request.type === 'checkout:get-state') {
-        const result = await response(state, now);
+        const result = await response(state, catalog, now);
         // Show a pending notice only when nothing else is shown; clear it once it has been shown.
         if (!result.ok || result.notice || !result.state.pendingNotice) return result;
         const shown = { ...result.state, pendingNotice: null };
         await storage.set({ [STATE_KEY]: shown });
         return { ...result, state: shown, notice: result.state.pendingNotice };
       }
+      if (request.type === 'checkout:catalog-cards')
+        return success(state, catalog, null, null, request.cardIds);
       if (request.type === 'checkout:record-savings') {
         // Written by the worker from a one-tap answer; it does not race the shopper's form inputs,
         // so it needs no expected revision. Newest first, bounded.
@@ -169,7 +239,7 @@ export function createStateService(
           ),
         };
         await storage.set({ [STATE_KEY]: next });
-        return success(next);
+        return success(next, catalog);
       }
       if (request.expectedRevision !== state.revision) {
         return {
@@ -180,7 +250,7 @@ export function createStateService(
       if (request.type === 'checkout:delete-savings') {
         const next: AppState = { ...state, revision: state.revision + 1, savings: [] };
         await storage.set({ [STATE_KEY]: next });
-        return await response(next, now);
+        return await response(next, catalog, now);
       }
       if (request.type === 'checkout:refresh-catalog') {
         if (!fetchCatalog)
@@ -212,12 +282,18 @@ export function createStateService(
           clearTimeout(timer!);
           controller.abort();
         }
-        const update = prepareCatalogUpdate(state, input, clock());
-        await storage.set({ [STATE_KEY]: update.state });
-        return success(update.state, null, update.notice);
+        const checkedAt = clock();
+        const update = prepareCatalogUpdate(state, cache, input, checkedAt);
+        // One write: the new cache and the wallet pruned for it land together or not at all.
+        await storage.set(
+          update.state
+            ? { [STATE_KEY]: update.state, [CATALOG_KEY]: update.cache }
+            : { [CATALOG_KEY]: update.cache },
+        );
+        return success(update.state ?? state, currentCatalog(update.cache, checkedAt), null, update.notice);
       }
       if (request.type === 'checkout:save-wallet') {
-        if (!validateWallet(request.wallet, currentCatalog(state)))
+        if (!validateWallet(request.wallet, catalog, clock()))
           return {
             ok: false,
             error:
@@ -227,10 +303,11 @@ export function createStateService(
           ...state,
           revision: state.revision + 1,
           wallet: request.wallet,
+          walletCatalogVersion: catalog.version,
           comparison: null,
         };
         await storage.set({ [STATE_KEY]: next });
-        return await response(next, now);
+        return await response(next, catalog, now);
       }
       if (request.type === 'checkout:read-cart') {
         if (!cartReader)
@@ -249,7 +326,7 @@ export function createStateService(
         }
         const next: AppState = { ...state, revision: state.revision + 1, cart, comparison: null };
         await storage.set({ [STATE_KEY]: next });
-        return success(next);
+        return success(next, catalog);
       }
       if (request.purchase.purchasedOn !== localDate(now)) {
         return {
@@ -272,13 +349,13 @@ export function createStateService(
       const comparedAt = clock();
       if (request.purchase.purchasedOn !== localDate(comparedAt))
         return { ok: false, error: 'The date changed while reading the cart. Confirm today’s amount again.' };
-      const catalog = currentCatalog(state);
-      const comparison = compareRewards(catalog, state.wallet, request.purchase, comparedAt);
-      if (comparison.status === 'unavailable') return success(state, comparison);
+      const purchase = enginePurchase(request.purchase, catalog);
+      const comparison = compareRewards(catalog, engineWallet(state.wallet, catalog), purchase, comparedAt);
+      if (comparison.status === 'unavailable') return success(state, catalog, comparison);
       const next: AppState = {
         ...state,
         revision: state.revision + 1,
-        purchase: request.purchase,
+        purchase,
         cart: request.cartId ? state.cart : null,
         comparison: {
           inputRevision: state.revision + 1,
@@ -288,7 +365,7 @@ export function createStateService(
         },
       };
       await storage.set({ [STATE_KEY]: next });
-      return success(next, comparison);
+      return success(next, catalog, comparison);
     } catch (error) {
       if (error instanceof CatalogUpdateError) return { ok: false, error: error.message };
       if (error instanceof Error && error.message.startsWith('Saved data'))
@@ -307,9 +384,12 @@ export function createStateService(
     );
     return task;
   };
-  /** The saved state (migrated if needed), read in the same queue as writes. */
-  service.read = (): Promise<AppState> => {
-    const task = queue.then(load);
+  /** The saved state (migrated if needed) and the catalog in effect, read in the same queue as writes. */
+  service.read = (): Promise<{ state: AppState; catalog: Catalog }> => {
+    const task = queue.then(async () => {
+      const { state, catalog } = await load(clock());
+      return { state, catalog };
+    });
     queue = task.then(
       () => undefined,
       () => undefined,
@@ -319,7 +399,7 @@ export function createStateService(
   // Browser lifecycle events enter the same queue as user writes.
   service.invalidateTab = (tabId: number): Promise<void> => {
     const task = queue.then(async () => {
-      const state = await load();
+      const { state } = await load(clock());
       if (state.cart?.tabId !== tabId) return;
       await storage.set({
         [STATE_KEY]: { ...state, revision: state.revision + 1, cart: null, comparison: null },

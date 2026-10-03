@@ -143,7 +143,163 @@ export interface CatalogV2 {
   cards: CardProductV2[];
 }
 
-export type Catalog = CatalogV1 | CatalogV2;
+/** Catalog schema 3 adds these to the shared categories. Provisional (Stage 2 M1): only categories
+ * that a chosen, automatic or rotating option names and that a retail checkout can code as.
+ * The overlay milestone (M4) finalizes the list; the SQL mirror is
+ * `catalog_private.catalog_v3_reward_categories()`, replaced in the same change. */
+export const REWARD_CATEGORIES_V3 = [
+  ...REWARD_CATEGORIES,
+  'electronics',
+  'department-stores',
+  'home-improvement',
+  'wholesale-clubs',
+] as const;
+export type RewardCategoryV3 = (typeof REWARD_CATEGORIES_V3)[number];
+/** Merchant categories for catalog schema 3 (SQL: `catalog_v3_merchant_categories()`). */
+export const MERCHANT_CATEGORIES_V3 = [
+  ...MERCHANT_CATEGORIES,
+  'department-stores',
+  'home-improvement',
+  'wholesale-clubs',
+] as const;
+export type MerchantCategoryV3 = (typeof MERCHANT_CATEGORIES_V3)[number];
+/** Catalog schema 3 payment paths: schema 2's plus Venmo. */
+export const PAYMENT_PATHS_V3 = ['card', 'paypal', 'venmo', 'digital-wallet', 'bnpl'] as const;
+export type PaymentPathV3 = (typeof PAYMENT_PATHS_V3)[number];
+export const EXCLUDABLE_PAYMENT_PATHS_V3 = ['paypal', 'venmo', 'digital-wallet', 'bnpl'] as const;
+export const RULE_STATUSES_V3 = [
+  'applied',
+  'may-apply',
+  'base',
+  'not-at-merchant',
+  'not-eligible',
+  'expired',
+  'cap-reached',
+  /** A closed-loop card is not accepted at this merchant. */
+  'not-accepted',
+  /** The rule's `limitedTime.startsOn` is after the purchase date. */
+  'not-started',
+  /** The shopper chose a different option. */
+  'choice-not-selected',
+  /** The shopper said they do not meet a gate the rule requires. */
+  'condition-not-met',
+] as const;
+export type RuleStatusV3 = (typeof RULE_STATUSES_V3)[number];
+
+/** How a program's reward units convert to cents, in hundredths of a cent per unit. */
+export type ProgramValuation =
+  /** Cash back: one unit is one cent. */
+  | { basis: 'cash'; valueHundredthsOfCent: 100 }
+  /** A published cents-per-point estimate: an opinion, labelled with its publisher and date. */
+  | {
+      basis: 'published-estimate';
+      valueHundredthsOfCent: number;
+      publisher: string;
+      url: string;
+      retrievedOn: string;
+    }
+  /** A fixed value the issuer states in a captured source. */
+  | { basis: 'issuer-stated'; valueHundredthsOfCent: number; sourceIds: string[] }
+  /** No value: the card shows units only until the shopper sets one. */
+  | { basis: 'none' };
+
+export interface RewardProgram {
+  id: string;
+  name: string;
+  currency: 'cash-back' | 'points';
+  /** Plural unit name shown with amounts ("points", "miles", "Reward Dollars"). */
+  unitName: string;
+  valuation: ProgramValuation;
+  /** Brands where the rewards can be redeemed; empty when not limited to a store. */
+  redemptionBrandIds: string[];
+}
+
+/** A merchant brand that rules and closed-loop cards are scoped to (Amazon, Whole Foods, Gap). */
+export interface Brand {
+  id: string;
+  name: string;
+}
+
+/** A question about the cardholder (membership, tier, relationship) that rules can require. */
+export interface Gate {
+  id: string;
+  question: string;
+  options: { id: string; label: string }[];
+}
+
+/** Categories the cardholder picks (`chosen`) or the issuer determines from spend (`automatic`). */
+export interface CardChoice {
+  id: string;
+  kind: 'chosen' | 'automatic';
+  label: string;
+  /** How many options earn at the same time (Cash+ two 5% categories: 2). */
+  picks: number;
+  options: { id: string; label: string }[];
+  /** Options in effect until the cardholder changes them; always empty for `automatic`. */
+  defaultOptionIds: string[];
+}
+
+export interface RewardRuleV3 extends Omit<
+  RewardRuleV2,
+  'category' | 'excludedPaymentPaths' | 'limitedTime'
+> {
+  category: RewardCategoryV3;
+  excludedPaymentPaths: (typeof EXCLUDABLE_PAYMENT_PATHS_V3)[number][];
+  /** Promotional or rotating rule: applies from `startsOn` through `endsOn`, where each is set. */
+  limitedTime: { startsOn: string | null; endsOn: string | null } | null;
+  /** Merchant scope: when non-empty, the rule applies only at merchants with one of these brands. */
+  brandIds: string[];
+  /** The rule never applies at merchants with one of these brands (Freedom Flex grocery
+   * "excluding Walmart and Target"); disjoint from `brandIds`. */
+  excludedBrandIds: string[];
+  /** Rules of one card with the same ID share one spend cap ("$1,500 in combined purchases");
+   * each such rule has a spend cap with the same amount and period. */
+  sharedCapId: string | null;
+  /** The rule earns only while this option of one of the card's choices is in effect. */
+  choice: { choiceId: string; optionId: string } | null;
+  /** Every listed gate must be answered with one of its `optionIds`. */
+  requires: { gateId: string; optionIds: string[] }[];
+  /** When non-empty, the rule applies only when paying through one of these paths. */
+  requiredPaymentPaths: PaymentPathV3[];
+}
+
+export interface CardProductV3 {
+  id: string;
+  name: string;
+  shortName: string;
+  issuer: string;
+  programId: string;
+  /** Issuer-stated cash value of one unit for this card (corpus `pointValueHundredthsOfCent`);
+   * only on points programs. */
+  statedValueHundredthsOfCent: number | null;
+  /** `closed-loop` cards are accepted only at merchants with one of `brandIds`. */
+  acceptance: { kind: 'open-loop' } | { kind: 'closed-loop'; brandIds: string[] };
+  choices: CardChoice[];
+  rules: RewardRuleV3[];
+  exclusions: string[];
+}
+
+export interface MerchantProfileV3 extends Omit<MerchantProfile, 'expectedCategory'> {
+  expectedCategory: MerchantCategoryV3;
+  brandIds: string[];
+}
+
+/** Catalog schema 3: programs and point values, brands, gates, chosen categories, closed-loop
+ * cards and larger limits (decision 2026-10-02-catalog-v3-schema). */
+export interface CatalogV3 {
+  schemaVersion: 3;
+  version: string;
+  verifiedAt: string;
+  expiresAt: string;
+  programs: RewardProgram[];
+  brands: Brand[];
+  gates: Gate[];
+  merchants: MerchantProfileV3[];
+  sources: Source[];
+  cards: CardProductV3[];
+}
+
+export type Catalog = CatalogV1 | CatalogV2 | CatalogV3;
 
 export interface RuleUsage {
   ruleId: string;
@@ -153,14 +309,42 @@ export interface RuleUsage {
   activation: 'active' | 'inactive' | 'unknown';
 }
 
+/** Catalog v3: the options of one `chosen` card choice the shopper says are in effect. A choice
+ * with no entry is unknown. */
+export interface WalletChoice {
+  choiceId: string;
+  /** The complete selection: 1 to `picks` options of the choice. */
+  optionIds: string[];
+}
+
+/** Catalog v3: the shopper's answer to one gate question. Gates describe the cardholder (a Prime
+ * membership, a bank relationship), so one answer applies to every card. No entry is unknown. */
+export interface WalletGate {
+  gateId: string;
+  optionId: string;
+}
+
+/** Catalog v3: the shopper's own value for one points program, in hundredths of a cent per unit
+ * (1 to 10,000). It wins over issuer-stated values and published estimates. */
+export interface ValueOverride {
+  programId: string;
+  valueHundredthsOfCent: number;
+}
+
 export interface WalletCard {
   cardId: string;
   usage: RuleUsage[];
+  /** Catalog v3 only; ignored by v1 and v2. */
+  choices?: WalletChoice[];
 }
 
 export interface Wallet {
   cards: WalletCard[];
   defaultCardId: string | null;
+  /** Catalog v3 only (points programs); ignored by v1 and v2. */
+  valueOverrides?: ValueOverride[];
+  /** Catalog v3 only: gate answers for the cardholder, shared by every card; ignored by v1 and v2. */
+  gates?: WalletGate[];
 }
 
 export interface Purchase {
@@ -171,8 +355,8 @@ export interface Purchase {
   purchasedOn: string;
   eligiblePurchase: Eligibility;
   onlineRetail: Eligibility;
-  /** Catalog v2 only; defaults to `card`. */
-  paymentPath?: PaymentPath;
+  /** Catalog v2 and v3; defaults to `card`. `venmo` exists only in v3 (a v2 catalog rejects it). */
+  paymentPath?: PaymentPathV3;
 }
 
 export const UNCERTAINTIES = [
@@ -184,10 +368,31 @@ export const UNCERTAINTIES = [
   'payment-path-uncertain',
 ] as const;
 export type Uncertainty = (typeof UNCERTAINTIES)[number];
+/** Schema 2's uncertainty codes plus the ones the v3 engine (Stage 2 M2) reports. */
+export const UNCERTAINTIES_V3 = [
+  ...UNCERTAINTIES,
+  /** The rule earns only on a chosen option and the shopper has not said which one is chosen. */
+  'choice-unknown',
+  /** The rule earns on an automatically determined top category; it cannot be known in advance. */
+  'automatic-category',
+  /** The rule needs a membership, tier or relationship the shopper has not confirmed. */
+  'condition-unknown',
+  /** The card's program has no value (no override, issuer-stated value or estimate): the estimate
+   * is in units only and its cent amounts are 0. */
+  'value-unknown',
+] as const;
+export type UncertaintyV3 = (typeof UNCERTAINTIES_V3)[number];
 
 /** Why a v2 rule did or did not count for this purchase. */
 export type RuleStatus =
   'applied' | 'may-apply' | 'base' | 'not-at-merchant' | 'not-eligible' | 'expired' | 'cap-reached';
+
+/** Where a v3 card's value per unit comes from, in precedence order: the shopper's override,
+ * the card's issuer-stated value, then the program's valuation. */
+export interface UnitValue {
+  hundredthsOfCent: number;
+  basis: 'override' | 'card-stated' | 'cash' | 'published-estimate' | 'issuer-stated';
+}
 
 export interface CardEstimate {
   cardId: string;
@@ -197,23 +402,38 @@ export interface CardEstimate {
   bonusRateBps: number | null;
   minBonusSpendCents: number;
   maxBonusSpendCents: number;
-  uncertainties: Uncertainty[];
+  /** v1 and v2 report only `UNCERTAINTIES`; v3 may add the `UNCERTAINTIES_V3` codes. */
+  uncertainties: UncertaintyV3[];
   sourceIds: string[];
   /** Catalog v2 only: the rule this estimate is about. That is the bonus rule with the highest
    * possible reward here (it sets `maxRewardCents`, `bonusRateBps` and the bonus spend), or the
-   * base rule when no bonus can add anything. */
+   * base rule when no bonus can add anything. Catalog v3 as well, except a closed-loop card with
+   * no base and no rule that can add anything, where it is absent. */
   appliedRuleId?: string;
   /** Catalog v2 only: the part of `appliedRuleId`'s rate earned when the balance is paid
    * (Citi Double Cash: 100 of 200). */
   paidOnPaymentBps?: number;
-  rules?: { ruleId: string; status: RuleStatus }[];
+  /** v2 reports only `RuleStatus`; v3 may add the `RULE_STATUSES_V3` codes. */
+  rules?: { ruleId: string; status: RuleStatusV3 }[];
+  /** Catalog v3 only: the card's reward program. */
+  programId?: string;
+  /** Catalog v3 only: reward units (points, miles, or cents for cash back), floored. */
+  minRewardUnits?: number;
+  maxRewardUnits?: number;
+  /** Catalog v3 only: the value used for the cent amounts; null when the program has none, in
+   * which case the cent amounts are 0 and `value-unknown` is reported when units are earned. */
+  unitValue?: UnitValue | null;
 }
 
 export interface Comparison {
   status: 'ready';
   catalogVersion: string;
-  /** Ordered by conservative estimate; the default card breaks exact ties. */
+  /** Ordered by conservative estimate; the default card breaks exact ties. Catalog v3: cards with
+   * a value first, then unvalued cards by units (see `compareV3`). */
   estimates: CardEstimate[];
+  /** Catalog v3 only: owned closed-loop cards not accepted at this merchant, left out of the
+   * ranking; every rule has status `not-accepted` and the amounts are 0. */
+  notAccepted?: CardEstimate[];
   preferredCardId: string;
   /** True when missing information could produce a different best card. */
   rankingMayChange: boolean;
@@ -229,5 +449,7 @@ export interface UnavailableComparison {
     | 'no-owned-cards'
     | 'unknown-owned-card'
     | 'purchase-not-confirmed'
-    | 'ineligible-purchase';
+    | 'ineligible-purchase'
+    /** Catalog v3 only: every owned card is a closed-loop card not accepted at this merchant. */
+    | 'no-accepted-card';
 }

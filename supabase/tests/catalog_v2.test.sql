@@ -49,7 +49,7 @@ select ok(pg_temp.valid(pg_temp.v2()),'synthetic v2 catalog passes the union val
 select ok(catalog_private.valid_catalog_v2(pg_temp.v2()),'synthetic v2 catalog passes the v2 validator');
 select ok(not catalog_private.valid_catalog_v1(pg_temp.v2()),'the v1 validator rejects a v2 catalog');
 select ok(coalesce((select pg_temp.valid(catalog) from catalog_private.drafts
-  where id='00000000-0000-4000-8000-000000000001'),false),'seeded real 7-card catalog passes');
+  where id='00000000-0000-4000-8000-000000000001'),false),'seeded catalog (v3 since Stage 2 M5) passes the union validator');
 select ok(pg_temp.valid(jsonb_build_object(
     'schemaVersion',1,'version','v1.1','verifiedAt','2026-09-25T00:00:00Z','expiresAt','2026-10-25T00:00:00Z',
     'merchantIds','["best-buy-us"]'::jsonb,
@@ -96,11 +96,12 @@ select set_config('test.terms',public.capture_catalog_source('test-terms','Synth
   (now() at time zone 'UTC')::date,'Synthetic v2 terms for tests only.')->>'id',true);
 select set_config('test.mcc',public.capture_catalog_source('test-mcc','Synthetic MCC lookup','https://mcc.example/best-buy',
   (now() at time zone 'UTC')::date,'Synthetic MCC lookup for tests only.')->>'id',true);
--- Long issuer terms (the Citi terms PDF is about 75,000 characters) fit; the limit is 120,000.
+-- Long issuer terms (the Citi terms PDF is about 75,000 characters) fit; the limit is 250,000 since
+-- 20261002222425_catalog_v3 (catalog_v3.test.sql checks the new boundary).
 select lives_ok($q$select public.capture_catalog_source('test-long','Long terms','https://issuer.example/long',
   (now() at time zone 'UTC')::date,repeat('x',100000))$q$,'a 100,000-character capture fits');
 select throws_ok($q$select public.capture_catalog_source('test-long2','Long terms 2','https://issuer.example/long2',
-  (now() at time zone 'UTC')::date,repeat('x',120001))$q$,'23514',null,'captures over 120,000 characters fail');
+  (now() at time zone 'UTC')::date,repeat('x',250001))$q$,'23514',null,'captures over 250,000 characters fail');
 select set_config('test.draft',public.save_catalog_draft(null,null,pg_temp.v2(),
   array[current_setting('test.terms')::uuid],(select release_sequence from public.catalog_head))::text,true);
 select throws_ok($q$select public.publish_catalog((current_setting('test.draft')::jsonb->>'id')::uuid,1,

@@ -40,4 +40,4 @@ Evan wanted a better-looking UI for the popup, badge, review app and site, and s
 - Light theme only, as before.
 
 ## Status
-Accepted 2026-10-02 by Evan Liu. Supersedes the look of [2026-09-28-helios-design-system](2026-09-28-helios-design-system.md); its component approach stands.
+Accepted 2026-10-02 by Evan Liu. Supersedes the look of [2026-09-28-helios-design-system](2026-09-28-helios-design-system.md); its component approach stands. Merged with `main` at `f383964` on 2026-10-03 (catalog v3 UI from Stage 2 M7, [Tailwind 4](2026-10-03-tailwind-4.md)): main's behaviour and copy kept, the look extended to the v3 rows, combobox, wallet sections and badge states; a winner block in units or a range uses the smaller size, and "$X less" is never shown for a program with no value ([extension](../system/extension.md#popup-and-onboarding)).

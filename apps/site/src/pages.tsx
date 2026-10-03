@@ -3,17 +3,33 @@ import { AlertInline, Badge, Card, Link, Table, type TableColumn } from '@ai-che
 import { Layout, PageIntro, REPO, type PageId } from './Layout';
 import { ResultsChart, rowLabel } from './Chart';
 import { SystemsDiagram } from './Diagram';
-import { percent, resultRows, resultsFile, seconds, type ResultRow } from './results';
+import {
+  expansionFile,
+  expansionRows,
+  percent,
+  resultRows,
+  resultsFile,
+  seconds,
+  sevenCardHeldoutRow,
+  type ExpansionRow,
+  type ResultRow,
+} from './results';
 
-const CARDS = [
-  'Citi Double Cash',
-  'Wells Fargo Active Cash',
-  'Capital One Quicksilver',
-  'Capital One Savor',
-  'Chase Freedom Unlimited',
-  'American Express Blue Cash Everyday',
-  'American Express Blue Cash Preferred',
+/** Cards per issuer in the bundled catalog v3 (2026-10-02.expansion.1); tests/pages.test.tsx checks it. */
+export const ISSUERS: [string, number][] = [
+  ['American Express', 13],
+  ['Bank of America', 19],
+  ['Barclays', 26],
+  ['Capital One', 22],
+  ['Chase', 29],
+  ['Citi', 17],
+  ['Discover', 6],
+  ['Synchrony', 23],
+  ['U.S. Bank', 16],
+  ['Wells Fargo', 7],
 ];
+export const CARD_COUNT = ISSUERS.reduce((total, [, count]) => total + count, 0);
+const EXPANSION_MD = `${REPO}/blob/main/docs/evals/expansion.md`;
 const MERCHANTS = ['Amazon US', 'Best Buy US', 'Newegg US'];
 const RESULTS_MD = `${REPO}/blob/main/docs/evals/results.md`;
 
@@ -28,6 +44,9 @@ function Section({ id, title, children }: { id: string; title: string; children:
   );
 }
 
+// TODO(after the Ocean theme): these captures show the pre-M7 UI (the wallet capture still shows
+// the seven-card setup of catalog v2). Deferred on 2026-10-03 until the Ocean theme lands, so the
+// site and Web Store media are regenerated once, in the final look.
 const SCREENSHOTS = [
   {
     src: '/media/2-comparison.png',
@@ -55,15 +74,15 @@ function Home(): Rendered {
   return {
     title: 'AI Checkout: the best card you already own, at checkout',
     description:
-      'A Chrome extension that compares the cash-back cards you already have at an online checkout, with rules reviewed by a human from the issuers’ own terms.',
+      'A Chrome extension that compares the credit cards you already have at an online checkout, with rules taken from the issuers’ own terms and each published release approved by a person.',
     body: (
       <>
         <div className="hero">
           <PageIntro eyebrow="Chrome extension" title="Which card you already own earns the most here?">
             <p>
-              On your cart, AI Checkout shows which of the cash-back cards in your wallet earns the most, with
-              the reward, the issuer rule behind it and its conditions. The math runs on your device; no model
-              and no account are involved at checkout.
+              On your cart, AI Checkout shows which of the cards in your wallet earns the most, with the
+              reward, the issuer rule behind it and its conditions. The math runs on your device; no model and
+              no account are involved at checkout.
             </p>
           </PageIntro>
           <Card hasBorder className="install">
@@ -87,8 +106,7 @@ function Home(): Rendered {
               <h3>A badge on your cart</h3>
               <p>
                 Choose the cards you have once. On a supported cart a small badge shows your best card and its
-                cash back (“Use Blue Cash Everyday · $3.00 back”), ranked by what the purchase is sure to
-                earn.
+                reward (“Use Blue Cash Everyday · $3.00 back”), ranked by what the purchase is sure to earn.
               </p>
             </Card>
             <Card as="li" hasBorder className="feature">
@@ -103,7 +121,7 @@ function Home(): Rendered {
               <h3>Shows its reasons, counts your savings</h3>
               <p>
                 Open the badge for every card’s estimate with the issuer’s rule and conditions. After an
-                order, one tap adds the extra cash back to your all-time total, kept on your device.
+                order, one tap adds the extra rewards to your all-time total, kept on your device.
               </p>
             </Card>
           </ul>
@@ -112,17 +130,21 @@ function Home(): Rendered {
         <Section id="how" title="How it decides">
           <ol className="steps">
             <li>
-              <strong>Rules from issuer terms, reviewed by a person.</strong> Each card’s earning rules
-              (category, rate, spending cap, activation, U.S.-only) come from a catalog built from the
-              issuers’ published terms. A language model drafts changes with quotes, automated checks verify
-              every quote, and a person approves each release.{' '}
+              <strong>Rules from issuer terms, approved by a person.</strong> Each card’s earning rules
+              (category, rate, spending cap, activation, U.S.-only, named merchants) come from a catalog built
+              from the issuers’ published terms. A language model drafts changes with quotes, automated checks
+              verify every quote, and a person approves each published release. The 178-card catalog bundled
+              today was checked against the captured terms by verifier agents; a person reviews it before it
+              is published as the next release.{' '}
               <Link href="/architecture/">How the catalog is maintained</Link>
             </li>
             <li>
               <strong>Deterministic math at checkout.</strong> A small engine works in whole cents and basis
               points. It applies only the rules that can apply to this merchant and payment method, honors
               spending caps and the rate after a cap, and counts a reward paid when you pay your bill (Citi’s
-              second 1%) with a note saying so.
+              second 1%) with a note saying so. Points and miles are compared in cash terms using a published
+              estimate of their value, or the issuer’s stated value; an estimate is an opinion, not an issuer
+              fact, and a program with no estimate is compared in points.
             </li>
             <li>
               <strong>Unknowns stay visible.</strong> If it doesn’t know how much of a cap you’ve used,
@@ -152,9 +174,15 @@ function Home(): Rendered {
           <div className="two-up">
             <div>
               <h3>Cards</h3>
+              <p>
+                {CARD_COUNT} personal credit cards, cash back and points, from the ten largest U.S. card
+                issuers:
+              </p>
               <ul className="plain-list">
-                {CARDS.map((card) => (
-                  <li key={card}>{card}</li>
+                {ISSUERS.map(([issuer, count]) => (
+                  <li key={issuer}>
+                    {issuer} ({count})
+                  </li>
                 ))}
               </ul>
             </div>
@@ -174,8 +202,9 @@ function Home(): Rendered {
 
         <Section id="measured" title="How well the model reads terms">
           <p>
-            The catalog pipeline was measured on real issuer terms for the seven cards, across six models and
-            three prompts. <Link href="/results/">See the results, including what they don’t show</Link>
+            The catalog pipeline was first measured on real issuer terms for seven cards, across six models
+            and three prompts, then on {expansionFile.corpus.cases} cards of the expansion, where it scores
+            lower. <Link href="/results/">See the results, including what they don’t show</Link>
           </p>
         </Section>
       </>
@@ -243,16 +272,54 @@ const columns = (split: 'dev' | 'heldout'): TableColumn<ResultRow>[] => [
       ]),
 ];
 
+const expansionColumns: TableColumn<ExpansionRow>[] = [
+  {
+    key: 'model',
+    label: 'Model',
+    isRowHeader: true,
+    render: (row) => (
+      <>
+        <span className="config__model">{row.model}</span>
+        <span className="config__meta">
+          {row.id === 'cross-model'
+            ? 'Neither drafted nor verified the labels'
+            : 'Upper bound: labels seeded from it'}
+        </span>
+      </>
+    ),
+  },
+  { key: 'cards', label: 'Cards', align: 'right', render: (row) => row.cards },
+  {
+    key: 'field',
+    label: 'Field acc. (e2e)',
+    align: 'right',
+    render: (row) => <strong>{percent(row.fieldAccuracy)}</strong>,
+  },
+  {
+    key: 'matched',
+    label: 'Field acc. (matched)',
+    align: 'right',
+    render: (row) => percent(row.matchedFieldAccuracy),
+  },
+  { key: 'recall', label: 'Rule recall', align: 'right', render: (row) => percent(row.ruleRecall) },
+  { key: 'issues', label: 'Issue recall', align: 'right', render: (row) => percent(row.issueRecall) },
+  { key: 'clean', label: 'False-clean', align: 'right', render: (row) => row.falseClean },
+  { key: 'latency', label: 'p50', align: 'right', render: (row) => seconds(row.p50Ms) },
+];
+
 function Results(): Rendered {
   const rows = resultRows();
   const dev = rows.filter((row) => row.split === 'dev');
   const heldout = rows.filter((row) => row.split === 'heldout');
   const added = rows.filter((row) => row.addedAfter);
   const measured = resultsFile.generatedAt.slice(0, 10);
+  const expanded = expansionRows();
+  const [cross] = expanded;
+  const sevenCard = sevenCardHeldoutRow();
   return {
     title: 'Results: how well models read card terms · AI Checkout',
     description:
-      'Extraction results on real issuer terms for seven cards: six models, three prompts, dev and held-out splits, with limitations.',
+      'Extraction results on real issuer terms: seven cards across six models and three prompts, then 173 expansion cards, with limitations.',
     body: (
       <>
         <PageIntro eyebrow="Evaluation" title="How well models read card terms">
@@ -361,14 +428,61 @@ function Results(): Rendered {
           </ul>
         </Section>
 
+        <Section id="expansion" title={`Expansion: ${expansionFile.corpus.cases} cards`}>
+          <p>
+            The catalog then grew to the main personal cards of the ten largest U.S. issuers. The same harness
+            and prompt, never tuned on these pages, read the terms of {expansionFile.corpus.cases} cards whose
+            labels were drafted from gpt-5.6-luna extractions and then checked and corrected by Claude
+            verifier agents (agent-verified, one repeat). Data:{' '}
+            <Link href="/results/expansion.json">expansion.json</Link>.
+          </p>
+          <Table
+            caption="Expansion results: cross-model run and luna upper bound"
+            isCaptionHidden
+            columns={expansionColumns}
+            rows={expanded}
+            rowKey={(row) => row.id}
+            density="short"
+            className="results-table"
+          />
+          <ul className="prose-list">
+            <li>
+              The less biased number is {cross?.model} at {percent(cross?.fieldAccuracy ?? null)} end to end
+              {sevenCard
+                ? `, against ${percent(sevenCard.fieldAccuracy)} for the same model, effort, prompt and source selection on the seven-card held-out split (three cards, two repeats)`
+                : ''}
+              . The two are not directly comparable: the expansion has points cards and merchant-specific
+              rules, its labels were made differently, and output tokens were counted differently.
+            </li>
+            <li>
+              On the rules each model did find, field accuracy is about 94% for both. Most of the end-to-end
+              drop is rules the model missed, mainly merchant- and partner-specific ones, and {cross?.model}{' '}
+              reported only {percent(cross?.issueRecall ?? null)} of the labelled issues.
+            </li>
+            <li>
+              The luna row is an upper bound, not an accuracy measure: wherever a verifier kept a luna value,
+              it scores as correct. Labels seeded from luna drafts can also favour luna-style readings in the
+              cross-model row.
+            </li>
+          </ul>
+          <p>
+            <Link href={EXPANSION_MD} variant="standalone" icon="arrow-right" isExternal>
+              Expansion write-up with pipeline metrics and per-issuer results (expansion.md on GitHub)
+            </Link>
+          </p>
+        </Section>
+
         <Section id="limitations" title="Limitations">
           <ul className="prose-list">
-            <li>Seven cards, at most two per issuer, and 37 cases.</li>
+            <li>
+              Seven cards, at most two per issuer, and 37 cases in the main comparison; the expansion run is
+              one live run of one model, one repeat.
+            </li>
             <li>
               Injection and conflict variants are synthetic edits of real pages, so they measure resistance to
               planted text, not to real adversarial pages.
             </li>
-            <li>Labels are agent-verified; a human verification pass is still to come.</li>
+            <li>Labels are agent-verified on both corpora; a human verification pass is still to come.</li>
             <li>
               Models ran through their vendors’ agent CLIs on subscriptions, not raw APIs, which adds harness
               tokens and latency. Subscription models are not pinned snapshots.
@@ -690,8 +804,10 @@ function Support(): Rendered {
         <Section id="start" title="Getting started">
           <ol className="prose-list">
             <li>
-              After installing, a setup tab opens. Pick the cash-back cards you have and your default card,
-              then save. No card number, login or passphrase is needed.
+              After installing, a setup tab opens. Search for each card you have by name or issuer, pick your
+              default card, then save. For some cards it also asks which bonus categories you chose, a
+              membership the bonus depends on, or what a point is worth to you; “Not sure” shows a range. No
+              card number, login or passphrase is needed.
             </li>
             <li>
               Open your cart on Amazon US, Best Buy US or Newegg US. The badge in the corner shows your best
@@ -699,7 +815,7 @@ function Support(): Rendered {
             </li>
             <li>
               After you order, the badge may ask once which card you paid with; your answer adds to your
-              all-time extra cash back in the toolbar popup.
+              all-time extra rewards in the toolbar popup.
             </li>
             <li>
               For any other purchase, open the toolbar popup, pick the merchant, type the amount and choose{' '}
@@ -723,7 +839,8 @@ function Support(): Rendered {
         <Section id="limits" title="Known limitations">
           <ul className="prose-list">
             <li>
-              Seven cards and three U.S. checkouts. Other cards, benefits and countries are out of scope.
+              {CARD_COUNT} cards from ten U.S. issuers and three U.S. checkouts. Other cards, benefits and
+              countries are out of scope.
             </li>
             <li>
               Estimates follow the issuers’ terms; how a purchase actually posts (its merchant category,

@@ -1,6 +1,79 @@
-/* Popup layout. Components and tokens come from @ai-checkout/ui/styles.css (Ocean theme). */
-@tailwind components;
-@tailwind utilities;
+/* Popup layout. Components and tokens come from @ai-checkout/ui/styles.css (Helios specs, Ocean
+ * theme values from packages/ui/src/theme.css). */
+/* Tailwind 4, layout utilities only. Its design scales are replaced (not extended) by the theme's
+ * tokens, so any color, type, radius or shadow utility resolves to a --token-* or --ac-* variable. No
+ * preflight: components bring their own resets. Utilities stay unlayered, as in Tailwind 3. */
+@import 'tailwindcss/theme.css' layer(theme);
+@tailwind utilities source(none);
+@source '../**/*.{ts,tsx,html}';
+
+@theme inline {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-page: var(--token-color-page-faint);
+  --color-surface: var(--token-color-surface-primary);
+  --color-surface-faint: var(--token-color-surface-faint);
+  --color-surface-strong: var(--token-color-surface-strong);
+  --color-strong: var(--token-color-foreground-strong);
+  --color-primary: var(--token-color-foreground-primary);
+  --color-faint: var(--token-color-foreground-faint);
+  --color-action: var(--token-color-foreground-action);
+  --color-critical: var(--token-color-foreground-critical-on-surface);
+  --color-success: var(--token-color-foreground-success-on-surface);
+  --color-border: var(--token-color-border-primary);
+  --color-border-faint: var(--token-color-border-faint);
+  /* Ocean brand colours; sky and the on-navy colours are for use on navy only. */
+  --color-navy: var(--ac-color-navy);
+  --color-navy-strong: var(--ac-color-navy-strong);
+  --color-navy-line: var(--ac-color-navy-line);
+  --color-sky: var(--ac-color-sky);
+  --color-on-navy: var(--ac-color-on-navy);
+  --color-on-navy-soft: var(--ac-color-on-navy-soft);
+
+  --font-*: initial;
+  --font-sans: var(--token-typography-font-stack-text);
+  --font-mono: var(--token-typography-font-stack-code);
+  --font-display: var(--ac-font-display);
+  --font-weight-normal: var(--token-typography-font-weight-regular);
+  --font-weight-medium: var(--token-typography-font-weight-medium);
+  --font-weight-semibold: var(--token-typography-font-weight-semibold);
+  --font-weight-bold: var(--token-typography-font-weight-bold);
+
+  --text-*: initial;
+  --text-xs: var(--token-typography-body-100-font-size);
+  --text-xs--line-height: var(--token-typography-body-100-line-height);
+  --text-sm: var(--token-typography-body-200-font-size);
+  --text-sm--line-height: var(--token-typography-body-200-line-height);
+  --text-base: var(--token-typography-body-300-font-size);
+  --text-base--line-height: var(--token-typography-body-300-line-height);
+  --text-lg: var(--token-typography-display-300-font-size);
+  --text-lg--line-height: var(--token-typography-display-300-line-height);
+  --text-xl: var(--token-typography-display-400-font-size);
+  --text-xl--line-height: var(--token-typography-display-400-line-height);
+
+  --radius-*: initial;
+  --radius: var(--token-border-radius-medium);
+  --radius-none: 0;
+  --radius-sm: var(--token-border-radius-small);
+  --radius-lg: var(--token-border-radius-large);
+  --radius-hero: var(--ac-radius-hero);
+
+  --shadow-*: initial;
+  --shadow-none: none;
+  --shadow-low: var(--token-elevation-low-box-shadow);
+  --shadow-mid: var(--token-elevation-mid-box-shadow);
+}
+
+/* Tailwind 3's space-y: a top margin on each shown child after the first, at class specificity
+ * (Tailwind 4's zero-specificity bottom margins would lose to the margin resets below). */
+@utility space-y-* {
+  & > :not([hidden]) ~ :not([hidden]) {
+    margin-top: --spacing(--value(number));
+    margin-top: --value([length]);
+    margin-bottom: 0;
+  }
+}
 
 body {
   margin: 0;
@@ -67,6 +140,52 @@ body {
   padding: 16px;
 }
 
+.subsection-title {
+  color: var(--token-color-foreground-strong);
+  font-family: var(--ac-font-display);
+  font-size: var(--token-typography-body-200-font-size);
+  font-weight: var(--token-typography-font-weight-bold);
+  line-height: var(--token-typography-body-200-line-height);
+}
+
+/* Owned cards in the wallet editor: name and issuer, with a remove action. */
+.wallet-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--token-color-border-faint);
+  border-radius: var(--token-border-radius-medium);
+}
+.wallet-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+}
+.wallet-list__item + .wallet-list__item {
+  border-top: 1px solid var(--token-color-border-faint);
+}
+/* The card's name above its issuer. */
+.wallet-list__item > div > p:first-child {
+  color: var(--token-color-foreground-strong);
+  font-weight: var(--token-typography-font-weight-semibold);
+}
+
+/* A point value field with its reset action beside it. */
+.value-field {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+.value-field > :first-child {
+  flex: 1;
+}
+
+.estimate-value .ac-badge {
+  margin-right: 4px;
+}
+
 .supporting {
   color: var(--token-color-foreground-faint);
   font-size: var(--token-typography-body-100-font-size);
@@ -80,6 +199,19 @@ body {
   font-weight: var(--token-typography-font-weight-bold);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+/* Card name and amount on one baseline; a wide amount (a range in units, or a difference beside
+ * it) moves under the name, right-aligned, instead of overflowing at 360 px. */
+.estimate-head {
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+.estimate-head > h3 {
+  flex: 1 1 8rem;
+}
+.estimate-head > .estimate-amount {
+  margin-left: auto;
 }
 
 .estimate-delta {

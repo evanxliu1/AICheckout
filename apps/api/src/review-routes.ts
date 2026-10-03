@@ -1,4 +1,4 @@
-import type { FastifyInstance, FastifyRequest } from 'fastify';
+import type { FastifyInstance, FastifyReply, FastifyRequest, RequestPayload } from 'fastify';
 import rateLimit from '@fastify/rate-limit';
 import { z } from 'zod';
 import { publishedReleaseSchema } from '@ai-checkout/rewards-core';
@@ -11,10 +11,14 @@ import {
   draftSchema,
   draftIdSchema,
   reviewQueueSchema,
-  reviewDetailSchema,
+  reviewSummarySchema,
   startExtractionInputSchema,
+  MAX_CAPTURE_REQUEST_BYTES,
+  MAX_DRAFT_REQUEST_BYTES,
+  MAX_CAPTURES_PER_MINUTE,
 } from '@ai-checkout/catalog-review';
 import { ReviewError, type ReviewRpc } from './review-repository.ts';
+import type { VerifyToken } from './review-auth.ts';
 import { curationRunSchema, LedgerError } from './curation/ledger.ts';
 import { startReviewedExtraction, type CurationExecution } from './curation/service.ts';
 import { applyExtractionInputSchema, extractionListSchema } from '@ai-checkout/catalog-review/curation';
@@ -44,12 +48,14 @@ export async function reviewRoutes(
   app: FastifyInstance,
   {
     rpc,
+    verifyToken,
     limit = 60,
     curation,
     shutdownSignal,
     curationLimit = 3,
   }: {
     rpc: ReviewRpc;
+    verifyToken: VerifyToken;
     limit?: number;
     curation?: CurationExecution;
     shutdownSignal?: AbortSignal;
@@ -63,6 +69,24 @@ export async function reviewRoutes(
     reply.header('Cache-Control', 'no-store').header('X-Content-Type-Options', 'nosniff');
     bearer(request);
   });
+  // Routes that accept large bodies verify the token before the body is read, so a caller without a
+  // valid session cannot push a ~1.5 MB capture or ~1.1 MB draft through to the database. It is a
+  // preParsing hook, not onRequest: @fastify/rate-limit adds its onRequest hook after a route's own,
+  // and the check may call Supabase Auth, so it must run after the rate limit.
+  const verified = async (request: FastifyRequest) => {
+    let valid: boolean;
+    try {
+      valid = await verifyToken(bearer(request));
+    } catch (error) {
+      if (error instanceof ReviewError) throw error;
+      throw new ReviewError(503, 'review_unavailable');
+    }
+    if (!valid) throw new ReviewError(401, 'sign_in_required');
+  };
+  const signedIn = async (request: FastifyRequest, _reply: FastifyReply, payload: RequestPayload) => {
+    await verified(request);
+    return payload;
+  };
   app.setErrorHandler((error, _request, reply) => {
     if (error instanceof ReviewError) return reply.code(error.status).send({ error: error.code });
     if (error instanceof LedgerError) {
@@ -88,11 +112,28 @@ export async function reviewRoutes(
     input(z.strictObject({}), request.query);
     return reviewQueueSchema.parse(await rpc('get_catalog_review', bearer(request), { p_draft_id: null }));
   });
+  // Source metadata only: a v3 draft's captures can total far more than the response cap. The
+  // review app reads one capture's text at a time from the route below.
   app.get('/drafts/:id', async (request) => {
     input(z.strictObject({}), request.query);
-    return reviewDetailSchema.parse(
-      await rpc('get_catalog_review', bearer(request), { p_draft_id: id(request) }),
+    const draftId = id(request);
+    const summary = reviewSummarySchema.parse(
+      await rpc('get_catalog_review_summary', bearer(request), { p_draft_id: draftId }),
     );
+    if (summary.draft.id !== draftId) throw new ReviewError(503, 'review_unavailable');
+    return summary;
+  });
+  app.get('/drafts/:id/sources/:sourceId', async (request) => {
+    input(z.strictObject({}), request.query);
+    const params = input(z.strictObject({ id: draftIdSchema, sourceId: draftIdSchema }), request.params);
+    const source = sourceDocumentSchema.parse(
+      await rpc('get_catalog_review_source', bearer(request), {
+        p_draft_id: params.id,
+        p_source_document_id: params.sourceId,
+      }),
+    );
+    if (source.id !== params.sourceId) throw new ReviewError(503, 'review_unavailable');
+    return source;
   });
   app.get('/runs/:id', async (request) => {
     input(z.strictObject({}), request.query);
@@ -111,17 +152,21 @@ export async function reviewRoutes(
     const params = input(z.strictObject({ id: draftIdSchema, runId: draftIdSchema }), request.params);
     return (await readExtractionReview(rpc, bearer(request), params.id, params.runId)).review;
   });
-  app.post('/drafts/:id/extractions/:runId/apply', { bodyLimit: 196608 }, async (request) => {
-    input(z.strictObject({}), request.query);
-    const params = input(z.strictObject({ id: draftIdSchema, runId: draftIdSchema }), request.params);
-    return applyReviewedExtraction(
-      rpc,
-      bearer(request),
-      params.id,
-      params.runId,
-      input(applyExtractionInputSchema, request.body),
-    );
-  });
+  app.post(
+    '/drafts/:id/extractions/:runId/apply',
+    { bodyLimit: 196608, preParsing: signedIn },
+    async (request) => {
+      input(z.strictObject({}), request.query);
+      const params = input(z.strictObject({ id: draftIdSchema, runId: draftIdSchema }), request.params);
+      return applyReviewedExtraction(
+        rpc,
+        bearer(request),
+        params.id,
+        params.runId,
+        input(applyExtractionInputSchema, request.body),
+      );
+    },
+  );
   app.post(
     '/drafts/:id/extractions',
     { bodyLimit: 4096, config: { rateLimit: { max: curationLimit, timeWindow: 60000 } } },
@@ -160,19 +205,31 @@ export async function reviewRoutes(
       }
     },
   );
-  app.post('/sources', { bodyLimit: 524288 }, async (request) => {
-    const value = input(captureSourceInputSchema, request.body);
-    return sourceDocumentSchema.parse(
-      await rpc('capture_catalog_source', bearer(request), {
-        p_source_key: value.sourceKey,
-        p_title: value.title,
-        p_url: value.url,
-        p_checked_on: value.checkedOn,
-        p_body: value.body,
-      }),
-    );
-  });
-  app.post('/drafts', { bodyLimit: 270336 }, async (request) => {
+  // A draft cites up to 600 sources and the review app captures them one request each, so this route
+  // has its own, higher limit (the app waits and retries on 429); every other review route keeps the
+  // shared limit. It stays well below 600/min because each request may carry ~1.5 MB; the token is
+  // checked after the rate limit and before the body is read.
+  app.post(
+    '/sources',
+    {
+      bodyLimit: MAX_CAPTURE_REQUEST_BYTES,
+      preParsing: signedIn,
+      config: { rateLimit: { max: MAX_CAPTURES_PER_MINUTE, timeWindow: 60000 } },
+    },
+    async (request) => {
+      const value = input(captureSourceInputSchema, request.body);
+      return sourceDocumentSchema.parse(
+        await rpc('capture_catalog_source', bearer(request), {
+          p_source_key: value.sourceKey,
+          p_title: value.title,
+          p_url: value.url,
+          p_checked_on: value.checkedOn,
+          p_body: value.body,
+        }),
+      );
+    },
+  );
+  app.post('/drafts', { bodyLimit: MAX_DRAFT_REQUEST_BYTES, preParsing: signedIn }, async (request) => {
     const value = input(createDraftInputSchema, request.body);
     return draftSchema.parse(
       await rpc('save_catalog_draft', bearer(request), {
@@ -184,7 +241,7 @@ export async function reviewRoutes(
       }),
     );
   });
-  app.put('/drafts/:id', { bodyLimit: 270336 }, async (request) => {
+  app.put('/drafts/:id', { bodyLimit: MAX_DRAFT_REQUEST_BYTES, preParsing: signedIn }, async (request) => {
     const draftId = id(request),
       value = input(updateDraftInputSchema, request.body);
     return draftSchema.parse(

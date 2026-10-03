@@ -9,6 +9,7 @@ import {
   Button,
   Card,
   Checkbox,
+  Combobox,
   Disclosure,
   Field,
   Fieldset,
@@ -21,6 +22,8 @@ import {
   Tabs,
   TextInput,
   Toggle,
+  matchesSearch,
+  normalizeSearch,
 } from '../src';
 
 afterEach(cleanup);
@@ -643,5 +646,130 @@ describe('review fixes', () => {
     rerender(view());
     expect(sortValue.mock.calls.length).toBe(calls);
     expect(screen.getAllByRole('cell').map((cell) => cell.textContent)).toEqual(['1', '2']);
+  });
+});
+
+describe('Combobox', () => {
+  const OPTIONS = [
+    { id: 'dc', label: 'Citi Double Cash', group: 'Citi' },
+    { id: 'cc', label: 'Citi Custom Cash', group: 'Citi' },
+    { id: 'bce', label: 'Blue Cash Everyday', group: 'American Express', keywords: 'BCE' },
+    { id: 'cabelas', label: 'Cabela’s CLUB', group: 'Capital One' },
+  ];
+  function Picker({ onSelect }: { onSelect: (id: string) => void }) {
+    return (
+      <Field label="Add a card" helperText="Type part of a name.">
+        {(control) => (
+          <Combobox
+            {...control}
+            listLabel="Matching cards"
+            emptyText="No cards match"
+            options={OPTIONS}
+            onSelect={onSelect}
+          />
+        )}
+      </Field>
+    );
+  }
+
+  it('matches every typed word anywhere in the name, group or keywords', () => {
+    expect(matchesSearch(OPTIONS[0], 'double')).toBe(true);
+    expect(matchesSearch(OPTIONS[0], 'citi cash')).toBe(true);
+    expect(matchesSearch(OPTIONS[0], 'custom')).toBe(false);
+    expect(matchesSearch(OPTIONS[2], 'american bce')).toBe(true);
+    expect(matchesSearch(OPTIONS[3], 'cabelas')).toBe(true);
+    expect(matchesSearch(OPTIONS[3], 'CABELA’S club')).toBe(true);
+    expect(normalizeSearch('Barnes & Noble')).toBe('barnes and noble');
+  });
+
+  it('filters as you type, groups matches, and picks with the keyboard', async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    render(<Picker onSelect={onSelect} />);
+    const input = screen.getByRole('combobox', { name: 'Add a card' });
+    expect(input.getAttribute('aria-expanded')).toBe('false');
+    expect(input.getAttribute('aria-describedby')).toContain('helper');
+    await user.type(input, 'cash');
+    expect(input.getAttribute('aria-expanded')).toBe('true');
+    const list = screen.getByRole('listbox', { name: 'Matching cards' });
+    expect(screen.getAllByRole('option').map((o) => o.textContent)).toEqual([
+      'Citi Double Cash',
+      'Citi Custom Cash',
+      'Blue Cash Everyday',
+    ]);
+    expect(screen.getAllByRole('group').map((g) => g.getAttribute('aria-labelledby'))).toHaveLength(2);
+    expect(screen.getByRole('group', { name: 'American Express' })).toBeTruthy();
+    expect(screen.getByRole('status').textContent).toBe('3 matches');
+    await user.keyboard('{ArrowDown}{ArrowDown}');
+    const active = screen.getByRole('option', { name: 'Citi Custom Cash' });
+    expect(input.getAttribute('aria-activedescendant')).toBe(active.id);
+    expect(active.getAttribute('aria-selected')).toBe('true');
+    expect(list.contains(active)).toBe(true);
+    await user.keyboard('{ArrowUp}{ArrowUp}');
+    expect(input.getAttribute('aria-activedescendant')).toBe(
+      screen.getByRole('option', { name: 'Blue Cash Everyday' }).id,
+    );
+    await user.keyboard('{Enter}');
+    expect(onSelect).toHaveBeenCalledWith('bce');
+    expect((input as HTMLInputElement).value).toBe('');
+    expect(input.getAttribute('aria-expanded')).toBe('false');
+  });
+
+  it('moves through interleaved groups in the order they are shown', async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    render(
+      <Field label="Add a card">
+        {(control) => (
+          <Combobox
+            {...control}
+            listLabel="Matching cards"
+            options={[OPTIONS[0], OPTIONS[2], OPTIONS[1]]}
+            onSelect={onSelect}
+          />
+        )}
+      </Field>,
+    );
+    const input = screen.getByRole('combobox', { name: 'Add a card' });
+    await user.type(input, 'cash');
+    const shown = screen.getAllByRole('option');
+    expect(shown.map((o) => o.textContent)).toEqual([
+      'Citi Double Cash',
+      'Citi Custom Cash',
+      'Blue Cash Everyday',
+    ]);
+    await user.keyboard('{ArrowDown}{ArrowDown}');
+    expect(input.getAttribute('aria-activedescendant')).toBe(shown[1].id);
+    await user.keyboard('{Enter}');
+    expect(onSelect).toHaveBeenCalledWith('cc');
+  });
+
+  it('says when nothing matches, closes on Escape, and picks by click', async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    render(
+      <form onSubmit={() => onSelect('submitted')}>
+        <Picker onSelect={onSelect} />
+      </form>,
+    );
+    const input = screen.getByRole('combobox', { name: 'Add a card' });
+    await user.type(input, 'zzz');
+    expect(screen.getByRole('status').textContent).toBe('No cards match');
+    expect(input.getAttribute('aria-expanded')).toBe('false');
+    await user.keyboard('{Enter}');
+    expect(onSelect).not.toHaveBeenCalled();
+    await user.clear(input);
+    await user.type(input, 'double');
+    await user.keyboard('{Escape}');
+    expect(input.getAttribute('aria-expanded')).toBe('false');
+    await user.keyboard('{Escape}');
+    expect((input as HTMLInputElement).value).toBe('');
+    await user.type(input, 'every');
+    await user.click(screen.getByRole('option', { name: 'Blue Cash Everyday' }));
+    expect(onSelect).toHaveBeenCalledWith('bce');
+    // A single match is picked with Enter alone.
+    await user.type(input, 'double');
+    await user.keyboard('{Enter}');
+    expect(onSelect).toHaveBeenLastCalledWith('dc');
   });
 });

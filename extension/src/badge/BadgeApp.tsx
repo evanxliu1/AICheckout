@@ -3,19 +3,21 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AlertInline, Button, Field, Icon, Select, TextInput } from '@ai-checkout/ui';
 import { formatUsd, parseUsd } from '../domain';
-import type { PaymentPath } from '../domain';
+import type { PaymentPathV3 } from '../domain';
 import { EstimateRow } from '../components/ComparisonResult';
-import { amount, rowEmphasis, unavailableCopy } from '../components/estimates';
+import {
+  notAcceptedLines,
+  PAYMENT_LABELS,
+  pillReward,
+  rankingNote,
+  rewardKind,
+  rowEmphasis,
+  unavailableCopy,
+} from '../components/estimates';
 import { merchantName } from '../checkout/merchants';
 import type { BadgeAction, BadgeView } from './contracts';
 import { badgeRequest, postToHost } from './client';
 
-const PAYMENT_LABELS: Record<PaymentPath, string> = {
-  card: 'Card entered at checkout',
-  paypal: 'PayPal or another payment account',
-  'digital-wallet': 'Digital wallet (Apple Pay, Google Pay)',
-  bnpl: 'Buy now, pay later (Affirm, Klarna)',
-};
 const KIND_LABELS = { total: 'order total', 'estimated-total': 'estimated total', subtotal: 'subtotal' };
 
 /** IntersectionObserver v2 (Chrome 74+): reports whether the element is visible and unobscured. */
@@ -155,9 +157,17 @@ export default function BadgeApp() {
   if (view.kind === 'ready') {
     const best = view.result.estimates.find((e) => e.cardId === view.result.preferredCardId)!;
     const name = view.catalog.cards.find((c) => c.id === best.cardId)?.shortName ?? best.cardId;
-    pillAmount = `${amount(best)} back`;
+    pillAmount = pillReward(best, view.catalog);
     pillText = `Use ${name} · ${pillAmount}`;
-    pillLabel = `${pillText} on this cart (AI Checkout). Show details`;
+    const basis = rewardKind(best, view.catalog) === 'points' ? best.unitValue?.basis : undefined;
+    // The pill says "est." for a published estimate; the label spells it out.
+    const valued =
+      basis === 'override'
+        ? ', at your value,'
+        : basis && basis !== 'published-estimate'
+          ? ', at the issuer’s value,'
+          : '';
+    pillLabel = `${pillText.replace(' · est. ', ' · estimated ')}${valued} on this cart (AI Checkout). Show details`;
     pillAction = expand;
   } else if (view.kind === 'locked') {
     pillText = view.order ? 'Unlock to record this order' : 'Unlock to see your best card';
@@ -295,8 +305,8 @@ function PanelBody({
     return (
       <p role="status">
         {view.extraCents !== null && view.baselineCardName
-          ? `About ${formatUsd(Math.abs(view.extraCents))} ${view.extraCents >= 0 ? 'more' : 'less'} cash back than ${view.baselineCardName}, your default card (estimated). See all-time savings in AI Checkout.`
-          : 'Saved to your order history in AI Checkout.'}
+          ? `About ${formatUsd(Math.abs(view.extraCents))} ${view.extraCents >= 0 ? 'more' : 'less'} ${view.rewardTerm === 'cash back' ? 'cash back' : 'in rewards'} than ${view.baselineCardName}, your default card (estimated).${view.valueNote ? ` ${view.valueNote}` : ''} See all-time savings in AI Checkout.`
+          : `Saved to your order history in AI Checkout.${view.valueNote ? ` ${view.valueNote}` : ''}`}
       </p>
     );
   // locked / no-cards / damaged open the popup or setup from the pill; nothing to expand.
@@ -381,22 +391,21 @@ function ReadyBody({
                 value={ready.paymentPath}
                 disabled={busy}
                 onChange={(event) =>
-                  void apply({ type: 'badge:set-payment', paymentPath: event.target.value as PaymentPath })
+                  void apply({ type: 'badge:set-payment', paymentPath: event.target.value as PaymentPathV3 })
                 }
               >
-                {Object.entries(PAYMENT_LABELS).map(([value, label]) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ))}
+                {Object.entries(PAYMENT_LABELS)
+                  .filter(([value]) => value !== 'venmo' || ready.catalog.schemaVersion === 3)
+                  .map(([value, label]) => (
+                    <option key={value} value={value}>
+                      {label}
+                    </option>
+                  ))}
               </Select>
             )}
           </Field>
           {ready.result.rankingMayChange && (
-            <p className="supporting">
-              Ranked by the cash back each card is sure to earn; another card may earn more once its
-              conditions are confirmed.
-            </p>
+            <p className="supporting">{rankingNote(ready.result, ready.catalog)}</p>
           )}
           <ol className="estimate-list badge-ranking" aria-label="Your cards, best first">
             {ready.result.estimates.map((estimate, i) => (
@@ -409,6 +418,11 @@ function ReadyBody({
               />
             ))}
           </ol>
+          {notAcceptedLines(ready.result, ready.catalog).map((line) => (
+            <p key={line} className="supporting">
+              {line}
+            </p>
+          ))}
           <p className="supporting">
             Estimates from the card terms in AI Checkout; statement rewards may differ. Nothing about this
             cart leaves your device.
@@ -436,8 +450,8 @@ function OrderBody({
   return (
     <>
       <p className="supporting">
-        Your answer adds an estimate to your all-time cash back in AI Checkout. Only this page’s address was
-        checked; nothing on it was read.
+        Your answer adds an estimate to your all-time rewards total in AI Checkout. Only this page’s address
+        was checked; nothing on it was read.
       </p>
       {choosing ? (
         <form
