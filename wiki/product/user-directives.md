@@ -6,7 +6,7 @@ status: stable
 tags: [product, directives, memory]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:05:00Z
+  at: 2026-10-03T06:45:00Z
 ---
 
 # User directives
@@ -15,6 +15,8 @@ Standing instructions from the owner, newest first. A directive stays in force u
 
 | Date | Directive | Scope | Source |
 | --- | --- | --- | --- |
+| 2026-10-03 | The coordinator may drive a catalog publish in the hosted review app in the browser after Evan signs in (start the draft, run the capture, review, verify, write the review note). Evan signs in, selects the capture folders and ticks the attestation himself; the attestation is never the agent's. Subagents still never touch hosted services. | Catalog release | [Catalog release runbook](../ops/catalog-release.md#assisted-flow-coordinator-drives-the-browser), chat 2026-10-03 |
+| 2026-10-03 | Keep the Helios-blue cart mark (`#2563eb`) for the toolbar icons and promo tile with the Ocean theme. | Frontend, release | [Decision](../decisions/2026-10-03-keep-helios-blue-cart-mark.md) |
 | 2026-10-02 | Use the Ocean theme (Mint layout: navy hero, pale sky page, sky accent; Bricolage Grotesque and Figtree) on the popup, badge, review app and site. Helios is not fixed; the best-looking UI wins. | Frontend | [Decision](../decisions/2026-10-02-ocean-theme.md), chat 2026-10-02 |
 | 2026-10-02 | Card expansion runs from a natural-language request to the coding agent ("expand to issuer X, these cards") through the whole pipeline up to publish; publishing stays Evan's click. Shape: deterministic CLI in `tools/catalog-pipeline`, `expand-catalog` skill, researcher/verifier/adjudicator subagents; product code never imports `tools/`. A merchant-expansion pipeline follows the same pattern. | Catalog pipeline | [Design draft](../system/card-expansion-pipeline.md), [decision (proposed)](../decisions/2026-10-02-agent-driven-card-pipeline.md) |
 | 2026-10-02 | Finish Phase 7 Stage 2 completely: the expansion corpus becomes a published catalog the extension ranks correctly, docs current, ready for the card-expansion pipeline. Then a card-expansion pipeline (CLI, skill, subagents), then a merchant-expansion pipeline, then the Web Store release and terms-change detection. | Roadmap | [Stage 2 plan](phase-7-stage-2.md), chat 2026-10-02 |

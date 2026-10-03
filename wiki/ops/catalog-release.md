@@ -1,12 +1,12 @@
 ---
 type: Runbook
 title: Catalog release
-description: Publish a bundled catalog as the next hosted release from the review app, first 2026-10-02.expansion.1 (178 cards, 328 sources), then verify /v1/catalog and a hosted extension build.
+description: Publish a bundled catalog as the next hosted release from the review app (release 2, 2026-10-02.expansion.1, 178 cards and 328 sources, published 2026-10-03), optionally with the coordinator driving the browser after Evan signs in, then verify /v1/catalog and the extension's refresh.
 status: stable
 tags: [ops, catalog, release, review]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:00:00Z
+  at: 2026-10-03T06:45:00Z
 stale_after: 2026-11-01T00:00:00Z
 sources:
   - resource: ../../apps/review/src/StartDraft.tsx
@@ -27,7 +27,18 @@ sources:
 
 # Catalog release
 
-How a catalog built in the repository becomes the hosted release that `GET /v1/catalog` serves. Publishing is Evan's action in the hosted review app; no script or agent publishes, signs in or posts captures ([user directives](../product/user-directives.md)). The coordinator checks the deploy before and the result after. The first run of this runbook publishes `2026-10-02.expansion.1`; release 1 (`2026-09-29.real.1`, 7 cards) was published with [`docs/release/publish-runbook.md`](../../docs/release/publish-runbook.md), whose step-by-step screens this runbook follows.
+How a catalog built in the repository becomes the hosted release that `GET /v1/catalog` serves. Publishing is Evan's action in the hosted review app: he signs in, ticks the attestation and publishes; no script or agent signs in, ticks the attestation or publishes on its own ([user directives](../product/user-directives.md)). Since 2026-10-03 the coordinator may drive the rest of the review app in the browser after Evan has signed in ([assisted flow](#assisted-flow-coordinator-drives-the-browser)). The coordinator checks the deploy before and the result after. The first run of this runbook published `2026-10-02.expansion.1` as release 2 on 2026-10-03; release 1 (`2026-09-29.real.1`, 7 cards) was published with [`docs/release/publish-runbook.md`](../../docs/release/publish-runbook.md), whose step-by-step screens this runbook follows.
+
+## Release 2 (published 2026-10-03)
+
+| Item | Value |
+| --- | --- |
+| Release | sequence 2, `2026-10-02.expansion.1`, schema 3, 178 cards, 328 sources, expires 2026-11-01T00:00:00Z |
+| Published | by Evan in the hosted review app at 2026-10-03T06:15:00Z, through the [assisted flow](#assisted-flow-coordinator-drives-the-browser): Evan signed in, selected the three capture folders and ticked the attestation; the coordinator prepared the draft in the browser, wrote the review note and verified |
+| Review note | states the catalog is agent-verified, not human-verified |
+| Draft and served release | canonically identical to `CATALOG_V3` on `main` `577c025` (canonical JSON SHA-256 `147b48c1a18fa2296d06461b0ae0e647d8c0a8e66f9639ab1cfc10613533eb26`); every one of the 328 sources showed "Matching evidence captured"; the served release is schema-valid |
+| Extension refresh | the extension's own `prepareCatalogUpdate` accepts the served release over a cached release 1 and puts it in effect. This closes the Phase 3 M6 live-refresh check, verified through the extension's update logic, not by loading a `build:hosted` extension and choosing **Check for updated terms** |
+| Next deadline | the release expires **2026-11-01T00:00Z**; a fresh catalog (pipeline freshness stage or a manual refresh with new dated captures) must be published before then. Freedom Flex and Discover Q4 rules end 2026-12-31 |
 
 ## Facts (2026-10-02.expansion.1)
 
@@ -52,7 +63,7 @@ How a catalog built in the repository becomes the hosted release that `GET /v1/c
 
 ### Evan, in the hosted review app
 
-All three folders are gitignored copyrighted text; never commit or upload them anywhere else. The session lives in the tab's memory: reloading signs you out (saved revisions and captures are kept).
+Evan can do every step himself, or use the [assisted flow](#assisted-flow-coordinator-drives-the-browser). All three folders are gitignored copyrighted text; never commit or upload them anywhere else. The session lives in the tab's memory: reloading signs you out (saved revisions and captures are kept).
 
 1. **Sign in** at https://ai-checkout-api.onrender.com/review/ with the reviewer account.
 2. **Start a new draft.** Choose **Start a new draft**, select **Bundled catalog 2026-10-02.expansion.1 (schema 3, 178 cards)**. Check the summary: schema 3, 178 cards (328 sources to capture), verified Oct 2, 2026, expires Nov 1, 2026, status **Valid now**. Choose **Create draft**, then **Create the draft** in the dialog. The draft opens with every source missing. Nothing is published.
@@ -71,11 +82,23 @@ All three folders are gitignored copyrighted text; never commit or upload them a
    Labels and overlay are agent-verified, not human-verified; say what you checked in the note. Fix errors under **Correct draft data**; every save is a new revision that needs fresh approval.
 6. **Approve and publish** before 2026-10-28: tick **I checked the full source terms and all proposed rules and conditions.**, write a **Review note** (at least 10 characters, what you checked), choose **Publish reviewed terms**, check version, revision, 178 cards, 328 sources and the expiry (Nov 1, 2026, 12:00 AM UTC) in the dialog, then **Publish release**. Note the release number N (2 if release 1 is the head).
 
+### Assisted flow: coordinator drives the browser
+
+Evan's directive of 2026-10-03, first used for release 2. The coordinating session (never a subagent) works the hosted review app in the browser pane on Evan's request:
+
+1. **Evan** opens the review app and signs in; the agent never types the password.
+2. **Coordinator** starts the draft (step 2) and opens **Capture all missing sources**.
+3. **Evan** selects the three capture folders in the file picker (step 3); the coordinator runs the capture (step 4) and checks every source reads "Matching evidence captured".
+4. **Coordinator** reviews (step 5) and verifies the draft against the catalog on `main` (canonical JSON SHA-256 of the draft equals `CATALOG_V3`'s), then writes the **Review note**, saying the catalog is agent-verified, not human-verified, and what was checked.
+5. **Evan** ticks **I checked the full source terms and all proposed rules and conditions.** himself and publishes (step 6). The attestation is always Evan's.
+
 ### Coordinator, after publishing
 
 1. `curl -s https://ai-checkout-api.onrender.com/v1/catalog | head -c 300` shows `"sequence":N` and `"version":"2026-10-02.expansion.1"`; the full body is about 0.6 MB.
 2. Build a hosted extension: `npm run build:hosted --workspace=ai-checkout-extension`, load `extension/dist`, choose **Check for updated terms** in the popup, and confirm it finishes without an error and that `checkoutCatalogV1` in `chrome.storage.local` (service worker DevTools: `await chrome.storage.local.get('checkoutCatalogV1')`) holds release sequence N, version `2026-10-02.expansion.1`. This closes the open Phase 3 M6 check. The cached release has the bundled catalog's `verifiedAt`, so the cached release is the one in effect (ties go to the cache) and the wallet keeps its inputs.
 3. Update [now](../now.md), [hosting](hosting.md#facts) (published catalog row), the [roadmap](../product/roadmap.md) (Stage 2 done) and [log](../log.md).
+
+For release 2 (2026-10-03), step 2 was done without a loaded `build:hosted` extension: the served body was passed through the extension's own `prepareCatalogUpdate` with release 1 cached, which accepted it and put it in effect ([release 2](#release-2-published-2026-10-03)).
 
 ## If something is blocked
 

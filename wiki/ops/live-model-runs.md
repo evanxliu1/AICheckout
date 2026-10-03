@@ -6,7 +6,7 @@ status: stable
 tags: [ops, evals, llm]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:00:00Z
+  at: 2026-10-03T06:45:00Z
 sources:
   - resource: ../../evals/curation/README.md
     title: Curation evaluations
@@ -68,7 +68,7 @@ Live extraction evals call models only through vendor CLIs signed in to Evan's s
 
 ## Expansion cross-model run
 
-The 173-card expansion corpus is all held-out and its captures live outside the corpus folder (on 2026-10-02 in the `AICheckout-expansion` worktree). Print the command with `node scripts/score-expansion-traces.mjs --print-command`; it is gpt-5.5 `low`, `guided.2`, `keyword-window.1`, visible output tokens, `--corpus evals/curation/expansion --captures $EXPANSION_CAPTURES --split heldout --allow-heldout --concurrency 8`, about 10–20 minutes. Afterwards: `node scripts/score-expansion-traces.mjs --captures DIR --traces DIR --run <output>` ([expansion eval](../../docs/evals/expansion.md)). Run once on 2026-10-02 (22:31Z–22:42Z, 173/173 slots, about 11 minutes) into the gitignored `evals/curation/runs/expansion/` of the `AICheckout-s2-m9` worktree.
+The 173-card expansion corpus is all held-out and its captures live outside the corpus folder (on 2026-10-02 in the `AICheckout-expansion` worktree). Print the command with `node scripts/score-expansion-traces.mjs --print-command`; it is gpt-5.5 `low`, `guided.2`, `keyword-window.1`, visible output tokens, `--corpus evals/curation/expansion --captures $EXPANSION_CAPTURES --split heldout --allow-heldout --concurrency 8`, about 10–20 minutes. Afterwards: `node scripts/score-expansion-traces.mjs --captures DIR --traces DIR --run <output>` ([expansion eval](../../docs/evals/expansion.md)). Run once on 2026-10-02 (22:31Z–22:42Z, 173/173 slots, about 11 minutes) into the gitignored `evals/curation/runs/expansion/` of the `AICheckout-s2-m9` worktree; on 2026-10-03 it was copied to `evals/curation/runs/expansion/codex.gpt-5.5.low.guided.2.keyword-window.1.heldout/` in the `AICheckout-expansion` worktree before `AICheckout-s2-m9` was removed.
 
 ## Run the matrix
 

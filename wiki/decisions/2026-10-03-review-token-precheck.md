@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, api, security, review]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:00:00Z
+  at: 2026-10-03T06:45:00Z
 sources:
   - resource: ../../apps/api/src/review-auth.ts
     title: createTokenVerifier
@@ -42,6 +42,9 @@ Stage 2 M8 raised the review body limits to 1,516,384 bytes for `POST /v1/review
 - No new environment variable on Render. On hosted today every new token costs one Auth call (then cached a minute); switching the hosted project to asymmetric JWT signing keys in the Supabase dashboard makes the check local with no code change.
 - A revoked session can pass the pre-check for up to a minute, then fails in the database as before.
 - Unauthenticated callers can still send headers and are rate-limited per socket IP; they can no longer make the API parse, buffer or forward a body (Node still reads and discards the unsent bytes of a refused request from the socket).
+
+## Status
+Accepted 2026-10-03 (Stage 2 M10 part 1, PR #28). Amendment 2026-10-03, without changing the text above: Evan switched the hosted project to asymmetric JWT signing keys; its JWKS publishes one ES256 P-256 key, so the pre-check now verifies hosted tokens locally and no longer asks Auth per new token. Checked after the switch: `/health` 200, `/v1/catalog` 200, unauthenticated `/v1/review/sources` 401. The legacy HS256 secret may be revoked by Evan once older sessions expire ([hosting](../ops/hosting.md#facts)).
 
 ## Related
 * [API](../system/api.md)
