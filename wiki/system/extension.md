@@ -44,7 +44,7 @@ sources:
 
 A Manifest V3 extension (`extension/`, Vite + `@crxjs/vite-plugin`, React 19, `@ai-checkout/ui`). The service worker owns all state in `chrome.storage`; the popup and onboarding pages are thin clients that send typed messages. State is plain local storage by default; a passphrase vault is optional. Carts are read by one generic interpreter driven by bundled, declarative site adapters. The automatic cart badge has its own page: [Cart badge](cart-badge.md).
 
-Verified 2026-10-02 on branch `s2-m6-extension-state` (Stage 2 M6) by reading the code and running `npm test --workspace=ai-checkout-extension` (23 vitest files, 608 tests including the rewards engine suites, plus 6 `node --test` package tests) and the Playwright specs (`npm run test:browser`: 10 passed, 3 skipped by design; `npm run test:catalog:browser` and `test:package:browser` passed).
+Verified 2026-10-02 on branch `s2-m6-extension-state` (Stage 2 M6, merged with PR #26; M5 merged with PR #27 made `CATALOG_V3` the bundled catalog) by reading the code and running `npm test --workspace=ai-checkout-extension` (23 vitest files, 608 tests including the rewards engine suites, plus 6 `node --test` package tests) and the Playwright specs (`npm run test:browser`: 10 passed, 3 skipped by design; `npm run test:catalog:browser` and `test:package:browser` passed).
 
 ## Facts
 
@@ -107,6 +107,8 @@ Each merchant is a JSON spec in [`src/checkout/adapters/`](../../extension/src/c
 ### Popup and onboarding
 
 [`popup/Popup.tsx`](../../extension/src/popup/Popup.tsx) holds the wallet editor, purchase form (merchant, amount, payment path, online-retail eligibility, eligibility confirmation), comparison result, catalog refresh, savings history, per-site badge switches ([`BadgeSettings.tsx`](../../extension/src/components/BadgeSettings.tsx)) and protection settings. [`onboarding/Onboarding.tsx`](../../extension/src/onboarding/Onboarding.tsx) picks cards and a default card with `checkout:save-wallet`. Both render the catalog from the response. Catalog v3 results render plainly until Stage 2 M7: an unvalued card shows its units ("1,000 miles"), v3 rules that do not apply are listed with placeholder copy, and closed-loop cards not accepted here are named in one line; `WalletEditor` keeps existing choices, gate answers and point values (it has no editor for them yet).
+
+TODO(M7): document wallet search (finding a card among 178 by name or issuer), the per-card options (chosen categories, memberships and tiers, activation), the "Point values" section with overrides, and the final wording of the v3 codes once Stage 2 M7 merges.
 
 ## Gotchas
 

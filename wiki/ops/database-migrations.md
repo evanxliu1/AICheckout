@@ -6,7 +6,7 @@ status: stable
 tags: [ops, database, supabase, migrations]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:59:00Z
+  at: 2026-10-03T02:00:00Z
 sources:
   - resource: ../../package.json
     title: db:* scripts
@@ -30,11 +30,11 @@ Schema changes are new files in [`supabase/migrations/`](../../supabase/migratio
 
 | Item | Value |
 | --- | --- |
-| Migrations | 9 on `main` as of 2026-10-02, `20260926032620_baseline_legacy_catalog.sql` to `20261002222425_catalog_v3.sql` (merged with PR #22); a 10th, `20261002230334_review_summary.sql`, is on branch `s2-m8-review-large-catalog` (Stage 2 M8), not yet merged or pushed |
-| pgTAP tests | [`supabase/tests/`](../../supabase/tests/) (`catalog`, `catalog_v2`, `catalog_v3`, `curation`, `extraction_application`, `review_summary` on the M8 branch) |
+| Migrations | 10 on `main` as of 2026-10-03, `20260926032620_baseline_legacy_catalog.sql` to `20261002230334_review_summary.sql` (Stage 2: `20261002222425_catalog_v3`, PR #22; `20261002230334_review_summary`, PR #24) |
+| pgTAP tests | [`supabase/tests/`](../../supabase/tests/) (`catalog`, `catalog_v2`, `catalog_v3`, `curation`, `extraction_application`, `review_summary`) |
 | Seed | [`supabase/seed.sql`](../../supabase/seed.sql), generated from `packages/rewards-core/src/catalog-v3.ts` (since Stage 2 M5): one **unapproved** private draft, no users or secrets |
 | Hosted push | `./scripts/db-push.sh` runs `npx supabase db push --linked --skip-vault`; DB password from the macOS Keychain item `aicheckout-supabase-db` |
-| Hosted state | All 8 applied. The 6 that existed on 2026-09-28 were applied that day ([archive](../archive/phase2-goal.md)); `20260930225732_catalog_v2` and `20261001010350_source_body_limit` were pushed by the coordinating session with `./scripts/db-push.sh` (reported by the coordinator; consistent with hosted `/v1/catalog` serving a `schemaVersion: 2` release on 2026-10-02). `20261002222425_catalog_v3` is pushed by the coordinator after the PR #22 merge; not checked by the M8 session |
+| Hosted state | All 10 applied. The 6 that existed on 2026-09-28 were applied that day ([archive](../archive/phase2-goal.md)); `20260930225732_catalog_v2`, `20261001010350_source_body_limit`, `20261002222425_catalog_v3` and `20261002230334_review_summary` were pushed by the coordinating session with `./scripts/db-push.sh` after their PRs merged (reported by the coordinator; not re-listed by the M10 session, which does not sign in to hosted services). Confirm with `npx supabase migration list --linked` before a catalog release ([catalog release](catalog-release.md)) |
 
 ## Create a migration
 

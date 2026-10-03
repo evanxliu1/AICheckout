@@ -6,7 +6,7 @@ status: stable
 tags: [system, evaluation, llm, curation]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:00:00Z
+  at: 2026-10-03T02:00:00Z
 sources:
   - resource: ../../evals/curation/README.md
     title: Curation evaluations README
@@ -44,7 +44,7 @@ sources:
 
 # Evaluation
 
-The evals measure how well an LLM extracts the earning rules for a card from captured issuer pages. Extraction contract `issuer-extraction.2` asks the model for every rule and card-level field, each backed by verbatim quotes. The harness resolves each quote to a span, and scorer `v2-scorer.2` compares the output with gold labels. The main corpus is `real.v2.2`: 15 real issuer pages for the seven [cards](../domain/cards.md), split dev/held-out by issuer. Its labels are **agent-verified, not human-verified**. The same labels generate the product catalog. Full results are in [`docs/evals/results.md`](../../docs/evals/results.md). That file is generated, the public site reads it, and it is not edited by hand.
+The evals measure how well an LLM extracts the earning rules for a card from captured issuer pages. Extraction contract `issuer-extraction.2` asks the model for every rule and card-level field, each backed by verbatim quotes. The harness resolves each quote to a span, and scorer `v2-scorer.2` compares the output with gold labels. The main corpus is `real.v2.2`: 15 real issuer pages for the seven release-1 [cards](../domain/cards.md), split dev/held-out by issuer. The second is `expansion.v1`: 173 cards of the ten largest issuers, all held-out, measured in [`docs/evals/expansion.md`](../../docs/evals/expansion.md). Labels of both are **agent-verified, not human-verified**, and the same labels (plus the M4 overlay) generate the product catalog. Full results are in [`docs/evals/results.md`](../../docs/evals/results.md). Both files are generated, the public site's results page reads `results.json` and `expansion.json` (since Stage 2 M10), and they are not edited by hand.
 
 ## Facts
 
@@ -146,7 +146,7 @@ Full tables, failure analysis and disclosures are in [`docs/evals/results.md`](.
 - Every guided row reports every planted injection (100% untrusted-instruction recall, dev and held-out).
 - The main held-out errors are `cap: none` asserted where the page is silent, and the BCE cap period.
 - Repeat noise reaches 5.8 points. Treat differences under about 3 points as ties.
-- gpt-5.6-luna `xhigh` ran all 37 cases once on 2026-10-02 (98.8% end-to-end overall); `results.md` reports it per split, marked added after: dev 99.5% (1 false-clean, Wells Fargo stale promo), held-out 98.3% (0 false-clean; 9 field errors: BCE cap period ×6, Chase `cap: none` ×3; `capPeriod` 16/22), p50 163 s / 192 s per case. On the expansion branch only until it merges. It became the curation model on 2026-10-02 ([decision](../decisions/2026-10-02-gpt-5-6-luna-for-curation.md), [reporting decision](../decisions/2026-10-02-luna-results-per-split.md)).
+- gpt-5.6-luna `xhigh` ran all 37 cases once on 2026-10-02 (98.8% end-to-end overall); `results.md` reports it per split, marked added after: dev 99.5% (1 false-clean, Wells Fargo stale promo), held-out 98.3% (0 false-clean; 9 field errors: BCE cap period ×6, Chase `cap: none` ×3; `capPeriod` 16/22), p50 163 s / 192 s per case. It became the curation model on 2026-10-02 ([decision](../decisions/2026-10-02-gpt-5-6-luna-for-curation.md), [reporting decision](../decisions/2026-10-02-luna-results-per-split.md)).
 
 ## Expansion eval (2026-10-02, summary)
 
@@ -154,7 +154,7 @@ Full page: [`docs/evals/expansion.md`](../../docs/evals/expansion.md). The expan
 
 - **Pipeline (draft → verified):** 5.9% of rule-field values changed (321/5,448; `activation` 21.1%, `issuerWording` 12.3%, `rateBps` 4.6%); 54 of 735 draft rules removed, 182 rules added (61 on the 15 undrafted cards); 10 cards confirmed unchanged, 7 dropped.
 - **gpt-5.6-luna re-score, an upper bound** (labels seeded from the same traces): 80.8% end to end on all 173 cards, 81.1% on the 158 drafted, 77.0% on the 15 undrafted; rule recall 85.6%; 5 false-clean. Most of the gap is verifier-added rules and the activation convention.
-- **Cross-model run** (collected 2026-10-02, Codex CLI 0.158.0): gpt-5.5 low (cross-model, neither drafted nor verified the labels; one repeat, visible output tokens): 76.2% end to end on all 173 (76.7% drafted, 69.1% undrafted), matched-rule field accuracy 94.3% (luna 94.8%), rule recall 81.6%, issue recall 15.4% (luna 56.9%), 11 false-clean, p50 28 s. The labels may still favour luna-style output through anchoring on luna drafts.
+- **Cross-model run** (collected 2026-10-02, Codex CLI 0.158.0): gpt-5.5 low (cross-model, neither drafted nor verified the labels; one repeat, visible output tokens): 76.2% end to end on all 173 (76.7% drafted, 69.1% undrafted), matched-rule field accuracy 94.3% (luna 94.8%), rule recall 81.6%, issue recall 15.4% (luna 56.9%), 11 false-clean, p50 28 s. The labels may still favour luna-style output through anchoring on luna drafts. The same model, effort, prompt and selection scored 97.5% on the `real.v2.2` held-out split (3 cards, 2 repeats, total output tokens counted); the corpora are not directly comparable (points cards, merchant rules, a different labelling process, visible output tokens), and the public site and README state it that way.
 
 ## Gotchas
 

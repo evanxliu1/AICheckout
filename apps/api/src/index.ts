@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { createApp } from './app.ts';
 import { createCatalogRepository } from './catalog-repository.ts';
 import { createReviewRepository } from './review-repository.ts';
+import { createTokenVerifier } from './review-auth.ts';
 import { createCurationDatabase } from './curation/database.ts';
 import { createCurationLedger } from './curation/ledger.ts';
 import { fixtureRefusalProvider, type CurationExecution } from './curation/service.ts';
@@ -78,6 +79,7 @@ if (env.data.CURATION_ADAPTER !== 'disabled') {
 const app = createApp({
   readCatalog: createCatalogRepository(env.data.SUPABASE_URL, env.data.SUPABASE_PUBLISHABLE_KEY),
   reviewRpc: createReviewRepository(env.data.SUPABASE_URL, env.data.SUPABASE_PUBLISHABLE_KEY),
+  verifyReviewToken: createTokenVerifier(env.data.SUPABASE_URL, env.data.SUPABASE_PUBLISHABLE_KEY),
   logging: true,
   reviewRoot: env.data.REVIEW_DIST_DIR ? resolve(env.data.REVIEW_DIST_DIR) : undefined,
   reviewConfig: { supabaseUrl: env.data.SUPABASE_URL, publishableKey: env.data.SUPABASE_PUBLISHABLE_KEY },

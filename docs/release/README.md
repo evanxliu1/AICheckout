@@ -1,6 +1,6 @@
 # Release preparation
 
-Updated October 1, 2026 for extension 2.0.0 (Helios popup) and catalog `2026-09-29.real.1` (seven cards; Best Buy, Newegg and Amazon US). These are reviewable drafts and operating instructions, **not evidence of submission or deployment**. See the [design doc](../design.md) for architecture and roadmap.
+Updated October 1, 2026 for extension 2.0.0 (Helios popup) and catalog `2026-09-29.real.1` (seven cards; Best Buy, Newegg and Amazon US). Since October 3, 2026 the extension bundles catalog `2026-10-02.expansion.1` (178 cards, same three merchants, expires November 1, 2026); store copy and screenshots are to be refreshed after the wallet-search UI lands. These are reviewable drafts and operating instructions, **not evidence of submission or deployment**. See the [design doc](../design.md) for architecture and roadmap.
 
 ## Contents
 

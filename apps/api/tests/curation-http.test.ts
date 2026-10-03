@@ -86,7 +86,12 @@ function fixture() {
     execute,
   };
   const rpc = vi.fn<ReviewRpc>().mockResolvedValue(detail);
-  const app = createApp({ readCatalog: async () => null, reviewRpc: rpc, curation: execution });
+  const app = createApp({
+    readCatalog: async () => null,
+    reviewRpc: rpc,
+    verifyReviewToken: async () => true,
+    curation: execution,
+  });
   apps.push(app);
   const post = (payload: Record<string, unknown> = request, authorization = `Bearer ${token}`) =>
     app.inject({

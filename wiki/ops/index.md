@@ -4,6 +4,7 @@ Runbooks: procedures someone will repeat. Numbered steps, exact commands, expect
 
 * [Local setup](local-setup.md) — install, build, lint, test, run the database suite and load the extension on a development machine.
 * [Hosting](hosting.md) — what runs on Render and hosted Supabase, deploys, and environment variable names.
+* [Catalog release](catalog-release.md) — publish a bundled catalog (first `2026-10-02.expansion.1`) as the next hosted release from the review app, then verify `/v1/catalog` and a hosted extension build.
 * [Database migrations](database-migrations.md) — create and test a migration locally, keep the seed in sync, hand the hosted push to Evan.
 * [Live model runs](live-model-runs.md) — local live evals through the Codex and Claude Code CLI subscriptions, matrix runner and resume.
 * [Release media](release-media.md) — npm scripts that regenerate store and portfolio media, and their prerequisites.

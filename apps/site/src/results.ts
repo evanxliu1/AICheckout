@@ -1,6 +1,8 @@
-// Reads docs/evals/results.json (copied into the build at build time) into the rows the results
-// page shows. Every number on the page comes from this file; nothing is typed in by hand.
+// Reads docs/evals/results.json and docs/evals/expansion.json (both copied into the build at build
+// time) into the rows the results page shows. Every number on the page comes from these files;
+// nothing is typed in by hand.
 import results from '../../../docs/evals/results.json';
+import expansion from '../../../docs/evals/expansion.json';
 
 type Rate = { correct: number; total: number; rate: number | null } | undefined;
 type Run = {
@@ -97,3 +99,69 @@ export function resultRows(file: ResultsFile = results as ResultsFile): ResultRo
 export const resultsFile = results as ResultsFile;
 export const percent = (value: number | null) => (value === null ? 'n/a' : `${(value * 100).toFixed(1)}%`);
 export const seconds = (ms: number) => `${Math.round(ms / 1000)} s`;
+
+// The Stage 2 expansion eval (docs/evals/expansion.json): 173 agent-verified cards, one repeat each.
+
+type ExpansionOverall = {
+  runs: number;
+  endToEndFieldAccuracy: Rate;
+  fieldAccuracy: Rate;
+  ruleRecall: Rate;
+  issueRecall: Rate;
+  falseClean: number;
+  latencyMs: { p50: number; p95: number };
+};
+export type ExpansionRow = {
+  id: 'cross-model' | 'luna-upper-bound';
+  model: string;
+  cards: number;
+  fieldAccuracy: number | null;
+  matchedFieldAccuracy: number | null;
+  ruleRecall: number | null;
+  issueRecall: number | null;
+  falseClean: number;
+  p50Ms: number;
+};
+type ExpansionFile = {
+  corpus: { version: string; cases: number; annotationStatus: string };
+  crossModel: {
+    all: Pick<Run, 'provider' | 'model' | 'effort' | 'prompt' | 'selection'> & { overall: ExpansionOverall };
+  };
+  lunaRescore: { all: { overall: ExpansionOverall } };
+};
+export const expansionFile = expansion as unknown as ExpansionFile;
+
+function expansionRow(id: ExpansionRow['id'], model: string, overall: ExpansionOverall): ExpansionRow {
+  return {
+    id,
+    model,
+    cards: overall.runs,
+    fieldAccuracy: rate(overall.endToEndFieldAccuracy),
+    matchedFieldAccuracy: rate(overall.fieldAccuracy),
+    ruleRecall: rate(overall.ruleRecall),
+    issueRecall: rate(overall.issueRecall),
+    falseClean: overall.falseClean,
+    p50Ms: overall.latencyMs.p50,
+  };
+}
+
+/** gpt-5.5 low (neither drafted nor verified the labels) first, then the luna upper bound. */
+export function expansionRows(file: ExpansionFile = expansionFile): ExpansionRow[] {
+  const cross = file.crossModel.all;
+  return [
+    expansionRow('cross-model', modelLabel(cross), cross.overall),
+    expansionRow('luna-upper-bound', 'gpt-5.6-luna (xhigh)', file.lunaRescore.all.overall),
+  ];
+}
+
+/** The same configuration as the expansion cross-model run on the 7-card held-out split. */
+export function sevenCardHeldoutRow(file: ExpansionFile = expansionFile): ResultRow | undefined {
+  const cross = file.crossModel.all;
+  return resultRows().find(
+    (row) =>
+      row.split === 'heldout' &&
+      row.model === modelLabel(cross) &&
+      row.prompt === cross.prompt &&
+      row.selection === cross.selection.replace(/\.\d+$/, ''),
+  );
+}
