@@ -292,8 +292,8 @@ function PanelBody({
     return (
       <p role="status">
         {view.extraCents !== null && view.baselineCardName
-          ? `About ${formatUsd(Math.abs(view.extraCents))} ${view.extraCents >= 0 ? 'more' : 'less'} cash back than ${view.baselineCardName}, your default card (estimated). See all-time savings in AI Checkout.`
-          : 'Saved to your order history in AI Checkout.'}
+          ? `About ${formatUsd(Math.abs(view.extraCents))} ${view.extraCents >= 0 ? 'more' : 'less'} ${view.rewardTerm === 'cash back' ? 'cash back' : 'in rewards'} than ${view.baselineCardName}, your default card (estimated).${view.valueNote ? ` ${view.valueNote}` : ''} See all-time savings in AI Checkout.`
+          : `Saved to your order history in AI Checkout.${view.valueNote ? ` ${view.valueNote}` : ''}`}
       </p>
     );
   // locked / no-cards / damaged open the popup or setup from the pill; nothing to expand.
@@ -436,8 +436,8 @@ function OrderBody({
   return (
     <>
       <p className="supporting">
-        Your answer adds an estimate to your all-time cash back in AI Checkout. Only this page’s address was
-        checked; nothing on it was read.
+        Your answer adds an estimate to your all-time rewards total in AI Checkout. Only this page’s address
+        was checked; nothing on it was read.
       </p>
       {choosing ? (
         <form

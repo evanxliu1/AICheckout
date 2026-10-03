@@ -10,7 +10,8 @@ import { localDate } from '../state/keys';
 import { enginePurchase, engineWallet } from '../state/wallet';
 import { catalogSlice } from '../state/catalog-slice';
 import type { VaultStatus } from '../state/vault-contracts';
-import { savingsEntry } from '../state/savings';
+import { cardEstimate, savingsEntry } from '../state/savings';
+import { rewardsWording } from '../components/estimates';
 import {
   BADGE_TABS_KEY,
   badgeRequestSchema,
@@ -271,14 +272,24 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
     const used = choice === 'yes' ? prompt.recommendedCardId : choice === 'other' ? cardId : null;
     if (used && !state.wallet.cards.some((owned) => owned.cardId === used))
       return { ok: false, error: 'Choose one of your cards.' };
+    const wallet = engineWallet(state.wallet, catalog) as Wallet,
+      now = clock();
     const entryRecord = savingsEntry({
       catalog,
-      wallet: engineWallet(state.wallet, catalog) as Wallet,
+      wallet,
       purchase: prompt.purchase,
       recommendedCardId: prompt.recommendedCardId,
       usedCardId: used,
-      now: clock(),
+      now,
     });
+    // Named by what the two cards pay: cash back, or rewards with what they were counted at.
+    const compared = used
+      ? [used, state.wallet.defaultCardId].flatMap((id) => {
+          const estimate = id ? cardEstimate(catalog, wallet, prompt.purchase, id, now) : null;
+          return estimate ? [estimate] : [];
+        })
+      : [];
+    const wording = rewardsWording(compared, catalog);
     const saved = (await vault.handle({ type: 'checkout:record-savings', entry: entryRecord })) as
       CheckoutResponse | undefined;
     if (!saved || !saved.ok) return { ok: false, error: 'The order could not be saved. Try again.' };
@@ -290,6 +301,9 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
         extraCents: entryRecord.extraCents,
         usedCardName: cardName(catalog, used),
         baselineCardName: cardName(catalog, state.wallet.defaultCardId),
+        rewardTerm: wording.term,
+        // What was counted only when something was; why not, when a program has no value.
+        valueNote: entryRecord.extraCents !== null || wording.unvalued ? wording.note : null,
       },
     };
   }

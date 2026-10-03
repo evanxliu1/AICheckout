@@ -8,8 +8,10 @@ import type { StateStorage } from '../src/state/service';
 import { emptyState } from '../src/state/contracts';
 import type { AppState } from '../src/state/contracts';
 import { CATALOG_KEY, STATE_KEY } from '../src/state/service';
-import { savingsEntry, totalExtraCents } from '../src/state/savings';
-import { CATALOG_V2, redateCatalog } from '../src/domain';
+import { cardEstimate, savingsEntry, totalExtraCents } from '../src/state/savings';
+import { rewardsWording } from '../src/components/estimates';
+import { CATALOG_V2, CATALOG_V3, redateCatalog } from '../src/domain';
+import type { Wallet } from '../src/domain';
 
 let now = Date.parse('2026-10-02T15:00:00Z');
 const clock = () => now;
@@ -213,6 +215,8 @@ describe('badge service', () => {
         extraCents: 100,
         usedCardName: 'Blue Cash Everyday',
         baselineCardName: 'Double Cash',
+        rewardTerm: 'cash back',
+        valueNote: null,
       },
     });
     const state = (await t.vault({ type: 'checkout:get-state' })) as { ok: true; state: AppState };
@@ -362,6 +366,40 @@ describe('savings math', () => {
     ]);
     expect(unsure).toMatchObject({ usedCardId: null, estimatedRewardCents: null, baselineRewardCents: 200 });
     expect(totalExtraCents([used, worse, unsure, noDefault])).toBe(100);
+  });
+  it('names the amount by what the cards pay and leaves programs with no value out of the total', () => {
+    const v3 = redateCatalog(CATALOG_V3, '2026-10-01');
+    const owned: Wallet = {
+      defaultCardId: 'citi-double-cash',
+      cards: ['citi-double-cash', 'capital-one-venture', 'barclays-frontier-airlines-world-mastercard'].map(
+        (cardId) => ({ cardId, usage: [] }),
+      ),
+    };
+    const estimates = (...ids: string[]) => ids.map((id) => cardEstimate(v3, owned, purchase, id, now)!);
+    const entry = (usedCardId: string) =>
+      savingsEntry({ catalog: v3, wallet: owned, purchase, recommendedCardId: usedCardId, usedCardId, now });
+    // Double Cash is cash back (2%): $2.00 both ways.
+    expect(rewardsWording(estimates('citi-double-cash', 'citi-double-cash'), v3)).toEqual({
+      term: 'cash back',
+      note: null,
+      unvalued: false,
+    });
+    // Venture Rewards: 200 miles at NerdWallet's 1¢ estimate.
+    expect(entry('capital-one-venture').extraCents).toBe(0);
+    expect(rewardsWording(estimates('capital-one-venture', 'citi-double-cash'), v3)).toEqual({
+      term: 'rewards',
+      note: 'Counts Capital One miles at 1¢ each (estimate).',
+      unvalued: false,
+    });
+    // Frontier miles have no value: not $0, not counted.
+    expect(entry('barclays-frontier-airlines-world-mastercard')).toMatchObject({
+      estimatedRewardCents: null,
+      baselineRewardCents: 200,
+      extraCents: null,
+    });
+    expect(
+      rewardsWording(estimates('barclays-frontier-airlines-world-mastercard', 'citi-double-cash'), v3).note,
+    ).toMatch(/has no value set, so this order is not added to your all-time total\.$/);
   });
   it('keeps the newest 500 entries and deletes the history only with the current revision', async () => {
     const t = setup();

@@ -29711,8 +29711,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "name": "Citi Double Cash",
       "shortName": "Double Cash",
       "issuer": "Citi",
-      "programId": "citi-thankyou",
-      "statedValueHundredthsOfCent": 100,
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
       "acceptance": {
         "kind": "open-loop"
       },

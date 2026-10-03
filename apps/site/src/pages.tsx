@@ -44,8 +44,9 @@ function Section({ id, title, children }: { id: string; title: string; children:
   );
 }
 
-// TODO(M7): retake these captures after the wallet search and point-value UI land; the wallet
-// capture still shows the seven-card setup of catalog v2.
+// TODO(after the Ocean theme): these captures show the pre-M7 UI (the wallet capture still shows
+// the seven-card setup of catalog v2). Deferred on 2026-10-03 until the Ocean theme lands, so the
+// site and Web Store media are regenerated once, in the final look.
 const SCREENSHOTS = [
   {
     src: '/media/2-comparison.png',
@@ -120,7 +121,7 @@ function Home(): Rendered {
               <h3>Shows its reasons, counts your savings</h3>
               <p>
                 Open the badge for every card’s estimate with the issuer’s rule and conditions. After an
-                order, one tap adds the extra cash back to your all-time total, kept on your device.
+                order, one tap adds the extra rewards to your all-time total, kept on your device.
               </p>
             </Card>
           </ul>
@@ -814,7 +815,7 @@ function Support(): Rendered {
             </li>
             <li>
               After you order, the badge may ask once which card you paid with; your answer adds to your
-              all-time extra cash back in the toolbar popup.
+              all-time extra rewards in the toolbar popup.
             </li>
             <li>
               For any other purchase, open the toolbar popup, pick the merchant, type the amount and choose{' '}

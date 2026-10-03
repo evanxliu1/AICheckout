@@ -258,8 +258,9 @@ export function buildCatalogV3(inputs) {
 /**
  * Differences between the real cards of a catalog v3 and release 1 (catalog v2), as strings. Names, rule IDs,
  * wording, rates, caps, activation, U.S.-only, excluded payment paths, end dates, sources and exclusions must
- * match; v3 adds only conditions that are empty for these cards. Double Cash's ThankYou points at the stated 1¢
- * replace v2's `pointValueHundredthsOfCent` 100; the other six earn cash back.
+ * match; v3 adds only conditions that are empty for these cards. The value of one rate unit must match: all seven
+ * earn cash back in v3 (1¢ per unit); release 1 labelled Double Cash as points at 1¢ (`pointValueHundredthsOfCent`
+ * 100), which is the same engine result in cents (general rule 1, coordinator decision 2026-10-03).
  */
 export function checkRealCards(catalog, catalogV2) {
   const problems = [];
@@ -277,10 +278,9 @@ export function checkRealCards(catalog, catalogV2) {
       problems.push(at('exclusions differ'));
     const program = programs.get(card.programId);
     const value = card.statedValueHundredthsOfCent ?? program?.valuation.valueHundredthsOfCent ?? null;
-    const currency = program?.currency === 'cash-back' ? 'cash-back' : 'points';
-    if (currency !== old.rewardCurrency) problems.push(at(`currency ${currency} ≠ ${old.rewardCurrency}`));
-    if (value !== (old.pointValueHundredthsOfCent ?? 100))
-      problems.push(at(`unit value ${value} ≠ ${old.pointValueHundredthsOfCent}`));
+    const oldValue = old.rewardCurrency === 'cash-back' ? 100 : old.pointValueHundredthsOfCent;
+    if (program?.currency !== 'cash-back') problems.push(at(`program ${card.programId} is not cash back`));
+    if (value !== oldValue) problems.push(at(`unit value ${value} ≠ ${oldValue}`));
     if (card.acceptance.kind !== 'open-loop' || card.choices.length) problems.push(at('gained v3 structure'));
     if (card.rules.length !== old.rules.length) problems.push(at('rule count differs'));
     old.rules.forEach((oldRule, i) => {

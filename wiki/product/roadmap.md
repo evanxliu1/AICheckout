@@ -6,7 +6,7 @@ status: stable
 tags: [product, roadmap]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:00:00Z
+  at: 2026-10-03T04:30:00Z
 sources:
   - resource: ../archive/phase2-goal.md
     title: Phase 2–6 plan (archived; full step lists and exit criteria)
@@ -16,7 +16,7 @@ sources:
 
 # Roadmap
 
-Phases from the archived [Phase 2–6 plan](../archive/phase2-goal.md), which keeps the detailed step lists and exit criteria. Each phase or milestone is one branch and one PR cut from the latest `main`; Evan or the authorized coordinating session merges. PRs: #4 2a, #5 2b, #6 2c, #7 Phase 3 M1 (ui), #8 M2 (catalog v2), #9 M3 (extension), #10 M4 (review), #11 M5 (site), #12 M6 prep, #13 3b auto badge, #14 3b follow-ups, #16 Phase 7 capture and extraction, #17 Phase 7 verification, #18–#27 Phase 7 Stage 2 (plan, M11, M3, M9, M1, M2, M8, M4, M6, M5).
+Phases from the archived [Phase 2–6 plan](../archive/phase2-goal.md), which keeps the detailed step lists and exit criteria. Each phase or milestone is one branch and one PR cut from the latest `main`; Evan or the authorized coordinating session merges. PRs: #4 2a, #5 2b, #6 2c, #7 Phase 3 M1 (ui), #8 M2 (catalog v2), #9 M3 (extension), #10 M4 (review), #11 M5 (site), #12 M6 prep, #13 3b auto badge, #14 3b follow-ups, #16 Phase 7 capture and extraction, #17 Phase 7 verification, #18–#30 Phase 7 Stage 2 (plan, M11, M3, M9, M1, M2, M8, M4, M6, M5, M10 part 1, Tailwind 4, M7); M10 part 2 on branch `s2-m10b-finish`.
 
 | Phase | Delivers | Status (2026-10-03) |
 | --- | --- | --- |
@@ -30,7 +30,7 @@ Phases from the archived [Phase 2–6 plan](../archive/phase2-goal.md), which ke
 | 4 Terms-change detection | Weekly GitHub Action re-captures sources, opens an issue with hashes and short excerpts | Not started |
 | 5 Ship | Chrome Web Store listing (Evan pays and submits), demo video | Not started |
 | 6 Site coverage harness | LLM drafts site adapters from captured carts; execution-based validation; remote kill switch; drift detection | Not started; design in the archived plan |
-| 7 Card expansion | 180 consumer cards of the top-10 U.S. issuers: capture, gpt-5.6-luna extraction, verified labels (Stage 1); catalog v3 with points valuation, merchant-specific, chosen, rotating, gated and closed-loop rules, larger limits, wallet search, eval and a published release (Stage 2) | Stage 1 done: PRs #16 and #17 merged, `expansion.v1` has 173 agent-verified cards. Stage 2 ([plan](phase-7-stage-2.md), M1–M11): M1–M6, M8, M9 and the M11 draft merged (PRs #18–#27), the extension bundles the 178-card `CATALOG_V3`; M7 (extension UI) and M10 (docs, publish) in progress; publish target 2026-10-28, hard limit 2026-11-01 ([catalog release](../ops/catalog-release.md)). See [catalog expansion](../system/catalog-expansion.md) and [decision](../decisions/2026-10-01-top-ten-issuer-card-expansion.md) |
+| 7 Card expansion | 180 consumer cards of the top-10 U.S. issuers: capture, gpt-5.6-luna extraction, verified labels (Stage 1); catalog v3 with points valuation, merchant-specific, chosen, rotating, gated and closed-loop rules, larger limits, wallet search, eval and a published release (Stage 2) | Stage 1 done: PRs #16 and #17 merged, `expansion.v1` has 173 agent-verified cards. Stage 2 ([plan](phase-7-stage-2.md), M1–M11): complete except Evan's publish. M1–M9 and the M11 draft merged (PRs #18–#30), M10 part 2 (Double Cash as cash back, savings wording, docs) on `s2-m10b-finish`; the extension bundles the 178-card `CATALOG_V3`. Left: Evan publishes `2026-10-02.expansion.1` in the review app (target 2026-10-28, hard limit 2026-11-01, [catalog release](../ops/catalog-release.md)); site screenshots and Web Store media wait for the Ocean theme. See [catalog expansion](../system/catalog-expansion.md) and [decision](../decisions/2026-10-01-top-ten-issuer-card-expansion.md) |
 | 8 Card-expansion pipeline | CLI in `tools/catalog-pipeline`, skill `expand-catalog`, subagents `card-researcher` and `card-verifier`; product code never imports the pipeline; hash-only freshness checks | Next after Stage 2. Design drafted 2026-10-02 (Stage 2 M11, branch `stage2-m11-pipeline-design`): [card-expansion pipeline](../system/card-expansion-pipeline.md), [decision (proposed)](../decisions/2026-10-02-agent-driven-card-pipeline.md); draft skill and subagent definitions; the import boundary lint rule is in force. Awaiting Evan's approval |
 | 9 Merchant-expansion pipeline | More checkout merchants: site adapters, merchant profiles and brand links so merchant-specific rules apply (builds on Phase 6) | After Phase 8 |
 

@@ -444,7 +444,7 @@ export default function WalletEditor({
           <Field
             id="default-card"
             label="Default card"
-            helperText="The card you would use anyway. It breaks ties and is the baseline for your all-time extra cash back."
+            helperText="The card you would use anyway. It breaks ties and is the baseline for your all-time extra rewards."
           >
             {(control) => (
               <Select
