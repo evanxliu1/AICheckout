@@ -60,7 +60,19 @@ export function Combobox({
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
   const list = useRef<HTMLDivElement>(null);
-  const matches = useMemo(() => options.filter((option) => matchesSearch(option, query)), [options, query]);
+  // Matches in the order they are shown: grouped, groups in first-seen order, so arrow keys and
+  // `aria-activedescendant` follow the visible list even when `options` interleave groups.
+  const matches = useMemo(() => {
+    const found = options.filter((option) => matchesSearch(option, query));
+    const order = new Map<string, number>();
+    for (const option of found) if (!order.has(option.group ?? '')) order.set(option.group ?? '', order.size);
+    return found
+      .map((option, index) => ({ option, index }))
+      .sort(
+        (a, b) => order.get(a.option.group ?? '')! - order.get(b.option.group ?? '')! || a.index - b.index,
+      )
+      .map(({ option }) => option);
+  }, [options, query]);
   const groups = useMemo(() => {
     const byGroup = new Map<string, { option: ComboboxOption; index: number }[]>();
     matches.forEach((option, index) => {

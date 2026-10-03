@@ -51,7 +51,7 @@ describe('wallet editor: search and add', () => {
     const list = screen.getByRole('list');
     expect(within(list).getByText('American Express Blue Cash Everyday')).toBeTruthy();
     // Rule-derived limits appear for the added card only.
-    expect(screen.getByLabelText(/Blue Cash Everyday online retail spend in 2026/)).toBeTruthy();
+    expect(screen.getByLabelText(/Blue Cash Everyday online retail spend this year/)).toBeTruthy();
     expect(screen.queryByLabelText(/bonus activation/)).toBeNull();
     // An added card is no longer offered.
     await user.type(search(), 'blue');
@@ -84,6 +84,10 @@ describe('wallet editor: search and add', () => {
     expect(screen.getByRole('heading', { name: 'Cards you own (20)' })).toBeTruthy();
     expect((search() as HTMLInputElement).disabled).toBe(true);
     expect(screen.getByText('You can save up to 20 cards. Remove one to add another.')).toBeTruthy();
+    // The disabled search field loses focus; it moves to the list of cards, then back on remove.
+    expect(document.activeElement).toBe(screen.getByRole('heading', { name: 'Cards you own (20)' }));
+    await user.click(screen.getByRole('button', { name: 'Remove Synthetic Card 005' }));
+    expect(document.activeElement).toBe(search());
   }, 20_000);
 });
 
@@ -121,7 +125,7 @@ describe('wallet editor: catalog v3 options', () => {
     expect(screen.queryByLabelText('Cash Plus department store bonus activation')).toBeNull();
     // The combined limit is recorded on the department-store rule (the group's smallest ID), so its
     // spend field stays while another category of the group is chosen.
-    expect(screen.getByLabelText(/Cash Plus combined electronics store spend in 2026/)).toBeTruthy();
+    expect(screen.getByLabelText(/Cash Plus combined electronics store spend this quarter/)).toBeTruthy();
 
     await user.click(screen.getByRole('button', { name: 'Save cards' }));
     const wallet = saved(onSave);
@@ -231,5 +235,94 @@ describe('point value parsing', () => {
     for (const bad of ['0', '0.001', '100.01', '1,5', '-1', 'abc', '', '1.234'])
       expect(parseCentsEach(bad)).toBeNull();
     expect([150, 125, 100, 66].map(formatCentsEach)).toEqual(['1.5', '1.25', '1', '0.66']);
+  });
+});
+
+describe('wallet editor: answers the form does not ask, values and failures (M7 review)', () => {
+  it('keeps saved choices, gate answers and point values the catalog in effect does not ask', async () => {
+    const wallet: Wallet = {
+      defaultCardId: 'test-prime-visa',
+      cards: [
+        {
+          cardId: 'test-prime-visa',
+          usage: [],
+          choices: [{ choiceId: 'from-a-newer-catalog', optionIds: ['kept'] }],
+        },
+      ],
+      gates: [
+        { gateId: 'amazon-prime', optionId: 'member' },
+        { gateId: 'from-a-newer-catalog', optionId: 'kept' },
+      ],
+      valueOverrides: [{ programId: 'from-a-newer-catalog', valueHundredthsOfCent: 150 }],
+    };
+    const { user, onSave } = editor(CATALOG_V3_FIXTURE, wallet);
+    await user.click(screen.getByRole('button', { name: 'Save cards' }));
+    expect(saved(onSave)).toMatchObject({
+      cards: [
+        { cardId: 'test-prime-visa', choices: [{ choiceId: 'from-a-newer-catalog', optionIds: ['kept'] }] },
+      ],
+      gates: [
+        { gateId: 'amazon-prime', optionId: 'member' },
+        { gateId: 'from-a-newer-catalog', optionId: 'kept' },
+      ],
+      valueOverrides: [{ programId: 'from-a-newer-catalog', valueHundredthsOfCent: 150 }],
+    });
+    cleanup();
+    // An older (v2) catalog in effect asks none of them; saving keeps them all.
+    const v2 = editor(CATALOG_V2, {
+      ...wallet,
+      defaultCardId: 'citi-double-cash',
+      cards: [{ cardId: 'citi-double-cash', usage: [], choices: wallet.cards[0].choices }],
+    });
+    await v2.user.click(screen.getByRole('button', { name: 'Save cards' }));
+    expect(saved(v2.onSave)).toMatchObject({
+      cards: [
+        { cardId: 'citi-double-cash', choices: [{ choiceId: 'from-a-newer-catalog', optionIds: ['kept'] }] },
+      ],
+      gates: wallet.gates,
+      valueOverrides: wallet.valueOverrides,
+    });
+  });
+
+  it('shows the card’s own stated value as the default, which the engine uses first', async () => {
+    const catalog = structuredClone(CATALOG_V3_FIXTURE);
+    catalog.cards.find((c) => c.id === 'test-points-card')!.statedValueHundredthsOfCent = 60;
+    const { user } = editor(catalog);
+    await add(user, 'points card', 'Test Points Card');
+    const field = screen.getByLabelText(
+      'Your value for Test Membership Points, in cents each',
+    ) as HTMLInputElement;
+    expect(field.placeholder).toBe('0.6');
+  });
+
+  it('takes a card back out when its terms cannot be loaded, and says so', async () => {
+    const loadCards = vi.fn(async () => {
+      throw new Error('The extension could not connect. Reopen it and try again.');
+    });
+    const onSave = vi.fn(async () => {});
+    const user = userEvent.setup();
+    render(
+      <WalletEditor
+        catalog={{ ...CATALOG_V3_FIXTURE, cards: [] }}
+        index={CATALOG_V3_FIXTURE.cards.map((c) => ({
+          id: c.id,
+          name: c.name,
+          shortName: c.shortName,
+          issuer: c.issuer,
+        }))}
+        loadCards={loadCards}
+        wallet={empty}
+        busy={false}
+        onSave={onSave}
+      />,
+    );
+    await add(user, 'points card', 'Test Points Card');
+    expect(await screen.findByRole('alert')).toHaveProperty(
+      'textContent',
+      'The card terms could not be loaded. The extension could not connect. Reopen it and try again.',
+    );
+    expect(screen.getByText('No cards yet. Add each card you might pay with.')).toBeTruthy();
+    expect(screen.getByText('Could not add Test Points Card.')).toBeTruthy();
+    expect(document.activeElement).toBe(search());
   });
 });

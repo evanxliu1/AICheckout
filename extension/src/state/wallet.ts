@@ -1,5 +1,5 @@
 import { stableJson } from '../domain';
-import type { Catalog, CardProductV3 } from '../domain';
+import type { Catalog, CardProductV3, Purchase } from '../domain';
 import type { WalletState } from './contracts';
 
 /** A rule in v3 form for comparing terms across catalog versions: a v2 rule gets the v3 fields with
@@ -112,4 +112,12 @@ export function validateWallet(wallet: WalletState, catalog: Catalog, now: numbe
  * IDs). Kept options of an expired catalog stay in storage; comparisons report the expiry anyway. */
 export function engineWallet(wallet: WalletState, catalog: Catalog): WalletState {
   return reconcileWallet(wallet, catalog).wallet;
+}
+
+/** The purchase as the engine sees it: Venmo exists only in catalog v3 terms (older engines reject
+ * it), so under a v1 or v2 catalog in effect a Venmo payment is compared as a card payment. */
+export function enginePurchase<P extends Purchase>(purchase: P, catalog: Catalog): P {
+  return purchase.paymentPath === 'venmo' && catalog.schemaVersion !== 3
+    ? { ...purchase, paymentPath: 'card' }
+    : purchase;
 }

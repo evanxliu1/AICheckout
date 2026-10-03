@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   AlertInline,
   Badge,
@@ -30,6 +30,28 @@ type Input = { spend: string; activation: RuleUsage['activation'] };
 const EMPTY_INPUT: Input = { spend: '', activation: 'unknown' };
 const key = (cardId: string, id: string) => `${cardId}/${id}`;
 const issuerOf = (card: Catalog['cards'][number]) => ('issuer' in card ? card.issuer : 'Cards');
+/** When the spend toward a bonus limit counts from, by the limit's period: the engine compares the
+ * spend entered with the limit of the current period. v1 limits are per calendar year. */
+function spendPeriod(card: Catalog['cards'][number], ruleId: string, year: number): string {
+  const rule = (card.rules as { id: string; cap?: { kind: string; period?: string } }[]).find(
+    (r) => r.id === ruleId,
+  );
+  const period = rule?.cap?.kind === 'spend' ? rule.cap.period : 'calendar-year';
+  switch (period) {
+    case 'quarter':
+      return 'this quarter';
+    case 'month':
+      return 'this month';
+    case 'billing-cycle':
+      return 'this billing cycle';
+    case 'cardmember-year':
+      return 'this card-member year';
+    case 'year-unspecified':
+      return 'this year';
+    default:
+      return `in ${year}`;
+  }
+}
 const dateCopy = (isoDate: string) =>
   new Date(`${isoDate}T12:00:00Z`).toLocaleDateString('en-US', { timeZone: 'UTC', dateStyle: 'medium' });
 
@@ -111,6 +133,15 @@ export default function WalletEditor({
   );
   const [announcement, setAnnouncement] = useState('');
   const [error, setError] = useState('');
+  /** Where focus goes after the control that had it disappears or is disabled. */
+  const [focusTo, setFocusTo] = useState<'search' | 'owned' | null>(null);
+  useEffect(() => {
+    if (!focusTo) return;
+    const search = document.getElementById('add-card') as HTMLInputElement | null;
+    if (focusTo === 'search' && search && !search.disabled) search.focus();
+    else document.getElementById('owned-cards-heading')?.focus();
+    setFocusTo(null);
+  }, [focusTo]);
 
   const cardOf = (id: string) => catalog.cards.find((card) => card.id === id);
   const entryOf = (id: string) => cards.find((card) => card.id === id);
@@ -141,25 +172,47 @@ export default function WalletEditor({
     });
   };
 
+  /** Loads the full terms of `ids` into the editor's catalog; null (with an error shown) on failure. */
+  async function loadTerms(ids: string[]): Promise<Catalog | null> {
+    if (!loadCards) return null;
+    setError('');
+    setLoading((n) => n + 1);
+    try {
+      const slice = await loadCards(ids);
+      setCatalog((current) => mergeSlices(current, slice));
+      return slice;
+    } catch (err) {
+      setError(`The card terms could not be loaded. ${err instanceof Error ? err.message : 'Try again.'}`);
+      return null;
+    } finally {
+      setLoading((n) => n - 1);
+    }
+  }
+
   async function add(id: string) {
     if (selected.includes(id) || selected.length >= MAX_CARDS) return;
     const next = [...selected, id];
+    const name = entryOf(id)?.name ?? id;
     setSelected(next);
     if (!next.includes(defaultId)) setDefaultId(next[0] ?? '');
-    setAnnouncement(`Added ${entryOf(id)?.name ?? id}. ${next.length} of ${MAX_CARDS} cards.`);
+    setAnnouncement(
+      next.length >= MAX_CARDS
+        ? `Added ${name}. ${next.length} of ${MAX_CARDS} cards, the most you can save.`
+        : `Added ${name}. ${next.length} of ${MAX_CARDS} cards.`,
+    );
+    // The search field is disabled at the limit; keep focus on the list of cards.
+    if (next.length >= MAX_CARDS) setFocusTo('owned');
     let terms = catalog;
     if (!cardOf(id) && loadCards) {
-      setLoading((n) => n + 1);
-      try {
-        terms = await loadCards(next);
-        const slice = terms;
-        setCatalog((current) => mergeSlices(current, slice));
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'The card’s terms could not be loaded. Try again.');
+      const slice = await loadTerms(next);
+      if (!slice) {
+        // Without its terms the card cannot be shown or saved; take it back out.
+        setSelected((current) => current.filter((c) => c !== id));
+        setAnnouncement(`Could not add ${name}.`);
+        setFocusTo('search');
         return;
-      } finally {
-        setLoading((n) => n - 1);
       }
+      terms = slice;
     }
     // Suggest the issuer's default categories for a card added now; the shopper can change them.
     const defaults = choiceQuestions(terms, id).filter((choice) => choice.defaultOptionIds.length > 0);
@@ -182,8 +235,8 @@ export default function WalletEditor({
     setSelected(next);
     if (!next.includes(defaultId)) setDefaultId(next[0] ?? '');
     setAnnouncement(`Removed ${entryOf(id)?.name ?? 'the unavailable card'}.`);
-    // The button is gone; return focus to the search field.
-    document.getElementById('add-card')?.focus();
+    // The button is gone; return focus to the search field once it is enabled again.
+    setFocusTo('search');
   }
 
   /** Usage inputs that can matter. A rule tied to a category the shopper did not choose cannot earn,
@@ -244,15 +297,24 @@ export default function WalletEditor({
         if (spentCents !== null || activation !== 'unknown')
           usage.push({ ruleId: rule.ruleId, calendarYear: year, recordedOn, spentCents, activation });
       }
+      // Saved choices this form does not ask (an expired or older catalog in effect lacks them, or
+      // no catalog merchant uses them) are kept, never dropped by saving.
+      const before = wallet.cards.find((c) => c.cardId === card.id)?.choices;
+      const asked = choiceQuestions(catalog, card.id);
+      const kept = Object.entries(choices[card.id] ?? {}).flatMap(([choiceId, optionIds]) =>
+        optionIds.length && !asked.some((q) => q.id === choiceId) ? [{ choiceId, optionIds }] : [],
+      );
       if (catalog.schemaVersion !== 3) {
-        cards.push({ cardId: card.id, usage });
+        cards.push(
+          before === undefined ? { cardId: card.id, usage } : { cardId: card.id, usage, choices: kept },
+        );
         continue;
       }
-      const picked = choiceQuestions(catalog, card.id).flatMap((choice) => {
+      const picked = asked.flatMap((choice) => {
         const optionIds = choices[card.id]?.[choice.id] ?? [];
         return optionIds.length ? [{ choiceId: choice.id, optionIds }] : [];
       });
-      cards.push({ cardId: card.id, usage, choices: picked });
+      cards.push({ cardId: card.id, usage, choices: [...picked, ...kept].slice(0, 5) });
     }
     const next: Wallet = {
       ...wallet,
@@ -260,9 +322,15 @@ export default function WalletEditor({
       cards,
     };
     if (catalog.schemaVersion === 3) {
-      next.gates = questions.flatMap(({ gate }) =>
-        gates[gate.id] ? [{ gateId: gate.id, optionId: gates[gate.id] }] : [],
-      );
+      // As with choices: answers and values this form does not show are kept.
+      next.gates = [
+        ...questions.flatMap(({ gate }) =>
+          gates[gate.id] ? [{ gateId: gate.id, optionId: gates[gate.id] }] : [],
+        ),
+        ...Object.entries(gates).flatMap(([gateId, optionId]) =>
+          questions.some(({ gate }) => gate.id === gateId) ? [] : [{ gateId, optionId }],
+        ),
+      ].slice(0, 100);
       const overrides: NonNullable<Wallet['valueOverrides']> = [];
       for (const { program } of programs) {
         const text = values[program.id]?.trim();
@@ -276,7 +344,15 @@ export default function WalletEditor({
         }
         overrides.push({ programId: program.id, valueHundredthsOfCent: value });
       }
-      next.valueOverrides = overrides;
+      next.valueOverrides = [
+        ...overrides,
+        ...Object.entries(values).flatMap(([programId, text]) => {
+          const value = parseCentsEach(text);
+          return value === null || programs.some(({ program }) => program.id === programId)
+            ? []
+            : [{ programId, valueHundredthsOfCent: value }];
+        }),
+      ].slice(0, 100);
     }
     try {
       await onSave(next);
@@ -328,7 +404,7 @@ export default function WalletEditor({
           {announcement}
         </p>
         <section className="space-y-2" aria-labelledby="owned-cards-heading">
-          <h3 id="owned-cards-heading" className="subsection-title">
+          <h3 id="owned-cards-heading" className="subsection-title" tabIndex={-1}>
             Cards you own ({selected.length})
           </h3>
           {selected.length === 0 ? (
@@ -429,7 +505,7 @@ export default function WalletEditor({
                 <Fieldset
                   key={name}
                   legend={`${card.shortName}: ${choice.label}`}
-                  helperText={`Pick up to ${choice.picks}. Leave them all unchecked if you’re not sure.${suggested}`}
+                  helperText={`Check every category you picked (up to ${choice.picks}). Leave them all unchecked if you’re not sure.${suggested}`}
                   disabled={busy}
                 >
                   {choice.options.map((option) => {
@@ -511,8 +587,8 @@ export default function WalletEditor({
                 {rule.needsSpend && (
                   <Field
                     id={`spend-${rule.ruleId}`}
-                    label={`${card.shortName} ${rule.label} spend in ${year}`}
-                    helperText="Optional USD, across your card account. Leave blank if unsure; 0 means none used. Update before each purchase. Becomes unknown tomorrow."
+                    label={`${card.shortName} ${rule.label} spend ${spendPeriod(card, rule.ruleId, year)}`}
+                    helperText={`Optional USD, across your card account, counted toward the limit ${spendPeriod(card, rule.ruleId, year).replace(/^in /, 'for ')}. Leave blank if unsure; 0 means none used. Update before each purchase. Becomes unknown tomorrow.`}
                   >
                     {(control) => (
                       <TextInput
@@ -570,12 +646,20 @@ export default function WalletEditor({
               const stated = cards.filter((card) => card.statedValueHundredthsOfCent !== null);
               const id = `value-${program.id}`;
               const typed = values[program.id] ?? '';
-              const fallback =
+              // The engine uses a card's stated value before the program's value.
+              const statedValues = new Set(stated.map((card) => card.statedValueHundredthsOfCent!));
+              const programValue =
                 valuation.basis === 'published-estimate' || valuation.basis === 'issuer-stated'
-                  ? formatCentsEach(valuation.valueHundredthsOfCent)
-                  : stated.length === cards.length
-                    ? formatCentsEach(stated[0].statedValueHundredthsOfCent!)
-                    : 'Not set';
+                  ? valuation.valueHundredthsOfCent
+                  : null;
+              const fallback =
+                stated.length === cards.length && statedValues.size === 1
+                  ? formatCentsEach(stated[0].statedValueHundredthsOfCent!)
+                  : stated.length === 0
+                    ? programValue === null
+                      ? 'Not set'
+                      : formatCentsEach(programValue)
+                    : 'Per card';
               return (
                 <div key={program.id} className="space-y-2">
                   <p>
@@ -613,7 +697,13 @@ export default function WalletEditor({
                     <Field
                       id={id}
                       label={`Your value for ${program.name}, in cents each`}
-                      helperText={`Optional, from 0.01 to 100. ${fallback === 'Not set' ? 'Leave blank if you don’t know.' : 'Leave blank to use the value above.'}`}
+                      helperText={`Optional, from 0.01 to 100. ${
+                        fallback === 'Not set'
+                          ? 'Leave blank if you don’t know.'
+                          : fallback === 'Per card'
+                            ? 'Leave blank to use each card’s value shown above.'
+                            : 'Leave blank to use the value above.'
+                      }${cards.length > 1 ? ' Your value replaces these for all cards in this program.' : ''}`}
                     >
                       {(control) => (
                         <TextInput
@@ -646,6 +736,18 @@ export default function WalletEditor({
               );
             })}
           </section>
+        )}
+        {pending.length > 0 && loading === 0 && loadCards && (
+          <AlertInline
+            color="warning"
+            actions={
+              <Button size="small" color="secondary" disabled={busy} onClick={() => void loadTerms(selected)}>
+                Load card terms
+              </Button>
+            }
+          >
+            The terms of {pending.map((id) => entryOf(id)?.shortName ?? id).join(', ')} are not loaded yet.
+          </AlertInline>
         )}
         {error && (
           <AlertInline color="critical" role="alert">

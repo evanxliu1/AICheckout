@@ -184,9 +184,7 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     await pill.click();
     await expect(badge.getByRole('heading', { name: 'Best card for this cart' })).toBeFocused();
     await expect(badge.getByText('Based on $27.23 cart order total at Best Buy US.')).toBeVisible();
-    await expect(
-      badge.getByText('2 points per $1 if the balance is paid (1 point per $1 at purchase).'),
-    ).toBeVisible();
+    await expect(badge.getByText('2% if the balance is paid (1% at purchase).')).toBeVisible();
     await expect(
       badge.getByRole('list', { name: 'Your cards, best first' }).getByRole('listitem'),
     ).toHaveCount(2);
@@ -354,10 +352,10 @@ test('badge on catalog v3: points with their value basis, a store card not accep
     await cart.goto('https://www.bestbuy.com/cart');
     const badge = await badgeFrame(cart);
     const pill = badge.getByRole('button', {
-      name: 'Use Points · $0.98 in points, estimated value, on this cart (AI Checkout). Show details',
+      name: 'Use Points · estimated $0.98 in points on this cart (AI Checkout). Show details',
     });
     await expect(pill).toBeVisible();
-    await expect(pill).toContainText('Use Points · $0.98 in points');
+    await expect(pill).toContainText('Use Points · est. $0.98 in points');
     await axeBadge(badge, 'v3 collapsed badge');
     await cart.screenshot({ path: testInfo.outputPath('v3-collapsed.png') });
     await pill.click();
@@ -386,7 +384,9 @@ test('badge on catalog v3: points with their value basis, a store card not accep
     await expect(ranking.getByRole('listitem').first()).toContainText('27 points at 1.2¢ each.');
     await axeBadge(badge, 'v3 panel with Venmo');
     await badge.getByRole('button', { name: 'Collapse' }).click();
-    await expect(badge.getByRole('button', { name: /Use Points · \$0\.32 in points/ })).toBeVisible();
+    await expect(
+      badge.getByRole('button', { name: /Use Points · estimated \$0\.32 in points/ }),
+    ).toBeVisible();
   } finally {
     await context.close();
   }

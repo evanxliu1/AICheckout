@@ -12,6 +12,7 @@ import type { AppState, CatalogCache, CheckoutResponse } from '../src/state/cont
 import { CATALOG_KEY, createStateService, localDate, STATE_KEY } from '../src/state/service';
 import type { StateStorage } from '../src/state/service';
 import { currentCatalog } from '../src/state/catalog';
+import { enginePurchase } from '../src/state/wallet';
 import { redateCatalog } from '../../packages/rewards-core/src/catalog-helpers';
 
 vi.mock('../src/domain', async (importOriginal) => {
@@ -262,5 +263,42 @@ describe('when both catalogs have expired (coordinator decision, 2026-10-03)', (
     expect(after.catalog.version).toBe('hosted-v3.9');
     expect(after.state.wallet.gates).toEqual([]);
     expect(after.state.wallet.valueOverrides).toEqual(wallet.valueOverrides);
+  });
+});
+
+describe('Venmo under an older catalog in effect (M7 review)', () => {
+  it('compares a Venmo payment as a card payment when a v2 catalog is in effect, and saves it so', async () => {
+    const newerV2 = {
+      ...structuredClone(realV2),
+      version: 'hosted-v2.9',
+      verifiedAt: '2026-10-02T06:00:00Z',
+    };
+    const cache = cacheOf(release(newerV2, 3));
+    expect(currentCatalog(cache, now).schemaVersion).toBe(2);
+    const local = memory({
+      [STATE_KEY]: {
+        ...emptyState(),
+        revision: 1,
+        walletCatalogVersion: 'hosted-v2.9',
+        wallet: { defaultCardId: 'citi-double-cash', cards: [{ cardId: 'citi-double-cash', usage: [] }] },
+      },
+      [CATALOG_KEY]: cache,
+    });
+    const service = createStateService(local.api, clock);
+    const purchase = {
+      merchantId: 'best-buy-us',
+      currency: 'USD' as const,
+      amountCents: 10_000,
+      purchasedOn: localDate(now),
+      eligiblePurchase: 'eligible' as const,
+      onlineRetail: 'eligible' as const,
+      paymentPath: 'venmo' as const,
+    };
+    const result = ok(await service({ type: 'checkout:compare', expectedRevision: 1, purchase }));
+    expect(result.comparison?.status).toBe('ready');
+    expect(result.state.purchase?.paymentPath).toBe('card');
+    // A Venmo purchase saved under v3 terms is re-compared as a card payment, not refused.
+    expect(enginePurchase(purchase, newerV2).paymentPath).toBe('card');
+    expect(enginePurchase(purchase, CATALOG_V3_FIXTURE)).toBe(purchase);
   });
 });

@@ -84,7 +84,7 @@ Stage 2 M7 (branch `s2-m7-extension-ui`, verified 2026-10-03 with the unit tests
 
 [`frame.ts`](../../extension/src/badge/frame.ts) creates the host element with a **closed** shadow root holding a cross-origin `chrome-extension://` iframe, so page scripts can see the host but not its contents. The iframe ([`BadgeApp.tsx`](../../extension/src/badge/BadgeApp.tsx), [`client.ts`](../../extension/src/badge/client.ts)) talks to the worker via `chrome.runtime.sendMessage` and posts only `{source: 'ai-checkout-badge', type: 'size', width, height, expanded}` or `{type: 'hide'}` to `location.ancestorOrigins[0]`. The host accepts a message only if `event.source` is its iframe's window, `event.origin` is the extension origin, and the shape has exactly the expected keys with sizes in 0–4000.
 
-Pill texts by view: `Use {card} · {$x} back` for cash back; catalog v3 (Stage 2 M7, `estimates.ts:pillReward`): `· {$x} in store rewards`, `· {$x} in points` (or miles; the accessible name adds "estimated value" for a published estimate), and for a program without a value its units, `· {n} miles`; a range reads `$x–$y`, a $0 minimum `up to $y`; `Unlock to see your best card` (or `Unlock to record this order`), `Pick your cards to see your best card` (opens onboarding), `Can't read this cart — enter the amount`, `Did you pay with your recommended card?`.
+Pill texts by view: `Use {card} · {$x} back` for cash back; catalog v3 (Stage 2 M7, `estimates.ts:pillReward`): `· {$x} in store rewards`, `· {$x} in points` (or miles; a published estimate reads `· est. {$x} in points`, spelled "estimated" in the accessible name; an issuer's or the shopper's value is named in the accessible name), and for a program without a value its units, `· {n} miles`; a range reads `$x–$y`, a $0 minimum `up to $y`; `Unlock to see your best card` (or `Unlock to record this order`), `Pick your cards to see your best card` (opens onboarding), `Can't read this cart — enter the amount`, `Did you pay with your recommended card?`.
 
 ### Order detection and savings
 
@@ -112,7 +112,7 @@ Pill texts by view: `Use {card} · {$x} back` for cash back; catalog v3 (Stage 2
 | Layer | Tests |
 | --- | --- |
 | Unit | `extension/tests/auto-reader.test.ts` (includes back/forward-cache resume and `observeCart` host removal), `badge-routing.test.ts`, `badge-service.test.ts` |
-| Browser | `extension/e2e/badge.spec.ts`: a catalog v3 badge (points pill with "estimated value", estimate label, a store card not accepted, Venmo, no inline styles, axe on pill and panel); onboarding, each supported cart, live updates on quantity change, closed shadow + cross-origin iframe, a removed host coming back without a body change, the covered-click status message, dismiss, per-site off, order savings, axe on badge and panel; no-cards and locked prompts. Fixture pages are served at the real hosts via `context.route`. |
+| Browser | `extension/e2e/badge.spec.ts`: a catalog v3 badge (points pill with "est.", estimate label, a store card not accepted, Venmo, no inline styles, axe on pill and panel); onboarding, each supported cart, live updates on quantity change, closed shadow + cross-origin iframe, a removed host coming back without a body change, the covered-click status message, dismiss, per-site off, order savings, axe on badge and panel; no-cards and locked prompts. Fixture pages are served at the real hosts via `context.route`. |
 
 ## Related
 

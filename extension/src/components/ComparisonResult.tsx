@@ -95,7 +95,9 @@ export function EstimateRow({
           ))}
         </div>
       )}
-      {estimate.minRewardCents === 0 && estimate.maxRewardCents > 0 && (
+      {(estimate.unitValue === null
+        ? (estimate.minRewardUnits ?? 0) === 0 && (estimate.maxRewardUnits ?? 0) > 0
+        : estimate.minRewardCents === 0 && estimate.maxRewardCents > 0) && (
         <p className="supporting">
           Nothing is guaranteed: this card earns here only if the conditions below are met.
         </p>
@@ -120,7 +122,8 @@ export function EstimateRow({
         // A store card with no base rate: only its own rule can earn.
         <p>
           {rate(applied.rateBps)} on “{applied.issuerWording}”
-          {estimate.maxBonusSpendCents < amountCents &&
+          {estimate.maxBonusSpendCents > 0 &&
+            estimate.maxBonusSpendCents < amountCents &&
             ` for up to ${money(estimate.maxBonusSpendCents)} of this purchase`}
           ; nothing on other purchases.
         </p>

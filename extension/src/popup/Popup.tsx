@@ -111,7 +111,9 @@ export default function Popup({
     // Restored results are labeled saved; a new comparison requires renewed confirmation.
     setEligible(false);
     setOnlineRetail(next.state.purchase?.onlineRetail ?? 'unknown');
-    setPaymentPath(next.state.purchase?.paymentPath ?? 'card');
+    // Venmo is offered only with catalog v3 terms.
+    const path = next.state.purchase?.paymentPath ?? 'card';
+    setPaymentPath(path === 'venmo' && next.catalog.schemaVersion !== 3 ? 'card' : path);
     setDirty(false);
     setEditing(next.state.wallet.cards.length === 0);
   }, []);

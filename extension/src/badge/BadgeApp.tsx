@@ -155,8 +155,15 @@ export default function BadgeApp() {
     const best = view.result.estimates.find((e) => e.cardId === view.result.preferredCardId)!;
     const name = view.catalog.cards.find((c) => c.id === best.cardId)?.shortName ?? best.cardId;
     pillText = `Use ${name} · ${pillReward(best, view.catalog)}`;
-    const estimated = rewardKind(best, view.catalog) === 'points' ? ', estimated value,' : '';
-    pillLabel = `${pillText}${estimated} on this cart (AI Checkout). Show details`;
+    const basis = rewardKind(best, view.catalog) === 'points' ? best.unitValue?.basis : undefined;
+    // The pill says "est." for a published estimate; the label spells it out.
+    const valued =
+      basis === 'override'
+        ? ', at your value,'
+        : basis && basis !== 'published-estimate'
+          ? ', at the issuer’s value,'
+          : '';
+    pillLabel = `${pillText.replace(' · est. ', ' · estimated ')}${valued} on this cart (AI Checkout). Show details`;
     pillAction = expand;
   } else if (view.kind === 'locked') {
     pillText = view.order ? 'Unlock to record this order' : 'Unlock to see your best card';

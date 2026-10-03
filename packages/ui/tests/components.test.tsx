@@ -715,6 +715,35 @@ describe('Combobox', () => {
     expect(input.getAttribute('aria-expanded')).toBe('false');
   });
 
+  it('moves through interleaved groups in the order they are shown', async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    render(
+      <Field label="Add a card">
+        {(control) => (
+          <Combobox
+            {...control}
+            listLabel="Matching cards"
+            options={[OPTIONS[0], OPTIONS[2], OPTIONS[1]]}
+            onSelect={onSelect}
+          />
+        )}
+      </Field>,
+    );
+    const input = screen.getByRole('combobox', { name: 'Add a card' });
+    await user.type(input, 'cash');
+    const shown = screen.getAllByRole('option');
+    expect(shown.map((o) => o.textContent)).toEqual([
+      'Citi Double Cash',
+      'Citi Custom Cash',
+      'Blue Cash Everyday',
+    ]);
+    await user.keyboard('{ArrowDown}{ArrowDown}');
+    expect(input.getAttribute('aria-activedescendant')).toBe(shown[1].id);
+    await user.keyboard('{Enter}');
+    expect(onSelect).toHaveBeenCalledWith('cc');
+  });
+
   it('says when nothing matches, closes on Escape, and picks by click', async () => {
     const user = userEvent.setup();
     const onSelect = vi.fn();

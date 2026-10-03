@@ -300,7 +300,7 @@ test('bundled catalog v3: real cards re-rank when a category, a point value or P
       await popup
         .getByLabel(/Cash\+ Visa Signature electronics store bonus activation/)
         .selectOption('active');
-      await popup.getByLabel(/Cash\+ Visa Signature combined .* spend in/).fill('0');
+      await popup.getByLabel(/Cash\+ Visa Signature combined .* spend this quarter/).fill('0');
     });
     await compare('best-buy-us');
     await expect(popup.getByRole('heading', { name: 'Use Cash+ Visa Signature' })).toBeVisible();

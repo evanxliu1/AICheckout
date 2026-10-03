@@ -4,13 +4,15 @@ import ComparisonResult from '../src/components/ComparisonResult';
 import {
   amount,
   basisLabel,
+  cashLikePoints,
   centsEach,
   pillReward,
   rankingNote,
+  rateText,
   rewardText,
   unavailableCopy,
 } from '../src/components/estimates';
-import { compareRewards } from '../src/domain';
+import { CATALOG_V3 as BUNDLED_V3, compareRewards } from '../src/domain';
 import type { CardEstimate, CatalogV3, Comparison, Purchase, Wallet } from '../src/domain';
 import { CATALOG_V3_FIXTURE } from '../../packages/rewards-core/test-cases';
 
@@ -105,7 +107,7 @@ describe('catalog v3 amounts and value basis', () => {
     );
     expect(
       screen.getByText(
-        /Prime Visa is first because it is sure to earn the most\. Another card could earn more/,
+        /Prime Visa is first because its guaranteed estimate is the highest\. Another card could earn more/,
       ),
     ).toBeTruthy();
   });
@@ -168,28 +170,32 @@ describe('catalog v3 amounts and value basis', () => {
   });
 });
 
+const estimate = (extra: Partial<CardEstimate>): CardEstimate => ({
+  cardId: 'test-points-card',
+  minRewardCents: 360,
+  maxRewardCents: 360,
+  baseRateBps: 100,
+  bonusRateBps: null,
+  minBonusSpendCents: 0,
+  maxBonusSpendCents: 0,
+  uncertainties: [],
+  sourceIds: [],
+  programId: 'test-membership-points',
+  minRewardUnits: 300,
+  maxRewardUnits: 300,
+  unitValue: { hundredthsOfCent: 120, basis: 'published-estimate' },
+  ...extra,
+});
+
 describe('result wording helpers', () => {
-  const estimate = (extra: Partial<CardEstimate>): CardEstimate => ({
-    cardId: 'test-points-card',
-    minRewardCents: 360,
-    maxRewardCents: 360,
-    baseRateBps: 100,
-    bonusRateBps: null,
-    minBonusSpendCents: 0,
-    maxBonusSpendCents: 0,
-    uncertainties: [],
-    sourceIds: [],
-    programId: 'test-membership-points',
-    minRewardUnits: 300,
-    maxRewardUnits: 300,
-    unitValue: { hundredthsOfCent: 120, basis: 'published-estimate' },
-    ...extra,
-  });
   it('formats amounts, units and the pill', () => {
     expect([120, 100, 66, 125].map(centsEach)).toEqual(['1.2¢', '1¢', '0.66¢', '1.25¢']);
     expect(amount({ minRewardCents: 0, maxRewardCents: 500 })).toBe('up to $5.00');
     expect(amount({ minRewardCents: 100, maxRewardCents: 500 })).toBe('$1.00–$5.00');
-    expect(pillReward(estimate({}), CATALOG_V3_FIXTURE)).toBe('$3.60 in points');
+    expect(pillReward(estimate({}), CATALOG_V3_FIXTURE)).toBe('est. $3.60 in points');
+    expect(
+      pillReward(estimate({ unitValue: { hundredthsOfCent: 120, basis: 'override' } }), CATALOG_V3_FIXTURE),
+    ).toBe('$3.60 in points');
     expect(
       pillReward(
         estimate({ programId: 'cash-back', unitValue: { hundredthsOfCent: 100, basis: 'cash' } }),
@@ -244,7 +250,54 @@ describe('result wording helpers', () => {
         CATALOG_V3_FIXTURE,
       ),
     ).toBe(
-      'Points is first because it is sure to earn the most. Cards whose points have no value are listed last; setting a value may move them up.',
+      'Points is first because its guaranteed estimate is the highest. Cards whose points have no value are listed last; setting a value may move them up.',
     );
+  });
+});
+
+describe('Citi Double Cash on the bundled catalog: points the issuer values at 1¢', () => {
+  const real = BUNDLED_V3;
+  const doubleCash = (wallet: Partial<Wallet> = {}) => {
+    const { result, p } = compare(['citi-double-cash'], {}, wallet, real);
+    if (result.status !== 'ready') throw new Error(`unavailable: ${result.reason}`);
+    render(<ComparisonResult result={result} purchase={p} catalog={real} />);
+    return result.estimates[0];
+  };
+  it('reads as 2% paid as ThankYou points, not as "2 points per $1"', () => {
+    const e = doubleCash();
+    expect(cashLikePoints(e, real)).toBe(true);
+    expect(rateText(200, real, e)).toBe('2%');
+    expect(pillReward(e, real)).toBe('$2.00 in points');
+    const card = row('Double Cash');
+    expect(within(card).getByText('Issuer-stated')).toBeTruthy();
+    expect(card.textContent).toContain('Paid as 200 points (Citi ThankYou Points) at 1¢ each.');
+    expect(card.textContent).toContain('2% on “every purchase”.');
+    expect(card.textContent).toContain('2% if the balance is paid (1% at purchase).');
+    expect(card.textContent).not.toContain('points per $1');
+  });
+  it('keeps points wording for the shopper’s own value and for published estimates', () => {
+    const e = doubleCash({ valueOverrides: [{ programId: 'citi-thankyou', valueHundredthsOfCent: 100 }] });
+    expect(cashLikePoints(e, real)).toBe(false);
+    expect(rateText(200, real, e)).toBe('2 points per $1');
+    expect(row('Double Cash').textContent).toContain('200 points at 1¢ each.');
+    cleanup();
+    // Sold on points, although Chase states 1¢ a point: keeps "points per $1".
+    const { result } = compare(['chase-sapphire-preferred'], {}, {}, real);
+    if (result.status !== 'ready') throw new Error('unavailable');
+    expect(result.estimates[0].unitValue?.basis).toBe('card-stated');
+    expect(cashLikePoints(result.estimates[0], real)).toBe(false);
+    expect(rateText(300, real, result.estimates[0])).toBe('3 points per $1');
+  });
+});
+
+describe('ranking note', () => {
+  it('says another card could earn more only when one’s best case beats the first card’s guarantee', () => {
+    const first = estimate({ cardId: 'test-points-card', minRewardCents: 500, maxRewardCents: 500 });
+    const lower = estimate({ cardId: 'test-cash-plus', minRewardCents: 100, maxRewardCents: 400 });
+    const higher = estimate({ cardId: 'test-cash-plus', minRewardCents: 100, maxRewardCents: 600 });
+    const note = (other: CardEstimate) =>
+      rankingNote({ preferredCardId: 'test-points-card', estimates: [first, other] }, CATALOG_V3_FIXTURE);
+    expect(note(lower)).toBe('Points is first because its guaranteed estimate is the highest.');
+    expect(note(higher)).toContain('Another card could earn more if its conditions below are met.');
   });
 });

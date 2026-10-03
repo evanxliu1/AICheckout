@@ -269,7 +269,9 @@ function blocked(rule: RewardRuleV3, ctx: Context): RuleStatusV3 | null {
   if (path !== 'card' && rule.excludedPaymentPaths.includes(path)) return 'not-eligible';
   if (rule.requiredPaymentPaths.length > 0 && !rule.requiredPaymentPaths.includes(path))
     return 'not-eligible';
-  if (needsActivation(rule) && ctx.usageFor(rule)?.activation === 'inactive') return 'not-eligible';
+  // A chosen category is its own enrollment (`enrolledByChoice`); a leftover activation row is ignored.
+  if (needsActivation(rule) && !enrolledByChoice(card, rule) && ctx.usageFor(rule)?.activation === 'inactive')
+    return 'not-eligible';
   if (rule.choice) {
     const choice = card.choices.find((c) => c.id === rule.choice!.choiceId)!;
     const picked = owned.choices?.find((c) => c.choiceId === choice.id);

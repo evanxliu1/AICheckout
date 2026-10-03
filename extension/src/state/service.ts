@@ -13,7 +13,7 @@ import { migrateState, reconcileState } from './migrate';
 import type { AppState, CatalogCache, CheckoutResponse } from './contracts';
 import type { CartSnapshot } from '../checkout/contracts';
 import { catalogByVersion, CatalogUpdateError, currentCatalog, prepareCatalogUpdate } from './catalog';
-import { engineWallet, validateWallet } from './wallet';
+import { enginePurchase, engineWallet, validateWallet } from './wallet';
 import { cardIndex, catalogSlice } from './catalog-slice';
 import {
   CART_MAX_AGE_MS,
@@ -188,7 +188,12 @@ export function createStateService(
         return success(
           state,
           catalog,
-          compareRewards(catalog, engineWallet(state.wallet, catalog), state.purchase, checkedAt),
+          compareRewards(
+            catalog,
+            engineWallet(state.wallet, catalog),
+            enginePurchase(state.purchase, catalog),
+            checkedAt,
+          ),
           notice,
         );
       }
@@ -344,17 +349,13 @@ export function createStateService(
       const comparedAt = clock();
       if (request.purchase.purchasedOn !== localDate(comparedAt))
         return { ok: false, error: 'The date changed while reading the cart. Confirm today’s amount again.' };
-      const comparison = compareRewards(
-        catalog,
-        engineWallet(state.wallet, catalog),
-        request.purchase,
-        comparedAt,
-      );
+      const purchase = enginePurchase(request.purchase, catalog);
+      const comparison = compareRewards(catalog, engineWallet(state.wallet, catalog), purchase, comparedAt);
       if (comparison.status === 'unavailable') return success(state, catalog, comparison);
       const next: AppState = {
         ...state,
         revision: state.revision + 1,
-        purchase: request.purchase,
+        purchase,
         cart: request.cartId ? state.cart : null,
         comparison: {
           inputRevision: state.revision + 1,

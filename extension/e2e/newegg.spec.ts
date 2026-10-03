@@ -35,7 +35,7 @@ test('Newegg native capture distinguishes subtotal, follows quantity changes and
     let popup = await openNativePopup(context, merchant, id);
     await startNativePopup(popup);
     await popup.checkCards(REAL_CARD_NAMES);
-    await expect.poll(popup.text).toContain('online retail spend in');
+    await expect.poll(popup.text).toContain('online retail spend this year');
     await popup.fill('spend-bce-online-retail', '0');
     await popup.click('Save cards');
     await expect.poll(popup.text).toContain('Read cart amount');

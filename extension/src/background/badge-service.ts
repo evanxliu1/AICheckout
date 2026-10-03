@@ -7,7 +7,7 @@ import { merchantForCheckout, merchantForOrderConfirmation, type MerchantId } fr
 import type { AppState, CheckoutResponse } from '../state/contracts';
 import type { StateStorage } from '../state/service';
 import { localDate } from '../state/keys';
-import { engineWallet } from '../state/wallet';
+import { enginePurchase, engineWallet } from '../state/wallet';
 import { catalogSlice } from '../state/catalog-slice';
 import type { VaultStatus } from '../state/vault-contracts';
 import { savingsEntry } from '../state/savings';
@@ -67,16 +67,18 @@ export function autoPurchase(
 ): Purchase & { paymentPath: TabEntry['paymentPath'] } {
   const profile =
     catalog.schemaVersion === 1 ? undefined : catalog.merchants.find((m) => m.id === merchantId);
-  return {
-    merchantId,
-    currency: 'USD',
-    amountCents,
-    purchasedOn: localDate(now),
-    eligiblePurchase: 'eligible',
-    onlineRetail: profile ? (profile.onlineRetail ? 'eligible' : 'ineligible') : 'unknown',
-    // Venmo exists only in catalog v3 terms; older terms compare a card payment.
-    paymentPath: paymentPath === 'venmo' && catalog.schemaVersion !== 3 ? 'card' : paymentPath,
-  };
+  return enginePurchase(
+    {
+      merchantId,
+      currency: 'USD',
+      amountCents,
+      purchasedOn: localDate(now),
+      eligiblePurchase: 'eligible',
+      onlineRetail: profile ? (profile.onlineRetail ? 'eligible' : 'ineligible') : 'unknown',
+      paymentPath,
+    },
+    catalog,
+  );
 }
 
 /** The part of the catalog the badge iframe needs for one merchant: the owned cards, that merchant,

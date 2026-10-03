@@ -1214,6 +1214,19 @@ describe('catalog v3 engine: a chosen category is its own enrollment (Stage 2 M7
     expect(cents(e)).toEqual([100, 500]);
     expect(e.uncertainties).toEqual(['choice-unknown']);
   });
+  it('ignores a leftover same-day "inactive" row of a chosen enroll-once category', () => {
+    const e = only({
+      catalog: enrollOnce,
+      cards: [
+        owned('test-cash-plus', {
+          usage: [...capKnown, usage('cash-plus-electronics', { activation: 'inactive' })],
+          choices: [{ choiceId: 'five-percent', optionIds: ['electronics'] }],
+        }),
+      ],
+    });
+    expect(cents(e)).toEqual([500, 500]);
+    expect(e.rules?.find((r) => r.ruleId === 'cash-plus-electronics')?.status).toBe('applied');
+  });
   it('still asks recurring activation of a chosen category, and never asks it in usageInputs', () => {
     const e = only({
       cards: [

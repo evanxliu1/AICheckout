@@ -84,7 +84,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     }
     await startNativePopup(popup);
     await popup.checkCards(REAL_CARD_NAMES);
-    await expect.poll(popup.text).toContain('online retail spend in');
+    await expect.poll(popup.text).toContain('online retail spend this year');
     await popup.fill('spend-bce-online-retail', '0');
     await popup.evaluate(
       "document.querySelector('[aria-labelledby=wallet-heading]').scrollIntoView({block:'start'})",
@@ -141,7 +141,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     popup = await openNativePopup(context, merchant, id);
     await expect.poll(popup.text).toContain('Edit cards');
     await popup.click('Edit cards');
-    await expect.poll(popup.text).toContain('online retail spend in');
+    await expect.poll(popup.text).toContain('online retail spend this year');
     await popup.fill('spend-bce-online-retail', '');
     await popup.click('Save cards');
     await expect.poll(popup.text).toContain('Read cart amount');
@@ -152,7 +152,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
       'Your online retail spend toward this year’s bonus limit is unknown.',
     ]);
     await popup.click('Edit cards');
-    await expect.poll(popup.text).toContain('online retail spend in');
+    await expect.poll(popup.text).toContain('online retail spend this year');
     await popup.fill('spend-bce-online-retail', '0');
     await popup.click('Save cards');
     await expect.poll(popup.text).toContain('Read cart amount');

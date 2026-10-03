@@ -84,6 +84,31 @@ export function rewardKind(estimate: CardEstimate, catalog: Catalog): RewardKind
   return program.id === 'cash-back' ? 'cash' : 'store';
 }
 
+/**
+ * A card sold as a cash-back card whose rewards are points the issuer itself values at exactly 1¢
+ * each, redeemable beyond one store family: Citi Double Cash, which earns ThankYou points (M3) and is
+ * advertised as "2% cash back". Its rates read as percentages ("2%"), the same arithmetic as the
+ * dollar amount shown, with a line saying they are paid as points. The catalog has no "marketed as
+ * cash back" field, so the card's name stands in for it ("Cash" as a word); points cards sold on
+ * points (Sapphire Preferred, Autograph) and published estimates or the shopper's own values keep
+ * "points per $1".
+ */
+export function cashLikePoints(estimate: CardEstimate, catalog: Catalog): boolean {
+  const program = programOf(estimate, catalog);
+  const value = estimate.unitValue;
+  const card = catalog.cards.find((c) => c.id === estimate.cardId);
+  return (
+    rewardKind(estimate, catalog) === 'points' &&
+    !!card &&
+    /\bcash\b/i.test(card.name) &&
+    !!program &&
+    program.redemptionBrandIds.length === 0 &&
+    !!value &&
+    (value.basis === 'issuer-stated' || value.basis === 'card-stated') &&
+    value.hundredthsOfCent === 100
+  );
+}
+
 /** The short label of a value's basis. Published estimates are opinions, never issuer facts. */
 export function basisLabel(basis: UnitValue['basis']): 'estimate' | 'issuer-stated' | 'your value' | null {
   if (basis === 'published-estimate') return 'estimate';
@@ -99,13 +124,14 @@ export function rewardText(estimate: CardEstimate, catalog: Catalog): string {
   return capitalize(amount(estimate));
 }
 
-/** The badge pill's short reward: "$3.00 back", "$5.00 in store rewards", "$1.20 in miles",
- * "1,000 miles". */
+/** The badge pill's short reward: "$3.00 back", "$5.00 in store rewards", "$4.00 in points" (a value
+ * the issuer states or the shopper set), "est. $1.20 in miles" (a published estimate), "1,000 miles". */
 export function pillReward(estimate: CardEstimate, catalog: Catalog): string {
   const kind = rewardKind(estimate, catalog);
   const program = programOf(estimate, catalog);
   if (kind === 'unvalued') return units(estimate, program!.unitName);
-  if (kind === 'points') return `${amount(estimate)} in ${program!.unitName}`;
+  if (kind === 'points')
+    return `${estimate.unitValue?.basis === 'published-estimate' ? 'est. ' : ''}${amount(estimate)} in ${program!.unitName}`;
   if (kind === 'store') return `${amount(estimate)} in store rewards`;
   return `${amount(estimate)} back`;
 }
@@ -133,7 +159,9 @@ export function valueDetails(
   }
   const value = estimate.unitValue!;
   const lines = [
-    `${capitalize(units(estimate, program.unitName))} at ${centsEach(value.hundredthsOfCent)} each.`,
+    cashLikePoints(estimate, catalog)
+      ? `Paid as ${units(estimate, program.unitName)} (${program.name}) at ${centsEach(value.hundredthsOfCent)} each.`
+      : `${capitalize(units(estimate, program.unitName))} at ${centsEach(value.hundredthsOfCent)} each.`,
   ];
   if (value.basis === 'published-estimate' && program.valuation.basis === 'published-estimate')
     lines.push(
@@ -145,11 +173,12 @@ export function valueDetails(
   return { lines, basis: basisLabel(value.basis) };
 }
 
-/** A rule's rate in the program's terms: "3%" for cash back and store rewards, "4 points per $1"
- * for points (catalog points rates are the card's multiple × 100). */
+/** A rule's rate in the program's terms: "3%" for cash back, store rewards and points the issuer
+ * values at 1¢ (`cashLikePoints`), "4 points per $1" for other points (catalog points rates are the
+ * card's multiple × 100). */
 export function rateText(bps: number, catalog: Catalog, estimate: CardEstimate): string {
   const program = programOf(estimate, catalog);
-  if (program?.currency === 'points') {
+  if (program?.currency === 'points' && !cashLikePoints(estimate, catalog)) {
     const n = bps / 100;
     // "1 point per $1", "1 mile per $1"; other unit names ("Avios", "Rewards") stay as they are.
     const unit =
@@ -286,12 +315,19 @@ export function rankingNote(
   catalog: Catalog,
 ): string {
   const preferred = catalog.cards.find((c) => c.id === result.preferredCardId)?.shortName ?? 'The first card';
-  const parts = [`${preferred} is first because it is sure to earn the most.`];
-  if (
-    result.estimates.some(
-      (e) => e.minRewardCents !== e.maxRewardCents || e.minRewardUnits !== e.maxRewardUnits,
-    )
-  )
+  const first = result.estimates.find((e) => e.cardId === result.preferredCardId);
+  const parts = [`${preferred} is first because its guaranteed estimate is the highest.`];
+  // Only when another card's best case beats the first card's guaranteed amount (cards in units are
+  // compared in units with each other; valued cards in cents).
+  const couldBeat = (e: CardEstimate) =>
+    !!first &&
+    e.cardId !== first.cardId &&
+    ((e.unitValue === null) === (first.unitValue === null)
+      ? e.unitValue === null
+        ? (e.maxRewardUnits ?? 0) > (first.minRewardUnits ?? 0)
+        : e.maxRewardCents > first.minRewardCents
+      : first.unitValue === null && e.maxRewardCents > 0);
+  if (result.estimates.some(couldBeat))
     parts.push('Another card could earn more if its conditions below are met.');
   if (result.estimates.some((e) => e.unitValue === null && (e.maxRewardUnits ?? 0) > 0))
     parts.push('Cards whose points have no value are listed last; setting a value may move them up.');
