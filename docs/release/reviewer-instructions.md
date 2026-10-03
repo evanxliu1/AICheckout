@@ -11,7 +11,7 @@ Draft for the final release. Shopper features need no login, payment, bank conne
 
 ## Manual two-card demonstration
 
-1. Open the extension. Read the setup disclosure, choose and confirm a disposable test passphrase of at least 15 characters, accept the disclosure, and choose **Protect saved inputs**. Keep the phrase for the restart check; do not send it to the publisher. Select **Capital One Quicksilver** and **American Express Blue Cash Everyday**. For this synthetic demonstration only, enter `0` in the Blue Cash Everyday annual online-retail spend field and save.
+1. Open the extension. Under **Add a card**, type part of the name and pick **Capital One Quicksilver**, then **American Express Blue Cash Everyday**, from the list (the catalog has 178 cards). For this synthetic demonstration only, enter `0` in the Blue Cash Everyday online retail spend field and save. For the lock and restart checks below, open **Settings** and choose **Protect with a passphrase** with a disposable test passphrase of at least 15 characters; keep it, and do not send it to the publisher.
 2. Choose **Best Buy US** as Merchant. Enter `100` as the USD purchase amount.
 3. Choose **Eligible goods, paid directly online**, confirm the exclusion checkbox, and compare.
 4. Expect **Use Blue Cash Everyday**, with **$3.00** for Blue Cash Everyday and **$1.50** for Quicksilver. Confirm the saved-estimate sentence names the merchant and amount. Open **Card terms and sources**.
@@ -42,7 +42,7 @@ For Best Buy, the live reader and native fixture observations already exist, but
 - Use Tab/Shift+Tab and native select/checkbox keys through wallet, purchase, result sources and deletion. Check visible focus, readable errors and scrolling in the native 360px popup.
 - Choose **Lock saved inputs**. All open extension views should hide private inputs. A wrong phrase must fail; the correct phrase restores them. Restart Chrome and confirm that unlocking is required again. Closing only the popup should keep the session unlocked.
 - Expand **Data and protection details** during setup, unlock and normal use. Check that retention, memory-key lifetime and deletion limits are readable.
-- Expand **Delete saved data**, confirm permanent deletion, choose **Delete all local data**, and reopen. The protection-setup screen should remain reset. Both locked and unlocked deletion require the explicit reset checkbox; neither requires the passphrase. Remove the extension when testing ends.
+- Expand **Delete saved data**, confirm permanent deletion, choose **Delete all local data**, and reopen. Card setup should return with no saved cards. Both locked and unlocked deletion require the explicit reset checkbox; neither requires the passphrase. Remove the extension when testing ends.
 
 ## Test record
 

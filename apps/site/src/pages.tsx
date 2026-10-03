@@ -44,9 +44,8 @@ function Section({ id, title, children }: { id: string; title: string; children:
   );
 }
 
-// TODO(after the Ocean theme): these captures show the pre-M7 UI (the wallet capture still shows
-// the seven-card setup of catalog v2). Deferred on 2026-10-03 until the Ocean theme lands, so the
-// site and Web Store media are regenerated once, in the final look.
+// Copied from the Web Store screenshots in docs/release/assets (vite.config.ts COPIED); regenerated
+// on 2026-10-03 in the Ocean theme with the 178-card catalog. Keep alt text in step with them.
 const SCREENSHOTS = [
   {
     src: '/media/2-comparison.png',
@@ -60,8 +59,8 @@ const SCREENSHOTS = [
   },
   {
     src: '/media/1-wallet.png',
-    alt: 'Extension wallet setup listing the seven supported cards grouped by issuer.',
-    caption: 'Pick the cards you already have. No card numbers or bank login.',
+    alt: 'Extension wallet editor: a search field for the 178-card catalog above the sample cards added, starting with Citi Double Cash, Wells Fargo Active Cash and Capital One Quicksilver.',
+    caption: 'Search 178 cards and add the ones you already have. No card numbers or bank login.',
   },
   {
     src: '/media/4-subtotal.png',

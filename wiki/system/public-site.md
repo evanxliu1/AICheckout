@@ -6,7 +6,7 @@ status: stable
 tags: [system, site, static]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T03:40:00Z
+  at: 2026-10-03T04:10:00Z
 sources:
   - resource: ../../apps/site/vite.config.ts
     title: Site build and copied files
@@ -60,7 +60,7 @@ Verified 2026-10-03 on branch `s2-m10-docs-publish` (Stage 2 M10) by reading the
 - Pages must not need inline style or script; the CSP blocks them and the browser test fails on any CSP violation.
 - The site can never answer `/v1`, `/review` or `/health` (see [API](api.md#gotchas)).
 - Updating eval numbers means regenerating `docs/evals/results.json` (`npm run eval:summarize`) and rebuilding the site; nothing is fetched at runtime.
-- TODO(after the Ocean theme): the screenshots (`media/1-wallet.png` still shows the seven-card setup) show the pre-M7, pre-Ocean UI. Deferred on 2026-10-03 (M10 part 2) until the Ocean theme lands; branch `ui-ocean-theme` was merged with `main` on 2026-10-03 and waits for Evan's merge, after which the site and Web Store media are regenerated once, in the final look. The support page's getting-started steps describe the M7 card search and questions since the M7 merge (2026-10-03).
+- The home page's "What you see" screenshots are copied at build time from the Web Store screenshots 1–4 (`COPIED` in `vite.config.ts`), so regenerating the [release media](../ops/release-media.md) updates them; their alt text and captions live in `SCREENSHOTS` in `pages.tsx` and must be kept in step. Regenerated on 2026-10-03 in the Ocean theme with card search (178 cards). The support page's getting-started steps describe the M7 card search and questions since the M7 merge (2026-10-03).
 - The privacy and support pages describe extension behaviour; when the extension changes (for example the [Cart badge](cart-badge.md)), these pages need a matching edit.
 
 ## Tests
