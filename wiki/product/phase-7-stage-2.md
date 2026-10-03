@@ -6,7 +6,7 @@ status: draft
 tags: [product, plan, phase-7, catalog, engine, extension]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T00:25:00Z
+  at: 2026-10-03T02:00:00Z
 stale_after: 2026-11-01T00:00:00Z
 sources:
   - resource: ../system/catalog-expansion.md
@@ -126,6 +126,7 @@ Start in parallel: M1, M3, M9, M11 (draft). After M1: M2, M4 and M8 in parallel.
 - **Scope.** Wiki pages ([rewards engine](../system/rewards-engine.md), [reward rules](../domain/reward-rules.md), [cards](../domain/cards.md), [merchants](../domain/merchants.md), [extension](../system/extension.md), [cart badge](../system/cart-badge.md), [review app](../system/review-app.md), [database](../system/database.md), [evaluation](../system/evaluation.md), [catalog expansion](../system/catalog-expansion.md)); a catalog release runbook in `wiki/ops/`; README and site copy (seven cards → 180); stale package READMEs (decision 5).
 - **Publish steps.** (1) Coordinator confirms both migrations on hosted and `main` deployed on Render. (2) Evan, in the hosted review app: start a draft from `CATALOG_V3`, attach all captures from the local capture folders, review, publish with a note, before 2026-10-28. (3) Coordinator checks `GET /v1/catalog` serves `2026-10-02.expansion.1` and a `build:hosted` extension refreshes to it (closes the Phase 3 M6 check).
 - **Acceptance.** Linter clean; release live; roadmap marks Stage 2 done.
+- **Status (2026-10-03).** Part 1 on branch `s2-m10-docs-publish`: the API checks the review token before reading capture and draft bodies (M8 review follow-up, [decision](../decisions/2026-10-03-review-token-precheck.md)); wiki pages above brought current; [catalog release runbook](../ops/catalog-release.md); README and site copy for 178 cards with the expansion eval on the results page; package READMEs corrected. Hosted check 2026-10-03T01:07Z: Render serves `main` (review bundle offers `CATALOG_V3`), `/v1/catalog` serves release 1. Left: UI docs after M7 (marked TODO(M7)), then Evan publishes.
 
 ### M11 Card-expansion pipeline readiness
 - **Scope.** Decision record and plan page for the pipeline: a CLI in `tools/catalog-pipeline` (stages research → capture → extract → draft → verify → adjudicate → apply → overlay → build → eval, resumable per batch), the skill `.claude/skills/expand-catalog`, subagent definitions `card-researcher` and `card-verifier` (plus an adjudicator), a hash-only freshness check, the `rate_not_in_evidence` fix for "NX" multiples, and the boundary rule: product code (`extension`, `packages/*`, `apps/*`) never imports `tools/`, enforced by ESLint `no-restricted-imports` and a test. Existing `scripts/*expansion*` move into the CLI in the pipeline phase, not here.

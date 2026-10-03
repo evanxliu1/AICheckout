@@ -1,6 +1,6 @@
 # Issuer extraction kernel
 
-The LLM curation harness includes a bounded kernel, durable ledger, authenticated HTTP invocation/inspection, a restricted PostgreSQL pool, and an OpenAI Responses SDK adapter. **The adapter is implemented but has not made a live model call.** Tests use explicitly synthetic source text and intercepted provider replies. There have been no paid calls, model-accuracy measurements, or automatic catalog publications.
+The LLM curation harness includes a bounded kernel, durable ledger, authenticated HTTP invocation/inspection, a restricted PostgreSQL pool, and an OpenAI Responses SDK adapter. **The OpenAI Responses adapter is implemented but has not made a live model call.** Its tests use explicitly synthetic source text and intercepted provider replies. There have been no paid calls and no automatic catalog publications. Live extraction runs and model-accuracy measurements do exist, made locally through the Codex and Claude Code subscription CLIs with the v2 contract (`v2/`), not through this adapter: [`docs/evals/results.md`](../../../../docs/evals/results.md) (7 cards, six models) and [`docs/evals/expansion.md`](../../../../docs/evals/expansion.md) (173 cards).
 
 ## Contract and context
 

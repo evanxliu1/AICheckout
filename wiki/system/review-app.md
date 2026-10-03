@@ -6,7 +6,7 @@ status: stable
 tags: [system, review, react, maintainer]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:59:00Z
+  at: 2026-10-03T02:00:00Z
 sources:
   - resource: ../../apps/review/src/client.ts
     title: API and Auth client
@@ -34,7 +34,7 @@ sources:
 
 `apps/review` (`@ai-checkout/review`) is a React 19 + Vite SPA built with `base: '/review/'` and served by the API on the same origin ([API](api.md)). A provisioned reviewer signs in with Supabase Auth, compares a candidate catalog against the published head, attaches immutable source captures, edits the draft, optionally runs and applies a v1 extraction, and publishes with an explicit, separately confirmed action. The browser holds only the Supabase origin and a publishable key (from `/review/config.json`); every protected call goes through `/v1/review/*` with the user's bearer token. The step-by-step reviewer flow is in [`apps/review/README.md`](../../apps/review/README.md).
 
-Verified 2026-10-02 on branch `s2-m8-review-large-catalog` (Stage 2 M8): `npm test --workspace=@ai-checkout/review` (7 files, 50 tests) and `npm run test:browser --workspace=@ai-checkout/review` on the local stack (7 passed, the portfolio demo skipped), including a synthetic 180-card catalog v3 draft citing 340 sources captured from a folder and published through the UI. Choices: [large catalog decision](../decisions/2026-10-02-review-large-catalog.md).
+Verified 2026-10-02 on branch `s2-m8-review-large-catalog` (Stage 2 M8): `npm test --workspace=@ai-checkout/review` (7 files, 50 tests) and `npm run test:browser --workspace=@ai-checkout/review` on the local stack (7 passed, the portfolio demo skipped), including a synthetic 180-card catalog v3 draft citing 340 sources captured from a folder and published through the UI. Choices: [large catalog decision](../decisions/2026-10-02-review-large-catalog.md). M8 merged with PR #24 and its migration is on hosted; the hosted app serves `main` with `CATALOG_V3` offered first (bundle checked 2026-10-03T01:07Z). Publishing `2026-10-02.expansion.1` from it: [catalog release runbook](../ops/catalog-release.md).
 
 ## Facts
 
@@ -70,7 +70,7 @@ Blockers enforced in the UI and again by the API/database: invalid schema, missi
 
 - Reviewer membership is provisioned by the operator in `catalog_private.reviewers`; normal users see nothing and cannot self-enroll ([Database](database.md#authority)).
 - The v1 extraction panel is hidden for schema 2 and 3 drafts; v2 extraction into drafts does not exist yet ([Curation harness](curation-harness.md#gotchas)).
-- Capturing 340 sources is 340 `POST /v1/review/sources` requests then one draft save; `/sources` allows 200 a minute, and on a 429 the app waits for `Retry-After` (up to 10 times per capture) and retries the same capture, so 340 sources take about two minutes. Captures are idempotent, so a capture run that fails part way can be repeated; nothing is attached until all succeed.
+- Capturing 340 sources is 340 `POST /v1/review/sources` requests then one draft save; `/sources` allows 200 a minute, and on a 429 the app waits for `Retry-After` (up to 10 times per capture) and retries the same capture, so 340 sources take about two minutes. Captures are idempotent, so a capture run that fails part way can be repeated; nothing is attached until all succeed. The API checks the bearer token before reading a capture or draft body (since Stage 2 M10), so an expired session fails fast with `sign_in_required` instead of after the upload ([API](api.md#facts)).
 - A capture folder must hold `<source id>.txt` files exactly as captured (the hash is of the UTF-8 text); other files are skipped and counted.
 - The structured editor edits choices, the answers a rule requires, acceptance and new IDs only through the JSON editor.
 - Captured text is rendered as inert text, never HTML.

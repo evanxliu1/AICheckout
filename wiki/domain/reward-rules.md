@@ -6,7 +6,7 @@ status: stable
 tags: [domain, rewards, engine]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:59:00Z
+  at: 2026-10-03T02:00:00Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
     title: Catalog v2 types (RewardRuleV2, RuleCap, PaymentPath, Uncertainty)
@@ -24,7 +24,7 @@ sources:
 
 # Reward rules
 
-A catalog v2 rule is one earning rule as an issuer states it: a category, a total rate, the part of that rate paid only on payment, a cap, an activation requirement, a U.S.-only flag, any excluded payment paths, and an optional promotion end date. The engine (`compareV2` in [`engine-v2.ts`](../../packages/rewards-core/src/engine-v2.ts)) decides whether each rule applies at one merchant checkout. When it cannot be sure, it reports a range from the base reward to the bonus. Cards are ranked by guaranteed minimum. The rules for the seven real cards are listed in [Cards](cards.md).
+A catalog v2 rule is one earning rule as an issuer states it: a category, a total rate, the part of that rate paid only on payment, a cap, an activation requirement, a U.S.-only flag, any excluded payment paths, and an optional promotion end date. The engine (`compareV2` in [`engine-v2.ts`](../../packages/rewards-core/src/engine-v2.ts)) decides whether each rule applies at one merchant checkout. When it cannot be sure, it reports a range from the base reward to the bonus. Cards are ranked by guaranteed minimum. Catalog v3, which the extension bundles since 2026-10-03 (`CATALOG_V3`, 178 cards), keeps every v2 field and adds the merchant, choice, gate, payment-path and valuation concepts in [Catalog v3 rules](#catalog-v3-rules); `compareV3` applies them. The cards are summarized in [Cards](cards.md).
 
 ## Facts
 

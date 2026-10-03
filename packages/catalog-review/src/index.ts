@@ -13,8 +13,8 @@ export const MAX_SOURCE_BODY_CHARS = 250_000;
 /** Most captures a draft can reference (`drafts.source_document_ids`); catalog v3 cites up to 600 sources. */
 export const MAX_DRAFT_SOURCES = 600;
 /** `POST /v1/review/sources` requests allowed a minute (per process and socket IP). Each may carry
- * `MAX_CAPTURE_REQUEST_BYTES` and is accepted before the database verifies the token, so this bounds
- * what any caller can push through the API (about 5 MB/s). The review app waits and retries when the
+ * `MAX_CAPTURE_REQUEST_BYTES`; the API checks the token before reading the body, so this bounds what a
+ * signed-in caller can push through the API (about 5 MB/s). The review app waits and retries when the
  * limit is reached, so a 600-source draft is captured in about three minutes. */
 export const MAX_CAPTURES_PER_MINUTE = 200;
 /** Largest `POST /v1/review/sources` body. `JSON.stringify` writes each UTF-16 unit of the text in at

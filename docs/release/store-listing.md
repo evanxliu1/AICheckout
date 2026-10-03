@@ -1,6 +1,6 @@
 # Store listing draft
 
-Internal preparation only. Copy the public description after the gates in [release preparation](README.md) pass. Match the final ZIP; the text below assumes the hosted-catalog build with the automatic cart badge (Phase 3b): seven card products and three US merchant readers (Amazon, Best Buy, Newegg).
+Internal preparation only. Copy the public description after the gates in [release preparation](README.md) pass. Match the final ZIP; the text below assumes the hosted-catalog build with the automatic cart badge (Phase 3b): 178 card products and three US merchant readers (Amazon, Best Buy, Newegg).
 
 ## Basic fields
 
@@ -20,7 +20,7 @@ The short description matches the current manifest. Choose the current dashboard
 
 See which card you already own earns the most cash back, right on your cart.
 
-On Amazon US, Best Buy US and Newegg US carts, AI Checkout shows a small badge with your best card and its estimated cash back for that cart: "Use Blue Cash Everyday · $3.00 back". Click it to see every card you own, ranked, with the issuer's rule behind each estimate, its conditions, and a payment-method choice. It currently models seven cash-back cards: Citi Double Cash, Wells Fargo Active Cash, Capital One Quicksilver and Savor, Chase Freedom Unlimited, and American Express Blue Cash Everyday and Blue Cash Preferred.
+On Amazon US, Best Buy US and Newegg US carts, AI Checkout shows a small badge with your best card and its estimated cash back for that cart: "Use Blue Cash Everyday · $3.00 back". Click it to see every card you own, ranked, with the issuer's rule behind each estimate, its conditions, and a payment-method choice. It currently models 178 cash back and points cards from the ten largest U.S. card issuers: American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank and Wells Fargo.
 
 Features:
 

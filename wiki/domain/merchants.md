@@ -6,7 +6,7 @@ status: stable
 tags: [domain, merchants, mcc]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:59:00Z
+  at: 2026-10-03T02:00:00Z
 sources:
   - resource: ../../evals/curation/real/merchants.json
     title: Merchant profiles (input to the catalog builder)
@@ -18,12 +18,12 @@ sources:
     title: MerchantProfile type
   - resource: ../../docs/research/cashback-card-terms-2026.md
     title: Research report, section on electronics retailers (checked 2026-09-28)
-stale_after: 2026-10-29T00:00:00Z
+stale_after: 2026-11-01T00:00:00Z
 ---
 
 # Merchants
 
-A merchant profile says what the engine may assume about a retailer: whether it is online retail selling physical goods, whether it is U.S., which merchant category it is expected to code as, and the predicted MCC with a confidence level. The catalog has three profiles. The MCC is a prediction. It is never observed at checkout. None of the seven [cards](cards.md) pays a bonus on the expected categories, so the deciding test at these merchants is the Amex online-retail channel rule (see [Reward rules](reward-rules.md)).
+A merchant profile says what the engine may assume about a retailer: whether it is online retail selling physical goods, whether it is U.S., which merchant category it is expected to code as, and the predicted MCC with a confidence level. Both catalogs have the same three profiles. The MCC is a prediction. It is never observed at checkout. None of the seven release-1 [cards](cards.md) pays a bonus on the expected categories, so for them the deciding test is the Amex online-retail channel rule (see [Reward rules](reward-rules.md)). In the bundled catalog v3 (178 cards) brand-scoped rules and store cards also decide, and the `electronics` category pays at Best Buy and Newegg for the cards that offer it (U.S. Bank Cash+ and Cash+ Secured when chosen, Edward Jones Triple Rewards as an automatic top category); see [Catalog v3](#catalog-v3-stage-2-m4).
 
 ## Facts
 

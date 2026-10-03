@@ -1,0 +1,99 @@
+---
+type: Runbook
+title: Catalog release
+description: Publish a bundled catalog as the next hosted release from the review app, first 2026-10-02.expansion.1 (178 cards, 328 sources), then verify /v1/catalog and a hosted extension build.
+status: stable
+tags: [ops, catalog, release, review]
+generated:
+  by: claude-code/claude-opus-5-5
+  at: 2026-10-03T02:00:00Z
+stale_after: 2026-11-01T00:00:00Z
+sources:
+  - resource: ../../apps/review/src/StartDraft.tsx
+    title: Start a new draft
+  - resource: ../../apps/review/src/DraftPanel.tsx
+    title: Capture all missing sources, publish dialog
+  - resource: ../../apps/review/src/ReviewWorkspace.tsx
+    title: Bulk capture with rate-limit waits
+  - resource: ../../packages/catalog-review/src/index.ts
+    title: Capture, draft and rate limits
+  - resource: ../../packages/rewards-core/src/catalog-v3.ts
+    title: CATALOG_V3 (2026-10-02.expansion.1)
+  - resource: ../../evals/curation/expansion/catalog-build-report.md
+    title: Catalog v3 build report
+  - resource: ../../docs/release/publish-runbook.md
+    title: Release 1 publish runbook (7 cards)
+---
+
+# Catalog release
+
+How a catalog built in the repository becomes the hosted release that `GET /v1/catalog` serves. Publishing is Evan's action in the hosted review app; no script or agent publishes, signs in or posts captures ([user directives](../product/user-directives.md)). The coordinator checks the deploy before and the result after. The first run of this runbook publishes `2026-10-02.expansion.1`; release 1 (`2026-09-29.real.1`, 7 cards) was published with [`docs/release/publish-runbook.md`](../../docs/release/publish-runbook.md), whose step-by-step screens this runbook follows.
+
+## Facts (2026-10-02.expansion.1)
+
+| Item | Value |
+| --- | --- |
+| Catalog | `CATALOG_V3`, schema 3, version `2026-10-02.expansion.1`: 178 cards, 820 rules, 328 sources, 70 programs, 140 brands, 24 gates, 3 merchants; 602,441 bytes JSON ([build report](../../evals/curation/expansion/catalog-build-report.md)) |
+| Valid | verified 2026-10-02T00:00Z, **expires 2026-11-01T00:00Z**. The database refuses to publish it after expiry and the review app refuses to start a draft from it |
+| Target | publish by **2026-10-28**; hosted release 1 expires 2026-10-29T00:00Z, after which `/v1/catalog` answers 503 until a valid release is published |
+| Sources to capture | 328: 15 from `evals/curation/real/captures`, 2 from `evals/curation/real/merchant-captures`, 312 from `evals/curation/expansion/captures` (that folder holds 321 files; 9 are not cited and are ignored). `chase-rewards-category-faq` is in both the real and the expansion folder with the same hash |
+| Requests | 328 `POST /v1/review/sources` (largest body about 206 KB; limit 1,516,384 bytes) and one draft save (about 0.62 MB; limit 1,114,112 bytes). `/sources` allows 200 a minute; the app waits on 429 and retries, so the capture takes about two minutes |
+| Prerequisites on hosted | all 10 migrations (Stage 2: `20261002222425_catalog_v3`, `20261002230334_review_summary`); Render serving `main` with M5 and M8 (the review app offers `CATALOG_V3`). Checked 2026-10-03T01:07Z: `/health` 200, `/v1/catalog` 200 (release 1), the hosted review bundle contains `2026-10-02.expansion.1` and "Load a capture folder" |
+| Local check 2026-10-03 | all 338 files in the three folders match their manifests' SHA-256 (15 + 2 + 321); `valid_catalog_v3` accepts the catalog in about 0.1 s on the local stack |
+
+## Steps
+
+### Coordinator, before Evan starts
+
+1. `curl -s https://ai-checkout-api.onrender.com/health` returns `{"status":"ok"}` (the free instance may take about a minute to wake).
+2. `curl -s https://ai-checkout-api.onrender.com/v1/catalog | head -c 200` returns release `"sequence":1`, `"version":"2026-09-29.real.1"`, not a 503.
+3. Render's latest deploy is the current `main` commit (Render dashboard, or the review bundle at `/review/` contains `2026-10-02.expansion.1`).
+4. `npx supabase migration list --linked` shows all 10 migrations in the Remote column (needs the linked project; Evan or the authorized coordinator).
+
+### Evan, in the hosted review app
+
+All three folders are gitignored copyrighted text; never commit or upload them anywhere else. The session lives in the tab's memory: reloading signs you out (saved revisions and captures are kept).
+
+1. **Sign in** at https://ai-checkout-api.onrender.com/review/ with the reviewer account.
+2. **Start a new draft.** Choose **Start a new draft**, select **Bundled catalog 2026-10-02.expansion.1 (schema 3, 178 cards)**. Check the summary: schema 3, 178 cards (328 sources to capture), verified Oct 2, 2026, expires Nov 1, 2026, status **Valid now**. Choose **Create draft**, then **Create the draft** in the dialog. The draft opens with every source missing. Nothing is published.
+   - If **Create draft** errors, do not create another at once: reload, sign in, and open the pending `2026-10-02.expansion.1` draft if it exists.
+3. **Load the captures.** Open **Capture all missing sources** and use **Load a capture folder** three times; each load adds to the texts already loaded:
+   1. `~/Projects/AICheckout/evals/curation/real/captures` → "Loaded 15 files".
+   2. `~/Projects/AICheckout/evals/curation/real/merchant-captures` → "Loaded 2 files".
+   3. `~/Projects/AICheckout-expansion/evals/curation/expansion/captures` → "Loaded 312 files; ignored 9 that match no missing source".
+   - Each note says how many files match a corpus manifest. If any file is **refused** because its SHA-256 differs from the manifest, stop: it is the wrong file or the page was re-captured. Captures are never re-taken to fit ([user directives](../product/user-directives.md)).
+4. **Capture.** The button reads **Capture 328 of 328 missing sources and attach**. Choose it and keep the tab open. Past 200 requests a minute the status line shows "waiting N s for the capture rate limit…"; that is expected. Wait for "Captured 328 sources and attached them to a new draft revision."
+   - If it stops part way (network, sign-in expired, Render restart), nothing is attached yet. Reload, sign in, open the draft, load the three folders again and capture again: identical captures are deduplicated by the database, so a retry is safe.
+5. **Review.** **What changes** compares the draft with release 1: the seven real cards keep their IDs, rules and rule IDs (the build checks this), so changes are the 171 new cards, programs, brands and gates. Use the card search and the grouped diff. Spot-check against the captured text, at least:
+   - the [golden ladders](../system/catalog-expansion.md#catalog-v3-build-m5) cards at Amazon, Best Buy and Newegg (Prime Visa, Amazon Store Card, My Best Buy Visa, Newegg store card, Cash+, Customized Cash);
+   - program values: published estimates name NerdWallet and a 2026-10-02 retrieval date; issuer-stated values cite a capture; programs valued `none` show no value;
+   - rotating rules (Freedom Flex, Discover) carry their Q4 2026 dates.
+   Labels and overlay are agent-verified, not human-verified; say what you checked in the note. Fix errors under **Correct draft data**; every save is a new revision that needs fresh approval.
+6. **Approve and publish** before 2026-10-28: tick **I checked the full source terms and all proposed rules and conditions.**, write a **Review note** (at least 10 characters, what you checked), choose **Publish reviewed terms**, check version, revision, 178 cards, 328 sources and the expiry (Nov 1, 2026, 12:00 AM UTC) in the dialog, then **Publish release**. Note the release number N (2 if release 1 is the head).
+
+### Coordinator, after publishing
+
+1. `curl -s https://ai-checkout-api.onrender.com/v1/catalog | head -c 300` shows `"sequence":N` and `"version":"2026-10-02.expansion.1"`; the full body is about 0.6 MB.
+2. Build a hosted extension: `npm run build:hosted --workspace=ai-checkout-extension`, load `extension/dist`, choose **Check for updated terms** in the popup, and confirm it finishes without an error and that `checkoutCatalogV1` in `chrome.storage.local` (service worker DevTools: `await chrome.storage.local.get('checkoutCatalogV1')`) holds release sequence N, version `2026-10-02.expansion.1`. This closes the open Phase 3 M6 check. The cached release has the bundled catalog's `verifiedAt`, so the cached release is the one in effect (ties go to the cache) and the wallet keeps its inputs.
+3. Update [now](../now.md), [hosting](hosting.md#facts) (published catalog row), the [roadmap](../product/roadmap.md) (Stage 2 done) and [log](../log.md).
+
+## If something is blocked
+
+| What you see | What to do |
+| --- | --- |
+| `/health` times out | Render is waking the free instance; wait a minute and reload, then sign in again |
+| No `2026-10-02.expansion.1` option under **Start a new draft** | The deployed review app predates M5/M8, or the catalog expired. Coordinator checks the Render deploy of `main` |
+| A capture fails with `sign_in_required` | The session ended or the token was refused before the upload (the API checks it before reading the body). Reload, sign in, repeat steps 3–4 |
+| A capture fails with "could not be captured" or a length error | Check the hosted migrations include `20261002222425_catalog_v3` (captures up to 250,000 characters). Retrying is safe |
+| The capture keeps waiting on the rate limit for more than five minutes | Another tab or person is capturing too (the limit is shared per process); stop the other one, then retry |
+| Publish fails with a stale revision or head error | Someone saved or published in between: **Reload latest draft**, rebase if asked, review and approve again |
+| `/v1/catalog` still shows release 1 after publishing | Reload the review app and check the draft shows **Published**; if so and the endpoint is unchanged after a minute, tell the coordinator; do not publish again |
+| It is 2026-11-01 or later | The catalog has expired and cannot be published. A new catalog needs fresh captures through hash-only freshness checks ([Stage 2 plan](../product/phase-7-stage-2.md#decisions-on-the-plans-open-questions)) and a rebuild |
+
+## Related
+
+* [Hosting](hosting.md)
+* [Review app](../system/review-app.md)
+* [Catalog expansion](../system/catalog-expansion.md)
+* [Database migrations](database-migrations.md)
+* [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md)

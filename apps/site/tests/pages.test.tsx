@@ -1,6 +1,8 @@
 import { expect, it } from 'vitest';
 import { PAGES } from '../src/Layout';
 import { renderPage } from '../src/render';
+import { CARD_COUNT, ISSUERS } from '../src/pages';
+import { CATALOG_V3 } from '../../../packages/rewards-core/src/catalog-v3';
 
 const rendered = PAGES.map((page) => ({ ...page, ...renderPage(page.id) }));
 
@@ -33,7 +35,19 @@ it('keeps the results page honest about what the numbers are', () => {
     'href="/results/results-heldout.svg"',
   ])
     expect(results).toContain(text);
-  expect(results.match(/<table/g)).toHaveLength(2);
+  expect(results.match(/<table/g)).toHaveLength(3);
+  // The expansion section names the less biased number, the 7-card comparison and the upper bound.
+  for (const text of [
+    'Expansion: 173 cards',
+    'gpt-5.5 (low) at 76.2% end to end',
+    '97.5% for the same configuration on the seven-card held-out split',
+    'not directly comparable',
+    'agent-verified, one repeat',
+    'is an upper bound, not an accuracy measure',
+    'href="/results/expansion.json"',
+    'docs/evals/expansion.md',
+  ])
+    expect(results).toContain(text);
   expect(results.match(/class="chart"/g)).toHaveLength(2);
 });
 
@@ -77,4 +91,13 @@ it('shows the install placeholder, not a store link, until the listing exists', 
   const home = rendered.find((page) => page.id === 'home')!.body;
   expect(home).toContain('Coming soon');
   expect(home).not.toContain('chromewebstore.google.com');
+});
+
+it('lists the bundled catalog’s cards per issuer', () => {
+  const counts = new Map<string, number>();
+  for (const card of CATALOG_V3.cards) counts.set(card.issuer, (counts.get(card.issuer) ?? 0) + 1);
+  expect(Object.fromEntries(ISSUERS)).toEqual(Object.fromEntries(counts));
+  expect(CARD_COUNT).toBe(CATALOG_V3.cards.length);
+  const home = rendered.find((page) => page.id === 'home')!.body;
+  expect(home).toContain(`${CATALOG_V3.cards.length} personal credit cards`);
 });

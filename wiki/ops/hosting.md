@@ -6,7 +6,7 @@ status: stable
 tags: [ops, hosting, render, supabase]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T06:10:00Z
+  at: 2026-10-03T02:00:00Z
 sources:
   - resource: ../../render.yaml
     title: Render Blueprint
@@ -36,7 +36,10 @@ One Render web service, `ai-checkout-api`, runs a single Node process that serve
 | Auto-deploy | `autoDeploy: true` on the linked branch (`main`) | `render.yaml`, [archive](../archive/phase2-goal.md) |
 | Database | Hosted Supabase (Postgres, Auth, Data API); public sign-ups disabled; one provisioned reviewer (as of 2026-09-28) | [archive](../archive/phase2-goal.md) |
 | Hosted state 2026-09-28 | `/health` 200, `/v1/catalog` 200 with `{"release":null}`, `/v1/review/` 401 unauthenticated, `/review/` serves the app | [archive](../archive/phase2-goal.md) |
-| Published catalog | `/v1/catalog` serves release sequence 1, version `2026-09-29.real.1` (7 cards, 17 sources), `published_at` 2026-10-02T02:29:41Z, expires 2026-10-29T00:00:00Z | `GET /v1/catalog`, checked 2026-10-02T05:58Z |
+| Published catalog | `/v1/catalog` serves release sequence 1, version `2026-09-29.real.1` (7 cards, 17 sources), `published_at` 2026-10-02T02:29:41Z, expires 2026-10-29T00:00:00Z. Next: `2026-10-02.expansion.1` (178 cards) by 2026-10-28 ([catalog release](catalog-release.md)) | `GET /v1/catalog`, checked 2026-10-03T01:07Z (200, 16,192 bytes) |
+| Deployed code | `main` with Stage 2 M5 and M8: the hosted review bundle (`/review/assets/index-*.js`) contains `2026-10-02.expansion.1` and "Load a capture folder" | Fetched 2026-10-03T01:07Z |
+| Auth signing | Hosted Supabase signs access tokens with the legacy HS256 secret (`/auth/v1/.well-known/jwks.json` returned `{"keys":[]}` on 2026-10-03), so the API's token pre-check asks Auth (`GET /auth/v1/user`); switching to asymmetric signing keys makes it local, with no env change ([decision](../decisions/2026-10-03-review-token-precheck.md)) | Public JWKS endpoint |
+| Request size | Neither Render nor Supabase documents a request body limit for web services or PostgREST RPC calls that the review routes approach (Cloudflare, in front of both, allows 100 MB on its free plan). Release 1 captured bodies up to 74,938 characters through this path; the largest Stage 2 capture is about 206 KB as JSON and the v3 draft save about 0.62 MB, well under the API's own limits | Docs read 2026-10-03; not exercised on hosted |
 
 ## Environment variables (names only)
 

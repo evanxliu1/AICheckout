@@ -6,7 +6,7 @@ status: stable
 tags: [system, extension, badge, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:59:00Z
+  at: 2026-10-03T02:00:00Z
 verified_commit: 7322dec
 sources:
   - resource: ../../extension/src/badge/content.ts
@@ -37,7 +37,9 @@ sources:
 
 On a supported cart page the extension shows, without a click, the best owned card and its estimated cash back in a small pill bottom-right; clicking expands a panel with every owned card ranked, the applied rule and conditions, a payment-method selector and an editable amount. Built on branch `phase3b-auto-badge` (PR #13) with follow-ups on `phase3b-followups` (PR #14); both merged to `main` on 2026-10-02 (`7322dec`). The content script never receives card or wallet data: it sends the adapter's reading to the worker and learns only `{show: boolean}`; card data reaches only the badge iframe, an extension page in a closed shadow root.
 
-Verified 2026-10-02 against `7322dec` by reading the code and running the extension unit tests (21 files, 378 tests pass, including `auto-reader.test.ts`, `badge-routing.test.ts`, `badge-service.test.ts`). The Stage 2 M6 changes (trimmed catalog in the `ready` view, catalog from the vault snapshot) were verified on branch `s2-m6-extension-state` with the unit tests and `e2e/badge.spec.ts` (passed).
+Verified 2026-10-02 against `7322dec` by reading the code and running the extension unit tests (21 files, 378 tests pass, including `auto-reader.test.ts`, `badge-routing.test.ts`, `badge-service.test.ts`). The Stage 2 M6 changes (trimmed catalog in the `ready` view, catalog from the vault snapshot) were verified on branch `s2-m6-extension-state` with the unit tests and `e2e/badge.spec.ts` (passed), and merged with PR #26. Since PR #27 the badge ranks against the bundled 178-card `CATALOG_V3` (only the owned cards' slice reaches the iframe); the pill says "back" for cash and shows units for an unvalued program until Stage 2 M7 words the v3 states.
+
+TODO(M7): document how the badge shows units with their cash estimate, the "estimate" label, `not-accepted` store cards, gate conditions and the Venmo payment choice once Stage 2 M7 merges.
 
 ## Facts
 
