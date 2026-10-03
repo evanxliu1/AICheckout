@@ -15,6 +15,7 @@ AI Checkout compares estimated rewards on supported credit-card products that yo
 The extension saves the following in its local Chrome profile storage, which the extension restricts to its own pages and service worker each time it starts, so web pages and its own content scripts cannot read it (confirmed by the browser tests on Chromium 153; the extension supports Chrome 120 and later). By default it is stored unencrypted; if you turn on **Protect with a passphrase** in Settings, it is encrypted with your passphrase (see Storage protection).
 
 - The card product identifiers you select and your default card (used to break ties and as the baseline for savings).
+- Card options you choose: the bonus categories you selected, your answers to optional membership, status and account questions (for example a Prime or Sam's Club membership, a bank relationship or balance tier, or when an account was opened), and any point values you set.
 - Your badge settings: the sites where the badge is turned off.
 - Your savings history: for each order you confirmed in the badge, the date, merchant, last cart amount, recommended card, the card you said you used (or "not sure"), and the estimated rewards for that card and for your default card.
 - Optional reward-limit information you report, such as annual online-retail spend, its date/year and applicable activation status.

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createServer } from 'node:http';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { chromium } from '@playwright/test';
 import { demoAssets, demoRoot, digest, fileEvidence, fullStackEvidence } from './lib/demo-evidence.mjs';
 
@@ -55,6 +55,10 @@ const chapters = capture.chapters.map((chapter, index) => ({
   ...chapter,
   seconds: index === 0 ? 0 : chapter.seconds,
 }));
+// Ocean theme caption type: the self-hosted fonts the extension and review app bundle (SIL OFL 1.1).
+const font = (pkg, file) =>
+  `data:font/woff2;base64,${readFileSync(resolve(import.meta.dirname, '../node_modules/@fontsource-variable', pkg, 'files', file)).toString('base64')}`;
+const fonts = `@font-face{font-family:Figtree;font-weight:300 900;src:url(${font('figtree', 'figtree-latin-wght-normal.woff2')}) format("woff2")}@font-face{font-family:Bricolage;font-weight:200 800;src:url(${font('bricolage-grotesque', 'bricolage-grotesque-latin-wght-normal.woff2')}) format("woff2")}`;
 const browser = await chromium.launch({ channel: 'chromium', headless: true });
 let server;
 try {
@@ -64,10 +68,11 @@ try {
     const end = chapters[index + 1]?.seconds ?? duration;
     assert.ok(end > chapter.seconds);
     await page.setContent(`<!doctype html><html lang="en"><meta charset="utf-8"><title>Full-stack demo caption</title><style>
-      *{box-sizing:border-box}html,body{margin:0;width:1280px;height:960px;background:white;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-      footer{position:absolute;top:800px;left:0;width:1280px;height:160px;background:#1d4ed8;color:white;padding:16px 28px}
-      h1{font-size:28px;line-height:34px;margin:0 0 6px}p{font-size:20px;line-height:27px;margin:0;max-width:1200px}.scope{font-size:15px;line-height:20px;color:#dbeafe;margin-top:9px}
+      ${fonts}*{box-sizing:border-box}html,body{margin:0;width:1280px;height:960px;background:white;font-family:Figtree,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+      footer{position:absolute;top:800px;left:0;width:1280px;height:160px;background:#0c2a4d;color:white;padding:16px 28px}
+      h1{font-family:Bricolage,Figtree,sans-serif;font-size:28px;line-height:34px;margin:0 0 6px;font-weight:700;letter-spacing:-.01em}p{font-size:20px;line-height:27px;margin:0;max-width:1200px}.explanation{color:#fff}.scope{font-size:15px;line-height:20px;color:#a9c6ea;margin-top:9px}
       </style><body><footer><h1>${escape(chapter.title)}</h1><p class="explanation">${escape(chapter.text)}</p><p class="scope">AI Checkout · Actual local app · Synthetic terms and model response · No live model or provider charge</p></footer></body></html>`);
+    await page.evaluate(() => document.fonts.ready);
     const fits = await page.evaluate(
       () => document.querySelector('.scope').getBoundingClientRect().bottom <= 956,
     );

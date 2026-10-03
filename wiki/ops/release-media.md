@@ -6,7 +6,7 @@ status: stable
 tags: [ops, release, media]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T04:10:00Z
+  at: 2026-10-03T04:40:00Z
 sources:
   - resource: ../../package.json
     title: release:media and release:portfolio scripts
@@ -20,7 +20,7 @@ sources:
 
 # Release media
 
-Two npm scripts regenerate hash-pinned media under `docs/release/assets/`. Rerun the relevant one whenever a UI change alters what the screenshots or videos show, so the pinned hashes match. What the assets are and how they are used is documented in [`docs/release/assets/README.md`](../../docs/release/assets/README.md), outside the wiki. Both were last run on 2026-10-03 (branch `release-media-ocean`, from `ca0d10e`) for the Ocean theme and the 178-card catalog; both passed first time and needed no spec change.
+Two npm scripts regenerate hash-pinned media under `docs/release/assets/`. Rerun the relevant one whenever a UI change alters what the screenshots or videos show, so the pinned hashes match. What the assets are and how they are used is documented in [`docs/release/assets/README.md`](../../docs/release/assets/README.md), outside the wiki. Both were last run on 2026-10-03 (branch `release-media-ocean`, from `ca0d10e`) for the Ocean theme and the 178-card catalog, then rerun the same day after an independent review (agent-verified) changed the specs: screenshot crops, a shopper-demo caption, the full-stack footer and one still.
 
 | Script | Runs | Prerequisites |
 | --- | --- | --- |
@@ -30,9 +30,10 @@ Two npm scripts regenerate hash-pinned media under `docs/release/assets/`. Rerun
 ## Current media (2026-10-03)
 
 - Store screenshots 1–6 (640×400) show the Ocean popup and badge with card search; the presentation panel and video caption panel are Ocean navy (`#0c2a4d`, soft text `#a9c6ea`) in Bricolage Grotesque and Figtree, embedded from `@fontsource-variable` by `render-release-assets.mjs`. Bound to ZIP SHA-256 `0fbf73fc…af2f7`, catalog `2026-10-02.expansion.1`.
-- Shopper demo: 37.1 s, 960×720 H.264, about 1 MB, 9 caption cues. Full-stack demo: 59.6 s, 1280×960, about 2.8 MB, 11 chapters, plus 12 stills (`full-stack-confirmation.png` is new: the publish dialog, added to the spec with the Helios review app). The Web Store takes videos only as a YouTube link, so no upload limit applies.
+- Crops: screenshots 1–5 are the top 400 CSS pixels of a 498px native popup capture. `fitCrop` in `release-assets.spec.ts` scrolls the popup (never the pixels) by the smallest amount that leaves no text line, row, chip or control cut at the crop edge or the top edge; screenshot 3 first scrolls to the Blue Cash Everyday row so its $1.00–$3.00 range is in the image. If the UI changes so that no clean position exists within 60px (150px when anchored), the spec fails rather than cropping mid-line.
+- Shopper demo: 41.2 s, 960×720 H.264, about 1.1 MB, 10 caption cues (one added for turning on passphrase protection in Settings). Full-stack demo: 59.5 s, 1280×960, about 2.5 MB, 11 chapters, with an Ocean navy footer in embedded Figtree and Bricolage Grotesque (`render-full-stack-demo.mjs`), plus 12 distinct stills (`full-stack-extracted.png` now shows the run summary under the extraction controls and `full-stack-evidence.png` the quoted facts; they were byte-identical before). `full-stack-confirmation.png` (the publish dialog) is new to the committed media, though the spec step dates from the Helios review app. The Web Store takes videos only as a YouTube link, so no upload limit applies.
 - Not changed: the promo (440×280) and the toolbar icons still use the Helios action blue of `extension/assets/cart-mark.svg` (`#2563eb`); `render-brand.mjs` renders them from that file and the Ocean decision did not restyle the icon. Changing them is a brand choice for Evan.
-- The full-stack stills show whatever other drafts the shared local database holds (for example a local `2026-10-02.expansion.1` draft) and its release sequence; they are local state, not hosted.
+- The full-stack stills show whatever other drafts the shared local database holds (a local `2026-10-02.expansion.1` draft) and its release sequence; they are local state, not hosted. `synthetic-candidate.*` is the fixture's own second draft and is removed at cleanup. The review left the foreign draft in place rather than reset the shared stack: the sidebar is labelled local and the recording's captions and cleanup evidence cover only the fixture's records.
 
 ## Gotchas
 

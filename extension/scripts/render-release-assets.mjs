@@ -22,13 +22,13 @@ const scenes = [
     name: 'comparison',
     title: 'Compare a $100 purchase.',
     copy: 'For this sample: eligible online goods and $0 annual spend. Actual rewards depend on issuer terms.',
-    alt: 'Actual result for a sample $100 eligible Best Buy purchase: Blue Cash Everyday $3.00 on U.S. online retail purchases, then Double Cash and Active Cash $2.00.',
+    alt: 'Actual result for a sample $100 eligible Best Buy purchase: use Blue Cash Everyday, $3.00 (3%) on U.S. online retail purchases, with its U.S.-merchant and $6,000 yearly cap conditions.',
   },
   {
     name: 'uncertainty',
     title: 'Keep unknowns visible.',
     copy: 'Leave annual spend blank to see a reward range. Confirming the conditions can change which card comes first.',
-    alt: 'Actual result with unknown annual spend: Blue Cash Everyday ranges from $1.00 to $3.00, so Double Cash leads at $2.00 and the order may change.',
+    alt: 'Actual result with unknown annual spend: Blue Cash Everyday shows a $1.00–$3.00 range because its online retail spend toward the yearly bonus limit is unknown.',
   },
   {
     name: 'subtotal',
@@ -40,7 +40,7 @@ const scenes = [
     name: 'locked',
     title: 'Lock your saved inputs.',
     copy: 'Optional: protect saved inputs with a local passphrase. Unlock after restarting Chrome, or delete and start again if you forget it.',
-    alt: 'Actual locked popup asks for the local passphrase and exposes data details and deletion.',
+    alt: 'Actual locked popup asks for the local passphrase before showing saved inputs; protection can be turned off in Settings after unlocking.',
   },
   {
     name: 'badge',
@@ -96,7 +96,7 @@ ${fonts}*{box-sizing:border-box}html,body{margin:0;width:640px;height:400px;font
       captureSha256: frame.sha256,
       composition:
         scene.composition ??
-        'Actual native capture at 360 CSS pixels wide; top 400 CSS pixels shown without text or geometry alteration. Explanatory left panel is presentation, not application UI.',
+        'Actual native capture at 360 CSS pixels wide; top 400 CSS pixels shown without text or geometry alteration (the popup was scrolled so no line or control is cut at the crop edge). Explanatory left panel is presentation, not application UI.',
       alt: scene.alt,
     });
   }

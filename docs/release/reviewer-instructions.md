@@ -11,7 +11,7 @@ Draft for the final release. Shopper features need no login, payment, bank conne
 
 ## Manual two-card demonstration
 
-1. Open the extension. Under **Add a card**, type part of the name and pick **Capital One Quicksilver**, then **American Express Blue Cash Everyday**, from the list (the catalog has 178 cards). For this synthetic demonstration only, enter `0` in the Blue Cash Everyday online retail spend field and save. For the lock and restart checks below, open **Settings** and choose **Protect with a passphrase** with a disposable test passphrase of at least 15 characters; keep it, and do not send it to the publisher.
+1. Open the extension. Under **Add a card**, type part of the name and pick **Capital One Quicksilver**, then **American Express Blue Cash Everyday**, from the list (the catalog has 178 cards). For this synthetic demonstration only, enter `0` in the Blue Cash Everyday online retail spend field and save. For the lock and restart checks below, open **Settings**, enter and confirm a disposable test passphrase of at least 15 characters, tick the acknowledgement that it cannot be recovered, and choose **Protect with a passphrase**. Keep the phrase, and do not send it to the publisher.
 2. Choose **Best Buy US** as Merchant. Enter `100` as the USD purchase amount.
 3. Choose **Eligible goods, paid directly online**, confirm the exclusion checkbox, and compare.
 4. Expect **Use Blue Cash Everyday**, with **$3.00** for Blue Cash Everyday and **$1.50** for Quicksilver. Confirm the saved-estimate sentence names the merchant and amount. Open **Card terms and sources**.

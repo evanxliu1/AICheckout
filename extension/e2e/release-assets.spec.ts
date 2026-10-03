@@ -8,9 +8,9 @@ import {
   deleteNativeVault,
   deleteVault,
   protectNativeVault,
-  protectVault,
   startNativePopup,
   startPopup,
+  TEST_PASSPHRASE,
 } from './vault';
 import { CATALOG_V3 } from '../../packages/rewards-core/src/catalog-v3';
 import { addCard } from './wallet';
@@ -67,8 +67,56 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     );
     await merchant.goto('https://secure.newegg.com/shop/cart');
     let popup = await openNativePopup(context, merchant, id);
-    async function capture(name: string, expected: string[]) {
+    // The store images show the top 400 CSS pixels of the 498px native popup. Move the popup's
+    // own scroll (never the pixels) by the smallest amount that puts that crop edge, and the top
+    // edge, between lines of text and outside rows, chips and controls. An optional
+    // anchor (a card's heading in the result list) first scrolls that card's row to the top.
+    const scroller = `(() => { const main = document.querySelector('main');
+      return main.scrollHeight > main.clientHeight ? main : document.scrollingElement; })()`;
+    async function fitCrop(anchor?: string) {
+      const offset = await popup.evaluate<number | null>(`(() => {
+        const box = ${scroller}, crop = 400, clear = 3, anchor = ${JSON.stringify(anchor ?? '')};
+        if (anchor) {
+          const target = [...document.querySelectorAll('h3')].find((h) => h.textContent.trim() === anchor)?.closest('li');
+          if (!target) throw Error('Crop anchor not found');
+          box.scrollTop += target.getBoundingClientRect().top;
+        }
+        const base = box.scrollTop, edges = [0, crop];
+        const cut = (r, slack) => edges.some((e) => r.top < e + slack && r.bottom > e - slack);
+        const fits = () => {
+          const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+          while (walk.nextNode()) {
+            const node = walk.currentNode;
+            if (!node.textContent.trim() || !node.parentElement.checkVisibility({ visibilityProperty: true })) continue;
+            const range = document.createRange();
+            range.selectNodeContents(node);
+            for (const r of range.getClientRects()) if (r.width && cut(r, clear)) return false;
+          }
+          // The header bar starts at the popup's top edge; scrolling only trims its top padding.
+          for (const el of document.body.querySelectorAll('*:not(.popup-header)')) {
+            const r = el.getBoundingClientRect();
+            if (!r.height || r.height > 72 || !el.checkVisibility({ visibilityProperty: true })) continue;
+            const s = getComputedStyle(el);
+            const drawn = s.backgroundColor !== 'rgba(0, 0, 0, 0)' || parseFloat(s.borderTopWidth) > 0 ||
+              parseFloat(s.borderBottomWidth) > 0 || el.matches('input, select, textarea, button, summary, svg, img');
+            if (drawn && cut(r, -0.5)) return false;
+          }
+          return true;
+        };
+        for (let step = 0; step <= 200; step++) {
+          const d = step % 2 ? (step + 1) / 2 : -step / 2;
+          // Keep an anchored row's top in view: only scroll back from it.
+          if (d < (anchor ? -150 : -60) || (anchor && d > 0)) continue;
+          box.scrollTop = base + d;
+          if (Math.abs(box.scrollTop - (base + d)) <= 0.5 && fits()) return box.scrollTop;
+        }
+        return null;
+      })()`);
+      expect(offset, 'No clean 400px crop for this capture').not.toBeNull();
+    }
+    async function capture(name: string, expected: string[], anchor?: string) {
       for (const text of expected) await expect.poll(popup.text).toContain(text);
+      await fitCrop(anchor);
       const data = await popup.screenshot();
       writeFileSync(resolve(captures, `${name}.png`), data);
       frames.push({
@@ -78,7 +126,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
         height: data.readUInt32BE(20),
         text: await popup.text(),
         viewport: await popup.evaluate(
-          '({width:innerWidth,height:innerHeight,scale:devicePixelRatio,scroll:document.querySelector("main").scrollTop})',
+          `({width:innerWidth,height:innerHeight,scale:devicePixelRatio,scroll:${scroller}.scrollTop})`,
         ),
       });
     }
@@ -146,11 +194,15 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     await popup.click('Save cards');
     await expect.poll(popup.text).toContain('Read cart amount');
     await confirm();
-    await capture('uncertainty', [
-      'Compare the conditions',
-      '$1.00–$3.00',
-      'Your online retail spend toward this year’s bonus limit is unknown.',
-    ]);
+    await capture(
+      'uncertainty',
+      [
+        'Compare the conditions',
+        '$1.00–$3.00',
+        'Your online retail spend toward this year’s bonus limit is unknown.',
+      ],
+      'Blue Cash Everyday',
+    );
     await popup.click('Edit cards');
     await expect.poll(popup.text).toContain('online retail spend this year');
     await popup.fill('spend-bce-online-retail', '0');
@@ -262,7 +314,14 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     await page.getByRole('button', { name: 'Compare my cards' }).click();
     await expect(page.getByText('$1.00–$3.00', { exact: true })).toBeVisible();
     await pause('Unknown annual usage produces a $1.00–$3.00 range; the best card may change.', 5);
-    await protectVault(page);
+    await page.getByText('Settings', { exact: true }).click();
+    await page.getByLabel('New local passphrase', { exact: true }).fill(TEST_PASSPHRASE);
+    await page.getByLabel('Confirm local passphrase').fill(TEST_PASSPHRASE);
+    await page.getByRole('checkbox', { name: /cannot be recovered/ }).check();
+    await page.getByRole('button', { name: 'Protect with a passphrase' }).scrollIntoViewIfNeeded();
+    await pause('Optional: turn on passphrase protection in Settings. The phrase cannot be recovered.', 4);
+    await page.getByRole('button', { name: 'Protect with a passphrase' }).click();
+    await expect(page.getByRole('button', { name: 'Lock saved inputs' })).toBeVisible();
     await page.getByRole('button', { name: 'Lock saved inputs' }).click();
     await expect(page.getByLabel('Local passphrase', { exact: true })).toBeVisible();
     await pause('Lock hides private inputs and clears the session key. The local record stays encrypted.', 4);

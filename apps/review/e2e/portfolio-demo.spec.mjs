@@ -1,4 +1,4 @@
-/* global document, innerWidth, localStorage, sessionStorage */
+/* global document, innerWidth, localStorage, sessionStorage, window */
 import { test, expect } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -130,7 +130,9 @@ test('record the real local review, extraction and separate publication flow', a
     const apply = page.getByRole('button', { name: 'Apply reviewed extraction to draft' });
     await expect(apply).toBeVisible();
     await expect(apply).toBeDisabled();
-    await page.getByRole('region', { name: 'Extraction result' }).scrollIntoViewIfNeeded();
+    // The run summary under the extraction controls; the next chapter scrolls to its facts.
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await expect(page.getByRole('region', { name: 'Extraction result' })).toBeInViewport();
     await hold('extracted');
     const run = ok(await request(path, { token: reviewer.token })).runs[0];
     expect(run.outcome).toBe('evidence_valid');
@@ -140,11 +142,7 @@ test('record the real local review, extraction and separate publication flow', a
       'Inspect facts and exact quotations',
       'Each field points to a saved source span. Matching evidence is a mechanical check, not proof of correct interpretation.',
     );
-    await page
-      .getByRole('region', { name: 'Extraction result' })
-      .getByRole('term')
-      .first()
-      .scrollIntoViewIfNeeded();
+    await page.getByRole('region', { name: 'Extraction result' }).scrollIntoViewIfNeeded();
     await hold('evidence', 6000);
     chapter(
       'Review every condition',
