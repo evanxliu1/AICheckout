@@ -48,4 +48,4 @@ As in the "Chosen" column. Draft source references rise to 600 (`drafts` CHECK, 
 - M4 extends categories by replacing the two SQL functions in a new migration and the TS constants in the same PR; `db:test:catalog` fails if they differ.
 
 ## Status
-Accepted 2026-10-02 by the M1 implementing agent within the accepted [catalog v3 decision](2026-10-02-catalog-v3-schema.md); the coordinator or Evan can revise any row before M2/M4 build on it.
+Accepted 2026-10-02 by the M1 implementing agent within the accepted [catalog v3 decision](2026-10-02-catalog-v3-schema.md); the coordinator or Evan can revise any row before M2/M4 build on it. The "Extension before M6" row is superseded by [extension state schema 3](2026-10-02-extension-state-v3.md) (M6 accepts v3 releases).
