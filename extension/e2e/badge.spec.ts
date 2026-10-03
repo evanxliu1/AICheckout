@@ -192,6 +192,15 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     await axeBadge(badge, 'expanded panel');
     await cart.keyboard.press('Escape');
     await expect(pill).toBeFocused();
+    // A covered panel (e.g. a site's floating chat button over it) still collapses from its close button.
+    await pill.click();
+    await cart.evaluate(() => document.documentElement.style.setProperty('opacity', '0.05'));
+    await cart.waitForTimeout(400);
+    await badge.getByRole('button', { name: 'Collapse' }).click({ force: true });
+    await expect(badge.getByRole('heading', { name: 'Best card for this cart' })).toHaveCount(0);
+    await expect(pill).toBeVisible();
+    await cart.evaluate(() => document.documentElement.style.removeProperty('opacity'));
+    await cart.waitForTimeout(400);
 
     // The cart changes without navigation (quantity 2): the badge follows the summary.
     await cart.locator('table tr:last-child td').evaluate((el) => {

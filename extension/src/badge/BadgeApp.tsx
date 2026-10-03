@@ -121,6 +121,9 @@ export default function BadgeApp() {
     return () => observer.disconnect();
   }, [view?.kind, expanded]);
   const guard = (event: React.MouseEvent) => {
+    // Collapse and close only hide the badge, so a covered frame (for example a site's floating chat
+    // button over a tall panel) must not swallow them.
+    if (event.target instanceof Element && event.target.closest('.badge-panel__close')) return;
     if (event.detail > 0 && !unobscured.current) {
       event.preventDefault();
       event.stopPropagation();
@@ -221,6 +224,7 @@ export default function BadgeApp() {
               color="tertiary"
               icon="x"
               isIconOnly
+              className="badge-panel__close"
               onClick={view.kind === 'recorded' ? () => postToHost({ type: 'hide' }) : collapse}
             >
               {view.kind === 'recorded' ? 'Close' : 'Collapse'}
