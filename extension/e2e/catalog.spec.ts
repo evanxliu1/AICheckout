@@ -4,7 +4,7 @@ import { execFileSync } from 'node:child_process';
 import { createServer } from 'node:https';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { deleteVault, startPopup, readVaultState } from './vault';
+import { deleteVault, readCatalogCache, startPopup } from './vault';
 import { BADGE_ORIGINS } from './hosts';
 import { PILOT_CATALOG } from '../../packages/rewards-core/src/catalog';
 import { redateCatalog } from '../../packages/rewards-core/src/catalog-helpers';
@@ -122,7 +122,7 @@ test('published catalog: HTTPS refresh, changed rules, rollback rejection, offli
     responseStatus = 503;
     await page.getByRole('button', { name: 'Check for updated terms' }).click();
     await expect(page.getByRole('alert')).toContainText('could not be checked');
-    expect((await readVaultState(page)).catalog?.release?.sequence).toBe(2);
+    expect((await readCatalogCache(page))?.release?.sequence).toBe(2);
     expect(requests).toHaveLength(3);
     expect(
       requests.every(

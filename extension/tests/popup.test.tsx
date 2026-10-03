@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { createStateService } from '../src/state/service';
 import { emptyState } from '../src/state/contracts';
 import Popup from '../src/popup/Popup';
-import type { AppState } from '../src/state/contracts';
+import type { AppState, CatalogCache } from '../src/state/contracts';
 import { PILOT_CATALOG } from '../src/domain';
 
 let data: Record<string, unknown>;
@@ -108,9 +108,16 @@ describe('offline comparison popup', () => {
     expect(await screen.findByText('Saved estimate for a $260.00 Newegg US purchase.')).toBeTruthy();
     expect(screen.queryByText(/Subtotal only; tax and shipping/)).toBeNull();
   });
-  it('does not silently expand the scope of an older downloaded catalog', async () => {
-    const catalog = { ...PILOT_CATALOG, version: 'earlier-published', merchantIds: ['best-buy-us'] };
-    (data.checkoutStateV1 as AppState).catalog = {
+  it('does not silently expand the scope of a newer downloaded catalog', async () => {
+    // Newer than the bundled catalog and valid, so it stays in effect (newest valid catalog wins).
+    const catalog = {
+      ...PILOT_CATALOG,
+      version: 'newer-published',
+      verifiedAt: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+      expiresAt: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toISOString(),
+      merchantIds: ['best-buy-us'],
+    };
+    data.checkoutCatalogV1 = {
       lastCheckedAt: Date.now(),
       release: {
         sequence: 1,
@@ -119,7 +126,7 @@ describe('offline comparison popup', () => {
         catalog_hash: 'a'.repeat(64),
         published_at: catalog.verifiedAt,
       },
-    };
+    } satisfies CatalogCache;
     render(<Popup />);
     fireEvent.change(await screen.findByLabelText('Merchant'), { target: { value: 'newegg-us' } });
     expect(screen.getByText(/Your current card terms do not cover Newegg US/)).toBeTruthy();

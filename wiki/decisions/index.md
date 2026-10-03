@@ -2,8 +2,12 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-10-03
+* [The newest valid catalog is in effect, not always the cached release](./2026-10-03-newest-valid-catalog-wins.md) — Of the cached release and the bundled catalog, the one valid now and verified later; sequence rollback protection unchanged; a switch reconciles the wallet; partly supersedes the M6 extension state decision.
+
 ## 2026-10-02
 * [Building the 178-card catalog v3 (Stage 2 M5)](./2026-10-02-catalog-v3-build.md) — Semantic short rule IDs, real cards pinned to release 1, 8 exclusions omitted for the 25-word quote limit, unused objects dropped, local seed from v3.
+* [Extension state schema 3 for catalog v3 (Stage 2 M6)](./2026-10-02-extension-state-v3.md) — Catalog cache under its own plain key, wallet stamped with the catalog it was checked against and pruned by ID, responses carry the catalog so pages bundle none, badge gets only the owned cards' slice; supersedes the M1 "extension before M6" row.
 * [Catalog overlay pre-merge review: account-age gates and store-credit units](./2026-10-02-catalog-overlay-review.md) — Dateless account-age rates need a per-card gate because the engine reads only dates; store-credit cash-back units are cents; amends O14.
 * [Reviewing and publishing a large catalog (Stage 2 M8)](./2026-10-02-review-large-catalog.md) — Body-free review summary plus a per-source read, request limits derived from content limits, a per-route capture rate limit, capture files that differ from the manifests refused, grouped diffs and searchable editors, bundled catalogs found by export name.
 * [Answer gates per wallet, guarantee the worst gate answer, and hold shared caps on the smallest rule ID](./2026-10-02-engine-v3-review-gates-and-shared-caps.md) — M2 pre-merge review: `Wallet.gates` replaces per-card answers, an unanswered gate guarantees its worst answer's best rule (not the base), shared-cap spend on the smallest rule ID, a valued card earning $0 below an unvalued card guaranteeing units; partly supersedes the engine semantics decision.

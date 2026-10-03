@@ -5,7 +5,6 @@ import { AlertInline, ApplicationState, Card, Icon } from '@ai-checkout/ui';
 import WalletEditor from '../components/WalletEditor';
 import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
-import { currentCatalog } from '../state/catalog';
 import type { Wallet } from '../domain';
 import { MERCHANT_IDS, merchantName } from '../checkout/merchants';
 
@@ -96,12 +95,7 @@ export default function Onboarding() {
                 bank login, and no account: AI Checkout keeps this on your device.
               </p>
             </section>
-            <WalletEditor
-              catalog={currentCatalog(view.state)}
-              wallet={view.state.wallet}
-              busy={busy}
-              onSave={save}
-            />
+            <WalletEditor catalog={view.catalog} wallet={view.state.wallet} busy={busy} onSave={save} />
           </>
         ) : null}
       </div>

@@ -115,6 +115,7 @@ export type BadgeView =
       amountEdited: boolean;
       paymentPath: PaymentPath;
       result: Comparison;
+      /** Only the owned cards, this merchant and what they refer to (`badgeCatalog`). */
       catalog: Catalog;
       wallet: Wallet;
     }

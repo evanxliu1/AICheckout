@@ -23,9 +23,8 @@ import { catalogMerchantIds, formatUsd, parseUsd, usageInputs } from '../domain'
 import type { Eligibility, PaymentPath, Wallet } from '../domain';
 import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
-import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY } from '../state/service';
+import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY } from '../state/keys';
 import { emptyState } from '../state/contracts';
-import { currentCatalog } from '../state/catalog';
 import { MERCHANT_IDS, merchantName } from '../checkout/merchants';
 
 type View = Extract<CheckoutResponse, { ok: true }>;
@@ -57,11 +56,12 @@ export default function Popup({
   const [dirty, setDirty] = useState(false);
   const [cartId, setCartId] = useState<string | null>(null);
   const resultAnchor = useRef<HTMLDivElement>(null);
-  const catalog = currentCatalog(view?.state ?? emptyState());
+  // The catalog in effect comes from the worker with every response; pages bundle none.
+  const catalog = view?.catalog;
   // Spend-capped bonuses the shopper can report, derived from the catalog rules.
   const limitNotes = (view?.state.wallet.cards ?? []).flatMap((owned) => {
-    const card = catalog.cards.find((c) => c.id === owned.cardId);
-    if (!card) return [];
+    const card = catalog?.cards.find((c) => c.id === owned.cardId);
+    if (!catalog || !card) return [];
     return usageInputs(catalog, card.id)
       .filter((rule) => rule.needsSpend)
       .map((rule) => {
@@ -155,7 +155,7 @@ export default function Popup({
     const remaining =
       Math.min(
         view.state.comparison.computedAt + RESULT_MAX_AGE_MS,
-        Date.parse(catalog.expiresAt),
+        Date.parse(view.catalog.expiresAt),
         midnight.getTime(),
         view.state.comparison.cartId && view.state.cart
           ? view.state.cart.capturedAt + CART_MAX_AGE_MS
@@ -177,20 +177,23 @@ export default function Popup({
       Math.max(0, remaining),
     );
     return () => window.clearTimeout(timer);
-  }, [view, catalog.expiresAt]);
+  }, [view]);
 
   useEffect(() => {
     const onChange = (changes: Record<string, chrome.storage.StorageChange>, area: string) => {
       if (area !== 'local' || !changes[STATE_KEY]) return;
       const next = changes[STATE_KEY].newValue;
       if (next === undefined) {
-        restore({
-          ok: true,
-          state: emptyState(),
-          comparison: null,
-          notice: 'Local data deleted.',
-          catalogUpdatesAvailable: view?.catalogUpdatesAvailable ?? false,
-        });
+        // Until the next response, the catalog shown is the one this page last received.
+        if (view)
+          restore({
+            ok: true,
+            state: emptyState(),
+            catalog: view.catalog,
+            comparison: null,
+            notice: 'Local data deleted.',
+            catalogUpdatesAvailable: view.catalogUpdatesAvailable,
+          });
       } else if (next.revision !== view?.state.revision) {
         setView((current) =>
           current
@@ -207,7 +210,7 @@ export default function Popup({
     };
     chrome.storage.onChanged.addListener(onChange);
     return () => chrome.storage.onChanged.removeListener(onChange);
-  }, [restore, view?.state.revision, view?.catalogUpdatesAvailable]);
+  }, [restore, view]);
 
   async function readCart() {
     if (!view) return;
@@ -328,7 +331,7 @@ export default function Popup({
   }
   const cart = cartId ? view?.state.cart : null;
   const ownedNames = (view?.state.wallet.cards ?? [])
-    .map((c) => catalog.cards.find((p) => p.id === c.cardId)?.shortName ?? 'Unavailable card')
+    .map((c) => catalog?.cards.find((p) => p.id === c.cardId)?.shortName ?? 'Unavailable card')
     .join(' · ');
   return (
     <ErrorBoundary>
@@ -370,7 +373,7 @@ export default function Popup({
             (editing ? (
               <WalletEditor
                 key={view.state.revision}
-                catalog={catalog}
+                catalog={view.catalog}
                 wallet={view.state.wallet}
                 busy={busy}
                 onSave={saveWallet}
@@ -441,7 +444,7 @@ export default function Popup({
                         </Select>
                       )}
                     </Field>
-                    {!catalogMerchantIds(catalog).includes(merchantId) && (
+                    {!catalogMerchantIds(view.catalog).includes(merchantId) && (
                       <AlertInline color="warning" role="status">
                         Your current card terms do not cover {merchantName(merchantId)}. Check for updated
                         terms or an extension update.
@@ -592,7 +595,7 @@ export default function Popup({
                         : {})}
                     >
                       <ComparisonResult
-                        catalog={catalog}
+                        catalog={view.catalog}
                         result={view.comparison}
                         purchase={view.state.purchase}
                         subtotalOnly={
@@ -611,7 +614,7 @@ export default function Popup({
           {view && !editing && view.state.wallet.cards.length > 0 && (
             <SavingsHistory
               entries={view.state.savings}
-              catalog={catalog}
+              catalog={view.catalog}
               busy={busy}
               onDelete={() => void deleteSavings()}
             />
@@ -632,7 +635,7 @@ export default function Popup({
               Cards, purchase inputs and savings stay on this device. This comparison works offline and
               requires no API key.
             </p>
-            <p>Card terms expire {new Date(catalog.expiresAt).toLocaleString('en-US')}.</p>
+            {catalog && <p>Card terms expire {new Date(catalog.expiresAt).toLocaleString('en-US')}.</p>}
             <div className="flex flex-wrap gap-2">
               {onLock && (
                 <Button size="small" color="secondary" icon="lock" disabled={busy} onClick={onLock}>
