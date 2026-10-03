@@ -15,20 +15,20 @@ const scenes = [
   {
     name: 'wallet',
     title: 'Your cards. Your choice.',
-    copy: 'Select the products you already own. No card numbers or bank connection.',
-    alt: 'Actual wallet selection: seven card products grouped by issuer, all selected, with zero sample online retail spend.',
+    copy: 'Search 178 cards by name or bank and add the ones you own. No card numbers or bank connection.',
+    alt: 'Actual wallet editor: a search field for the 178-card catalog above the list of seven sample cards added, starting with Citi Double Cash, Wells Fargo Active Cash and Capital One Quicksilver.',
   },
   {
     name: 'comparison',
     title: 'Compare a $100 purchase.',
     copy: 'For this sample: eligible online goods and $0 annual spend. Actual rewards depend on issuer terms.',
-    alt: 'Actual result for a sample $100 eligible Best Buy purchase: Blue Cash Everyday $3.00 on U.S. online retail purchases, then Double Cash and Active Cash $2.00.',
+    alt: 'Actual result for a sample $100 eligible Best Buy purchase: use Blue Cash Everyday, $3.00 (3%) on U.S. online retail purchases, with its U.S.-merchant and $6,000 yearly cap conditions.',
   },
   {
     name: 'uncertainty',
     title: 'Keep unknowns visible.',
     copy: 'Leave annual spend blank to see a reward range. Confirming the conditions can change which card comes first.',
-    alt: 'Actual result with unknown annual spend: Blue Cash Everyday ranges from $1.00 to $3.00, so Double Cash leads at $2.00 and the order may change.',
+    alt: 'Actual result with unknown annual spend: Blue Cash Everyday shows a $1.00–$3.00 range because its online retail spend toward the yearly bonus limit is unknown.',
   },
   {
     name: 'subtotal',
@@ -40,7 +40,7 @@ const scenes = [
     name: 'locked',
     title: 'Lock your saved inputs.',
     copy: 'Optional: protect saved inputs with a local passphrase. Unlock after restarting Chrome, or delete and start again if you forget it.',
-    alt: 'Actual locked popup asks for the local passphrase and exposes data details and deletion.',
+    alt: 'Actual locked popup asks for the local passphrase before showing saved inputs; protection can be turned off in Settings after unlocking.',
   },
   {
     name: 'badge',
@@ -52,6 +52,10 @@ const scenes = [
       'Actual packaged badge on a neutral sample cart page (no retailer branding) served at a supported cart URL, 360×400 CSS pixels at 2× scale, without text or geometry alteration. Explanatory left panel is presentation, not application UI.',
   },
 ];
+// Ocean theme presentation type: the same self-hosted fonts the extension bundles (SIL OFL 1.1).
+const font = (pkg, file) =>
+  `data:font/woff2;base64,${readFileSync(resolve(root, 'node_modules/@fontsource-variable', pkg, 'files', file)).toString('base64')}`;
+const fonts = `@font-face{font-family:Figtree;font-weight:300 900;src:url(${font('figtree', 'figtree-latin-wght-normal.woff2')}) format("woff2")}@font-face{font-family:Bricolage;font-weight:200 800;src:url(${font('bricolage-grotesque', 'bricolage-grotesque-latin-wght-normal.woff2')}) format("woff2")}`;
 const icon = `data:image/png;base64,${readFileSync(resolve(root, 'extension/public/icons/icon128.png')).toString('base64')}`;
 const browser = await chromium.launch({ channel: 'chromium', headless: true });
 const results = [];
@@ -64,10 +68,11 @@ try {
     if (hash(bytes) !== frame.sha256) throw new Error(`Capture hash changed: ${scene.name}`);
     const img = `data:image/png;base64,${bytes.toString('base64')}`;
     const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${escape(scene.title)} — AI Checkout</title><style>
-*{box-sizing:border-box}html,body{margin:0;width:640px;height:400px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{display:grid;grid-template-columns:280px 360px;width:640px;height:400px;background:#1d4ed8;color:#fff}.copy{position:relative;padding:24px}header{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:600}header img{width:32px;height:32px}.story{margin-top:30px}h1{margin:0;font-size:28px;line-height:1.14;letter-spacing:-.025em;font-weight:650}p{margin:16px 0 0;font-size:15px;line-height:1.5;color:#dbeafe}.note{position:absolute;left:24px;right:24px;bottom:20px;margin:0;font-size:12px;line-height:1.4;color:#dbeafe}.actual{width:360px;height:400px;overflow:hidden;background:#f9fafb;}.actual img{display:block;width:360px;height:auto;max-width:none}</style></head>
-<body><!-- THESIS: show one actual feature with its conditions and honest sample data. OWN-WORLD: incumbent blue, white, system type and real popup pixels. STORY: understand the capability and inspect it. FIRST VIEWPORT: blue explanatory column beside a 1:1 CSS-pixel native popup detail. FORM: existing brand and interface, not a redesign. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md -->
+${fonts}*{box-sizing:border-box}html,body{margin:0;width:640px;height:400px;font-family:Figtree,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{display:grid;grid-template-columns:280px 360px;width:640px;height:400px;background:#0c2a4d;color:#fff}.copy{position:relative;padding:24px}header{display:flex;align-items:center;gap:8px;font-family:Bricolage,Figtree,sans-serif;font-size:17px;font-weight:700}header img{width:32px;height:32px}.story{margin-top:30px}h1{margin:0;font-family:Bricolage,Figtree,sans-serif;font-size:28px;line-height:1.14;letter-spacing:-.02em;font-weight:700}p{margin:16px 0 0;font-size:15px;line-height:1.5;color:#a9c6ea}.note{position:absolute;left:24px;right:24px;bottom:20px;margin:0;font-size:12px;line-height:1.4;color:#a9c6ea}.actual{width:360px;height:400px;overflow:hidden;background:#eef4fb;}.actual img{display:block;width:360px;height:auto;max-width:none}</style></head>
+<body><!-- THESIS: show one actual feature with its conditions and honest sample data. OWN-WORLD: Ocean navy, white, Bricolage and Figtree type and real popup pixels. STORY: understand the capability and inspect it. FIRST VIEWPORT: navy explanatory column beside a 1:1 CSS-pixel native popup detail. FORM: existing brand and interface, not a redesign. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md -->
 <main><section class="copy"><header><img src="${icon}" alt="">AI Checkout</header><div class="story"><h1>${escape(scene.title)}</h1><p>${escape(scene.copy)}</p></div><p class="note">${escape(scene.note ?? 'Actual popup detail.')}<br>Sample inputs; not earned rewards.</p></section><div class="actual"><img src="${img}" alt="${escape(scene.alt)}"></div></main></body></html>`;
     await page.setContent(html);
+    await page.evaluate(() => document.fonts.ready);
     await page.locator('img').evaluateAll((images) => Promise.all(images.map((img) => img.decode())));
     const fits = await page.evaluate(() => {
       const story = document.querySelector('.story').getBoundingClientRect(),
@@ -91,7 +96,7 @@ try {
       captureSha256: frame.sha256,
       composition:
         scene.composition ??
-        'Actual native capture at 360 CSS pixels wide; top 400 CSS pixels shown without text or geometry alteration. Explanatory left panel is presentation, not application UI.',
+        'Actual native capture at 360 CSS pixels wide; top 400 CSS pixels shown without text or geometry alteration (the popup was scrolled so no line or control is cut at the crop edge). Explanatory left panel is presentation, not application UI.',
       alt: scene.alt,
     });
   }
@@ -122,8 +127,9 @@ try {
   for (const [index, chapter] of chapters.chapters.entries()) {
     const start = index === 0 ? 0 : chapter.atSeconds,
       end = chapters.chapters[index + 1]?.atSeconds ?? duration;
-    const captionHtml = `<!doctype html><html lang="en"><meta charset="utf-8"><title>Demo caption</title><style>*{box-sizing:border-box}html,body{margin:0;width:960px;height:720px;background:#1d4ed8;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{padding:48px;width:560px}header{font-size:24px;font-weight:600}h1{font-size:38px;line-height:1.15;margin:48px 0 32px;letter-spacing:-.02em}p{font-size:24px;line-height:1.5;margin:0;color:#dbeafe}.scope{position:absolute;bottom:44px;left:48px;width:460px;font-size:16px;line-height:1.5;color:#dbeafe}</style><body><main><header>AI Checkout</header><h1>Offline shopper demo</h1><p>${escape(chapter.caption)}</p><p class="scope">Synthetic inputs · no live retailer or model call.<br>Actual extension page at its original size.</p></main></body></html>`;
+    const captionHtml = `<!doctype html><html lang="en"><meta charset="utf-8"><title>Demo caption</title><style>${fonts}*{box-sizing:border-box}html,body{margin:0;width:960px;height:720px;background:#0c2a4d;color:#fff;font-family:Figtree,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{padding:48px;width:560px}header{font-family:Bricolage,Figtree,sans-serif;font-size:24px;font-weight:700}h1{font-family:Bricolage,Figtree,sans-serif;font-size:38px;font-weight:700;line-height:1.15;margin:48px 0 32px;letter-spacing:-.02em}p{font-size:24px;line-height:1.5;margin:0;color:#a9c6ea}.scope{position:absolute;bottom:44px;left:48px;width:460px;font-size:16px;line-height:1.5;color:#a9c6ea}</style><body><main><header>AI Checkout</header><h1>Offline shopper demo</h1><p>${escape(chapter.caption)}</p><p class="scope">Synthetic inputs · no live retailer or model call.<br>Actual extension page at its original size.</p></main></body></html>`;
     await videoPage.setContent(captionHtml);
+    await videoPage.evaluate(() => document.fonts.ready);
     const fits = await videoPage.evaluate(
       () =>
         document.querySelector('main > p:not(.scope)').getBoundingClientRect().bottom + 20 <=

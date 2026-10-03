@@ -151,7 +151,7 @@ try {
         verifiedAt: new Date().toISOString(),
         browser: browser.version(),
         artifactSha256: inventory.sha256,
-        screenshots: 'Five opaque RGB PNGs, 640×400; source hashes match native captures.',
+        screenshots: 'Six opaque RGB PNGs, 640×400; source hashes match native captures.',
         promotion: 'Opaque RGB PNG, 440×280.',
         gallery: { widths: [1280, 390], horizontalOverflow: false, pageErrors: errors },
         video: { ...playback, captionCues: cues },

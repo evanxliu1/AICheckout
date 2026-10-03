@@ -1,37 +1,37 @@
 # Release media
 
-Regenerated October 1, 2026 for extension 2.0.0 with the automatic cart badge (Phase 3b; passphrase protection optional) and catalog `2026-09-29.real.1`. Open [the gallery](index.html) to review the screenshots, promotion, icon inspection, recording and transcript together. This packet is not a submitted listing or evidence of live retailer/model behavior.
+Regenerated October 3, 2026 for extension 2.0.0 in the Ocean theme, with card search and catalog `2026-10-02.expansion.1` (178 cards), the automatic cart badge and optional passphrase protection. Open [the gallery](index.html) to review the screenshots, promotion, icon inspection, recording and transcript together. This packet is not a submitted listing or evidence of live retailer/model behavior.
 
 ## Deliverables
 
 | File | Use |
 | --- | --- |
-| [1-wallet-640x400.png](1-wallet-640x400.png) | The seven card products grouped by issuer, all selected as a sample |
+| [1-wallet-640x400.png](1-wallet-640x400.png) | Card search over the 178-card catalog above the seven sample cards added |
 | [2-comparison-640x400.png](2-comparison-640x400.png) | A synthetic $100 eligible Best Buy purchase: Blue Cash Everyday $3.00 with its rule in the issuer's words and conditions |
-| [3-uncertainty-640x400.png](3-uncertainty-640x400.png) | Unknown annual spend toward the cap produces a $1.00–$3.00 range, so Double Cash leads at $2.00 |
+| [3-uncertainty-640x400.png](3-uncertainty-640x400.png) | Unknown annual spend toward the cap: Blue Cash Everyday shows a $1.00–$3.00 range, with the unknown limit named (the popup is scrolled to that card; Double Cash leads the list at $2.00 above it) |
 | [4-subtotal-640x400.png](4-subtotal-640x400.png) | Controlled Newegg fixture explicitly excludes tax/shipping from its subtotal |
 | [5-locked-640x400.png](5-locked-640x400.png) | Passphrase unlock after locking saved inputs (optional protection, turned on in Settings) |
 | [6-badge-640x400.png](6-badge-640x400.png) | The automatic cart badge ("Use Blue Cash Everyday · $3.00 back") on a neutral sample cart with a $100.00 total; no retailer branding |
 | [promo-440x280.png](promo-440x280.png) | Required small promotional brand image |
 | [icon-inspection.png](icon-inspection.png) | Existing cart identity simplified for 16/48/128px exports; light/dark inspection |
 | [shopper-demo.mp4](shopper-demo.mp4) | Actual offline extension-page walkthrough, with persistent sample-data labeling and timed explanations |
-| [shopper-demo.vtt](shopper-demo.vtt) | Nine English caption cues; the gallery also has a text transcript |
+| [shopper-demo.vtt](shopper-demo.vtt) | Ten English caption cues; the gallery also has a text transcript |
 | [full-stack-demo.mp4](full-stack-demo.mp4) | Actual local React/API/Auth/PostgreSQL review and publication flow with simulated model responses |
 | [Full-stack transcript and evidence](full-stack-demo.md) | Eleven chapters, verified cleanup, source/build hashes and reproduction |
 
 The screenshots are opaque 24-bit RGB PNGs at 640×400. The promotion is the same format at 440×280. The icon source is [cart-mark.svg](../../../extension/assets/cart-mark.svg); its 128px export uses 96px artwork with 16px transparent padding on each side. The prior gradient/text bitmap is replaced by a crisp cart mark in the existing action blue; no new product functionality is implied by that artwork.
 
-Screenshots 1–5 combine a presentation caption with the top 400 CSS pixels of an actual 360px native-popup capture at its original pixel density. Screenshot 6 shows the actual packaged badge on a neutral sample cart page ([mock-cart.html](../../../extension/tests/fixtures/mock-cart.html), served in memory at a supported cart URL so the content script runs) at 360×400 CSS pixels. The interface text and geometry are not recreated or retouched. The full original captures are under `captures/`; the crop and source hash are recorded in [assets-manifest.json](assets-manifest.json). A full-height inspection view is not represented as a native popup. The left presentation panel and “sample inputs” label are outside the application UI.
+Screenshots 1–5 combine a presentation caption with the top 400 CSS pixels of an actual 360px native-popup capture at its original pixel density. Before each capture the test scrolls the popup by the smallest amount that leaves no line of text, row, chip or control cut at the 400px crop edge or the top edge (screenshot 3 first scrolls to the Blue Cash Everyday result); the recorded scroll position is in the capture manifest. Screenshot 6 shows the actual packaged badge on a neutral sample cart page ([mock-cart.html](../../../extension/tests/fixtures/mock-cart.html), served in memory at a supported cart URL so the content script runs) at 360×400 CSS pixels. The interface text and geometry are not recreated or retouched. The full original captures are under `captures/`; the crop and source hash are recorded in [assets-manifest.json](assets-manifest.json). A full-height inspection view is not represented as a native popup. The left presentation panel (Ocean navy, Bricolage Grotesque and Figtree) and “sample inputs” label are outside the application UI.
 
-The roughly 40-second MP4 is 960×720 H.264. It contains an actual 360×600 extension-page interaction recording at its original size alongside captions. The underlying [WebM](shopper-demo.webm) is retained for provenance; it has no presentation captions and is not the stand-alone public demonstration. This recording is not a native-toolbar video, a live merchant test, a full-stack review recording or live LLM evaluation. The shopper calculation remains offline, and both local/session stores were empty after confirmed deletion.
+The roughly 41-second MP4 is 960×720 H.264. It contains an actual 360×600 extension-page interaction recording at its original size alongside captions. The underlying [WebM](shopper-demo.webm) is retained for provenance; it has no presentation captions and is not the stand-alone public demonstration. This recording is not a native-toolbar video, a live merchant test, a full-stack review recording or live LLM evaluation. The shopper calculation remains offline, and both local/session stores were empty after confirmed deletion.
 
 ## Provenance and validity
 
-The store images and shopper recording are bound to ZIP SHA-256 **`5f6a903cd03a6abbee10118723a2bcdab2b75a5a9235ef8eb6bf9fdedaf74879`**. [capture-manifest.json](capture-manifest.json) records the actual native target viewport, browser version, staged input descriptions, source hashes and artifact identity. [demo-chapters.json](demo-chapters.json) records timed explanations and the matching artifact; [verification.json](verification.json) records file-format/hash checks, desktop/mobile gallery checks, actual video playback and caption loading.
+The store images and shopper recording are bound to ZIP SHA-256 **`0fbf73fc33e58ae0000236a7f94ee1b6face8d197a984e41c415f57d768af2f7`**. [capture-manifest.json](capture-manifest.json) records the actual native target viewport, browser version, staged input descriptions, source hashes and artifact identity. [demo-chapters.json](demo-chapters.json) records timed explanations and the matching artifact; [verification.json](verification.json) records file-format/hash checks, desktop/mobile gallery checks, actual video playback and caption loading.
 
 The full-stack recording has separate [source/build and cleanup evidence](full-stack-capture.json) and [media hashes/playback checks](full-stack-media.json); the extension ZIP does not identify the server or review app. It is 1280×960 H.264 and preserves the unscaled 1280×800 application with an explanatory footer. It uses local disposable accounts, invented terms and intercepted responses; it does not make a live model call or establish model quality. Its reproduction command is `npm run release:portfolio`, with the existing disposable local Supabase stack available. See [the complete procedure](full-stack-demo.md).
 
-The Newegg image uses an intercepted in-memory fixture; all other HTTP traffic during native capture is blocked. No purchase, live retailer request, model call, deployment or store submission is performed by this workflow. Conditional estimates are not observed customer savings. Reverify terms and recapture if the intended artifact or catalog changes. The current terms expire October 25, 2026 UTC; do not edit dates to keep a demonstration running.
+The Newegg image uses an intercepted in-memory fixture; all other HTTP traffic during native capture is blocked. No purchase, live retailer request, model call, deployment or store submission is performed by this workflow. Conditional estimates are not observed customer savings. Reverify terms and recapture if the intended artifact or catalog changes. The current terms expire November 1, 2026 00:00 UTC; do not edit dates to keep a demonstration running.
 
 ## Reproduce
 

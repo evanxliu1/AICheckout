@@ -1,6 +1,6 @@
 # Release preparation
 
-Updated October 1, 2026 for extension 2.0.0 (Helios popup) and catalog `2026-09-29.real.1` (seven cards; Best Buy, Newegg and Amazon US). Since October 3, 2026 the extension bundles catalog `2026-10-02.expansion.1` (178 cards, same three merchants, expires November 1, 2026); store copy and screenshots are to be refreshed after the wallet-search UI lands. These are reviewable drafts and operating instructions, **not evidence of submission or deployment**. See the [design doc](../design.md) for architecture and roadmap.
+Updated October 1, 2026 for extension 2.0.0 (Helios popup) and catalog `2026-09-29.real.1` (seven cards; Best Buy, Newegg and Amazon US). Since October 3, 2026 the extension bundles catalog `2026-10-02.expansion.1` (178 cards, same three merchants, expires November 1, 2026); screenshots and the shopper and full-stack recordings were regenerated on October 3, 2026 in the Ocean theme with card search, and the store copy states the 178-card scope. These are reviewable drafts and operating instructions, **not evidence of submission or deployment**. See the [design doc](../design.md) for architecture and roadmap.
 
 ## Contents
 
@@ -41,7 +41,7 @@ Do not put passwords, payment details, provider keys, tokens or private contact 
 - [ ] Deploy and verify the API/review stack, catalog maintenance path, HTTPS/proxy behavior, scoped roles, backup/recovery and logs. A disabled curation adapter is the starting configuration.
 - [ ] Independently review representative evaluation labels and run the explicitly funded live model evaluation; report failures and cost. This is a portfolio goal, not a Chrome requirement.
 - [x] Record the actual local shopper and full-stack review flows with sample/model-simulation labels, reproducible commands and artifact evidence. These do not replace hosted or live-model evidence.
-- [ ] Reverify terms near release and publish through human review. Do not extend the existing October 25 UTC expiry just to keep a demo running.
+- [ ] Reverify terms near release and publish through human review. Do not extend the existing November 1 UTC expiry just to keep a demo running.
 - [ ] Fill public identity/contact fields; publish the actual privacy/support pages and verify they load without authentication.
 - [x] Produce five actual-popup screenshots and the required small promotional image; verify icon artwork, padding and light/dark contrast. [Local gallery and evidence](assets/README.md). These are bound to the current development ZIP and require rechecking against the eventual upload artifact.
 - [ ] Match permissions, privacy declarations, merchant/card scope, listing copy and screenshots to the exact upload ZIP and inventory hash.

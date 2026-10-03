@@ -44,9 +44,8 @@ function Section({ id, title, children }: { id: string; title: string; children:
   );
 }
 
-// TODO(after the Ocean theme): these captures show the pre-M7 UI (the wallet capture still shows
-// the seven-card setup of catalog v2). Deferred on 2026-10-03 until the Ocean theme lands, so the
-// site and Web Store media are regenerated once, in the final look.
+// Copied from the Web Store screenshots in docs/release/assets (vite.config.ts COPIED); regenerated
+// on 2026-10-03 in the Ocean theme with the 178-card catalog. Keep alt text in step with them.
 const SCREENSHOTS = [
   {
     src: '/media/2-comparison.png',
@@ -55,13 +54,13 @@ const SCREENSHOTS = [
   },
   {
     src: '/media/3-uncertainty.png',
-    alt: 'Extension popup titled Compare the conditions: with annual spend unknown, Double Cash leads at $2.00 because another card’s estimate is a range.',
+    alt: 'Extension popup result with annual spend unknown: Blue Cash Everyday shows a $1.00 to $3.00 range and says its online retail spend toward the yearly bonus limit is unknown.',
     caption: 'Unknown spend toward a cap becomes a range, not a guess.',
   },
   {
     src: '/media/1-wallet.png',
-    alt: 'Extension wallet setup listing the seven supported cards grouped by issuer.',
-    caption: 'Pick the cards you already have. No card numbers or bank login.',
+    alt: 'Extension wallet editor: a search field for the 178-card catalog above the sample cards added, starting with Citi Double Cash, Wells Fargo Active Cash and Capital One Quicksilver.',
+    caption: 'Search 178 cards and add the ones you already have. No card numbers or bank login.',
   },
   {
     src: '/media/4-subtotal.png',
@@ -668,11 +667,16 @@ function Privacy(): Rendered {
             <li>
               The cards you selected and your default card (it breaks ties and is the baseline for savings).
             </li>
+            <li>
+              Card options: the bonus categories you chose, your answers to optional membership, status and
+              account questions (for example a Prime membership or when an account was opened), and any point
+              values you set.
+            </li>
             <li>Your badge settings: the sites where the badge is turned off.</li>
             <li>
               Your savings history: for each order you confirmed in the badge, the date, merchant, last cart
-              amount, recommended card, the card you said you used (or “not sure”) and the estimated cash
-              back. You can export it as JSON or delete it.
+              amount, recommended card, the card you said you used (or “not sure”) and the estimated rewards.
+              You can export it as JSON or delete it.
             </li>
             <li>Spending you report toward a card’s cap, with its date, and activation choices.</li>
             <li>Your latest purchase inputs: merchant, amount, date and eligibility choices.</li>
@@ -805,9 +809,9 @@ function Support(): Rendered {
           <ol className="prose-list">
             <li>
               After installing, a setup tab opens. Search for each card you have by name or issuer, pick your
-              default card, then save. For some cards it also asks which bonus categories you chose, a
-              membership the bonus depends on, or what a point is worth to you; “Not sure” shows a range. No
-              card number, login or passphrase is needed.
+              default card, then save. For some cards it also asks which bonus categories you chose or about a
+              membership, status or account the bonus depends on (“Not sure” shows a range), and what a point
+              is worth to you. No card number, login or passphrase is needed.
             </li>
             <li>
               Open your cart on Amazon US, Best Buy US or Newegg US. The badge in the corner shows your best

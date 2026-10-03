@@ -7,12 +7,12 @@ Preparation status: the contact and policy URL must be filled and the final rele
 
 ## Getting started
 
-1. After installing, a setup tab opens: choose the supported cards you already own and your default card, then **Save cards**. No card number, account or passphrase is needed. (You can change cards later from the AI Checkout toolbar button.)
-2. Open your cart on Amazon US, Best Buy US or Newegg US. A badge in the bottom-right corner shows your best card and its estimated cash back. Click it for every card's estimate, the rules behind it, a payment-method choice and an editable amount.
+1. After installing, a setup tab opens: under **Add a card**, type part of a card or bank name and pick each card you already own from the list, choose your default card, then **Save cards**. For some cards it also asks which bonus categories you chose or about a membership, status or account the bonus depends on (“Not sure” shows a range), and what a point is worth to you. No card number, account or passphrase is needed. (You can change cards later from the AI Checkout toolbar button.)
+2. Open your cart on Amazon US, Best Buy US or Newegg US. A badge in the bottom-right corner shows your best card and its estimated rewards. Click it for every card's estimate, the rules behind it, a payment-method choice and an editable amount.
 3. After you order, the badge may ask once whether you paid with the recommended card. Your answer adds an estimate to **All-time** extra rewards in the toolbar popup.
 4. For any other purchase, open the toolbar popup, choose the merchant, enter the amount, confirm the listed exclusions and choose **Compare my cards**.
 
-The supported card products are Citi Double Cash, Wells Fargo Active Cash, Capital One Quicksilver, Capital One Savor, Chase Freedom Unlimited, and American Express Blue Cash Everyday and Blue Cash Preferred. Other benefits and card products are outside the current scope. Rewards depend on issuer terms and how the transaction posts; the extension cannot guarantee a category or reward.
+The catalog covers 178 U.S. credit card products. Points and miles are counted at a published estimate unless the issuer states a value or you set your own under **Point values** in **Edit cards**. A few programs have no published value; those cards show points or miles and are listed last until you set a value. Other benefits and card products are outside the current scope. Rewards depend on issuer terms and how the transaction posts; the extension cannot guarantee a category or reward.
 
 ## Common issues
 
@@ -39,7 +39,7 @@ The extension works offline while the packaged terms remain valid. An unavailabl
 
 ## Delete data
 
-Expand **Delete saved data**, confirm that the inputs will be permanently removed, and choose **Delete all local data**. The same confirmation is required whether locked or unlocked. Card setup returns. This clears this extension's local inputs, settings, savings history and session key; to delete only the savings history, use **Delete savings history** in the popup. it does not remove a retailer's cart or Chrome's browser history. Uninstalling the extension also removes its local storage. See the privacy policy for retention details.
+Expand **Delete saved data**, confirm that the inputs will be permanently removed, and choose **Delete all local data**. The same confirmation is required whether locked or unlocked. Card setup returns. This clears this extension's local inputs, settings, savings history and session key; to delete only the savings history, use **Delete savings history** in the popup. It does not remove a retailer's cart or Chrome's browser history. Uninstalling the extension also removes its local storage. See the privacy policy for retention details.
 
 ## Report a problem
 

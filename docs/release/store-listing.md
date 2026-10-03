@@ -1,6 +1,6 @@
 # Store listing draft
 
-Internal preparation only. Copy the public description after the gates in [release preparation](README.md) pass. Match the final ZIP; the text below assumes the hosted-catalog build with the automatic cart badge (Phase 3b): seven card products and three US merchant readers (Amazon, Best Buy, Newegg).
+Internal preparation only. Copy the public description after the gates in [release preparation](README.md) pass. Match the final ZIP; the text below assumes the hosted-catalog build with the automatic cart badge (Phase 3b): 178 card products (catalog `2026-10-02.expansion.1`) and three US merchant readers (Amazon, Best Buy, Newegg).
 
 ## Basic fields
 
@@ -18,9 +18,9 @@ The short description matches the current manifest. Choose the current dashboard
 
 ## Detailed description — public copy
 
-See which card you already own earns the most cash back, right on your cart.
+See which card you already own earns the most rewards, right on your cart.
 
-On Amazon US, Best Buy US and Newegg US carts, AI Checkout shows a small badge with your best card and its estimated cash back for that cart: "Use Blue Cash Everyday · $3.00 back". Click it to see every card you own, ranked, with the issuer's rule behind each estimate, its conditions, and a payment-method choice. It currently models seven cash-back cards: Citi Double Cash, Wells Fargo Active Cash, Capital One Quicksilver and Savor, Chase Freedom Unlimited, and American Express Blue Cash Everyday and Blue Cash Preferred.
+On Amazon US, Best Buy US and Newegg US carts, AI Checkout shows a small badge with your best card and its estimated rewards for that cart: "Use Blue Cash Everyday · $3.00 back". Click it to see every card you own, ranked, with the issuer's rule behind each estimate, its conditions, and a payment-method choice. It covers 178 U.S. credit cards; add yours by searching for the card or bank name. Points and miles are counted at a published estimate unless the issuer states a value or you set your own. A few programs have no published value; those cards show points or miles and are listed last until you set a value.
 
 Features:
 
@@ -41,13 +41,13 @@ Automatic reading is limited to Best Buy's observed US cart and checkout summary
 
 ## Single purpose — dashboard copy
 
-Show a shopper which of the supported cards they already own earns the most cash back on their cart at a supported US retailer, from the visible cart amount and packaged reward rules.
+Show a shopper which of the supported cards they already own earns the most rewards on their cart at a supported US retailer, from the visible cart amount and packaged reward rules.
 
 ## Permission justifications — dashboard copy
 
 | Permission | Reason |
 | --- | --- |
-| `storage` | Save the user's selected card products, optional reward-limit inputs, badge settings, purchase inputs and savings history locally, so the badge, popup and service worker share them. The user can export the savings history and delete all data from the popup. |
+| `storage` | Save the user's selected card products, their card options and point values, answers to optional membership, status and account questions, optional reward-limit inputs, badge settings, purchase inputs and savings history locally, so the badge, popup and service worker share them. The user can export the savings history and delete all data from the popup. |
 | Host permissions: `https://www.amazon.com/*`, `https://www.bestbuy.com/*`, `https://bestbuy.com/*`, `https://secure.newegg.com/*` | The automatic cart badge. A packaged content script runs only on these sites' cart, checkout and order-confirmation pages (declared match patterns). On cart pages it reads the visible order-summary amount through a bundled, declarative site adapter; on order-confirmation pages it uses the page address only, to ask whether the recommended card paid. Nothing else on these pages is read, and no other site is accessed. Each host comes from a bundled site adapter; adding a retailer requires an extension update. |
 | Host permission: the catalog origin (`https://ai-checkout-api.onrender.com/*`, hosted builds) | Fetch the published card catalog (reward rules, a JSON document validated against a fixed schema) when the user chooses **Check for updated terms**. The request carries no cookies, referrer, cards or purchase data. |
 | `activeTab` | Obtain temporary access to the current tab when the user opens the extension, so a manual cart read can identify a supported merchant and its summary amount. |
@@ -62,7 +62,7 @@ Do not select “no user data” simply because processing is local. The followi
 
 | Data category | Current behavior to disclose |
 | --- | --- |
-| Financial/payment information | Selected card products, optional reported annual spend, purchase and cart amounts, reward estimates/conditions and the local savings history (which card the user says paid); no card numbers, bank accounts or payment credentials. |
+| Financial/payment information | Selected card products and their options, answers to optional membership, status and account questions (for example a Prime or Sam's Club membership, a bank relationship or balance tier, or when an account was opened), optional reported annual spend and point values, purchase and cart amounts, reward estimates/conditions and the local savings history (which card the user says paid); no card numbers, bank accounts or payment credentials. |
 | Website content | Automatic reading of the visible order-summary amount on the supported carts (and user-requested reads); no product names, addresses or payment fields. |
 | Web history/browsing activity | On the supported sites, page addresses are matched against cart and order-confirmation patterns in memory; for a manual read a page-identity hash and tab/document identifiers are saved. No browsing history list is requested or built. |
 | Personally identifying/authentication data | No shopper sign-in, email, name, address or token is requested by the extension. Contact sent separately to support and administrator login are distinct services. |
@@ -74,8 +74,8 @@ Chrome requires a narrow purpose, permission explanations and consistent privacy
 
 ## Prepared assets
 
-The [local gallery](assets/index.html) and [asset record](assets/README.md) contain six 640×400 screenshots covering wallet selection, a confirmed comparison, unknown cap usage, a controlled Newegg subtotal, locked inputs and the automatic cart badge on a neutral sample cart. Each pairs explanatory copy with an actual extension UI detail at its original scale. Sample inputs and the crop are labeled; these are not earned rewards or live-retailer evidence.
+The [local gallery](assets/index.html) and [asset record](assets/README.md) contain six 640×400 screenshots covering card search and the wallet, a confirmed comparison, unknown cap usage, a controlled Newegg subtotal, locked inputs and the automatic cart badge on a neutral sample cart. Each pairs explanatory copy with an actual extension UI detail at its original scale. Sample inputs and the crop are labeled; these are not earned rewards or live-retailer evidence.
 
-The 440×280 promotional PNG and shared cart icon are also prepared. The 128×128 icon contains 96×96 artwork with 16px transparent padding; the 16px, 48px and 128px exports were inspected on light and dark backgrounds. Image formats, dimensions, source hashes and the current ZIP association pass local checks. The media visual review returned **ship**, with no material fixes.
+The 440×280 promotional PNG and shared cart icon are also prepared. The 128×128 icon contains 96×96 artwork with 16px transparent padding; the 16px, 48px and 128px exports were inspected on light and dark backgrounds. Image formats, dimensions, source hashes and the current ZIP association pass local checks. An independent subagent visual review of the October 3, 2026 media (agent-verified, not human-reviewed) found screenshots 2 and 4 cut a line or control at the 400px crop edge and alt text describing content outside the crop; the captures now scroll the popup so no line or control is cut, and the alt text describes only what is visible. After those fixes the review found no remaining material issue; no human has reviewed the media yet. The promotional image and icons still use the earlier action blue pending the owner's brand decision.
 
 Dimensions and required assets were checked against [Chrome's image guidance](https://developer.chrome.com/docs/webstore/images). These assets have not been submitted or approved by Google. Regenerate and recheck them if the upload artifact, terms or product scope changes; no optional marquee was produced.
