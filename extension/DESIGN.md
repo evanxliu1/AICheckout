@@ -44,7 +44,7 @@ cart icon; no HashiCorp branding is used.
 
 This document covers the protected-input gate, the wallet editor, the purchase form, the comparison
 result, and the shared cart identity under `extension/`. Sources: `src/styles/globals.css` (layout
-only), `tailwind.config.js` (token-mapped scales), `src/popup/Popup.tsx`, `src/components/*`.
+and the token-mapped Tailwind `@theme` scales), `src/popup/Popup.tsx`, `src/components/*`.
 
 **Key characteristics**
 
