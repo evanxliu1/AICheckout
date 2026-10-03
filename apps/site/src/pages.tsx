@@ -803,9 +803,10 @@ function Support(): Rendered {
         <Section id="start" title="Getting started">
           <ol className="prose-list">
             <li>
-              After installing, a setup tab opens. Pick the cards you have and your default card, then save.
-              No card number, login or passphrase is needed.
-              {/* TODO(M7): describe searching the card list and the per-card options once wallet search lands. */}
+              After installing, a setup tab opens. Search for each card you have by name or issuer, pick your
+              default card, then save. For some cards it also asks which bonus categories you chose, a
+              membership the bonus depends on, or what a point is worth to you; “Not sure” shows a range. No
+              card number, login or passphrase is needed.
             </li>
             <li>
               Open your cart on Amazon US, Best Buy US or Newegg US. The badge in the corner shows your best

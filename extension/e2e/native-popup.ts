@@ -97,16 +97,31 @@ export async function openNativePopup(context: BrowserContext, merchant: Page, e
         `(() => { const button = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === ${JSON.stringify(name)}); if (!button || button.disabled) throw Error('Button not available'); button.click(); })()`,
       );
     },
-    /** Checks the wallet editor's checkboxes for these card names (the bundled catalog lists 178 cards). */
-    checkCards: async (names: readonly string[]) => {
-      await evaluate(
-        `(() => { const boxes = [...document.querySelectorAll('[aria-labelledby=wallet-heading] fieldset input[type=checkbox]')]; for (const name of ${JSON.stringify(names)}) { const box = boxes.find(b => b.labels[0]?.textContent.trim() === name); if (!box) throw Error('Card not found: ' + name); if (!box.checked) box.click(); } })()`,
-      );
-    },
     fill: async (id: string, value: string) => {
       await evaluate(
         `(() => { const input = document.getElementById(${JSON.stringify(id)}); if (!input) throw Error('Input not found'); Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, ${JSON.stringify(value)}); input.dispatchEvent(new Event('input', { bubbles: true })); })()`,
       );
+    },
+    /** Adds cards in the wallet editor through its search field, picking each from the matches
+     * (the bundled catalog lists 178 cards). */
+    checkCards: async (names: readonly string[]) => {
+      for (const name of names) {
+        await evaluate(
+          `(() => { const input = document.getElementById('add-card'); Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, ${JSON.stringify(name)}); input.dispatchEvent(new Event('input', { bubbles: true })); })()`,
+        );
+        await expect
+          .poll(() =>
+            evaluate<boolean>(
+              `[...document.querySelectorAll('[role=option]')].some(o => o.textContent === ${JSON.stringify(name)})`,
+            ),
+          )
+          .toBe(true);
+        await evaluate(
+          `[...document.querySelectorAll('[role=option]')].find(o => o.textContent === ${JSON.stringify(name)}).click()`,
+        );
+      }
+      // Each added card's terms arrive from the worker before it can be saved.
+      await expect.poll(() => evaluate<string>('document.body.innerText')).not.toContain('loading its terms');
     },
     close: async () => {
       await cdp.send('Target.closeTarget', { targetId });

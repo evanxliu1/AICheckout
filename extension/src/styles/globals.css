@@ -122,6 +122,46 @@ body {
   padding: 16px;
 }
 
+.subsection-title {
+  color: var(--token-color-foreground-strong);
+  font-size: var(--token-typography-body-200-font-size);
+  font-weight: var(--token-typography-font-weight-semibold);
+  line-height: var(--token-typography-body-200-line-height);
+}
+
+/* Owned cards in the wallet editor: name and issuer, with a remove action. */
+.wallet-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--token-color-border-faint);
+  border-radius: var(--token-border-radius-medium);
+}
+.wallet-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+}
+.wallet-list__item + .wallet-list__item {
+  border-top: 1px solid var(--token-color-border-faint);
+}
+
+/* A point value field with its reset action beside it. */
+.value-field {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+.value-field > :first-child {
+  flex: 1;
+}
+
+.estimate-value .ac-badge {
+  margin-right: 4px;
+}
+
 .supporting {
   color: var(--token-color-foreground-faint);
   font-size: var(--token-typography-body-100-font-size);

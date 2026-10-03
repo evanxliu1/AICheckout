@@ -1,14 +1,15 @@
 import { z } from 'zod';
 import {
-  catalogSchema,
+  CATALOG_V3_LIMITS,
   MAX_AMOUNT_CENTS,
-  PAYMENT_PATHS,
+  PAYMENT_PATHS_V3,
   publishedReleaseSchema,
   RULE_STATUSES_V3,
   UNCERTAINTIES_V3,
 } from '../domain';
 import type { Catalog, Comparison, UnavailableComparison } from '../domain';
 import { cartSnapshotSchema } from '../checkout/contracts';
+import type { CardIndexEntry } from './catalog-slice';
 import { MAX_WALLET_CARDS } from './keys';
 
 const id = z.string().min(1).max(100);
@@ -97,7 +98,7 @@ export const purchaseSchema = z.strictObject({
   purchasedOn: z.iso.date(),
   eligiblePurchase: eligibility,
   onlineRetail: eligibility,
-  paymentPath: z.enum(PAYMENT_PATHS).optional(),
+  paymentPath: z.enum(PAYMENT_PATHS_V3).optional(),
 });
 
 /** One order the shopper confirmed after a badge recommendation. Amounts are estimates: the cart
@@ -171,6 +172,11 @@ export const storedAppStateSchema = z.discriminatedUnion('schemaVersion', [
 export type StoredAppState = z.infer<typeof storedAppStateSchema>;
 export const requestSchema = z.discriminatedUnion('type', [
   z.strictObject({ type: z.literal('checkout:get-state') }),
+  /** Read-only: the catalog slice with these cards' full terms (the wallet editor adds a card). */
+  z.strictObject({
+    type: z.literal('checkout:catalog-cards'),
+    cardIds: z.array(id).max(MAX_WALLET_CARDS),
+  }),
   z.strictObject({
     type: z.literal('checkout:refresh-catalog'),
     expectedRevision: z.number().int().nonnegative(),
@@ -200,15 +206,27 @@ export type CheckoutResponse =
   | {
       ok: true;
       state: AppState;
-      /** The catalog in effect (the cached release, else the bundled one). Pages use it instead of
-       * bundling a catalog of their own. */
+      /** The catalog in effect (the newest valid of the cached release and the bundled one), cut to
+       * the owned cards and the cards a request names (`catalogSlice`), with every merchant. Pages use
+       * it instead of bundling a catalog of their own. */
       catalog: Catalog;
+      /** Every card of the catalog in effect, for search (`cardIndex`). */
+      cardIndex: CardIndexEntry[];
       comparison: Comparison | UnavailableComparison | null;
       notice: string | null;
       catalogUpdatesAvailable: boolean;
     }
   | { ok: false; error: string };
 
+const catalogSliceSchema = z.custom<Catalog>(
+  (value) =>
+    typeof value === 'object' &&
+    value !== null &&
+    [1, 2, 3].includes((value as { schemaVersion?: unknown }).schemaVersion as number) &&
+    Array.isArray((value as { cards?: unknown }).cards) &&
+    Array.isArray((value as { sources?: unknown }).sources) &&
+    typeof (value as { expiresAt?: unknown }).expiresAt === 'string',
+);
 const bps = z.number().int().min(0).max(10_000);
 const units = z.number().int().min(0).max(Number.MAX_SAFE_INTEGER);
 const estimateSchema = z.strictObject({
@@ -245,7 +263,18 @@ export const responseSchema = z.discriminatedUnion('ok', [
   z.strictObject({
     ok: z.literal(true),
     state: appStateSchema,
-    catalog: catalogSchema,
+    // A slice of a catalog the worker validated; it may hold no cards, so it is checked for shape only.
+    catalog: catalogSliceSchema,
+    cardIndex: z
+      .array(
+        z.strictObject({
+          id,
+          name: z.string().min(1).max(120),
+          shortName: z.string().min(1).max(60),
+          issuer: z.string().min(1).max(80),
+        }),
+      )
+      .max(CATALOG_V3_LIMITS.cards),
     notice: z.string().max(1000).nullable(),
     catalogUpdatesAvailable: z.boolean(),
     comparison: z

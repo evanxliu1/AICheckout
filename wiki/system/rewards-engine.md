@@ -6,7 +6,7 @@ status: stable
 tags: [system, rewards-core, catalog, engine]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:00:00Z
+  at: 2026-10-03T02:40:00Z
 stale_after: 2026-11-01T00:00:00Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
@@ -110,7 +110,7 @@ Usage rows count only for the same calendar year **and** the same `recordedOn` d
 - **Acceptance.** A closed-loop card whose `brandIds` miss the merchant's goes to `Comparison.notAccepted` (every rule `not-accepted`), not `estimates`; if no owned card is accepted the result is `no-accepted-card`.
 - **Base.** The unconditional `all-purchases` rule (`baseRuleV3`); a closed-loop card may have none (base reward 0).
 - **Blocking order** (`blocked`): portal, or `other` without brands → `not-at-merchant`; `endsOn` before the purchase or `verifiedAt` date → `expired`; `startsOn` after the purchase date → `not-started`; brand scope or excluded brand or category (`ruleCoversMerchant`: brand-scoped `other`/`all-purchases` need only the brand) → `not-at-merchant`; online retail ruled out, U.S.-only, excluded path, required path not used, known-inactive activation → `not-eligible`; a selected choice without this option → `choice-not-selected`; a gate answered outside the required options → `condition-not-met`.
-- **Ranges** (`evaluate`): the v2 codes, except no `payment-path-uncertain` when the rule requires that path; `automatic-category` for an automatic choice; `choice-unknown` for an unanswered chosen choice (defaults are not assumed); `condition-unknown` for an unanswered gate. A shared cap reads its spend from the group's rule with the smallest ID (`capHolder`), whatever the rules' order.
+- **Ranges** (`evaluate`): the v2 codes, except no `payment-path-uncertain` when the rule requires that path; `automatic-category` for an automatic choice; `choice-unknown` for an unanswered chosen choice (defaults are not assumed); `condition-unknown` for an unanswered gate. An `enroll-once` rule tied to a `chosen` choice is enrolled by choosing it (`enrolledByChoice`, Stage 2 M7): it never reports `activation-unknown`, and `usageInputs` asks no activation for it ([decision](../decisions/2026-10-03-extension-ui-v3.md)). A shared cap reads its spend from the group's rule with the smallest ID (`capHolder`), whatever the rules' order.
 - **Guaranteed minimum** (`guaranteed`): the best option's minimum, or, with unanswered gates, the worst case over the possible answers of the best minimum each answer allows (Prime Visa at Amazon with Prime unknown: 3–5%, not 1–5%). Answers are grouped by which requirements they meet; past 64 combinations per card (`MAX_GATE_COMBINATIONS`) it falls back to base-to-rule ranges.
 - **Money.** Per range end one BigInt numerator Σ spend × bps; units = ⌊n / 10,000⌋; cents = ⌊n × value / 1,000,000⌋ with value = override → card `statedValueHundredthsOfCent` → program valuation (`unitValueFor`). A `cash` valuation must be 100. A program with valuation `none` and no override has no value: cents 0, `unitValue: null`, `value-unknown`. Codes and `may-apply` are reported when they move the shown amount (cents, or units when unvalued).
 - **Estimate fields** added for v3: `programId`, `minRewardUnits`, `maxRewardUnits`, `unitValue` `{hundredthsOfCent, basis: override | card-stated | cash | published-estimate | issuer-stated}` or null; `appliedRuleId` is absent only for a base-less card with nothing applicable.

@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { createStateService } from '../src/state/service';
 import { emptyState } from '../src/state/contracts';
 import Popup from '../src/popup/Popup';
@@ -187,7 +188,8 @@ describe('offline comparison popup', () => {
 });
 
 describe('wallet editor with the bundled catalog v3', () => {
-  it('refuses more than 20 cards with a clear message instead of a rejected save', async () => {
+  it('finds real cards by part of a name and stops at 20 cards', async () => {
+    const user = userEvent.setup();
     const onSave = vi.fn(async () => undefined);
     render(
       <WalletEditor
@@ -197,17 +199,22 @@ describe('wallet editor with the bundled catalog v3', () => {
         onSave={onSave}
       />,
     );
-    const boxes = screen.getAllByRole('checkbox');
-    expect(boxes).toHaveLength(CATALOG_V3.cards.length);
-    boxes.slice(0, 21).forEach((box) => fireEvent.click(box));
-    fireEvent.click(screen.getByRole('button', { name: 'Save cards' }));
-    expect((await screen.findByRole('alert')).textContent).toBe(
-      'Choose up to 20 cards. You have 21 selected.',
-    );
-    expect(onSave).not.toHaveBeenCalled();
-    fireEvent.click(boxes[20]);
-    fireEvent.click(screen.getByRole('button', { name: 'Save cards' }));
+    const search = screen.getByRole('combobox', { name: 'Add a card' });
+    expect(screen.getByText(new RegExp(`\\(${CATALOG_V3.cards.length} cards\\)`))).toBeTruthy();
+    await user.click(search);
+    await user.paste('double cash');
+    expect(screen.getAllByRole('option').map((o) => o.textContent)).toContain('Citi Double Cash');
+    await user.keyboard('{Escape}{Escape}');
+    // Twenty cards in catalog order, picked through the search field.
+    for (const card of CATALOG_V3.cards.slice(0, 20)) {
+      await user.click(search);
+      await user.paste(card.name);
+      await user.click(screen.getByRole('option', { name: card.name }));
+    }
+    expect((search as HTMLInputElement).disabled).toBe(true);
+    expect(screen.getByText('You can save up to 20 cards. Remove one to add another.')).toBeTruthy();
+    await user.click(screen.getByRole('button', { name: 'Save cards' }));
     await vi.waitFor(() => expect(onSave).toHaveBeenCalledTimes(1));
     expect((onSave.mock.calls[0] as unknown as [{ cards: unknown[] }])[0].cards).toHaveLength(20);
-  });
+  }, 30_000);
 });

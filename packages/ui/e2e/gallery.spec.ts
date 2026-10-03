@@ -98,3 +98,23 @@ test('tabs, radios, and the sortable table work from the keyboard', async ({ pag
   await expect(table.getByRole('columnheader', { name: 'Card' })).toHaveAttribute('aria-sort', 'ascending');
   await expect(table.getByRole('rowheader').first()).toHaveText('Blue Cash Everyday');
 });
+
+test('the combobox filters, groups and picks from the keyboard with no axe violations', async ({ page }) => {
+  await page.goto('/');
+  const input = page.getByRole('combobox', { name: 'Add a card' });
+  await input.fill('cash');
+  const list = page.getByRole('listbox', { name: 'Matching cards' });
+  await expect(list).toBeVisible();
+  await expect(list.getByRole('group', { name: 'Citi' }).getByRole('option')).toHaveCount(2);
+  await expect(page.getByRole('status').filter({ hasText: '4 matches' })).toBeAttached();
+  await page.keyboard.press('ArrowDown');
+  await expect(input).toHaveAttribute('aria-activedescendant', /option-0/);
+  await expectNoViolations(page);
+  await page.keyboard.press('Enter');
+  await expect(page.getByText('Added: Citi Double Cash')).toBeVisible();
+  await expect(input).toHaveValue('');
+  await expect(list).toBeHidden();
+  await input.fill('zzz');
+  await expect(page.getByText('No cards match')).toBeVisible();
+  await expectNoViolations(page);
+});

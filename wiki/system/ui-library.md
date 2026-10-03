@@ -6,7 +6,7 @@ status: stable
 tags: [system, ui, helios, accessibility]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:05:00Z
+  at: 2026-10-03T02:40:00Z
 sources:
   - resource: ../../packages/ui/src/index.ts
     title: Component exports
@@ -24,13 +24,13 @@ sources:
 
 `packages/ui` (`@ai-checkout/ui`) is this repo's own React 19 component set, written to the public [Helios](https://helios.hashicorp.design) component specs (HashiCorp's Ember-only library is not used) and styled only with `--token-*` CSS variables from `@hashicorp/design-system-tokens` 5.1.0. Icons are path data from `@hashicorp/flight-icons` 5.2.0 copied into a generated TS file. It is consumed as TypeScript source by the extension popup, onboarding and badge iframe, the review app and the public site. Light theme only (the token package ships no dark theme). Usage examples and licence notes: [`packages/ui/README.md`](../../packages/ui/README.md).
 
-Verified 2026-10-02 by reading the code and running `npm test --workspace=@ai-checkout/ui` (36 tests plus the icon staleness check, passing).
+Verified 2026-10-03 on branch `s2-m7-extension-ui` after merging `main` (M10 part 1, Tailwind 4) by running `npm test --workspace=@ai-checkout/ui` (40 tests plus the icon staleness check) and the gallery Playwright spec (6 passed).
 
 ## Facts
 
 | Item | Value |
 | --- | --- |
-| Exports | `AlertInline`, `ApplicationState`, `Badge`, `Button`, `Card`, `Disclosure`, `Checkbox`, `Field`, `Fieldset`, `Radio`, `Select`, `TextInput`, `Toggle`, `Icon`, `Link`, `Modal`, `Table`, `Tabs`, `cx` ([`src/index.ts`](../../packages/ui/src/index.ts)) |
+| Exports | `AlertInline`, `ApplicationState`, `Badge`, `Button`, `Card`, `Combobox` (with `matchesSearch`, `normalizeSearch`), `Disclosure`, `Checkbox`, `Field`, `Fieldset`, `Radio`, `Select`, `TextInput`, `Toggle`, `Icon`, `Link`, `Modal`, `Table`, `Tabs`, `cx` ([`src/index.ts`](../../packages/ui/src/index.ts)) |
 | Styles | `import '@ai-checkout/ui/styles.css'` once per app: tokens, color/elevation/focus-ring/typography helpers, component CSS ([`src/styles.css`](../../packages/ui/src/styles.css)) |
 | Token exceptions | Listed at the top of `styles.css`: untokenized layout px, overlay opacity, outlined badges using the filled text colour for 4.5:1 contrast. No raw hex |
 | Icons | Only names in `ICONS` in [`scripts/generate-icons.mjs`](../../packages/ui/scripts/generate-icons.mjs) are bundled into `src/icons.generated.ts`; `npm run icons --workspace=@ai-checkout/ui` regenerates |
@@ -43,6 +43,7 @@ Verified 2026-10-02 by reading the code and running `npm test --workspace=@ai-ch
 - `Field` and `Fieldset` wire `id`, `aria-describedby` (helper, error and any extra IDs passed via `describedBy`) and `aria-invalid`; errors sit in a polite live region.
 - `Modal` traps focus, closes on Esc, restores focus and locks body scroll; built for one open modal at a time.
 - `Tabs` uses roving tabindex with arrow keys; `Table` supports optional sorting.
+- `Combobox` (Stage 2 M7, [`Combobox.tsx`](../../packages/ui/src/Combobox.tsx), matching in [`search.ts`](../../packages/ui/src/search.ts)) follows the WAI-ARIA editable combobox with list autocomplete: the field keeps focus, arrow keys move `aria-activedescendant` through the matches, Enter picks (or picks a single match), Escape closes the list then clears the text; matches are grouped (`role="group"` labelled by its group name) in an in-flow listbox (max 240 px, so nothing is clipped in a scrolling popup), and a polite status announces the count or the empty text. The field is cleared after a pick (an "add" picker). Matching ignores case, accents and punctuation; every typed word must appear in the label, group or keywords. Helios has no React combobox; the styling reuses the form text input and tokens.
 
 ## Gotchas
 
@@ -52,8 +53,8 @@ Verified 2026-10-02 by reading the code and running `npm test --workspace=@ai-ch
 
 ## Tests
 
-- [`tests/components.test.tsx`](../../packages/ui/tests/components.test.tsx): roles, labels, keyboard behaviour.
-- [`e2e/gallery.spec.ts`](../../packages/ui/e2e/gallery.spec.ts): builds the gallery; axe (WCAG 2.1 A/AA) at 360 and 1280 px, modal focus trap and return, keyboard use of tabs, radios and sortable table. Runs in "Application checks" CI.
+- [`tests/components.test.tsx`](../../packages/ui/tests/components.test.tsx): roles, labels, keyboard behaviour (incl. the combobox: filtering, groups, active option, Enter, Escape, click, empty status).
+- [`e2e/gallery.spec.ts`](../../packages/ui/e2e/gallery.spec.ts): builds the gallery; axe (WCAG 2.1 A/AA) at 360 and 1280 px, modal focus trap and return, keyboard use of tabs, radios and sortable table, and the combobox open, active and empty (axe). Runs in "Application checks" CI.
 
 ## Related
 

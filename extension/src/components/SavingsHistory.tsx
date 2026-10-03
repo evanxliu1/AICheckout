@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Button, Card, Checkbox, Disclosure } from '@ai-checkout/ui';
 import { formatUsd } from '../domain';
-import type { Catalog } from '../domain';
 import type { SavingsEntry } from '../state/contracts';
 import { totalExtraCents } from '../state/savings';
 import { merchantName } from '../checkout/merchants';
@@ -12,18 +11,19 @@ const signed = (cents: number) => `${cents < 0 ? '−' : ''}${formatUsd(Math.abs
 
 export default function SavingsHistory({
   entries,
-  catalog,
+  cards,
   busy,
   onDelete,
 }: {
   entries: SavingsEntry[];
-  catalog: Catalog;
+  /** Names of every card in the catalog in effect (the page's card index). */
+  cards: { id: string; shortName: string }[];
   busy: boolean;
   onDelete: () => void;
 }) {
   const [confirmed, setConfirmed] = useState(false);
   const name = (id: string | null) =>
-    id ? (catalog.cards.find((card) => card.id === id)?.shortName ?? 'Unavailable card') : 'Not sure';
+    id ? (cards.find((card) => card.id === id)?.shortName ?? 'Unavailable card') : 'Not sure';
   const total = totalExtraCents(entries);
   function exportJson() {
     const blob = new Blob(

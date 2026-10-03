@@ -6,7 +6,7 @@ status: stable
 tags: [system, extension, badge, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:00:00Z
+  at: 2026-10-03T02:50:00Z
 verified_commit: 7322dec
 sources:
   - resource: ../../extension/src/badge/content.ts
@@ -37,9 +37,15 @@ sources:
 
 On a supported cart page the extension shows, without a click, the best owned card and its estimated cash back in a small pill bottom-right; clicking expands a panel with every owned card ranked, the applied rule and conditions, a payment-method selector and an editable amount. Built on branch `phase3b-auto-badge` (PR #13) with follow-ups on `phase3b-followups` (PR #14); both merged to `main` on 2026-10-02 (`7322dec`). The content script never receives card or wallet data: it sends the adapter's reading to the worker and learns only `{show: boolean}`; card data reaches only the badge iframe, an extension page in a closed shadow root.
 
-Verified 2026-10-02 against `7322dec` by reading the code and running the extension unit tests (21 files, 378 tests pass, including `auto-reader.test.ts`, `badge-routing.test.ts`, `badge-service.test.ts`). The Stage 2 M6 changes (trimmed catalog in the `ready` view, catalog from the vault snapshot) were verified on branch `s2-m6-extension-state` with the unit tests and `e2e/badge.spec.ts` (passed), and merged with PR #26. Since PR #27 the badge ranks against the bundled 178-card `CATALOG_V3` (only the owned cards' slice reaches the iframe); the pill says "back" for cash and shows units for an unvalued program until Stage 2 M7 words the v3 states.
+Verified 2026-10-02 against `7322dec` by reading the code and running the extension unit tests (21 files, 378 tests pass, including `auto-reader.test.ts`, `badge-routing.test.ts`, `badge-service.test.ts`). The Stage 2 M6 changes (trimmed catalog in the `ready` view, catalog from the vault snapshot) were verified on branch `s2-m6-extension-state` with the unit tests and `e2e/badge.spec.ts` (passed), and merged with PR #26. Since PR #27 the badge ranks against the bundled 178-card `CATALOG_V3` (only the owned cards' slice reaches the iframe).
 
-TODO(M7): document how the badge shows units with their cash estimate, the "estimate" label, `not-accepted` store cards, gate conditions and the Venmo payment choice once Stage 2 M7 merges.
+Stage 2 M7 (branch `s2-m7-extension-ui`, PR #30; verified 2026-10-03 with the unit tests and `e2e/badge.spec.ts`) words the v3 states in the badge with the popup's code ([`BadgeApp.tsx`](../../extension/src/badge/BadgeApp.tsx) reuses `EstimateRow` from `ComparisonResult.tsx` and the wording in `estimates.ts`; [decision](../decisions/2026-10-03-extension-ui-v3.md)), and `badgeCatalog` is `catalogSlice` for the owned cards and this merchant:
+
+- **Pill:** dollars for cash, store rewards and valued points (a published estimate is marked `est.`), units for a program without a value (texts below).
+- **Panel rows:** dollars first, then for points the units and value per unit labelled "Estimate", "Issuer-stated" or "Your value"; an unvalued program in units ("Shown in units because this program has no value set").
+- **Conditions:** an unanswered gate or chosen category is shown as a range with the question or option it depends on; a ranking note (`rankingNote`) appears when conditions or missing values could change the first card.
+- **Store cards not accepted here** are listed after the ranking, one line each ("works only at …", `notAcceptedLines`).
+- **Payment method:** the selector offers Venmo only when the catalog in effect is v3 (see `set-payment` below).
 
 ## Facts
 
@@ -78,7 +84,7 @@ TODO(M7): document how the badge shows units with their cash estimate, the "esti
 
 - `content()` validates with `contentMessageSchema`, re-derives the merchant from the sender URL (a reading for another merchant is refused), updates the tab entry (`reading`, `unreadable`, clears a typed amount when the cart changes) and replies `show` only for a `found` reading on a non-dismissed, non-disabled site.
 - `view()` builds a `BadgeView`: `hidden`, `locked`, `damaged`, `no-cards`, `unreadable`, `unavailable`, `ready` (comparison, catalog slice, wallet), `order`, `recorded`. It reads the state and the catalog in effect from the vault's `snapshot()` (`{status, state, catalog}`; both null while locked or damaged). The `ready` view's catalog is [`badgeCatalog`](../../extension/src/background/badge-service.ts): only the owned cards, this merchant, their programs, the brands and gates their rules name and the sources they cite, never the whole catalog (a 20-card slice of a 1 MiB catalog is under 160 KiB, tested in `state-v3.test.ts`). Computing `ready` stores `recommendation {purchase, recommendedCardId, at}` for order detection.
-- `badge()` handles `badge:get`, `set-amount`, `set-payment`, `dismiss` (for the tab's life), `disable-site` (adds to `disabledMerchants` in settings), `answer-order`, `open` (popup via `chrome.action.openPopup`, falling back to a tab; or onboarding).
+- `badge()` handles `badge:get`, `set-amount`, `set-payment` (Venmo too; the selector offers it only with catalog v3 terms, and `autoPurchase` compares a card payment if an older catalog is in effect), `dismiss` (for the tab's life), `disable-site` (adds to `disabledMerchants` in settings), `answer-order`, `open` (popup via `chrome.action.openPopup`, falling back to a tab; or onboarding).
 - `navigated(tabId)` clears the reading and typed amount; dismissal, payment choice and the pending recommendation survive. `removed(tabId)` deletes the entry.
 - Popup/onboarding writes trigger `badge:changed`, a runtime broadcast that reaches extension pages (the iframes), never content scripts.
 
@@ -86,7 +92,7 @@ TODO(M7): document how the badge shows units with their cash estimate, the "esti
 
 [`frame.ts`](../../extension/src/badge/frame.ts) creates the host element with a **closed** shadow root holding a cross-origin `chrome-extension://` iframe, so page scripts can see the host but not its contents. The iframe ([`BadgeApp.tsx`](../../extension/src/badge/BadgeApp.tsx), [`client.ts`](../../extension/src/badge/client.ts)) talks to the worker via `chrome.runtime.sendMessage` and posts only `{source: 'ai-checkout-badge', type: 'size', width, height, expanded}` or `{type: 'hide'}` to `location.ancestorOrigins[0]`. The host accepts a message only if `event.source` is its iframe's window, `event.origin` is the extension origin, and the shape has exactly the expected keys with sizes in 0–4000.
 
-Pill texts by view: `Use {card} · {$x} back` (for a catalog v3 card without a point value, its units: `Use {card} · {n} miles back`), `Unlock to see your best card` (or `Unlock to record this order`), `Pick your cards to see your best card` (opens onboarding), `Can't read this cart — enter the amount`, `Did you pay with your recommended card?`.
+Pill texts by view: `Use {card} · {$x} back` for cash back; catalog v3 (Stage 2 M7, `estimates.ts:pillReward`): `· {$x} in store rewards`, `· {$x} in points` (or miles; a published estimate reads `· est. {$x} in points`, spelled "estimated" in the accessible name; an issuer's or the shopper's value is named in the accessible name), and for a program without a value its units, `· {n} miles`; a range reads `$x–$y`, a $0 minimum `up to $y`; `Unlock to see your best card` (or `Unlock to record this order`), `Pick your cards to see your best card` (opens onboarding), `Can't read this cart — enter the amount`, `Did you pay with your recommended card?`.
 
 ### Order detection and savings
 
@@ -114,7 +120,7 @@ Pill texts by view: `Use {card} · {$x} back` (for a catalog v3 card without a p
 | Layer | Tests |
 | --- | --- |
 | Unit | `extension/tests/auto-reader.test.ts` (includes back/forward-cache resume and `observeCart` host removal), `badge-routing.test.ts`, `badge-service.test.ts` |
-| Browser | `extension/e2e/badge.spec.ts`: onboarding, each supported cart, live updates on quantity change, closed shadow + cross-origin iframe, a removed host coming back without a body change, the covered-click status message, dismiss, per-site off, order savings, axe on badge and panel; no-cards and locked prompts. Fixture pages are served at the real hosts via `context.route`. |
+| Browser | `extension/e2e/badge.spec.ts`: a catalog v3 badge (points pill with "est.", estimate label, a store card not accepted, Venmo, no inline styles, axe on pill and panel); onboarding, each supported cart, live updates on quantity change, closed shadow + cross-origin iframe, a removed host coming back without a body change, the covered-click status message, dismiss, per-site off, order savings, axe on badge and panel; no-cards and locked prompts. Fixture pages are served at the real hosts via `context.route`. |
 
 ## Related
 

@@ -6,7 +6,7 @@ import {
   storedAppStateSchema,
 } from './contracts';
 import type { CheckoutResponse, StoredAppState } from './contracts';
-import { CATALOG_KEY, createStateService, STATE_KEY } from './service';
+import { CATALOG_KEY, createStateService, pageResponse, STATE_KEY } from './service';
 import { currentCatalog } from './catalog';
 import type { CartReader, StateStorage } from './service';
 import {
@@ -185,14 +185,13 @@ export function createVaultService(
         return { ok: false, error: 'This request could not be read. Reopen the extension and try again.' };
       if (normal.data.type === 'checkout:clear') {
         await clear();
-        return {
-          ok: true,
-          state: emptyState(),
-          catalog: currentCatalog(emptyCatalogCache(), clock()),
-          comparison: null,
-          notice: 'Local data deleted.',
-          catalogUpdatesAvailable: !!fetchCatalog,
-        };
+        return pageResponse(
+          emptyState(),
+          currentCatalog(emptyCatalogCache(), clock()),
+          null,
+          'Local data deleted.',
+          !!fetchCatalog,
+        );
       }
       const current = await status();
       if (current === 'damaged')

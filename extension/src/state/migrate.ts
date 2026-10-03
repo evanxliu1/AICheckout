@@ -1,7 +1,7 @@
 import { currentCatalog } from './catalog';
 import type { Catalog } from '../domain';
 import type { AppState, CatalogCache, StoredAppState } from './contracts';
-import { reconcileWallet } from './wallet';
+import { catalogExpired, reconcileWallet } from './wallet';
 
 export const MIGRATION_NOTICE =
   'Card terms were updated in this version. Some saved reward limits no longer apply; review your cards before comparing.';
@@ -52,10 +52,14 @@ export function migrateState(
 
 /** Schema 3 state whose wallet was checked against another catalog (a new bundled catalog after an
  * extension update, a switch between the cached and the bundled catalog as one expires or the other
- * is newer, or a cache that could not be read): drops the inputs the catalog in effect lacks and,
+ * is newer, or a cache that could not be read): drops the inputs the catalog in effect lacks (but not
+ * choices, gate answers or point values while that catalog has expired) and,
  * when the old catalog is still at hand (`before`), usage rows whose rule changed. When nothing is dropped only the stamp changes, so open pages keep their revision. */
-export function reconcileState(state: AppState, catalog: Catalog, before?: Catalog): AppState {
-  const reconciled = reconcileWallet(state.wallet, catalog, before);
+export function reconcileState(state: AppState, catalog: Catalog, now: number, before?: Catalog): AppState {
+  // An expired catalog in effect keeps the shopper's choices, gate answers and point values.
+  const reconciled = reconcileWallet(state.wallet, catalog, before, {
+    keepOptions: catalogExpired(catalog, now),
+  });
   if (!reconciled.usageDropped && !reconciled.optionsDropped)
     return { ...state, walletCatalogVersion: catalog.version };
   return {

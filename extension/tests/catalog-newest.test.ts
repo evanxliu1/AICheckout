@@ -12,6 +12,8 @@ import type { AppState, CatalogCache, CheckoutResponse } from '../src/state/cont
 import { CATALOG_KEY, createStateService, localDate, STATE_KEY } from '../src/state/service';
 import type { StateStorage } from '../src/state/service';
 import { currentCatalog } from '../src/state/catalog';
+import { enginePurchase } from '../src/state/wallet';
+import { redateCatalog } from '../../packages/rewards-core/src/catalog-helpers';
 
 vi.mock('../src/domain', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../src/domain')>();
@@ -183,5 +185,120 @@ describe('newest valid catalog wins', () => {
     expect(newer.catalog.version).toBe('hosted-v3.2');
     expect(newer.state).toMatchObject({ revision: 1, walletCatalogVersion: 'hosted-v3.2' });
     expect(local.writes.at(-1)).toEqual([CATALOG_KEY, STATE_KEY]);
+  });
+});
+
+describe('when both catalogs have expired (coordinator decision, 2026-10-03)', () => {
+  const later = Date.parse('2026-11-05T15:00:00Z');
+  it('uses the one verified later, and the cached release while the other is not yet valid', () => {
+    const olderHosted = {
+      ...hostedV3(),
+      verifiedAt: '2026-10-01T00:00:00Z',
+      expiresAt: '2026-10-20T00:00:00Z',
+    };
+    expect(currentCatalog(cacheOf(release(olderHosted, 2)), later).version).toBe('bundled-v3.1');
+    const newerHosted = { ...hostedV3(), expiresAt: '2026-10-20T00:00:00Z' };
+    expect(currentCatalog(cacheOf(release(newerHosted, 2)), later).version).toBe('hosted-v3.2');
+    // A bundled catalog that is not yet valid (device clock before its verification) and an expired
+    // cached release: the cached release, as before.
+    const early = Date.parse('2026-10-01T12:00:00Z');
+    const expiredEarlier = {
+      ...hostedV3(),
+      verifiedAt: '2026-09-20T00:00:00Z',
+      expiresAt: '2026-09-30T00:00:00Z',
+    };
+    expect(currentCatalog(cacheOf(release(expiredEarlier, 2)), early).version).toBe('hosted-v3.2');
+  });
+
+  it('keeps choices, gate answers and point values when the catalog in effect has expired', async () => {
+    // A v2 release verified after the bundle and expired with it: it is in effect, and it lacks
+    // every v3 input; nothing the shopper answered is dropped.
+    const v2 = {
+      ...realV2,
+      version: 'hosted-v2.9',
+      verifiedAt: '2026-10-02T06:00:00Z',
+      expiresAt: '2026-10-20T00:00:00Z',
+    };
+    const wallet: AppState['wallet'] = {
+      defaultCardId: 'test-cash-plus',
+      cards: [
+        {
+          cardId: 'test-cash-plus',
+          usage: [usage('cash-plus-electronics')],
+          choices: [{ choiceId: 'five-percent', optionIds: ['electronics'] }],
+        },
+      ],
+      gates: [{ gateId: 'amazon-prime', optionId: 'member' }],
+      valueOverrides: [{ programId: 'test-airline-miles', valueHundredthsOfCent: 150 }],
+    };
+    now = later;
+    const local = memory({
+      [STATE_KEY]: { ...emptyState(), revision: 4, wallet, walletCatalogVersion: 'bundled-v3.1' },
+      [CATALOG_KEY]: cacheOf(release(v2, 2)),
+    });
+    const service = createStateService(local.api, clock);
+    const read = ok(await service({ type: 'checkout:get-state' }));
+    expect(read.catalog.version).toBe('hosted-v2.9');
+    expect(read.state.walletCatalogVersion).toBe('hosted-v2.9');
+    // The usage row's rule is not in the v2 catalog: dropped as before. The answers stay.
+    expect(read.state.wallet.cards[0].choices).toEqual(wallet.cards[0].choices);
+    expect(read.state.wallet.gates).toEqual(wallet.gates);
+    expect(read.state.wallet.valueOverrides).toEqual(wallet.valueOverrides);
+    // Saving and comparing still work: the comparison reports the expiry.
+    const saved = ok(
+      await service({
+        type: 'checkout:save-wallet',
+        expectedRevision: read.state.revision,
+        wallet: { ...read.state.wallet, cards: [], defaultCardId: null },
+      }),
+    );
+    expect(saved.state.wallet.gates).toEqual(wallet.gates);
+    // Once a valid catalog is in effect again, its own IDs decide what stays.
+    const fresh = { ...redateCatalog(CATALOG_V3_FIXTURE, '2026-11-05'), version: 'hosted-v3.9' };
+    fresh.gates = fresh.gates.filter((g) => g.id !== 'amazon-prime');
+    for (const card of fresh.cards)
+      for (const rule of card.rules) rule.requires = rule.requires.filter((r) => r.gateId !== 'amazon-prime');
+    await local.api.set({ [CATALOG_KEY]: cacheOf(release(fresh, 3)) });
+    const after = ok(await service({ type: 'checkout:get-state' }));
+    expect(after.catalog.version).toBe('hosted-v3.9');
+    expect(after.state.wallet.gates).toEqual([]);
+    expect(after.state.wallet.valueOverrides).toEqual(wallet.valueOverrides);
+  });
+});
+
+describe('Venmo under an older catalog in effect (M7 review)', () => {
+  it('compares a Venmo payment as a card payment when a v2 catalog is in effect, and saves it so', async () => {
+    const newerV2 = {
+      ...structuredClone(realV2),
+      version: 'hosted-v2.9',
+      verifiedAt: '2026-10-02T06:00:00Z',
+    };
+    const cache = cacheOf(release(newerV2, 3));
+    expect(currentCatalog(cache, now).schemaVersion).toBe(2);
+    const local = memory({
+      [STATE_KEY]: {
+        ...emptyState(),
+        revision: 1,
+        walletCatalogVersion: 'hosted-v2.9',
+        wallet: { defaultCardId: 'citi-double-cash', cards: [{ cardId: 'citi-double-cash', usage: [] }] },
+      },
+      [CATALOG_KEY]: cache,
+    });
+    const service = createStateService(local.api, clock);
+    const purchase = {
+      merchantId: 'best-buy-us',
+      currency: 'USD' as const,
+      amountCents: 10_000,
+      purchasedOn: localDate(now),
+      eligiblePurchase: 'eligible' as const,
+      onlineRetail: 'eligible' as const,
+      paymentPath: 'venmo' as const,
+    };
+    const result = ok(await service({ type: 'checkout:compare', expectedRevision: 1, purchase }));
+    expect(result.comparison?.status).toBe('ready');
+    expect(result.state.purchase?.paymentPath).toBe('card');
+    // A Venmo purchase saved under v3 terms is re-compared as a card payment, not refused.
+    expect(enginePurchase(purchase, newerV2).paymentPath).toBe('card');
+    expect(enginePurchase(purchase, CATALOG_V3_FIXTURE)).toBe(purchase);
   });
 });

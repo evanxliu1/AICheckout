@@ -53,6 +53,14 @@ const YEARLY = new Set(['calendar-year', 'cardmember-year', 'year-unspecified'])
 const needsActivation = (rule: RewardRuleV3) =>
   rule.activation === 'enroll-once' || rule.activation === 'recurring';
 
+/** An `enroll-once` rule tied to a `chosen` category is enrolled by choosing that category (Bank of
+ * America's 3% choice category, U.S. Bank Smartly Self-Select): the choice question is also its
+ * activation question, so the shopper is asked once (Stage 2 M7). */
+export function enrolledByChoice(card: CardProductV3, rule: RewardRuleV3): boolean {
+  if (rule.activation !== 'enroll-once' || rule.choice === null) return false;
+  return card.choices.find((c) => c.id === rule.choice!.choiceId)?.kind === 'chosen';
+}
+
 /** The card's base: its one unconditional `all-purchases` rule (closed-loop cards may have none). */
 export function baseRuleV3(card: CardProductV3): RewardRuleV3 | undefined {
   return card.rules.find((r) => r.category === 'all-purchases' && isUnconditionalRuleV3(r));
@@ -261,7 +269,9 @@ function blocked(rule: RewardRuleV3, ctx: Context): RuleStatusV3 | null {
   if (path !== 'card' && rule.excludedPaymentPaths.includes(path)) return 'not-eligible';
   if (rule.requiredPaymentPaths.length > 0 && !rule.requiredPaymentPaths.includes(path))
     return 'not-eligible';
-  if (needsActivation(rule) && ctx.usageFor(rule)?.activation === 'inactive') return 'not-eligible';
+  // A chosen category is its own enrollment (`enrolledByChoice`); a leftover activation row is ignored.
+  if (needsActivation(rule) && !enrolledByChoice(card, rule) && ctx.usageFor(rule)?.activation === 'inactive')
+    return 'not-eligible';
   if (rule.choice) {
     const choice = card.choices.find((c) => c.id === rule.choice!.choiceId)!;
     const picked = owned.choices?.find((c) => c.choiceId === choice.id);
@@ -284,7 +294,10 @@ function evaluate(rule: RewardRuleV3, ctx: Context, baseNumerator: bigint): Opti
     uncertain.push('online-category-unknown');
   const path = purchase.paymentPath ?? 'card';
   if (path !== 'card' && !rule.requiredPaymentPaths.includes(path)) uncertain.push('payment-path-uncertain');
-  if (needsActivation(rule) && usage?.activation !== 'active') uncertain.push('activation-unknown');
+  // Choosing the category is the enrollment: answered, it applies or is `choice-not-selected`;
+  // unanswered, `choice-unknown` already covers it.
+  if (needsActivation(rule) && usage?.activation !== 'active' && !enrolledByChoice(card, rule))
+    uncertain.push('activation-unknown');
   if (rule.cap.kind === 'unstated') uncertain.push('cap-unstated');
   if (rule.choice) {
     const choice = card.choices.find((c) => c.id === rule.choice!.choiceId)!;

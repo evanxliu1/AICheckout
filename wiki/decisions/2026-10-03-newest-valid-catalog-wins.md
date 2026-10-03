@@ -41,4 +41,4 @@ As in the "Chosen" column. `currentCatalog(cache, now)` in `state/catalog.ts` ta
 - Tests that relied on an older cached v1 release beating the bundled v2 catalog now use a cached release verified later than the bundle.
 
 ## Status
-Accepted 2026-10-03 by the coordinator; implemented in the M6 pre-merge review (agent-verified). Supersedes the "cached release always wins" consequence and the schema 2 → 3 cache row of the [M6 extension state decision](2026-10-02-extension-state-v3.md).
+Accepted 2026-10-03 by the coordinator; implemented in the M6 pre-merge review (agent-verified). Supersedes the "cached release always wins" consequence and the schema 2 → 3 cache row of the [M6 extension state decision](2026-10-02-extension-state-v3.md). Partly superseded 2026-10-03 by [when both catalogs have expired, use the one verified later and keep the shopper's answers](2026-10-03-expired-catalogs-keep-answers.md) (the "neither is valid" case).
