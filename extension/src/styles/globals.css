@@ -232,8 +232,9 @@ body {
   border-top: 1px solid var(--token-color-border-faint);
 }
 
-/* The clear winner: a navy block with the amount as the largest thing in the popup. Only white,
- * the sky accent and the soft on-navy text are used on navy, all above 7:1. */
+/* The clear winner: a navy block with the amount as the largest thing in the popup. Text on navy
+ * is white, the sky accent or the soft on-navy text (all above 7:1); badges inside keep their own
+ * surfaces (the neutral one is navy-line with white text, 9.8:1). */
 .estimate-row--best {
   padding: 16px;
   color: var(--ac-color-on-navy-soft);
@@ -263,7 +264,8 @@ body {
   line-height: 1;
   white-space: normal;
 }
-/* Ranges ("$12.34–$56.78") are longer; keep them on one line at 360 px. */
+/* Ranges ("$12.34–$56.78"), "Up to $x" and amounts in units are longer: a smaller size keeps
+ * typical ones on one line at 360 px; the largest wrap after the dash instead of overflowing. */
 .estimate-amount--range {
   font-size: 1.75rem;
 }

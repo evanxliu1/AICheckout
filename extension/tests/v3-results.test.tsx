@@ -6,6 +6,7 @@ import {
   basisLabel,
   centsEach,
   lessThanBest,
+  rowEmphasis,
   pillReward,
   rankingNote,
   rateText,
@@ -305,7 +306,8 @@ describe('Ocean winner block on catalog v3 results', () => {
     expect(hero()!.textContent).toBe('$3.60 3 points per $1');
     expect(hero()!.classList.contains('estimate-amount--range')).toBe(false);
     expect(within(best).getByText('Estimate')).toBeTruthy();
-    expect(within(row('Store Mastercard')).getByText('$2.60 less')).toBeTruthy();
+    // The difference rests on the winner's published estimate, so it says "est." like the pill.
+    expect(within(row('Store Mastercard')).getByText('est. $2.60 less')).toBeTruthy();
   });
   it('shows no block and no differences when tied or when the ranking may change', () => {
     for (const [cards, extra] of [
@@ -319,10 +321,10 @@ describe('Ocean winner block on catalog v3 results', () => {
       cleanup();
     }
   });
-  it('uses the smaller size and "up to" for a store card with nothing guaranteed and for units', () => {
+  it('gives a single card that guarantees nothing no block, and uses the smaller size for units', () => {
     show(['test-amazon-store'], { merchantId: 'amazon-us' });
-    expect(hero()!.textContent).toBe('Up to $5.00 up to 5%');
-    expect(hero()!.classList.contains('estimate-amount--range')).toBe(true);
+    expect(document.querySelector('.estimate-row--best')).toBeNull();
+    expect(within(row('Amazon Store')).getByText('Up to $5.00')).toBeTruthy();
     cleanup();
     show(['test-auto-top']);
     expect(hero()!.textContent).toBe('100–300 miles up to 3 miles per $1');
@@ -334,5 +336,24 @@ describe('Ocean winner block on catalog v3 results', () => {
     const value = { hundredthsOfCent: 100, basis: 'program' } as unknown as CardEstimate['unitValue'];
     expect(lessThanBest(est(300, value), est(0, null))).toBeUndefined();
     expect(lessThanBest(est(300, value), est(100, value))).toBe(200);
+  });
+  it('marks a difference that rests on a published estimate', () => {
+    const est = (cents: number, basis?: string) =>
+      ({
+        minRewardCents: cents,
+        maxRewardCents: cents,
+        unitValue: basis ? { hundredthsOfCent: 120, basis } : undefined,
+      }) as CardEstimate;
+    const cmp = (a: CardEstimate, b: CardEstimate) =>
+      ({ estimates: [a, b], tied: false, rankingMayChange: false }) as unknown as Comparison;
+    expect(rowEmphasis(cmp(est(300, 'published-estimate'), est(100)), 1)).toEqual({
+      best: false,
+      deltaCents: 200,
+      deltaEstimated: true,
+    });
+    expect(rowEmphasis(cmp(est(300, 'issuer-stated'), est(100)), 1)).toEqual({
+      best: false,
+      deltaCents: 200,
+    });
   });
 });

@@ -353,10 +353,24 @@ export function lessThanBest(best: CardEstimate, row: CardEstimate): number | un
 }
 
 /** How row `index` of a ranked comparison is shown: the clear winner (not tied, ranking stable)
- * as the hero, every other row with how much less it earns when both amounts are exact. */
-export function rowEmphasis(result: Comparison, index: number): { best: boolean; deltaCents?: number } {
+ * as the hero, every other row with how much less it earns when both amounts are exact.
+ * `deltaEstimated` marks a difference that rests on a published-estimate point value ("est.", as
+ * in the pill). A single card that guarantees nothing is no winner, so it gets no hero. */
+export function rowEmphasis(
+  result: Comparison,
+  index: number,
+): { best: boolean; deltaCents?: number; deltaEstimated?: boolean } {
   const clearWinner = !result.tied && !result.rankingMayChange;
   if (!clearWinner) return { best: false };
-  if (index === 0) return { best: true };
-  return { best: false, deltaCents: lessThanBest(result.estimates[0]!, result.estimates[index]!) };
+  const first = result.estimates[0]!;
+  if (index === 0) {
+    const guaranteesNothing =
+      first.unitValue === null ? (first.minRewardUnits ?? 0) === 0 : first.minRewardCents === 0;
+    return { best: !(result.estimates.length === 1 && guaranteesNothing) };
+  }
+  const row = result.estimates[index]!;
+  const deltaCents = lessThanBest(first, row);
+  if (deltaCents === undefined) return { best: false };
+  const estimated = [first, row].some((e) => e.unitValue?.basis === 'published-estimate');
+  return estimated ? { best: false, deltaCents, deltaEstimated: true } : { best: false, deltaCents };
 }

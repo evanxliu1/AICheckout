@@ -81,14 +81,14 @@ bring their own resets.
 
 - Navy is the brand color: the app title and header icon, primary buttons, checked controls, the
   badge pill and the winner hero. On white, links, focus and selected states use action blue
-  `#1d5fb4` (6.3:1); faint ink `#5a6b82` is 5.5:1 on white. Sky `#7cc4ff` and the soft on-navy text
+  `#1d5fb4` (6.3:1); faint ink `#5a6b82` is 5.4:1 on white. Sky `#7cc4ff` and the soft on-navy text
   `#a9c6ea` appear only on navy. Reward amounts and card names stay in strong ink outside the hero.
 - Alerts use Helios semantic surfaces: critical for errors and expired terms, warning for a merchant
   the terms don't cover, highlight for a read cart amount, neutral for notices.
 - Type is Figtree for text and Bricolage Grotesque for the app title, section titles and amounts,
   both self-hosted from `@fontsource-variable` (SIL OFL 1.1) as same-origin `woff2`. Section titles
   use display-200 bold; body text body-200; conditions and explanations body-100 in faint ink.
-  Amounts use tabular numerals and never wrap.
+  Amounts use tabular numerals; a row's amount stays on one line (it moves under the card name when wide), and the winner block's amount may wrap after a range's dash.
 
 ## Layout
 
@@ -100,7 +100,9 @@ amount on one baseline, separated by faint dividers; a wide amount moves under t
 right-aligned (`.estimate-head`). A clear winner (not tied, ranking stable) is
 instead a navy block with an 18 px radius: card name in white, the amount at 2.75rem in white
 Bricolage as the largest text in the popup, and its rate beside it in sky. When both amounts are
-exact, each other row shows "$X less" in faint ink before its amount. Long text wraps anywhere; the page never
+exact dollar amounts, each other row shows "$X less" in faint ink before its amount ("est. $X less"
+when either rests on a published-estimate point value). A single card that guarantees nothing
+gets no block. Long text wraps anywhere; the page never
 scrolls horizontally (checked by the popup accessibility test at 360 and 480 px).
 
 ## Components (from `@ai-checkout/ui`)

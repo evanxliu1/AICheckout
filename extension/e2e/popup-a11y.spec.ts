@@ -280,8 +280,8 @@ test('catalog v3 popup and onboarding states are axe-clean at 360 and 480 px', a
     for (const summary of await page.locator('summary').all()) await summary.click();
     await axeCheck(page, 'v3-winner-details', testInfo);
 
-    // The widest amounts on the largest purchase: a store card with nothing guaranteed ("Up to")
-    // and a range in units.
+    // The widest amounts on the largest purchase: a store card with nothing guaranteed ("Up to",
+    // a single card that guarantees nothing gets no winner block) and a range in units (block).
     for (const [remove, add, merchant, text] of [
       [['Test Points Card', 'Test Store Mastercard'], 'Test Amazon Store Card', 'amazon-us', 'Up to $'],
       [['Test Amazon Store Card'], 'Test Automatic Top Category', 'best-buy-us', 'miles'],
@@ -294,7 +294,7 @@ test('catalog v3 popup and onboarding states are axe-clean at 360 and 480 px', a
       await page.getByLabel('Purchase amount (USD)').fill('99999.99');
       await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
       await page.getByRole('button', { name: 'Compare my cards' }).click();
-      await expect(page.locator('.estimate-amount--hero')).toContainText(text);
+      await expect(page.locator('.estimate-amount').first()).toContainText(text);
       await axeCheck(page, `v3-winner-${merchant}-max`, testInfo);
     }
     expect(errors).toEqual([]);

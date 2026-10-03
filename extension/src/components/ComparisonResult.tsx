@@ -36,19 +36,21 @@ const BASIS_COLORS = { estimate: 'neutral', 'issuer-stated': 'neutral', 'your va
 /** One card's result: amount and what it is paid as, the rule behind it in the issuer's words, its
  * conditions, the rules that don't apply here, and notes about uncertain inputs. `best` shows it as
  * the clear winner (navy block, large amount and rate); `deltaCents` is how much less it earns than
- * the winner, when both are exact dollar amounts. */
+ * the winner, when both are exact dollar amounts ("est." when either rests on a published estimate). */
 export function EstimateRow({
   catalog,
   estimate,
   amountCents,
   best = false,
   deltaCents,
+  deltaEstimated = false,
 }: {
   catalog: Catalog;
   estimate: CardEstimate;
   amountCents: number;
   best?: boolean;
   deltaCents?: number;
+  deltaEstimated?: boolean;
 }) {
   const card = catalog.cards.find((c) => c.id === estimate.cardId)!;
   const rules: (RewardRuleV2 | RewardRuleV3)[] =
@@ -110,7 +112,9 @@ export function EstimateRow({
         <div className="estimate-head flex justify-between gap-4 items-baseline">
           <h3 className="section-title">{card.shortName}</h3>
           <span className="estimate-amount">
-            {deltaCents ? <span className="estimate-delta">{money(deltaCents)} less</span> : null}
+            {deltaCents ? (
+              <span className="estimate-delta">{`${deltaEstimated ? 'est. ' : ''}${money(deltaCents)} less`}</span>
+            ) : null}
             <span>{rewardText(estimate, catalog)}</span>
           </span>
         </div>

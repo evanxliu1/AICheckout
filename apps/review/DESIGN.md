@@ -47,7 +47,7 @@ extension popup, keeps AI Checkout's own name and cart icon, and uses no HashiCo
 Figtree text and Bricolage Grotesque headings
 ([decision](../../wiki/decisions/2026-10-02-ocean-theme.md)). The sky accent and soft on-navy text
 appear only on the navy header; on white, links, focus and the selected draft use action blue
-`#1d5fb4` (6.3:1) or navy, and faint text `#5a6b82` is 5.5:1.
+`#1d5fb4` (6.3:1) or navy, and faint text `#5a6b82` is 5.4:1.
 
 Sources: `src/styles.css` (layout only, `--token-*` and `--ac-*` values), `src/App.tsx`, `src/ReviewWorkspace.tsx`,
 `src/DraftPanel.tsx`, `src/StructuredEditor.tsx`, `src/ChangesTable.tsx`, `src/ExtractionPanel.tsx`.
