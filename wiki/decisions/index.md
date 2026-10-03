@@ -3,6 +3,7 @@
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
 ## 2026-10-03
+* [Tailwind 4 for the extension, with Tailwind 3 output kept](./2026-10-03-tailwind-4.md) — Clears the `braces` audit failure; PostCSS plugin, CSS-first Helios theme, unlayered utilities, Tailwind 3 `space-y`, typescript-eslint 8.48.0, root `lightningcss` pin for an npm lockfile bug.
 * [The extension bundles catalog v3, and usage rows are compared in v3 form](./2026-10-03-bundled-catalog-v3.md) — Stage 2 M5 swaps the bundled fallback to `CATALOG_V3`; a v2 rule is lifted to v3 form before comparing, so release 1 wallets keep every usage row on the switch.
 * [The newest valid catalog is in effect, not always the cached release](./2026-10-03-newest-valid-catalog-wins.md) — Of the cached release and the bundled catalog, the one valid now and verified later; sequence rollback protection unchanged; a switch reconciles the wallet; partly supersedes the M6 extension state decision.
 

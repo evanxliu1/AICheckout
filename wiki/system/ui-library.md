@@ -6,7 +6,7 @@ status: stable
 tags: [system, ui, helios, accessibility]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-03T02:05:00Z
 sources:
   - resource: ../../packages/ui/src/index.ts
     title: Component exports
@@ -48,7 +48,7 @@ Verified 2026-10-02 by reading the code and running `npm test --workspace=@ai-ch
 
 - CSP: components use no inline styles or `<style>` tags, but checkbox, radio, toggle and select use Helios token `data:` images, so consumers need `img-src 'self' data:` (the review app and site CSPs allow it; see [API](api.md#security-headers)).
 - `npm test` fails if `src/icons.generated.ts` is stale relative to `ICONS`.
-- The extension's Tailwind theme maps to `--token-*` variables so remaining utilities are tokens ([`extension/tailwind.config.js`](../../extension/tailwind.config.js)).
+- The extension's Tailwind 4 `@theme` maps colors, fonts, type sizes, weights, radii and shadows to `--token-*` variables so remaining utilities are tokens ([`extension/src/styles/globals.css`](../../extension/src/styles/globals.css); [decision](../decisions/2026-10-03-tailwind-4.md)).
 
 ## Tests
 
