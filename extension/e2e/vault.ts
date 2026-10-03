@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import type { Page } from '@playwright/test';
 import type { openNativePopup } from './native-popup';
 import { decryptVault, encryptVault } from '../src/state/vault-crypto';
-import type { AppState } from '../src/state/contracts';
+import type { AppState, CatalogCache } from '../src/state/contracts';
 
 // Synthetic test passphrase only. The production build contains no test entry point.
 export const TEST_PASSPHRASE = 'test-only river amber quiet notebook';
@@ -75,8 +75,18 @@ export async function mutateVaultState(target: InspectionTarget, mutate: (state:
     state = encrypted(envelope)
       ? ((await decryptVault(envelope, key as never)) as AppState)
       : structuredClone(envelope as AppState);
-  if (state.schemaVersion !== 2) throw new Error('Open the popup once so pilot-era state is migrated.');
+  if (state.schemaVersion !== 3) throw new Error('Open the popup once so earlier state is migrated.');
   mutate(state);
   const value = encrypted(envelope) ? await encryptVault(state, envelope as never, key as never) : state;
   await target.evaluate((next) => chrome.storage.local.set({ checkoutStateV1: next }), value);
+}
+/** The cached published catalog (plain storage, never encrypted). */
+export async function readCatalogCache(target: InspectionTarget): Promise<CatalogCache | undefined> {
+  return target.evaluate(
+    async () => (await chrome.storage.local.get('checkoutCatalogV1')).checkoutCatalogV1 as CatalogCache,
+    undefined,
+  );
+}
+export async function writeCatalogCache(target: InspectionTarget, cache: CatalogCache) {
+  await target.evaluate((next) => chrome.storage.local.set({ checkoutCatalogV1: next }), cache);
 }

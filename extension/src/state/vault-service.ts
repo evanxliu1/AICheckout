@@ -1,6 +1,13 @@
-import { appStateSchema, emptyState, requestSchema, storedAppStateSchema } from './contracts';
+import {
+  appStateSchema,
+  emptyCatalogCache,
+  emptyState,
+  requestSchema,
+  storedAppStateSchema,
+} from './contracts';
 import type { CheckoutResponse, StoredAppState } from './contracts';
-import { createStateService, STATE_KEY } from './service';
+import { CATALOG_KEY, createStateService, STATE_KEY } from './service';
+import { currentCatalog } from './catalog';
 import type { CartReader, StateStorage } from './service';
 import {
   decryptVault,
@@ -68,8 +75,11 @@ export function createVaultService(
   }
   /** Plain state (or nothing yet) when the vault is off; the decrypted envelope when it is on. */
   const isPlain = (saved: unknown) => saved === undefined || storedAppStateSchema.safeParse(saved).success;
+  /** The catalog cache is public: never encrypted, readable while locked. It is written in the same
+   * `local.set` as the state it belongs with, so both change together or not at all. */
   const protectedStorage: StateStorage = {
     get: async (key) => {
+      if (key === CATALOG_KEY) return local.get(CATALOG_KEY);
       if (key !== STATE_KEY) throw new Error('Unsupported state key.');
       const saved = await record();
       if (isPlain(saved)) return saved === undefined ? {} : { [STATE_KEY]: saved };
@@ -77,19 +87,20 @@ export function createVaultService(
       return { [STATE_KEY]: await decryptVault(unlocked.envelope, unlocked.key) };
     },
     set: async (items) => {
-      if (Object.keys(items).length !== 1 || !Object.hasOwn(items, STATE_KEY))
+      const keys = Object.keys(items);
+      if (!keys.length || keys.some((key) => key !== STATE_KEY && key !== CATALOG_KEY))
         throw new Error('Unsupported state write.');
-      if (isPlain(await record())) {
-        await local.set({ [STATE_KEY]: appStateSchema.parse(items[STATE_KEY]) });
-        return;
+      const write: Record<string, unknown> = {};
+      if (Object.hasOwn(items, CATALOG_KEY)) write[CATALOG_KEY] = items[CATALOG_KEY];
+      if (Object.hasOwn(items, STATE_KEY)) {
+        const state = appStateSchema.parse(items[STATE_KEY]);
+        if (isPlain(await record())) write[STATE_KEY] = state;
+        else {
+          const unlocked = await ready();
+          write[STATE_KEY] = await encryptVault(state, unlocked.envelope, unlocked.key);
+        }
       }
-      const unlocked = await ready();
-      const encrypted = await encryptVault(
-        appStateSchema.parse(items[STATE_KEY]),
-        unlocked.envelope,
-        unlocked.key,
-      );
-      await local.set({ [STATE_KEY]: encrypted });
+      await local.set(write);
     },
     remove: (keys) => local.remove(keys),
     clear,
@@ -177,6 +188,7 @@ export function createVaultService(
         return {
           ok: true,
           state: emptyState(),
+          catalog: currentCatalog(emptyCatalogCache()),
           comparison: null,
           notice: 'Local data deleted.',
           catalogUpdatesAvailable: !!fetchCatalog,
@@ -201,12 +213,14 @@ export function createVaultService(
       if (current === 'unlocked' || current === 'unprotected') await stateService.invalidateTab(tabId);
       // Locked captures are validated against the exact tab/document and age on unlock/use.
     });
-  /** The current status and, when readable, the saved state. For the badge, which only reads. */
+  /** The current status and, when readable, the saved state and the catalog in effect. For the
+   * badge, which only reads. */
   service.snapshot = () =>
     serial(async () => {
       const current = await status();
-      if (current !== 'unlocked' && current !== 'unprotected') return { status: current, state: null };
-      return { status: current, state: await stateService.read() };
+      if (current !== 'unlocked' && current !== 'unprotected')
+        return { status: current, state: null, catalog: null };
+      return { status: current, ...(await stateService.read()) };
     });
   return service;
 }

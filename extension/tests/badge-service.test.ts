@@ -7,7 +7,7 @@ import { createVaultService } from '../src/state/vault-service';
 import type { StateStorage } from '../src/state/service';
 import { emptyState } from '../src/state/contracts';
 import type { AppState } from '../src/state/contracts';
-import { STATE_KEY } from '../src/state/service';
+import { CATALOG_KEY, STATE_KEY } from '../src/state/service';
 import { savingsEntry, totalExtraCents } from '../src/state/savings';
 import { CATALOG_V2, redateCatalog } from '../src/domain';
 
@@ -52,7 +52,10 @@ const wallet = {
 function setup(state: Partial<AppState> | null = { wallet }) {
   const local = memory(
     state
-      ? { [STATE_KEY]: { ...emptyState(), catalog: { release: release(), lastCheckedAt: null }, ...state } }
+      ? {
+          [STATE_KEY]: { ...emptyState(), ...state },
+          [CATALOG_KEY]: { release: release(), lastCheckedAt: null },
+        }
       : {},
   );
   const session = memory();

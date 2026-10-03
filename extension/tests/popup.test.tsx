@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { createStateService } from '../src/state/service';
 import { emptyState } from '../src/state/contracts';
 import Popup from '../src/popup/Popup';
-import type { AppState } from '../src/state/contracts';
+import type { AppState, CatalogCache } from '../src/state/contracts';
 import { PILOT_CATALOG } from '../src/domain';
 
 let data: Record<string, unknown>;
@@ -110,7 +110,7 @@ describe('offline comparison popup', () => {
   });
   it('does not silently expand the scope of an older downloaded catalog', async () => {
     const catalog = { ...PILOT_CATALOG, version: 'earlier-published', merchantIds: ['best-buy-us'] };
-    (data.checkoutStateV1 as AppState).catalog = {
+    data.checkoutCatalogV1 = {
       lastCheckedAt: Date.now(),
       release: {
         sequence: 1,
@@ -119,7 +119,7 @@ describe('offline comparison popup', () => {
         catalog_hash: 'a'.repeat(64),
         published_at: catalog.verifiedAt,
       },
-    };
+    } satisfies CatalogCache;
     render(<Popup />);
     fireEvent.change(await screen.findByLabelText('Merchant'), { target: { value: 'newegg-us' } });
     expect(screen.getByText(/Your current card terms do not cover Newegg US/)).toBeTruthy();

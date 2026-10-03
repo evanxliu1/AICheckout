@@ -52,7 +52,7 @@ test('optional protection: plain by default, protect, cross-window lock, wrong p
     await page.getByRole('button', { name: 'Compare my cards' }).click();
     await expect(page.getByText('$1.85', { exact: true })).toBeVisible();
     const plain = await page.evaluate(() => chrome.storage.local.get(null));
-    expect(plain.checkoutStateV1).toMatchObject({ schemaVersion: 2 });
+    expect(plain.checkoutStateV1).toMatchObject({ schemaVersion: 3 });
     expect(JSON.stringify(plain)).toContain('capital-one-quicksilver');
 
     await protectVault(page);
@@ -101,7 +101,7 @@ test('optional protection: plain by default, protect, cross-window lock, wrong p
     await expect(page.getByRole('button', { name: 'Lock saved inputs' })).toHaveCount(0);
     await expect(page.getByText('Quicksilver', { exact: true }).first()).toBeVisible();
     expect((await page.evaluate(() => chrome.storage.local.get(null))).checkoutStateV1).toMatchObject({
-      schemaVersion: 2,
+      schemaVersion: 3,
     });
     expect(await page.evaluate(() => chrome.storage.session.get(null))).not.toHaveProperty(
       'checkoutVaultSessionV1',

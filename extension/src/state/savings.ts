@@ -3,7 +3,7 @@
 import { compareRewards } from '../domain';
 import type { Catalog, Purchase, Wallet } from '../domain';
 import type { SavingsEntry } from './contracts';
-import { localDate } from './service';
+import { localDate } from './keys';
 
 /** The guaranteed minimum a card earns on this purchase, or null when it cannot be estimated. */
 export function minimumReward(

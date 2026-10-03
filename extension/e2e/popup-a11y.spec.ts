@@ -4,7 +4,7 @@ import { closeOnboarding } from './onboarding';
 import AxeBuilder from '@axe-core/playwright';
 import { chromium, expect, test, type Page } from '@playwright/test';
 import { resolve } from 'node:path';
-import { mutateVaultState, protectVault, startPopup } from './vault';
+import { mutateVaultState, protectVault, startPopup, writeCatalogCache } from './vault';
 import { PILOT_CATALOG } from '../../packages/rewards-core/src/catalog';
 import { redateCatalog } from '../../packages/rewards-core/src/catalog-helpers';
 
@@ -81,14 +81,17 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
     const day = 86_400_000;
     const expired = redateCatalog(PILOT_CATALOG, new Date(Date.now() - 2 * day).toISOString().slice(0, 10));
     expired.expiresAt = new Date(Date.now() - 60_000).toISOString().replace(/\.\d{3}Z$/, 'Z');
-    await mutateVaultState(page, (state) => {
-      state.catalog.release = {
+    await writeCatalogCache(page, {
+      lastCheckedAt: null,
+      release: {
         sequence: 1,
         version: 'expired.1',
         catalog: { ...expired, version: 'expired.1' },
         catalog_hash: '1'.repeat(64),
         published_at: expired.verifiedAt,
-      };
+      },
+    });
+    await mutateVaultState(page, (state) => {
       state.wallet = { defaultCardId: null, cards: [{ cardId: 'capital-one-quicksilver', usage: [] }] };
       // Keep the earlier saved comparison: the expired-terms alert must still stay on screen.
       state.revision += 1;

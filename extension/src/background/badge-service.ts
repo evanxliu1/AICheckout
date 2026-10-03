@@ -4,10 +4,9 @@
 import { compareRewards } from '../domain';
 import type { Catalog, Purchase, Wallet } from '../domain';
 import { merchantForCheckout, merchantForOrderConfirmation, type MerchantId } from '../checkout/merchants';
-import { currentCatalog } from '../state/catalog';
 import type { AppState, CheckoutResponse } from '../state/contracts';
 import type { StateStorage } from '../state/service';
-import { localDate } from '../state/service';
+import { localDate } from '../state/keys';
 import type { VaultStatus } from '../state/vault-contracts';
 import { savingsEntry } from '../state/savings';
 import {
@@ -26,7 +25,7 @@ export interface BadgeDeps {
   local: Pick<StateStorage, 'get' | 'set'>;
   session: Pick<StateStorage, 'get' | 'set'>;
   vault: {
-    snapshot: () => Promise<{ status: VaultStatus; state: AppState | null }>;
+    snapshot: () => Promise<{ status: VaultStatus; state: AppState | null; catalog: Catalog | null }>;
     handle: (request: unknown) => Promise<unknown>;
   };
   clock?: () => number;
@@ -65,7 +64,7 @@ export function autoPurchase(
   now: number,
 ): Purchase & { paymentPath: TabEntry['paymentPath'] } {
   const profile =
-    catalog.schemaVersion === 2 ? catalog.merchants.find((m) => m.id === merchantId) : undefined;
+    catalog.schemaVersion === 1 ? undefined : catalog.merchants.find((m) => m.id === merchantId);
   return {
     merchantId,
     currency: 'USD',
@@ -74,6 +73,54 @@ export function autoPurchase(
     eligiblePurchase: 'eligible',
     onlineRetail: profile ? (profile.onlineRetail ? 'eligible' : 'ineligible') : 'unknown',
     paymentPath,
+  };
+}
+
+/** The part of the catalog the badge iframe needs for one merchant: the owned cards, that merchant,
+ * and what those cards refer to (their programs, the brands and gates their rules name, the sources
+ * they cite). Never the whole catalog: with 180 cards it would be most of 1 MiB per view. */
+export function badgeCatalog(catalog: Catalog, wallet: Pick<Wallet, 'cards'>, merchantId: string): Catalog {
+  const owned = new Set(wallet.cards.map((c) => c.cardId));
+  const cited = (ids: string[]) => {
+    const keep = new Set(ids);
+    return catalog.sources.filter((s) => keep.has(s.id));
+  };
+  if (catalog.schemaVersion === 1) {
+    const cards = catalog.cards.filter((c) => owned.has(c.id));
+    return { ...catalog, cards, sources: cited(cards.flatMap((c) => c.rules.flatMap((r) => r.sourceIds))) };
+  }
+  if (catalog.schemaVersion === 2) {
+    const merchants = catalog.merchants.filter((m) => m.id === merchantId);
+    const merchantSources = merchants.flatMap((m) => m.mcc.sourceIds);
+    const cards = catalog.cards.filter((c) => owned.has(c.id));
+    const ruleSources = cards.flatMap((c) => c.rules.flatMap((r) => r.sourceIds));
+    return { ...catalog, merchants, cards, sources: cited([...ruleSources, ...merchantSources]) };
+  }
+  const merchants = catalog.merchants.filter((m) => m.id === merchantId);
+  const merchantSources = merchants.flatMap((m) => m.mcc.sourceIds);
+  const cards = catalog.cards.filter((c) => owned.has(c.id));
+  const programIds = new Set(cards.map((c) => c.programId));
+  const programs = catalog.programs.filter((p) => programIds.has(p.id));
+  const rules = cards.flatMap((c) => c.rules);
+  const brandIds = new Set([
+    ...merchants.flatMap((m) => m.brandIds),
+    ...cards.flatMap((c) => (c.acceptance.kind === 'closed-loop' ? c.acceptance.brandIds : [])),
+    ...rules.flatMap((r) => [...r.brandIds, ...r.excludedBrandIds]),
+    ...programs.flatMap((p) => p.redemptionBrandIds),
+  ]);
+  const gateIds = new Set(rules.flatMap((r) => r.requires.map((g) => g.gateId)));
+  return {
+    ...catalog,
+    programs,
+    brands: catalog.brands.filter((b) => brandIds.has(b.id)),
+    gates: catalog.gates.filter((g) => gateIds.has(g.id)),
+    merchants,
+    cards,
+    sources: cited([
+      ...rules.flatMap((r) => r.sourceIds),
+      ...merchantSources,
+      ...programs.flatMap((p) => (p.valuation.basis === 'issuer-stated' ? p.valuation.sourceIds : [])),
+    ]),
   };
 }
 
@@ -188,9 +235,9 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
     if (!entry || !visible(entry, await settings())) return { kind: 'hidden' };
     const snapshot = await vault.snapshot();
     if (snapshot.status === 'locked') return { kind: 'locked', order: !!livePrompt(entry) };
-    if (snapshot.status === 'damaged' || !snapshot.state) return { kind: 'damaged' };
+    if (snapshot.status === 'damaged' || !snapshot.state || !snapshot.catalog) return { kind: 'damaged' };
     const state = snapshot.state,
-      catalog = currentCatalog(state);
+      catalog = snapshot.catalog;
     if (entry.orderPrompt && !livePrompt(entry)) {
       // Expired: the question is dropped, never asked later.
       await saveTab(tabId, { ...entry, orderPrompt: null });
@@ -235,7 +282,7 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
       amountEdited: entry.amountOverrideCents !== null,
       paymentPath: entry.paymentPath,
       result,
-      catalog,
+      catalog: badgeCatalog(catalog, state.wallet, entry.merchantId),
       wallet: state.wallet,
     };
   }
@@ -249,10 +296,10 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
     const prompt = livePrompt(entry);
     if (!prompt) return { ok: false, error: 'There is no order to record.' };
     const snapshot = await vault.snapshot();
-    if (!snapshot.state)
+    if (!snapshot.state || !snapshot.catalog)
       return { ok: false, error: 'Unlock AI Checkout to record this order, then answer again.' };
     const state = snapshot.state,
-      catalog = currentCatalog(state);
+      catalog = snapshot.catalog;
     const used = choice === 'yes' ? prompt.recommendedCardId : choice === 'other' ? cardId : null;
     if (used && !state.wallet.cards.some((owned) => owned.cardId === used))
       return { ok: false, error: 'Choose one of your cards.' };
