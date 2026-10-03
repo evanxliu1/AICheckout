@@ -4,7 +4,6 @@ import ComparisonResult from '../src/components/ComparisonResult';
 import {
   amount,
   basisLabel,
-  cashLikePoints,
   centsEach,
   pillReward,
   rankingNote,
@@ -255,37 +254,31 @@ describe('result wording helpers', () => {
   });
 });
 
-describe('Citi Double Cash on the bundled catalog: points the issuer values at 1¢', () => {
+describe('Citi Double Cash on the bundled catalog: cash back (general rule 1)', () => {
   const real = BUNDLED_V3;
-  const doubleCash = (wallet: Partial<Wallet> = {}) => {
-    const { result, p } = compare(['citi-double-cash'], {}, wallet, real);
+  it('reads as 2% cash back with no point value, and a ThankYou value does not change it', () => {
+    const { result, p } = compare(
+      ['citi-double-cash'],
+      {},
+      { valueOverrides: [{ programId: 'citi-thankyou', valueHundredthsOfCent: 300 }] },
+      real,
+    );
     if (result.status !== 'ready') throw new Error(`unavailable: ${result.reason}`);
     render(<ComparisonResult result={result} purchase={p} catalog={real} />);
-    return result.estimates[0];
-  };
-  it('reads as 2% paid as ThankYou points, not as "2 points per $1"', () => {
-    const e = doubleCash();
-    expect(cashLikePoints(e, real)).toBe(true);
+    const e = result.estimates[0];
+    expect(e.programId).toBe('cash-back');
+    expect(e.minRewardCents).toBe(200);
     expect(rateText(200, real, e)).toBe('2%');
-    expect(pillReward(e, real)).toBe('$2.00 in points');
+    expect(pillReward(e, real)).toBe('$2.00 back');
     const card = row('Double Cash');
-    expect(within(card).getByText('Issuer-stated')).toBeTruthy();
-    expect(card.textContent).toContain('Paid as 200 points (Citi ThankYou Points) at 1¢ each.');
     expect(card.textContent).toContain('2% on “every purchase”.');
     expect(card.textContent).toContain('2% if the balance is paid (1% at purchase).');
-    expect(card.textContent).not.toContain('points per $1');
+    expect(card.textContent).not.toMatch(/points|Issuer-stated|ThankYou/);
   });
-  it('keeps points wording for the shopper’s own value and for published estimates', () => {
-    const e = doubleCash({ valueOverrides: [{ programId: 'citi-thankyou', valueHundredthsOfCent: 100 }] });
-    expect(cashLikePoints(e, real)).toBe(false);
-    expect(rateText(200, real, e)).toBe('2 points per $1');
-    expect(row('Double Cash').textContent).toContain('200 points at 1¢ each.');
-    cleanup();
-    // Sold on points, although Chase states 1¢ a point: keeps "points per $1".
+  it('keeps points wording for a points card the issuer values at 1¢', () => {
     const { result } = compare(['chase-sapphire-preferred'], {}, {}, real);
     if (result.status !== 'ready') throw new Error('unavailable');
     expect(result.estimates[0].unitValue?.basis).toBe('card-stated');
-    expect(cashLikePoints(result.estimates[0], real)).toBe(false);
     expect(rateText(300, real, result.estimates[0])).toBe('3 points per $1');
   });
 });

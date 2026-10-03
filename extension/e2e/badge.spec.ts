@@ -205,7 +205,7 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     await expect(badge.getByRole('heading', { name: 'Best card for this cart' })).toBeVisible();
     await badge.getByRole('button', { name: 'Collapse' }).click();
     // Buy now, pay later excludes Amex online retail, so Double Cash leads.
-    await expect(badge.getByRole('button', { name: /Use Double Cash · \$1\.08 in points/ })).toBeVisible();
+    await expect(badge.getByRole('button', { name: /Use Double Cash · \$1\.08 back/ })).toBeVisible();
     await badge.getByRole('button', { name: /Show details/ }).click();
     await badge.getByLabel('Payment method').selectOption('card');
     await badge.getByLabel('Amount (USD)').fill('100');
@@ -264,7 +264,7 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     const popup = await context.newPage();
     await popup.setViewportSize({ width: 360, height: 900 });
     await popup.goto(popupUrl);
-    await expect(popup.getByRole('heading', { name: 'All-time: $0.55 extra cash back' })).toBeVisible();
+    await expect(popup.getByRole('heading', { name: 'All-time: $0.55 extra in rewards' })).toBeVisible();
     await popup.getByText('Order history (1)').click();
     await expect(popup.getByText(/Best Buy US · \$54\.46 cart/)).toBeVisible();
     await popup.screenshot({ path: testInfo.outputPath('savings.png'), fullPage: true });
@@ -387,6 +387,18 @@ test('badge on catalog v3: points with their value basis, a store card not accep
     await expect(
       badge.getByRole('button', { name: /Use Points · estimated \$0\.32 in points/ }),
     ).toBeVisible();
+
+    // The order line names points as rewards with the value they were counted at, not cash back.
+    await cart.goto(ORDER_PAGE);
+    const order = await badgeFrame(cart);
+    await expect(order.getByText(/all-time rewards total/)).toBeVisible();
+    await order.getByRole('button', { name: 'Yes', exact: true }).click();
+    await expect(
+      order.getByText(
+        /^About \$0\.00 more in rewards than Points, your default card \(estimated\)\. Counts .+ at 1\.2¢ each \(estimate\)\./,
+      ),
+    ).toBeVisible();
+    await axeBadge(order, 'v3 order recorded');
   } finally {
     await context.close();
   }

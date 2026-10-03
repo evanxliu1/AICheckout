@@ -1,11 +1,28 @@
 // All-time savings: what a recorded order earned on the card the shopper says they used, compared
-// with their default card, both estimated by the same engine as the badge.
+// with their default card, both estimated by the same engine as the badge. Amounts are dollar values:
+// cash back at face value, points and miles at the value in effect (estimate, issuer's or the
+// shopper's own); a card whose program has no value is not counted.
 import { compareRewards } from '../domain';
-import type { Catalog, Purchase, Wallet } from '../domain';
+import type { CardEstimate, Catalog, Purchase, Wallet } from '../domain';
 import type { SavingsEntry } from './contracts';
 import { localDate } from './keys';
 
-/** The guaranteed minimum a card earns on this purchase, or null when it cannot be estimated. */
+/** An owned card's estimate for this purchase, or null when it cannot be estimated. */
+export function cardEstimate(
+  catalog: Catalog,
+  wallet: Wallet,
+  purchase: Purchase,
+  cardId: string,
+  now: number,
+): CardEstimate | null {
+  if (!wallet.cards.some((owned) => owned.cardId === cardId)) return null;
+  const comparison = compareRewards(catalog, wallet, purchase, now);
+  if (comparison.status !== 'ready') return null;
+  return comparison.estimates.find((estimate) => estimate.cardId === cardId) ?? null;
+}
+
+/** The guaranteed minimum a card earns on this purchase in cents, or null when it cannot be
+ * estimated or its program has no value (its cents would read as $0, not as unknown). */
 export function minimumReward(
   catalog: Catalog,
   wallet: Wallet,
@@ -13,10 +30,8 @@ export function minimumReward(
   cardId: string,
   now: number,
 ) {
-  if (!wallet.cards.some((owned) => owned.cardId === cardId)) return null;
-  const comparison = compareRewards(catalog, wallet, purchase, now);
-  if (comparison.status !== 'ready') return null;
-  return comparison.estimates.find((estimate) => estimate.cardId === cardId)?.minRewardCents ?? null;
+  const estimate = cardEstimate(catalog, wallet, purchase, cardId, now);
+  return estimate && estimate.unitValue !== null ? estimate.minRewardCents : null;
 }
 
 /**

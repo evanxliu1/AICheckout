@@ -130,5 +130,9 @@ export type BadgeView =
       extraCents: number | null;
       usedCardName: string | null;
       baselineCardName: string | null;
+      /** "cash back" when both cards pay cash back, else "rewards" (`estimates.ts:rewardsWording`). */
+      rewardTerm: 'cash back' | 'rewards';
+      /** What non-cash rewards were counted at, or why the order is not counted; null for cash back. */
+      valueNote: string | null;
     };
 export type BadgeReply = { ok: true; view: BadgeView } | { ok: false; error: string };

@@ -8,19 +8,22 @@ or `packages/rewards-core/src/catalog-v3.ts` is stale. Do not edit by hand.
   2026-09-28; published estimates were read 2026-10-02 (inside the window from 30 days before verification to
   expiry).
 - **Inputs** `expansion/corpus.json` (expansion.v1, 173 cards), `real/corpus.v2.json`
-  (real.v2.2, 7 cards), `reward-programs.json` (reward-programs.2026-10-02.1),
+  (real.v2.2, 7 cards), `reward-programs.json` (reward-programs.2026-10-02.2),
   `merchants.json`, `catalog-overlay.json` (expansion.overlay.1). All labels and overlay decisions are
   agent-verified, not human-verified.
 - **Real cards** keep release 1's names, rule IDs, wording, rates, caps, activation, U.S.-only flags, excluded
   payment paths, end dates, sources and exclusions (checked against `CATALOG_V2` `2026-09-29.real.1` on every
-  build). Double Cash earns ThankYou points at the stated 1¢ (the M3 mapping), the value release 1 used.
+  build). All seven earn cash back: Double Cash's terms state a percentage cash back (paid as ThankYou Points), so it
+  maps to the `cash-back` program under general rule 1 (coordinator decision 2026-10-03); release 1's points at a stated
+  1¢ give the same cents. The version stays `2026-10-02.expansion.1` after this change: it was not yet published, so
+  no extension or release holds the earlier contents.
 
 ## Size
 
 | Measure | Bytes | Share of 1 MiB | Budget (75%) |
 | --- | --- | --- | --- |
-| JSON (`catalogV3Schema`) | 602,441 | 57.5% | 786,432 |
-| JSONB text (`valid_catalog_v3`, computed) | 643,327 | 61.4% | 786,432 |
+| JSON (`catalogV3Schema`) | 602,438 | 57.5% | 786,432 |
+| JSONB text (`valid_catalog_v3`, computed) | 643,324 | 61.4% | 786,432 |
 
 ## Counts
 
@@ -35,7 +38,7 @@ or `packages/rewards-core/src/catalog-v3.ts` is stale. Do not edit by hand.
 | Merchants | 3 |
 | Closed-loop cards | 4 |
 | Choices | 10 on 8 cards (1 automatic) |
-| Cards with an issuer-stated value | 19 |
+| Cards with an issuer-stated value | 18 |
 | Brand-scoped rules | 168 |
 | Rules excluding brands | 48 |
 | Rules on a chosen category | 91 |
@@ -53,12 +56,12 @@ Rules by category: `all-purchases` 188, `department-stores` 3, `dining` 108, `dr
 
 ## Programs by valuation basis
 
-"Cards" counts the cards whose value comes from that basis; 19 cards carry an
+"Cards" counts the cards whose value comes from that basis; 18 cards carry an
 issuer-stated card value that overrides their program's.
 
 | Basis | Programs | Cards | Program IDs |
 | --- | --- | --- | --- |
-| cash | 19 | 76 | `cash-back`, `key-rewards`, `t-mobile-rewards`, `rei-co-op-mastercard-rewards`, `bjs-credit-card-rewards`, `disney-rewards-dollars`, `my-best-buy-rewards`, `wayfair-reward-dollars`, `llbean-bean-bucks`, `verizon-dollars`, `sams-cash`, `walgreens-cash`, `tjx-rewards-certificates`, `club-chicos-rewards`, `soma-my-rewards`, `whbm-prestige-rewards`, `jcrew-rewards`, `harbor-freight-money`, `onekeycash` |
+| cash | 19 | 77 | `cash-back`, `key-rewards`, `t-mobile-rewards`, `rei-co-op-mastercard-rewards`, `bjs-credit-card-rewards`, `disney-rewards-dollars`, `my-best-buy-rewards`, `wayfair-reward-dollars`, `llbean-bean-bucks`, `verizon-dollars`, `sams-cash`, `walgreens-cash`, `tjx-rewards-certificates`, `club-chicos-rewards`, `soma-my-rewards`, `whbm-prestige-rewards`, `jcrew-rewards`, `harbor-freight-money`, `onekeycash` |
 | issuer-stated | 11 | 6 | `sun-country-rewards`, `allegiant-allways-points`, `royal-caribbean-royal-one`, `norwegian-cruise-line-points`, `rci-elite-rewards`, `gap-encore-points`, `bass-pro-club-points`, `dillards-rewards-points`, `macys-star-rewards-points`, `bloomingdales-loyallist-points`, `carecredit-reward-points` |
 | none | 16 | 21 | `us-bank-altitude-points`, `aer-lingus-avios`, `iberia-avios`, `lufthansa-miles-and-more`, `cathay-asia-miles`, `korean-air-skypass`, `frontier-miles`, `breeze-breezepoints`, `carnival-rewards-points`, `capital-vacations-rewards`, `gm-rewards-points`, `luxury-card-points`, `barnes-noble-points`, `american-eagle-real-rewards-points`, `harley-davidson-visa-points`, `edward-jones-loyalty-points` |
 | published-estimate | 24 | 56 | `amex-membership-rewards`, `chase-ultimate-rewards`, `citi-thankyou`, `capital-one-miles`, `wells-fargo-rewards`, `bank-of-america-points`, `discover-miles`, `delta-skymiles`, `united-mileageplus`, `american-aadvantage`, `southwest-rapid-rewards`, `jetblue-trueblue`, `atmos-rewards`, `british-airways-avios`, `air-canada-aeroplan`, `air-france-klm-flying-blue`, `emirates-skywards`, `virgin-points`, `hilton-honors`, `marriott-bonvoy`, `ihg-one-rewards`, `world-of-hyatt`, `wyndham-rewards`, `choice-privileges` |

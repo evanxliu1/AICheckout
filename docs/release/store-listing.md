@@ -27,7 +27,7 @@ Features:
 - Automatic, on the three supported carts only: the badge reads the cart's order-summary amount (for example "Subtotal (N items)" on Amazon) and nothing else on the page. Dismiss it for a tab or turn it off for a site.
 - Every estimate quotes the issuer's terms; unknown spend toward a cap or uncertain payment methods show as a range, never a guess.
 - Correct the amount in the badge, or compare any purchase manually from the toolbar popup.
-- All-time savings: after an order on a supported site, the badge asks once whether you paid with the recommended card and keeps an estimated total of the extra cash back versus your default card. The order page is recognized by its address only and is never read.
+- All-time savings: after an order on a supported site, the badge asks once whether you paid with the recommended card and keeps an estimated total of the extra rewards versus your default card. The order page is recognized by its address only and is never read.
 - No account and no AI at checkout. Your cards, settings and savings stay in this Chrome profile; optional passphrase protection encrypts them.
 - Delete everything with **Delete all local data**; export your savings history as JSON.
 

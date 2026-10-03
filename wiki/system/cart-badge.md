@@ -6,7 +6,7 @@ status: stable
 tags: [system, extension, badge, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:50:00Z
+  at: 2026-10-03T03:05:00Z
 verified_commit: 7322dec
 sources:
   - resource: ../../extension/src/badge/content.ts
@@ -99,8 +99,9 @@ Pill texts by view: `Use {card} · {$x} back` for cash back; catalog v3 (Stage 2
 1. A cart view computes a recommendation and saves it on the tab entry.
 2. A document that loaded at an adapter `orderConfirmation` path in the same tab, within 3 h (`ORDER_WINDOW_MS`) for the same merchant, moves the recommendation to `orderPrompt` and the badge shows (not in a dismissed tab). The question expires 3 h after the order page or at the next cart reading; a reload shows the same pending question, never a second one after an answer.
 3. The shopper answers Yes / another owned card / Not sure (`badge:answer-order`).
-4. [`savings.ts:savingsEntry`](../../extension/src/state/savings.ts) computes the guaranteed minimum (`minRewardCents`) for the used card and for the default card with the same engine; `extraCents = estimated − baseline` (null if either is unknown, may be negative). The worker writes it with internal `checkout:record-savings` (encrypted when the vault is on; refused while locked).
-5. The popup's [`SavingsHistory.tsx`](../../extension/src/components/SavingsHistory.tsx) shows the total (`totalExtraCents`), history, JSON export and delete.
+4. [`savings.ts:savingsEntry`](../../extension/src/state/savings.ts) computes the guaranteed minimum (`minRewardCents`) for the used card and for the default card with the same engine; `extraCents = estimated − baseline` (null if either is unknown, may be negative). A card whose program has no value counts as unknown, not $0 (M10 part 2). The amounts are dollar values: cash back at face value, points and miles at the value in effect (estimate, issuer's value or the shopper's own). The worker writes it with internal `checkout:record-savings` (encrypted when the vault is on; refused while locked).
+5. The `recorded` view words the amount by what the two cards pay ([`estimates.ts:rewardsWording`](../../extension/src/components/estimates.ts), M10 part 2): "About $0.55 more cash back than Double Cash, your default card (estimated)" when both pay cash back; otherwise "more in rewards" plus what the other rewards were counted at ("Counts Capital One miles at 1¢ each (estimate).", store rewards "at face value") or, for a program with no value, that the order is not added to the total. The order question says the answer adds to the "all-time rewards total".
+6. The popup's [`SavingsHistory.tsx`](../../extension/src/components/SavingsHistory.tsx) shows the total as "All-time: $x extra in rewards" (`totalExtraCents`) with how points are counted, the history, JSON export and delete.
 
 ## Gotchas
 

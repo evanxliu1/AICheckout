@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "version": "reward-programs.2026-10-02.1",
+  "version": "reward-programs.2026-10-02.2",
   "annotationStatus": "agent-verified",
-  "description": "Reward-program valuation table for catalog v3 (Phase 7 Stage 2 M3). One program per reward currency; every expansion.v1 and real.v2.2 card maps to one program with a verbatim currency anchor of at most 25 words from its capture. Values are hundredths of a cent per unit: cash back 100; published estimates from one primary publisher (for bank currencies its baseline value, which is the issuer’s own travel-portal or fixed value, not a transfer value and not always the cash value; for airline and hotel currencies its median program value); otherwise an issuer-stated fixed redemption value from the captures, including credit toward the program’s own travel, cruise or store purchases (broader than corpus conventions 3 and 20, which govern card point values only; gift-card and up-to values excluded); otherwise none (no value is assumed). Card statedValueHundredthsOfCent repeats the corpus pointValueHundredthsOfCent and takes precedence over the program value. Numbers, URLs and dates only from the publisher.",
+  "description": "Reward-program valuation table for catalog v3 (Phase 7 Stage 2 M3). One program per reward currency; every expansion.v1 and real.v2.2 card maps to one program with a verbatim currency anchor of at most 25 words from its capture. Values are hundredths of a cent per unit: cash back 100; published estimates from one primary publisher (for bank currencies its baseline value, which is the issuer’s own travel-portal or fixed value, not a transfer value and not always the cash value; for airline and hotel currencies its median program value); otherwise an issuer-stated fixed redemption value from the captures, including credit toward the program’s own travel, cruise or store purchases (broader than corpus conventions 3 and 20, which govern card point values only; gift-card and up-to values excluded); otherwise none (no value is assumed). Card statedValueHundredthsOfCent repeats the corpus pointValueHundredthsOfCent and takes precedence over the program value; a card whose frozen corpus label is points at a stated 1¢ while its terms state a percentage cash back maps to cash back with a corpusLabel note (general rule 1). Numbers, URLs and dates only from the publisher.",
   "primaryPublisher": {
     "publisher": "NerdWallet",
     "url": "https://www.nerdwallet.com/travel/learn/airline-miles-and-hotel-points-valuations",
@@ -2272,11 +2272,16 @@
     {
       "cardId": "citi-double-cash",
       "corpus": "real.v2.2",
-      "programId": "citi-thankyou",
-      "statedValueHundredthsOfCent": 100,
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null,
       "anchor": {
         "sourceId": "citi-double-cash-product",
-        "quote": "Cash back is earned in the form of ThankYou® Points"
+        "quote": "Earn unlimited 1% cash back when you buy, plus an additional 1% as you pay, on every purchase."
+      },
+      "corpusLabel": {
+        "currency": "points",
+        "pointValueHundredthsOfCent": 100,
+        "reason": "The terms state a percentage cash back (paid as ThankYou Points), so general rule 1 makes it cash back, like Chase Freedom Unlimited (coordinator decision 2026-10-03). The real.v2.2 eval label is frozen and keeps points at the stated 1¢; the cents are the same."
       }
     },
     {

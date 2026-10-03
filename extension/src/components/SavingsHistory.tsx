@@ -41,12 +41,14 @@ export default function SavingsHistory({
     <Card as="section" hasBorder aria-labelledby="savings-heading">
       <div className="card-body space-y-2">
         <h2 id="savings-heading" className="section-title">
-          All-time: {signed(total)} extra cash back
+          All-time: {signed(total)} extra in rewards
         </h2>
         <p className="supporting">
           Estimated, compared with your default card, from {entries.length} order
-          {entries.length === 1 ? '' : 's'} you confirmed in the cart badge. Cart amounts are the last amount
-          the badge read; tax and shipping may differ.
+          {entries.length === 1 ? '' : 's'} you confirmed in the cart badge. Cash back counts at face value;
+          points and miles at the value in effect when the order was recorded (a published estimate, the
+          issuer’s value or your own), and an order on a card whose points have no value is not counted. Cart
+          amounts are the last amount the badge read; tax and shipping may differ.
         </p>
         {entries.length > 0 && (
           <>

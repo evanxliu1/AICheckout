@@ -6,7 +6,7 @@ status: stable
 tags: [system, site, static]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:50:00Z
+  at: 2026-10-03T03:05:00Z
 sources:
   - resource: ../../apps/site/vite.config.ts
     title: Site build and copied files
@@ -60,7 +60,7 @@ Verified 2026-10-03 on branch `s2-m10-docs-publish` (Stage 2 M10) by reading the
 - Pages must not need inline style or script; the CSP blocks them and the browser test fails on any CSP violation.
 - The site can never answer `/v1`, `/review` or `/health` (see [API](api.md#gotchas)).
 - Updating eval numbers means regenerating `docs/evals/results.json` (`npm run eval:summarize`) and rebuilding the site; nothing is fetched at runtime.
-- TODO(M7): the screenshots (`media/1-wallet.png` still shows the seven-card setup) show the pre-M7 UI; retake them in Stage 2 M10 part 2. The support page's getting-started steps describe the M7 card search and questions since the M7 merge (2026-10-03).
+- TODO(after the Ocean theme): the screenshots (`media/1-wallet.png` still shows the seven-card setup) show the pre-M7 UI. Deferred on 2026-10-03 (M10 part 2) until the Ocean theme (branch `ui-ocean-theme`) lands, so the site and Web Store media are regenerated once, in the final look. The support page's getting-started steps describe the M7 card search and questions since the M7 merge (2026-10-03).
 - The privacy and support pages describe extension behaviour; when the extension changes (for example the [Cart badge](cart-badge.md)), these pages need a matching edit.
 
 ## Tests

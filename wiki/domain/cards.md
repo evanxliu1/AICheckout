@@ -6,7 +6,7 @@ status: stable
 tags: [domain, cards, catalog]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:00:00Z
+  at: 2026-10-03T03:05:00Z
 sources:
   - resource: ../../packages/rewards-core/src/catalog-v3.ts
     title: CATALOG_V3 (generated catalog, version 2026-10-02.expansion.1)
@@ -97,7 +97,7 @@ Exclusions (purchases that never earn), as summarized in the catalog:
 ## Gotchas
 
 - **Citi rates are totals.** Citi words the portal rate as an "additional 3%" on top of 2%. The catalog stores 500 total, with 100 paid on payment. Models prompted with `baseline.1` often report increments instead (see [Evaluation](../system/evaluation.md)).
-- **Citi is `points`, not `cash-back`.** Citi advertises cash back but pays it as ThankYou Points worth 1¢. Prompt `guided.2` steers some models to `cash-back` here, which is a known prompt wording bug.
+- **Citi is `points` in the eval label, `cash-back` in catalog v3.** Citi advertises cash back but pays it as ThankYou Points worth 1¢. The frozen `real.v2.2` label (and release 1) says `points` at 1¢, and prompt `guided.2` steering some models to `cash-back` here is a known prompt wording bug against that label. Catalog v3 maps the card to the `cash-back` program under the expansion's general rule 1 (terms state a percentage back), with the same cents ([decision](../decisions/2026-10-03-double-cash-cash-back.md)).
 - **BCE cap period.** The issuer terms say "calendar year" only in the supermarket clause, so the labels use `calendar-year` for supermarkets and `year-unspecified` for online retail and gas. The research report recommends treating all three as calendar year. The engine treats every yearly period the same, so the recommendation does not change.
 - **Chase category caps are `unstated`, not `none`.** Only the 1.5% base is described as "unlimited". For an `unstated` bonus cap the engine adds `cap-unstated` and shows a range when that changes the estimate.
 - **Activation `unstated` vs research "None".** The research report lists most rules as needing no activation, but the labels are null wherever the page says nothing. The engine treats `unstated` like `none` (see [Reward rules](reward-rules.md)), so this has no effect on estimates.

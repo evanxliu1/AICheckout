@@ -48,6 +48,11 @@ test('the real cards keep release 1 names, rule IDs and rule semantics', () => {
     'citi-double-cash unit value 150 ≠ 100',
     'amex-blue-cash-everyday rule bce-online-retail differs',
   ]);
+  const points = structuredClone(built);
+  points.cards.find((c) => c.id === 'citi-double-cash').programId = 'citi-thankyou';
+  assert.deepEqual(checkRealCards(points, CATALOG_V2), [
+    'citi-double-cash program citi-thankyou is not cash back',
+  ]);
 });
 
 test('rule IDs are short, unique and derived from the rule, not its position', () => {

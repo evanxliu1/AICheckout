@@ -22284,8 +22284,8 @@ export const CATALOG_V3: CatalogV3 = {
       name: 'Citi Double Cash',
       shortName: 'Double Cash',
       issuer: 'Citi',
-      programId: 'citi-thankyou',
-      statedValueHundredthsOfCent: 100,
+      programId: 'cash-back',
+      statedValueHundredthsOfCent: null,
       acceptance: { kind: 'open-loop' },
       choices: [],
       rules: [

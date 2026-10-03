@@ -97,7 +97,10 @@ or \`packages/rewards-core/src/catalog-v3.ts\` is stale. Do not edit by hand.
   agent-verified, not human-verified.
 - **Real cards** keep release 1's names, rule IDs, wording, rates, caps, activation, U.S.-only flags, excluded
   payment paths, end dates, sources and exclusions (checked against \`CATALOG_V2\` \`${CATALOG_V2.version}\` on every
-  build). Double Cash earns ThankYou points at the stated 1¢ (the M3 mapping), the value release 1 used.
+  build). All seven earn cash back: Double Cash's terms state a percentage cash back (paid as ThankYou Points), so it
+  maps to the \`cash-back\` program under general rule 1 (coordinator decision 2026-10-03); release 1's points at a stated
+  1¢ give the same cents. The version stays \`${catalog.version}\` after this change: it was not yet published, so
+  no extension or release holds the earlier contents.
 
 ## Size
 

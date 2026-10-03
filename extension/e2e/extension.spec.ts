@@ -267,7 +267,7 @@ test('bundled catalog v3: real cards re-rank when a category, a point value or P
     await popup.goto(`chrome-extension://${new URL(worker.url()).host}/src/popup/index.html`);
     await startPopup(popup);
     // Bundled catalog 2026-10-02.expansion.1 (re-dated for the test). On $100 at Best Buy: Double Cash
-    // earns 200 ThankYou points (issuer-stated 1¢: $2.00); Cash+ earns 5% in two chosen categories.
+    // earns 2% cash back ($2.00); Cash+ earns 5% in two chosen categories.
     await addCard(popup, 'Citi Double Cash');
     await addCard(popup, 'U.S. Bank Cash+ Visa Signature Card');
     await popup.getByRole('button', { name: 'Save cards' }).click();
@@ -305,22 +305,23 @@ test('bundled catalog v3: real cards re-rank when a category, a point value or P
     await compare('best-buy-us');
     await expect(popup.getByRole('heading', { name: 'Use Cash+ Visa Signature' })).toBeVisible();
 
-    // ThankYou points at 3¢ (the shopper's own value) make Double Cash's 200 points $6.00.
+    // Capital One miles at 3¢ (the shopper's own value) make Venture Rewards' 200 miles $6.00.
     await edit(async () => {
-      await popup.getByLabel('Your value for Citi ThankYou Points, in cents each').fill('3');
+      await addCard(popup, 'Capital One Venture Rewards');
+      await popup.getByLabel('Your value for Capital One miles, in cents each').fill('3');
     });
     await compare('best-buy-us');
-    await expect(popup.getByRole('heading', { name: 'Use Double Cash' })).toBeVisible();
+    await expect(popup.getByRole('heading', { name: 'Use Venture Rewards' })).toBeVisible();
     await expect(popup.getByText('$6.00', { exact: true })).toBeVisible();
 
-    // At Amazon with Prime Visa and ThankYou at 2¢ ($4.00): Prime unknown guarantees Prime Visa only
-    // 3% ($3.00), so Double Cash leads; answering "Prime member" (5%, $5.00) puts Prime Visa first.
+    // At Amazon with Prime Visa and miles at 2¢ ($4.00): Prime unknown guarantees Prime Visa only
+    // 3% ($3.00), so Venture Rewards leads; answering "Prime member" (5%, $5.00) puts Prime Visa first.
     await edit(async () => {
       await addCard(popup, 'Prime Visa');
-      await popup.getByLabel('Your value for Citi ThankYou Points, in cents each').fill('2');
+      await popup.getByLabel('Your value for Capital One miles, in cents each').fill('2');
     });
     await compare('amazon-us');
-    await expect(first()).toHaveText('Double Cash');
+    await expect(first()).toHaveText('Venture Rewards');
     await expect(popup.getByText('$3.00–$5.00', { exact: true })).toBeVisible();
     await edit(async () => {
       await popup
