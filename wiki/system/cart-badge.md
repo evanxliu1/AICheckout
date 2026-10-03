@@ -108,7 +108,7 @@ Pill texts by view: `Use {card} · {$x} back` for cash back; catalog v3 (Stage 2
 ## Gotchas
 
 - **Frame nonce.** For each new badge frame the worker issues a 32-char nonce (`NONCE_PATTERN`), passed in the frame URL fragment inside the closed shadow root and stored as `frameNonce` in the tab entry. Every `badge:*` request must carry the current nonce, so page-made copies of the web-accessible badge page get nothing. A removed host is recreated with a new nonce ([`contracts.ts`](../../extension/src/badge/contracts.ts), `badge-service.ts`).
-- **Click guard.** Pointer clicks in the frame count only while IntersectionObserver v2 reports it visible (anti-clickjacking). An ignored click shows "Click ignored: the badge was covered or hidden…" for about 4 s in a `role="status"` paragraph that is always in the DOM (visually hidden when empty), so screen readers announce it ([`BadgeApp.tsx`](../../extension/src/badge/BadgeApp.tsx)).
+- **Click guard.** Pointer clicks in the frame count only while IntersectionObserver v2 reports it visible (anti-clickjacking). An ignored click shows "Click ignored: the badge was covered or hidden…" for about 4 s in a `role="status"` paragraph that is always in the DOM (visually hidden when empty), so screen readers announce it ([`BadgeApp.tsx`](../../extension/src/badge/BadgeApp.tsx)). The panel's close (X) button is exempt (2026-10-03): it only hides the badge, and the taller v3 panel can sit under a site's floating chat button.
 - Locking the vault removes only the session key; badge tab state survives.
 
 - Order-confirmation paths are unverified guesses for all three adapters (`orderConfirmation.verified: false`). A wrong path only means no savings prompt. Open until checked on real orders.
