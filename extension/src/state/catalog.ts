@@ -1,8 +1,8 @@
 import {
   catalogResponseSchema,
-  // The bundled fallback. Stage 2 M5 swaps this import for CATALOG_V3; nothing else changes, because
-  // state written under the old bundle is reconciled with the new one on load (`walletCatalogVersion`).
-  CATALOG_V2 as BUNDLED_CATALOG,
+  // The bundled fallback (catalog v3 since Stage 2 M5). State written under an older bundle is
+  // reconciled with this one on load (`walletCatalogVersion`).
+  CATALOG_V3 as BUNDLED_CATALOG,
   catalogSchema,
   redateCatalog,
   stableJson,

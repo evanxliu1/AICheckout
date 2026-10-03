@@ -6,7 +6,7 @@ status: draft
 tags: [system, catalog, curation, expansion, phase-7]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:59:00Z
+  at: 2026-10-03T00:50:00Z
 verified_commit: e940b6f
 ---
 
@@ -201,7 +201,8 @@ Stage 2 M5 (branch `s2-m5-catalog-v3-build`, 2026-10-02) builds the release cata
 | W17 Customized Cash, year unanswered | 3–6%; through PayPal 1% | 3–6% | 3–6% |
 
 - **Reviewer observations (no change made).** Closed-loop store cards with no stated cap guarantee $0 and rank below a flat 2% card (rule 21 plus the engine; M7 should show the 5%). NerdWallet values for bank currencies have no local capture. Customized Cash choice rules are also `enroll-once` (see M4 hand-off). My Best Buy certificates count at full cash value (O13).
-- **For M6, M7 and M10.** The extension still bundles `CATALOG_V2` (tree shaking keeps v3 out of `extension/dist`); M6 switches the fallback. M10 publish: Evan starts a draft from `CATALOG_V3` in the review app and loads the capture folders `evals/curation/real/captures`, `evals/curation/real/merchant-captures` and `evals/curation/expansion/captures`: 328 sources, all present on Evan's machine on 2026-10-02 (312 expansion, 15 real, 2 merchant; `chase-rewards-category-faq` is in both the expansion and real folders with the same hash). The catalog expires 2026-11-01T00:00Z, so it must publish before then (target 2026-10-28).
+- **Extension bundle.** After merging M6, M5 switched the extension's bundled fallback to `CATALOG_V3`. Under newest-valid-wins an installed extension with cached release 1 moves to it on update; the seven real cards keep their IDs and all 24 rule IDs, and usage rows are compared in v3 form, so their wallets keep every reported limit (test in `state-migration.test.ts`; [decision](../decisions/2026-10-03-bundled-catalog-v3.md)). Worker chunk 42,737 → 587,072 bytes; pages unchanged.
+- **For M7 and M10.** M7: wallet search (178 cards in the editor), editors for choices, gates and point values. M10 publish: Evan starts a draft from `CATALOG_V3` in the review app and loads the capture folders `evals/curation/real/captures`, `evals/curation/real/merchant-captures` and `evals/curation/expansion/captures`: 328 sources, all present on Evan's machine on 2026-10-02 (312 expansion, 15 real, 2 merchant; `chase-rewards-category-faq` is in both the expansion and real folders with the same hash). The catalog expires 2026-11-01T00:00Z, so it must publish before then (target 2026-10-28).
 
 ## Remaining work
 

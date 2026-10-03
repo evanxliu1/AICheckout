@@ -1,5 +1,9 @@
 import { expect } from '@playwright/test';
 import type { BrowserContext, Page } from '@playwright/test';
+import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2';
+
+/** The seven cards of hosted release 1 (catalog v2); catalog v3 keeps their names, IDs and rules. */
+export const REAL_CARD_NAMES = CATALOG_V2.cards.map((card) => card.name);
 
 /** Chrome exposes toolbar popups as "other" targets, not Playwright Page objects.
  * Use the documented CDP transport rather than widening extension host permissions. */
@@ -91,6 +95,12 @@ export async function openNativePopup(context: BrowserContext, merchant: Page, e
     click: async (name: string) => {
       await evaluate(
         `(() => { const button = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === ${JSON.stringify(name)}); if (!button || button.disabled) throw Error('Button not available'); button.click(); })()`,
+      );
+    },
+    /** Checks the wallet editor's checkboxes for these card names (the bundled catalog lists 178 cards). */
+    checkCards: async (names: readonly string[]) => {
+      await evaluate(
+        `(() => { const boxes = [...document.querySelectorAll('[aria-labelledby=wallet-heading] fieldset input[type=checkbox]')]; for (const name of ${JSON.stringify(names)}) { const box = boxes.find(b => b.labels[0]?.textContent.trim() === name); if (!box) throw Error('Card not found: ' + name); if (!box.checked) box.click(); } })()`,
       );
     },
     fill: async (id: string, value: string) => {

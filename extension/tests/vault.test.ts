@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest';
-import { CATALOG_V2 } from '../src/domain';
+import { CATALOG_V3 } from '../src/domain';
 import { emptyState } from '../src/state/contracts';
 import type { AppState } from '../src/state/contracts';
 import { createVaultService } from '../src/state/vault-service';
@@ -41,7 +41,7 @@ const wallet = {
 };
 const legacy: AppState = {
   ...emptyState(),
-  walletCatalogVersion: CATALOG_V2.version,
+  walletCatalogVersion: CATALOG_V3.version,
   wallet,
   purchase: {
     merchantId: 'newegg-us',

@@ -10,7 +10,9 @@ let data: Record<string, unknown>;
 const read = vi.fn();
 beforeEach(() => {
   HTMLElement.prototype.scrollIntoView = vi.fn();
-  vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-09-30T15:00:00Z'));
+  // The bundled catalog v3 is valid from 2026-10-02. Only Date.now is mocked; the popup's stale-result
+  // timer takes midnight from the real clock, so this must not be later than the real date.
+  vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-10-02T15:00:00Z'));
   data = {
     checkoutStateV1: {
       ...emptyState(),
