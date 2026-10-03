@@ -6,7 +6,7 @@ status: stable
 tags: [system, api, fastify, security]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:00:00Z
+  at: 2026-10-03T06:45:00Z
 sources:
   - resource: ../../apps/api/src/index.ts
     title: Entrypoint and env schema
@@ -101,7 +101,7 @@ Verified 2026-10-03 by reading the code and running `npm test --workspace=@ai-ch
 - Rate limits are per process and per socket IP; behind Render's proxy all clients may share one IP. The ledger enforces durable global limits separately.
 - `fixture-refusal` refuses to start unless both `CURATION_DATABASE_URL` and `SUPABASE_URL` are loopback.
 - `/health` returning 200 says nothing about the database.
-- Hosted Supabase signs with the legacy HS256 secret (its JWKS was empty on 2026-10-03), so on Render the pre-check asks Auth once per token per minute; the local CLI stack signs ES256 and is checked locally. Switching the hosted project to asymmetric JWT signing keys makes the check local with no code or env change.
+- Hosted Supabase signs with asymmetric keys since 2026-10-03 (one ES256 P-256 key in its JWKS), so on Render the pre-check verifies tokens locally, as on the local CLI stack (ES256). Before the switch the project signed with the legacy HS256 secret (empty JWKS) and the pre-check asked Auth once per token per minute; no code or env change was needed ([hosting](../ops/hosting.md#facts)).
 - `createApp` refuses `reviewRpc` without `verifyReviewToken`; tests pass `async () => true`.
 
 ## Tests

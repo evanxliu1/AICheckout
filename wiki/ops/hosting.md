@@ -6,7 +6,7 @@ status: stable
 tags: [ops, hosting, render, supabase]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:00:00Z
+  at: 2026-10-03T06:45:00Z
 sources:
   - resource: ../../render.yaml
     title: Render Blueprint
@@ -36,9 +36,9 @@ One Render web service, `ai-checkout-api`, runs a single Node process that serve
 | Auto-deploy | `autoDeploy: true` on the linked branch (`main`) | `render.yaml`, [archive](../archive/phase2-goal.md) |
 | Database | Hosted Supabase (Postgres, Auth, Data API); public sign-ups disabled; one provisioned reviewer (as of 2026-09-28) | [archive](../archive/phase2-goal.md) |
 | Hosted state 2026-09-28 | `/health` 200, `/v1/catalog` 200 with `{"release":null}`, `/v1/review/` 401 unauthenticated, `/review/` serves the app | [archive](../archive/phase2-goal.md) |
-| Published catalog | `/v1/catalog` serves release sequence 1, version `2026-09-29.real.1` (7 cards, 17 sources), `published_at` 2026-10-02T02:29:41Z, expires 2026-10-29T00:00:00Z. Next: `2026-10-02.expansion.1` (178 cards) by 2026-10-28 ([catalog release](catalog-release.md)) | `GET /v1/catalog`, checked 2026-10-03T01:07Z (200, 16,192 bytes) |
+| Published catalog | `/v1/catalog` serves release sequence 2, version `2026-10-02.expansion.1` (schema 3, 178 cards, 328 sources), published by Evan 2026-10-03T06:15:00Z, expires **2026-11-01T00:00:00Z**; canonically identical to `CATALOG_V3` on `main` `577c025` ([catalog release](catalog-release.md#release-2-published-2026-10-03)). A fresh catalog must be published before the expiry, or `/v1/catalog` answers 503. Release 1 (`2026-09-29.real.1`, 7 cards) was published 2026-10-02T02:29:41Z | `GET /v1/catalog`, checked 2026-10-03 after publishing |
 | Deployed code | `main` with Stage 2 M5 and M8: the hosted review bundle (`/review/assets/index-*.js`) contains `2026-10-02.expansion.1` and "Load a capture folder" | Fetched 2026-10-03T01:07Z |
-| Auth signing | Hosted Supabase signs access tokens with the legacy HS256 secret (`/auth/v1/.well-known/jwks.json` returned `{"keys":[]}` on 2026-10-03), so the API's token pre-check asks Auth (`GET /auth/v1/user`); switching to asymmetric signing keys makes it local, with no env change ([decision](../decisions/2026-10-03-review-token-precheck.md)) | Public JWKS endpoint |
+| Auth signing | Asymmetric JWT signing keys since 2026-10-03 (Evan switched the project). The JWKS (`/auth/v1/.well-known/jwks.json`) publishes one ES256 P-256 key, `kid` `695ed5b6-5d96-497a-baa2-f0e6b1765c37`, so the API's review token pre-check verifies tokens locally, with no env change ([decision](../decisions/2026-10-03-review-token-precheck.md)). After the switch: `/health` 200, `/v1/catalog` 200, unauthenticated `/v1/review/sources` 401. Until 2026-10-03 the project signed with the legacy HS256 secret (empty JWKS) and the pre-check asked Auth. Evan may revoke the legacy HS256 secret once sessions issued before the switch have expired | Public JWKS endpoint, checked 2026-10-03 |
 | Request size | Neither Render nor Supabase documents a request body limit for web services or PostgREST RPC calls that the review routes approach (Cloudflare, in front of both, allows 100 MB on its free plan). Release 1 captured bodies up to 74,938 characters through this path; the largest Stage 2 capture is about 206 KB as JSON and the v3 draft save about 0.62 MB, well under the API's own limits | Docs read 2026-10-03; not exercised on hosted |
 
 ## Environment variables (names only)
