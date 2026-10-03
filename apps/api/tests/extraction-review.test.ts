@@ -177,7 +177,11 @@ it('the apply route accepts human review only and uses the signed session, never
         ? { run: f.run, application: null }
         : { draft: next, application: f.application },
   );
-  const app = createApp({ readCatalog: async () => null, reviewRpc: rpc });
+  const app = createApp({
+    readCatalog: async () => null,
+    reviewRpc: rpc,
+    verifyReviewToken: async () => true,
+  });
   apps.push(app);
   const path = `/v1/review/drafts/${f.detail.draft.id}/extractions/${f.run.id}/apply`,
     headers = { authorization: 'Bearer signed.human.session' };

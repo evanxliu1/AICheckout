@@ -18,6 +18,7 @@ import {
   MAX_CAPTURES_PER_MINUTE,
 } from '@ai-checkout/catalog-review';
 import { ReviewError, type ReviewRpc } from './review-repository.ts';
+import type { VerifyToken } from './review-auth.ts';
 import { curationRunSchema, LedgerError } from './curation/ledger.ts';
 import { startReviewedExtraction, type CurationExecution } from './curation/service.ts';
 import { applyExtractionInputSchema, extractionListSchema } from '@ai-checkout/catalog-review/curation';
@@ -47,12 +48,14 @@ export async function reviewRoutes(
   app: FastifyInstance,
   {
     rpc,
+    verifyToken,
     limit = 60,
     curation,
     shutdownSignal,
     curationLimit = 3,
   }: {
     rpc: ReviewRpc;
+    verifyToken: VerifyToken;
     limit?: number;
     curation?: CurationExecution;
     shutdownSignal?: AbortSignal;
@@ -66,6 +69,18 @@ export async function reviewRoutes(
     reply.header('Cache-Control', 'no-store').header('X-Content-Type-Options', 'nosniff');
     bearer(request);
   });
+  // Routes that accept large bodies verify the token before the body is read, so a caller without a
+  // valid session cannot push a ~1.5 MB capture or ~1.1 MB draft through to the database.
+  const signedIn = async (request: FastifyRequest) => {
+    let valid: boolean;
+    try {
+      valid = await verifyToken(bearer(request));
+    } catch (error) {
+      if (error instanceof ReviewError) throw error;
+      throw new ReviewError(503, 'review_unavailable');
+    }
+    if (!valid) throw new ReviewError(401, 'sign_in_required');
+  };
   app.setErrorHandler((error, _request, reply) => {
     if (error instanceof ReviewError) return reply.code(error.status).send({ error: error.code });
     if (error instanceof LedgerError) {
@@ -131,17 +146,21 @@ export async function reviewRoutes(
     const params = input(z.strictObject({ id: draftIdSchema, runId: draftIdSchema }), request.params);
     return (await readExtractionReview(rpc, bearer(request), params.id, params.runId)).review;
   });
-  app.post('/drafts/:id/extractions/:runId/apply', { bodyLimit: 196608 }, async (request) => {
-    input(z.strictObject({}), request.query);
-    const params = input(z.strictObject({ id: draftIdSchema, runId: draftIdSchema }), request.params);
-    return applyReviewedExtraction(
-      rpc,
-      bearer(request),
-      params.id,
-      params.runId,
-      input(applyExtractionInputSchema, request.body),
-    );
-  });
+  app.post(
+    '/drafts/:id/extractions/:runId/apply',
+    { bodyLimit: 196608, onRequest: signedIn },
+    async (request) => {
+      input(z.strictObject({}), request.query);
+      const params = input(z.strictObject({ id: draftIdSchema, runId: draftIdSchema }), request.params);
+      return applyReviewedExtraction(
+        rpc,
+        bearer(request),
+        params.id,
+        params.runId,
+        input(applyExtractionInputSchema, request.body),
+      );
+    },
+  );
   app.post(
     '/drafts/:id/extractions',
     { bodyLimit: 4096, config: { rateLimit: { max: curationLimit, timeWindow: 60000 } } },
@@ -182,12 +201,13 @@ export async function reviewRoutes(
   );
   // A draft cites up to 600 sources and the review app captures them one request each, so this route
   // has its own, higher limit (the app waits and retries on 429); every other review route keeps the
-  // shared limit. It stays well below 600/min because each request may carry ~1.5 MB and is accepted
-  // before the database verifies the token.
+  // shared limit. It stays well below 600/min because each request may carry ~1.5 MB; the token is
+  // checked before the body is read.
   app.post(
     '/sources',
     {
       bodyLimit: MAX_CAPTURE_REQUEST_BYTES,
+      onRequest: signedIn,
       config: { rateLimit: { max: MAX_CAPTURES_PER_MINUTE, timeWindow: 60000 } },
     },
     async (request) => {
@@ -203,7 +223,7 @@ export async function reviewRoutes(
       );
     },
   );
-  app.post('/drafts', { bodyLimit: MAX_DRAFT_REQUEST_BYTES }, async (request) => {
+  app.post('/drafts', { bodyLimit: MAX_DRAFT_REQUEST_BYTES, onRequest: signedIn }, async (request) => {
     const value = input(createDraftInputSchema, request.body);
     return draftSchema.parse(
       await rpc('save_catalog_draft', bearer(request), {
@@ -215,7 +235,7 @@ export async function reviewRoutes(
       }),
     );
   });
-  app.put('/drafts/:id', { bodyLimit: MAX_DRAFT_REQUEST_BYTES }, async (request) => {
+  app.put('/drafts/:id', { bodyLimit: MAX_DRAFT_REQUEST_BYTES, onRequest: signedIn }, async (request) => {
     const draftId = id(request),
       value = input(updateDraftInputSchema, request.body);
     return draftSchema.parse(

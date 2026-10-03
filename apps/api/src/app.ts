@@ -2,6 +2,7 @@ import Fastify, { LogController } from 'fastify';
 import { catalogResponseSchema } from '@ai-checkout/rewards-core';
 import { reviewRoutes } from './review-routes.ts';
 import type { ReviewRpc } from './review-repository.ts';
+import type { VerifyToken } from './review-auth.ts';
 import { reviewSite } from './review-site.ts';
 import { publicSite } from './public-site.ts';
 import type { ReviewConfig } from '@ai-checkout/catalog-review';
@@ -12,6 +13,7 @@ export function createApp({
   clock = Date.now,
   logging = false,
   reviewRpc,
+  verifyReviewToken,
   reviewLimit,
   reviewRoot,
   reviewConfig,
@@ -24,6 +26,8 @@ export function createApp({
   clock?: () => number;
   logging?: boolean;
   reviewRpc?: ReviewRpc;
+  /** Required with `reviewRpc`: checks the session before large review bodies are read. */
+  verifyReviewToken?: VerifyToken;
   reviewLimit?: number;
   reviewRoot?: string;
   reviewConfig?: ReviewConfig;
@@ -54,10 +58,12 @@ export function createApp({
     );
   });
   app.get('/health', async () => ({ status: 'ok' }));
-  if (reviewRpc)
+  if (reviewRpc && !verifyReviewToken) throw new Error('Review routes need a token verifier.');
+  if (reviewRpc && verifyReviewToken)
     void app.register(reviewRoutes, {
       prefix: '/v1/review',
       rpc: reviewRpc,
+      verifyToken: verifyReviewToken,
       limit: reviewLimit,
       curation,
       shutdownSignal,

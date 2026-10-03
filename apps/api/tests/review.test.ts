@@ -45,7 +45,12 @@ const release = {
 };
 const apps: ReturnType<typeof createApp>[] = [];
 function app(rpc = vi.fn().mockResolvedValue(queue), reviewLimit?: number) {
-  const instance = createApp({ readCatalog: async () => null, reviewRpc: rpc, reviewLimit });
+  const instance = createApp({
+    readCatalog: async () => null,
+    reviewRpc: rpc,
+    verifyReviewToken: async () => true,
+    reviewLimit,
+  });
   apps.push(instance);
   return { instance, rpc };
 }
@@ -492,5 +497,74 @@ it('maps a missing capture to source_not_found', async () => {
   await expect(repository('get_catalog_review_source', token, {})).rejects.toMatchObject({
     status: 404,
     code: 'source_not_found',
+  });
+});
+
+describe('token check before large review bodies', () => {
+  function guarded(valid: boolean | Error) {
+    const rpc = vi.fn().mockResolvedValue(queue);
+    const verifyReviewToken = vi.fn(async () => {
+      if (valid instanceof Error) throw valid;
+      return valid;
+    });
+    const instance = createApp({ readCatalog: async () => null, reviewRpc: rpc, verifyReviewToken });
+    apps.push(instance);
+    return { instance, rpc, verifyReviewToken };
+  }
+  const oversized = JSON.stringify({ body: 'a'.repeat(MAX_CAPTURE_REQUEST_BYTES) });
+  it.each([
+    ['POST', '/v1/review/sources'],
+    ['POST', '/v1/review/drafts'],
+    ['PUT', `/v1/review/drafts/${draftId}`],
+    ['POST', `/v1/review/drafts/${draftId}/extractions/${draftId}/apply`],
+  ] as const)('%s %s answers 401 before reading the body', async (method, url) => {
+    const { instance, rpc, verifyReviewToken } = guarded(false);
+    const response = await instance.inject({
+      method,
+      url,
+      headers: { authorization, 'content-type': 'application/json' },
+      payload: oversized,
+    });
+    // 401, not 413: the body limit is applied while parsing, which never started.
+    expect(response.statusCode).toBe(401);
+    expect(response.json()).toEqual({ error: 'sign_in_required' });
+    expect(verifyReviewToken).toHaveBeenCalledExactlyOnceWith(token);
+    expect(rpc).not.toHaveBeenCalled();
+  });
+  it('reports an unreachable Auth server as unavailable, not as signed out', async () => {
+    const { instance, rpc } = guarded(new TypeError('fetch failed'));
+    const response = await instance.inject({
+      method: 'POST',
+      url: '/v1/review/sources',
+      headers: { authorization },
+      payload: { body: 'x' },
+    });
+    expect(response.statusCode).toBe(503);
+    expect(response.json()).toEqual({ error: 'review_unavailable' });
+    expect(rpc).not.toHaveBeenCalled();
+  });
+  it('leaves small-body and read routes to the database check alone', async () => {
+    const { instance, verifyReviewToken } = guarded(false);
+    expect((await instance.inject({ url: '/v1/review/', headers: { authorization } })).statusCode).toBe(200);
+    expect(verifyReviewToken).not.toHaveBeenCalled();
+  });
+  it('responds over a real socket while the declared 1 MB body is still unsent', async () => {
+    const { instance } = guarded(false);
+    const address = await instance.listen({ host: '127.0.0.1', port: 0 });
+    const { request } = await import('node:http');
+    const status = await new Promise<number>((resolve, reject) => {
+      const outgoing = request(`${address}/v1/review/sources`, {
+        method: 'POST',
+        headers: { authorization, 'content-type': 'application/json', 'content-length': 1_000_000 },
+      });
+      outgoing.on('response', (response) => {
+        response.resume();
+        resolve(response.statusCode ?? 0);
+        outgoing.destroy();
+      });
+      outgoing.on('error', reject);
+      outgoing.flushHeaders();
+    });
+    expect(status).toBe(401);
   });
 });
