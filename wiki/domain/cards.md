@@ -6,7 +6,7 @@ status: stable
 tags: [domain, cards, catalog]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T04:30:00Z
+  at: 2026-10-03T03:05:00Z
 sources:
   - resource: ../../packages/rewards-core/src/catalog-v3.ts
     title: CATALOG_V3 (generated catalog, version 2026-10-02.expansion.1)

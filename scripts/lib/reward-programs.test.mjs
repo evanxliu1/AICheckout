@@ -60,6 +60,11 @@ test('Double Cash maps to cash back over its frozen points label (general rule 1
   assert.deepEqual(check(points), [
     'card citi-double-cash: a corpusLabel override maps to cash-back with no stated value',
   ]);
+  const anchor = copy();
+  card(anchor, 'citi-double-cash').anchor.quote = 'Cash back is earned in the form of ThankYou® Points';
+  assert.deepEqual(check(anchor), [
+    'card citi-double-cash: a corpusLabel override needs an anchor stating a percentage cash back',
+  ]);
   const without = copy();
   delete card(without, 'citi-double-cash').corpusLabel;
   assert.deepEqual(check(without), [

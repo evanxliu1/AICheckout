@@ -399,7 +399,7 @@ describe('savings math', () => {
     });
     expect(
       rewardsWording(estimates('barclays-frontier-airlines-world-mastercard', 'citi-double-cash'), v3).note,
-    ).toMatch(/has no value set, so this order is not added to your all-time total\.$/);
+    ).toMatch(/has no published value, so this order is not added to your all-time total\.$/);
   });
   it('keeps the newest 500 entries and deletes the history only with the current revision', async () => {
     const t = setup();

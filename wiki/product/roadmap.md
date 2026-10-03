@@ -6,7 +6,7 @@ status: stable
 tags: [product, roadmap]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T04:30:00Z
+  at: 2026-10-03T03:05:00Z
 sources:
   - resource: ../archive/phase2-goal.md
     title: Phase 2–6 plan (archived; full step lists and exit criteria)

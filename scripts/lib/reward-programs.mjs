@@ -162,6 +162,8 @@ export function checkRewardPrograms(table, corpora, { asOf }) {
       );
     if (label && (card.programId !== 'cash-back' || card.statedValueHundredthsOfCent !== null))
       problems.push(`${at}: a corpusLabel override maps to cash-back with no stated value`);
+    if (label && !/\d(\.\d+)?% cash back/i.test(card.anchor.quote))
+      problems.push(`${at}: a corpusLabel override needs an anchor stating a percentage cash back`);
     if (!label && card.statedValueHundredthsOfCent !== truth.pointValue)
       problems.push(
         `${at}: stated value ${card.statedValueHundredthsOfCent} differs from corpus ${truth.pointValue}`,

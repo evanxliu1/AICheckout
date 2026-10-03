@@ -95,7 +95,8 @@ export function basisLabel(basis: UnitValue['basis']): 'estimate' | 'issuer-stat
 /**
  * How a dollar amount compared across cards is named (the badge's recorded-order line): "cash back"
  * when every card involved pays cash back, otherwise "rewards" with what the other rewards were
- * counted at ("Counts Capital One miles at 1¢ each (estimate).") or, for a program with no value,
+ * counted at ("Counts Capital One miles at 1¢ each (estimate).", store rewards "at face value") or,
+ * for a program with no value,
  * that the order is not counted (`unvalued`).
  */
 export function rewardsWording(
@@ -108,7 +109,7 @@ export function rewardsWording(
   if (unvalued)
     return {
       term: 'rewards',
-      note: `${programOf(unvalued, catalog)!.name} has no value set, so this order is not added to your all-time total.`,
+      note: `${programOf(unvalued, catalog)!.name} has no published value, so this order is not added to your all-time total.`,
       unvalued: true,
     };
   const counted = new Map<string, string>();
@@ -118,7 +119,9 @@ export function rewardsWording(
     const basis = basisLabel(e.unitValue!.basis);
     counted.set(
       program.id,
-      `${program.name} at ${centsEach(e.unitValue!.hundredthsOfCent)} each${basis ? ` (${basis})` : ''}`,
+      kinds[i] === 'store'
+        ? `${program.name} at face value`
+        : `${program.name} at ${centsEach(e.unitValue!.hundredthsOfCent)} each${basis ? ` (${basis})` : ''}`,
     );
   });
   return { term: 'rewards', note: `Counts ${[...counted.values()].join(' and ')}.`, unvalued: false };

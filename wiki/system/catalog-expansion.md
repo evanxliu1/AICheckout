@@ -6,13 +6,13 @@ status: draft
 tags: [system, catalog, curation, expansion, phase-7]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T04:30:00Z
+  at: 2026-10-03T03:05:00Z
 verified_commit: e940b6f
 ---
 
 # Catalog expansion (Phase 7)
 
-Phase 7 widens the card catalog to the consumer cards of the ten largest U.S. issuers ([scope decision](../decisions/2026-10-01-top-ten-issuer-card-expansion.md)). The capture, extraction and first drafts merged into `main` with PR #16 (`be5de25`, branch `phase7-catalog-expansion`). The 25-word drafts, the verification findings, the conventions and the agent-verified corpus merged with PR #17 (`23d3d52`, branch `phase7-verify`); the paths below are in `evals/curation/expansion/` and `scripts/`. The gitignored captures and extraction traces are still only in the `../AICheckout-expansion` worktree. Stage 2 (engine, catalog v3, eval, release) is planned in the [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md); as of 2026-10-03 M1–M6, M8, M9 and the M11 draft are merged (PRs #18–#27), the extension bundles the 178-card `CATALOG_V3`, M7 (extension UI) is in progress and the hosted release is M10 ([catalog release](../ops/catalog-release.md)).
+Phase 7 widens the card catalog to the consumer cards of the ten largest U.S. issuers ([scope decision](../decisions/2026-10-01-top-ten-issuer-card-expansion.md)). The capture, extraction and first drafts merged into `main` with PR #16 (`be5de25`, branch `phase7-catalog-expansion`). The 25-word drafts, the verification findings, the conventions and the agent-verified corpus merged with PR #17 (`23d3d52`, branch `phase7-verify`); the paths below are in `evals/curation/expansion/` and `scripts/`. The gitignored captures and extraction traces are still only in the `../AICheckout-expansion` worktree. Stage 2 (engine, catalog v3, eval, release) is planned in the [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md); as of 2026-10-03 M1–M9 and the M11 draft are merged (PRs #18–#30), M10 part 2 is on `s2-m10b-finish`, the extension bundles the 178-card `CATALOG_V3`, and Evan's publish of the hosted release is left ([catalog release](../ops/catalog-release.md)).
 
 Read on 2026-10-02 from the `phase7-verify` worktree at `4b487da` (no model call, no re-capture).
 

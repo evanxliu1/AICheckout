@@ -6,7 +6,7 @@ status: stable
 tags: [system, site, static]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T04:30:00Z
+  at: 2026-10-03T03:05:00Z
 sources:
   - resource: ../../apps/site/vite.config.ts
     title: Site build and copied files

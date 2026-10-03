@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, catalog, valuation, extension, phase-7]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T04:30:00Z
+  at: 2026-10-03T03:05:00Z
 sources:
   - resource: ../../evals/curation/expansion/reward-programs.json
     title: Reward-program table (Double Cash entry with corpusLabel)

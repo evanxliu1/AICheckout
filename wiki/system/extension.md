@@ -6,7 +6,7 @@ status: stable
 tags: [system, extension, chrome, mv3]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T04:30:00Z
+  at: 2026-10-03T03:05:00Z
 sources:
   - resource: ../../extension/vite.config.ts
     title: Build plugins and generated manifest
