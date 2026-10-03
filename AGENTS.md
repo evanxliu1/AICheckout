@@ -63,6 +63,7 @@ npm test                          # unit/component tests in every workspace + sc
 npm run build                     # extension/dist, apps; load extension/dist in chrome://extensions
 npm run eval:v2 -- --check        # extraction harness self-check, no model
 npm run catalog:v2:check          # generated 7-card catalog is up to date
+npm run catalog:v3:check          # generated 178-card catalog v3 and its build report are up to date
 npm run test:browser --workspace=ai-checkout-extension   # Playwright on the built extension
 npm run db:start:api && npm run db:test                   # needs Docker; see wiki/ops/database-migrations.md
 python3 scripts/lint_wiki.py      # wiki conformance and links

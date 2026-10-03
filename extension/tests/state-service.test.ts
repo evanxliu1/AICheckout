@@ -12,7 +12,7 @@ const wallet = {
   cards: [{ cardId: 'capital-one-quicksilver', usage: [] }],
 };
 beforeEach(() => {
-  now = Date.parse('2026-09-30T15:00:00Z');
+  now = Date.parse('2026-10-03T15:00:00Z');
   data = {};
   storage = {
     get: vi.fn(async () => structuredClone(data)),
@@ -156,7 +156,7 @@ describe('durable worker state', () => {
       await handle({
         type: 'checkout:compare',
         expectedRevision: 1,
-        purchase: { ...purchase(), purchasedOn: '2026-09-29' },
+        purchase: { ...purchase(), purchasedOn: '2026-10-02' },
       }),
     ).toMatchObject({ ok: false });
     expect(

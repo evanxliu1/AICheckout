@@ -3,7 +3,7 @@ import { closeOnboarding } from './onboarding';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { openNativePopup } from './native-popup';
+import { openNativePopup, REAL_CARD_NAMES } from './native-popup';
 import {
   deleteNativeVault,
   deleteVault,
@@ -12,7 +12,7 @@ import {
   startNativePopup,
   startPopup,
 } from './vault';
-import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2';
+import { CATALOG_V3 } from '../../packages/rewards-core/src/catalog-v3';
 import { addCard } from './wallet';
 
 test('capture real release UI and record the staged offline shopper walkthrough', async ({
@@ -83,8 +83,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
       });
     }
     await startNativePopup(popup);
-    // Add every bundled card through the search field, as a shopper would.
-    await popup.addCards(CATALOG_V2.cards.map((card) => card.name));
+    await popup.checkCards(REAL_CARD_NAMES);
     await expect.poll(popup.text).toContain('online retail spend in');
     await popup.fill('spend-bce-online-retail', '0');
     await popup.evaluate(
@@ -182,8 +181,8 @@ test('capture real release UI and record the staged offline shopper walkthrough'
           browser: context.browser()?.version(),
           artifactSha256: inventory.sha256,
           extensionVersion: '2.0.0',
-          catalogVersion: CATALOG_V2.version,
-          catalogExpiresAt: CATALOG_V2.expiresAt,
+          catalogVersion: CATALOG_V3.version,
+          catalogExpiresAt: CATALOG_V3.expiresAt,
           source:
             'Actual native toolbar popup; all seven card products selected as a sample; intercepted Newegg summary fixture.',
           liveMerchant: false,

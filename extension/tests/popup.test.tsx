@@ -1,16 +1,20 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { createStateService } from '../src/state/service';
 import { emptyState } from '../src/state/contracts';
 import Popup from '../src/popup/Popup';
 import type { AppState, CatalogCache } from '../src/state/contracts';
-import { PILOT_CATALOG } from '../src/domain';
+import { CATALOG_V3, PILOT_CATALOG } from '../src/domain';
+import WalletEditor from '../src/components/WalletEditor';
 
 let data: Record<string, unknown>;
 const read = vi.fn();
 beforeEach(() => {
   HTMLElement.prototype.scrollIntoView = vi.fn();
-  vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-09-30T15:00:00Z'));
+  // The bundled catalog v3 is valid from 2026-10-02. Only Date.now is mocked; the popup's stale-result
+  // timer takes midnight from the real clock, so this must not be later than the real date.
+  vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-10-02T15:00:00Z'));
   data = {
     checkoutStateV1: {
       ...emptyState(),
@@ -181,4 +185,36 @@ describe('offline comparison popup', () => {
     expect(screen.queryByText('$1.50')).toBeNull();
     expect(data).toEqual({});
   });
+});
+
+describe('wallet editor with the bundled catalog v3', () => {
+  it('finds real cards by part of a name and stops at 20 cards', async () => {
+    const user = userEvent.setup();
+    const onSave = vi.fn(async () => undefined);
+    render(
+      <WalletEditor
+        catalog={CATALOG_V3}
+        wallet={{ defaultCardId: null, cards: [] }}
+        busy={false}
+        onSave={onSave}
+      />,
+    );
+    const search = screen.getByRole('combobox', { name: 'Add a card' });
+    expect(screen.getByText(new RegExp(`\\(${CATALOG_V3.cards.length} cards\\)`))).toBeTruthy();
+    await user.click(search);
+    await user.paste('double cash');
+    expect(screen.getAllByRole('option').map((o) => o.textContent)).toContain('Citi Double Cash');
+    await user.keyboard('{Escape}{Escape}');
+    // Twenty cards in catalog order, picked through the search field.
+    for (const card of CATALOG_V3.cards.slice(0, 20)) {
+      await user.click(search);
+      await user.paste(card.name);
+      await user.click(screen.getByRole('option', { name: card.name }));
+    }
+    expect((search as HTMLInputElement).disabled).toBe(true);
+    expect(screen.getByText('You can save up to 20 cards. Remove one to add another.')).toBeTruthy();
+    await user.click(screen.getByRole('button', { name: 'Save cards' }));
+    await vi.waitFor(() => expect(onSave).toHaveBeenCalledTimes(1));
+    expect((onSave.mock.calls[0] as unknown as [{ cards: unknown[] }])[0].cards).toHaveLength(20);
+  }, 30_000);
 });

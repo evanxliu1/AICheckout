@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { CATALOG_V2 } from '@ai-checkout/rewards-core';
+import { CATALOG_V2, CATALOG_V3 } from '@ai-checkout/rewards-core';
 import type { ReviewSummary } from '@ai-checkout/catalog-review';
 import ReviewWorkspace from '../src/ReviewWorkspace';
 import type { ReviewApi } from '../src/client';
@@ -85,7 +85,8 @@ it('offers to start a draft from the bundled catalog when the queue is empty, an
 });
 
 it('refuses the bundled catalog before it is valid and after it expires', async () => {
-  for (const at of [Date.parse(CATALOG_V2.verifiedAt) - 60_000, Date.parse(CATALOG_V2.expiresAt)]) {
+  // Before the older catalog (v2) is valid and once the newer one (v3) has expired, no bundled catalog is usable.
+  for (const at of [Date.parse(CATALOG_V2.verifiedAt) - 60_000, Date.parse(CATALOG_V3.expiresAt)]) {
     vi.spyOn(Date, 'now').mockReturnValue(at);
     const api = backend();
     const user = setup();

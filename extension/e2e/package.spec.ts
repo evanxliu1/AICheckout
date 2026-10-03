@@ -4,10 +4,10 @@ import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { openNativePopup } from './native-popup';
+import { openNativePopup, REAL_CARD_NAMES } from './native-popup';
 import { deleteNativeVault, startNativePopup } from './vault';
 import { BADGE_ORIGINS } from './hosts';
-import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2';
+import { CATALOG_V3 } from '../../packages/rewards-core/src/catalog-v3';
 
 test('the inspected upload ZIP installs and completes a native comparison', async ({
   browserName,
@@ -71,7 +71,7 @@ test('the inspected upload ZIP installs and completes a native comparison', asyn
     const popup = await openNativePopup(context, merchant, id);
     await startNativePopup(popup);
     writeFileSync(testInfo.outputPath('zip-setup.png'), await popup.screenshot());
-    await popup.addCards(CATALOG_V2.cards.map((card) => card.name));
+    await popup.checkCards(REAL_CARD_NAMES);
     await expect.poll(popup.text).toContain('online retail spend in');
     await popup.fill('spend-bce-online-retail', '0');
     await popup.click('Save cards');
@@ -89,7 +89,7 @@ test('the inspected upload ZIP installs and completes a native comparison', asyn
     await popup.click('Compare my cards');
     // This is the real release artifact, so its bundled catalog is not re-dated: before expiry it
     // must compare; afterwards it must refuse with the expiry notice. Either way it never time-bombs.
-    if (Date.now() < Date.parse(CATALOG_V2.expiresAt)) {
+    if (Date.now() < Date.parse(CATALOG_V3.expiresAt)) {
       await expect.poll(popup.text).toContain('$0.81');
       await expect.poll(popup.text).toContain('$0.40');
     } else await expect.poll(popup.text).toContain('These card terms have expired');

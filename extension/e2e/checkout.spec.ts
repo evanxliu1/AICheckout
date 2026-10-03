@@ -59,7 +59,8 @@ test('native action grants temporary access, reads a cart and rejects changed to
       return result.result;
     });
     expect(storageAccess).toEqual([true, true]);
-    await popup.addCards(['Citi Double Cash']);
+    // Citi Double Cash (2%).
+    await popup.checkCards(['Citi Double Cash']);
     await popup.click('Save cards');
     await expect.poll(popup.text).toContain('Read cart amount');
     await popup.click('Read cart amount');

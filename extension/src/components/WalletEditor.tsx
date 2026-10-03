@@ -14,7 +14,7 @@ import {
 } from '@ai-checkout/ui';
 import { parseUsd, usageInputs } from '../domain';
 import type { Catalog, CardProductV3, RuleUsage, Wallet } from '../domain';
-import { localDate } from '../state/keys';
+import { localDate, MAX_WALLET_CARDS as MAX_CARDS } from '../state/keys';
 import { centsEach } from './estimates';
 import {
   choiceQuestions,
@@ -25,8 +25,6 @@ import {
 } from './wallet-options';
 
 type Input = { spend: string; activation: RuleUsage['activation'] };
-/** The wallet's card limit (`walletSchema`). */
-const MAX_CARDS = 20;
 const EMPTY_INPUT: Input = { spend: '', activation: 'unknown' };
 const key = (cardId: string, id: string) => `${cardId}/${id}`;
 const issuerOf = (card: Catalog['cards'][number]) => ('issuer' in card ? card.issuer : 'Cards');

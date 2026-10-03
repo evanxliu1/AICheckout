@@ -49,7 +49,7 @@ select ok(pg_temp.valid(pg_temp.v2()),'synthetic v2 catalog passes the union val
 select ok(catalog_private.valid_catalog_v2(pg_temp.v2()),'synthetic v2 catalog passes the v2 validator');
 select ok(not catalog_private.valid_catalog_v1(pg_temp.v2()),'the v1 validator rejects a v2 catalog');
 select ok(coalesce((select pg_temp.valid(catalog) from catalog_private.drafts
-  where id='00000000-0000-4000-8000-000000000001'),false),'seeded real 7-card catalog passes');
+  where id='00000000-0000-4000-8000-000000000001'),false),'seeded catalog (v3 since Stage 2 M5) passes the union validator');
 select ok(pg_temp.valid(jsonb_build_object(
     'schemaVersion',1,'version','v1.1','verifiedAt','2026-09-25T00:00:00Z','expiresAt','2026-10-25T00:00:00Z',
     'merchantIds','["best-buy-us"]'::jsonb,

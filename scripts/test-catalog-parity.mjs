@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
 import pg from 'pg';
+import { CATALOG_V3 } from '../packages/rewards-core/src/catalog-v3.ts';
 import { catalogSchema } from '../packages/rewards-core/src/schema.ts';
 import { MERCHANT_CATEGORIES_V3, REWARD_CATEGORIES_V3 } from '../packages/rewards-core/src/types.ts';
 import { catalogCases, catalogV2Cases, catalogV3Cases } from '../packages/rewards-core/test-cases.ts';
+import { CATALOG_V3_BYTE_BUDGET, jsonbTextBytes } from './lib/catalog-v3.mjs';
 
 // Local read-only comparison of both actual implementations against common domain cases.
 const client = new pg.Client({
@@ -36,8 +38,20 @@ try {
   );
   assert.deepEqual(categories.rows[0].reward, [...REWARD_CATEGORIES_V3], 'v3 reward categories');
   assert.deepEqual(categories.rows[0].merchant, [...MERCHANT_CATEGORIES_V3], 'v3 merchant categories');
+  // The bundled 178-card catalog v3 (Stage 2 M5) passes both validators within the 75% size budget, measured as
+  // the database measures it (JSONB text).
+  const real = await client.query(
+    `select catalog_private.valid_catalog_v3($1::jsonb) as v3, catalog_private.valid_catalog($1::jsonb) as any,
+            octet_length($1::jsonb::text) as bytes`,
+    [JSON.stringify(CATALOG_V3)],
+  );
+  assert.equal(real.rows[0].v3, true, 'Database valid_catalog_v3: CATALOG_V3');
+  assert.equal(real.rows[0].any, true, 'Database valid_catalog: CATALOG_V3');
+  assert.equal(catalogSchema.safeParse(CATALOG_V3).success, true, 'Shared runtime: CATALOG_V3');
+  assert.equal(real.rows[0].bytes, jsonbTextBytes(CATALOG_V3), 'CATALOG_V3 JSONB text size');
+  assert.ok(real.rows[0].bytes <= CATALOG_V3_BYTE_BUDGET, 'CATALOG_V3 within 75% of 1 MiB as JSONB text');
   console.log(
-    `PASS: database and shared runtime agree on ${catalogCases.length} v1, ${catalogV2Cases.length} v2 and ${catalogV3Cases.length} v3 contract cases, and on the v3 category lists.`,
+    `PASS: database and shared runtime agree on ${catalogCases.length} v1, ${catalogV2Cases.length} v2 and ${catalogV3Cases.length} v3 contract cases, on the v3 category lists, and accept CATALOG_V3 (${real.rows[0].bytes} JSONB text bytes).`,
   );
 } finally {
   await client.end();

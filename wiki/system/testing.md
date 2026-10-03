@@ -38,7 +38,7 @@ Verified 2026-10-02 by reading the workflows and scripts, and by running the uni
 | Review / site / ui unit | `npm test --workspace=@ai-checkout/review` (or `/site`, `/ui`) | |
 | Script unit tests | `npm run test:scripts` (`scripts/lib/*.test.mjs`) | Includes `import-boundary.test.mjs`, which lints sample imports with the real ESLint config: product code may not import `tools/` or `@ai-checkout/catalog-pipeline` ([pipeline design](card-expansion-pipeline.md#boundary-rule)) |
 | Lint, format, types | `npm run lint`, `npm run format:check`, `npm run typecheck` | |
-| Generated files current | `npm run catalog:v2:check`, `npm run db:seed:check` | |
+| Generated files current | `npm run catalog:v2:check`, `npm run catalog:v3:check`, `npm run db:seed:check` | |
 | Eval plumbing (no model) | `npm run eval:curation -- --check`, `npm run eval:v2 -- --check` | |
 | SQL (pgTAP) | `npm run db:test` | Docker, `npm run db:start:api` |
 | Zod/SQL parity | `npm run db:test:catalog` | local DB |
@@ -72,7 +72,7 @@ Re-run on 2026-10-02 at `7322dec` (after PRs #13 and #14), all pass: extension v
 
 | Workflow | Name | Steps in order |
 | --- | --- | --- |
-| [`extension.yml`](../../.github/workflows/extension.yml) | Application checks | wiki lint; `npm ci`; lint; format:check; typecheck; `npm test`; `eval:curation --check`; `eval:v2 --check`; `catalog:v2:check`; `npm audit --audit-level=high`; build; Playwright install; review a11y; ui browser; site browser; extension browser; `test:catalog:browser`; `test:package:browser`; uploads `chrome-extension` and `browser-test-results` artifacts |
+| [`extension.yml`](../../.github/workflows/extension.yml) | Application checks | wiki lint; `npm ci`; lint; format:check; typecheck; `npm test`; `eval:curation --check`; `eval:v2 --check`; `catalog:v2:check`; `catalog:v3:check`; `npm audit --audit-level=high`; build; Playwright install; review a11y; ui browser; site browser; extension browser; `test:catalog:browser`; `test:package:browser`; uploads `chrome-extension` and `browser-test-results` artifacts |
 | [`database.yml`](../../.github/workflows/database.yml) | Database checks | `npm ci`; audit; `db:seed:check`; `db:start:api`; `db:test`; `db:test:concurrency`; `db:test:catalog`; `db:test:http`; `db:test:curation`; build api + review; `db:test:curation:http`; `db:test:curation:application`; review browser; `db:lint`; `db:advisors`; stop |
 
 Both trigger on every `push` and `pull_request`. The wiki-lint step and the pre-commit hook were added with the `llm-wiki` branch on 2026-10-02. The pre-commit hook in [`.githooks/pre-commit`](../../.githooks/pre-commit) runs only the wiki linter. Enable it with `git config core.hooksPath .githooks`; in Evan's clone it is already set in the shared `.git/config`, so it applies to every worktree. The path is relative to each worktree, and Git silently skips a hook file that does not exist, so worktrees on branches without `.githooks/` (anything not yet merged with the wiki) run no pre-commit hook at all.
