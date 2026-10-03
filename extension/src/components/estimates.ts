@@ -1,5 +1,5 @@
 import { formatUsd } from '../domain';
-import type { CardEstimate, UnavailableComparison } from '../domain';
+import type { Catalog, CardEstimate, UnavailableComparison } from '../domain';
 
 export const unavailableCopy: Record<UnavailableComparison['reason'], string> = {
   'catalog-expired':
@@ -19,4 +19,24 @@ export function amount(estimate: CardEstimate) {
   return estimate.minRewardCents === estimate.maxRewardCents
     ? formatUsd(estimate.minRewardCents)
     : `${formatUsd(estimate.minRewardCents)}–${formatUsd(estimate.maxRewardCents)}`;
+}
+
+/** The amount shown for an estimate: cents, or for a catalog v3 card whose program has no value,
+ * its reward units ("1,000–3,000 miles"). Plain rendering until Stage 2 M7 words the v3 results. */
+export function rewardText(estimate: CardEstimate, catalog: Catalog) {
+  if (estimate.unitValue !== null || estimate.minRewardUnits === undefined) return amount(estimate);
+  const min = estimate.minRewardUnits,
+    max = estimate.maxRewardUnits ?? min;
+  const unit =
+    (catalog.schemaVersion === 3 && catalog.programs.find((p) => p.id === estimate.programId)?.unitName) ||
+    'points';
+  const count = (n: number) => n.toLocaleString('en-US');
+  return `${min === max ? count(min) : `${count(min)}–${count(max)}`} ${unit}`;
+}
+
+/** Owned closed-loop cards left out of a v3 ranking because this merchant does not accept them. */
+export function notAcceptedNames(result: { notAccepted?: CardEstimate[] }, catalog: Catalog) {
+  return (result.notAccepted ?? []).map(
+    (e) => catalog.cards.find((c) => c.id === e.cardId)?.shortName ?? e.cardId,
+  );
 }

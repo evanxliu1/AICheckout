@@ -4,7 +4,7 @@ import Popup from '../popup/Popup';
 import PopupHeader from './PopupHeader';
 import DataProtectionDetails from './DataProtectionDetails';
 import DeleteSavedData from './DeleteSavedData';
-import { STATE_KEY } from '../state/service';
+import { STATE_KEY } from '../state/keys';
 import { PASSPHRASE_MIN_LENGTH } from '../state/vault-crypto';
 import { VAULT_SESSION_KEY } from '../state/vault-contracts';
 import type { VaultRequest, VaultStatus } from '../state/vault-contracts';

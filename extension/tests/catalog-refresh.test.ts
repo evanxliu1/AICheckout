@@ -1,12 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { CATALOG_TIMEOUT_MS } from '@ai-checkout/catalog-client';
-import { PILOT_CATALOG, redateCatalog } from '../src/domain';
-import { CATALOG_V3_FIXTURE } from '../../packages/rewards-core/test-cases';
+import { PILOT_CATALOG } from '../src/domain';
 import type { PublishedRelease } from '../src/domain';
-import { createStateService, localDate, STATE_KEY } from '../src/state/service';
+import { CATALOG_KEY, createStateService, localDate, STATE_KEY } from '../src/state/service';
 import type { StateStorage } from '../src/state/service';
 import { emptyState } from '../src/state/contracts';
-import type { AppState, CheckoutResponse } from '../src/state/contracts';
+import type { AppState, CatalogCache, CheckoutResponse } from '../src/state/contracts';
 
 let data: Record<string, unknown>, now: number, storage: StateStorage;
 const fetchCatalog = vi.fn();
@@ -29,6 +28,9 @@ function service() {
 }
 function state() {
   return data[STATE_KEY] as AppState;
+}
+function cache() {
+  return data[CATALOG_KEY] as CatalogCache | undefined;
 }
 function purchase() {
   return {
@@ -82,10 +84,13 @@ beforeEach(() => {
 afterEach(() => vi.useRealTimers());
 
 describe('published catalog lifecycle', () => {
-  it('migrates stored pilot state without dropping its wallet', async () => {
-    delete (state() as Partial<AppState>).catalog;
+  it('migrates stored schema 2 state without a catalog cache, keeping its wallet', async () => {
+    const legacy: Record<string, unknown> = { ...state(), schemaVersion: 2 };
+    delete legacy.walletCatalogVersion;
+    data[STATE_KEY] = legacy;
     const read = ok(await service()({ type: 'checkout:get-state' }));
-    expect(read.state.catalog.release).toBeNull();
+    expect(read.state).toMatchObject({ schemaVersion: 3, walletCatalogVersion: read.catalog.version });
+    expect(cache()).toEqual({ release: null, lastCheckedAt: null });
     expect(read.state.wallet.cards).toHaveLength(1);
   });
   it('atomically applies changed rates and invalidates saved comparisons', async () => {
@@ -135,7 +140,7 @@ describe('published catalog lifecycle', () => {
       await service()({ type: 'checkout:compare', expectedRevision: state().revision, purchase: purchase() }),
     );
     expect(result.comparison).toEqual({ status: 'unavailable', reason: 'catalog-expired' });
-    expect(state().catalog.release?.version).toBe('published.1');
+    expect(cache()?.release?.version).toBe('published.1');
   });
   it('preserves removed cards and their usage, then explicitly blocks the incomplete wallet', async () => {
     const next = release();
@@ -165,8 +170,13 @@ describe('published catalog lifecycle', () => {
   ])('keeps the last snapshot on %s', async (failure) => {
     fetchCatalog.mockResolvedValue({ release: release(2) });
     ok(await refresh());
-    const before = structuredClone(data);
     const next = release(3);
+    if (failure === 'expired') {
+      // Loading at that time may switch to the valid bundled catalog; that write is not the refresh's.
+      now = Date.parse(next.catalog.expiresAt);
+      ok(await service()({ type: 'checkout:get-state' }));
+    }
+    const before = structuredClone(data);
     let response: unknown = { release: next };
     if (failure === 'rollback') response = { release: release(1) };
     if (failure === 'same sequence changed') {
@@ -177,9 +187,6 @@ describe('published catalog lifecycle', () => {
     }
     if (failure === 'missing release') response = { release: null };
     if (failure === 'invalid schema') next.catalog.cards[0].rules[0].rateBps = -1;
-    if (failure === 'expired') {
-      now = Date.parse(next.catalog.expiresAt);
-    }
     if (failure === 'future') next.published_at = '2026-09-26T00:00:00Z';
     fetchCatalog.mockResolvedValue(response);
     expect(await refresh()).toMatchObject({ ok: false });
@@ -193,15 +200,7 @@ describe('published catalog lifecycle', () => {
       return { release: next };
     });
     expect(await refresh()).toMatchObject({ ok: false });
-    expect(state().catalog.release).toBeNull();
-  });
-  it('refuses a catalog v3 release until the extension runs the v3 engine', async () => {
-    const catalog = redateCatalog(CATALOG_V3_FIXTURE, '2026-09-25');
-    fetchCatalog.mockResolvedValue({ release: { ...release(), catalog, version: catalog.version } });
-    const result = await refresh();
-    expect(result).toMatchObject({ ok: false });
-    if (!result.ok) expect(result.error).toContain('newer version of this extension');
-    expect(state().catalog.release).toBeNull();
+    expect(cache()).toBeUndefined();
   });
   it('keeps all state unchanged if the atomic storage write fails', async () => {
     const before = structuredClone(data);

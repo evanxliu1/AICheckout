@@ -6,7 +6,7 @@ status: draft
 tags: [product, plan, phase-7, catalog, engine, extension]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:59:00Z
+  at: 2026-10-03T00:25:00Z
 stale_after: 2026-11-01T00:00:00Z
 sources:
   - resource: ../system/catalog-expansion.md
@@ -99,6 +99,7 @@ Start in parallel: M1, M3, M9, M11 (draft). After M1: M2, M4 and M8 in parallel.
 - **Files.** `extension/src/state/{contracts,service,migrate,catalog,vault-service}.ts`, `background/badge-service.ts`, `badge/contracts.ts`, `packages/catalog-client`.
 - **Tests.** Migration 2 → 3 with and without the vault; vault size with a 1 MiB catalog; refresh rules for v3; badge payload size bound.
 - **Acceptance.** All existing extension tests pass; a locked vault still shows the catalog-independent prompts; content scripts gain no wallet or catalog code.
+- **Status (2026-10-02).** Implemented on branch `s2-m6-extension-state`: state schema 3 with the catalog cache under its own plain key `checkoutCatalogV1`, migration 2 → 3 in one write (with the vault, on the first unlocked read), `walletCatalogVersion` with pruning on load when the catalog in effect changes, v3 refresh with pruning of usage rows, choices, gate answers and point values, wallet `choices`/`gates`/`valueOverrides` and 30 usage rows per card, catalog client cap 1 MiB + 2 KiB, `responseSchema` widened to v3, responses carrying the catalog in effect (pages no longer bundle one), badge `ready` view with only the owned cards' slice. The bundled fallback stays `CATALOG_V2` until M5 swaps one import in `state/catalog.ts`. Plain v3 rendering (units for unvalued cards, not-accepted cards named) until M7. Tests: `state-v3.test.ts` and updated suites, Playwright specs pass ([decision](../decisions/2026-10-02-extension-state-v3.md)). Pre-merge review (agent-verified, 2026-10-03): the newest valid of the cached release and the bundled catalog is in effect, so M5's bundle replaces hosted release 1 on update ([decision](../decisions/2026-10-03-newest-valid-catalog-wins.md)).
 
 ### M7 Extension UI
 - **Scope.** Wallet search and add over 180 cards in popup and onboarding (combobox with issuer grouping, keyboard and screen-reader support, no network); per-card options (chosen categories, memberships and tiers, activation) shown only for cards that have them; a "Point values" section listing the programs of owned cards with the estimate, publisher, date and an override field; results and badge show units plus cash value with "estimate" labels, `not-accepted` and gate conditions in plain words; Venmo in the payment selector. New shared parts go into `packages/ui` on Helios tokens.

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AlertInline, Button, Card, Checkbox, Field, Fieldset, Select, TextInput } from '@ai-checkout/ui';
 import { parseUsd, usageInputs } from '../domain';
 import type { Catalog, RuleUsage, Wallet } from '../domain';
-import { localDate } from '../state/service';
+import { localDate } from '../state/keys';
 
 type Input = { spend: string; activation: RuleUsage['activation'] };
 
@@ -90,10 +90,12 @@ export default function WalletEditor({
         if (spentCents !== null || activation !== 'unknown')
           usage.push({ ruleId: rule.ruleId, calendarYear: year, recordedOn, spentCents, activation });
       }
-      cards.push({ cardId: card.id, usage });
+      // Catalog v3 card options have no editor yet (Stage 2 M7); keep what the wallet has.
+      const choices = wallet.cards.find((owned) => owned.cardId === card.id)?.choices;
+      cards.push(choices ? { cardId: card.id, usage, choices } : { cardId: card.id, usage });
     }
     try {
-      await onSave({ defaultCardId: selected.length ? defaultId || selected[0] : null, cards });
+      await onSave({ ...wallet, defaultCardId: selected.length ? defaultId || selected[0] : null, cards });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Your cards could not be saved. Try again.');
     }

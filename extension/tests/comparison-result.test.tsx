@@ -4,6 +4,7 @@ import ComparisonResult from '../src/components/ComparisonResult';
 import WalletEditor from '../src/components/WalletEditor';
 import { CATALOG_V2, compareRewards } from '../src/domain';
 import type { Comparison, Purchase } from '../src/domain';
+import { CATALOG_V3_FIXTURE } from '../../packages/rewards-core/test-cases';
 
 const now = Date.parse('2026-09-30T15:00:00Z');
 const purchase = (extra: Partial<Purchase> = {}): Purchase => ({
@@ -114,5 +115,33 @@ describe('wallet editor on catalog v2', () => {
     fireEvent.click(screen.getByRole('checkbox', { name: 'American Express Blue Cash Everyday' }));
     expect(screen.getByLabelText(/Blue Cash Everyday online retail spend in 2026/)).toBeTruthy();
     expect(screen.queryByLabelText(/bonus activation/)).toBeNull();
+  });
+});
+
+describe('catalog v3 results (plain rendering until Stage 2 M7)', () => {
+  it('shows units for an unvalued card, rules that do not apply, and cards not accepted here', () => {
+    const at = Date.parse('2026-10-02T15:00:00Z');
+    const comparison = compareRewards(
+      CATALOG_V3_FIXTURE,
+      {
+        defaultCardId: null,
+        cards: [
+          { cardId: 'test-auto-top', usage: [] },
+          { cardId: 'test-amazon-store', usage: [] },
+          { cardId: 'test-cash-plus', usage: [] },
+        ],
+      },
+      { ...purchase(), purchasedOn: '2026-10-02' },
+      at,
+    );
+    if (comparison.status !== 'ready') throw new Error('not ready');
+    render(<ComparisonResult result={comparison} purchase={purchase()} catalog={CATALOG_V3_FIXTURE} />);
+    const auto = comparison.estimates.find((e) => e.cardId === 'test-auto-top')!;
+    expect(auto.unitValue).toBeNull();
+    expect(
+      screen.getByText(new RegExp(`${auto.minRewardUnits!.toLocaleString('en-US')}.*miles`)),
+    ).toBeTruthy();
+    expect(screen.getByText('Not accepted at this merchant: Amazon Store.')).toBeTruthy();
+    expect(screen.getAllByText(/Rules that don’t apply here/).length).toBeGreaterThan(0);
   });
 });

@@ -5,7 +5,7 @@ import { AlertInline, Button, Field, Icon, Select, TextInput } from '@ai-checkou
 import { formatUsd, parseUsd } from '../domain';
 import type { PaymentPath } from '../domain';
 import { EstimateRow } from '../components/ComparisonResult';
-import { amount, unavailableCopy } from '../components/estimates';
+import { notAcceptedNames, rewardText, unavailableCopy } from '../components/estimates';
 import { merchantName } from '../checkout/merchants';
 import type { BadgeAction, BadgeView } from './contracts';
 import { badgeRequest, postToHost } from './client';
@@ -153,7 +153,7 @@ export default function BadgeApp() {
   if (view.kind === 'ready') {
     const best = view.result.estimates.find((e) => e.cardId === view.result.preferredCardId)!;
     const name = view.catalog.cards.find((c) => c.id === best.cardId)?.shortName ?? best.cardId;
-    pillText = `Use ${name} · ${amount(best)} back`;
+    pillText = `Use ${name} · ${rewardText(best, view.catalog)} back`;
     pillLabel = `${pillText} on this cart (AI Checkout). Show details`;
     pillAction = expand;
   } else if (view.kind === 'locked') {
@@ -396,6 +396,11 @@ function ReadyBody({
               />
             ))}
           </ol>
+          {notAcceptedNames(ready.result, ready.catalog).length > 0 && (
+            <p className="supporting">
+              Not accepted at this merchant: {notAcceptedNames(ready.result, ready.catalog).join(', ')}.
+            </p>
+          )}
           <p className="supporting">
             Estimates from the card terms in AI Checkout; statement rewards may differ. Nothing about this
             cart leaves your device.

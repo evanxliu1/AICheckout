@@ -1,25 +1,25 @@
 import { AlertInline, Badge, Card, Disclosure, Link } from '@ai-checkout/ui';
-import { ACTIVATION_LABELS, CATEGORY_LABELS, formatUsd } from '../domain';
+import { ACTIVATION_LABELS, CATEGORY_LABELS, formatUsd, isUnconditionalRuleV3 } from '../domain';
 import type {
   Catalog,
   CardEstimate,
   Comparison,
   Purchase,
   RewardRuleV2,
+  RewardRuleV3,
   RuleStatusV3,
   UnavailableComparison,
   UncertaintyV3,
 } from '../domain';
 import { merchantName } from '../checkout/merchants';
-import { amount, unavailableCopy } from './estimates';
+import { notAcceptedNames, rewardText, unavailableCopy } from './estimates';
 
 const statusCopy: Partial<Record<RuleStatusV3, string>> = {
   'not-at-merchant': 'Not at this merchant',
   'not-eligible': 'Not eligible for this purchase',
   expired: 'Promotion ended',
   'cap-reached': 'Spend limit reached',
-  // Catalog v3 statuses: placeholder copy, shown once the extension runs v3 catalogs (Stage 2 M6)
-  // and worded in Stage 2 M7.
+  // Catalog v3 statuses: placeholder copy, worded in Stage 2 M7.
   'not-accepted': 'Card not accepted at this merchant',
   'not-started': 'Promotion not started',
   'choice-not-selected': 'Category not selected',
@@ -44,7 +44,7 @@ function uncertaintyCopy(code: UncertaintyV3, label: string): string {
     'activation-unknown': `Activation of the ${label} bonus is unconfirmed.`,
     'cap-unstated': `The issuer does not state a spend limit for the ${label} bonus.`,
     'payment-path-uncertain': `This payment method may not earn the ${label} bonus.`,
-    // Catalog v3 codes: placeholder copy, shown from Stage 2 M6 and worded in Stage 2 M7.
+    // Catalog v3 codes: placeholder copy, worded in Stage 2 M7.
     'choice-unknown': `Whether you chose the ${label} category is unknown.`,
     'automatic-category': `The ${label} bonus applies only if it is your top spending category.`,
     'condition-unknown': `The ${label} bonus needs a membership or status you have not confirmed.`,
@@ -64,9 +64,13 @@ export function EstimateRow({
   amountCents: number;
 }) {
   const card = catalog.cards.find((c) => c.id === estimate.cardId)!;
-  const rules: RewardRuleV2[] = catalog.schemaVersion === 2 ? (card.rules as RewardRuleV2[]) : [];
+  const rules: (RewardRuleV2 | RewardRuleV3)[] =
+    catalog.schemaVersion === 1 ? [] : (card.rules as (RewardRuleV2 | RewardRuleV3)[]);
   const applied = rules.find((r) => r.id === estimate.appliedRuleId);
-  const base = rules.find((r) => r.category === 'all-purchases');
+  // v3: the base is the unconditional all-purchases rule (others may need a choice or a gate).
+  const base = rules.find(
+    (r) => r.category === 'all-purchases' && (!('brandIds' in r) || isUnconditionalRuleV3(r)),
+  );
   // v1 catalogs have one bonus kind; name it from the card's own rule rather than assuming it.
   const v1Bonus =
     catalog.schemaVersion === 1
@@ -77,7 +81,7 @@ export function EstimateRow({
   const mayApply = rules.filter((r) =>
     estimate.rules?.some((s) => s.ruleId === r.id && s.status === 'may-apply'),
   );
-  const sourceOf: Record<UncertaintyV3, (r: RewardRuleV2) => boolean> = {
+  const sourceOf: Record<UncertaintyV3, (r: RewardRuleV2 | RewardRuleV3) => boolean> = {
     'annual-usage-unknown': (r) => r.cap.kind === 'spend',
     'cap-usage-unknown': (r) => r.cap.kind === 'spend',
     'cap-unstated': (r) => r.cap.kind === 'unstated',
@@ -100,7 +104,7 @@ export function EstimateRow({
     <li className="py-3 space-y-2">
       <div className="flex justify-between gap-4 items-baseline">
         <h3 className="section-title">{card.shortName}</h3>
-        <span className="estimate-amount">{amount(estimate)}</span>
+        <span className="estimate-amount">{rewardText(estimate, catalog)}</span>
       </div>
       {applied && base ? (
         <p>
@@ -194,6 +198,7 @@ export default function ComparisonResult({
   const preferred = catalog.cards.find((c) => c.id === result.preferredCardId)!;
   const single = result.estimates.length === 1;
   const sources = catalog.sources.filter((s) => result.estimates.some((e) => e.sourceIds.includes(s.id)));
+  const notAccepted = notAcceptedNames(result, catalog);
   return (
     <Card hasBorder>
       <div className="card-body space-y-3">
@@ -236,6 +241,9 @@ export default function ComparisonResult({
             />
           ))}
         </ul>
+        {notAccepted.length > 0 && (
+          <p className="supporting">Not accepted at this merchant: {notAccepted.join(', ')}.</p>
+        )}
         <p className="supporting">
           Estimates depend on issuer eligibility and merchant coding. Amounts are rounded down to a cent;
           statement rewards may differ. Offers, fees and financing are excluded.
