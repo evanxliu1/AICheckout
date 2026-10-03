@@ -435,6 +435,37 @@ describe('golden ladders on catalog v3', () => {
     }
   });
 
+  it('W17 Customized Cash: account age unanswered guarantees 3%; a PayPal checkout earns only 1%', () => {
+    // Both online shopping rules activated; the first-year gate is unanswered, so the worst answer
+    // (after the first year) sets the floor at 3% and the first-year 6% is the ceiling (O20).
+    const w = wallet([
+      owned('boa-customized-cash-rewards', {
+        choices: [{ choiceId: 'choice-category', optionIds: ['online-shopping'] }],
+        usage: [
+          usage('customized-cash-rewards-club', { spentCents: 0 }),
+          usage('customized-cash-rewards-online-shopping', { activation: 'active' }),
+          usage('customized-cash-rewards-online-shopping-first-year', { activation: 'active' }),
+        ],
+      }),
+      owned('citi-double-cash'),
+    ]);
+    for (const merchantId of MERCHANTS) {
+      const result = expectLadder(compare(w, merchantId), {
+        ladder: ['boa-customized-cash-rewards 300..600', 'citi-double-cash 200..200'],
+        rankingMayChange: false,
+        tied: false,
+      });
+      expect(estimate(result, 'boa-customized-cash-rewards').uncertainties).toEqual(['condition-unknown']);
+    }
+    // Bank of America: purchases processed through a third-party payment account do not qualify for
+    // bonus cash rewards, so through PayPal the card earns its 1% base.
+    expectLadder(compare(customizedCash(true), 'amazon-us', { paymentPath: 'paypal' }), {
+      ladder: ['citi-double-cash 200..200', 'boa-customized-cash-rewards 100..100'],
+      rankingMayChange: false,
+      tied: false,
+    });
+  });
+
   const checkoutCards = () =>
     wallet([
       owned('synchrony-paypal-cashback-mastercard'),
