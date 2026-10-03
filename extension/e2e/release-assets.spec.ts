@@ -13,6 +13,7 @@ import {
   startPopup,
 } from './vault';
 import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2';
+import { addCard } from './wallet';
 
 test('capture real release UI and record the staged offline shopper walkthrough', async ({
   browserName,
@@ -82,9 +83,8 @@ test('capture real release UI and record the staged offline shopper walkthrough'
       });
     }
     await startNativePopup(popup);
-    await popup.evaluate(
-      "document.querySelectorAll('[aria-labelledby=wallet-heading] fieldset input[type=checkbox]').forEach(box=>box.click())",
-    );
+    // Add every bundled card through the search field, as a shopper would.
+    await popup.addCards(CATALOG_V2.cards.map((card) => card.name));
     await expect.poll(popup.text).toContain('online retail spend in');
     await popup.fill('spend-bce-online-retail', '0');
     await popup.evaluate(
@@ -238,8 +238,8 @@ test('capture real release UI and record the staged offline shopper walkthrough'
       'Staged offline demo. Actual extension page; sample inputs; no live retailer or model call.',
       4,
     );
-    await page.getByRole('checkbox', { name: 'Capital One Quicksilver', exact: true }).check();
-    await page.getByRole('checkbox', { name: 'American Express Blue Cash Everyday', exact: true }).check();
+    await addCard(page, 'Capital One Quicksilver');
+    await addCard(page, 'American Express Blue Cash Everyday');
     await page.getByLabel(/Blue Cash Everyday online retail spend/).fill('0');
     await pause('Choose two card products. Reported annual online-retail spend is $0 for this example.');
     await page.getByRole('button', { name: 'Save cards' }).click();

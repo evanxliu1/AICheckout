@@ -1188,3 +1188,44 @@ describe('catalog v3 engine: review edge cases', () => {
     expect(() => compare({ cards: [owned('test-bce')], catalog })).toThrow('Invalid catalog program.');
   });
 });
+
+describe('catalog v3 engine: a chosen category is its own enrollment (Stage 2 M7)', () => {
+  // Bank of America's choice category: each option's rule is `enroll-once`, and choosing the
+  // category is the enrollment. Synthetic: the fixture's Cash Plus with enroll-once rules.
+  const enrollOnce = structuredClone(CATALOG);
+  for (const r of enrollOnce.cards.find((c) => c.id === 'test-cash-plus')!.rules)
+    if (r.choice) r.activation = 'enroll-once';
+  const capKnown = [usage('cash-plus-department-stores', { spentCents: 0 })];
+  it('needs no activation answer once the category is chosen', () => {
+    const e = only({
+      catalog: enrollOnce,
+      cards: [
+        owned('test-cash-plus', {
+          usage: capKnown,
+          choices: [{ choiceId: 'five-percent', optionIds: ['electronics'] }],
+        }),
+      ],
+    });
+    expect(cents(e)).toEqual([500, 500]);
+    expect(e.uncertainties).toEqual([]);
+  });
+  it('reports only the unanswered choice, not activation as well', () => {
+    const e = only({ catalog: enrollOnce, cards: [owned('test-cash-plus', { usage: capKnown })] });
+    expect(cents(e)).toEqual([100, 500]);
+    expect(e.uncertainties).toEqual(['choice-unknown']);
+  });
+  it('still asks recurring activation of a chosen category, and never asks it in usageInputs', () => {
+    const e = only({
+      cards: [
+        owned('test-cash-plus', {
+          usage: capKnown,
+          choices: [{ choiceId: 'five-percent', optionIds: ['electronics'] }],
+        }),
+      ],
+    });
+    expect(e.uncertainties).toEqual(['activation-unknown']);
+    expect(usageInputs(enrollOnce, 'test-cash-plus').map((i) => [i.ruleId, i.needsActivation])).toEqual([
+      ['cash-plus-department-stores', false],
+    ]);
+  });
+});

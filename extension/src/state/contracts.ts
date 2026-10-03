@@ -2,7 +2,7 @@ import { z } from 'zod';
 import {
   catalogSchema,
   MAX_AMOUNT_CENTS,
-  PAYMENT_PATHS,
+  PAYMENT_PATHS_V3,
   publishedReleaseSchema,
   RULE_STATUSES_V3,
   UNCERTAINTIES_V3,
@@ -96,7 +96,7 @@ export const purchaseSchema = z.strictObject({
   purchasedOn: z.iso.date(),
   eligiblePurchase: eligibility,
   onlineRetail: eligibility,
-  paymentPath: z.enum(PAYMENT_PATHS).optional(),
+  paymentPath: z.enum(PAYMENT_PATHS_V3).optional(),
 });
 
 /** One order the shopper confirmed after a badge recommendation. Amounts are estimates: the cart

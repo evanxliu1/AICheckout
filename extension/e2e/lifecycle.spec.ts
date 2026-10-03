@@ -22,7 +22,7 @@ async function merchantFixture(context: BrowserContext) {
 async function chooseCard(context: BrowserContext, merchant: Page, id: string) {
   const popup = await openNativePopup(context, merchant, id);
   await startNativePopup(popup);
-  await popup.evaluate("document.querySelector('input[type=checkbox]').click()");
+  await popup.addCards(['Citi Double Cash']);
   await popup.click('Save cards');
   await expect.poll(popup.text).toContain('Read cart amount');
   return popup;

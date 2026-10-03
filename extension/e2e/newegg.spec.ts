@@ -3,6 +3,7 @@ import { closeOnboarding } from './onboarding';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { openNativePopup } from './native-popup';
+import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2';
 import { startNativePopup } from './vault';
 import { BADGE_ORIGINS } from './hosts';
 
@@ -34,9 +35,7 @@ test('Newegg native capture distinguishes subtotal, follows quantity changes and
     await merchant.goto('https://secure.newegg.com/shop/cart');
     let popup = await openNativePopup(context, merchant, id);
     await startNativePopup(popup);
-    await popup.evaluate(
-      "document.querySelectorAll('[aria-labelledby=wallet-heading] fieldset input[type=checkbox]').forEach(box => box.click())",
-    );
+    await popup.addCards(CATALOG_V2.cards.map((card) => card.name));
     await expect.poll(popup.text).toContain('online retail spend in');
     await popup.fill('spend-bce-online-retail', '0');
     await popup.click('Save cards');

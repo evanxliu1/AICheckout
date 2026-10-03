@@ -1,7 +1,6 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import ComparisonResult from '../src/components/ComparisonResult';
-import WalletEditor from '../src/components/WalletEditor';
 import { CATALOG_V2, compareRewards } from '../src/domain';
 import type { Comparison, Purchase } from '../src/domain';
 import { CATALOG_V3_FIXTURE } from '../../packages/rewards-core/test-cases';
@@ -92,34 +91,8 @@ describe('comparison result on catalog v2', () => {
   });
 });
 
-describe('wallet editor on catalog v2', () => {
-  it('groups the seven cards by issuer and only asks for rule-derived limits', () => {
-    render(
-      <WalletEditor
-        catalog={CATALOG_V2}
-        wallet={{ defaultCardId: null, cards: [] }}
-        busy={false}
-        onSave={vi.fn(async () => {})}
-      />,
-    );
-    expect(screen.getAllByRole('group').map((g) => g.querySelector('legend')!.textContent)).toEqual([
-      'Citi',
-      'Wells Fargo',
-      'Capital One',
-      'Chase',
-      'American Express',
-    ]);
-    expect(screen.getAllByRole('checkbox')).toHaveLength(7);
-    fireEvent.click(screen.getByRole('checkbox', { name: 'American Express Blue Cash Preferred' }));
-    expect(screen.queryByRole('heading', { name: 'Bonus limits' })).toBeNull();
-    fireEvent.click(screen.getByRole('checkbox', { name: 'American Express Blue Cash Everyday' }));
-    expect(screen.getByLabelText(/Blue Cash Everyday online retail spend in 2026/)).toBeTruthy();
-    expect(screen.queryByLabelText(/bonus activation/)).toBeNull();
-  });
-});
-
-describe('catalog v3 results (plain rendering until Stage 2 M7)', () => {
-  it('shows units for an unvalued card, rules that do not apply, and cards not accepted here', () => {
+describe('catalog v3 results', () => {
+  it('shows units for an unvalued card and where a store card works', () => {
     const at = Date.parse('2026-10-02T15:00:00Z');
     const comparison = compareRewards(
       CATALOG_V3_FIXTURE,
@@ -138,10 +111,14 @@ describe('catalog v3 results (plain rendering until Stage 2 M7)', () => {
     render(<ComparisonResult result={comparison} purchase={purchase()} catalog={CATALOG_V3_FIXTURE} />);
     const auto = comparison.estimates.find((e) => e.cardId === 'test-auto-top')!;
     expect(auto.unitValue).toBeNull();
+    const row = screen.getByRole('heading', { name: 'Auto Top' }).closest('li')!;
     expect(
-      screen.getByText(new RegExp(`${auto.minRewardUnits!.toLocaleString('en-US')}.*miles`)),
+      within(row).getByText(
+        `${auto.minRewardUnits!.toLocaleString('en-US')}–${auto.maxRewardUnits!.toLocaleString('en-US')} miles`,
+      ),
     ).toBeTruthy();
-    expect(screen.getByText('Not accepted at this merchant: Amazon Store.')).toBeTruthy();
+    expect(row.textContent).toContain('Test Airline Miles has no published value');
+    expect(screen.getByText('Amazon Store works only at Amazon, so it is not compared here.')).toBeTruthy();
     expect(screen.getAllByText(/Rules that don’t apply here/).length).toBeGreaterThan(0);
   });
 });

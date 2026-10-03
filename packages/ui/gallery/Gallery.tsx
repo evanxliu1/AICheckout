@@ -7,6 +7,7 @@ import {
   Button,
   Card,
   Checkbox,
+  Combobox,
   Disclosure,
   Field,
   Fieldset,
@@ -142,6 +143,10 @@ function Forms() {
           )}
         </Field>
       </div>
+      <h3>Combobox</h3>
+      <div className="gallery-grid">
+        <ComboboxDemo />
+      </div>
       <h3>Checkbox, radio, toggle</h3>
       <div className="gallery-grid">
         <Fieldset legend="Cards in your wallet" helperText="Pick every card you carry." isRequired>
@@ -167,6 +172,34 @@ function Forms() {
         </Fieldset>
       </div>
     </Section>
+  );
+}
+
+const GALLERY_CARDS = [
+  { id: 'double-cash', label: 'Citi Double Cash', group: 'Citi' },
+  { id: 'custom-cash', label: 'Citi Custom Cash', group: 'Citi' },
+  { id: 'bce', label: 'Blue Cash Everyday', group: 'American Express' },
+  { id: 'bcp', label: 'Blue Cash Preferred', group: 'American Express' },
+  { id: 'quicksilver', label: 'Quicksilver', group: 'Capital One' },
+];
+
+function ComboboxDemo() {
+  const [picked, setPicked] = useState<string[]>([]);
+  return (
+    <div>
+      <Field label="Add a card" helperText="Type part of a card or bank name.">
+        {(control) => (
+          <Combobox
+            {...control}
+            listLabel="Matching cards"
+            emptyText="No cards match"
+            options={GALLERY_CARDS.filter((card) => !picked.includes(card.id))}
+            onSelect={(id) => setPicked((current) => [...current, id])}
+          />
+        )}
+      </Field>
+      <p>Added: {picked.map((id) => GALLERY_CARDS.find((c) => c.id === id)?.label).join(', ') || 'none'}</p>
+    </div>
   );
 }
 

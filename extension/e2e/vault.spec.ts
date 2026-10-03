@@ -3,6 +3,7 @@ import { closeOnboarding } from './onboarding';
 import { resolve } from 'node:path';
 import { deleteVault, protectVault, startPopup, unlockVault, TEST_PASSPHRASE } from './vault';
 import { emptyState } from '../src/state/contracts';
+import { addCard } from './wallet';
 
 test('optional protection: plain by default, protect, cross-window lock, wrong phrase, turn off and reset', async ({
   browserName,
@@ -45,7 +46,7 @@ test('optional protection: plain by default, protect, cross-window lock, wrong p
     await startPopup(page);
     expect(await page.evaluate(() => chrome.storage.local.get(null))).toEqual({});
     await capture('setup');
-    await page.getByRole('checkbox', { name: 'Capital One Quicksilver', exact: true }).check();
+    await addCard(page, 'Capital One Quicksilver');
     await page.getByRole('button', { name: 'Save cards' }).click();
     await page.getByLabel('Purchase amount (USD)').fill('123.45');
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();

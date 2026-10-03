@@ -19,8 +19,10 @@ import {
   TextInput,
 } from '@ai-checkout/ui';
 import PopupHeader from '../components/PopupHeader';
+import { PAYMENT_LABELS } from '../components/estimates';
+import { unvaluedPrograms } from '../components/wallet-options';
 import { catalogMerchantIds, formatUsd, parseUsd, usageInputs } from '../domain';
-import type { Eligibility, PaymentPath, Wallet } from '../domain';
+import type { Eligibility, PaymentPathV3, Wallet } from '../domain';
 import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
 import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY } from '../state/keys';
@@ -52,7 +54,7 @@ export default function Popup({
   const [merchantId, setMerchantId] = useState<string>('best-buy-us');
   const [eligible, setEligible] = useState(false);
   const [onlineRetail, setOnlineRetail] = useState<Eligibility>('unknown');
-  const [paymentPath, setPaymentPath] = useState<PaymentPath>('card');
+  const [paymentPath, setPaymentPath] = useState<PaymentPathV3>('card');
   const [dirty, setDirty] = useState(false);
   const [cartId, setCartId] = useState<string | null>(null);
   const resultAnchor = useRef<HTMLDivElement>(null);
@@ -330,6 +332,7 @@ export default function Popup({
     }
   }
   const cart = cartId ? view?.state.cart : null;
+  const unvalued = view ? unvaluedPrograms(view.catalog, view.state.wallet) : [];
   const ownedNames = (view?.state.wallet.cards ?? [])
     .map((c) => catalog?.cards.find((p) => p.id === c.cardId)?.shortName ?? 'Unavailable card')
     .join(' · ');
@@ -401,6 +404,13 @@ export default function Popup({
                       </Button>
                     </div>
                     <p>{ownedNames || 'No cards selected.'}</p>
+                    {unvalued.length > 0 && (
+                      <p className="supporting">
+                        No published value for {unvalued.map((p) => p.name).join(', ')}. Those cards show
+                        points or miles only and are listed last until you set a value under Point values in
+                        Edit cards.
+                      </p>
+                    )}
                     {limitNotes.map((note) => (
                       <p key={note.key} className="supporting">
                         {note.text}
@@ -524,7 +534,7 @@ export default function Popup({
                       <Field
                         id="payment-path"
                         label="How you will pay"
-                        helperText="Paying through PayPal, a digital wallet or buy now, pay later can change which bonuses apply."
+                        helperText={`Paying through PayPal${view.catalog.schemaVersion === 3 ? ', Venmo' : ''}, a digital wallet or buy now, pay later can change which bonuses apply.`}
                       >
                         {(control) => (
                           <Select
@@ -532,14 +542,17 @@ export default function Popup({
                             value={paymentPath}
                             disabled={busy}
                             onChange={(e) => {
-                              setPaymentPath(e.target.value as PaymentPath);
+                              setPaymentPath(e.target.value as PaymentPathV3);
                               setDirty(true);
                             }}
                           >
-                            <option value="card">Card entered at checkout</option>
-                            <option value="paypal">PayPal or another payment account</option>
-                            <option value="digital-wallet">Digital wallet (Apple Pay, Google Pay)</option>
-                            <option value="bnpl">Buy now, pay later (Affirm, Klarna)</option>
+                            {Object.entries(PAYMENT_LABELS)
+                              .filter(([value]) => value !== 'venmo' || view.catalog.schemaVersion === 3)
+                              .map(([value, label]) => (
+                                <option key={value} value={value}>
+                                  {label}
+                                </option>
+                              ))}
                           </Select>
                         )}
                       </Field>

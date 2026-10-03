@@ -71,9 +71,7 @@ test('the inspected upload ZIP installs and completes a native comparison', asyn
     const popup = await openNativePopup(context, merchant, id);
     await startNativePopup(popup);
     writeFileSync(testInfo.outputPath('zip-setup.png'), await popup.screenshot());
-    await popup.evaluate(
-      "document.querySelectorAll('[aria-labelledby=wallet-heading] fieldset input[type=checkbox]').forEach(box => box.click())",
-    );
+    await popup.addCards(CATALOG_V2.cards.map((card) => card.name));
     await expect.poll(popup.text).toContain('online retail spend in');
     await popup.fill('spend-bce-online-retail', '0');
     await popup.click('Save cards');

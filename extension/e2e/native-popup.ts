@@ -98,6 +98,24 @@ export async function openNativePopup(context: BrowserContext, merchant: Page, e
         `(() => { const input = document.getElementById(${JSON.stringify(id)}); if (!input) throw Error('Input not found'); Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, ${JSON.stringify(value)}); input.dispatchEvent(new Event('input', { bubbles: true })); })()`,
       );
     },
+    /** Adds cards in the wallet editor through its search field, picking each from the matches. */
+    addCards: async (names: string[]) => {
+      for (const name of names) {
+        await evaluate(
+          `(() => { const input = document.getElementById('add-card'); Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, ${JSON.stringify(name)}); input.dispatchEvent(new Event('input', { bubbles: true })); })()`,
+        );
+        await expect
+          .poll(() =>
+            evaluate<boolean>(
+              `[...document.querySelectorAll('[role=option]')].some(o => o.textContent === ${JSON.stringify(name)})`,
+            ),
+          )
+          .toBe(true);
+        await evaluate(
+          `[...document.querySelectorAll('[role=option]')].find(o => o.textContent === ${JSON.stringify(name)}).click()`,
+        );
+      }
+    },
     close: async () => {
       await cdp.send('Target.closeTarget', { targetId });
       // A close request can finish before Chrome destroys the native popup target.

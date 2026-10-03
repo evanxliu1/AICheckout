@@ -1,5 +1,5 @@
 import { needsActivation } from './engine-v2.ts';
-import { baseRuleV3, capHolder, ruleCoversMerchant } from './engine-v3.ts';
+import { baseRuleV3, capHolder, enrolledByChoice, ruleCoversMerchant } from './engine-v3.ts';
 import type {
   Catalog,
   CardProductV2,
@@ -116,7 +116,8 @@ function usageInputsV3(catalog: CatalogV3, cardId: string): UsageInput[] {
     const group =
       rule.sharedCapId === null ? [rule] : card.rules.filter((r) => r.sharedCapId === rule.sharedCapId);
     const needsSpend = rule.cap.kind === 'spend' && capHolder(card, rule) === rule && group.some(covers);
-    const needsActivation = activation(rule) && covers(rule);
+    // A category the shopper chooses is its own enrollment (`enrolledByChoice`): asked once, as the choice.
+    const needsActivation = activation(rule) && !enrolledByChoice(card, rule) && covers(rule);
     if (!needsSpend && !needsActivation) return [];
     const labels = [...new Set(group.filter(covers).map((r) => ruleLabelV3(catalog, r)))];
     return [

@@ -72,7 +72,8 @@ export function autoPurchase(
     purchasedOn: localDate(now),
     eligiblePurchase: 'eligible',
     onlineRetail: profile ? (profile.onlineRetail ? 'eligible' : 'ineligible') : 'unknown',
-    paymentPath,
+    // Venmo exists only in catalog v3 terms; older terms compare a card payment.
+    paymentPath: paymentPath === 'venmo' && catalog.schemaVersion !== 3 ? 'card' : paymentPath,
   };
 }
 
@@ -280,7 +281,7 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
       amountKind: entry.reading?.kind ?? null,
       amountCents,
       amountEdited: entry.amountOverrideCents !== null,
-      paymentPath: entry.paymentPath,
+      paymentPath: purchase.paymentPath,
       result,
       catalog: badgeCatalog(catalog, state.wallet, entry.merchantId),
       wallet: state.wallet,

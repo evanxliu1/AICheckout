@@ -464,6 +464,57 @@
   background-image: var(--token-form-select-background-image-data-url-disabled);
 }
 
+/* Combobox: a text input over an in-flow list of matches (no overlay, so nothing is clipped in a
+ * scrolling popup). The active option uses the action surface; the list scrolls past 240px. */
+.ac-combobox__listbox {
+  box-sizing: border-box;
+  max-height: 240px;
+  margin-top: 4px;
+  padding: 4px 0;
+  overflow-y: auto;
+  background: var(--token-color-surface-primary);
+  border: 1px solid var(--token-color-border-primary);
+  border-radius: var(--token-border-radius-medium);
+  box-shadow: var(--token-elevation-mid-box-shadow);
+}
+
+.ac-combobox__listbox[hidden] {
+  display: none;
+}
+
+.ac-combobox__group + .ac-combobox__group {
+  border-top: 1px solid var(--token-color-border-faint);
+}
+
+.ac-combobox__group-label {
+  padding: 6px 12px 2px;
+  color: var(--token-color-foreground-faint);
+  font-size: var(--token-typography-body-100-font-size);
+  font-weight: var(--token-typography-font-weight-semibold);
+  line-height: var(--token-typography-body-100-line-height);
+}
+
+.ac-combobox__option {
+  padding: 6px 12px;
+  color: var(--token-color-foreground-primary);
+  font-size: var(--token-typography-body-200-font-size);
+  line-height: var(--token-typography-body-200-line-height);
+  cursor: pointer;
+}
+
+.ac-combobox__option--active {
+  color: var(--token-color-foreground-strong);
+  background: var(--token-color-surface-action);
+  box-shadow: inset 2px 0 0 var(--token-color-border-action);
+}
+
+.ac-combobox__empty {
+  margin-top: 4px;
+  color: var(--token-color-foreground-faint);
+  font-size: var(--token-typography-body-100-font-size);
+  line-height: var(--token-typography-body-100-line-height);
+}
+
 /* Checkbox, radio, toggle: control on the left, label, helper, and error in the second column. */
 .ac-form-choice {
   display: grid;

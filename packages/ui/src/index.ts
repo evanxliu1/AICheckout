@@ -5,6 +5,8 @@ export { ApplicationState, type ApplicationStateProps } from './ApplicationState
 export { Badge, type BadgeColor, type BadgeProps } from './Badge';
 export { Button, type ButtonColor, type ButtonProps, type ButtonSize } from './Button';
 export { Card, type CardLevel, type CardProps } from './Card';
+export { Combobox, type ComboboxOption, type ComboboxProps } from './Combobox';
+export { matchesSearch, normalizeSearch } from './search';
 export { Disclosure, type DisclosureProps } from './Disclosure';
 export {
   Checkbox,
