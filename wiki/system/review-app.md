@@ -6,7 +6,7 @@ status: stable
 tags: [system, review, react, maintainer]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:00:00Z
+  at: 2026-10-03T03:40:00Z
 sources:
   - resource: ../../apps/review/src/client.ts
     title: API and Auth client
@@ -47,6 +47,7 @@ Verified 2026-10-02 on branch `s2-m8-review-large-catalog` (Stage 2 M8): `npm te
 | Source body | ≤ 250,000 chars per capture (`MAX_SOURCE_BODY_CHARS`); a draft cites ≤ 600 (`MAX_DRAFT_SOURCES`) | `@ai-checkout/catalog-review` |
 | Large-catalog thresholds | > 40 changed fields: grouped by card and section with a search; > 12 sources: source search; > 30 missing sources: files or folder only, no paste field each | `ChangesTable.tsx`, `DraftPanel.tsx` |
 | CSP | `script-src 'self'; style-src 'self'`, `connect-src 'self' <supabase>`; Zod JIT disabled first thing ([`zod-config.ts`](../../apps/review/src/zod-config.ts)) because the CSP forbids eval | [API](api.md#security-headers) |
+| Look | Ocean theme from `@ai-checkout/ui` (since the `ui-ocean-theme` merge, 2026-10-03): navy header with the sky cart icon and white Bricolage name, Bricolage headings, the current queue draft white with a 3 px navy bar; fonts bundled same-origin, so the CSP is unchanged ([decision](../decisions/2026-10-02-ocean-theme.md), [UI library](ui-library.md)) | [`styles.css`](../../apps/review/src/styles.css), `DESIGN.md` |
 | Build size note | README records ~552 kB script before compression; Vite's chunk warning is expected | README |
 
 ## How it works

@@ -1,6 +1,7 @@
-/* Popup layout. Components and tokens come from @ai-checkout/ui/styles.css (Helios). */
-/* Tailwind 4, layout utilities only. Its design scales are replaced (not extended) by Helios
- * tokens, so any color, type, radius or shadow utility resolves to a --token-* variable. No
+/* Popup layout. Components and tokens come from @ai-checkout/ui/styles.css (Helios specs, Ocean
+ * theme values from packages/ui/src/theme.css). */
+/* Tailwind 4, layout utilities only. Its design scales are replaced (not extended) by the theme's
+ * tokens, so any color, type, radius or shadow utility resolves to a --token-* or --ac-* variable. No
  * preflight: components bring their own resets. Utilities stay unlayered, as in Tailwind 3. */
 @import 'tailwindcss/theme.css' layer(theme);
 @tailwind utilities source(none);
@@ -22,10 +23,18 @@
   --color-success: var(--token-color-foreground-success-on-surface);
   --color-border: var(--token-color-border-primary);
   --color-border-faint: var(--token-color-border-faint);
+  /* Ocean brand colours; sky and the on-navy colours are for use on navy only. */
+  --color-navy: var(--ac-color-navy);
+  --color-navy-strong: var(--ac-color-navy-strong);
+  --color-navy-line: var(--ac-color-navy-line);
+  --color-sky: var(--ac-color-sky);
+  --color-on-navy: var(--ac-color-on-navy);
+  --color-on-navy-soft: var(--ac-color-on-navy-soft);
 
   --font-*: initial;
   --font-sans: var(--token-typography-font-stack-text);
   --font-mono: var(--token-typography-font-stack-code);
+  --font-display: var(--ac-font-display);
   --font-weight-normal: var(--token-typography-font-weight-regular);
   --font-weight-medium: var(--token-typography-font-weight-medium);
   --font-weight-semibold: var(--token-typography-font-weight-semibold);
@@ -48,6 +57,7 @@
   --radius-none: 0;
   --radius-sm: var(--token-border-radius-small);
   --radius-lg: var(--token-border-radius-large);
+  --radius-hero: var(--ac-radius-hero);
 
   --shadow-*: initial;
   --shadow-none: none;
@@ -104,17 +114,25 @@ body {
   height: 24px;
 }
 
+.popup-header .ac-icon,
+.onboarding__header .ac-icon {
+  color: var(--ac-color-navy);
+}
+
 .popup-title {
-  color: var(--token-color-foreground-strong);
+  color: var(--ac-color-navy);
+  font-family: var(--ac-font-display);
   font-size: var(--token-typography-display-300-font-size);
-  font-weight: var(--token-typography-font-weight-semibold);
+  font-weight: 800;
+  letter-spacing: -0.01em;
   line-height: var(--token-typography-display-300-line-height);
 }
 
 .section-title {
   color: var(--token-color-foreground-strong);
+  font-family: var(--ac-font-display);
   font-size: var(--token-typography-display-200-font-size);
-  font-weight: var(--token-typography-font-weight-semibold);
+  font-weight: var(--token-typography-font-weight-bold);
   line-height: var(--token-typography-display-200-line-height);
 }
 
@@ -124,8 +142,9 @@ body {
 
 .subsection-title {
   color: var(--token-color-foreground-strong);
+  font-family: var(--ac-font-display);
   font-size: var(--token-typography-body-200-font-size);
-  font-weight: var(--token-typography-font-weight-semibold);
+  font-weight: var(--token-typography-font-weight-bold);
   line-height: var(--token-typography-body-200-line-height);
 }
 
@@ -146,6 +165,11 @@ body {
 }
 .wallet-list__item + .wallet-list__item {
   border-top: 1px solid var(--token-color-border-faint);
+}
+/* The card's name above its issuer. */
+.wallet-list__item > div > p:first-child {
+  color: var(--token-color-foreground-strong);
+  font-weight: var(--token-typography-font-weight-semibold);
 }
 
 /* A point value field with its reset action beside it. */
@@ -170,10 +194,32 @@ body {
 
 .estimate-amount {
   color: var(--token-color-foreground-strong);
+  font-family: var(--ac-font-display);
   font-size: var(--token-typography-display-200-font-size);
-  font-weight: var(--token-typography-font-weight-semibold);
+  font-weight: var(--token-typography-font-weight-bold);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+/* Card name and amount on one baseline; a wide amount (a range in units, or a difference beside
+ * it) moves under the name, right-aligned, instead of overflowing at 360 px. */
+.estimate-head {
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+.estimate-head > h3 {
+  flex: 1 1 8rem;
+}
+.estimate-head > .estimate-amount {
+  margin-left: auto;
+}
+
+.estimate-delta {
+  margin-right: 8px;
+  color: var(--token-color-foreground-faint);
+  font-family: var(--token-typography-font-stack-text);
+  font-size: var(--token-typography-body-100-font-size);
+  font-weight: var(--token-typography-font-weight-medium);
 }
 
 .estimate-list {
@@ -184,6 +230,67 @@ body {
 
 .estimate-list > li + li {
   border-top: 1px solid var(--token-color-border-faint);
+}
+
+/* The clear winner: a navy block with the amount as the largest thing in the popup. Text on navy
+ * is white, the sky accent or the soft on-navy text (all above 7:1); badges inside keep their own
+ * surfaces (the neutral one is navy-line with white text, 9.8:1). */
+.estimate-row--best {
+  padding: 16px;
+  color: var(--ac-color-on-navy-soft);
+  background: var(--ac-color-navy);
+  border-radius: var(--ac-radius-hero);
+}
+.estimate-list > .estimate-row--best + li {
+  margin-top: 4px;
+  border-top: 0;
+}
+.estimate-row--best .section-title,
+.estimate-row--best .estimate-amount {
+  color: var(--ac-color-on-navy);
+}
+.estimate-row--best .supporting {
+  color: var(--ac-color-on-navy-soft);
+}
+.estimate-amount--hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 8px;
+  row-gap: 4px;
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: normal;
+}
+/* Ranges ("$12.34–$56.78"), "Up to $x" and amounts in units are longer: a smaller size keeps
+ * typical ones on one line at 360 px; the largest wrap after the dash instead of overflowing. */
+.estimate-amount--range {
+  font-size: 1.75rem;
+}
+.estimate-amount--hero > span {
+  overflow-wrap: anywhere;
+}
+.estimate-rate {
+  color: var(--ac-color-sky);
+  font-size: 1.25rem;
+  letter-spacing: 0;
+}
+.estimate-row--best .ac-badge--neutral-filled {
+  color: var(--ac-color-on-navy);
+  background: var(--ac-color-navy-line);
+}
+.estimate-row--best .ac-disclosure {
+  border-color: var(--ac-color-navy-line);
+}
+.estimate-row--best .ac-disclosure__summary,
+.estimate-row--best .ac-disclosure__icon,
+.estimate-row--best .ac-disclosure__content {
+  color: var(--ac-color-on-navy);
+}
+.estimate-row--best .ac-disclosure__summary:hover {
+  background-color: var(--ac-color-navy-strong);
 }
 
 .plain-list {

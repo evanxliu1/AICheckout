@@ -6,7 +6,7 @@ status: stable
 tags: [product, directives, memory]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T20:30:00Z
+  at: 2026-10-02T23:05:00Z
 ---
 
 # User directives
@@ -15,6 +15,7 @@ Standing instructions from the owner, newest first. A directive stays in force u
 
 | Date | Directive | Scope | Source |
 | --- | --- | --- | --- |
+| 2026-10-02 | Use the Ocean theme (Mint layout: navy hero, pale sky page, sky accent; Bricolage Grotesque and Figtree) on the popup, badge, review app and site. Helios is not fixed; the best-looking UI wins. | Frontend | [Decision](../decisions/2026-10-02-ocean-theme.md), chat 2026-10-02 |
 | 2026-10-02 | Card expansion runs from a natural-language request to the coding agent ("expand to issuer X, these cards") through the whole pipeline up to publish; publishing stays Evan's click. Shape: deterministic CLI in `tools/catalog-pipeline`, `expand-catalog` skill, researcher/verifier/adjudicator subagents; product code never imports `tools/`. A merchant-expansion pipeline follows the same pattern. | Catalog pipeline | [Design draft](../system/card-expansion-pipeline.md), [decision (proposed)](../decisions/2026-10-02-agent-driven-card-pipeline.md) |
 | 2026-10-02 | Finish Phase 7 Stage 2 completely: the expansion corpus becomes a published catalog the extension ranks correctly, docs current, ready for the card-expansion pipeline. Then a card-expansion pipeline (CLI, skill, subagents), then a merchant-expansion pipeline, then the Web Store release and terms-change detection. | Roadmap | [Stage 2 plan](phase-7-stage-2.md), chat 2026-10-02 |
 | 2026-10-02 | Value points with published cents-per-point estimates per rewards program, labelled as estimates with source and date; the shopper can override per program; issuer-stated cash values take precedence over estimates; rank by cash-equivalent value. | Catalog, engine, extension | [Decision](../decisions/2026-10-02-points-valuation-published-estimates.md) |
@@ -38,4 +39,4 @@ Standing instructions from the owner, newest first. A directive stays in force u
 | 2026-09-28 | Live model calls only through the Codex / Claude Code subscription CLIs, locally; no paid API calls; never on Render. | LLM | [Decision](../decisions/2026-09-28-subscription-cli-providers-local-only.md) |
 | 2026-09-28 | The agent never signs in to hosted services, never types API keys or passwords (Evan pastes secrets), never creates accounts, never permanently deletes data, never places orders on retailer sites. | All agents | [Archived plan](../archive/phase2-goal.md) |
 | 2026-09-28 | Prioritize measurable LLM results; add product schema only where the product needs it; no hedge-heavy agent-log docs. | Scope, docs | [Archived plan](../archive/phase2-goal.md) |
-| 2026-09-28 | Use Helios via tokens and our own components; no HashiCorp logos or branding, no implied affiliation. | Frontend | [Decision](../decisions/2026-09-28-helios-design-system.md) |
+| 2026-09-28 | Use Helios via tokens and our own components; no HashiCorp logos or branding, no implied affiliation. Look replaced by the Ocean theme on 2026-10-02. | Frontend | [Decision](../decisions/2026-09-28-helios-design-system.md) |

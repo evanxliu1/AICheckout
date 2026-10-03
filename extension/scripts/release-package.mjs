@@ -58,7 +58,8 @@ const runtime = (path) =>
     'src/badge/content.js',
     ...PAGES,
   ].includes(path) ||
-  /^assets\/[a-zA-Z0-9_.-]+\.(js|css)$/.test(path) ||
+  // Self-hosted theme fonts (packages/ui/src/theme.css) are bundled as woff2 assets.
+  /^assets\/[a-zA-Z0-9_.-]+\.(js|css|woff2)$/.test(path) ||
   /^public\/icons\/icon(16|48|128)\.png$/.test(path);
 
 function collect(directory, prefix = '') {

@@ -73,6 +73,6 @@ python3 scripts/lint_wiki.py      # wiki conformance and links
 
 - **TypeScript:** strict, ESM, Zod for every contract; integer cents and basis points, never floats for money. Packages are consumed as TS source. Node scripts in `scripts/` use type stripping, so import `.ts` with explicit extensions and avoid parameter properties.
 - **Tests:** vitest next to each workspace's `tests/`; Playwright in `e2e/` with role/label selectors and axe checks; SQL tests under `supabase/`.
-- **UI:** `packages/ui` components on Helios tokens only; CSP `style-src 'self'` (no inline styles, no remote fonts).
+- **UI:** `packages/ui` components on the Ocean theme tokens (`packages/ui/src/theme.css`) only; CSP `style-src 'self'` (no inline styles, no remote fonts; Figtree and Bricolage Grotesque are bundled).
 - **Branches and PRs:** one branch and one PR per milestone, cut from the latest `main`; both GitHub workflows must pass. Render deploys `main` on merge.
 - **Documentation:** development facts go into the wiki page that owns the concept, not a new markdown file. Root markdown is limited to `README.md`, `SECURITY.md`, `AGENTS.md` (and the local `CLAUDE.md`). Package READMEs stay as package entry points and the wiki links to them. Superseded development docs go to `wiki/archive/` via the archive policy; nothing is deleted.

@@ -1,7 +1,7 @@
 /*
- * Public site layout on Helios tokens. Components (alerts, badges, cards, links, tables) come from
- * @ai-checkout/ui/styles.css. Every color, type size, radius and shadow is a --token-* variable;
- * the only raw values are layout measurements.
+ * Public site layout on the Ocean theme. Components (alerts, badges, cards, links, tables) come
+ * from @ai-checkout/ui/styles.css. Every color, type size, radius and shadow is a --token-* or
+ * --ac-* variable; the only raw values are layout measurements.
  */
 @import '@ai-checkout/ui/styles.css';
 
@@ -24,6 +24,9 @@ h2,
 h3 {
   margin: 0;
   color: var(--token-color-foreground-strong);
+  font-family: var(--ac-font-display);
+  font-weight: var(--token-typography-font-weight-bold);
+  letter-spacing: -0.01em;
   overflow-wrap: anywhere;
 }
 h1 {
@@ -102,13 +105,15 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--token-color-foreground-strong);
+  color: var(--ac-color-navy);
+  font-family: var(--ac-font-display);
   font-size: var(--token-typography-display-300-font-size);
-  font-weight: var(--token-typography-font-weight-bold);
+  font-weight: 800;
+  letter-spacing: -0.01em;
   text-decoration: none;
 }
 .brand .ac-icon {
-  color: var(--token-color-foreground-action);
+  color: var(--ac-color-navy);
 }
 .brand:focus-visible,
 .site-nav__link:focus-visible {
@@ -178,12 +183,30 @@ img {
   margin-top: 12px;
 }
 
-/* Home */
+/* Home: a navy block with the page question, beside the install card. */
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 320px;
   align-items: start;
   gap: 32px 48px;
+  padding: 40px;
+  color: var(--ac-color-on-navy-soft);
+  background: var(--ac-color-navy);
+  border-radius: var(--ac-radius-hero);
+}
+.hero h1 {
+  color: var(--ac-color-on-navy);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.hero .eyebrow {
+  color: var(--ac-color-sky);
+}
+.hero .lead {
+  color: var(--ac-color-on-navy-soft);
+}
+.hero .install {
+  color: var(--token-color-foreground-primary);
 }
 .install {
   padding: 20px;
@@ -455,6 +478,7 @@ img {
 @media (max-width: 860px) {
   .hero {
     grid-template-columns: minmax(0, 1fr);
+    padding: 28px;
   }
 }
 @media (max-width: 760px) {
@@ -482,6 +506,9 @@ img {
   }
   .section {
     margin-top: 40px;
+  }
+  .hero {
+    padding: 20px;
   }
   .screens,
   .chart__row {

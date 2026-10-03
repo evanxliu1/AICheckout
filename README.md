@@ -79,4 +79,4 @@ MIT
 
 ## Credits
 
-`packages/ui` implements components to the specs of [Helios](https://helios.hashicorp.design), HashiCorp's design system, using its design tokens (`@hashicorp/design-system-tokens`) and [Flight icons](https://helios.hashicorp.design/icons/library) (`@hashicorp/flight-icons`), both MPL-2.0. AI Checkout is not affiliated with or endorsed by HashiCorp.
+`packages/ui` implements components to the specs of [Helios](https://helios.hashicorp.design), HashiCorp's design system, using its design tokens (`@hashicorp/design-system-tokens`) and [Flight icons](https://helios.hashicorp.design/icons/library) (`@hashicorp/flight-icons`), both MPL-2.0, restyled with AI Checkout's own Ocean theme. Fonts: Figtree and Bricolage Grotesque from Fontsource (`@fontsource-variable/*`), SIL Open Font License 1.1. AI Checkout is not affiliated with or endorsed by HashiCorp.

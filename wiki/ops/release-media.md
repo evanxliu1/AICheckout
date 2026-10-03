@@ -6,7 +6,7 @@ status: stable
 tags: [ops, release, media]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-02T23:05:00Z
 sources:
   - resource: ../../package.json
     title: release:media and release:portfolio scripts
@@ -34,3 +34,4 @@ Two npm scripts regenerate hash-pinned media under `docs/release/assets/`. Rerun
 
 * [Local setup](local-setup.md)
 * [Helios design system decision](../decisions/2026-09-28-helios-design-system.md)
+* [Ocean theme decision](../decisions/2026-10-02-ocean-theme.md): the committed release media predate it and the catalog v3 UI; after the merge rerun `release:media` (store screenshots, promo, shopper demo, and the site's `/media/*.png`, which `apps/site/vite.config.ts` copies from them) and `release:portfolio` (review app stills and video)

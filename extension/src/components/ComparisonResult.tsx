@@ -15,6 +15,7 @@ import {
   rankingNote,
   rateText,
   rewardText,
+  rowEmphasis,
   statusCopy,
   unavailableCopy,
   uncertaintyCopy,
@@ -33,15 +34,23 @@ const periodCopy: Record<string, string> = {
 const BASIS_COLORS = { estimate: 'neutral', 'issuer-stated': 'neutral', 'your value': 'highlight' } as const;
 
 /** One card's result: amount and what it is paid as, the rule behind it in the issuer's words, its
- * conditions, the rules that don't apply here, and notes about uncertain inputs. */
+ * conditions, the rules that don't apply here, and notes about uncertain inputs. `best` shows it as
+ * the clear winner (navy block, large amount and rate); `deltaCents` is how much less it earns than
+ * the winner, when both are exact dollar amounts ("est." when either rests on a published estimate). */
 export function EstimateRow({
   catalog,
   estimate,
   amountCents,
+  best = false,
+  deltaCents,
+  deltaEstimated = false,
 }: {
   catalog: Catalog;
   estimate: CardEstimate;
   amountCents: number;
+  best?: boolean;
+  deltaCents?: number;
+  deltaEstimated?: boolean;
 }) {
   const card = catalog.cards.find((c) => c.id === estimate.cardId)!;
   const rules: (RewardRuleV2 | RewardRuleV3)[] =
@@ -69,14 +78,47 @@ export function EstimateRow({
     return rule && why ? [{ rule, why }] : [];
   });
   const value = valueDetails(estimate, catalog);
+  // Exact when the amount shown first (dollars, or units for a program with no value) is one number.
+  const exact =
+    estimate.unitValue === null
+      ? (estimate.minRewardUnits ?? 0) === (estimate.maxRewardUnits ?? 0)
+      : estimate.minRewardCents === estimate.maxRewardCents;
   // The unvalued line already says why the card is in units.
   const uncertainties = estimate.uncertainties.filter((code) => code !== 'value-unknown');
   return (
-    <li className="py-3 space-y-2">
-      <div className="flex justify-between gap-4 items-baseline">
-        <h3 className="section-title">{card.shortName}</h3>
-        <span className="estimate-amount">{rewardText(estimate, catalog)}</span>
-      </div>
+    <li className={best ? 'estimate-row estimate-row--best space-y-2' : 'estimate-row py-3 space-y-2'}>
+      {best ? (
+        <>
+          <h3 className="section-title">{card.shortName}</h3>
+          <p
+            className={
+              exact && estimate.unitValue !== null
+                ? 'estimate-amount estimate-amount--hero'
+                : 'estimate-amount estimate-amount--hero estimate-amount--range'
+            }
+          >
+            <span>{rewardText(estimate, catalog)}</span>{' '}
+            {total > 0 && (
+              <span className="estimate-rate">
+                {/* The rate covers the whole amount only when the estimate is exact and fully at that rate. */}
+                {!exact || (bonus && estimate.maxBonusSpendCents < amountCents)
+                  ? `up to ${rate(total)}`
+                  : rate(total)}
+              </span>
+            )}
+          </p>
+        </>
+      ) : (
+        <div className="estimate-head flex justify-between gap-4 items-baseline">
+          <h3 className="section-title">{card.shortName}</h3>
+          <span className="estimate-amount">
+            {deltaCents ? (
+              <span className="estimate-delta">{`${deltaEstimated ? 'est. ' : ''}${money(deltaCents)} less`}</span>
+            ) : null}
+            <span>{rewardText(estimate, catalog)}</span>
+          </span>
+        </div>
+      )}
       {(value.lines.length > 0 || value.basis) && (
         <div className="estimate-value space-y-1">
           {value.basis && (
@@ -229,12 +271,13 @@ export default function ComparisonResult({
           <p className="supporting">Your preferred card breaks the tie: {preferred.shortName}.</p>
         )}
         <ul className="estimate-list">
-          {result.estimates.map((estimate) => (
+          {result.estimates.map((estimate, i) => (
             <EstimateRow
               key={estimate.cardId}
               catalog={catalog}
               estimate={estimate}
               amountCents={purchase?.amountCents ?? 0}
+              {...rowEmphasis(result, i)}
             />
           ))}
         </ul>

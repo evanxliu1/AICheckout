@@ -6,7 +6,7 @@ status: stable
 tags: [system, site, static]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T03:05:00Z
+  at: 2026-10-03T03:40:00Z
 sources:
   - resource: ../../apps/site/vite.config.ts
     title: Site build and copied files
@@ -26,7 +26,7 @@ sources:
 
 `apps/site` (`@ai-checkout/site`) is a Vite multi-page build with no client router. A build plugin loads [`src/render.tsx`](../../apps/site/src/render.tsx) through a Vite SSR server and renders each page to static HTML with React and `@ai-checkout/ui`; the only shipped script is [`src/enhance.ts`](../../apps/site/src/enhance.ts) (keyboard-scrollable wide tables). The build copies the committed evaluation results and four release screenshots into `dist/`, so the results page always matches `docs/evals/`. The API serves `dist/` at `/` when `SITE_DIST_DIR` is set ([API](api.md)).
 
-Verified 2026-10-03 on branch `s2-m10-docs-publish` (Stage 2 M10) by reading the code and running `npm test --workspace=@ai-checkout/site` (2 files, 10 tests, passing). Browser specs not run.
+Verified 2026-10-03 on branch `s2-m10-docs-publish` (Stage 2 M10) by reading the code and running `npm test --workspace=@ai-checkout/site` (2 files, 10 tests, passing). Browser specs not run. Re-verified 2026-10-03 on `ui-ocean-theme` after merging `main` (`f383964`): site unit tests (10) and the site browser spec (6 passed, axe incl. the navy hero).
 
 ## Facts
 
@@ -53,14 +53,14 @@ Verified 2026-10-03 on branch `s2-m10-docs-publish` (Stage 2 M10) by reading the
 
 1. `vite build` enumerates `PAGES` and calls `renderPage(id)` for each, producing `{head, body}` injected into the HTML shell ([`Layout.tsx`](../../apps/site/src/Layout.tsx)).
 2. [`results.ts`](../../apps/site/src/results.ts) reads the copied `results.json` and [`Chart.tsx`](../../apps/site/src/Chart.tsx) renders tables; the SVG charts are the committed files.
-3. Styles are Helios tokens only ([`site.css`](../../apps/site/src/site.css)).
+3. Styles use theme tokens only ([`site.css`](../../apps/site/src/site.css)); the home intro is a navy hero block with the install card beside it.
 
 ## Gotchas
 
 - Pages must not need inline style or script; the CSP blocks them and the browser test fails on any CSP violation.
 - The site can never answer `/v1`, `/review` or `/health` (see [API](api.md#gotchas)).
 - Updating eval numbers means regenerating `docs/evals/results.json` (`npm run eval:summarize`) and rebuilding the site; nothing is fetched at runtime.
-- TODO(after the Ocean theme): the screenshots (`media/1-wallet.png` still shows the seven-card setup) show the pre-M7 UI. Deferred on 2026-10-03 (M10 part 2) until the Ocean theme (branch `ui-ocean-theme`) lands, so the site and Web Store media are regenerated once, in the final look. The support page's getting-started steps describe the M7 card search and questions since the M7 merge (2026-10-03).
+- TODO(after the Ocean theme): the screenshots (`media/1-wallet.png` still shows the seven-card setup) show the pre-M7, pre-Ocean UI. Deferred on 2026-10-03 (M10 part 2) until the Ocean theme lands; branch `ui-ocean-theme` was merged with `main` on 2026-10-03 and waits for Evan's merge, after which the site and Web Store media are regenerated once, in the final look. The support page's getting-started steps describe the M7 card search and questions since the M7 merge (2026-10-03).
 - The privacy and support pages describe extension behaviour; when the extension changes (for example the [Cart badge](cart-badge.md)), these pages need a matching edit.
 
 ## Tests

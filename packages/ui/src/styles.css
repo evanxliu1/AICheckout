@@ -1,19 +1,21 @@
 /*
  * AI Checkout UI: component styles built to the Helios specs (https://helios.hashicorp.design).
- * Import once per app. Every value comes from a Helios `--token-*` variable, except:
+ * Import once per app. Colours, type and radii come from `--token-*` variables, whose values are
+ * set by the AI Checkout Ocean theme (theme.css, loaded after the Helios token file), except:
  *  - layout measurements Helios does not tokenize (gaps, paddings, button/modal sizes) are
  *    written in px to match the Helios component CSS;
  *  - the modal overlay uses `--token-color-palette-neutral-700` at 50% opacity (as Helios does);
  *  - outlined highlight/success/warning/critical badges use the `-filled` foreground token for
  *    text (the `-outlined` token stays on the border): the `-outlined` text colors are below
  *    4.5:1 on light surfaces and fail WCAG 1.4.3.
- * No raw hex colors.
+ * No raw hex colors outside theme.css.
  */
 @import '@hashicorp/design-system-tokens/dist/products/css/tokens.css';
 @import '@hashicorp/design-system-tokens/dist/products/css/helpers/color.css';
 @import '@hashicorp/design-system-tokens/dist/products/css/helpers/elevation.css';
 @import '@hashicorp/design-system-tokens/dist/products/css/helpers/focus-ring.css';
 @import '@hashicorp/design-system-tokens/dist/products/css/helpers/typography.css';
+@import './theme.css';
 
 /* ---------- Shared ---------- */
 
@@ -505,7 +507,8 @@
 .ac-combobox__option--active {
   color: var(--token-color-foreground-strong);
   background: var(--token-color-surface-action);
-  box-shadow: inset 2px 0 0 var(--token-color-border-action);
+  /* Ocean: the navy bar of the review queue's current draft, 3:1 or more on the action surface. */
+  box-shadow: inset 3px 0 0 var(--ac-color-navy);
 }
 
 .ac-combobox__empty {

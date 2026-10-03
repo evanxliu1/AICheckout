@@ -1,0 +1,117 @@
+/*
+ * AI Checkout "Ocean" theme. Loaded by styles.css after the Helios token file and replaces the
+ * Helios values with the AI Checkout palette, so every component and app that reads `--token-*`
+ * picks it up. Brand-only values that Helios has no token for are `--ac-*` below.
+ *
+ * Contrast rules (WCAG 2.1 AA): the sky accent (#7cc4ff) only sits on navy; on white, links,
+ * focus and selected states use action blue (#1d5fb4, 6.3:1). Muted text (#5a6b82) is 5.4:1 on
+ * white and 4.9:1 on the page tint. Form-control borders use it too, for 3:1 on every surface.
+ *
+ * Fonts are self-hosted from @fontsource-variable (SIL OFL 1.1): Figtree for text, Bricolage
+ * Grotesque for display. They load from the app's own origin, so `style-src 'self'` and
+ * `default-src 'self'` CSPs need no change.
+ */
+@import '@fontsource-variable/figtree';
+@import '@fontsource-variable/bricolage-grotesque';
+
+:root {
+  /* Brand */
+  --ac-color-navy: #0c2a4d;
+  --ac-color-navy-strong: #081f3a;
+  --ac-color-sky: #7cc4ff;
+  --ac-color-on-navy: #ffffff;
+  --ac-color-on-navy-soft: #a9c6ea;
+  --ac-color-navy-line: #1d4573;
+  --ac-font-display:
+    'Bricolage Grotesque Variable', 'Figtree Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Helvetica, Arial, sans-serif;
+  --ac-radius-hero: 18px;
+
+  /* Typography */
+  --token-typography-font-stack-text:
+    'Figtree Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --token-typography-font-stack-display: var(--ac-font-display);
+
+  /* Radius: rounder than Helios */
+  --token-border-radius-x-small: 4px;
+  --token-border-radius-small: 8px;
+  --token-border-radius-medium: 12px;
+  --token-border-radius-large: 16px;
+  --token-form-control-border-radius: 8px;
+
+  /* Palette used directly by components (primary button, badge pill, charts, overlay) */
+  --token-color-palette-blue-500: #081f3a;
+  --token-color-palette-blue-400: #071a33;
+  --token-color-palette-blue-300: #0a2342;
+  --token-color-palette-blue-200: #0c2a4d;
+  --token-color-palette-blue-100: #d6e6f8;
+  --token-color-palette-blue-50: #eef4fb;
+  --token-color-palette-neutral-700: #0f1b2b;
+  --token-color-palette-neutral-600: #2a3a52;
+  --token-color-palette-neutral-500: #5a6b82;
+  --token-color-palette-neutral-400: #8193ab;
+  --token-color-palette-neutral-300: #bccadb;
+  --token-color-palette-neutral-200: #dde7f3;
+  --token-color-palette-neutral-100: #eaf1f9;
+  --token-color-palette-neutral-50: #f6f9fd;
+
+  /* Text */
+  --token-color-foreground-strong: #0f1b2b;
+  --token-color-foreground-primary: #2a3a52;
+  --token-color-foreground-faint: #5a6b82;
+  --token-color-foreground-disabled: #8193ab;
+  --token-color-foreground-action: #1d5fb4;
+  --token-color-foreground-action-hover: #174f97;
+  --token-color-foreground-action-active: #123f7a;
+  --token-color-foreground-highlight: #1d5fb4;
+  --token-color-foreground-highlight-on-surface: #174f97;
+  --token-color-foreground-highlight-high-contrast: #0c2a4d;
+
+  /* Surfaces */
+  --token-color-page-faint: #eef4fb;
+  --token-color-surface-faint: #f6f9fd;
+  --token-color-surface-strong: #eaf1f9;
+  --token-color-surface-interactive-hover: #eaf1f9;
+  --token-color-surface-interactive-active: #dde7f3;
+  --token-color-surface-interactive-disabled: #f6f9fd;
+  --token-color-surface-action: #e6f0fb;
+  --token-color-surface-highlight: #eaf3fd;
+
+  /* Borders */
+  --token-color-border-primary: #5a6b8233;
+  --token-color-border-faint: #5a6b821a;
+  --token-color-border-strong: #2a3a5266;
+  --token-color-border-action: #b9d3f0;
+  --token-color-border-highlight: #c6dcf3;
+
+  /* Focus: 1px action blue inside a 3:1 outer ring */
+  --token-color-focus-action-internal: #1d5fb4;
+  --token-color-focus-action-external: #4a8ad6;
+  --token-focus-ring-action-box-shadow: inset 0 0 0 1px #1d5fb4, 0 0 0 3px #4a8ad6;
+
+  /* Elevation, tinted navy */
+  --token-elevation-low-box-shadow: 0 1px 1px 0 #0c2a4d0d, 0 2px 2px 0 #0c2a4d0d;
+  --token-elevation-mid-box-shadow: 0 2px 3px 0 #0c2a4d1a, 0 8px 16px -10px #0c2a4d33;
+  --token-elevation-high-box-shadow: 0 2px 3px 0 #0c2a4d26, 0 16px 24px -12px #0c2a4d4d;
+  --token-elevation-overlay-box-shadow: 0 2px 3px 0 #0c2a4d40, 0 14px 28px 0 #0c2a4d59;
+
+  /* Form controls: navy when checked, borders above 3:1 on white and the page tint */
+  --token-form-control-base-border-color-default: #5a6b82;
+  --token-form-control-base-border-color-hover: #2a3a52;
+  --token-form-control-checked-surface-color-default: #0c2a4d;
+  --token-form-control-checked-surface-color-hover: #0a2342;
+  --token-form-control-checked-border-color-default: #0a2342;
+  --token-form-control-checked-border-color-hover: #071a33;
+  --token-form-toggle-base-surface-color-default: #eaf1f9;
+
+  /* Badges: neutral and highlight follow the palette */
+  --token-badge-foreground-color-neutral-filled: #2a3a52;
+  --token-badge-surface-color-neutral-filled: #dde7f3;
+  --token-badge-surface-color-neutral-inverted: #5a6b82;
+  --token-badge-foreground-color-neutral-outlined: #2a3a52;
+  --token-badge-foreground-color-highlight-filled: #0c2a4d;
+  --token-badge-foreground-color-highlight-outlined: #1d5fb4;
+  --token-badge-surface-color-highlight-filled: #d6e6f8;
+  --token-badge-surface-color-highlight-inverted: #1d5fb4;
+}

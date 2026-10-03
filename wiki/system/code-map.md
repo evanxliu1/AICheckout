@@ -6,7 +6,7 @@ status: stable
 tags: [system, code-map]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-02T23:05:00Z
 sources:
   - resource: ../../package.json
     title: Root workspaces and scripts
@@ -30,7 +30,7 @@ One npm workspace repo (`extension`, `packages/*`, `apps/*`), Node 24, TypeScrip
 | [`packages/rewards-core/`](../../packages/rewards-core) | `@ai-checkout/rewards-core` | Catalog schemas v1/v2, engine, money math, bundled catalogs, parity cases | [`src/index.ts`](../../packages/rewards-core/src/index.ts), `./money` subpath | No own runner; covered by `extension/tests/rewards*.test.ts`, `catalog-schema.test.ts`, `scripts/test-catalog-parity.mjs` | [Rewards engine](rewards-engine.md) |
 | [`packages/catalog-client/`](../../packages/catalog-client) | `@ai-checkout/catalog-client` | `createCatalogFetcher`, `readBoundedJson` (size-capped JSON read) | [`src/index.ts`](../../packages/catalog-client/src/index.ts) | `extension/tests/catalog-refresh.test.ts`, `apps/api/tests/catalog.test.ts` | [Extension](extension.md#catalog-refresh) |
 | [`packages/catalog-review/`](../../packages/catalog-review) | `@ai-checkout/catalog-review` | Browser-safe Zod contracts: review RPC input/output, `MAX_SOURCE_BODY_CHARS`, extraction v1 schema, trace, `limitsSchema` | [`src/index.ts`](../../packages/catalog-review/src/index.ts), [`src/curation.ts`](../../packages/catalog-review/src/curation.ts) | Through API and review tests | [API](api.md), [Curation harness](curation-harness.md) |
-| [`packages/ui/`](../../packages/ui) | `@ai-checkout/ui` | Helios-token React components, generated Flight icons, gallery | [`src/index.ts`](../../packages/ui/src/index.ts), `./styles.css` | `tests/components.test.tsx`, `e2e/gallery.spec.ts` (axe) | [UI library](ui-library.md) |
+| [`packages/ui/`](../../packages/ui) | `@ai-checkout/ui` | React components (Helios specs, Ocean theme), generated Flight icons, gallery | [`src/index.ts`](../../packages/ui/src/index.ts), `./styles.css` | `tests/components.test.tsx`, `e2e/gallery.spec.ts` (axe) | [UI library](ui-library.md) |
 | [`apps/api/`](../../apps/api) | `@ai-checkout/api` | Fastify server, catalog/review repositories, static hosting, curation harness | [`src/index.ts`](../../apps/api/src/index.ts) → [`src/app.ts:createApp`](../../apps/api/src/app.ts) | `apps/api/tests/*.test.ts` (vitest) + root `db:test:*` scripts | [API](api.md), [Curation harness](curation-harness.md) |
 | [`apps/review/`](../../apps/review) | `@ai-checkout/review` | Maintainer review SPA | [`src/main.tsx`](../../apps/review/src/main.tsx) | `tests/*.test.ts(x)`, `e2e/*.spec.*` | [Review app](review-app.md) |
 | [`apps/site/`](../../apps/site) | `@ai-checkout/site` | Static public site, pre-rendered with React | [`src/render.tsx`](../../apps/site/src/render.tsx), [`vite.config.ts`](../../apps/site/vite.config.ts) | `tests/*.test.ts(x)`, `e2e/a11y.spec.ts` | [Public site](public-site.md) |

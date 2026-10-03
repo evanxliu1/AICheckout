@@ -6,7 +6,7 @@ status: stable
 tags: [system, architecture]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-02T23:05:00Z
 sources:
   - resource: ../../extension/vite.config.ts
     title: Extension build and generated manifest
@@ -46,7 +46,7 @@ Verified 2026-10-02 by reading the code at commit `f6d3f79` (branch `llm-wiki`);
 | Curation harness | `apps/api/src/curation` | In the API process (v1 HTTP path) and local CLIs (v1/v2 evals) | Bounded LLM extraction, durable ledger, evaluation | [Curation harness](curation-harness.md) |
 | Review app | `apps/review` | React 19 SPA served at `/review/` | Maintainer review, extraction review, explicit publication | [Review app](review-app.md) |
 | Public site | `apps/site` | Static HTML served at `/` | Landing, eval results, architecture, privacy, support | [Public site](public-site.md) |
-| UI library | `packages/ui` | React 19 components on Helios tokens | Shared components for popup, badge, onboarding, review app, site | [UI library](ui-library.md) |
+| UI library | `packages/ui` | React 19 components on Helios token names, Ocean theme values | Shared components for popup, badge, onboarding, review app, site | [UI library](ui-library.md) |
 | Database | `supabase/` | PostgreSQL 17 + Supabase Auth/Data API | Immutable releases, head pointer, private drafts/sources/ledger | [Database](database.md) |
 | Evaluation corpus and runs | `evals/curation`, `scripts/` | Local Node CLIs | Corpora, matrix runs, results in `docs/evals/` | [Evaluation](evaluation.md) |
 

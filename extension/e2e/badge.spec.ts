@@ -383,6 +383,20 @@ test('badge on catalog v3: points with their value basis, a store card not accep
     await expect(badge.getByLabel('Payment method')).toHaveValue('venmo');
     await expect(ranking.getByRole('listitem').first()).toContainText('27 points at 1.2¢ each.');
     await axeBadge(badge, 'v3 panel with Venmo');
+    // The widest amounts (largest purchase, a range in units) stay inside the 360 px panel.
+    await badge.getByLabel('Amount (USD)').fill('99999.99');
+    await badge.getByRole('button', { name: 'Update' }).click();
+    await expect(ranking.getByRole('listitem').nth(1)).toContainText(/\d{2},\d{3}.* miles/);
+    expect(
+      await badge.evaluate(() => {
+        const body = document.querySelector('.badge-panel__body')!;
+        return body.scrollWidth <= body.clientWidth;
+      }),
+    ).toBe(true);
+    await cart.screenshot({ path: testInfo.outputPath('v3-expanded-max.png') });
+    await badge.getByLabel('Amount (USD)').fill('27.23');
+    await badge.getByRole('button', { name: 'Update' }).click();
+    await expect(ranking.getByRole('listitem').first()).toContainText('27 points at 1.2¢ each.');
     await badge.getByRole('button', { name: 'Collapse' }).click();
     await expect(
       badge.getByRole('button', { name: /Use Points · estimated \$0\.32 in points/ }),

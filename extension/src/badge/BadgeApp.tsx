@@ -11,6 +11,7 @@ import {
   pillReward,
   rankingNote,
   rewardKind,
+  rowEmphasis,
   unavailableCopy,
 } from '../components/estimates';
 import { merchantName } from '../checkout/merchants';
@@ -151,10 +152,13 @@ export default function BadgeApp() {
 
   // Pill: always a button with the whole message in its accessible name.
   let pillText: string, pillLabel: string, pillAction: () => void;
+  // The reward part of a ready pill, shown in the accent colour.
+  let pillAmount: string | undefined;
   if (view.kind === 'ready') {
     const best = view.result.estimates.find((e) => e.cardId === view.result.preferredCardId)!;
     const name = view.catalog.cards.find((c) => c.id === best.cardId)?.shortName ?? best.cardId;
-    pillText = `Use ${name} · ${pillReward(best, view.catalog)}`;
+    pillAmount = pillReward(best, view.catalog);
+    pillText = `Use ${name} · ${pillAmount}`;
     const basis = rewardKind(best, view.catalog) === 'points' ? best.unitValue?.basis : undefined;
     // The pill says "est." for a published estimate; the label spells it out.
     const valued =
@@ -258,7 +262,16 @@ export default function BadgeApp() {
           onClick={pillAction}
         >
           <Icon name={view.kind === 'locked' ? 'lock' : 'credit-card'} size={16} />
-          <span>{pillText}</span>
+          <span>
+            {pillAmount ? (
+              <>
+                {pillText.slice(0, -pillAmount.length)}
+                <span className="badge-pill__amount">{pillAmount}</span>
+              </>
+            ) : (
+              pillText
+            )}
+          </span>
         </button>
       )}
     </div>
@@ -395,12 +408,13 @@ function ReadyBody({
             <p className="supporting">{rankingNote(ready.result, ready.catalog)}</p>
           )}
           <ol className="estimate-list badge-ranking" aria-label="Your cards, best first">
-            {ready.result.estimates.map((estimate) => (
+            {ready.result.estimates.map((estimate, i) => (
               <EstimateRow
                 key={estimate.cardId}
                 catalog={ready.catalog}
                 estimate={estimate}
                 amountCents={ready.amountCents}
+                {...rowEmphasis(ready.result, i)}
               />
             ))}
           </ol>

@@ -53,7 +53,8 @@ export function Layout({ page, children }: { page: PageId; children: ReactNode }
           </p>
           <p className="muted">
             Interface built to the specs of the Helios design system with its tokens and Flight icons
-            (MPL-2.0). Not affiliated with or endorsed by HashiCorp. Card names belong to their issuers; AI
+            (MPL-2.0), restyled with our own theme. Fonts: Figtree and Bricolage Grotesque (SIL Open Font
+            License 1.1). Not affiliated with or endorsed by HashiCorp. Card names belong to their issuers; AI
             Checkout is not affiliated with any issuer or retailer.
           </p>
         </div>

@@ -13,7 +13,7 @@ How the code works. One page per component; name code by path and symbol.
 * [Extension](extension.md) — MV3 popup, onboarding, service worker, local state and optional vault, site adapters, catalog refresh.
 * [Cart badge](cart-badge.md) — automatic badge: content script, sender-based routing, isolated iframe, order detection and savings.
 * [Rewards engine](rewards-engine.md) — `packages/rewards-core`: catalog v1/v2 contract, `compareRewards`, ranges and ranking.
-* [UI library](ui-library.md) — `packages/ui`: Helios-token React components shared by all frontends.
+* [UI library](ui-library.md) — `packages/ui`: React components on Helios token names with the Ocean theme, shared by all frontends.
 
 ## Maintainer side
 

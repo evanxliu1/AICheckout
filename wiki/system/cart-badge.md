@@ -47,6 +47,8 @@ Stage 2 M7 (branch `s2-m7-extension-ui`, PR #30; verified 2026-10-03 with the un
 - **Store cards not accepted here** are listed after the ranking, one line each ("works only at …", `notAcceptedLines`).
 - **Payment method:** the selector offers Venmo only when the catalog in effect is v3 (see `set-payment` below).
 
+Ocean theme (branch `ui-ocean-theme`, merged with `main` on 2026-10-03; [decision](../decisions/2026-10-02-ocean-theme.md)): the pill is navy (`--ac-color-navy`, hover `--ac-color-navy-strong`) with white text, and the reward part (`pillReward`, including "est.") is sky Bricolage (`.badge-pill__amount`); the accessible name is unchanged. The panel header icon is navy, and the ranked list uses the popup's winner block and "$X less" through `rowEmphasis` ([extension](extension.md#popup-and-onboarding)): only a clear winner (`!tied && !rankingMayChange`) gets the block. Panel `h3` margins are reset so rows match the popup. `badge.spec.ts` checks that the widest amounts on a $99,999.99 purchase stay inside the 360 px panel body.
+
 ## Facts
 
 | Item | Value | Where |
@@ -121,7 +123,7 @@ Pill texts by view: `Use {card} · {$x} back` for cash back; catalog v3 (Stage 2
 | Layer | Tests |
 | --- | --- |
 | Unit | `extension/tests/auto-reader.test.ts` (includes back/forward-cache resume and `observeCart` host removal), `badge-routing.test.ts`, `badge-service.test.ts` |
-| Browser | `extension/e2e/badge.spec.ts`: a catalog v3 badge (points pill with "est.", estimate label, a store card not accepted, Venmo, no inline styles, axe on pill and panel); onboarding, each supported cart, live updates on quantity change, closed shadow + cross-origin iframe, a removed host coming back without a body change, the covered-click status message, dismiss, per-site off, order savings, axe on badge and panel; no-cards and locked prompts. Fixture pages are served at the real hosts via `context.route`. |
+| Browser | `extension/e2e/badge.spec.ts`: a catalog v3 badge (points pill with "est.", estimate label, a store card not accepted, Venmo, no overflow at $99,999.99, no inline styles, axe on pill and panel); onboarding, each supported cart, live updates on quantity change, closed shadow + cross-origin iframe, a removed host coming back without a body change, the covered-click status message, dismiss, per-site off, order savings, axe on badge and panel; no-cards and locked prompts. Fixture pages are served at the real hosts via `context.route`. |
 
 ## Related
 

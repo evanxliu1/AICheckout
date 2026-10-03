@@ -31,6 +31,15 @@ async function axeCheck(target: Page, state: string, testInfo: TestInfo) {
       `${state} at ${width}px`,
     ).toEqual([]);
     expect(await target.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    // The popup scrolls itself, so overflow inside it never widens the document.
+    expect(
+      await target.evaluate(() =>
+        Array.from(document.querySelectorAll('.checkout-popup, .badge-panel__body')).every(
+          (el) => el.scrollWidth <= el.clientWidth,
+        ),
+      ),
+      `overflow inside ${state} at ${width}px`,
+    ).toBe(true);
     await target.screenshot({ path: testInfo.outputPath(`${state}-${width}.png`), fullPage: true });
   }
 }
@@ -250,6 +259,90 @@ test('catalog v3 popup and onboarding states are axe-clean at 360 and 480 px', a
     await addCard(onboarding, 'Test Automatic Top Category');
     await expect(onboarding.getByRole('heading', { name: 'Point values' })).toBeVisible();
     await axeCheck(onboarding, 'v3-onboarding', testInfo);
+    await onboarding.close();
+
+    // A clear winner: the navy block with a points estimate and its basis label.
+    await page.getByRole('button', { name: 'Edit cards' }).click();
+    await page.getByRole('button', { name: 'Remove Test Amazon Store Card' }).click();
+    await addCard(page, 'Test Points Card');
+    await addCard(page, 'Test Store Mastercard');
+    await page.getByRole('button', { name: 'Save cards' }).click();
+    await page.getByLabel('Merchant').selectOption('amazon-us');
+    await page.getByLabel('Purchase amount (USD)').fill('100');
+    await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
+    await page.getByRole('button', { name: 'Compare my cards' }).click();
+    await expect(page.getByRole('heading', { name: 'Use Points' })).toBeVisible();
+    await expect(page.locator('.estimate-row--best')).toHaveCount(1);
+    await expect(page.locator('.estimate-row--best').getByText('Estimate', { exact: true })).toBeVisible();
+    // The winner's estimate is a range here, so the other card shows no "$X less".
+    await expect(page.locator('.estimate-amount--hero')).toHaveText('$1.20–$3.60 up to 3 points per $1');
+    await axeCheck(page, 'v3-winner', testInfo);
+    for (const summary of await page.locator('summary').all()) await summary.click();
+    await axeCheck(page, 'v3-winner-details', testInfo);
+
+    // The widest amounts on the largest purchase: a store card with nothing guaranteed ("Up to",
+    // a single card that guarantees nothing gets no winner block) and a range in units (block).
+    for (const [remove, add, merchant, text] of [
+      [['Test Points Card', 'Test Store Mastercard'], 'Test Amazon Store Card', 'amazon-us', 'Up to $'],
+      [['Test Amazon Store Card'], 'Test Automatic Top Category', 'best-buy-us', 'miles'],
+    ] as const) {
+      await page.getByRole('button', { name: 'Edit cards' }).click();
+      for (const name of remove) await page.getByRole('button', { name: `Remove ${name}` }).click();
+      await addCard(page, add);
+      await page.getByRole('button', { name: 'Save cards' }).click();
+      await page.getByLabel('Merchant').selectOption(merchant);
+      await page.getByLabel('Purchase amount (USD)').fill('99999.99');
+      await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
+      await page.getByRole('button', { name: 'Compare my cards' }).click();
+      await expect(page.locator('.estimate-amount').first()).toContainText(text);
+      await axeCheck(page, `v3-winner-${merchant}-max`, testInfo);
+    }
+    expect(errors).toEqual([]);
+  } finally {
+    await context.close();
+  }
+});
+
+test('long card names and the widest amounts of the bundled catalog fit at 360 and 480 px', async ({
+  browserName,
+}, testInfo) => {
+  test.setTimeout(90_000);
+  expect(browserName).toBe('chromium');
+  const extension = resolve('dist-e2e');
+  const context = await chromium.launchPersistentContext(testInfo.outputPath('profile'), {
+    channel: 'chromium',
+    headless: true,
+    viewport: { width: 360, height: 600 },
+    args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`],
+  });
+  try {
+    await context.setOffline(true);
+    const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+    await closeOnboarding(context);
+    const page = await context.newPage();
+    const errors: string[] = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.goto(`chrome-extension://${new URL(worker.url()).host}/src/popup/index.html`);
+    await startPopup(page);
+    // The longest short names in the bundled catalog, miles with a published estimate, a program
+    // with no value (shown as a range of miles) and cash back, on the largest purchase.
+    for (const name of [
+      'Citi / AAdvantage Platinum Select World Elite Mastercard',
+      'Emirates Skywards Premium World Elite Mastercard',
+      'Lufthansa Miles & More World Elite Mastercard',
+      'State Farm Premier Cash Rewards Visa Signature Card',
+    ])
+      await addCard(page, name);
+    await axeCheck(page, 'bundled-long-names-wallet', testInfo);
+    await page.getByRole('button', { name: 'Save cards' }).click();
+    await page.getByLabel('Merchant').selectOption('amazon-us');
+    await page.getByLabel('Purchase amount (USD)').fill('99999.99');
+    await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
+    await page.getByRole('button', { name: 'Compare my cards' }).click();
+    await expect(page.locator('#comparison-heading')).toBeVisible();
+    await axeCheck(page, 'bundled-long-names-comparison', testInfo);
+    for (const summary of await page.locator('summary').all()) await summary.click();
+    await axeCheck(page, 'bundled-long-names-details', testInfo);
     expect(errors).toEqual([]);
   } finally {
     await context.close();
