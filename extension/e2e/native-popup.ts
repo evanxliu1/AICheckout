@@ -120,6 +120,8 @@ export async function openNativePopup(context: BrowserContext, merchant: Page, e
           `[...document.querySelectorAll('[role=option]')].find(o => o.textContent === ${JSON.stringify(name)}).click()`,
         );
       }
+      // Each added card's terms arrive from the worker before it can be saved.
+      await expect.poll(() => evaluate<string>('document.body.innerText')).not.toContain('loading its terms');
     },
     close: async () => {
       await cdp.send('Target.closeTarget', { targetId });

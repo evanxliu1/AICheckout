@@ -184,7 +184,9 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     await pill.click();
     await expect(badge.getByRole('heading', { name: 'Best card for this cart' })).toBeFocused();
     await expect(badge.getByText('Based on $27.23 cart order total at Best Buy US.')).toBeVisible();
-    await expect(badge.getByText('2% if the balance is paid (1% at purchase).')).toBeVisible();
+    await expect(
+      badge.getByText('2 points per $1 if the balance is paid (1 point per $1 at purchase).'),
+    ).toBeVisible();
     await expect(
       badge.getByRole('list', { name: 'Your cards, best first' }).getByRole('listitem'),
     ).toHaveCount(2);
@@ -205,7 +207,7 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     await expect(badge.getByRole('heading', { name: 'Best card for this cart' })).toBeVisible();
     await badge.getByRole('button', { name: 'Collapse' }).click();
     // Buy now, pay later excludes Amex online retail, so Double Cash leads.
-    await expect(badge.getByRole('button', { name: /Use Double Cash · \$1\.08 back/ })).toBeVisible();
+    await expect(badge.getByRole('button', { name: /Use Double Cash · \$1\.08 in points/ })).toBeVisible();
     await badge.getByRole('button', { name: /Show details/ }).click();
     await badge.getByLabel('Payment method').selectOption('card');
     await badge.getByLabel('Amount (USD)').fill('100');

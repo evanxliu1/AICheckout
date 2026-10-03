@@ -63,7 +63,9 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
     await page.getByRole('button', { name: 'Compare my cards' }).click();
     await expect(page.getByRole('heading', { name: 'Use Blue Cash Everyday' })).toBeVisible();
-    await expect(page.getByText('2% if the balance is paid (1% at purchase).')).toBeVisible();
+    await expect(
+      page.getByText('2 points per $1 if the balance is paid (1 point per $1 at purchase).'),
+    ).toBeVisible();
     await check('comparison');
     for (const summary of await page.locator('summary').all()) await summary.click();
     await expect(page.getByText(/Not at this merchant/).first()).toBeVisible();

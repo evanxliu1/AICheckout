@@ -40,7 +40,14 @@ export interface ReconciledWallet {
  * form, `ruleTerms`, so a v2 rule carried unchanged into v3 keeps its rows). Chosen
  * categories, gate answers and point values describe the shopper, not the terms, so they stay
  * while their IDs still resolve. v1 and v2 catalogs have none of them. */
-export function reconcileWallet(wallet: WalletState, after: Catalog, before?: Catalog): ReconciledWallet {
+export function reconcileWallet(
+  wallet: WalletState,
+  after: Catalog,
+  before?: Catalog,
+  /** Keep choices, gate answers and point values whatever `after` has: an expired catalog in effect
+   * must not cost the shopper their answers (coordinator decision, 2026-10-03). */
+  { keepOptions = false }: { keepOptions?: boolean } = {},
+): ReconciledWallet {
   let usageDropped = false,
     optionsDropped = false;
   const cards = wallet.cards.map((owned) => {
@@ -56,7 +63,7 @@ export function reconcileWallet(wallet: WalletState, after: Catalog, before?: Ca
       return !!old && ruleTerms(old) === ruleTerms(next);
     });
     if (usage.length !== owned.usage.length) usageDropped = true;
-    if (owned.choices === undefined) return { ...owned, usage };
+    if (owned.choices === undefined || keepOptions) return { ...owned, usage };
     const options = after.schemaVersion === 3 ? (card as CardProductV3).choices : [];
     const choices = owned.choices.filter((picked) => {
       const choice = options.find((c) => c.id === picked.choiceId);
@@ -70,14 +77,14 @@ export function reconcileWallet(wallet: WalletState, after: Catalog, before?: Ca
     return { ...owned, usage, choices };
   });
   const next: WalletState = { ...wallet, cards };
-  if (wallet.gates !== undefined) {
+  if (wallet.gates !== undefined && !keepOptions) {
     const gates = after.schemaVersion === 3 ? after.gates : [];
     next.gates = wallet.gates.filter((answer) =>
       gates.some((g) => g.id === answer.gateId && g.options.some((o) => o.id === answer.optionId)),
     );
     if (next.gates.length !== wallet.gates.length) optionsDropped = true;
   }
-  if (wallet.valueOverrides !== undefined) {
+  if (wallet.valueOverrides !== undefined && !keepOptions) {
     const programs = after.schemaVersion === 3 ? after.programs : [];
     // Point values only: cash-back programs have a fixed value.
     next.valueOverrides = wallet.valueOverrides.filter((o) =>
@@ -88,9 +95,21 @@ export function reconcileWallet(wallet: WalletState, after: Catalog, before?: Ca
   return { wallet: next, usageDropped, optionsDropped };
 }
 
-/** A wallet the shopper saves must use only cards and inputs the catalog in effect has. */
-export function validateWallet(wallet: WalletState, catalog: Catalog): boolean {
+/** Whether a catalog's validity window has ended at `now`. */
+export const catalogExpired = (catalog: Catalog, now: number) => now >= Date.parse(catalog.expiresAt);
+
+/** A wallet the shopper saves must use only cards and inputs the catalog in effect has; while that
+ * catalog has expired, choices, gate answers and point values it lacks are kept, not refused. */
+export function validateWallet(wallet: WalletState, catalog: Catalog, now: number): boolean {
   if (!wallet.cards.every((owned) => catalog.cards.some((c) => c.id === owned.cardId))) return false;
-  const reconciled = reconcileWallet(wallet, catalog);
+  const reconciled = reconcileWallet(wallet, catalog, undefined, {
+    keepOptions: catalogExpired(catalog, now),
+  });
   return !reconciled.usageDropped && !reconciled.optionsDropped;
+}
+
+/** The wallet as the engine sees it: without inputs the catalog lacks (the engine rejects unknown
+ * IDs). Kept options of an expired catalog stay in storage; comparisons report the expiry anyway. */
+export function engineWallet(wallet: WalletState, catalog: Catalog): WalletState {
+  return reconcileWallet(wallet, catalog).wallet;
 }

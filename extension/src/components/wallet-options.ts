@@ -82,3 +82,21 @@ export function parseCentsEach(text: string): number | null {
 export function formatCentsEach(hundredthsOfCent: number): string {
   return String(hundredthsOfCent / 100);
 }
+
+/** Two slices of the same catalog combined (cards and what they refer to), so card details loaded
+ * for the wallet editor accumulate. A slice of another catalog version replaces the first. */
+export function mergeSlices(a: Catalog, b: Catalog): Catalog {
+  if (a.version !== b.version || a.schemaVersion !== b.schemaVersion) return b;
+  const union = <T extends { id: string }>(x: T[], y: T[]) => [
+    ...x,
+    ...y.filter((item) => !x.some((other) => other.id === item.id)),
+  ];
+  const merged = { ...b } as Record<string, unknown>;
+  for (const key of ['cards', 'sources', 'merchants', 'programs', 'gates', 'brands'] as const)
+    if (Array.isArray((a as unknown as Record<string, unknown>)[key]))
+      merged[key] = union(
+        (a as unknown as Record<string, { id: string }[]>)[key],
+        (b as unknown as Record<string, { id: string }[]>)[key],
+      );
+  return merged as unknown as Catalog;
+}

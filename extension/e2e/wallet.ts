@@ -11,6 +11,8 @@ export async function addCard(page: Page, name: string) {
   await search.fill(name);
   await page.getByRole('option', { name, exact: true }).click();
   await expect(page.getByRole('button', { name: `Remove ${name}` })).toBeVisible();
+  // The card's terms arrive from the worker before it can be saved.
+  await expect(page.getByText('loading its terms', { exact: false })).toHaveCount(0);
 }
 
 /** Caches the synthetic catalog v3 fixture as a published release verified today (UTC), so it is the

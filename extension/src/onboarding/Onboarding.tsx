@@ -95,7 +95,16 @@ export default function Onboarding() {
                 numbers or bank login, and no account: AI Checkout keeps this on your device.
               </p>
             </section>
-            <WalletEditor catalog={view.catalog} wallet={view.state.wallet} busy={busy} onSave={save} />
+            <WalletEditor
+              catalog={view.catalog}
+              index={view.cardIndex}
+              loadCards={(cardIds) =>
+                checkoutRequest({ type: 'checkout:catalog-cards', cardIds }).then((next) => next.catalog)
+              }
+              wallet={view.state.wallet}
+              busy={busy}
+              onSave={save}
+            />
           </>
         ) : null}
       </div>

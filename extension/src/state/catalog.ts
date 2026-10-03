@@ -22,17 +22,21 @@ const isValid = (catalog: Catalog, now: number) =>
   Date.parse(catalog.verifiedAt) <= now && now < Date.parse(catalog.expiresAt);
 /** The catalog in effect at `now`: of the cached published release (v1, v2 or v3) and the bundled
  * catalog, the one that is valid now; when both are, the one verified later (the cached release on a
- * tie, so a published correction of the same day's terms takes effect); when neither is, the cached
- * release (comparisons then report its expiry). An extension update can
- * so bring newer terms than an old cached release, and an expired release gives way to a valid
- * bundled catalog. Rollback protection is unchanged: `prepareCatalogUpdate` never caches a release
- * with a lower sequence than the cached one, whichever of the two is in effect. */
+ * tie, so a published correction of the same day's terms takes effect). When both have expired, also
+ * the one verified later (coordinator decision, 2026-10-03), so the newest terms are the ones whose
+ * expiry comparisons report; otherwise, when neither is valid (one not yet valid), the cached release.
+ * An extension update can so bring newer terms than an old cached release, and an expired release
+ * gives way to a valid bundled catalog. Rollback protection is unchanged: `prepareCatalogUpdate` never
+ * caches a release with a lower sequence than the cached one, whichever of the two is in effect. */
 export function currentCatalog(cache: CatalogCache, now: number): Catalog {
   const cached = cache.release?.catalog;
   if (!cached) return bundled;
   const cachedValid = isValid(cached, now);
   if (cachedValid !== isValid(bundled, now)) return cachedValid ? cached : bundled;
-  return cachedValid && Date.parse(bundled.verifiedAt) > Date.parse(cached.verifiedAt) ? bundled : cached;
+  const expired = (catalog: Catalog) => now >= Date.parse(catalog.expiresAt);
+  const newest = Date.parse(bundled.verifiedAt) > Date.parse(cached.verifiedAt) ? bundled : cached;
+  if (cachedValid || (expired(cached) && expired(bundled))) return newest;
+  return cached;
 }
 /** The catalog a wallet stamped `version` was last checked against, when it is still at hand (the
  * cached release or the bundled catalog); undefined after an extension update replaced the bundle. */

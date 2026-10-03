@@ -192,6 +192,7 @@ export default function Popup({
             ok: true,
             state: emptyState(),
             catalog: view.catalog,
+            cardIndex: view.cardIndex,
             comparison: null,
             notice: 'Local data deleted.',
             catalogUpdatesAvailable: view.catalogUpdatesAvailable,
@@ -237,6 +238,8 @@ export default function Popup({
     }
   }
 
+  const loadCards = (cardIds: string[]) =>
+    checkoutRequest({ type: 'checkout:catalog-cards', cardIds }).then((next) => next.catalog);
   async function saveWallet(wallet: Wallet) {
     if (!view) return;
     setPending('save');
@@ -377,6 +380,8 @@ export default function Popup({
               <WalletEditor
                 key={view.state.revision}
                 catalog={view.catalog}
+                index={view.cardIndex}
+                loadCards={loadCards}
                 wallet={view.state.wallet}
                 busy={busy}
                 onSave={saveWallet}
@@ -627,7 +632,7 @@ export default function Popup({
           {view && !editing && view.state.wallet.cards.length > 0 && (
             <SavingsHistory
               entries={view.state.savings}
-              catalog={view.catalog}
+              cards={view.cardIndex}
               busy={busy}
               onDelete={() => void deleteSavings()}
             />

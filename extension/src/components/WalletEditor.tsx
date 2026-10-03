@@ -20,9 +20,11 @@ import {
   choiceQuestions,
   formatCentsEach,
   gateQuestions,
+  mergeSlices,
   parseCentsEach,
   pointPrograms,
 } from './wallet-options';
+import type { CardIndexEntry } from '../state/catalog-slice';
 
 type Input = { spend: string; activation: RuleUsage['activation'] };
 const EMPTY_INPUT: Input = { spend: '', activation: 'unknown' };
@@ -39,17 +41,37 @@ const dateCopy = (isoDate: string) =>
  */
 export default function WalletEditor({
   wallet,
-  catalog,
+  catalog: initial,
+  index,
+  loadCards,
   busy,
   onSave,
   onCancel,
 }: {
   wallet: Wallet;
+  /** The catalog in effect, or a slice of it holding at least the owned cards. */
   catalog: Catalog;
+  /** Every card to search; defaults to the cards of `catalog`. */
+  index?: CardIndexEntry[];
+  /** Fetches the full terms of these cards (a catalog slice) when one is added. */
+  loadCards?: (cardIds: string[]) => Promise<Catalog>;
   busy: boolean;
   onSave: (wallet: Wallet) => Promise<void>;
   onCancel?: () => void;
 }) {
+  const [catalog, setCatalog] = useState(initial);
+  const [loading, setLoading] = useState(0);
+  const cards = useMemo(
+    () =>
+      index ??
+      initial.cards.map((card) => ({
+        id: card.id,
+        name: card.name,
+        shortName: card.shortName,
+        issuer: issuerOf(card),
+      })),
+    [index, initial],
+  );
   const [recordedOn] = useState(() => localDate(Date.now()));
   const year = Number(recordedOn.slice(0, 4));
   const [selected, setSelected] = useState(wallet.cards.map((c) => c.cardId));
@@ -91,15 +113,18 @@ export default function WalletEditor({
   const [error, setError] = useState('');
 
   const cardOf = (id: string) => catalog.cards.find((card) => card.id === id);
+  const entryOf = (id: string) => cards.find((card) => card.id === id);
+  // Selected cards in the order the catalog lists them, once their terms are here.
   const owned = catalog.cards.filter((card) => selected.includes(card.id));
-  const unavailable = selected.filter((id) => !cardOf(id));
+  const unavailable = selected.filter((id) => !entryOf(id));
+  const pending = selected.filter((id) => entryOf(id) && !cardOf(id));
   const options = useMemo(
     () =>
-      catalog.cards
+      cards
         .filter((card) => !selected.includes(card.id))
-        .map((card) => ({ id: card.id, label: card.name, group: issuerOf(card), keywords: card.shortName }))
+        .map((card) => ({ id: card.id, label: card.name, group: card.issuer, keywords: card.shortName }))
         .sort((a, b) => a.group.localeCompare(b.group) || a.label.localeCompare(b.label)),
-    [catalog, selected],
+    [cards, selected],
   );
   const input = (cardId: string, ruleId: string) => inputs[key(cardId, ruleId)] ?? EMPTY_INPUT;
   const update = (cardId: string, ruleId: string, change: Partial<Input>) =>
@@ -116,32 +141,47 @@ export default function WalletEditor({
     });
   };
 
-  function add(id: string) {
+  async function add(id: string) {
     if (selected.includes(id) || selected.length >= MAX_CARDS) return;
     const next = [...selected, id];
     setSelected(next);
     if (!next.includes(defaultId)) setDefaultId(next[0] ?? '');
+    setAnnouncement(`Added ${entryOf(id)?.name ?? id}. ${next.length} of ${MAX_CARDS} cards.`);
+    let terms = catalog;
+    if (!cardOf(id) && loadCards) {
+      setLoading((n) => n + 1);
+      try {
+        terms = await loadCards(next);
+        const slice = terms;
+        setCatalog((current) => mergeSlices(current, slice));
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'The card’s terms could not be loaded. Try again.');
+        return;
+      } finally {
+        setLoading((n) => n - 1);
+      }
+    }
     // Suggest the issuer's default categories for a card added now; the shopper can change them.
-    const defaults = choiceQuestions(catalog, id).filter(
-      (choice) => choice.defaultOptionIds.length > 0 && choices[id]?.[choice.id] === undefined,
-    );
-    if (defaults.length) {
-      setChoices((current) => ({
+    const defaults = choiceQuestions(terms, id).filter((choice) => choice.defaultOptionIds.length > 0);
+    if (!defaults.length) return;
+    setChoices((current) => {
+      const fresh = defaults.filter((c) => current[id]?.[c.id] === undefined);
+      if (!fresh.length) return current;
+      setPrefilled((marked) => new Set([...marked, ...fresh.map((c) => key(id, c.id))]));
+      return {
         ...current,
         [id]: {
           ...current[id],
-          ...Object.fromEntries(defaults.map((c) => [c.id, c.defaultOptionIds.slice(0, c.picks)])),
+          ...Object.fromEntries(fresh.map((c) => [c.id, c.defaultOptionIds.slice(0, c.picks)])),
         },
-      }));
-      setPrefilled((current) => new Set([...current, ...defaults.map((c) => key(id, c.id))]));
-    }
-    setAnnouncement(`Added ${cardOf(id)?.name ?? id}. ${next.length} of ${MAX_CARDS} cards.`);
+      };
+    });
   }
   function remove(id: string) {
     const next = selected.filter((c) => c !== id);
     setSelected(next);
     if (!next.includes(defaultId)) setDefaultId(next[0] ?? '');
-    setAnnouncement(`Removed ${cardOf(id)?.name ?? 'the unavailable card'}.`);
+    setAnnouncement(`Removed ${entryOf(id)?.name ?? 'the unavailable card'}.`);
     // The button is gone; return focus to the search field.
     document.getElementById('add-card')?.focus();
   }
@@ -182,6 +222,10 @@ export default function WalletEditor({
     }
     if (unavailable.length) {
       setError('Remove unavailable cards before saving. They cannot be compared with these terms.');
+      return;
+    }
+    if (pending.length) {
+      setError('The terms of a card you added are still loading. Try again in a moment.');
       return;
     }
     const cards: Wallet['cards'] = [];
@@ -264,7 +308,7 @@ export default function WalletEditor({
           helperText={
             selected.length >= MAX_CARDS
               ? `You can save up to ${MAX_CARDS} cards. Remove one to add another.`
-              : `Type part of the card or bank name, then pick it from the list (${catalog.cards.length} cards).`
+              : `Type part of the card or bank name, then pick it from the list (${cards.length} cards).`
           }
         >
           {(control) => (
@@ -276,7 +320,7 @@ export default function WalletEditor({
               emptyText="No cards match. Try fewer letters or the bank’s name."
               countText={(n) => `${n} ${n === 1 ? 'card matches' : 'cards match'}`}
               options={options}
-              onSelect={add}
+              onSelect={(id) => void add(id)}
             />
           )}
         </Field>
@@ -292,13 +336,17 @@ export default function WalletEditor({
           ) : (
             <ul className="wallet-list">
               {selected.map((id) => {
-                const card = cardOf(id);
+                const card = entryOf(id);
                 return (
                   <li key={id} className="wallet-list__item">
                     <div>
                       <p>{card ? card.name : `Unavailable card: ${id}`}</p>
                       <p className="supporting">
-                        {card ? issuerOf(card) : 'No longer in the card terms. Remove it to save.'}
+                        {!card
+                          ? 'No longer in the card terms. Remove it to save.'
+                          : pending.includes(id)
+                            ? `${card.issuer} · loading its terms…`
+                            : card.issuer}
                       </p>
                     </div>
                     <Button
@@ -331,7 +379,7 @@ export default function WalletEditor({
               >
                 {selected.map((id) => (
                   <option key={id} value={id}>
-                    {cardOf(id)?.shortName ?? `Unavailable: ${id}`}
+                    {entryOf(id)?.shortName ?? `Unavailable: ${id}`}
                   </option>
                 ))}
               </Select>
@@ -605,7 +653,7 @@ export default function WalletEditor({
           </AlertInline>
         )}
         <div className="flex gap-2">
-          <Button type="submit" isLoading={busy}>
+          <Button type="submit" isLoading={busy || loading > 0}>
             Save cards
           </Button>
           {onCancel && (

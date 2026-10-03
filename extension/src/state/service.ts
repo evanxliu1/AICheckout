@@ -13,7 +13,8 @@ import { migrateState, reconcileState } from './migrate';
 import type { AppState, CatalogCache, CheckoutResponse } from './contracts';
 import type { CartSnapshot } from '../checkout/contracts';
 import { catalogByVersion, CatalogUpdateError, currentCatalog, prepareCatalogUpdate } from './catalog';
-import { validateWallet } from './wallet';
+import { engineWallet, validateWallet } from './wallet';
+import { cardIndex, catalogSlice } from './catalog-slice';
 import {
   CART_MAX_AGE_MS,
   CART_READ_TIMEOUT_MS,
@@ -43,6 +44,27 @@ export interface StateStorage {
   clear(): Promise<void>;
 }
 
+/** A successful page response: the catalog in effect cut to the owned cards (and `extraCardIds`), with
+ * the index of every card for search, instead of the whole catalog (about 800 KB with catalog v3). */
+export function pageResponse(
+  state: AppState,
+  catalog: Catalog,
+  comparison: Extract<CheckoutResponse, { ok: true }>['comparison'],
+  notice: string | null,
+  catalogUpdatesAvailable: boolean,
+  extraCardIds: string[] = [],
+): CheckoutResponse {
+  return {
+    ok: true,
+    state,
+    catalog: catalogSlice(catalog, [...state.wallet.cards.map((c) => c.cardId), ...extraCardIds]),
+    cardIndex: cardIndex(catalog),
+    comparison,
+    notice,
+    catalogUpdatesAvailable,
+  };
+}
+
 /** Storage is authoritative. Reconnecting popups do not rely on worker memory. */
 export function createStateService(
   storage: StateStorage,
@@ -56,14 +78,8 @@ export function createStateService(
     catalog: Catalog,
     comparison: Extract<CheckoutResponse, { ok: true }>['comparison'] = null,
     notice: string | null = null,
-  ): CheckoutResponse => ({
-    ok: true,
-    state,
-    catalog,
-    comparison,
-    notice,
-    catalogUpdatesAvailable: !!fetchCatalog,
-  });
+    extraCardIds: string[] = [],
+  ): CheckoutResponse => pageResponse(state, catalog, comparison, notice, !!fetchCatalog, extraCardIds);
   async function bounded<T>(promise: Promise<T>): Promise<T> {
     let timer: ReturnType<typeof setTimeout>;
     try {
@@ -105,6 +121,7 @@ export function createStateService(
     const state = reconcileState(
       parsed.data,
       catalog,
+      now,
       catalogByVersion(cache, parsed.data.walletCatalogVersion),
     );
     await storage.set({ [STATE_KEY]: state });
@@ -171,7 +188,7 @@ export function createStateService(
         return success(
           state,
           catalog,
-          compareRewards(catalog, state.wallet, state.purchase, checkedAt),
+          compareRewards(catalog, engineWallet(state.wallet, catalog), state.purchase, checkedAt),
           notice,
         );
       }
@@ -203,6 +220,8 @@ export function createStateService(
         await storage.set({ [STATE_KEY]: shown });
         return { ...result, state: shown, notice: result.state.pendingNotice };
       }
+      if (request.type === 'checkout:catalog-cards')
+        return success(state, catalog, null, null, request.cardIds);
       if (request.type === 'checkout:record-savings') {
         // Written by the worker from a one-tap answer; it does not race the shopper's form inputs,
         // so it needs no expected revision. Newest first, bounded.
@@ -269,7 +288,7 @@ export function createStateService(
         return success(update.state ?? state, currentCatalog(update.cache, checkedAt), null, update.notice);
       }
       if (request.type === 'checkout:save-wallet') {
-        if (!validateWallet(request.wallet, catalog))
+        if (!validateWallet(request.wallet, catalog, clock()))
           return {
             ok: false,
             error:
@@ -325,7 +344,12 @@ export function createStateService(
       const comparedAt = clock();
       if (request.purchase.purchasedOn !== localDate(comparedAt))
         return { ok: false, error: 'The date changed while reading the cart. Confirm today’s amount again.' };
-      const comparison = compareRewards(catalog, state.wallet, request.purchase, comparedAt);
+      const comparison = compareRewards(
+        catalog,
+        engineWallet(state.wallet, catalog),
+        request.purchase,
+        comparedAt,
+      );
       if (comparison.status === 'unavailable') return success(state, catalog, comparison);
       const next: AppState = {
         ...state,

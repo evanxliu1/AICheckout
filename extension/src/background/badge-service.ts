@@ -7,6 +7,8 @@ import { merchantForCheckout, merchantForOrderConfirmation, type MerchantId } fr
 import type { AppState, CheckoutResponse } from '../state/contracts';
 import type { StateStorage } from '../state/service';
 import { localDate } from '../state/keys';
+import { engineWallet } from '../state/wallet';
+import { catalogSlice } from '../state/catalog-slice';
 import type { VaultStatus } from '../state/vault-contracts';
 import { savingsEntry } from '../state/savings';
 import {
@@ -81,48 +83,11 @@ export function autoPurchase(
  * and what those cards refer to (their programs, the brands and gates their rules name, the sources
  * they cite). Never the whole catalog: with 180 cards it would be most of 1 MiB per view. */
 export function badgeCatalog(catalog: Catalog, wallet: Pick<Wallet, 'cards'>, merchantId: string): Catalog {
-  const owned = new Set(wallet.cards.map((c) => c.cardId));
-  const cited = (ids: string[]) => {
-    const keep = new Set(ids);
-    return catalog.sources.filter((s) => keep.has(s.id));
-  };
-  if (catalog.schemaVersion === 1) {
-    const cards = catalog.cards.filter((c) => owned.has(c.id));
-    return { ...catalog, cards, sources: cited(cards.flatMap((c) => c.rules.flatMap((r) => r.sourceIds))) };
-  }
-  if (catalog.schemaVersion === 2) {
-    const merchants = catalog.merchants.filter((m) => m.id === merchantId);
-    const merchantSources = merchants.flatMap((m) => m.mcc.sourceIds);
-    const cards = catalog.cards.filter((c) => owned.has(c.id));
-    const ruleSources = cards.flatMap((c) => c.rules.flatMap((r) => r.sourceIds));
-    return { ...catalog, merchants, cards, sources: cited([...ruleSources, ...merchantSources]) };
-  }
-  const merchants = catalog.merchants.filter((m) => m.id === merchantId);
-  const merchantSources = merchants.flatMap((m) => m.mcc.sourceIds);
-  const cards = catalog.cards.filter((c) => owned.has(c.id));
-  const programIds = new Set(cards.map((c) => c.programId));
-  const programs = catalog.programs.filter((p) => programIds.has(p.id));
-  const rules = cards.flatMap((c) => c.rules);
-  const brandIds = new Set([
-    ...merchants.flatMap((m) => m.brandIds),
-    ...cards.flatMap((c) => (c.acceptance.kind === 'closed-loop' ? c.acceptance.brandIds : [])),
-    ...rules.flatMap((r) => [...r.brandIds, ...r.excludedBrandIds]),
-    ...programs.flatMap((p) => p.redemptionBrandIds),
-  ]);
-  const gateIds = new Set(rules.flatMap((r) => r.requires.map((g) => g.gateId)));
-  return {
-    ...catalog,
-    programs,
-    brands: catalog.brands.filter((b) => brandIds.has(b.id)),
-    gates: catalog.gates.filter((g) => gateIds.has(g.id)),
-    merchants,
-    cards,
-    sources: cited([
-      ...rules.flatMap((r) => r.sourceIds),
-      ...merchantSources,
-      ...programs.flatMap((p) => (p.valuation.basis === 'issuer-stated' ? p.valuation.sourceIds : [])),
-    ]),
-  };
+  return catalogSlice(
+    catalog,
+    wallet.cards.map((c) => c.cardId),
+    [merchantId],
+  );
 }
 
 export function createBadgeService({ local, session, vault, clock = Date.now, open, notify }: BadgeDeps) {
@@ -261,7 +226,7 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
     if (!amountCents) return { kind: 'unreadable', merchantId: entry.merchantId };
     const now = clock();
     const purchase = autoPurchase(catalog, entry.merchantId, amountCents, entry.paymentPath, now);
-    const result = compareRewards(catalog, state.wallet, purchase, now);
+    const result = compareRewards(catalog, engineWallet(state.wallet, catalog), purchase, now);
     if (result.status === 'unavailable') return { kind: 'unavailable', merchantId: entry.merchantId, result };
     const recommendation = entry.recommendation;
     if (
@@ -306,7 +271,7 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
       return { ok: false, error: 'Choose one of your cards.' };
     const entryRecord = savingsEntry({
       catalog,
-      wallet: state.wallet as Wallet,
+      wallet: engineWallet(state.wallet, catalog) as Wallet,
       purchase: prompt.purchase,
       recommendedCardId: prompt.recommendedCardId,
       usedCardId: used,
