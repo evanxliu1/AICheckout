@@ -32,12 +32,13 @@ M6 made the newest valid catalog the one in effect ([decision](2026-10-03-newest
 | Give the real cards new rule IDs in v3 | | Drops the same rows by ID; M5 deliberately pinned them |
 
 ## Decision
-`state/catalog.ts` imports `CATALOG_V3 as BUNDLED_CATALOG`. `wallet.ts:ruleTerms` lifts a v1/v2-shaped rule (no `brandIds`) to v3 form before comparing; v3 rules compare as they are. Rule IDs of the seven real cards are identical in v2 and v3 (24 rules), so a schema 2 state on cached release 1 migrates onto bundled v3 with its wallet unchanged and no notice. A rule whose rate, cap or any v3 field differs under the same ID still loses its row.
+`state/catalog.ts` imports `CATALOG_V3 as BUNDLED_CATALOG`. `wallet.ts:ruleTerms` lifts a v1/v2-shaped rule (no `brandIds`) to v3 form before comparing; v3 rules compare as they are. Rule IDs of the seven real cards are identical in v2 and v3 (26 rules), so a schema 2 state on cached release 1 migrates onto bundled v3 with its wallet unchanged and no notice. A rule whose rate, cap or any v3 field differs under the same ID still loses its row.
 
 ## Consequences
 - Release 1 stays cached as the reference for the sequence check; Evan's M10 publish (sequence 2, `CATALOG_V3` or later) takes over from the bundle on a later `verifiedAt` or a tie.
-- The worker chunk grows from 42,737 to 587,072 bytes (gzip 11,291 to 52,730); popup, onboarding and content scripts are unchanged and carry no catalog. The upload ZIP grows from 166,831 to 208,242 bytes.
-- The wallet editor lists all 178 cards grouped by issuer with no search; M7 owns wallet search and the editors for choices, gates and point values.
+- The worker chunk grows from 42,737 to 587,077 bytes (gzip 11,291 to 52,727); popup, onboarding and content scripts are unchanged and carry no catalog. The upload ZIP grows from 166,831 to 208,313 bytes.
+- The wallet editor lists all 178 cards grouped by issuer with no search and refuses to save more than `MAX_WALLET_CARDS` (20, the state schema's limit) with a message, instead of the worker's generic rejection; M7 owns wallet search and the editors for choices, gates and point values.
+- When both the cached release and the bundle have expired, the cached release is in effect (M6 rule); with release 1 cached after 2026-11-01 that is v2, and reconciliation would drop v3-only shopper options (choices, gates, point values). None exist before M7's editors; left open for the coordinator.
 - The bundle expires 2026-11-01T00:00Z and is valid from 2026-10-02T00:00Z, so tests that fix the clock use dates in that window.
 
 ## Status

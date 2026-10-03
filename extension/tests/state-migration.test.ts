@@ -273,4 +273,43 @@ describe('reconciling with a new catalog in effect (schema 3)', () => {
     const read = ok(await createStateService(storage, () => now)({ type: 'checkout:get-state' }));
     expect(read.catalog.version).toBe(CATALOG_V3.version);
   });
+  it.each([
+    ['with cached release 1 (rules compared in v3 form)', true],
+    ['without a cache (rules matched by ID)', false],
+  ])(
+    'moves a schema 3 wallet stamped with release 1 onto the bundled v3 %s, keeping every usage row',
+    async (_, withCache) => {
+      const cards = CATALOG_V2.cards.map((card) => ({
+        cardId: card.id,
+        usage: card.rules.map((rule) => ({
+          ...row(rule.id),
+          spentCents: 500,
+          activation: 'inactive' as const,
+        })),
+      }));
+      data[STATE_KEY] = {
+        ...emptyState(),
+        revision: 9,
+        walletCatalogVersion: CATALOG_V2.version,
+        wallet: { defaultCardId: 'amex-blue-cash-everyday', cards },
+      };
+      if (withCache)
+        data[CATALOG_KEY] = {
+          release: {
+            sequence: 1,
+            version: CATALOG_V2.version,
+            catalog: structuredClone(CATALOG_V2),
+            catalog_hash: '1'.repeat(64),
+            published_at: '2026-10-02T02:29:00Z',
+          },
+          lastCheckedAt: null,
+        };
+      const read = ok(await createStateService(storage, () => now)({ type: 'checkout:get-state' }));
+      expect(read.catalog.version).toBe(CATALOG_V3.version);
+      expect(read.notice).toBeNull();
+      // Only the stamp changes, so open pages keep their revision.
+      expect(read.state).toMatchObject({ revision: 9, walletCatalogVersion: CATALOG_V3.version });
+      expect(read.state.wallet).toEqual({ defaultCardId: 'amex-blue-cash-everyday', cards });
+    },
+  );
 });
