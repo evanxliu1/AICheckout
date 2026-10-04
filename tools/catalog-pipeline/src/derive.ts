@@ -275,16 +275,20 @@ export function nextStep(view: BatchView): NextStep {
   const blocking = view.queue.find((item) =>
     ['capture-flagged', 'convention-needed', 'scope-question'].includes(item.code),
   );
-  if (blocking)
+  if (blocking) {
+    // Every item of the same stage and code in one step, so a fix-and-retry loop handles them together.
+    const same = view.queue.filter((item) => item.code === blocking.code && item.stage === blocking.stage);
+    const cardIds = [...new Set(same.flatMap((item) => (item.cardId ? [item.cardId] : [])))];
     return {
       kind: 'queue',
       batch: id,
       stage: blocking.stage,
       issuer: blocking.issuer,
-      cardIds: blocking.cardId ? [blocking.cardId] : undefined,
+      cardIds: cardIds.length ? cardIds : undefined,
       code: blocking.code,
       reason: `${blocking.code} (owner ${blocking.owner}): see ${blocking.ref}`,
     };
+  }
   // 2. Anchor-only re-draft: re-point the findings before anything downstream runs.
   const rebase = view.cards.filter((card) => card.rebaseAnchors).map((card) => card.cardId);
   if (rebase.length)
@@ -308,14 +312,12 @@ export function nextStep(view: BatchView): NextStep {
     const cards = view.cards.filter((card) => card.stages[stage].ready);
     const reverify = stage === 'verify' ? view.queue.filter((item) => item.code === 'needs-reverify') : [];
     if (reverify.length) {
-      const card = view.cards.find((entry) => entry.cardId === reverify[0].cardId)!;
-      return agentStep(
-        id,
-        'verify',
-        card.issuer,
-        [card.cardId],
-        'needs-reverify: a rejected drop-card verdict',
-      );
+      // A verify packet is per issuer: every card of the first card's issuer that needs re-verification.
+      const issuer = view.cards.find((entry) => entry.cardId === reverify[0].cardId)!.issuer;
+      const ids = view.cards
+        .filter((card) => card.issuer === issuer && reverify.some((item) => item.cardId === card.cardId))
+        .map((card) => card.cardId);
+      return agentStep(id, 'verify', issuer, ids, 'needs-reverify: a rejected drop-card verdict');
     }
     const failed = cards.filter((card) => card.stages[stage].status === 'failed-gate');
     if (failed.length && AGENTS[stage])
@@ -333,13 +335,14 @@ export function nextStep(view: BatchView): NextStep {
             card.stages[stage].status === 'failed-gate' &&
             (card.stages[stage].record?.attempts ?? 0) >= GATE_ATTEMPTS,
         );
+    // Every failed card of the stage goes with it (they share the gate-failed code), not only the stuck ones.
     if (stuck.length)
       return {
         ...queueGate(
           id,
           stage,
           stuck[0].issuer,
-          stuck.map((card) => card.cardId),
+          cards.filter((card) => card.stages[stage].status === 'failed-gate').map((card) => card.cardId),
         ),
         reason: `gate-failed at ${stage} after ${GATE_ATTEMPTS} attempts (owner session): see the gate errors, fix the cause, then run again`,
       };

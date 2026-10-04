@@ -112,6 +112,9 @@ export const CAPTURE_FLAG_REASONS = [
   'keep-existing-capture',
 ] as const;
 
+/** Reason codes for removing a source from a batch (`pipeline drop-source`); codes, never text. */
+export const DROP_SOURCE_REASONS = ['bot-wall', 'error-page', 'out-of-scope', 'duplicate'] as const;
+
 export const stateSchema = z.strictObject({
   schemaVersion: z.literal(1),
   batch: z.string().regex(BATCH_ID),
@@ -125,6 +128,11 @@ export const stateSchema = z.strictObject({
   /** Capture flags accepted by the session, per source: valid while the manifest hash is still `sha256`. */
   resolvedFlags: z
     .record(id, z.strictObject({ reason: z.enum(CAPTURE_FLAG_REASONS), sha256: hex, resolvedAt: timestamp }))
+    .optional(),
+  /** Sources removed from the batch by `pipeline drop-source`, with a reason code; their captures are in
+   * captures-dropped/. */
+  droppedSources: z
+    .record(id, z.strictObject({ reason: z.enum(DROP_SOURCE_REASONS), droppedAt: timestamp }))
     .optional(),
 });
 export type State = z.infer<typeof stateSchema>;

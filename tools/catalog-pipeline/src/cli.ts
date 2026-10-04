@@ -31,6 +31,7 @@ import { runStage } from './run.ts';
 import type { Env } from './run.ts';
 import { accept } from './accept.ts';
 import { resolveCaptureFlag } from './capture.ts';
+import { dropSource } from './drop-source.ts';
 import { lintLabels } from './lint-command.ts';
 import { claim, openPacketStatus } from './packets.ts';
 import type { PacketStatus } from './packets.ts';
@@ -39,6 +40,7 @@ import {
   CAPTURE_FLAG_REASONS,
   CARD_STAGES,
   CLI_STAGES,
+  DROP_SOURCE_REASONS,
   ISSUER_STAGES,
   STATUSES,
   initialState,
@@ -58,6 +60,7 @@ const USAGE = `Usage: npm run pipeline -- <command>
   claim <${ISSUER_STAGES.join('|')}> --issuer <slug> [--batch B] [--release]
   accept <${ISSUER_STAGES.join('|')}> --issuer <slug> --agent-run <id> [--model <id>] [--duration-ms N] [--tokens N] [--batch B] [--dry-run]
   resolve capture-flagged --source <id> --reason <${CAPTURE_FLAG_REASONS.join('|')}> [--batch B]
+  drop-source --source <id> --reason <${DROP_SOURCE_REASONS.join('|')}> [--batch B]
   lint-labels [--batch B | --dir <corpus dir>] [--json]
   eval [--batch B] [--cross-model-run DIR]
   handoff [--batch B]`;
@@ -342,6 +345,10 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
         if (positionals[0] !== 'capture-flagged' || !values.source || !values.reason)
           throw new UsageError('resolve capture-flagged --source <id> --reason <code>.');
         return await resolveCaptureFlag(env, await oneBatch(env, values.batch), values.source, values.reason);
+      case 'drop-source':
+        if (positionals.length || !values.source || !values.reason)
+          throw new UsageError('drop-source --source <id> --reason <code>.');
+        return await dropSource(env, await oneBatch(env, values.batch), values.source, values.reason);
       case 'lint-labels':
         return await lintLabels(env, { batch: values.batch, dir: values.dir, json: values.json });
       default:
