@@ -1,15 +1,15 @@
 ---
 type: Decision
 title: Run card expansion as a deterministic pipeline CLI driven by a Claude Code skill and subagents
-description: Proposed — card expansion becomes a resumable CLI in tools/catalog-pipeline (per-card text-free state, input hashing, gates, review queue, hash-only freshness) driven by the expand-catalog skill and card-researcher, card-verifier and card-adjudicator subagents, ending at a ready branch Evan publishes; product code never imports tools/.
-status: proposed
+description: Accepted 2026-10-03 with the Fable review's changes — card expansion becomes a resumable CLI in tools/catalog-pipeline (per-card text-free state, input hashing, gates, review queue, hash-only freshness) driven by the expand-catalog skill and card-researcher, card-verifier and card-adjudicator subagents, ending at a ready branch Evan publishes; product code never imports tools/.
+status: accepted
 tags: [decision, catalog, curation, pipeline, phase-8]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:30:00Z
+  at: 2026-10-04T00:30:00Z
 sources:
   - resource: ../system/card-expansion-pipeline.md
-    title: Card-expansion pipeline (design draft)
+    title: Card-expansion pipeline (Phase 8 design, approved)
   - resource: ../product/phase-7-stage-2.md
     title: Phase 7 Stage 2 plan (M11)
 ---
@@ -46,4 +46,4 @@ Details, schemas, gates and the stage-to-script map: [card-expansion pipeline](.
 - Open questions on the design page (batch layout, noisy pages under hash-only freshness, re-verification on convention changes, PR ownership, overlay authoring agent, research web scope) are Evan's to answer before Phase 8; the coordinator's recommended answers (2026-10-02) are on that page, pending his approval.
 
 ## Status
-Proposed 2026-10-02 by the M11 agent (claude-code/claude-opus-5-5). Evan approves or amends; on approval this becomes `accepted` and the design page leaves draft once Stage 2 M5 has settled the overlay and builder.
+Accepted 2026-10-03 by Evan, **with the changes of the independent Fable 5.1 review (2026-10-03, agent-verified)**, which amend points 1, 4, 5 and 6 above for v1: one text-free `state.json` per batch instead of one per card; no `running` status or PID locks and no review-queue file (`status` derives the queue); claimed work packets with `claim`/`accept`; the `validate` stage and `v2-validator.2` deferred; a draft hash split into labels and anchors; a deterministic label-evidence lint; a multi-batch builder with SHA-256 pairing and a rule-ID continuity gate; a fourth subagent `card-overlay-author`; models pinned in the agent files; the Phase 7 scripts wrapped, not moved. Freshness (point 5) becomes Phase 9; the merchant pipeline (point 8) becomes Phase 10. The approved v1 design is on the [design page](../system/card-expansion-pipeline.md). Proposed 2026-10-02 by the M11 agent (claude-code/claude-opus-5-5).

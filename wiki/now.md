@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T06:45:00Z
+  at: 2026-10-04T00:30:00Z
 ---
 
 # Now
 
-As of 2026-10-03T06:45Z.
+As of 2026-10-04T00:30Z.
 
 ## Current state
 
@@ -23,15 +23,14 @@ As of 2026-10-03T06:45Z.
 
 ## Active work
 
-- Wiki update for the release on branch `wiki-release-2` (PR open, Evan or the coordinator merges).
-- **Phase 8 card-expansion pipeline:** design proposed ([pipeline](system/card-expansion-pipeline.md), [decision, proposed](decisions/2026-10-02-agent-driven-card-pipeline.md)); an independent Fable 5.1 review (agent-verified) approved it with changes and a v1 build order ([review](system/card-expansion-pipeline.md#review-2026-10-03-fable-51-agent-verified)). Not yet approved by Evan.
+- **Phase 8, card-expansion pipeline v1** (coordinator, started 2026-10-04 UTC). Evan approved the design with the Fable review's changes on 2026-10-03 ([pipeline](system/card-expansion-pipeline.md), [decision](decisions/2026-10-02-agent-driven-card-pipeline.md)). Milestones, one PR each from the latest `main`: (0) approval wiki update, branch `phase8-approval`; (1) multi-batch catalog builder; (2) CLI skeleton; (3) `claim`/`accept` with gates and the label lint; (4) skill and four agent files; (5) `eval` and `handoff`; (6) acceptance run: Wells Fargo as a new batch, measured in `docs/evals/pipeline-v1.md`. Target 2026-10-17; tell Evan at once if it slips past 2026-10-20.
 
 ## Open questions and next steps
 
-1. **Evan approves the pipeline design with the review's changes**, then Phase 8 v1 is built in the review's order: multi-batch builder → CLI skeleton → claim/accept with gates and label lint → skill and four agent files → eval and hand-off → freshness → one small issuer end to end.
-2. **Catalog freshness before 2026-11-01T00:00Z**, when release 2 expires and `/v1/catalog` would answer 503: re-check the sources (the pipeline's freshness stage, or a manual refresh with new dated captures) and publish a new release. Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data (Discover not captured).
+1. Build Phase 8 v1 in the order above.
+2. **Phase 9, catalog freshness, before 2026-11-01T00:00Z**, when release 2 expires and `/v1/catalog` would answer 503: re-check the sources (the pipeline's freshness stage, or a manual refresh with new dated captures) and publish a new release. Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data (Discover not captured).
 3. Optional (Evan): revoke the legacy HS256 JWT secret in Supabase once sessions issued before the switch have expired.
-- Later phases, in Evan's order (2026-10-02): 9 merchant-expansion pipeline → 5 Web Store release and 4 terms-change detection; 6 site coverage harness ([roadmap](product/roadmap.md)).
+- Later phases, in Evan's order (2026-10-03): 9 freshness → 10 merchant-expansion pipeline → Web Store release; 4 terms-change detection is revisited after 9; 6 site coverage harness ([roadmap](product/roadmap.md)).
 - Open for Evan from M3: Aer Lingus and Iberia Avios stay unvalued unless he wants parity with British Airways; a second publisher would value U.S. Bank Altitude, SKYPASS, Lufthansa, Cathay, Frontier.
 - Enable GitHub private vulnerability reporting on the repository, which [`SECURITY.md`](../SECURITY.md) tells reporters to use (Evan, repository settings).
 - Verify the `orderConfirmation` URL patterns on a real order per retailer before the Web Store release (Evan).
