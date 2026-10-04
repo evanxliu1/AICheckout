@@ -3,6 +3,7 @@
 import { mkdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { deriveBatch } from './derive.ts';
+import { runEval } from './eval.ts';
 import type { BatchView } from './derive.ts';
 import { captureReportSchema, loadBatch, statePath, traceFileSchema } from './files.ts';
 import type { Batch } from './files.ts';
@@ -26,6 +27,8 @@ export interface RunOptions {
   only?: string[];
   concurrency?: number;
   waitMinutes?: number;
+  /** eval: an eval:v2 run directory of the coordinator's cross-model run, to score. */
+  crossModelRun?: string;
 }
 
 /** Stages that call a model; they never run where CI or RENDER is set. */
@@ -68,10 +71,7 @@ export async function runStage(
   stage: CliStage,
   options: RunOptions = {},
 ): Promise<number> {
-  if (stage === 'eval') {
-    env.log('run eval: the eval stage and handoff arrive in Phase 8 milestone 5; nothing was run.');
-    return 2;
-  }
+  if (stage === 'eval') return runEval(env, batchId, { crossModelRun: options.crossModelRun });
   const refusal = refuseModelStage(stage, env.env);
   if (refusal) {
     env.log(refusal);

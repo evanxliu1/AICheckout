@@ -2,17 +2,18 @@
 // write docs/evals/expansion.json (pipeline metrics + luna re-score + the cross-model run, or "pending").
 //
 //   node scripts/score-expansion-traces.mjs --captures DIR --traces DIR [--run DIR] [--output FILE]
-//   node scripts/score-expansion-traces.mjs --print-command
+//   node scripts/score-expansion-traces.mjs --print-command [--dir DIR] [--captures DIR]
 //
 //   --captures   local, gitignored expansion captures (<source id>.txt); env AICHECKOUT_EXPANSION_CAPTURES
 //   --traces     local, gitignored extract-cards.mjs traces (<card id>.json); env AICHECKOUT_EXPANSION_TRACES
+//   --dir        the corpus directory, default evals/curation/expansion (a pipeline batch: evals/curation/batches/<id>)
 //   --run        an eval:v2 run directory of the cross-model run (observations.json); omitted = pending
 //   --output     default docs/evals/expansion.json; "-" prints to stdout
 //
 // No model is called. Every trace is checked against the corpus inputs (document and context hashes) before it is
 // scored with the current v2 scorer. The output has no timestamps and no issuer text, so it is reproducible.
 import { readdir, readFile, writeFile } from 'node:fs/promises';
-import { join, resolve } from 'node:path';
+import { basename, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { loadCorpusV2 } from '../apps/api/src/curation/v2/corpus.ts';
@@ -33,15 +34,18 @@ export const CROSS_MODEL = {
   concurrency: 8,
   output: 'evals/curation/runs/expansion/codex.gpt-5.5.low.guided.2.keyword-window.1.heldout',
 };
-export const crossModelCommand = (captures = '$EXPANSION_CAPTURES') =>
+/** The cross-model run's output directory: CROSS_MODEL.output for expansion.v1, a per-batch folder otherwise. */
+export const crossModelOutput = (dir = DIR) =>
+  dir === DIR ? CROSS_MODEL.output : CROSS_MODEL.output.replace('/expansion/', `/batches/${basename(dir)}/`);
+export const crossModelCommand = (captures = '$EXPANSION_CAPTURES', dir = DIR) =>
   [
     'npm run eval:v2 --',
     `--provider codex --model ${CROSS_MODEL.model} --effort ${CROSS_MODEL.effort}`,
     `--prompt ${CROSS_MODEL.prompt} --selection ${CROSS_MODEL.selection}`,
     `--codex-output-tokens ${CROSS_MODEL.codexOutputTokens}`,
-    `--corpus ${DIR} --captures ${captures}`,
+    `--corpus ${dir} --captures ${captures}`,
     `--split heldout --allow-heldout --concurrency ${CROSS_MODEL.concurrency}`,
-    `--output ${CROSS_MODEL.output}`,
+    `--output ${crossModelOutput(dir)}`,
   ].join(' ');
 
 const DISCLOSURE =
@@ -128,7 +132,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     },
   });
   if (values['print-command']) {
-    console.log(crossModelCommand(values.captures ?? '$EXPANSION_CAPTURES'));
+    console.log(crossModelCommand(values.captures ?? '$EXPANSION_CAPTURES', values.dir));
     process.exit(0);
   }
   if (!values.captures || !values.traces)

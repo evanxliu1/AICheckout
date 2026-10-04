@@ -7,6 +7,8 @@
 //   npm run pipeline -- run <capture|extract|draft|apply|build|eval> [--batch B] [--only ids] [--concurrency N]
 //                           [--wait-minutes N]
 //   npm run pipeline -- rebase-anchors [--batch B]
+//   npm run pipeline -- eval [--batch B] [--cross-model-run DIR]
+//   npm run pipeline -- handoff [--batch B]
 //
 // Exit status: 0 done, 1 error or failed gate, 2 usage or not built yet, 3 usage limit (extract paused).
 import { spawn } from 'node:child_process';
@@ -16,6 +18,8 @@ import { parseArgs } from 'node:util';
 import { deriveBatch, nextStep } from './derive.ts';
 import type { BatchView, NextStep } from './derive.ts';
 import { batchDir, batchFileSchema, listBatches, loadBatch, slugify, statePath } from './files.ts';
+import { runEval } from './eval.ts';
+import { handoff } from './handoff.ts';
 import { rebaseAnchors } from './rebase.ts';
 import { runStage } from './run.ts';
 import type { Env } from './run.ts';
@@ -36,7 +40,9 @@ const USAGE = `Usage: npm run pipeline -- <command>
   status [--batch B] [--json]
   next [--batch B] [--json]
   run <${CLI_STAGES.join('|')}> [--batch B] [--only ids] [--concurrency N] [--wait-minutes N]
-  rebase-anchors [--batch B]`;
+  rebase-anchors [--batch B]
+  eval [--batch B] [--cross-model-run DIR]
+  handoff [--batch B]`;
 
 const list = (value: string | undefined): string[] =>
   (value ?? '')
@@ -207,6 +213,7 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
         only: { type: 'string' },
         concurrency: { type: 'string' },
         'wait-minutes': { type: 'string' },
+        'cross-model-run': { type: 'string' },
       },
     });
     switch (command) {
@@ -256,8 +263,15 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
           only: values.only ? list(values.only) : undefined,
           concurrency,
           waitMinutes,
+          crossModelRun: values['cross-model-run'],
         });
       }
+      case 'eval':
+        return await runEval(env, await oneBatch(env, values.batch), {
+          crossModelRun: values['cross-model-run'],
+        });
+      case 'handoff':
+        return await handoff(env, values.batch);
       case 'rebase-anchors': {
         const result = await rebaseAnchors(env, await oneBatch(env, values.batch));
         env.log(

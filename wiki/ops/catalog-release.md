@@ -6,7 +6,7 @@ status: stable
 tags: [ops, catalog, release, review]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T06:45:00Z
+  at: 2026-10-04T01:40:00Z
 stale_after: 2026-11-01T00:00:00Z
 sources:
   - resource: ../../apps/review/src/StartDraft.tsx
@@ -99,6 +99,10 @@ Evan's directive of 2026-10-03, first used for release 2. The coordinating sessi
 3. Update [now](../now.md), [hosting](hosting.md#facts) (published catalog row), the [roadmap](../product/roadmap.md) (Stage 2 done) and [log](../log.md).
 
 For release 2 (2026-10-03), step 2 was done without a loaded `build:hosted` extension: the served body was passed through the extension's own `prepareCatalogUpdate` with release 1 cached, which accepted it and put it in effect ([release 2](#release-2-published-2026-10-03)).
+
+## Publishing a pipeline batch
+
+For a catalog built from a Phase 8 pipeline batch, start with `npm run pipeline -- handoff --batch <batch>` in the checkout that holds the batch's captures. It prints the PR checklist, the build report summary (version, verifiedAt, expiresAt, rule-ID changes), migrations, the capture folders to select in step 3 (one per layer the catalog uses, as absolute paths with file counts) and these steps, and exits 1 while the batch is not ready. The review app matches captures only against the manifests `apps/review/src/manifest.ts` bundles, so a batch's new captures need its manifest added there (a product change, its own PR and a Render deploy) before Evan can publish; `handoff` lists the sources it would not match ([pipeline](../system/card-expansion-pipeline.md#built-so-far)).
 
 ## If something is blocked
 
