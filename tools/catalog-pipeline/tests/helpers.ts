@@ -1,5 +1,6 @@
 // A throwaway repository root with the synthetic fixture batch, and stub commands standing in for the wrapped
 // scripts. Captures and traces are a few fake words written here; no issuer text is ever involved.
+import { execFile } from 'node:child_process';
 import { cp, mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -18,6 +19,11 @@ export const BATCH = 'example-bank-2026-10';
 export const FIXTURE = fileURLToPath(new URL(`./fixtures/${BATCH}/`, import.meta.url));
 export const ALPHA = 'example-bank-alpha';
 export const BETA = 'example-bank-beta';
+export const REPO = fileURLToPath(new URL('../../../', import.meta.url));
+
+/** The synthetic text of every fixture capture: a few fake sentences, never issuer text. */
+export const captureText = (id: string): string =>
+  `Synthetic page ${id}. fake alpha words 2% back. fake beta words 3X points. fake beta words 1X points. fake beta words three. fake hint words.\n`;
 
 export interface Harness {
   env: Env;
@@ -29,6 +35,8 @@ export interface Harness {
   extractExit: number[];
   /** The stub extract's trace status, and whether it hits the usage limit only after writing every trace. */
   extract: { status: string; limitAfterTraces: boolean };
+  /** The text the stub capture writes for a source (change it to simulate a changed page). */
+  capture: { text: (id: string) => string };
   clock: { now: Date };
   run: (...argv: string[]) => Promise<number>;
   view: () => Promise<BatchView>;
@@ -45,6 +53,21 @@ export async function harness(): Promise<Harness> {
   const calls: string[][] = [];
   const extractExit: number[] = [];
   const extract = { status: 'evidence_valid', limitAfterTraces: false };
+  const capture = { text: captureText };
+  // The build config with this batch as its only layer, and the frozen program table and merchants it names.
+  for (const name of ['reward-programs.json', 'merchants.json'])
+    await cp(join(REPO, 'evals/curation/expansion', name), join(root, 'evals/curation/expansion', name));
+  await writeFile(
+    join(root, 'evals/curation/catalog-batches.json'),
+    json({
+      schemaVersion: 1,
+      description: 'Test build config.',
+      version: '2026-10-04.test.1',
+      programTable: 'evals/curation/expansion/reward-programs.json',
+      merchants: 'evals/curation/expansion/merchants.json',
+      layers: [{ kind: 'batch', id: BATCH, dropped: {} }],
+    }),
+  );
   const clock = { now: new Date('2026-10-04T10:00:00Z') };
 
   const exec = async (command: string, args: string[]): Promise<number> => {
@@ -53,26 +76,45 @@ export async function harness(): Promise<Harness> {
     const script = command === 'npm' ? args.join(' ') : args[0];
     switch (script) {
       case 'scripts/capture-issuer-pages.mjs': {
+        // Mirrors the script: the manifest entry is the source plus date, hash and length; --protect keeps an
+        // existing capture whose text changed and reports the source as failed.
         const ids = flag('--only').split(',');
+        const protect = new Set(args.includes('--protect') ? flag('--protect').split(',') : []);
         const manifestPath = join(dir, 'manifest.json');
         const previous = await readFile(manifestPath, 'utf8')
           .then((text) => JSON.parse(text).sources as { id: string }[])
           .catch(() => []);
         const byId = new Map(previous.map((entry) => [entry.id, entry]));
+        const sources = JSON.parse(await readFile(join(dir, 'sources.json'), 'utf8')).sources as {
+          id: string;
+        }[];
         await mkdir(join(dir, 'captures'), { recursive: true });
+        const report = [];
         for (const id of ids) {
-          const text = `fake capture words for ${id}\n`;
-          await writeFile(join(dir, 'captures', `${id}.txt`), text);
+          const text = capture.text(id);
+          const path = join(dir, 'captures', `${id}.txt`);
+          const existing = await readFile(path, 'utf8').catch(() => null);
+          if (protect.has(id) && existing !== null && sha256Hex(existing) !== sha256Hex(text)) {
+            report.push({
+              id,
+              ok: false,
+              error: 'changed-capture-kept',
+              flags: ['CHANGED since last capture'],
+            });
+            continue;
+          }
+          await writeFile(path, text);
           byId.set(id, {
-            id,
+            ...sources.find((source) => source.id === id),
             capturedOn: '2026-10-04',
             sha256: sha256Hex(text),
             length: text.length,
           } as never);
+          report.push({ id, ok: true, flags: [] });
         }
         await writeFile(manifestPath, json({ schemaVersion: 1, sources: [...byId.values()] }));
-        await writeFile(join(dir, flag('--report')), json(ids.map((id) => ({ id, ok: true, flags: [] }))));
-        return 0;
+        await writeFile(join(dir, flag('--report')), json(report));
+        return report.every((row) => row.ok) ? 0 : 1;
       }
       case 'scripts/expansion-capture-report.mjs':
         return 0;
@@ -112,7 +154,15 @@ export async function harness(): Promise<Harness> {
         return 0;
       case 'scripts/apply-expansion-verification.mjs':
         await cp(join(FIXTURE, 'corpus.json'), join(dir, 'corpus.json'));
+        await cp(join(FIXTURE, 'product-notes.verified.json'), join(dir, 'product-notes.verified.json'));
         return 0;
+      case 'scripts/build-expansion-cards.mjs':
+        // The real consolidation, on the temporary batch directory.
+        return new Promise((done) =>
+          execFile('node', [join(REPO, script), '--dir', join(root, flag('--dir'))], (error) =>
+            done(error ? 1 : 0),
+          ),
+        );
       case 'run catalog:v3':
         return 0;
       default:
@@ -139,6 +189,7 @@ export async function harness(): Promise<Harness> {
     calls,
     extractExit,
     extract,
+    capture,
     clock,
     run,
     view: async () => deriveBatch(await loadBatch(root, BATCH), clock.now),

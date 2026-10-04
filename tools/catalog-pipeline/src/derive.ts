@@ -430,7 +430,7 @@ function agentStep(
     cardIds: cardIds.length ? cardIds : undefined,
     agent: AGENTS[stage],
     command: pipeline(`claim ${stage} --batch ${batch} --issuer ${issuer}`),
-    reason: `${reason}; claim the packet, start ${AGENTS[stage]}, then accept (claim/accept arrive in milestone 3)`,
+    reason: `${reason}; claim the packet, start ${AGENTS[stage]} with it, then accept (an open packet: accept or release it)`,
   };
 }
 

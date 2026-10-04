@@ -4,11 +4,19 @@ import { mkdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { deriveBatch } from './derive.ts';
 import type { BatchView } from './derive.ts';
-import { captureReportSchema, loadBatch, statePath, traceFileSchema } from './files.ts';
+import { loadBatch, statePath, traceFileSchema } from './files.ts';
+import { captureRecord, capturePlan, latestRows } from './capture.ts';
 import type { Batch } from './files.ts';
 import { fileSha256, jsonSha256, labelsHash, anchorsHash } from './hash.ts';
 import { EXTRACT_CONFIG, STAGE_VERSIONS } from './inputs.ts';
-import { emptyCardState, writeState } from './state.ts';
+import { emptyCardState, writeJsonAtomic, writeState } from './state.ts';
+import { applyLint, quoteGate } from './gates.ts';
+import type { CorpusCaseLike } from './label-lint.ts';
+import {
+  BATCHES_CONFIG_PATH,
+  batchesConfigSchema,
+  sha256Json,
+} from '../../../scripts/lib/catalog-batches.mjs';
 import type { CardStage, CliStage, Stage, StageRecord } from './state.ts';
 
 export type Exec = (command: string, args: string[]) => Promise<number>;
@@ -85,6 +93,7 @@ export async function runStage(
       env.log(`run build: not ready (${view.build.status}); every active card's overlay must be done.`);
       return 1;
     }
+    await registerBatch(env.root, batch);
     const code = await env.exec('npm', ['run', 'catalog:v3']);
     const catalog = await fileSha256(join(env.root, 'packages/rewards-core/src/catalog-v3.ts'));
     batch.state.batchStages.build = {
@@ -134,62 +143,46 @@ export async function runStage(
   env.log(`run ${stage}: ${targets.length} card(s): ${targets.join(', ')}`);
 
   if (stage === 'capture') {
-    const sourceIds = [
-      ...new Set(targets.flatMap((id) => batch.cards.find((card) => card.id === id)!.sourceIds)),
-    ];
-    const reportName = `parts/report.pipeline-${env.now().toISOString().replace(/[:.]/g, '-')}.json`;
-    await mkdir(join(batch.dir, 'parts'), { recursive: true });
-    const args = [
-      'scripts/capture-issuer-pages.mjs',
-      '--dir',
-      batch.rel,
-      '--only',
-      sourceIds.join(','),
-      '--delay-ms',
-      String(CAPTURE_DELAY_MS),
-      '--report',
-      reportName,
-    ];
-    if (await fileSha256(join(batch.dir, 'capture-hints.json')))
-      args.push('--hints', `${batch.rel}/capture-hints.json`);
-    const code = await env.exec('node', args);
-    await env.exec('node', ['scripts/expansion-capture-report.mjs', '--dir', batch.rel]);
-    const report = await readFile(join(batch.dir, reportName), 'utf8')
-      .then((text) => captureReportSchema.parse(JSON.parse(text)))
-      .catch(() => []);
-    const reportById = new Map(report.map((row) => [row.id, row]));
+    const plan = await capturePlan(batch, targets, await latestRows(batch));
+    let code = 0;
+    if (plan.fetch.length) {
+      const reportName = `parts/report.pipeline-${env.now().toISOString().replace(/[:.]/g, '-')}.json`;
+      await mkdir(join(batch.dir, 'parts'), { recursive: true });
+      const args = [
+        'scripts/capture-issuer-pages.mjs',
+        '--dir',
+        batch.rel,
+        '--only',
+        plan.fetch.join(','),
+        '--delay-ms',
+        String(CAPTURE_DELAY_MS),
+        '--report',
+        reportName,
+      ];
+      if (plan.protect.length) args.push('--protect', plan.protect.join(','));
+      if (await fileSha256(join(batch.dir, 'capture-hints.json')))
+        args.push('--hints', `${batch.rel}/capture-hints.json`);
+      code = await env.exec('node', args);
+      await env.exec('node', ['scripts/expansion-capture-report.mjs', '--dir', batch.rel, '--batch']);
+    }
+    const state = batch.state;
     batch = await loadBatch(env.root, batchId);
+    batch.state = state;
     view = await deriveBatch(batch, env.now());
-    for (const id of targets) {
-      const card = batch.cards.find((entry) => entry.id === id)!;
-      const outputs = [];
-      let flags = 0;
-      for (const sourceId of card.sourceIds) {
-        const row = reportById.get(sourceId);
-        const entry = batch.manifest.get(sourceId);
-        const file = await fileSha256(join(batch.dir, 'captures', `${sourceId}.txt`));
-        if (!row?.ok || !entry || file !== entry.sha256) flags++;
-        else flags += row.flags?.length ? 1 : 0;
-        if (entry) outputs.push({ ref: `manifest:${sourceId}`, sha256: entry.sha256 });
-      }
+    const rows = await latestRows(batch);
+    for (const id of targets)
       setCard(
         batch,
         id,
         'capture',
-        record(
-          'capture',
+        await captureRecord(
+          batch,
           view,
-          id,
-          {
-            status: flags ? 'failed-gate' : 'done',
-            outputs,
-            metrics: { sources: card.sourceIds.length, flags },
-            ...(flags ? { reason: 'capture-flagged' } : {}),
-          },
+          batch.cards.find((card) => card.id === id)!,
+          rows,
           env.now(),
         ),
       );
-    }
     await writeState(statePath(batch.dir), batch.state, env.now());
     return code === 0 ? 0 : 1;
   }
@@ -308,6 +301,25 @@ export async function runStage(
     `${batch.id}.v1`,
   ]);
   batch = await loadBatch(env.root, batchId);
+  // The apply gate on the written corpus: the label-evidence lint (checks a–c) per card and the quote check.
+  const gateErrors = new Map<string, string[]>();
+  if (code === 0) {
+    const cases = batch.corpus as unknown as Map<string, CorpusCaseLike>;
+    for (const id of targets) {
+      const errors = applyLint(cases, [id]);
+      if (errors.length) gateErrors.set(id, errors);
+    }
+    const quotes = await quoteGate(batch);
+    if (quotes.length)
+      for (const id of targets) gateErrors.set(id, [...(gateErrors.get(id) ?? []), ...quotes]);
+    const printed = new Set<string>();
+    for (const [id, errors] of gateErrors)
+      for (const error of errors)
+        if (!printed.has(error)) {
+          printed.add(error);
+          env.log(`run apply: ${id}: ${error}`);
+        }
+  }
   for (const id of targets) {
     const corpusCase = batch.corpus.get(id);
     const findings = batch.findings.get(id)?.card;
@@ -321,6 +333,7 @@ export async function runStage(
       batch.state.cards[id].dropped = 'drop-card';
       continue;
     }
+    const failed = gateErrors.get(id);
     setCard(
       batch,
       id,
@@ -329,15 +342,76 @@ export async function runStage(
         'apply',
         view,
         id,
-        code === 0 && corpusCase
+        code === 0 && corpusCase && !failed
           ? { status: 'done', outputs: [{ ref: `corpus:${id}`, sha256: jsonSha256(corpusCase) }] }
-          : { status: 'failed-gate', reason: code === 0 ? 'not-in-corpus' : 'apply-errors' },
+          : {
+              status: 'failed-gate',
+              reason:
+                code !== 0
+                  ? 'apply-errors'
+                  : !corpusCase
+                    ? 'not-in-corpus'
+                    : failed!.some((error) => error.startsWith('label lint'))
+                      ? 'label-lint'
+                      : 'quote-check',
+            },
         env.now(),
       ),
     );
   }
   await writeState(statePath(batch.dir), batch.state, env.now());
-  return code === 0 ? 0 : 1;
+  if (code === 0 && !gateErrors.size) {
+    const restamped = await restampOverlay(env, batchId);
+    if (restamped.length)
+      env.log(`run apply: re-stamped corpusCaseSha256 in catalog-overlay.json for ${restamped.join(', ')}.`);
+  }
+  return code === 0 && !gateErrors.size ? 0 : 1;
+}
+
+/**
+ * After an anchor-only change (design rule 3) the overlay stays done but its pairing hash names the old corpus case:
+ * once apply and the quote check pass, `corpusCaseSha256` is re-stamped for every card whose overlay is done.
+ */
+export async function restampOverlay(env: Env, batchId: string): Promise<string[]> {
+  const batch = await loadBatch(env.root, batchId);
+  const path = join(batch.dir, 'catalog-overlay.json');
+  const text = await readFile(path, 'utf8').catch(() => null);
+  if (text === null) return [];
+  const overlay = JSON.parse(text) as { cards: { cardId: string; corpusCaseSha256?: string }[] };
+  const view = await deriveBatch(batch, env.now());
+  const restamped: string[] = [];
+  for (const entry of overlay.cards) {
+    const card = view.cards.find((item) => item.cardId === entry.cardId);
+    const corpusCase = batch.corpus.get(entry.cardId);
+    if (!card || !corpusCase || card.stages.overlay.status !== 'done') continue;
+    const hash = sha256Json(corpusCase) as string;
+    if (entry.corpusCaseSha256 === hash) continue;
+    entry.corpusCaseSha256 = hash;
+    restamped.push(entry.cardId);
+  }
+  if (restamped.length) await writeJsonAtomic(path, overlay);
+  return restamped;
+}
+
+/** Registers the batch as the newest layer of the build config, with its dropped cards from state. */
+export async function registerBatch(root: string, batch: Batch): Promise<void> {
+  const path = join(root, BATCHES_CONFIG_PATH);
+  const config = batchesConfigSchema.parse(JSON.parse(await readFile(path, 'utf8'))) as {
+    layers: ({ kind: string; id: string } & Record<string, unknown>)[];
+  };
+  const inCorpus = new Set(batch.corpus.keys());
+  const dropped: Record<string, string> = {};
+  for (const [cardId, card] of Object.entries(batch.state.cards).sort(([a], [b]) => (a < b ? -1 : 1))) {
+    if (card.dropped) dropped[cardId] = card.dropped;
+    else if (card.heldOut && !inCorpus.has(cardId)) dropped[cardId] = card.heldOut;
+  }
+  const layer = { kind: 'batch', id: batch.id, dropped };
+  const index = config.layers.findIndex((entry) => entry.kind === 'batch' && entry.id === batch.id);
+  if (index >= 0) config.layers[index] = layer;
+  else config.layers.push(layer);
+  const before = await readFile(path, 'utf8');
+  const after = JSON.stringify(config, null, 2) + '\n';
+  if (after !== before) await writeJsonAtomic(path, config);
 }
 
 async function readTrace(batch: Batch, cardId: string) {

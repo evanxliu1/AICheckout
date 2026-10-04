@@ -152,13 +152,15 @@ describe('status and next through the stages', () => {
     expect(status.batches[0].counts.apply).toEqual({ done: 2 });
   });
 
-  it('lists open packets and never writes a queue file', async () => {
+  it('lists packet files it cannot read as invalid and never writes a queue file', async () => {
     const h = await harness();
     await initWithResearch(h);
     await mkdir(join(h.dir, 'pipeline/packets'), { recursive: true });
     await writeFile(join(h.dir, 'pipeline/packets/verify.example-bank.1.json'), '{}');
     const status = await h.json<{ batches: StatusJson[] }>('status');
-    expect(status.batches[0].packets).toEqual(['verify.example-bank.1.json']);
+    expect(status.batches[0].packets).toEqual([
+      { file: 'verify.example-bank.1.json', output: 'invalid-packet' },
+    ]);
     expect((await readdir(join(h.dir, 'pipeline'))).sort()).toEqual(['batch.json', 'packets', 'state.json']);
   });
 

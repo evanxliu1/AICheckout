@@ -1,21 +1,26 @@
 // Consolidate the issuer research drafts into the card list and capture sources for the catalog expansion.
 //
-//   node scripts/build-expansion-cards.mjs
+//   node scripts/build-expansion-cards.mjs [--dir <pipeline batch dir>]
 //
 // Reads docs/research/cards-2026/*.json (agent research drafts; values are unverified) and writes:
 //   evals/curation/expansion/cards.json       cards to capture, extract, and label
 //   evals/curation/expansion/exclusions.json  cards left out, with the reason
 //   evals/curation/expansion/sources.json     official pages to capture (same format as real/sources.json)
 //
+// With --dir (the pipeline's research accept), it reads <dir>/research/*.json and writes the same four files into <dir>.
+//
 // Nothing from the research goes into the catalog: it only chooses which cards and pages to capture. Rates
 // come later from the captures (LLM extraction, then independent verification).
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parseArgs } from 'node:util';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const researchDir = join(root, 'docs/research/cards-2026');
-const outDir = join(root, 'evals/curation/expansion');
+const { values } = parseArgs({ options: { dir: { type: 'string' } } });
+const batchDir = values.dir ? resolve(root, values.dir) : null;
+const researchDir = batchDir ? join(batchDir, 'research') : join(root, 'docs/research/cards-2026');
+const outDir = batchDir ?? join(root, 'evals/curation/expansion');
 
 /** Cards already labeled in evals/curation/real. */
 const ALREADY_LABELED = new Set([
@@ -217,7 +222,7 @@ const files = readdirSync(researchDir)
   .filter((name) => name.endsWith('.json'))
   .sort();
 const research = files.map((name) => ({
-  file: `docs/research/cards-2026/${name}`,
+  file: `${relative(root, researchDir)}/${name}`,
   ...JSON.parse(readFileSync(join(researchDir, name), 'utf8')),
 }));
 

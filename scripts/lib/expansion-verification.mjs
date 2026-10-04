@@ -154,6 +154,17 @@ const agentSchema = z.strictObject({
 });
 export const verificationFileSchema = z.strictObject({
   schemaVersion: z.literal(1),
+  /** Pipeline batches only (tools/catalog-pipeline): the work packet of the agent that last wrote the file, its batch
+   * and the provenance the gate requires. Optional, so the frozen `expansion.v1` files still validate. */
+  packetId: z
+    .string()
+    .regex(/^[A-Za-z0-9][A-Za-z0-9._:/-]{0,99}$/)
+    .optional(),
+  batch: z
+    .string()
+    .regex(/^[a-z0-9-]+-\d{4}-\d{2}$/)
+    .optional(),
+  provenance: z.literal('agent-verified').optional(),
   issuer: z.string().min(1).max(80),
   verifier: agentSchema.extend({ filesRead: agentSchema.shape.filesRead.min(1) }),
   /** The second pass; null until an adjudicator has decided every finding in the file. */
