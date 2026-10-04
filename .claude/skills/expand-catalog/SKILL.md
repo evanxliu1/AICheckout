@@ -1,52 +1,66 @@
 ---
 name: expand-catalog
-description: DRAFT (2026-10-02, not yet usable; the pipeline CLI is built in Phase 8). Use when Evan asks to add cards or issuers to the AI Checkout card catalog ("expand to issuer X, these cards", "refresh the Chase cards", "check the catalog sources are still current"). Drives the tools/catalog-pipeline CLI through research, capture, extraction, drafting, subagent verification and adjudication, overlay, build and eval, and stops at a ready branch; Evan publishes.
+description: Use when Evan asks to add, refresh or check cards in the AI Checkout card catalog, in any words ("expand Wells Fargo as a new batch", "add these Chase cards", "refresh the Citi cards", "add issuer X with these cards"). Drives the tools/catalog-pipeline CLI (`npm run pipeline -- next --json` in a loop) through research, capture, extraction, drafting, subagent verification and adjudication, apply, overlay, build and eval, and stops at a ready branch and `pipeline handoff`; Evan publishes.
 ---
 
-# Expand the card catalog (DRAFT)
+# Expand the card catalog
 
-> **Draft, 2026-10-02 (Phase 7 Stage 2 M11).** The `pipeline` CLI this skill drives does not exist yet; it is built in Phase 8. Until then, do not follow this playbook: use the Stage 1 scripts as described in `wiki/system/catalog-expansion.md`. Design: `wiki/system/card-expansion-pipeline.md`. Decision (proposed): `wiki/decisions/2026-10-02-agent-driven-card-pipeline.md`.
+Design: `wiki/system/card-expansion-pipeline.md`. CLI: `tools/catalog-pipeline/README.md`. Every command below is `npm run pipeline -- <command>`.
 
 ## Before anything
 
-1. Read `AGENTS.md`, `wiki/now.md` and `wiki/system/card-expansion-pipeline.md`. Follow the session protocol (update the wiki last).
-2. Work in the checkout that has the captures (they are gitignored). Run `pipeline status`; if a batch for this request exists, resume it instead of starting another.
-3. Restate the request as a batch: issuer(s), card names, refresh or new. If the card list or scope is unclear (business cards, closed products, store cards), ask Evan once, then record his answer in `batch.json`.
+1. Read `AGENTS.md`, `wiki/now.md` and the design page. Follow the session protocol (wiki last).
+2. Work in the checkout that holds (or will hold) the batch's captures; they are gitignored and never leave it. Run `pipeline status`; if a batch for this request exists, resume it.
+3. Restate the request as a batch: id `<issuer-slug>-<YYYY-MM>`, issuer, card names, refresh or new. **Scope questions go to Evan before `init`**: an issuer outside the top 10 (Chase, American Express, Citi, Capital One, Bank of America, Wells Fargo, Discover, U.S. Bank, Barclays, Synchrony), business cards, or an unclear card list. Put his answer in `--summary` (at most 300 characters, his words, no issuer text).
+4. Branch from the latest `origin/main`, then `pipeline init <batch> --issuer "<Name>" --cards "<a, b>" --domains <issuer domains> [--refresh] --summary "<request>"`. Use `--refresh` when any card is already in a released corpus.
 
 ## Hard rules
 
-- **Never publish** a catalog release, never sign in to any hosted service (review app, Supabase, Render, GitHub web), never push `main` or merge. The run ends at a committed branch and `pipeline handoff`; Evan publishes in the review app.
-- **Never re-capture over a frozen capture.** A capture file is never overwritten or edited. A changed page becomes a new dated capture in a new batch (`pipeline freshness`). Never edit released corpora (`real.v2.2`, `expansion.v1`), released prompt versions or validator versions, and never tune prompts on held-out data.
-- **Models only through local subscription CLIs.** Extraction runs through the CLI (Codex, gpt-5.6-luna `xhigh`); judgment steps run as Claude Code subagents. No paid API keys, no local models, nothing on Render or CI.
-- **Reviews by subagents.** Every verification and adjudication goes to a separate, independent subagent; a verifier never adjudicates its own findings. Record provenance as `agent-verified`, never `human-verified`.
-- **Quotes of at most 25 words**, verbatim from one capture, and quotes of one item must not overlap or abut into a longer run. Run the quote check before every commit of expansion files. Never paste capture text into chat, commits, PRs or the wiki.
-- **Safety on issuer and retailer sites.** Never type secrets, create accounts, apply for cards, accept terms or submit forms.
-- Use absolute dates (`YYYY-MM-DD`).
+- **Never publish** a catalog release, never sign in to any hosted service, never push `main`, never merge. The run ends at a pushed branch, a PR the session opens and the `pipeline handoff` checklist. The coordinator merges under Evan's standing authorization only after CI and an independent reviewer subagent pass; Evan publishes in the review app.
+- **Ask Evan only** for a `scope-question` and for `publish`. Everything else is the session's.
+- **Captures are frozen.** Never edit or overwrite a capture; a changed page is a new dated capture in a new batch. Never edit released corpora (`real.v2.2`, `expansion.v1`), released prompts or validator versions; never tune prompts on held-out data.
+- **Models only through local subscription CLIs.** Extraction runs inside `pipeline run extract` (Codex); judgment steps are Claude Code subagents. No API keys, no local models, nothing on Render or CI.
+- **Quotes at most 25 words**, verbatim from one capture, no overlapping or abutting runs. Never paste capture text into chat, commits, PRs or the wiki.
+- **Safety on issuer sites**: no secrets, accounts, applications, terms or form submissions.
+- Absolute dates (`YYYY-MM-DD`). Provenance is `agent-verified`, never `human-verified`.
 
 ## The loop
 
-```
-pipeline init --batch <issuer-slug>-<YYYY-MM> --issuer "<Issuer>" --cards "<names>"
-repeat:
-  pipeline next --json
-```
-
-Act on the `kind` it returns:
+Repeat `pipeline next --batch <batch> --json` and act on `kind`:
 
 | kind | Do |
 | --- | --- |
-| `cli` | Run the printed command (capture, extract, validate, draft, apply, build, eval). On exit 3 (usage limit), report the pause and either wait (`--wait-minutes`) or stop. |
-| `agent` | Start the named subagent with the printed work packet: `card-researcher` (research), `card-verifier` (verify, one per issuer), `card-adjudicator` (adjudicate, one per issuer, never the same run as the verifier), the overlay author (overlay, per M4). Then run `pipeline accept <stage> --issuer <slug>`. If the gate fails, send the subagent the gate errors (file and field names only) and accept again. |
-| `queue` | Resolve the review-queue items owned by the session (capture hints, re-runs, conventions). Ask Evan only for items owned by `evan` (scope questions). |
-| `wait` | A pause is in effect; report the time and stop or wait. |
-| `handoff` | Run `pipeline handoff`, commit, and report its checklist to Evan. Stop. |
+| `cli` | Run the printed `command` (`pipeline run <stage>` or `pipeline rebase-anchors`). Exit 3 from `run extract` is a Codex usage limit: the cards are `paused`; re-run later or with `--wait-minutes N`. Exit 1: read the errors, fix the cause, run again. |
+| `agent` | Run the printed `pipeline claim` command, then start the named subagent (Agent stages, below). |
+| `queue` | `gate-failed` on an agent stage: send that agent the gate errors and accept again (below). `gate-failed` on a CLI stage (two failed runs): fix the cause. `capture-flagged`: read `capture-report.md`; add a capture hint and re-run capture, or `pipeline resolve capture-flagged --source <id> --reason expected-short-page\|false-positive-flag\|keep-existing-capture`. `inputs-missing`: wrong checkout; stop. `scope-question`: ask Evan. `convention-needed`: see Conventions. |
+| `wait` | A usage-limit pause (`until`) or an open packet: report and wait, or stop; nothing is lost. |
+| `handoff` | See Finish. |
 
-Commit after every accepted stage (state records and committed outputs only; never captures or traces), with messages that name the batch and stage.
+## Agent stages
+
+| Stage | Subagent | Pinned model (`--model`) |
+| --- | --- | --- |
+| research | `card-researcher` | `claude-opus-5-5` |
+| verify | `card-verifier` | `claude-opus-5-5` |
+| adjudicate | `card-adjudicator` | `claude-fable-5-1` |
+| overlay | `card-overlay-author` | `claude-opus-5-5` |
+
+1. `pipeline claim <stage> --batch <batch> --issuer <slug>` prints the packet path. **One agent per open packet**; never start a second agent on a packet.
+2. Start the subagent (Agent tool, `subagent_type` as above) in this checkout, **never with `isolation: worktree`**. The prompt gives only the absolute packet path, the batch and the issuer slug, and says: write only the packet's `output`, never under a scratchpad, and run the dry-run accept before reporting.
+3. From the completion notice take the agent ID, `duration_ms` and `total_tokens`. Note per packet: packet file, `packetId`, agent ID.
+4. The chat report is only a pointer; `accept` reads the file: `pipeline accept <stage> --batch <batch> --issuer <slug> --agent-run <agent ID> --model <pinned model> --duration-ms <ms> --tokens <n>`.
+5. On a failed gate, send the **same** agent (SendMessage to its ID) the gate errors as printed (paths and field names only, never capture text), then accept again with the same `--agent-run`. After two failed rounds, `pipeline claim <stage> --batch <batch> --issuer <slug> --release` and claim afresh for a new agent.
+6. The **verifier and adjudicator are always different runs** (accept refuses otherwise). Claim adjudicate only after verify is accepted.
+7. `questions` in the accepted research file are scope questions: ask Evan before capture. If his answer changes the card list, tell him the batch must be re-initialised (the CLI cannot amend `batch.json`).
 
 ## Conventions
 
-New labelling judgment calls go into `evals/curation/batches/<batch>/verification/conventions/` (general rules stay consistent with `evals/curation/expansion/verification/conventions/general.md`). A convention change makes adjudication stale for the affected cards; re-adjudicate, do not hand-edit labels.
+Batch conventions live in `evals/curation/batches/<batch>/verification/conventions/` (`general.md`, `<issuer-slug>.md`); where a file is absent, agents read the frozen one in `evals/curation/expansion/verification/conventions/`. When an adjudicator or overlay author reports `convention-needed`, release its packet, write the dated convention in the batch's folder (consistent with the frozen `general.md`; ask Evan only if it is a scope matter), commit it and claim again: conventions are adjudicate inputs, so the affected cards re-adjudicate. Never hand-edit labels.
+
+## Commits
+
+After every accepted stage, and every CLI stage that writes committed files: first `node scripts/check-expansion-quotes.mjs --dir evals/curation/batches/<batch>`, then commit `pipeline/state.json`, `pipeline/batch.json` and the stage's committed outputs (never `captures/`, `extractions/`, `parts/` or `pipeline/packets/`), message `Batch <batch>: <stage> <issuer> accepted`. Push the branch (`git push -u origin <branch>`), never `main`.
 
 ## Finish
 
-`pipeline status` shows every card `done`, `dropped` or held out with a reason; `npm run lint`, `format:check`, `typecheck`, `npm test` and `python3 scripts/lint_wiki.py` pass; `wiki/now.md` and `wiki/log.md` are updated. Report to Evan: batch, branch, cards added/dropped/held out, metrics summary, the handoff checklist (publish steps and the release expiry date).
+On `handoff`: run `pipeline handoff --batch <batch>` and work through its PR checklist (`npm run lint`, `format:check`, `typecheck`, `npm test`, `python3 scripts/lint_wiki.py`, the quote check with every capture folder; `wiki/now.md`, `wiki/log.md` and the pages it names). Start an independent reviewer subagent on the branch, fix its findings, then open the PR. Report to Evan: batch, branch, PR, cards added, dropped and held out with reasons, the eval summary, the handoff's publish steps with release version and expiry, and any "publish blocked" line. Stop there.
