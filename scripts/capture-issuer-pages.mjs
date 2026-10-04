@@ -2,7 +2,7 @@
 //
 //   node scripts/capture-issuer-pages.mjs [--dir evals/curation/real] [--only id,id]
 //     [--sources sources.json] [--captures captures] [--manifest manifest.json]
-//     [--delay-ms 0] [--hints hints.json] [--report report.json] [--protect id,id]
+//     [--delay-ms 0] [--hints hints.json] [--report report.json] [--protect id,id] [--renderer renderer.json]
 //
 // Reads <dir>/sources.json, saves each page's rendered text to <dir>/captures/<id>.txt (gitignored: issuer
 // text is copyrighted), and records URL, date, SHA-256, and length in <dir>/manifest.json (committed).
@@ -20,17 +20,21 @@
 // that text is on the page, `request` fetches the HTML without the browser (for hosts that block headless
 // Chromium but serve static HTML) and renders it with scripts and subresources off. `--report` writes each source's status and flags as JSON. `--protect` lists
 // sources whose existing capture must never be overwritten with other text (the pipeline's capture gate): a changed
-// page is reported as failed (`changed-capture-kept`) and the old capture and manifest entry stay. Defaults change
-// nothing for the existing corpus.
+// page is reported as failed (`changed-capture-kept`) and the old capture and manifest entry stay. `--renderer` writes
+// the Playwright and Chromium versions as JSON (`pipeline freshness` records them). `--sources`, `--captures`,
+// `--manifest`, `--report` and `--renderer` are relative to `--dir` unless absolute (scripts/lib/capture-paths.mjs).
+// Defaults change nothing for the existing corpus.
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { createRequire } from 'node:module';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs, promisify } from 'node:util';
 import { chromium } from '@playwright/test';
 import { CHANGED_CAPTURE_KEPT, keepExistingCapture } from './lib/capture-guard.mjs';
+import { capturePaths } from './lib/capture-paths.mjs';
 import { revealStaticHtml } from './lib/static-html.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -45,14 +49,15 @@ const { values } = parseArgs({
     hints: { type: 'string' },
     report: { type: 'string' },
     protect: { type: 'string' },
+    renderer: { type: 'string' },
   },
 });
 const protectedIds = new Set(values.protect ? values.protect.split(',') : []);
 const delayMs = Number(values['delay-ms']);
-const hints = values.hints ? JSON.parse(await readFile(resolve(root, values.hints), 'utf8')) : {};
-const dir = resolve(root, values.dir);
-const { sources } = JSON.parse(await readFile(join(dir, values.sources), 'utf8'));
-const captures = join(dir, values.captures);
+const paths = capturePaths(root, values);
+const hints = paths.hints ? JSON.parse(await readFile(paths.hints, 'utf8')) : {};
+const { sources } = JSON.parse(await readFile(paths.sources, 'utf8'));
+const captures = paths.captures;
 const only = values.only ? new Set(values.only.split(',')) : null;
 const today = new Date().toISOString().slice(0, 10);
 const BOT_WALL =
@@ -164,13 +169,21 @@ async function requestText(browser, context, url) {
 }
 
 await mkdir(captures, { recursive: true });
-const manifestPath = join(dir, values.manifest);
+const manifestPath = paths.manifest;
 const previous = await readFile(manifestPath, 'utf8')
   .then((text) => JSON.parse(text).sources)
   .catch(() => []);
 const byId = new Map(previous.map((entry) => [entry.id, entry]));
 
 const browser = await chromium.launch({ headless: true });
+if (paths.renderer)
+  await writeFile(
+    paths.renderer,
+    JSON.stringify({
+      playwright: createRequire(import.meta.url)('@playwright/test/package.json').version,
+      chromium: browser.version(),
+    }) + '\n',
+  );
 const context = await browser.newContext({
   viewport: { width: 1280, height: 1600 },
   locale: 'en-US',
@@ -242,5 +255,5 @@ const manifest = {
     .sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id)),
 };
 await writeFile(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
-if (values.report) await writeFile(join(dir, values.report), JSON.stringify(report, null, 2) + '\n');
+if (paths.report) await writeFile(paths.report, JSON.stringify(report, null, 2) + '\n');
 console.log(rows.join('\n'));
