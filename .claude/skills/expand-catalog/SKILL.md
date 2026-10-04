@@ -32,7 +32,7 @@ Repeat `pipeline next --batch <batch> --json` and act on `kind`:
 | --- | --- |
 | `cli` | Run the printed `command` (`pipeline run <stage>` or `pipeline rebase-anchors`). Exit 3 from `run extract` is a Codex usage limit: the cards are `paused`; re-run later or with `--wait-minutes N`. Exit 1: read the errors, fix the cause, run again. |
 | `agent` | Run the printed `pipeline claim` command, then start the named subagent (Agent stages, below). |
-| `queue` | `gate-failed` on an agent stage: send that agent the gate errors and accept again (below). `gate-failed` on a CLI stage (two failed runs): fix the cause. `capture-flagged`: read `capture-report.md`; add a capture hint and re-run capture, or `pipeline resolve capture-flagged --source <id> --reason expected-short-page\|false-positive-flag\|keep-existing-capture`. `inputs-missing`: wrong checkout; stop. `scope-question`: ask Evan. `convention-needed`: see Conventions. |
+| `queue` | `gate-failed` on an agent stage: send that agent the gate errors and accept again (below). `gate-failed` on a CLI stage (two failed runs): fix the cause. `capture-flagged` (every flagged card in one step): read `capture-report.md`; add a capture hint and re-run capture, or `pipeline resolve capture-flagged --source <id> --reason expected-short-page\|false-positive-flag\|keep-existing-capture`. A source the batch cannot use (bot wall, error page, out of scope, duplicate): `pipeline drop-source --batch <batch> --source <id> --reason bot-wall\|error-page\|out-of-scope\|duplicate`, then run capture again; never remove a source by hand. `inputs-missing`: wrong checkout; stop. `scope-question`: ask Evan. `convention-needed`: see Conventions. |
 | `wait` | A usage-limit pause (`until`) or an open packet: report and wait, or stop; nothing is lost. |
 | `handoff` | See Finish. |
 
@@ -60,6 +60,10 @@ Batch conventions live in `evals/curation/batches/<batch>/verification/conventio
 ## Commits
 
 After every accepted stage, and every CLI stage that writes committed files: first `node scripts/check-expansion-quotes.mjs --dir evals/curation/batches/<batch>`, then commit `pipeline/state.json`, `pipeline/batch.json` and the stage's committed outputs (never `captures/`, `extractions/`, `parts/` or `pipeline/packets/`), message `Batch <batch>: <stage> <issuer> accepted`. Push the branch (`git push -u origin <branch>`), never `main`.
+
+## Build and versions
+
+A catalog version Evan has published (`publishedVersions` in `evals/curation/catalog-batches.json`) is never rebuilt with other contents. While the config's version is published, `next` prints `pipeline run build --batch <batch> --proposed --version <YYYY-MM-DD>.<batch name>.1` (a suggested new version; pick another if it is already in `publishedVersions`): it writes `pipeline/proposed/` and changes nothing that ships. Unless Evan asked to ship the batch, build it that way. To ship, plain `run build` with `--version <new version>` when the config's version is published. Never edit the build config, the ledger or `catalog-v3.ts` by hand.
 
 ## Finish
 

@@ -10,6 +10,7 @@ import { listBatches, loadBatch } from './files.ts';
 import { fileSha256 } from './hash.ts';
 import { EVAL_FILE } from './eval.ts';
 import { openPacketStatus } from './packets.ts';
+import { PROPOSED_CONFIG, PROPOSED_DIR } from './run.ts';
 import type { Env } from './run.ts';
 import { CARD_STAGES } from './state.ts';
 
@@ -56,8 +57,8 @@ export interface CatalogSummary {
 }
 
 export interface HandoffDeps {
-  /** The catalog the committed build config builds now (milestone 1's builder), or throws with its problems. */
-  catalog: (root: string) => Promise<CatalogSummary>;
+  /** The catalog the committed build config (or a proposed build's config) builds now, or throws with its problems. */
+  catalog: (root: string, configPath?: string) => Promise<CatalogSummary>;
   reviewManifests: (root: string) => Promise<ReviewManifest[]>;
   /** stdout of a git command in the root, or null when it fails. */
   git: (root: string, args: string[]) => Promise<string | null>;
@@ -286,14 +287,19 @@ export async function handoffReport(
     );
   }
 
+  // After `run build --proposed` the batch is a layer of its would-be config only, and nothing ships.
+  const proposed =
+    view?.build.status === 'done' && view.build.record?.proposed
+      ? { config: `${view.batch.rel}/${PROPOSED_CONFIG}`, version: view.build.record.catalogVersion }
+      : null;
   let configLayers: string[] = [];
   try {
-    const config = JSON.parse(await readFile(join(root, BATCHES_CONFIG), 'utf8')) as {
+    const config = JSON.parse(await readFile(join(root, proposed?.config ?? BATCHES_CONFIG), 'utf8')) as {
       layers: { id: string; kind: string }[];
     };
     configLayers = config.layers.filter((layer) => layer.kind === 'batch').map((layer) => layer.id);
   } catch {
-    problems.push(`build config: ${BATCHES_CONFIG} is missing or unreadable`);
+    problems.push(`build config: ${proposed?.config ?? BATCHES_CONFIG} is missing or unreadable`);
   }
   const warnings: string[] = [];
   if (view) {
@@ -311,7 +317,7 @@ export async function handoffReport(
 
   let catalog: CatalogSummary | null = null;
   try {
-    catalog = await deps.catalog(root);
+    catalog = await deps.catalog(root, proposed?.config);
   } catch (error) {
     problems.push(`build: ${error instanceof Error ? error.message : String(error)}`);
   }
@@ -357,6 +363,11 @@ export async function handoffReport(
 
   // 2. Build report summary.
   out('## Build report summary', '');
+  if (proposed)
+    out(
+      `**Proposed build: nothing ships.** Version ${code(proposed.version ?? 'unknown')} is built into ${code(`${view!.batch.rel}/${PROPOSED_DIR}`)} from ${code(proposed.config)}; ${code(BATCHES_CONFIG)}, ${code(LEDGER)} and ${code('CATALOG_V3')} are unchanged. To ship the batch, run ${code(`npm run pipeline -- run build --batch ${view!.batch.id} --version <new version>`)} in a PR Evan approves.`,
+      '',
+    );
   if (!catalog) out('The catalog does not build; see the problems below.', '');
   else {
     out(
@@ -471,7 +482,12 @@ export async function handoffReport(
   out('## Ready', '');
   if (warnings.length) out('Warnings:', ...warnings.map((warning) => `- ${warning}`), '');
   if (problems.length) out('Not ready:', ...problems.map((problem) => `- ${problem}`));
-  else out('Ready: open the PR with the checklist above.');
+  else
+    out(
+      proposed
+        ? 'Ready: open the PR with the checklist above (the batch data and its proposed build; nothing ships).'
+        : 'Ready: open the PR with the checklist above.',
+    );
   return { text: lines.join('\n'), problems };
 }
 
@@ -487,7 +503,7 @@ interface Layer {
   manifest: { sources: { id: string; sha256: string; capturedOn: string; checkedOn?: string }[] };
 }
 interface CatalogLibs {
-  loadCatalogBatches: (root: string) => Promise<{ layers: Layer[] }>;
+  loadCatalogBatches: (root: string, path?: string) => Promise<{ layers: Layer[] }>;
   mergeLayers: (loaded: unknown) => {
     version: string;
     overlay: { cards: { cardId: string; heldOut: string | null }[] };
@@ -507,11 +523,14 @@ interface CatalogV3Libs {
   CATALOG_V3_BYTE_BUDGET: number;
 }
 
-/** The catalog the committed build config builds now, through milestone 1's builder (nothing is written). */
-export async function buildCatalogSummary(root: string): Promise<CatalogSummary> {
+/** The catalog a build config (default the committed one) builds now, through milestone 1's builder (nothing is written). */
+export async function buildCatalogSummary(
+  root: string,
+  configPath = BATCHES_CONFIG,
+): Promise<CatalogSummary> {
   const batches = (await import(scriptLib('catalog-batches.mjs'))) as CatalogLibs;
   const v3 = (await import(scriptLib('catalog-v3.mjs'))) as CatalogV3Libs;
-  const loaded = await batches.loadCatalogBatches(root);
+  const loaded = await batches.loadCatalogBatches(root, configPath);
   const merged = batches.mergeLayers(loaded);
   const ledger = (await exists(join(root, LEDGER)))
     ? JSON.parse(await readFile(join(root, LEDGER), 'utf8'))

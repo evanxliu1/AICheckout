@@ -11,8 +11,10 @@ import { loadCatalogBatches, mergeLayers, sha256Json } from './catalog-batches.m
 import {
   buildRelease,
   catalogDates,
+  catalogSha256,
   continueRuleIds,
   emptyLedger,
+  publishedVersionProblems,
   ruleTermsSha256,
   updateLedger,
 } from './catalog-v3.mjs';
@@ -327,4 +329,56 @@ test('continuity: a rebuild of the same version is compared with the version bef
   const rebuilt = release('v2', [cardWith(rule('a-dining', 400))], draft.ledger);
   assert.deepEqual(rebuilt.continuity.changed, draft.continuity.changed);
   assert.deepEqual(rebuilt.ledger, draft.ledger);
+});
+
+test('published versions: the same rule IDs and terms leave the ledger as is; anything else is refused', () => {
+  const v1 = release('v1', [cardWith(rule('a-base', 100), rule('a-dining', 300))]);
+  const v2 = release('v2', [cardWith(rule('a-base', 100), rule('a-dining', 400))], v1.ledger);
+  const published = { published: ['v1', 'v2'] };
+  // An identical rebuild of v2 returns the ledger unchanged (its entry, bytes included, is never rewritten).
+  const same = { ...v2.catalog, cards: structuredClone(v2.catalog.cards) };
+  assert.equal(updateLedger(v2.ledger, same, published), v2.ledger);
+  assert.deepEqual(publishedVersionProblems(v2.ledger, same), []);
+  // Other terms under the same ID, an ID more, an ID fewer, another order: all refused before any write.
+  const terms = structuredClone(same);
+  terms.cards[0].rules[0].rateBps = 150;
+  assert.throws(() => updateLedger(v2.ledger, terms, published), /v2 is published.*with other terms: a-base/);
+  const more = structuredClone(same);
+  more.cards[0].rules.push({ ...rule('a-gas', 200) });
+  assert.match(publishedVersionProblems(v2.ledger, more).join(), /1 rule ID\(s\) not in it: a-gas/);
+  const fewer = structuredClone(same);
+  fewer.cards[0].rules.pop();
+  assert.match(
+    publishedVersionProblems(v2.ledger, fewer).join(),
+    /1 of its rule ID\(s\) missing: a-dining-v2/,
+  );
+  // Card-level fields are not in the rule terms: the catalog SHA-256 in the entry catches them.
+  const renamed = structuredClone(same);
+  renamed.cards[0].name = 'Card A (renamed)';
+  assert.deepEqual(publishedVersionProblems(v2.ledger, renamed), [
+    'other catalog contents (SHA-256 of the canonical JSON)',
+  ]);
+  assert.throws(() => updateLedger(v2.ledger, renamed, published), /canonical JSON/);
+  const unhashed = structuredClone(v2.ledger);
+  delete unhashed.catalogs[1].catalogSha256;
+  assert.deepEqual(publishedVersionProblems(unhashed, same), ['its ledger entry has no catalogSha256']);
+  const order = structuredClone(same);
+  order.cards[0].rules.reverse();
+  assert.deepEqual(publishedVersionProblems(v2.ledger, order), [
+    'its rule IDs in another order',
+    'other catalog contents (SHA-256 of the canonical JSON)',
+  ]);
+  // A published version the ledger does not know is refused too; an unpublished one is still rebuilt in place.
+  assert.throws(() => updateLedger(v2.ledger, { ...same, version: 'v3' }, { published: ['v3'] }), /no entry/);
+  assert.deepEqual(updateLedger(v2.ledger, more).catalogs.at(-1).ruleIds, ['a-base', 'a-dining-v2', 'a-gas']);
+});
+
+test('the committed config lists its version as published, and the committed build matches its ledger entry', () => {
+  assert.ok(base.config.publishedVersions.includes(base.config.version));
+  const { catalog } = buildRelease({ ...mergeLayers(base), ledger });
+  assert.deepEqual(publishedVersionProblems(ledger, catalog), []);
+  assert.equal(updateLedger(ledger, catalog, { published: base.config.publishedVersions }), ledger);
+  // The seeded hash is today's CATALOG_V3, the canonical JSON SHA-256 recorded for release 2.
+  assert.equal(ledger.catalogs.at(-1).catalogSha256, catalogSha256(CATALOG_V3));
+  assert.equal(catalogSha256(CATALOG_V3), '147b48c1a18fa2296d06461b0ae0e647d8c0a8e66f9639ab1cfc10613533eb26');
 });

@@ -211,6 +211,9 @@ export function catalogDates(sources, merchantSourceIds) {
   };
 }
 
+/** SHA-256 (hex) of a catalog's canonical JSON (`stableJson`), recorded per version in the rule-ID ledger. */
+export const catalogSha256 = (catalog) => createHash('sha256').update(stableJson(catalog)).digest('hex');
+
 /** SHA-256 (hex) of a rule's terms: the rule without its ID in `stableJson` form, as `ruleTerms` in wallet.ts. */
 export function ruleTermsSha256(rule) {
   const { id: _id, ...terms } = rule;
@@ -231,6 +234,8 @@ export const ledgerSchema = z
       z.strictObject({
         version: z.string().min(1),
         jsonBytes: z.number().int().min(1),
+        /** SHA-256 of the catalog's canonical JSON (`stableJson`): card-level fields included. */
+        catalogSha256: sha256Hex.optional(),
         ruleIds: z.array(z.string().min(1)),
       }),
     ),
@@ -320,11 +325,60 @@ export function continueRuleIds(cards, ledger, version) {
 }
 
 /**
+ * How a build of a published version differs from that version's ledger entry: rule IDs added or missing (or
+ * reordered), and rule IDs whose card or terms differ. Empty when the build has the published rule IDs and terms.
+ */
+export function publishedVersionProblems(ledger, catalog) {
+  const entry = ledger.catalogs.find((item) => item.version === catalog.version);
+  if (!entry) return [`the ledger has no entry for ${catalog.version}`];
+  const contents = !entry.catalogSha256
+    ? ['its ledger entry has no catalogSha256']
+    : entry.catalogSha256 !== catalogSha256(catalog)
+      ? ['other catalog contents (SHA-256 of the canonical JSON)']
+      : [];
+  const built = catalog.cards.flatMap((card) => card.rules.map((rule) => ({ card, rule })));
+  const builtIds = built.map(({ rule }) => rule.id);
+  const before = new Set(entry.ruleIds);
+  const now = new Set(builtIds);
+  const added = builtIds.filter((id) => !before.has(id));
+  const missing = entry.ruleIds.filter((id) => !now.has(id));
+  const problems = [];
+  if (added.length) problems.push(`${added.length} rule ID(s) not in it: ${added.slice(0, 5).join(', ')}`);
+  if (missing.length)
+    problems.push(`${missing.length} of its rule ID(s) missing: ${missing.slice(0, 5).join(', ')}`);
+  if (!added.length && !missing.length && builtIds.join() !== entry.ruleIds.join())
+    problems.push('its rule IDs in another order');
+  const otherTerms = built
+    .filter(({ card, rule }) => {
+      const issued = ledger.ids[rule.id];
+      return (
+        before.has(rule.id) && (issued.cardId !== card.id || issued.termsSha256 !== ruleTermsSha256(rule))
+      );
+    })
+    .map(({ rule }) => rule.id);
+  if (otherTerms.length)
+    problems.push(`${otherTerms.length} rule ID(s) with other terms: ${otherTerms.slice(0, 5).join(', ')}`);
+  return [...problems, ...contents];
+}
+
+/**
  * The ledger after a build: IDs not issued before are appended, and the catalog's entry is appended (or, when the
  * newest entry has the same version, a rebuild of an unpublished version, replaced). Throws if the catalog would
- * reissue an ID with other terms or reuse a version older than the newest.
+ * reissue an ID with other terms or reuse a version older than the newest. A version in `published` (the config's
+ * `publishedVersions`) is never rewritten: the ledger comes back unchanged when the build has that version's rule IDs
+ * and terms, and the build is refused otherwise.
  */
-export function updateLedger(ledger, catalog) {
+export function updateLedger(ledger, catalog, { published = [] } = {}) {
+  if (published.includes(catalog.version)) {
+    const problems = publishedVersionProblems(ledger, catalog);
+    if (problems.length)
+      throw new Error(
+        `Catalog version ${catalog.version} is published and this build differs from its ledger entry (${problems.join('; ')}). ` +
+          'A published version is never rebuilt with other contents: set a new "version" in evals/curation/catalog-batches.json ' +
+          '(or pass --version to pipeline run build) and rebuild.',
+      );
+    return ledger;
+  }
   const ids = { ...ledger.ids };
   const ruleIds = [];
   for (const card of catalog.cards)
@@ -341,7 +395,12 @@ export function updateLedger(ledger, catalog) {
   if (at !== -1 && at !== catalogs.length - 1)
     throw new Error(`Version ${catalog.version} is older than the newest in the ledger`);
   if (at !== -1) catalogs.pop();
-  catalogs.push({ version: catalog.version, jsonBytes: jsonBytes(catalog), ruleIds });
+  catalogs.push({
+    version: catalog.version,
+    jsonBytes: jsonBytes(catalog),
+    catalogSha256: catalogSha256(catalog),
+    ruleIds,
+  });
   return { ...ledger, ids, catalogs };
 }
 
@@ -352,7 +411,7 @@ export function ledgerText(ledger) {
   );
   const catalogs = ledger.catalogs.map(
     (entry) =>
-      `    {\n      "version": ${JSON.stringify(entry.version)},\n      "jsonBytes": ${entry.jsonBytes},\n      "ruleIds": [\n${entry.ruleIds
+      `    {\n      "version": ${JSON.stringify(entry.version)},\n      "jsonBytes": ${entry.jsonBytes},\n${entry.catalogSha256 ? `      "catalogSha256": ${JSON.stringify(entry.catalogSha256)},\n` : ''}      "ruleIds": [\n${entry.ruleIds
         .map((id) => `        ${JSON.stringify(id)}`)
         .join(',\n')}\n      ]\n    }`,
   );

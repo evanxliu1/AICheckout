@@ -2,6 +2,9 @@
   "schemaVersion": 1,
   "description": "Build config of the release catalog v3 (scripts/build-catalog-v3.mjs, scripts/lib/catalog-batches.mjs). Layers in order: a later layer's card replaces an earlier one's in place; new cards append. The base layer (expansion.v1, real.v2.2) is frozen and listed expansion first to keep the card order of CATALOG_V3; the two share no card. Pipeline batches follow as { \"kind\": \"batch\", \"id\": \"<issuer-slug>-<YYYY-MM>\" } (files in evals/curation/batches/<id>/). Dropped cards carry their reason here until the pipeline state supplies it.",
   "version": "2026-10-02.expansion.1",
+  "publishedVersions": [
+    "2026-10-02.expansion.1"
+  ],
   "programTable": "evals/curation/expansion/reward-programs.json",
   "merchants": "evals/curation/expansion/merchants.json",
   "layers": [

@@ -715,6 +715,30 @@ describe('pipeline handoff', () => {
     expect(text).toMatch(/Ready: open the PR/);
   });
 
+  it('after a proposed build: summarises its would-be config, says nothing ships, needs no committed layer', async () => {
+    const h = await builtBatch();
+    const proposed = ['--proposed', '--version', '2026-10-05.wells-fargo.1'];
+    expect(await h.run('run', 'build', '--batch', BATCH, ...proposed), h.logs.join('\n')).toBe(0);
+    expect(await h.run('eval', '--batch', BATCH), h.logs.join('\n')).toBe(0);
+    // The committed build config does not have the batch: a proposed build never registers it.
+    await writeFile(join(h.root, 'evals/curation/catalog-batches.json'), config([]));
+    const paths: (string | undefined)[] = [];
+    const base = deps(cited, cited);
+    const report = await handoffReport(h.env, BATCH, {
+      ...base,
+      catalog: async (root, path) => {
+        paths.push(path);
+        return base.catalog(root);
+      },
+    });
+    expect(paths).toEqual([`evals/curation/batches/${BATCH}/pipeline/proposed/catalog-batches.json`]);
+    expect(report.problems).toEqual([]);
+    expect(report.text).toContain(
+      '**Proposed build: nothing ships.** Version `2026-10-05.wells-fargo.1` is built into',
+    );
+    expect(report.text).toMatch(/Ready: open the PR with the checklist above \(.*nothing ships\)\.$/);
+  });
+
   it('says the review app needs the batch manifest when it cannot match a cited source', async () => {
     const h = await builtBatch();
     expect(await h.run('eval', '--batch', BATCH)).toBe(0);
