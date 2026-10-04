@@ -1,0 +1,1063 @@
+{
+  "schemaVersion": 1,
+  "packetId": "5bfef31e-2464-4cb5-b508-fd4306f121f9",
+  "batch": "wells-fargo-2026-10",
+  "issuer": "Wells Fargo",
+  "provenance": "agent-verified",
+  "cards": [
+    {
+      "cardId": "wells-fargo-autograph",
+      "issuer": "Wells Fargo",
+      "corpusCaseSha256": "ffad9e762ac3d2dea900a57851e7665bb7aec7364d982c78db9260263778f6c6",
+      "heldOut": null,
+      "programId": null,
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wells Fargo reserves the right to decide whether third-party payment account purchases qualify for bonus points: PayPal and Venmo excluded (O10, conservative reading). Wallets are not named in this statement.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "This includes purchases you make using a third-party payment account"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wells Fargo reserves the right to decide whether third-party payment account purchases qualify for bonus points: PayPal and Venmo excluded (O10, conservative reading). Wallets are not named in this statement.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "This includes purchases you make using a third-party payment account"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wells Fargo reserves the right to decide whether third-party payment account purchases qualify for bonus points: PayPal and Venmo excluded (O10, conservative reading). Wallets are not named in this statement.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "This includes purchases you make using a third-party payment account"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "streaming",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wells Fargo reserves the right to decide whether third-party payment account purchases qualify for bonus points: PayPal and Venmo excluded (O10, conservative reading). Wallets are not named in this statement.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "This includes purchases you make using a third-party payment account"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "transit",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wells Fargo reserves the right to decide whether third-party payment account purchases qualify for bonus points: PayPal and Venmo excluded (O10, conservative reading). Wallets are not named in this statement.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "This includes purchases you make using a third-party payment account"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: travel (airlines, hotels, car rentals, cruises, travel agencies); no v3 category covers it."
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: phone plans (telecom services); no v3 category covers it."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The eligible streaming list sits on a page outside the captures; the streaming rule stays as labelled and the engine matches by category."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Third-party payment account purchases may not earn the bonus: PayPal and Venmo are excluded on every bonus rule kept in the catalog.",
+          "rules": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "Warehouse clubs, superstores and grocery stores code outside the gas category, so the gas and EV rules stay as labelled; no brand is named."
+        },
+        {
+          "index": 3,
+          "disposition": "noted",
+          "how": [],
+          "note": "Bakeries, grocery stores and delivery services code outside dining; the dining rule stays as labelled."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "PayPal and Venmo are excluded on each kept bonus rule; the base rate still applies to those payments.",
+          "rules": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "wells-fargo-autograph-journey",
+      "issuer": "Wells Fargo",
+      "corpusCaseSha256": "f2edf2a9dd963fd6bb0a55d47bbf2278dedfa24bd69fbe91e98153048ddf2f62",
+      "heldOut": null,
+      "programId": null,
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: hotels; no v3 category covers it."
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airlines; no v3 category covers it."
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wells Fargo reserves the right to decide whether third-party payment account purchases qualify for bonus points: PayPal and Venmo excluded (O10, conservative reading). Wallets are not named in this statement.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-journey-pricing",
+              "quote": "This includes purchases you make using a third-party payment account"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: other travel (timeshares, car rentals, cruise lines, travel agencies, campgrounds); no v3 category covers it."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wells Fargo decides which purchases earn the bonus, including third-party payment account purchases: PayPal and Venmo are excluded on the restaurants rule.",
+          "rules": [
+            3
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Bakeries, grocery stores and delivery services code outside dining; the restaurants rule stays as labelled."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "PayPal and Venmo are excluded on the restaurants rule; the other bonus rules are held out.",
+          "rules": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "wells-fargo-one-key",
+      "issuer": "Wells Fargo",
+      "corpusCaseSha256": "6a3d8f6817707060af89e62065ccda72ba96e5ad8497ba5bc9ffdbf8aa4d6381",
+      "heldOut": null,
+      "programId": "onekeycash",
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "The corpus labels this travel-portal per the Wells Fargo convention; the overlay brand-scopes it to Expedia, Hotels.com and Vrbo so those booking sites match (coordinator ruling). PayPal bookings are not eligible for the bonus (O10).",
+          "set": {
+            "category": "other",
+            "brandIds": [
+              "expedia",
+              "hotels-com",
+              "vrbo"
+            ],
+            "excludedPaymentPaths": [
+              "paypal"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "booked through the U.S. version of Expedia, Hotels.com, or Vrbo"
+            },
+            {
+              "sourceId": "wells-fargo-one-key-product",
+              "quote": "The following transactions are not eligible and may not earn bonus rewards: 1) purchases made through PayPal"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "OneKeyCash moves to its own store-credit program redeemable only on Expedia, Hotels.com and Vrbo (O13)."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The site booking rate is brand-scoped to expedia, hotels-com and vrbo. The One Key login condition is not modelled.",
+          "rules": [
+            1
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "PayPal is excluded on the Expedia, Hotels.com and Vrbo booking rule.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "wells-fargo-one-key-plus",
+      "issuer": "Wells Fargo",
+      "corpusCaseSha256": "47b3dc5a6f304c39da3051731fd2c2fb8cf4e21f5bce520057a7837ff3a7331c",
+      "heldOut": null,
+      "programId": "onekeycash",
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "The corpus labels this travel-portal per the Wells Fargo convention; the overlay brand-scopes it to Expedia, Hotels.com and Vrbo so those booking sites match (coordinator ruling). PayPal bookings are not eligible for the bonus (O10).",
+          "set": {
+            "category": "other",
+            "brandIds": [
+              "expedia",
+              "hotels-com",
+              "vrbo"
+            ],
+            "excludedPaymentPaths": [
+              "paypal"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-one-key-plus-product",
+              "quote": "booked through the U.S. version of Expedia, Hotels.com, or Vrbo"
+            },
+            {
+              "sourceId": "wells-fargo-one-key-plus-product",
+              "quote": "The following transactions are not eligible and may not earn bonus rewards: 1) purchases made through PayPal"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "OneKeyCash moves to its own store-credit program redeemable only on Expedia, Hotels.com and Vrbo (O13)."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The site booking rate is brand-scoped to expedia, hotels-com and vrbo. The One Key login condition is not modelled.",
+          "rules": [
+            1
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "PayPal is excluded on the Expedia, Hotels.com and Vrbo booking rule.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "wells-fargo-choice-privileges",
+      "issuer": "Wells Fargo",
+      "corpusCaseSha256": "5ed47b6a1a206961f5efa927b2883df6e51a881279f05fff21029b88567fee56",
+      "heldOut": null,
+      "programId": null,
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus points may not be earned via third-party payment accounts or mobile/digital wallets: PayPal, Venmo and digital wallet excluded (O10). Online marketplaces have no payment path.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "You may not earn bonus points for purchases made through third-party payment accounts"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "or if you use a mobile or digital wallet."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus points may not be earned via third-party payment accounts or mobile/digital wallets: PayPal, Venmo and digital wallet excluded (O10). Online marketplaces have no payment path.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "You may not earn bonus points for purchases made through third-party payment accounts"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "or if you use a mobile or digital wallet."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus points may not be earned via third-party payment accounts or mobile/digital wallets: PayPal, Venmo and digital wallet excluded (O10). Online marketplaces have no payment path.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "You may not earn bonus points for purchases made through third-party payment accounts"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "or if you use a mobile or digital wallet."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: telephone plans (landline and cell phone providers); no v3 category covers telecom services."
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "checkout-method"
+          ],
+          "note": "Home improvement is a whole-category rule (hardware, garden, furniture and home stores): category home-improvement, plus the bonus payment-path exclusions.",
+          "set": {
+            "category": "home-improvement",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "Home improvement: home improvement stores, hardware stores, nurseries and garden supply stores"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "You may not earn bonus points for purchases made through third-party payment accounts"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "or if you use a mobile or digital wallet."
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Qualifying stays are billed by eligible Choice hotels booked via Choice channels: brand-scoped to choice-hotels, plus the bonus payment-path exclusions.",
+          "set": {
+            "brandIds": [
+              "choice-hotels"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "Qualifying Choice Hotel stays are items billed by eligible Choice brand hotels as merchant of record"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "You may not earn bonus points for purchases made through third-party payment accounts"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "or if you use a mobile or digital wallet."
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases of Choice Privileges points are sold by Choice Hotels: brand-scoped to choice-hotels, plus the bonus payment-path exclusions.",
+          "set": {
+            "brandIds": [
+              "choice-hotels"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "qualifying net purchases of Choice Privileges points made on the Card Account"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "You may not earn bonus points for purchases made through third-party payment accounts"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-product",
+              "quote": "or if you use a mobile or digital wallet."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Stays are brand-scoped to choice-hotels; eligible non-Choice-brand locations booked through Choice channels are not matched by brand. The conflict stays open."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "PayPal, Venmo and digital wallets are excluded on every bonus rule kept in the catalog; online marketplaces have no payment path.",
+          "rules": [
+            1,
+            2,
+            3,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "Gas at warehouse clubs and superstores codes outside the gas category; the gas and EV rules stay as labelled and no brand is named."
+        },
+        {
+          "index": 3,
+          "disposition": "noted",
+          "how": [],
+          "note": "Meal-kit delivery and warehouse clubs code outside the grocery category; the groceries rule stays as labelled."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wallet and third-party payment exclusions are on every kept bonus rule.",
+          "rules": [
+            1,
+            2,
+            3,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Stays and point purchases are brand-scoped to choice-hotels.",
+          "rules": [
+            6,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "wells-fargo-choice-privileges-select",
+      "issuer": "Wells Fargo",
+      "corpusCaseSha256": "c9c579ad49c332c8be57412c1769707ac971c9e240bd56cff04bd5ce2adb0a41",
+      "heldOut": null,
+      "programId": null,
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "gas",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus points may not be earned via third-party payment accounts or mobile/digital wallets: PayPal, Venmo and digital wallet excluded (O10). Online marketplaces have no payment path.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "You may not earn bonus points for purchases made through third-party payment accounts"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "or if you use a mobile or digital wallet."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus points may not be earned via third-party payment accounts or mobile/digital wallets: PayPal, Venmo and digital wallet excluded (O10). Online marketplaces have no payment path.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "You may not earn bonus points for purchases made through third-party payment accounts"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "or if you use a mobile or digital wallet."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus points may not be earned via third-party payment accounts or mobile/digital wallets: PayPal, Venmo and digital wallet excluded (O10). Online marketplaces have no payment path.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "You may not earn bonus points for purchases made through third-party payment accounts"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "or if you use a mobile or digital wallet."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 1000
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Qualifying stays are billed by eligible Choice hotels booked via Choice channels: brand-scoped to choice-hotels, plus the bonus payment-path exclusions.",
+          "set": {
+            "brandIds": [
+              "choice-hotels"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "Qualifying Choice Hotel stays are items billed by eligible Choice brand hotels as merchant of record"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "You may not earn bonus points for purchases made through third-party payment accounts"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "or if you use a mobile or digital wallet."
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 1000
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases of Choice Privileges points are sold by Choice Hotels: brand-scoped to choice-hotels, plus the bonus payment-path exclusions.",
+          "set": {
+            "brandIds": [
+              "choice-hotels"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "qualifying net purchases of Choice Privileges points made on the Card Account"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "You may not earn bonus points for purchases made through third-party payment accounts"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "or if you use a mobile or digital wallet."
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "checkout-method"
+          ],
+          "note": "Home improvement is a whole-category rule (hardware, garden, furniture and home stores): category home-improvement, plus the bonus payment-path exclusions.",
+          "set": {
+            "category": "home-improvement",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "Home improvement: home improvement stores, hardware stores, nurseries and garden supply stores"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "You may not earn bonus points for purchases made through third-party payment accounts"
+            },
+            {
+              "sourceId": "wells-fargo-choice-privileges-select-product",
+              "quote": "or if you use a mobile or digital wallet."
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: telephone plans (landline and cell phone providers); no v3 category covers telecom services."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Stays are brand-scoped to choice-hotels; eligible non-Choice-brand locations booked through Choice channels are not matched by brand. The conflict stays open."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "PayPal, Venmo and digital wallets are excluded on every bonus rule kept in the catalog; online marketplaces have no payment path.",
+          "rules": [
+            1,
+            2,
+            3,
+            6,
+            4,
+            5
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "Gas at warehouse clubs and superstores codes outside the gas category; the gas and EV rules stay as labelled and no brand is named."
+        },
+        {
+          "index": 3,
+          "disposition": "noted",
+          "how": [],
+          "note": "Meal-kit delivery and warehouse clubs code outside the grocery category; the groceries rule stays as labelled."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wallet and third-party payment exclusions are on every kept bonus rule.",
+          "rules": [
+            1,
+            2,
+            3,
+            6,
+            4,
+            5
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Stays and point purchases are brand-scoped to choice-hotels.",
+          "rules": [
+            4,
+            5
+          ]
+        }
+      ]
+    }
+  ],
+  "gates": [],
+  "programs": [],
+  "programDetails": [],
+  "rewardPrograms": [
+    {
+      "cardId": "wells-fargo-autograph",
+      "programId": "wells-fargo-rewards",
+      "statedValueHundredthsOfCent": 100
+    },
+    {
+      "cardId": "wells-fargo-autograph-journey",
+      "programId": "wells-fargo-rewards",
+      "statedValueHundredthsOfCent": null
+    },
+    {
+      "cardId": "wells-fargo-one-key",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null
+    },
+    {
+      "cardId": "wells-fargo-one-key-plus",
+      "programId": "cash-back",
+      "statedValueHundredthsOfCent": null
+    },
+    {
+      "cardId": "wells-fargo-choice-privileges",
+      "programId": "choice-privileges",
+      "statedValueHundredthsOfCent": null
+    },
+    {
+      "cardId": "wells-fargo-choice-privileges-select",
+      "programId": "choice-privileges",
+      "statedValueHundredthsOfCent": null
+    }
+  ],
+  "labelLintAcks": []
+}
