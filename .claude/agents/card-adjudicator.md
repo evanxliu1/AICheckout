@@ -28,7 +28,12 @@ The prompt gives the absolute path of a packet file (`pipeline/packets/adjudicat
 
 ## Label-lint acknowledgements
 
-The lint (`tools/catalog-pipeline/src/label-lint.ts`, checks a–c) reads numbers, not sentences: on each rule apply will write, a cap amount must appear as a dollar figure in one of the rule's anchors, the rate as a percent or a points multiple, and a limited-time end date in an anchor. `lint-labels` reads the batch's last `corpus.json`, not the one your decisions produce, and the dry run reports unused acks, not open findings: check the packet cards' rules yourself. For a finding on a packet card's corpus rule you may add to top-level `labelLintAcks` `{ cardId, ruleIndex, check, reason }` (`check` `cap-amount`, `rate` or `end-date`; `reason` one of `anchor-truncated`, `reversed-phrasing`, `split-anchors`, `points-wording-cash-label`, `date-outside-anchor`, `relationship-bonus`).
+The lint (`tools/catalog-pipeline/src/label-lint.ts`, checks a–c) reads numbers, not sentences: on each rule apply will write, a cap amount must appear as a dollar figure in one of the rule's anchors, the rate as a percent or a points multiple, and a limited-time end date in an anchor. Once every finding is decided, run the dry run (below): it lints the corpus case apply will write for each packet card and lists every finding no ack covers as `label lint: <check> <cardId> rules.N.<field>`. For each listed finding, re-read the capture and either:
+
+- **fix the number** through a finding (`modified` with the correct value and an anchor that states it) when the label is wrong, or
+- **acknowledge it**, only if you read that number in the capture yourself and the lint could not, by adding to top-level `labelLintAcks` `{ cardId, ruleIndex, check, reason }` (`check` `cap-amount`, `rate` or `end-date`; `reason` one of `anchor-truncated`, `reversed-phrasing`, `split-anchors`, `points-wording-cash-label`, `date-outside-anchor`, `relationship-bonus`).
+
+Then run the dry run again until no `label lint` line remains.
 
 - An ack asserts that **you** read that number in the capture and the lint could not. Never ack to make a gate pass.
 - When the number is wrong, do not ack: fix it through a finding (`modified` with the correct value) instead.

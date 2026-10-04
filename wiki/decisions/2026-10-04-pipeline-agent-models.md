@@ -31,6 +31,7 @@ The approved design (review change "pin agent models and record `packetId` and m
 | Self-check | Each agent runs `pipeline accept <stage> --agent-run self-check --dry-run` (`accept` requires `--agent-run` even in a dry run; a dry run records nothing) | The Phase 7 scripts directly |
 | Scope questions | Asked before `init`, the answer in `--summary`; research `questions` asked before capture | Record them in `batch.json` (strict schema, no field) |
 | `convention-needed` | The agent leaves `adjudicator` null and reports it; the session releases the packet, writes the dated convention in the batch's `verification/conventions/`, commits and claims again | A CLI command to record the reason (none exists yet) |
+| Lint at adjudicate | `accept adjudicate` (and its dry run) lints the corpus case apply will write for each packet card (the in-memory `applyVerification` the gate already runs) and fails on every finding no ack covers, listed as paths and check codes; the adjudicator fixes the number through a finding or acks it (only if it read the number in the capture); apply's lint stays a backstop | Leave the lint to apply (the adjudicator cannot see the findings, and a failed apply cannot be re-adjudicated because adjudication fields are not in adjudicate's input hash) |
 | Failed gate | The same agent gets the gate errors through SendMessage and accept runs again with the same `--agent-run`; after two rounds, release and a new agent | Always a new agent (loses the context of a near-correct file) |
 
 ## Decision
@@ -38,7 +39,7 @@ Pin researcher, verifier and overlay author to `claude-opus-5-5` and the adjudic
 
 ## Consequences
 - Changing an agent's model is a change to its file and this record; the researcher file is a research input, so editing it makes research stale for open batches.
-- Gaps found in the CLI, recorded on the [design page](../system/card-expansion-pipeline.md#built-so-far): nothing records `scope-question` or `convention-needed`; the adjudicator cannot list the lint findings of the corpus case apply will write; an apply that fails the lint cannot be re-adjudicated through `claim`.
+- Gaps found in the CLI, recorded on the [design page](../system/card-expansion-pipeline.md#built-so-far): nothing records `scope-question` or `convention-needed`. The lint gap at adjudicate (no preview, no re-adjudication after an apply lint failure) is closed by the CLI change above, at the coordinator's request.
 - Labels stay agent-verified, never human-verified.
 
 ## Status

@@ -199,7 +199,8 @@ export async function verifyGate(batch: Batch, packet: Packet, data: unknown): P
 const decided = (item: { adjudication?: unknown }) => item.adjudication !== undefined;
 
 /** Adjudicate: every finding and drop-card verdict of the packet's cards decided, the verifier's findings and block
- * untouched, `apply --check` passes on the batch, and the batch passes the quote check. (The run ≠ verifier run and
+ * untouched, `apply --check` passes on the batch, the label lint (checks a–c) on the corpus cases apply will write
+ * has no finding the file's acks leave open, and the batch passes the quote check. (The run ≠ verifier run and
  * claimed-after-verify rules are checked by `accept` before the gate.) */
 export async function adjudicateGate(batch: Batch, packet: Packet, data: unknown): Promise<string[]> {
   const errors = envelopeGate(packet, data);
@@ -240,11 +241,13 @@ export async function adjudicateGate(batch: Batch, packet: Packet, data: unknown
       .filter((item) => packet.cardIds.includes(item.cardId))
       .flatMap(lintCorpusCase);
     const own = acks.filter(({ ack }) => packet.cardIds.includes(ack.cardId));
-    for (const i of resolveAcks(
+    const resolved = resolveAcks(
       findings,
       own.map(({ ack }) => ack),
-    ).unused)
-      errors.push(`labelLintAcks.${own[i].index}: ${unusedAck(own[i].ack)}`);
+    );
+    for (const i of resolved.unused) errors.push(`labelLintAcks.${own[i].index}: ${unusedAck(own[i].ack)}`);
+    // A finding no ack covers fails here, so the adjudicator fixes or acks it before apply (apply stays a backstop).
+    errors.push(...resolved.open.map((finding) => `label lint: ${formatFinding(finding)}`));
   }
   errors.push(...(await quoteGate(batch)));
   return errors;

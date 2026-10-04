@@ -50,7 +50,7 @@ Repeat `pipeline next --batch <batch> --json` and act on `kind`:
 3. From the completion notice take the agent ID, `duration_ms` and `total_tokens`. Note per packet: packet file, `packetId`, agent ID.
 4. The chat report is only a pointer; `accept` reads the file: `pipeline accept <stage> --batch <batch> --issuer <slug> --agent-run <agent ID> --model <pinned model> --duration-ms <ms> --tokens <n>`.
 5. On a failed gate, send the **same** agent (SendMessage to its ID) the gate errors as printed (paths and field names only, never capture text), then accept again with the same `--agent-run`. After two failed rounds, `pipeline claim <stage> --batch <batch> --issuer <slug> --release` and claim afresh for a new agent.
-6. The **verifier and adjudicator are always different runs** (accept refuses otherwise). Claim adjudicate only after verify is accepted.
+6. The **verifier and adjudicator are always different runs** (accept refuses otherwise). Claim adjudicate only after verify is accepted. `accept adjudicate` lints the corpus case apply will write; a `label lint:` error goes back to the adjudicator, which fixes the number or acks it. Never add or edit an ack yourself.
 7. `questions` in the accepted research file are scope questions: ask Evan before capture. If his answer changes the card list, tell him the batch must be re-initialised (the CLI cannot amend `batch.json`).
 
 ## Conventions
