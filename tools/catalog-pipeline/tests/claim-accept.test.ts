@@ -4,6 +4,7 @@ import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { StatusJson } from '../src/cli.ts';
+import { definitionConflicts } from '../src/gates.ts';
 import { packetSchema } from '../src/packets.ts';
 import type { Packet } from '../src/packets.ts';
 import { sha256Json } from '../../../scripts/lib/catalog-batches.mjs';
@@ -499,6 +500,21 @@ describe('apply and overlay', () => {
     const overlay = JSON.parse(await readFile(join(h.dir, 'catalog-overlay.json'), 'utf8'));
     expect(overlay.cards[1].corpusCaseSha256).toBe(sha256Json(corpus.cases[1]));
     expect((await h.view()).cards[1].stages.overlay.status).toBe('done');
+  });
+});
+
+describe('overlay definitions', () => {
+  const gate = (id: string, requires: string) => ({ id, requires });
+  const defs = (gates: unknown[]) => ({ gates, programs: [], programDetails: [] }) as never;
+  it("refuses another issuer's gate ID with other content; same content or an own ID passes", () => {
+    const overlay = { cards: [], ...defs([gate('g-shared', 'one'), gate('g-own', 'one')]) } as never;
+    const other = defs([gate('g-shared', 'one')]);
+    expect(definitionConflicts(overlay, defs([gate('g-shared', 'two')]), [other])).toEqual([
+      "gates.0: g-shared is defined by another issuer's fragment with other content",
+    ]);
+    expect(definitionConflicts(overlay, defs([gate('g-shared', 'one')]), [other])).toEqual([]);
+    expect(definitionConflicts(overlay, defs([gate('g-own', 'two')]), [other])).toEqual([]);
+    expect(definitionConflicts(null, defs([gate('g-shared', 'two')]), [other])).toEqual([]);
   });
 });
 

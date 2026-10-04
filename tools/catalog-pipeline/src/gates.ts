@@ -1,7 +1,7 @@
 // The deterministic gates of the agent stages (wiki/system/card-expansion-pipeline.md, "Gates"). Every gate returns
 // errors as `<file or field path>: <problem>` and never echoes issuer text: values in quotation marks are redacted
 // (`redact`) and the quote check reports where a run is, not the run.
-import { readFile } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
 import { z } from 'zod';
@@ -232,8 +232,41 @@ interface OverlayFile extends OverlayLike {
   cards: (OverlayLike['cards'][number] & { issuer?: string })[];
 }
 
+type DefinitionKind = 'gates' | 'programs' | 'programDetails';
+const DEFINITION_KEY: Record<DefinitionKind, (item: Record<string, unknown>) => string> = {
+  gates: (item) => String(item.id),
+  programs: (item) => String(item.id),
+  programDetails: (item) => String(item.programId),
+};
+
+/**
+ * Definitions (gates, programs, program details) of the fragment whose ID the batch overlay already holds with other
+ * content, where another issuer's fragment defines that ID: an issuer must not overwrite another's definition. (An ID
+ * no other fragment defines is this issuer's own earlier definition, which a new fragment may replace.)
+ */
+export function definitionConflicts(
+  overlay: OverlayFile | null,
+  fragment: Pick<Fragment, DefinitionKind>,
+  others: Pick<Fragment, DefinitionKind>[],
+): string[] {
+  const errors: string[] = [];
+  for (const kind of ['gates', 'programs', 'programDetails'] as const) {
+    const key = DEFINITION_KEY[kind];
+    const existing = new Map(
+      ((overlay?.[kind] ?? []) as Record<string, unknown>[]).map((item) => [key(item), item]),
+    );
+    const owned = new Set(others.flatMap((other) => (other[kind] as Record<string, unknown>[]).map(key)));
+    (fragment[kind] as Record<string, unknown>[]).forEach((item, i) => {
+      const id = key(item);
+      if (existing.has(id) && owned.has(id) && !isDeepStrictEqual(existing.get(id), item))
+        errors.push(`${kind}.${i}: ${id} is defined by another issuer's fragment with other content`);
+    });
+  }
+  return errors;
+}
+
 /** The batch overlay and program mappings with the fragment merged in: the packet's cards replaced, definitions
- * replaced by ID. */
+ * replaced by ID (`definitionConflicts` refuses another issuer's ID first). */
 export function mergeFragment(
   batch: Batch,
   overlay: OverlayFile | null,
@@ -284,6 +317,18 @@ const readJsonOrNull = async <T>(path: string): Promise<T | null> => {
   return text === null ? null : (JSON.parse(text) as T);
 };
 
+/** The definitions of the other issuers' fragments in overlay/ (unparseable ones count as defining nothing). */
+async function otherFragments(batch: Batch, own: string): Promise<Pick<Fragment, DefinitionKind>[]> {
+  const dir = join(batch.dir, 'overlay');
+  const out: Pick<Fragment, DefinitionKind>[] = [];
+  for (const name of (await readdir(dir).catch(() => [] as string[])).sort()) {
+    if (!name.endsWith('.json') || join(dir, name) === own) continue;
+    const parsed = overlayFragmentSchema.safeParse(await readJsonOrNull(join(dir, name)).catch(() => null));
+    if (parsed.success) out.push(parsed.data);
+  }
+  return out;
+}
+
 /**
  * Overlay: the fragment parses and covers exactly the packet's cards, each entry carries the corpusCaseSha256 of its
  * corpus case (milestone 1's pairing hash), the batch merged into the build's layers passes `checkOverlay` for the
@@ -316,11 +361,13 @@ export async function overlayGate(
       errors.push(`cards.${cardId}: no entry for a card of the packet`);
   for (const mapping of fragment.rewardPrograms)
     if (!inPacket.has(mapping.cardId)) errors.push(`rewardPrograms.${mapping.cardId}: outside the packet`);
+  const overlay = await readJsonOrNull<OverlayFile>(join(batch.dir, 'catalog-overlay.json'));
+  errors.push(...definitionConflicts(overlay, fragment, await otherFragments(batch, packet.output)));
   if (errors.length) return { errors };
 
   const merged = mergeFragment(
     batch,
-    await readJsonOrNull<OverlayFile>(join(batch.dir, 'catalog-overlay.json')),
+    overlay,
     await readJsonOrNull<{ cards: { cardId: string }[] }>(join(batch.dir, 'reward-programs.json')),
     fragment,
     packet.cardIds,
