@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "description": "Build config of the release catalog v3 (scripts/build-catalog-v3.mjs, scripts/lib/catalog-batches.mjs). Layers in order: a later layer's card replaces an earlier one's in place; new cards append. The base layer (expansion.v1, real.v2.2) is frozen and listed expansion first to keep the card order of CATALOG_V3; the two share no card. Pipeline batches follow as { \"kind\": \"batch\", \"id\": \"<issuer-slug>-<YYYY-MM>\" } (files in evals/curation/batches/<id>/). Dropped cards carry their reason here until the pipeline state supplies it.",
+  "version": "2026-10-02.expansion.1",
+  "programTable": "evals/curation/expansion/reward-programs.json",
+  "merchants": "evals/curation/expansion/merchants.json",
+  "layers": [
+    {
+      "kind": "base",
+      "id": "expansion.v1",
+      "dir": "evals/curation/expansion",
+      "corpus": "corpus.json",
+      "manifest": "manifest.json",
+      "overlay": "catalog-overlay.json",
+      "notes": "product-notes.verified.json",
+      "cards": "cards.json",
+      "dropped": {
+        "capital-one-kohls-rewards-visa": "captures state no earn rate",
+        "synchrony-mylowes-rewards-credit-card": "captures state no earn rate",
+        "synchrony-dicks-mastercard": "captures state no earn rate",
+        "synchrony-belk-rewards-mastercard": "captures state no earn rate",
+        "us-bank-state-farm-good-neighbor": "captures state no earn rate",
+        "synchrony-phillips-66-credit-card": "cents-per-gallon fuel rewards, not a rate on the purchase",
+        "synchrony-techron-advantage-visa": "cents-per-gallon fuel rewards, not a rate on the purchase"
+      }
+    },
+    {
+      "kind": "base",
+      "id": "real.v2.2",
+      "dir": "evals/curation/real",
+      "corpus": "corpus.v2.json",
+      "manifest": "manifest.json",
+      "overlay": null,
+      "notes": null,
+      "cards": null,
+      "dropped": {}
+    }
+  ]
+}

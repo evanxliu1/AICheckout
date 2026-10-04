@@ -4,6 +4,7 @@ Dated records of choices, one per file, in the format **Context**, **Options con
 
 ## 2026-10-04
 * [Pipeline CLI skeleton choices (Phase 8 milestone 2)](./2026-10-04-pipeline-cli-skeleton.md) — Node 24 type stripping for the CLI; draft notes count as anchors, issuer wordings as labels; stale beats inputs-missing; CLI gates failing twice go to the session; adjudicate hashes the verifier's findings without adjudication or anchor-path `current`; mechanical `rebase-anchors`; overlay not stale for an anchor-only apply; `inputs-missing` rules; extract pauses with `--wait-minutes 0`; no script flags added; lockfile workspace entries added by hand.
+* [Multi-batch catalog builder: layer merge, frozen-layer pairing, newest-capture dates and a rule-ID ledger](./2026-10-04-multi-batch-catalog-builder.md) — Phase 8 M1: build config of layers merged into the M5 inputs, `corpusCaseSha256` pairing for batches (frozen `expansion.v1` paired by directory), `verifiedAt` from the newest issuer-source date, append-only rule-ID ledger with `-vN` IDs for changed terms.
 
 ## 2026-10-03
 * [Keep the Helios-blue cart mark for the icons and promo tile under the Ocean theme](./2026-10-03-keep-helios-blue-cart-mark.md) — Evan kept `cart-mark.svg` in `#2563eb` for the toolbar icons and promo tile; no media change.

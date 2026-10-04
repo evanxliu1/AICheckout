@@ -6,7 +6,7 @@ status: draft
 tags: [system, catalog, curation, expansion, phase-7]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T03:05:00Z
+  at: 2026-10-04T03:00:00Z
 verified_commit: e940b6f
 ---
 
@@ -172,6 +172,8 @@ Stage 2 M4 (branch `s2-m4-catalog-overlay`, 2026-10-02, merged with PR #25) adds
 ## Catalog v3 build (M5)
 
 Stage 2 M5 (branch `s2-m5-catalog-v3-build`, 2026-10-02, merged with PR #27) builds the release catalog `CATALOG_V3` ([`packages/rewards-core/src/catalog-v3.ts`](../../packages/rewards-core/src/catalog-v3.ts)) with `npm run catalog:v3` ([`scripts/build-catalog-v3.mjs`](../../scripts/build-catalog-v3.mjs), logic and tests in `scripts/lib/catalog-v3.mjs`); CI runs `catalog:v3:check`. Every count below is in the generated [build report](../../evals/curation/expansion/catalog-build-report.md) ([decision](../decisions/2026-10-02-catalog-v3-build.md)).
+
+- **Multi-batch since Phase 8 M1** (2026-10-04). The builder now reads the layers of [`evals/curation/catalog-batches.json`](../../evals/curation/catalog-batches.json) (this page's corpora are the frozen base layer `expansion.v1` + `real.v2.2`; pipeline batches follow), takes the version from that config and the dates from the capture manifests (newest issuer-source date, +30 days), keeps the seven dropped-card reasons there, and continues rule IDs against the append-only [`rule-id-ledger.json`](../../evals/curation/rule-id-ledger.json); `catalog:v3:check` also compares the ledger. Output unchanged byte for byte; the build report gained "Batches and dates" and "Rule-ID continuity" sections ([pipeline builder](card-expansion-pipeline.md#multi-batch-catalog-builder), [decision](../decisions/2026-10-04-multi-batch-catalog-builder.md)).
 
 - **Catalog.** Version `2026-10-02.expansion.1`, verified 2026-10-02, expires 2026-11-01T00:00Z (the 30-day maximum). 178 cards (171 expansion, 7 real), 820 rules (at most 17 per card), 328 sources, 70 programs (cash 19, published estimate 24, issuer-stated 11, none 16), 140 brands, 24 gates, 10 choices on 8 cards, 4 closed-loop cards, 18 cards with an issuer-stated value (19 before M10 part 2). Size 602,438 bytes JSON (57.5% of 1 MiB) and 643,324 bytes JSONB text (61.4%, the SQL measure; equal to the computed value in the parity harness).
 - **Not in the catalog.** Held out by the overlay: `marriott-bonvoy-bold`, `us-bank-shield` (no base rate). Dropped in verification, never in the corpus: 5 cards with no stated earn rate and 2 fuel cards (cents per gallon).
