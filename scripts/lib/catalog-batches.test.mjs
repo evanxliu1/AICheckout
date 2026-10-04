@@ -13,6 +13,7 @@ import {
   catalogDates,
   continueRuleIds,
   emptyLedger,
+  publishedVersionProblems,
   ruleTermsSha256,
   updateLedger,
 } from './catalog-v3.mjs';
@@ -327,4 +328,37 @@ test('continuity: a rebuild of the same version is compared with the version bef
   const rebuilt = release('v2', [cardWith(rule('a-dining', 400))], draft.ledger);
   assert.deepEqual(rebuilt.continuity.changed, draft.continuity.changed);
   assert.deepEqual(rebuilt.ledger, draft.ledger);
+});
+
+test('published versions: the same rule IDs and terms leave the ledger as is; anything else is refused', () => {
+  const v1 = release('v1', [cardWith(rule('a-base', 100), rule('a-dining', 300))]);
+  const v2 = release('v2', [cardWith(rule('a-base', 100), rule('a-dining', 400))], v1.ledger);
+  const published = { published: ['v1', 'v2'] };
+  // An identical rebuild of v2 returns the ledger unchanged (its entry, bytes included, is never rewritten).
+  const same = { ...v2.catalog, cards: structuredClone(v2.catalog.cards) };
+  assert.equal(updateLedger(v2.ledger, same, published), v2.ledger);
+  assert.deepEqual(publishedVersionProblems(v2.ledger, same), []);
+  // Other terms under the same ID, an ID more, an ID fewer, another order: all refused before any write.
+  const terms = structuredClone(same);
+  terms.cards[0].rules[0].rateBps = 150;
+  assert.throws(() => updateLedger(v2.ledger, terms, published), /v2 is published.*with other terms: a-base/);
+  const more = structuredClone(same);
+  more.cards[0].rules.push({ ...rule('a-gas', 200) });
+  assert.match(publishedVersionProblems(v2.ledger, more).join(), /1 rule ID\(s\) not in it: a-gas/);
+  const fewer = structuredClone(same);
+  fewer.cards[0].rules.pop();
+  assert.match(publishedVersionProblems(v2.ledger, fewer).join(), /1 of its rule ID\(s\) missing: a-dining-v2/);
+  const order = structuredClone(same);
+  order.cards[0].rules.reverse();
+  assert.deepEqual(publishedVersionProblems(v2.ledger, order), ['its rule IDs in another order']);
+  // A published version the ledger does not know is refused too; an unpublished one is still rebuilt in place.
+  assert.throws(() => updateLedger(v2.ledger, { ...same, version: 'v3' }, { published: ['v3'] }), /no entry/);
+  assert.deepEqual(updateLedger(v2.ledger, more).catalogs.at(-1).ruleIds, ['a-base', 'a-dining-v2', 'a-gas']);
+});
+
+test('the committed config lists its version as published, and the committed build matches its ledger entry', () => {
+  assert.ok(base.config.publishedVersions.includes(base.config.version));
+  const { catalog } = buildRelease({ ...mergeLayers(base), ledger });
+  assert.deepEqual(publishedVersionProblems(ledger, catalog), []);
+  assert.equal(updateLedger(ledger, catalog, { published: base.config.publishedVersions }), ledger);
 });

@@ -63,6 +63,7 @@ export async function harness(): Promise<Harness> {
       schemaVersion: 1,
       description: 'Test build config.',
       version: '2026-10-04.test.1',
+      publishedVersions: [],
       programTable: 'evals/curation/expansion/reward-programs.json',
       merchants: 'evals/curation/expansion/merchants.json',
       layers: [{ kind: 'batch', id: BATCH, dropped: {} }],
