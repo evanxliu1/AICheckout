@@ -7,7 +7,15 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { NextStep } from '../src/derive.ts';
 import { EVAL_FILE, labelAgreement } from '../src/eval.ts';
-import { captureFolders, handoff, handoffReport, renderRuleIds, reviewAppReadiness } from '../src/handoff.ts';
+import {
+  REVIEW_MANIFEST_MODULE,
+  captureFolders,
+  handoff,
+  handoffReport,
+  readReviewManifests,
+  renderRuleIds,
+  reviewAppReadiness,
+} from '../src/handoff.ts';
 import type { CatalogSummary, HandoffDeps } from '../src/handoff.ts';
 import { sha256Hex } from '../src/hash.ts';
 import { REPO_ROOT } from '../src/root.ts';
@@ -351,12 +359,28 @@ describe('labelAgreement', () => {
     });
     expect(result.overall.ruleFields.rateBps).toEqual({ agree: 1, total: 1, rate: 1 });
     expect(labelAgreement(frozen as never, [] as never).cards).toEqual([]);
+    // Same rules and fields, but a different issue count: not identical.
+    const same = [item('d', labels('points', null, [rule('dining', 300)]))];
+    const withIssue = [item('d', labels('points', null, [rule('dining', 300)], [{ code: 'ambiguous' }]))];
+    expect(labelAgreement(same as never, same as never).overall.cardsIdentical).toBe(1);
+    expect(labelAgreement(same as never, withIssue as never).overall.cardsIdentical).toBe(0);
   });
 });
 
 const SHA = (n: number) => String(n).repeat(64).slice(0, 64);
 
 describe('review-app readiness', () => {
+  it('reads the manifests the real review app bundles (a reformat of its imports must fail here)', async () => {
+    const manifests = await readReviewManifests(REPO_ROOT);
+    expect(manifests.map((manifest) => manifest.path)).toEqual([
+      'evals/curation/real/manifest.json',
+      'evals/curation/real/merchant-manifest.json',
+      'evals/curation/expansion/manifest.json',
+    ]);
+    expect(manifests.every((manifest) => manifest.sources.length > 0)).toBe(true);
+    expect(REVIEW_MANIFEST_MODULE).toBe('apps/review/src/manifest.ts');
+  });
+
   const manifests = [
     {
       path: 'evals/curation/real/manifest.json',

@@ -150,12 +150,16 @@ export function labelAgreement(frozenCases: LabelCase[], batchCases: LabelCase[]
     matching: 'same category, then closest issuer wording and an equal rate (v2 scorer matchRules)',
     overall: {
       cards: cards.length,
+      /** Same rules, rule and card field values, and exclusion and issue counts (counts only: their texts are not
+       * compared). */
       cardsIdentical: cards.filter(
         (card) =>
           card.rules.matched === card.rules.frozen &&
           card.rules.matched === card.rules.batch &&
           AGREEMENT_RULE_FIELDS.every((field) => card.ruleFields[field].agree === card.rules.matched) &&
-          AGREEMENT_CARD_FIELDS.every((field) => card.cardFields[field]),
+          AGREEMENT_CARD_FIELDS.every((field) => card.cardFields[field]) &&
+          card.exclusions.frozen === card.exclusions.batch &&
+          card.issues.frozen === card.issues.batch,
       ).length,
       rules: {
         frozen: frozenRules,
