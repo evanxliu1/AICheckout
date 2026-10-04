@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T00:30:00Z
+  at: 2026-10-04T00:50:00Z
 ---
 
 # Now
 
-As of 2026-10-04T00:30Z.
+As of 2026-10-04T00:50Z.
 
 ## Current state
 
@@ -23,7 +23,7 @@ As of 2026-10-04T00:30Z.
 
 ## Active work
 
-- **Phase 8, card-expansion pipeline v1** (coordinator, started 2026-10-04 UTC). Evan approved the design with the Fable review's changes on 2026-10-03 ([pipeline](system/card-expansion-pipeline.md), [decision](decisions/2026-10-02-agent-driven-card-pipeline.md)). Milestones, one PR each from the latest `main`: (0) approval wiki update, branch `phase8-approval`; (1) multi-batch catalog builder; (2) CLI skeleton; (3) `claim`/`accept` with gates and the label lint; (4) skill and four agent files; (5) `eval` and `handoff`; (6) acceptance run: Wells Fargo as a refresh batch (new dated captures; labels compared with `expansion.v1` as an independent re-derivation), measured in `docs/evals/pipeline-v1.md`. Target 2026-10-17; tell Evan at once if it slips past 2026-10-20.
+- **Phase 8, card-expansion pipeline v1** (coordinator, started 2026-10-04 UTC). Evan approved the design with the Fable review's changes on 2026-10-03 ([pipeline](system/card-expansion-pipeline.md), [decision](decisions/2026-10-02-agent-driven-card-pipeline.md)). Milestones, one PR each from the latest `main`: (0) approval wiki update, branch `phase8-approval`; (1) multi-batch catalog builder; (2) CLI skeleton — built on branch `phase8-m2-cli-skeleton` (2026-10-04: `tools/catalog-pipeline` with `init`, `status`, `next`, `run`, `rebase-anchors`; [built so far](system/card-expansion-pipeline.md#built-so-far)), PR pending; (3) `claim`/`accept` with gates and the label lint; (4) skill and four agent files; (5) `eval` and `handoff`; (6) acceptance run: Wells Fargo as a refresh batch (new dated captures; labels compared with `expansion.v1` as an independent re-derivation), measured in `docs/evals/pipeline-v1.md`. Target 2026-10-17; tell Evan at once if it slips past 2026-10-20.
 
 ## Open questions and next steps
 

@@ -6,7 +6,7 @@ status: stable
 tags: [ops, setup, testing]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-04T00:50:00Z
 sources:
   - resource: ../../package.json
     title: Root scripts and Node engine
@@ -45,13 +45,14 @@ One npm workspace (root `package-lock.json`) covers `extension/`, `packages/*` a
 
 1. `nvm use` (or otherwise select Node 24).
 2. `npm ci`
-3. `npm run lint` (ESLint over `extension/src`, `extension/tests`, `extension/e2e`, `extension/scripts`, `packages`, `apps`, `scripts`).
+3. `npm run lint` (ESLint over `extension/src`, `extension/tests`, `extension/e2e`, `extension/scripts`, `packages`, `apps`, `scripts`, `tools`).
 4. `npm run format:check` (Prettier; fix with `npm run format`). `docs/` and build output are excluded by [`.prettierignore`](../../.prettierignore).
 5. `npm run typecheck` (every workspace's `typecheck`).
 6. `npm test` (every workspace's Vitest suite, the extension package test, the `packages/ui` icon check, then `test:scripts` = `node --test scripts/lib/*.test.mjs`).
 7. Offline eval gates, no model call: `npm run eval:curation -- --check`, `npm run eval:v2 -- --check`, `npm run catalog:v2:check`, `npm run catalog:v3:check`.
-8. `npm run build` (every workspace's `build`; the extension lands in `extension/dist/`).
-9. Browser tests, after `npx playwright install chromium`:
+8. Card-expansion pipeline (maintainer only): `npm run pipeline -- status` and `npm run pipeline -- next --json`; commands in [card-expansion pipeline](../system/card-expansion-pipeline.md#built-so-far).
+9. `npm run build` (every workspace's `build`; the extension lands in `extension/dist/`).
+10. Browser tests, after `npx playwright install chromium`:
    - `npm run test:browser --workspace=@ai-checkout/ui`
    - `npm run test:browser --workspace=@ai-checkout/site`
    - `npm run test:browser --workspace=ai-checkout-extension`

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 2,
+  "version": "example-bank-2026-10.draft.1",
+  "cases": [
+    {
+      "id": "example-bank-alpha",
+      "cardId": "example-bank-alpha",
+      "issuer": "Example Bank",
+      "sourceIds": ["example-bank-alpha-product"],
+      "reference": {
+        "rewardCurrency": { "value": "cash-back", "anchors": ["fake alpha words two percent"] },
+        "rules": [
+          {
+            "category": "all-purchases",
+            "issuerWording": "fake alpha words two percent",
+            "rateBps": 200,
+            "cap": null,
+            "anchors": ["fake alpha words two percent"]
+          }
+        ],
+        "exclusions": [],
+        "issues": []
+      }
+    },
+    {
+      "id": "example-bank-beta",
+      "cardId": "example-bank-beta",
+      "issuer": "Example Bank",
+      "sourceIds": ["example-bank-beta-product", "example-bank-beta-terms"],
+      "reference": {
+        "rewardCurrency": { "value": "points", "anchors": ["fake beta words three x"] },
+        "rules": [
+          {
+            "category": "dining",
+            "issuerWording": "fake beta words three x",
+            "rateBps": 300,
+            "cap": null,
+            "anchors": ["fake beta words three x"]
+          }
+        ],
+        "exclusions": [],
+        "issues": []
+      }
+    }
+  ]
+}

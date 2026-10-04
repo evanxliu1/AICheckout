@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-10-04
+* [Pipeline CLI skeleton choices (Phase 8 milestone 2)](./2026-10-04-pipeline-cli-skeleton.md) — Node 24 type stripping for the CLI; issuer wordings and draft notes count as anchors; adjudicate hashes the verifier's findings without adjudication or anchor-path `current`; mechanical `rebase-anchors`; overlay not stale for an anchor-only apply; `inputs-missing` rules; extract pauses with `--wait-minutes 0`; no script flags added; lockfile workspace entries added by hand.
+
 ## 2026-10-03
 * [Keep the Helios-blue cart mark for the icons and promo tile under the Ocean theme](./2026-10-03-keep-helios-blue-cart-mark.md) — Evan kept `cart-mark.svg` in `#2563eb` for the toolbar icons and promo tile; no media change.
 * [Citi Double Cash is cash back in the catalog, and savings are worded by what the cards pay](./2026-10-03-double-cash-cash-back.md) — Stage 2 M10 part 2: Double Cash maps to `cash-back` under general rule 1 through a pinned `corpusLabel` override (eval label frozen), engine cents unchanged, `cashLikePoints` removed; the recorded-order line and savings history say "rewards" unless both cards pay cash back; unvalued programs are not counted; partly supersedes the extension UI decision.

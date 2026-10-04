@@ -6,7 +6,7 @@ status: stable
 tags: [system, code-map]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:05:00Z
+  at: 2026-10-04T00:50:00Z
 sources:
   - resource: ../../package.json
     title: Root workspaces and scripts
@@ -20,7 +20,7 @@ sources:
 
 # Code map
 
-One npm workspace repo (`extension`, `packages/*`, `apps/*`), Node 24, TypeScript, Zod 4 everywhere. Packages are consumed as TypeScript source (`exports` points at `src/*.ts`); only the API is bundled for Node (esbuild). Built from reading the tree at commit `f6d3f79` on 2026-10-02.
+One npm workspace repo (`extension`, `packages/*`, `apps/*`, `tools/*`), Node 24, TypeScript, Zod 4 everywhere. Packages are consumed as TypeScript source (`exports` points at `src/*.ts`); only the API is bundled for Node (esbuild). Built from reading the tree at commit `f6d3f79` on 2026-10-02.
 
 ## Workspaces
 
@@ -33,6 +33,7 @@ One npm workspace repo (`extension`, `packages/*`, `apps/*`), Node 24, TypeScrip
 | [`packages/ui/`](../../packages/ui) | `@ai-checkout/ui` | React components (Helios specs, Ocean theme), generated Flight icons, gallery | [`src/index.ts`](../../packages/ui/src/index.ts), `./styles.css` | `tests/components.test.tsx`, `e2e/gallery.spec.ts` (axe) | [UI library](ui-library.md) |
 | [`apps/api/`](../../apps/api) | `@ai-checkout/api` | Fastify server, catalog/review repositories, static hosting, curation harness | [`src/index.ts`](../../apps/api/src/index.ts) → [`src/app.ts:createApp`](../../apps/api/src/app.ts) | `apps/api/tests/*.test.ts` (vitest) + root `db:test:*` scripts | [API](api.md), [Curation harness](curation-harness.md) |
 | [`apps/review/`](../../apps/review) | `@ai-checkout/review` | Maintainer review SPA | [`src/main.tsx`](../../apps/review/src/main.tsx) | `tests/*.test.ts(x)`, `e2e/*.spec.*` | [Review app](review-app.md) |
+| [`tools/catalog-pipeline/`](../../tools/catalog-pipeline) | `@ai-checkout/catalog-pipeline` | Maintainer tooling (Phase 8): card-expansion pipeline CLI, batch state, input hashing, derived queue; wraps the expansion scripts. Product code never imports it | [`src/cli.ts`](../../tools/catalog-pipeline/src/cli.ts) (`npm run pipeline`), [README](../../tools/catalog-pipeline/README.md) | `tools/catalog-pipeline/tests/*.test.ts` (vitest, synthetic fixtures) | [Card-expansion pipeline](card-expansion-pipeline.md) |
 | [`apps/site/`](../../apps/site) | `@ai-checkout/site` | Static public site, pre-rendered with React | [`src/render.tsx`](../../apps/site/src/render.tsx), [`vite.config.ts`](../../apps/site/vite.config.ts) | `tests/*.test.ts(x)`, `e2e/a11y.spec.ts` | [Public site](public-site.md) |
 
 ## Non-workspace directories

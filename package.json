@@ -6,13 +6,14 @@
   "workspaces": [
     "extension",
     "packages/*",
-    "apps/*"
+    "apps/*",
+    "tools/*"
   ],
   "engines": {
     "node": ">=24 <25"
   },
   "scripts": {
-    "lint": "eslint extension/src extension/tests extension/e2e extension/scripts packages apps scripts",
+    "lint": "eslint extension/src extension/tests extension/e2e extension/scripts packages apps scripts tools",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present && npm run test:scripts",
     "build": "npm run build --workspaces --if-present",
@@ -40,6 +41,7 @@
     "catalog:v2:check": "node scripts/build-catalog-v2.mjs --check",
     "catalog:v3": "node scripts/build-catalog-v3.mjs",
     "catalog:v3:check": "node scripts/build-catalog-v3.mjs --check",
+    "pipeline": "node tools/catalog-pipeline/src/cli.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:scripts": "node --test \"scripts/lib/*.test.mjs\"",

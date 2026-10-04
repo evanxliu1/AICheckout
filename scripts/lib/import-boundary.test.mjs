@@ -37,8 +37,13 @@ const ALLOWED = [
   ['apps/api/src/x.ts', "import { catalogV2Schema } from '@ai-checkout/rewards-core';"],
   ['extension/src/x.ts', "import { helper } from './toolsHelper.ts';"],
   ['packages/ui/src/x.tsx', "import { toolbar } from '../toolbar/index.ts';"],
-  // The pipeline lives outside product code: scripts/ (and later tools/) may import product packages and tools/.
+  // The pipeline lives outside product code: scripts/ and tools/ may import product packages and tools/.
   ['scripts/x.mjs', "import { run } from '../tools/catalog-pipeline/src/cli.mjs';"],
+  ['tools/catalog-pipeline/src/x.ts', "import { catalogV3Schema } from '@ai-checkout/rewards-core';"],
+  [
+    'tools/catalog-pipeline/src/x.ts',
+    "import { canonicalJson } from '../../../apps/api/src/curation/canonical.ts';",
+  ],
 ];
 
 for (const [filePath, code] of ALLOWED) {
