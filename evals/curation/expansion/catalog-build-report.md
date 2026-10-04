@@ -102,3 +102,30 @@ exclusions (general rule 22), so the catalog omits them; the corpus keeps them.
 | `capital-one-williams-sonoma-key-rewards-visa` | Installation Services, volume gift card purchases … |
 | `wells-fargo-autograph` | Overdraft protection advances … |
 | `wells-fargo-autograph-journey` | Overdraft protection advances … |
+
+## Batches and dates
+
+Built from `evals/curation/catalog-batches.json`, layers in order; a later layer's card replaces an earlier one's in
+its place and new cards append (pipeline design, multi-batch builder).
+
+| Layer | Kind | Directory | Corpus | Cards used | Replaced by a later layer |
+| --- | --- | --- | --- | --- | --- |
+| `expansion.v1` | base | `evals/curation/expansion` | `expansion.v1` | 173 | 0 |
+| `real.v2.2` | base | `evals/curation/real` | `real.v2.2` | 7 | 0 |
+
+- **verifiedAt** 2026-10-02T00:00:00Z is the newest date on which any of the 326 issuer sources the
+  catalog cites was captured or re-checked (manifest `checkedOn`, else `capturedOn`); **expiresAt**
+  2026-11-01T00:00:00Z is 30 days later. The oldest issuer source date is 2026-09-29; source dates:
+  2026-09-29, 2026-10-02. Merchant MCC sources are not issuer terms and do not set the dates.
+
+## Rule-ID continuity
+
+Checked against `evals/curation/rule-id-ledger.json`, the append-only record of every rule ID issued (card and
+SHA-256 of its terms) and the rule IDs of each catalog version. Previous catalog: none (no other version in the ledger), so every rule ID counts as added. This catalog: 820 rules, 602,438 bytes JSON.
+
+| Rule IDs | Count |
+| --- | --- |
+| Kept (same card, same terms) | 0 |
+| Changed (terms changed, new ID issued) | 0 |
+| Added | 820 |
+| Dropped | 0 |

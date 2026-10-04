@@ -6,7 +6,7 @@ status: stable
 tags: [system, catalog, curation, expansion, pipeline, phase-8, design]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T00:30:00Z
+  at: 2026-10-04T03:00:00Z
 stale_after: 2026-11-15T00:00:00Z
 sources:
   - resource: ../product/phase-7-stage-2.md
@@ -212,15 +212,17 @@ There is no queue file. `pipeline status` derives the open items from state and 
 
 ## Multi-batch catalog builder
 
-`scripts/lib/catalog-v3.mjs` builds the release catalog from a list of batches: the base layer (`real.v2.2` and the frozen `expansion.v1`) and then every pipeline batch in order.
+**Built in Phase 8 milestone 1** (branch `phase8-m1-multibatch-builder`, 2026-10-04; [decision](../decisions/2026-10-04-multi-batch-catalog-builder.md)). [`scripts/lib/catalog-batches.mjs`](../../scripts/lib/catalog-batches.mjs) loads the layers listed in the committed, Zod-checked build config [`evals/curation/catalog-batches.json`](../../evals/curation/catalog-batches.json) and merges them into the inputs [`scripts/lib/catalog-v3.mjs`](../../scripts/lib/catalog-v3.mjs) already builds from; `npm run catalog:v3` writes the catalog, the build report and the rule-ID ledger, and `catalog:v3:check` (CI) compares all three. Rebuilding today's inputs reproduces `CATALOG_V3` `2026-10-02.expansion.1` byte for byte (SHA-256 `5e095b7b…33ac` before and after); the build report only gained two sections at its end.
 
-1. **Newest batch wins per card.** A card in a later batch replaces its earlier corpus case, overlay entry and program mapping.
-2. **Pairing.** Each card's corpus case and overlay entry come from the same batch, checked by the corpus case's SHA-256 (canonical JSON) stored in the overlay entry (`corpusCaseSha256`). CI has no captures, so the check needs none. The frozen base layer predates the field and is paired by directory.
-3. **Dates** come from the batches' manifests (`capturedOn`, later a freshness `checkedOn`), not constants: `verifiedAt` is the newest capture date of the sources the catalog uses and `expiresAt` is `verifiedAt` + 30 days (the contract maximum), which gives today's `2026-10-02T00:00:00Z` / `2026-11-01T00:00:00Z`; the build report also states the oldest source date (the real-card sources, 2026-09-29). Milestone 1 confirms or refines this rule and records it.
-4. **Completeness.** The build refuses unless every card of every batch is `done`, `dropped`, or held out with a reason.
-5. **Rule-ID continuity gate** against the previous bundled catalog (`CATALOG_V3` as committed; hosted release 2 is canonically identical to it): a rule whose terms are unchanged keeps its ID; a rule whose terms changed gets a new ID; dropped IDs are listed in the build report. This protects wallets: `reconcileWallet` drops usage rows when a rule's terms change.
+- **Config.** The catalog version label, the frozen program table (`expansion/reward-programs.json`) and `merchants.json`, and the layers in order: the base layer, `expansion.v1` (`evals/curation/expansion`, read-only) then `real.v2.2` (`evals/curation/real`, no overlay) — expansion first keeps the card order of release 2; they share no card — then pipeline batches as `{ "kind": "batch", "id": "<batch>" }`. A batch directory provides `corpus.json`, `catalog-overlay.json`, `product-notes.verified.json`, `manifest.json`, `cards.json` and optionally `reward-programs.json` (card mappings to existing programs only). Dropped cards carry their reason in the config (the frozen layer's seven, formerly `DROPPED_REASONS` in the build script); `loadLayer(root, layer, { dropped })` is the hook for milestone 2's `state.json` dispositions.
 
-Acceptance: rebuilding today's inputs reproduces `CATALOG_V3` byte for byte.
+1. **Newest batch wins per card.** A later layer's corpus case, overlay entry, program mapping and product notes replace the earlier ones; the card keeps its position and new cards append at the end. A later drop removes the card (listed with its reason). The real cards cannot be replaced or dropped and stay checked by `checkRealCards`. Gates, store programs and brands that only replaced cards used are pruned; a batch may add gates, store programs and `programDetails`, but redefining an ID with other content fails.
+2. **Pairing.** A pipeline batch's overlay entry carries `corpusCaseSha256`, the SHA-256 of that card's corpus case in the same batch in canonical JSON (`stableJson`, sorted keys); a missing or different value fails. The field is optional in the overlay schema: the frozen `expansion.v1` predates it and is paired by directory. CI needs no capture for any of this.
+3. **Dates** come from the manifests: `verifiedAt` is the newest `checkedOn ?? capturedOn` of the issuer sources the catalog cites (merchant MCC sources excluded) and `expiresAt` is 30 days later (the contract maximum): `2026-10-02T00:00:00Z` / `2026-11-01T00:00:00Z` today. The build report states the oldest issuer source date (2026-09-29, the real cards). `checkedOn` on a manifest source is the Phase 9 freshness hook: a re-check that finds the capture unchanged moves the source's date, and the catalog's, forward. The `CATALOG_V3_VERIFIED_AT`/`EXPIRES_AT`/`VERSION` constants are gone; the overlay check's draft is dated from the manifests too.
+4. **Completeness.** The build refuses unless every card of every layer's `cards.json` is in that layer's corpus (where the overlay includes it or holds it out with a reason) or dropped with a reason, and every corpus card is in `cards.json`.
+5. **Rule-ID continuity gate** against [`evals/curation/rule-id-ledger.json`](../../evals/curation/rule-id-ledger.json), an append-only ledger of every rule ID ever issued (card, SHA-256 of the rule's terms — the rule without `id` in `stableJson` form, as `ruleTerms` in `wallet.ts` — and first version) and the rule IDs and JSON bytes of each catalog version, seeded from `2026-10-02.expansion.1` (identical to hosted release 2). Previous = the newest ledger catalog with another version. A rule whose card had a rule with the same terms keeps that ID; any other rule takes its generated ID unless the ledger issued it for other terms or another card, then `<id>-v2`, `-v3`, …; an ID is never reissued with other terms. The build report lists kept, changed (old → new), added and dropped IDs and the catalog bytes. This protects wallets: `reconcileWallet` drops usage rows when a rule's terms change.
+
+Tests: `scripts/lib/catalog-batches.test.mjs` (synthetic batches on the committed base layer, no captures) and `scripts/lib/catalog-v3.test.mjs`.
 
 ## Agents
 

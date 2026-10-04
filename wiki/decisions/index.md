@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-10-04
+* [Multi-batch catalog builder: layer merge, frozen-layer pairing, newest-capture dates and a rule-ID ledger](./2026-10-04-multi-batch-catalog-builder.md) — Phase 8 M1: build config of layers merged into the M5 inputs, `corpusCaseSha256` pairing for batches (frozen `expansion.v1` paired by directory), `verifiedAt` from the newest issuer-source date, append-only rule-ID ledger with `-vN` IDs for changed terms.
+
 ## 2026-10-03
 * [Keep the Helios-blue cart mark for the icons and promo tile under the Ocean theme](./2026-10-03-keep-helios-blue-cart-mark.md) — Evan kept `cart-mark.svg` in `#2563eb` for the toolbar icons and promo tile; no media change.
 * [Citi Double Cash is cash back in the catalog, and savings are worded by what the cards pay](./2026-10-03-double-cash-cash-back.md) — Stage 2 M10 part 2: Double Cash maps to `cash-back` under general rule 1 through a pinned `corpusLabel` override (eval label frozen), engine cents unchanged, `cashLikePoints` removed; the recorded-order line and savings history say "rewards" unless both cards pay cash back; unvalued programs are not counted; partly supersedes the extension UI decision.

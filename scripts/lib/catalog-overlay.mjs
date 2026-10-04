@@ -42,7 +42,8 @@ export const MODELLED_AS = [
 ];
 export const MAX_NOTE_WORDS = 60;
 
-/** Catalog dates for the draft built here (the capture date and the 30-day expiry the plan fixes). */
+/** Default catalog dates for the draft built here (the capture date and the 30-day expiry the plan fixes); the
+ * multi-batch build passes dates from the manifests (`inputs.verifiedAt`, `inputs.expiresAt`). */
 export const DRAFT_VERIFIED_AT = '2026-10-02T00:00:00Z';
 export const DRAFT_EXPIRES_AT = '2026-11-01T00:00:00Z';
 
@@ -145,6 +146,12 @@ export const itemDispositionSchema = z.strictObject({
 export const overlayCardSchema = z.strictObject({
   cardId: z.string().min(1),
   issuer: z.string().min(1),
+  /** SHA-256 of the card's corpus case in canonical JSON (`stableJson`), pairing the entry with that case. Required
+   * in pipeline batches (checked by scripts/lib/catalog-batches.mjs); the frozen `expansion.v1` overlay predates it. */
+  corpusCaseSha256: z
+    .string()
+    .regex(/^[0-9a-f]{64}$/)
+    .optional(),
   /** Why the card is left out of the catalog; null when it is included. */
   heldOut: noteSchema.nullable(),
   /** Store-credit cash-back program replacing the reward-programs.json `cash-back` mapping. */
@@ -310,14 +317,28 @@ export function applyOverlayCard(item, entry, { programId, statedValue }) {
   };
 }
 
-const sourceOf = ({ id, title, url, capturedOn }) => ({ id, title, url, checkedOn: capturedOn });
+// `checkedOn` in a manifest source is the Phase 9 freshness hook: the date a re-check found the capture unchanged.
+const sourceOf = ({ id, title, url, capturedOn, checkedOn }) => ({
+  id,
+  title,
+  url,
+  checkedOn: checkedOn ?? capturedOn,
+});
 
 /**
  * An unpublished catalog v3 built from the committed inputs (corpora, reward programs, merchants, overlay and the
  * capture manifests), for checking the overlay. Rule IDs are `<cardId>-r<index>` or `<cardId>-<key>`; M5's builder
  * shortens them and fixes display names.
  */
-export function draftCatalogV3({ overlay, merchants, corpora, rewardPrograms, manifests }) {
+export function draftCatalogV3({
+  overlay,
+  merchants,
+  corpora,
+  rewardPrograms,
+  manifests,
+  verifiedAt = DRAFT_VERIFIED_AT,
+  expiresAt = DRAFT_EXPIRES_AT,
+}) {
   const entries = new Map(overlay.cards.map((entry) => [entry.cardId, entry]));
   const mapping = new Map(rewardPrograms.cards.map((card) => [card.cardId, card]));
   const details = new Map(overlay.programDetails.map((detail) => [detail.programId, detail]));
@@ -381,8 +402,8 @@ export function draftCatalogV3({ overlay, merchants, corpora, rewardPrograms, ma
   return {
     schemaVersion: 3,
     version: '2026-10-02.overlay-draft',
-    verifiedAt: DRAFT_VERIFIED_AT,
-    expiresAt: DRAFT_EXPIRES_AT,
+    verifiedAt,
+    expiresAt,
     programs,
     brands: merchants.brands,
     gates: overlay.gates.map(({ anchors: _anchors, ...gate }) => gate),
@@ -643,7 +664,16 @@ export function checkOverlay(inputs, { issuers = null } = {}) {
           { ...corpora[0], cases: corpora[0].cases.filter((item) => inScope(item.issuer)) },
           ...corpora.slice(1),
         ];
-  const draft = draftCatalogV3({ overlay, merchants, corpora: scoped, rewardPrograms, manifests });
+  const { verifiedAt, expiresAt } = inputs;
+  const draft = draftCatalogV3({
+    overlay,
+    merchants,
+    corpora: scoped,
+    rewardPrograms,
+    manifests,
+    verifiedAt,
+    expiresAt,
+  });
   if (issuers !== null) {
     const used = new Set(draft.cards.map((card) => card.programId));
     draft.programs = draft.programs.filter((program) => used.has(program.id));
