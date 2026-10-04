@@ -15,12 +15,18 @@
 //   a reason) or dropped with a reason.
 // - A layer may add gates, store-credit programs and programDetails; redefining an ID with other content is refused.
 //   The program table stays the frozen one: a batch maps its cards to existing programs only.
+// - Real cards (a base layer without an overlay, `real.v2.2`) may be replaced by a pipeline batch (Phase 9), never by
+//   a base layer and never dropped; the builder keeps their release-1 names and rule-ID prefixes.
+// - Dates (Phase 9 freshness): a manifest source is dated by the newest freshness record that rendered the page with
+//   the manifest's hash, else its own `checkedOn ?? capturedOn`; the merchant MCC sources likewise from
+//   `real/merchant-manifest.json` (scripts/lib/freshness.mjs).
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { z } from 'zod';
 import { stableJson } from '../../packages/rewards-core/src/schema.ts';
 import { corpusCases } from './catalog-overlay.mjs';
+import { MERCHANT_MANIFEST, freshDates, loadFreshnessRecords } from './freshness.mjs';
 
 export const BATCHES_CONFIG_PATH = 'evals/curation/catalog-batches.json';
 export const BATCHES_DIR = 'evals/curation/batches';
@@ -134,7 +140,44 @@ export async function loadLayer(root, layer, { dropped = {} } = {}) {
   };
 }
 
-/** The config, its layers, the program table and merchants, read from the repository root. */
+/**
+ * The manifest source that dates and hashes each source ID, in layer order: a later capture or check of the same ID
+ * replaces an earlier one when its date is newer. A source's date is the newest freshness record date on which the
+ * page rendered with the manifest's hash, when that is newer than its own `checkedOn ?? capturedOn` (then the
+ * returned source carries it as `checkedOn`). Returns source ID → `{ source, layer }` (layer ID).
+ */
+export function effectiveSources(layers, freshness = []) {
+  const fresh = freshDates(freshness);
+  const out = new Map();
+  for (const layer of layers)
+    for (const listed of layer.manifest.sources) {
+      const checked = fresh.get(`${listed.id} ${listed.sha256}`);
+      const source = checked && checked > sourceDate(listed) ? { ...listed, checkedOn: checked } : listed;
+      const earlier = out.get(source.id);
+      if (!earlier || sourceDate(source) > sourceDate(earlier.source))
+        out.set(source.id, { source, layer: layer.id });
+    }
+  return out;
+}
+
+/** merchants.json with each MCC source's `checkedOn` moved to a newer freshness date of its captured hash. */
+export function freshMerchants(merchants, merchantManifest, freshness = []) {
+  if (!merchantManifest || !freshness.length) return merchants;
+  const fresh = freshDates(freshness);
+  const hashes = new Map(merchantManifest.sources.map((source) => [source.id, source.sha256]));
+  return {
+    ...merchants,
+    sources: merchants.sources.map((source) => {
+      const checked = fresh.get(`${source.id} ${hashes.get(source.id)}`);
+      return checked && checked > source.checkedOn ? { ...source, checkedOn: checked } : source;
+    }),
+  };
+}
+
+/**
+ * The config, its layers, the program table, merchants, the merchant MCC manifest (null when absent) and the
+ * freshness records, read from the repository root.
+ */
 export async function loadCatalogBatches(root, path = BATCHES_CONFIG_PATH) {
   const read = async (name) => JSON.parse(await readFile(join(root, name), 'utf8'));
   // The config may live outside the root (a proposed build's config); the paths inside it are root-relative.
@@ -146,6 +189,11 @@ export async function loadCatalogBatches(root, path = BATCHES_CONFIG_PATH) {
     layers,
     programTable: await read(config.programTable),
     merchants: await read(config.merchants),
+    merchantManifest: await read(MERCHANT_MANIFEST).catch((error) => {
+      if (error.code === 'ENOENT') return null;
+      throw error;
+    }),
+    freshness: await loadFreshnessRecords(root),
   };
 }
 
@@ -168,7 +216,15 @@ function entryUses(entry) {
  * cardOrder, dropped, layers }`, where `corpora` is [overlaid cards, real cards] as `loadOverlayInputs` returns.
  * Throws with every problem found (pairing, completeness, redefinitions, unknown programs).
  */
-export function mergeLayers({ config, layers, programTable, merchants }) {
+export function mergeLayers({
+  config,
+  layers,
+  programTable,
+  merchants: listedMerchants,
+  merchantManifest = null,
+  freshness = [],
+}) {
+  const merchants = freshMerchants(listedMerchants, merchantManifest, freshness);
   const problems = [];
   const winner = new Map(); // card ID → { layer, case | dropped }
   const firstSeen = []; // card IDs in order of first appearance
@@ -213,9 +269,10 @@ export function mergeLayers({ config, layers, programTable, merchants }) {
       }
 
     for (const [cardId, item] of cases) {
-      if (plainCards.has(cardId))
+      // A real card may be replaced by a pipeline batch (refresh), never by a base layer.
+      if (plainCards.has(cardId) && layer.kind !== 'batch')
         problems.push(
-          `${at}: card ${cardId} is a ${plainCards.get(cardId)} card, which no layer may replace`,
+          `${at}: card ${cardId} is a ${plainCards.get(cardId)} card, which only a pipeline batch may replace`,
         );
       if (!layer.overlay) {
         if (winner.has(cardId))
@@ -275,6 +332,7 @@ export function mergeLayers({ config, layers, programTable, merchants }) {
   const winners = firstSeen.map((cardId) => [cardId, winner.get(cardId)]);
   const overlaid = winners.filter(([, w]) => w.item && w.layer.overlay);
   const plain = winners.filter(([, w]) => w.item && !w.layer.overlay);
+  const plainIds = new Set(plain.map(([cardId]) => cardId));
   const entryOf = (cardId, layer) => layer.overlay.cards.find((entry) => entry.cardId === cardId);
   const entries = overlaid.map(([cardId, w]) => entryOf(cardId, w.layer));
 
@@ -302,12 +360,7 @@ export function mergeLayers({ config, layers, programTable, merchants }) {
   const brands = merchants.brands.filter((b) => otherBrandUses.has(b.id) || !orphan('brands', b.id));
 
   // Manifest sources in layer order; a later capture or check of the same source ID replaces it in place.
-  const sources = new Map();
-  for (const layer of layers)
-    for (const source of layer.manifest.sources) {
-      const earlier = sources.get(source.id);
-      if (!earlier || sourceDate(source) > sourceDate(earlier)) sources.set(source.id, source);
-    }
+  const sources = new Map([...effectiveSources(layers, freshness)].map(([id, { source }]) => [id, source]));
 
   const firstOverlay = layers.find((layer) => layer.overlay);
   const firstPlain = layers.find((layer) => !layer.overlay);
@@ -321,7 +374,11 @@ export function mergeLayers({ config, layers, programTable, merchants }) {
       { ...firstOverlay.corpus, cases: overlaid.map(([, w]) => w.item) },
       {
         ...(firstPlain?.corpus ?? { version: 'none' }),
-        cases: layers.filter((layer) => !layer.overlay).flatMap((layer) => layer.corpus.cases),
+        // Real cards a batch replaced are in the overlaid corpus instead.
+        cases: layers
+          .filter((layer) => !layer.overlay)
+          .flatMap((layer) => layer.corpus.cases)
+          .filter((item) => plainIds.has(item.cardId)),
       },
     ],
     notes: {
@@ -341,6 +398,8 @@ export function mergeLayers({ config, layers, programTable, merchants }) {
         (cardId) => winnerLayer.get(cardId) !== summary.id,
       ),
     })),
+    /** Real cards (a layer without an overlay) that a pipeline batch replaced. */
+    replacedReal: [...plainCards.keys()].filter((cardId) => !plainIds.has(cardId)),
     researched: new Set(layers.flatMap((layer) => (layer.cards?.cards ?? []).map((card) => card.id))).size,
   };
 }

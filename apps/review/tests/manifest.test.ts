@@ -7,6 +7,7 @@ import {
   manifestComparison,
   manifestStaleNote,
   parseBatchManifests,
+  parseFreshnessRecords,
   staleCaptureNote,
 } from '../src/manifest';
 
@@ -78,5 +79,48 @@ describe('manifest comparison', () => {
       `matches the ${old.capturedOn} capture, not the one dated ${fresh.capturedOn}`,
     );
     expect(manifestComparison(id, old.sha256, old.capturedOn)).toBe('matches');
+  });
+
+  it('a source re-checked on date D accepts exactly the hash freshness rendered on D', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const entry = (sourceId: string, sha256: string | null, result: string) => ({
+      sourceId,
+      layer: 'expansion.v1',
+      manifestSha256: SHA(1),
+      sha256,
+      result,
+      flags: [],
+      checkedOn: '2026-10-20',
+    });
+    const records = parseFreshnessRecords({
+      'freshness/2026-10-20.json': {
+        checkedOn: '2026-10-20',
+        sources: [
+          entry('page', SHA(1), 'unchanged'),
+          entry('moved', SHA(5), 'changed'),
+          entry('walled', SHA(6), 'flagged'),
+          entry('down', null, 'unreachable'),
+        ],
+      },
+      'freshness/2026-10-19.json': { sources: 'no' },
+    });
+    expect(warn).toHaveBeenCalledWith('Skipping malformed freshness record freshness/2026-10-19.json');
+    expect(records).toEqual([
+      {
+        sources: [
+          { id: 'page', sha256: SHA(1), checkedOn: '2026-10-20' },
+          { id: 'moved', sha256: SHA(5), checkedOn: '2026-10-20' },
+        ],
+      },
+    ]);
+    const fresh = hashIndex([
+      { sources: [{ id: 'page', sha256: SHA(1), capturedOn: '2026-10-02' }] },
+      { sources: [{ id: 'page', sha256: SHA(2), capturedOn: '2026-10-04' }] },
+      ...records,
+    ]);
+    // Re-checked on 2026-10-20: the 2026-10-02 capture's hash, not the newer 2026-10-04 one.
+    expect(compareWithIndex(fresh, 'page', SHA(1), '2026-10-20')).toBe('matches');
+    expect(compareWithIndex(fresh, 'page', SHA(2), '2026-10-20')).toBe('differs');
+    expect(compareWithIndex(fresh, 'walled', SHA(6), '2026-10-20')).toBeUndefined();
   });
 });

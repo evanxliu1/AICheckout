@@ -13,6 +13,7 @@ import { openPacketStatus } from './packets.ts';
 import { PROPOSED_CONFIG, PROPOSED_DIR } from './run.ts';
 import type { Env } from './run.ts';
 import { CARD_STAGES } from './state.ts';
+import { freshnessRecordSchema } from '../../../scripts/lib/freshness.mjs';
 
 export const REVIEW_MANIFEST_MODULE = 'apps/review/src/manifest.ts';
 export const BATCHES_CONFIG = 'evals/curation/catalog-batches.json';
@@ -122,8 +123,9 @@ export function reviewAppReadiness(cited: CitedSource[], manifests: ReviewManife
 
 /**
  * The manifests the review app bundles, in its order: the JSON imports of apps/review/src/manifest.ts, then the
- * batch manifests its `import.meta.glob` matches, sorted by path. Throws when either is missing, so a rewrite of
- * its imports fails loudly here.
+ * batch manifests its `import.meta.glob` matches, sorted by path, then the freshness records its second glob matches
+ * (sorted by path; each page rendered unchanged or changed is a capture of its hash dated the record's day, as the
+ * review app's `parseFreshnessRecords`). Throws when any is missing, so a rewrite of its imports fails loudly here.
  */
 export async function readReviewManifests(root: string): Promise<ReviewManifest[]> {
   const module = join(root, REVIEW_MANIFEST_MODULE);
@@ -132,8 +134,11 @@ export async function readReviewManifests(root: string): Promise<ReviewManifest[
     resolve(dirname(module), match[1]),
   );
   const globs = [...text.matchAll(/import\.meta\.glob(?:<\w+>)?\('([^'*]+)\/\*\/manifest\.json'/g)];
-  if (!paths.length || globs.length !== 1)
-    throw new Error(`${REVIEW_MANIFEST_MODULE}: expected JSON imports and one batch-manifest glob`);
+  const freshnessGlobs = [...text.matchAll(/import\.meta\.glob(?:<\w+>)?\('([^'*]+)\/\*\.json'/g)];
+  if (!paths.length || globs.length !== 1 || freshnessGlobs.length !== 1)
+    throw new Error(
+      `${REVIEW_MANIFEST_MODULE}: expected JSON imports, one batch-manifest glob and one freshness-record glob`,
+    );
   const batches = resolve(dirname(module), globs[0][1]);
   const dirs = (await readdir(batches, { withFileTypes: true })).filter((entry) => entry.isDirectory());
   for (const dir of dirs.map((entry) => join(batches, entry.name, 'manifest.json')).sort())
@@ -143,6 +148,24 @@ export async function readReviewManifests(root: string): Promise<ReviewManifest[
     const data = JSON.parse(await readFile(path, 'utf8')) as { sources?: ManifestSource[] };
     // The review app skips a manifest without sources; so does this check.
     if (Array.isArray(data.sources)) out.push({ path: relative(root, path), sources: data.sources });
+  }
+  const freshnessDir = resolve(dirname(module), freshnessGlobs[0][1]);
+  const records = (await readdir(freshnessDir).catch(() => [] as string[]))
+    .filter((name) => name.endsWith('.json'))
+    .sort();
+  for (const name of records) {
+    const parsed = freshnessRecordSchema.safeParse(
+      JSON.parse(await readFile(join(freshnessDir, name), 'utf8')),
+    );
+    if (!parsed.success) continue; // the review app skips a malformed record too
+    out.push({
+      path: relative(root, join(freshnessDir, name)),
+      sources: parsed.data.sources.flatMap((entry) =>
+        entry.sha256 && (entry.result === 'unchanged' || entry.result === 'changed')
+          ? [{ id: entry.sourceId, sha256: entry.sha256, checkedOn: entry.checkedOn }]
+          : [],
+      ),
+    });
   }
   return out;
 }
@@ -520,14 +543,17 @@ interface Layer {
   manifest: { sources: { id: string; sha256: string; capturedOn: string; checkedOn?: string }[] };
 }
 interface CatalogLibs {
-  loadCatalogBatches: (root: string, path?: string) => Promise<{ layers: Layer[] }>;
+  loadCatalogBatches: (root: string, path?: string) => Promise<{ layers: Layer[]; freshness: unknown[] }>;
   mergeLayers: (loaded: unknown) => {
     version: string;
     overlay: { cards: { cardId: string; heldOut: string | null }[] };
     dropped: { cardId: string; layer: string; reason: string }[];
     layers: { id: string; kind: string; dir: string; cards: number; replaced: string[] }[];
   };
-  sourceDate: (source: { capturedOn: string; checkedOn?: string }) => string;
+  effectiveSources: (
+    layers: Layer[],
+    freshness: unknown[],
+  ) => Map<string, { source: { sha256: string }; layer: string }>;
 }
 interface CatalogV3Libs {
   buildRelease: (inputs: unknown) => {
@@ -559,15 +585,14 @@ export async function buildCatalogSummary(
     : undefined;
   const { catalog, dates, continuity } = v3.buildRelease({ ...merged, ledger });
   const stats = v3.catalogStats(catalog);
-  // The manifest each source's hash comes from, as mergeLayers picks it (a later, newer capture wins).
-  const winner = new Map<string, { sha256: string; dir: string; date: string }>();
-  for (const layer of loaded.layers)
-    for (const source of layer.manifest.sources) {
-      const date = batches.sourceDate(source);
-      const earlier = winner.get(source.id);
-      if (!earlier || date > earlier.date)
-        winner.set(source.id, { sha256: source.sha256, dir: layer.dir, date });
-    }
+  // The manifest each source's hash comes from, as mergeLayers picks it (a later, newer capture or check wins).
+  const dirs = new Map(loaded.layers.map((layer) => [layer.id, layer.dir]));
+  const winner = new Map(
+    [...batches.effectiveSources(loaded.layers, loaded.freshness)].map(([id, { source, layer }]) => [
+      id,
+      { sha256: source.sha256, dir: dirs.get(layer)! },
+    ]),
+  );
   const layerOf = (cardId: string) =>
     [...loaded.layers].reverse().find((layer) => layer.corpus.cases.some((item) => item.cardId === cardId))
       ?.id ?? 'unknown';

@@ -8,7 +8,9 @@
 // needs: display names and short names, short stable rule IDs (continued against the rule-ID ledger), rule order,
 // the release version and dates, and drops programs, brands and gates that no included card, merchant or program
 // uses. The seven real cards keep the names, rule IDs and rule semantics of release 1 (`CATALOG_V2`,
-// `2026-09-29.real.1`); `checkRealCards` fails the build if any of them differs.
+// `2026-09-29.real.1`); `checkRealCards` fails the build if any of them differs. A real card a pipeline batch replaced
+// (Phase 9) keeps the release-1 names and rule-ID scheme but takes the batch's terms, so it is not checked against
+// release 1; rule-ID continuity against the ledger applies to it as to every card.
 import { createHash } from 'node:crypto';
 import { catalogV3Schema, CATALOG_V3_LIMITS, stableJson } from '../../packages/rewards-core/src/schema.ts';
 import { z } from 'zod';
@@ -184,6 +186,65 @@ const byBaseThenRate = (rules) =>
 /** Release-1 rule IDs (`<prefix>-base`, `<prefix>-<category>`), which the real cards keep. */
 const realRuleId = (prefix, rule) =>
   `${prefix}-${rule.category === 'all-purchases' ? 'base' : rule.category}`;
+
+/** The release-1 scheme over a card's rules, with `-2`, `-3` for a repeated one (a refreshed real card may have two
+ * rules in one category; release 1 had none, so its IDs are unchanged). */
+const realRuleIds = (prefix, rules) => {
+  const seen = new Map();
+  return rules.map((rule) => {
+    const stem = realRuleId(prefix, rule);
+    const count = (seen.get(stem) ?? 0) + 1;
+    seen.set(stem, count);
+    return count === 1 ? stem : `${stem}-${count}`;
+  });
+};
+
+/**
+ * The source IDs the release catalog cites, from the merged inputs without building it: the sources (first ten) of
+ * every card that is not held out and keeps a rule, the issuer-stated valuation source of each program such a card
+ * uses, and the merchants' MCC sources. `pipeline freshness` re-checks exactly these.
+ */
+export function citedSourceIds({ overlay, corpora, rewardPrograms, merchants }) {
+  const entries = new Map(overlay.cards.map((entry) => [entry.cardId, entry]));
+  const mapping = new Map(rewardPrograms.cards.map((card) => [card.cardId, card]));
+  const ids = new Set();
+  const programs = new Set();
+  for (const corpus of corpora)
+    for (const [cardId, item] of corpusCases(corpus)) {
+      const entry = entries.get(cardId);
+      if (entry?.heldOut) continue;
+      const held = new Set(
+        (entry?.rules ?? [])
+          .filter((patch) => patch.disposition === 'rule-held-out' || patch.disposition === 'card-held-out')
+          .map((patch) => patch.index),
+      );
+      const rules =
+        item.reference.rules.filter((_, index) => !held.has(index)).length + (entry?.addedRules?.length ?? 0);
+      if (!rules) continue;
+      item.sourceIds.slice(0, 10).forEach((id) => ids.add(id));
+      programs.add(entry?.programId ?? mapping.get(cardId)?.programId);
+    }
+  for (const program of rewardPrograms.programs)
+    if (programs.has(program.id) && program.basis === 'issuer-stated') ids.add(program.issuerStated.sourceId);
+  for (const merchant of merchants.merchants) merchant.mcc.sourceIds.forEach((id) => ids.add(id));
+  return ids;
+}
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+/**
+ * Sources whose `checkedOn` is outside the 30 days before `verifiedAt` (`catalogV3Schema`'s source window, checked here
+ * first so the error names them): `{ id, checkedOn }`, oldest first.
+ */
+export function staleSources(sources, verifiedAt) {
+  const verified = Date.parse(`${verifiedAt.slice(0, 10)}T00:00:00Z`);
+  return sources
+    .filter((source) => {
+      const checked = Date.parse(`${source.checkedOn}T00:00:00Z`);
+      return checked > verified || verified - checked > CATALOG_V3_VALID_DAYS * DAY_MS;
+    })
+    .map(({ id, checkedOn }) => ({ id, checkedOn }))
+    .sort((a, b) => a.checkedOn.localeCompare(b.checkedOn) || a.id.localeCompare(b.id));
+}
 
 /**
  * The catalog dates from its issuer sources (the manifest sources it cites; merchant MCC sources are not terms):
@@ -436,6 +497,26 @@ export function buildRelease(inputs) {
     manifest.sources.map((source) => ({ id: source.id, checkedOn: source.checkedOn ?? source.capturedOn })),
   );
   const { verifiedAt, expiresAt } = catalogDates(manifestSources, merchantSourceIds);
+  // The source window first, on the sources the catalog will cite, so the error names them (the overlay check below
+  // would report schema paths of its draft).
+  const cited = citedSourceIds(inputs);
+  const citedSources = [
+    ...new Map(
+      manifestSources
+        .filter((s) => cited.has(s.id))
+        .reverse()
+        .map((s) => [s.id, s]),
+    ).values(),
+    ...inputs.merchants.sources.filter((source) => cited.has(source.id)),
+  ];
+  const window = catalogDates(citedSources, merchantSourceIds);
+  const stale = staleSources(citedSources, window.verifiedAt);
+  if (stale.length)
+    throw new Error(
+      `${stale.length} cited source(s) outside the 30 days before verifiedAt ${window.verifiedAt}: ` +
+        `${stale.map((source) => `${source.id} (${source.checkedOn})`).join(', ')}. ` +
+        'Re-check them (npm run pipeline -- freshness) or refresh their cards in a batch.',
+    );
   const problems = checkOverlay({ ...inputs, verifiedAt, expiresAt });
   if (problems.length) throw new Error(`The overlay check fails:\n- ${problems.join('\n- ')}`);
   const draft = draftCatalogV3({
@@ -451,7 +532,7 @@ export function buildRelease(inputs) {
     if (realIds.has(card.id) && !real) throw new Error(`No release-1 metadata for real card ${card.id}`);
     const rules = byBaseThenRate(card.rules);
     const ids = real
-      ? rules.map((rule) => realRuleId(real.prefix, rule))
+      ? realRuleIds(real.prefix, rules)
       : ruleIdsFor(rulePrefixOf(card.id), rules, isUnconditionalBase);
     rules.forEach((rule, i) => renamed.set(rule.id, ids[i]));
     const omit = QUOTE_LIMIT_OMISSIONS[card.id] ?? [];

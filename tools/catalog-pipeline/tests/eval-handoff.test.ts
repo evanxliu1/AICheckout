@@ -514,11 +514,19 @@ describe('review-app readiness', () => {
       'evals/curation/expansion/manifest.json',
     ]);
     expect(paths).toContain('evals/curation/batches/wells-fargo-2026-10/manifest.json');
-    expect(
-      paths.slice(3).every((path) => /^evals\/curation\/batches\/[^/]+\/manifest\.json$/.test(path)),
-    ).toBe(true);
-    expect(paths.slice(3)).toEqual([...paths.slice(3)].sort());
-    expect(manifests.every((manifest) => manifest.sources.length > 0)).toBe(true);
+    // Batch manifests (sorted), then freshness records (sorted), as the review app's two globs.
+    const batches = paths
+      .slice(3)
+      .filter((path) => /^evals\/curation\/batches\/[^/]+\/manifest\.json$/.test(path));
+    const records = paths.slice(3 + batches.length);
+    expect(batches).toEqual([...batches].sort());
+    expect(records.every((path) => /^evals\/curation\/freshness\/\d{4}-\d{2}-\d{2}\.json$/.test(path))).toBe(
+      true,
+    );
+    expect(records).toEqual([...records].sort());
+    expect(manifests.slice(0, 3 + batches.length).every((manifest) => manifest.sources.length > 0)).toBe(
+      true,
+    );
     expect(REVIEW_MANIFEST_MODULE).toBe('apps/review/src/manifest.ts');
   });
 
