@@ -53,6 +53,9 @@ export type Status = (typeof STATUSES)[number];
 
 export const BATCH_ID = /^[a-z0-9-]+-\d{4}-\d{2}$/;
 export const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+/** A model, agent-run or packet ID: one token, no spaces (also `verificationFileSchema`'s `packetId` in
+ * scripts/lib/expansion-verification.mjs, which keeps its own copy: scripts do not import the pipeline). */
+export const TOKEN = /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,99}$/;
 const id = z.string().regex(SLUG).max(120);
 const hash = z.string().regex(/^sha256:[0-9a-f]{64}$/);
 const hex = z.string().regex(/^[0-9a-f]{64}$/);
@@ -61,8 +64,7 @@ const code = z.string().regex(/^[a-z][a-z0-9-]{0,47}$/);
 /** `<kind>:<id or relative path>`, e.g. `manifest:wells-fargo-autograph-product`. */
 const ref = z.string().regex(/^[a-z][a-z-]*:[A-Za-z0-9._/-]{1,200}$/);
 const timestamp = z.iso.datetime();
-/** A model or agent-run ID: one token, no spaces. */
-const token = z.string().regex(/^[A-Za-z0-9][A-Za-z0-9._:/-]{0,99}$/);
+const token = z.string().regex(TOKEN);
 
 export const stageRecordSchema = z.strictObject({
   status: z.enum(STATUSES),

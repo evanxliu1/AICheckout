@@ -543,7 +543,12 @@ describe('overlay definitions', () => {
   const gate = (id: string, requires: string) => ({ id, requires });
   const defs = (gates: unknown[]) => ({ gates, programs: [], programDetails: [] }) as never;
   it("refuses another issuer's gate ID with other content; same content or an own ID passes", () => {
-    const overlay = { cards: [], ...defs([gate('g-shared', 'one'), gate('g-own', 'one')]) } as never;
+    const overlay = {
+      cards: [],
+      gates: [gate('g-shared', 'one'), gate('g-own', 'one')],
+      programs: [],
+      programDetails: [],
+    } as never;
     const other = defs([gate('g-shared', 'one')]);
     expect(definitionConflicts(overlay, defs([gate('g-shared', 'two')]), [other])).toEqual([
       "gates.0: g-shared is defined by another issuer's fragment with other content",

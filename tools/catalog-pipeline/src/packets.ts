@@ -120,7 +120,7 @@ export function packetCards(view: BatchView, stage: IssuerStage, issuer: string)
     .map((card) => card.cardId);
 }
 
-function inputsOf(batch: Batch, stage: IssuerStage, cardIds: string[]): string[] {
+function inputsOf(batch: Batch, stage: IssuerStage, issuer: string, cardIds: string[]): string[] {
   const at = (path: string) => join(batch.dir, path);
   const captures = [
     ...new Set(cardIds.flatMap((id) => batch.cards.find((card) => card.id === id)?.sourceIds ?? [])),
@@ -136,14 +136,14 @@ function inputsOf(batch: Batch, stage: IssuerStage, cardIds: string[]): string[]
         join(batch.root, VERIFIER_BRIEF),
         at('corpus.draft.json'),
         at('product-notes.json'),
-        at(`verify/${cardIssuerSlug(batch, cardIds)}.md`),
+        at(`verify/${issuer}.md`),
         conventions,
         ...captures,
       ];
     case 'adjudicate':
       return [
         join(batch.root, VERIFIER_BRIEF),
-        at(`verification/${cardIssuerSlug(batch, cardIds)}.json`),
+        at(`verification/${issuer}.json`),
         at('corpus.draft.json'),
         at('product-notes.json'),
         conventions,
@@ -161,11 +161,6 @@ function inputsOf(batch: Batch, stage: IssuerStage, cardIds: string[]): string[]
       ];
   }
 }
-
-const cardIssuerSlug = (batch: Batch, cardIds: string[]): string => {
-  const issuer = batch.cards.find((card) => card.id === cardIds[0])?.issuer;
-  return batch.meta.issuers.find((entry) => entry.name === issuer)?.slug ?? 'issuer';
-};
 
 /** `pipeline claim <stage> --issuer <slug> [--release]`. */
 export async function claim(
@@ -218,7 +213,7 @@ export async function claim(
         .map((entry) => entry.packet!.n),
     ) + 1;
   const output = join(batch.dir, outputOf(stage, issuer));
-  const inputs = inputsOf(batch, stage, cardIds);
+  const inputs = inputsOf(batch, stage, issuer, cardIds);
   const inputSha256: Record<string, string> = {};
   for (const path of inputs) {
     const sha = path === output ? null : await fileSha256(path);

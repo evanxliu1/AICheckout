@@ -7,7 +7,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { z } from 'zod';
 import type { Batch } from './files.ts';
-import { SLUG } from './state.ts';
+import { SLUG, TOKEN } from './state.ts';
 import { batchesConfigSchema, BATCHES_CONFIG_PATH } from '../../../scripts/lib/catalog-batches.mjs';
 
 export const SOURCE_KINDS = [
@@ -37,7 +37,7 @@ export const researchFileSchema = z.strictObject({
   researchedOn: z.iso.date(),
   provenance: z.strictObject({
     generatedBy: z.literal('card-researcher'),
-    model: z.string().regex(/^[A-Za-z0-9][A-Za-z0-9._:/-]{0,99}$/),
+    model: z.string().regex(TOKEN),
     date: z.iso.date(),
     status: z.literal('agent-research-unverified'),
   }),
