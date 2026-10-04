@@ -1,8 +1,18 @@
 {
   "schemaVersion": 1,
   "issuer": "Example Bank",
-  "verifier": { "agent": "fixture", "model": "fixture", "date": "2026-10-04", "filesRead": ["fixture"] },
-  "adjudicator": { "agent": "fixture", "model": "fixture", "date": "2026-10-04", "filesRead": ["fixture"] },
+  "verifier": {
+    "agent": "fixture",
+    "model": "fixture",
+    "date": "2026-10-04",
+    "filesRead": ["fixture"]
+  },
+  "adjudicator": {
+    "agent": "fixture",
+    "model": "fixture",
+    "date": "2026-10-04",
+    "filesRead": ["fixture"]
+  },
   "cards": [
     {
       "cardId": "example-bank-alpha",
@@ -22,11 +32,17 @@
         {
           "op": "set",
           "path": "reference.rules.0.anchors.0",
-          "current": "fake beta words three x",
-          "corrected": "fake beta words",
-          "anchor": { "sourceId": "example-bank-beta-product", "quote": "fake beta words" },
+          "current": "fake beta words 3X",
+          "corrected": "fake beta words 3X points",
+          "anchor": {
+            "sourceId": "example-bank-beta-product",
+            "quote": "fake beta words 3X points"
+          },
           "note": "fixture",
-          "adjudication": { "decision": "accepted", "reason": "fixture" }
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "fixture"
+          }
         }
       ],
       "addedRules": [],

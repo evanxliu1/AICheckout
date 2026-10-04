@@ -1,21 +1,29 @@
 // Consolidate the issuer research drafts into the card list and capture sources for the catalog expansion.
 //
-//   node scripts/build-expansion-cards.mjs
+//   node scripts/build-expansion-cards.mjs [--dir <pipeline batch dir>]
 //
 // Reads docs/research/cards-2026/*.json (agent research drafts; values are unverified) and writes:
 //   evals/curation/expansion/cards.json       cards to capture, extract, and label
 //   evals/curation/expansion/exclusions.json  cards left out, with the reason
 //   evals/curation/expansion/sources.json     official pages to capture (same format as real/sources.json)
 //
+// With --dir (the pipeline's research accept), it reads <dir>/research/*.json and writes the same four files into <dir>.
+//
 // Nothing from the research goes into the catalog: it only chooses which cards and pages to capture. Rates
 // come later from the captures (LLM extraction, then independent verification).
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parseArgs } from 'node:util';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const researchDir = join(root, 'docs/research/cards-2026');
-const outDir = join(root, 'evals/curation/expansion');
+const { values } = parseArgs({ options: { dir: { type: 'string' } } });
+const batchDir = values.dir ? resolve(root, values.dir) : null;
+const researchDir = batchDir ? join(batchDir, 'research') : join(root, 'docs/research/cards-2026');
+const outDir = batchDir ?? join(root, 'evals/curation/expansion');
+/** The card- and page-specific lists below are corrections of the Phase 7 research (docs/research/cards-2026). They
+ * apply to the default run only; a pipeline batch (--dir) is consolidated from its own research without them. */
+const phase7 = !batchDir;
 
 /** Cards already labeled in evals/curation/real. */
 const ALREADY_LABELED = new Set([
@@ -217,14 +225,14 @@ const files = readdirSync(researchDir)
   .filter((name) => name.endsWith('.json'))
   .sort();
 const research = files.map((name) => ({
-  file: `docs/research/cards-2026/${name}`,
+  file: `${relative(root, researchDir)}/${name}`,
   ...JSON.parse(readFileSync(join(researchDir, name), 'utf8')),
 }));
 
 const cards = [];
 const exclusions = [];
 const byId = new Map();
-const extraUrls = new Map(Object.entries(EXTRA_URLS).map(([id, urls]) => [id, [...urls]]));
+const extraUrls = new Map(Object.entries(phase7 ? EXTRA_URLS : {}).map(([id, urls]) => [id, [...urls]]));
 const mergedNotes = new Map();
 
 for (const issuer of research) {
@@ -238,18 +246,18 @@ for (const issuer of research) {
         research: issuer.file,
         ...extra,
       });
-    if (issuer.issuer === 'Capital One' && DISCOVER_IN_CAPITAL_ONE.has(card.id)) {
+    if (phase7 && issuer.issuer === 'Capital One' && DISCOVER_IN_CAPITAL_ONE.has(card.id)) {
       exclude(
         'Duplicate: a Discover card (Capital One owns Discover). Kept under Discover; its Capital One disclosure page is added as a source.',
         { mergedInto: card.id },
       );
       continue;
     }
-    if (ALREADY_LABELED.has(card.id)) {
+    if (phase7 && ALREADY_LABELED.has(card.id)) {
       exclude('Already labeled in evals/curation/real (7-card corpus).');
       continue;
     }
-    if (MERGED_VARIANTS[card.id]) {
+    if (phase7 && MERGED_VARIANTS[card.id]) {
       const target = MERGED_VARIANTS[card.id];
       const where = ALREADY_LABELED.has(target)
         ? ' (the main card is already labeled in evals/curation/real)'
@@ -264,7 +272,7 @@ for (const issuer of research) {
       );
       continue;
     }
-    if (NO_REWARDS[card.id]) {
+    if (phase7 && NO_REWARDS[card.id]) {
       exclude(`Earns no rewards: ${NO_REWARDS[card.id]}`);
       continue;
     }
@@ -325,12 +333,12 @@ const NOTES = {
   'capital-one-union-plus-cash-rewards': 'Affinity card for union members.',
   'capital-one-teamster-privilege-cash-rewards': 'Affinity card for Teamsters members.',
 };
-for (const [id, note] of Object.entries(NOTES)) byId.get(id)?.notes.push(note);
+for (const [id, note] of Object.entries(phase7 ? NOTES : {})) byId.get(id)?.notes.push(note);
 
 // ---- Sources --------------------------------------------------------------------------------------------
 const sources = new Map();
 const pickIndex = (card, urls) => {
-  const pick = PICK[card.id];
+  const pick = phase7 ? PICK[card.id] : undefined;
   if (!pick) return null;
   return pick.map((needle) => {
     const re = new RegExp(needle.replace(/[.?]/g, (c) => `\\${c}`));
@@ -343,7 +351,7 @@ for (const card of cards) {
   const candidates = card.urls.filter(
     (u, i, all) =>
       !SKIP_KINDS.has(u.kind) &&
-      !SKIP_URL.some((re) => re.test(u.url)) &&
+      !(phase7 && SKIP_URL.some((re) => re.test(u.url))) &&
       all.findIndex((other) => other.url === u.url) === i,
   );
   const chosen =
@@ -362,7 +370,7 @@ for (const card of cards) {
         ? kind
         : 'category-faq';
     let id, title;
-    if (SHARED_IDS[url]) [id, title] = SHARED_IDS[url];
+    if (phase7 && SHARED_IDS[url]) [id, title] = SHARED_IDS[url];
     else {
       let suffix = KIND_SUFFIX[normalizedKind];
       if (used.has(suffix)) suffix = `${suffix}-2`;
@@ -425,7 +433,7 @@ for (const source of sources.values()) {
     hints[source.id] = { click: ['Expand All'] };
   if (/cashplus\.usbank\.com\/cash-plus\/samplemerchants/.test(source.url))
     hints[source.id] = { request: true };
-  if (WAIT_FOR[source.id]) hints[source.id] = { waitFor: WAIT_FOR[source.id] };
+  if (phase7 && WAIT_FOR[source.id]) hints[source.id] = { waitFor: WAIT_FOR[source.id] };
 }
 out('capture-hints.json', hints);
 const count = (list, key) => list.reduce((acc, x) => ((acc[x[key]] = (acc[x[key]] ?? 0) + 1), acc), {});

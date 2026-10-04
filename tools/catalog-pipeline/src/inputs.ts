@@ -216,6 +216,10 @@ export async function cardInputs(batch: Batch, stage: Stage, card: CardEntry): P
         inputs: [
           { ref: `draft-case:${card.id}`, sha256: jsonSha256(draft) },
           { ref: `findings-adjudicated:${card.id}`, sha256: jsonSha256(findings.card) },
+          // The adjudicator's label-lint acks of the card (only when there are any, so other hashes stay as they were).
+          ...(findings.acks.length
+            ? [{ ref: `lint-acks:${card.id}`, sha256: jsonSha256(findings.acks) }]
+            : []),
         ],
       };
     }

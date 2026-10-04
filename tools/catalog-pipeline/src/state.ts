@@ -53,6 +53,9 @@ export type Status = (typeof STATUSES)[number];
 
 export const BATCH_ID = /^[a-z0-9-]+-\d{4}-\d{2}$/;
 export const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+/** A model, agent-run or packet ID: one token, no spaces (also `verificationFileSchema`'s `packetId` in
+ * scripts/lib/expansion-verification.mjs, which keeps its own copy: scripts do not import the pipeline). */
+export const TOKEN = /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,99}$/;
 const id = z.string().regex(SLUG).max(120);
 const hash = z.string().regex(/^sha256:[0-9a-f]{64}$/);
 const hex = z.string().regex(/^[0-9a-f]{64}$/);
@@ -61,8 +64,7 @@ const code = z.string().regex(/^[a-z][a-z0-9-]{0,47}$/);
 /** `<kind>:<id or relative path>`, e.g. `manifest:wells-fargo-autograph-product`. */
 const ref = z.string().regex(/^[a-z][a-z-]*:[A-Za-z0-9._/-]{1,200}$/);
 const timestamp = z.iso.datetime();
-/** A model or agent-run ID: one token, no spaces. */
-const token = z.string().regex(/^[A-Za-z0-9][A-Za-z0-9._:/-]{0,99}$/);
+const token = z.string().regex(TOKEN);
 
 export const stageRecordSchema = z.strictObject({
   status: z.enum(STATUSES),
@@ -84,6 +86,10 @@ export const stageRecordSchema = z.strictObject({
   agentRun: token.optional(),
   model: token.optional(),
   acceptedAt: timestamp.optional(),
+  /** Agent stages, issuer record: the subagent's run time and tokens from its completion notice (accept
+   * --duration-ms, --tokens), for the cost report (tokens per card = tokens / packet cards). */
+  durationMs: z.int().nonnegative().optional(),
+  tokens: z.int().nonnegative().optional(),
 });
 export type StageRecord = z.infer<typeof stageRecordSchema>;
 
@@ -93,6 +99,13 @@ export const cardStateSchema = z.strictObject({
   heldOut: code.nullable(),
 });
 export type CardState = z.infer<typeof cardStateSchema>;
+
+/** Reason codes for accepting a flagged capture (`pipeline resolve capture-flagged`); codes, never text. */
+export const CAPTURE_FLAG_REASONS = [
+  'expected-short-page',
+  'false-positive-flag',
+  'keep-existing-capture',
+] as const;
 
 export const stateSchema = z.strictObject({
   schemaVersion: z.literal(1),
@@ -104,6 +117,10 @@ export const stateSchema = z.strictObject({
     z.strictObject({ stages: z.partialRecord(z.enum(ISSUER_STAGES), stageRecordSchema) }),
   ),
   batchStages: z.partialRecord(z.enum(BATCH_STAGES), stageRecordSchema),
+  /** Capture flags accepted by the session, per source: valid while the manifest hash is still `sha256`. */
+  resolvedFlags: z
+    .record(id, z.strictObject({ reason: z.enum(CAPTURE_FLAG_REASONS), sha256: hex, resolvedAt: timestamp }))
+    .optional(),
 });
 export type State = z.infer<typeof stateSchema>;
 

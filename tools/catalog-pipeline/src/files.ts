@@ -60,6 +60,7 @@ export const findingsFileSchema = z.looseObject({
   issuer: z.string(),
   adjudicator: z.unknown().optional(),
   cards: z.array(findingsCardSchema),
+  labelLintAcks: z.array(z.looseObject({ cardId: z.string() })).optional(),
 });
 const overlayFileSchema = z.looseObject({ cards: z.array(z.looseObject({ cardId: z.string() })) });
 /** One row of a capture run report (`capture-issuer-pages.mjs --report`). */
@@ -92,6 +93,8 @@ export interface Findings {
   issuerSlug: string;
   file: string;
   card: FindingsCard;
+  /** The file's `labelLintAcks` of this card, as written (the gates validate them). */
+  acks: unknown[];
 }
 
 /** Everything the status derivation reads from one batch directory. */
@@ -149,7 +152,12 @@ export async function loadBatch(root: string, id: string): Promise<Batch> {
     if (!name.endsWith('.json')) continue;
     const file = await readJson(join(verificationDir, name), findingsFileSchema);
     for (const card of file?.cards ?? [])
-      findings.set(card.cardId, { issuerSlug: name.slice(0, -5), file: join(verificationDir, name), card });
+      findings.set(card.cardId, {
+        issuerSlug: name.slice(0, -5),
+        file: join(verificationDir, name),
+        card,
+        acks: (file?.labelLintAcks ?? []).filter((ack) => ack.cardId === card.cardId),
+      });
   }
   const packets = (await readdir(join(dir, 'pipeline', 'packets')).catch(() => [] as string[]))
     .filter((name) => name.endsWith('.json'))

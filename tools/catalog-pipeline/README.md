@@ -9,9 +9,18 @@ npm run pipeline -- status [--batch B] [--json]
 npm run pipeline -- next [--batch B] --json
 npm run pipeline -- run capture|extract|draft|apply|build|eval [--batch B] [--only ids] [--concurrency N] [--wait-minutes N]
 npm run pipeline -- rebase-anchors [--batch B]
+npm run pipeline -- claim research|verify|adjudicate|overlay --issuer <slug> [--batch B] [--release]
+npm run pipeline -- accept research|verify|adjudicate|overlay --issuer <slug> --agent-run <id> [--model <id>] \
+  [--duration-ms N] [--tokens N] [--batch B] [--dry-run]
+npm run pipeline -- resolve capture-flagged --source <id> --reason expected-short-page|false-positive-flag|keep-existing-capture
+npm run pipeline -- lint-labels [--batch B | --dir evals/curation/expansion] [--json]
 npm run pipeline -- eval [--batch B] [--cross-model-run DIR]   # writes pipeline/eval.json; prints the cross-model command
 npm run pipeline -- handoff [--batch B]                        # prints the PR checklist and Evan's publish steps; writes nothing
 ```
+
+`claim` writes a work packet (`pipeline/packets/`, gitignored: absolute paths of this machine) naming the cards, the inputs and the one output file the agent writes; `accept` runs the stage's gates on that file and records the packet, agent run, model and, from the subagent's completion notice, `durationMs` and `tokens` in `state.json`. Gate errors name paths and fields, never issuer text.
+
+`lint-labels` reports the label-evidence lint as findings raised, acknowledged and open. A finding the lint cannot read is acknowledged only by an agent: the adjudicator in its findings file (`labelLintAcks: [{ cardId, ruleIndex, check, reason }]`) or the overlay author in its fragment, with `reason` one of `anchor-truncated`, `reversed-phrasing`, `split-anchors`, `points-wording-cash-label`, `date-outside-anchor`, `relationship-bonus`. Each ack must name a raised finding; the CLI has no override of its own.
 
 Runs on Node 24 type stripping (`node src/cli.ts`); tests are `npm test --workspace=@ai-checkout/catalog-pipeline` and use synthetic fixtures only.
 

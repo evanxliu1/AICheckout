@@ -7,6 +7,11 @@
 //   npm run pipeline -- run <capture|extract|draft|apply|build|eval> [--batch B] [--only ids] [--concurrency N]
 //                           [--wait-minutes N]
 //   npm run pipeline -- rebase-anchors [--batch B]
+//   npm run pipeline -- claim <research|verify|adjudicate|overlay> --issuer <slug> [--batch B] [--release]
+//   npm run pipeline -- accept <research|verify|adjudicate|overlay> --issuer <slug> --agent-run <id> [--model <id>]
+//                           [--duration-ms N] [--tokens N] [--batch B] [--dry-run]
+//   npm run pipeline -- resolve capture-flagged --source <id> --reason <code> [--batch B]
+//   npm run pipeline -- lint-labels [--batch B | --dir evals/curation/expansion] [--json]
 //   npm run pipeline -- eval [--batch B] [--cross-model-run DIR]
 //   npm run pipeline -- handoff [--batch B]
 //
@@ -23,16 +28,23 @@ import { handoff } from './handoff.ts';
 import { rebaseAnchors } from './rebase.ts';
 import { runStage } from './run.ts';
 import type { Env } from './run.ts';
+import { accept } from './accept.ts';
+import { resolveCaptureFlag } from './capture.ts';
+import { lintLabels } from './lint-command.ts';
+import { claim, openPacketStatus } from './packets.ts';
+import type { PacketStatus } from './packets.ts';
 import {
   BATCH_ID,
+  CAPTURE_FLAG_REASONS,
   CARD_STAGES,
   CLI_STAGES,
+  ISSUER_STAGES,
   STATUSES,
   initialState,
   writeJsonAtomic,
   writeState,
 } from './state.ts';
-import type { CliStage } from './state.ts';
+import type { CliStage, IssuerStage } from './state.ts';
 import { REPO_ROOT } from './root.ts';
 
 const USAGE = `Usage: npm run pipeline -- <command>
@@ -41,6 +53,10 @@ const USAGE = `Usage: npm run pipeline -- <command>
   next [--batch B] [--json]
   run <${CLI_STAGES.join('|')}> [--batch B] [--only ids] [--concurrency N] [--wait-minutes N]
   rebase-anchors [--batch B]
+  claim <${ISSUER_STAGES.join('|')}> --issuer <slug> [--batch B] [--release]
+  accept <${ISSUER_STAGES.join('|')}> --issuer <slug> --agent-run <id> [--model <id>] [--duration-ms N] [--tokens N] [--batch B] [--dry-run]
+  resolve capture-flagged --source <id> --reason <${CAPTURE_FLAG_REASONS.join('|')}> [--batch B]
+  lint-labels [--batch B | --dir <corpus dir>] [--json]
   eval [--batch B] [--cross-model-run DIR]
   handoff [--batch B]`;
 
@@ -122,12 +138,13 @@ export async function init(
 export interface StatusJson {
   batch: string;
   counts: Record<string, Partial<Record<string, number>>>;
-  packets: string[];
+  /** Open packets and their output: absent, present (awaiting accept), present-not-accepted (a gate failed). */
+  packets: PacketStatus[];
   rebaseAnchors: string[];
   queue: BatchView['queue'];
 }
 
-export function statusJson(view: BatchView): StatusJson {
+export function statusJson(view: BatchView, packets: PacketStatus[]): StatusJson {
   const counts: StatusJson['counts'] = {};
   const add = (stage: string, status: string) => {
     counts[stage] ??= {};
@@ -140,7 +157,7 @@ export function statusJson(view: BatchView): StatusJson {
   return {
     batch: view.batch.id,
     counts,
-    packets: view.batch.packets,
+    packets,
     rebaseAnchors: view.cards.filter((card) => card.rebaseAnchors).map((card) => card.cardId),
     queue: view.queue,
   };
@@ -168,7 +185,9 @@ function statusText(status: StatusJson, cardCount: number): string {
     lines.push(
       `  ${stage.padEnd(11)}${STATUSES.map((s) => String(status.counts[stage]?.[s] ?? 0).padStart(15)).join('')}`,
     );
-  lines.push(`  packets: ${status.packets.length ? status.packets.join(', ') : 'none'}`);
+  lines.push(
+    `  open packets: ${status.packets.length ? status.packets.map((p) => `${p.file} (output ${p.output})`).join(', ') : 'none'}`,
+  );
   if (status.rebaseAnchors.length) lines.push(`  rebase anchors: ${status.rebaseAnchors.join(', ')}`);
   lines.push(`  queue: ${status.queue.length ? '' : 'empty'}`);
   for (const item of status.queue)
@@ -213,6 +232,15 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
         only: { type: 'string' },
         concurrency: { type: 'string' },
         'wait-minutes': { type: 'string' },
+        release: { type: 'boolean', default: false },
+        'agent-run': { type: 'string' },
+        model: { type: 'string' },
+        'duration-ms': { type: 'string' },
+        tokens: { type: 'string' },
+        'dry-run': { type: 'boolean', default: false },
+        source: { type: 'string' },
+        reason: { type: 'string' },
+        dir: { type: 'string' },
         'cross-model-run': { type: 'string' },
       },
     });
@@ -225,7 +253,7 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
         const counts: number[] = [];
         for (const id of await batchesFor(env, values.batch)) {
           const view = await deriveBatch(await loadBatch(env.root, id), env.now());
-          out.push(statusJson(view));
+          out.push(statusJson(view, await openPacketStatus(view.batch)));
           counts.push(view.cards.length);
         }
         if (values.json) env.log(JSON.stringify({ batches: out }, null, 2));
@@ -282,6 +310,30 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
         );
         return result.unresolved.length ? 1 : 0;
       }
+      case 'claim':
+      case 'accept': {
+        const stage = positionals[0] as IssuerStage;
+        if (positionals.length !== 1 || !ISSUER_STAGES.includes(stage))
+          throw new UsageError(`${command} takes one agent stage: ${ISSUER_STAGES.join(', ')}.`);
+        if (!values.issuer) throw new UsageError('--issuer <slug> is required.');
+        const batch = await oneBatch(env, values.batch);
+        if (command === 'claim')
+          return await claim(env, batch, stage, values.issuer, { release: values.release });
+        const int = (value: string | undefined) => (value === undefined ? undefined : Number(value));
+        return await accept(env, batch, stage, values.issuer, {
+          agentRun: values['agent-run'],
+          model: values.model,
+          dryRun: values['dry-run'],
+          durationMs: int(values['duration-ms']),
+          tokens: int(values.tokens),
+        });
+      }
+      case 'resolve':
+        if (positionals[0] !== 'capture-flagged' || !values.source || !values.reason)
+          throw new UsageError('resolve capture-flagged --source <id> --reason <code>.');
+        return await resolveCaptureFlag(env, await oneBatch(env, values.batch), values.source, values.reason);
+      case 'lint-labels':
+        return await lintLabels(env, { batch: values.batch, dir: values.dir, json: values.json });
       default:
         env.log(USAGE);
         return 2;

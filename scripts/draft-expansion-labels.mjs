@@ -725,7 +725,7 @@ for (const issuer of issuers) {
     '7. **Product notes**: each hint (merchant-specific rules with merchant names and membership requirements, chosen-category options and caps, rotating quarters with dates and activation, store-only use, relationship tiers, checkout-method rules) is true per the captures; `keyword-search` anchors were chosen automatically and must actually support the hint; `unanchored` hints need a capture quote or should be dropped.',
     '8. **Draft notes**: values the drafting dropped (no resolving quote) may be real: re-check them.',
     '',
-    `Record findings in \`${relDir}/verification/<issuer-slug>.json\` in the format of \`${relDir}/verification/README.md\` (card verdict; each fix with field path, current value, corrected value and an anchor quote of at most ${MAX_QUOTE_WORDS} words, verbatim from a named capture). Quote nothing longer.`,
+    `Record findings in \`${relDir}/verification/<issuer-slug>.json\` in the format of \`evals/curation/expansion/verification/README.md\` (card verdict; each fix with field path, current value, corrected value and an anchor quote of at most ${MAX_QUOTE_WORDS} words, verbatim from a named capture). Quote nothing longer.`,
     '',
   ];
   for (const card of list) {

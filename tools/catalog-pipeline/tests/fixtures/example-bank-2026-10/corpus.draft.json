@@ -1,21 +1,37 @@
 {
   "schemaVersion": 2,
   "version": "example-bank-2026-10.draft.1",
+  "origin": "real-issuer-captures",
+  "annotationStatus": "agent-drafted",
+  "description": "Synthetic fixture draft.",
   "cases": [
     {
       "id": "example-bank-alpha",
       "cardId": "example-bank-alpha",
+      "cardName": "Example Alpha Card",
       "issuer": "Example Bank",
+      "split": "dev",
       "sourceIds": ["example-bank-alpha-product"],
       "reference": {
-        "rewardCurrency": { "value": "cash-back", "anchors": ["fake alpha words two percent"] },
+        "rewardCurrency": {
+          "value": "cash-back",
+          "anchors": ["fake alpha words 2% back"]
+        },
+        "pointValueHundredthsOfCent": {
+          "value": null,
+          "anchors": []
+        },
         "rules": [
           {
             "category": "all-purchases",
-            "issuerWording": "fake alpha words two percent",
+            "issuerWording": "fake alpha words 2% back",
             "rateBps": 200,
+            "paidOnPaymentBps": 0,
             "cap": null,
-            "anchors": ["fake alpha words two percent"]
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": ["fake alpha words 2% back"]
           }
         ],
         "exclusions": [],
@@ -25,17 +41,41 @@
     {
       "id": "example-bank-beta",
       "cardId": "example-bank-beta",
+      "cardName": "Example Beta Card",
       "issuer": "Example Bank",
+      "split": "dev",
       "sourceIds": ["example-bank-beta-product", "example-bank-beta-terms"],
       "reference": {
-        "rewardCurrency": { "value": "points", "anchors": ["fake beta words three x"] },
+        "rewardCurrency": {
+          "value": "points",
+          "anchors": ["fake beta words 3X"]
+        },
+        "pointValueHundredthsOfCent": {
+          "value": null,
+          "anchors": []
+        },
         "rules": [
           {
             "category": "dining",
-            "issuerWording": "fake beta words three x",
+            "issuerWording": "fake beta words 3X points",
             "rateBps": 300,
+            "paidOnPaymentBps": 0,
             "cap": null,
-            "anchors": ["fake beta words three x"]
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": ["fake beta words 3X"]
+          },
+          {
+            "category": "all-purchases",
+            "issuerWording": "fake beta words 1X points",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": ["fake beta words 1X points"]
           }
         ],
         "exclusions": [],

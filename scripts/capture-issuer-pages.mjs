@@ -2,7 +2,7 @@
 //
 //   node scripts/capture-issuer-pages.mjs [--dir evals/curation/real] [--only id,id]
 //     [--sources sources.json] [--captures captures] [--manifest manifest.json]
-//     [--delay-ms 0] [--hints hints.json] [--report report.json]
+//     [--delay-ms 0] [--hints hints.json] [--report report.json] [--protect id,id]
 //
 // Reads <dir>/sources.json, saves each page's rendered text to <dir>/captures/<id>.txt (gitignored: issuer
 // text is copyrighted), and records URL, date, SHA-256, and length in <dir>/manifest.json (committed).
@@ -18,8 +18,10 @@
 // `{ "<sourceId>": { "waitFor": "text", "click": ["button text", ...], "pdf": true, "request": true } }`:
 // `click` expands controls whose accessible name matches (never links, never forms), `waitFor` waits until
 // that text is on the page, `request` fetches the HTML without the browser (for hosts that block headless
-// Chromium but serve static HTML) and renders it with scripts and subresources off. `--report` writes each source's status and flags as JSON. Defaults change nothing for the
-// existing corpus.
+// Chromium but serve static HTML) and renders it with scripts and subresources off. `--report` writes each source's status and flags as JSON. `--protect` lists
+// sources whose existing capture must never be overwritten with other text (the pipeline's capture gate): a changed
+// page is reported as failed (`changed-capture-kept`) and the old capture and manifest entry stay. Defaults change
+// nothing for the existing corpus.
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
@@ -28,6 +30,7 @@ import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs, promisify } from 'node:util';
 import { chromium } from '@playwright/test';
+import { CHANGED_CAPTURE_KEPT, keepExistingCapture } from './lib/capture-guard.mjs';
 import { revealStaticHtml } from './lib/static-html.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -41,8 +44,10 @@ const { values } = parseArgs({
     'delay-ms': { type: 'string', default: '0' },
     hints: { type: 'string' },
     report: { type: 'string' },
+    protect: { type: 'string' },
   },
 });
+const protectedIds = new Set(values.protect ? values.protect.split(',') : []);
 const delayMs = Number(values['delay-ms']);
 const hints = values.hints ? JSON.parse(await readFile(resolve(root, values.hints), 'utf8')) : {};
 const dir = resolve(root, values.dir);
@@ -202,6 +207,14 @@ try {
       const sha256 = createHash('sha256').update(text, 'utf8').digest('hex');
       const old = byId.get(source.id);
       if (old && old.sha256 !== sha256) flags.push('CHANGED since last capture');
+      const existingBody = await readFile(join(captures, `${source.id}.txt`), 'utf8').catch(() => null);
+      if (keepExistingCapture({ protectedIds, id: source.id, existingBody, newSha256: sha256 })) {
+        if (!flags.includes('CHANGED since last capture')) flags.push('CHANGED since last capture');
+        rows.push(`${source.id.padEnd(36)} KEPT: the page changed; the existing capture is not overwritten`);
+        report.push({ id: source.id, ok: false, error: CHANGED_CAPTURE_KEPT, status: result.status, flags });
+        process.exitCode = 1;
+        continue;
+      }
       await writeFile(join(captures, `${source.id}.txt`), text);
       byId.set(source.id, {
         ...source,

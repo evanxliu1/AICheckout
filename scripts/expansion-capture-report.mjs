@@ -1,17 +1,23 @@
 // Write the capture report for the catalog expansion.
 //
-//   node scripts/expansion-capture-report.mjs [--dir evals/curation/expansion]
+//   node scripts/expansion-capture-report.mjs [--dir evals/curation/expansion] [--batch]
 //
 // Reads sources.json, manifest.json, the local captures, and the per-run capture reports in parts/, and writes
 // <dir>/capture-report.md (committed): counts per issuer, every source that failed or looks wrong (short page,
-// bot wall, error page), and the known problems handled by capture hints. No captured text is copied.
+// bot wall, error page), and the known problems handled by capture hints. No captured text is copied. `--batch` (a
+// pipeline batch) leaves out the Phase 7 expansion's known-problems section and its short-page exceptions.
 import { readdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const { values } = parseArgs({ options: { dir: { type: 'string', default: 'evals/curation/expansion' } } });
+const { values } = parseArgs({
+  options: {
+    dir: { type: 'string', default: 'evals/curation/expansion' },
+    batch: { type: 'boolean', default: false },
+  },
+});
 const dir = resolve(root, values.dir);
 const json = async (path) => JSON.parse(await readFile(path, 'utf8'));
 const { sources } = await json(join(dir, 'sources.json'));
@@ -36,11 +42,15 @@ for (const { n } of dated.sort((a, b) => a.t - b.t))
 const WRONG_PAGE =
   /access denied|captcha|are you a robot|request (was )?blocked|verify you are human|error has occurred|cannot process your request|page not found|no longer available|not currently accepting/i;
 /** Pages that are legitimately short (lists and FAQs); they are listed but not counted as problems. */
-const SHORT_OK = new Set([
-  'citi-costco-anywhere-visa-categories',
-  'wells-fargo-autograph-categories',
-  'synchrony-dicks-mastercard-partner',
-]);
+const SHORT_OK = new Set(
+  values.batch
+    ? []
+    : [
+        'citi-costco-anywhere-visa-categories',
+        'wells-fargo-autograph-categories',
+        'synchrony-dicks-mastercard-partner',
+      ],
+);
 
 const rows = [];
 for (const source of sources) {
@@ -98,23 +108,25 @@ for (const row of rows.filter((r) => r.flags.length))
   lines.push(
     `| \`${row.source.id}\` | ${row.source.cardIds.join(', ')} | ${row.entry?.length ?? '—'} | ${row.attempts} | ${row.flags.join('; ')} |`,
   );
-lines.push(
-  '',
-  '## Known problems and how they were handled',
-  '',
-  '- **Network outage during the first pass** (2026-10-01 evening): most sources failed with `ERR_INTERNET_DISCONNECTED` and a few pages rendered empty; every failed, empty, or short source was captured again (the Runs column counts passes).',
-  '- **Barclays terms** (`TnCs.jsp?<n>` in the research) return an error page; the product pages link `TnCs.jsp?tc<n>`, which is what `sources.json` uses.',
-  '- **Akamai "Access Denied" to headless Chromium** on synchrony.com, synchronycredit.com, synchronybankterms.com, carecredit.com, jcpcreditcard.com, chevrontexacocards.com, statefarm.com; **HTTP/2 error** on fidelity.com. These serve static HTML to a plain request, so they are fetched outside the browser (`request` hint) and rendered with scripts off, `<details>` opened, and hidden sections shown.',
-  '- **Chase rewards agreements** (`chase.com/<card>/rewardsagreement`) redirect to PDFs; the script now detects the download and reads the PDF with Ghostscript.',
-  '- **U.S. Bank Cash+**: the rewards FAQ needs "Expand All" (`click` hint); the sample-merchant list shows one category at a time in the browser, so its static HTML is used (all categories, including Electronics Stores with Bestbuy.com and Newegg.com).',
-  '- **Bank of America terms** (`/credit-cards/terms-and-conditions/?campaignid=...`), which plain fetches 404, load in headless Chromium.',
-  '- **Capital One** application terms come from `disclosures.capitalone.com/disclosure.<productId>.en-US.html` with the product IDs found in the research; partner cards (Kohl’s, REI, Key Rewards, BJ’s, Bass Pro, Cabela’s, union cards) have only that page because their product pages are application flows.',
-  '- **Discover rotating calendar** (`cashback-calendar.html`), down during research, loaded and lists the 2026 quarters; the stale `cashback-bonus.html` page and the alternate calendar URL were not used.',
-  '- **Citi retail-card terms** (`citiretailservices.citibankonline.com/apply/...`) are application flows or HTML shells and were not used; Citi store cards rely on the citi.com product page.',
-  '- **Amazon Store Card page** (`amazon-store-card-product`, amazon.com) includes customer reviews below the issuer terms. Review text is not issuer evidence: verifiers must reject any label or anchor that comes from it.',
-  '- **Wells Fargo One Key terms** (`/credit-cards/terms/onekey/`) return an error page and were dropped; One Key cards use the product page footnotes.',
-  '',
-);
+if (values.batch) lines.push('');
+else
+  lines.push(
+    '',
+    '## Known problems and how they were handled',
+    '',
+    '- **Network outage during the first pass** (2026-10-01 evening): most sources failed with `ERR_INTERNET_DISCONNECTED` and a few pages rendered empty; every failed, empty, or short source was captured again (the Runs column counts passes).',
+    '- **Barclays terms** (`TnCs.jsp?<n>` in the research) return an error page; the product pages link `TnCs.jsp?tc<n>`, which is what `sources.json` uses.',
+    '- **Akamai "Access Denied" to headless Chromium** on synchrony.com, synchronycredit.com, synchronybankterms.com, carecredit.com, jcpcreditcard.com, chevrontexacocards.com, statefarm.com; **HTTP/2 error** on fidelity.com. These serve static HTML to a plain request, so they are fetched outside the browser (`request` hint) and rendered with scripts off, `<details>` opened, and hidden sections shown.',
+    '- **Chase rewards agreements** (`chase.com/<card>/rewardsagreement`) redirect to PDFs; the script now detects the download and reads the PDF with Ghostscript.',
+    '- **U.S. Bank Cash+**: the rewards FAQ needs "Expand All" (`click` hint); the sample-merchant list shows one category at a time in the browser, so its static HTML is used (all categories, including Electronics Stores with Bestbuy.com and Newegg.com).',
+    '- **Bank of America terms** (`/credit-cards/terms-and-conditions/?campaignid=...`), which plain fetches 404, load in headless Chromium.',
+    '- **Capital One** application terms come from `disclosures.capitalone.com/disclosure.<productId>.en-US.html` with the product IDs found in the research; partner cards (Kohl’s, REI, Key Rewards, BJ’s, Bass Pro, Cabela’s, union cards) have only that page because their product pages are application flows.',
+    '- **Discover rotating calendar** (`cashback-calendar.html`), down during research, loaded and lists the 2026 quarters; the stale `cashback-bonus.html` page and the alternate calendar URL were not used.',
+    '- **Citi retail-card terms** (`citiretailservices.citibankonline.com/apply/...`) are application flows or HTML shells and were not used; Citi store cards rely on the citi.com product page.',
+    '- **Amazon Store Card page** (`amazon-store-card-product`, amazon.com) includes customer reviews below the issuer terms. Review text is not issuer evidence: verifiers must reject any label or anchor that comes from it.',
+    '- **Wells Fargo One Key terms** (`/credit-cards/terms/onekey/`) return an error page and were dropped; One Key cards use the product page footnotes.',
+    '',
+  );
 await writeFile(join(dir, 'capture-report.md'), lines.join('\n'));
 console.log(
   `capture-report.md: ${total}/${rows.length} captured, ${rows.filter((r) => r.flags.length).length} listed`,

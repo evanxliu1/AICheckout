@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T02:31:00Z
+  at: 2026-10-04T09:14:29Z
 ---
 
 # Now
 
-As of 2026-10-04T02:31Z.
+As of 2026-10-04T04:44Z.
 
 ## Current state
 
@@ -23,7 +23,7 @@ As of 2026-10-04T02:31Z.
 
 ## Active work
 
-- **Phase 8, card-expansion pipeline v1** (coordinator, started 2026-10-04 UTC). Evan approved the design with the Fable review's changes on 2026-10-03 ([pipeline](system/card-expansion-pipeline.md), [decision](decisions/2026-10-02-agent-driven-card-pipeline.md)). Milestones, one PR each from the latest `main`: (0) approval wiki update, PR #36 merged; (1) multi-batch catalog builder, PR #37 merged 2026-10-04: build config `evals/curation/catalog-batches.json`, pairing by `corpusCaseSha256`, dates from manifests (newest issuer-source date), completeness, rule-ID ledger `evals/curation/rule-id-ledger.json`; `CATALOG_V3` byte-identical ([decision](decisions/2026-10-04-multi-batch-catalog-builder.md)); (2) CLI skeleton, branch `phase8-m2-cli-skeleton`, PR #38 (`tools/catalog-pipeline` with `init`, `status`, `next`, `run`, `rebase-anchors`; [built so far](system/card-expansion-pipeline.md#built-so-far)); (3) `claim`/`accept` with gates and the label lint; (4) skill and four agent files; (5) `eval` and `handoff`, branch `phase8-m5-eval-handoff` (`pipeline/eval.json` with metrics, trace re-score, agreement with `expansion.v1` and timings; `handoff` prints the PR checklist and publish steps and checks that the review app's bundled manifests know every cited source, which a batch's new captures will not until the review app bundles its manifest; [decision](decisions/2026-10-04-pipeline-eval-handoff.md)); (6) acceptance run: Wells Fargo as a refresh batch (new dated captures; labels compared with `expansion.v1` as an independent re-derivation), measured in `docs/evals/pipeline-v1.md`. Target 2026-10-17; tell Evan at once if it slips past 2026-10-20.
+- **Phase 8, card-expansion pipeline v1** (coordinator, started 2026-10-04 UTC). Evan approved the design with the Fable review's changes on 2026-10-03 ([pipeline](system/card-expansion-pipeline.md), [decision](decisions/2026-10-02-agent-driven-card-pipeline.md)). Milestones, one PR each from the latest `main`: (0) approval wiki update, PR #36 merged; (1) multi-batch catalog builder, PR #37 merged ([decision](decisions/2026-10-04-multi-batch-catalog-builder.md)); (2) CLI skeleton, PR #38 merged ([decision](decisions/2026-10-04-pipeline-cli-skeleton.md)); (3) `claim`/`accept` with gates and the label-evidence lint (with agent acknowledgements of findings it cannot read; review findings fixed 2026-10-04), branch `phase8-m3-claim-accept` ([decision](decisions/2026-10-04-pipeline-claim-accept.md)); (4) skill and four agent files; (5) `eval` and `handoff`, PR #39 merged ([decision](decisions/2026-10-04-pipeline-eval-handoff.md)); (6) acceptance run: Wells Fargo as a refresh batch (new dated captures; labels compared with `expansion.v1` as an independent re-derivation), measured in `docs/evals/pipeline-v1.md`; publishing a batch also needs the review app to bundle batch manifests. Target 2026-10-17; tell Evan at once if it slips past 2026-10-20.
 
 ## Open questions and next steps
 

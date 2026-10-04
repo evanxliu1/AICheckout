@@ -2,7 +2,7 @@
 // fixture's committed-style files; the trace scorer is a stub (it needs real captures); the frozen expansion.v1 layer
 // is a fake one written into the throwaway root. No issuer text, no model.
 import { execFile } from 'node:child_process';
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { NextStep } from '../src/derive.ts';
@@ -18,8 +18,11 @@ import {
 } from '../src/handoff.ts';
 import type { CatalogSummary, HandoffDeps } from '../src/handoff.ts';
 import { sha256Hex } from '../src/hash.ts';
+import { packetSchema } from '../src/packets.ts';
+import type { Packet } from '../src/packets.ts';
 import { REPO_ROOT } from '../src/root.ts';
-import { ALPHA, BATCH, BETA, acceptCards, harness, initWithResearch } from './helpers.ts';
+import { sha256Json } from '../../../scripts/lib/catalog-batches.mjs';
+import { ALPHA, BATCH, BETA, FIXTURE, captureText, harness, initWithResearch } from './helpers.ts';
 import type { Harness } from './helpers.ts';
 
 const json = (value: unknown) => JSON.stringify(value, null, 2) + '\n';
@@ -35,26 +38,52 @@ const rule = (category: string, rateBps: number, extra: Record<string, unknown> 
   anchors: [`fake ${category} words`],
   ...extra,
 });
-const labels = (currency: string, point: number | null, rules: unknown[], issues: unknown[] = []) => ({
-  rewardCurrency: { value: currency, anchors: [] },
-  pointValueHundredthsOfCent: { value: point, anchors: [] },
+const labels = (
+  currency: string,
+  point: number | null,
+  rules: unknown[],
+  issues: unknown[] = [],
+  anchors: { currency: string[]; point: string[] } = { currency: [], point: [] },
+) => ({
+  rewardCurrency: { value: currency, anchors: anchors.currency },
+  pointValueHundredthsOfCent: { value: point, anchors: anchors.point },
   rules,
   exclusions: [],
   issues,
 });
+const SOURCES: Record<string, string[]> = {
+  [ALPHA]: ['example-bank-alpha-product'],
+  [BETA]: ['example-bank-beta-product', 'example-bank-beta-terms'],
+};
 const item = (cardId: string, reference: unknown) => ({
   id: cardId,
   cardId,
+  cardName: cardId,
   issuer: 'Example Bank',
+  split: 'dev',
+  sourceIds: SOURCES[cardId] ?? [],
   reference,
 });
+/** Rule evidence that is in the synthetic captures and states the rule's rate (the apply label lint). */
+const said = (wording: string, anchors = [wording]) => ({ issuerWording: wording, anchors });
+const EXTRA_CAPTURE_TEXT = 'fake beta dining words 4X points. fake beta travel words 2X points.\n';
+const ALPHA_ALL = rule('all-purchases', 200, said('fake alpha words 2% back'));
+const BETA_ALL = rule('all-purchases', 100, said('fake beta words 1X points'));
+const BETA_TRAVEL = rule('transit', 200, said('fake beta travel words 2X points'));
+const ALPHA_ANCHORS = { currency: ['fake alpha words 2% back'], point: [] };
+const BETA_ANCHORS = { currency: ['fake beta words 3X points'], point: ['fake beta words 1X points'] };
+const betaDining = (rateBps: number, anchor: string) =>
+  rule('dining', rateBps, said('fake beta words 3X points', [anchor]));
 
 const DRAFT = {
   schemaVersion: 2,
   version: `${BATCH}.draft.1`,
   cases: [
-    item(ALPHA, labels('cash-back', null, [rule('all-purchases', 200)])),
-    item(BETA, labels('points', 100, [rule('dining', 300), rule('all-purchases', 100)])),
+    item(ALPHA, labels('cash-back', null, [ALPHA_ALL], [], ALPHA_ANCHORS)),
+    item(
+      BETA,
+      labels('points', 100, [betaDining(300, 'fake beta words 3X points'), BETA_ALL], [], BETA_ANCHORS),
+    ),
   ],
 };
 const CORPUS = {
@@ -62,18 +91,35 @@ const CORPUS = {
   version: `${BATCH}.v1`,
   annotationStatus: 'agent-verified',
   cases: [
-    item(ALPHA, labels('cash-back', null, [rule('all-purchases', 200)])),
-    item(BETA, labels('points', 100, [rule('dining', 400), rule('all-purchases', 100), rule('travel', 200)])),
+    item(ALPHA, labels('cash-back', null, [ALPHA_ALL], [], ALPHA_ANCHORS)),
+    item(
+      BETA,
+      labels(
+        'points',
+        100,
+        [betaDining(400, 'fake beta dining words 4X points'), BETA_ALL, BETA_TRAVEL],
+        [],
+        BETA_ANCHORS,
+      ),
+    ),
   ],
 };
 const decided = (decision: string) => ({ adjudication: { decision, reason: 'fixture' } });
-const FINDINGS = {
+const anchor = (quote: string) => ({ sourceId: 'example-bank-beta-product', quote });
+const travelRule = Object.fromEntries(Object.entries(BETA_TRAVEL).filter(([key]) => key !== 'anchors'));
+/** The verifier's findings; `adjudicated` adds the decisions (accepted, rejected, accepted). */
+const findingsFile = (adjudicated: boolean) => ({
   schemaVersion: 1,
   issuer: 'Example Bank',
+  verifier: { agent: 'fixture', model: 'claude-test', date: '2026-10-04', filesRead: [] as string[] },
+  adjudicator: adjudicated
+    ? { agent: 'fixture', model: 'claude-test', date: '2026-10-04', filesRead: ['fixture'] }
+    : null,
   cards: [
     {
       cardId: ALPHA,
       verdict: 'confirmed',
+      reason: null,
       fixes: [],
       addedRules: [],
       addedExclusions: [],
@@ -83,38 +129,56 @@ const FINDINGS = {
     {
       cardId: BETA,
       verdict: 'fixed',
+      reason: null,
       fixes: [
         {
           op: 'set',
           path: 'reference.rules.0.rateBps',
           current: 300,
           corrected: 400,
-          ...decided('accepted'),
+          anchor: anchor('fake beta dining words 4X points'),
+          note: 'fixture',
+          ...(adjudicated ? decided('accepted') : {}),
         },
         {
           op: 'set',
           path: 'reference.rules.1.rateBps',
           current: 100,
           corrected: 150,
-          ...decided('rejected'),
+          anchor: anchor('fake beta words 1X points'),
+          note: 'fixture',
+          ...(adjudicated ? decided('rejected') : {}),
         },
       ],
-      addedRules: [{ rule: rule('travel', 200), ...decided('accepted') }],
+      addedRules: [
+        {
+          rule: travelRule,
+          anchors: [anchor('fake beta travel words 2X points')],
+          note: 'fixture',
+          ...(adjudicated ? decided('accepted') : {}),
+        },
+      ],
       addedExclusions: [],
       addedIssues: [],
       productNoteChanges: [],
     },
   ],
-};
+});
 /** The fake frozen expansion.v1: alpha identical, beta at another dining rate, no travel rule and one issue. */
 const FROZEN = {
   schemaVersion: 2,
   version: 'expansion.v1',
   cases: [
-    item(ALPHA, labels('cash-back', null, [rule('all-purchases', 200)])),
+    item(ALPHA, labels('cash-back', null, [ALPHA_ALL], [], ALPHA_ANCHORS)),
     item(
       BETA,
-      labels('points', 100, [rule('dining', 300), rule('all-purchases', 100)], [{ code: 'ambiguous' }]),
+      labels(
+        'points',
+        100,
+        [betaDining(300, 'fake beta words 3X points'), BETA_ALL],
+        [{ code: 'ambiguous' }],
+        BETA_ANCHORS,
+      ),
     ),
     item('example-bank-gamma', labels('points', null, [rule('all-purchases', 100)])),
   ],
@@ -177,26 +241,92 @@ function wrapExec(h: Harness): void {
     if (args[0] === 'scripts/apply-expansion-verification.mjs') {
       h.calls.push([command, ...args]);
       await writeFile(join(h.dir, 'corpus.json'), json(CORPUS));
+      await writeFile(
+        join(h.dir, 'product-notes.verified.json'),
+        json({ schemaVersion: 1, cards: [ALPHA, BETA].map((cardId) => ({ cardId, hints: [] })) }),
+      );
       return 0;
     }
     return inner(command, args);
   };
 }
 
-/** The fixture batch through build, with the eval fixture's labels and a fake frozen layer. */
+const ISSUER = 'example-bank';
+const claim = async (h: Harness, stage: string) => {
+  expect(await h.run('claim', stage, '--batch', BATCH, '--issuer', ISSUER), h.logs.join('\n')).toBe(0);
+  const dir = join(h.dir, 'pipeline/packets');
+  const files = (await readdir(dir)).sort();
+  const packets = await Promise.all(
+    files.map(async (file) => packetSchema.parse(JSON.parse(await readFile(join(dir, file), 'utf8')))),
+  );
+  return packets.find((packet) => packet.status === 'open' && packet.stage === stage)!;
+};
+const accept = async (h: Harness, stage: string, run: string, durationMs: number, tokens: number) =>
+  expect(
+    await h.run(
+      'accept',
+      stage,
+      '--batch',
+      BATCH,
+      '--issuer',
+      ISSUER,
+      '--agent-run',
+      run,
+      '--model',
+      'claude-test',
+      '--duration-ms',
+      String(durationMs),
+      '--tokens',
+      String(tokens),
+    ),
+    h.logs.join('\n'),
+  ).toBe(0);
+
+/** The fixture batch through build by claim / accept and the stage gates, with the eval fixture's labels and a fake
+ * frozen layer. */
 async function builtBatch(): Promise<Harness> {
   const h = await harness();
   wrapExec(h);
+  h.capture.text = (id) => captureText(id) + EXTRA_CAPTURE_TEXT;
   await initWithResearch(h);
   for (const stage of ['capture', 'extract', 'draft'])
     expect(await h.run('run', stage, '--batch', BATCH)).toBe(0);
-  await mkdir(join(h.dir, 'verification'), { recursive: true });
-  await writeFile(join(h.dir, 'verification/example-bank.json'), json(FINDINGS));
-  await acceptCards(h, 'verify', null);
-  await acceptCards(h, 'adjudicate', null);
-  expect(await h.run('run', 'apply', '--batch', BATCH)).toBe(0);
-  await acceptCards(h, 'overlay', 'catalog-overlay.json');
-  expect(await h.run('run', 'build', '--batch', BATCH)).toBe(0);
+  const envelope = (packet: Packet) => ({
+    packetId: packet.packetId,
+    batch: BATCH,
+    provenance: 'agent-verified',
+  });
+
+  const verify = await claim(h, 'verify');
+  const findings = findingsFile(false);
+  findings.verifier.filesRead = [...SOURCES[ALPHA], ...SOURCES[BETA]].map(
+    (id) => `evals/curation/batches/${BATCH}/captures/${id}.txt`,
+  );
+  await mkdir(join(verify.output, '..'), { recursive: true });
+  await writeFile(verify.output, json({ ...envelope(verify), ...findings }));
+  await accept(h, 'verify', 'run-verifier', 60_000, 6000);
+
+  const adjudicate = await claim(h, 'adjudicate');
+  // The adjudicator adds decisions to the file as verify accepted it, changing nothing else.
+  const decisions = findingsFile(true);
+  const file = JSON.parse(await readFile(adjudicate.output, 'utf8'));
+  file.packetId = adjudicate.packetId;
+  file.adjudicator = decisions.adjudicator;
+  file.cards[1].fixes.forEach((fix: object, i: number) => Object.assign(fix, decisions.cards[1].fixes[i]));
+  Object.assign(file.cards[1].addedRules[0], decisions.cards[1].addedRules[0]);
+  await writeFile(adjudicate.output, json(file));
+  await accept(h, 'adjudicate', 'run-adjudicator', 30_000, 3000);
+  expect(await h.run('run', 'apply', '--batch', BATCH), h.logs.join('\n')).toBe(0);
+
+  const overlay = await claim(h, 'overlay');
+  const fragment = JSON.parse(await readFile(join(FIXTURE, 'overlay-fragment.json'), 'utf8'));
+  fragment.packetId = overlay.packetId;
+  for (const entry of fragment.cards)
+    entry.corpusCaseSha256 = sha256Json(CORPUS.cases.find((card) => card.cardId === entry.cardId));
+  await mkdir(join(overlay.output, '..'), { recursive: true });
+  await writeFile(overlay.output, json(fragment));
+  await accept(h, 'overlay', 'run-overlay', 30_000, 3000);
+  expect(await h.run('run', 'build', '--batch', BATCH), h.logs.join('\n')).toBe(0);
   await mkdir(join(h.root, 'evals/curation/expansion'), { recursive: true });
   await writeFile(join(h.root, 'evals/curation/expansion/corpus.json'), json(FROZEN));
   await writeFile(
@@ -260,7 +390,7 @@ describe('pipeline eval', () => {
     });
     expect(result.agreement.overall.ruleFields.rateBps).toEqual({ agree: 2, total: 3, rate: 0.6667 });
     const beta = result.agreement.cards.find((card: { cardId: string }) => card.cardId === BETA);
-    expect(beta).toMatchObject({ onlyBatch: ['travel'], onlyFrozen: [] });
+    expect(beta).toMatchObject({ onlyBatch: ['transit'], onlyFrozen: [] });
 
     // Timings: what state and the extraction summary record, null where nothing is recorded.
     expect(result.timings.startedAt).toBeNull();
@@ -271,7 +401,12 @@ describe('pipeline eval', () => {
       inputTokens: 4000,
       outputTokens: 400,
     });
-    expect(result.timings.agentStages).toEqual({ modelMinutes: null, tokens: null });
+    // Agent stages: what accept recorded on the issuer's verify, adjudicate and overlay records (research has none).
+    expect(result.timings.agentStages).toEqual({
+      modelMinutes: 2,
+      tokens: 12000,
+      perCard: { modelMinutes: 1, tokens: 6000 },
+    });
 
     expect(h.logs.join('\n')).toMatch(/agreement with expansion\.v1 \(two agent-verified label sets/);
     const state = await h.state();
