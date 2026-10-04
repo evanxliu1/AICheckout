@@ -6,7 +6,7 @@ status: stable
 tags: [system, evaluation, llm, curation]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:00:00Z
+  at: 2026-10-04T01:40:00Z
 sources:
   - resource: ../../evals/curation/README.md
     title: Curation evaluations README
@@ -110,8 +110,8 @@ Predicted rules are matched to reference rules by category. When a category has 
 | `npm run eval:v2 -- --provider codex\|claude ...` | same | Live run. Options: `--prompt`, `--selection`, `--split`, `--repeat`, `--corpus DIR`, `--captures DIR` (captures outside the corpus folder), `--resume DIR`, `--replay FILE`. A usage limit exits with status 3 and the run can be resumed. `--provider codex` without `--model` runs the curation configuration (gpt-5.6-luna `xhigh`, `guided.2`, `keyword-window.1`; [live model runs](../ops/live-model-runs.md)) |
 | `npm run eval:matrix` | [`scripts/run-eval-matrix.mjs`](../../scripts/run-eval-matrix.mjs) | Runs every config in [`matrix.dev.json`](../../evals/curation/matrix.dev.json) / [`matrix.heldout.json`](../../evals/curation/matrix.heldout.json) into `runs/matrix*/<slug>/`. Skips complete configs, resumes partial ones; `--wait-minutes` retries after usage limits |
 | `npm run eval:summarize` | [`scripts/summarize-evals.mjs`](../../scripts/summarize-evals.mjs) → `v2/summarize.ts` | Re-scores saved observations with the current scorer and labels, then writes `docs/evals/results.json` and the SVG charts. A `--split all` run becomes one row per split; `--added RUN-ID` marks a row added after its split was chosen. `results.md` is hand-written to match `results.json` (the site test checks each row) |
-| `node scripts/expansion-pipeline-metrics.mjs [--check]` | [`scripts/lib/expansion-metrics.mjs`](../../scripts/lib/expansion-metrics.mjs) | Draft → verified correction rates per field and issuer, rules removed/added, confirmed, dropped and undrafted cards, from committed files only. `--check` compares with `docs/evals/expansion.json` (also run by `npm test`) |
-| `node scripts/score-expansion-traces.mjs --captures DIR --traces DIR [--run DIR]` | [`scripts/lib/expansion-traces.mjs`](../../scripts/lib/expansion-traces.mjs) | Re-scores the saved luna `extract-cards.mjs` traces (hash-checked) on all, drafted and undrafted cards; with `--run`, scores the cross-model `eval:v2` run; writes `docs/evals/expansion.json`. `--print-command` prints the cross-model command |
+| `node scripts/expansion-pipeline-metrics.mjs [--dir DIR] [--output FILE \| --check]` | [`scripts/lib/expansion-metrics.mjs`](../../scripts/lib/expansion-metrics.mjs) | Draft → verified correction rates per field and issuer, rules removed/added, confirmed, dropped and undrafted cards, from committed files only. `--check` compares with `docs/evals/expansion.json` (also run by `npm test`) |
+| `node scripts/score-expansion-traces.mjs [--dir DIR] --captures DIR --traces DIR [--run DIR] [--output FILE]` | [`scripts/lib/expansion-traces.mjs`](../../scripts/lib/expansion-traces.mjs) | Re-scores the saved luna `extract-cards.mjs` traces (hash-checked) on all, drafted and undrafted cards; with `--run`, scores the cross-model `eval:v2` run; writes `docs/evals/expansion.json`. `--print-command [--dir DIR]` prints the cross-model command (for a pipeline batch, with `--dir`; `pipeline eval` calls both) |
 | `npm run eval:curation` | [`scripts/evaluate-curation.mjs`](../../scripts/evaluate-curation.mjs) → [`eval-cli.ts`](../../apps/api/src/curation/eval-cli.ts) | v1 evaluator: `--check`, `--mode replay\|ledger\|codex`, `--split development\|reserved\|all` (`--allow-reserved`) |
 
 Live providers run through vendor CLIs on subscriptions (`codex exec`, `claude -p`), not metered APIs. They are for local use only and must not be wired into the hosted API. Scoring rebuilds each case's context and rejects observations whose source hashes, prompt or selection differ from what the corpus produces.
