@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T21:07:00Z
+  at: 2026-10-04T22:05:00Z
 ---
 
 # Now
 
-As of 2026-10-04T21:07Z.
+As of 2026-10-04T22:05Z.
 
 ## Current state
 
@@ -25,11 +25,12 @@ As of 2026-10-04T21:07Z.
 
 - **Phase 8, card-expansion pipeline v1: built** (coordinator, 2026-10-04). PRs #36 (approval), #37 multi-batch builder with the rule-ID ledger, #38 CLI skeleton, #39 `eval`/`handoff`, #40 `claim`/`accept`, gates and label-evidence lint, #41 skill and four pinned agents: all merged after CI and an independent reviewer subagent ([pipeline](system/card-expansion-pipeline.md)).
 - **Acceptance run** (milestone 6), branch `catalog-wells-fargo-2026-10`: Wells Fargo refresh batch `wells-fargo-2026-10`, 6 cards, end to end from one chat request; results in [`docs/evals/pipeline-v1.md`](../docs/evals/pipeline-v1.md). No rate, cap or category differs from `expansion.v1`; rule-ID continuity 790 kept, 30 changed (all Wells Fargo), 0 dropped. Its catalog change is **not** shipped; publishing it is Evan's call ([decision](decisions/2026-10-04-wells-fargo-batch-not-shipped.md)). Gitignored captures and traces live only in `../AICheckout-p8-wf`: keep that worktree.
+- **Phase 9 milestone 1**, branch `phase9-m1-review-batch-manifests` (2026-10-04): the review app bundles every pipeline batch manifest and accepts any recorded hash per source ([decision](decisions/2026-10-04-review-app-batch-manifests.md)); a batch is publishable after its merge and the Render deploy.
 
 ## Open questions and next steps
 
 1. **Evan: publish the Wells Fargo refresh or not?** It applies general convention 7 (activation `none`) on 22 rules, adds 35 catalog exclusions and drops `usMerchantsOnly` on the One Key Expedia rules (a Phase 7 judgment call); no rate, cap or category changes. Default: not published; Phase 9 renews all sources anyway.
-   - Before any pipeline batch can be published, the review app must bundle the batch's manifest (`apps/review/src/manifest.ts` imports fixed paths): a product change and a Render deploy, first task of Phase 9. `pipeline handoff` lists the sources the app would not match.
+   - The review app knows batch manifests once Phase 9 milestone 1 is merged and deployed; publishing still needs the batch registered under a new version ([decision](decisions/2026-10-04-wells-fargo-batch-not-shipped.md)).
 2. **Phase 9, catalog freshness, before 2026-11-01T00:00Z**, when release 2 expires and `/v1/catalog` would answer 503: re-check the sources (the pipeline's freshness stage, or a manual refresh with new dated captures) and publish a new release. Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data (Discover not captured).
 3. Optional (Evan): revoke the legacy HS256 JWT secret in Supabase once sessions issued before the switch have expired.
 - Later phases, in Evan's order (2026-10-03): 9 freshness → 10 merchant-expansion pipeline → Web Store release; 4 terms-change detection is revisited after 9; 6 site coverage harness ([roadmap](product/roadmap.md)).

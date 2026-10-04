@@ -101,8 +101,9 @@ Sources: `src/styles.css` (layout only, `--token-*` and `--ac-*` values), `src/A
   saved draft and reloads it, so each is disabled while another editor (JSON, Cards and rules, either
   capture form) has unsaved input, with the reason shown next to the button.
 - **Capture hashes**: each captured source shows its SHA-256, and loaded or pasted capture text shows
-  whether it matches the corpus manifest (`evals/curation/real/manifest.json`), which catches a
-  mislabelled file before it is attached. Files too large to be a capture are skipped unread.
+  whether it matches the corpus manifests (`evals/curation/real/manifest.json`, the expansion and
+  merchant manifests and every pipeline batch manifest; any recorded capture of the source counts),
+  which catches a mislabelled file before it is attached. Files too large to be a capture are skipped unread.
 - **Approval**: a `Card` with the acknowledgement `Checkbox`, a Review note field, and "Publish
   reviewed terms". Publishing opens a warning `Modal` ("Publish {version}?") that restates the
   revision, cards, sources, changed-field count, expiry and the note. Focus starts on **Cancel**
