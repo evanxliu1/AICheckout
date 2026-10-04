@@ -4,6 +4,7 @@
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { z } from 'zod';
+import { CATALOG_VERSION } from '../../../scripts/lib/catalog-batches.mjs';
 
 export const STAGES = [
   'research',
@@ -90,6 +91,9 @@ export const stageRecordSchema = z.strictObject({
    * --duration-ms, --tokens), for the cost report (tokens per card = tokens / packet cards). */
   durationMs: z.int().nonnegative().optional(),
   tokens: z.int().nonnegative().optional(),
+  /** Build: the catalog version built, and `true` for a proposed build (`run build --proposed`), which ships nothing. */
+  catalogVersion: z.string().regex(CATALOG_VERSION).optional(),
+  proposed: z.literal(true).optional(),
 });
 export type StageRecord = z.infer<typeof stageRecordSchema>;
 
@@ -107,6 +111,9 @@ export const CAPTURE_FLAG_REASONS = [
   'keep-existing-capture',
 ] as const;
 
+/** Reason codes for removing a source from a batch (`pipeline drop-source`); codes, never text. */
+export const DROP_SOURCE_REASONS = ['bot-wall', 'error-page', 'out-of-scope', 'duplicate'] as const;
+
 export const stateSchema = z.strictObject({
   schemaVersion: z.literal(1),
   batch: z.string().regex(BATCH_ID),
@@ -120,6 +127,11 @@ export const stateSchema = z.strictObject({
   /** Capture flags accepted by the session, per source: valid while the manifest hash is still `sha256`. */
   resolvedFlags: z
     .record(id, z.strictObject({ reason: z.enum(CAPTURE_FLAG_REASONS), sha256: hex, resolvedAt: timestamp }))
+    .optional(),
+  /** Sources removed from the batch by `pipeline drop-source`, with a reason code; their captures are in
+   * captures-dropped/. */
+  droppedSources: z
+    .record(id, z.strictObject({ reason: z.enum(DROP_SOURCE_REASONS), droppedAt: timestamp }))
     .optional(),
 });
 export type State = z.infer<typeof stateSchema>;

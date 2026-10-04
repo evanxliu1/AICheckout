@@ -36,4 +36,4 @@ The Phase 8 acceptance run re-derived the six Wells Fargo cards of `expansion.v1
 - Phase 9 adds: a builder refusal for a published version with other contents, a way to build a batch without changing what ships, and review-app support for batch manifests.
 
 ## Status
-Accepted 2026-10-04 by the coordinator (claude-code/claude-opus-5-5) under Evan's brief; publishing remains Evan's.
+Accepted 2026-10-04 by the coordinator (claude-code/claude-opus-5-5) under Evan's brief; publishing remains Evan's. Superseded in part 2026-10-04: Evan decided the Phase 9 renewal includes this batch ([Phase 9 plan](../product/phase-9-freshness.md#wells-fargo-refresh-batch)).

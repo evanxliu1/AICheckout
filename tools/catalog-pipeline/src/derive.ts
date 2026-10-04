@@ -1,6 +1,8 @@
 // Status derivation, the derived queue and `next` (wiki/system/card-expansion-pipeline.md, "Derived queue").
 // Nothing here writes: statuses are computed from state.json, the batch files and the input hashes each time.
-import { relative } from 'node:path';
+import { readFile } from 'node:fs/promises';
+import { join, relative } from 'node:path';
+import { BATCHES_CONFIG_PATH } from '../../../scripts/lib/catalog-batches.mjs';
 import { inputHash } from './hash.ts';
 import { batchInputs, cardInputs, draftSplit, researchInputs } from './inputs.ts';
 import type { MaybeInputs } from './inputs.ts';
@@ -56,6 +58,10 @@ export interface BatchView {
   build: Derived;
   eval: Derived;
   queue: QueueItem[];
+  /** The build config's version when it is published (a plain `run build` would refuse), else null. */
+  publishedConfigVersion: string | null;
+  /** The version `next` suggests for a proposed build while the config's version is published. */
+  suggestedVersion: string;
 }
 
 export const AGENTS: Record<string, string> = {
@@ -181,10 +187,36 @@ export async function deriveBatch(batch: Batch, now: Date): Promise<BatchView> {
     build,
     now,
   );
-  const view: BatchView = { batch, research, cards, build, eval: evalStage, queue: [] };
+  const view: BatchView = {
+    batch,
+    research,
+    cards,
+    build,
+    eval: evalStage,
+    queue: [],
+    publishedConfigVersion: await publishedConfigVersion(batch.root),
+    suggestedVersion: suggestedVersion(batch.id, now),
+  };
   view.queue = deriveQueue(view);
   return view;
 }
+
+/** The committed build config's version if it is in `publishedVersions` (null without a readable config). */
+async function publishedConfigVersion(root: string): Promise<string | null> {
+  try {
+    const config = JSON.parse(await readFile(join(root, BATCHES_CONFIG_PATH), 'utf8')) as {
+      version?: string;
+      publishedVersions?: string[];
+    };
+    return config.version && config.publishedVersions?.includes(config.version) ? config.version : null;
+  } catch {
+    return null;
+  }
+}
+
+/** A suggested new catalog version for a batch: `<today>.<batch without its month>.1`, e.g. 2026-10-04.wells-fargo.1. */
+export const suggestedVersion = (batchId: string, now: Date): string =>
+  `${now.toISOString().slice(0, 10)}.${batchId.replace(/-\d{4}-\d{2}$/, '')}.1`;
 
 function deriveQueue(view: BatchView): QueueItem[] {
   const { batch } = view;
@@ -244,7 +276,8 @@ function deriveQueue(view: BatchView): QueueItem[] {
         owner: AGENTS.verify,
       });
   }
-  if (view.build.status === 'done' && view.eval.status === 'done')
+  // A proposed build (`run build --proposed`) ships nothing, so there is nothing for Evan to publish.
+  if (view.build.status === 'done' && view.eval.status === 'done' && !view.build.record?.proposed)
     items.push({ batch: batch.id, stage: 'publish', code: 'publish', ref: statePath, owner: 'evan' });
   return items;
 }
@@ -274,16 +307,20 @@ export function nextStep(view: BatchView): NextStep {
   const blocking = view.queue.find((item) =>
     ['capture-flagged', 'convention-needed', 'scope-question'].includes(item.code),
   );
-  if (blocking)
+  if (blocking) {
+    // Every item of the same stage and code in one step, so a fix-and-retry loop handles them together.
+    const same = view.queue.filter((item) => item.code === blocking.code && item.stage === blocking.stage);
+    const cardIds = [...new Set(same.flatMap((item) => (item.cardId ? [item.cardId] : [])))];
     return {
       kind: 'queue',
       batch: id,
       stage: blocking.stage,
       issuer: blocking.issuer,
-      cardIds: blocking.cardId ? [blocking.cardId] : undefined,
+      cardIds: cardIds.length ? cardIds : undefined,
       code: blocking.code,
       reason: `${blocking.code} (owner ${blocking.owner}): see ${blocking.ref}`,
     };
+  }
   // 2. Anchor-only re-draft: re-point the findings before anything downstream runs.
   const rebase = view.cards.filter((card) => card.rebaseAnchors).map((card) => card.cardId);
   if (rebase.length)
@@ -307,14 +344,12 @@ export function nextStep(view: BatchView): NextStep {
     const cards = view.cards.filter((card) => card.stages[stage].ready);
     const reverify = stage === 'verify' ? view.queue.filter((item) => item.code === 'needs-reverify') : [];
     if (reverify.length) {
-      const card = view.cards.find((entry) => entry.cardId === reverify[0].cardId)!;
-      return agentStep(
-        id,
-        'verify',
-        card.issuer,
-        [card.cardId],
-        'needs-reverify: a rejected drop-card verdict',
-      );
+      // A verify packet is per issuer: every card of the first card's issuer that needs re-verification.
+      const issuer = view.cards.find((entry) => entry.cardId === reverify[0].cardId)!.issuer;
+      const ids = view.cards
+        .filter((card) => card.issuer === issuer && reverify.some((item) => item.cardId === card.cardId))
+        .map((card) => card.cardId);
+      return agentStep(id, 'verify', issuer, ids, 'needs-reverify: a rejected drop-card verdict');
     }
     const failed = cards.filter((card) => card.stages[stage].status === 'failed-gate');
     if (failed.length && AGENTS[stage])
@@ -332,13 +367,14 @@ export function nextStep(view: BatchView): NextStep {
             card.stages[stage].status === 'failed-gate' &&
             (card.stages[stage].record?.attempts ?? 0) >= GATE_ATTEMPTS,
         );
+    // Every failed card of the stage goes with it (they share the gate-failed code), not only the stuck ones.
     if (stuck.length)
       return {
         ...queueGate(
           id,
           stage,
           stuck[0].issuer,
-          stuck.map((card) => card.cardId),
+          cards.filter((card) => card.stages[stage].status === 'failed-gate').map((card) => card.cardId),
         ),
         reason: `gate-failed at ${stage} after ${GATE_ATTEMPTS} attempts (owner session): see the gate errors, fix the cause, then run again`,
       };
@@ -391,21 +427,30 @@ export function nextStep(view: BatchView): NextStep {
     ['build', view.build],
     ['eval', view.eval],
   ] as const)
-    if (derived.ready && derived.status !== 'done')
+    if (derived.ready && derived.status !== 'done') {
+      // A published config version is never rebuilt: build the batch as a proposal under a new version instead.
+      const published = stage === 'build' ? view.publishedConfigVersion : null;
       return {
         kind: 'cli',
         batch: id,
         stage,
-        command: pipeline(`run ${stage} --batch ${id}`),
-        reason: `${stage} ${derived.status}`,
+        command: pipeline(
+          `run ${stage} --batch ${id}${published ? ` --proposed --version ${view.suggestedVersion}` : ''}`,
+        ),
+        reason: published
+          ? `${stage} ${derived.status}; the config's version ${published} is published, so this builds a proposal under a new version (check it is not in publishedVersions; to ship, see the skill)`
+          : `${stage} ${derived.status}`,
       };
+    }
   if (view.build.status === 'done' && view.eval.status === 'done')
     return {
       kind: 'handoff',
       batch: id,
       stage: 'publish',
       command: pipeline(`handoff --batch ${id}`),
-      reason: 'all stages done: open the PR; Evan publishes in the review app',
+      reason: view.build.record?.proposed
+        ? `all stages done; the build is proposed (${view.build.record.catalogVersion}) and ships nothing: open the PR with the batch data`
+        : 'all stages done: open the PR; Evan publishes in the review app',
     };
   return {
     kind: 'wait',

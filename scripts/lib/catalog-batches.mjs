@@ -17,7 +17,7 @@
 //   The program table stays the frozen one: a batch maps its cards to existing programs only.
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { z } from 'zod';
 import { stableJson } from '../../packages/rewards-core/src/schema.ts';
 import { corpusCases } from './catalog-overlay.mjs';
@@ -48,11 +48,22 @@ const batchLayerSchema = z.strictObject({
   /** Dropped cards with reasons, until milestone 2's pipeline/state.json supplies them (`loadLayer`'s `dropped`). */
   dropped: reasons.default({}),
 });
+/** A catalog version label, e.g. `2026-10-02.expansion.1` (date, name, counter). */
+export const CATALOG_VERSION = /^[0-9]{4}-[0-9]{2}-[0-9]{2}\.[a-z0-9-]+\.[0-9]+$/;
+const catalogVersion = z.string().regex(CATALOG_VERSION);
 export const batchesConfigSchema = z.strictObject({
   schemaVersion: z.literal(1),
   description: z.string().min(1),
   /** The release catalog version label. */
-  version: z.string().regex(/^[0-9]{4}-[0-9]{2}-[0-9]{2}\.[a-z0-9-]+\.[0-9]+$/),
+  version: catalogVersion,
+  /**
+   * The v3 catalog versions Evan has published (the coordinator adds one in the PR after he publishes it). The builder
+   * refuses to build a published version with other rule IDs or terms than its ledger entry, and never rewrites that
+   * entry (wiki/ops/catalog-release.md).
+   */
+  publishedVersions: z
+    .array(catalogVersion)
+    .refine((versions) => new Set(versions).size === versions.length, 'published versions are unique'),
   /** The frozen reward-program table (programs and the base layer's card mappings). */
   programTable: file,
   merchants: file,
@@ -126,7 +137,8 @@ export async function loadLayer(root, layer, { dropped = {} } = {}) {
 /** The config, its layers, the program table and merchants, read from the repository root. */
 export async function loadCatalogBatches(root, path = BATCHES_CONFIG_PATH) {
   const read = async (name) => JSON.parse(await readFile(join(root, name), 'utf8'));
-  const config = batchesConfigSchema.parse(await read(path));
+  // The config may live outside the root (a proposed build's config); the paths inside it are root-relative.
+  const config = batchesConfigSchema.parse(JSON.parse(await readFile(resolve(root, path), 'utf8')));
   const layers = [];
   for (const layer of config.layers) layers.push(await loadLayer(root, layer));
   return {
