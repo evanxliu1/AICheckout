@@ -1,0 +1,1493 @@
+{
+  "schemaVersion": 1,
+  "batch": "wells-fargo-2026-10",
+  "generatedBy": "npm run pipeline -- eval",
+  "annotationStatus": "agent-verified",
+  "pipeline": {
+    "schemaVersion": 1,
+    "inputs": {
+      "draft": "expansion.draft.1",
+      "corpus": "wells-fargo-2026-10.v1",
+      "annotationStatus": "agent-verified",
+      "verificationFiles": [
+        "wells-fargo.json"
+      ]
+    },
+    "totals": {
+      "cards": 6,
+      "inCorpus": 6,
+      "drafted": 6,
+      "undrafted": 0,
+      "confirmed": 0,
+      "fixed": 6,
+      "dropped": 0,
+      "draftRules": 41,
+      "rulesRemoved": 0,
+      "rulesAdded": 0,
+      "verifiedRules": 41,
+      "draftRulesUnchanged": 10,
+      "ruleFieldValues": 328,
+      "ruleFieldsChanged": 33,
+      "cardFieldValues": 12,
+      "cardFieldsChanged": 0,
+      "ruleFieldCorrectionRate": 0.1006,
+      "cardFieldCorrectionRate": 0,
+      "draftRulesRemovedRate": 0,
+      "draftRulesUnchangedRate": 0.2439
+    },
+    "ruleFields": {
+      "category": {
+        "count": 0,
+        "total": 41,
+        "rate": 0
+      },
+      "issuerWording": {
+        "count": 4,
+        "total": 41,
+        "rate": 0.0976
+      },
+      "rateBps": {
+        "count": 0,
+        "total": 41,
+        "rate": 0
+      },
+      "paidOnPaymentBps": {
+        "count": 0,
+        "total": 41,
+        "rate": 0
+      },
+      "cap": {
+        "count": 0,
+        "total": 41,
+        "rate": 0
+      },
+      "activation": {
+        "count": 29,
+        "total": 41,
+        "rate": 0.7073
+      },
+      "usMerchantsOnly": {
+        "count": 0,
+        "total": 41,
+        "rate": 0
+      },
+      "limitedTime": {
+        "count": 0,
+        "total": 41,
+        "rate": 0
+      }
+    },
+    "cardFields": {
+      "rewardCurrency": {
+        "count": 0,
+        "total": 6,
+        "rate": 0
+      },
+      "pointValueHundredthsOfCent": {
+        "count": 0,
+        "total": 6,
+        "rate": 0
+      }
+    },
+    "items": {
+      "exclusionsRemoved": 0,
+      "exclusionsAdded": 51,
+      "issuesRemoved": 5,
+      "issuesAdded": 11
+    },
+    "undraftedRulesAdded": 0,
+    "findings": {
+      "accepted": 110,
+      "modified": 0,
+      "rejected": 0
+    },
+    "byIssuer": {
+      "Wells Fargo": {
+        "cards": 6,
+        "inCorpus": 6,
+        "drafted": 6,
+        "undrafted": 0,
+        "confirmed": 0,
+        "fixed": 6,
+        "dropped": 0,
+        "draftRules": 41,
+        "rulesRemoved": 0,
+        "rulesAdded": 0,
+        "verifiedRules": 41,
+        "draftRulesUnchanged": 10,
+        "ruleFieldValues": 328,
+        "ruleFieldsChanged": 33,
+        "cardFieldValues": 12,
+        "cardFieldsChanged": 0,
+        "ruleFieldCorrectionRate": 0.1006,
+        "cardFieldCorrectionRate": 0,
+        "draftRulesRemovedRate": 0,
+        "draftRulesUnchangedRate": 0.2439
+      }
+    },
+    "cards": {
+      "confirmed": [],
+      "dropped": [],
+      "undrafted": [],
+      "valuesUnchanged": []
+    },
+    "definitions": "scripts/expansion-pipeline-metrics.mjs"
+  },
+  "traces": {
+    "status": "scored",
+    "scorerVersion": "v2-scorer.2",
+    "corpus": {
+      "version": "wells-fargo-2026-10.v1",
+      "hash": "d300c12f3d4136ef04f29f56a70a9c0345b923813bf07b7857678930528adc2a",
+      "cases": 6
+    },
+    "upperBound": true,
+    "files": 6,
+    "scored": 6,
+    "skipped": 0,
+    "all": {
+      "planned": 6,
+      "observed": 6,
+      "complete": true,
+      "overall": {
+        "runs": 6,
+        "ruleRecall": {
+          "correct": 41,
+          "total": 41,
+          "rate": 1
+        },
+        "rulePrecision": {
+          "correct": 41,
+          "total": 41,
+          "rate": 1
+        },
+        "fieldAccuracy": {
+          "correct": 217,
+          "total": 246,
+          "rate": 0.8821
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 217,
+          "total": 246,
+          "rate": 0.8821
+        },
+        "claimPrecision": {
+          "correct": 102,
+          "total": 102,
+          "rate": 1
+        },
+        "evidenceValidity": {
+          "correct": 231,
+          "total": 236,
+          "rate": 0.9788
+        },
+        "issueRecall": {
+          "correct": 5,
+          "total": 16,
+          "rate": 0.3125
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 12,
+          "total": 12,
+          "rate": 1
+        },
+        "unsupportedClaims": 0,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 2,
+            "total": 13,
+            "rate": 0.1538
+          },
+          "conflicting": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "missing": {
+            "correct": 1,
+            "total": 1,
+            "rate": 1
+          }
+        },
+        "exclusionRecall": {
+          "correct": 33,
+          "total": 84,
+          "rate": 0.3929
+        },
+        "statuses": {
+          "needs_review": 6
+        },
+        "latencyMs": {
+          "p50": 242675,
+          "p95": 322513
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 41,
+            "total": 41,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "correct": 41,
+            "total": 41,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 41,
+            "total": 41,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 12,
+            "total": 41,
+            "rate": 0.2927
+          },
+          "usMerchantsOnly": {
+            "correct": 41,
+            "total": 41,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 41,
+            "total": 41,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "drafted": {
+      "planned": 6,
+      "observed": 6,
+      "complete": true,
+      "overall": {
+        "runs": 6,
+        "ruleRecall": {
+          "correct": 41,
+          "total": 41,
+          "rate": 1
+        },
+        "rulePrecision": {
+          "correct": 41,
+          "total": 41,
+          "rate": 1
+        },
+        "fieldAccuracy": {
+          "correct": 217,
+          "total": 246,
+          "rate": 0.8821
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 217,
+          "total": 246,
+          "rate": 0.8821
+        },
+        "claimPrecision": {
+          "correct": 102,
+          "total": 102,
+          "rate": 1
+        },
+        "evidenceValidity": {
+          "correct": 231,
+          "total": 236,
+          "rate": 0.9788
+        },
+        "issueRecall": {
+          "correct": 5,
+          "total": 16,
+          "rate": 0.3125
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 12,
+          "total": 12,
+          "rate": 1
+        },
+        "unsupportedClaims": 0,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 2,
+            "total": 13,
+            "rate": 0.1538
+          },
+          "conflicting": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "missing": {
+            "correct": 1,
+            "total": 1,
+            "rate": 1
+          }
+        },
+        "exclusionRecall": {
+          "correct": 33,
+          "total": 84,
+          "rate": 0.3929
+        },
+        "statuses": {
+          "needs_review": 6
+        },
+        "latencyMs": {
+          "p50": 242675,
+          "p95": 322513
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 41,
+            "total": 41,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "correct": 41,
+            "total": 41,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 41,
+            "total": 41,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 12,
+            "total": 41,
+            "rate": 0.2927
+          },
+          "usMerchantsOnly": {
+            "correct": 41,
+            "total": 41,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 41,
+            "total": 41,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "undrafted": {
+      "planned": 0,
+      "observed": 0,
+      "complete": true,
+      "overall": {
+        "runs": 0,
+        "ruleRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "rulePrecision": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "fieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "claimPrecision": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "evidenceValidity": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "issueRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "unsupportedClaims": 0,
+        "issueRecallByCode": {},
+        "exclusionRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "statuses": {},
+        "latencyMs": {
+          "p50": null,
+          "p95": null
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "paidOnPaymentBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capKind": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "usMerchantsOnly": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "limitedTime": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          }
+        }
+      }
+    },
+    "byIssuer": {
+      "Wells Fargo": {
+        "runs": 6,
+        "ruleRecall": {
+          "correct": 41,
+          "total": 41,
+          "rate": 1
+        },
+        "rulePrecision": {
+          "correct": 41,
+          "total": 41,
+          "rate": 1
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 217,
+          "total": 246,
+          "rate": 0.8821
+        },
+        "cardFieldAccuracy": {
+          "correct": 12,
+          "total": 12,
+          "rate": 1
+        },
+        "issueRecall": {
+          "correct": 5,
+          "total": 16,
+          "rate": 0.3125
+        },
+        "falseClean": 0
+      }
+    }
+  },
+  "crossModel": {
+    "status": "scored",
+    "model": "gpt-5.5",
+    "effort": "low",
+    "all": {
+      "planned": 6,
+      "observed": 6,
+      "complete": true,
+      "overall": {
+        "runs": 6,
+        "ruleRecall": {
+          "correct": 37,
+          "total": 41,
+          "rate": 0.9024
+        },
+        "rulePrecision": {
+          "correct": 37,
+          "total": 37,
+          "rate": 1
+        },
+        "fieldAccuracy": {
+          "correct": 194,
+          "total": 222,
+          "rate": 0.8739
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 194,
+          "total": 246,
+          "rate": 0.7886
+        },
+        "claimPrecision": {
+          "correct": 92,
+          "total": 94,
+          "rate": 0.9787
+        },
+        "evidenceValidity": {
+          "correct": 152,
+          "total": 167,
+          "rate": 0.9102
+        },
+        "issueRecall": {
+          "correct": 1,
+          "total": 16,
+          "rate": 0.0625
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 10,
+          "total": 12,
+          "rate": 0.8333
+        },
+        "unsupportedClaims": 2,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 0,
+            "total": 13,
+            "rate": 0
+          },
+          "conflicting": {
+            "correct": 1,
+            "total": 2,
+            "rate": 0.5
+          },
+          "missing": {
+            "correct": 0,
+            "total": 1,
+            "rate": 0
+          }
+        },
+        "exclusionRecall": {
+          "correct": 31,
+          "total": 84,
+          "rate": 0.369
+        },
+        "statuses": {
+          "needs_review": 6
+        },
+        "latencyMs": {
+          "p50": 38704,
+          "p95": 46102
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 37,
+            "total": 37,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "correct": 37,
+            "total": 37,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 37,
+            "total": 37,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 10,
+            "total": 37,
+            "rate": 0.2703
+          },
+          "usMerchantsOnly": {
+            "correct": 36,
+            "total": 37,
+            "rate": 0.973
+          },
+          "limitedTime": {
+            "correct": 37,
+            "total": 37,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "drafted": {
+      "planned": 6,
+      "observed": 6,
+      "complete": true,
+      "overall": {
+        "runs": 6,
+        "ruleRecall": {
+          "correct": 37,
+          "total": 41,
+          "rate": 0.9024
+        },
+        "rulePrecision": {
+          "correct": 37,
+          "total": 37,
+          "rate": 1
+        },
+        "fieldAccuracy": {
+          "correct": 194,
+          "total": 222,
+          "rate": 0.8739
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 194,
+          "total": 246,
+          "rate": 0.7886
+        },
+        "claimPrecision": {
+          "correct": 92,
+          "total": 94,
+          "rate": 0.9787
+        },
+        "evidenceValidity": {
+          "correct": 152,
+          "total": 167,
+          "rate": 0.9102
+        },
+        "issueRecall": {
+          "correct": 1,
+          "total": 16,
+          "rate": 0.0625
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 10,
+          "total": 12,
+          "rate": 0.8333
+        },
+        "unsupportedClaims": 2,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 0,
+            "total": 13,
+            "rate": 0
+          },
+          "conflicting": {
+            "correct": 1,
+            "total": 2,
+            "rate": 0.5
+          },
+          "missing": {
+            "correct": 0,
+            "total": 1,
+            "rate": 0
+          }
+        },
+        "exclusionRecall": {
+          "correct": 31,
+          "total": 84,
+          "rate": 0.369
+        },
+        "statuses": {
+          "needs_review": 6
+        },
+        "latencyMs": {
+          "p50": 38704,
+          "p95": 46102
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 37,
+            "total": 37,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "correct": 37,
+            "total": 37,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 37,
+            "total": 37,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 10,
+            "total": 37,
+            "rate": 0.2703
+          },
+          "usMerchantsOnly": {
+            "correct": 36,
+            "total": 37,
+            "rate": 0.973
+          },
+          "limitedTime": {
+            "correct": 37,
+            "total": 37,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "undrafted": {
+      "planned": 0,
+      "observed": 0,
+      "complete": true,
+      "overall": {
+        "runs": 0,
+        "ruleRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "rulePrecision": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "fieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "claimPrecision": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "evidenceValidity": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "issueRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "unsupportedClaims": 0,
+        "issueRecallByCode": {},
+        "exclusionRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "statuses": {},
+        "latencyMs": {
+          "p50": null,
+          "p95": null
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "paidOnPaymentBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capKind": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "usMerchantsOnly": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "limitedTime": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          }
+        }
+      }
+    },
+    "byIssuer": {
+      "Wells Fargo": {
+        "runs": 6,
+        "ruleRecall": {
+          "correct": 37,
+          "total": 41,
+          "rate": 0.9024
+        },
+        "rulePrecision": {
+          "correct": 37,
+          "total": 37,
+          "rate": 1
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 194,
+          "total": 246,
+          "rate": 0.7886
+        },
+        "cardFieldAccuracy": {
+          "correct": 10,
+          "total": 12,
+          "rate": 0.8333
+        },
+        "issueRecall": {
+          "correct": 1,
+          "total": 16,
+          "rate": 0.0625
+        },
+        "falseClean": 0
+      }
+    }
+  },
+  "agreement": {
+    "frozen": "expansion.v1",
+    "measure": "agreement-not-accuracy",
+    "note": "Agreement between two agent-verified label sets (this batch and the frozen expansion.v1) on the same cards; neither is human-verified, so this is not accuracy.",
+    "matching": "same category, then closest issuer wording and an equal rate (v2 scorer matchRules)",
+    "overall": {
+      "cards": 6,
+      "cardsIdentical": 0,
+      "rules": {
+        "frozen": 41,
+        "batch": 41,
+        "matched": 41,
+        "onlyFrozen": 0,
+        "onlyBatch": 0
+      },
+      "ruleFields": {
+        "rateBps": {
+          "agree": 41,
+          "total": 41,
+          "rate": 1
+        },
+        "paidOnPaymentBps": {
+          "agree": 41,
+          "total": 41,
+          "rate": 1
+        },
+        "cap": {
+          "agree": 41,
+          "total": 41,
+          "rate": 1
+        },
+        "activation": {
+          "agree": 12,
+          "total": 41,
+          "rate": 0.2927
+        },
+        "usMerchantsOnly": {
+          "agree": 39,
+          "total": 41,
+          "rate": 0.9512
+        },
+        "limitedTime": {
+          "agree": 41,
+          "total": 41,
+          "rate": 1
+        }
+      },
+      "allRuleFields": {
+        "agree": 215,
+        "total": 246,
+        "rate": 0.874
+      },
+      "cardFields": {
+        "rewardCurrency": {
+          "agree": 6,
+          "total": 6,
+          "rate": 1
+        },
+        "pointValueHundredthsOfCent": {
+          "agree": 6,
+          "total": 6,
+          "rate": 1
+        }
+      },
+      "exclusions": {
+        "frozen": 49,
+        "batch": 84
+      },
+      "issues": {
+        "frozen": 5,
+        "batch": 16
+      }
+    },
+    "cards": [
+      {
+        "cardId": "wells-fargo-autograph",
+        "rules": {
+          "frozen": 8,
+          "batch": 8,
+          "matched": 8
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 0,
+            "total": 8,
+            "rate": 0
+          },
+          "usMerchantsOnly": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 15,
+          "batch": 16
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 4
+        }
+      },
+      {
+        "cardId": "wells-fargo-autograph-journey",
+        "rules": {
+          "frozen": 5,
+          "batch": 5,
+          "matched": 5
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 0,
+            "total": 5,
+            "rate": 0
+          },
+          "usMerchantsOnly": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 16,
+          "batch": 15
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 2
+        }
+      },
+      {
+        "cardId": "wells-fargo-choice-privileges",
+        "rules": {
+          "frozen": 8,
+          "batch": 8,
+          "matched": 8
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 0,
+            "total": 8,
+            "rate": 0
+          },
+          "usMerchantsOnly": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 5,
+          "batch": 15
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 4
+        }
+      },
+      {
+        "cardId": "wells-fargo-choice-privileges-select",
+        "rules": {
+          "frozen": 8,
+          "batch": 8,
+          "matched": 8
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 0,
+            "total": 8,
+            "rate": 0
+          },
+          "usMerchantsOnly": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 5,
+          "batch": 14
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 4
+        }
+      },
+      {
+        "cardId": "wells-fargo-one-key",
+        "rules": {
+          "frozen": 6,
+          "batch": 6,
+          "matched": 6
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 5,
+            "total": 6,
+            "rate": 0.8333
+          },
+          "limitedTime": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 4,
+          "batch": 12
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "wells-fargo-one-key-plus",
+        "rules": {
+          "frozen": 6,
+          "batch": 6,
+          "matched": 6
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 5,
+            "total": 6,
+            "rate": 0.8333
+          },
+          "limitedTime": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 4,
+          "batch": 12
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      }
+    ]
+  },
+  "timings": {
+    "startedAt": null,
+    "unavailable": [
+      "startedAt: state records finishedAt and acceptedAt only"
+    ],
+    "stages": {
+      "research": {
+        "records": 1,
+        "done": 1,
+        "attempts": 1,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-04T17:27:27.105Z",
+        "lastFinishedAt": "2026-10-04T17:27:27.105Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "capture": {
+        "records": 6,
+        "done": 6,
+        "attempts": 10,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-04T17:39:03.210Z",
+        "lastFinishedAt": "2026-10-04T17:39:59.294Z",
+        "models": []
+      },
+      "extract": {
+        "records": 6,
+        "done": 6,
+        "attempts": 14,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-04T20:45:42.290Z",
+        "lastFinishedAt": "2026-10-04T20:51:38.505Z",
+        "models": []
+      },
+      "draft": {
+        "records": 6,
+        "done": 6,
+        "attempts": 6,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-04T20:51:51.235Z",
+        "lastFinishedAt": "2026-10-04T20:51:51.237Z",
+        "models": []
+      },
+      "verify": {
+        "records": 6,
+        "done": 6,
+        "attempts": 6,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-04T20:56:44.657Z",
+        "lastFinishedAt": "2026-10-04T20:56:44.657Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "adjudicate": {
+        "records": 6,
+        "done": 6,
+        "attempts": 6,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-04T21:00:28.002Z",
+        "lastFinishedAt": "2026-10-04T21:00:28.002Z",
+        "models": [
+          "claude-fable-5-1"
+        ]
+      },
+      "apply": {
+        "records": 6,
+        "done": 6,
+        "attempts": 6,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-04T21:00:29.181Z",
+        "lastFinishedAt": "2026-10-04T21:00:29.182Z",
+        "models": []
+      },
+      "overlay": {
+        "records": 6,
+        "done": 6,
+        "attempts": 6,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-04T21:03:34.602Z",
+        "lastFinishedAt": "2026-10-04T21:03:34.602Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "build": {
+        "records": 1,
+        "done": 1,
+        "attempts": 1,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-04T21:03:41.000Z",
+        "lastFinishedAt": "2026-10-04T21:03:41.000Z",
+        "models": []
+      }
+    },
+    "extract": {
+      "cards": [
+        {
+          "cardId": "wells-fargo-autograph",
+          "runs": 3,
+          "modelMinutes": 5.3,
+          "inputTokens": 10523,
+          "outputTokens": 2164
+        },
+        {
+          "cardId": "wells-fargo-autograph-journey",
+          "runs": 3,
+          "modelMinutes": 4.07,
+          "inputTokens": 10831,
+          "outputTokens": 1463
+        },
+        {
+          "cardId": "wells-fargo-one-key",
+          "runs": 7,
+          "modelMinutes": 4.04,
+          "inputTokens": 6252,
+          "outputTokens": 2239
+        },
+        {
+          "cardId": "wells-fargo-one-key-plus",
+          "runs": 3,
+          "modelMinutes": 3.43,
+          "inputTokens": 6866,
+          "outputTokens": 1440
+        },
+        {
+          "cardId": "wells-fargo-choice-privileges",
+          "runs": 3,
+          "modelMinutes": 5.38,
+          "inputTokens": 8761,
+          "outputTokens": 2163
+        },
+        {
+          "cardId": "wells-fargo-choice-privileges-select",
+          "runs": 3,
+          "modelMinutes": 3.61,
+          "inputTokens": 9298,
+          "outputTokens": 1631
+        }
+      ],
+      "totals": {
+        "cards": 6,
+        "modelMinutes": 25.83,
+        "inputTokens": 52531,
+        "outputTokens": 11100
+      }
+    },
+    "agentStages": {
+      "modelMinutes": 24.78,
+      "tokens": 318443,
+      "perCard": {
+        "modelMinutes": 4.13,
+        "tokens": 53073.83
+      }
+    }
+  }
+}
