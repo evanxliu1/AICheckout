@@ -74,12 +74,15 @@ export async function sha256(text: string) {
   }
 }
 
-/** The captures the source's date selects: those dated `checkedOn` when a manifest has one (an older or newer
- * capture of a refreshed page must not stand in for it), otherwise every known capture (a page re-checked
- * unchanged after its capture, or a source dated before its capture was saved). */
+/** The captures the source's date selects: those dated `checkedOn` when a manifest has one, otherwise the
+ * newest-dated capture (a page re-checked unchanged after its capture, or a source dated before its capture was
+ * saved). An older capture of a refreshed page never stands in for a newer date. */
 function selected(captures: Capture[], checkedOn: string | undefined) {
   const dated = checkedOn ? captures.filter((capture) => capture.dates.includes(checkedOn)) : [];
-  return dated.length ? dated : captures;
+  if (dated.length) return dated;
+  const latest = (capture: Capture) => capture.dates.reduce((a, b) => (b > a ? b : a), '');
+  const newest = captures.reduce((a, capture) => (latest(capture) > a ? latest(capture) : a), '');
+  return captures.filter((capture) => latest(capture) === newest);
 }
 
 /** "matches" when the hash is a capture the source's date selects, "differs" when the source is known but no
@@ -102,10 +105,12 @@ export function staleCaptureNote(
   hash: string | undefined,
   checkedOn: string | undefined,
 ) {
-  const other = index.get(sourceId)?.find((capture) => capture.sha256 === hash && capture.dates.length);
-  if (!other || !checkedOn || compareWithIndex(index, sourceId, hash, checkedOn) !== 'differs')
+  const captures = index.get(sourceId) ?? [];
+  const other = captures.find((capture) => capture.sha256 === hash && capture.dates.length);
+  const wanted = selected(captures, checkedOn).flatMap((capture) => capture.dates);
+  if (!other || !wanted.length || compareWithIndex(index, sourceId, hash, checkedOn) !== 'differs')
     return undefined;
-  return `matches the ${other.dates[0]} capture, not the one dated ${checkedOn}`;
+  return `matches the ${other.dates[0]} capture, not the one dated ${checkedOn && wanted.includes(checkedOn) ? checkedOn : wanted.sort().at(-1)}`;
 }
 
 export const manifestComparison = (sourceId: string, hash: string | undefined, checkedOn?: string) =>

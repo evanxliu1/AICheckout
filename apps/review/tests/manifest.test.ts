@@ -35,11 +35,19 @@ describe('manifest comparison', () => {
   it('falls back to any known capture when none is dated checkedOn', () => {
     // A merchant page dated before its capture was saved, or a page re-checked unchanged later.
     expect(compareWithIndex(index, 'other', SHA(3), '2026-09-28')).toBe('matches');
-    expect(compareWithIndex(index, 'page', SHA(1), '2026-11-01')).toBe('matches');
+    expect(compareWithIndex(index, 'page', SHA(2), '2026-11-01')).toBe('matches');
     expect(compareWithIndex(index, 'page', SHA(2))).toBe('matches');
     expect(compareWithIndex(index, 'page', SHA(3), '2026-11-01')).toBe('differs');
     expect(compareWithIndex(index, 'unknown', SHA(1))).toBeUndefined();
     expect(compareWithIndex(index, 'page', undefined)).toBeUndefined();
+  });
+
+  it('accepts only the newest capture when checkedOn is later than every capture', () => {
+    expect(compareWithIndex(index, 'page', SHA(2), '2026-11-01')).toBe('matches');
+    expect(compareWithIndex(index, 'page', SHA(1), '2026-11-01')).toBe('differs');
+    expect(staleCaptureNote(index, 'page', SHA(1), '2026-11-01')).toBe(
+      'matches the 2026-10-02 capture, not the one dated 2026-10-04',
+    );
   });
 
   it('skips a malformed batch manifest with a warning', () => {

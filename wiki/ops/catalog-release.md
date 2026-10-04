@@ -6,7 +6,7 @@ status: stable
 tags: [ops, catalog, release, review]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T22:22:00Z
+  at: 2026-10-04T22:31:00Z
 stale_after: 2026-11-01T00:00:00Z
 sources:
   - resource: ../../apps/review/src/StartDraft.tsx
@@ -102,7 +102,7 @@ For release 2 (2026-10-03), step 2 was done without a loaded `build:hosted` exte
 
 ## Publishing a pipeline batch
 
-For a catalog built from a Phase 8 pipeline batch, start with `npm run pipeline -- handoff --batch <batch>` in the checkout that holds the batch's captures. It prints the PR checklist, the build report summary (version, verifiedAt, expiresAt, rule-ID changes), migrations, the capture folders to select in step 3 (one per layer the catalog uses, as absolute paths with file counts) and these steps, and exits 1 while the batch is not ready. The review app matches captures against the manifests `apps/review/src/manifest.ts` bundles at build time: the fixed corpora and every `evals/curation/batches/*/manifest.json` (since Phase 9 milestone 1), requiring the capture dated the source's `checkedOn` when one exists, otherwise any recorded capture. So the Render deploy of `main` is what makes a new batch's manifest known: the batch must be merged and deployed before Evan publishes (check that Render serves the merge commit in step 1). `handoff` reports review-app readiness against the checkout's manifests and lists any cited source it would not match ([pipeline](../system/card-expansion-pipeline.md#built-so-far), [decision](../decisions/2026-10-04-review-app-batch-manifests.md)).
+For a catalog built from a Phase 8 pipeline batch, start with `npm run pipeline -- handoff --batch <batch>` in the checkout that holds the batch's captures. It prints the PR checklist, the build report summary (version, verifiedAt, expiresAt, rule-ID changes), migrations, the capture folders to select in step 3 (one per layer the catalog uses, as absolute paths with file counts) and these steps, and exits 1 while the batch is not ready. The review app matches captures against the manifests `apps/review/src/manifest.ts` bundles at build time: the fixed corpora and every `evals/curation/batches/*/manifest.json` (since Phase 9 milestone 1), requiring the capture dated the source's `checkedOn` when one exists, otherwise the newest-dated capture. So the Render deploy of `main` is what makes a new batch's manifest known: the batch must be merged and deployed before Evan publishes (check that Render serves the merge commit in step 1). `handoff` reports review-app readiness against the checkout's manifests and lists any cited source it would not match ([pipeline](../system/card-expansion-pipeline.md#built-so-far), [decision](../decisions/2026-10-04-review-app-batch-manifests.md)).
 
 ## If something is blocked
 

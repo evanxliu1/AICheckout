@@ -86,7 +86,7 @@ export interface ReviewReadiness {
 /**
  * Whether the hosted review app can match every source the catalog cites. The review app keeps every capture the
  * manifests `apps/review/src/manifest.ts` bundles record for a source ID; a loaded capture must be the one dated the
- * source's checkedOn when a manifest has that date, otherwise any recorded capture. A cited source with no bundled
+ * source's checkedOn when a manifest has that date, otherwise the newest-dated capture. A cited source with no bundled
  * hash, or whose hash is not among the captures its date selects, is missing or differs.
  */
 export function reviewAppReadiness(cited: CitedSource[], manifests: ReviewManifest[]): ReviewReadiness {
@@ -104,7 +104,11 @@ export function reviewAppReadiness(cited: CitedSource[], manifests: ReviewManife
     const dated = captures.filter(
       (capture) => source.checkedOn && [capture.capturedOn, capture.checkedOn].includes(source.checkedOn),
     );
-    const selected = dated.length ? dated : captures;
+    // No capture of that date: only the newest-dated capture (as the review app does).
+    const latest = (capture: ManifestSource) =>
+      [capture.capturedOn ?? '', capture.checkedOn ?? ''].sort().at(-1)!;
+    const newest = captures.map(latest).sort().at(-1)!;
+    const selected = dated.length ? dated : captures.filter((capture) => latest(capture) === newest);
     if (source.sha256 && !selected.some((capture) => capture.sha256 === source.sha256))
       differs.push({
         id: source.id,

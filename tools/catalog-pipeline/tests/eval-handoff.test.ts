@@ -560,7 +560,7 @@ describe('review-app readiness', () => {
     expect(reviewAppReadiness([{ id: 'shared', sha256: SHA(3), dir: null }], manifests).ok).toBe(true);
   });
 
-  it('requires the capture dated checkedOn when a manifest has one, else any capture', () => {
+  it('requires the capture dated checkedOn when a manifest has one, else the newest capture', () => {
     const dated = [
       {
         path: 'evals/curation/expansion/manifest.json',
@@ -576,8 +576,9 @@ describe('review-app readiness', () => {
     expect(check(SHA(2), '2026-10-04').ok).toBe(true);
     expect(check(SHA(1), '2026-10-04').differs).toEqual([{ id: 'p', expected: SHA(1), review: [SHA(2)] }]);
     expect(check(SHA(1), '2026-10-02').ok).toBe(true);
-    // No capture dated checkedOn (a merchant page dated before its capture, a page re-checked unchanged): any.
-    expect(check(SHA(1), '2026-11-01').ok).toBe(true);
+    // No capture dated checkedOn (a merchant page dated before its capture, a page re-checked unchanged): newest only.
+    expect(check(SHA(2), '2026-11-01').ok).toBe(true);
+    expect(check(SHA(1), '2026-11-01').differs).toEqual([{ id: 'p', expected: SHA(1), review: [SHA(2)] }]);
     expect(check(SHA(3), '2026-11-01').ok).toBe(false);
   });
 

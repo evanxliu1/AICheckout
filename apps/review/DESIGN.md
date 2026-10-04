@@ -103,7 +103,7 @@ Sources: `src/styles.css` (layout only, `--token-*` and `--ac-*` values), `src/A
 - **Capture hashes**: each captured source shows its SHA-256, and loaded or pasted capture text shows
   whether it matches the corpus manifests (`evals/curation/real/manifest.json`, the expansion and
   merchant manifests and every pipeline batch manifest; the capture dated the source's checkedOn when
-  one exists, otherwise any recorded capture),
+  one exists, otherwise the newest-dated capture),
   which catches a mislabelled file before it is attached. Files too large to be a capture are skipped unread.
 - **Approval**: a `Card` with the acknowledgement `Checkbox`, a Review note field, and "Publish
   reviewed terms". Publishing opens a warning `Modal` ("Publish {version}?") that restates the
