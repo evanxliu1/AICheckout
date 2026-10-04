@@ -342,8 +342,7 @@ export function publishedVersionProblems(ledger, catalog) {
     .filter(({ card, rule }) => {
       const issued = ledger.ids[rule.id];
       return (
-        before.has(rule.id) &&
-        (issued.cardId !== card.id || issued.termsSha256 !== ruleTermsSha256(rule))
+        before.has(rule.id) && (issued.cardId !== card.id || issued.termsSha256 !== ruleTermsSha256(rule))
       );
     })
     .map(({ rule }) => rule.id);

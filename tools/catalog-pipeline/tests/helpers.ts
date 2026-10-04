@@ -172,7 +172,10 @@ export async function harness(): Promise<Harness> {
         const { version } = JSON.parse(await readFile(join(root, flag('--config')), 'utf8'));
         await mkdir(out, { recursive: true });
         await writeFile(join(out, 'catalog-v3.json'), json({ schemaVersion: 3, version }));
-        await writeFile(join(out, 'catalog-build-report.md'), `# Catalog v3 build report\n\nVersion ${version}\n`);
+        await writeFile(
+          join(out, 'catalog-build-report.md'),
+          `# Catalog v3 build report\n\nVersion ${version}\n`,
+        );
         await writeFile(join(out, 'ledger-diff.json'), json({ schemaVersion: 1, version }));
         return 0;
       }

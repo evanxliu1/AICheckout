@@ -347,7 +347,10 @@ test('published versions: the same rule IDs and terms leave the ledger as is; an
   assert.match(publishedVersionProblems(v2.ledger, more).join(), /1 rule ID\(s\) not in it: a-gas/);
   const fewer = structuredClone(same);
   fewer.cards[0].rules.pop();
-  assert.match(publishedVersionProblems(v2.ledger, fewer).join(), /1 of its rule ID\(s\) missing: a-dining-v2/);
+  assert.match(
+    publishedVersionProblems(v2.ledger, fewer).join(),
+    /1 of its rule ID\(s\) missing: a-dining-v2/,
+  );
   const order = structuredClone(same);
   order.cards[0].rules.reverse();
   assert.deepEqual(publishedVersionProblems(v2.ledger, order), ['its rule IDs in another order']);

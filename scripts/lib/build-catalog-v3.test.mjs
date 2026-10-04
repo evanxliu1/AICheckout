@@ -38,7 +38,10 @@ test('a published version without a matching ledger entry is refused, and nothin
     publishedVersions: [...committed.publishedVersions, '2026-10-01.test.1'],
   });
   const before = await snapshot();
-  for (const args of [['--config', config], ['--config', config, '--out-dir', join(dir, 'out')]]) {
+  for (const args of [
+    ['--config', config],
+    ['--config', config, '--out-dir', join(dir, 'out')],
+  ]) {
     const result = await build(...args);
     assert.equal(result.code, 1);
     assert.match(result.stderr, /2026-10-01\.test\.1 is published .*the ledger has no entry/);
@@ -55,14 +58,21 @@ test('a proposed build writes the catalog, report and ledger diff to its directo
   const result = await build('--config', config, '--out-dir', out);
   assert.equal(result.code, 0, result.stderr);
   assert.deepEqual(await snapshot(), before);
-  assert.deepEqual((await readdir(out)).sort(), ['catalog-build-report.md', 'catalog-v3.json', 'ledger-diff.json']);
+  assert.deepEqual((await readdir(out)).sort(), [
+    'catalog-build-report.md',
+    'catalog-v3.json',
+    'ledger-diff.json',
+  ]);
   const catalog = JSON.parse(await readFile(join(out, 'catalog-v3.json'), 'utf8'));
   assert.equal(catalog.version, '2026-10-05.test.1');
   const diff = JSON.parse(await readFile(join(out, 'ledger-diff.json'), 'utf8'));
   assert.equal(diff.previous.version, committed.version);
   assert.equal(diff.kept, diff.rules);
   assert.deepEqual([diff.changed, diff.added, diff.dropped, diff.idsIssued], [[], [], [], []]);
-  assert.match(await readFile(join(out, 'catalog-build-report.md'), 'utf8'), /\*\*Version\*\* `2026-10-05\.test\.1`/);
+  assert.match(
+    await readFile(join(out, 'catalog-build-report.md'), 'utf8'),
+    /\*\*Version\*\* `2026-10-05\.test\.1`/,
+  );
   // --check compares the proposed files, not the committed ones.
   assert.equal((await build('--config', config, '--out-dir', out, '--check')).code, 0);
 });
