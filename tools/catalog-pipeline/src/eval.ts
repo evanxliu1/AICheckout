@@ -16,7 +16,7 @@ import type { Batch } from './files.ts';
 import { fileSha256 } from './hash.ts';
 import { STAGE_VERSIONS } from './inputs.ts';
 import type { Env } from './run.ts';
-import { CARD_STAGES, writeJsonAtomic, writeState } from './state.ts';
+import { CARD_STAGES, ISSUER_STAGES, writeJsonAtomic, writeState } from './state.ts';
 import type { StageRecord } from './state.ts';
 
 /** The frozen layer the agreement compares with (never written by the pipeline). */
@@ -256,16 +256,35 @@ export function timings(batch: Batch, summary: { cards?: SummaryCard[] } | null)
         },
       }
     : null;
+  // Agent stages: the run time and tokens `accept --duration-ms/--tokens` records on each issuer's stage record.
+  const agentRecords = Object.values(batch.state.issuers).flatMap((issuer) =>
+    ISSUER_STAGES.flatMap((stage) => (issuer.stages[stage] ? [issuer.stages[stage]] : [])),
+  );
+  const agentTotal = (key: 'durationMs' | 'tokens') =>
+    agentRecords.some((record) => record[key] !== undefined)
+      ? agentRecords.reduce((n, record) => n + (record[key] ?? 0), 0)
+      : null;
+  const agentMs = agentTotal('durationMs');
+  const agentTokens = agentTotal('tokens');
+  const perCard = (value: number | null) =>
+    value === null || !batch.cards.length ? null : Number((value / batch.cards.length).toFixed(2));
+  const agentMinutes = agentMs === null ? null : Number((agentMs / 60_000).toFixed(2));
   return {
     startedAt: null,
     unavailable: [
       'startedAt: state records finishedAt and acceptedAt only',
-      'agent stages (research, verify, adjudicate, overlay): no model minutes or tokens are recorded',
+      ...(agentMs === null && agentTokens === null
+        ? ['agent stages (research, verify, adjudicate, overlay): no model minutes or tokens are recorded']
+        : []),
       ...(summary ? [] : ['extract: no extraction-summary.json in the batch']),
     ],
     stages,
     extract,
-    agentStages: { modelMinutes: null, tokens: null },
+    agentStages: {
+      modelMinutes: agentMinutes,
+      tokens: agentTokens,
+      perCard: { modelMinutes: perCard(agentMinutes), tokens: perCard(agentTokens) },
+    },
   };
 }
 

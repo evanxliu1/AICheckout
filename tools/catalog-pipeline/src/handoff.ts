@@ -9,6 +9,7 @@ import type { BatchView } from './derive.ts';
 import { listBatches, loadBatch } from './files.ts';
 import { fileSha256 } from './hash.ts';
 import { EVAL_FILE } from './eval.ts';
+import { openPacketStatus } from './packets.ts';
 import type { Env } from './run.ts';
 import { CARD_STAGES } from './state.ts';
 
@@ -200,7 +201,9 @@ export async function batchProblems(
       break;
     }
   }
-  if (batch.packets.length) problems.push(`open packets: ${batch.packets.join(', ')}`);
+  // Accepted and released packets stay in pipeline/packets as the run record; only open (or unreadable) ones block.
+  const open = await openPacketStatus(batch);
+  if (open.length) problems.push(`open packets: ${open.map((entry) => entry.file).join(', ')}`);
   if (view.build.status !== 'done') problems.push(`build: ${view.build.status}`);
   if (view.eval.status !== 'done') problems.push(`eval: ${view.eval.status}`);
   else {
