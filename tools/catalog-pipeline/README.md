@@ -20,6 +20,8 @@ npm run pipeline -- handoff [--batch B]                        # prints the PR c
 
 `claim` writes a work packet (`pipeline/packets/`, gitignored: absolute paths of this machine) naming the cards, the inputs and the one output file the agent writes; `accept` runs the stage's gates on that file and records the packet, agent run, model and, from the subagent's completion notice, `durationMs` and `tokens` in `state.json`. Gate errors name paths and fields, never issuer text.
 
+`lint-labels` reports the label-evidence lint as findings raised, acknowledged and open. A finding the lint cannot read is acknowledged only by an agent: the adjudicator in its findings file (`labelLintAcks: [{ cardId, ruleIndex, check, reason }]`) or the overlay author in its fragment, with `reason` one of `anchor-truncated`, `reversed-phrasing`, `split-anchors`, `points-wording-cash-label`, `date-outside-anchor`, `relationship-bonus`. Each ack must name a raised finding; the CLI has no override of its own.
+
 Runs on Node 24 type stripping (`node src/cli.ts`); tests are `npm test --workspace=@ai-checkout/catalog-pipeline` and use synthetic fixtures only.
 
 Design, commands, statuses and what each milestone adds: [wiki/system/card-expansion-pipeline.md](../../wiki/system/card-expansion-pipeline.md).
