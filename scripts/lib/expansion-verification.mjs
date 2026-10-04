@@ -170,6 +170,19 @@ export const verificationFileSchema = z.strictObject({
   /** The second pass; null until an adjudicator has decided every finding in the file. */
   adjudicator: agentSchema.nullable().default(null),
   cards: z.array(cardVerificationSchema).min(1).max(60),
+  /** Pipeline batches only: the adjudicator's acknowledgements of label-lint findings the lint cannot read. Codes
+   * only; tools/catalog-pipeline checks the check and reason enums and that each names a raised finding. */
+  labelLintAcks: z
+    .array(
+      z.strictObject({
+        cardId: id,
+        ruleIndex: z.number().int().min(0),
+        check: z.string().regex(/^[a-z][a-z-]{0,39}$/),
+        reason: z.string().regex(/^[a-z][a-z-]{0,39}$/),
+      }),
+    )
+    .max(400)
+    .optional(),
 });
 
 // ---- Loading ---------------------------------------------------------------------------------------------

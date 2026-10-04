@@ -8,8 +8,16 @@ import { z } from 'zod';
 import type { Batch } from './files.ts';
 import { jsonSha256 } from './hash.ts';
 import { verifierFindings } from './inputs.ts';
-import { lintCorpusCase, lintOverlay, formatFinding } from './label-lint.ts';
-import type { CorpusCaseLike, OverlayLike } from './label-lint.ts';
+import {
+  adjudicatorAckSchema,
+  ackPath,
+  formatFinding,
+  fragmentAckSchema,
+  lintCorpusCase,
+  lintOverlay,
+  resolveAcks,
+} from './label-lint.ts';
+import type { CorpusCaseLike, LintAck, LintFinding, OverlayLike } from './label-lint.ts';
 import type { Packet } from './packets.ts';
 import { valueAt } from './rebase.ts';
 import { checkQuoteFiles } from '../../../scripts/lib/expansion-quote-check.mjs';
@@ -99,6 +107,32 @@ interface FindingsFileLike {
   verifier: { filesRead: string[] };
   adjudicator: unknown;
   cards: FindingsCardLike[];
+  labelLintAcks?: { cardId: string }[];
+}
+
+/** The acks of each card in a list, by card ID. */
+export const acksByCard = (acks: { cardId: string }[] = []): Map<string, { cardId: string }[]> => {
+  const out = new Map<string, { cardId: string }[]>();
+  for (const ack of acks) out.set(ack.cardId, [...(out.get(ack.cardId) ?? []), ack]);
+  return out;
+};
+
+/** Acks of cards outside the packet are unchanged since the claim; the verifier records none for the packet's cards. */
+function ackScopeGate(packet: Packet, file: FindingsFileLike): string[] {
+  const errors: string[] = [];
+  const byCard = acksByCard(file.labelLintAcks);
+  const frozen = packet.frozen?.acks ?? {};
+  for (const cardId of new Set([...byCard.keys(), ...Object.keys(frozen)])) {
+    if (packet.cardIds.includes(cardId)) {
+      if (packet.stage === 'verify' && byCard.has(cardId))
+        errors.push(`labelLintAcks.${cardId}: only the adjudicator acknowledges label-lint findings`);
+      continue;
+    }
+    const acks = byCard.get(cardId);
+    if ((acks ? jsonSha256(acks) : null) !== (frozen[cardId] ?? null))
+      errors.push(`labelLintAcks.${cardId}: outside the packet (added or changed)`);
+  }
+  return errors;
 }
 
 /** Entries of cards outside the packet must be unchanged since the claim; every packet card needs an entry. */
@@ -115,7 +149,7 @@ function scopeGate(packet: Packet, file: FindingsFileLike): string[] {
   for (const cardId of packet.cardIds)
     if (!file.cards.some((entry) => entry.cardId === cardId))
       errors.push(`cards.${cardId}: no entry for a card of the packet`);
-  return errors;
+  return [...errors, ...ackScopeGate(packet, file)];
 }
 
 function parseFindings(data: unknown, errors: string[]): FindingsFileLike | null {
@@ -195,10 +229,67 @@ export async function adjudicateGate(batch: Batch, packet: Packet, data: unknown
     if (entry.verdict === 'drop-card' && entry.verdictAdjudication === undefined)
       errors.push(`${at}.verdictAdjudication: undecided drop-card`);
   }
+  const acks = parseAcks(file.labelLintAcks ?? [], adjudicatorAckSchema, errors);
   if (errors.length) return errors;
-  errors.push(...(await applyCheck(batch)));
+  const state = await loadExpansion(batch.dir);
+  const applied = applyVerification(state) as { errors: string[]; cases: CorpusCaseLike[] };
+  errors.push(...applied.errors.map(redact));
+  if (!errors.length) {
+    // Each ack of the packet's cards names a finding the lint raises on the corpus case apply will write.
+    const findings = applied.cases
+      .filter((item) => packet.cardIds.includes(item.cardId))
+      .flatMap(lintCorpusCase);
+    const own = acks.filter(({ ack }) => packet.cardIds.includes(ack.cardId));
+    for (const i of resolveAcks(
+      findings,
+      own.map(({ ack }) => ack),
+    ).unused)
+      errors.push(`labelLintAcks.${own[i].index}: ${unusedAck(own[i].ack)}`);
+  }
   errors.push(...(await quoteGate(batch)));
   return errors;
+}
+
+/** Parses each ack with the schema (errors at `labelLintAcks.<i>`), keeping its index. */
+function parseAcks(
+  raw: unknown[],
+  schema: typeof adjudicatorAckSchema | typeof fragmentAckSchema,
+  errors: string[],
+): { ack: LintAck; index: number }[] {
+  const out: { ack: LintAck; index: number }[] = [];
+  raw.forEach((item, index) => {
+    const parsed = schema.safeParse(item);
+    if (parsed.success) out.push({ ack: parsed.data, index });
+    else errors.push(...zodErrors(`labelLintAcks.${index}.`, parsed.error));
+  });
+  return out;
+}
+
+const unusedAck = (ack: LintAck) =>
+  `names no open label-lint finding (${ack.check} ${ack.cardId} ${ackPath(ack)}); stale or duplicate`;
+
+/**
+ * The adjudicator's acks in verification/<issuer>.json, as accepted: when there are any, their hash must be the one
+ * `accept adjudicate` recorded (output `lint-acks:<issuer>`), so neither the session nor the CLI can add one later.
+ */
+export async function acceptedAcks(
+  batch: Batch,
+  issuerSlug: string,
+): Promise<{ acks: LintAck[]; errors: string[] }> {
+  const errors: string[] = [];
+  const file = await readJsonOrNull<{ labelLintAcks?: unknown[] }>(
+    join(batch.dir, 'verification', `${issuerSlug}.json`),
+  );
+  const raw = file?.labelLintAcks ?? [];
+  const acks = parseAcks(raw, adjudicatorAckSchema, errors).map(({ ack }) => ack);
+  const recorded = batch.state.issuers[issuerSlug]?.stages.adjudicate?.outputs?.find(
+    (output) => output.ref === `lint-acks:${issuerSlug}`,
+  );
+  if (raw.length && recorded?.sha256 !== jsonSha256(raw))
+    errors.push(
+      `verification/${issuerSlug}.json labelLintAcks: not the acknowledgements accepted with adjudicate`,
+    );
+  return { acks, errors };
 }
 
 /** The overlay agent's fragment, overlay/<issuer-slug>.json: the issuer's overlay entries and their definitions. */
@@ -222,6 +313,8 @@ export const overlayFragmentSchema = z.strictObject({
       }),
     )
     .default([]),
+  /** The overlay author's acks of overlay findings the adjudicator did not acknowledge (label-lint.ts). */
+  labelLintAcks: z.array(fragmentAckSchema).max(400).default([]),
 });
 type Fragment = z.infer<typeof overlayFragmentSchema>;
 
@@ -339,7 +432,11 @@ export async function overlayGate(
   packet: Packet,
   data: unknown,
   dropped: Record<string, string>,
-): Promise<{ errors: string[]; merged?: ReturnType<typeof mergeFragment> }> {
+): Promise<{
+  errors: string[];
+  merged?: ReturnType<typeof mergeFragment>;
+  lint?: { raised: LintFinding[]; acked: LintFinding[] };
+}> {
   const errors = envelopeGate(packet, data);
   const parsed = overlayFragmentSchema.safeParse(data);
   if (!parsed.success) return { errors: [...errors, ...zodErrors('', parsed.error)] };
@@ -373,11 +470,23 @@ export async function overlayGate(
     packet.cardIds,
   );
   errors.push(...(await overlayCoverage(batch, merged, packet.issuerName, dropped)));
-  errors.push(
-    ...lintOverlay(cases, merged.overlay, inPacket).map((finding) => `label lint: ${formatFinding(finding)}`),
+  // The label lint: findings acknowledged by the adjudicator, then by the fragment's own acks, pass; the rest fail.
+  const raised = lintOverlay(cases, merged.overlay, inPacket);
+  const adjudicator = await acceptedAcks(batch, packet.issuer);
+  errors.push(...adjudicator.errors);
+  const first = resolveAcks(
+    raised,
+    adjudicator.acks.filter((ack) => inPacket.has(ack.cardId)),
   );
+  fragment.labelLintAcks.forEach((ack, i) => {
+    if (!inPacket.has(ack.cardId)) errors.push(`labelLintAcks.${i}: outside the packet`);
+  });
+  const second = resolveAcks(first.open, fragment.labelLintAcks);
+  for (const i of second.unused) errors.push(`labelLintAcks.${i}: ${unusedAck(fragment.labelLintAcks[i])}`);
+  errors.push(...second.open.map((finding) => `label lint: ${formatFinding(finding)}`));
   errors.push(...(await quoteGate(batch)));
-  return errors.length ? { errors } : { errors, merged };
+  const lint = { raised, acked: [...first.acked, ...second.acked] };
+  return errors.length ? { errors, lint } : { errors, merged, lint };
 }
 
 /** `checkOverlay` for one issuer on the build's layers with this batch (merged overlay) as the newest layer. */
@@ -437,10 +546,23 @@ async function overlayCoverage(
   }
 }
 
-/** The label lint at apply: checks a–c on the corpus rules of the given cards. */
-export function applyLint(cases: Map<string, CorpusCaseLike>, cardIds: string[]): string[] {
-  return cardIds.flatMap((cardId) => {
-    const item = cases.get(cardId);
-    return item ? lintCorpusCase(item).map((finding) => `label lint: ${formatFinding(finding)}`) : [];
-  });
+/** The label lint at apply: checks a–c on a card's corpus rules; the adjudicator's acks of the card pass their
+ * findings, and an ack naming no finding is an error. */
+export function applyLint(
+  cases: Map<string, CorpusCaseLike>,
+  cardId: string,
+  acks: LintAck[],
+): { errors: string[]; raised: LintFinding[]; acked: LintFinding[] } {
+  const item = cases.get(cardId);
+  const raised = item ? lintCorpusCase(item) : [];
+  const own = acks.filter((ack) => ack.cardId === cardId);
+  const { open, acked, unused } = resolveAcks(raised, own);
+  return {
+    errors: [
+      ...open.map((finding) => `label lint: ${formatFinding(finding)}`),
+      ...unused.map((i) => `label lint ack: ${unusedAck(own[i])}`),
+    ],
+    raised,
+    acked,
+  };
 }

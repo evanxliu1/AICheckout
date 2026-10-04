@@ -1,6 +1,14 @@
 // The label-evidence lint on synthetic rules and anchors (no issuer text).
 import { describe, expect, it } from 'vitest';
-import { dateRegex, lintCorpusCase, lintOverlay, multiplesIn } from '../src/label-lint.ts';
+import {
+  dateRegex,
+  fragmentAckSchema,
+  lintCorpusCase,
+  lintMetrics,
+  lintOverlay,
+  multiplesIn,
+  resolveAcks,
+} from '../src/label-lint.ts';
 import type { CorpusCaseLike } from '../src/label-lint.ts';
 
 const rule = (fields: Record<string, unknown>, anchors: string[]) => ({
@@ -27,6 +35,12 @@ describe('a) cap amounts, digit-exact', () => {
     for (const text of ['$5,000 a year', '$5000 a year', '$5,000.00 a year', '$5k a year', '$5K a year'])
       expect(checks(capped(500_000, text))).toEqual([]);
   });
+  it('accepts $1.5k for 150000, not $15k or $1.55k', () => {
+    expect(checks(capped(150_000, '$1.5k a year'))).toEqual([]);
+    expect(checks(capped(150_000, '$1.5K.'))).toEqual([]);
+    expect(checks(capped(150_000, '$15k a year'))).toEqual(['cap-amount rules.0.cap.amountCents']);
+    expect(checks(capped(150_000, '$1.55k a year'))).toEqual(['cap-amount rules.0.cap.amountCents']);
+  });
   it('rejects $50,000 for $5,000 and $5,000 for $50,000', () => {
     expect(checks(capped(500_000, '$50,000 a year'))).toEqual(['cap-amount rules.0.cap.amountCents']);
     expect(checks(capped(5_000_000, '$5,000 a year'))).toEqual(['cap-amount rules.0.cap.amountCents']);
@@ -52,6 +66,8 @@ describe('b) rates', () => {
       [300, 'earn three points for every $1.00'],
       [200, 'earn 2 Points (1 base and 1 bonus Point) for every $1'],
       [500, '4 additional points (for a total of 5 points) for each dollar'],
+      [200, 'earn 2 points/$1 spent'],
+      [300, 'earn 3 miles / dollar'],
     ] as const)
       expect(checks(card('points', [rule({ rateBps: rate }, [text])])), text).toEqual([]);
   });
@@ -128,5 +144,43 @@ describe('d) and e) on the overlay', () => {
     expect(lintOverlay(cases, { cards: [], programs: [program] }).map((f) => f.path)).toEqual([
       'programDetails.store',
     ]);
+  });
+});
+
+describe('acknowledgements', () => {
+  const findings = lintCorpusCase(
+    card('points', [rule({ rateBps: 200 }, ['per $1: 2 points at']), rule({ rateBps: 100 }, ['fake 1X'])]),
+  );
+  const ack = (fields: Record<string, unknown>) =>
+    fragmentAckSchema.parse({
+      cardId: 'example-bank-alpha',
+      check: 'rate',
+      reason: 'reversed-phrasing',
+      ...fields,
+    });
+  it('an ack passes its finding; the rest stay open and are counted apart', () => {
+    expect(findings.map((f) => f.path)).toEqual(['rules.0.rateBps']);
+    const result = resolveAcks(findings, [ack({ ruleIndex: 0 })]);
+    expect(result).toMatchObject({ open: [], unused: [] });
+    expect(result.acked).toHaveLength(1);
+    expect(lintMetrics(findings, result.acked)).toEqual({ lintRateRaised: 1, lintRateAcked: 1 });
+    expect(lintMetrics(findings, [])).toEqual({ lintRateRaised: 1 });
+  });
+  it('an ack naming no finding, a duplicate, or another check is unused; an unacked finding stays open', () => {
+    const result = resolveAcks(findings, [
+      ack({ ruleIndex: 1 }),
+      ack({ ruleIndex: 0, check: 'end-date' }),
+      ack({ addedRule: 'rules-0' }),
+    ]);
+    expect(result.open).toEqual(findings);
+    expect(result.unused).toEqual([0, 1, 2]);
+    expect(resolveAcks(findings, [ack({ ruleIndex: 0 }), ack({ ruleIndex: 0 })]).unused).toEqual([1]);
+  });
+  it('acks are codes only: reasons from the enum, one rule locator, no store-program', () => {
+    expect(() => ack({ ruleIndex: 0, reason: 'the anchor is fine' })).toThrow();
+    expect(() => ack({ ruleIndex: 0, addedRule: 'x' })).toThrow();
+    expect(() => ack({})).toThrow();
+    expect(() => ack({ ruleIndex: 0, check: 'store-program' })).toThrow();
+    expect(() => ack({ ruleIndex: 0, note: 'free text' })).toThrow();
   });
 });

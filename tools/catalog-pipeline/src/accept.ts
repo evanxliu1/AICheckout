@@ -9,7 +9,8 @@ import type { BatchView } from './derive.ts';
 import { loadBatch, statePath } from './files.ts';
 import type { Batch } from './files.ts';
 import { adjudicateGate, envelopeGate, overlayGate, quoteGate, verifyGate } from './gates.ts';
-import { fileSha256 } from './hash.ts';
+import { fileSha256, jsonSha256 } from './hash.ts';
+import { lintMetrics } from './label-lint.ts';
 import { STAGE_VERSIONS, draftSplit } from './inputs.ts';
 import { openPacket, writePacket } from './packets.ts';
 import type { Packet } from './packets.ts';
@@ -109,6 +110,7 @@ export async function accept(
     errors.push(`${path}: changed since the claim (an agent writes only its output file)`);
 
   let merged: Awaited<ReturnType<typeof overlayGate>>['merged'];
+  let metrics: Record<string, number> | undefined;
   if (!errors.length)
     switch (stage) {
       case 'research':
@@ -125,6 +127,7 @@ export async function accept(
         const result = await overlayGate(batch, packet, data, droppedOf(batch));
         errors.push(...result.errors);
         merged = result.merged;
+        if (result.lint) metrics = lintMetrics(result.lint.raised, result.lint.acked);
         break;
       }
     }
@@ -173,6 +176,12 @@ export async function accept(
   const outputs = [];
   const sha = await fileSha256(packet.output);
   if (sha) outputs.push({ ref: `${stage === 'overlay' ? 'fragment' : stage}:${issuer}`, sha256: sha });
+  // The adjudicator's label-lint acks as accepted: apply and overlay use them only while their hash is this one.
+  if (stage === 'adjudicate')
+    outputs.push({
+      ref: `lint-acks:${issuer}`,
+      sha256: jsonSha256((JSON.parse(text) as { labelLintAcks?: unknown[] }).labelLintAcks ?? []),
+    });
   record(
     batch,
     view,
@@ -190,6 +199,7 @@ export async function accept(
     {
       ...(options.durationMs !== undefined ? { durationMs: options.durationMs } : {}),
       ...(options.tokens !== undefined ? { tokens: options.tokens } : {}),
+      ...(metrics && Object.keys(metrics).length ? { metrics } : {}),
     },
   );
   await writePacket(batch, {
@@ -214,7 +224,7 @@ function record(
   packet: Packet,
   fields: Partial<StageRecord>,
   now: string,
-  usage: Pick<StageRecord, 'durationMs' | 'tokens'> = {},
+  usage: Pick<StageRecord, 'durationMs' | 'tokens' | 'metrics'> = {},
 ): void {
   const issuerState = (batch.state.issuers[issuer] ??= { stages: {} });
   const previous = issuerState.stages[stage];

@@ -506,6 +506,19 @@ describe('apply and overlay', () => {
     expect(config.layers).toEqual([{ kind: 'batch', id: BATCH, dropped: { [BETA]: 'drop-card' } }]);
   });
 
+  it('refuses a fragment ack that names no overlay finding', async () => {
+    const h = await harness();
+    await applied(h);
+    const packet = await claimed(h, 'overlay');
+    await fragment(h, packet, (data) => {
+      data.labelLintAcks = [{ cardId: ALPHA, ruleIndex: 0, check: 'rate', reason: 'split-anchors' }];
+    });
+    expect(await accept(h, 'overlay', 'run-overlay')).toBe(1);
+    expect(h.logs.join('\n')).toContain(
+      `- labelLintAcks.0: names no open label-lint finding (rate ${ALPHA} rules.0.rateBps); stale or duplicate`,
+    );
+  });
+
   it('refuses an overlay entry for a card outside the packet', async () => {
     const h = await harness();
     await applied(h);
@@ -557,6 +570,106 @@ describe('apply and overlay', () => {
     const overlay = JSON.parse(await readFile(join(h.dir, 'catalog-overlay.json'), 'utf8'));
     expect(overlay.cards[1].corpusCaseSha256).toBe(sha256Json(corpus.cases[1]));
     expect((await h.view()).cards[1].stages.overlay.status).toBe('done');
+  });
+});
+
+describe('label-lint acknowledgements', () => {
+  const ACK = { cardId: ALPHA, ruleIndex: 0, check: 'rate', reason: 'anchor-truncated' };
+  /** The draft and corpus stubs write alpha's rule 0 at 1.5%, which its anchor ("2%") does not state. */
+  function unreadableRate(h: Harness) {
+    const original = h.env.exec;
+    h.env.exec = async (command, args) => {
+      const code = await original(command, args);
+      for (const [script, name] of [
+        ['scripts/draft-expansion-labels.mjs', 'corpus.draft.json'],
+        ['scripts/apply-expansion-verification.mjs', 'corpus.json'],
+      ])
+        if (args[0] === script) {
+          const data = JSON.parse(await readFile(join(h.dir, name), 'utf8'));
+          data.cases[0].reference.rules[0].rateBps = 150;
+          await write(join(h.dir, name), data);
+        }
+      return code;
+    };
+  }
+  async function adjudicated(h: Harness, acks: unknown[]) {
+    unreadableRate(h);
+    await verified(h);
+    const packet = await claimed(h, 'adjudicate');
+    await adjudication(packet);
+    const data = JSON.parse(await readFile(packet.output, 'utf8'));
+    data.labelLintAcks = acks;
+    await write(packet.output, data);
+    return accept(h, 'adjudicate', 'run-adjudicator');
+  }
+
+  it('an adjudicator ack of a raised finding is accepted, passes apply and is counted', async () => {
+    const h = await harness();
+    expect(await adjudicated(h, [ACK]), h.logs.join('\n')).toBe(0);
+    expect(await h.run('run', 'apply', '--batch', BATCH), h.logs.join('\n')).toBe(0);
+    const state = await h.state();
+    expect(state.cards[ALPHA].stages.apply).toMatchObject({
+      status: 'done',
+      metrics: { lintRateRaised: 1, lintRateAcked: 1 },
+    });
+    expect(state.cards[BETA].stages.apply?.metrics).toBeUndefined();
+    h.logs.length = 0;
+    expect(await h.run('lint-labels', '--batch', BATCH)).toBe(0);
+    expect(h.logs.join('\n')).toContain('1 raised, 1 acked, 0 open');
+  });
+
+  it('refuses an ack naming no finding, a reason outside the enum, and acks the verifier writes', async () => {
+    const h = await harness();
+    unreadableRate(h);
+    await toDraft(h);
+    const packet = await claimed(h, 'verify');
+    await findings(packet, (data) => (data.labelLintAcks = [ACK]));
+    expect(await accept(h, 'verify', 'run-verifier', '--dry-run')).toBe(1);
+    expect(h.logs.join('\n')).toContain(
+      `- labelLintAcks.${ALPHA}: only the adjudicator acknowledges label-lint findings`,
+    );
+    await findings(packet);
+    expect(await accept(h, 'verify', 'run-verifier'), h.logs.join('\n')).toBe(0);
+
+    const adjudicate = await claimed(h, 'adjudicate');
+    await adjudication(adjudicate);
+    const data = JSON.parse(await readFile(adjudicate.output, 'utf8'));
+    data.labelLintAcks = [
+      { ...ACK, ruleIndex: 1 },
+      { ...ACK, reason: 'looks-fine' },
+    ];
+    await write(adjudicate.output, data);
+    h.logs.length = 0;
+    expect(await accept(h, 'adjudicate', 'run-adjudicator')).toBe(1);
+    const out = h.logs.join('\n');
+    expect(out).toContain('- labelLintAcks.1.reason:');
+    data.labelLintAcks = [{ ...ACK, ruleIndex: 1 }];
+    await write(adjudicate.output, data);
+    h.logs.length = 0;
+    expect(await accept(h, 'adjudicate', 'run-adjudicator')).toBe(1);
+    expect(h.logs.join('\n')).toContain(
+      `- labelLintAcks.0: names no open label-lint finding (rate ${ALPHA} rules.1.rateBps); stale or duplicate`,
+    );
+  });
+
+  it('an unacked finding fails apply, and so does an ack added after adjudicate was accepted', async () => {
+    const h = await harness();
+    expect(await adjudicated(h, []), h.logs.join('\n')).toBe(0);
+    expect(await h.run('run', 'apply', '--batch', BATCH)).toBe(1);
+    expect(h.logs.join('\n')).toContain(`label lint: rate ${ALPHA} rules.0.rateBps`);
+    expect((await h.state()).cards[ALPHA].stages.apply).toMatchObject({
+      status: 'failed-gate',
+      metrics: { lintRateRaised: 1 },
+    });
+    // The session adds the ack itself: apply refuses it.
+    const file = join(h.dir, 'verification/example-bank.json');
+    const data = JSON.parse(await readFile(file, 'utf8'));
+    data.labelLintAcks = [ACK];
+    await write(file, data);
+    h.logs.length = 0;
+    expect(await h.run('run', 'apply', '--batch', BATCH)).toBe(1);
+    expect(h.logs.join('\n')).toContain('labelLintAcks: not the acknowledgements accepted with adjudicate');
+    expect((await h.state()).cards[ALPHA].stages.apply?.status).toBe('failed-gate');
   });
 });
 

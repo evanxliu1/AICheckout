@@ -11,7 +11,8 @@ import type { Batch } from './files.ts';
 import { fileSha256, jsonSha256, labelsHash, anchorsHash } from './hash.ts';
 import { EXTRACT_CONFIG, STAGE_VERSIONS } from './inputs.ts';
 import { emptyCardState, writeJsonAtomic, writeState } from './state.ts';
-import { applyLint, quoteGate } from './gates.ts';
+import { acceptedAcks, applyLint, quoteGate } from './gates.ts';
+import { lintMetrics } from './label-lint.ts';
 import type { CorpusCaseLike } from './label-lint.ts';
 import {
   BATCHES_CONFIG_PATH,
@@ -303,10 +304,17 @@ export async function runStage(
   batch = await loadBatch(env.root, batchId);
   // The apply gate on the written corpus: the label-evidence lint (checks a–c) per card and the quote check.
   const gateErrors = new Map<string, string[]>();
+  const lintCounts = new Map<string, Record<string, number>>();
   if (code === 0) {
     const cases = batch.corpus as unknown as Map<string, CorpusCaseLike>;
+    const issuerAcks = new Map<string, Awaited<ReturnType<typeof acceptedAcks>>>();
     for (const id of targets) {
-      const errors = applyLint(cases, [id]);
+      const slug = batch.findings.get(id)?.issuerSlug;
+      if (slug && !issuerAcks.has(slug)) issuerAcks.set(slug, await acceptedAcks(batch, slug));
+      const accepted = slug ? issuerAcks.get(slug)! : { acks: [], errors: [] };
+      const lint = applyLint(cases, id, accepted.acks);
+      lintCounts.set(id, lintMetrics(lint.raised, lint.acked));
+      const errors = [...accepted.errors.map((error) => `label lint ack: ${error}`), ...lint.errors];
       if (errors.length) gateErrors.set(id, errors);
     }
     const quotes = await quoteGate(batch);
@@ -334,6 +342,7 @@ export async function runStage(
       continue;
     }
     const failed = gateErrors.get(id);
+    const metrics = lintCounts.get(id) ?? {};
     setCard(
       batch,
       id,
@@ -343,8 +352,13 @@ export async function runStage(
         view,
         id,
         code === 0 && corpusCase && !failed
-          ? { status: 'done', outputs: [{ ref: `corpus:${id}`, sha256: jsonSha256(corpusCase) }] }
+          ? {
+              status: 'done',
+              outputs: [{ ref: `corpus:${id}`, sha256: jsonSha256(corpusCase) }],
+              ...(Object.keys(metrics).length ? { metrics } : {}),
+            }
           : {
+              ...(Object.keys(metrics).length ? { metrics } : {}),
               status: 'failed-gate',
               reason:
                 code !== 0

@@ -20,6 +20,13 @@
 //   d) dateless-limited-time   a limited-time rule with neither date needs an overlay gate (`requires` non-empty).
 //   e) store-program           a store-credit program's `unitName` is `cents`, and its `programDetails` entry exists
 //                   with the same unit name and redemption brands.
+//
+// Acknowledgements. A finding the lint cannot read (a truncated anchor, reversed phrasing …) is acknowledged by an
+// agent, never by the session or the CLI: the adjudicator in its findings file (`labelLintAcks`, corpus rules, checks
+// a–c), the overlay author in its fragment (overlay findings the adjudicator did not acknowledge). An ack is codes
+// only: card, rule, check and a reason from `LINT_ACK_REASONS`. Each must name a finding the lint raises; an unused
+// ack fails the gate. The gates count acknowledged findings separately and pass them.
+import { z } from 'zod';
 import { percentsIn } from '../../../apps/api/src/curation/v2/validate.ts';
 import { amountRegex } from '../../../scripts/lib/expansion-quotes.mjs';
 
@@ -31,6 +38,93 @@ export const LINT_CHECKS = [
   'store-program',
 ] as const;
 export type LintCheck = (typeof LINT_CHECKS)[number];
+/** Why a finding is acknowledged rather than fixed. */
+export const LINT_ACK_REASONS = [
+  'anchor-truncated',
+  'reversed-phrasing',
+  'split-anchors',
+  'points-wording-cash-label',
+  'date-outside-anchor',
+  'relationship-bonus',
+] as const;
+/** The field a check reports on, after the rule path (`rules.3` or `addedRules.<key>`). */
+const CHECK_FIELD: Record<Exclude<LintCheck, 'store-program'>, string> = {
+  'cap-amount': 'cap.amountCents',
+  rate: 'rateBps',
+  'end-date': 'limitedTime.endsOn',
+  'dateless-limited-time': 'limitedTime',
+};
+const cardIdSchema = z
+  .string()
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
+  .max(120);
+/** The adjudicator's ack (findings file `labelLintAcks`): a corpus rule by index, checks a–c. */
+export const adjudicatorAckSchema = z.strictObject({
+  cardId: cardIdSchema,
+  ruleIndex: z.int().nonnegative(),
+  check: z.enum(['cap-amount', 'rate', 'end-date']),
+  reason: z.enum(LINT_ACK_REASONS),
+});
+/** The overlay author's ack (fragment `labelLintAcks`): a corpus rule by index or an added rule by key, checks a–d (a
+ * store-program finding names no card and is always fixed). */
+export const fragmentAckSchema = z
+  .strictObject({
+    cardId: cardIdSchema,
+    ruleIndex: z.int().nonnegative().optional(),
+    addedRule: z
+      .string()
+      .regex(/^[A-Za-z0-9][A-Za-z0-9._:/-]{0,99}$/)
+      .optional(),
+    check: z.enum(['cap-amount', 'rate', 'end-date', 'dateless-limited-time']),
+    reason: z.enum(LINT_ACK_REASONS),
+  })
+  .refine((ack) => (ack.ruleIndex === undefined) !== (ack.addedRule === undefined), {
+    message: 'exactly one of ruleIndex and addedRule',
+  });
+export type LintAck = z.infer<typeof fragmentAckSchema>;
+
+/** The finding path an ack names. */
+export const ackPath = (ack: LintAck): string =>
+  `${ack.ruleIndex !== undefined ? `rules.${ack.ruleIndex}` : `addedRules.${ack.addedRule}`}.${CHECK_FIELD[ack.check]}`;
+const findingKey = (cardId: string | null, path: string, check: string) => `${check} ${cardId} ${path}`;
+
+/** Splits findings into open and acknowledged; `unused` are the acks naming no raised finding (or a finding already
+ * acknowledged by an earlier ack), by index into `acks`. */
+export function resolveAcks(
+  findings: LintFinding[],
+  acks: LintAck[],
+): { open: LintFinding[]; acked: LintFinding[]; unused: number[] } {
+  const byKey = new Map<string, number>();
+  acks.forEach((ack, i) => {
+    const key = findingKey(ack.cardId, ackPath(ack), ack.check);
+    if (!byKey.has(key)) byKey.set(key, i);
+  });
+  const used = new Set<number>();
+  const open: LintFinding[] = [];
+  const acked: LintFinding[] = [];
+  for (const finding of findings) {
+    const i = byKey.get(findingKey(finding.cardId, finding.path, finding.check));
+    if (i === undefined) open.push(finding);
+    else {
+      used.add(i);
+      acked.push(finding);
+    }
+  }
+  return { open, acked, unused: acks.map((_, i) => i).filter((i) => !used.has(i)) };
+}
+
+const camel = (check: string) =>
+  check.replace(/(^|-)([a-z])/g, (_, __: string, letter: string) => letter.toUpperCase());
+/** State metrics of a lint run: `lint<Check>Raised` and `lint<Check>Acked` for every check with findings. */
+export function lintMetrics(raised: LintFinding[], acked: LintFinding[]): Record<string, number> {
+  const out: Record<string, number> = {};
+  const counts = [countByCheck(raised), countByCheck(acked)];
+  for (const check of LINT_CHECKS) {
+    if (counts[0][check]) out[`lint${camel(check)}Raised`] = counts[0][check];
+    if (counts[1][check]) out[`lint${camel(check)}Acked`] = counts[1][check];
+  }
+  return out;
+}
 export interface LintFinding {
   cardId: string | null;
   path: string;
@@ -109,9 +203,10 @@ const WORDS = [
 const NUMBER = String.raw`(\d{1,2}(?:\.\d{1,2})?|\b(?:${WORDS.join('|')})\b)`;
 const MULTIPLE_X = new RegExp(String.raw`(?<![\d.,$])${NUMBER}\s?[x×](?![a-z])`, 'gi');
 /** "4 points per $1", "1 BreezePoint for every $1", "three points for every $1.00", "1 rewards point will be earned per
- * $1": a number, up to six words, then per / for every / for each / on every / on each / with each $1 or dollar. */
+ * $1", "2 points/$1": a number, up to six words, then per / for every / for each / on every / on each / with each, or
+ * a slash, and $1 or dollar. */
 const MULTIPLE_PER = new RegExp(
-  String.raw`(?<![\d.,$])${NUMBER}(?:\s+(?!per\b|for\b|on\b|with\b)[^\s\d$%]+){0,6}?[\s,)]+(?:per|for every|for each|on every|on each|with each)\s+(?:\$1(?:\.00)?(?![\d,.]\d)|(?:one\s+)?dollars?\b)`,
+  String.raw`(?<![\d.,$])${NUMBER}(?:\s+(?!per\b|for\b|on\b|with\b)[^\s\d$%]+){0,6}?(?:[\s,)]+(?:per|for every|for each|on every|on each|with each)\s+|\s*\/\s*)(?:\$1(?:\.00)?(?![\d,.]\d)|(?:one\s+)?dollars?\b)`,
   'gi',
 );
 /** "for a total of 5 points", "for a total of 7, for each dollar", "for a total of two (2) Points". */
@@ -146,9 +241,15 @@ const statesRate = (rate: number, evidence: string[], points: boolean): boolean 
   return multiples.includes(rate) || (multiples.length > 1 && sum(multiples) === rate);
 };
 
+/** `amountRegex` writes `$5k` only for whole thousands; the lint also reads `$1.5k` for 150000. */
+const thousandsRegex = (cents: number): RegExp | null => {
+  const thousands = cents / 100_000;
+  if (cents % 1000 !== 0 || Number.isInteger(thousands) || thousands < 1) return null;
+  return new RegExp(String.raw`\$\s?${String(thousands).replace('.', '\\.')}[kK](?!\w|\.\d)`);
+};
 const statesAmount = (cents: number, evidence: string[]): boolean => {
-  const pattern = amountRegex(cents) as RegExp;
-  return evidence.some((text) => pattern.test(text));
+  const patterns = [amountRegex(cents) as RegExp, thousandsRegex(cents)].filter((re) => re !== null);
+  return evidence.some((text) => patterns.some((pattern) => pattern.test(text)));
 };
 
 const MONTHS = [

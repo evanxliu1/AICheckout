@@ -11,6 +11,7 @@ import { deriveBatch, AGENTS } from './derive.ts';
 import type { BatchView } from './derive.ts';
 import { loadBatch } from './files.ts';
 import type { Batch } from './files.ts';
+import { acksByCard } from './gates.ts';
 import { fileSha256, jsonSha256 } from './hash.ts';
 import { RESEARCHER_AGENT, VERIFIER_BRIEF, verifierFindings } from './inputs.ts';
 import { ISSUER_STAGES, SLUG, writeJsonAtomic } from './state.ts';
@@ -48,9 +49,14 @@ export const packetSchema = z.strictObject({
   /** Overlay: the corpusCaseSha256 each entry must carry (the pairing hash of milestone 1). */
   corpusCaseSha256: z.record(slug, hex).optional(),
   /** Verify and adjudicate: hashes of what the agent must leave alone (other cards' entries; for adjudicate, the
-   * verifier's findings of the packet cards and the verifier block). */
+   * verifier's findings of the packet cards and the verifier block; the label-lint acks of the other cards). */
   frozen: z
-    .strictObject({ entries: z.record(slug, hex), findings: z.record(slug, hex), verifier: hex.nullable() })
+    .strictObject({
+      entries: z.record(slug, hex),
+      findings: z.record(slug, hex),
+      verifier: hex.nullable(),
+      acks: z.record(slug, hex).optional(),
+    })
     .optional(),
 });
 export type Packet = z.infer<typeof packetSchema>;
@@ -245,6 +251,7 @@ export async function claim(
     const file = join(batch.dir, outputOf('verify', issuer));
     const entries: Record<string, string> = {};
     const findings: Record<string, string> = {};
+    const acks: Record<string, string> = {};
     let verifier: string | null = null;
     const text = await readFile(file, 'utf8').catch(() => null);
     if (text !== null) {
@@ -255,6 +262,7 @@ export async function claim(
       const data = (parsed.success ? parsed.data : raw) as {
         verifier?: unknown;
         cards?: { cardId: string }[];
+        labelLintAcks?: { cardId: string }[];
       };
       verifier = data.verifier === undefined ? null : jsonSha256(data.verifier);
       for (const entry of data.cards ?? []) {
@@ -262,8 +270,10 @@ export async function claim(
         else if (stage === 'adjudicate')
           findings[entry.cardId] = jsonSha256(verifierFindings(entry as never));
       }
+      for (const [cardId, list] of acksByCard(data.labelLintAcks))
+        if (!cardIds.includes(cardId)) acks[cardId] = jsonSha256(list);
     }
-    packet.frozen = { entries, findings, verifier: stage === 'adjudicate' ? verifier : null };
+    packet.frozen = { entries, findings, verifier: stage === 'adjudicate' ? verifier : null, acks };
   }
   await writePacket(batch, packet);
   const path = join(packetsDir(batch), packetFile(packet));
