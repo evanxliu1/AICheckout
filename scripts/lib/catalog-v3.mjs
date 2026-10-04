@@ -608,10 +608,12 @@ export function buildRelease(inputs) {
  * earn cash back in v3 (1¢ per unit); release 1 labelled Double Cash as points at 1¢ (`pointValueHundredthsOfCent`
  * 100), which is the same engine result in cents (general rule 1, coordinator decision 2026-10-03).
  */
-export function checkRealCards(catalog, catalogV2) {
+export function checkRealCards(catalog, catalogV2, { replaced = [] } = {}) {
+  // A real card a pipeline batch replaced (`mergeLayers` `replacedReal`) carries the batch's terms: not pinned.
+  const skip = new Set(replaced);
   const problems = [];
   const programs = new Map(catalog.programs.map((p) => [p.id, p]));
-  for (const old of catalogV2.cards) {
+  for (const old of catalogV2.cards.filter((c) => !skip.has(c.id))) {
     const card = catalog.cards.find((c) => c.id === old.id);
     if (!card) {
       problems.push(`${old.id}: missing`);

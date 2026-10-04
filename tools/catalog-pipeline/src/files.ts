@@ -22,6 +22,14 @@ export const batchFileSchema = z.strictObject({
   refresh: z.boolean(),
   summary: z.string().max(300).nullable(),
   createdAt: z.iso.datetime(),
+  /** A refresh batch seeded from a freshness record (`init --refresh-from-freshness`): the record's date and the
+   * build-config layers the cards, sources and capture hints were copied from. Research is `done`, provenance `seeded`. */
+  seed: z
+    .strictObject({
+      freshness: z.iso.date(),
+      layers: z.array(z.string().regex(/^[a-z0-9][a-z0-9.-]{0,79}$/)).min(1),
+    })
+    .optional(),
 });
 export type BatchFile = z.infer<typeof batchFileSchema>;
 

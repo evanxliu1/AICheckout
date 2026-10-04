@@ -3,7 +3,7 @@
 // (evals/curation/expansion/manifest.json) and every card-expansion pipeline batch
 // (evals/curation/batches/<batch>/manifest.json, bundled at build time, so a new batch is known once
 // main is deployed), plus the freshness records (evals/curation/freshness/<date>.json, Phase 9): a page
-// re-rendered on date D with hash H is a capture of H dated D, so a source re-checked on D accepts exactly
+// found unchanged on date D with hash H is a capture of H dated D, so a source re-checked on D accepts exactly
 // that hash. URLs, dates and hashes only, no page text. The review app compares captures with them to catch
 // a mislabelled or changed file.
 import { z } from 'zod';
@@ -55,8 +55,9 @@ export function parseBatchManifests(files: Record<string, unknown>) {
 }
 
 /**
- * The freshness records as manifests, sorted by path: each page rendered on its record's date (unchanged or changed;
- * a flagged or failed render is no capture) becomes a capture of that hash dated that day. A malformed record is
+ * The freshness records as manifests, sorted by path: each page a record found unchanged becomes a capture of that
+ * hash dated the record's day, as the catalog builder dates it (scripts/lib/freshness.mjs `freshDates`). A changed,
+ * flagged or failed render is no capture: a changed page is re-captured in a refresh batch. A malformed record is
  * skipped with a console warning.
  */
 export function parseFreshnessRecords(files: Record<string, unknown>): Manifest[] {
@@ -71,7 +72,7 @@ export function parseFreshnessRecords(files: Record<string, unknown>): Manifest[
       return [
         {
           sources: parsed.data.sources.flatMap((entry) =>
-            entry.sha256 && (entry.result === 'unchanged' || entry.result === 'changed')
+            entry.sha256 && entry.result === 'unchanged'
               ? [{ id: entry.sourceId, sha256: entry.sha256, checkedOn: entry.checkedOn }]
               : [],
           ),

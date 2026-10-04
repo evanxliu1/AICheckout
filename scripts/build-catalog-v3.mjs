@@ -62,10 +62,7 @@ const inputs = { ...mergeLayers(loaded), ledger: readLedger() };
 const { catalog, dates, continuity } = buildRelease(inputs);
 // Real cards a pipeline batch replaced carry the batch's terms: only the others are pinned to release 1.
 const replacedReal = new Set(inputs.replacedReal);
-const realProblems = checkRealCards(catalog, {
-  ...CATALOG_V2,
-  cards: CATALOG_V2.cards.filter((card) => !replacedReal.has(card.id)),
-});
+const realProblems = checkRealCards(catalog, CATALOG_V2, { replaced: inputs.replacedReal });
 if (realProblems.length) {
   console.error(`The real cards differ from release 1:\n- ${realProblems.join('\n- ')}`);
   process.exit(1);

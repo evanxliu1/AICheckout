@@ -25,6 +25,7 @@ Conventions O1–O21 in `evals/curation/expansion/verification/conventions/gener
 - Reuse the IDs of gates, programs and brands already defined; never give an ID another issuer's fragment defines other content.
 - **Anchors**: every anchor verbatim from one of the card's own captures (gates and programs: any capture), at most 25 words, not overlapping or abutting the item's other anchors into a run over 25 words. Notes in your own words, at most 60 words.
 - If a case needs a convention that does not exist, do not invent one: report `convention-needed` and stop.
+- **Real cards** (the seven release-1 cards, `REAL_CARDS` in `scripts/lib/catalog-v3.mjs`, such as `amex-blue-cash-everyday`) may be refreshed by a batch. They had no overlay entry before: the builder gave every Amex rule in `online-retail` `excludedPaymentPaths: ["bnpl"]` only while a card has no entry (`applyOverlayCard`, `REAL_EXCLUDED_PAYMENT_PATHS`). Your entry replaces that, so for a refreshed Amex real card set `excludedPaymentPaths: ["bnpl"]` on its `online-retail` rules yourself (a patch `set`, or the added rule) when the card's captures support the buy-now-pay-later exclusion, with an anchor; if they do not, leave it out and say so in the report. The catalog keeps the release-1 name and rule-ID prefix; you do not set them.
 
 ## Label-lint acknowledgements
 

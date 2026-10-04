@@ -107,10 +107,7 @@ describe('manifest comparison', () => {
     expect(warn).toHaveBeenCalledWith('Skipping malformed freshness record freshness/2026-10-19.json');
     expect(records).toEqual([
       {
-        sources: [
-          { id: 'page', sha256: SHA(1), checkedOn: '2026-10-20' },
-          { id: 'moved', sha256: SHA(5), checkedOn: '2026-10-20' },
-        ],
+        sources: [{ id: 'page', sha256: SHA(1), checkedOn: '2026-10-20' }],
       },
     ]);
     const fresh = hashIndex([
@@ -122,5 +119,6 @@ describe('manifest comparison', () => {
     expect(compareWithIndex(fresh, 'page', SHA(1), '2026-10-20')).toBe('matches');
     expect(compareWithIndex(fresh, 'page', SHA(2), '2026-10-20')).toBe('differs');
     expect(compareWithIndex(fresh, 'walled', SHA(6), '2026-10-20')).toBeUndefined();
+    expect(compareWithIndex(fresh, 'moved', SHA(5), '2026-10-20')).toBeUndefined();
   });
 });

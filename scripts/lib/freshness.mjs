@@ -107,14 +107,15 @@ export async function loadFreshnessRecords(root) {
 }
 
 /**
- * Newest date per `<sourceId> <sha256>` on which a record rendered the page with that hash (results `unchanged` and
- * `changed`; a flagged render never dates a page).
+ * Newest date per `<sourceId> <sha256>` on which a record found the page unchanged (its hash the manifest's). Only
+ * `unchanged` dates a capture: a `changed` render's hash may equal an older layer's capture of the same source, which
+ * would then out-date the newer batch's capture; a flagged or failed render never dates a page.
  */
 export function freshDates(records) {
   const dates = new Map();
   for (const record of records)
     for (const entry of record.sources) {
-      if (entry.sha256 === null || entry.result === 'flagged' || entry.result === 'unreachable') continue;
+      if (entry.result !== 'unchanged') continue;
       const key = `${entry.sourceId} ${entry.sha256}`;
       if (!dates.has(key) || dates.get(key) < entry.checkedOn) dates.set(key, entry.checkedOn);
     }

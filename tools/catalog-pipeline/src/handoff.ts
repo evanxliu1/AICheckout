@@ -124,8 +124,8 @@ export function reviewAppReadiness(cited: CitedSource[], manifests: ReviewManife
 /**
  * The manifests the review app bundles, in its order: the JSON imports of apps/review/src/manifest.ts, then the
  * batch manifests its `import.meta.glob` matches, sorted by path, then the freshness records its second glob matches
- * (sorted by path; each page rendered unchanged or changed is a capture of its hash dated the record's day, as the
- * review app's `parseFreshnessRecords`). Throws when any is missing, so a rewrite of its imports fails loudly here.
+ * (sorted by path; each page found unchanged is a capture of its hash dated the record's day, as the review app's
+ * `parseFreshnessRecords`). Throws when any is missing, so a rewrite of its imports fails loudly here.
  */
 export async function readReviewManifests(root: string): Promise<ReviewManifest[]> {
   const module = join(root, REVIEW_MANIFEST_MODULE);
@@ -161,7 +161,7 @@ export async function readReviewManifests(root: string): Promise<ReviewManifest[
     out.push({
       path: relative(root, join(freshnessDir, name)),
       sources: parsed.data.sources.flatMap((entry) =>
-        entry.sha256 && (entry.result === 'unchanged' || entry.result === 'changed')
+        entry.sha256 && entry.result === 'unchanged'
           ? [{ id: entry.sourceId, sha256: entry.sha256, checkedOn: entry.checkedOn }]
           : [],
       ),

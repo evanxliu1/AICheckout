@@ -73,7 +73,8 @@ test('a source is dated by the newest record that rendered its manifest hash; me
   // Catalog contents other than dates are unchanged.
   const strip = (c) => ({ ...c, version: null, verifiedAt: null, expiresAt: null, sources: null });
   assert.deepEqual(strip(catalog), strip(CATALOG_V3));
-  assert.equal(freshDates([newer]).get(`amex-gold-product ${'b'.repeat(64)}`), '2026-10-20');
+  // A changed render dates nothing, not even a capture elsewhere with that hash (it could out-date a newer batch).
+  assert.equal(freshDates([newer]).get(`amex-gold-product ${'b'.repeat(64)}`), undefined);
 });
 
 test('a cited source older than 30 days before verifiedAt fails the build, naming the stale sources', () => {
@@ -180,11 +181,7 @@ test('a batch may replace a real card: release-1 names and rule-ID scheme, not p
   assert.ok(
     checkRealCards(catalog, CATALOG_V2).some((problem) => problem.startsWith('wells-fargo-active-cash')),
   );
-  const others = {
-    ...CATALOG_V2,
-    cards: CATALOG_V2.cards.filter((c) => !inputs.replacedReal.includes(c.id)),
-  };
-  assert.deepEqual(checkRealCards(catalog, others), []);
+  assert.deepEqual(checkRealCards(catalog, CATALOG_V2, { replaced: inputs.replacedReal }), []);
   // A base layer still may not replace a real card, and no layer may drop one.
   const asBase = { ...batch, kind: 'base', corpus: { ...batch.corpus, version: batch.id } };
   assert.throws(
