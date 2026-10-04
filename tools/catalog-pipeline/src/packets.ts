@@ -17,6 +17,7 @@ import { ISSUER_STAGES, SLUG, writeJsonAtomic } from './state.ts';
 import type { IssuerStage } from './state.ts';
 import type { Env } from './run.ts';
 import { sha256Json } from '../../../scripts/lib/catalog-batches.mjs';
+import { verificationFileSchema } from '../../../scripts/lib/expansion-verification.mjs';
 
 const slug = z.string().regex(SLUG).max(120);
 const hex = z.string().regex(/^[0-9a-f]{64}$/);
@@ -252,7 +253,14 @@ export async function claim(
     let verifier: string | null = null;
     const text = await readFile(file, 'utf8').catch(() => null);
     if (text !== null) {
-      const data = JSON.parse(text) as { verifier?: unknown; cards?: { cardId: string }[] };
+      // Hashed as the gates see it: parsed, with the schema's defaults filled in (`reason: null`, `fixes: []`,
+      // `op: 'set'` …), so an omitted optional field hashes the same at claim and at accept.
+      const raw: unknown = JSON.parse(text);
+      const parsed = verificationFileSchema.safeParse(raw);
+      const data = (parsed.success ? parsed.data : raw) as {
+        verifier?: unknown;
+        cards?: { cardId: string }[];
+      };
       verifier = data.verifier === undefined ? null : jsonSha256(data.verifier);
       for (const entry of data.cards ?? []) {
         if (!cardIds.includes(entry.cardId)) entries[entry.cardId] = jsonSha256(entry);

@@ -360,6 +360,33 @@ describe('accept verify and adjudicate', () => {
     });
     expect(await h.json('next')).toMatchObject({ kind: 'cli', stage: 'apply' });
   });
+
+  it('hashes the findings as parsed: omitted defaulted fields (reason, addedIssues) still accept', async () => {
+    const h = await harness();
+    await verified(h);
+    // The verifier left out fields the schema defaults, on both cards.
+    const file = join(h.dir, 'verification/example-bank.json');
+    const data = JSON.parse(await readFile(file, 'utf8'));
+    for (const card of data.cards) {
+      delete card.reason;
+      delete card.addedIssues;
+    }
+    delete data.cards[1].fixes[0].op;
+    await write(file, data);
+    // Alpha's adjudication is done, so the packet covers beta only and alpha's entry is frozen.
+    const view = await h.view();
+    const state = await h.state();
+    state.cards[ALPHA].stages.adjudicate = {
+      status: 'done',
+      stageVersion: 'adjudicate.1',
+      inputHash: view.cards[0].stages.adjudicate.inputHash,
+    };
+    await write(join(h.dir, 'pipeline/state.json'), state);
+    const packet = await claimed(h, 'adjudicate');
+    expect(packet.cardIds).toEqual([BETA]);
+    await adjudication(packet);
+    expect(await accept(h, 'adjudicate', 'run-adjudicator'), h.logs.join('\n')).toBe(0);
+  });
 });
 
 describe('apply and overlay', () => {
