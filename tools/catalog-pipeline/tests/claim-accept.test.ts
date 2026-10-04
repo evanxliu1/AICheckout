@@ -38,6 +38,16 @@ async function claimed(h: Harness, stage: string): Promise<Packet> {
   if (code !== 0) throw new Error(h.logs.join('\n'));
   return openOne(h, stage);
 }
+/** Every file under a directory with its content, for byte-for-byte comparisons. */
+async function snapshot(dir: string): Promise<Record<string, string>> {
+  const out: Record<string, string> = {};
+  for (const entry of await readdir(dir, { recursive: true, withFileTypes: true }))
+    if (entry.isFile()) {
+      const path = join(entry.parentPath, entry.name);
+      out[path] = await readFile(path, 'utf8');
+    }
+  return out;
+}
 const write = (path: string, data: unknown) => writeFile(path, JSON.stringify(data, null, 2) + '\n');
 const accept = (h: Harness, stage: string, run: string, ...more: string[]) =>
   h.run('accept', stage, '--batch', BATCH, '--issuer', ISSUER, '--agent-run', run, ...more);
@@ -227,6 +237,18 @@ describe('accept research', () => {
     expect(status.batches[0].packets).toMatchObject([{ output: 'present-not-accepted' }]);
   });
 
+  it('a passing --dry-run writes nothing: state, packets and outputs unchanged', async () => {
+    const h = await harness();
+    await initOnly(h);
+    const packet = await claimed(h, 'research');
+    await researchOutput(packet);
+    const before = await snapshot(h.dir);
+    expect(await accept(h, 'research', 'run-1', '--dry-run'), h.logs.join('\n')).toBe(0);
+    expect(h.logs.at(-1)).toMatch(/gates pass \(dry run, nothing recorded\)/);
+    expect(await snapshot(h.dir)).toEqual(before);
+    expect(h.calls.some((call) => call[1] === 'scripts/build-expansion-cards.mjs')).toBe(false);
+  });
+
   it('refuses a card of a released corpus unless the batch is a refresh', async () => {
     const h = await harness();
     await initOnly(h);
@@ -290,6 +312,29 @@ describe('accept verify and adjudicate', () => {
     const out = h.logs.join('\n');
     expect(out).toContain('- cards.example-bank-gamma: outside the packet (added or changed)');
     expect(out).toContain(`- cards.${BETA}.fixes.0.current: does not match the draft`);
+  });
+
+  it('refuses a changed packet input and a filesRead without a card capture', async () => {
+    const h = await harness();
+    await toDraft(h);
+    const packet = await claimed(h, 'verify');
+    await findings(packet, (data) => {
+      data.verifier.filesRead = data.verifier.filesRead.filter(
+        (path: string) => !path.endsWith('example-bank-beta-terms.txt'),
+      );
+    });
+    expect(await accept(h, 'verify', 'run-verifier', '--dry-run')).toBe(1);
+    expect(h.logs.join('\n')).toContain(
+      `- verifier.filesRead: does not name captures/example-bank-beta-terms.txt (${BETA})`,
+    );
+    await findings(packet);
+    const draftPath = join(h.dir, 'corpus.draft.json');
+    await writeFile(draftPath, (await readFile(draftPath, 'utf8')) + '\n');
+    h.logs.length = 0;
+    expect(await accept(h, 'verify', 'run-verifier')).toBe(1);
+    expect(h.logs.join('\n')).toContain(
+      `- ${draftPath}: changed since the claim (an agent writes only its output file)`,
+    );
   });
 
   it('a failed gate sets failed-gate and prints no capture text', async () => {
@@ -459,6 +504,16 @@ describe('apply and overlay', () => {
     await h.run('run', 'build', '--batch', BATCH);
     const config = JSON.parse(await readFile(join(h.root, 'evals/curation/catalog-batches.json'), 'utf8'));
     expect(config.layers).toEqual([{ kind: 'batch', id: BATCH, dropped: { [BETA]: 'drop-card' } }]);
+  });
+
+  it('refuses an overlay entry for a card outside the packet', async () => {
+    const h = await harness();
+    await applied(h);
+    const packet = await claimed(h, 'overlay');
+    await fragment(h, packet, (data) => data.cards.push({ ...data.cards[0], cardId: 'example-bank-gamma' }));
+    expect(await accept(h, 'overlay', 'run-overlay')).toBe(1);
+    expect(h.logs.join('\n')).toContain('- cards.example-bank-gamma: outside the packet');
+    await expect(readFile(join(h.dir, 'catalog-overlay.json'), 'utf8')).rejects.toThrow();
   });
 
   it('refuses an overlay entry whose pairing hash is not its corpus case', async () => {
