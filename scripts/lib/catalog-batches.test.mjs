@@ -11,6 +11,7 @@ import { loadCatalogBatches, mergeLayers, sha256Json } from './catalog-batches.m
 import {
   buildRelease,
   catalogDates,
+  catalogSha256,
   continueRuleIds,
   emptyLedger,
   publishedVersionProblems,
@@ -351,9 +352,22 @@ test('published versions: the same rule IDs and terms leave the ledger as is; an
     publishedVersionProblems(v2.ledger, fewer).join(),
     /1 of its rule ID\(s\) missing: a-dining-v2/,
   );
+  // Card-level fields are not in the rule terms: the catalog SHA-256 in the entry catches them.
+  const renamed = structuredClone(same);
+  renamed.cards[0].name = 'Card A (renamed)';
+  assert.deepEqual(publishedVersionProblems(v2.ledger, renamed), [
+    'other catalog contents (SHA-256 of the canonical JSON)',
+  ]);
+  assert.throws(() => updateLedger(v2.ledger, renamed, published), /canonical JSON/);
+  const unhashed = structuredClone(v2.ledger);
+  delete unhashed.catalogs[1].catalogSha256;
+  assert.deepEqual(publishedVersionProblems(unhashed, same), ['its ledger entry has no catalogSha256']);
   const order = structuredClone(same);
   order.cards[0].rules.reverse();
-  assert.deepEqual(publishedVersionProblems(v2.ledger, order), ['its rule IDs in another order']);
+  assert.deepEqual(publishedVersionProblems(v2.ledger, order), [
+    'its rule IDs in another order',
+    'other catalog contents (SHA-256 of the canonical JSON)',
+  ]);
   // A published version the ledger does not know is refused too; an unpublished one is still rebuilt in place.
   assert.throws(() => updateLedger(v2.ledger, { ...same, version: 'v3' }, { published: ['v3'] }), /no entry/);
   assert.deepEqual(updateLedger(v2.ledger, more).catalogs.at(-1).ruleIds, ['a-base', 'a-dining-v2', 'a-gas']);
@@ -364,4 +378,7 @@ test('the committed config lists its version as published, and the committed bui
   const { catalog } = buildRelease({ ...mergeLayers(base), ledger });
   assert.deepEqual(publishedVersionProblems(ledger, catalog), []);
   assert.equal(updateLedger(ledger, catalog, { published: base.config.publishedVersions }), ledger);
+  // The seeded hash is today's CATALOG_V3, the canonical JSON SHA-256 recorded for release 2.
+  assert.equal(ledger.catalogs.at(-1).catalogSha256, catalogSha256(CATALOG_V3));
+  assert.equal(catalogSha256(CATALOG_V3), '147b48c1a18fa2296d06461b0ae0e647d8c0a8e66f9639ab1cfc10613533eb26');
 });

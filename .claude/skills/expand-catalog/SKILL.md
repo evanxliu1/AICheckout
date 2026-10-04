@@ -63,7 +63,7 @@ After every accepted stage, and every CLI stage that writes committed files: fir
 
 ## Build and versions
 
-A catalog version Evan has published (`publishedVersions` in `evals/curation/catalog-batches.json`) is never rebuilt with other contents. Unless Evan asked to ship the batch, `next`'s `run build` becomes `pipeline run build --batch <batch> --proposed --version <YYYY-MM-DD>.<issuer-slug>.1`: it writes `pipeline/proposed/` and changes nothing that ships. To ship, plain `run build` with `--version <new version>` when the config's version is published. Never edit the build config, the ledger or `catalog-v3.ts` by hand.
+A catalog version Evan has published (`publishedVersions` in `evals/curation/catalog-batches.json`) is never rebuilt with other contents. While the config's version is published, `next` prints `pipeline run build --batch <batch> --proposed --version <YYYY-MM-DD>.<batch name>.1` (a suggested new version; pick another if it is already in `publishedVersions`): it writes `pipeline/proposed/` and changes nothing that ships. Unless Evan asked to ship the batch, build it that way. To ship, plain `run build` with `--version <new version>` when the config's version is published. Never edit the build config, the ledger or `catalog-v3.ts` by hand.
 
 ## Finish
 

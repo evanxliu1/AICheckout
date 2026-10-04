@@ -4,6 +4,7 @@
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { z } from 'zod';
+import { CATALOG_VERSION } from '../../../scripts/lib/catalog-batches.mjs';
 
 export const STAGES = [
   'research',
@@ -52,8 +53,6 @@ export const STATUSES = [
 export type Status = (typeof STATUSES)[number];
 
 export const BATCH_ID = /^[a-z0-9-]+-\d{4}-\d{2}$/;
-/** A catalog version label (`CATALOG_VERSION` of scripts/lib/catalog-batches.mjs, which the config schema uses). */
-export const CATALOG_VERSION = /^[0-9]{4}-[0-9]{2}-[0-9]{2}\.[a-z0-9-]+\.[0-9]+$/;
 export const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 /** A model, agent-run or packet ID: one token, no spaces (also `verificationFileSchema`'s `packetId` in
  * scripts/lib/expansion-verification.mjs, which keeps its own copy: scripts do not import the pipeline). */

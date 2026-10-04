@@ -144,3 +144,27 @@ describe('run build (shipping)', () => {
     expect(record.proposed).toBeUndefined();
   });
 });
+
+describe('next for the build', () => {
+  it('suggests a proposed build under a new version while the config version is published, and that command works', async () => {
+    const h = await overlaid();
+    expect(await h.json<NextStep>('next')).toMatchObject({
+      stage: 'build',
+      command: `npm run pipeline -- run build --batch ${BATCH}`,
+    });
+    await publish(h, ['2026-10-04.test.1']);
+    const step = await h.json<NextStep>('next');
+    expect(step).toMatchObject({
+      kind: 'cli',
+      stage: 'build',
+      command: `npm run pipeline -- run build --batch ${BATCH} --proposed --version 2026-10-04.example-bank.1`,
+      reason: expect.stringMatching(/2026-10-04\.test\.1 is published/),
+    });
+    const argv = step.command!.replace('npm run pipeline -- ', '').split(' ');
+    expect(await h.run(...argv), h.logs.join('\n')).toBe(0);
+    expect((await h.state()).batchStages.build).toMatchObject({
+      proposed: true,
+      catalogVersion: '2026-10-04.example-bank.1',
+    });
+  });
+});

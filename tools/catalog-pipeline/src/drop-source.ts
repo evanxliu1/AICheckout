@@ -1,7 +1,7 @@
 // `pipeline drop-source --source <id> --reason <code>`: removes a source the batch cannot use (a bot wall, an error
 // page, a page out of scope, a duplicate) from sources.json, manifest.json and the cards' sourceIds, moves its capture
-// to captures-dropped/ (gitignored like captures/) and records the drop in state.json by reason code. The capture
-// stage of the cards that cited it turns stale (their sources changed), so `run capture` re-checks them.
+// to captures-dropped/ (gitignored like captures/) and records the drop in state.json by reason code. The cards that
+// cited it turn stale from capture on (their sources changed), so the whole chain re-runs for them through eval.
 import { readFile, mkdir, rename } from 'node:fs/promises';
 import { join } from 'node:path';
 import { BATCHES_CONFIG_PATH, batchesConfigSchema } from '../../../scripts/lib/catalog-batches.mjs';
@@ -109,7 +109,7 @@ export async function dropSource(
   env.log(
     `Dropped ${sourceId} (${reason})${citing.length ? ` from ${citing.map((card) => card.id).join(', ')}` : ''}; ` +
       `${moved ? `capture moved to ${batch.rel}/${DROPPED_CAPTURES}/` : 'no capture here to move'}. ` +
-      'The capture stage of those cards is stale: run capture again.',
+      'Those cards are stale from capture on: capture, extract, draft, verify, adjudicate, apply and overlay re-run, then build and eval (follow next).',
   );
   return 0;
 }

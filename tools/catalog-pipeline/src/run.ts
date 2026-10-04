@@ -10,12 +10,13 @@ import { captureRecord, capturePlan, latestRows } from './capture.ts';
 import type { Batch } from './files.ts';
 import { fileSha256, jsonSha256, labelsHash, anchorsHash } from './hash.ts';
 import { EXTRACT_CONFIG, STAGE_VERSIONS } from './inputs.ts';
-import { CATALOG_VERSION, emptyCardState, writeJsonAtomic, writeState } from './state.ts';
+import { emptyCardState, writeJsonAtomic, writeState } from './state.ts';
 import { acceptedAcks, applyLint, quoteGate } from './gates.ts';
 import { lintMetrics } from './label-lint.ts';
 import type { CorpusCaseLike } from './label-lint.ts';
 import {
   BATCHES_CONFIG_PATH,
+  CATALOG_VERSION,
   batchesConfigSchema,
   sha256Json,
 } from '../../../scripts/lib/catalog-batches.mjs';
