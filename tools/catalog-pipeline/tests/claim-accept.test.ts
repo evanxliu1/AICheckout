@@ -1,6 +1,8 @@
 // claim / accept, the gates of the agent stages, the capture gate and the build registration, on the synthetic fixture
 // batch (fake captures written by the harness; no issuer text).
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { execFile } from 'node:child_process';
+import { mkdir, mkdtemp, readFile, readdir, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { StatusJson } from '../src/cli.ts';
@@ -8,7 +10,7 @@ import { definitionConflicts } from '../src/gates.ts';
 import { packetSchema } from '../src/packets.ts';
 import type { Packet } from '../src/packets.ts';
 import { sha256Json } from '../../../scripts/lib/catalog-batches.mjs';
-import { ALPHA, BATCH, BETA, FIXTURE, harness, initWithResearch } from './helpers.ts';
+import { ALPHA, BATCH, BETA, FIXTURE, REPO, harness, initWithResearch } from './helpers.ts';
 import type { Harness } from './helpers.ts';
 
 /** Fixture JSON edited in place by the tests. */
@@ -500,6 +502,40 @@ describe('apply and overlay', () => {
     const overlay = JSON.parse(await readFile(join(h.dir, 'catalog-overlay.json'), 'utf8'));
     expect(overlay.cards[1].corpusCaseSha256).toBe(sha256Json(corpus.cases[1]));
     expect((await h.view()).cards[1].stages.overlay.status).toBe('done');
+  });
+});
+
+describe('research consolidation of a batch', () => {
+  it('does not apply the Phase 7 skip, merge and pick lists', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'consolidation-'));
+    await mkdir(join(dir, 'research'));
+    const page = (url: string) => ({ officialUrls: [{ url, kind: 'product-page' }] });
+    await write(join(dir, 'research/capital-one.json'), {
+      schemaVersion: 1,
+      issuer: 'Capital One',
+      cards: [
+        { id: 'citi-double-cash', name: 'Fake A', ...page('https://www.example.com/a') },
+        { id: 'capital-one-quicksilver-good-credit', name: 'Fake B', ...page('https://www.example.com/b') },
+        { id: 'chase-freedom-flex', name: 'Fake C', ...page('https://www.example.com/c') },
+        { id: 'capital-one-fake', name: 'Fake D', ...page('https://www.capitalone.com/apply/fake') },
+      ],
+    });
+    const code = await new Promise((done) =>
+      execFile('node', [join(REPO, 'scripts/build-expansion-cards.mjs'), '--dir', dir], (error) =>
+        done(error ? 1 : 0),
+      ),
+    );
+    expect(code).toBe(0);
+    const cards = JSON.parse(await readFile(join(dir, 'cards.json'), 'utf8')).cards;
+    expect(cards.map((card: { id: string }) => card.id)).toEqual([
+      'citi-double-cash',
+      'capital-one-quicksilver-good-credit',
+      'chase-freedom-flex',
+      'capital-one-fake',
+    ]);
+    expect(cards.every((card: { sourceIds: string[] }) => card.sourceIds.length === 1)).toBe(true);
+    const exclusions = JSON.parse(await readFile(join(dir, 'exclusions.json'), 'utf8')).exclusions;
+    expect(exclusions).toEqual([]);
   });
 });
 
