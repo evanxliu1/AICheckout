@@ -71,8 +71,8 @@ function sourceMatches(detail: ReviewSummary, sourceId: string) {
  * One step to attach evidence for every source the draft cites but has not captured yet: load the
  * saved capture files (named `<source id>.txt`) one by one or as a whole folder, or paste text, then
  * capture them all and attach them in a single draft revision. Loaded files are checked against the
- * SHA-256 in the corpus manifests (real, merchant and expansion); a file whose hash differs is not
- * loaded. Pasted text that differs is only flagged.
+ * SHA-256 in the corpus manifests (real, merchant, expansion and pipeline batches); a file whose hash
+ * matches none of its source's known captures is not loaded. Pasted text that differs is only flagged.
  */
 function CaptureMissingSources({
   detail,

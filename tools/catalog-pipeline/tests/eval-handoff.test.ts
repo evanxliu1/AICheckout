@@ -505,13 +505,19 @@ describe('labelAgreement', () => {
 const SHA = (n: number) => String(n).repeat(64).slice(0, 64);
 
 describe('review-app readiness', () => {
-  it('reads the manifests the real review app bundles (a reformat of its imports must fail here)', async () => {
+  it('reads the manifests the real review app bundles (a reformat of its imports or glob must fail here)', async () => {
     const manifests = await readReviewManifests(REPO_ROOT);
-    expect(manifests.map((manifest) => manifest.path)).toEqual([
+    const paths = manifests.map((manifest) => manifest.path);
+    expect(paths.slice(0, 3)).toEqual([
       'evals/curation/real/manifest.json',
       'evals/curation/real/merchant-manifest.json',
       'evals/curation/expansion/manifest.json',
     ]);
+    expect(paths).toContain('evals/curation/batches/wells-fargo-2026-10/manifest.json');
+    expect(
+      paths.slice(3).every((path) => /^evals\/curation\/batches\/[^/]+\/manifest\.json$/.test(path)),
+    ).toBe(true);
+    expect(paths.slice(3)).toEqual([...paths.slice(3)].sort());
     expect(manifests.every((manifest) => manifest.sources.length > 0)).toBe(true);
     expect(REVIEW_MANIFEST_MODULE).toBe('apps/review/src/manifest.ts');
   });
@@ -546,30 +552,28 @@ describe('review-app readiness', () => {
       ok: true,
       missing: [],
       differs: [],
-      conflicts: [],
     });
   });
 
-  it('lists a missing hash, a different hash and a source in two manifests with different hashes', () => {
+  it('accepts a source with several dated captures when the cited hash is one of them', () => {
+    expect(reviewAppReadiness([{ id: 'shared', sha256: SHA(2), dir: null }], manifests).ok).toBe(true);
+    expect(reviewAppReadiness([{ id: 'shared', sha256: SHA(3), dir: null }], manifests).ok).toBe(true);
+  });
+
+  it('lists a missing hash and a hash that is none of the bundled ones', () => {
     const result = reviewAppReadiness(
       [
         { id: 'new-page', sha256: SHA(5), dir: 'evals/curation/batches/example-bank-2026-10' },
         { id: 'b', sha256: SHA(6), dir: 'evals/curation/batches/example-bank-2026-10' },
-        { id: 'shared', sha256: SHA(3), dir: null },
+        { id: 'shared', sha256: SHA(7), dir: null },
       ],
       manifests,
     );
     expect(result.ok).toBe(false);
     expect(result.missing).toEqual(['new-page']);
-    expect(result.differs).toEqual([{ id: 'b', expected: SHA(6), review: SHA(4) }]);
-    expect(result.conflicts).toEqual([
-      {
-        id: 'shared',
-        hashes: [
-          { path: 'evals/curation/real/manifest.json', sha256: SHA(2) },
-          { path: 'evals/curation/expansion/manifest.json', sha256: SHA(3) },
-        ],
-      },
+    expect(result.differs).toEqual([
+      { id: 'b', expected: SHA(6), review: [SHA(4)] },
+      { id: 'shared', expected: SHA(7), review: [SHA(2), SHA(3)] },
     ]);
   });
 
@@ -715,7 +719,7 @@ describe('pipeline handoff', () => {
     expect(text).toMatch(/Ready: open the PR/);
   });
 
-  it('says the review app needs the batch manifest when it cannot match a cited source', async () => {
+  it('blocks publishing when the review app cannot match a cited source', async () => {
     const h = await builtBatch();
     expect(await h.run('eval', '--batch', BATCH)).toBe(0);
     await writeFile(
@@ -724,7 +728,8 @@ describe('pipeline handoff', () => {
     );
     const { text } = await handoffReport(h.env, BATCH, deps(cited, []));
     expect(text).toMatch(/\*\*Publish blocked:\*\* 1 cited source\(s\) are in no bundled manifest/);
-    expect(text).toMatch(/a product change, its own PR and a Render deploy/);
+    expect(text).toMatch(/must be in a committed manifest the review app bundles/);
+    expect(text).toMatch(/merged and Render has deployed main/);
     expect(text).toMatch(/- missing: `example-bank-alpha-product`/);
   });
 

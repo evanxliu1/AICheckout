@@ -2,7 +2,7 @@
 // checklist, the build report summary, migrations, review-app readiness, the capture folders Evan selects and his
 // publish steps (wiki/ops/catalog-release.md). It writes nothing, and the CLI has no publish, push or sign-in command.
 import { execFile } from 'node:child_process';
-import { access, readFile } from 'node:fs/promises';
+import { access, readdir, readFile } from 'node:fs/promises';
 import { basename, dirname, join, relative, resolve } from 'node:path';
 import { deriveBatch } from './derive.ts';
 import type { BatchView } from './derive.ts';
@@ -75,50 +75,52 @@ export interface ReviewReadiness {
   ok: boolean;
   /** Cited sources no bundled manifest has: the review app cannot match their captures. */
   missing: string[];
-  /** Cited sources whose bundled hash (the one the review app's map keeps) is not the catalog's. */
-  differs: { id: string; expected: string; review: string }[];
-  /** Cited sources in two bundled manifests with different hashes: the map keeps only the last. */
-  conflicts: { id: string; hashes: { path: string; sha256: string }[] }[];
+  /** Cited sources whose catalog hash is none of the hashes the bundled manifests record for them. */
+  differs: { id: string; expected: string; review: string[] }[];
 }
 
 /**
- * Whether the hosted review app can match every source the catalog cites. The review app builds one map from the
- * manifests `apps/review/src/manifest.ts` imports, later manifests overwriting earlier ones, and compares each loaded
- * capture with it. A source the catalog took from a manifest the app does not bundle is missing or differs.
+ * Whether the hosted review app can match every source the catalog cites. The review app keeps every hash the
+ * manifests `apps/review/src/manifest.ts` bundles record for a source ID (several dated captures are fine) and a
+ * loaded capture matches when its hash is any of them. A cited source with no bundled hash, or whose hash is not
+ * among them, is missing or differs.
  */
 export function reviewAppReadiness(cited: CitedSource[], manifests: ReviewManifest[]): ReviewReadiness {
-  const entries = new Map<string, { path: string; sha256: string }[]>();
+  const known = new Map<string, Set<string>>();
   for (const manifest of manifests)
     for (const source of manifest.sources)
-      entries.set(source.id, [
-        ...(entries.get(source.id) ?? []),
-        { path: manifest.path, sha256: source.sha256 },
-      ]);
+      known.set(source.id, (known.get(source.id) ?? new Set()).add(source.sha256));
   const missing: string[] = [];
   const differs: ReviewReadiness['differs'] = [];
-  const conflicts: ReviewReadiness['conflicts'] = [];
   for (const source of [...cited].sort((a, b) => a.id.localeCompare(b.id))) {
-    const found = entries.get(source.id);
-    if (!found) {
-      missing.push(source.id);
-      continue;
-    }
-    if (new Set(found.map((entry) => entry.sha256)).size > 1)
-      conflicts.push({ id: source.id, hashes: found });
-    const review = found.at(-1)!.sha256;
-    if (source.sha256 && review !== source.sha256)
-      differs.push({ id: source.id, expected: source.sha256, review });
+    const hashes = known.get(source.id);
+    if (!hashes) missing.push(source.id);
+    else if (source.sha256 && !hashes.has(source.sha256))
+      differs.push({ id: source.id, expected: source.sha256, review: [...hashes] });
   }
-  return { ok: !missing.length && !differs.length && !conflicts.length, missing, differs, conflicts };
+  return { ok: !missing.length && !differs.length, missing, differs };
 }
 
-/** The manifests the review app bundles: the JSON imports of apps/review/src/manifest.ts, in order. */
+/**
+ * The manifests the review app bundles, in its order: the JSON imports of apps/review/src/manifest.ts, then the
+ * batch manifests its `import.meta.glob` matches, sorted by path. Throws when either is missing, so a rewrite of
+ * its imports fails loudly here.
+ */
 export async function readReviewManifests(root: string): Promise<ReviewManifest[]> {
   const module = join(root, REVIEW_MANIFEST_MODULE);
   const text = await readFile(module, 'utf8');
+  const paths = [...text.matchAll(/^import \w+ from '([^']+\.json)';$/gm)].map((match) =>
+    resolve(dirname(module), match[1]),
+  );
+  const globs = [...text.matchAll(/import\.meta\.glob<\w+>\('([^'*]+)\/\*\/manifest\.json'/g)];
+  if (!paths.length || globs.length !== 1)
+    throw new Error(`${REVIEW_MANIFEST_MODULE}: expected JSON imports and one batch-manifest glob`);
+  const batches = resolve(dirname(module), globs[0][1]);
+  const dirs = (await readdir(batches, { withFileTypes: true })).filter((entry) => entry.isDirectory());
+  for (const dir of dirs.map((entry) => join(batches, entry.name, 'manifest.json')).sort())
+    if (await exists(dir)) paths.push(dir);
   const out: ReviewManifest[] = [];
-  for (const match of text.matchAll(/^import \w+ from '([^']+\.json)';$/gm)) {
-    const path = resolve(dirname(module), match[1]);
+  for (const path of paths) {
     const data = JSON.parse(await readFile(path, 'utf8')) as { sources: ManifestSource[] };
     out.push({ path: relative(root, path), sources: data.sources });
   }
@@ -415,7 +417,7 @@ export async function handoffReport(
   else {
     const readiness = reviewAppReadiness(catalog.cited, manifests);
     out(
-      `The review app knows capture hashes only from the manifests ${code(REVIEW_MANIFEST_MODULE)} bundles: ${manifests.map((m) => code(m.path)).join(', ') || 'none found'}.`,
+      `The review app knows capture hashes only from the manifests ${code(REVIEW_MANIFEST_MODULE)} bundles at build time (the fixed corpora and every ${code('evals/curation/batches/*/manifest.json')}): ${manifests.map((m) => code(m.path)).join(', ') || 'none found'}. The hosted app knows a new batch's manifest only once this branch is merged and Render has deployed main, so Evan publishes after that deploy.`,
       '',
     );
     if (readiness.ok)
@@ -425,16 +427,12 @@ export async function handoffReport(
       );
     else {
       out(
-        `**Publish blocked:** ${readiness.missing.length} cited source(s) are in no bundled manifest, ${readiness.differs.length} have another hash there, ${readiness.conflicts.length} have conflicting hashes in two manifests. The review app needs the batch manifest added to ${code(REVIEW_MANIFEST_MODULE)} (a product change, its own PR and a Render deploy) before Evan can publish.`,
+        `**Publish blocked:** ${readiness.missing.length} cited source(s) are in no bundled manifest, ${readiness.differs.length} have none of their bundled hashes. Every cited capture's SHA-256 must be in a committed manifest the review app bundles before Evan can publish.`,
       );
       if (readiness.missing.length) out(`- missing: ${idList(readiness.missing)}`);
       for (const item of readiness.differs)
         out(
-          `- differs: ${code(item.id)} catalog ${item.expected.slice(0, 12)}…, review app ${item.review.slice(0, 12)}…`,
-        );
-      for (const item of readiness.conflicts)
-        out(
-          `- conflict: ${code(item.id)} in ${item.hashes.map((h) => `${code(h.path)} ${h.sha256.slice(0, 12)}…`).join(', ')}`,
+          `- differs: ${code(item.id)} catalog ${item.expected.slice(0, 12)}…, review app ${item.review.map((hash) => `${hash.slice(0, 12)}…`).join(', ')}`,
         );
       out('');
     }

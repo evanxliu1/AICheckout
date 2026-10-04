@@ -16,7 +16,6 @@ vi.mock('../src/manifest', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../src/manifest')>();
   return {
     ...actual,
-    manifestHash: (id: string) => manifest.get(id),
     manifestComparison: (id: string, hash: string | undefined) => {
       const expected = manifest.get(id);
       if (!expected || !hash) return undefined;
