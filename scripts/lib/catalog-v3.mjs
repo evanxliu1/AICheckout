@@ -1,19 +1,22 @@
-// Catalog v3 build (Stage 2 M5): the release catalog from the committed inputs, never from model output.
+// Catalog v3 build (Stage 2 M5, multi-batch since Phase 8 milestone 1): the release catalog from the committed
+// inputs, never from model output.
 //
-// Inputs (via loadOverlayInputs): the expansion corpus (`expansion.v1`, 173 cards), the real corpus
-// (`real.v2.2`, 7 cards), reward-programs.json, merchants.json, catalog-overlay.json and both capture manifests.
+// Inputs: `mergeLayers` (scripts/lib/catalog-batches.mjs) over the layers of evals/curation/catalog-batches.json —
+// the frozen base layer (the expansion corpus `expansion.v1`, 173 cards, and the real corpus `real.v2.2`, 7 cards)
+// and then the pipeline batches — with reward-programs.json, merchants.json, the overlays and the capture manifests.
 // `draftCatalogV3` (scripts/lib/catalog-overlay.mjs) applies the overlay; this module then fixes what a release
-// needs: display names and short names, short stable rule IDs, rule order, the release version and dates, and
-// drops programs, brands and gates that no included card, merchant or program uses. The seven real cards keep the
-// names, rule IDs and rule semantics of release 1 (`CATALOG_V2`, `2026-09-29.real.1`); `checkRealCards` fails the
-// build if any of them differs.
-import { catalogV3Schema, CATALOG_V3_LIMITS } from '../../packages/rewards-core/src/schema.ts';
+// needs: display names and short names, short stable rule IDs (continued against the rule-ID ledger), rule order,
+// the release version and dates, and drops programs, brands and gates that no included card, merchant or program
+// uses. The seven real cards keep the names, rule IDs and rule semantics of release 1 (`CATALOG_V2`,
+// `2026-09-29.real.1`); `checkRealCards` fails the build if any of them differs.
+import { createHash } from 'node:crypto';
+import { catalogV3Schema, CATALOG_V3_LIMITS, stableJson } from '../../packages/rewards-core/src/schema.ts';
+import { z } from 'zod';
 import { isUnconditionalRuleV3 } from '../../packages/rewards-core/src/rules-v3.ts';
 import { checkOverlay, corpusCases, draftCatalogV3, overlaySchema } from './catalog-overlay.mjs';
 
-export const CATALOG_V3_VERSION = '2026-10-02.expansion.1';
-export const CATALOG_V3_VERIFIED_AT = '2026-10-02T00:00:00Z';
-export const CATALOG_V3_EXPIRES_AT = '2026-11-01T00:00:00Z';
+/** Days from `verifiedAt` to `expiresAt`: the contract maximum. */
+export const CATALOG_V3_VALID_DAYS = 30;
 /** The size budget M5 targets: 75% of the 1 MiB contract limit, for both JSON and JSONB text. */
 export const CATALOG_V3_BYTE_BUDGET = Math.floor(CATALOG_V3_LIMITS.bytes * 0.75);
 
@@ -183,16 +186,208 @@ const realRuleId = (prefix, rule) =>
   `${prefix}-${rule.category === 'all-purchases' ? 'base' : rule.category}`;
 
 /**
- * The release catalog v3 from `loadOverlayInputs` (parsed by `catalogV3Schema`). Throws when the overlay coverage
- * check fails, the catalog is invalid or over the byte budget.
+ * The catalog dates from its issuer sources (the manifest sources it cites; merchant MCC sources are not terms):
+ * `verifiedAt` is the newest date any of them was captured or re-checked (`checkedOn ?? capturedOn` in the manifest),
+ * `expiresAt` is 30 days later. The oldest date is reported, not used: a catalog mixing a 2026-09-29 and a
+ * 2026-10-02 capture is dated 2026-10-02 (decision 2026-10-04-multi-batch-catalog-builder). Phase 9 freshness
+ * re-checks sources and records `checkedOn`, which moves both dates forward.
  */
+export function catalogDates(sources, merchantSourceIds) {
+  const dates = sources
+    .filter((source) => !merchantSourceIds.has(source.id))
+    .map((source) => source.checkedOn)
+    .sort();
+  if (!dates.length) throw new Error('The catalog cites no issuer source');
+  const newest = dates.at(-1);
+  const expires = new Date(`${newest}T00:00:00Z`);
+  expires.setUTCDate(expires.getUTCDate() + CATALOG_V3_VALID_DAYS);
+  return {
+    verifiedAt: `${newest}T00:00:00Z`,
+    expiresAt: expires.toISOString().replace('.000Z', 'Z'),
+    newest,
+    oldest: dates[0],
+    issuerSources: dates.length,
+    captureDates: [...new Set(dates)],
+  };
+}
+
+/** SHA-256 (hex) of a rule's terms: the rule without its ID in `stableJson` form, as `ruleTerms` in wallet.ts. */
+export function ruleTermsSha256(rule) {
+  const { id: _id, ...terms } = rule;
+  return createHash('sha256').update(stableJson(terms)).digest('hex');
+}
+
+const sha256Hex = z.string().regex(/^[0-9a-f]{64}$/);
+/** The rule-ID ledger (evals/curation/rule-id-ledger.json). */
+export const ledgerSchema = z
+  .strictObject({
+    schemaVersion: z.literal(1),
+    description: z.string().min(1),
+    ids: z.record(
+      z.string().min(1),
+      z.strictObject({ cardId: z.string().min(1), termsSha256: sha256Hex, firstVersion: z.string().min(1) }),
+    ),
+    catalogs: z.array(
+      z.strictObject({
+        version: z.string().min(1),
+        jsonBytes: z.number().int().min(1),
+        ruleIds: z.array(z.string().min(1)),
+      }),
+    ),
+  })
+  .refine(
+    (ledger) => ledger.catalogs.every((entry) => entry.ruleIds.every((id) => ledger.ids[id])),
+    'every catalog rule ID is in ids',
+  )
+  .refine(
+    (ledger) => new Set(ledger.catalogs.map((entry) => entry.version)).size === ledger.catalogs.length,
+    'catalog versions are unique',
+  );
+
+/** An empty rule-ID ledger (evals/curation/rule-id-ledger.json). */
+export const emptyLedger = () => ({
+  schemaVersion: 1,
+  description:
+    'Append-only rule-ID ledger for catalog v3 (written by npm run catalog:v3, checked by catalog:v3:check): every rule ID ever issued with its card and the SHA-256 of its terms, and the rule IDs of each catalog version. An ID is never reissued with other terms.',
+  ids: {},
+  catalogs: [],
+});
+
+/**
+ * Rule-ID continuity against the ledger (protects wallets: `reconcileWallet` drops usage rows when a rule's terms
+ * change). The previous catalog is the newest ledger catalog with another version. A rule whose card had a rule with
+ * the same terms there keeps that ID; any other rule takes its generated ID unless the ledger issued that ID for other
+ * terms or another card, in which case it gets `<id>-v2`, `-v3`, … (the first never issued for other terms). Returns
+ * the new rule IDs per card and the kept, changed, added and dropped lists.
+ */
+export function continueRuleIds(cards, ledger, version) {
+  const previous = [...ledger.catalogs].reverse().find((entry) => entry.version !== version) ?? null;
+  const previousIds = new Set(previous?.ruleIds ?? []);
+  const byTerms = new Map();
+  // Previous IDs by card and stem: the ID without a `-vN` continuity suffix and a `-2`…`-9` collision counter
+  // (`ruleIdsFor`). Start months end in two digits (`-2026-10`), so a one-digit counter is never one of them.
+  const stem = (id) => id.replace(/-v[0-9]+$/, '').replace(/-[2-9]$/, '');
+  const byStem = new Map();
+  const push = (map, key, id) => map.set(key, [...(map.get(key) ?? []), id]);
+  for (const id of previous?.ruleIds ?? []) {
+    push(byTerms, `${ledger.ids[id].cardId} ${ledger.ids[id].termsSha256}`, id);
+    push(byStem, `${ledger.ids[id].cardId} ${stem(id)}`, id);
+  }
+  const used = new Set();
+  const terms = cards.map((card) => card.rules.map(ruleTermsSha256));
+  const ids = cards.map((card, c) =>
+    card.rules.map((rule, r) => {
+      const same = byTerms.get(`${card.id} ${terms[c][r]}`) ?? [];
+      const pick = [rule.id, ...same].find((id) => same.includes(id) && !used.has(id)) ?? null;
+      if (pick !== null) used.add(pick);
+      return pick;
+    }),
+  );
+  const issuable = (id, cardId, sha) =>
+    !used.has(id) &&
+    (!ledger.ids[id] || (ledger.ids[id].cardId === cardId && ledger.ids[id].termsSha256 === sha));
+  const kept = [];
+  const changed = [];
+  const added = [];
+  cards.forEach((card, c) =>
+    card.rules.forEach((rule, r) => {
+      if (ids[c][r] !== null) return kept.push(ids[c][r]);
+      let id = rule.id;
+      for (let n = 2; !issuable(id, card.id, terms[c][r]); n++) id = `${rule.id}-v${n}`;
+      used.add(id);
+      ids[c][r] = id;
+      // Changed: the card had a rule with this stem (generated ID, -vN or collision counter) that no rule keeps.
+      const from = (byStem.get(`${card.id} ${stem(rule.id)}`) ?? []).find(
+        (old) => !used.has(old) && !changed.some((item) => item.from === old),
+      );
+      if (from) changed.push({ cardId: card.id, from, to: id });
+      else added.push(id);
+    }),
+  );
+  const replaced = new Set(changed.map((item) => item.from));
+  return {
+    previous: previous && {
+      version: previous.version,
+      jsonBytes: previous.jsonBytes,
+      rules: previousIds.size,
+    },
+    ids,
+    kept,
+    changed,
+    added,
+    dropped: [...previousIds].filter((id) => !used.has(id) && !replaced.has(id)),
+  };
+}
+
+/**
+ * The ledger after a build: IDs not issued before are appended, and the catalog's entry is appended (or, when the
+ * newest entry has the same version, a rebuild of an unpublished version, replaced). Throws if the catalog would
+ * reissue an ID with other terms or reuse a version older than the newest.
+ */
+export function updateLedger(ledger, catalog) {
+  const ids = { ...ledger.ids };
+  const ruleIds = [];
+  for (const card of catalog.cards)
+    for (const rule of card.rules) {
+      const entry = { cardId: card.id, termsSha256: ruleTermsSha256(rule), firstVersion: catalog.version };
+      const earlier = ids[rule.id];
+      if (earlier && (earlier.cardId !== entry.cardId || earlier.termsSha256 !== entry.termsSha256))
+        throw new Error(`Rule ID ${rule.id} was issued for other terms`);
+      if (!earlier) ids[rule.id] = entry;
+      ruleIds.push(rule.id);
+    }
+  const catalogs = [...ledger.catalogs];
+  const at = catalogs.findIndex((entry) => entry.version === catalog.version);
+  if (at !== -1 && at !== catalogs.length - 1)
+    throw new Error(`Version ${catalog.version} is older than the newest in the ledger`);
+  if (at !== -1) catalogs.pop();
+  catalogs.push({ version: catalog.version, jsonBytes: jsonBytes(catalog), ruleIds });
+  return { ...ledger, ids, catalogs };
+}
+
+/** The ledger as committed: two-space JSON with one line per issued ID and per catalog rule ID. */
+export function ledgerText(ledger) {
+  const ids = Object.entries(ledger.ids).map(
+    ([id, entry]) => `    ${JSON.stringify(id)}: ${JSON.stringify(entry)}`,
+  );
+  const catalogs = ledger.catalogs.map(
+    (entry) =>
+      `    {\n      "version": ${JSON.stringify(entry.version)},\n      "jsonBytes": ${entry.jsonBytes},\n      "ruleIds": [\n${entry.ruleIds
+        .map((id) => `        ${JSON.stringify(id)}`)
+        .join(',\n')}\n      ]\n    }`,
+  );
+  return `{\n  "schemaVersion": 1,\n  "description": ${JSON.stringify(ledger.description)},\n  "ids": {\n${ids.join(',\n')}\n  },\n  "catalogs": [\n${catalogs.join(',\n')}\n  ]\n}\n`;
+}
+
+/** The release catalog v3 from `mergeLayers` inputs (see `buildRelease`). */
 export function buildCatalogV3(inputs) {
-  const problems = checkOverlay(inputs);
+  return buildRelease(inputs).catalog;
+}
+
+/**
+ * The release catalog v3 (parsed by `catalogV3Schema`) from `mergeLayers` inputs, with its dates and the rule-ID
+ * continuity against `inputs.ledger` (empty when absent). Throws when the overlay coverage check fails, the catalog is
+ * invalid or over the byte budget.
+ */
+export function buildRelease(inputs) {
+  if (!inputs.version) throw new Error('No catalog version');
+  // The check-only draft is dated from all manifest sources; the catalog below is dated from cited sources only.
+  const merchantSourceIds = new Set(inputs.merchants.sources.map((source) => source.id));
+  const manifestSources = inputs.manifests.flatMap((manifest) =>
+    manifest.sources.map((source) => ({ id: source.id, checkedOn: source.checkedOn ?? source.capturedOn })),
+  );
+  const { verifiedAt, expiresAt } = catalogDates(manifestSources, merchantSourceIds);
+  const problems = checkOverlay({ ...inputs, verifiedAt, expiresAt });
   if (problems.length) throw new Error(`The overlay check fails:\n- ${problems.join('\n- ')}`);
-  const draft = draftCatalogV3({ ...inputs, overlay: overlaySchema.parse(inputs.overlay) });
+  const draft = draftCatalogV3({
+    ...inputs,
+    overlay: overlaySchema.parse(inputs.overlay),
+    verifiedAt,
+    expiresAt,
+  });
   const realIds = new Set(corpusCases(inputs.corpora[1]).keys());
   const renamed = new Map(); // old rule ID → new rule ID, for shared caps
-  const cards = draft.cards.map((card) => {
+  let cards = draft.cards.map((card) => {
     const real = REAL_CARDS[card.id];
     if (realIds.has(card.id) && !real) throw new Error(`No release-1 metadata for real card ${card.id}`);
     const rules = byBaseThenRate(card.rules);
@@ -213,6 +408,16 @@ export function buildCatalogV3(inputs) {
     };
   });
   if (renamed.size !== new Set(renamed.values()).size) throw new Error('Rule IDs collide');
+  if (inputs.cardOrder) {
+    const order = new Map(inputs.cardOrder.map((id, i) => [id, i]));
+    cards = cards.toSorted((a, b) => order.get(a.id) - order.get(b.id));
+  }
+  const ledger = ledgerSchema.parse(inputs.ledger ?? emptyLedger());
+  const continuity = continueRuleIds(cards, ledger, inputs.version);
+  cards = cards.map((card, c) => ({
+    ...card,
+    rules: card.rules.map((rule, r) => ({ ...rule, id: continuity.ids[c][r] })),
+  }));
 
   // Keep only the programs, brands and gates something in the catalog uses.
   const programIds = new Set(cards.map((card) => card.programId));
@@ -236,12 +441,13 @@ export function buildCatalogV3(inputs) {
     ...draft.merchants.flatMap((m) => m.mcc.sourceIds),
   ]);
   const sources = draft.sources.filter((source) => sourceIds.has(source.id));
+  const dates = catalogDates(sources, merchantSourceIds);
 
   const catalog = catalogV3Schema.parse({
     schemaVersion: 3,
-    version: CATALOG_V3_VERSION,
-    verifiedAt: CATALOG_V3_VERIFIED_AT,
-    expiresAt: CATALOG_V3_EXPIRES_AT,
+    version: inputs.version,
+    verifiedAt: dates.verifiedAt,
+    expiresAt: dates.expiresAt,
     programs,
     brands,
     gates,
@@ -252,7 +458,7 @@ export function buildCatalogV3(inputs) {
   const bytes = jsonBytes(catalog);
   if (bytes > CATALOG_V3_BYTE_BUDGET || jsonbTextBytes(catalog) > CATALOG_V3_BYTE_BUDGET)
     throw new Error(`Catalog is over the ${CATALOG_V3_BYTE_BUDGET}-byte budget (${bytes} bytes)`);
-  return catalog;
+  return { catalog, dates, continuity };
 }
 
 /**

@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2.ts';
 import { CATALOG_V3 } from '../../packages/rewards-core/src/catalog-v3.ts';
 import { catalogV3Schema } from '../../packages/rewards-core/src/schema.ts';
-import { loadOverlayInputs } from './catalog-overlay.mjs';
+import { loadCatalogBatches, mergeLayers } from './catalog-batches.mjs';
 import {
   CATALOG_V3_BYTE_BUDGET,
   buildCatalogV3,
@@ -17,7 +17,7 @@ import {
 } from './catalog-v3.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
-const committed = await loadOverlayInputs(root);
+const committed = mergeLayers(await loadCatalogBatches(root));
 const built = buildCatalogV3(committed);
 
 test('the committed CATALOG_V3 is the build of the committed inputs', () => {
