@@ -5,7 +5,7 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T21:07:00Z
+  at: 2026-10-04T22:17:00Z
 ---
 
 # Now
@@ -25,6 +25,7 @@ As of 2026-10-04T21:07Z.
 
 - **Phase 8, card-expansion pipeline v1: built** (coordinator, 2026-10-04). PRs #36 (approval), #37 multi-batch builder with the rule-ID ledger, #38 CLI skeleton, #39 `eval`/`handoff`, #40 `claim`/`accept`, gates and label-evidence lint, #41 skill and four pinned agents: all merged after CI and an independent reviewer subagent ([pipeline](system/card-expansion-pipeline.md)).
 - **Acceptance run** (milestone 6), branch `catalog-wells-fargo-2026-10`: Wells Fargo refresh batch `wells-fargo-2026-10`, 6 cards, end to end from one chat request; results in [`docs/evals/pipeline-v1.md`](../docs/evals/pipeline-v1.md). No rate, cap or category differs from `expansion.v1`; rule-ID continuity 790 kept, 30 changed (all Wells Fargo), 0 dropped. Its catalog change is **not** shipped; publishing it is Evan's call ([decision](decisions/2026-10-04-wells-fargo-batch-not-shipped.md)). Gitignored captures and traces live only in `../AICheckout-p8-wf`: keep that worktree.
+- **Phase 9 milestone 2** (branch `phase9-m2-pipeline-fixes`, ready for review): published versions are never rebuilt with other contents (`publishedVersions`), `run build --proposed --version` ships nothing, `pipeline drop-source`, and `next` groups cards per queue code ([pipeline](system/card-expansion-pipeline.md#built-so-far)).
 
 ## Open questions and next steps
 

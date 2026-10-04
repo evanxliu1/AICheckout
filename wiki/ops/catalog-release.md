@@ -6,7 +6,7 @@ status: stable
 tags: [ops, catalog, release, review]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T01:40:00Z
+  at: 2026-10-04T22:17:00Z
 stale_after: 2026-11-01T00:00:00Z
 sources:
   - resource: ../../apps/review/src/StartDraft.tsx
