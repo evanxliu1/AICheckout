@@ -32,7 +32,7 @@ Conventions O1–O21 in `evals/curation/expansion/verification/conventions/gener
 
 ## Before you report
 
-Run `npm run pipeline -- accept overlay --batch <batch> --issuer <slug> --agent-run self-check --dry-run` and fix your fragment until it prints "gates pass". Do not run accept without `--dry-run`. Captures only: no web, memory, research files or models. Provenance is `agent-verified`, never `human-verified`.
+Run `npm run pipeline -- accept overlay --batch <batch> --issuer <slug> --agent-run self-check --dry-run` and fix your fragment until it prints "gates pass" (unless you are reporting `convention-needed`). Do not run accept without `--dry-run`. Captures only: no web, memory, research files or models. Provenance is `agent-verified`, never `human-verified`.
 
 ## Report
 

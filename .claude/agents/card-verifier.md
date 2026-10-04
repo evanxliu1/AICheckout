@@ -26,7 +26,7 @@ The prompt gives the absolute path of a packet file (`pipeline/packets/verify.<i
 - **Quotes: verbatim, one capture, at most 25 words**, named by `sourceId`, the shortest span that states the value; quotes of one item must not overlap or abut into a run over 25 words. Notes and reasons are your own words.
 - **Write only the findings file.** Never edit drafts, captures, conventions or other files; never re-capture or fetch a page; never run a model. If the file exists, change only the entries of the packet's cards; other cards' entries stay byte-for-byte.
 - One entry per packet card. `current` must equal the draft value at the path.
-- Top level: `schemaVersion: 1`, `packetId` (this packet's), `batch`, `issuer` (exactly `issuerName`), `provenance: "agent-verified"`, `verifier` `{ agent: "card-verifier", model: "claude-opus-5-5", date, filesRead }` with `filesRead` naming every file you opened, including each capture of the packet's cards, `adjudicator: null`, `cards`.
+- Top level: `schemaVersion: 1`, `packetId` (this packet's), `batch`, `issuer` (exactly `issuerName`), `provenance: "agent-verified"`, `verifier` `{ agent: "card-verifier", model: "claude-opus-5-5" (the model named in your frontmatter), date, filesRead }` with `filesRead` naming every file you opened, including each capture of the packet's cards, `adjudicator: null`, `cards`.
 - Leave `adjudicator` null and add no `labelLintAcks`: adjudication is another agent's job.
 - Provenance is `agent-verified`, never `human-verified`.
 

@@ -20,7 +20,7 @@ The prompt gives the absolute path of a packet file (`pipeline/packets/adjudicat
 ## Rules
 
 - **Decide every finding** of the packet's cards: each fix, addition and product-note change gets `adjudication: { decision: accepted | rejected | modified, reason }`; a `modified` fix gives `corrected` (optionally its own `anchor`), a `modified` addition gives `replacement`; each `drop-card` verdict gets `verdictAdjudication` (`accepted` or `rejected`).
-- Then set `adjudicator` `{ agent: "card-adjudicator", model: "claude-fable-5-1", date, filesRead }` and set `packetId` to this packet's ID (keep `batch`, `issuer`, `provenance: "agent-verified"`).
+- Then set `adjudicator` `{ agent: "card-adjudicator", model: "claude-fable-5-1" (the model named in your frontmatter), date, filesRead }` and set `packetId` to this packet's ID (keep `batch`, `issuer`, `provenance: "agent-verified"`).
 - **Edit only** the adjudication fields, `verdictAdjudication`, the `adjudicator` block, `packetId` and `labelLintAcks` of the packet's cards. Never change the verifier's finding text or block, other cards' entries or acks, drafts, captures, conventions or any other file.
 - **Conventions win.** A finding against the conventions is `modified` to the conforming value or `rejected`. Where a case needs a convention that does not exist, do not invent one: leave `adjudicator` null and report `convention-needed` (card, finding path, the question in your words). The session adds the convention and a new adjudicator run decides.
 - **Captures only**: no memory, research files, web or models. Re-read the capture around every anchor you rely on.
@@ -41,7 +41,7 @@ Then run the dry run again until no `label lint` line remains.
 
 ## Before you report
 
-Run `npm run pipeline -- accept adjudicate --batch <batch> --issuer <slug> --agent-run self-check --dry-run` and fix your own edits until it prints "gates pass". Do not run accept without `--dry-run`. Provenance is `agent-verified`, never `human-verified`.
+Run `npm run pipeline -- accept adjudicate --batch <batch> --issuer <slug> --agent-run self-check --dry-run` and fix your own edits until it prints "gates pass" (unless you are reporting `convention-needed`, which leaves `adjudicator` null). Do not run accept without `--dry-run`. Provenance is `agent-verified`, never `human-verified`.
 
 ## Report
 
