@@ -244,7 +244,8 @@ function deriveQueue(view: BatchView): QueueItem[] {
         owner: AGENTS.verify,
       });
   }
-  if (view.build.status === 'done' && view.eval.status === 'done')
+  // A proposed build (`run build --proposed`) ships nothing, so there is nothing for Evan to publish.
+  if (view.build.status === 'done' && view.eval.status === 'done' && !view.build.record?.proposed)
     items.push({ batch: batch.id, stage: 'publish', code: 'publish', ref: statePath, owner: 'evan' });
   return items;
 }
@@ -405,7 +406,9 @@ export function nextStep(view: BatchView): NextStep {
       batch: id,
       stage: 'publish',
       command: pipeline(`handoff --batch ${id}`),
-      reason: 'all stages done: open the PR; Evan publishes in the review app',
+      reason: view.build.record?.proposed
+        ? `all stages done; the build is proposed (${view.build.record.catalogVersion}) and ships nothing: open the PR with the batch data`
+        : 'all stages done: open the PR; Evan publishes in the review app',
     };
   return {
     kind: 'wait',

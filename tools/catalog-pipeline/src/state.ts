@@ -52,6 +52,8 @@ export const STATUSES = [
 export type Status = (typeof STATUSES)[number];
 
 export const BATCH_ID = /^[a-z0-9-]+-\d{4}-\d{2}$/;
+/** A catalog version label (`CATALOG_VERSION` of scripts/lib/catalog-batches.mjs, which the config schema uses). */
+export const CATALOG_VERSION = /^[0-9]{4}-[0-9]{2}-[0-9]{2}\.[a-z0-9-]+\.[0-9]+$/;
 export const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 /** A model, agent-run or packet ID: one token, no spaces (also `verificationFileSchema`'s `packetId` in
  * scripts/lib/expansion-verification.mjs, which keeps its own copy: scripts do not import the pipeline). */
@@ -90,6 +92,9 @@ export const stageRecordSchema = z.strictObject({
    * --duration-ms, --tokens), for the cost report (tokens per card = tokens / packet cards). */
   durationMs: z.int().nonnegative().optional(),
   tokens: z.int().nonnegative().optional(),
+  /** Build: the catalog version built, and `true` for a proposed build (`run build --proposed`), which ships nothing. */
+  catalogVersion: z.string().regex(CATALOG_VERSION).optional(),
+  proposed: z.literal(true).optional(),
 });
 export type StageRecord = z.infer<typeof stageRecordSchema>;
 

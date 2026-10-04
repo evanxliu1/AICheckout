@@ -10,7 +10,7 @@ import { captureRecord, capturePlan, latestRows } from './capture.ts';
 import type { Batch } from './files.ts';
 import { fileSha256, jsonSha256, labelsHash, anchorsHash } from './hash.ts';
 import { EXTRACT_CONFIG, STAGE_VERSIONS } from './inputs.ts';
-import { emptyCardState, writeJsonAtomic, writeState } from './state.ts';
+import { CATALOG_VERSION, emptyCardState, writeJsonAtomic, writeState } from './state.ts';
 import { acceptedAcks, applyLint, quoteGate } from './gates.ts';
 import { lintMetrics } from './label-lint.ts';
 import type { CorpusCaseLike } from './label-lint.ts';
@@ -38,7 +38,16 @@ export interface RunOptions {
   waitMinutes?: number;
   /** eval: an eval:v2 run directory of the coordinator's cross-model run, to score. */
   crossModelRun?: string;
+  /** build: build into the batch's pipeline/proposed/ without changing what ships (needs `version`). */
+  proposed?: boolean;
+  /** build: the catalog version to build (required with `proposed`, and when the config's version is published). */
+  version?: string;
 }
+
+/** Where a proposed build writes (relative to the batch directory). */
+export const PROPOSED_DIR = 'pipeline/proposed';
+export const PROPOSED_CONFIG = `${PROPOSED_DIR}/catalog-batches.json`;
+export const PROPOSED_CATALOG = `${PROPOSED_DIR}/catalog-v3.json`;
 
 /** Stages that call a model; they never run where CI or RENDER is set. */
 export const MODEL_STAGES = new Set<string>(['extract']);
@@ -94,21 +103,67 @@ export async function runStage(
       env.log(`run build: not ready (${view.build.status}); every active card's overlay must be done.`);
       return 1;
     }
-    await registerBatch(env.root, batch);
-    const code = await env.exec('npm', ['run', 'catalog:v3']);
-    const catalog = await fileSha256(join(env.root, 'packages/rewards-core/src/catalog-v3.ts'));
+    const config = await readBatchesConfig(env.root);
+    const published = new Set(config.publishedVersions);
+    const version = options.version ?? config.version;
+    const refusal = options.proposed
+      ? !options.version
+        ? 'run build --proposed needs --version <new catalog version>.'
+        : null
+      : !options.version && published.has(config.version)
+        ? `run build: the config's version ${config.version} is published; pass --version <new catalog version>.`
+        : null;
+    if (refusal) {
+      env.log(refusal);
+      return 2;
+    }
+    if (!CATALOG_VERSION.test(version) || published.has(version)) {
+      env.log(
+        `run build: --version ${version} ${published.has(version) ? 'is published' : 'is not a catalog version (YYYY-MM-DD.name.N)'}; a published version is never rebuilt with other contents.`,
+      );
+      return 2;
+    }
+    const layered = withBatchLayer(config, batch, version);
+    let code: number;
+    let output: { ref: string; sha256: string | null };
+    if (options.proposed) {
+      // The would-be config, built into the batch; the build config, ledger and CATALOG_V3 are not touched.
+      await writeJsonAtomic(join(batch.dir, PROPOSED_CONFIG), layered);
+      code = await env.exec('node', [
+        'scripts/build-catalog-v3.mjs',
+        '--config',
+        `${batch.rel}/${PROPOSED_CONFIG}`,
+        '--out-dir',
+        `${batch.rel}/${PROPOSED_DIR}`,
+      ]);
+      output = {
+        ref: `file:${batch.rel}/${PROPOSED_CATALOG}`,
+        sha256: await fileSha256(join(batch.dir, PROPOSED_CATALOG)),
+      };
+    } else {
+      await writeBatchesConfig(env.root, layered);
+      code = await env.exec('npm', ['run', 'catalog:v3']);
+      output = {
+        ref: 'file:packages/rewards-core/src/catalog-v3.ts',
+        sha256: await fileSha256(join(env.root, 'packages/rewards-core/src/catalog-v3.ts')),
+      };
+    }
     batch.state.batchStages.build = {
       status: code === 0 ? 'done' : 'failed-gate',
       stageVersion: STAGE_VERSIONS.build,
       ...(view.build.inputHash ? { inputHash: view.build.inputHash } : {}),
       finishedAt: env.now().toISOString(),
       attempts: (batch.state.batchStages.build?.attempts ?? 0) + 1,
-      ...(code === 0 && catalog
-        ? { outputs: [{ ref: 'file:packages/rewards-core/src/catalog-v3.ts', sha256: catalog }] }
-        : {}),
+      ...(code === 0 && output.sha256 ? { outputs: [{ ref: output.ref, sha256: output.sha256 }] } : {}),
       ...(code === 0 ? {} : { reason: 'build-failed' }),
+      catalogVersion: version,
+      ...(options.proposed ? { proposed: true as const } : {}),
     };
     await writeState(statePath(batch.dir), batch.state, env.now());
+    if (code === 0 && options.proposed)
+      env.log(
+        `run build: proposed catalog ${version} in ${batch.rel}/${PROPOSED_DIR}; nothing that ships changed (build config, ledger, CATALOG_V3).`,
+      );
     return code === 0 ? 0 : 1;
   }
 
@@ -407,12 +462,27 @@ export async function restampOverlay(env: Env, batchId: string): Promise<string[
   return restamped;
 }
 
-/** Registers the batch as the newest layer of the build config, with its dropped cards from state. */
-export async function registerBatch(root: string, batch: Batch): Promise<void> {
+type BatchesConfig = {
+  version: string;
+  publishedVersions: string[];
+  layers: ({ kind: string; id: string } & Record<string, unknown>)[];
+} & Record<string, unknown>;
+
+async function readBatchesConfig(root: string): Promise<BatchesConfig> {
+  return batchesConfigSchema.parse(
+    JSON.parse(await readFile(join(root, BATCHES_CONFIG_PATH), 'utf8')),
+  ) as BatchesConfig;
+}
+
+async function writeBatchesConfig(root: string, config: BatchesConfig): Promise<void> {
   const path = join(root, BATCHES_CONFIG_PATH);
-  const config = batchesConfigSchema.parse(JSON.parse(await readFile(path, 'utf8'))) as {
-    layers: ({ kind: string; id: string } & Record<string, unknown>)[];
-  };
+  const before = await readFile(path, 'utf8');
+  const after = JSON.stringify(config, null, 2) + '\n';
+  if (after !== before) await writeJsonAtomic(path, config);
+}
+
+/** The build config with the batch as its newest layer (dropped cards from state) and, if given, another version. */
+export function withBatchLayer(config: BatchesConfig, batch: Batch, version?: string): BatchesConfig {
   const inCorpus = new Set(batch.corpus.keys());
   const dropped: Record<string, string> = {};
   for (const [cardId, card] of Object.entries(batch.state.cards).sort(([a], [b]) => (a < b ? -1 : 1))) {
@@ -420,12 +490,11 @@ export async function registerBatch(root: string, batch: Batch): Promise<void> {
     else if (card.heldOut && !inCorpus.has(cardId)) dropped[cardId] = card.heldOut;
   }
   const layer = { kind: 'batch', id: batch.id, dropped };
-  const index = config.layers.findIndex((entry) => entry.kind === 'batch' && entry.id === batch.id);
-  if (index >= 0) config.layers[index] = layer;
-  else config.layers.push(layer);
-  const before = await readFile(path, 'utf8');
-  const after = JSON.stringify(config, null, 2) + '\n';
-  if (after !== before) await writeJsonAtomic(path, config);
+  const layers = [...config.layers];
+  const index = layers.findIndex((entry) => entry.kind === 'batch' && entry.id === batch.id);
+  if (index >= 0) layers[index] = layer;
+  else layers.push(layer);
+  return { ...config, ...(version ? { version } : {}), layers };
 }
 
 async function readTrace(batch: Batch, cardId: string) {
