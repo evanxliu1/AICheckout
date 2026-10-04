@@ -17,6 +17,8 @@ export interface Derived {
   ready: boolean;
   /** Stale because an upstream stage is, not because this stage's own inputs changed. */
   propagated?: boolean;
+  /** Stale, but a gitignored input the stage runs with (a capture) is not on this machine. */
+  inputsMissing?: boolean;
   record?: StageRecord;
 }
 
@@ -82,12 +84,13 @@ export function deriveStage(
   if (!inputs) return { status: done ? 'stale' : 'pending', ready: true, record };
   if (inputs.missingHashed.length) return { status: 'inputs-missing', ready: true, record };
   const hash = inputHash(stage, inputs.stageVersion, inputs.config, inputs.inputs);
-  const runnable = (status: Status): Derived => ({
-    status: inputs.missingToRun.length ? 'inputs-missing' : status,
-    inputHash: hash,
-    ready: true,
-    record,
-  });
+  // A computable hash that differs is `stale` even without the captures, so staleness shows (and propagates) in
+  // every checkout; `inputs-missing` is for stages that would otherwise run.
+  const missing = inputs.missingToRun.length > 0;
+  const runnable = (status: Status): Derived =>
+    status === 'stale'
+      ? { status, inputHash: hash, ready: true, record, ...(missing ? { inputsMissing: true } : {}) }
+      : { status: missing ? 'inputs-missing' : status, inputHash: hash, ready: true, record };
   switch (record?.status) {
     case 'done':
       return record.inputHash === hash
@@ -261,6 +264,8 @@ export interface NextStep {
 
 const pipeline = (args: string): string => `npm run pipeline -- ${args}`;
 const ACTIONABLE = new Set<Status>(['pending', 'stale', 'failed-gate']);
+/** Runs of a CLI stage whose gate failed before `next` hands the card to the session. */
+export const GATE_ATTEMPTS = 2;
 
 /** The single next actionable step of one batch. */
 export function nextStep(view: BatchView): NextStep {
@@ -319,7 +324,27 @@ export function nextStep(view: BatchView): NextStep {
         failed[0].issuer,
         failed.map((c) => c.cardId),
       );
-    const todo = cards.filter((card) => ACTIONABLE.has(card.stages[stage].status));
+    // A CLI stage whose gate failed GATE_ATTEMPTS times goes to the session instead of another run.
+    const stuck = AGENTS[stage]
+      ? []
+      : cards.filter(
+          (card) =>
+            card.stages[stage].status === 'failed-gate' &&
+            (card.stages[stage].record?.attempts ?? 0) >= GATE_ATTEMPTS,
+        );
+    if (stuck.length)
+      return {
+        ...queueGate(
+          id,
+          stage,
+          stuck[0].issuer,
+          stuck.map((card) => card.cardId),
+        ),
+        reason: `gate-failed at ${stage} after ${GATE_ATTEMPTS} attempts (owner session): see the gate errors, fix the cause, then run again`,
+      };
+    const todo = cards.filter(
+      (card) => ACTIONABLE.has(card.stages[stage].status) && !card.stages[stage].inputsMissing,
+    );
     if (todo.length) {
       if (AGENTS[stage]) {
         const issuer = todo[0].issuer;
@@ -336,7 +361,9 @@ export function nextStep(view: BatchView): NextStep {
         reason: `${stage}: ${ids.length} card(s) pending, stale or failed`,
       };
     }
-    const missing = cards.filter((card) => card.stages[stage].status === 'inputs-missing');
+    const missing = cards.filter(
+      (card) => card.stages[stage].status === 'inputs-missing' || card.stages[stage].inputsMissing,
+    );
     if (missing.length)
       return {
         kind: 'queue',

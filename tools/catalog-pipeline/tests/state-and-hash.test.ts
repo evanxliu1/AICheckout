@@ -121,9 +121,13 @@ describe('labels and anchors hashes', () => {
   it('splits a case: anchors move only the anchors hash, labels only the labels hash', () => {
     const moved = structuredClone(draft);
     moved.reference.rules[0].anchors = ['fake words two'];
-    moved.reference.rules[0].issuerWording = 'fake words two';
     expect(labelsHash(moved)).toBe(labelsHash(draft));
     expect(anchorsHash(moved)).not.toBe(anchorsHash(draft));
+    // The issuer wording is a label: the verifier judges it and the catalog ships it.
+    const reworded = structuredClone(draft);
+    reworded.reference.rules[0].issuerWording = 'fake words two';
+    expect(labelsHash(reworded)).not.toBe(labelsHash(draft));
+    expect(anchorsHash(reworded)).toBe(anchorsHash(draft));
     const relabelled = structuredClone(draft);
     relabelled.reference.rules[0].rateBps = 400;
     expect(labelsHash(relabelled)).not.toBe(labelsHash(draft));
@@ -132,7 +136,7 @@ describe('labels and anchors hashes', () => {
 
   it('verifier findings ignore adjudication and anchor-path current values', () => {
     expect(isAnchorPath('reference.rules.0.anchors.1')).toBe(true);
-    expect(isAnchorPath('reference.rules.0.issuerWording')).toBe(true);
+    expect(isAnchorPath('reference.rules.0.issuerWording')).toBe(false);
     expect(isAnchorPath('reference.rules.0.rateBps')).toBe(false);
     const card = {
       cardId: 'x',

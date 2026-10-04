@@ -25,8 +25,10 @@ export interface Harness {
   dir: string;
   logs: string[];
   calls: string[][];
-  /** Exit code the stub extract returns next (3 = usage limit). */
+  /** Exit code the stub extract returns next (3 = usage limit, before any trace is written). */
   extractExit: number[];
+  /** The stub extract's trace status, and whether it hits the usage limit only after writing every trace. */
+  extract: { status: string; limitAfterTraces: boolean };
   clock: { now: Date };
   run: (...argv: string[]) => Promise<number>;
   view: () => Promise<BatchView>;
@@ -42,6 +44,7 @@ export async function harness(): Promise<Harness> {
   const logs: string[] = [];
   const calls: string[][] = [];
   const extractExit: number[] = [];
+  const extract = { status: 'evidence_valid', limitAfterTraces: false };
   const clock = { now: new Date('2026-10-04T10:00:00Z') };
 
   const exec = async (command: string, args: string[]): Promise<number> => {
@@ -97,11 +100,11 @@ export async function harness(): Promise<Harness> {
               cardId: id,
               configuration: EXTRACT_CONFIG,
               documents,
-              trace: { status: 'evidence_valid' },
+              trace: { status: extract.status },
             }),
           );
         }
-        return code;
+        return extract.limitAfterTraces ? 3 : code;
       }
       case 'scripts/draft-expansion-labels.mjs':
         await cp(join(FIXTURE, 'corpus.draft.json'), join(dir, 'corpus.draft.json'));
@@ -135,6 +138,7 @@ export async function harness(): Promise<Harness> {
     logs,
     calls,
     extractExit,
+    extract,
     clock,
     run,
     view: async () => deriveBatch(await loadBatch(root, BATCH), clock.now),

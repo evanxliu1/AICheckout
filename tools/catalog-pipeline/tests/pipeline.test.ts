@@ -364,3 +364,84 @@ describe('model stages and usage limits', () => {
     expect(statuses(await h.view(), 'extract')).toEqual(['done', 'done']);
   });
 });
+
+describe('review fixes', () => {
+  it('a re-draft with another issuer wording makes verify stale', async () => {
+    const h = await harness();
+    await initWithResearch(h);
+    await advance(h, 'overlay');
+    const draft = JSON.parse(await readFile(join(h.dir, 'corpus.draft.json'), 'utf8'));
+    draft.cases[1].reference.rules[0].issuerWording = 'fake beta words';
+    await writeFile(join(h.dir, 'corpus.draft.json'), JSON.stringify(draft));
+    const beta = (await h.view()).cards[1];
+    expect(beta.stages.verify.status).toBe('stale');
+    expect(beta.stages.overlay.status).toBe('stale');
+    expect(beta.rebaseAnchors).toBe(false);
+  });
+
+  it('a changed manifest hash is stale even where the captures are missing, and downstream follows', async () => {
+    const h = await harness();
+    await initWithResearch(h);
+    await advance(h, 'overlay');
+    await rm(join(h.dir, 'captures'), { recursive: true });
+    let view = await h.view();
+    expect(statuses(view, 'extract')).toEqual(['done', 'done']);
+    const manifest = JSON.parse(await readFile(join(h.dir, 'manifest.json'), 'utf8'));
+    manifest.sources[0].sha256 = 'a'.repeat(64);
+    await writeFile(join(h.dir, 'manifest.json'), JSON.stringify(manifest));
+    view = await h.view();
+    const alpha = view.cards[0];
+    for (const stage of ['extract', 'draft', 'verify', 'adjudicate', 'apply', 'overlay'] as const)
+      expect(alpha.stages[stage].status).toBe('stale');
+    expect(view.cards[1].stages.overlay.status).toBe('done');
+    // It cannot run here: run skips it and next names the missing inputs.
+    const calls = h.calls.length;
+    expect(await h.run('run', 'extract', '--batch', BATCH)).toBe(0);
+    expect(h.calls.length).toBe(calls);
+    expect(await h.json<NextStep>('next')).toMatchObject({
+      kind: 'queue',
+      stage: 'extract',
+      cardIds: [ALPHA],
+    });
+  });
+
+  it('a CLI gate that failed twice goes to the session as gate-failed', async () => {
+    const h = await harness();
+    await initWithResearch(h);
+    await advance(h, 'capture');
+    h.extract.status = 'timeout';
+    expect(await h.run('run', 'extract', '--batch', BATCH)).toBe(0);
+    expect(statuses(await h.view(), 'extract')).toEqual(['failed-gate', 'failed-gate']);
+    expect(await h.json<NextStep>('next')).toMatchObject({ kind: 'cli', stage: 'extract' });
+    expect(await h.run('run', 'extract', '--batch', BATCH)).toBe(0);
+    expect((await h.state()).cards[ALPHA].stages.extract?.attempts).toBe(2);
+    expect(await h.json<NextStep>('next')).toMatchObject({
+      kind: 'queue',
+      stage: 'extract',
+      code: 'gate-failed',
+      cardIds: [ALPHA, BETA],
+    });
+    const status = await h.json<{ batches: StatusJson[] }>('status');
+    expect(status.batches[0].queue.filter((item) => item.code === 'gate-failed')).toHaveLength(2);
+  });
+
+  it('--wait-minutes does not sleep when nothing is paused', async () => {
+    const h = await harness();
+    await initWithResearch(h);
+    await advance(h, 'capture');
+    h.extract.limitAfterTraces = true;
+    expect(await h.run('run', 'extract', '--batch', BATCH, '--wait-minutes', '20')).toBe(0);
+    expect(h.clock.now.toISOString()).toBe('2026-10-04T10:00:00.000Z');
+    expect(statuses(await h.view(), 'extract')).toEqual(['done', 'done']);
+  });
+
+  it('rebase-anchors with nothing to rebase leaves state.json untouched', async () => {
+    const h = await harness();
+    await initWithResearch(h);
+    await advance(h, 'overlay');
+    const before = await readFile(join(h.dir, 'pipeline/state.json'), 'utf8');
+    h.clock.now = new Date('2026-10-04T11:00:00Z');
+    expect(await h.run('rebase-anchors', '--batch', BATCH)).toBe(0);
+    expect(await readFile(join(h.dir, 'pipeline/state.json'), 'utf8')).toBe(before);
+  });
+});

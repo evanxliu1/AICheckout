@@ -73,6 +73,6 @@ export async function rebaseAnchors(env: Env, batchId: string): Promise<RebaseRe
       result.rebased.push(cardId);
     }
   }
-  await writeState(statePath(batch.dir), batch.state, env.now());
+  if (result.rebased.length) await writeState(statePath(batch.dir), batch.state, env.now());
   return result;
 }

@@ -113,11 +113,15 @@ export async function runStage(
     .filter((card) => !only || only.has(card.cardId))
     .filter(
       (card) =>
-        card.stages[stage].ready && ['pending', 'stale', 'failed-gate'].includes(card.stages[stage].status),
+        card.stages[stage].ready &&
+        !card.stages[stage].inputsMissing &&
+        ['pending', 'stale', 'failed-gate'].includes(card.stages[stage].status),
     )
     .map((card) => card.cardId);
   const missing = view.cards.filter(
-    (card) => (!only || only.has(card.cardId)) && card.stages[stage].status === 'inputs-missing',
+    (card) =>
+      (!only || only.has(card.cardId)) &&
+      (card.stages[stage].status === 'inputs-missing' || card.stages[stage].inputsMissing),
   );
   if (missing.length)
     env.log(
@@ -251,6 +255,7 @@ export async function runStage(
       }
       await writeState(statePath(batch.dir), batch.state, env.now());
       if (code !== EXIT_USAGE_LIMIT) return code === 0 ? 0 : 1;
+      if (!paused.length) return 0;
       if (!options.waitMinutes) {
         env.log(
           `run extract: usage limit; ${paused.length} card(s) paused. Re-run later, or pass --wait-minutes.`,
@@ -262,7 +267,6 @@ export async function runStage(
       );
       await env.sleep(options.waitMinutes * 60_000);
       pending = paused;
-      if (!pending.length) return 0;
     }
   }
 

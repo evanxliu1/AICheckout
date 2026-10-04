@@ -35,15 +35,15 @@ export function inputHash(stage: string, stageVersion: string, config: unknown, 
 }
 
 /**
- * Fields that carry quotes or evidence rather than labels: anchors, quotes, issuer wordings (verbatim spans), a
- * hint's anchor method and the drafting notes about anchors. The labels hash leaves them out, the anchors hash
+ * Fields that carry quotes or evidence rather than labels: anchors, quotes, a hint's anchor method and the drafting
+ * notes about anchors. `issuerWording` is a label (a corpus rule field the verifier judges and the catalog ships),
+ * so a changed wording changes the labels hash. The labels hash leaves them out, the anchors hash
  * holds only them, so a re-draft that moves anchors without changing a label leaves verification standing.
  */
 export const ANCHOR_KEYS = new Set([
   'anchors',
   'anchor',
   'anchorMethod',
-  'issuerWording',
   'quote',
   'quotes',
   'evidence',
