@@ -9,7 +9,14 @@ npm run pipeline -- status [--batch B] [--json]
 npm run pipeline -- next [--batch B] --json
 npm run pipeline -- run capture|extract|draft|apply|build|eval [--batch B] [--only ids] [--concurrency N] [--wait-minutes N]
 npm run pipeline -- rebase-anchors [--batch B]
+npm run pipeline -- claim research|verify|adjudicate|overlay --issuer <slug> [--batch B] [--release]
+npm run pipeline -- accept research|verify|adjudicate|overlay --issuer <slug> --agent-run <id> [--model <id>] \
+  [--duration-ms N] [--tokens N] [--batch B] [--dry-run]
+npm run pipeline -- resolve capture-flagged --source <id> --reason expected-short-page|false-positive-flag|keep-existing-capture
+npm run pipeline -- lint-labels [--batch B | --dir evals/curation/expansion] [--json]
 ```
+
+`claim` writes a work packet (`pipeline/packets/`, gitignored: absolute paths of this machine) naming the cards, the inputs and the one output file the agent writes; `accept` runs the stage's gates on that file and records the packet, agent run, model and, from the subagent's completion notice, `durationMs` and `tokens` in `state.json`. Gate errors name paths and fields, never issuer text.
 
 Runs on Node 24 type stripping (`node src/cli.ts`); tests are `npm test --workspace=@ai-checkout/catalog-pipeline` and use synthetic fixtures only.
 

@@ -10,6 +10,10 @@ import { sha256Json } from '../../../scripts/lib/catalog-batches.mjs';
 import { ALPHA, BATCH, BETA, FIXTURE, harness, initWithResearch } from './helpers.ts';
 import type { Harness } from './helpers.ts';
 
+/** Fixture JSON edited in place by the tests. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Data = Record<string, any>;
+
 const ISSUER = 'example-bank';
 /** Sentences of the fixture captures: no gate output may contain them. */
 const CAPTURE_SENTENCES = ['fake alpha words 2% back', 'fake beta words 3X points', 'Synthetic page'];
@@ -49,7 +53,7 @@ async function initOnly(h: Harness) {
   if (code !== 0) throw new Error(h.logs.join('\n'));
 }
 
-async function researchOutput(packet: Packet, edit: (data: Record<string, any>) => void = () => {}) {
+async function researchOutput(packet: Packet, edit: (data: Data) => void = () => {}) {
   const data = await fixture('research-output.json');
   data.packetId = packet.packetId;
   edit(data);
@@ -64,7 +68,7 @@ async function toDraft(h: Harness) {
     if ((await h.run('run', stage, '--batch', BATCH)) !== 0) throw new Error(h.logs.join('\n'));
 }
 
-async function findings(packet: Packet, edit: (data: Record<string, any>) => void = () => {}) {
+async function findings(packet: Packet, edit: (data: Data) => void = () => {}) {
   const data = await fixture('verification/example-bank.json');
   Object.assign(data, { packetId: packet.packetId, batch: BATCH, provenance: 'agent-verified' });
   data.verifier.filesRead = [
@@ -366,7 +370,7 @@ describe('apply and overlay', () => {
     if ((await accept(h, 'adjudicate', 'run-adjudicator')) !== 0) throw new Error(h.logs.join('\n'));
     if ((await h.run('run', 'apply', '--batch', BATCH)) !== 0) throw new Error(h.logs.join('\n'));
   }
-  async function fragment(h: Harness, packet: Packet, edit: (data: Record<string, any>) => void = () => {}) {
+  async function fragment(h: Harness, packet: Packet, edit: (data: Data) => void = () => {}) {
     const data = await fixture('overlay-fragment.json');
     data.packetId = packet.packetId;
     const corpus = JSON.parse(await readFile(join(h.dir, 'corpus.json'), 'utf8'));
