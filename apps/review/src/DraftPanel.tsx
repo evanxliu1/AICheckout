@@ -21,7 +21,7 @@ import { catalogChanges, publicationIssues, ruleSummaries } from './comparison';
 import ChangesTable from './ChangesTable';
 import LazyDisclosure from './LazyDisclosure';
 import StructuredEditor from './StructuredEditor';
-import { manifestComparison, sha256 } from './manifest';
+import { manifestComparison, manifestStaleNote, sha256 } from './manifest';
 
 export type CaptureItem = { sourceKey: string; body: string };
 /** Reads one attached capture's text; the draft summary lists sources without text. */
@@ -71,8 +71,8 @@ function sourceMatches(detail: ReviewSummary, sourceId: string) {
  * One step to attach evidence for every source the draft cites but has not captured yet: load the
  * saved capture files (named `<source id>.txt`) one by one or as a whole folder, or paste text, then
  * capture them all and attach them in a single draft revision. Loaded files are checked against the
- * SHA-256 in the corpus manifests (real, merchant, expansion and pipeline batches); a file whose hash
- * matches none of its source's known captures is not loaded. Pasted text that differs is only flagged.
+ * SHA-256 in the corpus manifests (real, merchant, expansion and pipeline batches), preferring the capture
+ * dated the source's checkedOn; a file whose hash differs is not loaded. Pasted text that differs is only flagged.
  */
 function CaptureMissingSources({
   detail,
@@ -123,14 +123,17 @@ function CaptureMissingSources({
         continue;
       }
       const id = file.name.replace(/\.txt$/i, '');
-      if (!missing.some((source) => source.id === id)) ignored.push(file.name);
+      const source = missing.find((value) => value.id === id);
+      if (!source) ignored.push(file.name);
       else if (file.size > MAX_CAPTURE_FILE_BYTES) oversized.push(file.name);
       else {
         const text = await file.text(),
           hash = await sha256(text);
-        const comparison = manifestComparison(id, hash);
-        if (comparison === 'differs') differs.push(file.name);
-        else {
+        const comparison = manifestComparison(id, hash, source.checkedOn);
+        if (comparison === 'differs') {
+          const stale = manifestStaleNote(id, hash, source.checkedOn);
+          differs.push(stale ? `${file.name}, which ${stale}` : file.name);
+        } else {
           next[id] = text;
           nextHashes[id] = hash;
           matched.push(id);
@@ -222,7 +225,8 @@ function CaptureMissingSources({
         missing.map((source) => {
           const text = texts[source.id] ?? '';
           const hash = text ? hashes[source.id] : undefined;
-          const comparison = manifestComparison(source.id, hash);
+          const comparison = manifestComparison(source.id, hash, source.checkedOn);
+          const stale = manifestStaleNote(source.id, hash, source.checkedOn);
           return (
             <Field
               key={source.id}
@@ -234,7 +238,7 @@ function CaptureMissingSources({
                 comparison === 'matches'
                   ? ' Matches the corpus manifest capture.'
                   : comparison === 'differs'
-                    ? ' Differs from the corpus manifest capture: check that this is the right file.'
+                    ? ` Differs from the corpus manifest capture${stale ? ` (it ${stale})` : ''}: check that this is the right file.`
                     : ''
               }`}
               error={
@@ -370,7 +374,7 @@ const SourceEvidence = memo(function SourceEvidence({
   const sources = detail.draft.catalog.sources;
   const matching = sources.filter((source) => sourceMatches(detail, source.id)).length;
   const inManifest = detail.sources.filter(
-    (doc) => manifestComparison(doc.source_key, doc.content_hash) === 'matches',
+    (doc) => manifestComparison(doc.source_key, doc.content_hash, doc.checked_on) === 'matches',
   ).length;
   const needle = query.trim().toLowerCase();
   const shown = needle
@@ -404,7 +408,9 @@ const SourceEvidence = memo(function SourceEvidence({
       {shown.map((source) => {
         const doc = detail.sources.find((value) => value.source_key === source.id);
         const matches = sourceMatches(detail, source.id);
-        const comparison = doc ? manifestComparison(source.id, doc.content_hash) : undefined;
+        const comparison = doc
+          ? manifestComparison(source.id, doc.content_hash, source.checkedOn)
+          : undefined;
         return (
           <Card as="article" hasBorder key={source.id}>
             <div className="source-card stack-tight">

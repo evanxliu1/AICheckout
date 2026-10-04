@@ -560,6 +560,27 @@ describe('review-app readiness', () => {
     expect(reviewAppReadiness([{ id: 'shared', sha256: SHA(3), dir: null }], manifests).ok).toBe(true);
   });
 
+  it('requires the capture dated checkedOn when a manifest has one, else any capture', () => {
+    const dated = [
+      {
+        path: 'evals/curation/expansion/manifest.json',
+        sources: [{ id: 'p', sha256: SHA(1), capturedOn: '2026-10-02' }],
+      },
+      {
+        path: 'evals/curation/batches/example-bank-2026-10/manifest.json',
+        sources: [{ id: 'p', sha256: SHA(2), capturedOn: '2026-10-04' }],
+      },
+    ];
+    const check = (sha256: string, checkedOn: string) =>
+      reviewAppReadiness([{ id: 'p', sha256, dir: null, checkedOn }], dated);
+    expect(check(SHA(2), '2026-10-04').ok).toBe(true);
+    expect(check(SHA(1), '2026-10-04').differs).toEqual([{ id: 'p', expected: SHA(1), review: [SHA(2)] }]);
+    expect(check(SHA(1), '2026-10-02').ok).toBe(true);
+    // No capture dated checkedOn (a merchant page dated before its capture, a page re-checked unchanged): any.
+    expect(check(SHA(1), '2026-11-01').ok).toBe(true);
+    expect(check(SHA(3), '2026-11-01').ok).toBe(false);
+  });
+
   it('lists a missing hash and a hash that is none of the bundled ones', () => {
     const result = reviewAppReadiness(
       [

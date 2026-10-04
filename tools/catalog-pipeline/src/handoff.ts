@@ -20,6 +20,8 @@ export const LEDGER = 'evals/curation/rule-id-ledger.json';
 export interface ManifestSource {
   id: string;
   sha256: string;
+  capturedOn?: string;
+  checkedOn?: string;
 }
 /** A manifest the review app bundles (repository-relative path), in import order. */
 export interface ReviewManifest {
@@ -31,6 +33,8 @@ export interface CitedSource {
   id: string;
   sha256: string | null;
   dir: string | null;
+  /** The catalog source's checkedOn: the review app requires the capture of this date when a manifest has one. */
+  checkedOn?: string;
 }
 export interface CatalogSummary {
   version: string;
@@ -80,23 +84,33 @@ export interface ReviewReadiness {
 }
 
 /**
- * Whether the hosted review app can match every source the catalog cites. The review app keeps every hash the
- * manifests `apps/review/src/manifest.ts` bundles record for a source ID (several dated captures are fine) and a
- * loaded capture matches when its hash is any of them. A cited source with no bundled hash, or whose hash is not
- * among them, is missing or differs.
+ * Whether the hosted review app can match every source the catalog cites. The review app keeps every capture the
+ * manifests `apps/review/src/manifest.ts` bundles record for a source ID; a loaded capture must be the one dated the
+ * source's checkedOn when a manifest has that date, otherwise any recorded capture. A cited source with no bundled
+ * hash, or whose hash is not among the captures its date selects, is missing or differs.
  */
 export function reviewAppReadiness(cited: CitedSource[], manifests: ReviewManifest[]): ReviewReadiness {
-  const known = new Map<string, Set<string>>();
+  const known = new Map<string, ManifestSource[]>();
   for (const manifest of manifests)
-    for (const source of manifest.sources)
-      known.set(source.id, (known.get(source.id) ?? new Set()).add(source.sha256));
+    for (const source of manifest.sources) known.set(source.id, [...(known.get(source.id) ?? []), source]);
   const missing: string[] = [];
   const differs: ReviewReadiness['differs'] = [];
   for (const source of [...cited].sort((a, b) => a.id.localeCompare(b.id))) {
-    const hashes = known.get(source.id);
-    if (!hashes) missing.push(source.id);
-    else if (source.sha256 && !hashes.has(source.sha256))
-      differs.push({ id: source.id, expected: source.sha256, review: [...hashes] });
+    const captures = known.get(source.id);
+    if (!captures) {
+      missing.push(source.id);
+      continue;
+    }
+    const dated = captures.filter(
+      (capture) => source.checkedOn && [capture.capturedOn, capture.checkedOn].includes(source.checkedOn),
+    );
+    const selected = dated.length ? dated : captures;
+    if (source.sha256 && !selected.some((capture) => capture.sha256 === source.sha256))
+      differs.push({
+        id: source.id,
+        expected: source.sha256,
+        review: selected.map((capture) => capture.sha256),
+      });
   }
   return { ok: !missing.length && !differs.length, missing, differs };
 }
@@ -112,7 +126,7 @@ export async function readReviewManifests(root: string): Promise<ReviewManifest[
   const paths = [...text.matchAll(/^import \w+ from '([^']+\.json)';$/gm)].map((match) =>
     resolve(dirname(module), match[1]),
   );
-  const globs = [...text.matchAll(/import\.meta\.glob<\w+>\('([^'*]+)\/\*\/manifest\.json'/g)];
+  const globs = [...text.matchAll(/import\.meta\.glob(?:<\w+>)?\('([^'*]+)\/\*\/manifest\.json'/g)];
   if (!paths.length || globs.length !== 1)
     throw new Error(`${REVIEW_MANIFEST_MODULE}: expected JSON imports and one batch-manifest glob`);
   const batches = resolve(dirname(module), globs[0][1]);
@@ -121,8 +135,9 @@ export async function readReviewManifests(root: string): Promise<ReviewManifest[
     if (await exists(dir)) paths.push(dir);
   const out: ReviewManifest[] = [];
   for (const path of paths) {
-    const data = JSON.parse(await readFile(path, 'utf8')) as { sources: ManifestSource[] };
-    out.push({ path: relative(root, path), sources: data.sources });
+    const data = JSON.parse(await readFile(path, 'utf8')) as { sources?: ManifestSource[] };
+    // The review app skips a manifest without sources; so does this check.
+    if (Array.isArray(data.sources)) out.push({ path: relative(root, path), sources: data.sources });
   }
   return out;
 }
@@ -427,7 +442,7 @@ export async function handoffReport(
       );
     else {
       out(
-        `**Publish blocked:** ${readiness.missing.length} cited source(s) are in no bundled manifest, ${readiness.differs.length} have none of their bundled hashes. Every cited capture's SHA-256 must be in a committed manifest the review app bundles before Evan can publish.`,
+        `**Publish blocked:** ${readiness.missing.length} cited source(s) are in no bundled manifest, ${readiness.differs.length} have none of the bundled hashes their date selects. Every cited capture's SHA-256 must be in a committed manifest the review app bundles before Evan can publish.`,
       );
       if (readiness.missing.length) out(`- missing: ${idList(readiness.missing)}`);
       for (const item of readiness.differs)
@@ -496,7 +511,12 @@ interface CatalogLibs {
 }
 interface CatalogV3Libs {
   buildRelease: (inputs: unknown) => {
-    catalog: { version: string; verifiedAt: string; expiresAt: string; sources: { id: string }[] };
+    catalog: {
+      version: string;
+      verifiedAt: string;
+      expiresAt: string;
+      sources: { id: string; checkedOn: string }[];
+    };
     dates: { oldest: string };
     continuity: CatalogSummary['continuity'];
   };
@@ -546,7 +566,12 @@ export async function buildCatalogSummary(root: string): Promise<CatalogSummary>
     continuity,
     cited: catalog.sources.map((source) => {
       const entry = winner.get(source.id);
-      return { id: source.id, sha256: entry?.sha256 ?? null, dir: entry?.dir ?? null };
+      return {
+        id: source.id,
+        sha256: entry?.sha256 ?? null,
+        dir: entry?.dir ?? null,
+        checkedOn: source.checkedOn,
+      };
     }),
   };
 }

@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T22:05:00Z
+  at: 2026-10-04T22:22:00Z
 ---
 
 # Now
 
-As of 2026-10-04T22:05Z.
+As of 2026-10-04T22:22Z.
 
 ## Current state
 
@@ -25,7 +25,7 @@ As of 2026-10-04T22:05Z.
 
 - **Phase 8, card-expansion pipeline v1: built** (coordinator, 2026-10-04). PRs #36 (approval), #37 multi-batch builder with the rule-ID ledger, #38 CLI skeleton, #39 `eval`/`handoff`, #40 `claim`/`accept`, gates and label-evidence lint, #41 skill and four pinned agents: all merged after CI and an independent reviewer subagent ([pipeline](system/card-expansion-pipeline.md)).
 - **Acceptance run** (milestone 6), branch `catalog-wells-fargo-2026-10`: Wells Fargo refresh batch `wells-fargo-2026-10`, 6 cards, end to end from one chat request; results in [`docs/evals/pipeline-v1.md`](../docs/evals/pipeline-v1.md). No rate, cap or category differs from `expansion.v1`; rule-ID continuity 790 kept, 30 changed (all Wells Fargo), 0 dropped. Its catalog change is **not** shipped; publishing it is Evan's call ([decision](decisions/2026-10-04-wells-fargo-batch-not-shipped.md)). Gitignored captures and traces live only in `../AICheckout-p8-wf`: keep that worktree.
-- **Phase 9 milestone 1**, branch `phase9-m1-review-batch-manifests` (2026-10-04): the review app bundles every pipeline batch manifest and accepts any recorded hash per source ([decision](decisions/2026-10-04-review-app-batch-manifests.md)); a batch is publishable after its merge and the Render deploy.
+- **Phase 9 milestone 1**, branch `phase9-m1-review-batch-manifests` (2026-10-04): the review app bundles every pipeline batch manifest and matches a capture by the source's `checkedOn` ([decision](decisions/2026-10-04-review-app-batch-manifests.md)); a batch is publishable after its merge and the Render deploy.
 
 ## Open questions and next steps
 
