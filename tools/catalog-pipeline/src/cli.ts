@@ -12,6 +12,8 @@
 //                           [--duration-ms N] [--tokens N] [--batch B] [--dry-run]
 //   npm run pipeline -- resolve capture-flagged --source <id> --reason <code> [--batch B]
 //   npm run pipeline -- lint-labels [--batch B | --dir evals/curation/expansion] [--json]
+//   npm run pipeline -- eval [--batch B] [--cross-model-run DIR]
+//   npm run pipeline -- handoff [--batch B]
 //
 // Exit status: 0 done, 1 error or failed gate, 2 usage or not built yet, 3 usage limit (extract paused).
 import { spawn } from 'node:child_process';
@@ -21,6 +23,8 @@ import { parseArgs } from 'node:util';
 import { deriveBatch, nextStep } from './derive.ts';
 import type { BatchView, NextStep } from './derive.ts';
 import { batchDir, batchFileSchema, listBatches, loadBatch, slugify, statePath } from './files.ts';
+import { runEval } from './eval.ts';
+import { handoff } from './handoff.ts';
 import { rebaseAnchors } from './rebase.ts';
 import { runStage } from './run.ts';
 import type { Env } from './run.ts';
@@ -52,7 +56,9 @@ const USAGE = `Usage: npm run pipeline -- <command>
   claim <${ISSUER_STAGES.join('|')}> --issuer <slug> [--batch B] [--release]
   accept <${ISSUER_STAGES.join('|')}> --issuer <slug> --agent-run <id> [--model <id>] [--duration-ms N] [--tokens N] [--batch B] [--dry-run]
   resolve capture-flagged --source <id> --reason <${CAPTURE_FLAG_REASONS.join('|')}> [--batch B]
-  lint-labels [--batch B | --dir <corpus dir>] [--json]`;
+  lint-labels [--batch B | --dir <corpus dir>] [--json]
+  eval [--batch B] [--cross-model-run DIR]
+  handoff [--batch B]`;
 
 const list = (value: string | undefined): string[] =>
   (value ?? '')
@@ -235,6 +241,7 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
         source: { type: 'string' },
         reason: { type: 'string' },
         dir: { type: 'string' },
+        'cross-model-run': { type: 'string' },
       },
     });
     switch (command) {
@@ -284,8 +291,15 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
           only: values.only ? list(values.only) : undefined,
           concurrency,
           waitMinutes,
+          crossModelRun: values['cross-model-run'],
         });
       }
+      case 'eval':
+        return await runEval(env, await oneBatch(env, values.batch), {
+          crossModelRun: values['cross-model-run'],
+        });
+      case 'handoff':
+        return await handoff(env, values.batch);
       case 'rebase-anchors': {
         const result = await rebaseAnchors(env, await oneBatch(env, values.batch));
         env.log(

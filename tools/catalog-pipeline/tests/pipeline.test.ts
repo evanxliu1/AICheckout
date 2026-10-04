@@ -129,10 +129,9 @@ describe('status and next through the stages', () => {
     });
     expect(await h.run('run', 'build', '--batch', BATCH)).toBe(0);
     await expectNext({ kind: 'cli', stage: 'eval' });
-    expect(await h.run('run', 'eval', '--batch', BATCH)).toBe(2);
-    expect(h.logs.at(-1)).toMatch(/milestone 5/);
 
-    // Eval arrives in milestone 5; with it recorded done, the queue holds the publish item and next hands off.
+    // With eval recorded done (eval itself is tested in eval-handoff.test.ts), the queue holds the publish item
+    // and next hands off.
     const state = await h.state();
     const view = await h.view();
     state.batchStages.eval = { status: 'done', inputHash: view.eval.inputHash };

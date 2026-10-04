@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, catalog, pipeline, phase-8, gates]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T08:00:00Z
+  at: 2026-10-04T04:44:00Z
 sources:
   - resource: ../system/card-expansion-pipeline.md
     title: Card-expansion pipeline (design and what is built)

@@ -14,6 +14,8 @@ npm run pipeline -- accept research|verify|adjudicate|overlay --issuer <slug> --
   [--duration-ms N] [--tokens N] [--batch B] [--dry-run]
 npm run pipeline -- resolve capture-flagged --source <id> --reason expected-short-page|false-positive-flag|keep-existing-capture
 npm run pipeline -- lint-labels [--batch B | --dir evals/curation/expansion] [--json]
+npm run pipeline -- eval [--batch B] [--cross-model-run DIR]   # writes pipeline/eval.json; prints the cross-model command
+npm run pipeline -- handoff [--batch B]                        # prints the PR checklist and Evan's publish steps; writes nothing
 ```
 
 `claim` writes a work packet (`pipeline/packets/`, gitignored: absolute paths of this machine) naming the cards, the inputs and the one output file the agent writes; `accept` runs the stage's gates on that file and records the packet, agent run, model and, from the subagent's completion notice, `durationMs` and `tokens` in `state.json`. Gate errors name paths and fields, never issuer text.

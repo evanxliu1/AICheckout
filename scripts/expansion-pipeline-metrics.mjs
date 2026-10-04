@@ -1,11 +1,12 @@
 // Draft → verified pipeline metrics for the catalog expansion, from committed files only (no captures).
 //
 //   node scripts/expansion-pipeline-metrics.mjs [--dir evals/curation/expansion]     # print the JSON
+//   node scripts/expansion-pipeline-metrics.mjs --dir <batch dir> --output FILE       # write it (pipeline eval)
 //   node scripts/expansion-pipeline-metrics.mjs --check [--results docs/evals/expansion.json]
 //
 // Reads cards.json, corpus.draft.json, corpus.json and verification/*.json. The output is deterministic (no
 // timestamps). --check recomputes the metrics and fails if the `pipeline` section of the results file differs.
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual, parseArgs } from 'node:util';
@@ -17,6 +18,7 @@ const { values } = parseArgs({
     dir: { type: 'string', default: 'evals/curation/expansion' },
     check: { type: 'boolean', default: false },
     results: { type: 'string', default: 'docs/evals/expansion.json' },
+    output: { type: 'string' },
   },
 });
 const metrics = pipelineMetrics(await loadPipelineInputs(resolve(root, values.dir)));
@@ -29,4 +31,6 @@ if (values.check) {
     process.exit(1);
   }
   console.log(`${values.results}: pipeline metrics up to date.`);
-} else console.log(JSON.stringify(metrics, null, 2));
+} else if (values.output)
+  await writeFile(resolve(root, values.output), JSON.stringify(metrics, null, 2) + '\n');
+else console.log(JSON.stringify(metrics, null, 2));
