@@ -3,7 +3,7 @@
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
 ## 2026-10-04
-* **Directive** Evan approved the card-expansion pipeline design with the Fable 5.1 review's changes (2026-10-03, his time) and set the order Phase 8 pipeline v1 → Phase 9 freshness → Phase 10 merchant-expansion pipeline → Web Store release; Phase 8 target 2026-10-17. [User directives](product/user-directives.md). (coordinator, claude-code/claude-opus-5-5)
+* **Directive** Evan approved the card-expansion pipeline design with the Fable 5.1 review's changes (directive dated 2026-10-03) and set the order Phase 8 pipeline v1 → Phase 9 freshness → Phase 10 merchant-expansion pipeline → Web Store release; Phase 8 target 2026-10-17. [User directives](product/user-directives.md). (coordinator, claude-code/claude-opus-5-5)
 * **Decision** [2026-10-02-agent-driven-card-pipeline](decisions/2026-10-02-agent-driven-card-pipeline.md) — status amended to accepted, with the review's changes. (coordinator)
 * **Update** [card-expansion pipeline](system/card-expansion-pipeline.md) — the review's changes folded into the design body (scope of v1, one `state.json` per batch, claimed packets, label-evidence lint, multi-batch builder with rule-ID continuity, four agents, freshness as Phase 9); [roadmap](product/roadmap.md) reordered with Phase 9 freshness and Phase 10 merchant expansion; [now](now.md). (coordinator)
 

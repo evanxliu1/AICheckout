@@ -46,7 +46,7 @@ The CLI holds all bookkeeping and every check that can be mechanical. Models do 
 | One text-free `state.json` per batch; input hashing; draft hash split into labels and anchors | The capture normalizer (measure the false-change rate first, in Phase 9) |
 | Claimed work packets; gates at accept, including the label-evidence lint | `metrics.json` (the eval writes `docs/evals/pipeline-v1.md`) |
 | Skill and four agent files, models pinned | A second-agent overlay review; a cross-vendor audit |
-| Acceptance run: Wells Fargo as a new batch | The shared core for the merchant pipeline (Phase 10); moving `scripts/*expansion*` into stage modules |
+| Acceptance run: Wells Fargo as a **refresh batch** (new dated captures in its own folder; its labels are an independent re-derivation compared with `expansion.v1`, not new eval truth) | The shared core for the merchant pipeline (Phase 10); moving `scripts/*expansion*` into stage modules |
 
 ## Stages
 
@@ -65,7 +65,7 @@ Per-card stages run for each card of a batch; batch stages run once per batch. "
 | 9 | build | batch | CLI | none | `packages/rewards-core/src/catalog-v3.ts` and its build report (multi-batch) | `build-catalog-v3.mjs` |
 | 10 | eval | batch | CLI | none by default; a gpt-5.5 `low` cross-model run is opt-in and started by the session | `docs/evals/pipeline-v1.md` rows | `expansion-pipeline-metrics.mjs`, `score-expansion-traces.mjs` |
 | — | freshness | card | *Phase 9* | none | slot only in v1 | — |
-| 11 | publish | batch | **Evan**, in the hosted review app | none | a published catalog release | none; `pipeline handoff` prints the checklist |
+| 11 | publish | batch | **Evan**, in the hosted review app | none | a published catalog release | none. `pipeline handoff` prints the checklist (branch, PR checklist, migrations needed, build report summary, the capture folders to attach, release version and expiry, Evan's publish steps per [catalog release](../ops/catalog-release.md)); the **session opens the PR** and the coordinator merges it under Evan's standing authorization |
 
 `scripts/check-expansion-quotes.mjs` is not a stage of its own: it is the copyright gate of draft, verify, adjudicate, apply and overlay. In v1 every stage calls the existing scripts with `--dir <batch dir>`; the scripts stay where they are.
 
@@ -117,7 +117,7 @@ One JSON file per batch, `pipeline/state.json`, committed. It holds **no issuer 
     }
   },
   "issuers": {
-    "wells-fargo": { "stages": { "verify": { "status": "done", "packetId": "…", "model": "claude-opus-5-5", "acceptedAt": "…" } } }
+    "wells-fargo": { "stages": { "verify": { "status": "done", "packetId": "…", "agentRun": "…", "model": "claude-opus-5-5", "acceptedAt": "…" } } }
   }
 }
 ```
@@ -140,21 +140,21 @@ Every stage's **input hash** is `sha256(canonicalJson({ stage, stageVersion, con
 
 | Stage | Inputs hashed |
 | --- | --- |
-| research | the batch request (issuer, card names) and the accepted research file |
+| research | the batch request (issuer, card names) and the researcher agent file's hash (the research file is the output, not an input) |
 | capture | the card's source entries (URL, kind) and capture hints; outputs are each capture's SHA-256 |
 | extract | the manifest SHA-256 of each document read; provider, model, effort, prompt, selection, output-token mode and limits (`extract-cards.mjs`'s `sameConfiguration`, plus limits) |
 | draft | trace hash, capture hashes, research hash, draft script version. The output hash is split: a **labels hash** (the case without anchors and quotes) and an **anchors hash** |
-| verify | the card's draft **labels** hash, product-note hash, packet hash, verifier brief version |
+| verify | the card's draft **labels** hash, product-note hash, verifier brief version. Verify runs per issuer, but its input hash is kept per card (in the card's stage record); a verify packet lists only the issuer's cards that are pending or stale, and the findings file is merged, so one stale card does not re-verify the issuer |
 | adjudicate | the card's findings hash, `conventions/general.md` and the issuer conventions hash |
 | apply | draft case hash and adjudicated findings hash |
-| overlay | corpus case hash, overlay conventions hash, program table hash |
+| overlay | corpus case **labels** hash (as for verify), overlay conventions hash, program table hash. After an anchor-only change the CLI re-stamps `corpusCaseSha256` mechanically once the quote check passes, so no new overlay packet is needed |
 | build, eval | every card's apply and overlay output hashes, merchants, programs, previous catalog |
 
 **Invalidation rules.**
 
 1. A stage is `stale` when its computed input hash differs from the recorded one. Staleness propagates down, never up.
 2. An absent gitignored input makes the stage `inputs-missing`, not `stale`.
-3. **Anchor-only change.** When a re-draft changes only the anchors hash (labels hash equal), verify and adjudicate stay `done`; the CLI rebases the findings' `current` anchors mechanically onto the new draft and re-runs only the quote check and the `current` check (`apply --check`). Any labels-hash change makes verify stale.
+3. **Anchor-only change.** When a re-draft changes only the anchors hash (labels hash equal), verify, adjudicate and overlay stay `done`; the CLI rebases the findings' `current` anchors mechanically onto the new draft, re-runs apply (a CLI stage), the quote check and the `current` check (`apply --check`), and re-stamps the overlay pairing hash. Any labels-hash change makes verify stale.
 4. **Convention change** re-adjudicates, not re-verifies: a change to `general.md` or an issuer conventions file changes the adjudicate input hash of the cards it covers (issuer-wide or batch-wide by file).
 5. Frozen inputs are never rewritten to clear staleness: no capture is overwritten, no released corpus, prompt or validator version is edited.
 
@@ -164,7 +164,7 @@ Agent stages run through claimed work packets, which fix the Phase 7 coordinatio
 
 - `pipeline claim <stage> --issuer <slug>` writes `pipeline/packets/<stage>.<issuer>.<n>.json`: batch, issuer, card IDs, absolute input paths, **one absolute output path** and a random `packetId`. It refuses a second open claim on the same stage and issuer; `--release` abandons a claim.
 - The agent writes only the output file, which must carry `packetId`, `batch` and `issuer`. Its chat reply is a pointer, never the result.
-- `pipeline accept <stage> --issuer <slug> [--model <id>] [--dry-run]` reads the file, rejects anything outside the open packet, runs the stage's gates, records `model`, `packetId` and `acceptedAt` in state, and closes the packet. Adjudicate is refused if its packet is the verifier's (`packetId` or run) — the adjudicator is always a different run.
+- `pipeline accept <stage> --issuer <slug> [--model <id>] [--dry-run]` reads the file, rejects anything outside the open packet, runs the stage's gates, records `model`, `packetId` and `acceptedAt` in state, and closes the packet. `accept` also takes `--agent-run <id>` (the subagent run ID the session got when it started the agent) and records it; `accept adjudicate` refuses when that run ID equals the one recorded for the issuer's verify, and when the adjudicate packet was claimed before verify was accepted. The adjudicator is always a different run.
 - `pipeline status` lists open packets as output present, absent, or present but not accepted.
 - Pipeline subagents run in the checkout that holds the captures, **never with worktree isolation**, and never write under a scratchpad.
 
@@ -174,7 +174,7 @@ A stage is `done` only when its gate passes. Gates are deterministic; their erro
 
 | Stage | Gate |
 | --- | --- |
-| research | Strict Zod schema: card IDs `<issuer-slug>-<card-slug>`, URLs on the issuer's domain allow-list in `batch.json`, enum source kinds and groups, `notes` ≤ 300 characters, no numeric rate fields; every card has at least one issuer-domain source |
+| research | Strict Zod schema: card IDs `<issuer-slug>-<card-slug>`, URLs on the issuer's domain allow-list in `batch.json`, enum source kinds and groups, `notes` ≤ 300 characters, no numeric rate fields; every card has at least one issuer-domain source; no card already in a released corpus unless the batch is a refresh (`batch.json` says so); no research value is copied into a label field |
 | capture | Manifest hash equals the file; no bot-wall, error-page or short-page flag; body ≤ the source limit; an existing capture with another hash is never overwritten |
 | extract | Trace status is not `timeout`, `provider_error`, `refusal` or a schema failure; the configuration equals the batch's |
 | draft | Quote and adjacency check (no quote over 25 words, no adjacent run over 25 words); the case parses as corpus v2 |
@@ -202,7 +202,7 @@ There is no queue file. `pipeline status` derives the open items from state and 
 | Code | Owner | Resolution |
 | --- | --- | --- |
 | `capture-flagged` | session | Add a capture hint and re-run capture for that source, or drop the source; never edit a capture |
-| `gate-failed` | the agent that wrote the file, or the session for CLI stages | Fix the file (errors name paths and fields) and accept again |
+| `gate-failed` (a stage in status `failed-gate`) | the agent that wrote the file, or the session for CLI stages | Fix the file (errors name paths and fields) and accept again |
 | `needs-reverify` | verifier | A rejected `drop-card` or an adjudicator request; a new verify packet |
 | `convention-needed` | session (coordinator) | Add a dated convention in the batch's `verification/conventions/`, then re-adjudicate |
 | `scope-question` | **Evan** | Answer in chat; the session records it in `batch.json` |
@@ -216,7 +216,7 @@ There is no queue file. `pipeline status` derives the open items from state and 
 
 1. **Newest batch wins per card.** A card in a later batch replaces its earlier corpus case, overlay entry and program mapping.
 2. **Pairing.** Each card's corpus case and overlay entry come from the same batch, checked by the corpus case's SHA-256 (canonical JSON) stored in the overlay entry (`corpusCaseSha256`). CI has no captures, so the check needs none. The frozen base layer predates the field and is paired by directory.
-3. **Dates** `verifiedAt` and `expiresAt` come from the batches' manifests (`capturedOn`, later freshness `checkedOn`), not constants.
+3. **Dates** come from the batches' manifests (`capturedOn`, later a freshness `checkedOn`), not constants: `verifiedAt` is the newest capture date of the sources the catalog uses and `expiresAt` is `verifiedAt` + 30 days (the contract maximum), which gives today's `2026-10-02T00:00:00Z` / `2026-11-01T00:00:00Z`; the build report also states the oldest source date (the real-card sources, 2026-09-29). Milestone 1 confirms or refines this rule and records it.
 4. **Completeness.** The build refuses unless every card of every batch is `done`, `dropped`, or held out with a reason.
 5. **Rule-ID continuity gate** against the previous bundled catalog (`CATALOG_V3` as committed; hosted release 2 is canonically identical to it): a rule whose terms are unchanged keeps its ID; a rule whose terms changed gets a new ID; dropped IDs are listed in the build report. This protects wallets: `reconcileWallet` drops usage rows when a rule's terms change.
 
