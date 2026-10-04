@@ -264,11 +264,14 @@ export function continueRuleIds(cards, ledger, version) {
   const previous = [...ledger.catalogs].reverse().find((entry) => entry.version !== version) ?? null;
   const previousIds = new Set(previous?.ruleIds ?? []);
   const byTerms = new Map();
-  const byStem = new Map(); // previous IDs by card and generated ID (the ID without a `-vN` continuity suffix)
+  // Previous IDs by card and stem: the ID without a `-vN` continuity suffix and a `-2`…`-9` collision counter
+  // (`ruleIdsFor`). Start months end in two digits (`-2026-10`), so a one-digit counter is never one of them.
+  const stem = (id) => id.replace(/-v[0-9]+$/, '').replace(/-[2-9]$/, '');
+  const byStem = new Map();
   const push = (map, key, id) => map.set(key, [...(map.get(key) ?? []), id]);
   for (const id of previous?.ruleIds ?? []) {
     push(byTerms, `${ledger.ids[id].cardId} ${ledger.ids[id].termsSha256}`, id);
-    push(byStem, `${ledger.ids[id].cardId} ${id.replace(/-v[0-9]+$/, '')}`, id);
+    push(byStem, `${ledger.ids[id].cardId} ${stem(id)}`, id);
   }
   const used = new Set();
   const terms = cards.map((card) => card.rules.map(ruleTermsSha256));
@@ -293,8 +296,8 @@ export function continueRuleIds(cards, ledger, version) {
       for (let n = 2; !issuable(id, card.id, terms[c][r]); n++) id = `${rule.id}-v${n}`;
       used.add(id);
       ids[c][r] = id;
-      // Changed: the card had a rule with this generated ID (or a -vN of it) that no rule keeps.
-      const from = (byStem.get(`${card.id} ${rule.id}`) ?? []).find(
+      // Changed: the card had a rule with this stem (generated ID, -vN or collision counter) that no rule keeps.
+      const from = (byStem.get(`${card.id} ${stem(rule.id)}`) ?? []).find(
         (old) => !used.has(old) && !changed.some((item) => item.from === old),
       );
       if (from) changed.push({ cardId: card.id, from, to: id });
@@ -368,7 +371,7 @@ export function buildCatalogV3(inputs) {
  */
 export function buildRelease(inputs) {
   if (!inputs.version) throw new Error('No catalog version');
-  // The draft the overlay check parses is dated from every manifest source, so a later capture fits its window.
+  // The check-only draft is dated from all manifest sources; the catalog below is dated from cited sources only.
   const merchantSourceIds = new Set(inputs.merchants.sources.map((source) => source.id));
   const manifestSources = inputs.manifests.flatMap((manifest) =>
     manifest.sources.map((source) => ({ id: source.id, checkedOn: source.checkedOn ?? source.capturedOn })),

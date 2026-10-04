@@ -48,6 +48,7 @@ As chosen. The ledger is 195,647 bytes for 820 IDs; a rebuild of an unpublished 
 - `draftCatalogV3` takes optional `verifiedAt`/`expiresAt` (the `DRAFT_*` constants stay the defaults), so a batch captured after 2026-10-02 passes the overlay check's draft parse.
 - A batch cannot add brands (merchants.json is shared) or programs to the table; both need a separate change.
 - The `-vN` suffix lengthens an ID; an ID over 80 characters fails the schema.
+- **Commit the ledger with the final build of a version.** Every `npm run catalog:v3` reserves the IDs it issues for good, including draft rebuilds on a branch: if a later iteration changes a rule's terms, its ID moves to the next `-vN`, so branch iterations burn suffixes. Behaviour kept on purpose (an ID never comes back with other terms); review-driven amendment of 2026-10-04 (PR #37 review).
 
 ## Status
 Accepted 2026-10-04 (Phase 8 milestone 1, coordinator-delegated agent; agent-verified by tests, not human-reviewed). Evan or the coordinator can revise.

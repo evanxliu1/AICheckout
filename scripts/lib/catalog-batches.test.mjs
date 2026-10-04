@@ -147,6 +147,21 @@ test('a later batch can drop a card, which leaves the catalog with its reason', 
   );
   const { catalog } = buildRelease(inputs);
   assert.equal(catalog.cards.length, 177);
+  // A gate only the dropped card used is pruned (it would otherwise fail the overlay's "unused" check).
+  const gate = 'boa-customized-cash-rewards-first-year';
+  assert.ok(mergeLayers(base).overlay.gates.some((g) => g.id === gate));
+  const pruned = mergeLayers(
+    stack(
+      batch({
+        cases: [],
+        entries: [],
+        cards: ['boa-customized-cash-rewards'],
+        dropped: { 'boa-customized-cash-rewards': 'card withdrawn' },
+      }),
+    ),
+  );
+  assert.ok(!pruned.overlay.gates.some((g) => g.id === gate));
+  assert.doesNotThrow(() => buildRelease(pruned));
 });
 
 test('pairing: a missing or mismatched corpusCaseSha256 is refused', () => {
@@ -219,6 +234,20 @@ test('definitions: a batch may add or repeat a gate, never redefine one; program
     () => mergeLayers(stack(redefined)),
     new RegExp(`gates ${gate.id} redefines the one in expansion.v1`),
   );
+  const store = structuredClone(expansion.overlay.programs[0]);
+  const programs = refreshBatch();
+  programs.overlay.programs = [{ ...store, name: `${store.name} Changed` }];
+  assert.throws(
+    () => mergeLayers(stack(programs)),
+    new RegExp(`programs ${store.id} redefines the one in expansion.v1`),
+  );
+  const detail = structuredClone(expansion.overlay.programDetails.find((d) => d.programId === store.id));
+  const details = refreshBatch();
+  details.overlay.programDetails = [{ ...detail, unitName: 'points' }];
+  assert.throws(
+    () => mergeLayers(stack(details)),
+    new RegExp(`programDetails ${store.id} redefines the one in expansion.v1`),
+  );
   const program = refreshBatch();
   program.rewardPrograms.cards[0].programId = 'test-new-points';
   assert.throws(() => mergeLayers(stack(program)), /maps to unknown program test-new-points/);
@@ -282,6 +311,14 @@ test('continuity: an issued ID is never reissued with other terms', () => {
     /a-dining was issued for other terms/,
   );
   assert.throws(() => updateLedger(v6.ledger, v1.catalog), /older than the newest/);
+});
+
+test('continuity: a terms change is "changed" when the old ID carried a collision counter', () => {
+  const v1 = release('v1', [cardWith(rule('a-dining-2', 300))]);
+  const v2 = release('v2', [cardWith(rule('a-dining', 250))], v1.ledger);
+  assert.deepEqual(v2.continuity.changed, [{ cardId: 'card-a', from: 'a-dining-2', to: 'a-dining' }]);
+  assert.deepEqual(v2.continuity.added, []);
+  assert.deepEqual(v2.continuity.dropped, []);
 });
 
 test('continuity: a rebuild of the same version is compared with the version before it', () => {
