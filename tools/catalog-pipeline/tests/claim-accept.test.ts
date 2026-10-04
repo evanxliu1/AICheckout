@@ -652,19 +652,48 @@ describe('label-lint acknowledgements', () => {
     );
   });
 
-  it('an unacked finding fails apply, and so does an ack added after adjudicate was accepted', async () => {
+  it('accept adjudicate lists an open finding of the corpus case apply will write; an ack makes it pass', async () => {
     const h = await harness();
-    expect(await adjudicated(h, []), h.logs.join('\n')).toBe(0);
+    expect(await adjudicated(h, [])).toBe(1);
+    expect(h.logs.join('\n')).toContain(`- label lint: rate ${ALPHA} rules.0.rateBps`);
+    expect((await h.state()).cards[ALPHA].stages.adjudicate?.status).toBe('failed-gate');
+    // The dry run shows the same finding, and the ack the adjudicator adds passes accept and then apply.
+    const output = join(h.dir, 'verification/example-bank.json');
+    const data = JSON.parse(await readFile(output, 'utf8'));
+    h.logs.length = 0;
+    expect(await accept(h, 'adjudicate', 'run-adjudicator', '--dry-run')).toBe(1);
+    expect(h.logs.join('\n')).toContain(`- label lint: rate ${ALPHA} rules.0.rateBps`);
+    data.labelLintAcks = [ACK];
+    await write(output, data);
+    expect(await accept(h, 'adjudicate', 'run-adjudicator'), h.logs.join('\n')).toBe(0);
+    h.logs.length = 0;
+    expect(await h.run('run', 'apply', '--batch', BATCH), h.logs.join('\n')).toBe(0);
+    expect(h.logs.join('\n')).not.toContain('label lint:');
+  });
+
+  it('apply stays a backstop: an ack added after adjudicate was accepted fails it', async () => {
+    const h = await harness();
+    unreadableRate(h);
+    await verified(h);
+    const packet = await claimed(h, 'adjudicate');
+    await adjudication(packet);
+    // Accepted with an ack; the session then removes it and apply fails, and re-adding it by hand does not help.
+    const accepted = JSON.parse(await readFile(packet.output, 'utf8'));
+    accepted.labelLintAcks = [ACK];
+    await write(packet.output, accepted);
+    expect(await accept(h, 'adjudicate', 'run-adjudicator'), h.logs.join('\n')).toBe(0);
+    accepted.labelLintAcks = [];
+    await write(packet.output, accepted);
     expect(await h.run('run', 'apply', '--batch', BATCH)).toBe(1);
     expect(h.logs.join('\n')).toContain(`label lint: rate ${ALPHA} rules.0.rateBps`);
     expect((await h.state()).cards[ALPHA].stages.apply).toMatchObject({
       status: 'failed-gate',
       metrics: { lintRateRaised: 1 },
     });
-    // The session adds the ack itself: apply refuses it.
+    // The session adds an ack of its own: apply refuses it.
     const file = join(h.dir, 'verification/example-bank.json');
     const data = JSON.parse(await readFile(file, 'utf8'));
-    data.labelLintAcks = [ACK];
+    data.labelLintAcks = [{ ...ACK, reason: 'split-anchors' }];
     await write(file, data);
     h.logs.length = 0;
     expect(await h.run('run', 'apply', '--batch', BATCH)).toBe(1);
