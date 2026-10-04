@@ -6,7 +6,7 @@ status: stable
 tags: [system, catalog, curation, expansion, pipeline, phase-8, design]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T15:00:56Z
+  at: 2026-10-04T21:07:00Z
 stale_after: 2026-11-15T00:00:00Z
 sources:
   - resource: ../product/phase-7-stage-2.md
@@ -98,7 +98,9 @@ Gates as built: **research** a strict schema (no numeric field; IDs `<issuer-slu
 
 **Review-app manifest constraint.** The hosted review app knows capture hashes only from the manifests [`apps/review/src/manifest.ts`](../../apps/review/src/manifest.ts) imports at fixed paths (`real/manifest.json`, `real/merchant-manifest.json`, `expansion/manifest.json`), merged into one map in which a later manifest overwrites an earlier one. A batch's new captures are in none of them, so `handoff` lists every cited source the app would not match (no bundled hash, another hash, or two bundled manifests with different hashes) and says the review app needs the batch manifest added (a product change in its own PR and a Render deploy) before Evan can publish. This does not change the exit status: it blocks publishing, not the PR. On `main` today all 328 cited sources match.
 
-Not built yet: the review app knowing batch manifests and `docs/evals/pipeline-v1.md` (6). Known gaps: capture runs sequentially (2.5 s between pages) rather than in parallel per host; the apply and capture scripts print their own output (which may quote captures) to the terminal.
+**Milestone 6 (acceptance run, branch `catalog-wells-fargo-2026-10`)**: the Wells Fargo refresh batch `wells-fargo-2026-10` ran end to end on 2026-10-04 from one chat request through the skill; measured in [`docs/evals/pipeline-v1.md`](../../docs/evals/pipeline-v1.md) (agreement between agents, not accuracy). The batch's catalog change is kept out of what ships ([decision](../decisions/2026-10-04-wells-fargo-batch-not-shipped.md)). Gaps the run exposed, for Phase 9: no command to drop a bot-walled source; the builder does not refuse to rebuild a published version with other contents (the first `run build` wrote under `2026-10-02.expansion.1`); `run build` always changes what ships (registers the batch, rewrites `CATALOG_V3`); `next` lists one card per failed-gate queue item; a session must start after the skill and agent files it uses are merged (it loads them at start-up).
+
+Not built yet: the review app knowing batch manifests. Known gaps: capture runs sequentially (2.5 s between pages) rather than in parallel per host; the apply and capture scripts print their own output (which may quote captures) to the terminal.
 
 ## Stages
 

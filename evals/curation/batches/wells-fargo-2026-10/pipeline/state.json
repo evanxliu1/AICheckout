@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "wells-fargo-2026-10",
-  "updatedAt": "2026-10-04T21:03:34.618Z",
+  "updatedAt": "2026-10-04T21:05:42.338Z",
   "cards": {
     "wells-fargo-autograph": {
       "stages": {
@@ -773,10 +773,30 @@
   },
   "batchStages": {
     "build": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:2a5362dcc12acc55028a559cff4b922779e35e639f1a7dfd3b589c087cf99119",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "03497fb48f46e3f16443ac00f6602d047f0fb91beffe0f565fac98e854088ace"
+        }
+      ],
+      "finishedAt": "2026-10-04T21:03:41.000Z",
+      "attempts": 1
     },
     "eval": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:b65325d6dc50f5d14b01c9a0c767c0aff92c5d36b4e66f5219da52e27bce6029",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "eecfe93f85cf8552e99fb2a8071a7d5ce32934a7f378147a7d91177810a8792b"
+        }
+      ],
+      "finishedAt": "2026-10-04T21:05:42.338Z",
+      "attempts": 3
     }
   }
 }
