@@ -481,12 +481,38 @@ export async function overlayGate(
   fragment.labelLintAcks.forEach((ack, i) => {
     if (!inPacket.has(ack.cardId)) errors.push(`labelLintAcks.${i}: outside the packet`);
   });
+  errors.push(...selfCertifiedAcks(fragment));
   const second = resolveAcks(first.open, fragment.labelLintAcks);
   for (const i of second.unused) errors.push(`labelLintAcks.${i}: ${unusedAck(fragment.labelLintAcks[i])}`);
   errors.push(...second.open.map((finding) => `label lint: ${formatFinding(finding)}`));
   errors.push(...(await quoteGate(batch)));
   const lint = { raised, acked: [...first.acked, ...second.acked] };
   return errors.length ? { errors, lint } : { errors, merged, lint };
+}
+
+/**
+ * Fragment acks on a value the fragment itself wrote: an added rule's rate, cap or end date, or a patched rule's cap
+ * or end date (`set.cap`, `set.limitedTime`). The overlay author may not certify its own number; only the
+ * adjudicator's acks or the evidence can pass those (review of milestone 3, 2026-10-04).
+ */
+export function selfCertifiedAcks(fragment: Pick<Fragment, 'cards' | 'labelLintAcks'>): string[] {
+  const errors: string[] = [];
+  fragment.labelLintAcks.forEach((ack, i) => {
+    if (ack.check === 'dateless-limited-time') return;
+    const card = fragment.cards.find((entry) => entry.cardId === ack.cardId);
+    const own =
+      ack.addedRule !== undefined
+        ? true
+        : (card?.rules ?? []).some(
+            (patch) =>
+              patch.index === ack.ruleIndex &&
+              ((ack.check === 'cap-amount' && patch.set?.cap !== undefined) ||
+                (ack.check === 'end-date' && patch.set?.limitedTime !== undefined)),
+          );
+    if (own)
+      errors.push(`labelLintAcks.${i}: the overlay author cannot acknowledge a value its fragment sets`);
+  });
+  return errors;
 }
 
 /** `checkOverlay` for one issuer on the build's layers with this batch (merged overlay) as the newest layer. */

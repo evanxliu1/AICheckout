@@ -10,6 +10,7 @@ import {
   resolveAcks,
 } from '../src/label-lint.ts';
 import type { CorpusCaseLike } from '../src/label-lint.ts';
+import { selfCertifiedAcks } from '../src/gates.ts';
 
 const rule = (fields: Record<string, unknown>, anchors: string[]) => ({
   rateBps: 100,
@@ -182,5 +183,36 @@ describe('acknowledgements', () => {
     expect(() => ack({})).toThrow();
     expect(() => ack({ ruleIndex: 0, check: 'store-program' })).toThrow();
     expect(() => ack({ ruleIndex: 0, note: 'free text' })).toThrow();
+  });
+});
+
+describe('overlay author acks', () => {
+  const card = {
+    cardId: 'example-bank-alpha',
+    rules: [
+      { index: 0, set: { cap: { kind: 'spend', amountCents: 500000 } } },
+      { index: 1, set: { category: 'groceries' } },
+    ],
+  };
+  const ack = (extra: Record<string, unknown>) => ({
+    cardId: 'example-bank-alpha',
+    reason: 'split-anchors',
+    ...extra,
+  });
+  it('refuses an ack on a value the fragment itself sets or adds', () => {
+    const fragment = {
+      cards: [card],
+      labelLintAcks: [
+        ack({ ruleIndex: 0, check: 'cap-amount' }),
+        ack({ addedRule: 'bonus', check: 'rate' }),
+        ack({ ruleIndex: 1, check: 'rate' }),
+        ack({ ruleIndex: 0, check: 'end-date' }),
+        ack({ addedRule: 'bonus', check: 'dateless-limited-time' }),
+      ],
+    } as unknown as Parameters<typeof selfCertifiedAcks>[0];
+    expect(selfCertifiedAcks(fragment)).toEqual([
+      'labelLintAcks.0: the overlay author cannot acknowledge a value its fragment sets',
+      'labelLintAcks.1: the overlay author cannot acknowledge a value its fragment sets',
+    ]);
   });
 });
