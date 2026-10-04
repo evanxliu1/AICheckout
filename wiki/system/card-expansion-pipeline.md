@@ -21,6 +21,8 @@ sources:
     title: Verifier brief and findings format
   - resource: ../../eslint.config.js
     title: Import boundary rule
+  - resource: ../../tools/catalog-pipeline/README.md
+    title: Pipeline workspace entry point
 ---
 
 # Card-expansion pipeline (Phase 8 design, approved)
@@ -47,6 +49,28 @@ The CLI holds all bookkeeping and every check that can be mechanical. Models do 
 | Claimed work packets; gates at accept, including the label-evidence lint | `metrics.json` (the eval writes `docs/evals/pipeline-v1.md`) |
 | Skill and four agent files, models pinned | A second-agent overlay review; a cross-vendor audit |
 | Acceptance run: Wells Fargo as a **refresh batch** (new dated captures in its own folder; its labels are an independent re-derivation compared with `expansion.v1`, not new eval truth) | The shared core for the merchant pipeline (Phase 10); moving `scripts/*expansion*` into stage modules |
+
+## Built so far
+
+**Milestone 2 (CLI skeleton, branch `phase8-m2-cli-skeleton`)**: the workspace [`tools/catalog-pipeline`](../../tools/catalog-pipeline/README.md) (`@ai-checkout/catalog-pipeline`, run by Node 24 type stripping, Zod for every file it reads or writes, tests with synthetic fixtures only). Choices within this design: [decision](../decisions/2026-10-04-pipeline-cli-skeleton.md).
+
+| Command | Behaviour |
+| --- | --- |
+| `npm run pipeline -- init <batch> --issuer "<Name>" --cards "<a, b>" [--domains a.com,b.com] [--refresh] [--summary "<text>"]` | Writes `pipeline/batch.json` (batch id, issuer name, slug and domain allow-list, requested cards, refresh flag, summary, `createdAt`) and an initial `pipeline/state.json` (research `pending` for the issuer, build and eval `pending`). Batch ids match `^[a-z0-9-]+-\d{4}-\d{2}$`; refuses an existing batch |
+| `status [--batch B] [--json]` | Counts per stage and status per batch, the files in `pipeline/packets/`, cards needing an anchor rebase, and the derived queue (`capture-flagged`, `gate-failed`, `needs-reverify`, `convention-needed`, `scope-question`, `publish`). Writes nothing |
+| `next [--batch B] --json` | The single next step `{ kind, batch, stage, issuer?, cardIds?, command?, agent?, code?, until?, reason }`: blocking queue items first, then an anchor rebase, research, the card stages in order, a `wait` for paused cards, build, eval, then `handoff`. Agent steps name the subagent and the `pipeline claim …` command of milestone 3 |
+| `run capture\|extract\|draft\|apply\|build\|eval [--batch B] [--only ids] [--concurrency N] [--wait-minutes N]` | Runs the cards whose stage is `pending`, `stale` or `failed-gate` with upstream done, through the wrapped script (`capture-issuer-pages.mjs --dir --only <sources> --delay-ms 2500 --report parts/…` then `expansion-capture-report.mjs`; `extract-cards.mjs --dir --only --concurrency --wait-minutes 0`; `draft-expansion-labels.mjs --dir`; `apply-expansion-verification.mjs --dir --version <batch>.v1`; `npm run catalog:v3`), then records each card. `eval` is a stub that exits 2 until milestone 5. `extract` refuses when `CI` or `RENDER` is set |
+| `rebase-anchors [--batch B]` | The mechanical anchor rebase of invalidation rule 3: re-points the findings' `current` on anchor paths to the new draft and records the new anchors hash on verify; a path the new draft lacks is reported (exit 1) |
+
+How the statuses are derived (no `running`, no locks; the queue is never written):
+
+- **Recorded vs derived.** `state.json` records `done`, `failed-gate`, `paused` (with `pausedUntil` and reason `usage-limit`) and `dropped`; `status` and `next` recompute every stage's input hash from the batch files and derive `stale`, `inputs-missing` and `pending`. Cards enter the derivation from `cards.json` (written by research) and get a state entry when a stage first records them; `freshness` is always `pending`.
+- **Per-card records for agent stages.** Verify, adjudicate and overlay keep their input hash per card (verify also the draft anchors hash it saw); research is per issuer. Acceptance fields (`packetId`, `agentRun`, `model`, `acceptedAt`) are in the schema for milestone 3.
+- **Stage inputs.** research: the issuer's request and the researcher agent file; capture: each source's id, URL and kind plus its capture hint; extract: the manifest SHA-256 of each source and the default extraction configuration with limits; draft: the trace, the manifest hashes, the research file and the draft script; verify: the draft case's labels hash, the product-note labels and the verifier brief; adjudicate: the verifier's findings for the card and the batch's `general.md` and issuer conventions; apply: the full draft case and adjudicated findings; overlay: the corpus case's labels hash, the conventions and `reward-programs.json`; build and eval: every active card's corpus case and overlay entry, `merchants.json` and `reward-programs.json`.
+- **Propagation.** `stale` propagates downstream, except that an apply stale only through its own inputs (the draft anchors moved) leaves the overlay done. A stage with a missing hashed gitignored input (draft without its trace) or missing inputs it must run with (captures, for extract and draft) is `inputs-missing`; a stage done with a matching hash stays done; a computable hash that differs is `stale` even without the captures (and its downstream with it), and `run` skips the card there. The labels hash leaves out `anchors`, `anchor`, `anchorMethod`, `quote(s)`, `evidence` and `draftNotes`; `issuerWording` is a label.
+- **Gates now.** Capture is `failed-gate` (`capture-flagged`) when a source failed, is flagged in the run report or does not match the manifest; extract is done only for a trace with the batch's configuration on the current pages and status `evidence_valid` or `needs_review`; draft fails without a draft case; apply fails on script errors or a card missing from `corpus.json`, and marks a card `dropped` on an accepted `drop-card`. After two failed attempts a CLI stage is no longer proposed as `run`: `next` returns a `queue` step `gate-failed` owned by the session. The quote, label-evidence and research gates arrive with `accept` in milestone 3.
+
+Not built yet: `claim`/`accept` and the gates of the table below (milestone 3), the skill's and agents' use of the CLI (4), `eval` and `handoff` (5). Known gaps for later milestones: capture runs sequentially (2.5 s between pages) rather than in parallel per host; `expansion-capture-report.mjs` still writes the Phase 7 "known problems" text and short-page exceptions into every batch's `capture-report.md`; the capture script overwrites a capture whose hash changed, which the capture gate must refuse; build does not yet register the batch with the multi-batch builder (milestone 1 wiring); the overlay `corpusCaseSha256` re-stamp after a rebase waits for milestone 1's pairing field; `verify/<issuer>.md` packets name `<batch>/verification/README.md`, which a batch does not have.
 
 ## Stages
 
@@ -252,7 +276,7 @@ Freshness is the next phase, not a v1 stage. v1 leaves a `freshness` stage slot 
 
 ## Boundary rule
 
-The pipeline is maintainer tooling. It may import product packages (`@ai-checkout/rewards-core` schemas, the curation harness) so its gates use the product's validators. **`extension/**`, `packages/**` and `apps/**` may not import any path into `tools/` or `@ai-checkout/catalog-pipeline`**. Enforced since 2026-10-02 by ESLint `no-restricted-imports` in [`eslint.config.js`](../../eslint.config.js), tested by [`scripts/lib/import-boundary.test.mjs`](../../scripts/lib/import-boundary.test.mjs). The rule sees static imports, not `require()` or dynamic `import()`. When the workspace is created, `tools/*` joins the root `workspaces` and the `lint` script.
+The pipeline is maintainer tooling. It may import product packages (`@ai-checkout/rewards-core` schemas, the curation harness) so its gates use the product's validators. **`extension/**`, `packages/**` and `apps/**` may not import any path into `tools/` or `@ai-checkout/catalog-pipeline`**. Enforced since 2026-10-02 by ESLint `no-restricted-imports` in [`eslint.config.js`](../../eslint.config.js), tested by [`scripts/lib/import-boundary.test.mjs`](../../scripts/lib/import-boundary.test.mjs). The rule sees static imports, not `require()` or dynamic `import()`. Since milestone 2 (2026-10-04) `tools/*` is in the root `workspaces` and the `lint` script, and the boundary test also checks that `tools/` may import product packages.
 
 ## Merchant-expansion pipeline (Phase 10)
 

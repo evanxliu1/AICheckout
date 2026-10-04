@@ -3,6 +3,7 @@
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
 ## 2026-10-04
+* [Pipeline CLI skeleton choices (Phase 8 milestone 2)](./2026-10-04-pipeline-cli-skeleton.md) — Node 24 type stripping for the CLI; draft notes count as anchors, issuer wordings as labels; stale beats inputs-missing; CLI gates failing twice go to the session; adjudicate hashes the verifier's findings without adjudication or anchor-path `current`; mechanical `rebase-anchors`; overlay not stale for an anchor-only apply; `inputs-missing` rules; extract pauses with `--wait-minutes 0`; no script flags added; lockfile workspace entries added by hand.
 * [Multi-batch catalog builder: layer merge, frozen-layer pairing, newest-capture dates and a rule-ID ledger](./2026-10-04-multi-batch-catalog-builder.md) — Phase 8 M1: build config of layers merged into the M5 inputs, `corpusCaseSha256` pairing for batches (frozen `expansion.v1` paired by directory), `verifiedAt` from the newest issuer-source date, append-only rule-ID ledger with `-vN` IDs for changed terms.
 
 ## 2026-10-03

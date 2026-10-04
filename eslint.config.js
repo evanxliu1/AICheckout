@@ -31,7 +31,13 @@ export default [
     ],
   },
   {
-    files: ['apps/**/*.ts', 'scripts/**/*.mjs', 'extension/scripts/**/*.mjs', 'packages/*/scripts/**/*.mjs'],
+    files: [
+      'apps/**/*.ts',
+      'scripts/**/*.mjs',
+      'extension/scripts/**/*.mjs',
+      'packages/*/scripts/**/*.mjs',
+      'tools/**/*.ts',
+    ],
     languageOptions: { globals: globals.node },
   },
   { files: ['extension/scripts/**/*.mjs'], rules: js.configs.recommended.rules },
