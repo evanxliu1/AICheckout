@@ -5,7 +5,7 @@ Phase 8 milestone 6, run on 2026-10-04 from one chat request ("Expand Wells Farg
 `catalog-wells-fargo-2026-10`. It covers the six Wells Fargo cards already in `expansion.v1`, re-derived from new
 dated captures in the batch's own folder. Every number below comes from the batch's committed files:
 `pipeline/state.json`, `pipeline/eval.json`, `extraction-summary.json`, `verification/wells-fargo.json` and
-`pipeline/proposed-catalog-build-report.md`. Timings and agent tokens come from the coordinator's run log.
+`pipeline/proposed-catalog-build-report.md`. Timings come from the coordinator's run log. The per-field breakdown of the 30 changed rules and the catalog exclusion counts come from the coordinator's diff of the proposed build against the published catalog.
 
 **All accuracy numbers here are agreement between agents, not human-checked accuracy.** The batch's labels are
 agent-verified, as are the frozen `expansion.v1` labels it is compared with.
@@ -25,7 +25,7 @@ agent-verified, as are the frozen `expansion.v1` labels it is compared with.
 
 | Measure | Value |
 | --- | --- |
-| Wall clock, request to ready branch | 2026-10-04T17:10Z → about 21:15Z, roughly 4 h 05 min. About 2 h 50 min of it was a Codex service hang during extraction (below), and the session was suspended while the laptop was closed (about 19:15–20:45Z) |
+| Wall clock, request to ready branch | 2026-10-04T17:10Z → 21:09Z (last commit on the branch before review), about 4 h. About 2 h 50 min of it was a Codex service hang during extraction (below), and the session was suspended while the laptop was closed (about 19:15–20:45Z) |
 | Items that needed Evan | 0. The researcher raised 2 questions (refresh Active Cash too? OneKeyCash as cash back?); the session resolved both from the request and the frozen conventions, since neither is a scope question |
 | Usage-limit pauses | 0 |
 | Restarts | Extraction: 3 full-batch or single-card rounds timed out (14 attempts in total); then 1 card, then 5 cards, succeeded after the service recovered. Capture: 2 rounds for the 4 flagged pages. No agent restart |
@@ -87,7 +87,7 @@ the frozen labels of the same six cards.
 | --- | --- |
 | Rules | 41/41 matched (0 only in `expansion.v1`, 0 only in the batch) |
 | Rate, paid on payment, cap, limited time | 41/41 each |
-| U.S.-merchants-only | 39/41: the One Key and One Key+ Expedia/Hotels.com/Vrbo rule (`expansion.v1` true, a Phase 7 judgment call; the batch false) |
+| U.S.-merchants-only | 39/41: the One Key and One Key+ Expedia/Hotels.com/Vrbo rule (`expansion.v1` true, a Phase 7 judgment call; the batch unstated, which the catalog maps to false). The captures mention only the U.S. version of the booking sites, a site condition rather than a merchant location, which supports the batch's reading (independent review, agent-verified) |
 | Activation | 12/41: the batch applies general convention 7 (automatic enrollment → `none`) on the Autograph and Choice cards, where `expansion.v1` left it unstated |
 | All rule fields | 215/246 (87.4%) |
 | Card fields (currency, point value) | 12/12 |
@@ -112,7 +112,9 @@ the frozen labels of the same six cards.
    the batch under `2026-10-02.expansion.1` and rewrote that version's ledger entry. The coordinator restored the
    ledger and bumped the version; `handoff` flags this case, but the build itself should refuse.
 4. **`run build` changes what ships.** It registers the batch in the build config and rewrites `CATALOG_V3`. For a
-   batch that is not to be published, the coordinator restored the shipping files and kept the proposed report.
+   batch that is not to be published, the coordinator restored the shipping files and kept the proposed report. The
+   batch state therefore records only the second build (its output hash is the proposed catalog), and `status` queues
+   `publish` for a batch that is not shipped.
 5. **`next` lists one card per failed-gate queue item,** so a retry loop that follows `next` retries one card at a
    time.
 6. **Codex service hangs look like timeouts.** gpt-5.6-luna calls with structured output hung at `turn.started` for
