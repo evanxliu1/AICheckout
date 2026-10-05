@@ -1,12 +1,12 @@
 ---
 type: Decision
 title: Generic reader evaluation protocol choices (Phase 12.1)
-description: Where the Phase 12 plan left room in the pre-registered reader protocol: a frozen agent-classified retail frame on Tranco 647LX, SHA-256 keyed seeded orders, all top-1k and 1k–10k candidates, a capture stop at 195 sites, balanced stratified splits, a pass bar on real pages only with variants reported apart, pass or fail on frozen labels, robots `Disallow: /` as the only posture exclusion, and merchant-pipeline held-out domains (6 / 27 / 27) allowed to overlap the reader splits.
-status: proposed
+description: Where the Phase 12 plan left room in the pre-registered reader protocol: a frozen agent-classified retail frame on Tranco 647LX, SHA-256 keyed seeded orders, all top-1k and 1k–10k candidates, a capture stop at 195 sites, balanced stratified splits, a pass bar on real pages only with variants reported apart, pass or fail on frozen labels with all three splits frozen before any reader run, robots.txt exclusions as Evan decided, rank bands only in committed files, and merchant-pipeline held-out domains (6 / 27 / 27) allowed to overlap the reader splits.
+status: accepted
 tags: [decision, phase-12, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T02:00:00Z
+  at: 2026-10-06T04:00:00Z
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol
@@ -30,14 +30,16 @@ The [Phase 12 plan](../product/phase-12-reader-eval.md) sets what the [protocol]
 | Global brands, marketplaces | Probe exclusions as they were; one rule | One rule: a U.S. storefront in USD with its own checkout. H&M and Zara become eligible, marketplaces are in, online-only cross-border retailers are out |
 | Variants and the bar | Variants inside the zero-false-found bar; reported apart | Reported apart, with false founds listed by class. The bar is on real pages, as criterion 1 reads, and the variants are synthetic and adversarial |
 | Errata and the verdict | Score on corrected labels; on frozen labels | Frozen labels decide. A pass that needs errata is reported as such and goes to Evan. In the probe, both corrections went the reader's way |
-| robots.txt and terms | Exclude on any cart or checkout disallow, or on an anti-automation clause; record only | Exclude only `Disallow: /` for all agents. Record cart and checkout disallows and terms clauses, and report counts. Most retailers disallow `/cart` to keep it out of search indexes, and D4 approved a shopper-paced, logged-out visit. Evan may tighten this by amendment before 12.3 |
+| robots.txt and terms | Exclude on any cart or checkout disallow, or on an anti-automation clause; record only | **Evan's decision (chat, 2026-10-06):** exclude a site whose robots.txt, for `*` or the tool's own user agent, disallows everything or the cart or checkout paths the tool would load. Terms clauses are recorded and reported but don't exclude. The builder had proposed excluding only `Disallow: /` |
+| Exact Tranco ranks in committed files | Commit ranks; commit bands only | Bands only. Tranco states no licence, and one of its sources, Cloudflare Radar, is CC BY-NC 4.0 (coordinator, tranco-list.eu, 2026-10-06). Exact ranks stay gitignored, and no selection depends on them |
+| When to freeze labels | Per split before its first run; all three before any run | All three splits in 12.3 before any reader run on any split (review fix). The pass bar, outcome definitions and label schema are fixed for good; a scoring change needs an Evan decision and dual reporting |
 | Extension during capture | Load the extension as a shopper would; none | None. Nike's refusal named extensions |
 | Held-out B after A retires | Stop after B's first failure; B gets two runs | Two runs, "under the same rule". The stop rule triggers when B fails twice |
 | Pipeline held-out size per band | 20 / 20 / 20; 6 / 27 / 27 | 6 / 27 / 27. Only 18 top-1k domains are eligible, so the list takes a third of them and leaves two thirds for pipeline development |
 | Overlap between pipeline held-out and reader splits | Disjoint; independent | Independent draws, with overlap allowed (46 of 60 are reader candidates). The two evaluations measure different outputs from different inputs. Disjoint sets would cost a third of the reader's scarce top-1k sites. Reader data of these domains is barred from pipeline development |
 
 ## Decision
-As chosen above, in `generic-reader-protocol.1`. The seed is `ai-checkout/phase-12/2026-10-06`. The frame SHA-256 is `11b2d786…7985`, and the pipeline held-out list SHA-256 is `8c89dc44…8a75`. The script is `evals/merchants/tools/seeded-selection.mjs`.
+As chosen above, in `generic-reader-protocol.1`. The seed is `ai-checkout/phase-12/2026-10-06`. The frame SHA-256 is `e5139826…6886`, and the pipeline held-out list SHA-256 is `6bc92515…79b2` (bands only; the domains are unchanged from the first draft). The script is `evals/merchants/tools/seeded-selection.mjs`.
 
 ## Consequences
 - 12.2 must implement: the capture posture (no extension, pace limits, robots and terms recording), the platform markers, a snapshot that keeps open shadow roots and styles, and a harness that verifies the freeze hashes.
@@ -46,4 +48,4 @@ As chosen above, in `generic-reader-protocol.1`. The seed is `ai-checkout/phase-
 - Phase 16 starts by adjudicating the 60 held-out profiles, and its drafting can't read Phase 14 seed rows for them.
 
 ## Status
-Proposed 2026-10-06 by the Phase 12.1 builder (claude-code/claude-opus-5-5) within the approved plan. It becomes accepted when the independent reviewer signs the protocol. Evan may amend the robots and terms posture before 12.3.
+Proposed 2026-10-06 by the Phase 12.1 builder (claude-code/claude-opus-5-5) within the approved plan. Accepted 2026-10-06 after the independent review signed the protocol with fixes (agent-verified) and Evan decided the robots posture.

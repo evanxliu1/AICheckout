@@ -1,7 +1,7 @@
 {
  "frame": "retail-frame.1",
  "frozenOn": "2026-10-06",
- "source": "Tranco list 647LX (daily, generated 2026-10-04, providers crux/farsight/majestic/radar/umbrella, 30 days 2026-09-05..2026-10-04), https://tranco-list.eu/list/647LX/1000000; Le Pochat et al., NDSS 2019. Ranks are the list position of the registrable domain.",
+ "source": "Tranco list 647LX (daily, generated 2026-10-04, providers crux/farsight/majestic/radar/umbrella, 30 days 2026-09-05..2026-10-04), https://tranco-list.eu/list/647LX/1000000; Le Pochat et al., NDSS 2019. The frame carries rank bands only, never exact ranks (licence note in the protocol); exact ranks stay in the gitignored evals/merchants/data/frame-ranks.json.",
  "classification": "Agent-classified U.S. retail of physical goods (claude-code/claude-opus-5-5, 2026-10-06), no website visited: the Phase 10 candidate list, plus a read of Tranco ranks 1-10,000 (.com/.net/.us/.co after a keyword filter) and a known-retailer list looked up in Tranco. Rules and exclusion codes: docs/evals/generic-reader-protocol.md#retail-frame",
  "bands": {
   "top-1k": "1-1,000",
@@ -31,64 +31,42 @@
  },
  "domains": [
   {
-   "domain": "google.com",
-   "trancoRank": 1,
-   "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-a-store",
-   "probeSite": false
-  },
-  {
-   "domain": "microsoft.com",
-   "trancoRank": 8,
-   "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-a-store",
-   "probeSite": false
-  },
-  {
-   "domain": "apple.com",
-   "trancoRank": 10,
-   "band": "top-1k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
    "domain": "amazon.com",
-   "trancoRank": 26,
    "band": "top-1k",
    "eligible": false,
    "exclusion": "legacy-named-merchant",
    "probeSite": false
   },
   {
-   "domain": "samsung.com",
-   "trancoRank": 109,
+   "domain": "apple.com",
    "band": "top-1k",
    "eligible": true,
    "exclusion": null,
    "probeSite": true
   },
   {
+   "domain": "asus.com",
+   "band": "top-1k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bestbuy.com",
+   "band": "top-1k",
+   "eligible": false,
+   "exclusion": "legacy-named-merchant",
+   "probeSite": false
+  },
+  {
+   "domain": "dell.com",
+   "band": "top-1k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
    "domain": "ebay.com",
-   "trancoRank": 207,
-   "band": "top-1k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "roku.com",
-   "trancoRank": 261,
-   "band": "top-1k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "hp.com",
-   "trancoRank": 305,
    "band": "top-1k",
    "eligible": true,
    "exclusion": null,
@@ -96,103 +74,20 @@
   },
   {
    "domain": "etsy.com",
-   "trancoRank": 335,
    "band": "top-1k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "dell.com",
-   "trancoRank": 340,
-   "band": "top-1k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "temu.com",
-   "trancoRank": 436,
-   "band": "top-1k",
-   "eligible": false,
-   "exclusion": "cross-border-marketplace",
-   "probeSite": false
-  },
-  {
-   "domain": "walmart.com",
-   "trancoRank": 476,
-   "band": "top-1k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "shein.com",
-   "trancoRank": 506,
-   "band": "top-1k",
-   "eligible": false,
-   "exclusion": "cross-border-marketplace",
-   "probeSite": false
-  },
-  {
-   "domain": "playstation.com",
-   "trancoRank": 605,
-   "band": "top-1k",
-   "eligible": false,
-   "exclusion": "mostly-digital-goods",
-   "probeSite": false
-  },
-  {
-   "domain": "target.com",
-   "trancoRank": 611,
-   "band": "top-1k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "nintendo.com",
-   "trancoRank": 631,
-   "band": "top-1k",
-   "eligible": false,
-   "exclusion": "mostly-digital-goods",
-   "probeSite": false
-  },
-  {
-   "domain": "ikea.com",
-   "trancoRank": 637,
-   "band": "top-1k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "nike.com",
-   "trancoRank": 651,
-   "band": "top-1k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "ring.com",
-   "trancoRank": 721,
-   "band": "top-1k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "meta.com",
-   "trancoRank": 736,
+   "domain": "google.com",
    "band": "top-1k",
    "eligible": false,
    "exclusion": "not-a-store",
    "probeSite": false
   },
   {
-   "domain": "asus.com",
-   "trancoRank": 742,
+   "domain": "hm.com",
    "band": "top-1k",
    "eligible": true,
    "exclusion": null,
@@ -200,39 +95,34 @@
   },
   {
    "domain": "homedepot.com",
-   "trancoRank": 768,
    "band": "top-1k",
    "eligible": true,
    "exclusion": null,
    "probeSite": true
   },
   {
-   "domain": "bestbuy.com",
-   "trancoRank": 792,
-   "band": "top-1k",
-   "eligible": false,
-   "exclusion": "legacy-named-merchant",
-   "probeSite": false
-  },
-  {
-   "domain": "lenovo.com",
-   "trancoRank": 801,
+   "domain": "hp.com",
    "band": "top-1k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "xbox.com",
-   "trancoRank": 819,
+   "domain": "ikea.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "mostly-digital-goods",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "lenovo.com",
+   "band": "top-1k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
    "domain": "lg.com",
-   "trancoRank": 914,
    "band": "top-1k",
    "eligible": true,
    "exclusion": null,
@@ -240,487 +130,104 @@
   },
   {
    "domain": "lowes.com",
-   "trancoRank": 965,
    "band": "top-1k",
    "eligible": true,
    "exclusion": null,
    "probeSite": true
   },
   {
-   "domain": "hm.com",
-   "trancoRank": 968,
+   "domain": "meta.com",
+   "band": "top-1k",
+   "eligible": false,
+   "exclusion": "not-a-store",
+   "probeSite": false
+  },
+  {
+   "domain": "microsoft.com",
+   "band": "top-1k",
+   "eligible": false,
+   "exclusion": "not-a-store",
+   "probeSite": false
+  },
+  {
+   "domain": "nike.com",
+   "band": "top-1k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "nintendo.com",
+   "band": "top-1k",
+   "eligible": false,
+   "exclusion": "mostly-digital-goods",
+   "probeSite": false
+  },
+  {
+   "domain": "playstation.com",
+   "band": "top-1k",
+   "eligible": false,
+   "exclusion": "mostly-digital-goods",
+   "probeSite": false
+  },
+  {
+   "domain": "ring.com",
    "band": "top-1k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "costco.com",
-   "trancoRank": 1004,
-   "band": "1k-10k",
+   "domain": "roku.com",
+   "band": "top-1k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "samsung.com",
+   "band": "top-1k",
    "eligible": true,
    "exclusion": null,
    "probeSite": true
   },
   {
-   "domain": "kohls.com",
-   "trancoRank": 1037,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
+   "domain": "shein.com",
+   "band": "top-1k",
+   "eligible": false,
+   "exclusion": "cross-border-marketplace",
    "probeSite": false
   },
   {
-   "domain": "garmin.com",
-   "trancoRank": 1047,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "netgear.com",
-   "trancoRank": 1070,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "logitech.com",
-   "trancoRank": 2088,
-   "band": "1k-10k",
+   "domain": "target.com",
+   "band": "top-1k",
    "eligible": true,
    "exclusion": null,
    "probeSite": true
   },
   {
-   "domain": "sony.com",
-   "trancoRank": 2163,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
+   "domain": "temu.com",
+   "band": "top-1k",
+   "eligible": false,
+   "exclusion": "cross-border-marketplace",
    "probeSite": false
   },
   {
-   "domain": "barnesandnoble.com",
-   "trancoRank": 2188,
-   "band": "1k-10k",
+   "domain": "walmart.com",
+   "band": "top-1k",
    "eligible": true,
    "exclusion": null,
    "probeSite": true
   },
   {
-   "domain": "lego.com",
-   "trancoRank": 2350,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "instacart.com",
-   "trancoRank": 2389,
-   "band": "1k-10k",
+   "domain": "xbox.com",
+   "band": "top-1k",
    "eligible": false,
-   "exclusion": "no-own-checkout",
+   "exclusion": "mostly-digital-goods",
    "probeSite": false
   },
   {
-   "domain": "wayfair.com",
-   "trancoRank": 2580,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "simplisafe.com",
-   "trancoRank": 2823,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "philips.com",
-   "trancoRank": 2863,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "sonos.com",
-   "trancoRank": 2939,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "redbubble.com",
-   "trancoRank": 2950,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "adidas.com",
-   "trancoRank": 3082,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "walgreens.com",
-   "trancoRank": 3229,
-   "band": "1k-10k",
-   "eligible": false,
-   "exclusion": "prescription-or-pharmacy",
-   "probeSite": false
-  },
-  {
-   "domain": "zara.com",
-   "trancoRank": 3274,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "gap.com",
-   "trancoRank": 3331,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "samsclub.com",
-   "trancoRank": 3333,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "asos.com",
-   "trancoRank": 3371,
-   "band": "1k-10k",
-   "eligible": false,
-   "exclusion": "non-us-online-retailer",
-   "probeSite": false
-  },
-  {
-   "domain": "msi.com",
-   "trancoRank": 3393,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "ouraring.com",
-   "trancoRank": 3404,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "macys.com",
-   "trancoRank": 3418,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "teepublic.com",
-   "trancoRank": 3493,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "houzz.com",
-   "trancoRank": 3516,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "uniqlo.com",
-   "trancoRank": 3750,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "cvs.com",
-   "trancoRank": 3782,
-   "band": "1k-10k",
-   "eligible": false,
-   "exclusion": "prescription-or-pharmacy",
-   "probeSite": false
-  },
-  {
-   "domain": "mercari.com",
-   "trancoRank": 3798,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "razer.com",
-   "trancoRank": 3819,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "tcgplayer.com",
-   "trancoRank": 3821,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "chewy.com",
-   "trancoRank": 3866,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "farfetch.com",
-   "trancoRank": 3919,
-   "band": "1k-10k",
-   "eligible": false,
-   "exclusion": "non-us-online-retailer",
-   "probeSite": false
-  },
-  {
-   "domain": "poshmark.com",
-   "trancoRank": 4021,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "rei.com",
-   "trancoRank": 4063,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "arlo.com",
-   "trancoRank": 4093,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "iherb.com",
-   "trancoRank": 4111,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "dji.com",
-   "trancoRank": 4146,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "snapfish.com",
-   "trancoRank": 4150,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "shutterfly.com",
-   "trancoRank": 4231,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "nanit.com",
-   "trancoRank": 4259,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "belkin.com",
-   "trancoRank": 4427,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "revolve.com",
-   "trancoRank": 4470,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "victoriassecret.com",
-   "trancoRank": 4491,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "fitbit.com",
-   "trancoRank": 4493,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "seagate.com",
-   "trancoRank": 4502,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "newegg.com",
-   "trancoRank": 4561,
-   "band": "1k-10k",
-   "eligible": false,
-   "exclusion": "legacy-named-merchant",
-   "probeSite": false
-  },
-  {
-   "domain": "zappos.com",
-   "trancoRank": 4599,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "reolink.com",
-   "trancoRank": 4651,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "brother.com",
-   "trancoRank": 4709,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "casio.com",
-   "trancoRank": 4753,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "nespresso.com",
-   "trancoRank": 4770,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "sephora.com",
-   "trancoRank": 4815,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "eufylife.com",
-   "trancoRank": 4823,
-   "band": "1k-10k",
-   "eligible": false,
-   "exclusion": "duplicate-of-another-domain",
-   "probeSite": false
-  },
-  {
-   "domain": "dickssportinggoods.com",
-   "trancoRank": 4858,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "kroger.com",
-   "trancoRank": 4861,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "ulta.com",
-   "trancoRank": 4862,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "canon.com",
-   "trancoRank": 4975,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "motorola.com",
-   "trancoRank": 4980,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "zazzle.com",
-   "trancoRank": 5058,
+   "domain": "academy.com",
    "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
@@ -728,47 +235,6 @@
   },
   {
    "domain": "acehardware.com",
-   "trancoRank": 5068,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "mango.com",
-   "trancoRank": 5072,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "jcpenney.com",
-   "trancoRank": 5078,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "gamestop.com",
-   "trancoRank": 5091,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "vizio.com",
-   "trancoRank": 5114,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "qvc.com",
-   "trancoRank": 5115,
    "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
@@ -776,351 +242,6 @@
   },
   {
    "domain": "acer.com",
-   "trancoRank": 5120,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bricklink.com",
-   "trancoRank": 5145,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "nordstrom.com",
-   "trancoRank": 5146,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "louisvuitton.com",
-   "trancoRank": 5248,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "jbl.com",
-   "trancoRank": 5303,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "tractorsupply.com",
-   "trancoRank": 5304,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bookshop.org",
-   "trancoRank": 5474,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "menards.com",
-   "trancoRank": 5505,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "swarovski.com",
-   "trancoRank": 5595,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "skechers.com",
-   "trancoRank": 5622,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "sweetwater.com",
-   "trancoRank": 5719,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "vistaprint.com",
-   "trancoRank": 5748,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "harborfreight.com",
-   "trancoRank": 5756,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "onepeloton.com",
-   "trancoRank": 5848,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bhphotovideo.com",
-   "trancoRank": 5856,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "thriftbooks.com",
-   "trancoRank": 5884,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "depop.com",
-   "trancoRank": 5904,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "lululemon.com",
-   "trancoRank": 5974,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "hollisterco.com",
-   "trancoRank": 6162,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "ecobee.com",
-   "trancoRank": 6225,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "ifixit.com",
-   "trancoRank": 6228,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "oreillyauto.com",
-   "trancoRank": 6347,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "scholastic.com",
-   "trancoRank": 6358,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "wyze.com",
-   "trancoRank": 6385,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "academy.com",
-   "trancoRank": 6386,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "michaels.com",
-   "trancoRank": 6402,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bedbathandbeyond.com",
-   "trancoRank": 6549,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "hobbylobby.com",
-   "trancoRank": 6567,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "whatnot.com",
-   "trancoRank": 6670,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "birkenstock.com",
-   "trancoRank": 6677,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "puma.com",
-   "trancoRank": 6716,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "torrid.com",
-   "trancoRank": 6723,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "epson.com",
-   "trancoRank": 7114,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "gopro.com",
-   "trancoRank": 7132,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "thredup.com",
-   "trancoRank": 7183,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "underarmour.com",
-   "trancoRank": 7216,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "uline.com",
-   "trancoRank": 7373,
-   "band": "1k-10k",
-   "eligible": false,
-   "exclusion": "business-supplier",
-   "probeSite": false
-  },
-  {
-   "domain": "bigbadtoystore.com",
-   "trancoRank": 7485,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bambulab.com",
-   "trancoRank": 7613,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "cafepress.com",
-   "trancoRank": 7674,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "stockx.com",
-   "trancoRank": 7926,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "officedepot.com",
-   "trancoRank": 8030,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "vestiairecollective.com",
-   "trancoRank": 8197,
-   "band": "1k-10k",
-   "eligible": false,
-   "exclusion": "non-us-online-retailer",
-   "probeSite": false
-  },
-  {
-   "domain": "ifit.com",
-   "trancoRank": 8212,
    "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
@@ -1128,7 +249,13 @@
   },
   {
    "domain": "adafruit.com",
-   "trancoRank": 8320,
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "adidas.com",
    "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
@@ -1136,47 +263,125 @@
   },
   {
    "domain": "anker.com",
-   "trancoRank": 8395,
    "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "linksys.com",
-   "trancoRank": 8517,
+   "domain": "arlo.com",
    "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "staples.com",
-   "trancoRank": 8753,
+   "domain": "asos.com",
    "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "patagonia.com",
-   "trancoRank": 8785,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "mattel.com",
-   "trancoRank": 8955,
-   "band": "1k-10k",
-   "eligible": true,
-   "exclusion": null,
+   "eligible": false,
+   "exclusion": "non-us-online-retailer",
    "probeSite": false
   },
   {
    "domain": "autozone.com",
-   "trancoRank": 9015,
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bambulab.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "barnesandnoble.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "bedbathandbeyond.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "belkin.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bhphotovideo.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bigbadtoystore.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "birkenstock.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bookshop.org",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bricklink.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "brother.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "cafepress.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "canon.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "casio.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "chewy.com",
    "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
@@ -1184,23 +389,55 @@
   },
   {
    "domain": "coach.com",
-   "trancoRank": 9213,
    "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "lexmark.com",
-   "trancoRank": 9296,
+   "domain": "costco.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "cvs.com",
+   "band": "1k-10k",
+   "eligible": false,
+   "exclusion": "prescription-or-pharmacy",
+   "probeSite": false
+  },
+  {
+   "domain": "depop.com",
    "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "roborock.com",
-   "trancoRank": 9542,
+   "domain": "dickssportinggoods.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dji.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ecobee.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "epson.com",
    "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
@@ -1208,2079 +445,643 @@
   },
   {
    "domain": "eufy.com",
-   "trancoRank": 9838,
    "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "therealreal.com",
-   "trancoRank": 10152,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "petsmart.com",
-   "trancoRank": 10279,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "corsair.com",
-   "trancoRank": 10382,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "petco.com",
-   "trancoRank": 10511,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "jdpower.com",
-   "trancoRank": 10556,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "not-a-store",
-   "probeSite": false
-  },
-  {
-   "domain": "hsn.com",
-   "trancoRank": 11027,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "wholefoodsmarket.com",
-   "trancoRank": 11227,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "no-own-checkout",
-   "probeSite": false
-  },
-  {
-   "domain": "abercrombie.com",
-   "trancoRank": 11231,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bose.com",
-   "trancoRank": 11276,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "booksamillion.com",
-   "trancoRank": 11316,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "asics.com",
-   "trancoRank": 11323,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "zola.com",
-   "trancoRank": 11646,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "registry-service",
-   "probeSite": false
-  },
-  {
-   "domain": "llbean.com",
-   "trancoRank": 11761,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "nordstromrack.com",
-   "trancoRank": 11854,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "potterybarn.com",
-   "trancoRank": 11876,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "fashionnova.com",
-   "trancoRank": 11949,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "levi.com",
-   "trancoRank": 12152,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "anthropologie.com",
-   "trancoRank": 12228,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "summitracing.com",
-   "trancoRank": 12325,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "guitarcenter.com",
-   "trancoRank": 12474,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "loft.com",
-   "trancoRank": 12549,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "publix.com",
-   "trancoRank": 12621,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "steelseries.com",
-   "trancoRank": 12655,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "sleepnumber.com",
-   "trancoRank": 12726,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "urbanoutfitters.com",
-   "trancoRank": 12945,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "rockauto.com",
-   "trancoRank": 12953,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "cabelas.com",
-   "trancoRank": 12975,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "dyson.com",
-   "trancoRank": 13076,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "reverb.com",
-   "trancoRank": 13149,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "swatch.com",
-   "trancoRank": 13326,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "shopbop.com",
-   "trancoRank": 13342,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bathandbodyworks.com",
-   "trancoRank": 13356,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "stanley1913.com",
-   "trancoRank": 13376,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "belk.com",
-   "trancoRank": 13404,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "cricut.com",
-   "trancoRank": 13434,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "ae.com",
-   "trancoRank": 13441,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "michaelkors.com",
-   "trancoRank": 13458,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "ssense.com",
-   "trancoRank": 13484,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "non-us-online-retailer",
-   "probeSite": false
-  },
-  {
-   "domain": "neimanmarcus.com",
-   "trancoRank": 13626,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "wish.com",
-   "trancoRank": 13688,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "cross-border-marketplace",
-   "probeSite": false
-  },
-  {
-   "domain": "hasbro.com",
-   "trancoRank": 13697,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "on.com",
-   "trancoRank": 13876,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "scheels.com",
-   "trancoRank": 13957,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "crateandbarrel.com",
-   "trancoRank": 14042,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "williams-sonoma.com",
-   "trancoRank": 14128,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "crocs.com",
-   "trancoRank": 14258,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "hottopic.com",
-   "trancoRank": 14270,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "loreal.com",
-   "trancoRank": 14411,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "not-a-store",
-   "probeSite": false
-  },
-  {
-   "domain": "saksfifthavenue.com",
-   "trancoRank": 14436,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "partsgeek.com",
-   "trancoRank": 14462,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "dollartree.com",
-   "trancoRank": 14463,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "thenorthface.com",
-   "trancoRank": 14464,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "ashleyfurniture.com",
-   "trancoRank": 14488,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "hoka.com",
-   "trancoRank": 14516,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "overstock.com",
-   "trancoRank": 14650,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "ralphlauren.com",
-   "trancoRank": 14754,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "sherwin-williams.com",
-   "trancoRank": 14912,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "sennheiser.com",
-   "trancoRank": 14951,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bjs.com",
-   "trancoRank": 15020,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "disneystore.com",
-   "trancoRank": 15054,
-   "band": "10k-100k",
+   "domain": "eufylife.com",
+   "band": "1k-10k",
    "eligible": false,
    "exclusion": "duplicate-of-another-domain",
    "probeSite": false
   },
   {
-   "domain": "funko.com",
-   "trancoRank": 15171,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "vans.com",
-   "trancoRank": 15214,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "pandora.net",
-   "trancoRank": 15234,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "mytheresa.com",
-   "trancoRank": 15239,
-   "band": "10k-100k",
+   "domain": "farfetch.com",
+   "band": "1k-10k",
    "eligible": false,
    "exclusion": "non-us-online-retailer",
    "probeSite": false
   },
   {
-   "domain": "tommy.com",
-   "trancoRank": 15262,
-   "band": "10k-100k",
+   "domain": "fitbit.com",
+   "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "dillards.com",
-   "trancoRank": 15291,
-   "band": "10k-100k",
+   "domain": "gamestop.com",
+   "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "heb.com",
-   "trancoRank": 15486,
-   "band": "10k-100k",
+   "domain": "gap.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "garmin.com",
+   "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "converse.com",
-   "trancoRank": 15708,
-   "band": "10k-100k",
+   "domain": "gopro.com",
+   "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "lush.com",
-   "trancoRank": 15769,
-   "band": "10k-100k",
+   "domain": "harborfreight.com",
+   "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "bloomingdales.com",
-   "trancoRank": 15927,
-   "band": "10k-100k",
+   "domain": "hobbylobby.com",
+   "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "powells.com",
-   "trancoRank": 16060,
-   "band": "10k-100k",
+   "domain": "hollisterco.com",
+   "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "cdw.com",
-   "trancoRank": 16330,
-   "band": "10k-100k",
+   "domain": "houzz.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ifit.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ifixit.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "iherb.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "instacart.com",
+   "band": "1k-10k",
+   "eligible": false,
+   "exclusion": "no-own-checkout",
+   "probeSite": false
+  },
+  {
+   "domain": "jbl.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "jcpenney.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "kohls.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "kroger.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "lego.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "lexmark.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "linksys.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "logitech.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "louisvuitton.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "lululemon.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "macys.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "mango.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "mattel.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "menards.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "mercari.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "michaels.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "motorola.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "msi.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "nanit.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "nespresso.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "netgear.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "newegg.com",
+   "band": "1k-10k",
+   "eligible": false,
+   "exclusion": "legacy-named-merchant",
+   "probeSite": false
+  },
+  {
+   "domain": "nordstrom.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "officedepot.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "onepeloton.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "oreillyauto.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ouraring.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "patagonia.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "philips.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "poshmark.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "puma.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "qvc.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "razer.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "redbubble.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "rei.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "reolink.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "revolve.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "roborock.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "samsclub.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "scholastic.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "seagate.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "sephora.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "shutterfly.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "simplisafe.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "skechers.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "snapfish.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "sonos.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "sony.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "staples.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "stockx.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "swarovski.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "sweetwater.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "tcgplayer.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "teepublic.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "thredup.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "thriftbooks.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "torrid.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "tractorsupply.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "uline.com",
+   "band": "1k-10k",
    "eligible": false,
    "exclusion": "business-supplier",
    "probeSite": false
   },
   {
-   "domain": "safeway.com",
-   "trancoRank": 16345,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "goat.com",
-   "trancoRank": 16367,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "talbots.com",
-   "trancoRank": 16383,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bodybuilding.com",
-   "trancoRank": 16606,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "jcrew.com",
-   "trancoRank": 16609,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "sportsmans.com",
-   "trancoRank": 16745,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "famousfootwear.com",
-   "trancoRank": 16780,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "lanebryant.com",
-   "trancoRank": 16996,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "marshalls.com",
-   "trancoRank": 17071,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "longchamp.com",
-   "trancoRank": 17268,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "woot.com",
-   "trancoRank": 17391,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "tiffany.com",
-   "trancoRank": 17503,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "maurices.com",
-   "trancoRank": 17558,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "worldmarket.com",
-   "trancoRank": 17730,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "weber.com",
-   "trancoRank": 17781,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "polar.com",
-   "trancoRank": 18375,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "advanceautoparts.com",
-   "trancoRank": 18380,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "freepeople.com",
-   "trancoRank": 18386,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "microcenter.com",
-   "trancoRank": 18405,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "backcountry.com",
-   "trancoRank": 18449,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "meijer.com",
-   "trancoRank": 18495,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "spirithalloween.com",
-   "trancoRank": 18505,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "babylist.com",
-   "trancoRank": 18532,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "registry-service",
-   "probeSite": false
-  },
-  {
-   "domain": "seikowatches.com",
-   "trancoRank": 18549,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "dollargeneral.com",
-   "trancoRank": 18573,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "quince.com",
-   "trancoRank": 18752,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "dsw.com",
-   "trancoRank": 19399,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "boohoo.com",
-   "trancoRank": 19425,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "non-us-online-retailer",
-   "probeSite": false
-  },
-  {
-   "domain": "carparts.com",
-   "trancoRank": 20064,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "fwrd.com",
-   "trancoRank": 20145,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "orientaltrading.com",
-   "trancoRank": 20169,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "lookfantastic.com",
-   "trancoRank": 20212,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "non-us-online-retailer",
-   "probeSite": false
-  },
-  {
-   "domain": "zoro.com",
-   "trancoRank": 20227,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "adorama.com",
-   "trancoRank": 20503,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "sierra.com",
-   "trancoRank": 20674,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "grailed.com",
-   "trancoRank": 20841,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "timberland.com",
-   "trancoRank": 21146,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "westelm.com",
-   "trancoRank": 21793,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "crutchfield.com",
-   "trancoRank": 22098,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "shure.com",
-   "trancoRank": 22160,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "landsend.com",
-   "trancoRank": 22742,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "jomashop.com",
-   "trancoRank": 23054,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bang-olufsen.com",
-   "trancoRank": 23296,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "newbalance.com",
-   "trancoRank": 23475,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "footlocker.com",
-   "trancoRank": 23730,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "gymshark.com",
-   "trancoRank": 23863,
-   "band": "10k-100k",
+   "domain": "ulta.com",
+   "band": "1k-10k",
    "eligible": true,
    "exclusion": null,
    "probeSite": true
+  },
+  {
+   "domain": "underarmour.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "uniqlo.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "vestiairecollective.com",
+   "band": "1k-10k",
+   "eligible": false,
+   "exclusion": "non-us-online-retailer",
+   "probeSite": false
+  },
+  {
+   "domain": "victoriassecret.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "vistaprint.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "vizio.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "walgreens.com",
+   "band": "1k-10k",
+   "eligible": false,
+   "exclusion": "prescription-or-pharmacy",
+   "probeSite": false
+  },
+  {
+   "domain": "wayfair.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "whatnot.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "wyze.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "zappos.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "zara.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "zazzle.com",
+   "band": "1k-10k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "1800contacts.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "prescription-or-pharmacy",
+   "probeSite": false
   },
   {
    "domain": "1800flowers.com",
-   "trancoRank": 24043,
    "band": "10k-100k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "suunto.com",
-   "trancoRank": 24232,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "brilliantearth.com",
-   "trancoRank": 24280,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "tirerack.com",
-   "trancoRank": 24485,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "dove.com",
-   "trancoRank": 24691,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "no-own-checkout",
-   "probeSite": false
-  },
-  {
-   "domain": "columbia.com",
-   "trancoRank": 25015,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "beatsbydre.com",
-   "trancoRank": 25144,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "sallybeauty.com",
-   "trancoRank": 25622,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "warbyparker.com",
-   "trancoRank": 25629,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "prescription-or-pharmacy",
-   "probeSite": false
-  },
-  {
-   "domain": "jdsports.com",
-   "trancoRank": 25711,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "aloyoga.com",
-   "trancoRank": 25859,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "aldi.us",
-   "trancoRank": 25980,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "no-own-checkout",
-   "probeSite": false
-  },
-  {
-   "domain": "lulus.com",
-   "trancoRank": 26010,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "kitchenaid.com",
-   "trancoRank": 26167,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "containerstore.com",
-   "trancoRank": 26417,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "reebok.com",
-   "trancoRank": 26604,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "carters.com",
-   "trancoRank": 26687,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "yeti.com",
-   "trancoRank": 26857,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "napaonline.com",
-   "trancoRank": 26979,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "system76.com",
-   "trancoRank": 27032,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "musiciansfriend.com",
-   "trancoRank": 27176,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "traderjoes.com",
-   "trancoRank": 27179,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "no-own-checkout",
-   "probeSite": false
-  },
-  {
-   "domain": "gnc.com",
-   "trancoRank": 27271,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "northerntool.com",
-   "trancoRank": 27377,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "arcteryx.com",
-   "trancoRank": 27535,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "foodlion.com",
-   "trancoRank": 27625,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "hy-vee.com",
-   "trancoRank": 27669,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "ferguson.com",
-   "trancoRank": 27709,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "business-supplier",
-   "probeSite": false
-  },
-  {
-   "domain": "potterybarnkids.com",
-   "trancoRank": 27833,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "coros.com",
-   "trancoRank": 27948,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "albertsons.com",
-   "trancoRank": 28089,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "acmetools.com",
-   "trancoRank": 28134,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "katespade.com",
-   "trancoRank": 28508,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "express.com",
-   "trancoRank": 28555,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "fossil.com",
-   "trancoRank": 28760,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "merrell.com",
-   "trancoRank": 28881,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "rcwilley.com",
-   "trancoRank": 28958,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "surlatable.com",
-   "trancoRank": 29124,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "toryburch.com",
-   "trancoRank": 29210,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "ugg.com",
-   "trancoRank": 29296,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "charlottetilbury.com",
-   "trancoRank": 29342,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "fabletics.com",
-   "trancoRank": 29433,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "jegs.com",
-   "trancoRank": 29514,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "fashionphile.com",
-   "trancoRank": 29799,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "cb2.com",
-   "trancoRank": 30027,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "drmartens.com",
-   "trancoRank": 30042,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "pacsun.com",
-   "trancoRank": 30096,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "guess.com",
-   "trancoRank": 30146,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "crayola.com",
-   "trancoRank": 30272,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "brooksrunning.com",
-   "trancoRank": 30360,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bollandbranch.com",
-   "trancoRank": 30689,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "finishline.com",
-   "trancoRank": 30798,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "thrivemarket.com",
-   "trancoRank": 31330,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "skims.com",
-   "trancoRank": 31420,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "forever21.com",
-   "trancoRank": 31488,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "defunct-2025",
-   "probeSite": false
-  },
-  {
-   "domain": "vitacost.com",
-   "trancoRank": 31515,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "anntaylor.com",
-   "trancoRank": 31797,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "carhartt.com",
-   "trancoRank": 31838,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "entertainmentearth.com",
-   "trancoRank": 32106,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "quill.com",
-   "trancoRank": 32155,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "business-supplier",
-   "probeSite": false
-  },
-  {
-   "domain": "vitaminshoppe.com",
-   "trancoRank": 32269,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "childrensplace.com",
-   "trancoRank": 32315,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "discounttire.com",
-   "trancoRank": 32623,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "revzilla.com",
-   "trancoRank": 32701,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "hannaandersson.com",
-   "trancoRank": 32726,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "wrangler.com",
-   "trancoRank": 32818,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "duluthtrading.com",
-   "trancoRank": 32847,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "stevemadden.com",
-   "trancoRank": 32907,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "journeys.com",
-   "trancoRank": 33359,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "zennioptical.com",
-   "trancoRank": 33565,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "prescription-or-pharmacy",
-   "probeSite": false
-  },
-  {
-   "domain": "pbteen.com",
-   "trancoRank": 33657,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bergdorfgoodman.com",
-   "trancoRank": 33819,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "dickblick.com",
-   "trancoRank": 34107,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "fivebelow.com",
-   "trancoRank": 34205,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "chicos.com",
-   "trancoRank": 34277,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "livingspaces.com",
-   "trancoRank": 34301,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "wegmans.com",
-   "trancoRank": 34470,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bluenile.com",
-   "trancoRank": 34716,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "shoprite.com",
-   "trancoRank": 34892,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "roomstogo.com",
-   "trancoRank": 35177,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "aldoshoes.com",
-   "trancoRank": 35326,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "toysrus.com",
-   "trancoRank": 35594,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "lenscrafters.com",
-   "trancoRank": 35711,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "prescription-or-pharmacy",
-   "probeSite": false
-  },
-  {
-   "domain": "maccosmetics.com",
-   "trancoRank": 35941,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "jtv.com",
-   "trancoRank": 35981,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "lampsplus.com",
-   "trancoRank": 36090,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "saucony.com",
-   "trancoRank": 36127,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "tillys.com",
-   "trancoRank": 36288,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "hibbett.com",
-   "trancoRank": 36369,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "prettylittlething.com",
-   "trancoRank": 36453,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "non-us-online-retailer",
-   "probeSite": false
-  },
-  {
-   "domain": "sprouts.com",
-   "trancoRank": 36544,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "callawaygolf.com",
-   "trancoRank": 36644,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "rh.com",
-   "trancoRank": 36700,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "zzounds.com",
-   "trancoRank": 36890,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "princesspolly.com",
-   "trancoRank": 36954,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "non-us-online-retailer",
-   "probeSite": false
-  },
-  {
-   "domain": "madewell.com",
-   "trancoRank": 37255,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "zulily.com",
-   "trancoRank": 37285,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "eddiebauer.com",
-   "trancoRank": 37315,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "dermstore.com",
-   "trancoRank": 37322,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "zwilling.com",
-   "trancoRank": 37873,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "familydollar.com",
-   "trancoRank": 38200,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "ftd.com",
-   "trancoRank": 38305,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "farmandfleet.com",
-   "trancoRank": 38357,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "americangirl.com",
-   "trancoRank": 38727,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "kay.com",
-   "trancoRank": 38766,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "zales.com",
-   "trancoRank": 38793,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "marcjacobs.com",
-   "trancoRank": 38987,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "audio-technica.com",
-   "trancoRank": 39096,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "mattressfirm.com",
-   "trancoRank": 39906,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "stopandshop.com",
-   "trancoRank": 39948,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "eyebuydirect.com",
-   "trancoRank": 40009,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "prescription-or-pharmacy",
-   "probeSite": false
-  },
-  {
-   "domain": "esteelauder.com",
-   "trancoRank": 40067,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "theordinary.com",
-   "trancoRank": 40539,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "everlane.com",
-   "trancoRank": 40723,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "buildabear.com",
-   "trancoRank": 41261,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "fentybeauty.com",
-   "trancoRank": 41881,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "altardstate.com",
-   "trancoRank": 41936,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "joann.com",
-   "trancoRank": 42855,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "defunct-2025",
-   "probeSite": false
-  },
-  {
-   "domain": "windsorstore.com",
-   "trancoRank": 42912,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "yankeecandle.com",
-   "trancoRank": 43179,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "orvis.com",
-   "trancoRank": 43736,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "calvinklein.com",
-   "trancoRank": 44450,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "evo.com",
-   "trancoRank": 44530,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "verabradley.com",
-   "trancoRank": 44680,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "boxlunch.com",
-   "trancoRank": 44731,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "glassesusa.com",
-   "trancoRank": 44888,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "prescription-or-pharmacy",
-   "probeSite": false
-  },
-  {
-   "domain": "partycity.com",
-   "trancoRank": 44929,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "defunct-2025",
-   "probeSite": false
-  },
-  {
-   "domain": "spencersonline.com",
-   "trancoRank": 44952,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "kendrascott.com",
-   "trancoRank": 46142,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "lumens.com",
-   "trancoRank": 46417,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "elfcosmetics.com",
-   "trancoRank": 46548,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "danielwellington.com",
-   "trancoRank": 46635,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "jjill.com",
-   "trancoRank": 46932,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "marshall.com",
-   "trancoRank": 47314,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "perigold.com",
-   "trancoRank": 47400,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "ruralking.com",
-   "trancoRank": 47511,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "glossier.com",
-   "trancoRank": 47749,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "monoprice.com",
-   "trancoRank": 47782,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "boscovs.com",
-   "trancoRank": 47859,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "clinique.com",
-   "trancoRank": 47971,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "cyclegear.com",
-   "trancoRank": 48046,
+   "domain": "abercrombie.com",
    "band": "10k-100k",
    "eligible": true,
    "exclusion": null,
@@ -3288,791 +1089,20 @@
   },
   {
    "domain": "abt.com",
-   "trancoRank": 48654,
    "band": "10k-100k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "doitbest.com",
-   "trancoRank": 49119,
+   "domain": "acmetools.com",
    "band": "10k-100k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "coldwatercreek.com",
-   "trancoRank": 49127,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "dollarshaveclub.com",
-   "trancoRank": 49947,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "kith.com",
-   "trancoRank": 49959,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "homegoods.com",
-   "trancoRank": 50223,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "riteaid.com",
-   "trancoRank": 50554,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "prescription-or-pharmacy",
-   "probeSite": false
-  },
-  {
-   "domain": "purple.com",
-   "trancoRank": 50742,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "vuoriclothing.com",
-   "trancoRank": 50967,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "truevalue.com",
-   "trancoRank": 51242,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "bombas.com",
-   "trancoRank": 51447,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "kiehls.com",
-   "trancoRank": 51630,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "teleflora.com",
-   "trancoRank": 51912,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "casper.com",
-   "trancoRank": 52120,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "roguefitness.com",
-   "trancoRank": 52139,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "edikted.com",
-   "trancoRank": 52296,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "oldnavy.com",
-   "trancoRank": 52316,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "realtruck.com",
-   "trancoRank": 52620,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "dunhamssports.com",
-   "trancoRank": 53149,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "shopdisney.com",
-   "trancoRank": 53407,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "dickies.com",
-   "trancoRank": 53670,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "zumiez.com",
-   "trancoRank": 53839,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "pcrichard.com",
-   "trancoRank": 54461,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "benefitcosmetics.com",
-   "trancoRank": 54980,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "lee.com",
-   "trancoRank": 55981,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "hannaford.com",
-   "trancoRank": 56737,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "1800contacts.com",
-   "trancoRank": 57052,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "prescription-or-pharmacy",
-   "probeSite": false
-  },
-  {
-   "domain": "keenfootwear.com",
-   "trancoRank": 57435,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "pepboys.com",
-   "trancoRank": 57938,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "shoecarnival.com",
-   "trancoRank": 57957,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "allmodern.com",
-   "trancoRank": 58215,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "giantfood.com",
-   "trancoRank": 58270,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "dooney.com",
-   "trancoRank": 58670,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "rackroomshoes.com",
-   "trancoRank": 58718,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "vonmaur.com",
-   "trancoRank": 58870,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "savagex.com",
-   "trancoRank": 58903,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "owalalife.com",
-   "trancoRank": 59322,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "arhaus.com",
-   "trancoRank": 59545,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "paulaschoice.com",
-   "trancoRank": 61004,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "golfgalaxy.com",
-   "trancoRank": 61364,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "graco.com",
-   "trancoRank": 61823,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "not-a-store",
-   "probeSite": false
-  },
-  {
-   "domain": "catherines.com",
-   "trancoRank": 62337,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "tigerdirect.com",
-   "trancoRank": 62828,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "klipsch.com",
-   "trancoRank": 63166,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "timex.com",
-   "trancoRank": 63593,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "taylormadegolf.com",
-   "trancoRank": 63710,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "proflowers.com",
-   "trancoRank": 63847,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "article.com",
-   "trancoRank": 64062,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "tartecosmetics.com",
-   "trancoRank": 64595,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "wahoofitness.com",
-   "trancoRank": 65148,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "saatva.com",
-   "trancoRank": 66043,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "whitehouseblackmarket.com",
-   "trancoRank": 66476,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "hyperx.com",
-   "trancoRank": 67163,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "pgatoursuperstore.com",
-   "trancoRank": 67516,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "allbirds.com",
-   "trancoRank": 68312,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": true
-  },
-  {
-   "domain": "aveda.com",
-   "trancoRank": 68656,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "lecreuset.com",
-   "trancoRank": 68916,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "rothys.com",
-   "trancoRank": 69278,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "birchlane.com",
-   "trancoRank": 69869,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "spanx.com",
-   "trancoRank": 70191,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "whitefoxboutique.com",
-   "trancoRank": 71530,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "non-us-online-retailer",
-   "probeSite": false
-  },
-  {
-   "domain": "ruggable.com",
-   "trancoRank": 71670,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "rossstores.com",
-   "trancoRank": 71892,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "mejuri.com",
-   "trancoRank": 72193,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "harryanddavid.com",
-   "trancoRank": 72321,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "nectarsleep.com",
-   "trancoRank": 72370,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "titleist.com",
-   "trancoRank": 72683,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "alexandani.com",
-   "trancoRank": 72804,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "traeger.com",
-   "trancoRank": 72850,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "nastygal.com",
-   "trancoRank": 73236,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "non-us-online-retailer",
-   "probeSite": false
-  },
-  {
-   "domain": "skullcandy.com",
-   "trancoRank": 73581,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "champssports.com",
-   "trancoRank": 73821,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "jared.com",
-   "trancoRank": 73827,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "rugsusa.com",
-   "trancoRank": 73910,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "vitamix.com",
-   "trancoRank": 74357,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "breville.com",
-   "trancoRank": 74441,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "harrys.com",
-   "trancoRank": 75200,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "vons.com",
-   "trancoRank": 75892,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "davidyurman.com",
-   "trancoRank": 78770,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "citizenwatch.com",
-   "trancoRank": 81729,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "ethanallen.com",
-   "trancoRank": 81807,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "jewelosco.com",
-   "trancoRank": 82004,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "claires.com",
-   "trancoRank": 82351,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "maybelline.com",
-   "trancoRank": 82475,
-   "band": "10k-100k",
-   "eligible": false,
-   "exclusion": "no-own-checkout",
-   "probeSite": false
-  },
-  {
-   "domain": "lovesac.com",
-   "trancoRank": 82770,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "polkaudio.com",
-   "trancoRank": 82947,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "soma.com",
-   "trancoRank": 83335,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "burlington.com",
-   "trancoRank": 83397,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "colourpop.com",
-   "trancoRank": 84079,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "jerrysartarama.com",
-   "trancoRank": 84115,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "dollskill.com",
-   "trancoRank": 84262,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "neutrogena.com",
-   "trancoRank": 84481,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "teva.com",
-   "trancoRank": 85174,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "nyxcosmetics.com",
-   "trancoRank": 86576,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "biglots.com",
-   "trancoRank": 89289,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "hanes.com",
-   "trancoRank": 91247,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "castlery.com",
-   "trancoRank": 91409,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "build.com",
-   "trancoRank": 95848,
-   "band": "10k-100k",
-   "eligible": true,
-   "exclusion": null,
-   "probeSite": false
-  },
-  {
-   "domain": "jossandmain.com",
-   "trancoRank": 96528,
+   "domain": "adorama.com",
    "band": "10k-100k",
    "eligible": true,
    "exclusion": null,
@@ -4080,15 +1110,1014 @@
   },
   {
    "domain": "adoreme.com",
-   "trancoRank": 96800,
    "band": "10k-100k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "serenaandlily.com",
-   "trancoRank": 97839,
+   "domain": "advanceautoparts.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ae.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "albertsons.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "aldi.us",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "no-own-checkout",
+   "probeSite": false
+  },
+  {
+   "domain": "aldoshoes.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "alexandani.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "allbirds.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "allmodern.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "aloyoga.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "altardstate.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "americangirl.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "anntaylor.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "anthropologie.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "arcteryx.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "arhaus.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "article.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ashleyfurniture.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "asics.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "audio-technica.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "aveda.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "babylist.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "registry-service",
+   "probeSite": false
+  },
+  {
+   "domain": "backcountry.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bang-olufsen.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bathandbodyworks.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "beatsbydre.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "belk.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "benefitcosmetics.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bergdorfgoodman.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "biglots.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "birchlane.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bjs.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bloomingdales.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bluenile.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bodybuilding.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bollandbranch.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bombas.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "boohoo.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "non-us-online-retailer",
+   "probeSite": false
+  },
+  {
+   "domain": "booksamillion.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "boscovs.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "bose.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "boxlunch.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "breville.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "brilliantearth.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "brooksrunning.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "build.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "buildabear.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "burlington.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "cabelas.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "callawaygolf.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "calvinklein.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "carhartt.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "carparts.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "carters.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "casper.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "castlery.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "catherines.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "cb2.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "cdw.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "business-supplier",
+   "probeSite": false
+  },
+  {
+   "domain": "champssports.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "charlottetilbury.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "chicos.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "childrensplace.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "citizenwatch.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "claires.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "clinique.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "coldwatercreek.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "colourpop.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "columbia.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "containerstore.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "converse.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "coros.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "corsair.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "crateandbarrel.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "crayola.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "cricut.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "crocs.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "crutchfield.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "cyclegear.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "danielwellington.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "davidyurman.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dermstore.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dickblick.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dickies.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dillards.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "discounttire.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "disneystore.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "duplicate-of-another-domain",
+   "probeSite": false
+  },
+  {
+   "domain": "doitbest.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dollargeneral.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dollarshaveclub.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dollartree.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dollskill.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dooney.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dove.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "no-own-checkout",
+   "probeSite": false
+  },
+  {
+   "domain": "drmartens.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dsw.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "duluthtrading.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dunhamssports.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "dyson.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "eddiebauer.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "edikted.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "elfcosmetics.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "entertainmentearth.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "esteelauder.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ethanallen.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "everlane.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "evo.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "express.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "eyebuydirect.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "prescription-or-pharmacy",
+   "probeSite": false
+  },
+  {
+   "domain": "fabletics.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "familydollar.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "famousfootwear.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "farmandfleet.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "fashionnova.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "fashionphile.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "fentybeauty.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ferguson.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "business-supplier",
+   "probeSite": false
+  },
+  {
+   "domain": "finishline.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "fivebelow.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "foodlion.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "footlocker.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "forever21.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "defunct-2025",
+   "probeSite": false
+  },
+  {
+   "domain": "fossil.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "freepeople.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ftd.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "funko.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "fwrd.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "giantfood.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "glassesusa.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "prescription-or-pharmacy",
+   "probeSite": false
+  },
+  {
+   "domain": "glossier.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "gnc.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "goat.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "golfgalaxy.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "graco.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "not-a-store",
+   "probeSite": false
+  },
+  {
+   "domain": "grailed.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "guess.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "guitarcenter.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "gymshark.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "hanes.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "hannaandersson.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "hannaford.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "harryanddavid.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "harrys.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "hasbro.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "heb.com",
    "band": "10k-100k",
    "eligible": true,
    "exclusion": null,
@@ -4096,959 +2125,1483 @@
   },
   {
    "domain": "hexclad.com",
-   "trancoRank": 98106,
    "band": "10k-100k",
    "eligible": true,
    "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "cerave.com",
-   "trancoRank": 100059,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "hibbett.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "janieandjack.com",
-   "trancoRank": 101343,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "hoka.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "bananarepublic.com",
-   "trancoRank": 102882,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "homegoods.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "papersource.com",
-   "trancoRank": 103008,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "hottopic.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "hsn.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "thirdlove.com",
-   "trancoRank": 104584,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "hy-vee.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "raymourflanigan.com",
-   "trancoRank": 107246,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "hyperx.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "rebag.com",
-   "trancoRank": 107458,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "jared.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "kirklands.com",
-   "trancoRank": 107998,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "jcrew.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "showpo.com",
-   "trancoRank": 108008,
-   "band": "beyond-100k",
+   "domain": "jdpower.com",
+   "band": "10k-100k",
    "eligible": false,
-   "exclusion": "outside-top-100k",
+   "exclusion": "not-a-store",
    "probeSite": false
   },
   {
-   "domain": "olay.com",
-   "trancoRank": 108720,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "jdsports.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "ooni.com",
-   "trancoRank": 110698,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "jegs.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "saksoff5th.com",
-   "trancoRank": 112567,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "jerrysartarama.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "stuartweitzman.com",
-   "trancoRank": 112752,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "jewelosco.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "pier1.com",
-   "trancoRank": 113250,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "jjill.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "cuisinart.com",
-   "trancoRank": 113380,
-   "band": "beyond-100k",
+   "domain": "joann.com",
+   "band": "10k-100k",
    "eligible": false,
-   "exclusion": "outside-top-100k",
+   "exclusion": "defunct-2025",
    "probeSite": false
   },
   {
-   "domain": "4wheelparts.com",
-   "trancoRank": 113690,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "jomashop.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "urbandecay.com",
-   "trancoRank": 114073,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "jossandmain.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "brooklinen.com",
-   "trancoRank": 114335,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "journeys.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "hyperice.com",
-   "trancoRank": 115246,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "jtv.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "avenue.com",
-   "trancoRank": 115615,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "katespade.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "therabody.com",
-   "trancoRank": 116072,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "kay.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "sweatybetty.com",
-   "trancoRank": 116506,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "keenfootwear.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "manscaped.com",
-   "trancoRank": 117786,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "kendrascott.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "madeincookware.com",
-   "trancoRank": 119310,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "kiehls.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "nordictrack.com",
-   "trancoRank": 120375,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "kitchenaid.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "hellomolly.com",
-   "trancoRank": 120704,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "kith.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "hydroflask.com",
-   "trancoRank": 121524,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "klipsch.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "kyliecosmetics.com",
-   "trancoRank": 122919,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "lampsplus.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "vineyardvines.com",
-   "trancoRank": 123729,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "landsend.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "joybird.com",
-   "trancoRank": 125130,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "lanebryant.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "freshdirect.com",
-   "trancoRank": 126367,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "lecreuset.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "melissaanddoug.com",
-   "trancoRank": 126689,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "lee.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "tjmaxx.com",
-   "trancoRank": 126742,
-   "band": "beyond-100k",
+   "domain": "lenscrafters.com",
+   "band": "10k-100k",
    "eligible": false,
-   "exclusion": "outside-top-100k",
+   "exclusion": "prescription-or-pharmacy",
    "probeSite": false
   },
   {
-   "domain": "bobbibrowncosmetics.com",
-   "trancoRank": 127604,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "levi.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "jockey.com",
-   "trancoRank": 127772,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "livingspaces.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "meundies.com",
-   "trancoRank": 128017,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
+   "domain": "llbean.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
-   "domain": "carawayhome.com",
-   "trancoRank": 128983,
-   "band": "beyond-100k",
+   "domain": "loft.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "longchamp.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "lookfantastic.com",
+   "band": "10k-100k",
    "eligible": false,
-   "exclusion": "outside-top-100k",
+   "exclusion": "non-us-online-retailer",
+   "probeSite": false
+  },
+  {
+   "domain": "loreal.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "not-a-store",
+   "probeSite": false
+  },
+  {
+   "domain": "lovesac.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "lulus.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "lumens.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "lush.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "maccosmetics.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "madewell.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "marcjacobs.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "marshall.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "marshalls.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "mattressfirm.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "maurices.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "maybelline.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "no-own-checkout",
+   "probeSite": false
+  },
+  {
+   "domain": "meijer.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "mejuri.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "merrell.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "michaelkors.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "microcenter.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "monoprice.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "musiciansfriend.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "mytheresa.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "non-us-online-retailer",
+   "probeSite": false
+  },
+  {
+   "domain": "napaonline.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "nastygal.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "non-us-online-retailer",
+   "probeSite": false
+  },
+  {
+   "domain": "nectarsleep.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "neimanmarcus.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "neutrogena.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "newbalance.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "nordstromrack.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "northerntool.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "nyxcosmetics.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "oldnavy.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "on.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "orientaltrading.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "orvis.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "overstock.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "owalalife.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "pacsun.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "pandora.net",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "partsgeek.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "partycity.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "defunct-2025",
+   "probeSite": false
+  },
+  {
+   "domain": "paulaschoice.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "pbteen.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "pcrichard.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "pepboys.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "perigold.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "petco.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "petsmart.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "pgatoursuperstore.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "polar.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "polkaudio.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "potterybarn.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "potterybarnkids.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "powells.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "prettylittlething.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "non-us-online-retailer",
+   "probeSite": false
+  },
+  {
+   "domain": "princesspolly.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "non-us-online-retailer",
+   "probeSite": false
+  },
+  {
+   "domain": "proflowers.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "publix.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "purple.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "quill.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "business-supplier",
+   "probeSite": false
+  },
+  {
+   "domain": "quince.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "rackroomshoes.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ralphlauren.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "rcwilley.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "realtruck.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "reebok.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "reverb.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "revzilla.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "rh.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "riteaid.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "prescription-or-pharmacy",
+   "probeSite": false
+  },
+  {
+   "domain": "rockauto.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "roguefitness.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "roomstogo.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "rossstores.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "rothys.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ruggable.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "rugsusa.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ruralking.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "saatva.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "safeway.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "saksfifthavenue.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "sallybeauty.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "saucony.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "savagex.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "scheels.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "seikowatches.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "sennheiser.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "serenaandlily.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "sherwin-williams.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "shoecarnival.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "shopbop.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "shopdisney.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "shoprite.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "shure.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "sierra.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "skims.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "skullcandy.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "sleepnumber.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "soma.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "spanx.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "spencersonline.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "spirithalloween.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "sportsmans.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "sprouts.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ssense.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "non-us-online-retailer",
+   "probeSite": false
+  },
+  {
+   "domain": "stanley1913.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "steelseries.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "stevemadden.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "stopandshop.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "summitracing.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "surlatable.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "suunto.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "swatch.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "system76.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "talbots.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "tartecosmetics.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "taylormadegolf.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "teleflora.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "teva.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "thenorthface.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "theordinary.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "therealreal.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "thrivemarket.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "tiffany.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "tigerdirect.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "tillys.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "timberland.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "timex.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "tirerack.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "titleist.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "tommy.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "toryburch.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "toysrus.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "traderjoes.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "no-own-checkout",
+   "probeSite": false
+  },
+  {
+   "domain": "traeger.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "truevalue.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "ugg.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "urbanoutfitters.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "vans.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "verabradley.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "vitacost.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "vitaminshoppe.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "vitamix.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "vonmaur.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "vons.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "vuoriclothing.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "wahoofitness.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "warbyparker.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "prescription-or-pharmacy",
+   "probeSite": false
+  },
+  {
+   "domain": "weber.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "wegmans.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "westelm.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "whitefoxboutique.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "non-us-online-retailer",
+   "probeSite": false
+  },
+  {
+   "domain": "whitehouseblackmarket.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "wholefoodsmarket.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "no-own-checkout",
+   "probeSite": false
+  },
+  {
+   "domain": "williams-sonoma.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "windsorstore.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "wish.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "cross-border-marketplace",
+   "probeSite": false
+  },
+  {
+   "domain": "woot.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "worldmarket.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "wrangler.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "yankeecandle.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "yeti.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "zales.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "zennioptical.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "prescription-or-pharmacy",
+   "probeSite": false
+  },
+  {
+   "domain": "zola.com",
+   "band": "10k-100k",
+   "eligible": false,
+   "exclusion": "registry-service",
+   "probeSite": false
+  },
+  {
+   "domain": "zoro.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "zulily.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "zumiez.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": true
+  },
+  {
+   "domain": "zwilling.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
+   "probeSite": false
+  },
+  {
+   "domain": "zzounds.com",
+   "band": "10k-100k",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false
   },
   {
    "domain": "1800petmeds.com",
-   "trancoRank": 129009,
    "band": "beyond-100k",
    "eligible": false,
    "exclusion": "prescription-or-pharmacy",
    "probeSite": false
   },
   {
-   "domain": "movado.com",
-   "trancoRank": 129481,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "frys.com",
-   "trancoRank": 129945,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "parachutehome.com",
-   "trancoRank": 130090,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "petalandpup.com",
-   "trancoRank": 130292,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "barkbox.com",
-   "trancoRank": 130498,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "gymboree.com",
-   "trancoRank": 131481,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "bareminerals.com",
-   "trancoRank": 131993,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "solostove.com",
-   "trancoRank": 132436,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "olaplex.com",
-   "trancoRank": 134301,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "rarebeauty.com",
-   "trancoRank": 136677,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "mvmt.com",
-   "trancoRank": 139900,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "sorel.com",
-   "trancoRank": 141782,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "steepandcheap.com",
-   "trancoRank": 141882,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "bowflex.com",
-   "trancoRank": 142446,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "fatbraintoys.com",
-   "trancoRank": 142728,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "champion.com",
-   "trancoRank": 143090,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "samash.com",
-   "trancoRank": 147800,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "anastasiabeverlyhills.com",
-   "trancoRank": 148124,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "buybuybaby.com",
-   "trancoRank": 148621,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "campsaver.com",
-   "trancoRank": 148944,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "drsquatch.com",
-   "trancoRank": 151045,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "zgallerie.com",
-   "trancoRank": 151633,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "all-clad.com",
-   "trancoRank": 153938,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "bassettfurniture.com",
-   "trancoRank": 154733,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "avocadogreenmattress.com",
-   "trancoRank": 156231,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "payless.com",
-   "trancoRank": 158539,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "alienware.com",
-   "trancoRank": 158733,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "hourglasscosmetics.com",
-   "trancoRank": 161936,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "helixsleep.com",
-   "trancoRank": 162009,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "morphe.com",
-   "trancoRank": 162295,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "interiordefine.com",
-   "trancoRank": 163022,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "origins.com",
-   "trancoRank": 164037,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "drunkelephant.com",
-   "trancoRank": 166392,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "chubbiesshorts.com",
-   "trancoRank": 167290,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "tommyjohn.com",
-   "trancoRank": 168016,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "ninjakitchen.com",
-   "trancoRank": 173659,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "away.com",
-   "trancoRank": 176197,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "toofaced.com",
-   "trancoRank": 179349,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "moosejaw.com",
-   "trancoRank": 181768,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "athleta.com",
-   "trancoRank": 188721,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "beyondyoga.com",
-   "trancoRank": 191647,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "nunababy.com",
-   "trancoRank": 192447,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "havertys.com",
-   "trancoRank": 196157,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "learningexpress.com",
-   "trancoRank": 202197,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "tuftandneedle.com",
-   "trancoRank": 210355,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "uppababy.com",
-   "trancoRank": 222097,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "sharkclean.com",
-   "trancoRank": 222866,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "taylorstitch.com",
-   "trancoRank": 224765,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "jamesallen.com",
-   "trancoRank": 226152,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "primary.com",
-   "trancoRank": 227169,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "watchesofswitzerland.com",
-   "trancoRank": 229699,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "meh.com",
-   "trancoRank": 232880,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "outdoorvoices.com",
-   "trancoRank": 238297,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "shophq.com",
-   "trancoRank": 242297,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "fila.com",
-   "trancoRank": 245124,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "summerfridays.com",
-   "trancoRank": 248315,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "francescas.com",
-   "trancoRank": 248823,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "milanicosmetics.com",
-   "trancoRank": 250354,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "theinkeylist.com",
-   "trancoRank": 250872,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "homesense.com",
-   "trancoRank": 261188,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "peloton.com",
-   "trancoRank": 265605,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "leesa.com",
-   "trancoRank": 272433,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "dressbarn.com",
-   "trancoRank": 273042,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "wetnwildbeauty.com",
-   "trancoRank": 284384,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "christopherandbanks.com",
-   "trancoRank": 296944,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "contactsdirect.com",
-   "trancoRank": 298250,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "brahmin.com",
-   "trancoRank": 301541,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "burrow.com",
-   "trancoRank": 303306,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "oshkosh.com",
-   "trancoRank": 306290,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "bellacor.com",
-   "trancoRank": 315193,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "clarksusa.com",
-   "trancoRank": 331974,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "coyuchi.com",
-   "trancoRank": 333838,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "nbcstore.com",
-   "trancoRank": 338983,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "boxed.com",
-   "trancoRank": 372968,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "surface.com",
-   "trancoRank": 378634,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "petmeds.com",
-   "trancoRank": 384928,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "prescription-or-pharmacy",
-   "probeSite": false
-  },
-  {
-   "domain": "gshock.com",
-   "trancoRank": 456274,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "dicks.com",
-   "trancoRank": 511054,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "briogeohair.com",
-   "trancoRank": 528739,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "conns.com",
-   "trancoRank": 545908,
-   "band": "beyond-100k",
-   "eligible": false,
-   "exclusion": "outside-top-100k",
-   "probeSite": false
-  },
-  {
-   "domain": "fao.com",
-   "trancoRank": 580173,
+   "domain": "4wheelparts.com",
    "band": "beyond-100k",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5056,15 +3609,104 @@
   },
   {
    "domain": "albanypark.com",
-   "trancoRank": 585639,
    "band": "beyond-100k",
    "eligible": false,
    "exclusion": "outside-top-100k",
    "probeSite": false
   },
   {
-   "domain": "ylighting.com",
-   "trancoRank": 636033,
+   "domain": "alienware.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "all-clad.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "anastasiabeverlyhills.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "athleta.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "avenue.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "avocadogreenmattress.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "away.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "bananarepublic.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "bareminerals.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "barkbox.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "bassettfurniture.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "bellacor.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "beyondyoga.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "bobbibrowncosmetics.com",
    "band": "beyond-100k",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5072,15 +3714,181 @@
   },
   {
    "domain": "bonton.com",
-   "trancoRank": 650633,
    "band": "beyond-100k",
    "eligible": false,
    "exclusion": "outside-top-100k",
    "probeSite": false
   },
   {
-   "domain": "golfsmith.com",
-   "trancoRank": 868000,
+   "domain": "bowflex.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "boxed.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "brahmin.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "briogeohair.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "brooklinen.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "burrow.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "buybuybaby.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "campsaver.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "carawayhome.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "cerave.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "champion.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "christopherandbanks.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "chubbiesshorts.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "clarksusa.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "conns.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "contactsdirect.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "coyuchi.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "cuisinart.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "dicks.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "dressbarn.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "drsquatch.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "drunkelephant.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "fao.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "fatbraintoys.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "fila.com",
    "band": "beyond-100k",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5088,7 +3896,566 @@
   },
   {
    "domain": "floydhome.com",
-   "trancoRank": 966858,
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "francescas.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "freshdirect.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "frys.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "golfsmith.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "gshock.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "gymboree.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "havertys.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "helixsleep.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "hellomolly.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "homesense.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "hourglasscosmetics.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "hydroflask.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "hyperice.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "interiordefine.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "jamesallen.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "janieandjack.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "jockey.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "joybird.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "kirklands.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "kyliecosmetics.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "learningexpress.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "leesa.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "madeincookware.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "manscaped.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "meh.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "melissaanddoug.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "meundies.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "milanicosmetics.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "moosejaw.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "morphe.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "movado.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "mvmt.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "nbcstore.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "ninjakitchen.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "nordictrack.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "nunababy.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "olaplex.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "olay.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "ooni.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "origins.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "oshkosh.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "outdoorvoices.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "papersource.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "parachutehome.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "payless.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "peloton.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "petalandpup.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "petmeds.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "prescription-or-pharmacy",
+   "probeSite": false
+  },
+  {
+   "domain": "pier1.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "primary.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "rarebeauty.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "raymourflanigan.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "rebag.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "saksoff5th.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "samash.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "sharkclean.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "shophq.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "showpo.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "solostove.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "sorel.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "steepandcheap.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "stuartweitzman.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "summerfridays.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "surface.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "sweatybetty.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "taylorstitch.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "theinkeylist.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "therabody.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "thirdlove.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "tjmaxx.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "tommyjohn.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "toofaced.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "tuftandneedle.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "uppababy.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "urbandecay.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "vineyardvines.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "watchesofswitzerland.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "wetnwildbeauty.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "ylighting.com",
+   "band": "beyond-100k",
+   "eligible": false,
+   "exclusion": "outside-top-100k",
+   "probeSite": false
+  },
+  {
+   "domain": "zgallerie.com",
    "band": "beyond-100k",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5096,7 +4463,6 @@
   },
   {
    "domain": "aerie.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5104,7 +4470,6 @@
   },
   {
    "domain": "allclad.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5112,7 +4477,6 @@
   },
   {
    "domain": "ashleyhomestore.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5120,7 +4484,6 @@
   },
   {
    "domain": "at-home.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5128,7 +4491,6 @@
   },
   {
    "domain": "bassproshops.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5136,7 +4498,6 @@
   },
   {
    "domain": "billieshave.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5144,7 +4505,6 @@
   },
   {
    "domain": "blick.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5152,7 +4512,6 @@
   },
   {
    "domain": "bluapple.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5160,7 +4519,6 @@
   },
   {
    "domain": "bluestarcooking.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5168,7 +4526,6 @@
   },
   {
    "domain": "bobs.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5176,7 +4533,6 @@
   },
   {
    "domain": "bobsdiscountfurniture.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5184,7 +4540,6 @@
   },
   {
    "domain": "boll-and-branch.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5192,7 +4547,6 @@
   },
   {
    "domain": "carsonsprescott.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5200,7 +4554,6 @@
   },
   {
    "domain": "cato.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5208,7 +4561,6 @@
   },
   {
    "domain": "chicco.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5216,7 +4568,6 @@
   },
   {
    "domain": "eccous.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5224,7 +4575,6 @@
   },
   {
    "domain": "edible.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5232,7 +4582,6 @@
   },
   {
    "domain": "evine.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5240,7 +4589,6 @@
   },
   {
    "domain": "framework.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5248,7 +4596,6 @@
   },
   {
    "domain": "gordmans.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5256,7 +4603,6 @@
   },
   {
    "domain": "hhgregg.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5264,7 +4610,6 @@
   },
   {
    "domain": "hokas.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5272,7 +4617,6 @@
   },
   {
    "domain": "ilia.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5280,7 +4624,6 @@
   },
   {
    "domain": "lazboy.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5288,7 +4631,6 @@
   },
   {
    "domain": "lulusandco.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5296,7 +4638,6 @@
   },
   {
    "domain": "nars.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5304,7 +4645,6 @@
   },
   {
    "domain": "native.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5312,7 +4652,6 @@
   },
   {
    "domain": "ouai.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5320,7 +4659,6 @@
   },
   {
    "domain": "ourplace.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5328,7 +4666,6 @@
   },
   {
    "domain": "rogueworld.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5336,7 +4673,6 @@
   },
   {
    "domain": "rooms-to-go.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5344,7 +4680,6 @@
   },
   {
    "domain": "savagexfenty.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5352,7 +4687,6 @@
   },
   {
    "domain": "stage.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5360,7 +4694,6 @@
   },
   {
    "domain": "staub-usa.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5368,7 +4701,6 @@
   },
   {
    "domain": "theragun.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5376,7 +4708,6 @@
   },
   {
    "domain": "toolbarn.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",
@@ -5384,7 +4715,6 @@
   },
   {
    "domain": "warnerbrosshop.com",
-   "trancoRank": null,
    "band": "unranked",
    "eligible": false,
    "exclusion": "outside-top-100k",

@@ -52,7 +52,7 @@ As in [Phase 10](phase-10-feasibility-probe.md#safety-and-copyright), enforced b
 
 ## Progress
 
-- **12.1 built (2026-10-06, branch `phase12-protocol`):** [`docs/evals/generic-reader-protocol.md`](../../docs/evals/generic-reader-protocol.md) (`generic-reader-protocol.1`); frozen retail frame `evals/merchants/retail-frame.json` (Tranco 647LX, 457 eligible of 670; SHA-256 `11b2d786…7985`); merchant-pipeline held-out list `evals/merchants/pipeline-heldout-domains.json` (60 domains, 6 / 27 / 27; SHA-256 `8c89dc44…8a75`), allowed to overlap the reader splits; seeded selection script `evals/merchants/tools/seeded-selection.mjs` (held-out list, candidate order, split assignment, frame check). Choices in the [decision](../decisions/2026-10-06-reader-eval-protocol.md). Next: independent reviewer signs the protocol; then 12.2.
+- **12.1 built (2026-10-06, branch `phase12-protocol`):** [`docs/evals/generic-reader-protocol.md`](../../docs/evals/generic-reader-protocol.md) (`generic-reader-protocol.1`); frozen retail frame `evals/merchants/retail-frame.json` (Tranco 647LX, 457 eligible of 670; bands only, SHA-256 `e5139826…6886`); merchant-pipeline held-out list `evals/merchants/pipeline-heldout-domains.json` (60 domains, 6 / 27 / 27; SHA-256 `6bc92515…79b2`), allowed to overlap the reader splits; seeded selection script `evals/merchants/tools/seeded-selection.mjs` (held-out list, candidate order, split assignment, frame check). Choices in the [decision](../decisions/2026-10-06-reader-eval-protocol.md). Independent review 2026-10-06: sign with fixes (agent-verified), fixes applied; Evan decided the robots posture. Next: PR and merge, then 12.2.
 
 Done when all three PRs are merged; Phase 13 (reader v1) then tunes on the development split only.
 

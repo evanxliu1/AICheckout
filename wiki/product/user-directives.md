@@ -6,7 +6,7 @@ status: stable
 tags: [product, directives, memory]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:26:46Z
+  at: 2026-10-06T04:00:00Z
 ---
 
 # User directives
@@ -15,6 +15,7 @@ Standing instructions from the owner, newest first. A directive stays in force u
 
 | Date | Directive | Scope | Source |
 | --- | --- | --- | --- |
+| 2026-10-06 | Reader-eval capture posture: **exclude any site whose robots.txt** (for `*` or for the capture tool's own user agent) **disallows the cart or checkout paths the tool would load, or disallows everything**. Terms-of-use clauses against automated access are recorded and reported but do not exclude a site. | Merchant coverage, Phase 12 capture | [Protocol](../../docs/evals/generic-reader-protocol.md#capture-posture), [decision](../decisions/2026-10-06-reader-eval-protocol.md), chat 2026-10-06 |
 | 2026-10-05 | Accepts the Phase 10 probe verdict **go** (fragile for top retailers: bot walls limit which sites Phase 12 can capture) and **Y = 80%** found-correct on held-out one-item cart pages, with zero false found first. Start Phase 12. | Merchant coverage, reader eval | [Probe report](../../docs/evals/merchant-probe-2026-10.md), chat 2026-10-05 |
 | 2026-10-05 | Split the merchant coverage plan into Phases 10–17 and tackle them one by one; run Phases 10 (feasibility probe) and 11 (any store, typed amount) in parallel; ask each phase's decisions when it starts. Approves D4 (logged-out real cart captures, one known item, non-Evan profile, no CAPTCHAs, rate-limited, ~150–200 sites with monthly replays) and D6 (merchant list from Tranco or CrUX ∩ agent-classified retail, with attribution, NRF Top 100 cross-check, no paid rankings). | Merchant coverage, roadmap | [Decision](../decisions/2026-10-05-merchant-coverage-phases.md), chat 2026-10-05 |
 | 2026-10-05 | The coding agent (coordinating session only) uploads the captures and publishes catalog releases from the CLI. Evan logs a CLI session in himself (`pipeline login`, password in his own terminal; the agent never types, prints or reads it) and approves each release by typing `publish <version>` in chat; that message is the attestation. Supersedes Evan ticking the attestation in the review app (2026-10-03), "publishing stays Evan's click" (2026-10-02), and publishing himself (2026-10-01, 2026-09-29); the browser flow stays as a fallback. First used for release 3 on 2026-10-05. | Catalog release | [Decision](../decisions/2026-10-05-agent-publish-cli-session.md), chat 2026-10-05 |
