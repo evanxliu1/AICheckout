@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "64d832c5-b928-4455-8ad3-bd483370f5cf",
+  "packetId": "ff2cecaf-1416-417b-9fda-0e1082e4811f",
   "batch": "citi-refresh-2026-10",
   "provenance": "agent-verified",
   "issuer": "Citi",
@@ -39,7 +39,42 @@
       "evals/curation/batches/citi-refresh-2026-10/captures/citi-double-cash-terms-pdf.txt"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-10-04",
+    "filesRead": [
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/citi.md",
+      "evals/curation/batches/citi-refresh-2026-10/pipeline/packets/adjudicate.citi.1.json",
+      "evals/curation/batches/citi-refresh-2026-10/verification/citi.json",
+      "evals/curation/batches/citi-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/citi-refresh-2026-10/product-notes.json",
+      "wiki/decisions/2026-10-03-double-cash-cash-back.md",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-premier-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-premier-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-elite-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-elite-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-costco-anywhere-visa-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-costco-anywhere-visa-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-costco-anywhere-visa-categories.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-platinum-select-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-platinum-select-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-mileup-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-mileup-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-globe-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-globe-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-tsc-visa-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-dillards-mastercard-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-macys-amex-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-double-cash-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-double-cash-additional-info.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-double-cash-terms-pdf.txt"
+    ]
+  },
   "cards": [
     {
       "cardId": "citi-strata",
@@ -55,7 +90,11 @@
             "sourceId": "citi-strata-rewards-terms",
             "quote": "When your account is opened, the default Self-Select Category is Select Streaming Services."
           },
-          "note": "Streaming is the default Self-Select option; the anchor about changing the category is replaced by the default sentence (it abuts it in the capture)."
+          "note": "Streaming is the default Self-Select option; the anchor about changing the category is replaced by the default sentence (it abuts it in the capture).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state Select Streaming Services is the default; the default sentence replaces the change-procedure anchor that abutted it (general 22)."
+          }
         },
         {
           "op": "set",
@@ -66,7 +105,11 @@
             "sourceId": "citi-strata-rewards-terms",
             "quote": "When your account is opened, the default Self-Select Category is Select Streaming Services."
           },
-          "note": "Select Streaming Services is the default option at account opening, so no choice is needed (Citi convention: activation none)."
+          "note": "Select Streaming Services is the default option at account opening, so no choice is needed (Citi convention: activation none).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Default option at account opening needs no choice: activation none per Citi Self-Select convention (general 6)."
+          }
         },
         {
           "op": "set",
@@ -77,7 +120,11 @@
             "sourceId": "citi-strata-rewards-terms",
             "quote": "Includes membership fee and other purchases at athletic, sports and recreation facilities requiring membership such as health, tennis, and swimming clubs."
           },
-          "note": "The rule lumps all five Self-Select options into one; per general 6 it becomes the Fitness Clubs option, and the other options get their own rules."
+          "note": "The rule lumps all five Self-Select options into one; per general 6 it becomes the Fitness Clubs option, and the other options get their own rules.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "One rule per Self-Select option (general 6); rule 8 becomes the Fitness Clubs option, defined in the terms."
+          }
         },
         {
           "op": "set",
@@ -88,7 +135,11 @@
             "sourceId": "citi-strata-product",
             "quote": "Earn 3x points on an eligible Self-Select Category of your choice"
           },
-          "note": "This is the one Self-Select issue: only the chosen category earns 3X (general 6), so the code is ambiguous, not out-of-scope."
+          "note": "This is the one Self-Select issue: only the chosen category earns 3X (general 6), so the code is ambiguous, not out-of-scope.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Only the chosen category earns 3X; this is the one ambiguous Self-Select issue the Citi convention names."
+          }
         },
         {
           "op": "remove",
@@ -97,7 +148,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         }
       ],
       "addedRules": [
@@ -126,7 +181,11 @@
               "quote": "choose which Self-Select Category to activate"
             }
           ],
-          "note": "Self-Select option missing from the draft; one rule per option (general 6), chosen once at citi.com/selfselect."
+          "note": "Self-Select option missing from the draft; one rule per option (general 6), chosen once at citi.com/selfselect.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cosmetic Stores/Barber Shops/Hair Salons is a Self-Select option the draft lacked; one 3X rule per option, enroll-once (general 6, Citi convention)."
+          }
         },
         {
           "rule": {
@@ -153,7 +212,11 @@
               "quote": "choose which Self-Select Category to activate"
             }
           ],
-          "note": "Self-Select option missing from the draft; one rule per option (general 6)."
+          "note": "Self-Select option missing from the draft; one rule per option (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Pet Supply Stores is a Self-Select option the draft lacked; one 3X rule per option, enroll-once (general 6, Citi convention)."
+          }
         }
       ],
       "addedExclusions": [],
@@ -166,7 +229,11 @@
               "quote": "Includes ticket purchases for live entertainment, including concerts, live sporting events, live theatrical productions, amusement parks, and orchestras."
             }
           ],
-          "note": "Live Entertainment covers only live-event tickets, part of the entertainment category (general 19)."
+          "note": "Live Entertainment covers only live-event tickets, part of the entertainment category (general 19).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Live Entertainment covers live-event tickets only, a part of entertainment; ambiguous issue per general 19 and the Citi convention."
+          }
         }
       ],
       "productNoteChanges": [
@@ -177,7 +244,11 @@
             "sourceId": "citi-strata-rewards-terms",
             "quote": "When your account is opened, the default Self-Select Category is Select Streaming Services."
           },
-          "note": "Five options at 3X, default Select Streaming Services, changeable once per calendar quarter; the terms state all of it."
+          "note": "Five options at 3X, default Select Streaming Services, changeable once per calendar quarter; the terms state all of it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint matches the terms: five options at 3X, streaming default, change once per quarter; anchor verified."
+          }
         }
       ]
     },
@@ -193,7 +264,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -202,7 +277,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -211,7 +290,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -220,7 +303,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -242,7 +329,11 @@
             "sourceId": "citi-strata-elite-product",
             "quote": "Restaurants on Citi Nights® purchases (Friday and Saturday from 6 p.m. – 6 a.m. ET)"
           },
-          "note": "The draft wording was clipped with an ellipsis and is not verbatim; replaced with the product page wording."
+          "note": "The draft wording was clipped with an ellipsis and is not verbatim; replaced with the product page wording.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Draft wording was clipped with an ellipsis; the product-page phrase is verbatim and names the Citi Nights window."
+          }
         },
         {
           "op": "set",
@@ -253,7 +344,11 @@
             "sourceId": "citi-strata-elite-rewards-terms",
             "quote": "Citi Nights eligibility is based on the day and time your restaurant purchase is authorized, not when the transaction is posted to your Account."
           },
-          "note": "The Citi Nights time window cannot be represented; Citi convention records it as an out-of-scope issue."
+          "note": "The Citi Nights time window cannot be represented; Citi convention records it as an out-of-scope issue.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Citi convention records the Citi Nights time window as an out-of-scope issue; anchor verified in the terms."
+          }
         },
         {
           "op": "remove",
@@ -262,7 +357,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -271,7 +370,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -293,7 +396,11 @@
             "sourceId": "citi-costco-anywhere-visa-product",
             "quote": "On gas at Costco"
           },
-          "note": "Gas at Costco warehouses pays at one merchant only, so the category is other (general 4, Citi convention)."
+          "note": "Gas at Costco warehouses pays at one merchant only, so the category is other (general 4, Citi convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Gas at Costco warehouses pays at one merchant: category other per general 4 and the Citi Costco convention."
+          }
         }
       ],
       "addedRules": [],
@@ -307,7 +414,11 @@
               "quote": "5% and 4% earn is on a combined $7,000 spend per year, 1% thereafter"
             }
           ],
-          "note": "The $7,000 cap is shared by the 5% and 4% rules; the schema cannot express a combined cap (Citi convention)."
+          "note": "The $7,000 cap is shared by the 5% and 4% rules; the schema cannot express a combined cap (Citi convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Citi convention keeps the combined $7,000 cap on each rule with an out-of-scope issue for the shared cap; the draft had none."
+          }
         }
       ],
       "productNoteChanges": [
@@ -318,7 +429,11 @@
             "sourceId": "citi-costco-anywhere-visa-product",
             "quote": "the Costco Anywhere Visa® Card by Citi is exclusively for Costco members."
           },
-          "note": "5% on Costco warehouse gas within the combined $7,000 yearly cap, then 1%; the card requires a Costco membership."
+          "note": "5% on Costco warehouse gas within the combined $7,000 yearly cap, then 1%; the card requires a Costco membership.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "5% Costco gas within the combined cap and the membership requirement are stated on the product page; anchor verified."
+          }
         },
         {
           "action": "confirm",
@@ -327,7 +442,11 @@
             "sourceId": "citi-costco-anywhere-visa-product",
             "quote": "On all other Costco and Costco.com purchases"
           },
-          "note": "2% on other Costco and Costco.com purchases is stated on the product page and in the terms."
+          "note": "2% on other Costco and Costco.com purchases is stated on the product page and in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2% on other Costco and Costco.com purchases is stated on the product page; anchor verified."
+          }
         }
       ]
     },
@@ -345,7 +464,11 @@
             "sourceId": "citi-aadvantage-platinum-select-rewards-terms",
             "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
           },
-          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21)."
+          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The no-cap anchor was a section heading; the terms sentence stating no maximum on miles supports cap none (general 21)."
+          }
         },
         {
           "op": "set",
@@ -356,7 +479,11 @@
             "sourceId": "citi-aadvantage-platinum-select-rewards-terms",
             "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
           },
-          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21)."
+          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The no-cap anchor was a section heading; the terms sentence stating no maximum on miles supports cap none (general 21)."
+          }
         },
         {
           "op": "set",
@@ -367,7 +494,11 @@
             "sourceId": "citi-aadvantage-platinum-select-rewards-terms",
             "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
           },
-          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21)."
+          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The no-cap anchor was a section heading; the terms sentence stating no maximum on miles supports cap none (general 21)."
+          }
         },
         {
           "op": "set",
@@ -378,7 +509,11 @@
             "sourceId": "citi-aadvantage-platinum-select-rewards-terms",
             "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
           },
-          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21)."
+          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The no-cap anchor was a section heading; the terms sentence stating no maximum on miles supports cap none (general 21)."
+          }
         }
       ],
       "addedRules": [],
@@ -392,7 +527,11 @@
             "sourceId": "citi-aadvantage-platinum-select-rewards-terms",
             "quote": "Eligible American Airlines purchases are items billed by American Airlines as the merchant of record."
           },
-          "note": "2X on items billed by American Airlines; aadvantagecars.com and aadvantagehotels.com bookings do not qualify, as the hint says."
+          "note": "2X on items billed by American Airlines; aadvantagecars.com and aadvantagehotels.com bookings do not qualify, as the hint says.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms define eligible AA purchases as items billed by American Airlines and exclude aadvantagecars.com and aadvantagehotels.com bookings; hint is accurate."
+          }
         }
       ]
     },
@@ -410,7 +549,11 @@
             "sourceId": "citi-aadvantage-mileup-product",
             "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card."
           },
-          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21)."
+          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The no-cap anchor was a section heading; the product-page sentence stating no maximum on miles supports cap none (general 21)."
+          }
         },
         {
           "op": "set",
@@ -421,7 +564,11 @@
             "sourceId": "citi-aadvantage-mileup-product",
             "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card."
           },
-          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21)."
+          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The no-cap anchor was a section heading; the product-page sentence stating no maximum on miles supports cap none (general 21)."
+          }
         },
         {
           "op": "set",
@@ -432,7 +579,11 @@
             "sourceId": "citi-aadvantage-mileup-product",
             "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card."
           },
-          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21)."
+          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The no-cap anchor was a section heading; the product-page sentence stating no maximum on miles supports cap none (general 21)."
+          }
         },
         {
           "op": "remove",
@@ -441,7 +592,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -455,7 +610,11 @@
             "sourceId": "citi-aadvantage-mileup-rewards-terms",
             "quote": "Eligible American Airlines purchases are items billed by American Airlines as the merchant of record."
           },
-          "note": "2X on items billed by American Airlines as merchant of record."
+          "note": "2X on items billed by American Airlines as merchant of record.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms define eligible AA purchases as items billed by American Airlines as merchant of record; hint is accurate."
+          }
         }
       ]
     },
@@ -473,7 +632,11 @@
             "sourceId": "citi-aadvantage-globe-rewards-terms",
             "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
           },
-          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21)."
+          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The no-cap anchor was a section heading; the terms sentence stating no maximum on miles supports cap none (general 21)."
+          }
         },
         {
           "op": "set",
@@ -484,7 +647,11 @@
             "sourceId": "citi-aadvantage-globe-rewards-terms",
             "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
           },
-          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21)."
+          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The no-cap anchor was a section heading; the terms sentence stating no maximum on miles supports cap none (general 21)."
+          }
         },
         {
           "op": "set",
@@ -495,7 +662,11 @@
             "sourceId": "citi-aadvantage-globe-rewards-terms",
             "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
           },
-          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21)."
+          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The no-cap anchor was a section heading; the terms sentence stating no maximum on miles supports cap none (general 21)."
+          }
         },
         {
           "op": "set",
@@ -506,7 +677,11 @@
             "sourceId": "citi-aadvantage-globe-rewards-terms",
             "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
           },
-          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21)."
+          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The no-cap anchor was a section heading; the terms sentence stating no maximum on miles supports cap none (general 21)."
+          }
         },
         {
           "op": "set",
@@ -517,7 +692,11 @@
             "sourceId": "citi-aadvantage-globe-rewards-terms",
             "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
           },
-          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21)."
+          "note": "The no-cap anchor was a section heading; replaced with the sentence stating there is no maximum on miles (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The no-cap anchor was a section heading; the terms sentence stating no maximum on miles supports cap none (general 21)."
+          }
         },
         {
           "op": "set",
@@ -528,7 +707,11 @@
             "sourceId": "citi-aadvantage-globe-rewards-terms",
             "quote": "Food and beverage purchases made at the American Airlines Admirals Club® will be awarded 3 AAdvantage® miles"
           },
-          "note": "Anchor now starts the sentence so it names the Admirals Club merchant; the old window began mid-name."
+          "note": "Anchor now starts the sentence so it names the Admirals Club merchant; the old window began mid-name.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchor now starts at the sentence naming Admirals Club food and beverage; verified in the terms."
+          }
         },
         {
           "op": "set",
@@ -539,7 +722,11 @@
             "sourceId": "citi-aadvantage-globe-rewards-terms",
             "quote": "Food and beverage purchases made at the American Airlines Admirals Club® will be awarded 3 AAdvantage® miles"
           },
-          "note": "The wording named only the benefit; the rule pays on Admirals Club food and beverage, so the merchant is named (general 4)."
+          "note": "The wording named only the benefit; the rule pays on Admirals Club food and beverage, so the merchant is named (general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rule pays on Admirals Club food and beverage, so the merchant is named (general 4, Citi AAdvantage convention)."
+          }
         },
         {
           "op": "remove",
@@ -551,7 +738,11 @@
               "Earn 1 AAdvantage® mile for every $1 spent on all other purchases2"
             ]
           },
-          "note": "The terms state plainly that Admirals Club food and beverage earns 3X, which rule 4 records; the issue is moot (general 11)."
+          "note": "The terms state plainly that Admirals Club food and beverage earns 3X, which rule 4 records; the issue is moot (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state plainly that Admirals Club food and beverage earns 3X, recorded by rule 4; issue is moot (general 11)."
+          }
         },
         {
           "op": "remove",
@@ -560,7 +751,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         }
       ],
       "addedRules": [
@@ -594,7 +789,11 @@
               "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
             }
           ],
-          "note": "The 3X American Airlines purchases rule was missing; only the Admirals Club part of the benefit was drafted."
+          "note": "The 3X American Airlines purchases rule was missing; only the Admirals Club part of the benefit was drafted.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 3X eligible American Airlines purchases rule was missing; other per Citi convention, cap none on the no-maximum sentence (general 21)."
+          }
         }
       ],
       "addedExclusions": [],
@@ -607,7 +806,11 @@
             "sourceId": "citi-aadvantage-globe-rewards-terms",
             "quote": "Food and beverage purchases made at the American Airlines Admirals Club® will be awarded 3 AAdvantage® miles"
           },
-          "note": "3X on eligible American Airlines purchases, and Admirals Club food and beverage earns 3X as part of that benefit."
+          "note": "3X on eligible American Airlines purchases, and Admirals Club food and beverage earns 3X as part of that benefit.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3X on eligible AA purchases and Admirals Club food and beverage are both stated in the captures; hint is accurate."
+          }
         }
       ]
     },
@@ -625,13 +828,21 @@
             "sourceId": "citi-tsc-visa-product",
             "quote": "you can earn an additional 3% in Rewards on gas stations, grocery stores, and on veterinary service purchases"
           },
-          "note": "Rewards are stated as a percentage back, so the currency is cash-back (general 1, Citi convention for TSC)."
+          "note": "Rewards are stated as a percentage back, so the currency is cash-back (general 1, Citi convention for TSC).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "TSC states rates as a percentage in Rewards; cash-back per general 1 and the Citi store-card convention."
+          }
         },
         {
           "op": "remove",
           "path": "reference.rewardCurrency.anchors.0",
           "current": "How do I redeem reward points on my TSC® Credit Card?",
-          "note": "The FAQ heading about redeeming points does not support the cash-back currency."
+          "note": "The FAQ heading about redeeming points does not support the cash-back currency.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The FAQ heading about redeeming points does not support cash-back; the currency fix supplies its own anchor."
+          }
         },
         {
           "op": "remove",
@@ -640,7 +851,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -649,7 +864,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -658,7 +877,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -672,7 +895,11 @@
               "quote": "You can redeem your rewards at Tractor Supply stores, online at TractorSupply.com, or in the TSC App."
             }
           ],
-          "note": "Rewards are redeemable only with Tractor Supply, so they are store credit rather than general cash back (general 8)."
+          "note": "Rewards are redeemable only with Tractor Supply, so they are store credit rather than general cash back (general 8).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards redeem only with Tractor Supply; the Citi convention requires the ambiguous store-rewards issue (general 8)."
+          }
         }
       ],
       "productNoteChanges": [
@@ -694,7 +921,11 @@
             "sourceId": "citi-tsc-visa-product",
             "quote": "Shop at Tractor Supply and Earn 5%in Rewards"
           },
-          "note": "Anchored on the product page; the captures name Petsense and TractorSupply.com only as places the store card is accepted, not as 5% earners."
+          "note": "Anchored on the product page; the captures name Petsense and TractorSupply.com only as places the store card is accepted, not as 5% earners.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchor verified on the product page; the captures name TractorSupply.com and Petsense only for store-card acceptance, so the summary is accurate."
+          }
         }
       ]
     },
@@ -712,7 +943,11 @@
             "sourceId": "citi-dillards-mastercard-product",
             "quote": "2 points at U.S. supermarkets and grocery stores, and 1 point for all other purchases."
           },
-          "note": "The old anchor stopped at the number 1 and did not name all other purchases."
+          "note": "The old anchor stopped at the number 1 and did not name all other purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The old anchor stopped at the number; the corrected anchor names all other purchases and the 1 point rate."
+          }
         },
         {
           "op": "set",
@@ -723,7 +958,11 @@
             "sourceId": "citi-dillards-mastercard-product",
             "quote": "For every 1,500 points earned, members can choose between a 10% off3 One-Day Shopping Pass or a $10 off3 Reward Certificate."
           },
-          "note": "The pass-or-certificate redemption makes the store-only point value ambiguous (Citi convention, general 14)."
+          "note": "The pass-or-certificate redemption makes the store-only point value ambiguous (Citi convention, general 14).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Citi convention records the pass-or-certificate redemption as an ambiguous issue; anchor verified."
+          }
         },
         {
           "op": "remove",
@@ -732,7 +971,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -746,7 +989,11 @@
             "sourceId": "citi-dillards-mastercard-product",
             "quote": "Dillard’s Mastercard members earn 2 points4 for every $1 spent on all eligible Dillard’s purchases."
           },
-          "note": "2 points per $1 on eligible Dillard's purchases is stated in the FAQ and disclosures."
+          "note": "2 points per $1 on eligible Dillard's purchases is stated in the FAQ and disclosures.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2 points per $1 on eligible Dillard's purchases is stated in the FAQ; anchor verified."
+          }
         }
       ]
     },
@@ -762,7 +1009,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         }
       ],
       "addedRules": [
@@ -791,7 +1042,11 @@
               "quote": "Earn points on every Macy’s purchase (except gift cards, services and fees)."
             }
           ],
-          "note": "The Macy's purchase rule was dropped in drafting; recorded at the Silver tier new cardholders start in (Citi convention)."
+          "note": "The Macy's purchase rule was dropped in drafting; recorded at the Silver tier new cardholders start in (Citi convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Macy's purchase rule recorded at the Silver tier new cardholders start in, category other (Citi store-card convention, general 4)."
+          }
         }
       ],
       "addedExclusions": [],
@@ -804,7 +1059,11 @@
               "quote": "Points add up to Star Money that you can use to purchase merchandise at Macy’s, Macy’s Backstage, or macys.com."
             }
           ],
-          "note": "Star Money is usable only at Macy's, Macy's Backstage or macys.com (general 14, Citi convention)."
+          "note": "Star Money is usable only at Macy's, Macy's Backstage or macys.com (general 14, Citi convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Star Money is usable only at Macy's brands; the store-only ambiguous issue is required (general 14, Citi convention)."
+          }
         }
       ],
       "productNoteChanges": [
@@ -823,7 +1082,11 @@
             "sourceId": "citi-macys-amex-product",
             "quote": "New credit cards are opened at Silver status. Cardholders can access Gold status with $500 - $1,199 annual spend"
           },
-          "note": "Anchored; the conditions now state the spend thresholds the product page gives for each tier."
+          "note": "Anchored; the conditions now state the spend thresholds the product page gives for each tier.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchor verified; the product page states the Silver default and the Gold and Platinum spend thresholds."
+          }
         }
       ]
     },
@@ -841,7 +1104,11 @@
             "sourceId": "citi-double-cash-product",
             "quote": "Unlimited 2% cash back on purchases"
           },
-          "note": "The card states its rates as a percentage cash back, so the currency is cash-back even though it is tracked as ThankYou Points (general 1)."
+          "note": "The card states its rates as a percentage cash back, so the currency is cash-back even though it is tracked as ThankYou Points (general 1).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state a percentage cash back even though it is tracked as ThankYou Points: cash-back per general 1 and the 2026-10-03 Double Cash decision."
+          }
         },
         {
           "op": "set",
@@ -852,7 +1119,11 @@
             "sourceId": "citi-double-cash-additional-info",
             "quote": "Earn unlimited 1% cash back when you buy, plus an additional 1% as you pay, on every purchase."
           },
-          "note": "A cash-back card has no point value (general 13)."
+          "note": "A cash-back card has no point value (general 13).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A cash-back card carries no point value (general 13); the redemption example stays in the ambiguous issue."
+          }
         },
         {
           "op": "remove",
@@ -861,7 +1132,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem; removed under general convention 16."
+          "note": "Anchorless missing issue with no stated problem; removed under general convention 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue removed (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -874,11 +1149,41 @@
               "quote": "The following transactions are not purchases and will not earn Points: balance transfers, cash advances, checks that access your Card Account, items returned for credit,"
             }
           ],
-          "note": "The terms list transactions that never earn; the draft dropped this exclusion."
+          "note": "The terms list transactions that never earn; the draft dropped this exclusion.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms list transactions that never earn; the draft dropped this exclusion. Anchor verified, 25 words."
+          }
         }
       ],
       "addedIssues": [],
       "productNoteChanges": []
+    }
+  ],
+  "labelLintAcks": [
+    {
+      "cardId": "citi-aadvantage-globe",
+      "ruleIndex": 4,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "citi-dillards-mastercard",
+      "ruleIndex": 1,
+      "check": "rate",
+      "reason": "reversed-phrasing"
+    },
+    {
+      "cardId": "citi-dillards-mastercard",
+      "ruleIndex": 2,
+      "check": "rate",
+      "reason": "reversed-phrasing"
+    },
+    {
+      "cardId": "citi-dillards-mastercard",
+      "ruleIndex": 3,
+      "check": "rate",
+      "reason": "anchor-truncated"
     }
   ]
 }
