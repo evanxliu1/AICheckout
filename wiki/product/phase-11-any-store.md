@@ -31,7 +31,7 @@ Started 2026-10-05, in parallel with Phase 10 ([merchant coverage plan](phase-10
 | Names | `merchantName` returns "Another U.S. online store" for the generic id (results, saved purchase restore) |
 | Unchanged | Badge, content-script hosts, `host_permissions`, savings and order recognition (popup never asks; generic stores never do), catalog data, payment pages (PayPal, Shop Pay) get the generic answer |
 
-Known limit, tested and documented: the generic profile carries no brands, so a rule's `excludedBrandIds` (for example "excluding Walmart and Target") cannot fire at a generic store. A guard test on the bundled catalog lists every rule that can apply at the generic profile and has exclusions; today it should be none (the online-retail rules have no exclusions). Named profiles for such stores come with the merchant database (Phase 14).
+Known limit, tested and documented: the generic profile carries no brands, so a rule's `excludedBrandIds` (for example "excluding Walmart and Target") cannot fire at a generic store. **Brand websites are deferred (Evan, 2026-10-05):** at the website of a brand the catalog knows (walmart.com, target.com, costco.com, kohls.com, …) the generic answer can be wrong: brand-scoped rules (166 in the catalog) do not apply, closed-loop store cards are not accepted, and exclusions such as OnePay's "excluding Walmart" do not fire. No shopper sees this build before Release A (Phase 15); Phase 14 gives brand websites their brands before then. A guard test on the bundled catalog lists every rule that can apply at the generic profile and has exclusions; today it should be none (the online-retail rules have no exclusions). Named profiles for such stores come with the merchant database (Phase 14).
 
 ## Steps
 
