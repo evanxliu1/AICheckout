@@ -11,6 +11,7 @@ import type { Batch } from './files.ts';
 import { fileSha256, jsonSha256, labelsHash, anchorsHash } from './hash.ts';
 import { EXTRACT_CONFIG, STAGE_VERSIONS } from './inputs.ts';
 import { emptyCardState, writeJsonAtomic, writeState } from './state.ts';
+import { undraftedCase } from '../../../scripts/lib/expansion-verification.mjs';
 import { acceptedAcks, applyLint, quoteGate } from './gates.ts';
 import { lintMetrics } from './label-lint.ts';
 import type { CorpusCaseLike } from './label-lint.ts';
@@ -325,6 +326,10 @@ export async function runStage(
     batch = await loadBatch(env.root, batchId);
     for (const id of targets) {
       const draft = batch.draft.get(id);
+      // A successful run that wrote no case for a card (no extracted value resolved to an anchor) leaves it
+      // undrafted: done, verified from an empty reference (the verifier writes every label from the captures).
+      const empty = code === 0 && !draft ? undraftedCase(batch.cards.find((card) => card.id === id)!) : null;
+      const drafted = draft ?? empty;
       setCard(
         batch,
         id,
@@ -333,18 +338,24 @@ export async function runStage(
           'draft',
           view,
           id,
-          code === 0 && draft
+          code === 0 && drafted
             ? {
                 status: 'done',
-                outputs: [{ ref: `corpus-draft:${id}`, sha256: jsonSha256(draft) }],
-                labelsHash: labelsHash(draft),
-                anchorsHash: anchorsHash(draft),
+                ...(draft ? { outputs: [{ ref: `corpus-draft:${id}`, sha256: jsonSha256(draft) }] } : {}),
+                labelsHash: labelsHash(drafted),
+                anchorsHash: anchorsHash(drafted),
+                ...(empty ? { undrafted: true as const } : {}),
               }
-            : { status: 'failed-gate', reason: code === 0 ? 'no-draft-case' : 'draft-error' },
+            : { status: 'failed-gate', reason: 'draft-error' },
           env.now(),
         ),
       );
     }
+    const undrafted = targets.filter((id) => !batch.draft.has(id));
+    if (code === 0 && undrafted.length)
+      env.log(
+        `run draft: ${undrafted.length} card(s) undrafted (no draft case): ${undrafted.join(', ')}; their verifier writes every label from the captures.`,
+      );
     await writeState(statePath(batch.dir), batch.state, env.now());
     return code === 0 ? 0 : 1;
   }

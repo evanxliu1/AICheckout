@@ -60,7 +60,8 @@ Repeat `pipeline next --batch <batch> --json` and act on `kind`:
 4. The chat report is only a pointer; `accept` reads the file: `pipeline accept <stage> --batch <batch> --issuer <slug> --agent-run <agent ID> --model <pinned model> --duration-ms <ms> --tokens <n>`.
 5. On a failed gate, send the **same** agent (SendMessage to its ID) the gate errors as printed (paths and field names only, never capture text), then accept again with the same `--agent-run`. After two failed rounds, `pipeline claim <stage> --batch <batch> --issuer <slug> --release` and claim afresh for a new agent; the released packet's output file stays in place (an adjudicator edits it; a new verifier or researcher may overwrite it).
 6. The **verifier and adjudicator are always different runs** (accept refuses otherwise). Claim adjudicate only after verify is accepted. `accept adjudicate` lints the corpus case apply will write; a `label lint:` error goes back to the adjudicator, which fixes the number or acks it. Never add or edit an ack yourself.
-7. `questions` in the accepted research file are scope questions: ask Evan before capture. If his answer changes the card list, tell him the batch must be re-initialised (the CLI cannot amend `batch.json`).
+7. **Undrafted cards** (`run draft` logs them; the packet lists them under `undraftedCardIds`) go to the verifier like any other card; it writes every label from the captures. If the issuer's verify was already accepted, `next` proposes a second verify packet for them, then a second adjudicate packet: run them as usual.
+8. `questions` in the accepted research file are scope questions: ask Evan before capture. If his answer changes the card list, tell him the batch must be re-initialised (the CLI cannot amend `batch.json`).
 
 ## Conventions
 

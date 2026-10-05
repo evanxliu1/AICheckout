@@ -374,6 +374,8 @@ export function nextStep(view: BatchView): NextStep {
       : cards.filter(
           (card) =>
             card.stages[stage].status === 'failed-gate' &&
+            // `no-draft-case` is a record from before undrafted cards were done: one more run clears it.
+            card.stages[stage].record?.reason !== 'no-draft-case' &&
             (card.stages[stage].record?.attempts ?? 0) >= GATE_ATTEMPTS,
         );
     // Every failed card of the stage goes with it (they share the gate-failed code), not only the stuck ones.

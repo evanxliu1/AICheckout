@@ -244,6 +244,18 @@ const emptyReference = () => ({
   issues: [],
 });
 
+/** The case an undrafted card's findings apply to (no draft case: an empty reference). The pipeline hashes it as the
+ * card's draft labels (tools/catalog-pipeline), so it is a pure function of the card entry. */
+export const undraftedCase = (card) => ({
+  id: card.id,
+  cardId: card.id,
+  cardName: card.name.slice(0, 120),
+  issuer: card.issuer,
+  split: 'dev',
+  sourceIds: card.sourceIds.slice(0, 4),
+  reference: emptyReference(),
+});
+
 /** Every finding of a card that needs a second-pass decision. */
 const findingsOf = (entry) => [
   ...entry.fixes,
@@ -375,18 +387,7 @@ export function applyVerification({ cards, draft, productNotes, files, captures 
     }
 
     // Labels: draft (or an empty reference for an undrafted card) + accepted fixes and additions.
-    const draftCase = draftById.get(card.id);
-    const item = structuredClone(
-      draftCase ?? {
-        id: card.id,
-        cardId: card.id,
-        cardName: card.name.slice(0, 120),
-        issuer: card.issuer,
-        split: 'dev',
-        sourceIds: card.sourceIds.slice(0, 4),
-        reference: emptyReference(),
-      },
-    );
+    const item = structuredClone(draftById.get(card.id) ?? undraftedCase(card));
     const before = errors.length;
     const useSource = (sourceId) => {
       if (!item.sourceIds.includes(sourceId)) item.sourceIds.push(sourceId);
