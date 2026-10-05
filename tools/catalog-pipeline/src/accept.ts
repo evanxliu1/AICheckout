@@ -81,7 +81,13 @@ export async function accept(
       env.log('accept adjudicate: verify is not accepted for this issuer.');
       return 1;
     }
-    if (verify.agentRun === options.agentRun) {
+    // Against the issuer's latest verify run and the run that verified each packet card (a batch can have a second
+    // verify packet, for cards drafted or undrafted after the first was accepted).
+    const verifiers = [
+      verify.agentRun,
+      ...packet.cardIds.map((cardId) => batch.state.cards[cardId]?.stages.verify?.agentRun),
+    ];
+    if (verifiers.includes(options.agentRun)) {
       env.log(
         'accept adjudicate: refused, the agent run is the one that verified; the adjudicator is always another run.',
       );

@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T00:05:04Z
+  at: 2026-10-05T01:47:35Z
 ---
 
 # Now
 
-As of 2026-10-05T00:05Z.
+As of 2026-10-05T01:47Z.
 
 ## Current state
 
@@ -28,6 +28,7 @@ As of 2026-10-05T00:05Z.
 - **Acceptance run** (milestone 6), branch `catalog-wells-fargo-2026-10`: Wells Fargo refresh batch `wells-fargo-2026-10`, 6 cards, end to end from one chat request; results in [`docs/evals/pipeline-v1.md`](../docs/evals/pipeline-v1.md). No rate, cap or category differs from `expansion.v1`; rule-ID continuity 790 kept, 30 changed (all Wells Fargo), 0 dropped. Its catalog change is **not** shipped; publishing it is Evan's call ([decision](decisions/2026-10-04-wells-fargo-batch-not-shipped.md)). Gitignored captures and traces live only in `../AICheckout-p8-wf`: keep that worktree (the six merged Phase 8 worktrees were removed 2026-10-04).
 - **Phase 9 milestone 1** (PR #44): the review app bundles every pipeline batch manifest and matches a capture by the source's `checkedOn` ([decision](decisions/2026-10-04-review-app-batch-manifests.md)); a batch is publishable after its merge and the Render deploy.
 - **Phase 9 milestone 3** (branch `phase9-m3-freshness`, ready for review): `pipeline freshness`, freshness-dated sources in the builder and review app, seeded refresh batches (`init --refresh-from-freshness`) and real cards in batches ([decision](decisions/2026-10-05-freshness-records-and-seeded-refresh.md)); next is the milestone 4 renewal run.
+- **Phase 9 milestone 3b** (branch `phase9-m3b-undrafted-cards`, ready for review): undrafted cards (no draft case) are draft `done` and verified from the empty reference, with a second verify and adjudicate packet for a batch already verified ([decision](decisions/2026-10-05-undrafted-cards-in-the-pipeline.md)); unblocks the 13 undrafted cards of the renewal run (`run draft` on them, then `next`).
 - **Phase 9 milestone 2** (PR #45, merged): published versions are never rebuilt with other contents (`publishedVersions`), `run build --proposed --version` ships nothing, `pipeline drop-source`, and `next` groups cards per queue code ([pipeline](system/card-expansion-pipeline.md#built-so-far)).
 
 ## Open questions and next steps

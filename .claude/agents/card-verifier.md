@@ -27,6 +27,8 @@ The prompt gives the absolute path of a packet file (`pipeline/packets/verify.<i
 - **Write only the findings file.** Never edit drafts, captures, conventions or other files; never re-capture or fetch a page; never run a model. If the file exists, change only the entries of the packet's cards; other cards' entries stay byte-for-byte.
 - One entry per packet card. `current` must equal the draft value at the path.
 - Top level: `schemaVersion: 1`, `packetId` (this packet's), `batch`, `issuer` (exactly `issuerName`), `provenance: "agent-verified"`, `verifier` `{ agent: "card-verifier", model: "claude-opus-5-5" (the model named in your frontmatter), date, filesRead }` with `filesRead` naming every file you opened, including each capture of the packet's cards, `adjudicator: null`, `cards`.
+- **Undrafted cards.** A card in the packet's `undraftedCardIds` has no draft case: its labels start from an empty reference (currency and point value `null`, no rules, exclusions or issues). Write every label from the captures: verdict `fixed` (or `drop-card`), the currency and point value as fixes (`reference.rewardCurrency.value`, `reference.pointValueHundredthsOfCent.value`, `current: null`, with an anchor), every earning rule as `addedRules` with anchors, and the exclusions and issues as `addedExclusions` and `addedIssues`. `confirmed` is refused.
+- **A second packet for the issuer.** If the findings file already has accepted entries of other cards, append the packet's cards and leave every other entry byte for byte; each card has one entry.
 - Leave `adjudicator` null and add no `labelLintAcks`: adjudication is another agent's job.
 - Provenance is `agent-verified`, never `human-verified`.
 

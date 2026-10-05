@@ -13,7 +13,7 @@ import { loadBatch } from './files.ts';
 import type { Batch } from './files.ts';
 import { acksByCard } from './gates.ts';
 import { fileSha256, jsonSha256 } from './hash.ts';
-import { RESEARCHER_AGENT, VERIFIER_BRIEF, verifierFindings } from './inputs.ts';
+import { RESEARCHER_AGENT, VERIFIER_BRIEF, isUndrafted, verifierFindings } from './inputs.ts';
 import { ISSUER_STAGES, SLUG, writeJsonAtomic } from './state.ts';
 import type { IssuerStage } from './state.ts';
 import type { Env } from './run.ts';
@@ -36,6 +36,9 @@ export const packetSchema = z.strictObject({
   agent: z.string(),
   /** Research: none. Verify, adjudicate, overlay: the issuer's cards this packet covers. */
   cardIds: z.array(slug),
+  /** Verify and adjudicate: the packet cards with no draft case (draft `undrafted`). Their labels start from an empty
+   * reference, so the verifier writes every label from the captures. */
+  undraftedCardIds: z.array(slug).optional(),
   inputs: z.array(z.string().min(1)),
   output: z.string().min(1),
   claimedAt: timestamp,
@@ -243,6 +246,8 @@ export async function claim(
     inputSha256,
     attempts: [],
   };
+  const undrafted = cardIds.filter((id) => isUndrafted(batch, id));
+  if ((stage === 'verify' || stage === 'adjudicate') && undrafted.length) packet.undraftedCardIds = undrafted;
   if (stage === 'overlay')
     packet.corpusCaseSha256 = Object.fromEntries(
       cardIds.map((id) => [id, sha256Json(batch.corpus.get(id)) as string]),
@@ -278,6 +283,10 @@ export async function claim(
   await writePacket(batch, packet);
   const path = join(packetsDir(batch), packetFile(packet));
   env.log(`Claimed ${relative(env.root, path)} (packet ${packet.packetId}).`);
+  if (packet.undraftedCardIds)
+    env.log(
+      `Undrafted (no draft case; every label is written from the captures): ${packet.undraftedCardIds.join(', ')}.`,
+    );
   env.log(`Start the ${packet.agent} subagent with the packet path: ${path}`);
   env.log(
     `It writes only ${output}; then run: npm run pipeline -- accept ${stage} --batch ${batch.id} --issuer ${issuer} --agent-run <run id> --model <model id>`,

@@ -94,6 +94,9 @@ export const stageRecordSchema = z.strictObject({
   /** Build: the catalog version built, and `true` for a proposed build (`run build --proposed`), which ships nothing. */
   catalogVersion: z.string().regex(CATALOG_VERSION).optional(),
   proposed: z.literal(true).optional(),
+  /** Draft: the draft run succeeded but wrote no case for the card (no extracted value resolved to an anchor). The
+   * card is verified from an empty reference: the verifier writes every label from the captures. */
+  undrafted: z.literal(true).optional(),
   /** Research of a batch seeded from a freshness record: no researcher agent ran (`init --refresh-from-freshness`). */
   provenance: z.literal('seeded').optional(),
 });

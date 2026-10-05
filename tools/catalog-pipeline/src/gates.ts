@@ -7,7 +7,7 @@ import { isDeepStrictEqual } from 'node:util';
 import { z } from 'zod';
 import type { Batch } from './files.ts';
 import { jsonSha256 } from './hash.ts';
-import { verifierFindings } from './inputs.ts';
+import { draftCaseOf, verifierFindings } from './inputs.ts';
 import {
   adjudicatorAckSchema,
   ackPath,
@@ -140,6 +140,11 @@ function scopeGate(packet: Packet, file: FindingsFileLike): string[] {
   const errors: string[] = [];
   const inPacket = new Set(packet.cardIds);
   const frozen = packet.frozen?.entries ?? {};
+  // Each card has one entry: a later packet appends its cards and leaves accepted entries as they are.
+  const seen = new Set<string>();
+  for (const entry of file.cards)
+    if (seen.has(entry.cardId)) errors.push(`cards.${entry.cardId}: more than one entry for the card`);
+    else seen.add(entry.cardId);
   for (const entry of file.cards)
     if (!inPacket.has(entry.cardId) && frozen[entry.cardId] !== jsonSha256(entry))
       errors.push(`cards.${entry.cardId}: outside the packet (added or changed)`);
@@ -175,7 +180,12 @@ export async function verifyGate(batch: Batch, packet: Packet, data: unknown): P
   errors.push(...scopeGate(packet, file));
   for (const entry of file.cards) {
     if (!packet.cardIds.includes(entry.cardId)) continue;
-    const draft = batch.draft.get(entry.cardId);
+    const draft = draftCaseOf(batch, entry.cardId);
+    // An undrafted card starts from an empty reference: there is nothing to confirm, only labels to write.
+    if (packet.undraftedCardIds?.includes(entry.cardId) && entry.verdict === 'confirmed')
+      errors.push(
+        `cards.${entry.cardId}.verdict: an undrafted card is fixed (every label written from the captures) or drop-card`,
+      );
     entry.fixes.forEach((fix, i) => {
       const value = valueAt(draft, fix.path);
       if (value === undefined) errors.push(`cards.${entry.cardId}.fixes.${i}.path: not in the draft`);
