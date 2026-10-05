@@ -13,7 +13,7 @@ The project's long-term memory. Start with [`now.md`](now.md), then the director
 * [Architecture](system/architecture.md) — components, runtimes and how they connect.
 * [Code map](system/code-map.md) — every module and what it owns.
 * [User directives](product/user-directives.md) — dated record of what the owner authorized, forbade or prefers.
-* [Roadmap](product/roadmap.md) — phases and status; next is the [Phase 10 plan (draft)](product/phase-10-merchant-expansion.md), awaiting Evan's approval.
+* [Roadmap](product/roadmap.md) — phases and status; next is the [merchant coverage plan](product/phase-10-merchant-expansion.md), split into Phases 10–17; Phases 10 and 11 start in parallel.
 * [Catalog release](ops/catalog-release.md) — how a catalog is published; dated records in [release history](ops/catalog-release-history.md).
 
 ## Directories

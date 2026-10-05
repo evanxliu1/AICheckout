@@ -77,7 +77,7 @@ Chrome's per-extension site-access setting is read at start and on `permissions.
 6. **Decide:** one candidate of the most preferred kind (total after credit > estimated total > subtotal) → `found`; several → `ask`; none → `none`; never `found` on a tie.
 7. **Budget:** p95 under 50 ms on captured pages *(probe)*.
 
-## Real-page evaluation (pre-registered in milestone 2)
+## Real-page evaluation (pre-registered in Phase 12)
 
 | Element | Design |
 | --- | --- |
