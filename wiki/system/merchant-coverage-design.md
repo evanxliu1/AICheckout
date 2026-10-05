@@ -6,8 +6,10 @@ status: draft
 tags: [system, design, phase-10, merchants]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T23:30:00Z
+  at: 2026-10-06T02:00:00Z
 sources:
+  - resource: ../../docs/evals/generic-reader-protocol.md
+    title: Generic cart reader evaluation protocol (pre-registered 2026-10-06)
   - resource: ../product/phase-10-merchant-expansion.md
     title: Phase 10 plan
   - resource: telemetry-design.md
@@ -79,16 +81,18 @@ Chrome's per-extension site-access setting is read at start and on `permissions.
 
 ## Real-page evaluation (pre-registered in Phase 12)
 
+Pre-registered on 2026-10-06 in [`docs/evals/generic-reader-protocol.md`](../../docs/evals/generic-reader-protocol.md) (`generic-reader-protocol.1`), which is binding and wins over this summary.
+
 | Element | Design |
 | --- | --- |
-| Sites | 150–200 top retail domains stratified by platform (including "none detected", shadow-DOM storefronts, third-party checkouts) and rank band; split **by site** into development, held-out A and held-out B, each platform in every split |
-| Capture | A persistent, non-Evan Chrome profile driven by Playwright, logged out; one known in-stock item; may open a checkout page but never signs in and never fills or submits any field; never bypasses bot walls or solves CAPTCHAs; the tool itself refuses submit and in-form clicks except an add-to-cart allowlist, has no typing or coordinate-click path, and protects any local control server with a token and Origin check (the probe's prototype driver did not, 2026-10-05); rate-limited; robots and terms posture recorded; exclusion list reported |
-| Format | Snapshots with inlined styles (Playwright snapshot or MHTML); the reader's live result recorded at capture as a replay check |
-| Ground truth | The summary rows as displayed: two independent labeler subagents label every amount with its kind; disagreements go to an adjudicator subagent (never a labeler); agreement rate reported. Product price × quantity is a consistency flag only. Correct = returned amount equals the labelled amount of the returned kind, and the kind is the most preferred one present |
-| States | 1 item; quantity 2; 2 items; mini-cart vs cart page; strikethrough sale; promo banner; carousel with prices; tax/shipping estimate; installment widget; free-shipping progress; gift card or credit applied; empty; loading; shadow DOM; third-party checkout |
-| Variants | Class renames, injected promo rows, fake "Subtotal" outside the summary, injected instruction text (targets the labeler and capture agents, which read untrusted HTML; the reader has no model) |
-| Statistics | Rule-of-three / Wilson 95% bounds at the state and site-cluster level, both reported; with about 50–65 sites per split, 0 failures gives a site-level upper bound of about 5% |
-| Peek policy | Held-out A runs **at most twice in Phase 10 in total**; failures analysed by class only, fixed on development; a second failure retires A, and B then runs under the same rule |
+| Sites | Frozen retail frame (`evals/merchants/retail-frame.json`, Tranco 647LX ∩ agent-classified U.S. physical-goods retail, 457 eligible domains in the top 100,000); 300 candidates in a seeded order, capture stops at 195 sites (150 minimum); split **by site** into development, held-out A and held-out B (about 50–65 each), stratified by rank band and platform group with a seeded deterministic assignment; every platform group with at least three sites in every split; the 25 probe sites in development only |
+| Capture | A persistent, non-Evan Chrome profile driven by Playwright, logged out, no extension loaded; one known in-stock item ($10–$200); may open a checkout page but never signs in and never fills or submits any field; never bypasses bot walls or solves CAPTCHAs; the tool itself refuses submit and in-form clicks except an add-to-cart allowlist, has no typing or coordinate-click path, and protects any local control server with a token and Origin check (the probe's prototype driver did not, 2026-10-05); one site at a time, at least 3 s between actions; robots.txt (`Disallow: /` excludes) and terms posture recorded; exclusion list reported with codes |
+| Format | Snapshots that keep open shadow roots and the styles the reader reads (DOM tree, MHTML, screenshot, headers, hashes); a reader's live result at capture, when one exists, is stored apart as a replay check and never shown to labelers |
+| Ground truth | The summary rows as displayed: two independent labeler subagents label every amount with its kind and never see each other's labels or any reader output; disagreements go to an adjudicator subagent who never labelled that split; agreement reported (below 90% stops before the freeze). Labels frozen and SHA-256-hashed per split before any reader run; later fixes are dated errata reported beside the frozen-label score. Product price × quantity is a consistency flag only. Correct = returned amount equals the labelled amount of the returned kind, and the kind is the most preferred one present; a summary only in an iframe or closed shadow root has correct answer `none` |
+| States | Action (produced): empty cart, mini-cart, cart page with 1 item (the state for Y), first checkout page, quantity 2, 2 items. Observed (tagged, reported as subgroups): strikethrough sale, promo banner, carousel with prices, tax/shipping estimate, installment widget, free-shipping progress, credit applied, loading, shadow DOM, iframe or third-party checkout |
+| Variants | Offline, from real snapshots of the same split, labels derived by rule and frozen with the split: class renames, injected promo rows, fake "Subtotal" outside the summary, injected instruction text (targets the labeler and capture agents, which read untrusted HTML; the reader has no model), credit applied; reported apart from real pages |
+| Statistics | Found-correct, false found, ask, none-missed, none-correct; rule-of-three and Wilson 95% bounds at the page-state and site-cluster level, both reported; with about 60 sites per split, 0 failures gives a site-level upper bound of 5.0% (rule of three) or 6.0% (Wilson). Pass bar on real pages of the active held-out split: 0 false found, found-correct ≥ Y = 80% on one-item cart pages, p95 reading time ≤ 50 ms |
+| Peek policy | Held-out A runs **at most twice in Phases 10–17 in total**; failures analysed by class only, by an analyst who is not the reader developer, fixed on development; a second failure retires A, and B then runs under the same rule; B failing twice triggers the stop rule (Evan re-decides before Phase 15) |
 | Copyright | Snapshots gitignored; committed: URL, date, hash, recipe, labels, redacted structure fixtures; replays are new dated snapshots, labels never overwritten |
 
 ## Category evidence

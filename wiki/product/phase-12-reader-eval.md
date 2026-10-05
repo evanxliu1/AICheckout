@@ -6,7 +6,7 @@ status: stable
 tags: [product, plan, phase-12, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T00:30:00Z
+  at: 2026-10-06T02:00:00Z
 sources:
   - resource: phase-10-merchant-expansion.md
     title: Merchant coverage plan (Phases 10–17)
@@ -49,6 +49,10 @@ The probe's 25 sites may join the development split only (their labels were seen
 ## Safety and copyright
 
 As in [Phase 10](phase-10-feasibility-probe.md#safety-and-copyright), enforced by the tool: never sign in, create accounts, type, submit a form other than add-to-cart, place orders, solve CAPTCHAs or bypass bot walls; one site at a time, rate-limited; snapshots, screenshots, candidate lists from third parties and the profile stay gitignored; committed are URLs, dates, hashes, recipes, labels and quotes of 25 words or fewer.
+
+## Progress
+
+- **12.1 built (2026-10-06, branch `phase12-protocol`):** [`docs/evals/generic-reader-protocol.md`](../../docs/evals/generic-reader-protocol.md) (`generic-reader-protocol.1`); frozen retail frame `evals/merchants/retail-frame.json` (Tranco 647LX, 457 eligible of 670; SHA-256 `11b2d786…7985`); merchant-pipeline held-out list `evals/merchants/pipeline-heldout-domains.json` (60 domains, 6 / 27 / 27; SHA-256 `8c89dc44…8a75`), allowed to overlap the reader splits; seeded selection script `evals/merchants/tools/seeded-selection.mjs` (held-out list, candidate order, split assignment, frame check). Choices in the [decision](../decisions/2026-10-06-reader-eval-protocol.md). Next: independent reviewer signs the protocol; then 12.2.
 
 Done when all three PRs are merged; Phase 13 (reader v1) then tunes on the development split only.
 
