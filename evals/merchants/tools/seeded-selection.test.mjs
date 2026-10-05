@@ -44,6 +44,22 @@ test('item price bands cover every eligible frame currency', () => {
   for (const [cur, [min, max]] of Object.entries(bands)) assert.ok(min > 0 && max > min, cur);
 });
 
+test('currency minor-unit table covers every eligible frame currency', () => {
+  const units = JSON.parse(readFileSync(new URL('../currency-minor-units.json', import.meta.url), 'utf8')).currencies;
+  for (const d of frame.domains.filter((x) => x.eligible)) assert.ok(units[d.currency] !== undefined, d.currency);
+  for (const c of ['JPY', 'KRW', 'VND', 'CLP']) assert.equal(units[c], 0, c);
+  assert.equal(units.USD, 2);
+});
+
+test('retail-frame.2: one eligible storefront per retailer family', () => {
+  const seen = new Map();
+  for (const d of frame.domains.filter((x) => x.eligible)) {
+    assert.ok(d.family, d.domain);
+    assert.ok(!seen.has(d.family), `${d.family}: ${seen.get(d.family)} and ${d.domain}`);
+    seen.set(d.family, d.domain);
+  }
+});
+
 test('reader candidates: 200 per stream, every top-1k and 1k-10k eligible domain, all probe sites in the U.S. stream', () => {
   const c = readerCandidates(frame);
   assert.equal(c.length, 400);

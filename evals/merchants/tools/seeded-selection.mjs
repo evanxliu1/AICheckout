@@ -3,7 +3,7 @@
 // no exact ranks: every selection depends only on each domain's band, eligibility, region group and probe status in a
 // frozen frame and on the ascending hex SHA-256 of "<SEED>|<purpose>|<domain>".
 //
-// generic-reader-protocol.2 (2026-10-06) moved the reader evaluation to retail-frame.2 (worldwide, retail-frame-2.json).
+// generic-reader-protocol.2 (2026-10-05) moved the reader evaluation to retail-frame.2 (worldwide, retail-frame-2.json).
 // The merchant-pipeline held-out list stays on retail-frame.1 (retail-frame.json) and its procedure is unchanged.
 //
 //   node evals/merchants/tools/seeded-selection.mjs pipeline-heldout [--check]        write or check the held-out list

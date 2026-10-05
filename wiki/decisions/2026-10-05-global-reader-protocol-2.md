@@ -1,12 +1,12 @@
 ---
 type: Decision
 title: Global cart reader evaluation and deferred attended capture (generic-reader-protocol.2)
-description: Evan's 2026-10-06 decisions — the generic cart reader must return the total and its currency on storefronts worldwide, judged on a worldwide retail frame with U.S. and non-U.S. reported separately, while card recommendations for non-USD purchases wait for a later phase; bot-walled sites stay a reported gap and attended capture with Evan solving CAPTCHAs is deferred. Amends the signed reader protocol before any capture.
+description: Evan's 2026-10-05 decisions — the generic cart reader must return the total and its currency on storefronts worldwide, judged on a worldwide retail frame with U.S. and non-U.S. reported separately, while card recommendations for non-USD purchases wait for a later phase; bot-walled sites stay a reported gap and attended capture with Evan solving CAPTCHAs is deferred. Amends the signed reader protocol before any capture.
 status: proposed
 tags: [decision, phase-12, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T08:00:00Z
+  at: 2026-10-05T23:10:00Z
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol (.2)
@@ -14,10 +14,10 @@ sources:
     title: Reader protocol choices (.1)
 ---
 
-# Global cart reader evaluation and deferred attended capture (2026-10-06)
+# Global cart reader evaluation and deferred attended capture (2026-10-05)
 
 ## Context
-`generic-reader-protocol.1` was signed on 2026-10-06 (agent-verified). It judged the reader on U.S. storefronts in USD only: `non-usd` labels had a null expected and non-U.S. storefronts were excluded. Before any capture, Evan decided in chat on 2026-10-06 that the extractor should work worldwide now, while card recommendations stay U.S. Evan first also allowed attended capture of bot-walled sites, then dropped it the same day. The protocol fixes the frame, outcome definitions and label schema "for good" against builder amendments, so these changes need his decision on record. No capture, label or reader run exists yet, so nothing needs reporting under both versions.
+`generic-reader-protocol.1` was signed at `e28a901` (agent-verified). It judged the reader on U.S. storefronts in USD only: `non-usd` labels had a null expected and non-U.S. storefronts were excluded. Before any capture, Evan decided in chat on 2026-10-05 (UTC) that the extractor should work worldwide now, while card recommendations stay U.S. Evan first also allowed attended capture of bot-walled sites, then dropped it the same day. The protocol fixes the frame, outcome definitions and label schema "for good" against builder amendments, so these changes need his decision on record. No capture, label or reader run exists yet, so nothing needs reporting under both versions.
 
 ## Options considered
 | Question | Options | Chosen |
@@ -29,7 +29,9 @@ sources:
 | Russia and Belarus | Include; exclude | Exclude (`card-unusable-market`): U.S.-issued cards are not accepted there |
 | Sizing | One pool of 300; U.S. and non-U.S. streams | Two streams of 200 candidates. Each stops at 110 captured, 220 in all, about 73 per split, about half non-U.S. Below 80 captured in a stream, report to Evan |
 | Strata | Band × platform; band × region group × platform | Band × region group × platform, with tie-breaks on band × region group, then region group. The simulation gives held-out splits within one site of each other in every region group |
-| Currency in the label | Keep `amountCents` and add a currency; minor units | `reader-labels.2`: `{kind, amountMinor, currency}` in ISO 4217 minor units, `currencyEvidence`, `currency-undetermined` replaces `non-usd` |
+| Currency in the label | Keep `amountCents` and add a currency; minor units | `reader-labels.2`: `{kind, amountMinor, currency}` in ISO 4217 minor units from a committed table, `currency-undetermined` replaces `non-usd` |
+| How a labeller decides the currency (review fix) | Free judgement from page evidence including `lang`; a fixed precedence | Fixed precedence: (a) ISO code in the summary, (b) structured data, (c) a published list of unambiguous symbols, (d) the frame's storefront currency for an ambiguous symbol unless a conflicting marker shows; `lang` never decides. Undetermined only when nothing resolves; above 10% of a split's `cart-1` pages, stop and report to Evan |
+| Sites that refuse U.S. visitors (review fix) | Count as bot walls; separate code | `geo-blocked`, a judgement exclusion with screenshot evidence, reported apart from bot walls in the known gap |
 | Correctness | Amount only; amount and currency | Amount, kind and currency. A right amount with a wrong currency is a false found (Evan) |
 | Pass bar | Per region; whole split | Whole held-out split, same numbers (0 false found, Y = 80%, p95 ≤ 50 ms), with U.S. and non-U.S. reported separately (Evan) |
 | Locale coverage | Rely on real pages; add variants | Both: locale observed tags, and four new variants (`format-swap`, `format-space-after`, `zero-decimal`, `mixed-currency`) |
@@ -38,7 +40,7 @@ sources:
 | Bot-walled sites | Attended capture in the built-in browser pane with Evan solving CAPTCHAs; a reported gap | **A reported gap (Evan, revised the same day).** Blocked sites are listed by band and region. A later step may capture them attended, with Claude driving its built-in browser and Evan solving any CAPTCHA, under its own amendment and an Evan-approved in-page serializer |
 
 ## Decision
-Amend the reader protocol to `generic-reader-protocol.2` as chosen above ([Amendment 1](../../docs/evals/generic-reader-protocol.md#amendment-1-2026-10-06-generic-reader-protocol2)). Frame `retail-frame.2` SHA-256 `511959a5…b052` (989 eligible: 480 U.S., 509 non-U.S., 42 currencies); item price bands `f75c978c…3756`; seed unchanged; the held-out list `6bc92515…79b2` unchanged.
+Amend the reader protocol to `generic-reader-protocol.2` as chosen above ([Amendment 1](../../docs/evals/generic-reader-protocol.md#amendment-1-2026-10-05-generic-reader-protocol2)). Frame `retail-frame.2` SHA-256 `659dae60…5312` (989 eligible: 480 U.S., 509 non-U.S., 43 currencies; a `family` field per domain; built by the committed `evals/merchants/tools/build-retail-frame-2.py` from `evals/merchants/frame-2-inputs/`); item price bands `644f0d12…9b1c`; minor-unit table `currency-minor-units.json` `24754d36…2180`; script `d8f19e0d…3c5f`; seed unchanged; the held-out list `6bc92515…79b2` unchanged.
 
 ## Consequences
 - 12.2 adds the location rule (never change country or currency, `redirected-off-domain`), per-currency item bands, the observed storefront region and currency in `sites.json`, and extra platform markers (Shopware, PrestaShop, Cafe24, MakeShop).
@@ -49,4 +51,4 @@ Amend the reader protocol to `generic-reader-protocol.2` as chosen above ([Amend
 - `.2` needs an independent reviewer's signature before 12.3 starts.
 
 ## Status
-Proposed 2026-10-06 by the amendment builder (claude-code/claude-opus-5-5) on Evan's chat decisions. Becomes accepted when an independent reviewer subagent signs `generic-reader-protocol.2`.
+Proposed 2026-10-05 by the amendment builder (claude-code/claude-opus-5-5) on Evan's chat decisions. Independent review 2026-10-05 at `ca4dbac`: sign with fixes (agent-verified); fixes applied. Becomes accepted when the reviewer confirms the fixes and signs `generic-reader-protocol.2`.
