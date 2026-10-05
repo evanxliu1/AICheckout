@@ -94,6 +94,8 @@ export const stageRecordSchema = z.strictObject({
   /** Build: the catalog version built, and `true` for a proposed build (`run build --proposed`), which ships nothing. */
   catalogVersion: z.string().regex(CATALOG_VERSION).optional(),
   proposed: z.literal(true).optional(),
+  /** Research of a batch seeded from a freshness record: no researcher agent ran (`init --refresh-from-freshness`). */
+  provenance: z.literal('seeded').optional(),
 });
 export type StageRecord = z.infer<typeof stageRecordSchema>;
 

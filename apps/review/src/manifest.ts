@@ -2,8 +2,10 @@
 // merchant MCC pages the catalog cites (merchant-manifest.json), the Stage 2 expansion corpus
 // (evals/curation/expansion/manifest.json) and every card-expansion pipeline batch
 // (evals/curation/batches/<batch>/manifest.json, bundled at build time, so a new batch is known once
-// main is deployed). URLs, dates and hashes only, no page text. The review app compares captures with
-// them to catch a mislabelled or changed file.
+// main is deployed), plus the freshness records (evals/curation/freshness/<date>.json, Phase 9): a page
+// found unchanged on date D with hash H is a capture of H dated D, so a source re-checked on D accepts exactly
+// that hash. URLs, dates and hashes only, no page text. The review app compares captures with them to catch
+// a mislabelled or changed file.
 import { z } from 'zod';
 import manifest from '../../../evals/curation/real/manifest.json';
 import merchantManifest from '../../../evals/curation/real/merchant-manifest.json';
@@ -25,6 +27,21 @@ const batchManifests = import.meta.glob('../../../evals/curation/batches/*/manif
   import: 'default',
 });
 
+const freshnessRecords = import.meta.glob('../../../evals/curation/freshness/*.json', {
+  eager: true,
+  import: 'default',
+});
+const freshnessSchema = z.object({
+  sources: z.array(
+    z.object({
+      sourceId: z.string(),
+      sha256: z.string().nullable(),
+      result: z.enum(['unchanged', 'changed', 'unreachable', 'flagged']),
+      checkedOn: z.string(),
+    }),
+  ),
+});
+
 /** The batch manifests that parse, sorted by path; a malformed one is skipped with a console warning. */
 export function parseBatchManifests(files: Record<string, unknown>) {
   return Object.keys(files)
@@ -34,6 +51,33 @@ export function parseBatchManifests(files: Record<string, unknown>) {
       if (parsed.success) return [parsed.data];
       console.warn(`Skipping malformed capture manifest ${path}`);
       return [];
+    });
+}
+
+/**
+ * The freshness records as manifests, sorted by path: each page a record found unchanged becomes a capture of that
+ * hash dated the record's day, as the catalog builder dates it (scripts/lib/freshness.mjs `freshDates`). A changed,
+ * flagged or failed render is no capture: a changed page is re-captured in a refresh batch. A malformed record is
+ * skipped with a console warning.
+ */
+export function parseFreshnessRecords(files: Record<string, unknown>): Manifest[] {
+  return Object.keys(files)
+    .sort()
+    .flatMap((path) => {
+      const parsed = freshnessSchema.safeParse(files[path]);
+      if (!parsed.success) {
+        console.warn(`Skipping malformed freshness record ${path}`);
+        return [];
+      }
+      return [
+        {
+          sources: parsed.data.sources.flatMap((entry) =>
+            entry.sha256 && entry.result === 'unchanged'
+              ? [{ id: entry.sourceId, sha256: entry.sha256, checkedOn: entry.checkedOn }]
+              : [],
+          ),
+        },
+      ];
     });
 }
 
@@ -62,6 +106,7 @@ const hashes = hashIndex([
   merchantManifest,
   expansionManifest,
   ...parseBatchManifests(batchManifests),
+  ...parseFreshnessRecords(freshnessRecords),
 ]);
 
 /** Hex SHA-256 of the UTF-8 text, as the database computes content_hash; undefined if unavailable. */

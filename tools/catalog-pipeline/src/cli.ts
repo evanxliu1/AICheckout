@@ -2,6 +2,9 @@
 //
 //   npm run pipeline -- init <batch> --issuer "<Name>" --cards "<names or ids>" [--domains a.com,b.com]
 //                           [--refresh] [--summary "<request in Evan's words>"]
+//   npm run pipeline -- init <batch> --issuer "<Name>" --refresh-from-freshness <YYYY-MM-DD> [--cards ids]
+//                           [--summary "<text>"]
+//   npm run pipeline -- freshness [--date YYYY-MM-DD] [--only sourceIds] [--concurrency N]
 //   npm run pipeline -- status [--batch B] [--json]
 //   npm run pipeline -- next [--batch B] [--json]
 //   npm run pipeline -- run <capture|extract|draft|apply|build|eval> [--batch B] [--only ids] [--concurrency N]
@@ -25,6 +28,8 @@ import { deriveBatch, nextStep } from './derive.ts';
 import type { BatchView, NextStep } from './derive.ts';
 import { batchDir, batchFileSchema, listBatches, loadBatch, slugify, statePath } from './files.ts';
 import { runEval } from './eval.ts';
+import { freshnessSummary, newestFreshnessRecord, runFreshness } from './freshness.ts';
+import { seedRefreshBatch } from './seed.ts';
 import { handoff } from './handoff.ts';
 import { rebaseAnchors } from './rebase.ts';
 import { runStage } from './run.ts';
@@ -52,6 +57,8 @@ import { REPO_ROOT } from './root.ts';
 
 const USAGE = `Usage: npm run pipeline -- <command>
   init <batch> --issuer "<Name>" --cards "<names or ids>" [--domains a.com,b.com] [--refresh] [--summary "<text>"]
+  init <batch> --issuer "<Name>" --refresh-from-freshness <YYYY-MM-DD> [--cards ids] [--summary "<text>"]
+  freshness [--date YYYY-MM-DD] [--only sourceIds] [--concurrency N]
   status [--batch B] [--json]
   next [--batch B] [--json]
   run <${CLI_STAGES.join('|')}> [--batch B] [--only ids] [--concurrency N] [--wait-minutes N]
@@ -142,6 +149,8 @@ export async function init(
 
 export interface StatusJson {
   batch: string;
+  /** A batch seeded from a freshness record: research is done without a researcher agent. */
+  seed?: { freshness: string; layers: string[] };
   counts: Record<string, Partial<Record<string, number>>>;
   /** Open packets and their output: absent, present (awaiting accept), present-not-accepted (a gate failed). */
   packets: PacketStatus[];
@@ -161,6 +170,7 @@ export function statusJson(view: BatchView, packets: PacketStatus[]): StatusJson
   add('eval', view.eval.status);
   return {
     batch: view.batch.id,
+    ...(view.batch.meta.seed ? { seed: view.batch.meta.seed } : {}),
     counts,
     packets,
     rebaseAnchors: view.cards.filter((card) => card.rebaseAnchors).map((card) => card.cardId),
@@ -186,6 +196,10 @@ function statusText(status: StatusJson, cardCount: number): string {
     `${status.batch} (${cardCount} cards)`,
     `  ${'stage'.padEnd(11)}${STATUSES.map((s) => s.padStart(15)).join('')}`,
   ];
+  if (status.seed)
+    lines.push(
+      `  research seeded from freshness ${status.seed.freshness} (layers ${status.seed.layers.join(', ')}); no researcher agent`,
+    );
   for (const stage of order)
     lines.push(
       `  ${stage.padEnd(11)}${STATUSES.map((s) => String(status.counts[stage]?.[s] ?? 0).padStart(15)).join('')}`,
@@ -233,6 +247,8 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
         cards: { type: 'string' },
         domains: { type: 'string' },
         refresh: { type: 'boolean', default: false },
+        'refresh-from-freshness': { type: 'string' },
+        date: { type: 'string' },
         summary: { type: 'string' },
         only: { type: 'string' },
         concurrency: { type: 'string' },
@@ -254,7 +270,34 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
     switch (command) {
       case 'init':
         if (positionals.length !== 1) throw new UsageError('init takes one batch id.');
+        if (values['refresh-from-freshness'] !== undefined) {
+          if (!values.issuer) throw new UsageError('--issuer is required.');
+          if (values.domains || values.refresh)
+            throw new UsageError(
+              '--refresh-from-freshness takes its domains and refresh flag from the seed.',
+            );
+          return await seedRefreshBatch(env, positionals[0], {
+            issuer: values.issuer,
+            freshness: values['refresh-from-freshness'],
+            cards: values.cards ? list(values.cards) : undefined,
+            summary: values.summary,
+          });
+        }
         return await init(env, positionals[0], values);
+      case 'freshness': {
+        if (positionals.length) throw new UsageError('freshness takes no positional argument.');
+        const concurrency = values.concurrency === undefined ? undefined : Number(values.concurrency);
+        if (
+          concurrency !== undefined &&
+          (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 8)
+        )
+          throw new UsageError('--concurrency must be 1 to 8.');
+        return await runFreshness(env, {
+          date: values.date,
+          only: values.only ? list(values.only) : undefined,
+          concurrency,
+        });
+      }
       case 'status': {
         const out: StatusJson[] = [];
         const counts: number[] = [];
@@ -263,11 +306,20 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
           out.push(statusJson(view, await openPacketStatus(view.batch)));
           counts.push(view.cards.length);
         }
-        if (values.json) env.log(JSON.stringify({ batches: out }, null, 2));
-        else
+        // Without a batch, the newest freshness record's counts too.
+        const record = values.batch ? null : await newestFreshnessRecord(env.root);
+        const freshness = record
+          ? { checkedOn: record.checkedOn, catalogVersion: record.catalogVersion, counts: record.counts }
+          : null;
+        if (values.json)
+          env.log(JSON.stringify(values.batch ? { batches: out } : { batches: out, freshness }, null, 2));
+        else {
           env.log(
             out.length ? out.map((status, i) => statusText(status, counts[i])).join('\n\n') : 'No batches.',
           );
+          if (record) env.log(`\n${freshnessSummary(record, { cards: [] }).split('\n')[0]}`);
+          else if (!values.batch) env.log('\nNo freshness record yet.');
+        }
         return 0;
       }
       case 'next': {

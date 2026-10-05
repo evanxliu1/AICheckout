@@ -99,8 +99,39 @@ const captureMissing = async (batch: Batch, card: CardEntry): Promise<string[]> 
   return missing;
 };
 
+/** The files `init --refresh-from-freshness` seeds; they stand in for research output in a seeded batch. */
+export const SEED_FILES = ['cards.json', 'sources.json', 'exclusions.json', 'capture-hints.json'] as const;
+
 export async function researchInputs(batch: Batch, issuerSlug: string): Promise<StageInputs> {
   const issuer = batch.meta.issuers.find((entry) => entry.slug === issuerSlug) ?? null;
+  if (batch.meta.seed) {
+    // Seeded research: the request, the seed files and the freshness record they were chosen from.
+    const record = `evals/curation/freshness/${batch.meta.seed.freshness}.json`;
+    const files = [...SEED_FILES.map((name) => `${batch.rel}/${name}`), record];
+    return {
+      stageVersion: STAGE_VERSIONS.research,
+      config: { seeded: true },
+      inputs: [
+        {
+          ref: `request:${issuerSlug}`,
+          sha256: jsonSha256({
+            issuer,
+            requestedCards: batch.meta.requestedCards,
+            refresh: batch.meta.refresh,
+            seed: batch.meta.seed,
+          }),
+        },
+        ...(await Promise.all(
+          files.map(async (path) => ({
+            ref: `seed:${path}`,
+            sha256: (await fileSha256(join(batch.root, path))) ?? ABSENT_SHA256,
+          })),
+        )),
+      ],
+      missingHashed: [],
+      missingToRun: [],
+    };
+  }
   return {
     stageVersion: STAGE_VERSIONS.research,
     config: {},

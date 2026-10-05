@@ -332,9 +332,18 @@ export function nextStep(view: BatchView): NextStep {
       command: pipeline(`rebase-anchors --batch ${id}`),
       reason: 'rebase anchors: the draft anchors changed under unchanged labels; verification stands',
     };
-  // 3. Research per issuer.
+  // 3. Research per issuer. A seeded batch has no researcher: a changed seed goes to the session.
   for (const [issuer, derived] of Object.entries(view.research))
-    if (derived.status === 'pending' || derived.status === 'stale')
+    if (view.batch.meta.seed && derived.status !== 'done')
+      return {
+        kind: 'queue',
+        batch: id,
+        stage: 'research',
+        issuer,
+        code: 'gate-failed',
+        reason: `seeded research ${derived.status}: a seed file or the freshness record changed; seed a new batch with init --refresh-from-freshness`,
+      };
+    else if (derived.status === 'pending' || derived.status === 'stale')
       return agentStep(id, 'research', issuer, [], `research ${derived.status}`);
     else if (derived.status === 'failed-gate') return queueGate(id, 'research', issuer, []);
   // 4. Card stages in order; the first stage with work wins.

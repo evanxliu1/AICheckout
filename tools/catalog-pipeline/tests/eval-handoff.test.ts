@@ -514,11 +514,19 @@ describe('review-app readiness', () => {
       'evals/curation/expansion/manifest.json',
     ]);
     expect(paths).toContain('evals/curation/batches/wells-fargo-2026-10/manifest.json');
-    expect(
-      paths.slice(3).every((path) => /^evals\/curation\/batches\/[^/]+\/manifest\.json$/.test(path)),
-    ).toBe(true);
-    expect(paths.slice(3)).toEqual([...paths.slice(3)].sort());
-    expect(manifests.every((manifest) => manifest.sources.length > 0)).toBe(true);
+    // Batch manifests (sorted), then freshness records (sorted), as the review app's two globs.
+    const batches = paths
+      .slice(3)
+      .filter((path) => /^evals\/curation\/batches\/[^/]+\/manifest\.json$/.test(path));
+    const records = paths.slice(3 + batches.length);
+    expect(batches).toEqual([...batches].sort());
+    expect(records.every((path) => /^evals\/curation\/freshness\/\d{4}-\d{2}-\d{2}\.json$/.test(path))).toBe(
+      true,
+    );
+    expect(records).toEqual([...records].sort());
+    expect(manifests.slice(0, 3 + batches.length).every((manifest) => manifest.sources.length > 0)).toBe(
+      true,
+    );
     expect(REVIEW_MANIFEST_MODULE).toBe('apps/review/src/manifest.ts');
   });
 
@@ -670,6 +678,8 @@ describe('pipeline handoff', () => {
     jsonBytes: 1000,
     budgetBytes: 786432,
     layers: [{ id: BATCH, kind: 'batch', dir: `evals/curation/batches/${BATCH}`, cards: 2, replaced: 0 }],
+    replacedReal: [],
+    paymentPathChanges: [],
     heldOut: [],
     dropped: [],
     continuity: { previous: null, kept: [], changed: [], added: ['x-base'], dropped: [] },
@@ -739,6 +749,27 @@ describe('pipeline handoff', () => {
       /The CLI has no publish, push or sign-in command\. Evan ticks the attestation and clicks Publish\. Labels are agent-verified, not human-verified\./,
     );
     expect(text).toMatch(/Ready: open the PR/);
+    expect(text).not.toMatch(/Real cards refreshed/);
+    // A replaced real card: its payment-path changes against release 1 are listed for Evan.
+    h.logs.length = 0;
+    const withReal = deps(cited, cited);
+    withReal.catalog = async () => ({
+      ...summary(cited),
+      replacedReal: ['amex-blue-cash-everyday'],
+      paymentPathChanges: [
+        {
+          cardId: 'amex-blue-cash-everyday',
+          category: 'online-retail',
+          ruleIds: ['bce-online-retail'],
+          before: ['bnpl'],
+          after: [],
+        },
+      ],
+    });
+    expect(await handoff(h.env, BATCH, withReal)).toBe(0);
+    expect(h.logs.join('\n')).toContain(
+      '  - `amex-blue-cash-everyday` online-retail (`bce-online-retail`): bnpl → none',
+    );
   });
 
   it('after a proposed build: summarises its would-be config, says nothing ships, needs no committed layer', async () => {

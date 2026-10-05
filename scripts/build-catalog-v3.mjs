@@ -12,7 +12,9 @@
 // evals/curation/real, then the pipeline batches in evals/curation/batches/), merged by scripts/lib/catalog-batches.mjs,
 // and the rule-ID ledger evals/curation/rule-id-ledger.json. The build itself is scripts/lib/catalog-v3.mjs; the real
 // cards are checked against release 1 (CATALOG_V2). The version comes from the config (bump the counter for a rebuild
-// from the same captures); the dates come from the capture manifests (see `catalogDates`). A version in the config's
+// from the same captures); the dates come from the capture manifests and the freshness records in
+// evals/curation/freshness/ (see `catalogDates`, `effectiveSources`). A real card a pipeline batch replaced is not
+// checked against release 1 (it keeps the release-1 names and rule-ID scheme; continuity applies). A version in the config's
 // `publishedVersions` is refused, before anything is written, unless the build has its ledger rule IDs and terms.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -26,6 +28,7 @@ import {
   buildRelease,
   catalogStats,
   checkRealCards,
+  realPaymentPathChanges,
   emptyLedger,
   ledgerText,
   updateLedger,
@@ -58,7 +61,10 @@ const readLedger = () => {
 const loaded = await loadCatalogBatches(fileURLToPath(root), args.config);
 const inputs = { ...mergeLayers(loaded), ledger: readLedger() };
 const { catalog, dates, continuity } = buildRelease(inputs);
-const realProblems = checkRealCards(catalog, CATALOG_V2);
+// Real cards a pipeline batch replaced carry the batch's terms: only the others are pinned to release 1.
+const replacedReal = new Set(inputs.replacedReal);
+const realProblems = checkRealCards(catalog, CATALOG_V2, { replaced: inputs.replacedReal });
+const paymentPathChanges = realPaymentPathChanges(catalog, CATALOG_V2, inputs.replacedReal);
 if (realProblems.length) {
   console.error(`The real cards differ from release 1:\n- ${realProblems.join('\n- ')}`);
   process.exit(1);
@@ -124,7 +130,22 @@ or \`packages/rewards-core/src/catalog-v3.ts\` is stale. Do not edit by hand.
   build). All seven earn cash back: Double Cash's terms state a percentage cash back (paid as ThankYou Points), so it
   maps to the \`cash-back\` program under general rule 1 (coordinator decision 2026-10-03); release 1's points at a stated
   1¢ give the same cents. The version stays \`${catalog.version}\` after this change: it was not yet published, so
-  no extension or release holds the earlier contents.
+  no extension or release holds the earlier contents.${
+    replacedReal.size
+      ? `\n- **Real cards refreshed by a batch** (release-1 names and rule-ID prefixes kept; not checked against release 1,
+  rule-ID continuity below applies): ${[...replacedReal].map((id) => `\`${id}\``).join(', ')}. Excluded payment
+  paths that differ from release 1: ${
+    paymentPathChanges.length
+      ? paymentPathChanges
+          .map(
+            (c) =>
+              `\`${c.cardId}\` ${c.category} (${c.ruleIds.map((id) => `\`${id}\``).join(', ') || 'no rule'}): ${c.before.join(', ') || 'none'} → ${c.after.join(', ') || 'none'}`,
+          )
+          .join('; ')
+      : 'none'
+  }.`
+      : ''
+  }
 
 ## Size
 

@@ -6,7 +6,7 @@ status: stable
 tags: [ops, catalog, release, review]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T22:43:00Z
+  at: 2026-10-05T00:05:04Z
 stale_after: 2026-11-01T00:00:00Z
 sources:
   - resource: ../../apps/review/src/StartDraft.tsx
@@ -107,6 +107,16 @@ For a catalog built from a Phase 8 pipeline batch, start with `npm run pipeline 
 
 A batch that is not to ship yet is built with `npm run pipeline -- run build --batch <batch> --proposed --version <new version>`: the catalog, build report and ledger diff go to the batch's `pipeline/proposed/`, and the build config, ledger, `CATALOG_V3` and the committed build report stay as they are; `handoff` then reports the proposed version and that nothing ships. To ship a batch, plain `run build` registers it and writes the shipping catalog, and needs `--version <new version>` while the config's version is published.
 
+## Renewing a catalog before it expires
+
+Outline since Phase 9 milestone 3 ([plan](../product/phase-9-freshness.md), [pipeline](../system/card-expansion-pipeline.md#freshness)); the first full run is milestone 4.
+
+1. **Re-check.** In the checkout that holds the captures, on a branch from the latest `main`: `npm run pipeline -- freshness` (no model; re-run the same day to resume). Commit `evals/curation/freshness/<date>.json`. Its summary gives counts per layer and result and the cards with a changed page per issuer.
+2. **Refresh changed cards.** Per issuer: `npm run pipeline -- init <issuer-slug>-refresh-<YYYY-MM> --issuer "<Name>" --refresh-from-freshness <date>`, then the `expand-catalog` loop (capture, extract, verify, adjudicate, apply, overlay). Real cards may be among them.
+3. **Decide the rest.** Flagged and unreachable sources get no new date: add a capture hint and re-check with `--only`, drop the source in its batch, or hold the card out, each with a reason. Changed merchant MCC pages: re-capture by hand into `evals/curation/real/merchant-captures` with a new dated manifest entry, or drop.
+4. **Build** under a new version (`run build --version <new>`): `verifiedAt` is the newest effective date; the builder refuses any cited source older than 30 days before it, naming the sources. Rule IDs of changed terms take new IDs (ledger).
+5. **Merge and deploy**, so the review app knows the new batch manifests and freshness records, then `pipeline handoff` and the publish steps above. An unchanged source is matched against the hash the record verified for its date; Evan loads the capture folders `handoff` lists.
+
 ## If something is blocked
 
 | What you see | What to do |
@@ -119,7 +129,7 @@ A batch that is not to ship yet is built with `npm run pipeline -- run build --b
 | The capture keeps waiting on the rate limit for more than five minutes | Another tab or person is capturing too (the limit is shared per process); stop the other one, then retry |
 | Publish fails with a stale revision or head error | Someone saved or published in between: **Reload latest draft**, rebase if asked, review and approve again |
 | `/v1/catalog` still shows release 1 after publishing | Reload the review app and check the draft shows **Published**; if so and the endpoint is unchanged after a minute, tell the coordinator; do not publish again |
-| It is 2026-11-01 or later | The catalog has expired and cannot be published. A new catalog needs fresh captures through hash-only freshness checks ([Stage 2 plan](../product/phase-7-stage-2.md#decisions-on-the-plans-open-questions)) and a rebuild |
+| It is 2026-11-01 or later | The catalog has expired and cannot be published. A new catalog needs a freshness run and refresh batches ([renewal](#renewing-a-catalog-before-it-expires)) and a rebuild |
 
 ## Related
 
