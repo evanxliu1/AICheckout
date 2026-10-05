@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "be3d5b3c-0933-40f2-be3f-92367a64ece5",
+  "packetId": "4f6574ba-8fa4-48d5-8a40-942fb3b2974e",
   "batch": "capital-one-refresh-2026-10",
   "issuer": "Capital One",
   "provenance": "agent-verified",
@@ -41,7 +41,40 @@
       "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-savor-terms.txt"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-10-05",
+    "filesRead": [
+      "evals/curation/batches/capital-one-refresh-2026-10/pipeline/packets/adjudicate.capital-one.1.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/capital-one.md",
+      "evals/curation/batches/capital-one-refresh-2026-10/verification/capital-one.json",
+      "evals/curation/batches/capital-one-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/capital-one-refresh-2026-10/product-notes.json",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-venture-x-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-venture-x-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-venture-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-venture-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-ventureone-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-ventureone-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-quicksilverone-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-quicksilverone-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-quicksilver-student-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-quicksilver-student-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-quicksilver-secured-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-quicksilver-secured-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-savorone-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-savorone-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-savor-student-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-savor-student-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-quicksilver-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-quicksilver-terms.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-savor-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-savor-terms.txt"
+    ]
+  },
   "cards": [
     {
       "cardId": "capital-one-venture-x",
@@ -57,13 +90,21 @@
             "sourceId": "capital-one-venture-x-pricing",
             "quote": "Rates for these other redemption options vary and can change in the sole discretion of Capital One."
           },
-          "note": "No fixed cash redemption value is stated: cash, check and gift-card rates vary at Capital One's discretion. The cost-times-100 formula is a travel value (general 3, Capital One convention)."
+          "note": "No fixed cash redemption value is stated: cash, check and gift-card rates vary at Capital One's discretion. The cost-times-100 formula is a travel value (general 3, Capital One convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Conforms to general 3 and the Capital One point-value convention: the pricing capture says cash, check and gift-card rates vary, so no fixed cash value exists."
+          }
         },
         {
           "op": "remove",
           "path": "reference.pointValueHundredthsOfCent.anchors.0",
           "current": "For example, if your travel purchase costs $200, you would multiply that by 100 to determine you need 20,000 miles to redeem.",
-          "note": "This anchor is the travel-redemption formula, not a cash redemption value."
+          "note": "This anchor is the travel-redemption formula, not a cash redemption value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The removed anchor is the travel-redemption formula, which general 3 treats as a travel value; with the value null it anchors nothing."
+          }
         },
         {
           "op": "set",
@@ -74,7 +115,11 @@
             "sourceId": "capital-one-venture-x-pricing",
             "quote": "and 2 miles per dollar on all other purchases"
           },
-          "note": "The old anchor stops at \"and 2\"; this span states the 2X base rate."
+          "note": "The old anchor stops at \"and 2\"; this span states the 2X base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The pricing capture states 10X and 5X on Capital One Travel bookings and then 2X on all other purchases; the new span states the base rate the old truncated one did not."
+          }
         },
         {
           "op": "set",
@@ -85,7 +130,11 @@
             "sourceId": "capital-one-venture-x-product",
             "quote": "Miles on hotels & rental cars booked through Capital One Travel"
           },
-          "note": "Draft wording is not verbatim; the product page names the 10X booking types this way."
+          "note": "Draft wording is not verbatim; the product page names the 10X booking types this way.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page names the 10X booking types with this exact wording, and the Capital One convention wants the issuerWording to name those types; verbatim form is correct."
+          }
         }
       ],
       "addedRules": [],
@@ -107,13 +156,21 @@
             "sourceId": "capital-one-venture-pricing",
             "quote": "Rates for these other redemption options vary and can change in the sole discretion of Capital One."
           },
-          "note": "No fixed cash redemption value is stated: cash, check and gift-card rates vary at Capital One's discretion. The cost-times-100 formula is a travel value (general 3, Capital One convention)."
+          "note": "No fixed cash redemption value is stated: cash, check and gift-card rates vary at Capital One's discretion. The cost-times-100 formula is a travel value (general 3, Capital One convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Conforms to general 3 and the Capital One point-value convention: the pricing capture says other redemption rates vary."
+          }
         },
         {
           "op": "remove",
           "path": "reference.pointValueHundredthsOfCent.anchors.0",
           "current": "For example, if your travel purchase costs $200, you would multiply that by 100 to determine you need 20,000 miles to redeem.",
-          "note": "This anchor is the travel-redemption formula, not a cash redemption value."
+          "note": "This anchor is the travel-redemption formula, not a cash redemption value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The removed anchor is the travel-redemption formula, not a cash value; nothing remains to anchor once the value is null."
+          }
         }
       ],
       "addedRules": [],
@@ -135,19 +192,31 @@
             "sourceId": "capital-one-ventureone-pricing",
             "quote": "Rates for these other redemption options vary and can change in the sole discretion of Capital One."
           },
-          "note": "No fixed cash redemption value is stated: cash, check and gift-card rates vary at Capital One's discretion. The cost-times-100 formula is a travel value (general 3, Capital One convention)."
+          "note": "No fixed cash redemption value is stated: cash, check and gift-card rates vary at Capital One's discretion. The cost-times-100 formula is a travel value (general 3, Capital One convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Conforms to general 3 and the Capital One point-value convention: the pricing capture says other redemption rates vary."
+          }
         },
         {
           "op": "remove",
           "path": "reference.pointValueHundredthsOfCent.anchors.0",
           "current": "The number of miles needed for travel redemption varies and is based upon the cost of the travel purchase.",
-          "note": "This anchor says travel miles vary with cost; it states no cash redemption value."
+          "note": "This anchor says travel miles vary with cost; it states no cash redemption value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor says travel miles needed vary with cost; it states no cash value."
+          }
         },
         {
           "op": "remove",
           "path": "reference.pointValueHundredthsOfCent.anchors.1",
           "current": "Simply multiply the cost of your travel purchase by 100.",
-          "note": "This anchor is the travel-redemption formula, not a cash redemption value."
+          "note": "This anchor is the travel-redemption formula, not a cash redemption value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor is the travel-redemption formula, which the Capital One convention treats as a travel value."
+          }
         }
       ],
       "addedRules": [],
@@ -169,7 +238,11 @@
             "sourceId": "capital-one-quicksilverone-pricing",
             "quote": "You will earn 5% cash back on hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel"
           },
-          "note": "The terms state 5% on these Capital One Travel bookings; the draft dropped the rate."
+          "note": "The terms state 5% on these Capital One Travel bookings; the draft dropped the rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The pricing capture states 5% on hotels, rental cars and vacation rentals booked through Capital One Travel or Capital One Business Travel; the rule had no rate."
+          }
         },
         {
           "op": "set",
@@ -180,7 +253,11 @@
             "sourceId": "capital-one-quicksilverone-pricing",
             "quote": "You will earn 5% cash back on Capital One Entertainment purchases."
           },
-          "note": "The terms state 5% on Capital One Entertainment purchases; the draft dropped the rate."
+          "note": "The terms state 5% on Capital One Entertainment purchases; the draft dropped the rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The pricing capture states 5% on Capital One Entertainment purchases; the rule had no rate."
+          }
         },
         {
           "op": "set",
@@ -191,7 +268,11 @@
             "sourceId": "capital-one-quicksilverone-pricing",
             "quote": "1.5% cash back on all other purchases"
           },
-          "note": "The old anchor is cut before saying what the 1.5% applies to."
+          "note": "The old anchor is cut before saying what the 1.5% applies to.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The old anchor ended at the portal clause; the new span states the 1.5% base rate on all other purchases."
+          }
         },
         {
           "op": "remove",
@@ -203,7 +284,11 @@
               "You will earn 5% cash back on hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel using this"
             ]
           },
-          "note": "Not a conflict: the 1.5% headline is the base rate and the terms add the portal rate (Capital One convention); moot once the rate is labelled."
+          "note": "Not a conflict: the 1.5% headline is the base rate and the terms add the portal rate (Capital One convention); moot once the rate is labelled.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capital One convention: a product-page every-purchase headline does not conflict with higher portal rates in the terms; removed per general 11."
+          }
         },
         {
           "op": "remove",
@@ -215,7 +300,11 @@
               "You will earn 5% cash back on Capital One Entertainment purchases."
             ]
           },
-          "note": "Not a conflict: the 1.5% headline is the base rate and the terms add the portal rate (Capital One convention); moot once the rate is labelled."
+          "note": "Not a conflict: the 1.5% headline is the base rate and the terms add the portal rate (Capital One convention); moot once the rate is labelled.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Same convention: the 1.5% headline and the 5% Entertainment rate are base and portal rates, not a conflict."
+          }
         }
       ],
       "addedRules": [],
@@ -237,7 +326,11 @@
             "sourceId": "capital-one-quicksilver-student-pricing",
             "quote": "1.5% cash back on all other purchases"
           },
-          "note": "The old anchor is cut at \"and 1.5%\" and does not say what the base rate covers."
+          "note": "The old anchor is cut at \"and 1.5%\" and does not say what the base rate covers.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The old anchor was cut before the base rate; the new span from the pricing capture states 1.5% on all other purchases."
+          }
         },
         {
           "op": "remove",
@@ -250,7 +343,11 @@
               "You will earn 5% cash back on Capital One Entertainment purchases."
             ]
           },
-          "note": "Not an ambiguity: the every-purchase 1.5% headline is the base rate and the terms add the 5% portal rates (Capital One convention)."
+          "note": "Not an ambiguity: the every-purchase 1.5% headline is the base rate and the terms add the 5% portal rates (Capital One convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capital One convention: the every-purchase headline paired with higher portal rates is not an ambiguity; both rates are already labelled."
+          }
         }
       ],
       "addedRules": [],
@@ -272,7 +369,11 @@
             "sourceId": "capital-one-quicksilver-secured-pricing",
             "quote": "1.5% cash back on all other purchases"
           },
-          "note": "The old anchor is cut before saying what the 1.5% applies to."
+          "note": "The old anchor is cut before saying what the 1.5% applies to.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The old anchor was cut before the base rate; the new span from the pricing capture states 1.5% on all other purchases."
+          }
         },
         {
           "op": "remove",
@@ -281,7 +382,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless issue states no problem (general 11, 16)."
+          "note": "Anchorless issue states no problem (general 11, 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no stated problem; removed under general 11 and 16."
+          }
         },
         {
           "op": "remove",
@@ -290,7 +395,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless issue states no problem (general 11, 16)."
+          "note": "Anchorless issue states no problem (general 11, 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no stated problem; removed under general 11 and 16."
+          }
         }
       ],
       "addedRules": [],
@@ -310,7 +419,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless issue states no problem (general 11, 16)."
+          "note": "Anchorless issue states no problem (general 11, 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no stated problem; removed under general 11 and 16."
+          }
         },
         {
           "op": "remove",
@@ -319,7 +432,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless issue states no problem (general 11, 16)."
+          "note": "Anchorless issue states no problem (general 11, 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no stated problem; removed under general 11 and 16."
+          }
         }
       ],
       "addedRules": [],
@@ -341,7 +458,11 @@
             "sourceId": "capital-one-savor-student-pricing",
             "quote": "and 1% cash back on all other purchases"
           },
-          "note": "The old anchor quotes the 8% and 5% clauses and never states the 1% base rate."
+          "note": "The old anchor quotes the 8% and 5% clauses and never states the 1% base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The old anchor quoted only the 8% and 5% clauses; the new span from the pricing capture states the 1% base rate on all other purchases."
+          }
         },
         {
           "op": "remove",
@@ -350,7 +471,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless issue states no problem (general 11, 16)."
+          "note": "Anchorless issue states no problem (general 11, 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no stated problem; removed under general 11 and 16."
+          }
         }
       ],
       "addedRules": [],
@@ -372,7 +497,11 @@
             "sourceId": "capital-one-quicksilver-terms",
             "quote": "1.5% cash back on all other purchases"
           },
-          "note": "The old anchor is cut at \"and 1.5%\" and does not say what the base rate covers."
+          "note": "The old anchor is cut at \"and 1.5%\" and does not say what the base rate covers.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The old anchor was cut before the base rate; the new span from the terms capture states 1.5% on all other purchases."
+          }
         },
         {
           "op": "set",
@@ -383,7 +512,11 @@
             "sourceId": "capital-one-quicksilver-terms",
             "quote": "hotels, vacation rentals and rental cars booked through Capital One Travel"
           },
-          "note": "The 5% covers only the booking types the terms name, not Capital One Travel as a whole (Capital One convention)."
+          "note": "The 5% covers only the booking types the terms name, not Capital One Travel as a whole (Capital One convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Capital One convention: the Travel rate covers only the booking types the terms name, and the terms capture names hotels, vacation rentals and rental cars."
+          }
         }
       ],
       "addedRules": [],
@@ -405,7 +538,11 @@
             "sourceId": "capital-one-savor-product",
             "quote": "Earn unlimited 5% cash back on hotels, vacation rentals and rental cars booked through Capital One Travel."
           },
-          "note": "The product page and terms state 5% on these Capital One Travel bookings; the draft dropped the rate."
+          "note": "The product page and terms state 5% on these Capital One Travel bookings; the draft dropped the rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states unlimited 5% on hotels, vacation rentals and rental cars booked through Capital One Travel, and the terms capture agrees; the rule had no rate."
+          }
         },
         {
           "op": "remove",
@@ -414,7 +551,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless issue states no problem (general 11, 16)."
+          "note": "Anchorless issue states no problem (general 11, 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no stated problem; removed under general 11 and 16."
+          }
         },
         {
           "op": "remove",
@@ -423,7 +564,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless issue states no problem (general 11, 16)."
+          "note": "Anchorless issue states no problem (general 11, 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no stated problem; removed under general 11 and 16."
+          }
         }
       ],
       "addedRules": [],
