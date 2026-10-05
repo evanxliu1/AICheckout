@@ -22,12 +22,12 @@ As of 2026-10-05T05:47:59Z.
 
 ## Active work
 
-- **`phase10-prep`** (coordinator and wiki subagent): wiki split (pipeline overview, [CLI commands](system/card-pipeline-commands.md), [internals](system/card-pipeline-internals.md); [release history](ops/catalog-release-history.md) out of the runbook), captures moved to the main checkout, and the [Phase 10 plan](product/phase-10-merchant-expansion.md) as a **draft awaiting Evan's approval**.
+- **Phase 10 plan** (coordinator): [draft v3](product/phase-10-merchant-expansion.md) for the top 100–500 U.S. online merchants, revised after a Fable 5.1 design review; **awaiting Evan's decisions D1–D10**.
 - Release media regenerated for `2026-10-05.renewal.1` (`npm run release:media`, all checks passed, 2026-10-05; [release media](ops/release-media.md)).
 
 ## Open questions and next steps
 
-1. **Evan: approve or change the [Phase 10 plan](product/phase-10-merchant-expansion.md)** and answer its open questions (merchant list, anonymous-cart capture, scope against Phase 6, adapter author, shared core). No Phase 10 work starts before that.
+1. **Evan: approve or change the [Phase 10 plan](product/phase-10-merchant-expansion.md)** and answer decisions D1–D10. No Phase 10 work starts before that.
 2. **Next renewal, published before 2026-11-04T00:00Z** ([renewing](ops/catalog-release.md#renewing-a-catalog-before-it-expires)): re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data.
 3. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it instead of per file; `pipeline handoff` names the freshness record for the merchant MCC folder ([renewal record](ops/catalog-release-history.md#renewal-2026-10-05renewal1-prepared-2026-10-05)).
 4. Phase order (Evan, 2026-10-03): 10 merchant expansion → Web Store release; 4 terms-change detection revisited after 9; 6 site coverage harness (may fold into 10).
