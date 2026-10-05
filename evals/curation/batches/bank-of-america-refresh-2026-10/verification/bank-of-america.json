@@ -1,0 +1,2078 @@
+{
+  "schemaVersion": 1,
+  "packetId": "094aa32e-5cbf-4270-a588-d499e2800353",
+  "batch": "bank-of-america-refresh-2026-10",
+  "issuer": "Bank of America",
+  "provenance": "agent-verified",
+  "verifier": {
+    "agent": "card-verifier",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-05",
+    "filesRead": [
+      ".claude/agents/card-verifier.md",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/pipeline/packets/verify.bank-of-america.1.json",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/bank-of-america.md",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/corpus.ts",
+      "apps/api/src/curation/v2/schema.ts",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/product-notes.json",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/verify/bank-of-america.md",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-customized-cash-rewards-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-customized-cash-rewards-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-cash-back-category-choices.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-unlimited-cash-rewards-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-unlimited-cash-rewards-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-travel-rewards-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-travel-rewards-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-customized-cash-rewards-students-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-customized-cash-rewards-students-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-travel-rewards-students-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-customized-cash-rewards-secured-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-customized-cash-rewards-secured-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-susan-g-komen-customized-cash-rewards-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-susan-g-komen-customized-cash-rewards-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-atmos-rewards-summit-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-atmos-rewards-summit-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-air-france-klm-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-air-france-klm-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-norwegian-cruise-line-world-mastercard-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-10/captures/boa-norwegian-cruise-line-world-mastercard-pricing.txt"
+    ]
+  },
+  "adjudicator": null,
+  "cards": [
+    {
+      "cardId": "boa-customized-cash-rewards",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.cap",
+          "current": null,
+          "corrected": {
+            "kind": "none",
+            "amountCents": null,
+            "period": null,
+            "rateAfterCapBps": null
+          },
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-product",
+            "quote": "Unlimited 1% cash back on all other purchases"
+          },
+          "note": "The product page calls the 1% base unlimited, so the cap is none (general 21)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-product",
+            "quote": "Automatic 2% cash back at grocery stores and wholesale clubs"
+          },
+          "note": "The product page calls the 2% grocery and wholesale-club rate automatic (BoA convention, pre-merge review)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-pricing",
+            "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+          },
+          "note": "Gas & EV Charging Stations is the default choice, so no selection is needed (general 6)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-pricing",
+            "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+          },
+          "note": "Gas & EV Charging Stations is the default choice, so no selection is needed (general 6)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.7.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.8.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.exclusions.5.anchors.0",
+          "current": "will not earn cash rewards: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain",
+          "corrected": "fraudulent transactions and certain other charges",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-pricing",
+            "quote": "fraudulent transactions and certain other charges"
+          },
+          "note": "The anchor was cut before \"other charges\" and did not state the exclusion."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "out-of-scope",
+            "anchors": [
+              "This offer is in addition to the 3% cash rewards you will earn in the Choice Category you have selected for a total of 6%",
+              "After the first year from account opening, you'll earn 3% cash back on purchases in your choice category."
+            ]
+          },
+          "note": "The first-year 6% is modelled as limited-time rules, so this out-of-scope issue is moot (general 11)."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "gas",
+            "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Gas & Electric Vehicle (EV) Charging Stations; the standing 3% choice-category rate is missing (BoA convention)."
+        },
+        {
+          "rule": {
+            "category": "ev-charging",
+            "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Gas & Electric Vehicle (EV) Charging Stations; the standing 3% choice-category rate is missing (BoA convention)."
+        },
+        {
+          "rule": {
+            "category": "online-retail",
+            "issuerWording": "Online Shopping",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "enroll-once",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "If no change is made the category will remain the same."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Online Shopping; the standing 3% choice-category rate is missing (BoA convention)."
+        },
+        {
+          "rule": {
+            "category": "dining",
+            "issuerWording": "Dining",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "enroll-once",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "If no change is made the category will remain the same."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Dining; the standing 3% choice-category rate is missing (BoA convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Travel",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "enroll-once",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "If no change is made the category will remain the same."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Travel; the standing 3% choice-category rate is missing (BoA convention)."
+        },
+        {
+          "rule": {
+            "category": "drugstores",
+            "issuerWording": "Drug Stores",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "enroll-once",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "If no change is made the category will remain the same."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Drug Stores; the standing 3% choice-category rate is missing (BoA convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Home Improvement/Furnishings",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "enroll-once",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "If no change is made the category will remain the same."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Home Improvement/Furnishings; the standing 3% choice-category rate is missing (BoA convention)."
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "on Net Purchases made at eligible merchants in the one Choice Category you have selected"
+            }
+          ],
+          "note": "Only the one selected choice category earns 3% (6% in the first year); the other option rules are alternatives (general 6)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "cardholder-chosen-category",
+            "summary": "First-year choice category at 6%: gas and EV charging (default), online shopping, dining, travel, drug stores, or home improvement and furnishings.",
+            "rate": "6% (3% plus 3% first-year bonus) on purchases posting within 365 days of account opening",
+            "cap": "$2,500 combined 2% and 3% bonus-category purchases per calendar quarter, then 1%",
+            "conditions": "One choice category; Gas & EV Charging Stations until changed; may change once per calendar month in Online or Mobile Banking.",
+            "activation": "none for the default; one selection for any other option"
+          },
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-product",
+            "quote": "Choose which category you want to earn 6% cash back in"
+          },
+          "note": "The category list was clipped and activation said required; the default needs no selection and the first-year limit is 365 days."
+        },
+        {
+          "action": "fix",
+          "hintIndex": 1,
+          "hint": {
+            "type": "cardholder-chosen-category",
+            "summary": "Choice category at 3%: gas and EV charging (default), online shopping, dining, travel, drug stores, or home improvement and furnishings.",
+            "rate": "3%",
+            "cap": "$2,500 combined 2% and 3% bonus-category purchases per calendar quarter, then 1%",
+            "conditions": "One choice category; Gas & EV Charging Stations until changed; may change once per calendar month. Online Shopping excludes in-store and phone purchases.",
+            "activation": "none for the default; one selection for any other option"
+          },
+          "anchor": {
+            "sourceId": "boa-cash-back-category-choices",
+            "quote": "Choose which category you want to earn 3% cash back from the six categories shown below."
+          },
+          "note": "Same corrections as the first-year hint; the old anchor only defined online purchases."
+        },
+        {
+          "action": "fix",
+          "hintIndex": 2,
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "BofA Rewards members can earn a bonus on credit card purchases; the captures state no tier percentages, balance thresholds or start date.",
+            "rate": "not stated in the captures",
+            "cap": "not stated",
+            "conditions": "Enrollment in BofA Rewards; eligibility is not described in the captures.",
+            "membership": "BofA Rewards"
+          },
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-product",
+            "quote": "When you join BofA Rewards™, you can earn bonus rewards on the purchases you already make using eligible Bank of America® credit cards."
+          },
+          "note": "The research tiers, thresholds and start date do not appear in any capture; the hint now says only what the product page states (BoA convention)."
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Purchases through a third-party payment account or an unsupported digital wallet earn no bonus cash rewards; buy now, pay later may not qualify."
+          },
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-pricing",
+            "quote": "processes through a third-party payment account, digital wallet not supported by Bank of America"
+          },
+          "note": "The pricing terms state this for the 2% and 3% bonus categories."
+        }
+      ]
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.exclusions.0.anchors.0",
+          "current": "will not earn cash rewards: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain",
+          "corrected": "Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain other charges",
+          "anchor": {
+            "sourceId": "boa-unlimited-cash-rewards-pricing",
+            "quote": "Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain other charges"
+          },
+          "note": "The anchor was cut before \"other charges\"; this span names every excluded transaction."
+        },
+        {
+          "op": "set",
+          "path": "reference.exclusions.0.text",
+          "current": "The following transactions are not considered purchases and will not earn cash rewards: Balance Transfers and Cash Advances (each as defined in your Credit Card…",
+          "corrected": "Balance Transfers, Cash Advances, fees, interest charges, fraudulent transactions and certain other charges",
+          "anchor": {
+            "sourceId": "boa-unlimited-cash-rewards-pricing",
+            "quote": "Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain other charges"
+          },
+          "note": "The text was the clipped lead-in sentence; it now lists the excluded transactions."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A bare missing issue with no anchor (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A bare missing issue with no anchor (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "will not earn cash rewards: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain"
+            ]
+          },
+          "note": "Its only anchor is the exclusions sentence, which states no ambiguity (BoA convention)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "BofA Rewards members can earn a bonus on credit card purchases; the captures state no tier percentages, balance thresholds or start date.",
+            "rate": "not stated in the captures",
+            "cap": "not stated",
+            "conditions": "Enrollment in BofA Rewards; eligibility is not described in the captures.",
+            "membership": "BofA Rewards"
+          },
+          "anchor": {
+            "sourceId": "boa-unlimited-cash-rewards-product",
+            "quote": "When you join BofA Rewards™, you can earn bonus rewards on the purchases you already make using eligible Bank of America® credit cards."
+          },
+          "note": "The research tiers, thresholds and start date do not appear in any capture; the hint now says only what the product page states (BoA convention)."
+        }
+      ]
+    },
+    {
+      "cardId": "boa-travel-rewards",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": 60,
+          "anchor": {
+            "sourceId": "boa-travel-rewards-pricing",
+            "quote": "Each point redeemed for cash is worth $0.006 (2,500 points = $15)."
+          },
+          "note": "The terms state a cash redemption value of $0.006 a point; the $0.01 travel-credit value stays in the ambiguous issue (BoA convention, general 3)."
+        },
+        {
+          "op": "set",
+          "path": "reference.exclusions.4.anchors.0",
+          "current": "and will not earn points: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain",
+          "corrected": "fraudulent transactions and certain other charges",
+          "anchor": {
+            "sourceId": "boa-travel-rewards-pricing",
+            "quote": "fraudulent transactions and certain other charges"
+          },
+          "note": "The anchor was cut before \"other charges\" and did not state the exclusion."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "BofA Rewards members can earn a bonus on credit card purchases; the captures state no tier percentages, balance thresholds or start date.",
+            "rate": "not stated in the captures",
+            "cap": "not stated",
+            "conditions": "Enrollment in BofA Rewards; eligibility is not described in the captures.",
+            "membership": "BofA Rewards"
+          },
+          "anchor": {
+            "sourceId": "boa-travel-rewards-product",
+            "quote": "When you join BofA Rewards™, you can earn bonus rewards on the purchases you already make using eligible Bank of America® credit cards."
+          },
+          "note": "The research tiers, thresholds and start date do not appear in any capture; the hint now says only what the product page states (BoA convention)."
+        }
+      ]
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-students",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-product",
+            "quote": "Automatic 2% cash back at grocery stores and wholesale clubs"
+          },
+          "note": "The product page calls the 2% grocery and wholesale-club rate automatic (BoA convention, pre-merge review)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+          },
+          "note": "Gas & EV Charging Stations is the default choice, so no selection is needed (general 6)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+          },
+          "note": "Gas & EV Charging Stations is the default choice, so no selection is needed (general 6)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+          },
+          "note": "Gas & EV Charging Stations is the default choice, so no selection is needed (general 6)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+          },
+          "note": "Gas & EV Charging Stations is the default choice, so no selection is needed (general 6)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.7.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.8.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.9.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.10.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.11.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.12.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.13.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.14.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.15.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.exclusions.5.anchors.0",
+          "current": "will not earn cash rewards: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain",
+          "corrected": "fraudulent transactions and certain other charges",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "fraudulent transactions and certain other charges"
+          },
+          "note": "The anchor was cut before \"other charges\" and did not state the exclusion."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A bare missing issue with no anchor (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A bare missing issue with no anchor (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "on Net Purchases made at eligible merchants in the one Choice Category you have selected"
+            }
+          ],
+          "note": "Only the one selected choice category earns 3% (6% in the first year); the other option rules are alternatives (general 6)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "cardholder-chosen-category",
+            "summary": "First-year choice category at 6%: gas and EV charging (default), online shopping, dining, travel, drug stores, or home improvement and furnishings.",
+            "rate": "6% (3% plus 3% first-year bonus) on purchases posting within 365 days of account opening",
+            "cap": "$2,500 combined 2% and 3% bonus-category purchases per calendar quarter, then 1%",
+            "conditions": "One choice category; Gas & EV Charging Stations until changed; may change once per calendar month in Online or Mobile Banking.",
+            "activation": "none for the default; one selection for any other option"
+          },
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-product",
+            "quote": "Choose which category you want to earn 6% cash back in"
+          },
+          "note": "The category list was clipped and activation said required; the default needs no selection and the first-year limit is 365 days."
+        },
+        {
+          "action": "fix",
+          "hintIndex": 1,
+          "hint": {
+            "type": "cardholder-chosen-category",
+            "summary": "Choice category at 3%: gas and EV charging (default), online shopping, dining, travel, drug stores, or home improvement and furnishings.",
+            "rate": "3%",
+            "cap": "$2,500 combined 2% and 3% bonus-category purchases per calendar quarter, then 1%",
+            "conditions": "One choice category; Gas & EV Charging Stations until changed; may change once per calendar month. Online Shopping excludes in-store and phone purchases.",
+            "activation": "none for the default; one selection for any other option"
+          },
+          "anchor": {
+            "sourceId": "boa-cash-back-category-choices",
+            "quote": "Choose which category you want to earn 3% cash back from the six categories shown below."
+          },
+          "note": "Same corrections as the first-year hint; the old anchor only defined online purchases."
+        },
+        {
+          "action": "fix",
+          "hintIndex": 2,
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "BofA Rewards members can earn a bonus on credit card purchases; the captures state no tier percentages, balance thresholds or start date.",
+            "rate": "not stated in the captures",
+            "cap": "not stated",
+            "conditions": "Enrollment in BofA Rewards; eligibility is not described in the captures.",
+            "membership": "BofA Rewards"
+          },
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-product",
+            "quote": "When you join BofA Rewards™, you can earn bonus rewards on the purchases you already make using eligible Bank of America® credit cards."
+          },
+          "note": "The research tiers, thresholds and start date do not appear in any capture; the hint now says only what the product page states (BoA convention)."
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Purchases through a third-party payment account or an unsupported digital wallet earn no bonus cash rewards; buy now, pay later may not qualify."
+          },
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-students-pricing",
+            "quote": "processes through a third-party payment account, digital wallet not supported by Bank of America"
+          },
+          "note": "The pricing terms state this for the 2% and 3% bonus categories."
+        }
+      ]
+    },
+    {
+      "cardId": "boa-travel-rewards-students",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A bare missing issue with no anchor (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A bare missing issue with no anchor (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "BofA Rewards members can earn a bonus on credit card purchases; the captures state no tier percentages, balance thresholds or start date.",
+            "rate": "not stated in the captures",
+            "cap": "not stated",
+            "conditions": "Enrollment in BofA Rewards; eligibility is not described in the captures.",
+            "membership": "BofA Rewards"
+          },
+          "anchor": {
+            "sourceId": "boa-travel-rewards-students-product",
+            "quote": "When you join BofA Rewards™, you can earn bonus rewards on the purchases you already make using eligible Bank of America® credit cards."
+          },
+          "note": "The research tiers, thresholds and start date do not appear in any capture; the hint now says only what the product page states (BoA convention)."
+        }
+      ]
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-secured",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-product",
+            "quote": "Automatic 2% cash back at grocery stores and wholesale clubs"
+          },
+          "note": "The product page calls the 2% grocery and wholesale-club rate automatic (BoA convention, pre-merge review)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+          },
+          "note": "Gas & EV Charging Stations is the default choice, so no selection is needed (general 6)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.limitedTime.endsOn",
+          "current": "1365-10-04",
+          "corrected": null,
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-product",
+            "quote": "However, this offer is eligible for the first-year 3% bonus."
+          },
+          "note": "The first-year bonus runs 365 days from account opening; the captures give no calendar end date, and 1365-10-04 is not a real date (general 10)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+          },
+          "note": "Gas & EV Charging Stations is the default choice, so no selection is needed (general 6)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+          },
+          "note": "Gas & EV Charging Stations is the default choice, so no selection is needed (general 6)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.limitedTime.endsOn",
+          "current": "1365-10-04",
+          "corrected": null,
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-product",
+            "quote": "However, this offer is eligible for the first-year 3% bonus."
+          },
+          "note": "The first-year bonus runs 365 days from account opening; the captures give no calendar end date, and 1365-10-04 is not a real date (general 10)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+          },
+          "note": "Gas & EV Charging Stations is the default choice, so no selection is needed (general 6)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.limitedTime.endsOn",
+          "current": "1365-10-04",
+          "corrected": null,
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-product",
+            "quote": "However, this offer is eligible for the first-year 3% bonus."
+          },
+          "note": "The first-year bonus runs 365 days from account opening; the captures give no calendar end date, and 1365-10-04 is not a real date (general 10)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.7.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.8.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.8.limitedTime.endsOn",
+          "current": "1365-10-04",
+          "corrected": null,
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-product",
+            "quote": "However, this offer is eligible for the first-year 3% bonus."
+          },
+          "note": "The first-year bonus runs 365 days from account opening; the captures give no calendar end date, and 1365-10-04 is not a real date (general 10)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.9.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.10.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.10.limitedTime.endsOn",
+          "current": "1365-10-04",
+          "corrected": null,
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-product",
+            "quote": "However, this offer is eligible for the first-year 3% bonus."
+          },
+          "note": "The first-year bonus runs 365 days from account opening; the captures give no calendar end date, and 1365-10-04 is not a real date (general 10)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.11.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.12.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.12.limitedTime.endsOn",
+          "current": "1365-10-04",
+          "corrected": null,
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-product",
+            "quote": "However, this offer is eligible for the first-year 3% bonus."
+          },
+          "note": "The first-year bonus runs 365 days from account opening; the captures give no calendar end date, and 1365-10-04 is not a real date (general 10)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.13.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.14.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.14.limitedTime.endsOn",
+          "current": "1365-10-04",
+          "corrected": null,
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-product",
+            "quote": "However, this offer is eligible for the first-year 3% bonus."
+          },
+          "note": "The first-year bonus runs 365 days from account opening; the captures give no calendar end date, and 1365-10-04 is not a real date (general 10)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.15.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.exclusions.4.anchors.0",
+          "current": "will not earn cash rewards: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain",
+          "corrected": "fraudulent transactions and certain other charges",
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "fraudulent transactions and certain other charges"
+          },
+          "note": "The anchor was cut before \"other charges\" and did not state the exclusion."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "on Net Purchases made at eligible merchants in the one Choice Category you have selected"
+            }
+          ],
+          "note": "Only the one selected choice category earns 3% (6% in the first year); the other option rules are alternatives (general 6)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "cardholder-chosen-category",
+            "summary": "First-year choice category at 6%: gas and EV charging (default), online shopping, dining, travel, drug stores, or home improvement and furnishings.",
+            "rate": "6% (3% plus 3% first-year bonus) on purchases posting within 365 days of account opening",
+            "cap": "$2,500 combined 2% and 3% bonus-category purchases per calendar quarter, then 1%",
+            "conditions": "One choice category; Gas & EV Charging Stations until changed; may change once per calendar month in Online or Mobile Banking.",
+            "activation": "none for the default; one selection for any other option"
+          },
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-product",
+            "quote": "Choose which category you want to earn 6% cash back in"
+          },
+          "note": "The category list was clipped and activation said required; the default needs no selection and the first-year limit is 365 days."
+        },
+        {
+          "action": "fix",
+          "hintIndex": 1,
+          "hint": {
+            "type": "cardholder-chosen-category",
+            "summary": "Choice category at 3%: gas and EV charging (default), online shopping, dining, travel, drug stores, or home improvement and furnishings.",
+            "rate": "3%",
+            "cap": "$2,500 combined 2% and 3% bonus-category purchases per calendar quarter, then 1%",
+            "conditions": "One choice category; Gas & EV Charging Stations until changed; may change once per calendar month. Online Shopping excludes in-store and phone purchases.",
+            "activation": "none for the default; one selection for any other option"
+          },
+          "anchor": {
+            "sourceId": "boa-cash-back-category-choices",
+            "quote": "Choose which category you want to earn 3% cash back from the six categories shown below."
+          },
+          "note": "Same corrections as the first-year hint; the old anchor only defined online purchases."
+        },
+        {
+          "action": "fix",
+          "hintIndex": 2,
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "BofA Rewards members can earn a bonus on credit card purchases; the captures state no tier percentages, balance thresholds or start date.",
+            "rate": "not stated in the captures",
+            "cap": "not stated",
+            "conditions": "Enrollment in BofA Rewards; eligibility is not described in the captures.",
+            "membership": "BofA Rewards"
+          },
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-product",
+            "quote": "When you join BofA Rewards™, you can earn bonus rewards on the purchases you already make using eligible Bank of America® credit cards."
+          },
+          "note": "The research tiers, thresholds and start date do not appear in any capture; the hint now says only what the product page states (BoA convention)."
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Purchases through a third-party payment account or an unsupported digital wallet earn no bonus cash rewards; buy now, pay later may not qualify."
+          },
+          "anchor": {
+            "sourceId": "boa-customized-cash-rewards-secured-pricing",
+            "quote": "processes through a third-party payment account, digital wallet not supported by Bank of America"
+          },
+          "note": "The pricing terms state this for the 2% and 3% bonus categories."
+        }
+      ]
+    },
+    {
+      "cardId": "boa-susan-g-komen-customized-cash-rewards",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-susan-g-komen-customized-cash-rewards-product",
+            "quote": "Automatic 2% cash back at grocery stores and wholesale clubs"
+          },
+          "note": "The product page calls the 2% grocery and wholesale-club rate automatic (BoA convention, pre-merge review)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+            "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+          },
+          "note": "Gas & EV Charging Stations is the default choice, so no selection is needed (general 6)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+            "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+          },
+          "note": "Gas & EV Charging Stations is the default choice, so no selection is needed (general 6)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.7.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.8.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+            "quote": "If no change is made the category will remain the same."
+          },
+          "note": "This option must be selected once and stays until changed (general 6, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.exclusions.0.anchors.0",
+          "current": "will not earn cash rewards: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain",
+          "corrected": "Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain other charges",
+          "anchor": {
+            "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+            "quote": "Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain other charges"
+          },
+          "note": "The anchor was cut before \"other charges\"; this span names every excluded transaction."
+        },
+        {
+          "op": "set",
+          "path": "reference.exclusions.0.text",
+          "current": "The following transactions are not considered purchases and will not earn cash rewards: Balance Transfers and Cash Advances (each as defined in your Credit Card…",
+          "corrected": "Balance Transfers, Cash Advances, fees, interest charges, fraudulent transactions and certain other charges",
+          "anchor": {
+            "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+            "quote": "Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain other charges"
+          },
+          "note": "The text was the clipped lead-in sentence; it now lists the excluded transactions."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Visit BofA Rewards to learn more about eligibility and enrollment."
+            ]
+          },
+          "note": "Its only anchor is a \"Visit BofA Rewards\" pointer (BoA convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "you have selected that are made with the card each billing cycle and post to your account within 365 days of the account open date."
+            ]
+          },
+          "note": "The first-year period is modelled by the limited-time 6% rules, so this issue is moot (general 11)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A bare missing issue with no anchor (general 16)."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "gas",
+            "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Gas & Electric Vehicle (EV) Charging Stations; the standing 3% choice-category rate is missing (BoA convention)."
+        },
+        {
+          "rule": {
+            "category": "ev-charging",
+            "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Gas & Electric Vehicle (EV) Charging Stations; the standing 3% choice-category rate is missing (BoA convention)."
+        },
+        {
+          "rule": {
+            "category": "online-retail",
+            "issuerWording": "Online Shopping",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "enroll-once",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "If no change is made the category will remain the same."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Online Shopping; the standing 3% choice-category rate is missing (BoA convention)."
+        },
+        {
+          "rule": {
+            "category": "dining",
+            "issuerWording": "Dining",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "enroll-once",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "If no change is made the category will remain the same."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Dining; the standing 3% choice-category rate is missing (BoA convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Travel",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "enroll-once",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "If no change is made the category will remain the same."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Travel; the standing 3% choice-category rate is missing (BoA convention)."
+        },
+        {
+          "rule": {
+            "category": "drugstores",
+            "issuerWording": "Drug Stores",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "enroll-once",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "If no change is made the category will remain the same."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Drug Stores; the standing 3% choice-category rate is missing (BoA convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Home Improvement/Furnishings",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 250000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "enroll-once",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "3% Bonus Category: Earn a total of 3% cash back (equal to $0.03 for every $1, consisting of 2% bonus cash rewards and 1% base"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "earn bonus cash rewards on the first $2,500 of combined Net Purchases posted to the account each calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "additional Net Purchases will earn the 1% base cash rewards until the first day of the next calendar quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "If no change is made the category will remain the same."
+            }
+          ],
+          "note": "The draft has only the first-year 6% rule for Home Improvement/Furnishings; the standing 3% choice-category rate is missing (BoA convention)."
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "on Net Purchases made at eligible merchants in the one Choice Category you have selected"
+            }
+          ],
+          "note": "Only the one selected choice category earns 3% (6% in the first year); the other option rules are alternatives (general 6)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "cardholder-chosen-category",
+            "summary": "First-year choice category at 6%: gas and EV charging (default), online shopping, dining, travel, drug stores, or home improvement and furnishings.",
+            "rate": "6% (3% plus 3% first-year bonus) on purchases posting within 365 days of account opening",
+            "cap": "$2,500 combined 2% and 3% bonus-category purchases per calendar quarter, then 1%",
+            "conditions": "One choice category; Gas & EV Charging Stations until changed; may change once per calendar month in Online or Mobile Banking.",
+            "activation": "none for the default; one selection for any other option"
+          },
+          "anchor": {
+            "sourceId": "boa-susan-g-komen-customized-cash-rewards-product",
+            "quote": "Choose which category you want to earn 6% cash back in"
+          },
+          "note": "The category list was clipped and activation said required; the default needs no selection and the first-year limit is 365 days."
+        },
+        {
+          "action": "fix",
+          "hintIndex": 1,
+          "hint": {
+            "type": "cardholder-chosen-category",
+            "summary": "Choice category at 3%: gas and EV charging (default), online shopping, dining, travel, drug stores, or home improvement and furnishings.",
+            "rate": "3%",
+            "cap": "$2,500 combined 2% and 3% bonus-category purchases per calendar quarter, then 1%",
+            "conditions": "One choice category; Gas & EV Charging Stations until changed; may change once per calendar month. Online Shopping excludes in-store and phone purchases.",
+            "activation": "none for the default; one selection for any other option"
+          },
+          "anchor": {
+            "sourceId": "boa-cash-back-category-choices",
+            "quote": "Choose which category you want to earn 3% cash back from the six categories shown below."
+          },
+          "note": "Same corrections as the first-year hint; the old anchor only defined online purchases."
+        },
+        {
+          "action": "fix",
+          "hintIndex": 2,
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "BofA Rewards members can earn a bonus on credit card purchases; the captures state no tier percentages, balance thresholds or start date.",
+            "rate": "not stated in the captures",
+            "cap": "not stated",
+            "conditions": "Enrollment in BofA Rewards; eligibility is not described in the captures.",
+            "membership": "BofA Rewards"
+          },
+          "anchor": {
+            "sourceId": "boa-susan-g-komen-customized-cash-rewards-product",
+            "quote": "with the BofA Rewards™ program—starting with a rewards bonus on every credit card purchase."
+          },
+          "note": "The research tiers, thresholds and start date do not appear in any capture; the hint now says only what the product page states (BoA convention)."
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Purchases through a third-party payment account or an unsupported digital wallet earn no bonus cash rewards; buy now, pay later may not qualify."
+          },
+          "anchor": {
+            "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+            "quote": "processes through a third-party payment account, digital wallet not supported by Bank of America"
+          },
+          "note": "The pricing terms state this for the 2% and 3% bonus categories."
+        }
+      ]
+    },
+    {
+      "cardId": "boa-atmos-rewards-summit",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.3.issuerWording",
+          "current": "Earn 3 points for every $1 spent on eligible foreign transaction Net Purchases.",
+          "corrected": "Earn 3 points for every $1 spent on eligible foreign transaction Net Purchases",
+          "anchor": {
+            "sourceId": "boa-atmos-rewards-summit-pricing",
+            "quote": "Earn 3 points for every $1 spent on eligible foreign transaction Net Purchases"
+          },
+          "note": "The draft wording ended in a period the capture does not have; this is the verbatim span."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A bare missing issue with no anchor (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A bare missing issue with no anchor (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Your card will be automatically enrolled in Atmos™ Rewards Dining, a dining rewards program operated by Rewards Network Establishment Services Inc.",
+              "earn 1 point for every $2 spent at participating restaurants."
+            ]
+          },
+          "note": "Atmos Rewards Dining is now an added rule, so this issue is moot (general 11)."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Atmos™ Rewards Dining",
+            "rateBps": 350,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-atmos-rewards-summit-pricing",
+              "quote": "Your card will be automatically enrolled in Atmos™ Rewards Dining"
+            },
+            {
+              "sourceId": "boa-atmos-rewards-summit-pricing",
+              "quote": "earn 1 point for every $2 spent at participating restaurants."
+            },
+            {
+              "sourceId": "boa-atmos-rewards-summit-pricing",
+              "quote": "Earn 3 points for every $1 spent on eligible Dining Net Purchases."
+            }
+          ],
+          "note": "Bonus Points of 0.5 per $1 at participating Rewards Network restaurants stack on the 3x dining rate: 350, activation none (BoA convention)."
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "boa-atmos-rewards-summit-product",
+            "quote": "Plus, earn a 10% rewards bonus on all points earned from card purchases if you have an eligible Bank of America® account."
+          },
+          "note": "The terms define the Qualifying Account as consumer checking, savings or CD, or a Merrill investment account."
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Atmos Rewards Dining: 1 bonus point per $2 at participating Rewards Network restaurants, on top of the card earn.",
+            "rate": "0.5 points per $1 bonus",
+            "merchants": [
+              "Rewards Network participating restaurants"
+            ],
+            "membership": "automatic enrollment",
+            "conditions": "Participating restaurants are not listed in the captures."
+          },
+          "anchor": {
+            "sourceId": "boa-atmos-rewards-summit-pricing",
+            "quote": "Your card will be automatically enrolled in Atmos™ Rewards Dining"
+          },
+          "note": "Names the merchant program behind the added rule."
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Alaska Airlines and Hawaiian Airlines purchases booked directly earn 3 points per $1; purchases through third-party merchants do not.",
+            "rate": "3 points per $1",
+            "merchants": [
+              "Alaska Airlines",
+              "Hawaiian Airlines"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "boa-atmos-rewards-summit-pricing",
+            "quote": "purchases made through a third-party merchant (e.g., travel agency, online merchant) will not earn 3 points per dollar."
+          },
+          "note": "The airline rule is a co-brand merchant rule with a direct-booking condition."
+        }
+      ]
+    },
+    {
+      "cardId": "boa-air-france-klm",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.activation",
+          "current": "enroll-once",
+          "corrected": null,
+          "anchor": {
+            "sourceId": "boa-air-france-klm-pricing",
+            "quote": "Only Air France KLM Flying Blue program members are eligible to earn and redeem miles and XP."
+          },
+          "note": "Applying enrolls the cardholder in Flying Blue; holding the loyalty account is not a rewards enrollment, so activation is null (general 7, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.activation",
+          "current": "enroll-once",
+          "corrected": null,
+          "anchor": {
+            "sourceId": "boa-air-france-klm-pricing",
+            "quote": "Only Air France KLM Flying Blue program members are eligible to earn and redeem miles and XP."
+          },
+          "note": "Applying enrolls the cardholder in Flying Blue; holding the loyalty account is not a rewards enrollment, so activation is null (general 7, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.activation",
+          "current": "enroll-once",
+          "corrected": null,
+          "anchor": {
+            "sourceId": "boa-air-france-klm-pricing",
+            "quote": "Only Air France KLM Flying Blue program members are eligible to earn and redeem miles and XP."
+          },
+          "note": "Applying enrolls the cardholder in Flying Blue; holding the loyalty account is not a rewards enrollment, so activation is null (general 7, BoA convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.exclusions.5.anchors.0",
+          "current": "and will not earn miles: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain",
+          "corrected": "fraudulent transactions and certain other charges",
+          "anchor": {
+            "sourceId": "boa-air-france-klm-pricing",
+            "quote": "fraudulent transactions and certain other charges"
+          },
+          "note": "The anchor was cut before \"other charges\" and did not state the exclusion."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A bare missing issue with no anchor (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "A bare missing issue with no anchor (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "boa-air-france-klm-product",
+            "quote": "Earn 3 Miles for every $1 spent on eligible Air France, KLM Royal Dutch Airlines and SkyTeam member airline purchases."
+          },
+          "note": "True per the product page and terms; buying Flying Blue miles does not earn 3 miles."
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Purchases through a third-party payment account or an unsupported digital wallet earn 1.5 miles, not the 3-mile airline or dining rate."
+          },
+          "anchor": {
+            "sourceId": "boa-air-france-klm-pricing",
+            "quote": "will not qualify for the member airlines or Dining category earn rate of 3 miles for every $1 spent."
+          },
+          "note": "The terms pay the base rate on such purchases."
+        }
+      ]
+    },
+    {
+      "cardId": "boa-norwegian-cruise-line-world-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.exclusions.5.anchors.0",
+          "current": "and will not earn points: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain",
+          "corrected": "fraudulent transactions and certain other charges",
+          "anchor": {
+            "sourceId": "boa-norwegian-cruise-line-world-mastercard-pricing",
+            "quote": "fraudulent transactions and certain other charges"
+          },
+          "note": "The anchor was cut before \"other charges\" and did not state the exclusion."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Redeem points for travel, cash rewards, gift cards, Norwegian onboard credits, upgrades, cruises and cruise discounts."
+            ]
+          },
+          "note": "Its only anchor is a redemption list, which states no missing earning value (general 11)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "3 Points: Earn 3 points (consisting of 2 bonus points and 1 base point) for every $1 spent on eligible Net Purchases charged through Norwegian"
+            ]
+          },
+          "note": "Its only anchor is the 3-point earn line, which is already a rule (BoA convention)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "boa-norwegian-cruise-line-world-mastercard-pricing",
+            "quote": "Earn 3 points (consisting of 2 bonus points and 1 base point) for every $1 spent on eligible Net Purchases charged through Norwegian Cruise Line."
+          },
+          "note": "The statement line must show Norwegian Cruise Line or a ship name to qualify."
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "Purchases through a third-party payment account or an unsupported digital wallet earn no bonus points."
+          },
+          "anchor": {
+            "sourceId": "boa-norwegian-cruise-line-world-mastercard-pricing",
+            "quote": "processes through a third-party payment account, digital wallet not supported by Bank of America"
+          },
+          "note": "The terms say such purchases will not qualify for bonus rewards."
+        }
+      ]
+    }
+  ]
+}
