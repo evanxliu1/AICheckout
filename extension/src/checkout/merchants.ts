@@ -27,7 +27,7 @@ export function merchantForTab(rawUrl: string | undefined): string | null {
     if (url.protocol !== 'https:' && url.protocol !== 'http:') return null;
     return (
       MERCHANT_IDS.find((id) =>
-        SITE_ADAPTERS[id].match.hosts.some((host) => site(host) === site(url.hostname)),
+        SITE_ADAPTERS[id].match.hosts.some((host) => site(host) === site(url.hostname.replace(/\.$/, ''))),
       ) ?? GENERIC_MERCHANT_ID
     );
   } catch {

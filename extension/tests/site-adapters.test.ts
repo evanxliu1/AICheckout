@@ -57,7 +57,10 @@ describe('bundled site adapters', () => {
     expect(merchantForTab('https://secure.newegg.com/shop/cart')).toBe('newegg-us');
     expect(merchantForTab('https://www.bestbuy.com/site/tv')).toBe('best-buy-us');
     expect(merchantForTab('https://www.amazon.com/dp/B0')).toBe('amazon-us');
+    expect(merchantForTab('https://www.bestbuy.com./site/tv')).toBe('best-buy-us');
     expect(merchantForTab('https://www.amazon.co.uk/dp/B0')).toBe('generic-us-online');
+    expect(merchantForTab('http://192.168.0.1/')).toBe('generic-us-online');
+    expect(merchantForTab('http://[::1]:8080/')).toBe('generic-us-online');
     expect(merchantForTab('http://shop.example.com/checkout')).toBe('generic-us-online');
     expect(merchantForTab('https://notamazon.com/')).toBe('generic-us-online');
     for (const url of [

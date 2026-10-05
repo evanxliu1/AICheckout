@@ -107,6 +107,41 @@ describe('popup store from the open tab', () => {
     expect(merchantValue()).toBe('generic-us-online');
     expect((screen.getByLabelText('Purchase amount (USD)') as HTMLInputElement).value).toBe('100.00');
   });
+  it('does not show a saved result from another store as current', async () => {
+    render(<Popup />);
+    await fillPurchase();
+    expect(await screen.findByText('Saved estimate for a $100.00 Best Buy US purchase.')).toBeTruthy();
+    cleanup();
+    openOn('https://shop.example.com/checkout');
+    render(<Popup />);
+    await screen.findByLabelText('Purchase amount (USD)');
+    await vi.waitFor(() => expect(merchantValue()).toBe('generic-us-online'));
+    expect((screen.getByLabelText('Purchase amount (USD)') as HTMLInputElement).value).toBe('');
+    expect(screen.queryByText(/Saved estimate for a \$100.00 Best Buy US purchase/)).toBeNull();
+    expect(screen.queryByText('$1.50')).toBeNull();
+  });
+  it('keeps the tab’s store when saved inputs are reloaded', async () => {
+    const send = vi.mocked(chrome.runtime.sendMessage);
+    const original = send.getMockImplementation()!;
+    let failed = false;
+    send.mockImplementation(((request: { type: string }) => {
+      if (!failed && request.type === 'checkout:get-state') {
+        failed = true;
+        return Promise.reject(new Error('disconnected'));
+      }
+      return (original as (r: unknown) => unknown)(request);
+    }) as never);
+    openOn('https://shop.example.com/checkout');
+    render(<Popup />);
+    fireEvent.click(await screen.findByRole('button', { name: 'Reload saved inputs' }));
+    await screen.findByLabelText('Purchase amount (USD)');
+    expect(merchantValue()).toBe('generic-us-online');
+    // The comparison runs at the generic store.
+    await fillPurchase();
+    expect(
+      await screen.findByText('Saved estimate for a $100.00 Another U.S. online store purchase.'),
+    ).toBeTruthy();
+  });
   it('keeps the saved store on a non-web page', async () => {
     openOn('chrome://extensions/');
     render(<Popup />);

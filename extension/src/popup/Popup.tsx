@@ -106,9 +106,11 @@ export default function Popup({
     }
   }, [dirty, editing, view?.comparison]);
 
-  /** `tabMerchant`: the store of the tab the popup opened on; it replaces the saved store unless a
-   * read cart is waiting to be compared. */
-  const restore = useCallback((next: View, tabMerchant: string | null = null) => {
+  // The store of the tab the popup opened on, then the shopper's own pick from the select. Every
+  // restore keeps it: it replaces the saved store unless a read cart is waiting to be compared.
+  const store = useRef<string | null>(null);
+  const restore = useCallback((next: View) => {
+    const tabMerchant = store.current;
     setView(next);
     const cart = next.state.cart;
     const hasPendingCart = !!cart && !next.state.comparison;
@@ -135,7 +137,8 @@ export default function Popup({
     // Venmo is offered only with catalog v3 terms.
     const path = next.state.purchase?.paymentPath ?? 'card';
     setPaymentPath(path === 'venmo' && next.catalog.schemaVersion !== 3 ? 'card' : path);
-    setDirty(false);
+    // A saved result for another store is not shown as current (as when the select changes).
+    setDirty(changed);
     setEditing(next.state.wallet.cards.length === 0);
   }, []);
 
@@ -153,9 +156,13 @@ export default function Popup({
 
   useEffect(() => {
     let cancelled = false;
-    void Promise.all([checkoutRequest({ type: 'checkout:get-state' }), activeTabMerchant()])
-      .then(([next, tabMerchant]) => {
-        if (!cancelled) restore(next, tabMerchant);
+    // Kept even when loading fails, so "Reload saved inputs" restores the tab's store too.
+    const tab = activeTabMerchant().then((id) => {
+      store.current = id;
+    });
+    void Promise.all([checkoutRequest({ type: 'checkout:get-state' }), tab])
+      .then(([next]) => {
+        if (!cancelled) restore(next);
       })
       .catch((err) => {
         if (!cancelled)
@@ -252,7 +259,10 @@ export default function Popup({
       setView(next);
       setCartId(next.state.cart?.id ?? null);
       setAmount(next.state.cart ? (next.state.cart.amountCents / 100).toFixed(2) : '');
-      if (next.state.cart) setMerchantId(next.state.cart.merchantId);
+      if (next.state.cart) {
+        setMerchantId(next.state.cart.merchantId);
+        store.current = next.state.cart.merchantId;
+      }
       setOnlineRetail('unknown');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'The cart could not be read. Enter the amount manually.');
@@ -463,6 +473,7 @@ export default function Popup({
                           disabled={busy}
                           onChange={(e) => {
                             setMerchantId(e.target.value);
+                            store.current = e.target.value;
                             setAmount('');
                             setCartId(null);
                             setOnlineRetail(storeOnlineRetail(e.target.value));
