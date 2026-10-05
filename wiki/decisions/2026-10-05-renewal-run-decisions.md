@@ -23,7 +23,7 @@ The renewal re-verified 107 cards whose pages changed. Agents raised four questi
 | Question | Options | Chosen |
 | --- | --- | --- |
 | Barclays JetBlue and Carnival terms now say the cardmember "must accept the Program Terms & Conditions" to earn | `enroll-once` (general 7, rewards-specific step) or `none` (part of holding the loyalty account the issuer opens automatically) | `none`, recorded as a dated batch convention; the anchored auto-enrollment issue keeps the uncertainty |
-| Atmos Summit's 10% relationship boost (O9) needs gated copies at a derived rate (×1.1) | Teach the lint derived rates; let the author ack its own rate; record the boost as a note | Note only: no catalog rate that no capture states. A small regression against release 2 for shoppers who answered the BofA account gate |
+| Atmos Summit's 10% relationship boost (O9) needs gated copies at a derived rate (×1.1) | Teach the lint derived rates; let the author ack its own rate; record the boost as a note | Note only (a product note in the batch's corpus, not shown by the extension): no catalog rate that no capture states. A small regression against release 2 for shoppers who answered the BofA account gate |
 | Freedom Flex Jan–Mar 2027 quarter: the capture gives "JAN-MAR 2027", not an end date, and the overlay author may not ack its own end date | Add a convention; omit the quarter | Omit: the renewal expires 2026-11-04, before the quarter starts; the next renewals add it |
 | Refreshed Amex Blue Cash and Capital One Savor terms carry wallet and Walmart/Target wording release 1 did not model | Keep release-1 behaviour; apply O4/O10 as on every other card | Apply the conventions; the build report lists every real-card difference from release 1 for Evan's publish review |
 

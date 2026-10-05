@@ -63,7 +63,8 @@ Per issuer, rule-field agreement is 96.8–100%, except Wells Fargo's two Autogr
 - Blue Cash Everyday and Blue Cash Preferred no longer earn bonus rates when paid through PayPal, Venmo or a digital wallet. Their refreshed terms carry the Amex wallet sentence, handled under convention O10. Golden ladder W13 now shows 1% for Blue Cash Everyday on the PayPal and Venmo paths.
 - Savor excludes Walmart and Target from its grocery rate and wallets from its bonus rates.
 - Freedom Unlimited excludes wallets on dining and drugstores.
-- Atmos Summit's 10% relationship boost is now a note instead of a gated rate. The boosted rate is stated nowhere, so the lint cannot evidence it.
+- Atmos Summit's 10% relationship boost is no longer in the catalog. It stays only as a product note in the batch's corpus, which the extension does not show. The boosted rate is stated nowhere, so the lint cannot evidence it.
+- Two dropped rule IDs have equivalent replacements: `macys-amex-macys-silver` becomes the untiered `macys-amex-macys` at the same 2%, and `amazon-secured-amazon-member-2` is covered by `amazon-secured-amazon-member` on the same brand and rate.
 - Freedom Flex's Jan–Mar 2027 quarter is omitted. The capture does not state its end date, and this release expires before that quarter starts.
 - Usage that a shopper recorded on any of the 224 changed rule IDs (20 of them release-1 real-card rules) is dropped on update, with the extension's migration notice. This is by design.
 
@@ -74,7 +75,7 @@ Per issuer, rule-field agreement is 96.8–100%, except Wells Fargo's two Autogr
 3. **Fixed in PR #48:** the Phase 7 quote-limit omission list made the build throw for re-labelled cards.
 4. **Handoff names the wrong folder for freshness-dated merchant sources:** it gives the freshness record instead of `real/merchant-captures`.
 5. **The draft script produced an impossible end date** (`1365-10-04`) on Bank of America Secured. The verifier caught it.
-6. **The quote check resolves a source ID to a single capture.** With every capture folder loaded, it reports seven frozen anchors as not verbatim, because a refresh batch captured those sources again under the same IDs. The frozen files are clean against their own folders.
+6. **The quote check resolves a source ID to a single capture.** If the expansion folder is passed after a batch folder (the last folder with a source ID wins), it reports seven frozen anchors as not verbatim, because a refresh batch captured those sources again under the same IDs; with the batch folders first it is clean. The frozen files are clean against their own folders.
 7. **The quote check over the built catalog found two over-long exclusion runs** on the Wells Fargo Choice cards from the Phase 8 batch, which was never shipped and so never checked. Fixed with per-batch `exclusionOmissions` (PR #49): one non-purchase exclusion on each card.
 8. **One overlay agent wrote working files to a shared scratchpad.** It overwrote one file there, and no repository file was affected.
 

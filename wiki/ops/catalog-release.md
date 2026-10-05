@@ -125,7 +125,7 @@ Built from the 2026-10-05 freshness check and ten refresh batches ([results](../
 node scripts/check-expansion-quotes.mjs --captures <each folder below>
 ```
 
-With every folder loaded, the check also reports seven anchors in the frozen `evals/curation/expansion/` files as not verbatim: a source captured again by a refresh batch keeps its ID, and the checker resolves an ID to one capture. Those files are clean against their own folders (run the check with only the expansion and real folders); fixing the checker to resolve per file is a Phase 9 follow-up.
+Pass the batch folders first, as listed below; the check is then clean. If the expansion folder comes after a batch folder, the check reports seven anchors in the frozen `evals/curation/expansion/` files as not verbatim: a source captured again by a refresh batch keeps its ID, and the checker resolves an ID to the last folder that has it. Those files are clean against their own folders (run the check with only the expansion and real folders); fixing the checker to resolve per file is a Phase 9 follow-up.
 
 Capture folders Evan selects (14; three checkouts):
 
