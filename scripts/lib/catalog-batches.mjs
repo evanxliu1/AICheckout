@@ -333,6 +333,10 @@ export function mergeLayers({
         else if (stableJson(earlier.def) !== stableJson(def))
           problems.push(`layer ${layer.id}: ${kind} ${id} redefines the one in ${earlier.layer}`);
       }
+  for (const layer of layers)
+    for (const cardId of Object.keys(layer.exclusionOmissions ?? {}))
+      if (!corpusCases(layer.corpus).has(cardId))
+        problems.push(`layer ${layer.id}: exclusionOmissions names ${cardId}, which is not in its corpus`);
   if (problems.length) throw new Error(`The catalog batches fail:\n- ${problems.join('\n- ')}`);
 
   // The winning cards, in first-appearance order.

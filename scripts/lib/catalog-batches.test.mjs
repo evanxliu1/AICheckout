@@ -425,3 +425,14 @@ test('a batch layer may omit exclusions of its own cards from the catalog (quote
   refreshed.exclusionOmissions = { 'wells-fargo-autograph': ['No such exclusion'] };
   assert.throws(() => buildRelease({ ...mergeLayers(stack(refreshed)), ledger }), /no exclusion starts with/);
 });
+
+test('exclusionOmissions naming a card the batch does not supply fails the build', () => {
+  const autograph = caseOf('wells-fargo-autograph');
+  const refreshed = batch({
+    cases: [autograph],
+    entries: [entryOf('wells-fargo-autograph')],
+    sources: sourcesOf(autograph).map((source) => ({ ...source, capturedOn: '2026-10-05' })),
+  });
+  refreshed.exclusionOmissions = { 'wells-fargo-autograph-journey': ['Overdraft protection advances'] };
+  assert.throws(() => mergeLayers(stack(refreshed)), /not in its corpus/);
+});
