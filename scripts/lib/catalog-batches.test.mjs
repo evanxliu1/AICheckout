@@ -382,3 +382,25 @@ test('the committed config lists its version as published, and the committed bui
   assert.equal(ledger.catalogs.at(-1).catalogSha256, catalogSha256(CATALOG_V3));
   assert.equal(catalogSha256(CATALOG_V3), '147b48c1a18fa2296d06461b0ae0e647d8c0a8e66f9639ab1cfc10613533eb26');
 });
+
+test('quote-limit omissions apply only to cards still on the frozen base layer', () => {
+  // Wells Fargo Autograph is on the omission list; a refreshed case without that exclusion must still build.
+  const autograph = caseOf('wells-fargo-autograph');
+  autograph.reference.exclusions = autograph.reference.exclusions.filter(
+    (exclusion) => !exclusion.text.startsWith('Overdraft protection advances'),
+  );
+  const refreshed = batch({
+    cases: [autograph],
+    entries: [entryOf('wells-fargo-autograph')],
+    sources: sourcesOf(autograph).map((source) => ({ ...source, capturedOn: '2026-10-05' })),
+  });
+  const inputs = mergeLayers(stack(refreshed));
+  assert.equal(inputs.fromBase.includes('wells-fargo-autograph'), false);
+  assert.equal(inputs.fromBase.includes('wells-fargo-autograph-journey'), true);
+  const { catalog } = buildRelease({ ...inputs, ledger });
+  const journey = catalog.cards.find((card) => card.id === 'wells-fargo-autograph-journey');
+  assert.equal(
+    journey.exclusions.some((text) => text.startsWith('Overdraft protection advances')),
+    false,
+  );
+});
