@@ -1,8 +1,345 @@
 {
   "schemaVersion": 1,
   "batch": "synchrony-refresh-2026-10",
-  "updatedAt": "2026-10-05T01:06:55.708Z",
-  "cards": {},
+  "updatedAt": "2026-10-05T01:13:27.834Z",
+  "cards": {
+    "synchrony-amazon-store-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:7552ba7713082ba58902d4e6c2f173d66496cbf3c8c90652a1b975c4ba21dfdb",
+          "outputs": [
+            {
+              "ref": "manifest:amazon-store-card-product",
+              "sha256": "3ace3779e4f150abe988708406b25e1731459a060c7d7af1edb2511fccb122de"
+            },
+            {
+              "ref": "source-input:amazon-store-card-product",
+              "sha256": "7932a6c782319f7a83a19ee7583dcd46dba39a7a442a15ba7d322f4dca6b4727"
+            },
+            {
+              "ref": "manifest:synchrony-amazon-store-card-pricing",
+              "sha256": "5ddbf4c8428a495102ba1eaafc4af49aa0d33a8a9cb9b43597d931f17fac53b5"
+            },
+            {
+              "ref": "source-input:synchrony-amazon-store-card-pricing",
+              "sha256": "9f3b3857ac1400b5d53d069b1c4769b93a8395a394dc061150dfa615ed710112"
+            },
+            {
+              "ref": "manifest:synchrony-amazon-store-card-categories",
+              "sha256": "da5b53ad771af1a9f7ba2c2ed537c217a3728695d84de4cc1e6563795c096964"
+            },
+            {
+              "ref": "source-input:synchrony-amazon-store-card-categories",
+              "sha256": "edda473b9707167d06c62b62c470a9ce6516296d364ccec5fb9a0a09c3118d74"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:13:27.832Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-amazon-secured-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:02ef1fb061f5ca02b66c60b58e06b13e7a9358a78d093b269873fa2e395bf308",
+          "outputs": [
+            {
+              "ref": "manifest:amazon-store-card-product",
+              "sha256": "3ace3779e4f150abe988708406b25e1731459a060c7d7af1edb2511fccb122de"
+            },
+            {
+              "ref": "source-input:amazon-store-card-product",
+              "sha256": "7932a6c782319f7a83a19ee7583dcd46dba39a7a442a15ba7d322f4dca6b4727"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:13:27.833Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-paypal-cashback-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:cead00112b26b10ab6b856e14c91c3e3b2ff5665bfdee4378b7fc836ededc518",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-paypal-cashback-mastercard-product",
+              "sha256": "cc65e7f71da39af12fce3902fe4888cd28f2e2155db6c39cf4d791dca8159b52"
+            },
+            {
+              "ref": "source-input:synchrony-paypal-cashback-mastercard-product",
+              "sha256": "2058e7a0f591b0bbb63722fbf724e707dbf754291f38dc65727391df9117f51d"
+            },
+            {
+              "ref": "manifest:synchrony-paypal-cashback-mastercard-rewards-terms",
+              "sha256": "26dd56649e2bced58dc148a12293ffa30afa679ef469be48345dafc1ea01a1f8"
+            },
+            {
+              "ref": "source-input:synchrony-paypal-cashback-mastercard-rewards-terms",
+              "sha256": "10c657711a7839300235a3d66ed3b440752d6f2f735a433065955f1fe8e3aadb"
+            },
+            {
+              "ref": "manifest:synchrony-paypal-cashback-mastercard-pricing",
+              "sha256": "75fe430b557cd7a8d985ec30951ef9e33d12195986d25ffc54613e79dbf7ee00"
+            },
+            {
+              "ref": "source-input:synchrony-paypal-cashback-mastercard-pricing",
+              "sha256": "55f5bd87bfde3054bf963922745f830fb3d1be4caa97ee078360806dd46c2fe2"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:13:27.833Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-verizon-visa-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:df709067afee25b32950564736c682c83147e975b1c4c8c4042db8b18d341a32",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-verizon-visa-card-product",
+              "sha256": "84f026b952241ec8700afbc166a3fa2457cf7b60fee27f267e551421a7c8a260"
+            },
+            {
+              "ref": "source-input:synchrony-verizon-visa-card-product",
+              "sha256": "1234cea06da385ea5f9ea80770c9b7e3c2853e004d0268e0474c7c2f2e59a423"
+            },
+            {
+              "ref": "manifest:synchrony-verizon-visa-card-rewards-terms",
+              "sha256": "047bd8df13bd7ba4dfd36ed530652d4f9853dd077c94170ce7d95165deba109b"
+            },
+            {
+              "ref": "source-input:synchrony-verizon-visa-card-rewards-terms",
+              "sha256": "e937671b39184c980f3f9474ad0fb0dd41b03e26d066f33cab5509eac3713105"
+            },
+            {
+              "ref": "manifest:synchrony-verizon-visa-card-partner",
+              "sha256": "b373a8e267350ce75fc92934da4e648a142c39270d9df334ac6cbb8a6f91b50a"
+            },
+            {
+              "ref": "source-input:synchrony-verizon-visa-card-partner",
+              "sha256": "66392ed1f0eb70466e2f025efcbfcce7b66fe3b0c21c26364bf50251b37cc2d5"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:13:27.833Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-sams-club-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:6633426df6223fc853146fd4a61d50a2adb7c781b5e9accbce482b9e7725c852",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-sams-club-mastercard-product",
+              "sha256": "0e591b7080488ae7ecd549bb61a364f46ef8de6c589016fcbc97e1ada3890ab2"
+            },
+            {
+              "ref": "source-input:synchrony-sams-club-mastercard-product",
+              "sha256": "f2a70dda3c0437462d933f88937f964dbf2e1e3bc123aca7f805d9daf973eef3"
+            },
+            {
+              "ref": "manifest:synchrony-sams-club-mastercard-partner",
+              "sha256": "e253d9197edd865091887875e7a3b1c35deed23d82b42c9aafaa6e96ce9f7df8"
+            },
+            {
+              "ref": "source-input:synchrony-sams-club-mastercard-partner",
+              "sha256": "76ae4cef2101eefcf5699b2aaf41b6905c7ccb6fdc5be86bd0b44aa8c3209f99"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:13:27.833Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-onepay-cashrewards-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:25b6f0b4463219656383f651967996cf8c92920dc6177c353335f92eecbbd313",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-onepay-cashrewards-card-product",
+              "sha256": "5c51c887262700ea2f2838ce973d1a249037d68299d63a3db1124166f8fb9e44"
+            },
+            {
+              "ref": "source-input:synchrony-onepay-cashrewards-card-product",
+              "sha256": "87298cda772c12a2e0400d8dff49b1399d2a61693659e507fdd301ea79ba696a"
+            },
+            {
+              "ref": "manifest:synchrony-onepay-cashrewards-card-rewards-terms",
+              "sha256": "b4d68a17135ad611e348442c61b01bf47a23e4d9142cc1fa2b185fdb90fd1d6a"
+            },
+            {
+              "ref": "source-input:synchrony-onepay-cashrewards-card-rewards-terms",
+              "sha256": "2806d6f41e975562036c0f76bafadff9278092a2ab2b2c11c5b7af7f6b5a68e5"
+            },
+            {
+              "ref": "manifest:synchrony-onepay-cashrewards-card-pricing",
+              "sha256": "af87fba530323504751e61501d6f4172cecdf3f79ded627cb3f69a5a2154775c"
+            },
+            {
+              "ref": "source-input:synchrony-onepay-cashrewards-card-pricing",
+              "sha256": "bb41860dbe067ce6ac85d81e420dc94cba39c0469f330053be5f5c3f66fac658"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:13:27.834Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-mywalgreens-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:ef0f64b3d17193a3ce9a3c77f0bd0ab9c7d857a8938e5beb10abcce9a992495b",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-mywalgreens-mastercard-product",
+              "sha256": "fff9eacb442a5ac2d841a8e31365c80608f1d68438735ca946c6a2cccca0fcf8"
+            },
+            {
+              "ref": "source-input:synchrony-mywalgreens-mastercard-product",
+              "sha256": "dbcd0dec052816957b06a331117c0b6daf8d98809140cc8eb4ca2998a2a1f3c1"
+            },
+            {
+              "ref": "manifest:synchrony-mywalgreens-mastercard-rewards-terms",
+              "sha256": "223a6eb454816448cd0730ddffc4750972c5640613013915f4269c3977dbfa21"
+            },
+            {
+              "ref": "source-input:synchrony-mywalgreens-mastercard-rewards-terms",
+              "sha256": "20b205120a9b8bc33786de62eaf32718e503a61386a8f0fbcc4ae254447c187f"
+            },
+            {
+              "ref": "manifest:synchrony-mywalgreens-mastercard-partner",
+              "sha256": "face544b65af111ee352af8b1daae2625afe877bab849a10356b4fc60cfd93d5"
+            },
+            {
+              "ref": "source-input:synchrony-mywalgreens-mastercard-partner",
+              "sha256": "6c52fe72c624818e3780799480aefb6524aa0e0220efb956a3765898b768ab98"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:13:27.834Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-newegg-store-credit-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:86f3caae9b4c1806c6874037ee9b2fd5d21f992886ab54c46f83da31df33706d",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-newegg-store-credit-card-product",
+              "sha256": "e9c01de960e5c3cd650b4fb14f0657f71526d3d0e56fb0ef62b3e3ad985b12d1"
+            },
+            {
+              "ref": "source-input:synchrony-newegg-store-credit-card-product",
+              "sha256": "3b2ac1172e9f7a522929794252f26746f2e9d64b278dbfa5df06845cb842a35f"
+            },
+            {
+              "ref": "manifest:synchrony-newegg-store-credit-card-categories",
+              "sha256": "472ec25959e7c1aff4d7e1871621945af9dcae38a83476734c6a7f12c5d58f59"
+            },
+            {
+              "ref": "source-input:synchrony-newegg-store-credit-card-categories",
+              "sha256": "02207c59bf88c76a31c8b9004a04ee1a5cfea4fb804d53e7f6cf37f7863c8bc5"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:13:27.834Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
   "issuers": {
     "synchrony": {
       "stages": {

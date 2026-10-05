@@ -1,8 +1,101 @@
 {
   "schemaVersion": 1,
   "batch": "wells-fargo-refresh-2026-10",
-  "updatedAt": "2026-10-05T01:06:56.292Z",
-  "cards": {},
+  "updatedAt": "2026-10-05T01:09:37.925Z",
+  "cards": {
+    "wells-fargo-autograph": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:a679a5134a2cec95c8f8a5b069b543e71894d180826f4002e2e8e63920fcc99a",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-autograph-product",
+              "sha256": "901652059753f3e4c08656ec58a756575931524bb8f98573c70ce058f24fbfd7"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-product",
+              "sha256": "ba12b0807006c6902f2662a40f129b8c2db709e51e7a8df6be853a2823c7ff31"
+            },
+            {
+              "ref": "manifest:wells-fargo-autograph-rewards-terms",
+              "sha256": "08b559fcea0ed6bde219328cb3403fbc0882aa6a6f88b5fb52fa3d528b4ce67e"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-rewards-terms",
+              "sha256": "ad37f18b8b7fde499f94b04f3d36d0e1f4b0e94514f5ee8e24062383b23db802"
+            },
+            {
+              "ref": "manifest:wells-fargo-autograph-pricing",
+              "sha256": "2e1eecd9ed14450bededd5c5e75eea9cd4782eb70eb9e55e56823f5fe20840bd"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-pricing",
+              "sha256": "9acba18ae0c4d510dbb69d86ff7796c9c6a36c201daab0ae25cb51cc3c0ab824"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:09:37.923Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "wells-fargo-autograph-journey": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:c27b695ae222ae8beacd29b968d93f5ddc73962e66b042463039db0bf37072d7",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-autograph-journey-product",
+              "sha256": "271183618cd6d655d2f36781ff5d0b8c7c19de860ee4b1e3d041d28e53566bea"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-journey-product",
+              "sha256": "a0b32cbc721c3472aeb97945a2f4df2bab0e0abec791421d3190dff5e0dd2f7f"
+            },
+            {
+              "ref": "manifest:wells-fargo-autograph-rewards-terms",
+              "sha256": "08b559fcea0ed6bde219328cb3403fbc0882aa6a6f88b5fb52fa3d528b4ce67e"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-rewards-terms",
+              "sha256": "ad37f18b8b7fde499f94b04f3d36d0e1f4b0e94514f5ee8e24062383b23db802"
+            },
+            {
+              "ref": "manifest:wells-fargo-autograph-journey-pricing",
+              "sha256": "753e5ff8642205a670e8ff4a34d055d5b774744c9adc4098bc65556b4497a3b6"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-journey-pricing",
+              "sha256": "671d2a8866054786baf1e547eca4d51ab0ac462a2bef76755d4d577da770fdfc"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:09:37.924Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
   "issuers": {
     "wells-fargo": {
       "stages": {
