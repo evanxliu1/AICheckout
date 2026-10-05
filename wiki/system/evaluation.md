@@ -171,7 +171,7 @@ Full page: [`docs/evals/expansion.md`](../../docs/evals/expansion.md). The expan
 
 ## Related
 
-* [Generic cart reader evaluation protocol](../../docs/evals/generic-reader-protocol.md) — the merchant-side eval (real retail pages, three site splits, peek policy), pre-registered 2026-10-06; not a curation eval
+* [Generic cart reader evaluation protocol](../../docs/evals/generic-reader-protocol.md) — the merchant-side eval (real retail pages worldwide since `.2`, total and currency, three site splits, peek policy), pre-registered 2026-10-06; not a curation eval
 * [Cards](../domain/cards.md)
 * [Reward rules](../domain/reward-rules.md)
 * [Glossary](../domain/glossary.md)
