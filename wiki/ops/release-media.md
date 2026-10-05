@@ -37,7 +37,7 @@ Two npm scripts regenerate hash-pinned media under `docs/release/assets/`. Rerun
 
 ## README demo video (2026-10-05)
 
-`docs/readme/demo.mp4` (40.6 s, 1920×1080, 60 fps) is presentation media for the README, separate from the hash-pinned assets above. They were rendered from an HTML scene with real captures in a session scratchpad and are not reproducible from the repository; remake them if the extension's UI changes visibly ([decision](../decisions/2026-10-05-readme-demo-video-and-diagrams.md)).
+`docs/readme/demo.mp4` (40.6 s, 1920×1080, 60 fps) is presentation media for the README, separate from the hash-pinned assets above. It was rendered from an HTML scene with real captures in a session scratchpad and is not reproducible from the repository; remake it if the extension's UI changes visibly ([decision](../decisions/2026-10-05-readme-demo-video-and-diagrams.md)).
 
 ## Gotchas
 
