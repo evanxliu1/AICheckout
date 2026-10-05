@@ -27,6 +27,20 @@
       "redemptionBrandIds": [
         "tractor-supply"
       ]
+    },
+    {
+      "programId": "bloomingdales-loyallist-points",
+      "unitName": "points",
+      "redemptionBrandIds": [
+        "bloomingdales"
+      ]
+    },
+    {
+      "programId": "llbean-bean-bucks",
+      "unitName": "cents",
+      "redemptionBrandIds": [
+        "llbean"
+      ]
     }
   ],
   "gates": [
@@ -51,6 +65,50 @@
         {
           "sourceId": "citi-macys-amex-product",
           "quote": "Cardholders can access Gold status with $500 - $1,199 annual spend at Macy’s with their Card and Platinum status with $1,200+ annual spend"
+        }
+      ]
+    },
+    {
+      "id": "citi-aadvantage-executive-150k-spend",
+      "question": "Have you spent $150,000 on your Citi / AAdvantage Executive card this calendar year?",
+      "options": [
+        {
+          "id": "under-150k",
+          "label": "Not yet"
+        },
+        {
+          "id": "reached-150k",
+          "label": "Yes, $150,000 or more"
+        }
+      ],
+      "anchors": [
+        {
+          "sourceId": "citi-aadvantage-executive-rewards-terms",
+          "quote": "Upon reaching $150,000 in spend on your Citi® / AAdvantage® Executive World Legend Mastercard in a calendar year"
+        }
+      ]
+    },
+    {
+      "id": "bloomingdales-loyallist-tier",
+      "question": "What is your Bloomingdale's Loyallist status?",
+      "options": [
+        {
+          "id": "loyallist",
+          "label": "Loyallist"
+        },
+        {
+          "id": "top-of-the-list",
+          "label": "Top of the List"
+        },
+        {
+          "id": "top-of-the-list-unlocked",
+          "label": "Top of the List Unlocked"
+        }
+      ],
+      "anchors": [
+        {
+          "sourceId": "citi-bloomingdales-amex-product",
+          "quote": "Top of the List Unlocked2: 10 points per $1 spent"
         }
       ]
     }
@@ -981,6 +1039,411 @@
         }
       ],
       "hints": []
+    },
+    {
+      "cardId": "citi-aadvantage-executive",
+      "issuer": "Citi",
+      "corpusCaseSha256": "6e074f977cc99ba0ddc390932450a5511aabc6f55d59afe3308957d743b6c067",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "American Airlines purchases at 4X for cardholders below $150,000 card spend this calendar year; no cap on miles.",
+          "set": {
+            "cap": {
+              "kind": "none"
+            },
+            "brandIds": [
+              "american-airlines"
+            ],
+            "requires": [
+              {
+                "gateId": "citi-aadvantage-executive-150k-spend",
+                "optionIds": [
+                  "under-150k"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "Earn 1 AAdvantage® base mile and 3 AAdvantage® bonus miles, for a total of 4 AAdvantage® miles"
+            },
+            {
+              "sourceId": "citi-aadvantage-executive-product",
+              "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card."
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "aa-after-150k",
+          "issuerWording": "earn a total of 5 AAdvantage® miles for every $1 spent on eligible American Airlines purchases for the remainder of the year",
+          "rateBps": 500,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "other",
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [
+            "american-airlines"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "citi-aadvantage-executive-150k-spend",
+              "optionIds": [
+                "reached-150k"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "The 5X American Airlines rate after $150,000 in calendar-year card spend, gated on the cardholder saying they reached it.",
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-executive-product",
+              "quote": "After you spend $150,000 in purchases in a calendar year, earn a total of 5 AAdvantage® miles"
+            },
+            {
+              "sourceId": "citi-aadvantage-executive-product",
+              "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card."
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "The $150,000 calendar-year threshold is a spend-status gate: 4X below it, 5X once reached.",
+          "rules": [
+            1,
+            "aa-after-150k"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "American Airlines brand scope with the 4X/5X tier ladder on the spend-status gate.",
+          "rules": [
+            1,
+            "aa-after-150k"
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "citi-llbean-mastercard",
+      "issuer": "Citi",
+      "corpusCaseSha256": "2e7543a4ba363d974635025e18a2b5e81f2a1ff802af266c35723a8683de6435",
+      "heldOut": null,
+      "programId": "llbean-bean-bucks",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "L.L.Bean purchases scoped to the L.L.Bean brand.",
+          "set": {
+            "brandIds": [
+              "llbean"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-llbean-mastercard-product",
+              "quote": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Bean Bucks move to an L.L.Bean store-credit program.",
+          "rules": [
+            0,
+            1,
+            2
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to L.L.Bean.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "citi-bloomingdales-amex",
+      "issuer": "Citi",
+      "corpusCaseSha256": "c11687dae9f0abd20137b46fa373f86ad53012ac19b88768f587cc04600800e1",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Loyallist rate at Bloomingdale's, gated on Loyallist status.",
+          "set": {
+            "brandIds": [
+              "bloomingdales"
+            ],
+            "requires": [
+              {
+                "gateId": "bloomingdales-loyallist-tier",
+                "optionIds": [
+                  "loyallist"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "3 points per $1 spent for Loyallist 2"
+            },
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "Earn more points per dollar when you shop at Bloomingdale’s2"
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "bloomingdales-top-of-the-list",
+          "issuerWording": "Top of the List2: 4 points per $1 spent",
+          "rateBps": 400,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "other",
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [
+            "bloomingdales"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "bloomingdales-loyallist-tier",
+              "optionIds": [
+                "top-of-the-list"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Top of the List rate at Bloomingdale's.",
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "4 points per $1 spent for Top of the List 2"
+            }
+          ]
+        },
+        {
+          "key": "bloomingdales-unlocked",
+          "issuerWording": "Top of the List Unlocked2: 10 points per $1 spent",
+          "rateBps": 1000,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "other",
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [
+            "bloomingdales"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "bloomingdales-loyallist-tier",
+              "optionIds": [
+                "top-of-the-list-unlocked"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Top of the List Unlocked rate at Bloomingdale's.",
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "10 points per $1 spent for Top of the List Unlocked 2"
+            }
+          ]
+        },
+        {
+          "key": "outside-top-tiers",
+          "issuerWording": "Shopping Outside of Bloomingdale’s",
+          "rateBps": 400,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "all-purchases",
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "bloomingdales-loyallist-tier",
+              "optionIds": [
+                "top-of-the-list",
+                "top-of-the-list-unlocked"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "gate"
+          ],
+          "note": "Outside Bloomingdale's both upper tiers earn 4 points per dollar; Loyallists keep the 3X base.",
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "Rack up points outside of Bloomingdale’s too!2"
+            },
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "4 points per $1 spent for Top of the List Unlocked 2"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "Loyallist tier ladder: one gate, one rule per tier at Bloomingdale's, plus a 4X everywhere rule for the two upper tiers.",
+          "rules": [
+            0,
+            "bloomingdales-top-of-the-list",
+            "bloomingdales-unlocked",
+            "outside-top-tiers"
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "program-redemption"
+          ],
+          "note": "Rewards redeemable only at Bloomingdale's via programDetails."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "3/4/10 at Bloomingdale's and 3/4/4 elsewhere on the Loyallist tier gate.",
+          "rules": [
+            0,
+            "bloomingdales-top-of-the-list",
+            "bloomingdales-unlocked",
+            "outside-top-tiers"
+          ]
+        }
+      ]
     }
   ]
 }

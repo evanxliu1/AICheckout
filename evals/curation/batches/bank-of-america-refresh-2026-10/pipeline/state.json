@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "bank-of-america-refresh-2026-10",
-  "updatedAt": "2026-10-05T01:57:19.978Z",
+  "updatedAt": "2026-10-05T02:28:21.140Z",
   "cards": {
     "boa-customized-cash-rewards": {
       "stages": {
@@ -1245,7 +1245,18 @@
   },
   "batchStages": {
     "build": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:d1d77ddb3b2841dcb38835ac437bcad21b78974e9bdce3c899064870b231fec6",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "011159a43363db9bb4aa40bb5d0b5ef5889a01ac9cbddef987e010a109e91312"
+        }
+      ],
+      "finishedAt": "2026-10-05T02:28:21.140Z",
+      "attempts": 1,
+      "catalogVersion": "2026-10-05.renewal.1"
     },
     "eval": {
       "status": "pending"

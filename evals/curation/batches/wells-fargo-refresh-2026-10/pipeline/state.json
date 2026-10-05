@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "wells-fargo-refresh-2026-10",
-  "updatedAt": "2026-10-05T01:43:44.803Z",
+  "updatedAt": "2026-10-05T02:28:19.002Z",
   "cards": {
     "wells-fargo-autograph": {
       "stages": {
@@ -321,7 +321,18 @@
   },
   "batchStages": {
     "build": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:5834a51059824dd8263a82814ff88da8c2ca101ebb1ced7bfdd4f9eab639cf86",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "45c2ba0e93d92de61b8351372da0c8505c657ce3bfbe48497bbbebd0e2d0fa8c"
+        }
+      ],
+      "finishedAt": "2026-10-05T02:28:19.002Z",
+      "attempts": 1,
+      "catalogVersion": "2026-10-05.renewal.1"
     },
     "eval": {
       "status": "pending"

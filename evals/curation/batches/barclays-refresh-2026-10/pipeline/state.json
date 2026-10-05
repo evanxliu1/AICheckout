@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "barclays-refresh-2026-10",
-  "updatedAt": "2026-10-05T02:01:57.496Z",
+  "updatedAt": "2026-10-05T02:28:21.768Z",
   "cards": {
     "barclays-mastercard-titanium": {
       "stages": {
@@ -1362,6 +1362,17 @@
           ],
           "finishedAt": "2026-10-05T02:01:57.495Z",
           "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:fde69e993849758fc3b1903fca2c7a7691cd196ac9623864707f50915d2fb1bb",
+          "finishedAt": "2026-10-05T02:24:42.388Z",
+          "attempts": 1,
+          "packetId": "f9fdea25-1068-4fa2-8b72-52761f40804c",
+          "agentRun": "afe577176771b5cad",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:24:42.388Z"
         }
       },
       "dropped": null,
@@ -1424,28 +1435,30 @@
           "outputs": [
             {
               "ref": "fragment:barclays",
-              "sha256": "a51276c853c668f68b5aa136981aaf61ec5a75c33df54c7b9f21e0ee0d70d8e6"
+              "sha256": "bc30fb3a8bd4f873cdcb1149cfaa46fd14735d7a81116a928f39b258aa485af8"
             }
           ],
-          "finishedAt": "2026-10-05T01:56:26.468Z",
-          "attempts": 1,
-          "metrics": {
-            "lintRateRaised": 2,
-            "lintRateAcked": 2
-          },
-          "packetId": "e230a48c-3878-4eb7-bcfb-798061c15cdc",
-          "agentRun": "a978ea434fc564057",
+          "finishedAt": "2026-10-05T02:24:42.388Z",
+          "attempts": 2,
+          "packetId": "f9fdea25-1068-4fa2-8b72-52761f40804c",
+          "agentRun": "afe577176771b5cad",
           "model": "claude-opus-5-5",
-          "acceptedAt": "2026-10-05T01:56:26.468Z",
-          "durationMs": 125577,
-          "tokens": 80462
+          "acceptedAt": "2026-10-05T02:24:42.388Z",
+          "durationMs": 92361,
+          "tokens": 41642
         }
       }
     }
   },
   "batchStages": {
     "build": {
-      "status": "pending"
+      "status": "failed-gate",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:067fc4035404f9cca01284efcb06dbd55cb2fe209d79c6e34690848522afeb20",
+      "finishedAt": "2026-10-05T02:28:21.768Z",
+      "attempts": 1,
+      "reason": "build-failed",
+      "catalogVersion": "2026-10-05.renewal.1"
     },
     "eval": {
       "status": "pending"

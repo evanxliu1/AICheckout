@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "synchrony-refresh-2026-10",
-  "updatedAt": "2026-10-05T02:06:02.652Z",
+  "updatedAt": "2026-10-05T02:28:24.925Z",
   "cards": {
     "synchrony-amazon-store-card": {
       "stages": {
@@ -214,6 +214,17 @@
             "lintRateRaised": 1,
             "lintRateAcked": 1
           }
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:0d8f5c3b4c81b3602c2692762a9ae62d47598efa06951be620f6e219aa44b0ba",
+          "finishedAt": "2026-10-05T02:08:07.948Z",
+          "attempts": 1,
+          "packetId": "1b238e2f-061d-42bf-beef-6bc7cfb87967",
+          "agentRun": "a45108c59ef6f819a",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:08:07.948Z"
         }
       },
       "dropped": null,
@@ -442,6 +453,17 @@
           ],
           "finishedAt": "2026-10-05T02:06:02.652Z",
           "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:1958d0711cad9d450c543b9899bf8f77c89e568fa4cd1ad914c30eeeb7820ff0",
+          "finishedAt": "2026-10-05T02:08:07.948Z",
+          "attempts": 1,
+          "packetId": "1b238e2f-061d-42bf-beef-6bc7cfb87967",
+          "agentRun": "a45108c59ef6f819a",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:08:07.948Z"
         }
       },
       "dropped": null,
@@ -898,6 +920,17 @@
           ],
           "finishedAt": "2026-10-05T02:06:02.652Z",
           "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:152f93b912da4935bf30be92e514da53130a2f2257df4f316316dd3a1258b191",
+          "finishedAt": "2026-10-05T02:08:07.948Z",
+          "attempts": 1,
+          "packetId": "1b238e2f-061d-42bf-beef-6bc7cfb87967",
+          "agentRun": "a45108c59ef6f819a",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:08:07.948Z"
         }
       },
       "dropped": null,
@@ -960,24 +993,34 @@
           "outputs": [
             {
               "ref": "fragment:synchrony",
-              "sha256": "65415984299789278b2f81987e1678642a3b82eb3da8e1ed191109782b208617"
+              "sha256": "4a018a1b0982c02bf45b708c190f96e909b92f22af753057c4642d8c8bea892b"
             }
           ],
-          "finishedAt": "2026-10-05T01:49:37.361Z",
-          "attempts": 1,
-          "packetId": "e56db801-3365-45b4-969d-16f3a72cafc5",
-          "agentRun": "a3f4cf14d54adbca6",
+          "finishedAt": "2026-10-05T02:08:07.948Z",
+          "attempts": 2,
+          "metrics": {
+            "lintRateRaised": 1,
+            "lintRateAcked": 1
+          },
+          "packetId": "1b238e2f-061d-42bf-beef-6bc7cfb87967",
+          "agentRun": "a45108c59ef6f819a",
           "model": "claude-opus-5-5",
-          "acceptedAt": "2026-10-05T01:49:37.361Z",
-          "durationMs": 170243,
-          "tokens": 78172
+          "acceptedAt": "2026-10-05T02:08:07.948Z",
+          "durationMs": 110926,
+          "tokens": 57732
         }
       }
     }
   },
   "batchStages": {
     "build": {
-      "status": "pending"
+      "status": "failed-gate",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:3d83cc261fcaaf6ba5b68b2464cf5bcec39ea479afd2dc6005d742f83d42e1dd",
+      "finishedAt": "2026-10-05T02:28:24.925Z",
+      "attempts": 1,
+      "reason": "build-failed",
+      "catalogVersion": "2026-10-05.renewal.1"
     },
     "eval": {
       "status": "pending"

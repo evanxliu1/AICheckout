@@ -1414,6 +1414,338 @@
           "note": "The streaming rule stays as labelled; the select provider list lives off-capture and bundled or third-party-billed subscriptions are not modelled."
         }
       ]
+    },
+    {
+      "cardId": "amex-gold",
+      "issuer": "American Express",
+      "corpusCaseSha256": "a1bb634bb2dff572f887707d5928ecc66924e95ffc121b2f16bcc6c34865d40b",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "dining",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airfare charged directly with passenger airlines; no v3 category covers airline tickets."
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Restaurant-like merchants such as bars, cafeterias, caterers and bakeries earn no dining bonus; the catalog keeps the dining category, so it may overstate the rate at such merchants.",
+          "rules": [
+            1
+          ]
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "amex-hilton-honors",
+      "issuer": "American Express",
+      "corpusCaseSha256": "3da574798f98941ff9d44620e73f1e2879e61b7152b45a4452f06c527529ae7a",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 700
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases charged directly with Hilton portfolio properties; scoped to the hilton brand. Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "brandIds": [
+              "hilton"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-pricing",
+              "quote": "eligible purchases charged directly with a property within the Hilton portfolio"
+            },
+            {
+              "sourceId": "amex-hilton-honors-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "gas",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Gasoline bought at supermarkets, superstores or warehouse clubs earns only the base rate; such purchases usually code outside gas stations, so the gas rule stays as labelled.",
+          "rules": [
+            4
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Hilton portfolio rate is brand-scoped to hilton.",
+          "rules": [
+            1
+          ]
+        }
+      ]
     }
   ]
 }
