@@ -23,7 +23,7 @@ As of 2026-10-05T05:47:59Z.
 ## Active work
 
 - **`phase10-prep`** (coordinator and wiki subagent): wiki split (pipeline overview, [CLI commands](system/card-pipeline-commands.md), [internals](system/card-pipeline-internals.md); [release history](ops/catalog-release-history.md) out of the runbook), captures moved to the main checkout, and the [Phase 10 plan](product/phase-10-merchant-expansion.md) as a **draft awaiting Evan's approval**.
-- TODO(coordinator): release media regenerated for `2026-10-05.renewal.1` (coordinator, same PR).
+- Release media regenerated for `2026-10-05.renewal.1` (`npm run release:media`, all checks passed, 2026-10-05; [release media](ops/release-media.md)).
 
 ## Open questions and next steps
 

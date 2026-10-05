@@ -172,7 +172,7 @@ const captureDirOf = (manifestPath: string) =>
 
 /**
  * Without --captures: the capture folder next to every bundled manifest (not the freshness records) that lists a
- * cited source, in this checkout. Batch captures usually live in another checkout, so pass --captures.
+ * cited source, in this checkout (since 2026-10-05 the main checkout holds every capture); --captures overrides.
  */
 export function defaultCaptureFolders(root: string, ids: string[], manifests: ReviewManifest[]): string[] {
   const cited = new Set(ids);
@@ -301,7 +301,7 @@ export async function publish(env: Env, options: PublishOptions, deps: PublishDe
   const match = await matchCaptures(catalog.sources, folders, manifests);
   log('');
   log(
-    `Capture folders (${folders.length}${options.captures.length ? '' : ', defaults from this checkout; pass --captures'}):`,
+    `Capture folders (${folders.length}${options.captures.length ? '' : ', defaults from this checkout'}):`,
   );
   for (const entry of match.folders)
     log(`- ${entry.folder}: ${entry.exists ? `${entry.files} .txt files, ${entry.used} used` : 'not found'}`);
