@@ -1,0 +1,1241 @@
+{
+  "schemaVersion": 1,
+  "batch": "synchrony-refresh-2026-10",
+  "generatedBy": "npm run pipeline -- eval",
+  "annotationStatus": "agent-verified",
+  "pipeline": {
+    "schemaVersion": 1,
+    "inputs": {
+      "draft": "expansion.draft.1",
+      "corpus": "synchrony-refresh-2026-10.v1",
+      "annotationStatus": "agent-verified",
+      "verificationFiles": [
+        "synchrony.json"
+      ]
+    },
+    "totals": {
+      "cards": 8,
+      "inCorpus": 8,
+      "drafted": 5,
+      "undrafted": 3,
+      "confirmed": 0,
+      "fixed": 8,
+      "dropped": 0,
+      "draftRules": 20,
+      "rulesRemoved": 0,
+      "rulesAdded": 11,
+      "verifiedRules": 31,
+      "draftRulesUnchanged": 12,
+      "ruleFieldValues": 160,
+      "ruleFieldsChanged": 9,
+      "cardFieldValues": 10,
+      "cardFieldsChanged": 2,
+      "ruleFieldCorrectionRate": 0.0563,
+      "cardFieldCorrectionRate": 0.2,
+      "draftRulesRemovedRate": 0,
+      "draftRulesUnchangedRate": 0.6
+    },
+    "ruleFields": {
+      "category": {
+        "count": 4,
+        "total": 20,
+        "rate": 0.2
+      },
+      "issuerWording": {
+        "count": 0,
+        "total": 20,
+        "rate": 0
+      },
+      "rateBps": {
+        "count": 3,
+        "total": 20,
+        "rate": 0.15
+      },
+      "paidOnPaymentBps": {
+        "count": 0,
+        "total": 20,
+        "rate": 0
+      },
+      "cap": {
+        "count": 0,
+        "total": 20,
+        "rate": 0
+      },
+      "activation": {
+        "count": 1,
+        "total": 20,
+        "rate": 0.05
+      },
+      "usMerchantsOnly": {
+        "count": 0,
+        "total": 20,
+        "rate": 0
+      },
+      "limitedTime": {
+        "count": 1,
+        "total": 20,
+        "rate": 0.05
+      }
+    },
+    "cardFields": {
+      "rewardCurrency": {
+        "count": 1,
+        "total": 5,
+        "rate": 0.2
+      },
+      "pointValueHundredthsOfCent": {
+        "count": 1,
+        "total": 5,
+        "rate": 0.2
+      }
+    },
+    "items": {
+      "exclusionsRemoved": 0,
+      "exclusionsAdded": 5,
+      "issuesRemoved": 6,
+      "issuesAdded": 10
+    },
+    "undraftedRulesAdded": 10,
+    "findings": {
+      "accepted": 66,
+      "modified": 0,
+      "rejected": 0
+    },
+    "byIssuer": {
+      "Synchrony": {
+        "cards": 8,
+        "inCorpus": 8,
+        "drafted": 5,
+        "undrafted": 3,
+        "confirmed": 0,
+        "fixed": 8,
+        "dropped": 0,
+        "draftRules": 20,
+        "rulesRemoved": 0,
+        "rulesAdded": 11,
+        "verifiedRules": 31,
+        "draftRulesUnchanged": 12,
+        "ruleFieldValues": 160,
+        "ruleFieldsChanged": 9,
+        "cardFieldValues": 10,
+        "cardFieldsChanged": 2,
+        "ruleFieldCorrectionRate": 0.0563,
+        "cardFieldCorrectionRate": 0.2,
+        "draftRulesRemovedRate": 0,
+        "draftRulesUnchangedRate": 0.6
+      }
+    },
+    "cards": {
+      "confirmed": [],
+      "dropped": [],
+      "undrafted": [
+        {
+          "cardId": "synchrony-amazon-secured-card",
+          "issuer": "Synchrony",
+          "rules": 2
+        },
+        {
+          "cardId": "synchrony-newegg-store-credit-card",
+          "issuer": "Synchrony",
+          "rules": 1
+        },
+        {
+          "cardId": "synchrony-verizon-visa-card",
+          "issuer": "Synchrony",
+          "rules": 7
+        }
+      ],
+      "valuesUnchanged": []
+    },
+    "definitions": "scripts/expansion-pipeline-metrics.mjs"
+  },
+  "traces": {
+    "status": "scored",
+    "scorerVersion": "v2-scorer.2",
+    "corpus": {
+      "version": "synchrony-refresh-2026-10.v1",
+      "hash": "f5255909ce782ad1cc2233ebdd23eff434eb210b9fe83e16a27568789b066d76",
+      "cases": 8
+    },
+    "upperBound": true,
+    "files": 8,
+    "scored": 8,
+    "skipped": 0,
+    "all": {
+      "planned": 8,
+      "observed": 8,
+      "complete": true,
+      "overall": {
+        "runs": 8,
+        "ruleRecall": {
+          "correct": 24,
+          "total": 31,
+          "rate": 0.7742
+        },
+        "rulePrecision": {
+          "correct": 24,
+          "total": 31,
+          "rate": 0.7742
+        },
+        "fieldAccuracy": {
+          "correct": 139,
+          "total": 150,
+          "rate": 0.9267
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 139,
+          "total": 192,
+          "rate": 0.724
+        },
+        "claimPrecision": {
+          "correct": 75,
+          "total": 103,
+          "rate": 0.7282
+        },
+        "evidenceValidity": {
+          "correct": 189,
+          "total": 196,
+          "rate": 0.9643
+        },
+        "issueRecall": {
+          "correct": 9,
+          "total": 19,
+          "rate": 0.4737
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 10,
+          "total": 16,
+          "rate": 0.625
+        },
+        "unsupportedClaims": 28,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 3,
+            "total": 10,
+            "rate": 0.3
+          },
+          "out-of-scope": {
+            "correct": 6,
+            "total": 9,
+            "rate": 0.6667
+          }
+        },
+        "exclusionRecall": {
+          "correct": 12,
+          "total": 14,
+          "rate": 0.8571
+        },
+        "statuses": {
+          "needs_review": 8
+        },
+        "latencyMs": {
+          "p50": 226743,
+          "p95": 326159
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 22,
+            "total": 24,
+            "rate": 0.9167
+          },
+          "paidOnPaymentBps": {
+            "correct": 24,
+            "total": 24,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 24,
+            "total": 24,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "capPeriod": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "capRateAfterCapBps": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "activation": {
+            "correct": 16,
+            "total": 24,
+            "rate": 0.6667
+          },
+          "usMerchantsOnly": {
+            "correct": 24,
+            "total": 24,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 23,
+            "total": 24,
+            "rate": 0.9583
+          }
+        }
+      }
+    },
+    "drafted": {
+      "planned": 5,
+      "observed": 5,
+      "complete": true,
+      "overall": {
+        "runs": 5,
+        "ruleRecall": {
+          "correct": 17,
+          "total": 21,
+          "rate": 0.8095
+        },
+        "rulePrecision": {
+          "correct": 17,
+          "total": 22,
+          "rate": 0.7727
+        },
+        "fieldAccuracy": {
+          "correct": 104,
+          "total": 108,
+          "rate": 0.963
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 104,
+          "total": 132,
+          "rate": 0.7879
+        },
+        "claimPrecision": {
+          "correct": 54,
+          "total": 71,
+          "rate": 0.7606
+        },
+        "evidenceValidity": {
+          "correct": 124,
+          "total": 130,
+          "rate": 0.9538
+        },
+        "issueRecall": {
+          "correct": 8,
+          "total": 13,
+          "rate": 0.6154
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 8,
+          "total": 10,
+          "rate": 0.8
+        },
+        "unsupportedClaims": 17,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 2,
+            "total": 5,
+            "rate": 0.4
+          },
+          "out-of-scope": {
+            "correct": 6,
+            "total": 8,
+            "rate": 0.75
+          }
+        },
+        "exclusionRecall": {
+          "correct": 9,
+          "total": 10,
+          "rate": 0.9
+        },
+        "statuses": {
+          "needs_review": 5
+        },
+        "latencyMs": {
+          "p50": 240198,
+          "p95": 308482
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 15,
+            "total": 17,
+            "rate": 0.8824
+          },
+          "paidOnPaymentBps": {
+            "correct": 17,
+            "total": 17,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 17,
+            "total": 17,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "capPeriod": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "capRateAfterCapBps": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "activation": {
+            "correct": 16,
+            "total": 17,
+            "rate": 0.9412
+          },
+          "usMerchantsOnly": {
+            "correct": 17,
+            "total": 17,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 16,
+            "total": 17,
+            "rate": 0.9412
+          }
+        }
+      }
+    },
+    "undrafted": {
+      "planned": 3,
+      "observed": 3,
+      "complete": true,
+      "overall": {
+        "runs": 3,
+        "ruleRecall": {
+          "correct": 7,
+          "total": 10,
+          "rate": 0.7
+        },
+        "rulePrecision": {
+          "correct": 7,
+          "total": 9,
+          "rate": 0.7778
+        },
+        "fieldAccuracy": {
+          "correct": 35,
+          "total": 42,
+          "rate": 0.8333
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 35,
+          "total": 60,
+          "rate": 0.5833
+        },
+        "claimPrecision": {
+          "correct": 21,
+          "total": 32,
+          "rate": 0.6563
+        },
+        "evidenceValidity": {
+          "correct": 65,
+          "total": 66,
+          "rate": 0.9848
+        },
+        "issueRecall": {
+          "correct": 1,
+          "total": 6,
+          "rate": 0.1667
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 2,
+          "total": 6,
+          "rate": 0.3333
+        },
+        "unsupportedClaims": 11,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 1,
+            "total": 5,
+            "rate": 0.2
+          },
+          "out-of-scope": {
+            "correct": 0,
+            "total": 1,
+            "rate": 0
+          }
+        },
+        "exclusionRecall": {
+          "correct": 3,
+          "total": 4,
+          "rate": 0.75
+        },
+        "statuses": {
+          "needs_review": 3
+        },
+        "latencyMs": {
+          "p50": 214664,
+          "p95": 326159
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "correct": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 0,
+            "total": 7,
+            "rate": 0
+          },
+          "usMerchantsOnly": {
+            "correct": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 7,
+            "total": 7,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "byIssuer": {
+      "Synchrony": {
+        "runs": 8,
+        "ruleRecall": {
+          "correct": 24,
+          "total": 31,
+          "rate": 0.7742
+        },
+        "rulePrecision": {
+          "correct": 24,
+          "total": 31,
+          "rate": 0.7742
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 139,
+          "total": 192,
+          "rate": 0.724
+        },
+        "cardFieldAccuracy": {
+          "correct": 10,
+          "total": 16,
+          "rate": 0.625
+        },
+        "issueRecall": {
+          "correct": 9,
+          "total": 19,
+          "rate": 0.4737
+        },
+        "falseClean": 0
+      }
+    }
+  },
+  "crossModel": {
+    "status": "not-run"
+  },
+  "agreement": {
+    "frozen": "expansion.v1",
+    "measure": "agreement-not-accuracy",
+    "note": "Agreement between two agent-verified label sets (this batch and the frozen expansion.v1) on the same cards; neither is human-verified, so this is not accuracy.",
+    "matching": "same category, then closest issuer wording and an equal rate (v2 scorer matchRules)",
+    "overall": {
+      "cards": 8,
+      "cardsIdentical": 2,
+      "rules": {
+        "frozen": 32,
+        "batch": 31,
+        "matched": 31,
+        "onlyFrozen": 1,
+        "onlyBatch": 0
+      },
+      "ruleFields": {
+        "rateBps": {
+          "agree": 31,
+          "total": 31,
+          "rate": 1
+        },
+        "paidOnPaymentBps": {
+          "agree": 31,
+          "total": 31,
+          "rate": 1
+        },
+        "cap": {
+          "agree": 31,
+          "total": 31,
+          "rate": 1
+        },
+        "activation": {
+          "agree": 25,
+          "total": 31,
+          "rate": 0.8065
+        },
+        "usMerchantsOnly": {
+          "agree": 31,
+          "total": 31,
+          "rate": 1
+        },
+        "limitedTime": {
+          "agree": 31,
+          "total": 31,
+          "rate": 1
+        }
+      },
+      "allRuleFields": {
+        "agree": 180,
+        "total": 186,
+        "rate": 0.9677
+      },
+      "cardFields": {
+        "rewardCurrency": {
+          "agree": 8,
+          "total": 8,
+          "rate": 1
+        },
+        "pointValueHundredthsOfCent": {
+          "agree": 8,
+          "total": 8,
+          "rate": 1
+        }
+      },
+      "exclusions": {
+        "frozen": 25,
+        "batch": 14
+      },
+      "issues": {
+        "frozen": 15,
+        "batch": 19
+      }
+    },
+    "cards": [
+      {
+        "cardId": "synchrony-amazon-secured-card",
+        "rules": {
+          "frozen": 3,
+          "batch": 2,
+          "matched": 2
+        },
+        "onlyFrozen": [
+          "other"
+        ],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 2
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 3
+        }
+      },
+      {
+        "cardId": "synchrony-amazon-store-card",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 2,
+          "batch": 2
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "synchrony-mywalgreens-mastercard",
+        "rules": {
+          "frozen": 6,
+          "batch": 6,
+          "matched": 6
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 5,
+          "batch": 4
+        },
+        "issues": {
+          "frozen": 3,
+          "batch": 4
+        }
+      },
+      {
+        "cardId": "synchrony-newegg-store-credit-card",
+        "rules": {
+          "frozen": 1,
+          "batch": 1,
+          "matched": 1
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 2,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "synchrony-onepay-cashrewards-card",
+        "rules": {
+          "frozen": 4,
+          "batch": 4,
+          "matched": 4
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 1,
+            "total": 4,
+            "rate": 0.25
+          },
+          "usMerchantsOnly": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 6,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 3
+        }
+      },
+      {
+        "cardId": "synchrony-paypal-cashback-mastercard",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 0,
+            "total": 3,
+            "rate": 0
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "synchrony-sams-club-mastercard",
+        "rules": {
+          "frozen": 5,
+          "batch": 5,
+          "matched": 5
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 7,
+          "batch": 2
+        },
+        "issues": {
+          "frozen": 4,
+          "batch": 4
+        }
+      },
+      {
+        "cardId": "synchrony-verizon-visa-card",
+        "rules": {
+          "frozen": 7,
+          "batch": 7,
+          "matched": 7
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 2
+        }
+      }
+    ]
+  },
+  "timings": {
+    "startedAt": null,
+    "unavailable": [
+      "startedAt: state records finishedAt and acceptedAt only"
+    ],
+    "stages": {
+      "research": {
+        "records": 1,
+        "done": 1,
+        "attempts": 0,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:06:55.708Z",
+        "lastFinishedAt": "2026-10-05T01:06:55.708Z",
+        "models": []
+      },
+      "capture": {
+        "records": 8,
+        "done": 8,
+        "attempts": 8,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:13:27.832Z",
+        "lastFinishedAt": "2026-10-05T01:13:27.834Z",
+        "models": []
+      },
+      "extract": {
+        "records": 8,
+        "done": 8,
+        "attempts": 8,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:37:16.845Z",
+        "lastFinishedAt": "2026-10-05T01:37:16.846Z",
+        "models": []
+      },
+      "draft": {
+        "records": 8,
+        "done": 8,
+        "attempts": 11,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:37:38.056Z",
+        "lastFinishedAt": "2026-10-05T01:57:25.951Z",
+        "models": []
+      },
+      "verify": {
+        "records": 8,
+        "done": 8,
+        "attempts": 8,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:43:24.851Z",
+        "lastFinishedAt": "2026-10-05T02:02:33.808Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "adjudicate": {
+        "records": 8,
+        "done": 8,
+        "attempts": 8,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:46:13.782Z",
+        "lastFinishedAt": "2026-10-05T02:06:01.322Z",
+        "models": [
+          "claude-fable-5-1"
+        ]
+      },
+      "apply": {
+        "records": 8,
+        "done": 8,
+        "attempts": 8,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:46:16.160Z",
+        "lastFinishedAt": "2026-10-05T02:06:02.652Z",
+        "models": []
+      },
+      "overlay": {
+        "records": 8,
+        "done": 8,
+        "attempts": 8,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:49:37.361Z",
+        "lastFinishedAt": "2026-10-05T02:08:07.948Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "build": {
+        "records": 1,
+        "done": 1,
+        "attempts": 2,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T02:38:48.118Z",
+        "lastFinishedAt": "2026-10-05T02:38:48.118Z",
+        "models": []
+      }
+    },
+    "extract": {
+      "cards": [
+        {
+          "cardId": "synchrony-amazon-store-card",
+          "runs": 1,
+          "modelMinutes": 3.78,
+          "inputTokens": 10211,
+          "outputTokens": 1346
+        },
+        {
+          "cardId": "synchrony-amazon-secured-card",
+          "runs": 1,
+          "modelMinutes": 3.58,
+          "inputTokens": 8606,
+          "outputTokens": 1281
+        },
+        {
+          "cardId": "synchrony-paypal-cashback-mastercard",
+          "runs": 1,
+          "modelMinutes": 4,
+          "inputTokens": 12262,
+          "outputTokens": 991
+        },
+        {
+          "cardId": "synchrony-verizon-visa-card",
+          "runs": 1,
+          "modelMinutes": 5.44,
+          "inputTokens": 9235,
+          "outputTokens": 2662
+        },
+        {
+          "cardId": "synchrony-sams-club-mastercard",
+          "runs": 1,
+          "modelMinutes": 3.16,
+          "inputTokens": 6831,
+          "outputTokens": 1375
+        },
+        {
+          "cardId": "synchrony-onepay-cashrewards-card",
+          "runs": 1,
+          "modelMinutes": 4.48,
+          "inputTokens": 13397,
+          "outputTokens": 1768
+        },
+        {
+          "cardId": "synchrony-mywalgreens-mastercard",
+          "runs": 1,
+          "modelMinutes": 5.14,
+          "inputTokens": 9261,
+          "outputTokens": 2822
+        },
+        {
+          "cardId": "synchrony-newegg-store-credit-card",
+          "runs": 1,
+          "modelMinutes": 0.15,
+          "inputTokens": 5856,
+          "outputTokens": 138
+        }
+      ],
+      "totals": {
+        "cards": 8,
+        "modelMinutes": 29.73,
+        "inputTokens": 75659,
+        "outputTokens": 12383
+      }
+    },
+    "agentStages": {
+      "modelMinutes": 9.16,
+      "tokens": 237399,
+      "perCard": {
+        "modelMinutes": 1.15,
+        "tokens": 29674.88
+      }
+    }
+  }
+}
