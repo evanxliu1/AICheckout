@@ -1,0 +1,989 @@
+{
+  "schemaVersion": 1,
+  "packetId": "817a4d16-61fb-4c6e-adc5-e477f9303ecc",
+  "batch": "citi-refresh-2026-10",
+  "issuer": "Citi",
+  "provenance": "agent-verified",
+  "cards": [
+    {
+      "cardId": "citi-strata",
+      "issuer": "Citi",
+      "corpusCaseSha256": "17baa1a67a694d9c94c669cddf1aba66641dd01c1a9cb7cdedc64d9911a8c9de",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [
+        {
+          "id": "self-select",
+          "kind": "chosen",
+          "label": "Self-Select Category (3X)",
+          "picks": 1,
+          "options": [
+            {
+              "id": "fitness-clubs",
+              "label": "Fitness Clubs"
+            },
+            {
+              "id": "select-streaming",
+              "label": "Select Streaming Services"
+            },
+            {
+              "id": "live-entertainment",
+              "label": "Live Entertainment"
+            },
+            {
+              "id": "cosmetic-barber-salon",
+              "label": "Cosmetic Stores/Barber Shops/Hair Salons"
+            },
+            {
+              "id": "pet-supply-stores",
+              "label": "Pet Supply Stores"
+            }
+          ],
+          "defaultOptionIds": [
+            "select-streaming"
+          ],
+          "anchors": [
+            {
+              "sourceId": "citi-strata-product",
+              "quote": "Fitness Clubs, Select Streaming Services, Live Entertainment, Cosmetic Stores/Barber Shops/Hair Salons, or Pet Supply Stores.2"
+            },
+            {
+              "sourceId": "citi-strata-rewards-terms",
+              "quote": "When your account is opened, the default Self-Select Category is Select Streaming Services."
+            }
+          ]
+        }
+      ],
+      "rules": [
+        {
+          "index": 6,
+          "was": {
+            "category": "streaming",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice"
+          ],
+          "note": "Default Self-Select option; earns only while Select Streaming Services is the chosen category.",
+          "set": {
+            "choice": {
+              "choiceId": "self-select",
+              "optionId": "select-streaming"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-strata-rewards-terms",
+              "quote": "When your account is opened, the default Self-Select Category is Select Streaming Services."
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "entertainment",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice"
+          ],
+          "note": "Self-Select option; keeps entertainment (ticket purchases only, general 19) and earns only while chosen.",
+          "set": {
+            "choice": {
+              "choiceId": "self-select",
+              "optionId": "live-entertainment"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-strata-rewards-terms",
+              "quote": "Includes ticket purchases for live entertainment, including concerts, live sporting events"
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: fitness club memberships are a service; the option stays in the Self-Select choice and earns nothing at retail."
+        },
+        {
+          "index": 10,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: cosmetic stores are retail but have no v3 category, and barber shops and salons are services; the option stays in the Self-Select choice."
+        },
+        {
+          "index": 11,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: pet supply stores have no v3 category; the option stays in the Self-Select choice and earns nothing at retail."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Gift-card redemption through ThankYou is a redemption matter and does not change what a purchase earns."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Overlap of car rentals between Citi Travel and Select Transit concerns travel purchases, not retail; no catalog change."
+        },
+        {
+          "index": 2,
+          "disposition": "modelled",
+          "how": [
+            "choice"
+          ],
+          "note": "The Self-Select choice (one pick, default Select Streaming Services) means only the selected category earns 3X; quarterly changes are the cardholder updating the choice.",
+          "rules": [
+            6,
+            7
+          ]
+        },
+        {
+          "index": 3,
+          "disposition": "noted",
+          "how": [],
+          "note": "Live Entertainment covers ticket purchases only; the option keeps the entertainment category as labelled (general 19)."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "choice"
+          ],
+          "note": "Self-Select choice with five options, one pick and Select Streaming Services as default.",
+          "rules": [
+            6,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "citi-strata-premier",
+      "issuer": "Citi",
+      "corpusCaseSha256": "ceb6fa791f0e9a6b4a70bda502936835c55ce7fab68cfa9026b035cbac0863fa",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: air travel and hotel purchases outside Citi Travel have no v3 category."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "citi-strata-elite",
+      "issuer": "Citi",
+      "corpusCaseSha256": "767e98995a429387c8519587a9b52820cb114134dd57b52416c820f445943a18",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 600
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "The 6X Citi Nights rate applies only Friday and Saturday nights (ET); the engine has no time-of-day condition, so the 3X any-other-time restaurant rule stands alone (O19)."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Citi Nights time window cannot be evaluated; the 6X rule is held out and restaurants earn the 3X rule."
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "citi-costco-anywhere-visa",
+      "issuer": "Citi",
+      "corpusCaseSha256": "d06562f1371fb03b6918da62a4f629b3913210d0a0d66678c9b50c664bb248e8",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: gas pumped at Costco warehouses; scoping it to the Costco brand would pay 5% on every Costco and Costco.com purchase."
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "gas",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "brand-exclusion"
+          ],
+          "note": "Shares the $7,000 cap with EV charging. Of the issuer list of excluded superstores, grocers and clubs, only Walmart, Target, Sam's Club and BJ's are excluded; the longer grocer list is not representable (20-brand limit, no brands defined).",
+          "set": {
+            "sharedCapId": "costco-gas-ev-7000",
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "sams-club",
+              "bjs-wholesale-club"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-costco-anywhere-visa-product",
+              "quote": "5% and 4% earn is on a combined $7,000 spend per year, 1% thereafter"
+            },
+            {
+              "sourceId": "citi-costco-anywhere-visa-categories",
+              "quote": "Superstores, Supermarkets and Warehouse Clubs excluded from the 4% earn on Gas purchases"
+            },
+            {
+              "sourceId": "citi-costco-anywhere-visa-categories",
+              "quote": "Kroger Walmart Loblaw Companies Sam’s Club"
+            },
+            {
+              "sourceId": "citi-costco-anywhere-visa-categories",
+              "quote": "Fry’s Target"
+            },
+            {
+              "sourceId": "citi-costco-anywhere-visa-categories",
+              "quote": "BJ’s Wholesale"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap"
+          ],
+          "note": "EV charging shares the combined $7,000 yearly cap with gas.",
+          "set": {
+            "sharedCapId": "costco-gas-ev-7000"
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-costco-anywhere-visa-product",
+              "quote": "5% and 4% earn is on a combined $7,000 spend per year, 1% thereafter"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airfare, hotels, car rentals, travel agencies, cruise lines and Costco Travel are travel with no v3 category."
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Costco and Costco.com purchases scoped to the Costco brand.",
+          "set": {
+            "brandIds": [
+              "costco"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-costco-anywhere-visa-product",
+              "quote": "2 % On all other Costco and Costco.com purchases"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "shared-cap"
+          ],
+          "note": "One shared cap ID on the 4% gas and EV charging rules; the 5% Costco-gas rule that also counts toward the $7,000 is held out.",
+          "rules": [
+            1,
+            2
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Rule 0 (gas at Costco warehouses) is held out as not at retail. A Costco membership is needed to apply for the card, so every cardholder meets it and no gate is needed."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Costco brand.",
+          "rules": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-platinum-select",
+      "issuer": "Citi",
+      "corpusCaseSha256": "a7e450c7e10188fd406e940849b188862f0df8b5b27ffdeb81605cc717bb2a71",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "American Airlines purchases scoped to the American Airlines brand.",
+          "set": {
+            "brandIds": [
+              "american-airlines"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-platinum-select-product",
+              "quote": "Earn 2 AAdvantage® miles for every $1 spent on eligible American Airlines purchases2"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Redeeming miles for flights does not change what a purchase earns."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Citi deciding which American Airlines purchases qualify is carried by the brand scope as labelled; no further catalog change."
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "Loyalty Points toward AAdvantage status do not change the miles a purchase earns."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Items billed by American Airlines as merchant of record: brand scope; AAdvantage Hotels and Cars bookings are not part of this rule.",
+          "rules": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-mileup",
+      "issuer": "Citi",
+      "corpusCaseSha256": "5290a4a234d183a709627b80fd30ec96a69505082c83e58da6967f256964ca43",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "American Airlines purchases scoped to the American Airlines brand.",
+          "set": {
+            "brandIds": [
+              "american-airlines"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-mileup-product",
+              "quote": "Earn 2 AAdvantage® miles for every $1 spent on eligible American Airlines purchases2"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Loyalty Points toward AAdvantage status do not change the miles a purchase earns."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Merchant-of-record American Airlines purchases: brand scope.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-globe",
+      "issuer": "Citi",
+      "corpusCaseSha256": "57d04c9067143281db89a20430f7779448a3374f506c8ffd68541e97343fea77",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Admirals Club food and beverage is paid as part of the American Airlines purchases benefit, so it takes the American Airlines brand scope.",
+          "set": {
+            "brandIds": [
+              "american-airlines"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-globe-rewards-terms",
+              "quote": "Food and beverage purchases made at the American Airlines Admirals Club® will be awarded 3 AAdvantage® miles for each $1 spent"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "American Airlines purchases scoped to the American Airlines brand.",
+          "set": {
+            "brandIds": [
+              "american-airlines"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-globe-product",
+              "quote": "Earn 3 AAdvantage® miles for every $1 spent on eligible American Airlines purchases2"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "American Airlines purchases and Admirals Club food and beverage both scoped to American Airlines.",
+          "rules": [
+            5,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "citi-tsc-visa",
+      "issuer": "Citi",
+      "corpusCaseSha256": "49aea7a2149c94bb5a56f378dc21014f798bef321f92b3d92139b52de1174bc4",
+      "heldOut": null,
+      "programId": "tsc-rewards",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Tractor Supply purchases scoped to the Tractor Supply brand.",
+          "set": {
+            "brandIds": [
+              "tractor-supply"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-tsc-visa-product",
+              "quote": "Shop at Tractor Supply and Earn 5%in Rewards2"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: veterinary services are a service with no v3 category."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "The capture now says rewards are redeemed at Tractor Supply stores, TractorSupply.com or the TSC App, so the card moves to the TSC Rewards store-credit program redeemed at Tractor Supply (O13, O18)."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to Tractor Supply; whether Petsense purchases earn 5% is unstated, so Petsense is not in scope.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "citi-dillards-mastercard",
+      "issuer": "Citi",
+      "corpusCaseSha256": "cfaaa90297005043474349ce087a14a97d21eacf155dd4f035b9a47ba4afdfb6",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Dillard's purchases scoped to the Dillard's brand.",
+          "set": {
+            "brandIds": [
+              "dillards"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-dillards-mastercard-product",
+              "quote": "Dillard’s Mastercard members earn 2 points4 for every $1 spent on all eligible Dillard’s purchases."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Choice between a 10% shopping pass and a $10 certificate is a redemption matter; programDetails limits redemption to Dillard's."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to Dillard's.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "citi-macys-amex",
+      "issuer": "Citi",
+      "corpusCaseSha256": "5acd1b6a2ca1cb16e15e5e0243b9f152b134852bbd05f8f8abcab7a073c9e4f0",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Silver rate at Macy's and Macy's Backstage; new cards open at Silver, so the lowest tier stays ungated (O17) and the gate guards Gold and Platinum.",
+          "set": {
+            "brandIds": [
+              "macys",
+              "macys-backstage"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-macys-amex-product",
+              "quote": "2 points per $1 spent for Silver members"
+            },
+            {
+              "sourceId": "citi-macys-amex-product",
+              "quote": "Use your Macy’s Card on purchases at Macy’s stores, Macy’s Backstage or macys.com."
+            },
+            {
+              "sourceId": "citi-macys-amex-product",
+              "quote": "New credit cards are opened at Silver status."
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "macys-gold",
+          "issuerWording": "3 points per $1 spent for Gold members",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "other",
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [
+            "macys",
+            "macys-backstage"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "macys-star-rewards-tier",
+              "optionIds": [
+                "gold"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Gold tier rate at Macy's and Macy's Backstage.",
+          "anchors": [
+            {
+              "sourceId": "citi-macys-amex-product",
+              "quote": "3 points per $1 spent for Gold members"
+            }
+          ]
+        },
+        {
+          "key": "macys-platinum",
+          "issuerWording": "5 points per $1 spent for Platinum members",
+          "rateBps": 500,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "other",
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [
+            "macys",
+            "macys-backstage"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "macys-star-rewards-tier",
+              "optionIds": [
+                "platinum"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Platinum tier rate at Macy's and Macy's Backstage.",
+          "anchors": [
+            {
+              "sourceId": "citi-macys-amex-product",
+              "quote": "5 points per $1 spent for Platinum members"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "Star Rewards tier ladder: ungated Silver floor plus gated Gold and Platinum rules.",
+          "rules": [
+            4,
+            "macys-gold",
+            "macys-platinum"
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "program-redemption"
+          ],
+          "note": "Star Money redemption limited to Macy's and Macy's Backstage in programDetails."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "Silver/Gold/Platinum tier gate; the spend thresholds decide the status the cardholder reports.",
+          "rules": [
+            4,
+            "macys-gold",
+            "macys-platinum"
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "citi-double-cash",
+      "issuer": "Citi",
+      "corpusCaseSha256": "5ccebfaae5c9e75c706597329b51e8a6d7ab5871cd6db28114fed0f7c805dc44",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "ThankYou redemption at 1 cent per point matches the cash-back mapping (2026-10-03 decision); no catalog change."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "The pay-side 1% is earned only up to purchases being paid, as the paid-on-payment rate already labels; no catalog change."
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "Citi Travel bookings paid partly with points earn only on the card-paid portion; this does not change the per-dollar rate."
+        }
+      ],
+      "hints": []
+    }
+  ],
+  "gates": [
+    {
+      "id": "macys-star-rewards-tier",
+      "question": "What is your Macy's Star Rewards status?",
+      "options": [
+        {
+          "id": "silver",
+          "label": "Silver"
+        },
+        {
+          "id": "gold",
+          "label": "Gold"
+        },
+        {
+          "id": "platinum",
+          "label": "Platinum"
+        }
+      ],
+      "anchors": [
+        {
+          "sourceId": "citi-macys-amex-product",
+          "quote": "Cardholders can access Gold status with $500 - $1,199 annual spend at Macy’s with their Card and Platinum status with $1,200+ annual spend"
+        }
+      ]
+    }
+  ],
+  "programs": [
+    {
+      "id": "tsc-rewards",
+      "name": "TSC Rewards",
+      "currency": "cash-back",
+      "unitName": "cents",
+      "redemptionBrandIds": [
+        "tractor-supply"
+      ],
+      "anchors": [
+        {
+          "sourceId": "citi-tsc-visa-product",
+          "quote": "You can redeem your rewards at Tractor Supply stores, online at TractorSupply.com, or in the TSC App."
+        }
+      ]
+    }
+  ],
+  "programDetails": [
+    {
+      "programId": "tsc-rewards",
+      "unitName": "cents",
+      "redemptionBrandIds": [
+        "tractor-supply"
+      ]
+    }
+  ],
+  "rewardPrograms": [],
+  "labelLintAcks": []
+}
