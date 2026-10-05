@@ -1,63 +1,109 @@
-# AI Checkout
+<h1 align="center">
+  <img src="extension/assets/cart-mark.svg" width="56" alt="" /><br />
+  AI Checkout
+</h1>
 
-A Chrome extension that tells you which card you already own earns the most at checkout, backed by an LLM curation pipeline that keeps the card catalog up to date from issuer terms, with a human approving every published release.
-
-<p>
-  <img src="docs/release/assets/2-comparison-640x400.png" width="49%" alt="Extension popup comparing Blue Cash Everyday ($3.00) and Quicksilver ($1.50) on a $100 Best Buy purchase" />
-  <img src="docs/release/assets/full-stack-evidence.png" width="49%" alt="Review app showing extracted reward facts, each linked to an exact source span" />
+<p align="center">
+  A Chrome extension that tells you which card you already own earns the most at checkout.<br />
+  An LLM keeps its 178-card catalog current from issuer terms, and a person approves every release.
 </p>
 
-**Live:** [site](https://ai-checkout-api.onrender.com/) · [results](https://ai-checkout-api.onrender.com/results/) · [review app](https://ai-checkout-api.onrender.com/review/) (reviewers only) · [catalog API](https://ai-checkout-api.onrender.com/v1/catalog)
+<p align="center">
+  <a href="https://github.com/evanxliu1/AICheckout/actions/workflows/extension.yml"><img src="https://github.com/evanxliu1/AICheckout/actions/workflows/extension.yml/badge.svg" alt="Application checks" /></a>
+  <a href="https://github.com/evanxliu1/AICheckout/actions/workflows/database.yml"><img src="https://github.com/evanxliu1/AICheckout/actions/workflows/database.yml/badge.svg" alt="Database checks" /></a>
+  <a href="#license"><img src="https://img.shields.io/badge/license-MIT-1d5fb4" alt="MIT license" /></a>
+</p>
 
-[Shopper demo video](docs/release/assets/shopper-demo.mp4) · [Curation demo video](docs/release/assets/full-stack-demo.mp4) · [Architecture](wiki/system/architecture.md) · [Development wiki](wiki/index.md)
+<p align="center">
+  <a href="https://ai-checkout-api.onrender.com/">Site</a> ·
+  <a href="https://ai-checkout-api.onrender.com/results/">Eval results</a> ·
+  <a href="docs/readme/demo.mp4">Demo video</a> ·
+  <a href="docs/release/assets/full-stack-demo.mp4">Curation walkthrough</a> ·
+  <a href="wiki/system/architecture.md">Architecture</a> ·
+  <a href="wiki/index.md">Development wiki</a>
+</p>
+
+<p align="center">
+  <a href="docs/readme/demo.mp4"><img src="docs/readme/demo-poster.jpg" width="100%" alt="Demo video: add your cards, shop as usual, and the extension shows the best card on the cart; every card ranked, savings tracked, cards kept in the browser. Click to play (40 seconds)." /></a>
+  <br />
+  <sub><a href="docs/readme/demo.mp4">▶ Watch the 40-second demo</a></sub>
+</p>
+
+## Why it's built this way
+
+Turning pages of issuer terms into structured reward rules is extraction, which an LLM does well. Picking a card at checkout is arithmetic over those rules, which should be exact, fast and private. The project is split at that line:
+
+- **No model at checkout.** A pure TypeScript engine ranks your cards in integer cents and basis points, with spending caps and explicit ranges when an input is unknown. It runs offline, needs no API key, and your wallet never leaves the browser.
+- **The LLM curates, and it has no write path.** It drafts each card's reward rules from captured issuer pages into a strict schema. Every stated value has to quote the source; quotes are checked against the captured page, and one that doesn't match flags the run for review. Independent agents verify the drafted rules, and a person reviews and publishes each release as a separate action.
+- **The extraction is measured.** An offline eval scores models and prompts on real issuer terms, with held-out issuers and planted prompt injections.
 
 ## How it works
 
-```mermaid
-flowchart LR
-  subgraph Extension
-    P[Popup] --> W[Service worker] --> R[Deterministic rewards engine]
-    L[Cached catalog] --> R
-  end
-  S[Issuer terms] --> M[LLM extraction harness] --> V[Schema + citation checks] --> A[Human review] --> D[(Postgres releases)]
-  D -->|GET /v1/catalog| L
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/architecture-dark.svg" />
+  <img src="docs/readme/architecture-light.svg" width="100%" alt="Architecture. At checkout, in the browser: a supported cart is read for its order-summary amount, the deterministic rewards engine ranks the cards in your wallet, and the badge and popup show the result; no model runs. On the maintainer side: issuer terms are captured, an LLM extracts rules into a strict schema, quotes are matched against the page and misses are flagged, agents verify and a person signs off, and an immutable catalog release is published. The catalog is bundled with the extension, with an optional refresh from GET /v1/catalog." />
+</picture>
 
-- **At checkout, no model runs.** A pure TypeScript engine ranks your cards using integer cents/basis points, spending caps, and explicit uncertainty ranges. It works offline and needs no API key.
-- **The LLM keeps the rules current.** It turns captured issuer terms into a structured draft where every fact cites an exact source span. Validation rejects any quote that doesn't match the source. A reviewer applies and publishes changes as separate steps; the model has no write path.
-- **Everything is versioned.** Prompt, context, and schema versions are hashed into every trace. Catalog releases are immutable and published atomically.
+On a supported cart (Amazon, Best Buy and Newegg in the US), a badge shows the best card without a click, for example "Use Blue Cash Everyday · $3.00 back". The popup ranks every card you own for that purchase and names any condition it can't check. The 178-card catalog is bundled. Hosted builds can also check `/v1/catalog` for a newer release when you ask; that is the only network request, and it never sends cart or wallet data.
 
-## Highlights
+### The curation pipeline
 
-| Area | What's there |
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/curation-dark.svg" />
+  <img src="docs/readme/curation-light.svg" width="100%" alt="Curation pipeline: capture issuer pages with dates and hashes; extract with gpt-5.6-luna into strict JSON with stated values quoted, using a versioned prompt; validate with the Zod schema and match quotes to the page, flagging any that don't match; independent agents verify and adjudicate (the model cannot write); a person reviews and publishes as a separate step, producing an immutable release. Every run leaves a trace with prompt, context and schema hashes that the eval replays." />
+</picture>
+
+New cards and refreshes go through an agent-driven pipeline (`tools/catalog-pipeline`): research, capture, extraction, label drafting, then verification and adjudication by separate agents, ending at a ready branch. Publishing stays a human step in the review app. Details: [curation harness](apps/api/src/curation/README.md) · [card-expansion pipeline](wiki/system/card-expansion-pipeline.md).
+
+## Results
+
+Extraction on real issuer terms for seven cards, scored field by field against agent-verified labels. Prompts were written on four dev cards and frozen before the three held-out cards were run. All rows use the guided.2 prompt except the baseline.
+
+| Configuration | Held-out field accuracy | Rule recall | Planted injections reported |
+| --- | --- | --- | --- |
+| claude-opus-5-5 | 99.2% | 99.4% | 100% |
+| gpt-5.6-luna (xhigh), the curation model | 98.3% | 100% | 100% |
+| gpt-5.5 (low) | 97.5% | 100% | 100% |
+| gpt-6-astra (low), full pages | 97.2% | 100% | 100% |
+| claude-sonnet-5 | 93.2% | 100% | 100% |
+| claude-haiku-4-5 | 90.9% | 98.7% | 100% |
+| gpt-6-astra (low), two-sentence baseline prompt | 83.1% | 97.4% | 100% |
+
+- **The prompt is the biggest lever.** On dev, the same models score 65–83% with a two-sentence prompt and 92–99% with their best guided prompt. Model choice still spans up to 29 points at a fixed prompt.
+- **Caveats.** Labels are agent-verified, not human-verified. The Opus and luna held-out rows were added after the other held-out results had been seen; no prompt changed for them. Full tables, failure examples and disclosures are in [results](docs/evals/results.md).
+- **At catalog scale** (173 cards, including points cards and merchant-specific rules) gpt-5.5 scores 76.2% end to end and about 94% on the rules it finds; most of the drop is missed merchant and partner rules. The corpus and labelling differ, so this is not directly comparable with the table ([expansion eval](docs/evals/expansion.md)). The pipeline's first run, a Wells Fargo refresh, is in [pipeline v1](docs/evals/pipeline-v1.md).
+
+## What's in the repo
+
+| Area | Highlights |
 | --- | --- |
-| LLM harness | Versioned prompt/context/schema, strict structured output with `known`/`unknown`/`conflicting` states, citation span validation, prompt-injection handling, token/time/cost budgets with atomic reservations, once-only execution, and a private trace ledger ([details](apps/api/src/curation/README.md)) |
-| Evaluation | Offline scorer and replay tool for saved traces: field agreement, fact precision/recall, unsupported claims, evidence coverage, false "clear" verdicts, cost and latency ([details](evals/curation/README.md)). Measured on real issuer terms for seven cards (agent-verified labels), six models (gpt-5.5 at two efforts; gpt-5.6-luna at xhigh, the curation model since 2026-10-02, 99.5% dev / 98.3% held-out in a run added afterwards), three prompts: the best configurations reach 99% end-to-end field accuracy on dev (gpt-6-astra, guided prompt) and 97–99% on held-out issuers (gpt-6-astra 97%, Claude Opus 5.5 99% in a run added after the original held-out set) with 99–100% rule recall, and every planted prompt injection is reported; a detailed prompt is the largest single lever (65–83% with a two-sentence prompt vs 92–99% with each model's best guided prompt), and model choice still spans up to 29 points at a fixed prompt ([results](docs/evals/results.md)). On the 173-card expansion (points cards and merchant rules, agent-verified labels drafted from gpt-5.6-luna, one repeat) gpt-5.5 low with the same prompt and source selection that scored 97.5% on the 7-card held-out split scores 76.2% end to end: about 94% on the rules it finds, with most of the drop from missed merchant and partner rules and few labelled issues reported; the corpora (and how output tokens were counted) differ, so the numbers are not directly comparable ([expansion eval](docs/evals/expansion.md)) |
-| Backend | Node 24 + Fastify API, Supabase Auth, PostgreSQL with RLS, a private review schema, and transactional publication ([schema](supabase/README.md)) |
-| Review app | React UI for source evidence, per-condition decisions, draft diffs against the published catalog, and separate publication ([app](apps/review/README.md)) |
-| Extension | React + TypeScript on Manifest V3 with minimal permissions, a cart reader that only runs when you click it, and state that survives popup closure and worker shutdown ([extension](extension/README.md)) |
-| Testing | ~1,100 unit, component and script tests, Playwright tests against the packaged extension, review app and public site (with axe accessibility checks), SQL policy/concurrency tests, and CI for both stacks |
-
-## Repository
+| [Extension](extension/README.md) | React + TypeScript on Manifest V3; minimal permissions; site adapters that read only the order-summary amount, never the items; an optional passphrase lock; state that survives popup closure and worker shutdown |
+| [Rewards engine](packages/rewards-core) | Pure, deterministic ranking over a Zod-validated catalog: caps, rotating and merchant rules, points valued in cash where a value is published, issuer-stated or set by you, ranges for unknowns |
+| [LLM harness](apps/api/src/curation/README.md) | Versioned prompt, context and schema; `known` / `unknown` / `conflicting` states; citation span validation; injection handling; budgets with atomic reservations; once-only runs; a private trace ledger |
+| [Evaluation](evals/curation/README.md) | Offline scorer and trace replay: field accuracy, rule precision and recall, unsupported claims, evidence validity, false "clear" verdicts, cost and latency |
+| [Review app](apps/review/README.md) | React app for source evidence, per-condition decisions, draft diffs against the published catalog, and separate publication |
+| [Backend](supabase/README.md) | Node 24 + Fastify, Supabase Auth, PostgreSQL with row-level security, a private review schema, transactional publication |
+| Testing | About 1,200 unit, component and script tests; Playwright against the packaged extension, review app and site with axe accessibility checks; SQL policy and concurrency tests; CI for both stacks |
 
 ```
-extension/                Chrome extension (popup, service worker, cart readers)
-packages/rewards-core/    Deterministic rewards engine + catalog schema
+extension/                Chrome extension: popup, service worker, cart badge, site adapters
+packages/rewards-core/    Deterministic rewards engine and catalog schema
 packages/catalog-client/  Bounded catalog fetch used by the extension
-packages/catalog-review/  Shared curation/review contracts
-packages/ui/              React components built to the Helios design system specs
-apps/api/                 Fastify API; curation harness in src/curation/
-apps/review/              React review app
+packages/catalog-review/  Shared curation and review contracts
+packages/ui/              React components on the Ocean theme
+apps/api/                 Fastify API; the curation harness is in src/curation/
+apps/review/              Review app
 apps/site/                Public site: overview, results, architecture, privacy, support
-evals/curation/           Evaluation corpus, scorer docs, baseline
+tools/catalog-pipeline/   Agent-driven card-expansion pipeline CLI
+evals/curation/           Evaluation corpora and scorer docs
 supabase/                 Migrations, seed, SQL tests
-docs/                     Release and store materials, verification notes, eval results, research
-wiki/                     Development wiki: state, decisions, architecture, runbooks (start at wiki/now.md)
+docs/                     Eval results, release and store materials, README diagrams
+wiki/                     Development wiki: current state, decisions, architecture, runbooks
 ```
 
-## Run it
+## Run it locally
 
-Requires Node 24. No accounts or keys are needed for the extension.
+Requires Node 24. The extension needs no accounts or keys.
 
 ```sh
 npm ci
@@ -65,17 +111,20 @@ npm run lint && npm run typecheck && npm test
 npm run build
 ```
 
-Load `extension/dist` from `chrome://extensions` with Developer mode on. For the API, review app, and local database, see [apps/api](apps/api/README.md) and [supabase](supabase/README.md) (Docker required).
+Then open `chrome://extensions`, turn on Developer mode, and load `extension/dist`. The API, review app and local database need Docker; see [local setup](wiki/ops/local-setup.md).
 
 ## Status
 
-Working: the extension on catalog v3 with 178 cards, cash back and points, from the top 10 U.S. issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank, Wells Fargo), points compared in cash terms with published or issuer-stated value estimates, and 3 checkouts read through bundled site adapters (Amazon US, Best Buy US, Newegg US); the Helios UI across the extension, the review app and the public site; CI; and the hosted [site](https://ai-checkout-api.onrender.com/), [results page](https://ai-checkout-api.onrender.com/results/), [review app](https://ai-checkout-api.onrender.com/review/) and catalog API (Render + Supabase).
-
-Published: the 7-card catalog is release 1 on `/v1/catalog` (version `2026-09-29.real.1`, approved in the hosted review app on 2026-10-02; [publish runbook](docs/release/publish-runbook.md)). The 178-card catalog `2026-10-02.expansion.1` (agent-verified labels and overlay) is bundled in the extension and goes through human review in the review app before it is published as the next hosted release, by 2026-10-28 ([catalog release runbook](wiki/ops/catalog-release.md)). In progress: card search and point-value settings in the extension UI. Next: an agent-driven card-expansion pipeline and merchant expansion, then a Chrome Web Store release and terms-change detection. See the [roadmap](wiki/product/roadmap.md).
+| | |
+| --- | --- |
+| **Working** | The extension on a 178-card catalog from the top 10 U.S. issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank, Wells Fargo), cash back and points |
+| **Live** | [Site](https://ai-checkout-api.onrender.com/), [results](https://ai-checkout-api.onrender.com/results/), [review app](https://ai-checkout-api.onrender.com/review/) (reviewers only) and the [catalog API](https://ai-checkout-api.onrender.com/v1/catalog) on Render and Supabase. Release 2, the 178-card catalog, was published 2026-10-03 and expires 2026-11-01 |
+| **In progress** | Catalog freshness: every source was hash-checked on 2026-10-05, 107 cards were re-verified, and a renewed 178-card catalog is built and waiting to be published before release 2 expires ([freshness results](docs/evals/freshness-2026-10.md)) |
+| **Next** | More checkout sites through a merchant pipeline, then a Chrome Web Store release. See the [roadmap](wiki/product/roadmap.md) |
 
 ## License
 
-MIT
+[MIT](LICENSE)
 
 ## Credits
 
