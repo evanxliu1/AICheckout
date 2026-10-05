@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "capital-one-refresh-2026-10",
-  "updatedAt": "2026-10-05T02:00:32.124Z",
+  "updatedAt": "2026-10-05T02:02:27.297Z",
   "cards": {
     "capital-one-venture-x": {
       "stages": {
@@ -984,6 +984,30 @@
           "agentRun": "aedf99cf3efddd95e",
           "model": "claude-opus-5-5",
           "acceptedAt": "2026-10-05T02:00:32.093Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:dd91d5603d3963f4daa112bd39c0acc33f1c03d88dde9a3454945daba4b75c88",
+          "finishedAt": "2026-10-05T02:02:26.286Z",
+          "attempts": 1,
+          "packetId": "1c286d64-f970-4ef5-a09a-27c1e324e68d",
+          "agentRun": "a31d24e0c2e830ca7",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T02:02:26.286Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:6444b2345c14cfdf9aad656810ac00a54e8cfcdaa7aea8fc16f4bcdd778284d5",
+          "outputs": [
+            {
+              "ref": "corpus:capital-one-t-mobile-visa",
+              "sha256": "5538c41c2f72f149c4c0fc65037553d33304e542ad3fe246d9e2b1bf633d98d0"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:02:27.297Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -1252,21 +1276,21 @@
           "outputs": [
             {
               "ref": "adjudicate:capital-one",
-              "sha256": "97b70442801b18eed8cc418afb7baed09e6f4ad79472099fda9e18e36ee1bf06"
+              "sha256": "c401c68b29ea1e4924b29e7f362c79210ad09e6ebb90cec37fc676a1b342d4be"
             },
             {
               "ref": "lint-acks:capital-one",
               "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
             }
           ],
-          "finishedAt": "2026-10-05T01:42:46.284Z",
-          "attempts": 1,
-          "packetId": "4f6574ba-8fa4-48d5-8a40-942fb3b2974e",
-          "agentRun": "a52f0c9fef1c37b03",
+          "finishedAt": "2026-10-05T02:02:26.286Z",
+          "attempts": 2,
+          "packetId": "1c286d64-f970-4ef5-a09a-27c1e324e68d",
+          "agentRun": "a31d24e0c2e830ca7",
           "model": "claude-fable-5-1",
-          "acceptedAt": "2026-10-05T01:42:46.284Z",
-          "durationMs": 86729,
-          "tokens": 52434
+          "acceptedAt": "2026-10-05T02:02:26.286Z",
+          "durationMs": 98430,
+          "tokens": 41732
         },
         "overlay": {
           "status": "done",
