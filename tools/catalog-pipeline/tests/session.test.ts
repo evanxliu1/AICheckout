@@ -90,6 +90,7 @@ describe('pipeline login', () => {
       savedAt: '2026-10-04T12:00:00.000Z',
     });
     expect(logs).toEqual([
+      `Signing in to ${API}; your password goes to Supabase Auth at project.supabase.example.test.`,
       `Signed in as ${EMAIL}.`,
       'Reviewer access confirmed.',
       `Session saved to ${deps.sessionPath} (mode 600). End it with \`npm run pipeline -- logout\`.`,
@@ -108,7 +109,10 @@ describe('pipeline login', () => {
   it('reports a wrong password by status and code only', async () => {
     const { deps, logs } = await setup();
     expect(await login(deps, prompter([EMAIL, `${SECRET}-wrong`]), API)).toBe(1);
-    expect(logs).toEqual(['Sign-in refused (HTTP 400, invalid_credentials); nothing saved.']);
+    expect(logs).toEqual([
+      `Signing in to ${API}; your password goes to Supabase Auth at project.supabase.example.test.`,
+      'Sign-in refused (HTTP 400, invalid_credentials); nothing saved.',
+    ]);
     expect(await readSession(deps)).toBeNull();
   });
 

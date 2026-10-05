@@ -21,7 +21,8 @@ As of 2026-10-05T04:45Z.
 
 ## Active work
 
-- **Agent publish path** (Phase 9 milestone 5; [decision](decisions/2026-10-05-agent-publish-cli-session.md)): built on branch `phase9-m5-agent-publish` (2026-10-05T04:56Z), not yet reviewed or merged. `pipeline login` / `logout` / `whoami [--check]` and `pipeline publish` (dry run; `--confirm <version> --instruction-at <time>` after Evan's chat message); runbook [agent publish](ops/catalog-release.md#agent-publish-cli). The offline dry run of `2026-10-05.renewal.1` with the 14 capture folders matched 328 of 328 sources. Next: independent review, PR, merge, Render deploy (the API comment change only), then Evan runs `npm run pipeline -- login`. The renewal waits for it.
+- **Agent publish path** (Phase 9 milestone 5; [decision](decisions/2026-10-05-agent-publish-cli-session.md)): `pipeline login` / `logout` / `whoami [--check]` and `pipeline publish` (dry run; `--confirm <version> --instruction-at <time>` after Evan's chat message); runbook [agent publish](ops/catalog-release.md#agent-publish-cli). Independent review done (agent-verified, symlink and session hardening fixed). The offline dry run of `2026-10-05.renewal.1` with the 14 capture folders matched 328 of 328 sources. Next: PR, merge, Render deploy, then Evan runs `npm run pipeline -- login` once. The renewal waits for it.
+- **Public docs:** README rewrite with SVG diagrams and the demo video merged (PR #51, squash, 2026-10-05; [decision](decisions/2026-10-05-readme-demo-video-and-diagrams.md)).
 
 ## Open questions and next steps
 

@@ -444,6 +444,9 @@ export async function login(deps: SessionDeps, prompt: Prompter, api: string): P
   const config = await requestJson(deps, `${api}/review/config.json`, reviewConfigSchema, {
     maxBytes: 4096,
   });
+  deps.log(
+    `Signing in to ${api}; your password goes to Supabase Auth at ${new URL(config.supabaseUrl).host}.`,
+  );
   const email = (await prompt.ask('Email: ', false))?.trim();
   if (email === undefined) {
     deps.log('login aborted; nothing saved');

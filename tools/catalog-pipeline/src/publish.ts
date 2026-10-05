@@ -37,7 +37,13 @@ import {
 import type { ReviewClient, SessionDeps } from './session.ts';
 
 /** Paths whose uncommitted changes would make the checkout differ from the catalog and manifests on main. */
-export const CLEAN_PATHS = ['packages/rewards-core', 'evals/curation', 'apps/review/src/manifest.ts'];
+export const CLEAN_PATHS = [
+  'packages/rewards-core',
+  'packages/catalog-review',
+  'evals/curation',
+  'apps/review/src/manifest.ts',
+  'tools/catalog-pipeline',
+];
 export const MAX_RATE_LIMIT_WAITS = 8;
 const DEFAULT_RATE_LIMIT_WAIT_MS = 15_000;
 const INSTRUCTION_SKEW_MS = 5 * 60_000;
