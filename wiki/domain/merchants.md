@@ -1,12 +1,12 @@
 ---
 type: Domain Concept
 title: Merchants
-description: The three merchant profiles in catalog v2 (Best Buy, Newegg, Amazon), their expected category and MCC with confidence, the caveats that make bonuses uncertain, and their catalog v3 brands.
+description: The three merchant profiles in catalog v2 (Best Buy, Newegg, Amazon), their expected category and MCC with confidence, the caveats that make bonuses uncertain, their catalog v3 brands, and the engine's generic "Another U.S. online store" profile.
 status: stable
 tags: [domain, merchants, mcc]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:26:46Z
+  at: 2026-10-05T20:45:00Z
 sources:
   - resource: ../../evals/curation/real/merchants.json
     title: Merchant profiles (input to the catalog builder)
@@ -16,6 +16,8 @@ sources:
     title: CATALOG_V2 merchants
   - resource: ../../packages/rewards-core/src/types.ts
     title: MerchantProfile type
+  - resource: ../../packages/rewards-core/src/generic-merchant.ts
+    title: GENERIC_MERCHANT_PROFILE (Phase 11)
   - resource: ../../docs/research/cashback-card-terms-2026.md
     title: Research report, section on electronics retailers (checked 2026-09-28)
 stale_after: 2026-11-04T00:00:00Z
@@ -48,12 +50,24 @@ Both CheckMCC pages were re-checked unchanged (same SHA-256) by `pipeline freshn
 ## How it works
 
 - Profiles are authored in [`evals/curation/real/merchants.json`](../../evals/curation/real/merchants.json) and copied into `CATALOG_V2.merchants` by [`scripts/build-catalog-v2.mjs`](../../scripts/build-catalog-v2.mjs). Merchant MCC page captures are gitignored (`evals/curation/real/merchant-captures/`). Only `merchant-manifest.json` and `merchant-sources.json` are committed.
-- A purchase at a merchant not in `merchants` returns `unsupported-merchant`.
+- A purchase at a merchant not in `merchants` returns `unsupported-merchant`, except the generic id `generic-us-online` with a v3 catalog (see [Another U.S. online store](#another-us-online-store-phase-11)).
 - `expectedCategory` gates MCC-group rules. With `electronics` or `general-merchandise`, no supermarket, gas, dining or other category rule can apply.
 
 ## Catalog v3 (Stage 2 M4)
 
 [`evals/curation/expansion/merchants.json`](../../evals/curation/expansion/merchants.json) carries the same three profiles plus `brandIds` (`amazon-us` → `amazon`, `best-buy-us` → `best-buy`, `newegg-us` → `newegg`) and the 140 brands that overlay rules, closed-loop cards and store-credit programs refer to. A brand is a merchant name for matching only and implies no affiliation; UI copy must not present brands as partners. Rules scoped to `amazon`, `best-buy` or `newegg` (Prime Visa, Amazon Store Card, My Best Buy Visa, Newegg Store Credit Card) are the ones that change rankings at the supported merchants today ([overlay decision](../decisions/2026-10-02-catalog-overlay-conventions.md)).
+
+## Another U.S. online store (Phase 11)
+
+Since Phase 11 the engine, not the catalog, supplies one more profile: `GENERIC_MERCHANT_PROFILE` in [`generic-merchant.ts`](../../packages/rewards-core/src/generic-merchant.ts) ([decision](../decisions/2026-10-05-generic-store-profile.md)). The popup uses it for any web page that is not one of the three supported stores.
+
+| `id` | Name | Online retail | Physical goods | U.S. | `expectedCategory` | MCC | Brands |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `generic-us-online` | Another U.S. online store | yes | yes | yes | general-merchandise | null, `low` | none |
+
+- `compareV3` adds it to the catalog's merchants unless the catalog has a profile with that id (`merchantProfilesV3`), so every v3 release, bundled or hosted, supports it with no schema, SQL or migration change. v1 and v2 catalogs still answer `unsupported-merchant`. `catalogMerchantIds` lists it for v3 catalogs.
+- What applies there: `all-purchases` and `online-retail` rules. MCC-group rules do not (no reward category is `general-merchandise`), brand-scoped rules do not, and closed-loop cards are not accepted.
+- **Known limit.** It has no brands, so a rule's `excludedBrandIds` cannot fire at a generic store. A guard test in `extension/tests/rewards-v3.test.ts` lists every bundled rule that can apply there and has exclusions. In `2026-10-05.renewal.1` there is one: the Synchrony OnePay CashRewards first-90-days 3% on all purchases, which excludes Walmart, so at walmart.com a shopper who says they are in the first 90 days sees 3% where Walmart purchases earn under the card's own Walmart rule. Named profiles for such stores come with the merchant database (Phase 14).
 
 ## Gotchas
 
