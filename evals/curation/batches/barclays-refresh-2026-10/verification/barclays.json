@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "7e26a7a7-9c00-4b6d-ad17-0003b56e0417",
+  "packetId": "35b00b99-04b6-4a49-9b69-f93775fdafe5",
   "batch": "barclays-refresh-2026-10",
   "issuer": "Barclays",
   "provenance": "agent-verified",
@@ -44,7 +44,42 @@
       "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-aarp-travel-rewards-mastercard-pricing.txt"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-10-05",
+    "filesRead": [
+      ".claude/agents/card-adjudicator.md",
+      "evals/curation/batches/barclays-refresh-2026-10/pipeline/packets/adjudicate.barclays.2.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/batches/barclays-refresh-2026-10/verification/conventions/barclays.md",
+      "evals/curation/batches/barclays-refresh-2026-10/verification/barclays.json",
+      "evals/curation/batches/barclays-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-mastercard-titanium-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-mastercard-titanium-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-mastercard-gold-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-mastercard-gold-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-jetblue-plus-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-jetblue-plus-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-jetblue-premier-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-jetblue-premier-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-upromise-world-mastercard-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-upromise-world-mastercard-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-frontier-airlines-world-mastercard-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-frontier-airlines-world-mastercard-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-carnival-rewards-mastercard-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-carnival-rewards-mastercard-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-gap-encore-mastercard-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-gap-encore-mastercard-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-old-navy-encore-mastercard-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-old-navy-encore-mastercard-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-banana-republic-encore-mastercard-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-banana-republic-encore-mastercard-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-aarp-travel-rewards-mastercard-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-aarp-travel-rewards-mastercard-pricing.txt"
+    ]
+  },
   "cards": [
     {
       "cardId": "barclays-mastercard-titanium",
@@ -183,7 +218,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none."
+          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a TrueBlue number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "set",
@@ -194,7 +233,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none."
+          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a TrueBlue number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "set",
@@ -205,7 +248,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none."
+          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a TrueBlue number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "set",
@@ -216,7 +263,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none."
+          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a TrueBlue number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "remove",
@@ -267,7 +318,11 @@
               "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
             }
           ],
-          "note": "The terms pay 6 points per $1 on JetBlue Vacations purchases as a separate sentence; split out of the combined heading per the Barclays convention."
+          "note": "The terms pay 6 points per $1 on JetBlue Vacations purchases as a separate sentence; split out of the combined heading per the Barclays convention.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention splits the combined 6X heading; the pricing capture pays 6 points per $1 on JetBlue Vacations purchases as its own sentence, states no limit on points, and auto-assigns the TrueBlue number (activation none under the 2026-10-05 batch convention)."
+          }
         },
         {
           "rule": {
@@ -299,7 +354,11 @@
               "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
             }
           ],
-          "note": "TrueBlue Travel bookings at truebluetravel.com earn 6 points per $1; a program-run booking site, so travel-portal (Barclays convention)."
+          "note": "TrueBlue Travel bookings at truebluetravel.com earn 6 points per $1; a program-run booking site, so travel-portal (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention makes TrueBlue Travel (truebluetravel.com) a travel-portal rule; the pricing capture pays 6 points per $1 on it, states no limit on points, and auto-assigns the TrueBlue number (activation none under the 2026-10-05 batch convention)."
+          }
         }
       ],
       "addedExclusions": [],
@@ -361,7 +420,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none."
+          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a TrueBlue number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "set",
@@ -372,7 +435,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none."
+          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a TrueBlue number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "set",
@@ -383,7 +450,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none."
+          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a TrueBlue number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "set",
@@ -394,7 +465,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none."
+          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a TrueBlue number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "set",
@@ -405,7 +480,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none."
+          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a TrueBlue number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "set",
@@ -416,7 +495,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none."
+          "note": "Barclays convention: the JetBlue terms assign a TrueBlue number to cardmembers without one, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a TrueBlue number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "remove",
@@ -783,7 +866,11 @@
             "sourceId": "barclays-carnival-rewards-mastercard-pricing",
             "quote": "a new Carnival Rewards Account number will be assigned to you and added to your Card Account."
           },
-          "note": "The terms assign a Carnival Rewards number to cardmembers without one, so activation is none (Barclays convention)."
+          "note": "The terms assign a Carnival Rewards number to cardmembers without one, so activation is none (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a Carnival Rewards number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "set",
@@ -794,7 +881,11 @@
             "sourceId": "barclays-carnival-rewards-mastercard-pricing",
             "quote": "a new Carnival Rewards Account number will be assigned to you and added to your Card Account."
           },
-          "note": "The terms assign a Carnival Rewards number to cardmembers without one, so activation is none (Barclays convention)."
+          "note": "The terms assign a Carnival Rewards number to cardmembers without one, so activation is none (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a Carnival Rewards number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "set",
@@ -805,7 +896,11 @@
             "sourceId": "barclays-carnival-rewards-mastercard-pricing",
             "quote": "a new Carnival Rewards Account number will be assigned to you and added to your Card Account."
           },
-          "note": "The terms assign a Carnival Rewards number to cardmembers without one, so activation is none (Barclays convention)."
+          "note": "The terms assign a Carnival Rewards number to cardmembers without one, so activation is none (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a Carnival Rewards number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "set",
@@ -816,7 +911,11 @@
             "sourceId": "barclays-carnival-rewards-mastercard-pricing",
             "quote": "a new Carnival Rewards Account number will be assigned to you and added to your Card Account."
           },
-          "note": "The terms assign a Carnival Rewards number to cardmembers without one, so activation is none (Barclays convention)."
+          "note": "The terms assign a Carnival Rewards number to cardmembers without one, so activation is none (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Batch convention 2026-10-05: the pricing capture assigns a Carnival Rewards number to cardmembers without one, and accepting the Program Terms & Conditions is part of holding that account, not a rewards enrollment (general 7), so activation is none; the anchor is the enrollment sentence part the Barclays convention prescribes."
+          }
         },
         {
           "op": "remove",
@@ -1505,6 +1604,74 @@
       "addedExclusions": [],
       "addedIssues": [],
       "productNoteChanges": []
+    }
+  ],
+  "labelLintAcks": [
+    {
+      "cardId": "barclays-gap-encore-mastercard",
+      "ruleIndex": 1,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-gap-encore-mastercard",
+      "ruleIndex": 2,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-gap-encore-mastercard",
+      "ruleIndex": 3,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-gap-encore-mastercard",
+      "ruleIndex": 5,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-old-navy-encore-mastercard",
+      "ruleIndex": 0,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-old-navy-encore-mastercard",
+      "ruleIndex": 1,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-old-navy-encore-mastercard",
+      "ruleIndex": 3,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-old-navy-encore-mastercard",
+      "ruleIndex": 5,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-banana-republic-encore-mastercard",
+      "ruleIndex": 3,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-banana-republic-encore-mastercard",
+      "ruleIndex": 4,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-banana-republic-encore-mastercard",
+      "ruleIndex": 5,
+      "check": "rate",
+      "reason": "anchor-truncated"
     }
   ]
 }
