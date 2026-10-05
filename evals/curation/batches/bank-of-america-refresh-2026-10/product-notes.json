@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/draft-expansion-labels.mjs",
+  "description": "Structured hints the extraction schema cannot express, from the research drafts (summaries and conditions clipped to 25 words). An anchored hint cites a quote of at most 25 words that resolves in the captures (research-quote: the research quoted it; keyword-search: a capture sentence with the rate and a keyword, which a verifier must confirm says what the hint says). Unanchored hints cite the research. draftNotes record what drafting dropped.",
+  "cards": [
+    {
+      "cardId": "boa-customized-cash-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "6% (3% base + 3% first-year bonus)",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "First year from account opening only; cardholder selects category, may change once per calendar month via Online/Mobile Banking. Online shopping choice = \"purchases made online…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "3%",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "Cardholder selects category; change once per calendar month. Online shopping choice = \"purchases made online via a website or a digital application (an app)\", identified…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+            "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/cash-back-category-choices/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+            "https://www.bankofamerica.com/credit-cards/"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"1% Base Cash Rewards\") cap: value dropped (no resolving quote)",
+        "rules.1 (supermarkets): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.2 (gas): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.3 (ev-charging): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.4 (online-retail): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.5 (dining): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.6 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.7 (drugstores): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.8 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "exclusions.5: an anchor that ran on from another was dropped (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/unlimited-cash-back-credit-card/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+            "https://www.bankofamerica.com/credit-cards/",
+            "https://upgradedpoints.com/news/bofa-rewards-program-launch/"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-travel-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/travel-rewards-credit-card/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards",
+            "https://www.bankofamerica.com/credit-cards/"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (travel-portal): an anchor that ran on from another was shortened (no 25+ word run)",
+        "exclusions.4: an anchor that ran on from another was dropped (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-students",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "6% (3% base + 3% first-year bonus)",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "First year from account opening only; cardholder selects category, may change once per calendar month via Online/Mobile Banking. Online shopping choice = \"purchases made online…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "3%",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "Cardholder selects category; change once per calendar month. Online shopping choice = \"purchases made online via a website or a digital application (an app)\", identified…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/student-cash-back-credit-card/",
+            "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/cash-back-category-choices/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (supermarkets): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.2 (gas): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.3 (gas): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.4 (ev-charging): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.5 (ev-charging): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.6 (online-retail): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.7 (online-retail): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.8 (dining): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.9 (dining): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.10 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.11 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.12 (drugstores): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.13 (drugstores): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.14 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.15 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "exclusions.5: an anchor that ran on from another was dropped (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "boa-travel-rewards-students",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-secured",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "6% (3% base + 3% first-year bonus)",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "First year from account opening only; cardholder selects category, may change once per calendar month via Online/Mobile Banking. Online shopping choice = \"purchases made online…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "3%",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "Cardholder selects category; change once per calendar month. Online shopping choice = \"purchases made online via a website or a digital application (an app)\", identified…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/cash-back-secured-credit-card/",
+            "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/cash-back-category-choices/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (supermarkets): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.3 (gas): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.5 (ev-charging): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.7 (online-retail): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.9 (dining): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.11 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.13 (drugstores): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.15 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "exclusions.4: an anchor that ran on from another was dropped (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "boa-susan-g-komen-customized-cash-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "6% (3% base + 3% first-year bonus)",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "First year from account opening only; cardholder selects category, may change once per calendar month via Online/Mobile Banking. Online shopping choice = \"purchases made online…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "Choice category, one of: \"Gas and EV charging stations\", \"Online shopping, including cable, internet, phone plans and streaming\", \"Dining\", \"Travel\", \"Drug stores and pharmacies\", \"Home…",
+          "rate": "3%",
+          "cap": "$2,500 combined quarterly in choice + grocery/wholesale, then 1%",
+          "conditions": "Cardholder selects category; change once per calendar month. Online shopping choice = \"purchases made online via a website or a digital application (an app)\", identified…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "purchases made online via a website or a digital application (an app)"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards relationship bonus on all base earning (replaced Preferred Rewards May 27, 2026)",
+          "rate": "+10% Member / +25% Preferred Plus ($30k) / +50% Preferred Honors ($100k) / +75% Premier ($1M) of base rewards",
+          "cap": "none stated",
+          "conditions": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "membership": "Requires enrollment in BofA Rewards (eligible BofA checking account); tier set by combined BofA deposit + Merrill balances. Does not apply to account-opening bonuses or…",
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/bank-of-america.json",
+          "researchSources": [
+            "https://www.bankofamerica.com/credit-cards/products/susan-komen-credit-card/",
+            "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/cash-back-category-choices/",
+            "https://info.bankofamerica.com/en/rewards/bofa-rewards"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (supermarkets): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.2 (gas): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.3 (ev-charging): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.4 (online-retail): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.5 (dining): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.6 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.7 (drugstores): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.8 (other): an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "boa-atmos-rewards-summit",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "10% points bonus with eligible Bank of America account",
+          "rate": "+10% points",
+          "cap": "none stated",
+          "conditions": "Requires eligible BofA account",
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Plus, earn a 10% rewards bonus on all points earned from card purchases if you have an eligible Bank of America® account."
+        }
+      ],
+      "draftNotes": [
+        "rules.3 (other, \"Earn 3 points for every $1 spent on eligible foreign transac\"): issuerWording is not verbatim in the captures; replace it with the capture's wording",
+        "issues.3 (ambiguous): an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "boa-air-france-klm",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible Air France, KLM and SkyTeam member airline purchases",
+          "rate": "3 miles per $1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Air France-KLM (Flying Blue)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 3 Miles for every $1 spent on eligible Air France, KLM Royal Dutch Airlines and SkyTeam member airline purchases."
+        }
+      ],
+      "draftNotes": [
+        "exclusions.5: an anchor that ran on from another was dropped (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "boa-norwegian-cruise-line-world-mastercard",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Norwegian purchases",
+          "rate": "3 points per $1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Norwegian Cruise Line"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 3 points (consisting of 2 bonus points and 1 base point) for every $1 spent on eligible Net Purchases charged through Norwegian Cruise Line."
+        }
+      ],
+      "draftNotes": [
+        "exclusions.5: an anchor that ran on from another was dropped (no 25+ word run)"
+      ]
+    }
+  ]
+}
