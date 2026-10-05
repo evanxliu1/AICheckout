@@ -6,7 +6,7 @@ status: stable
 tags: [domain, rewards, engine]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:00:00Z
+  at: 2026-10-05T20:45:00Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
     title: Catalog v2 types (RewardRuleV2, RuleCap, PaymentPath, Uncertainty)
@@ -72,7 +72,7 @@ A code is reported only when it can move that card's estimate (max > min).
 ## How it works
 
 1. `validatePurchaseAndWallet` and `validateCatalog` reject malformed input. Unsupported rule shapes fail closed (`Unsupported catalog rules.`).
-2. `unavailableReason` ([`engine-shared.ts`](../../packages/rewards-core/src/engine-shared.ts)) returns, in this order: `catalog-not-yet-valid`, `catalog-expired`, `unsupported-merchant`, `no-owned-cards`, `unknown-owned-card`, `purchase-not-confirmed`, `ineligible-purchase`.
+2. `unavailableReason` ([`engine-shared.ts`](../../packages/rewards-core/src/engine-shared.ts)) returns, in this order: `catalog-not-yet-valid`, `catalog-expired`, `unsupported-merchant`, `no-owned-cards`, `unknown-owned-card`, `purchase-not-confirmed`, `ineligible-purchase`. With a v3 catalog the merchant `generic-us-online` ("Another U.S. online store", supplied by the engine since Phase 11) is supported: only `all-purchases` and `online-retail` rules can apply there, and brand exclusions cannot fire ([Merchants](merchants.md#another-us-online-store-phase-11)).
 3. `engine-v2.ts:blocked` filters each rule by category, expiry, merchant, U.S.-only, payment path, and known-inactive activation.
 4. `engine-v2.ts:evaluate` computes the rule's min and max. With a spend cap and unknown usage, bonus spend ranges from 0 to min(amount, cap). Usage only counts if it was recorded on the purchase date in the same year. Older usage counts as unknown, not as zero.
 5. `engine-v2.ts:estimateCard` takes the best floor and the best ceiling across the card's rules, clamped to the base reward.

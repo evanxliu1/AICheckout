@@ -1,7 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { MERCHANT_IDS, SITE_ADAPTERS } from '../src/checkout/adapters';
 import { siteAdapterSchema } from '../src/checkout/adapters/schema';
-import { MERCHANTS, merchantForCheckout, merchantForOrderConfirmation } from '../src/checkout/merchants';
+import {
+  MERCHANTS,
+  merchantForCheckout,
+  merchantForOrderConfirmation,
+  merchantForTab,
+  merchantName,
+} from '../src/checkout/merchants';
 
 describe('bundled site adapters', () => {
   it.each(MERCHANT_IDS)('%s is a valid spec with usable selectors and patterns', (id) => {
@@ -45,6 +51,28 @@ describe('bundled site adapters', () => {
   it('gives every adapter its own hosts, so no URL matches two adapters', () => {
     const hosts = MERCHANT_IDS.flatMap((id) => SITE_ADAPTERS[id].match.hosts);
     expect(new Set(hosts).size).toBe(hosts.length);
+  });
+  it('picks the popup store from the tab: a supported site, any other web page, or none', () => {
+    expect(merchantForTab('https://www.newegg.com/p/N82E1')).toBe('newegg-us');
+    expect(merchantForTab('https://secure.newegg.com/shop/cart')).toBe('newegg-us');
+    expect(merchantForTab('https://www.bestbuy.com/site/tv')).toBe('best-buy-us');
+    expect(merchantForTab('https://www.amazon.com/dp/B0')).toBe('amazon-us');
+    expect(merchantForTab('https://www.bestbuy.com./site/tv')).toBe('best-buy-us');
+    expect(merchantForTab('https://www.amazon.co.uk/dp/B0')).toBe('generic-us-online');
+    expect(merchantForTab('http://192.168.0.1/')).toBe('generic-us-online');
+    expect(merchantForTab('http://[::1]:8080/')).toBe('generic-us-online');
+    expect(merchantForTab('http://shop.example.com/checkout')).toBe('generic-us-online');
+    expect(merchantForTab('https://notamazon.com/')).toBe('generic-us-online');
+    for (const url of [
+      'chrome://newtab/',
+      'chrome-extension://abc/popup.html',
+      'file:///a.html',
+      '',
+      undefined,
+    ])
+      expect(merchantForTab(url)).toBeNull();
+    expect(merchantName('generic-us-online')).toBe('Another U.S. online store');
+    expect(merchantName('walmart-us')).toBe('Unsupported merchant');
   });
   it('rejects overlong paths before any pattern runs', () => {
     expect(merchantForCheckout(`https://www.amazon.com/cart${'/'.repeat(300)}`)).toBeNull();

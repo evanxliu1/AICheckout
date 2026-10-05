@@ -423,6 +423,15 @@ describe('catalog v2 engine: bounds and validation', () => {
       status: 'unavailable',
       reason: 'unsupported-merchant',
     });
+    // The engine's generic store profile is a catalog v3 feature.
+    expect(
+      compareRewards(
+        CATALOG_V2,
+        wallet([owned('citi-double-cash')]),
+        purchase({ merchantId: 'generic-us-online' }),
+        now,
+      ),
+    ).toEqual({ status: 'unavailable', reason: 'unsupported-merchant' });
     const broken = structuredClone(CATALOG_V2);
     broken.cards[0].rules = broken.cards[0].rules.filter((r) => r.category !== 'all-purchases');
     expect(() => compareRewards(broken, wallet([owned('citi-double-cash')]), purchase(), now)).toThrow();

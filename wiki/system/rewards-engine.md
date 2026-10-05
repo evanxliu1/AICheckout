@@ -6,7 +6,7 @@ status: stable
 tags: [system, rewards-core, catalog, engine]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:26:46Z
+  at: 2026-10-05T20:45:00Z
 stale_after: 2026-11-04T00:00:00Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
@@ -61,7 +61,7 @@ Verified 2026-10-02 by reading the code; parity case counts verified by importin
 | Rule statuses | v2: `applied`, `may-apply`, `base`, `not-at-merchant`, `not-eligible`, `expired`, `cap-reached`; v3 adds `not-accepted`, `not-started`, `choice-not-selected`, `condition-not-met` | `RuleStatus`, `RULE_STATUSES_V3` |
 | Unavailable reasons | `catalog-expired`, `catalog-not-yet-valid`, `unsupported-merchant`, `no-owned-cards`, `unknown-owned-card`, `purchase-not-confirmed`, `ineligible-purchase`; v3 adds `no-accepted-card` | `UnavailableComparison` |
 | Parity cases | `catalogCases` 28 (v1), `catalogV2Cases` 53 (v2), `catalogV3Cases` 117 (v3, from the synthetic `CATALOG_V3_FIXTURE`) | [`test-cases.ts`](../../packages/rewards-core/test-cases.ts) |
-| Engine tests | `rewards.test.ts` (v1), `rewards-v2.test.ts`, `rewards-v3.test.ts` (88: every v3 status and uncertainty, ladders at the three merchants, value precedence, shared caps, usage inputs, review edge cases: day boundaries, exhausted shared caps, all-unvalued wallets, gates with choices, malformed inputs) | [`extension/tests/`](../../extension/tests/rewards-v3.test.ts) |
+| Engine tests | `rewards.test.ts` (v1), `rewards-v2.test.ts`, `rewards-v3.test.ts` (98: every v3 status and uncertainty, ladders at the three merchants, the generic store and its brand-exclusion guard on the bundled catalog, value precedence, shared caps, usage inputs, review edge cases: day boundaries, exhausted shared caps, all-unvalued wallets, gates with choices, malformed inputs) | [`extension/tests/`](../../extension/tests/rewards-v3.test.ts) |
 
 ## Catalog v2 contract
 
@@ -107,6 +107,7 @@ Usage rows count only for the same calendar year **and** the same `recordedOn` d
 [`engine-v3.ts:compareV3`](../../packages/rewards-core/src/engine-v3.ts) keeps the v2 steps (validation, `unavailableReason`, rules do not stack, uncertain rules give a base-to-rule range, after-cap rates, same-day usage) and adds, per the [engine semantics decision](../decisions/2026-10-02-engine-v3-semantics.md) as amended by the [pre-merge review decision](../decisions/2026-10-02-engine-v3-review-gates-and-shared-caps.md):
 
 - **Inputs.** `WalletCard.choices` `[{choiceId, optionIds}]` (complete selection of a `chosen` choice, 1 to `picks`), `Wallet.gates` `[{gateId, optionId}]` (one answer per gate, shared by every card: gates describe the cardholder), `Wallet.valueOverrides` `[{programId, valueHundredthsOfCent}]` (points programs, 1–10,000). All optional; v1/v2 ignore them; unknown IDs and malformed shapes throw (`Invalid wallet choices.`, `Invalid wallet gates.`, `Invalid value override.`). `Purchase.paymentPath` accepts `venmo` (a v2 catalog still rejects it).
+- **Merchant.** The profile comes from `merchantProfilesV3(catalog)`: the catalog's merchants plus `GENERIC_MERCHANT_PROFILE` (`generic-us-online`, [`generic-merchant.ts`](../../packages/rewards-core/src/generic-merchant.ts), Phase 11) unless the catalog defines that id; any other unknown id is `unsupported-merchant`. The generic profile has no brands and `expectedCategory: general-merchandise`, so only `all-purchases` and `online-retail` rules apply and closed-loop cards are not accepted ([Merchants](../domain/merchants.md#another-us-online-store-phase-11), [decision](../decisions/2026-10-05-generic-store-profile.md)). `generic-merchant.ts` imports no Zod and no catalog, so content scripts may import it.
 - **Acceptance.** A closed-loop card whose `brandIds` miss the merchant's goes to `Comparison.notAccepted` (every rule `not-accepted`), not `estimates`; if no owned card is accepted the result is `no-accepted-card`.
 - **Base.** The unconditional `all-purchases` rule (`baseRuleV3`); a closed-loop card may have none (base reward 0).
 - **Blocking order** (`blocked`): portal, or `other` without brands → `not-at-merchant`; `endsOn` before the purchase or `verifiedAt` date → `expired`; `startsOn` after the purchase date → `not-started`; brand scope or excluded brand or category (`ruleCoversMerchant`: brand-scoped `other`/`all-purchases` need only the brand) → `not-at-merchant`; online retail ruled out, U.S.-only, excluded path, required path not used, known-inactive activation → `not-eligible`; a selected choice without this option → `choice-not-selected`; a gate answered outside the required options → `condition-not-met`.

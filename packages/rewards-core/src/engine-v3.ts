@@ -1,5 +1,6 @@
 import { numeratorCents, numeratorUnits, portionNumerator } from './money.ts';
 import { integer, unavailableReason, unique, validatePurchaseAndWallet } from './engine-shared.ts';
+import { GENERIC_MERCHANT_ID, GENERIC_MERCHANT_PROFILE } from './generic-merchant.ts';
 import { isUnconditionalRuleV3 } from './rules-v3.ts';
 import {
   PAYMENT_PATHS_V3,
@@ -73,6 +74,13 @@ export function capHolder(card: CardProductV3, rule: RewardRuleV3): RewardRuleV3
   return card.rules
     .filter((r) => r.sharedCapId === rule.sharedCapId)
     .reduce((holder, r) => (r.id < holder.id ? r : holder));
+}
+
+/** The catalog's merchant profiles plus the generic profile unless the catalog defines that id. */
+export function merchantProfilesV3(catalog: CatalogV3): MerchantProfileV3[] {
+  return catalog.merchants.some((m) => m.id === GENERIC_MERCHANT_ID)
+    ? catalog.merchants
+    : [...catalog.merchants, GENERIC_MERCHANT_PROFILE];
 }
 
 /** Whether a rule's merchant scope and category cover a merchant, before any purchase detail. */
@@ -568,15 +576,16 @@ export function compareV3(
 ): Comparison | UnavailableComparison {
   validatePurchaseAndWallet(wallet, purchase, now);
   validateCatalog(catalog, wallet, purchase);
+  const merchants = merchantProfilesV3(catalog);
   const unavailable = unavailableReason(
     catalog,
-    catalog.merchants.map((m) => m.id),
+    merchants.map((m) => m.id),
     wallet,
     purchase,
     now,
   );
   if (unavailable) return unavailable;
-  const merchant = catalog.merchants.find((m) => m.id === purchase.merchantId)!;
+  const merchant = merchants.find((m) => m.id === purchase.merchantId)!;
   const verifiedOn = catalog.verifiedAt.slice(0, 10);
   const estimates: CardEstimate[] = [],
     notAccepted: CardEstimate[] = [];

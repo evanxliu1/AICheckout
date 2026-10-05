@@ -100,6 +100,17 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
     await expect(page.getByRole('alert')).toBeVisible();
     await check('cart-error');
 
+    // Another U.S. online store (Phase 11): a typed amount, no cart reader; online retail applies.
+    await page.getByLabel('Merchant').selectOption('generic-us-online');
+    await expect(page.getByText(/Type the amount you will pay/)).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Read cart amount' })).toHaveCount(0);
+    await page.getByLabel('Purchase amount (USD)').fill('100');
+    await page.getByLabel('How you will pay').selectOption('card');
+    await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
+    await page.getByRole('button', { name: 'Compare my cards' }).click();
+    await expect(page.getByRole('heading', { name: 'Use Blue Cash Everyday' })).toBeVisible();
+    await check('generic-store');
+
     // An expired cached release gives way to the valid bundled terms (newest valid catalog wins).
     const day = 86_400_000;
     const expired = redateCatalog(PILOT_CATALOG, new Date(Date.now() - 2 * day).toISOString().slice(0, 10));

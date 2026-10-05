@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T19:14:03Z
+  at: 2026-10-05T21:10:00Z
 ---
 
 # Now
 
-As of 2026-10-05T19:14:03Z.
+As of 2026-10-05T21:10:00Z.
 
 ## Current state
 
@@ -23,6 +23,7 @@ As of 2026-10-05T19:14:03Z.
 ## Active work
 
 - **Merchant coverage, Phases 10–17** ([plan](product/phase-10-merchant-expansion.md), [decision](decisions/2026-10-05-merchant-coverage-phases.md)): v6.1 split on 2026-10-05 into eight phases, each with its own exit check and decisions. D4 and D6 approved. **Phase 10** (25-site feasibility probe, no product code) and **Phase 11** (any store with a typed amount, engine ranges) start in parallel. Phase 11 reduced on 2026-10-05: no store search, no category ranges (D5 moves to Phase 14).
+- **Phase 11 built** on branch `phase11-any-store` (not merged; reviewer subagent and CI pending): engine-supplied `generic-us-online` profile, popup picks the store from the active tab, typed amount at any other store ([plan progress](product/phase-11-any-store.md#progress), [decision](decisions/2026-10-05-generic-store-profile.md)). The OnePay CashRewards first-90-days rule's Walmart exclusion cannot fire at a generic store (pinned by a guard test, documented); Evan deferred brand websites to Phase 14, before Release A, on 2026-10-05. Independent review fixes applied.
 - Release media regenerated for `2026-10-05.renewal.1` (`npm run release:media`, all checks passed, 2026-10-05; [release media](ops/release-media.md)).
 
 ## Open questions and next steps
