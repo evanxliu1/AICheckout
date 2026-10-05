@@ -81,6 +81,7 @@ export async function startShop({ robots = 'User-agent: *\nDisallow: /admin\n' }
 <button type="button" id="like">Like</button>
 <form id="getform" action="/search" method="get"><input type="hidden" name="q" value="tee"></form>
 <button type="button" id="sneaky-get">More like this</button>
+<form id="imgform" action="/finalize" method="post"><button type="submit" id="img-order"><img alt="Place order" width="60" height="20" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs="></button></form>
 <script>
 for (const b of document.querySelectorAll('.size')) b.addEventListener('click', () => { document.getElementById('size').value = b.dataset.size; });
 document.getElementById('sneaky').addEventListener('click', () => document.getElementById('newsletter').requestSubmit());
@@ -185,9 +186,10 @@ document.getElementById('inc').addEventListener('click', () => { const q = docum
 <script>
 Object.defineProperty(HTMLButtonElement.prototype, 'type', { get() { return 'button'; } });
 Object.defineProperty(HTMLButtonElement.prototype, 'form', { get() { return null; } });
+const realGetAttribute = Element.prototype.getAttribute;
+Element.prototype.getAttribute = function (n) { return n === 'type' ? 'button' : realGetAttribute.call(this, n); };
 Element.prototype.closest = function () { return null; };
 Element.prototype.matches = function () { return false; };
-Element.prototype.getAttribute = function () { return null; };
 </script>`,
           ),
         );

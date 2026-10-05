@@ -2,11 +2,11 @@
 type: Decision
 title: Capture tool design choices (Phase 12.2)
 description: Where the signed reader protocol left room in the 12.2 capture tool: a guarded driver object with no typing or coordinate path, isolated-world inspection at the click point, structural rules for allowlisted in-form clicks plus a multilingual refusal of order, payment and account controls, guards on form submissions, writes, redirects and off-site navigation, MHTML as the replay format with styles read lazily, robots.txt on every origin navigation, stop detection, a token-and-Origin control server without run-time allowlisting, locale and currency metadata, and attended-pane capture deferred by Evan.
-status: proposed
+status: accepted
 tags: [decision, phase-12, merchants, eval, capture]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T08:00:00Z
+  at: 2026-10-05T23:05:00Z
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol
@@ -16,10 +16,10 @@ sources:
     title: Phase 12 plan
 ---
 
-# Capture tool design choices (2026-10-06)
+# Capture tool design choices (2026-10-05)
 
 ## Context
-The signed [protocol](../../docs/evals/generic-reader-protocol.md#capture-posture) (`generic-reader-protocol.1`) fixes what the capture tool must refuse and record. The [Phase 12 plan](../product/phase-12-reader-eval.md) 12.2 row adds the snapshot format and the reader's replay hook. The Phase 10 probe driver showed what goes wrong when the rules sit with the operator ([report](../../docs/evals/merchant-probe-2026-10.md#deviations-and-limits)). On 2026-10-06 Evan widened the scope through the coordinator: storefronts worldwide, and attended capture of robot-blocked sites in the desktop browser pane. The protocol amendment for those (`generic-reader-protocol.2`) is written on another branch; this tool doesn't edit the protocol.
+The signed [protocol](../../docs/evals/generic-reader-protocol.md#capture-posture) (`generic-reader-protocol.1`) fixes what the capture tool must refuse and record. The [Phase 12 plan](../product/phase-12-reader-eval.md) 12.2 row adds the snapshot format and the reader's replay hook. The Phase 10 probe driver showed what goes wrong when the rules sit with the operator ([report](../../docs/evals/merchant-probe-2026-10.md#deviations-and-limits)). On 2026-10-05 Evan widened the scope through the coordinator: storefronts worldwide, and attended capture of robot-blocked sites in the desktop browser pane. The protocol amendment for those (`generic-reader-protocol.2`) is written on another branch; this tool doesn't edit the protocol.
 
 ## Options considered
 | Question | Options | Chosen |
@@ -39,8 +39,8 @@ The signed [protocol](../../docs/evals/generic-reader-protocol.md#capture-postur
 | Committed text (review) | Free-text details; codes only | Stop details are reason codes, events carry kind and host, and committed URLs drop query strings and fragments and replace token-like path segments with `:token` |
 | Stop checks (review) | After actions; also before | Also before every `goto` and click, so a wall that appears after load is caught; visible challenge elements in the main document (`#px-captcha`, `[class*=captcha]`, Turnstile) stop as `captcha`, ignoring the reCAPTCHA badge |
 | Test pace | Real 3 s in tests; shorter for fixtures | A pace below 3 s is accepted only when the recipe's origin is 127.0.0.1 |
-| Global storefronts (Evan, 2026-10-06) | — | Recipes accept any country's domain and language; snapshots record `lang`, a region from `lang`, `og:locale` or `geo.region`, and currency markers (ISO codes from price metadata, symbol and code counts). Metadata only; no amount is read |
-| Attended pane capture (Evan, 2026-10-06) | — | **Deferred by Evan (2026-10-06)** to a later step through Claude's built-in browser; nothing is built for it. The robot's blocked-site records stay listable (`capture.mjs list-blocked`) |
+| Global storefronts (Evan, 2026-10-05) | — | Recipes accept any country's domain and language; snapshots record `lang`, a region from `lang`, `og:locale` or `geo.region`, and currency markers (ISO codes from price metadata, symbol and code counts). Metadata only; no amount is read |
+| Attended pane capture (Evan, 2026-10-05) | — | **Deferred by Evan (2026-10-05)** to a later step through Claude's built-in browser; nothing is built for it. The robot's blocked-site records stay listable (`capture.mjs list-blocked`) |
 
 ## Decision
 As chosen above, in `capture-tool.1` (`evals/merchants/capture/`), with recipe `capture-recipe.1`, snapshot `capture-snapshot.1` and site record `capture-site-record.1`.
@@ -52,4 +52,4 @@ As chosen above, in `capture-tool.1` (`evals/merchants/capture/`), with recipe `
 - Phase 13's harness loads snapshots through `openReplay`, which checks the manifest hash against the frozen value.
 
 ## Status
-Proposed 2026-10-06 by the Phase 12.2 builder (claude-code/claude-opus-5-5). The independent review of 2026-10-06 required changes (agent-verified); they are applied, each with a fixture test that fails without it. Pending the reviewer's confirmation.
+Proposed 2026-10-05 by the Phase 12.2 builder (claude-code/claude-opus-5-5). The independent review of 2026-10-05 required changes (agent-verified); they are applied, each with a fixture test that fails without it. Accepted 2026-10-05: the reviewer's re-review approved (agent-verified), with two low fixes applied (image-only control names, a discriminating isolation fixture).

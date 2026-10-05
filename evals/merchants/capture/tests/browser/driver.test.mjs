@@ -7,7 +7,7 @@ import path from 'node:path';
 import { after, before, test } from 'node:test';
 import { chromium } from 'playwright';
 import { MAX_NAVIGATIONS, createDriver } from '../../driver.mjs';
-import { RefusalError, StopError } from '../../guards.mjs';
+import { RefusalError, StopError, inspectControl } from '../../guards.mjs';
 import { parseRobots } from '../../robots.mjs';
 import { fixtureRecipe, startShop } from '../fixture-shop.mjs';
 
@@ -179,13 +179,31 @@ test('a GET form submission by script is a form submission', async () => {
 });
 
 test('inspection runs in an isolated world: a page that patches DOM prototypes cannot disguise a submit', async () => {
-  const { driver } = await fresh('serve');
+  const { driver, page } = await fresh('serve');
   await driver.goto(`${shop.origin}/products/patched`);
+  // The fixture fools a main-world inspection: type, form owner and closest() all say "plain button".
+  const fooled = await page.evaluate(`(${inspectControl})(document.getElementById('disguised'))`);
+  assert.equal(fooled.submit, false);
+  assert.equal(fooled.inForm, false);
+  // The driver's isolated-world inspection is not fooled and refuses before any request is sent.
   await assert.rejects(
     driver.click({ role: 'button', name: 'Next step' }),
     (e) => refusal('refused-submit')(e) && !/navigation aborted/.test(e.message),
   );
   assert.ok(!posts().includes('/cart/update'));
+});
+
+test('an image-only order control is refused by its alt text', async () => {
+  const { driver } = await fresh('serve', {
+    extra: withAllow([{ purpose: 'add-to-cart', target: { selector: '#img-order' } }]),
+  });
+  await driver.goto(`${shop.origin}/products/tee`);
+  await assert.rejects(
+    driver.click({ selector: '#img-order' }, 'add-to-cart'),
+    refusal('refused-order-or-account'),
+  );
+  await assert.rejects(driver.click({ selector: '#img-order' }), refusal('refused-order-or-account'));
+  assert.ok(!posts().includes('/finalize'));
 });
 
 test('an off-site redirect is caught after the action: offsite is set and only checkout-1 may be captured', async () => {

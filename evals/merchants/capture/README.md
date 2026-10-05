@@ -71,4 +71,4 @@ One folder per state with `page.mhtml` (CDP `Page.captureSnapshot`, the replay f
 
 ## Blocked sites
 
-`capture.mjs list-blocked` lists the sessions that stopped on a block (`blocked-bot-wall`, `blocked-http-403`, `blocked-http-429`, `captcha`, `blocked-extension-check`) with their reason code and evidence hash. Attended capture of these sites in a browser Evan watches was **deferred by Evan on 2026-10-06** to a later step through Claude's built-in browser; nothing for it is built here.
+`capture.mjs list-blocked` lists the sessions that stopped on a block (`blocked-bot-wall`, `blocked-http-403`, `blocked-http-429`, `captcha`, `blocked-extension-check`) with their reason code and evidence hash. Attended capture of these sites in a browser Evan watches was **deferred by Evan on 2026-10-05** to a later step through Claude's built-in browser; nothing for it is built here.

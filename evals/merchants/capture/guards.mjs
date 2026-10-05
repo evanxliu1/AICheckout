@@ -255,7 +255,18 @@ export function inspectControl(hit) {
     .split(/\s+/)
     .map((id) => (id && root.getElementById ? root.getElementById(id)?.textContent : ''))
     .join(' ');
-  const name = (el.getAttribute('aria-label') || labelledBy || el.innerText || el.value || el.title || '')
+  // An image-only control has no innerText: fall back to image alt text, then all text content.
+  const imgAlt = [...el.querySelectorAll('img[alt]')].map((img) => img.getAttribute('alt')).join(' ');
+  const name = (
+    el.getAttribute('aria-label') ||
+    labelledBy ||
+    el.innerText ||
+    el.value ||
+    el.title ||
+    imgAlt ||
+    el.textContent ||
+    ''
+  )
     .replace(/\s+/g, ' ')
     .trim()
     .slice(0, 120);

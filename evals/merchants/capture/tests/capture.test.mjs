@@ -433,7 +433,7 @@ test('control server: live, bound to 127.0.0.1, token and Origin enforced', asyn
   }
 });
 
-// ---- Review fixes (2026-10-06) ----
+// ---- Review fixes (2026-10-05) ----
 
 test('order, payment, sign-in and register names are refused in ten languages', () => {
   for (const name of [
