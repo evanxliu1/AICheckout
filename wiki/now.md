@@ -21,6 +21,7 @@ As of 2026-10-05T04:45Z.
 
 ## Active work
 
+- **Public docs** (branch `docs-readme-demo`, checkout `../AICheckout-docs`): new README with SVG diagrams and the Ocean-cinematic demo video ([decision](decisions/2026-10-05-readme-demo-video-and-diagrams.md)). The README plays the video inline from Evan's `user-attachments` upload. His GitHub profile README was refreshed (`evanxliu1/evanxliu1`, 2026-10-05).
 - **Agent publish path** (coordinator, started 2026-10-05; [decision](decisions/2026-10-05-agent-publish-cli-session.md)). Evan wants the coding agent to upload the captures and publish, with his part reduced to logging a CLI session in once and typing `publish <version>` in chat. To build: `pipeline login` / `logout` (Evan types his password into a hidden prompt; refresh token stored outside the repo, mode 600) and `pipeline publish` (match captures to the bundled manifests, upload through `POST /v1/review/sources`, create the draft, check its canonical hash equals `CATALOG_V3`, publish with `--confirm <version>` and the agent-verified review note). One PR, independent review, merge, Render deploy. The renewal waits for it.
 
 ## Open questions and next steps
