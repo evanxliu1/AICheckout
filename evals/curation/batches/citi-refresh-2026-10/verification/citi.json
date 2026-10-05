@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "ff2cecaf-1416-417b-9fda-0e1082e4811f",
+  "packetId": "e27e13a0-7ea2-40d7-bc81-393dcc9bfcee",
   "batch": "citi-refresh-2026-10",
   "provenance": "agent-verified",
   "issuer": "Citi",
@@ -9,34 +9,23 @@
     "model": "claude-opus-5-5",
     "date": "2026-10-05",
     "filesRead": [
+      ".claude/agents/card-verifier.md",
+      "evals/curation/batches/citi-refresh-2026-10/pipeline/packets/verify.citi.2.json",
       "evals/curation/expansion/verification/README.md",
       "evals/curation/expansion/verification/conventions/general.md",
       "evals/curation/expansion/verification/conventions/citi.md",
-      "evals/curation/batches/citi-refresh-2026-10/pipeline/packets/verify.citi.1.json",
       "evals/curation/batches/citi-refresh-2026-10/verify/citi.md",
       "evals/curation/batches/citi-refresh-2026-10/corpus.draft.json",
       "evals/curation/batches/citi-refresh-2026-10/product-notes.json",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-premier-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-premier-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-elite-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-elite-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-costco-anywhere-visa-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-costco-anywhere-visa-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-costco-anywhere-visa-categories.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-platinum-select-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-platinum-select-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-mileup-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-mileup-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-globe-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-globe-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-tsc-visa-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-dillards-mastercard-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-macys-amex-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-double-cash-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-double-cash-additional-info.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-double-cash-terms-pdf.txt"
+      "evals/curation/batches/citi-refresh-2026-10/verification/citi.json",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-executive-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-executive-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-llbean-mastercard-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-bloomingdales-amex-product.txt",
+      "tools/catalog-pipeline/src/gates.ts",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/schema.ts",
+      "wiki/system/card-expansion-pipeline.md"
     ]
   },
   "adjudicator": {
@@ -1158,6 +1147,432 @@
       ],
       "addedIssues": [],
       "productNoteChanges": []
+    },
+    {
+      "cardId": "citi-aadvantage-executive",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "points",
+          "anchor": {
+            "sourceId": "citi-aadvantage-executive-product",
+            "quote": "Earn 4 AAdvantage® miles for every $1 spent on eligible American Airlines purchases"
+          },
+          "note": "Undrafted card: the card earns AAdvantage miles, which count as points."
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "citi-aadvantage-executive-product",
+            "quote": "Use your AAdvantage® miles for flights to nearly 1,100 destinations worldwide on American Airlines, oneworld® and partner airlines."
+          },
+          "note": "Undrafted card: miles redeem for travel only and no capture states a cash value, so the point value stays null (general 3, 20)."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-executive-product",
+              "quote": "Earn 1 AAdvantage® mile for every $1 spent on all other purchases"
+            },
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
+            }
+          ],
+          "note": "Base rate 1X; the terms state no maximum on miles (general 21)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "eligible American Airlines purchases",
+            "rateBps": 400,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-executive-product",
+              "quote": "Earn 4 AAdvantage® miles for every $1 spent on eligible American Airlines purchases"
+            },
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "Eligible American Airlines purchases are items billed by American Airlines as the merchant of record."
+            }
+          ],
+          "note": "4X on purchases billed by American Airlines; one merchant, so category other (general 4). The $150,000 threshold to 5X is not a cap: cap null plus an out-of-scope issue (Citi convention)."
+        },
+        {
+          "rule": {
+            "category": "travel-portal",
+            "issuerWording": "eligible AAdvantage Hotels® bookings",
+            "rateBps": 1200,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-executive-product",
+              "quote": "Earn 12 AAdvantage® miles for every $1 spent on eligible AAdvantage Hotels® bookings"
+            },
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "when an eligible booking is made on aadvantagehotels.com"
+            },
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
+            }
+          ],
+          "note": "12X on hotels booked through aadvantagehotels.com, a partner booking portal (Citi convention: travel-portal)."
+        },
+        {
+          "rule": {
+            "category": "travel-portal",
+            "issuerWording": "eligible AAdvantage Cars® bookings",
+            "rateBps": 1200,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-executive-product",
+              "quote": "and eligible AAdvantage Cars® bookings"
+            },
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "for each $1 spent on eligible car rental purchases"
+            },
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
+            }
+          ],
+          "note": "12X on car rentals booked through aadvantagecars.com, a partner booking portal (Citi convention: travel-portal)."
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "Balance transfers, cash advances, account-access checks, returns, fees, interest, traveler's checks, money orders, wire transfers and other cash-like or betting transactions do not earn miles.",
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "Balance transfers, cash advances, checks that access your credit card account, items and services returned for credit, unauthorized charges, interest and account fees"
+            },
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "wire transfers (and similar cash-like transactions), lottery tickets, and gaming chips (and similar betting transactions) are not purchases and do not earn AAdvantage® miles"
+            }
+          ],
+          "note": "The terms list transactions that are not purchases and earn no miles."
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-executive-product",
+              "quote": "spend $150,000 in purchases in a calendar year, earn a total of 5 AAdvantage® miles for every $1 spent on eligible American Airlines purchases"
+            }
+          ],
+          "note": "American Airlines purchases rise from 4X to 5X for the rest of the calendar year after $150,000 in total card spend; a spend threshold, not a cap (general 9)."
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "purchases made through mobile/wireless technology may not earn additional AAdvantage® miles depending on how the technology is set up to process the purchase"
+            }
+          ],
+          "note": "Mobile or wallet payments may not earn the bonus miles, depending on how they are processed."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-aadvantage-executive-rewards-terms",
+            "quote": "Upon reaching $150,000 in spend on your Citi® / AAdvantage® Executive World Legend Mastercard in a calendar year"
+          },
+          "note": "The terms confirm 4X on American Airlines purchases, 5X after $150,000 in a calendar year, and the merchant-of-record condition."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-llbean-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "citi-llbean-mastercard-product",
+            "quote": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases."
+          },
+          "note": "Undrafted card: Bean Bucks are dollar-denominated store rewards stated as percentages, so cash-back (general 1, 8)."
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "citi-llbean-mastercard-product",
+            "quote": "1 Bean Buck = $1 savings on your future L.L.Bean purchases"
+          },
+          "note": "A cash-back card has no point value (general 13); Bean Bucks are worth $1 each toward L.L.Bean purchases."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "L.L.Bean",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-llbean-mastercard-product",
+              "quote": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases."
+            }
+          ],
+          "note": "5% at one merchant, so category other (general 4). No capture states a cap or enrollment, so both stay null."
+        },
+        {
+          "rule": {
+            "category": "dining",
+            "issuerWording": "restaurants",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-llbean-mastercard-product",
+              "quote": "Earn Bean Bucks everywhere you shop 5% at L.L.Bean, 2% at restaurants, and 1% on purchases everywhere else"
+            }
+          ],
+          "note": "2% at restaurants."
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-llbean-mastercard-product",
+              "quote": "Cardmembers earn Bean Bucks® on every purchase including 5% at L.L.Bean, 2% at restaurants, and 1% for all other purchases."
+            }
+          ],
+          "note": "1% base rate."
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-llbean-mastercard-product",
+              "quote": "Use Bean Bucks® to make purchases at L.L.Bean."
+            }
+          ],
+          "note": "Bean Bucks are usable only at L.L.Bean (general 8)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-llbean-mastercard-product",
+            "quote": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases."
+          },
+          "note": "The keyword-search anchor states 5% at L.L.Bean."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-bloomingdales-amex",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "points",
+          "anchor": {
+            "sourceId": "citi-bloomingdales-amex-product",
+            "quote": "Loyallists: 3 points per $1 spent"
+          },
+          "note": "Undrafted card: the card earns points per dollar (Citi convention: store cards that state only points stay points)."
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": 50,
+          "anchor": {
+            "sourceId": "citi-bloomingdales-amex-product",
+            "quote": "5,000 Points = $25 Reward"
+          },
+          "note": "5,000 points buy a $25 store Reward, half a cent a point (general 14, Citi convention)."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Shopping at Bloomingdale’s",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "Earn more points per dollar when you shop at Bloomingdale’s"
+            },
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "3 points per $1 spent for Loyallist"
+            }
+          ],
+          "note": "Bloomingdale's purchases at the Loyallist tier a new cardholder starts in (Citi convention); one merchant, so other (general 4)."
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "Shopping Outside of Bloomingdale’s",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "Rack up points outside of Bloomingdale’s too!"
+            },
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "You can use the Bloomingdale’s American Express Card anywhere that American Express is accepted"
+            }
+          ],
+          "note": "The Amex card earns 3 points per $1 outside Bloomingdale's at the Loyallist tier; the comparison table marks this as the Amex card only."
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "10 points per $1 spent for Top of the List Unlocked"
+            }
+          ],
+          "note": "Higher Loyallist tiers (Top of the List, Top of the List Unlocked) earn 4X or 10X at Bloomingdale's and 4X outside; tier conditions are not stated (general 17)."
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "Redeem your Reward for merchandise purchased at Bloomingdale’s, bloomingdales.com or Bloomingdale’s The Outlet Store."
+            }
+          ],
+          "note": "Rewards are usable only at Bloomingdale's (general 14)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "Loyallist tiers: 3/4/10 points per $1 at Bloomingdale's and 3/4/4 outside for Loyallist/Top of the List/Unlocked",
+            "rate": "Loyallist 3, Top of the List 4, Top of the List Unlocked 10 at Bloomingdale's; 3, 4, 4 outside",
+            "cap": "none stated",
+            "conditions": "Tier qualification is not stated in the capture",
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "citi-bloomingdales-amex-product",
+            "quote": "4 points per $1 spent for Top of the List"
+          },
+          "note": "Anchored on the comparison table; the outside rate for Top of the List Unlocked is 4, not 10."
+        }
+      ]
     }
   ],
   "labelLintAcks": [
