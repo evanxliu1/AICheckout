@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:47:59Z
+  at: 2026-10-05T19:14:03Z
 ---
 
 # Now
 
-As of 2026-10-05T05:47:59Z.
+As of 2026-10-05T19:14:03Z.
 
 ## Current state
 
@@ -22,15 +22,15 @@ As of 2026-10-05T05:47:59Z.
 
 ## Active work
 
-- **`phase10-prep`** (coordinator and wiki subagent): wiki split (pipeline overview, [CLI commands](system/card-pipeline-commands.md), [internals](system/card-pipeline-internals.md); [release history](ops/catalog-release-history.md) out of the runbook), captures moved to the main checkout, and the [Phase 10 plan](product/phase-10-merchant-expansion.md) as a **draft awaiting Evan's approval**.
+- **Merchant coverage, Phases 10–17** ([plan](product/phase-10-merchant-expansion.md), [decision](decisions/2026-10-05-merchant-coverage-phases.md)): v6.1 split on 2026-10-05 into eight phases, each with its own exit check and decisions. D4 and D6 approved. **Phase 10** (25-site feasibility probe, no product code) and **Phase 11** (any store with a typed amount, engine ranges) start in parallel. Phase 11 reduced on 2026-10-05: no store search, no category ranges (D5 moves to Phase 14).
 - Release media regenerated for `2026-10-05.renewal.1` (`npm run release:media`, all checks passed, 2026-10-05; [release media](ops/release-media.md)).
 
 ## Open questions and next steps
 
-1. **Evan: approve or change the [Phase 10 plan](product/phase-10-merchant-expansion.md)** and answer its open questions (merchant list, anonymous-cart capture, scope against Phase 6, adapter author, shared core). No Phase 10 work starts before that.
+1. Phases 10 and 11 in progress; later decisions are asked per phase ([table](product/phase-10-merchant-expansion.md#decisions-for-evan-one-word-each-asked-when-their-phase-starts)).
 2. **Next renewal, published before 2026-11-04T00:00Z** ([renewing](ops/catalog-release.md#renewing-a-catalog-before-it-expires)): re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data.
 3. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it instead of per file; `pipeline handoff` names the freshness record for the merchant MCC folder ([renewal record](ops/catalog-release-history.md#renewal-2026-10-05renewal1-prepared-2026-10-05)).
-4. Phase order (Evan, 2026-10-03): 10 merchant expansion → Web Store release; 4 terms-change detection revisited after 9; 6 site coverage harness (may fold into 10).
+4. Phase order (Evan, 2026-10-05): 10 ∥ 11 → 12 → 13 → 14 → 15 Release A (replaces Phase 5) → 17; 16 beside 15; Phase 6 folded in; 4 terms-change detection revisited after 9.
 5. Before the Web Store release: verify the `orderConfirmation` URL patterns on a real order per retailer (Evan); enable GitHub private vulnerability reporting ([`SECURITY.md`](../SECURITY.md)); optionally confirm **Check for updated terms** in a loaded `build:hosted` extension picks up release 3.
 6. Evan's calls: Aer Lingus and Iberia Avios valuation parity; a second luna repeat against gpt-5.5; the human spot-check of agent-verified labels (deferred 2026-10-02); revoking the legacy HS256 JWT secret.
 7. Catalog builder maps gold `usMerchantsOnly: null` to `false`; the catalog omits the Chase Lyft promo and targeted Quicksilver offers ([cards](domain/cards.md)).
