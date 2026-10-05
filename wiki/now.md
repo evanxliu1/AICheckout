@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T21:34:05Z
+  at: 2026-10-06T04:00:00Z
 ---
 
 # Now
 
-As of 2026-10-05T21:34:05Z.
+As of 2026-10-06T04:00:00Z.
 
 ## Current state
 
@@ -28,8 +28,8 @@ As of 2026-10-05T21:34:05Z.
 
 ## Open questions and next steps
 
-1. **Phase 10 probe results** on branch `phase10-probe`, PR #58 (not merged): verdict **go**, 16 of 25 sites showed a logged-out cart, but only 3 of 8 top-1k sites (bot walls), which limits Phase 12 capture, not the product. The badge frame loaded under every CSP seen. 2 MiB fits `chrome.storage.local` (measured). The prototype reader found 25 of 38 totals, then 31 of 38 after one bug fix with 1 false found (30 of 38 with 2 false found against the original labels) (IKEA superscript cents). Proposed Y is 80% on one-item cart pages ([report](../docs/evals/merchant-probe-2026-10.md), [decision](decisions/2026-10-05-merchant-probe-method.md)). The independent report review ran (agent-verified, approve with fixes; fixes applied). Second labeling done: labeler 2 agrees on 44 of 44 snapshots, no adjudication needed (agent-verified). Next: PR and merge; Evan confirms go and Y.
-2. **Evan accepted go and Y = 80% (2026-10-05); Phase 12** (eval protocols and captures) starts next. Later decisions are asked per phase ([table](product/phase-10-merchant-expansion.md#decisions-for-evan-one-word-each-asked-when-their-phase-starts)).
+1. **Phase 10 probe results** merged as PR #58 (2026-10-05): verdict **go**, 16 of 25 sites showed a logged-out cart, but only 3 of 8 top-1k sites (bot walls), which limits Phase 12 capture, not the product. The badge frame loaded under every CSP seen. 2 MiB fits `chrome.storage.local` (measured). The prototype reader found 25 of 38 totals, then 31 of 38 after one bug fix with 1 false found (30 of 38 with 2 false found against the original labels) (IKEA superscript cents). Proposed Y is 80% on one-item cart pages ([report](../docs/evals/merchant-probe-2026-10.md), [decision](decisions/2026-10-05-merchant-probe-method.md)). The independent report review ran (agent-verified, approve with fixes; fixes applied). Second labeling done: labeler 2 agrees on 44 of 44 snapshots, no adjudication needed (agent-verified). Merged; Evan accepted go and Y = 80% on 2026-10-05.
+2. **Evan accepted go and Y = 80% (2026-10-05). Phase 12** started 2026-10-06 ([plan](product/phase-12-reader-eval.md)): **12.1 built** on `phase12-protocol` (2026-10-06): [reader protocol](../docs/evals/generic-reader-protocol.md) pre-registered, retail frame (457 eligible domains on Tranco 647LX) and merchant-pipeline held-out list (60 domains) frozen with seeded selection ([decision](decisions/2026-10-06-reader-eval-protocol.md), proposed). Independent review 2026-10-06: sign with fixes (agent-verified), fixes applied; Evan decided the robots posture (robots.txt disallowing cart or checkout paths, or everything, excludes a site; terms clauses recorded only). Frame and held-out list carry rank bands only (Tranco source licences include CC BY-NC). Next: PR and merge. Then 12.2 capture tool, 12.3 captures. Later decisions are asked per phase ([table](product/phase-10-merchant-expansion.md#decisions-for-evan-one-word-each-asked-when-their-phase-starts)).
 3. **Next renewal, published before 2026-11-04T00:00Z** ([renewing](ops/catalog-release.md#renewing-a-catalog-before-it-expires)): re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data.
 4. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it instead of per file; `pipeline handoff` names the freshness record for the merchant MCC folder ([renewal record](ops/catalog-release-history.md#renewal-2026-10-05renewal1-prepared-2026-10-05)).
 5. Phase order (Evan, 2026-10-05): 10 ∥ 11 → 12 → 13 → 14 → 15 Release A (replaces Phase 5) → 17; 16 beside 15; Phase 6 folded in; 4 terms-change detection revisited after 9.

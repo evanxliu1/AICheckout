@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-10-06
+* [Generic reader evaluation protocol choices (Phase 12.1)](./2026-10-06-reader-eval-protocol.md) — frozen agent-classified retail frame on Tranco 647LX, SHA-256 seeded orders, capture stop at 195 sites, stratified balanced splits, pass bar on real pages with variants apart and frozen labels deciding, robots.txt cart/checkout disallows exclude (Evan), rank bands only in committed files, all splits frozen before any reader run, pipeline held-out 6 / 27 / 27 allowed to overlap the reader splits. Accepted after review.
+
 ## 2026-10-05
 * [Phase 10 probe method choices](./2026-10-05-merchant-probe-method.md) — candidate-list site selection on Tranco 647LX, custom computed-style snapshots, a test extension for the frame and storage checks, labels frozen before the first reader run, proposed Y 80%.
 * [Generic "Another U.S. online store" profile supplied by the engine](./2026-10-05-generic-store-profile.md) — engine-supplied `generic-us-online` profile, catalog profile wins on the same id, popup store matched by site, OnePay first-90-days exclusion pinned by a guard test.
