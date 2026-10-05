@@ -31,7 +31,7 @@ Phases: 10 feasibility probe, 11 any store with a typed amount, 12 eval protocol
 
 ## Consequences
 - The [plan page](../product/phase-10-merchant-expansion.md) keeps its path and lists each phase's exit check and needed decisions; the [roadmap](../product/roadmap.md) lists Phases 10–17, with Phase 5 replaced and Phase 6 folded in.
-- Phase 11 needs D5 (category evidence and ranges) before it starts.
+- Phase 11 reduced (Evan, same day): no store search (the popup knows the tab's site) and no category ranges (the generic profile always uses the general rate; ranges only matter once Phase 14 profiles stores that may code as a bonus category, so D5 moves there). Rewards follow the merchant's category code, not the cart's products, so recommendations stay store-based; cart contents give the amount only.
 - The "Rules kept and rules superseded" rows take effect as the phase that needs each decision is approved.
 
 ## Status

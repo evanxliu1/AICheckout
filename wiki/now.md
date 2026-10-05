@@ -22,12 +22,12 @@ As of 2026-10-05T19:14:03Z.
 
 ## Active work
 
-- **Merchant coverage, Phases 10–17** ([plan](product/phase-10-merchant-expansion.md), [decision](decisions/2026-10-05-merchant-coverage-phases.md)): v6.1 split on 2026-10-05 into eight phases, each with its own exit check and decisions. D4 and D6 approved. **Phase 10** (25-site feasibility probe, no product code) and **Phase 11** (any store with a typed amount, engine ranges) start in parallel; Phase 11 needs D5 first.
+- **Merchant coverage, Phases 10–17** ([plan](product/phase-10-merchant-expansion.md), [decision](decisions/2026-10-05-merchant-coverage-phases.md)): v6.1 split on 2026-10-05 into eight phases, each with its own exit check and decisions. D4 and D6 approved. **Phase 10** (25-site feasibility probe, no product code) and **Phase 11** (any store with a typed amount, engine ranges) start in parallel. Phase 11 reduced on 2026-10-05: no store search, no category ranges (D5 moves to Phase 14).
 - Release media regenerated for `2026-10-05.renewal.1` (`npm run release:media`, all checks passed, 2026-10-05; [release media](ops/release-media.md)).
 
 ## Open questions and next steps
 
-1. **Evan: D5** (category evidence: issuer statements and business-type inference with ranges; the paid Mastercard API only later) before Phase 11 starts. Later decisions are asked per phase ([table](product/phase-10-merchant-expansion.md#decisions-for-evan-one-word-each-asked-when-their-phase-starts)).
+1. Phases 10 and 11 in progress; later decisions are asked per phase ([table](product/phase-10-merchant-expansion.md#decisions-for-evan-one-word-each-asked-when-their-phase-starts)).
 2. **Next renewal, published before 2026-11-04T00:00Z** ([renewing](ops/catalog-release.md#renewing-a-catalog-before-it-expires)): re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data.
 3. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it instead of per file; `pipeline handoff` names the freshness record for the merchant MCC folder ([renewal record](ops/catalog-release-history.md#renewal-2026-10-05renewal1-prepared-2026-10-05)).
 4. Phase order (Evan, 2026-10-05): 10 ∥ 11 → 12 → 13 → 14 → 15 Release A (replaces Phase 5) → 17; 16 beside 15; Phase 6 folded in; 4 terms-change detection revisited after 9.
