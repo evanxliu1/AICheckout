@@ -26,7 +26,7 @@ A shopper gets a correct card recommendation at **any U.S. online checkout**: th
 
 ## Success criteria
 
-Y is set in the Phase 12 protocol; X and Z are set after 4 weeks of Release B data and reported with n.
+**Y = 80%** found-correct on held-out one-item cart pages (Evan, 2026-10-05, from the [Phase 10 probe](../../docs/evals/merchant-probe-2026-10.md)), pre-registered in the Phase 12 protocol; X and Z are set after 4 weeks of Release B data and reported with n.
 
 1. **Reader on real pages:** on the active held-out split (A, or B once A is retired) 0 false-found results, 95% upper bounds reported at the page-state and site level; found-correct ≥ Y% on the one-item state; p95 reading time within budget.
 2. **Category correctness:** every profiled domain whose plausible category is a catalog bonus category has class 1 or 2 evidence, or its recommendation is a range; the share of range recommendations is reported.

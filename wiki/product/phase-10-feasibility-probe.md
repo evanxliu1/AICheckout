@@ -18,7 +18,7 @@ sources:
 
 # Phase 10 plan: merchant feasibility probe
 
-**Status (2026-10-05T23:30Z): steps 1–4 done on branch `phase10-probe`, verdict go (16 of 25 sites showed a logged-out cart), proposed Y = 80%; second labeling done, 44/44 agreement (agent-verified); the independent report review ran (agent-verified, approve with fixes; fixes applied).** Results: [report](../../docs/evals/merchant-probe-2026-10.md); method choices: [decision](../decisions/2026-10-05-merchant-probe-method.md); working folder `evals/merchants/probe/`.
+**Evan accepted go and Y = 80% on 2026-10-05.** **Status (2026-10-05T23:30Z): steps 1–4 done on branch `phase10-probe`, verdict go (16 of 25 sites showed a logged-out cart), proposed Y = 80%; second labeling done, 44/44 agreement (agent-verified); the independent report review ran (agent-verified, approve with fixes; fixes applied).** Results: [report](../../docs/evals/merchant-probe-2026-10.md); method choices: [decision](../decisions/2026-10-05-merchant-probe-method.md); working folder `evals/merchants/probe/`.
 
 Started 2026-10-05, in parallel with Phase 11 ([merchant coverage plan](phase-10-merchant-expansion.md)). Evan approved D4 (real-page capture) and D6 (merchant list) the same day ([decision](../decisions/2026-10-05-merchant-coverage-phases.md)). No product code: the output is a report that decides whether the generic-reader plan (Phases 12–13) holds.
 
