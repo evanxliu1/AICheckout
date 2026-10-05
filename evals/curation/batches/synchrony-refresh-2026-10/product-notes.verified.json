@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/apply-expansion-verification.mjs",
+  "description": "Product hints of the verified cards with the verifiers’ adjudicated changes. verification: confirmed, fixed or added by a verifier (anchor quoted from anchorSourceId), or unreviewed.",
+  "cards": [
+    {
+      "cardId": "synchrony-amazon-store-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Amazon.com and Whole Foods Market (\"5% back at Amazon.com, Whole Foods Market (In-Store Code usage required at Whole Foods Market), and more\")",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "Requires eligible Prime membership (Prime Store Card). Non-Prime Amazon Store Card earns no % back. Cannot be combined with Equal Monthly Payments or special financing…",
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": "Requires eligible Prime membership (Prime Store Card). Non-Prime Amazon Store Card earns no % back. Cannot be combined with Equal Monthly Payments or special financing…",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Prime Store Card members with an eligible Prime membership can earn 5% back year-round at Amazon.com, Whole Foods Market (In-Store Code usage required at Whole",
+          "verification": "confirmed",
+          "anchorSourceId": "amazon-store-card-product"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card: usable at Amazon.com, select physical Amazon stores, participating Whole Foods Market stores, and Amazon Pay merchants that enable it.",
+          "merchants": [
+            "Amazon",
+            "Whole Foods Market"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores",
+          "anchorSourceId": "amazon-store-card-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-paypal-cashback-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "checkout-method",
+          "summary": "purchases made through your PayPal account online, and sending money to PayPal users (\"3% on Eligible Purchases you make using your Card Account through your…",
+          "rate": "3%",
+          "cap": "none stated (\"no maximum amount of Eligible Purchases\")",
+          "conditions": "card must be the linked payment method at PayPal checkout; authorized users earn 1.5% (unless they later add card to own PayPal)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3% on Eligible Purchases you make using your Card Account through your PayPal account online, or when you use your Card Account to send",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-paypal-cashback-mastercard-rewards-terms"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-sams-club-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Sam's Club purchases",
+          "rate": "3% for Plus members; 1% for Club members",
+          "cap": "$5,000 Sam's Cash/yr overall",
+          "conditions": "excludes tobacco, prescriptions, gift/prepaid cards, cash equivalents",
+          "membership": null,
+          "status": "anchored",
+          "verification": "confirmed",
+          "anchorMethod": "verifier",
+          "anchor": "back in Sam’s Cash on Sam’s Club purchases for Plus members. (Club members earn 1%).",
+          "anchorSourceId": "synchrony-sams-club-mastercard-partner"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-onepay-cashrewards-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Walmart (US stores, Walmart-branded gas stations, Walmart app, Walmart.com) with Walmart+",
+          "rate": "5%",
+          "cap": "none stated (\"unlimited\")",
+          "conditions": "Walmart+ membership must be linked to the card by email; excludes Sam's Club and third-party marketplace sellers on Walmart.com",
+          "merchants": [
+            "OnePay / Walmart"
+          ],
+          "membership": "Walmart+ membership must be linked to the card by email; excludes Sam's Club and third-party marketplace sellers on Walmart.com",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "OnePay Points are earned on Purchases as follows: (i) 5% on Purchases at Walmart for Walmart+ members whose Walmart+ membership is linked to their Account;",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-onepay-cashrewards-card-pricing"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Walmart without Walmart+",
+          "rate": "3%",
+          "cap": "none stated",
+          "conditions": "same Walmart definition",
+          "merchants": [
+            "OnePay / Walmart"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "3% Cash Back at Walmart: You earn OnePay Points equal to 3% of each $1 spent on Purchases at Walmart with your CashRewards Card (1.5%",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-onepay-cashrewards-card-rewards-terms"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-mywalgreens-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Walgreens brand purchases at Walgreens, Duane Reade, Walgreens.com",
+          "rate": "10%",
+          "cap": "none stated",
+          "conditions": "exclusions apply; myWalgreens membership required",
+          "merchants": [
+            "Walgreens"
+          ],
+          "membership": "exclusions apply; myWalgreens membership required",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "You will earn Walgreens Cash rewards equal to 10% of every USD spent for Eligible Purchases of retail products branded with Walgreens marks or logos",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-mywalgreens-mastercard-rewards-terms"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "all other brands and pharmacy purchases at Walgreens",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "exclusions apply",
+          "merchants": [
+            "Walgreens"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "5% on all other brands and pharmacy purchases†",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-mywalgreens-mastercard-product"
+        }
+      ]
+    }
+  ]
+}
