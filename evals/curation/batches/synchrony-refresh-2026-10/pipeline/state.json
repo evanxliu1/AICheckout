@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "synchrony-refresh-2026-10",
-  "updatedAt": "2026-10-05T02:02:33.826Z",
+  "updatedAt": "2026-10-05T02:06:02.652Z",
   "cards": {
     "synchrony-amazon-store-card": {
       "stages": {
@@ -186,6 +186,34 @@
           "agentRun": "a37a3c056da0be22e",
           "model": "claude-opus-5-5",
           "acceptedAt": "2026-10-05T02:02:33.808Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:435894c289c6bee8c15e2e6d898939d3ac3eb195cc904a2142a1f4224903ea29",
+          "finishedAt": "2026-10-05T02:06:01.322Z",
+          "attempts": 1,
+          "packetId": "75f4c48c-4f1d-4e41-ab08-44be2906b251",
+          "agentRun": "a5fb67c6c55e7cf88",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T02:06:01.322Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:dafb4cda471e1fe52f5ee38d7ddb5c1d77252ee66c64c69e924b1a65a325b22f",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-amazon-secured-card",
+              "sha256": "27ca7d8e4fa101ee7e6c271f573ebdc6bfeea6a888442dd21155a1d92e615041"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:06:02.652Z",
+          "attempts": 1,
+          "metrics": {
+            "lintRateRaised": 1,
+            "lintRateAcked": 1
+          }
         }
       },
       "dropped": null,
@@ -390,6 +418,30 @@
           "agentRun": "a37a3c056da0be22e",
           "model": "claude-opus-5-5",
           "acceptedAt": "2026-10-05T02:02:33.808Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:e6cb2159c8b14c95d1f74f84d9a4380a08711dd143f10f26aafcb2dcbd0d224c",
+          "finishedAt": "2026-10-05T02:06:01.322Z",
+          "attempts": 1,
+          "packetId": "75f4c48c-4f1d-4e41-ab08-44be2906b251",
+          "agentRun": "a5fb67c6c55e7cf88",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T02:06:01.322Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:58bc1203f1dd4a3b764c5b40ef36fe4b3855f0bbbdeb45452aff8d3b72017889",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-verizon-visa-card",
+              "sha256": "c462ae43a98e13b37721c561ff8312d89bc2b663245df41fa88cea50d317d6ca"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:06:02.652Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -822,6 +874,30 @@
           "agentRun": "a37a3c056da0be22e",
           "model": "claude-opus-5-5",
           "acceptedAt": "2026-10-05T02:02:33.808Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:b1a541ef049a1d294fba89e3318f52b9b174ea42f9b3375c8af3443ff833ee05",
+          "finishedAt": "2026-10-05T02:06:01.322Z",
+          "attempts": 1,
+          "packetId": "75f4c48c-4f1d-4e41-ab08-44be2906b251",
+          "agentRun": "a5fb67c6c55e7cf88",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T02:06:01.322Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:70a0f2bcb18bd069580095448f206704fae623114c88ecd6f2fc6c98424705a5",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-newegg-store-credit-card",
+              "sha256": "450f74c3b5ca260afad2aa2cdcd85d1bb524cab682c6f6377b0d7ae7a6dabe2d"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:06:02.652Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -862,21 +938,21 @@
           "outputs": [
             {
               "ref": "adjudicate:synchrony",
-              "sha256": "ddba23d97f94554833b4123f557910105b4a1e6527e8190923e9f778c4c9cd91"
+              "sha256": "3d618e460c9c934b4b3e586fa4cb575189751a2f57be3faaccc2c4dcf8d8cdff"
             },
             {
               "ref": "lint-acks:synchrony",
-              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+              "sha256": "7db1220c72b9dd215f19668718e78e0b70f208618a295b605def26820c5223c6"
             }
           ],
-          "finishedAt": "2026-10-05T01:46:13.782Z",
-          "attempts": 1,
-          "packetId": "cfcf71a5-69e6-49a1-9198-ebe0710c2efa",
-          "agentRun": "a2f4978e1023ce51b",
+          "finishedAt": "2026-10-05T02:06:01.322Z",
+          "attempts": 2,
+          "packetId": "75f4c48c-4f1d-4e41-ab08-44be2906b251",
+          "agentRun": "a5fb67c6c55e7cf88",
           "model": "claude-fable-5-1",
-          "acceptedAt": "2026-10-05T01:46:13.782Z",
-          "durationMs": 155638,
-          "tokens": 76075
+          "acceptedAt": "2026-10-05T02:06:01.322Z",
+          "durationMs": 183871,
+          "tokens": 70145
         },
         "overlay": {
           "status": "done",

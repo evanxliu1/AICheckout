@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "4370c416-0d47-4dae-b575-148f2b658c0b",
+  "packetId": "75f4c48c-4f1d-4e41-ab08-44be2906b251",
   "batch": "synchrony-refresh-2026-10",
   "issuer": "Synchrony",
   "provenance": "agent-verified",
@@ -30,7 +30,29 @@
       "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-newegg-store-credit-card-categories.txt"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-10-05",
+    "filesRead": [
+      ".claude/agents/card-adjudicator.md",
+      "evals/curation/batches/synchrony-refresh-2026-10/pipeline/packets/adjudicate.synchrony.2.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/synchrony.md",
+      "evals/curation/batches/synchrony-refresh-2026-10/verification/synchrony.json",
+      "evals/curation/batches/synchrony-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/synchrony-refresh-2026-10/product-notes.json",
+      "apps/api/src/curation/v2/schema.ts",
+      "tools/catalog-pipeline/src/gates.ts",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/amazon-store-card-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-verizon-visa-card-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-verizon-visa-card-rewards-terms.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-verizon-visa-card-partner.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-newegg-store-credit-card-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-newegg-store-credit-card-categories.txt"
+    ]
+  },
   "cards": [
     {
       "cardId": "synchrony-amazon-store-card",
@@ -632,7 +654,11 @@
             "sourceId": "amazon-store-card-product",
             "quote": "2% back on Amazon purchases with an eligible Prime membership"
           },
-          "note": "The Secured Card rate is stated as a percentage back, redeemable as statement credit: cash-back with rateBps = percent x 100 (Synchrony convention for Amazon Store and Secured)."
+          "note": "The Secured Card rate is stated as a percentage back, redeemable as statement credit: cash-back with rateBps = percent x 100 (Synchrony convention for Amazon Store and Secured).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product capture states the Secured Card rate as a percentage back; the Synchrony convention names Amazon Secured as cash-back with rateBps = percent x 100 (general 1). No point-value fix is needed: the empty reference already carries null, which is what a cash-back card must have (general 13)."
+          }
         }
       ],
       "addedRules": [
@@ -657,7 +683,11 @@
               "quote": "For Secured Card accounts opened on or after January 1, 2021, the 2% back benefit may apply to purchases (less returns and other credits)"
             }
           ],
-          "note": "The 2% for Secured Card accounts opened from 2021 on, at Amazon.com and physical Amazon locations with an eligible Prime membership; a single merchant, so other (general 4). The Prime condition is an out-of-scope issue."
+          "note": "The 2% for Secured Card accounts opened from 2021 on, at Amazon.com and physical Amazon locations with an eligible Prime membership; a single merchant, so other (general 4). The Prime condition is an out-of-scope issue.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Section 3 of the terms states 2% back for Secured accounts opened from 2021 on at Amazon.com and physical Amazon locations with an eligible Prime membership; a single merchant, so other (general 4, Synchrony convention). Captures state no cap, so cap null (general 21); the Prime gate is the out-of-scope issue (general 17)."
+          }
         },
         {
           "rule": {
@@ -680,7 +710,11 @@
               "quote": "Participating Whole Foods Market stores will accept in-store payment with the Store Card and Secured Card through the Amazon In-Store Code"
             }
           ],
-          "note": "The % back terms (section 6) cover Whole Foods purchases on the Secured Card at the applicable %, which is 2% for post-2021 accounts. The product page names only Amazon purchases, so this rests on the terms. Single merchant: other."
+          "note": "The % back terms (section 6) cover Whole Foods purchases on the Secured Card at the applicable %, which is 2% for post-2021 accounts. The product page names only Amazon purchases, so this rests on the terms. Single merchant: other.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Section 6 applies the % back benefit, including eligible purchases at participating Whole Foods Markets, to the Secured Card at the applicable %, and section 12 says Whole Foods accepts the Secured Card in store; for accounts opened now that % is the 2% of section 3. The Synchrony convention names Whole Foods on the Secured card as other."
+          }
         }
       ],
       "addedExclusions": [
@@ -692,7 +726,11 @@
               "quote": "Amazon Pay purchases made using your Prime Store Card or Prime Secured Card are not eligible to earn reward points."
             }
           ],
-          "note": "Amazon Pay purchases at other merchants never earn."
+          "note": "Amazon Pay purchases at other merchants never earn.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim from the terms: Amazon Pay purchases on the Prime Secured Card earn no reward points."
+          }
         },
         {
           "text": "The % back benefit cannot be combined with any special financing or equal monthly payments offer",
@@ -702,7 +740,11 @@
               "quote": "The % back benefit cannot be combined with any special financing or equal monthly payments offer"
             }
           ],
-          "note": "A purchase put on a financing or equal monthly payments offer earns no % back (same exclusion as the Amazon Store Card)."
+          "note": "A purchase put on a financing or equal monthly payments offer earns no % back (same exclusion as the Amazon Store Card).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim from the terms: a purchase on a financing or equal monthly payments offer earns no % back, the same exclusion the accepted Amazon Store Card carries."
+          }
         }
       ],
       "addedIssues": [
@@ -714,7 +756,11 @@
               "quote": "The Prime Secured Card, an upgrade from the Amazon Secured Card, is available to customers with an Eligible Prime Membership only"
             }
           ],
-          "note": "The 2% needs an eligible Prime membership (general 17, Synchrony convention); the rate stays as stated."
+          "note": "The 2% needs an eligible Prime membership (general 17, Synchrony convention); the rate stays as stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 2% needs an eligible Prime membership; the Synchrony convention gives the Secured Card an out-of-scope issue naming it (general 17)."
+          }
         },
         {
           "code": "ambiguous",
@@ -724,7 +770,11 @@
               "quote": "For Secured Card accounts opened before January 1, 2021, the 5% back benefit may apply to purchases"
             }
           ],
-          "note": "Secured accounts opened before 2021 keep 5% back with Prime; the labels carry the 2% that applies to accounts opened now."
+          "note": "Secured accounts opened before 2021 keep 5% back with Prime; the labels carry the 2% that applies to accounts opened now.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states that pre-2021 Secured accounts keep 5% back, a real ambiguity in the labelled 2%; the overlay convention records this split as a gate."
+          }
         },
         {
           "code": "ambiguous",
@@ -734,7 +784,11 @@
               "quote": "Each set of features has a different Purchase APR and Late Payment Fee as shown below and may have different rewards available."
             }
           ],
-          "note": "After 12 months a cardholder may switch to the Store Card features, whose rewards on a converted Secured account the captures do not state."
+          "note": "After 12 months a cardholder may switch to the Store Card features, whose rewards on a converted Secured account the captures do not state.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the two feature sets may have different rewards, and the captures do not say what a converted account earns; the issue is anchored on the problem (general 16)."
+          }
         }
       ],
       "productNoteChanges": [
@@ -745,7 +799,11 @@
             "sourceId": "amazon-store-card-product",
             "quote": "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership6"
           },
-          "note": "2% back on Amazon purchases with an eligible Prime membership is stated on the product page; the security deposit, Amazon Pay and financing conditions are in the terms."
+          "note": "2% back on Amazon purchases with an eligible Prime membership is stated on the product page; the security deposit, Amazon Pay and financing conditions are in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states 2% back on Amazon purchases with an eligible Prime membership; the hint matches it."
+          }
         },
         {
           "action": "fix",
@@ -762,7 +820,11 @@
             "sourceId": "amazon-store-card-product",
             "quote": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores"
           },
-          "note": "The terms name where the Secured Card works; the hint was unanchored."
+          "note": "The terms name where the Secured Card works; the hint was unanchored.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state use at Amazon.com, select physical Amazon stores, participating Whole Foods Market stores and Amazon Pay merchants that enable the card; the hint now carries an anchor and matches the overlay convention on Amazon closed loop."
+          }
         },
         {
           "action": "add",
@@ -779,7 +841,11 @@
             "sourceId": "amazon-store-card-product",
             "quote": "For Secured Card accounts opened before January 1, 2021, the 5% back benefit may apply to purchases"
           },
-          "note": "The account-age split of the Secured Card rate, for a later gate."
+          "note": "The account-age split of the Secured Card rate, for a later gate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state 5% back for Secured accounts opened before 2021-01-01 with Prime; the overlay convention records this split as a gate, so the hint carries it for later stages."
+          }
         }
       ]
     },
@@ -797,7 +863,11 @@
             "sourceId": "synchrony-verizon-visa-card-product",
             "quote": "you earn a percentage of the purchase in Verizon Dollars"
           },
-          "note": "Verizon Dollars are a dollar-denominated store credit stated as a percentage: cash-back (general 8), with the store-only issue below."
+          "note": "Verizon Dollars are a dollar-denominated store credit stated as a percentage: cash-back (general 8), with the store-only issue below.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verizon Dollars are a dollar-denominated store credit earned as a percentage of the purchase; general 8 names them as cash-back with the store-only issue, which the verifier added."
+          }
         }
       ],
       "addedRules": [
@@ -831,7 +901,11 @@
               "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
             }
           ],
-          "note": "Base 1%, no limit; cardholders are enrolled automatically (activation none, general 7)."
+          "note": "Base 1%, no limit; cardholders are enrolled automatically (activation none, general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Base 1% everywhere else Visa is accepted. The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
         },
         {
           "rule": {
@@ -863,7 +937,11 @@
               "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
             }
           ],
-          "note": "4% on gas, no limit."
+          "note": "4% on gas, no limit.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4% on gas, stated with EV charging in one sentence. The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
         },
         {
           "rule": {
@@ -895,7 +973,11 @@
               "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
             }
           ],
-          "note": "4% at EV charging stations, from the same sentence as gas."
+          "note": "4% at EV charging stations, from the same sentence as gas.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4% at EV charging stations, from the same sentence as gas; ev-charging is a corpus category. The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
         },
         {
           "rule": {
@@ -927,7 +1009,11 @@
               "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
             }
           ],
-          "note": "4% on groceries; the terms define them as grocery stores and supermarkets."
+          "note": "4% on groceries; the terms define them as grocery stores and supermarkets.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4% on groceries, defined by the terms as grocery stores and supermarkets, so the shared category fits. The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
         },
         {
           "rule": {
@@ -959,7 +1045,11 @@
               "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
             }
           ],
-          "note": "4% at restaurants (product page: including take-out and delivery)."
+          "note": "4% at restaurants (product page: including take-out and delivery).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4% at restaurants, defined by the terms as restaurants, drinking places, fast food and caterers. The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
         },
         {
           "rule": {
@@ -991,7 +1081,11 @@
               "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
             }
           ],
-          "note": "4% on Verizon purchases (devices and accessories, not bill payment); a single merchant, so other (general 4)."
+          "note": "4% on Verizon purchases (devices and accessories, not bill payment); a single merchant, so other (general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4% on Verizon purchases at Verizon stores, online, by phone and exclusive Authorized Retailers, devices and accessories only; a single merchant, so other (general 4). The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
         },
         {
           "rule": {
@@ -1023,7 +1117,11 @@
               "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
             }
           ],
-          "note": "Verizon bill payments earn 1%, the base rate, stated as its own rule because the 4% Verizon rule excludes them."
+          "note": "Verizon bill payments earn 1%, the base rate, stated as its own rule because the 4% Verizon rule excludes them.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state 1% on Verizon Wireless and Fios bill payments as a separate line and the 4% Verizon rule excludes bill payment, so the rule is labelled; a single merchant, so other (general 4). The Synchrony overlay convention already treats this bill-payment rule as held out at retail, so labelling it is consistent. The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
         }
       ],
       "addedExclusions": [
@@ -1035,7 +1133,11 @@
               "quote": "not earned on the following: unauthorized or fraudulent charges, the purchase of debt cancellation products, cash advances, balance transfers, interest or fees"
             }
           ],
-          "note": "Transactions that never earn Verizon Dollars, per the rewards terms."
+          "note": "Transactions that never earn Verizon Dollars, per the rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim from the rewards terms: the listed transactions never earn Verizon Dollars."
+          }
         }
       ],
       "addedIssues": [
@@ -1051,7 +1153,11 @@
               "quote": "Verizon Dollars have no cash value and are issued for rewards purposes only"
             }
           ],
-          "note": "Verizon Dollars are store credit usable only with Verizon (general 8, Synchrony convention)."
+          "note": "Verizon Dollars are store credit usable only with Verizon (general 8, Synchrony convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 8 requires the ambiguous issue that Verizon Dollars are usable only with Verizon; the anchors state redemption toward Verizon purchases or bills and no cash value."
+          }
         },
         {
           "code": "ambiguous",
@@ -1061,7 +1167,11 @@
               "quote": "3% for Verizon Shine Verizon Dollars program and 1% additional benefit for bill pay for cardholders."
             }
           ],
-          "note": "The product page adds Verizon Loyalty earn on bill payment (3% from the loyalty program plus 1% for cardholders) that the card terms do not state; only the terms' 1% is labelled (general 2)."
+          "note": "The product page adds Verizon Loyalty earn on bill payment (3% from the loyalty program plus 1% for cardholders) that the card terms do not state; only the terms' 1% is labelled (general 2).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states Verizon Loyalty earn on bill payment (3% plus 1%) that the rewards terms do not; only the card's own 1% is labelled (general 2) and the overlay convention notes the Shine/Loyalty extras."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1072,7 +1182,11 @@
             "sourceId": "synchrony-verizon-visa-card-rewards-terms",
             "quote": "Verizon purchases include purchases of devices and accessories but do not include the payment of your Verizon Wireless Account bill"
           },
-          "note": "4% at Verizon stores, online, by phone and exclusive Authorized Retailers, devices and accessories, not bill payment; no limit, per the rewards terms."
+          "note": "4% at Verizon stores, online, by phone and exclusive Authorized Retailers, devices and accessories, not bill payment; no limit, per the rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards terms state the 4% Verizon purchase rule, its device-and-accessory scope and the bill-payment exclusion; the hint matches."
+          }
         },
         {
           "action": "confirm",
@@ -1081,7 +1195,11 @@
             "sourceId": "synchrony-verizon-visa-card-product",
             "quote": "1% on Verizon wireless Account bill or Verizon Fios Account bill payment"
           },
-          "note": "1% on Verizon Wireless or Fios bill payments; the extra Verizon Loyalty earn on bills is on the product page only."
+          "note": "1% on Verizon Wireless or Fios bill payments; the extra Verizon Loyalty earn on bills is on the product page only.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states 1% on Verizon Wireless or Fios bill payment; the hint matches and its loyalty condition is the marketing extra general 2 leaves out of the labels."
+          }
         }
       ]
     },
@@ -1099,7 +1217,11 @@
             "sourceId": "synchrony-newegg-store-credit-card-product",
             "quote": "Use your Newegg Store Credit Card, enjoy 4% off every day on your purchase."
           },
-          "note": "The card pays a 4% point-of-sale discount: cash-back 400 per the Synchrony Newegg convention (not store credit)."
+          "note": "The card pays a 4% point-of-sale discount: cash-back 400 per the Synchrony Newegg convention (not store credit).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Synchrony convention records Newegg's 4% point-of-sale discount as cash-back 400 other with an ambiguous issue, not store credit; the product page states 4% off every day."
+          }
         }
       ],
       "addedRules": [
@@ -1124,7 +1246,11 @@
               "quote": "Get 4% off every day when you pay with your Newegg Store Credit Card."
             }
           ],
-          "note": "The 4% everyday discount on Newegg purchases; a single merchant, so other (general 4, Synchrony convention). No capture states a cap or an unlimited rate, so cap is null."
+          "note": "The 4% everyday discount on Newegg purchases; a single merchant, so other (general 4, Synchrony convention). No capture states a cap or an unlimited rate, so cap is null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states 4% off every day when paying with the card; a single merchant, so other (general 4, Synchrony convention). No capture states a cap or that it is unlimited, so cap null (general 21)."
+          }
         }
       ],
       "addedExclusions": [
@@ -1136,7 +1262,11 @@
               "quote": "The 4% discount does not apply to gift cards, warranties, prior purchases, taxes, or shipping charges."
             }
           ],
-          "note": "Items the discount never covers."
+          "note": "Items the discount never covers.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim from the product page FAQ: gift cards, warranties, prior purchases, taxes and shipping never get the discount."
+          }
         }
       ],
       "addedIssues": [
@@ -1152,7 +1282,11 @@
               "quote": "May not be stackable with all promo codes."
             }
           ],
-          "note": "The 4% is a point-of-sale discount the cardholder picks at checkout instead of special financing, and may not stack with promo codes (Synchrony Newegg convention)."
+          "note": "The 4% is a point-of-sale discount the cardholder picks at checkout instead of special financing, and may not stack with promo codes (Synchrony Newegg convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Synchrony convention requires the ambiguous issue that the 4% is a discount chosen at checkout instead of financing; the anchors state the choice and the promo-code limit."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1163,7 +1297,11 @@
             "sourceId": "synchrony-newegg-store-credit-card-product",
             "quote": "Simply choose the discount option at checkout."
           },
-          "note": "The 4% everyday discount, chosen at checkout instead of financing, excludes gift cards, warranties, taxes and shipping, and may not stack with promo codes."
+          "note": "The 4% everyday discount, chosen at checkout instead of financing, excludes gift cards, warranties, taxes and shipping, and may not stack with promo codes.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states the discount is chosen at checkout and lists the exclusions and promo-code limit; the hint matches."
+          }
         },
         {
           "action": "fix",
@@ -1179,9 +1317,21 @@
             "sourceId": "synchrony-newegg-store-credit-card-categories",
             "quote": "Union Pay Newegg Store Credit Card Newegg.com Gift Card"
           },
-          "note": "No capture states store-only use; the payment-method list shows the store card apart from Visa, Mastercard and the other networks (Synchrony overlay convention on closed loop by inference)."
+          "note": "No capture states store-only use; the payment-method list shows the store card apart from Visa, Mastercard and the other networks (Synchrony overlay convention on closed loop by inference).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "No capture says the card works only at Newegg; the payment-method list shows the store card apart from the networks, which is the inference the Synchrony overlay convention records for Newegg closed loop. The hint now says exactly that with an anchor."
+          }
         }
       ]
+    }
+  ],
+  "labelLintAcks": [
+    {
+      "cardId": "synchrony-amazon-secured-card",
+      "ruleIndex": 1,
+      "check": "rate",
+      "reason": "split-anchors"
     }
   ]
 }

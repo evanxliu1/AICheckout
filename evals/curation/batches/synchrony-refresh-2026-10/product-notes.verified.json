@@ -39,6 +39,55 @@
       ]
     },
     {
+      "cardId": "synchrony-amazon-secured-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Amazon purchases (\"Prime rewards: 2% back on Amazon purchases with an eligible Prime membership\")",
+          "rate": "2%",
+          "cap": "none stated",
+          "conditions": "Requires eligible Prime membership (Prime Secured Card); security deposit required; Amazon Pay purchases excluded; % back cannot be combined with financing offers",
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": "Requires eligible Prime membership (Prime Secured Card); security deposit required; Amazon Pay purchases excluded; % back cannot be combined with financing offers",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership6",
+          "verification": "confirmed",
+          "anchorSourceId": "amazon-store-card-product"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card: usable at Amazon.com, select physical Amazon stores, participating Whole Foods Market stores, and Amazon Pay merchants that enable it.",
+          "merchants": [
+            "Amazon",
+            "Whole Foods Market"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores",
+          "anchorSourceId": "amazon-store-card-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Secured Card accounts opened before January 1, 2021: 5% back at Amazon with an eligible Prime membership.",
+          "rate": "5%",
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": "Eligible Prime membership; account opened before 2021-01-01",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "For Secured Card accounts opened before January 1, 2021, the 5% back benefit may apply to purchases",
+          "anchorSourceId": "amazon-store-card-product",
+          "verification": "added"
+        }
+      ]
+    },
+    {
       "cardId": "synchrony-paypal-cashback-mastercard",
       "issuer": "Synchrony",
       "hints": [
@@ -53,6 +102,44 @@
           "anchor": "Earn 3% on Eligible Purchases you make using your Card Account through your PayPal account online, or when you use your Card Account to send",
           "verification": "confirmed",
           "anchorSourceId": "synchrony-paypal-cashback-mastercard-rewards-terms"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-verizon-visa-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Verizon purchases (Verizon stores, Verizon online, phone, exclusive Authorized Retailers; devices and accessories)",
+          "rate": "4%",
+          "cap": "no limit",
+          "conditions": "excludes bill payments",
+          "merchants": [
+            "Verizon"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Verizon purchases include purchases of devices and accessories but do not include the payment of your Verizon Wireless Account bill",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-verizon-visa-card-rewards-terms"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Verizon Wireless / Fios bill payments",
+          "rate": "1%",
+          "cap": "no limit",
+          "conditions": "plus Verizon Loyalty adds 1% for paying bill with card (marketing page)",
+          "merchants": [
+            "Verizon"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "1% on Verizon wireless Account bill or Verizon Fios Account bill payment",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-verizon-visa-card-product"
         }
       ]
     },
@@ -148,6 +235,40 @@
           "anchor": "5% on all other brands and pharmacy purchases†",
           "verification": "confirmed",
           "anchorSourceId": "synchrony-mywalgreens-mastercard-product"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-newegg-store-credit-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Newegg purchases (\"4% off every day when you choose the discount option at checkout\")",
+          "rate": "4% discount",
+          "cap": "none stated",
+          "conditions": "must choose discount option instead of special financing (6 mo on $199+, 12 mo on $499+); excludes gift cards, warranties, taxes, shipping; may not stack…",
+          "merchants": [
+            "Newegg"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Simply choose the discount option at checkout.",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-newegg-store-credit-card-product"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card: Newegg lists it as a payment method apart from the card networks; no capture says it works only at Newegg.",
+          "merchants": [
+            "Newegg"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Union Pay Newegg Store Credit Card Newegg.com Gift Card",
+          "anchorSourceId": "synchrony-newegg-store-credit-card-categories",
+          "verification": "fixed"
         }
       ]
     }
