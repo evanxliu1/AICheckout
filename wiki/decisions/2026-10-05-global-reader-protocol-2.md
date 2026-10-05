@@ -10,7 +10,7 @@ generated:
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol (.2)
-  - resource: 2026-10-06-reader-eval-protocol.md
+  - resource: 2026-10-05-reader-eval-protocol.md
     title: Reader protocol choices (.1)
 ---
 

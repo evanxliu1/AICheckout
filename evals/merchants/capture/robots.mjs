@@ -1,4 +1,4 @@
-// robots.txt posture for the capture tool (Evan's decision, 2026-10-06; docs/evals/generic-reader-protocol.md).
+// robots.txt posture for the capture tool (Evan's decision, 2026-10-05; docs/evals/generic-reader-protocol.md).
 // Parsed as RFC 9309 (groups, longest match, Allow wins a tie, `*` and `$`). The protocol rule is stricter than
 // RFC 9309 group selection: the rules for `User-agent: *` AND for the tool's own token both apply, and the site is
 // excluded if either has `Disallow: /` (robots-disallow-all) or disallows a cart or checkout path the recipe names

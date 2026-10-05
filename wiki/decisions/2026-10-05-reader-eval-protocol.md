@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, phase-12, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T04:00:00Z
+  at: 2026-10-05T21:00:00Z
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol
@@ -14,7 +14,7 @@ sources:
     title: Phase 12 plan
 ---
 
-# Generic reader evaluation protocol choices (2026-10-06)
+# Generic reader evaluation protocol choices (2026-10-05)
 
 ## Context
 The [Phase 12 plan](../product/phase-12-reader-eval.md) sets what the [protocol](../../docs/evals/generic-reader-protocol.md) must cover: about 300 candidates, three site splits, states by how they arise, two labelers and an adjudicator, frozen labels, bounds, Y = 80%, the peek policy, the capture posture and a frozen merchant-pipeline held-out list. It doesn't say how to classify retail domains, how to randomise, when capture stops, how variants relate to the pass bar, or whether the two held-out sets may overlap. The 12.1 builder made these calls. They become binding when the reviewer signs the protocol.
@@ -30,8 +30,8 @@ The [Phase 12 plan](../product/phase-12-reader-eval.md) sets what the [protocol]
 | Global brands, marketplaces | Probe exclusions as they were; one rule | One rule: a U.S. storefront in USD with its own checkout. H&M and Zara become eligible, marketplaces are in, online-only cross-border retailers are out |
 | Variants and the bar | Variants inside the zero-false-found bar; reported apart | Reported apart, with false founds listed by class. The bar is on real pages, as criterion 1 reads, and the variants are synthetic and adversarial |
 | Errata and the verdict | Score on corrected labels; on frozen labels | Frozen labels decide. A pass that needs errata is reported as such and goes to Evan. In the probe, both corrections went the reader's way |
-| robots.txt and terms | Exclude on any cart or checkout disallow, or on an anti-automation clause; record only | **Evan's decision (chat, 2026-10-06):** exclude a site whose robots.txt, for `*` or the tool's own user agent, disallows everything or the cart or checkout paths the tool would load. Terms clauses are recorded and reported but don't exclude. The builder had proposed excluding only `Disallow: /` |
-| Exact Tranco ranks in committed files | Commit ranks; commit bands only | Bands only. Tranco states no licence, and one of its sources, Cloudflare Radar, is CC BY-NC 4.0 (coordinator, tranco-list.eu, 2026-10-06). Exact ranks stay gitignored, and no selection depends on them |
+| robots.txt and terms | Exclude on any cart or checkout disallow, or on an anti-automation clause; record only | **Evan's decision (chat, 2026-10-05):** exclude a site whose robots.txt, for `*` or the tool's own user agent, disallows everything or the cart or checkout paths the tool would load. Terms clauses are recorded and reported but don't exclude. The builder had proposed excluding only `Disallow: /` |
+| Exact Tranco ranks in committed files | Commit ranks; commit bands only | Bands only. Tranco states no licence, and one of its sources, Cloudflare Radar, is CC BY-NC 4.0 (coordinator, tranco-list.eu, 2026-10-05). Exact ranks stay gitignored, and no selection depends on them |
 | When to freeze labels | Per split before its first run; all three before any run | All three splits in 12.3 before any reader run on any split (review fix). The pass bar, outcome definitions and label schema are fixed for good; a scoring change needs an Evan decision and dual reporting |
 | Extension during capture | Load the extension as a shopper would; none | None. Nike's refusal named extensions |
 | Held-out B after A retires | Stop after B's first failure; B gets two runs | Two runs, "under the same rule". The stop rule triggers when B fails twice |
@@ -39,7 +39,7 @@ The [Phase 12 plan](../product/phase-12-reader-eval.md) sets what the [protocol]
 | Overlap between pipeline held-out and reader splits | Disjoint; independent | Independent draws, with overlap allowed (46 of 60 are reader candidates). The two evaluations measure different outputs from different inputs. Disjoint sets would cost a third of the reader's scarce top-1k sites. Reader data of these domains is barred from pipeline development |
 
 ## Decision
-As chosen above, in `generic-reader-protocol.1`. The seed is `ai-checkout/phase-12/2026-10-06`. The frame SHA-256 is `e5139826…6886`, and the pipeline held-out list SHA-256 is `6bc92515…79b2` (bands only; the domains are unchanged from the first draft). The script is `evals/merchants/tools/seeded-selection.mjs`.
+As chosen above, in `generic-reader-protocol.1`. The seed is `ai-checkout/phase-12/2026-10-05`. The frame SHA-256 is `e5139826…6886`, and the pipeline held-out list SHA-256 is `6bc92515…79b2` (bands only; the domains are unchanged from the first draft). The script is `evals/merchants/tools/seeded-selection.mjs`.
 
 ## Consequences
 - 12.2 must implement: the capture posture (no extension, pace limits, robots and terms recording), the platform markers, a snapshot that keeps open shadow roots and styles, and a harness that verifies the freeze hashes.
@@ -48,4 +48,4 @@ As chosen above, in `generic-reader-protocol.1`. The seed is `ai-checkout/phase-
 - Phase 16 starts by adjudicating the 60 held-out profiles, and its drafting can't read Phase 14 seed rows for them.
 
 ## Status
-Proposed 2026-10-06 by the Phase 12.1 builder (claude-code/claude-opus-5-5) within the approved plan. Accepted 2026-10-06 after the independent review signed the protocol with fixes (agent-verified) and Evan decided the robots posture. Amended 2026-10-05 by [generic-reader-protocol.2](2026-10-05-global-reader-protocol-2.md) on Evan's decision: worldwide frame and currency, two candidate streams, new strata and label schema; the rest stands.
+Proposed 2026-10-05 by the Phase 12.1 builder (claude-code/claude-opus-5-5) within the approved plan. Accepted 2026-10-05 after the independent review signed the protocol with fixes (agent-verified) and Evan decided the robots posture. Amended 2026-10-05 by [generic-reader-protocol.2](2026-10-05-global-reader-protocol-2.md) on Evan's decision: worldwide frame and currency, two candidate streams, new strata and label schema; the rest stands.
