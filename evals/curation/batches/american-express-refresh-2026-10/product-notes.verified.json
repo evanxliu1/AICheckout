@@ -4,6 +4,11 @@
   "description": "Product hints of the verified cards with the verifiers’ adjudicated changes. verification: confirmed, fixed or added by a verifier (anchor quoted from anchorSourceId), or unreviewed.",
   "cards": [
     {
+      "cardId": "amex-gold",
+      "issuer": "American Express",
+      "hints": []
+    },
+    {
       "cardId": "amex-platinum",
       "issuer": "American Express",
       "hints": []
@@ -157,6 +162,28 @@
           "anchor": "Five thousand miles generally provides $50 of value.",
           "anchorSourceId": "amex-delta-skymiles-reserve-pricing",
           "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "amex-hilton-honors",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Hilton portfolio hotels and resorts",
+          "rate": "7X",
+          "cap": "none stated",
+          "conditions": "Charged directly with a property in the Hilton portfolio (booking must be via a Hilton-operated channel; incidentals if charged to room)",
+          "merchants": [
+            "Hilton"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "the booking must be made directly through a reservation channel operated by Hilton",
+          "verification": "confirmed",
+          "anchorSourceId": "amex-hilton-honors-pricing"
         }
       ]
     },

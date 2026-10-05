@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "3e60a619-f5ad-4896-9526-82d7877bcbdf",
+  "packetId": "f93d7165-4771-4f9f-b632-a12f82e75c42",
   "batch": "american-express-refresh-2026-10",
   "provenance": "agent-verified",
   "issuer": "American Express",
@@ -27,7 +27,27 @@
       "evals/curation/batches/american-express-refresh-2026-10/captures/amex-hilton-honors-pricing.txt"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-10-04",
+    "filesRead": [
+      "evals/curation/batches/american-express-refresh-2026-10/pipeline/packets/adjudicate.american-express.2.json",
+      ".claude/agents/card-adjudicator.md",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/american-express.md",
+      "evals/curation/batches/american-express-refresh-2026-10/verify/american-express.md",
+      "evals/curation/batches/american-express-refresh-2026-10/verification/american-express.json",
+      "evals/curation/batches/american-express-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/american-express-refresh-2026-10/product-notes.json",
+      "scripts/lib/expansion-verification.mjs",
+      "evals/curation/batches/american-express-refresh-2026-10/captures/amex-gold-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-10/captures/amex-gold-pricing.txt",
+      "evals/curation/batches/american-express-refresh-2026-10/captures/amex-hilton-honors-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-10/captures/amex-hilton-honors-pricing.txt"
+    ]
+  },
   "cards": [
     {
       "cardId": "amex-platinum",
@@ -1518,7 +1538,11 @@
             "sourceId": "amex-gold-pricing",
             "quote": "The Gold Card Membership Rewards® Program"
           },
-          "note": "Undrafted card: earns Membership Rewards points."
+          "note": "Undrafted card: earns Membership Rewards points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Gold rewards terms describe the Membership Rewards program and points per dollar; the undrafted card earns points."
+          }
         },
         {
           "op": "set",
@@ -1529,7 +1553,11 @@
             "sourceId": "amex-gold-pricing",
             "quote": "The value of Membership Rewards points varies according to how you choose to use them."
           },
-          "note": "Undrafted card: no fixed cash redemption value is stated, so the point value stays null (general 3)."
+          "note": "Undrafted card: no fixed cash redemption value is stated, so the point value stays null (general 3).",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "No-op: the empty reference already has a null point value, and the capture states only that the value varies (general 3). The accepted Amex cards with a null point value carry no such fix."
+          }
         }
       ],
       "addedRules": [
@@ -1550,7 +1578,11 @@
               "quote": "one Membership Rewards® point for each dollar charged for an eligible purchase on The American Express® Gold Card"
             }
           ],
-          "note": "Base 1X on eligible purchases."
+          "note": "Base 1X on eligible purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state one point per dollar on eligible purchases: base 1X."
+          }
         },
         {
           "rule": {
@@ -1578,7 +1610,11 @@
               "quote": "Per dollar spent on up to $50,000 in purchases per calendar year, then 1X points"
             }
           ],
-          "note": "4X at restaurants worldwide on the first $50,000 a calendar year, then 1X; worldwide so U.S.-only is false (issuer convention)."
+          "note": "4X at restaurants worldwide on the first $50,000 a calendar year, then 1X; worldwide so U.S.-only is false (issuer convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state 4X at restaurants worldwide on the first $50,000 per calendar year; the product page states 1X after; worldwide so U.S.-only false (Amex convention)."
+          }
         },
         {
           "rule": {
@@ -1606,7 +1642,11 @@
               "quote": "then 1X points for the rest of the year"
             }
           ],
-          "note": "4X at U.S. supermarkets on the first $25,000 a calendar year, then 1X."
+          "note": "4X at U.S. supermarkets on the first $25,000 a calendar year, then 1X.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state 4X at U.S. supermarkets on the first $25,000 per calendar year; the product page states 1X for the rest of the year."
+          }
         },
         {
           "rule": {
@@ -1625,7 +1665,11 @@
               "quote": "5X points) for each dollar spent on prepaid hotels booked through American Express Travel®"
             }
           ],
-          "note": "5X on prepaid hotels booked through Amex Travel."
+          "note": "5X on prepaid hotels booked through Amex Travel.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state 5X on prepaid hotels booked through American Express Travel: a travel-portal rule (general 4)."
+          }
         },
         {
           "rule": {
@@ -1644,7 +1688,11 @@
               "quote": "3X points) for each dollar of eligible purchases charged on airfare on a scheduled flight charged directly with passenger airlines"
             }
           ],
-          "note": "3X on flights booked directly with airlines: a separate other rule (issuer convention)."
+          "note": "3X on flights booked directly with airlines: a separate other rule (issuer convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Airline-direct airfare at 3X is a separate other rule under the Amex convention; the anchor states the rate and wording."
+          }
         },
         {
           "rule": {
@@ -1667,7 +1715,11 @@
               "quote": "and airfare charged directly through American Express Travel"
             }
           ],
-          "note": "3X on airfare booked through Amex Travel."
+          "note": "3X on airfare booked through Amex Travel.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The same 3X clause covers airfare charged directly through American Express Travel: travel-portal; the two anchors are separated by the airline-direct text."
+          }
         },
         {
           "rule": {
@@ -1686,7 +1738,11 @@
               "quote": "2X points) for each dollar of eligible purchases charged through AmexTravel.com or the Amex Travel AppTM for prepaid car rentals"
             }
           ],
-          "note": "2X on prepaid car rentals through AmexTravel.com or the app."
+          "note": "2X on prepaid car rentals through AmexTravel.com or the app.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state 2X on prepaid car rentals through AmexTravel.com or the app: travel-portal."
+          }
         },
         {
           "rule": {
@@ -1709,7 +1765,11 @@
               "quote": "charged for cruise reservations booked and paid through AmexTravel.com"
             }
           ],
-          "note": "2X on cruise reservations booked and paid through AmexTravel.com."
+          "note": "2X on cruise reservations booked and paid through AmexTravel.com.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state 2X on cruise reservations booked and paid through AmexTravel.com: travel-portal; anchors do not abut."
+          }
         },
         {
           "rule": {
@@ -1732,7 +1792,11 @@
               "quote": "at least 1 additional point for each dollar of eligible travel purchases made on AmexTravel.com or the Amex Travel App™"
             }
           ],
-          "note": "Separate 2X American Express Travel Online offer (covers e.g. prepaid short-term rentals); not combinable with the card bonuses. Holding an MR account is not enrollment, so activation is null (issuer convention)."
+          "note": "Separate 2X American Express Travel Online offer (covers e.g. prepaid short-term rentals); not combinable with the card bonuses. Holding an MR account is not enrollment, so activation is null (issuer convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Amex convention keeps the generic 2X American Express Travel Online offer as a rule on Gold; the pricing capture states it and holding an MR account is not enrollment, so activation null."
+          }
         }
       ],
       "addedExclusions": [
@@ -1748,7 +1812,11 @@
               "quote": "purchases or reloading of prepaid cards, or purchases of other cash equivalents"
             }
           ],
-          "note": "Standard eligible-purchase exclusions from the Gold rewards terms."
+          "note": "Standard eligible-purchase exclusions from the Gold rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The eligible-purchase definition in the terms lists these as never earning; the two anchors are separated by the travelers-checks clause."
+          }
         }
       ],
       "addedIssues": [
@@ -1760,7 +1828,11 @@
               "quote": "purchases at bars, nightclubs, cafeterias, caterers, theatre clubs, breweries, bakeries, and meeting venues"
             }
           ],
-          "note": "The 4X restaurant bonus may not apply at bars, bakeries, caterers and similar merchants or restaurants inside other establishments, though they may look like dining."
+          "note": "The 4X restaurant bonus may not apply at bars, bakeries, caterers and similar merchants or restaurants inside other establishments, though they may look like dining.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms list bars, caterers, bakeries and similar merchants as outside the restaurant bonus: a real ambiguity for dining matching."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1779,7 +1851,11 @@
             "sourceId": "amex-gold-pricing",
             "quote": "you choose to make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
           },
-          "note": "Hedged checkout-method statement in the Gold rewards terms."
+          "note": "Hedged checkout-method statement in the Gold rewards terms.",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "The hedged 'may not receive' wallet sentence is Amex boilerplate present on every Amex pricing capture; none of the accepted Amex cards carries a checkout-method hint for it (only Surpass, whose terms state it outright). Payment-path handling for the hedged wording is an overlay decision anchored on the pricing capture (O10)."
+          }
         }
       ]
     },
@@ -1797,7 +1873,11 @@
             "sourceId": "amex-hilton-honors-pricing",
             "quote": "Hilton Honors Bonus Points earned using your Hilton Honors American Express Card:"
           },
-          "note": "Undrafted card: earns Hilton Honors Bonus Points."
+          "note": "Undrafted card: earns Hilton Honors Bonus Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms describe Hilton Honors Bonus Points earned with the card: currency points."
+          }
         },
         {
           "op": "set",
@@ -1808,7 +1888,11 @@
             "sourceId": "amex-hilton-honors-pricing",
             "quote": "Hilton Honors membership, including the earning and redemption of Points, is subject to Hilton Honors Terms and Conditions"
           },
-          "note": "Undrafted card: no cash redemption value is stated; hotel points are travel-only, so the point value stays null (general 3, 20)."
+          "note": "Undrafted card: no cash redemption value is stated; hotel points are travel-only, so the point value stays null (general 3, 20).",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "No-op: the empty reference already has a null point value, and hotel points are travel-only (general 3, 20). The accepted Hilton cards with a null point value carry no such fix."
+          }
         }
       ],
       "addedRules": [
@@ -1829,7 +1913,11 @@
               "quote": "You will receive 3 Hilton Honors Bonus Points for each dollar of eligible purchases."
             }
           ],
-          "note": "Base 3X."
+          "note": "Base 3X.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state 3 Hilton Honors Bonus Points per dollar of eligible purchases: base 3X."
+          }
         },
         {
           "rule": {
@@ -1848,7 +1936,11 @@
               "quote": "for a total of 7, for each dollar of eligible purchases charged directly with a property within the Hilton portfolio"
             }
           ],
-          "note": "7X at Hilton portfolio properties: co-brand partner rule, category other (general 4)."
+          "note": "7X at Hilton portfolio properties: co-brand partner rule, category other (general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state a total of 7 per dollar charged directly with a Hilton portfolio property: co-brand partner rule, category other (general 4), card earn only."
+          }
         },
         {
           "rule": {
@@ -1867,7 +1959,11 @@
               "quote": "for a total of 5, for each dollar of eligible purchases at the following categories of merchants: restaurants located in the U.S."
             }
           ],
-          "note": "5X at U.S. restaurants."
+          "note": "5X at U.S. restaurants.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms state a total of 5 at restaurants located in the U.S.; U.S.-only true."
+          }
         },
         {
           "rule": {
@@ -1890,7 +1986,11 @@
               "quote": "supermarkets located in the U.S. and on gasoline at gas stations located in the U.S."
             }
           ],
-          "note": "5X at U.S. supermarkets."
+          "note": "5X at U.S. supermarkets.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The same 5X clause names supermarkets located in the U.S.; the two anchors are separated by the restaurants clause."
+          }
         },
         {
           "rule": {
@@ -1913,7 +2013,11 @@
               "quote": "on gasoline at gas stations located in the U.S."
             }
           ],
-          "note": "5X on gasoline at U.S. gas stations."
+          "note": "5X on gasoline at U.S. gas stations.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product page states 5X at U.S. gas stations and the terms name gasoline at gas stations located in the U.S. in the 5X clause."
+          }
         }
       ],
       "addedExclusions": [
@@ -1925,7 +2029,11 @@
               "quote": "Eligible purchases do NOT include fees or interest charges, cash advances, purchases of travelers checks, purchases or reloading of prepaid cards, purchases of gift cards"
             }
           ],
-          "note": "Standard eligible-purchase exclusions from the Hilton Honors rewards terms."
+          "note": "Standard eligible-purchase exclusions from the Hilton Honors rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The eligible-purchase definition lists these as never earning; the anchor is exactly 25 words from one capture."
+          }
         }
       ],
       "addedIssues": [
@@ -1937,7 +2045,11 @@
               "quote": "Purchases of gasoline at supermarkets, superstores, and warehouse clubs will only get 3 Bonus Points per dollar."
             }
           ],
-          "note": "Gas bought at supermarkets, superstores or warehouse clubs earns only the 3X base, not the 5X gas rate."
+          "note": "Gas bought at supermarkets, superstores or warehouse clubs earns only the 3X base, not the 5X gas rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state gasoline at supermarkets, superstores and warehouse clubs earns only 3 points: a real ambiguity for the gas rule."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1948,7 +2060,11 @@
             "sourceId": "amex-hilton-honors-pricing",
             "quote": "the booking must be made directly through a reservation channel operated by Hilton"
           },
-          "note": "7X at Hilton portfolio hotels and resorts; bookings via a Hilton channel, incidentals when charged to the room."
+          "note": "7X at Hilton portfolio hotels and resorts; bookings via a Hilton channel, incidentals when charged to the room.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The merchant-specific hint matches the 7X Hilton portfolio terms, including the Hilton booking-channel condition stated in the capture."
+          }
         },
         {
           "action": "add",
@@ -1965,7 +2081,11 @@
             "sourceId": "amex-hilton-honors-pricing",
             "quote": "you choose to make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
           },
-          "note": "Hedged checkout-method statement in the Hilton Honors rewards terms."
+          "note": "Hedged checkout-method statement in the Hilton Honors rewards terms.",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "The hedged 'may not receive' wallet sentence is Amex boilerplate present on every Amex pricing capture; none of the accepted Amex cards carries a checkout-method hint for it (only Surpass, whose terms state it outright). Payment-path handling for the hedged wording is an overlay decision anchored on the pricing capture (O10)."
+          }
         }
       ]
     }
