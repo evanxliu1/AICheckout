@@ -2,7 +2,7 @@
 type: Decision
 title: Global cart reader evaluation and deferred attended capture (generic-reader-protocol.2)
 description: Evan's 2026-10-05 decisions — the generic cart reader must return the total and its currency on storefronts worldwide, judged on a worldwide retail frame with U.S. and non-U.S. reported separately, while card recommendations for non-USD purchases wait for a later phase; bot-walled sites stay a reported gap and attended capture with Evan solving CAPTCHAs is deferred. Amends the signed reader protocol before any capture.
-status: proposed
+status: accepted
 tags: [decision, phase-12, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
@@ -51,4 +51,4 @@ Amend the reader protocol to `generic-reader-protocol.2` as chosen above ([Amend
 - `.2` needs an independent reviewer's signature before 12.3 starts.
 
 ## Status
-Proposed 2026-10-05 by the amendment builder (claude-code/claude-opus-5-5) on Evan's chat decisions. Independent review 2026-10-05 at `ca4dbac`: sign with fixes (agent-verified); fixes applied. Becomes accepted when the reviewer confirms the fixes and signs `generic-reader-protocol.2`.
+Proposed 2026-10-05 by the amendment builder (claude-code/claude-opus-5-5) on Evan's chat decisions. Independent review 2026-10-05 at `ca4dbac`: sign with fixes (agent-verified); fixes applied. The reviewer confirmed the fixes and **signed `generic-reader-protocol.2` at `3028fff`** on 2026-10-05 (agent-verified); accepted.
