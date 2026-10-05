@@ -2,6 +2,9 @@
 
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
+## 2026-10-06
+* **Create** [Phase 12 plan](product/phase-12-reader-eval.md) — reader eval protocol, capture tool and captures in three PRs; what the Phase 10 probe changes (sample about 300 candidates, labels frozen before any run, offline variants for states needing input, tool-enforced safety); merchant-pipeline held-out domains frozen now, profiles in Phase 16 (needs D5). Phase 10 merged as PR #58. (claude-code/claude-opus-5-5)
+
 ## 2026-10-05
 * **Directive** Evan accepted the Phase 10 verdict go and Y = 80% ([user directives](product/user-directives.md), [plan](product/phase-10-merchant-expansion.md)); Phase 12 next. (claude-code/claude-opus-5-5)
 * **Review** Phase 10 second labeling (agent-verified): labeler 2 (`evals/merchants/probe/labels-2.json`, labelled before reading labels.json) agrees with labeler 1 on 44 of 44 snapshots, on total displayed, preferred amount and kind, and every summary row; no adjudication. Counts reconciled by a join script: 14 mini-cart / 16 cart / 14 checkout, 38 with a total (labeler 2's message said 15/16/13 and 37; its file matches). Three shared judgement calls recorded in the [report](../docs/evals/merchant-probe-2026-10.md). [Plan](product/phase-10-feasibility-probe.md) and [now](now.md) updated. (claude-code/claude-opus-5-5)

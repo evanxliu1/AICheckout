@@ -1,0 +1,59 @@
+---
+type: Product
+title: Phase 12 plan (reader eval protocols and captures)
+description: Pre-register the generic cart reader evaluation (splits, states, labels, bounds, peek policy, capture posture, Y = 80%), select the merchant-pipeline held-out domains, build a capture tool that cannot type or submit, and capture and label 150–200 retail sites in three site splits — in three PRs.
+status: stable
+tags: [product, plan, phase-12, merchants, eval]
+generated:
+  by: claude-code/claude-opus-5-5
+  at: 2026-10-06T00:30:00Z
+sources:
+  - resource: phase-10-merchant-expansion.md
+    title: Merchant coverage plan (Phases 10–17)
+  - resource: phase-10-feasibility-probe.md
+    title: Phase 10 plan (probe)
+  - resource: ../../docs/evals/merchant-probe-2026-10.md
+    title: Phase 10 probe report
+  - resource: ../system/merchant-coverage-design.md
+    title: Merchant coverage design (real-page evaluation)
+---
+
+# Phase 12 plan: reader eval protocols and captures
+
+Started 2026-10-06 after Evan accepted the [Phase 10 probe](../../docs/evals/merchant-probe-2026-10.md) verdict (go, fragile for top retailers) and **Y = 80%** on 2026-10-05 ([merchant coverage plan](phase-10-merchant-expansion.md)). Phase 12 fixes how the generic reader (Phase 13) will be judged **before** any reader code is tuned, and builds the page set it is judged on. No product code.
+
+## What the probe changes
+
+| Probe finding | Consequence here |
+| --- | --- |
+| About half the top-1k retailers block a logged-out automated visit | Sample about 300 candidates to land 150–200 captured sites; report the blocked share per rank band; the splits are stratified on captured sites, so the top band is thinner and the report says so |
+| No cart summary was in a shadow root; one checkout summary was in a cross-origin iframe | Shadow DOM stays a variant and an observed state, not a stratum the splits must fill; iframe summaries are labelled "not readable" (correct answer `none`) |
+| Labels corrected after a reader run went the reader's way | Labels are frozen per split before the reader ever runs on that split; any later change is a dated erratum reported beside the original score |
+| The prototype driver could click submit and in-form buttons | The capture tool refuses them except an add-to-cart allowlist, has no typing or coordinate-click path, and its control server needs a token and Origin check; tests prove each refusal |
+| Some states need typing (gift card codes, ZIP for tax estimates) | Captured only where the site shows them without input; otherwise produced as offline variants of real snapshots, labelled separately and reported apart from real pages |
+
+## Merchant-pipeline protocol scope (coordinator's call)
+
+The full merchant-pipeline protocol needs the category-evidence rules (D5), which Evan moved to Phase 14. Phase 12 only **selects and freezes the held-out domain list** for the merchant pipeline (so no prompt is ever tuned on it); the adjudicated held-out profiles and the rest of that protocol are written at the start of Phase 16, before any drafting.
+
+## Steps (three PRs)
+
+| PR | Branch | Delivers | Verify |
+| --- | --- | --- | --- |
+| 12.1 | `phase12-protocol` | `docs/evals/generic-reader-protocol.md`: site sampling and three splits by site (development, held-out A, held-out B, each about 50–65 sites, stratified by rank band and platform); states by how they arise (action: 1 item, quantity 2, 2 items, mini-cart, cart, first checkout page, empty; observed: sale strikethrough, promo banner, price carousel, installment widget, free-shipping progress, shadow DOM, third-party or iframe checkout; offline variants: class renames, injected promo rows, a fake "Subtotal" outside the summary, injected instruction text, credit applied); labels (two independent labelers, an adjudicator who never labelled, agreement reported, freeze before any run); scoring (found-correct, false found, ask, none; Wilson and rule-of-three bounds at page-state and site level); **Y = 80%** on held-out one-item cart pages with zero false found first; the peek policy (held-out A at most twice in total, failures analysed by class only); capture posture (robots and terms recorded, rate limits, exclusions reported). Merchant-pipeline held-out domain list frozen | An independent reviewer subagent signs the protocol before 12.3 starts |
+| 12.2 | `phase12-capture-tool` | Capture tool (`tools/` or `scripts/`, Playwright, persistent non-Evan profile, gitignored output) with per-site recipes as data; refuses typing, submit and in-form clicks other than add-to-cart, coordinate clicks and cross-origin frames; local control server with token and Origin check; snapshot format (DOM with computed styles read lazily, MHTML, screenshot, headers, hashes) and the reader's replay hook | Unit tests for every refusal; a fixture-site run; independent review |
+| 12.3 | `phase12-captures` | Candidate list (Tranco ∩ retail, about 300, excluding the Phase 10 sites from held-out splits), captures with an exclusion list, split assignment, two labelers and an adjudicator per split, labels frozen; offline variants generated; `docs/evals/reader-captures-2026-10.md` (counts per split, state and band; blocked share; agreement) | Labels frozen and hashed per split before any reader run; independent review; snapshots gitignored, committed text-free |
+
+The probe's 25 sites may join the development split only (their labels were seen while a reader was being changed).
+
+## Safety and copyright
+
+As in [Phase 10](phase-10-feasibility-probe.md#safety-and-copyright), enforced by the tool: never sign in, create accounts, type, submit a form other than add-to-cart, place orders, solve CAPTCHAs or bypass bot walls; one site at a time, rate-limited; snapshots, screenshots, candidate lists from third parties and the profile stay gitignored; committed are URLs, dates, hashes, recipes, labels and quotes of 25 words or fewer.
+
+Done when all three PRs are merged; Phase 13 (reader v1) then tunes on the development split only.
+
+## Related
+
+* [Merchant coverage plan](phase-10-merchant-expansion.md)
+* [Phase 10 probe report](../../docs/evals/merchant-probe-2026-10.md)
+* [Merchant coverage design](../system/merchant-coverage-design.md)
