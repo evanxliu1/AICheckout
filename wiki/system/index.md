@@ -20,7 +20,9 @@ How the code works. One page per component; name code by path and symbol.
 * [API](api.md) — Fastify routes, catalog read, review auth, static hosting and security headers.
 * [Curation harness](curation-harness.md) — bounded LLM extraction kernel, v1/v2 contracts, providers, budgets and ledger.
 * [Evaluation](evaluation.md) — curation eval corpora, splits, variants, scorer versions, metrics, CLIs and results summary.
-* [Card-expansion pipeline](card-expansion-pipeline.md) — Phase 8 v1 design (approved 2026-10-03): `tools/catalog-pipeline` CLI with one text-free state file per batch, input hashing, claimed work packets, gates and a label-evidence lint, multi-batch builder with rule-ID continuity, driven by the `expand-catalog` skill and four subagents; freshness (Phase 9) and the agent publish commands (`login`, `publish`); import boundary rule.
+* [Card-expansion pipeline](card-expansion-pipeline.md) — Phase 8 v1 design (approved 2026-10-03), overview: `tools/catalog-pipeline` CLI driven by the `expand-catalog` skill and four pinned subagents; scope, commands in brief, stages, batch layout, agents, import boundary rule.
+* [Card pipeline CLI commands](card-pipeline-commands.md) — what each `pipeline` command does, milestone by milestone (Phase 8 M2–M6, Phase 9 M1–M3b and M5: `freshness`, `login`, `publish`).
+* [Card pipeline internals](card-pipeline-internals.md) — batch state record, input hashing and invalidation, work packets, gates and the label-evidence lint, derived queue, multi-batch builder with rule-ID continuity, resumability, freshness.
 * [Catalog expansion](catalog-expansion.md) — Phase 7, done 2026-10-03: 180 researched cards of the top-10 U.S. issuers; research, capture, extraction, draft labels, findings, valuation, overlay and the first catalog v3 build (release 2).
 * [Database](database.md) — Supabase schema, releases and head, private review/curation tables, RLS, `publish_catalog`, Zod parity.
 * [Review app](review-app.md) — maintainer SPA for drafts, source capture, extraction review and explicit publication.

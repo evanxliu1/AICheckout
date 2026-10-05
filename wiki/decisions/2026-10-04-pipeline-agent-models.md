@@ -39,7 +39,7 @@ Pin researcher, verifier and overlay author to `claude-opus-5-5` and the adjudic
 
 ## Consequences
 - Changing an agent's model is a change to its file and this record; the researcher file is a research input, so editing it makes research stale for open batches.
-- Gaps found in the CLI, recorded on the [design page](../system/card-expansion-pipeline.md#built-so-far): nothing records `scope-question` or `convention-needed`. The lint gap at adjudicate (no preview, no re-adjudication after an apply lint failure) is closed by the CLI change above, at the coordinator's request.
+- Gaps found in the CLI, recorded on the [design page](../system/card-pipeline-commands.md): nothing records `scope-question` or `convention-needed`. The lint gap at adjudicate (no preview, no re-adjudication after an apply lint failure) is closed by the CLI change above, at the coordinator's request.
 - Labels stay agent-verified, never human-verified.
 
 ## Status

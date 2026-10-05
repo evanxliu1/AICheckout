@@ -6,7 +6,7 @@ status: stable
 tags: [ops, setup, testing]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:26:46Z
+  at: 2026-10-05T05:47:59Z
 sources:
   - resource: ../../package.json
     title: Root scripts and Node engine
@@ -50,7 +50,7 @@ One npm workspace (root `package-lock.json`) covers `extension/`, `packages/*`, 
 5. `npm run typecheck` (every workspace's `typecheck`).
 6. `npm test` (every workspace's Vitest suite, the extension package test, the `packages/ui` icon check, then `test:scripts` = `node --test scripts/lib/*.test.mjs`).
 7. Offline eval gates, no model call: `npm run eval:curation -- --check`, `npm run eval:v2 -- --check`, `npm run catalog:v2:check`, `npm run catalog:v3:check`.
-8. Card-expansion pipeline (maintainer only): `npm run pipeline -- status` and `npm run pipeline -- next --json`; commands in [card-expansion pipeline](../system/card-expansion-pipeline.md#built-so-far).
+8. Card-expansion pipeline (maintainer only): `npm run pipeline -- status` and `npm run pipeline -- next --json`; commands in [card pipeline CLI commands](../system/card-pipeline-commands.md). Stages that read captures (and `publish`) run in Evan's main checkout, which holds every gitignored capture since 2026-10-05 ([capture folders](catalog-release.md#capture-folders)).
 9. `npm run build` (every workspace's `build`; the extension lands in `extension/dist/`).
 10. Browser tests, after `npx playwright install chromium`:
    - `npm run test:browser --workspace=@ai-checkout/ui`
