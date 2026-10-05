@@ -31,6 +31,7 @@ jobs:
       - run: npm audit --audit-level=high
       - run: npm run build
       - run: npx playwright install --with-deps chromium
+      - run: npm run test:capture:browser
       - run: npm run test:browser --workspace=@ai-checkout/review -- e2e/a11y.spec.ts
       - run: npm run test:browser --workspace=@ai-checkout/ui
       - run: npm run test:browser --workspace=@ai-checkout/site

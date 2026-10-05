@@ -3,6 +3,7 @@
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
 ## 2026-10-06
+* [Capture tool design choices (Phase 12.2)](./2026-10-06-capture-tool-design.md) — guarded driver object with no typing or coordinate path, language-neutral structural rules for allowlisted in-form clicks, route guard against script form submits and off-site navigation, MHTML replay with styles read lazily, robots.txt status handling, token-and-Origin control server, locale and currency metadata; attended-pane capture not built (permission classifier). Proposed.
 * [Generic reader evaluation protocol choices (Phase 12.1)](./2026-10-06-reader-eval-protocol.md) — frozen agent-classified retail frame on Tranco 647LX, SHA-256 seeded orders, capture stop at 195 sites, stratified balanced splits, pass bar on real pages with variants apart and frozen labels deciding, robots.txt cart/checkout disallows exclude (Evan), rank bands only in committed files, all splits frozen before any reader run, pipeline held-out 6 / 27 / 27 allowed to overlap the reader splits. Accepted after review.
 
 ## 2026-10-05
