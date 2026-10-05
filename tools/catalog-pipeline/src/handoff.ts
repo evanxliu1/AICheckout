@@ -1,6 +1,8 @@
 // `pipeline handoff`: prints (markdown, stdout) what the session and Evan need once a batch is through eval: the PR
-// checklist, the build report summary, migrations, review-app readiness, the capture folders Evan selects and his
-// publish steps (wiki/ops/catalog-release.md). It writes nothing, and the CLI has no publish, push or sign-in command.
+// checklist, the build report summary, migrations, review-app readiness, the capture folders and the publish steps
+// (wiki/ops/catalog-release.md). It writes nothing. Publishing is `pipeline publish` (publish.ts), which the
+// coordinator runs with --confirm only after Evan's chat instruction, on the session Evan created with
+// `pipeline login`; the CLI has no push command.
 import { execFile } from 'node:child_process';
 import { access, readdir, readFile } from 'node:fs/promises';
 import { basename, dirname, join, relative, resolve } from 'node:path';
@@ -96,6 +98,25 @@ export interface ReviewReadiness {
 }
 
 /**
+ * The captures of one source ID the review app accepts for a catalog source dated `checkedOn`
+ * (`apps/review/src/manifest.ts` `selected`): those dated `checkedOn` (captured or re-checked that day) when a manifest
+ * has one, otherwise only the newest-dated capture.
+ */
+export function selectedCaptures(
+  captures: ManifestSource[],
+  checkedOn: string | undefined,
+): ManifestSource[] {
+  const dated = captures.filter(
+    (capture) => checkedOn && [capture.capturedOn, capture.checkedOn].includes(checkedOn),
+  );
+  if (dated.length) return dated;
+  const latest = (capture: ManifestSource) =>
+    [capture.capturedOn ?? '', capture.checkedOn ?? ''].sort().at(-1)!;
+  const newest = captures.map(latest).sort().at(-1)!;
+  return captures.filter((capture) => latest(capture) === newest);
+}
+
+/**
  * Whether the hosted review app can match every source the catalog cites. The review app keeps every capture the
  * manifests `apps/review/src/manifest.ts` bundles record for a source ID; a loaded capture must be the one dated the
  * source's checkedOn when a manifest has that date, otherwise the newest-dated capture. A cited source with no bundled
@@ -113,14 +134,7 @@ export function reviewAppReadiness(cited: CitedSource[], manifests: ReviewManife
       missing.push(source.id);
       continue;
     }
-    const dated = captures.filter(
-      (capture) => source.checkedOn && [capture.capturedOn, capture.checkedOn].includes(source.checkedOn),
-    );
-    // No capture of that date: only the newest-dated capture (as the review app does).
-    const latest = (capture: ManifestSource) =>
-      [capture.capturedOn ?? '', capture.checkedOn ?? ''].sort().at(-1)!;
-    const newest = captures.map(latest).sort().at(-1)!;
-    const selected = dated.length ? dated : captures.filter((capture) => latest(capture) === newest);
+    const selected = selectedCaptures(captures, source.checkedOn);
     if (source.sha256 && !selected.some((capture) => capture.sha256 === source.sha256))
       differs.push({
         id: source.id,
@@ -511,7 +525,7 @@ export async function handoffReport(
   }
 
   // 5. Capture folders.
-  out('## Capture folders Evan selects', '');
+  out('## Capture folders', '');
   if (!capture.folders.length) out('None computed.', '');
   for (const folder of capture.folders)
     out(
@@ -521,10 +535,21 @@ export async function handoffReport(
   out('');
 
   // 6. Publish steps.
+  const version = catalog?.version ?? '<version>';
+  const captureFlags = capture.folders.map((folder) => ` --captures ${folder.absolute}`).join('');
   out(
-    '## Publish (Evan, in the hosted review app)',
+    '## Publish',
     '',
-    `Release ${catalog ? `${code(catalog.version)}, expires ${catalog.expiresAt}` : '(not built)'}. Follow ${code('wiki/ops/catalog-release.md')} (assisted flow):`,
+    `Release ${catalog ? `${code(catalog.version)}, expires ${catalog.expiresAt}` : '(not built)'}. Follow ${code('wiki/ops/catalog-release.md')}, after the merge and Render's deploy of main.`,
+    '',
+    'CLI (agent publish):',
+    '',
+    `1. Evan, once, in his own terminal: ${code('npm run pipeline -- login')} (the agent never sees the password or the session); the coordinator checks with ${code('npm run pipeline -- whoami --check')}.`,
+    `2. Coordinator, from a checkout of origin/main, dry run (no POST or PUT): ${code(`npm run pipeline -- publish --version ${version}${captureFlags}`)}. Pass the capture folders of the checkouts that hold them.`,
+    `3. Evan types ${code(`publish ${version}`)} in chat. Only then the coordinator runs the same command with ${code(`--confirm ${version} --instruction-at <UTC time of that message>`)}.`,
+    '4. Coordinator checks `/v1/catalog` serves the new release and adds the version to `publishedVersions` in the next PR.',
+    '',
+    'Browser fallback (assisted flow):',
     '',
     '1. Coordinator: before Evan starts, check `/health`, `/v1/catalog` and that Render serves the merged main (the review app offers this catalog).',
     '2. Evan signs in at https://ai-checkout-api.onrender.com/review/ (the agent never types the password).',
@@ -534,7 +559,7 @@ export async function handoffReport(
     '6. Evan ticks the attestation himself and clicks **Publish reviewed terms**, then **Publish release**.',
     '7. Coordinator checks `/v1/catalog` serves the new release and updates the wiki.',
     '',
-    'The CLI has no publish, push or sign-in command. Evan ticks the attestation and clicks Publish. Labels are agent-verified, not human-verified.',
+    `Nothing is published without Evan's approval of this release: his chat message ${code(`publish ${version}`)} (CLI) or his attestation tick (browser). The CLI has no push command. Labels are agent-verified, not human-verified.`,
     '',
   );
 

@@ -30,7 +30,7 @@ https://github.com/user-attachments/assets/f6575a3d-7a54-449f-818d-8e5908a4fafb
 Turning pages of issuer terms into structured reward rules is extraction, which an LLM does well. Picking a card at checkout is arithmetic over those rules, which should be exact, fast and private. The project is split at that line:
 
 - **No model at checkout.** A pure TypeScript engine ranks your cards in integer cents and basis points, with spending caps and explicit ranges when an input is unknown. It runs offline, needs no API key, and your wallet never leaves the browser.
-- **The LLM curates, and it has no write path.** It drafts each card's reward rules from captured issuer pages into a strict schema. Every stated value has to quote the source; quotes are checked against the captured page, and one that doesn't match flags the run for review. Independent agents verify the drafted rules, and a person reviews and publishes each release as a separate action.
+- **The LLM curates, and it has no write path.** It drafts each card's reward rules from captured issuer pages into a strict schema. Every stated value has to quote the source; quotes are checked against the captured page, and one that doesn't match flags the run for review. Independent agents verify the drafted rules; a person approves each release, and publication is a separate explicit step.
 - **The extraction is measured.** An offline eval scores models and prompts on real issuer terms, with held-out issuers and planted prompt injections.
 
 ## How it works
@@ -46,10 +46,10 @@ On a supported cart (Amazon, Best Buy and Newegg in the US), a badge shows the b
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/readme/curation-dark.svg" />
-  <img src="docs/readme/curation-light.svg" width="100%" alt="Curation pipeline: capture issuer pages with dates and hashes; extract with gpt-5.6-luna into strict JSON with stated values quoted, using a versioned prompt; validate with the Zod schema and match quotes to the page, flagging any that don't match; independent agents verify and adjudicate (the model cannot write); a person reviews and publishes as a separate step, producing an immutable release. Every run leaves a trace with prompt, context and schema hashes that the eval replays." />
+  <img src="docs/readme/curation-light.svg" width="100%" alt="Curation pipeline: capture issuer pages with dates and hashes; extract with gpt-5.6-luna into strict JSON with stated values quoted, using a versioned prompt; validate with the Zod schema and match quotes to the page, flagging any that don't match; independent agents verify and adjudicate (the model cannot write); a person approves each release, which is published as a separate step, producing an immutable release. Every run leaves a trace with prompt, context and schema hashes that the eval replays." />
 </picture>
 
-New cards and refreshes go through an agent-driven pipeline (`tools/catalog-pipeline`): research, capture, extraction, label drafting, then verification and adjudication by separate agents, ending at a ready branch. Publishing stays a human step in the review app. Details: [curation harness](apps/api/src/curation/README.md) · [card-expansion pipeline](wiki/system/card-expansion-pipeline.md).
+New cards and refreshes go through an agent-driven pipeline (`tools/catalog-pipeline`): research, capture, extraction, label drafting, then verification and adjudication by separate agents, ending at a ready branch. Publishing is a separate step that a person approves for each release. Details: [curation harness](apps/api/src/curation/README.md) · [card-expansion pipeline](wiki/system/card-expansion-pipeline.md).
 
 ## Results
 

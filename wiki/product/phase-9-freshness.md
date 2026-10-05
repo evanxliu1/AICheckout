@@ -6,7 +6,7 @@ status: stable
 tags: [product, plan, phase-9, catalog, freshness]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T04:45:00Z
+  at: 2026-10-05T04:56:00Z
 stale_after: 2026-11-15T00:00:00Z
 sources:
   - resource: ../system/card-expansion-pipeline.md
@@ -50,7 +50,7 @@ One branch and PR each, from the latest `main`. Each gets an independent reviewe
 | 2 | Pipeline fixes from the Phase 8 run | A published version is never rebuilt with other contents (`publishedVersions`); `run build --proposed` builds without changing what ships; `drop-source`; `next` returns all cards of a failed stage |
 | 3 | `pipeline freshness` | Hash-only re-check of every cited source (issuer, real and merchant layers); a freshness record; the builder reads `checkedOn`; refresh batches for changed pages. **Real cards:** a batch may refresh a real card; `checkRealCards` (pinned to release 1, `CATALOG_V2`) is replaced for refreshed real cards by the rule-ID continuity check against the published release, keeping the release-1 names and rule-ID prefixes. Also fixes `capture-issuer-pages.mjs` joining an absolute `--captures`/`--manifest` path under `--dir` |
 | 4 | Renewal run (done 2026-10-05, PR #50 merged and deployed; [results](../../docs/evals/freshness-2026-10.md)) | Freshness over all 328 sources, refresh batches for changed pages, renewed catalog under a new version, eval, `handoff`. Results in `docs/evals/freshness-2026-10.md` |
-| 5 | Agent publish path (added 2026-10-05 at Evan's request; [decision](../decisions/2026-10-05-agent-publish-cli-session.md)) | `pipeline login` / `logout` (Evan's own CLI session, stored outside the repository) and `pipeline publish`: match every cited source to a bundled manifest hash, upload the captures, create the draft, check it equals `CATALOG_V3`, publish only with `--confirm <version>` after Evan's `publish <version>` in chat. Then the renewal is published this way |
+| 5 | Agent publish path (added 2026-10-05 at Evan's request; [decision](../decisions/2026-10-05-agent-publish-cli-session.md); built on branch `phase9-m5-agent-publish` 2026-10-05, [runbook](../ops/catalog-release.md#agent-publish-cli)) | `pipeline login` / `logout` (Evan's own CLI session, stored outside the repository) and `pipeline publish`: match every cited source to a bundled manifest hash, upload the captures, create the draft, check it equals `CATALOG_V3`, publish only with `--confirm <version>` after Evan's `publish <version>` in chat. Then the renewal is published this way |
 
 ## Milestone 3, built (2026-10-05)
 

@@ -1,14 +1,18 @@
 ---
 type: Runbook
 title: Catalog release
-description: Publish a bundled catalog as the next hosted release from the review app (release 2, 2026-10-02.expansion.1, 178 cards and 328 sources, published 2026-10-03), optionally with the coordinator driving the browser after Evan signs in, then verify /v1/catalog and the extension's refresh.
+description: Publish a bundled catalog as the next hosted release, by the coordinator from the CLI on Evan's chat instruction (pipeline login, publish --confirm) or in the review app (release 2, 2026-10-02.expansion.1, published 2026-10-03 through the assisted browser flow), then verify /v1/catalog and the extension's refresh.
 status: stable
 tags: [ops, catalog, release, review]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T04:45:00Z
+  at: 2026-10-05T04:56:00Z
 stale_after: 2026-11-01T00:00:00Z
 sources:
+  - resource: ../../tools/catalog-pipeline/src/publish.ts
+    title: pipeline publish
+  - resource: ../../tools/catalog-pipeline/src/session.ts
+    title: pipeline login, logout, whoami
   - resource: ../../apps/review/src/StartDraft.tsx
     title: Start a new draft
   - resource: ../../apps/review/src/DraftPanel.tsx
@@ -27,7 +31,20 @@ sources:
 
 # Catalog release
 
-How a catalog built in the repository becomes the hosted release that `GET /v1/catalog` serves. Publishing needs Evan's approval of that one release. Since 2026-10-05 that approval is his chat message `publish <version>`, after which the coordinating session publishes from the CLI with a session Evan logged in himself (Phase 9 milestone 5, being built; [decision](../decisions/2026-10-05-agent-publish-cli-session.md)); no agent signs in or publishes without it ([user directives](../product/user-directives.md)). Before that path exists, Evan publishes in the hosted review app. Since 2026-10-03 the coordinator may drive the rest of the review app in the browser after Evan has signed in ([assisted flow](#assisted-flow-coordinator-drives-the-browser)). The coordinator checks the deploy before and the result after. The first run of this runbook published `2026-10-02.expansion.1` as release 2 on 2026-10-03; release 1 (`2026-09-29.real.1`, 7 cards) was published with [`docs/release/publish-runbook.md`](../../docs/release/publish-runbook.md), whose step-by-step screens this runbook follows.
+How a catalog built in the repository becomes the hosted release that `GET /v1/catalog` serves. Publishing needs Evan's approval of that one release. Since 2026-10-05 that approval is his chat message `publish <version>`, after which the coordinating session publishes from the CLI with a session Evan logged in himself ([agent publish](#agent-publish-cli), Phase 9 milestone 5, built on branch `phase9-m5-agent-publish`; [decision](../decisions/2026-10-05-agent-publish-cli-session.md)); no agent signs in or publishes without it ([user directives](../product/user-directives.md)). Until that branch is merged and deployed, and as the fallback after, Evan publishes in the hosted review app. Since 2026-10-03 the coordinator may drive the rest of the review app in the browser after Evan has signed in ([assisted flow](#assisted-flow-coordinator-drives-the-browser)). The coordinator checks the deploy before and the result after. The first run of this runbook published `2026-10-02.expansion.1` as release 2 on 2026-10-03; release 1 (`2026-09-29.real.1`, 7 cards) was published with [`docs/release/publish-runbook.md`](../../docs/release/publish-runbook.md), whose step-by-step screens this runbook follows.
+
+## Agent publish (CLI)
+
+Phase 9 milestone 5 ([decision](../decisions/2026-10-05-agent-publish-cli-session.md)). The coordinating session (never a subagent) uploads the captures and publishes through the hosted review API with `npm run pipeline -- publish`, on a Supabase session Evan created himself. The agent never sees the password or a token: `login` refuses unless it runs in a terminal, the session file lives outside the repository with mode 600, and no command prints a token. The review API, its validation, rate limits and the database's checks are the same as for the review app.
+
+1. **Evan, once, in his own terminal** (for example the desktop app's terminal panel, or any shell in a checkout with `npm ci` done): `npm run pipeline -- login`. It asks for the reviewer account's email and, without echo, its password, checks reviewer access and saves the session to `~/.config/ai-checkout/review-session.json` (or `$XDG_CONFIG_HOME/ai-checkout/`). Supabase rotates the refresh token on every use and the CLI saves the new one; the session lasts until it is revoked or unused past Supabase's refresh-token lifetime. `npm run pipeline -- logout` revokes it and deletes the file.
+2. **Coordinator, ready check:** `npm run pipeline -- whoami --check` (email, API, saved time; refreshes and confirms reviewer access).
+3. **Coordinator, dry run** in a checkout at `origin/main` (clean, the merged and deployed `main` whose review app bundles the manifests): `npm run pipeline -- publish --version <version> --captures <folder> …` with every capture folder (order does not matter). It sends no POST or PUT to the API. It prints `CATALOG_V3`'s canonical JSON SHA-256, git state, per folder the `.txt` files and how many it used, `N of N sources match`, the review note, the session, the review head and any pending draft of the version, and what `/v1/catalog` serves. It exits 1 listing every missing or differing capture, a version that is not `CATALOG_V3`'s or an expired catalog; git problems are reported as "would refuse with --confirm". `--offline` skips every network call (git fetch included) to check only the captures.
+4. **Evan types `publish <version>` in chat.** That message, for that one version, is the attestation. It does not carry over to another version.
+5. **Coordinator, publish:** the same command plus `--confirm <version> --instruction-at <UTC time of Evan's message, e.g. 2026-10-20T15:04:00Z>`. It refuses before sending anything when `--confirm` differs from `--version`, the instruction time is in the future (5 minutes of skew allowed) or older than 7 days, HEAD is not `origin/main` after `git fetch`, `packages/rewards-core`, `evals/curation` or `apps/review/src/manifest.ts` have local changes, or any check of the dry run fails. Then it resumes the newest pending draft of the version (or creates one on the current head), refuses if that draft's catalog is not canonically `CATALOG_V3` (someone edited it) or its base is not the head (it never rebases), uploads only the captures not already attached with the local hash (429s are waited out with `Retry-After`; identical captures are deduplicated, so a re-run is safe), saves the draft with exactly one matching capture per source, re-reads and verifies it, publishes with the review note and checks `/v1/catalog`. The note says the catalog is agent-verified, not human-verified, what was checked and "Published by the coding agent on Evan's chat instruction of `<time>`".
+6. **After publishing:** the steps under [coordinator, after publishing](#coordinator-after-publishing), including `publishedVersions` in the next PR.
+
+If a run stops part way (network, Render restart, rate limit), run the same `--confirm` command again: it resumes the draft and skips captures already attached. An error prints the HTTP status and the API's code only. "session expired or revoked" (exit 2) means Evan runs `login` again.
 
 ## Release 2 (published 2026-10-03)
 
@@ -103,7 +120,7 @@ For release 2 (2026-10-03), step 2 was done without a loaded `build:hosted` exte
 
 ## Publishing a pipeline batch
 
-For a catalog built from a Phase 8 pipeline batch, start with `npm run pipeline -- handoff --batch <batch>` in the checkout that holds the batch's captures. It prints the PR checklist, the build report summary (version, verifiedAt, expiresAt, rule-ID changes), migrations, the capture folders to select in step 3 (one per layer the catalog uses, as absolute paths with file counts) and these steps, and exits 1 while the batch is not ready. The review app matches captures against the manifests `apps/review/src/manifest.ts` bundles at build time: the fixed corpora and every `evals/curation/batches/*/manifest.json` (since Phase 9 milestone 1), requiring the capture dated the source's `checkedOn` when one exists, otherwise the newest-dated capture. So the Render deploy of `main` is what makes a new batch's manifest known: the batch must be merged and deployed before Evan publishes (check that Render serves the merge commit in step 1). `handoff` reports review-app readiness against the checkout's manifests and lists any cited source it would not match ([pipeline](../system/card-expansion-pipeline.md#built-so-far), [decision](../decisions/2026-10-04-review-app-batch-manifests.md)).
+For a catalog built from a Phase 8 pipeline batch, start with `npm run pipeline -- handoff --batch <batch>` in the checkout that holds the batch's captures. It prints the PR checklist, the build report summary (version, verifiedAt, expiresAt, rule-ID changes), migrations, the capture folders (one per layer the catalog uses, as absolute paths with file counts; for the [agent publish](#agent-publish-cli) as `--captures` flags of the `pipeline publish` command) and the publish steps, CLI first and the browser steps as the fallback, and exits 1 while the batch is not ready. The review app matches captures against the manifests `apps/review/src/manifest.ts` bundles at build time: the fixed corpora and every `evals/curation/batches/*/manifest.json` (since Phase 9 milestone 1), requiring the capture dated the source's `checkedOn` when one exists, otherwise the newest-dated capture. So the Render deploy of `main` is what makes a new batch's manifest known: the batch must be merged and deployed before Evan publishes (check that Render serves the merge commit in step 1). `handoff` reports review-app readiness against the checkout's manifests and lists any cited source it would not match ([pipeline](../system/card-expansion-pipeline.md#built-so-far), [decision](../decisions/2026-10-04-review-app-batch-manifests.md)).
 
 A batch that is not to ship yet is built with `npm run pipeline -- run build --batch <batch> --proposed --version <new version>`: the catalog, build report and ledger diff go to the batch's `pipeline/proposed/`, and the build config, ledger, `CATALOG_V3` and the committed build report stay as they are; `handoff` then reports the proposed version and that nothing ships. To ship a batch, plain `run build` registers it and writes the shipping catalog, and needs `--version <new version>` while the config's version is published.
 
@@ -119,7 +136,7 @@ Outline since Phase 9 milestone 3 ([plan](../product/phase-9-freshness.md), [pip
 
 ## Renewal `2026-10-05.renewal.1` (prepared 2026-10-05)
 
-Built from the 2026-10-05 freshness check and ten refresh batches ([results](../../docs/evals/freshness-2026-10.md)); verified 2026-10-05, **expires 2026-11-04T00:00Z**; 178 cards, 328 sources. It must be published before release 2 expires (2026-11-01T00:00Z); target from 2026-10-20, latest 2026-10-28. Merged (PR #50) and deployed: on 2026-10-05T04:40Z the hosted review bundle contained `2026-10-05.renewal.1` and the refresh batch manifests. Evan chose to publish it through the CLI publish path the coordinator runs on his chat instruction (Phase 9 milestone 5, [decision](../decisions/2026-10-05-agent-publish-cli-session.md)), once that is built; the browser steps above remain the fallback. Before publishing, the quote check passes with every capture folder:
+Built from the 2026-10-05 freshness check and ten refresh batches ([results](../../docs/evals/freshness-2026-10.md)); verified 2026-10-05, **expires 2026-11-04T00:00Z**; 178 cards, 328 sources. It must be published before release 2 expires (2026-11-01T00:00Z); target from 2026-10-20, latest 2026-10-28. Merged (PR #50) and deployed: on 2026-10-05T04:40Z the hosted review bundle contained `2026-10-05.renewal.1` and the refresh batch manifests. Evan chose to publish it through the CLI publish path the coordinator runs on his chat instruction (Phase 9 milestone 5, [decision](../decisions/2026-10-05-agent-publish-cli-session.md)), once that is merged and deployed and Evan has run `pipeline login`; the browser steps above remain the fallback. Before publishing, the quote check passes with every capture folder:
 
 ```
 node scripts/check-expansion-quotes.mjs --captures <each folder below>
@@ -127,12 +144,34 @@ node scripts/check-expansion-quotes.mjs --captures <each folder below>
 
 Pass the batch folders first, as listed below; the check is then clean. If the expansion folder comes after a batch folder, the check reports seven anchors in the frozen `evals/curation/expansion/` files as not verbatim: a source captured again by a refresh batch keeps its ID, and the checker resolves an ID to the last folder that has it. Those files are clean against their own folders (run the check with only the expansion and real folders); fixing the checker to resolve per file is a Phase 9 follow-up.
 
-Capture folders Evan selects (14; three checkouts):
+Capture folders (14; three checkouts):
 
 - `~/Projects/AICheckout-p8-wf/evals/curation/batches/<batch>/captures` for `wells-fargo-2026-10` and the ten `*-refresh-2026-10` batches (11 folders);
 - `~/Projects/AICheckout-expansion/evals/curation/expansion/captures` (181 unchanged expansion sources);
 - `~/Projects/AICheckout/evals/curation/real/captures` (5 unchanged real-card sources);
 - `~/Projects/AICheckout/evals/curation/real/merchant-captures` (2 merchant MCC pages; `pipeline handoff` wrongly names the freshness record for these).
+
+For the [agent publish](#agent-publish-cli), the same folders as flags (`$HOME/Projects/AICheckout` is Evan's main clone; run from a clean checkout of `origin/main`):
+
+```
+npm run pipeline -- publish --version 2026-10-05.renewal.1 \
+  --captures $HOME/Projects/AICheckout-p8-wf/evals/curation/batches/american-express-refresh-2026-10/captures \
+  --captures $HOME/Projects/AICheckout-p8-wf/evals/curation/batches/bank-of-america-refresh-2026-10/captures \
+  --captures $HOME/Projects/AICheckout-p8-wf/evals/curation/batches/barclays-refresh-2026-10/captures \
+  --captures $HOME/Projects/AICheckout-p8-wf/evals/curation/batches/capital-one-refresh-2026-10/captures \
+  --captures $HOME/Projects/AICheckout-p8-wf/evals/curation/batches/chase-refresh-2026-10/captures \
+  --captures $HOME/Projects/AICheckout-p8-wf/evals/curation/batches/citi-refresh-2026-10/captures \
+  --captures $HOME/Projects/AICheckout-p8-wf/evals/curation/batches/discover-refresh-2026-10/captures \
+  --captures $HOME/Projects/AICheckout-p8-wf/evals/curation/batches/synchrony-refresh-2026-10/captures \
+  --captures $HOME/Projects/AICheckout-p8-wf/evals/curation/batches/u-s-bank-refresh-2026-10/captures \
+  --captures $HOME/Projects/AICheckout-p8-wf/evals/curation/batches/wells-fargo-2026-10/captures \
+  --captures $HOME/Projects/AICheckout-p8-wf/evals/curation/batches/wells-fargo-refresh-2026-10/captures \
+  --captures $HOME/Projects/AICheckout-expansion/evals/curation/expansion/captures \
+  --captures $HOME/Projects/AICheckout/evals/curation/real/captures \
+  --captures $HOME/Projects/AICheckout/evals/curation/real/merchant-captures
+```
+
+Offline dry run on branch `phase9-m5-agent-publish` (2026-10-05, `--offline`): **328 of 328 sources match** a bundled manifest hash for their date. A source found in several folders with the same hash is counted for the first folder that has it, so the per-folder "used" counts (expansion 104, real 1, `wells-fargo-refresh-2026-10` 0) are lower than the per-layer counts above; the uploaded text is identical either way.
 
 After Evan publishes, the coordinator adds `2026-10-05.renewal.1` to `publishedVersions` in `evals/curation/catalog-batches.json` in the next PR. The next renewal is due before 2026-11-04 (the NerdWallet estimates read 2026-10-02 must be re-read for any catalog verified after 2026-11-01).
 

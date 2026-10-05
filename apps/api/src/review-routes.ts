@@ -254,8 +254,9 @@ export async function reviewRoutes(
       }),
     );
   });
-  // Publication is a distinct explicit human action, never an LLM tool or a side
-  // effect of GET, source capture, draft save, or later extraction endpoints.
+  // Publication stays a distinct explicit step on a human instruction: the review app's publish
+  // button, or the catalog pipeline CLI's `publish --confirm` after Evan's chat instruction. It is
+  // never a side effect of GET, source capture, draft save or extraction, and never chosen by a model.
   app.post('/drafts/:id/publish', { bodyLimit: 16384 }, async (request) => {
     const draftId = id(request),
       value = input(publishInputSchema, request.body);

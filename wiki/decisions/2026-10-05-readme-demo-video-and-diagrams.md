@@ -50,4 +50,4 @@ Evan asked on 2026-10-04 for an up-to-date repository README with better-looking
 - An independent review (agent-verified) corrected the README and diagram wording before merge. Quotes that don't match the page are flagged for review, not rejected. The catalog is bundled, and the `/v1/catalog` refresh is optional. The real catalog is verified by agents and published by a person, not reviewed condition by condition. All seven held-out rows are shown.
 
 ## Status
-Accepted 2026-10-05 by Evan Liu.
+accepted (Evan, 2026-10-05)

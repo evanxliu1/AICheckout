@@ -5,7 +5,7 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T04:45:00Z
+  at: 2026-10-05T04:56:00Z
 ---
 
 # Now
@@ -21,8 +21,8 @@ As of 2026-10-05T04:45Z.
 
 ## Active work
 
-- **Public docs** (branch `docs-readme-demo`, checkout `../AICheckout-docs`): new README with SVG diagrams and the Ocean-cinematic demo video ([decision](decisions/2026-10-05-readme-demo-video-and-diagrams.md)). The README plays the video inline from Evan's `user-attachments` upload. His GitHub profile README was refreshed (`evanxliu1/evanxliu1`, 2026-10-05).
-- **Agent publish path** (coordinator, started 2026-10-05; [decision](decisions/2026-10-05-agent-publish-cli-session.md)). Evan wants the coding agent to upload the captures and publish, with his part reduced to logging a CLI session in once and typing `publish <version>` in chat. To build: `pipeline login` / `logout` (Evan types his password into a hidden prompt; refresh token stored outside the repo, mode 600) and `pipeline publish` (match captures to the bundled manifests, upload through `POST /v1/review/sources`, create the draft, check its canonical hash equals `CATALOG_V3`, publish with `--confirm <version>` and the agent-verified review note). One PR, independent review, merge, Render deploy. The renewal waits for it.
+- **Agent publish path** (Phase 9 milestone 5; [decision](decisions/2026-10-05-agent-publish-cli-session.md)): `pipeline login` / `logout` / `whoami [--check]` and `pipeline publish` (dry run; `--confirm <version> --instruction-at <time>` after Evan's chat message); runbook [agent publish](ops/catalog-release.md#agent-publish-cli). Independent review done (agent-verified, symlink and session hardening fixed). The offline dry run of `2026-10-05.renewal.1` with the 14 capture folders matched 328 of 328 sources. Next: PR, merge, Render deploy, then Evan runs `npm run pipeline -- login` once. The renewal waits for it.
+- **Public docs:** README rewrite with SVG diagrams and the demo video merged (PR #51, squash, 2026-10-05; [decision](decisions/2026-10-05-readme-demo-video-and-diagrams.md)).
 
 ## Open questions and next steps
 

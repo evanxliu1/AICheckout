@@ -18,6 +18,11 @@
 //   npm run pipeline -- lint-labels [--batch B | --dir evals/curation/expansion] [--json]
 //   npm run pipeline -- eval [--batch B] [--cross-model-run DIR]
 //   npm run pipeline -- handoff [--batch B]
+//   npm run pipeline -- login [--api <origin>]            (Evan only, in his own terminal)
+//   npm run pipeline -- logout
+//   npm run pipeline -- whoami [--check]
+//   npm run pipeline -- publish --version <v> [--captures <dir> ...] [--offline] [--api <origin>]
+//                           [--confirm <v> --instruction-at <UTC time of Evan's "publish <v>">]
 //
 // Exit status: 0 done, 1 error or failed gate, 2 usage or not built yet, 3 usage limit (extract paused).
 import { spawn } from 'node:child_process';
@@ -31,6 +36,18 @@ import { runEval } from './eval.ts';
 import { freshnessSummary, newestFreshnessRecord, runFreshness } from './freshness.ts';
 import { seedRefreshBatch } from './seed.ts';
 import { handoff } from './handoff.ts';
+import { defaultPublishDeps, publish } from './publish.ts';
+import {
+  CliError,
+  DEFAULT_API,
+  apiOrigin,
+  login,
+  logout,
+  sessionPathFrom,
+  terminalPrompter,
+  whoami,
+} from './session.ts';
+import type { SessionDeps } from './session.ts';
 import { rebaseAnchors } from './rebase.ts';
 import { runStage } from './run.ts';
 import type { Env } from './run.ts';
@@ -70,7 +87,13 @@ const USAGE = `Usage: npm run pipeline -- <command>
   drop-source --source <id> --reason <${DROP_SOURCE_REASONS.join('|')}> [--batch B]
   lint-labels [--batch B | --dir <corpus dir>] [--json]
   eval [--batch B] [--cross-model-run DIR]
-  handoff [--batch B]`;
+  handoff [--batch B]
+  login [--api <origin>]                  Evan only, in his own terminal (hidden password prompt)
+  logout                                  revokes the session and deletes the session file
+  whoami [--check]                        the session file without secrets; --check asks the API
+  publish --version <v> [--captures <dir> ...] [--offline] [--api <origin>]
+      dry run: local and read-only checks, no POST or PUT
+  publish --version <v> --captures <dir> ... --confirm <v> --instruction-at <UTC time of Evan's "publish <v>">`;
 
 const list = (value: string | undefined): string[] =>
   (value ?? '')
@@ -265,9 +288,45 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
         'cross-model-run': { type: 'string' },
         proposed: { type: 'boolean', default: false },
         version: { type: 'string' },
+        api: { type: 'string' },
+        captures: { type: 'string', multiple: true },
+        confirm: { type: 'string' },
+        'instruction-at': { type: 'string' },
+        offline: { type: 'boolean', default: false },
+        check: { type: 'boolean', default: false },
       },
     });
+    const api = () => apiOrigin(values.api ?? env.env.AI_CHECKOUT_API ?? DEFAULT_API);
+    const sessionDeps = (): SessionDeps => ({
+      fetch: (input, init) => fetch(input, init),
+      sessionPath: sessionPathFrom(env.env),
+      root: env.root,
+      now: env.now,
+      log: env.log,
+    });
     switch (command) {
+      case 'login':
+        if (positionals.length) throw new UsageError('login takes no positional argument.');
+        return await login(sessionDeps(), terminalPrompter(), api());
+      case 'logout':
+        return await logout(sessionDeps());
+      case 'whoami':
+        return await whoami(sessionDeps(), values.check);
+      case 'publish':
+        if (positionals.length)
+          throw new UsageError('publish takes capture folders as --captures <dir> (repeatable).');
+        return await publish(
+          env,
+          {
+            version: values.version,
+            captures: values.captures ?? [],
+            confirm: values.confirm,
+            instructionAt: values['instruction-at'],
+            api: api(),
+            offline: values.offline,
+          },
+          defaultPublishDeps(sessionPathFrom(env.env)),
+        );
       case 'init':
         if (positionals.length !== 1) throw new UsageError('init takes one batch id.');
         if (values['refresh-from-freshness'] !== undefined) {
@@ -411,6 +470,10 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
     if (error instanceof UsageError || (error instanceof TypeError && 'code' in error)) {
       env.log(`${error.message}\n${USAGE}`);
       return 2;
+    }
+    if (error instanceof CliError) {
+      env.log(error.message);
+      return error.exitCode;
     }
     env.log(error instanceof Error ? error.message : String(error));
     return 1;
