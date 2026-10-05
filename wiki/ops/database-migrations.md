@@ -30,7 +30,7 @@ Schema changes are new files in [`supabase/migrations/`](../../supabase/migratio
 
 | Item | Value |
 | --- | --- |
-| Migrations | 10 on `main` as of 2026-10-03, `20260926032620_baseline_legacy_catalog.sql` to `20261002230334_review_summary.sql` (Stage 2: `20261002222425_catalog_v3`, PR #22; `20261002230334_review_summary`, PR #24) |
+| Migrations | 10 on `main` (checked 2026-10-05; none added since 2026-10-02), `20260926032620_baseline_legacy_catalog.sql` to `20261002230334_review_summary.sql` (Stage 2: `20261002222425_catalog_v3`, PR #22; `20261002230334_review_summary`, PR #24) |
 | pgTAP tests | [`supabase/tests/`](../../supabase/tests/) (`catalog`, `catalog_v2`, `catalog_v3`, `curation`, `extraction_application`, `review_summary`) |
 | Seed | [`supabase/seed.sql`](../../supabase/seed.sql), generated from `packages/rewards-core/src/catalog-v3.ts` (since Stage 2 M5): one **unapproved** private draft, no users or secrets |
 | Hosted push | `./scripts/db-push.sh` runs `npx supabase db push --linked --skip-vault`; DB password from the macOS Keychain item `aicheckout-supabase-db` |

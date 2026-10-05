@@ -6,7 +6,7 @@ status: stable
 tags: [ops, release, media]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T04:30:00Z
+  at: 2026-10-05T05:26:46Z
 sources:
   - resource: ../../package.json
     title: release:media and release:portfolio scripts
@@ -43,6 +43,7 @@ Two npm scripts regenerate hash-pinned media under `docs/release/assets/`. Rerun
 
 - `release:portfolio` reuses the running local stack and never resets or migrates a database; start it first ([Local setup](local-setup.md#database-suite-docker)).
 - Intermediate caption renders (`docs/release/assets/video-captions/`, `full-stack-captions/`) are gitignored.
+- Since the Phase 9 renewal (PR #50) the extension bundles `2026-10-05.renewal.1`, while `docs/release/assets/capture-manifest.json` still records `catalogVersion` `2026-10-02.expansion.1` and the old ZIP hash (checked 2026-10-05). Rerun `npm run release:media` before the Web Store submission; whether any check fails on the mismatch was not tested.
 
 ## Related
 

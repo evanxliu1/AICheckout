@@ -6,7 +6,7 @@ status: stable
 tags: [domain, merchants, mcc]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:00:00Z
+  at: 2026-10-05T05:26:46Z
 sources:
   - resource: ../../evals/curation/real/merchants.json
     title: Merchant profiles (input to the catalog builder)
@@ -18,7 +18,7 @@ sources:
     title: MerchantProfile type
   - resource: ../../docs/research/cashback-card-terms-2026.md
     title: Research report, section on electronics retailers (checked 2026-09-28)
-stale_after: 2026-11-01T00:00:00Z
+stale_after: 2026-11-04T00:00:00Z
 ---
 
 # Merchants
@@ -33,7 +33,7 @@ A merchant profile says what the engine may assume about a retailer: whether it 
 | `newegg-us` | yes | yes | yes | electronics | 5732 | low | CheckMCC community lookup, undated (checked 2026-09-28) |
 | `amazon-us` | yes | yes | yes | general-merchandise | null | low | none collected |
 
-MCC 5732 is the network code for electronics stores. The research report found no evidence for the alternatives 5734, 5999 or 5311, and no data that separates online coding from in-store coding.
+Both CheckMCC pages were re-checked unchanged (same SHA-256) by `pipeline freshness` on 2026-10-05, which dates them 2026-10-05 in catalog v3 `2026-10-05.renewal.1` ([freshness record](../../evals/curation/freshness/2026-10-05.json)). MCC 5732 is the network code for electronics stores. The research report found no evidence for the alternatives 5734, 5999 or 5311, and no data that separates online coding from in-store coding.
 
 ## Caveats (recorded in profile `notes`)
 

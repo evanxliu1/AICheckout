@@ -1,18 +1,18 @@
 ---
 type: System Component
 title: Catalog expansion (Phase 7)
-description: How the catalog grew from seven cards to 178 cards of the top-10 U.S. issuers — research, capture, LLM extraction, draft labels with 25-word quotes, per-issuer agent verification and adjudication, the 173-card agent-verified corpus `expansion.v1`, valuation, overlay and the catalog v3 build — with results, known gaps and the release still to publish.
-status: draft
+description: How the catalog grew from seven cards to 178 cards of the top-10 U.S. issuers — research, capture, LLM extraction, draft labels with 25-word quotes, per-issuer agent verification and adjudication, the 173-card agent-verified corpus `expansion.v1`, valuation, overlay and the catalog v3 build — with results and known gaps. Done 2026-10-03 (hosted release 2); the Phase 9 pipeline renewal supersedes the build as the current catalog.
+status: stable
 tags: [system, catalog, curation, expansion, phase-7]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T03:00:00Z
+  at: 2026-10-05T05:26:46Z
 verified_commit: e940b6f
 ---
 
 # Catalog expansion (Phase 7)
 
-Phase 7 widens the card catalog to the consumer cards of the ten largest U.S. issuers ([scope decision](../decisions/2026-10-01-top-ten-issuer-card-expansion.md)). The capture, extraction and first drafts merged into `main` with PR #16 (`be5de25`, branch `phase7-catalog-expansion`). The 25-word drafts, the verification findings, the conventions and the agent-verified corpus merged with PR #17 (`23d3d52`, branch `phase7-verify`); the paths below are in `evals/curation/expansion/` and `scripts/`. The gitignored captures and extraction traces are still only in the `../AICheckout-expansion` worktree. Stage 2 (engine, catalog v3, eval, release) is planned in the [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md); as of 2026-10-03 M1–M9 and the M11 draft are merged (PRs #18–#30), M10 part 2 is on `s2-m10b-finish`, the extension bundles the 178-card `CATALOG_V3`, and Evan's publish of the hosted release is left ([catalog release](../ops/catalog-release.md)).
+Phase 7 widens the card catalog to the consumer cards of the ten largest U.S. issuers ([scope decision](../decisions/2026-10-01-top-ten-issuer-card-expansion.md)). The capture, extraction and first drafts merged into `main` with PR #16 (`be5de25`, branch `phase7-catalog-expansion`). The 25-word drafts, the verification findings, the conventions and the agent-verified corpus merged with PR #17 (`23d3d52`, branch `phase7-verify`); the paths below are in `evals/curation/expansion/` and `scripts/`. The gitignored captures and extraction traces are still only in the `../AICheckout-expansion` worktree. Stage 2 (engine, catalog v3, eval, release) is planned in the [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md); as of 2026-10-03 M1–M9 and the M11 draft are merged (PRs #18–#30), M10 part 2 is on `s2-m10b-finish`, the extension bundles the 178-card `CATALOG_V3`, and Evan's publish of the hosted release is left ([catalog release](../ops/catalog-release.md)). Stage 2 finished on 2026-10-03: M10 part 2 merged (PR #31) and `2026-10-02.expansion.1` was published as hosted release 2. Cards are now maintained by the [card-expansion pipeline](card-expansion-pipeline.md): the Phase 9 renewal `2026-10-05.renewal.1` (hosted release 3 since 2026-10-05) takes 111 cards from pipeline batches and the rest from this page's frozen `expansion.v1` and `real.v2.2` layers.
 
 Read on 2026-10-02 from the `phase7-verify` worktree at `4b487da` (no model call, no re-capture).
 
@@ -171,7 +171,7 @@ Stage 2 M4 (branch `s2-m4-catalog-overlay`, 2026-10-02, merged with PR #25) adds
 
 ## Catalog v3 build (M5)
 
-Stage 2 M5 (branch `s2-m5-catalog-v3-build`, 2026-10-02, merged with PR #27) builds the release catalog `CATALOG_V3` ([`packages/rewards-core/src/catalog-v3.ts`](../../packages/rewards-core/src/catalog-v3.ts)) with `npm run catalog:v3` ([`scripts/build-catalog-v3.mjs`](../../scripts/build-catalog-v3.mjs), logic and tests in `scripts/lib/catalog-v3.mjs`); CI runs `catalog:v3:check`. Every count below is in the generated [build report](../../evals/curation/expansion/catalog-build-report.md) ([decision](../decisions/2026-10-02-catalog-v3-build.md)).
+Stage 2 M5 (branch `s2-m5-catalog-v3-build`, 2026-10-02, merged with PR #27) builds the release catalog `CATALOG_V3` ([`packages/rewards-core/src/catalog-v3.ts`](../../packages/rewards-core/src/catalog-v3.ts)) with `npm run catalog:v3` ([`scripts/build-catalog-v3.mjs`](../../scripts/build-catalog-v3.mjs), logic and tests in `scripts/lib/catalog-v3.mjs`); CI runs `catalog:v3:check`. The counts below are those of that first build, `2026-10-02.expansion.1` (hosted release 2); the current [build report](../../evals/curation/expansion/catalog-build-report.md) describes `2026-10-05.renewal.1` (816 rules, 71 programs, 602,925 bytes) ([decision](../decisions/2026-10-02-catalog-v3-build.md)).
 
 - **Multi-batch since Phase 8 M1** (2026-10-04). The builder now reads the layers of [`evals/curation/catalog-batches.json`](../../evals/curation/catalog-batches.json) (this page's corpora are the frozen base layer `expansion.v1` + `real.v2.2`; pipeline batches follow), takes the version from that config and the dates from the capture manifests (newest issuer-source date, +30 days), keeps the seven dropped-card reasons there, and continues rule IDs against the append-only [`rule-id-ledger.json`](../../evals/curation/rule-id-ledger.json); `catalog:v3:check` also compares the ledger. Output unchanged byte for byte; the build report gained "Batches and dates" and "Rule-ID continuity" sections ([pipeline builder](card-expansion-pipeline.md#multi-batch-catalog-builder), [decision](../decisions/2026-10-04-multi-batch-catalog-builder.md)).
 
@@ -213,7 +213,7 @@ Superseded on 2026-10-02 by the milestones in the [Phase 7 Stage 2 plan](../prod
 
 1. Stage-2 engine and catalog work in [`packages/rewards-core`](rewards-engine.md): merchant-specific rules, cardholder-chosen and rotating categories, relationship tiers, closed-loop store cards, PayPal and Venmo rules, new merchant categories, points valuation; raise catalog limits from 30 cards / 30 sources (Zod `catalogV2Schema` and the SQL validator in `20260930225732_catalog_v2.sql`) to about 200 / 450 through a **new** migration (also check `MAX_CATALOG_BYTES`, 256 KiB, against the larger catalog); wallet search in the extension; gated rates (rule 17) and a redemption note type (rule 18).
 2. Evaluate on the 173 verified expansion cards plus the seven existing ones. Stage 2 M9 (2026-10-02): pipeline metrics and the luna re-score are in [`docs/evals/expansion.md`](../../docs/evals/expansion.md); the gpt-5.5 cross-model run scores 76.2% end to end.
-3. Evan publishes the release in the review app ([catalog release](../ops/catalog-release.md); target 2026-10-28, hard limit 2026-11-01T00:00Z).
+3. Evan publishes the release in the review app ([catalog release](../ops/catalog-release.md); target 2026-10-28, hard limit 2026-11-01T00:00Z). Done: release 2 on 2026-10-03.
 
 ## Gotchas
 

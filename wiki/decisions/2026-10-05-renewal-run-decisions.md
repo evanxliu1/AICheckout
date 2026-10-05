@@ -36,4 +36,4 @@ As in the table. All four are reversible in a later batch.
 - Gaps for later: second packets reuse the first packet's output path; overlay-only conventions count as adjudicate inputs; handoff names the freshness record for merchant sources.
 
 ## Status
-Accepted 2026-10-05 by the coordinator (claude-code/claude-opus-5-5); publishing remains Evan's.
+Accepted 2026-10-05 by the coordinator (claude-code/claude-opus-5-5); publishing remains Evan's. Partly superseded the same day by [2026-10-05-agent-publish-cli-session](2026-10-05-agent-publish-cli-session.md): Evan approved the release in chat and the coordinator published it from the CLI as release 3.

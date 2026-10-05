@@ -6,7 +6,7 @@ status: stable
 tags: [product, goal]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-05T05:26:46Z
 sources:
   - resource: ../archive/phase2-goal.md
     title: Phase 2–6 plan (archived)
@@ -27,7 +27,7 @@ It is Evan Liu's portfolio project for LLM-engineering roles. The headline is a 
 | User | Uses | Needs |
 | --- | --- | --- |
 | Shopper | Extension on Amazon US, Best Buy US, Newegg US carts | Correct best-card answer, no account, nothing leaves the device |
-| Reviewer (Evan) | Hosted review app | Source-cited drafts, diffs against the published catalog, explicit publish |
+| Reviewer (Evan) | Hosted review app; chat approval of each release (since 2026-10-05) | Source-cited drafts, diffs against the published catalog, explicit publish on his approval |
 | Recruiter / reader | Public site, results page, repo | Honest, reproducible numbers |
 
 Few real users are expected; quality and honesty of claims matter more than reach.
@@ -35,7 +35,7 @@ Few real users are expected; quality and honesty of claims matter more than reac
 ## What success means
 
 1. Measured extraction results on real issuer terms, with held-out data, published in [`docs/evals/results.md`](../../docs/evals/results.md). Done 2026-09-29/30 (see [evaluation](../system/evaluation.md)).
-2. The extension runs on the reviewed 7-card catalog served by the hosted API.
+2. The extension runs on the reviewed catalog served by the hosted API (7 cards in release 1; 178 cards since release 2, 2026-10-03).
 3. The extension ships on the Chrome Web Store.
 4. Catalog stays current: terms-change detection triggers re-extraction and review.
 
