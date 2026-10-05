@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "35e288a6-05b3-43a7-8d50-04ac38791322",
+  "packetId": "019c15f0-f613-460e-a761-17d8c3bb8d65",
   "batch": "wells-fargo-refresh-2026-10",
   "issuer": "Wells Fargo",
   "provenance": "agent-verified",
@@ -25,7 +25,27 @@
       "evals/curation/batches/wells-fargo-refresh-2026-10/captures/wells-fargo-autograph-journey-pricing.txt"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-10-05",
+    "filesRead": [
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/wells-fargo.md",
+      "evals/curation/batches/wells-fargo-refresh-2026-10/pipeline/packets/adjudicate.wells-fargo.1.json",
+      "evals/curation/batches/wells-fargo-refresh-2026-10/verification/wells-fargo.json",
+      "evals/curation/batches/wells-fargo-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/wells-fargo-refresh-2026-10/product-notes.json",
+      "evals/curation/batches/wells-fargo-refresh-2026-10/verify/wells-fargo.md",
+      "evals/curation/batches/wells-fargo-refresh-2026-10/captures/wells-fargo-autograph-product.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-10/captures/wells-fargo-autograph-rewards-terms.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-10/captures/wells-fargo-autograph-pricing.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-10/captures/wells-fargo-autograph-journey-product.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-10/captures/wells-fargo-autograph-journey-pricing.txt",
+      "evals/curation/batches/wells-fargo-2026-10/verification/wells-fargo.json"
+    ]
+  },
   "cards": [
     {
       "cardId": "wells-fargo-autograph",
@@ -41,7 +61,11 @@
             "sourceId": "wells-fargo-autograph-pricing",
             "quote": "Airlines Hotel/motels Campgrounds Timeshares Cruise lines Travel agencies Discount travel sites Vehicle/auto rentals"
           },
-          "note": "The Travel bonus pays on travel merchant categories (airlines, hotels, rentals, agencies), not on a program-run booking portal; Wells Fargo convention maps Travel to other."
+          "note": "The Travel bonus pays on travel merchant categories (airlines, hotels, rentals, agencies), not on a program-run booking portal; Wells Fargo convention maps Travel to other.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The pricing capture lists travel merchant types, not a program-run booking site; Wells Fargo convention maps Travel to other (general 4)."
+          }
         },
         {
           "op": "set",
@@ -52,7 +76,11 @@
             "sourceId": "wells-fargo-autograph-pricing",
             "quote": "Electric vehicle charging stations"
           },
-          "note": "Wells Fargo convention: the EV rule split from Gas uses the wording for EV charging stations."
+          "note": "Wells Fargo convention: the EV rule split from Gas uses the wording for EV charging stations.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Wells Fargo convention: the EV rule split from Gas is worded electric vehicle charging stations; the capture lists that wording."
+          }
         },
         {
           "op": "set",
@@ -63,7 +91,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state the rewards account is created automatically on opening; general 7 gives activation none (same as the Phase 8 adjudication)."
+          }
         },
         {
           "op": "set",
@@ -74,7 +106,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state the rewards account is created automatically on opening; general 7 gives activation none (same as the Phase 8 adjudication)."
+          }
         },
         {
           "op": "set",
@@ -85,7 +121,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state the rewards account is created automatically on opening; general 7 gives activation none (same as the Phase 8 adjudication)."
+          }
         },
         {
           "op": "set",
@@ -96,7 +136,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state the rewards account is created automatically on opening; general 7 gives activation none (same as the Phase 8 adjudication)."
+          }
         },
         {
           "op": "set",
@@ -107,7 +151,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state the rewards account is created automatically on opening; general 7 gives activation none (same as the Phase 8 adjudication)."
+          }
         },
         {
           "op": "set",
@@ -118,7 +166,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state the rewards account is created automatically on opening; general 7 gives activation none (same as the Phase 8 adjudication)."
+          }
         },
         {
           "op": "set",
@@ -129,7 +181,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state the rewards account is created automatically on opening; general 7 gives activation none (same as the Phase 8 adjudication)."
+          }
         },
         {
           "op": "set",
@@ -140,7 +196,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state the rewards account is created automatically on opening; general 7 gives activation none (same as the Phase 8 adjudication)."
+          }
         },
         {
           "op": "remove",
@@ -149,7 +209,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor and no detail; removed (general 11 and 16)."
+          "note": "Missing issue with no anchor and no detail; removed (general 11 and 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Draft issue has no anchor and the schema carries no detail; general 11 and 16 remove it. Current matches the draft."
+          }
         },
         {
           "op": "remove",
@@ -158,7 +222,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor and no detail; removed (general 11 and 16)."
+          "note": "Missing issue with no anchor and no detail; removed (general 11 and 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Draft issue has no anchor and the schema carries no detail; general 11 and 16 remove it. Current matches the draft."
+          }
         }
       ],
       "addedRules": [],
@@ -171,7 +239,11 @@
               "quote": "Person-to-person money transfers"
             }
           ],
-          "note": "Listed under transactions that do not earn Rewards Points (Wells Fargo convention: one exclusion per line)."
+          "note": "Listed under transactions that do not earn Rewards Points (Wells Fargo convention: one exclusion per line).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim item in the pricing capture list of transactions that do not earn rewards points; Wells Fargo convention labels one per line."
+          }
         },
         {
           "text": "Overdraft protection advances do not earn rewards points.",
@@ -181,7 +253,11 @@
               "quote": "Overdraft protection advances"
             }
           ],
-          "note": "Listed under transactions that do not earn Rewards Points."
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim item in the pricing capture list of transactions that do not earn rewards points; Wells Fargo convention labels one per line."
+          }
         },
         {
           "text": "Disputed or illegal purchases do not earn rewards points.",
@@ -191,7 +267,11 @@
               "quote": "Disputed or illegal purchases"
             }
           ],
-          "note": "Listed under transactions that do not earn Rewards Points."
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim item in the pricing capture list of transactions that do not earn rewards points; Wells Fargo convention labels one per line."
+          }
         },
         {
           "text": "Fees and interest posted to the account do not earn rewards points.",
@@ -201,7 +281,11 @@
               "quote": "Any kind of fees or interest that post to your Credit Card Account"
             }
           ],
-          "note": "Listed under transactions that do not earn Rewards Points."
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim item in the pricing capture list of transactions that do not earn rewards points; Wells Fargo convention labels one per line."
+          }
         },
         {
           "text": "Gambling transactions do not earn rewards points.",
@@ -211,7 +295,11 @@
               "quote": "Any kind of gambling transactions you make"
             }
           ],
-          "note": "Listed under transactions that do not earn Rewards Points."
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim item in the pricing capture list of transactions that do not earn rewards points; Wells Fargo convention labels one per line."
+          }
         }
       ],
       "addedIssues": [
@@ -227,7 +315,11 @@
               "quote": "Warehouse/membership clubs"
             }
           ],
-          "note": "Gas and EV charging at superstores, warehouse clubs, grocery stores, car washes and auto repair stores may not earn the 3X bonus."
+          "note": "Gas and EV charging at superstores, warehouse clubs, grocery stores, car washes and auto repair stores may not earn the 3X bonus.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Both anchors read in the pricing capture state that bonus points may not be earned at those locations; ambiguous is the right code and the anchors stay under 25 words together."
+          }
         },
         {
           "code": "ambiguous",
@@ -241,7 +333,11 @@
               "quote": "Third-party delivery services"
             }
           ],
-          "note": "Dining at bakeries, grocery stores with food service and through third-party delivery services may not earn the 3X bonus."
+          "note": "Dining at bakeries, grocery stores with food service and through third-party delivery services may not earn the 3X bonus.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Both anchors read in the pricing capture state that bonus points may not be earned at those locations; ambiguous is the right code and the anchors stay under 25 words together."
+          }
         }
       ],
       "productNoteChanges": [
@@ -255,7 +351,11 @@
             "sourceId": "wells-fargo-autograph-pricing",
             "quote": "This includes purchases you make using a third-party payment account, with a mobile/wireless card reader, or through an online marketplace with multiple retailers."
           },
-          "note": "The terms reserve the right to deny bonus points on these checkout paths; base earn is stated as still applying."
+          "note": "The terms reserve the right to deny bonus points on these checkout paths; base earn is stated as still applying.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Pricing capture states Wells Fargo may deny bonus points on third-party payment accounts, card readers and marketplaces while base earn continues; Wells Fargo convention asks for a checkout-method note."
+          }
         }
       ]
     },
@@ -273,7 +373,11 @@
             "sourceId": "wells-fargo-autograph-journey-product",
             "quote": "Other Travel: 3 points (1 base plus 2 bonus points) are earned per $1 spent on net purchases"
           },
-          "note": "Other Travel (timeshares, auto rentals, cruise lines, travel agencies, campgrounds) earns 3 points per dollar, total rate 300; the terms also state 3 total for these categories."
+          "note": "Other Travel (timeshares, auto rentals, cruise lines, travel agencies, campgrounds) earns 3 points per dollar, total rate 300; the terms also state 3 total for these categories.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product-page capture states Other Travel earns 3 points per dollar total (1 base plus 2 bonus); total rate 300 (general 1)."
+          }
         },
         {
           "op": "set",
@@ -284,7 +388,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state the rewards account is created automatically on opening; general 7 gives activation none (same as the Phase 8 adjudication)."
+          }
         },
         {
           "op": "set",
@@ -295,7 +403,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state the rewards account is created automatically on opening; general 7 gives activation none (same as the Phase 8 adjudication)."
+          }
         },
         {
           "op": "set",
@@ -306,7 +418,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state the rewards account is created automatically on opening; general 7 gives activation none (same as the Phase 8 adjudication)."
+          }
         },
         {
           "op": "set",
@@ -317,7 +433,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state the rewards account is created automatically on opening; general 7 gives activation none (same as the Phase 8 adjudication)."
+          }
         },
         {
           "op": "set",
@@ -328,7 +448,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards terms say the rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards terms state the rewards account is created automatically on opening; general 7 gives activation none (same as the Phase 8 adjudication)."
+          }
         }
       ],
       "addedRules": [],
@@ -341,7 +465,11 @@
               "quote": "Person-to-person money transfers"
             }
           ],
-          "note": "Listed under transactions that do not earn Rewards Points (Wells Fargo convention: one exclusion per line)."
+          "note": "Listed under transactions that do not earn Rewards Points (Wells Fargo convention: one exclusion per line).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim item in the pricing capture list of transactions that do not earn rewards points; Wells Fargo convention labels one per line."
+          }
         },
         {
           "text": "Overdraft protection advances do not earn rewards points.",
@@ -351,7 +479,11 @@
               "quote": "Overdraft protection advances"
             }
           ],
-          "note": "Listed under transactions that do not earn Rewards Points."
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim item in the pricing capture list of transactions that do not earn rewards points; Wells Fargo convention labels one per line."
+          }
         },
         {
           "text": "Disputed or illegal purchases do not earn rewards points.",
@@ -361,7 +493,11 @@
               "quote": "Disputed or illegal purchases"
             }
           ],
-          "note": "Listed under transactions that do not earn Rewards Points."
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim item in the pricing capture list of transactions that do not earn rewards points; Wells Fargo convention labels one per line."
+          }
         },
         {
           "text": "Fees and interest posted to the account do not earn rewards points.",
@@ -371,7 +507,11 @@
               "quote": "Any kind of fees or interest that post to your Credit Card Account"
             }
           ],
-          "note": "Listed under transactions that do not earn Rewards Points."
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim item in the pricing capture list of transactions that do not earn rewards points; Wells Fargo convention labels one per line."
+          }
         },
         {
           "text": "Gambling transactions do not earn rewards points.",
@@ -381,7 +521,11 @@
               "quote": "Any kind of gambling transactions you make"
             }
           ],
-          "note": "Listed under transactions that do not earn Rewards Points."
+          "note": "Listed under transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim item in the pricing capture list of transactions that do not earn rewards points; Wells Fargo convention labels one per line."
+          }
         }
       ],
       "addedIssues": [],
@@ -396,7 +540,11 @@
             "sourceId": "wells-fargo-autograph-journey-pricing",
             "quote": "This includes purchases you make using a third-party payment account, with a mobile/wireless card reader, or through an online marketplace with multiple retailers."
           },
-          "note": "The terms reserve the right to deny bonus points on these checkout paths; base earn is stated as still applying."
+          "note": "The terms reserve the right to deny bonus points on these checkout paths; base earn is stated as still applying.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Pricing capture states Wells Fargo may deny bonus points on third-party payment accounts, card readers and marketplaces while base earn continues; Wells Fargo convention asks for a checkout-method note."
+          }
         }
       ]
     }

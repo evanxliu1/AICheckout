@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "wells-fargo-refresh-2026-10",
-  "updatedAt": "2026-10-05T01:40:27.835Z",
+  "updatedAt": "2026-10-05T01:41:54.185Z",
   "cards": {
     "wells-fargo-autograph": {
       "stages": {
@@ -85,6 +85,17 @@
           "agentRun": "af1b5dbb89e112e54",
           "model": "claude-opus-5-5",
           "acceptedAt": "2026-10-05T01:40:27.826Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:0dbdc2932d96b334bcdadc431f96226104f6f624ab92ccde263e02456367089a",
+          "finishedAt": "2026-10-05T01:41:54.178Z",
+          "attempts": 1,
+          "packetId": "019c15f0-f613-460e-a761-17d8c3bb8d65",
+          "agentRun": "a35fcbdbcd59ff853",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:41:54.178Z"
         }
       },
       "dropped": null,
@@ -172,6 +183,17 @@
           "agentRun": "af1b5dbb89e112e54",
           "model": "claude-opus-5-5",
           "acceptedAt": "2026-10-05T01:40:27.826Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:409e80ba129f15dcd8bdca8194c5d4c39085d9f4d6ef3643a980edbf59a706b6",
+          "finishedAt": "2026-10-05T01:41:54.178Z",
+          "attempts": 1,
+          "packetId": "019c15f0-f613-460e-a761-17d8c3bb8d65",
+          "agentRun": "a35fcbdbcd59ff853",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:41:54.178Z"
         }
       },
       "dropped": null,
@@ -205,6 +227,28 @@
           "acceptedAt": "2026-10-05T01:40:27.826Z",
           "durationMs": 140601,
           "tokens": 75740
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "outputs": [
+            {
+              "ref": "adjudicate:wells-fargo",
+              "sha256": "2ce03a566c021d18fbc575fdf182c9c3aab621bf67d9825a61d3f3c0793af1bb"
+            },
+            {
+              "ref": "lint-acks:wells-fargo",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:41:54.178Z",
+          "attempts": 1,
+          "packetId": "019c15f0-f613-460e-a761-17d8c3bb8d65",
+          "agentRun": "a35fcbdbcd59ff853",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:41:54.178Z",
+          "durationMs": 62473,
+          "tokens": 51320
         }
       }
     }
