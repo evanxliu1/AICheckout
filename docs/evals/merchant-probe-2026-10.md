@@ -2,12 +2,13 @@
 
 Phase 10 of the [merchant coverage plan](../../wiki/product/phase-10-merchant-expansion.md), run on 2026-10-05 per the [probe plan](../../wiki/product/phase-10-feasibility-probe.md). No product code. Committed evidence: `evals/merchants/probe/sites.json` (sites and outcomes), `labels.json` (displayed totals), `reader-results.json` (prototype reader runs), and the prototype tools in `evals/merchants/probe/tools/`. Snapshots, screenshots, the Tranco file and the probe profile are gitignored under `evals/merchants/probe/data/` and `profile/`.
 
-**Labels are agent labels.** Labeler 1 is the builder of this probe (claude-code/claude-opus-5-5). The second, independent labeler has not run yet. All label-based figures below are provisional until that check, and they are agreement with one agent, not human-checked accuracy.
+**Labels are agent labels.** Labeler 1 is the builder of this probe (claude-code/claude-opus-5-5). Labeler 2, an independent subagent, labelled every snapshot before opening labeler 1's file (`labels-2.json`). The two agree on **44 of 44** snapshots: whether a total is displayed, the preferred amount and kind, and every summary row. No adjudication was needed. Label-based figures are agreement between two agents, not human-checked accuracy.
 
 ## Verdict
 
-- **Go.** 16 of 25 sites (64%) put an item in a logged-out cart and showed a cart summary. That is above the stop rule's threshold of half. Of those 16, 14 also showed an order summary on the first checkout page without sign-in.
-- **The caveat is the top band.** Only 3 of the 8 top-1k sites reached a cart. Five were stopped by bot defences before or at add-to-cart. In the 1k–10k band 5 of 8 reached a cart, and in the 10k–100k band 8 of 9 did. The shopper's own browser does not face these walls, so this mainly limits **capture for evaluation** (Phase 12), not the product.
+- **Go, but fragile for top retailers.** 16 of 25 sites (64%) put an item in a logged-out cart and showed a cart summary. That is above the stop rule's threshold of half. Of those 16, 14 also showed an order summary on the first checkout page without sign-in.
+- **The margin depends on selection.** 7 candidate domains (kohls, macys, lego, adidas, dickssportinggoods, chewy, lululemon) were skipped because their home pages returned 403 or 429 to a plain fetch during selection. Had 4 of the reached sites been swapped for blocked ones, the count would be 12 of 25, below half. The test extension was loaded in the probe browser throughout, which may have affected some sites.
+- **The caveat is the top band.** Only 3 of the 8 top-1k sites reached a cart. Four were stopped by bot walls or edge 403s before add-to-cart. At Nike, add-to-cart was refused by a modal whose text asked the visitor to disable browser extensions such as coupon tools. In the 1k–10k band 5 of 8 reached a cart, and in the 10k–100k band 8 of 9 did. At checkout time the extension reads a page the shopper already reached, so it doesn't have to pass these walls. This mainly limits **capture for evaluation** (Phase 12), not the product.
 - **Proposed Y = 80%** found-correct on the one-item cart-page state, on the held-out split (reasoning in [Y](#proposed-y)).
 
 ## Site list (Q1)
@@ -42,7 +43,7 @@ The source is Tranco list [647LX](https://tranco-list.eu/list/647LX/1000000), th
 | zumiez.com | 53,839 | 10k–100k | Adobe Commerce (Magento) | yes | dropdown with order total | reached |
 | allbirds.com | 68,312 | 10k–100k | Shopify | yes | drawer (`/cart` redirects to it) | reached |
 
-**Strata.** The sample is 8 / 8 / 9 sites across the three bands. Platforms: Shopify storefront 4; custom storefront with Shopify checkout 2; Salesforce Commerce Cloud 5; Adobe Commerce 1; SAP Commerce marker 1; custom or none detected 12. That is at least four platforms.
+**Strata.** The sample is 8 / 8 / 9 sites across the three bands. Platforms: Shopify storefront 4; custom storefront with Shopify checkout 2; Salesforce Commerce Cloud 5; Adobe Commerce 1; SAP Commerce marker 1; custom or none detected 12. That meets the plan's stratum of at least four platforms (six platform groups seen).
 
 - **Shadow DOM.** No storefront kept its cart summary in a shadow root. Ulta has 25–29 open shadow roots on its cart pages, but its summary rows are in the light DOM. Closed roots appear on 8 sites, typically in payment buttons and widgets. None of them held a summary.
 - **Third-party checkouts.** Logitech uses a Global-e iframe. Shopify checkout runs on a separate host for Barnes & Noble, Corsair and Gymshark.
@@ -109,22 +110,25 @@ None of these policies lists `chrome-extension:`, so in the test browser (Chrome
 
 ## Q5: does a prototype reader find the total
 
-`tools/prototype-reader.mjs` implements design steps 1–3 and a simple decide:
+`tools/prototype-reader.mjs` (run 2; run 1 is `tools/prototype-reader-run1.mjs`) implements design steps 1–3 and a simple decide:
 
 1. **Summary region.** Found from summary headings and from `summary`/`total` attribute markers.
 2. **Total rows.** A label paired with exactly one amount, smallest element.
 3. **Distractors.** Text such as savings, installments and shipping progress; recommendation, carousel and line-item containers; strikethrough amounts; negative amounts.
 4. **Decide.** One amount of the most preferred kind inside a region gives `found`; otherwise `ask` or `none`.
 
-It runs over the 44 `dom.json` snapshots. In 38 of them a top-frame total is displayed. Labeler 1 wrote the labels from the screenshots before the reader first ran. Two labeler errors were corrected after run 2, against the capture-time screenshot and DOM, not the reader output (recorded in `labels.json`):
+It runs over the 44 `dom.json` snapshots. In 38 of them a top-frame total is displayed. Labeler 1 wrote the labels from the screenshots before the reader first ran. Two labels were corrected after run 2 (recorded in `labels.json`). Both corrections were triggered by diagnosing the reader's output, and both went the reader's way. Each was checked against the capture-time screenshot and DOM:
 
-- Gymshark mini-cart: the summary sits below the drawer's fold.
-- Hot Topic mini-cart: the dropdown had closed before capture.
+- Gymshark mini-cart: the summary sits below the drawer's fold. Originally labelled with no total; the reader had found $21.00.
+- Hot Topic mini-cart: the dropdown had closed before capture. Originally labelled $10.90; the reader had answered `none`.
+
+Against the original labels, run 2 scores 30 of 38 with 2 found-wrong.
 
 | Run | Found-correct | Found-wrong | Ask (right amount among candidates) | Ask (without it) | None, total missed | None, correct |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1, as first written | **25 / 38** (66%) | 1 | 1 | 1 | 11 | 5 |
-| 2, one visibility fix | **31 / 38** (82%) | 1 | 5 | 1 | 1 | 5 |
+| 2, against the original labels | **30 / 38** (79%) | 2 (Gymshark mini-cart found $21.00 where labelled none) | 5 | 1 | 1 (Hot Topic mini-cart) | 4 |
+| 2, one visibility fix, corrected labels | **31 / 38** (82%) | 1 | 5 | 1 | 1 | 5 |
 
 | State (run 1 → run 2) | Snapshots with a total | Found-correct |
 | --- | --- | --- |
@@ -161,7 +165,9 @@ It fits without `unlimitedStorage`. The 2 MiB cap in the design leaves room for 
 
 - The untuned prototype found 12 of 16 cart pages. After one bug fix it found 14 of 16. Reader v1 will be tuned on a development split three times larger, with split-amount parsing, lazy styles and kind rules.
 - An 80% target sits below the fixed prototype's point estimate (88%) and inside both runs' 95% intervals. That allows for held-out pages that look less like the development pages.
-- A higher target (90% or more) would invite `found` on ambiguous pages. That trades against the zero-false-found rule, which matters more because a wrong prefilled amount silently misranks cards. Pages with no readable total, such as iframe checkouts, are not counted against found-correct only when they answer `none`.
+- The false-found risk is larger than the corrected table shows. Against the original labels run 2 had 2 false founds in 38, not 1, and both label corrections went the reader's way. Phase 12 must adjudicate labels before any reader result is seen.
+- A higher target (90% or more) would push the reader to answer `found` on ambiguous pages, against the zero-false-found rule. That rule matters more: a wrong prefilled amount silently misranks cards.
+- Pages with no readable top-frame total, such as an iframe checkout, should be excluded from the found-correct denominator, and count as correct only when the reader answers `none`.
 
 Evan sets Y in the Phase 12 protocol. This is the recommendation.
 
@@ -170,14 +176,19 @@ Evan sets Y in the Phase 12 protocol. This is the recommendation.
 - **Site classification used a candidate list.** About 300 known U.S. retail domains were looked up in Tranco and the top 1,000 was read in full. The top 100,000 was not classified exhaustively.
 - **Selection bias.** For platform markers, 93 candidate home pages were each fetched once with `curl` before the visits. Domains that answered 403 or 429 were mostly passed over. That biases the sample toward reachable sites, so the 64% cart rate is optimistic for top retailers. Home Depot was chosen despite a 403 and was blocked.
 - **Browser setup.** The browser was Playwright's Chrome for Testing 153 in a fresh probe profile, not branded Chrome. The test extension was loaded throughout, and Nike's refusal cites extensions.
-- **Clicks beyond size, colour and add-to-cart.** None typed anything or submitted a form other than add-to-cart.
+- **Driver guards were weaker than the rule.** `driver.mjs` has no fill, type or press call. But its `click` refused only text inputs: it did not refuse submit buttons or buttons inside forms. `clickxy` (coordinate clicks) had no guard at all, and its local control server on `127.0.0.1:8765` had no token or Origin check. Staying inside the rules depended on the operator's choices. Phase 12's capture tool must enforce them: refuse submit and in-form clicks except an add-to-cart allowlist, and protect its control server ([design](../../wiki/system/merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12)).
+- **Clicks beyond size, colour and add-to-cart.** Nothing was typed, and no form was submitted except by add-to-cart buttons.
   - Declining or closing cookie banners and popups. One popup close was a coordinate click inside a third-party iframe.
   - "Continue as Guest" buttons (`type=button`, no enclosing form) on Apple and IKEA, and Ulta's guest link.
   - Checkout buttons that were links or non-form buttons.
 - **Checkout pages reached by URL.** For Shopify and Magento, `/checkout` was opened by URL instead of clicking a form-submit checkout button.
 - **One possible stray page load.** During a driver restart, a mistyped command may have loaded the stanley1913.com home page once. That domain is not in the sample, and nothing else was done there.
 - **Snapshot format.** `dom.json` is a custom computed-style tree with open shadow roots inlined, saved beside `page.html`, MHTML and a full-page screenshot. It is not a Playwright trace.
-- **Pending checks.** The second labeler and the independent review of this report have not run.
+- **Checks done.** Labeler 2 agreed on 44 of 44 snapshots, checked by joining the two files on domain and state. The snapshot set is 14 mini-cart, 16 cart and 14 checkout, 38 of them with a top-frame total. Labeler 2's message had given 15 / 16 / 13 and 37, but its file matches these counts. An independent review of this report ran on 2026-10-05 (agent-verified, approve with fixes); its fixes are applied.
+- **Judgement calls both labelers made the same way.**
+  - Gymshark mini-cart, labelled $21.00 with **low confidence**: the summary rows are in the drawer's scrollable DOM, behind the sticky checkout button. Labeler 2 reached this value independently.
+  - Corsair cart: the total after a sale discount is labelled `estimatedTotal`, not `afterCredit`.
+  - IKEA and Gap carts: a "total excluding tax" row is labelled `estimatedTotal`.
 
 ## Related
 

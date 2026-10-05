@@ -7,8 +7,9 @@ Working folder for the 25-site probe of 2026-10-05 ([plan](../../../wiki/product
 | `sites.json` | yes | The 25 domains with Tranco rank, band, platform and outcome codes (no page text) |
 | `labels.json` | yes | Labeler 1's displayed totals per snapshot: amounts in cents and kinds, the `dom.json` SHA-256, two recorded corrections |
 | `reader-results.json` | yes | Prototype reader runs 1 and 2: result, amount, kind, timing per snapshot |
-| `tools/driver.mjs` | yes | Control server around one headed Chromium with the probe profile. It has no fill, type, press or submit call |
-| `tools/prototype-reader.mjs` | yes | Design steps 1–3 plus a simple decide, over the `dom.json` snapshots |
+| `tools/driver.mjs` | yes | Control server around one headed Chromium with the probe profile. No fill, type or press call, but `click` does not refuse submit or in-form buttons, `clickxy` is unguarded and the server has no token: the rules were kept by the operator, not enforced |
+| `tools/prototype-reader.mjs` | yes | Design steps 1–3 plus a simple decide, over the `dom.json` snapshots (run 2) |
+| `tools/prototype-reader-run1.mjs` | yes | The reader as first written (run 1); differs only in the visibility rule |
 | `tools/frame-ext/` | yes | Test extension: mounts a `chrome-extension://` iframe the way the badge does (Q4) and writes 2 MiB to `chrome.storage.local` (Q6) |
 | `data/` | **no** (gitignored) | `tranco-647LX.csv`, home-page fetches, `notes.jsonl`, `views/` screenshots, reader run outputs and `sites/<domain>/<state>/` snapshots |
 | `profile/` | **no** (gitignored) | The probe's own Chromium profile (never Evan's) |

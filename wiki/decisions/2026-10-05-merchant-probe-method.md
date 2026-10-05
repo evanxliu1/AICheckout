@@ -28,16 +28,16 @@ The [probe plan](../product/phase-10-feasibility-probe.md) fixed the questions, 
 | Q4 badge frame | Read the CSP only; load a test extension that mounts the badge-shaped frame | Test extension, which answers the question empirically (the frame loaded under strict `frame-src`) |
 | Q6 storage | Desk check; measure | Measure in the same test extension |
 | Label independence | Label after running the reader; label before, freeze, then run | Before. Labeler errors found later are corrected against the screenshot and DOM and recorded in `labels.json` |
-| Reader changes | Tune until good; report the first run plus at most a bug fix, flagged | Run 1 as written, run 2 with one visibility fix, both reported; run 2 is not a held-out figure |
+| Reader changes | Tune until good; report the first run plus at most a bug fix, flagged | Run 1 as written (`tools/prototype-reader-run1.mjs`), run 2 with one visibility fix, both reported; run 2 is not a held-out figure. Both label corrections came from diagnosing the reader and went its way; run 2 against the original labels is also reported |
 | Proposed Y | 70%, 80% or 90% on one-item cart pages | 80%: below the fixed prototype's point estimate and inside both runs' intervals, without pushing `found` on ambiguous pages |
 
 ## Decision
-As chosen above. Clicks were limited to size, colour, add-to-cart, closing popups and cookie banners, non-form checkout and "Continue as guest" buttons. Shopify and Magento checkouts were opened by URL. Nothing was typed or submitted.
+As chosen above. Clicks were limited to size, colour, add-to-cart, closing popups and cookie banners, non-form checkout and "Continue as guest" buttons. Shopify and Magento checkouts were opened by URL. Nothing was typed, and no form was submitted except by add-to-cart. The prototype driver did not enforce this: `click` did not refuse submit or in-form buttons, `clickxy` had no guard and the control server had no token, so Phase 12's capture tool must enforce it ([design](../system/merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12)).
 
 ## Consequences
 - The 64% cart rate is optimistic for top retailers because of the selection bias. Phase 12's capture will meet bot walls on most top-1k sites.
 - Reader v1 needs split-amount parsing, lazy style reads and a rule against `found` on a lower kind when a total-labelled row did not parse.
-- The second labeler and the report review are still to run.
+- The second labeler is still to finish; the independent report review ran (agent-verified, approve with fixes) and its fixes are applied.
 
 ## Status
 Accepted 2026-10-05 by the Phase 10 builder (claude-code/claude-opus-5-5) within the approved plan; Y is a proposal for Evan.

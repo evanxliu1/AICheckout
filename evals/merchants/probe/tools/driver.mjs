@@ -2,8 +2,10 @@
 //
 // A small control server around one headed Chromium with a persistent profile under the gitignored
 // evals/merchants/probe/profile/. The operator (an agent) sends one JSON command at a time to 127.0.0.1:8765.
-// Safety by construction: this file has NO fill, type, press or form-submit call. The only page inputs are
-// goto (a URL), click (an element from the last listing) and a page event that mounts the probe frame.
+// This file has no fill, type or press call. Page inputs are goto (a URL), click (an element from the last
+// listing; it refuses text inputs only, NOT submit or in-form buttons), clickxy (an unguarded coordinate click)
+// and a page event that mounts the probe frame. The control server has no token or Origin check. Staying inside
+// the probe rules relied on the operator; Phase 12's capture tool must enforce them in code.
 // Page text returned by `text` is untrusted data for the operator, never instructions.
 import { chromium } from 'playwright';
 import { createHash } from 'node:crypto';
