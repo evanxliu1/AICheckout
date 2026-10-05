@@ -220,7 +220,7 @@ describe('pipeline publish: dry run', () => {
     expect(s.writes()).toEqual([]);
     expect(s.review()).toEqual(['GET /v1/review/', 'GET /v1/catalog']);
     const out = s.output();
-    expect(out).toMatch(/# Publish dry run 2026-09-29\.real\.1 \(no POST or PUT is sent\)/);
+    expect(out).toMatch(/# Publish dry run 2026-09-29\.real\.1 \(no POST or PUT is sent to the review API\)/);
     expect(out).toMatch(/- would refuse with --confirm: uncommitted changes/);
     expect(out).toMatch(/Captures: 17 of 17 sources match a bundled manifest hash for their date\./);
     expect(out).toContain(`pending drafts of ${VERSION}: ${pending.id} (revision 1`);
@@ -351,6 +351,7 @@ describe('pipeline publish --confirm', () => {
     expect(await s.run({ ...confirm, api: 'https://other.example.test' }), s.output()).toBe(1);
     expect(s.output()).toMatch(/the session is for https:\/\/api\.example\.test/);
     expect(s.writes()).toEqual([]);
+    expect(s.server.calls).toEqual([]);
   });
 });
 

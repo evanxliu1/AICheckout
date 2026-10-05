@@ -30,6 +30,7 @@ import {
   LOGIN_COMMAND,
   openSession,
   readSession,
+  refreshSession,
   reviewClient,
   servedCatalog,
 } from './session.ts';
@@ -268,7 +269,7 @@ export async function publish(env: Env, options: PublishOptions, deps: PublishDe
   const problems = instructionProblems(catalog, options, now);
 
   log(
-    `# Publish ${confirmed ? '' : 'dry run '}${options.version}${confirmed ? '' : ' (no POST or PUT is sent)'}`,
+    `# Publish ${confirmed ? '' : 'dry run '}${options.version}${confirmed ? '' : ' (no POST or PUT is sent to the review API)'}`,
   );
   log('');
   log(
@@ -464,11 +465,12 @@ async function confirmRemote(
     for (const line of lines) log(`- ${line}`);
     return 1;
   };
-  const session = await openSession(sessionDeps);
-  if (!session)
-    throw new CliError(`No session at ${sessionDeps.sessionPath}. Evan runs ${LOGIN_COMMAND}.`, 2);
-  if (session.file.api !== api)
-    return refuse([`the session is for ${session.file.api}, not ${api}; Evan logs in with --api ${api}`]);
+  // The session's API is checked before the refresh, so a session made for another API is never used.
+  const file = await readSession(sessionDeps);
+  if (!file) throw new CliError(`No session at ${sessionDeps.sessionPath}. Evan runs ${LOGIN_COMMAND}.`, 2);
+  if (file.api !== api)
+    return refuse([`the session is for ${file.api}, not ${api}; Evan logs in with --api ${api}`]);
+  const session = await refreshSession(sessionDeps, file);
   const client = reviewClient(sessionDeps, session);
   log('');
   log(`Session: ${session.file.email} at ${session.file.api}.`);

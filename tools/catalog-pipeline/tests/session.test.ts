@@ -1,5 +1,5 @@
 // `pipeline login`, `logout`, `whoami` and the session file, against the in-memory hosted stand-in (tests/hosted.ts).
-import { chmod, mkdtemp, readFile, stat, writeFile } from 'node:fs/promises';
+import { chmod, mkdir, mkdtemp, readFile, rename, stat, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterAll, describe, expect, it } from 'vitest';
@@ -161,6 +161,23 @@ describe('session file', () => {
     expect(await mode(deps.sessionPath)).toBe(0o640);
     expect(await readFile(deps.sessionPath, 'utf8')).toBe(text);
     expect(logs).toEqual([]);
+  });
+
+  it('refuses a session file that is a symlink, and a symlinked session directory', async () => {
+    const { deps, home } = await loggedIn();
+    const file = (await readSession(deps))!;
+    const real = join(home, 'elsewhere.json');
+    await rename(deps.sessionPath, real);
+    await symlink(real, deps.sessionPath);
+    await expect(readSession(deps)).rejects.toMatchObject({ exitCode: 2 });
+    await expect(readSession(deps)).rejects.toThrow(/is a symlink/);
+    const target = join(home, 'target-dir');
+    await mkdir(target, { mode: 0o700 });
+    const linked = join(home, 'linked-dir');
+    await symlink(target, linked);
+    await expect(
+      writeSession({ ...deps, sessionPath: join(linked, 'review-session.json') }, file),
+    ).rejects.toThrow(/is a symlink/);
   });
 
   it('whoami prints the file without secrets; --check confirms reviewer access', async () => {

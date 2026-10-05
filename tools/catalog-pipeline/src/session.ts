@@ -4,7 +4,7 @@
 // mode-600 file outside the repository. No token or password is ever printed, logged or put in an error message;
 // errors carry an HTTP status and a short code only.
 import { randomBytes } from 'node:crypto';
-import { chmod, mkdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
+import { chmod, lstat, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { dirname, isAbsolute, join, relative, resolve } from 'node:path';
 import { z } from 'zod';
@@ -203,11 +203,23 @@ function refuseInsideRepo(path: string, root: string) {
     throw new CliError(`The session file ${path} would be inside the repository; refusing.`, 2);
 }
 
-/** Writes the session file: directory 0700, file 0600, through a temporary file and a rename. */
+/** Owned by this user (where the platform has uids). */
+const ownedByMe = (uid: number) => process.getuid === undefined || uid === process.getuid();
+
+/**
+ * Writes the session file: directory 0700, file 0600, through a temporary file (created exclusively, so never through
+ * a symlink) and a rename. Refuses a directory that is a symlink or another user's.
+ */
 export async function writeSession(deps: SessionDeps, file: SessionFile): Promise<void> {
   refuseInsideRepo(deps.sessionPath, deps.root);
   const dir = dirname(deps.sessionPath);
   await mkdir(dir, { recursive: true, mode: 0o700 });
+  const info = await lstat(dir);
+  if (!info.isDirectory() || !ownedByMe(info.uid))
+    throw new CliError(
+      `The session directory ${dir} is a symlink, not a directory, or not owned by this user; refusing.`,
+      2,
+    );
   await chmod(dir, 0o700);
   const tmp = `${deps.sessionPath}.${process.pid}.${randomBytes(6).toString('hex')}.tmp`;
   try {
@@ -217,7 +229,6 @@ export async function writeSession(deps: SessionDeps, file: SessionFile): Promis
     });
     await chmod(tmp, 0o600);
     await rename(tmp, deps.sessionPath);
-    await chmod(deps.sessionPath, 0o600);
   } finally {
     await rm(tmp, { force: true });
   }
@@ -225,12 +236,18 @@ export async function writeSession(deps: SessionDeps, file: SessionFile): Promis
 
 /** The session file, or null when there is none. Refuses (exit 2) a file group or others can read or write. */
 export async function readSession(deps: SessionDeps): Promise<SessionFile | null> {
-  let mode: number;
+  let info: Awaited<ReturnType<typeof lstat>>;
   try {
-    mode = (await stat(deps.sessionPath)).mode;
+    info = await lstat(deps.sessionPath);
   } catch {
     return null;
   }
+  if (!info.isFile() || !ownedByMe(info.uid))
+    throw new CliError(
+      `The session file ${deps.sessionPath} is a symlink, not a regular file, or not owned by this user; nothing was changed. Evan deletes it and runs ${LOGIN_COMMAND} again.`,
+      2,
+    );
+  const mode = Number(info.mode);
   if (mode & 0o077)
     throw new CliError(
       `The session file ${deps.sessionPath} is accessible to group or others (mode ${(mode & 0o777).toString(8)}); nothing was changed. Evan deletes it and runs ${LOGIN_COMMAND} again.`,
