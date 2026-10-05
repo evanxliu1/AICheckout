@@ -6,7 +6,7 @@ status: stable
 tags: [system, code-map]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T03:00:00Z
+  at: 2026-10-05T05:26:46Z
 sources:
   - resource: ../../package.json
     title: Root workspaces and scripts
@@ -27,7 +27,7 @@ One npm workspace repo (`extension`, `packages/*`, `apps/*`, `tools/*`), Node 24
 | Path | npm name | Owns | Entry points | Tests | Page |
 | --- | --- | --- | --- | --- | --- |
 | [`extension/`](../../extension) | `ai-checkout-extension` | MV3 extension: popup, onboarding, worker, state/vault, site adapters, cart badge | [`src/background/index.ts`](../../extension/src/background/index.ts), [`src/popup/index.html`](../../extension/src/popup/index.html), [`src/badge/content.ts`](../../extension/src/badge/content.ts), [`src/checkout/content.ts`](../../extension/src/checkout/content.ts) | `extension/tests/*.test.ts(x)` (vitest), `extension/e2e/*.spec.ts` (Playwright), `scripts/package.test.mjs` | [Extension](extension.md), [Cart badge](cart-badge.md) |
-| [`packages/rewards-core/`](../../packages/rewards-core) | `@ai-checkout/rewards-core` | Catalog schemas v1/v2, engine, money math, bundled catalogs, parity cases | [`src/index.ts`](../../packages/rewards-core/src/index.ts), `./money` subpath | No own runner; covered by `extension/tests/rewards*.test.ts`, `catalog-schema.test.ts`, `scripts/test-catalog-parity.mjs` | [Rewards engine](rewards-engine.md) |
+| [`packages/rewards-core/`](../../packages/rewards-core) | `@ai-checkout/rewards-core` | Catalog schemas v1/v2/v3, engines, money math, bundled catalogs (`CATALOG_V2`, `CATALOG_V3`), parity cases | [`src/index.ts`](../../packages/rewards-core/src/index.ts), `./money` subpath | No own runner; covered by `extension/tests/rewards*.test.ts`, `catalog-schema.test.ts`, `scripts/test-catalog-parity.mjs` | [Rewards engine](rewards-engine.md) |
 | [`packages/catalog-client/`](../../packages/catalog-client) | `@ai-checkout/catalog-client` | `createCatalogFetcher`, `readBoundedJson` (size-capped JSON read) | [`src/index.ts`](../../packages/catalog-client/src/index.ts) | `extension/tests/catalog-refresh.test.ts`, `apps/api/tests/catalog.test.ts` | [Extension](extension.md#catalog-refresh) |
 | [`packages/catalog-review/`](../../packages/catalog-review) | `@ai-checkout/catalog-review` | Browser-safe Zod contracts: review RPC input/output, `MAX_SOURCE_BODY_CHARS`, extraction v1 schema, trace, `limitsSchema` | [`src/index.ts`](../../packages/catalog-review/src/index.ts), [`src/curation.ts`](../../packages/catalog-review/src/curation.ts) | Through API and review tests | [API](api.md), [Curation harness](curation-harness.md) |
 | [`packages/ui/`](../../packages/ui) | `@ai-checkout/ui` | React components (Helios specs, Ocean theme), generated Flight icons, gallery | [`src/index.ts`](../../packages/ui/src/index.ts), `./styles.css` | `tests/components.test.tsx`, `e2e/gallery.spec.ts` (axe) | [UI library](ui-library.md) |
@@ -40,7 +40,7 @@ One npm workspace repo (`extension`, `packages/*`, `apps/*`, `tools/*`), Node 24
 
 | Path | Owns | Page |
 | --- | --- | --- |
-| [`supabase/`](../../supabase) | `config.toml`, 8 migrations, generated `seed.sql`, pgTAP tests in `supabase/tests/` | [Database](database.md) |
+| [`supabase/`](../../supabase) | `config.toml`, 10 migrations, generated `seed.sql`, pgTAP tests in `supabase/tests/` | [Database](database.md) |
 | [`evals/curation/`](../../evals/curation) | v1 synthetic corpus, v2 fixture and real corpora (captures gitignored), matrix configs | [Evaluation](evaluation.md) |
 | [`docs/evals/`](../../docs/evals) | Committed results (`results.json`, `results.md`, SVG charts); the site copies them at build | [Evaluation](evaluation.md), [Public site](public-site.md) |
 | [`scripts/`](../../scripts) | Root Node scripts (below) and [`lint_wiki.py`](../../scripts/lint_wiki.py) | [Testing](testing.md) |
@@ -67,6 +67,7 @@ One npm workspace repo (`extension`, `packages/*`, `apps/*`, `tools/*`), Node 24
 | [`capture-issuer-pages.mjs`](../../scripts/capture-issuer-pages.mjs), [`author-real-corpus.mjs`](../../scripts/author-real-corpus.mjs), [`author-curation-corpus.mjs`](../../scripts/author-curation-corpus.mjs), [`build-verification-page.mjs`](../../scripts/build-verification-page.mjs) | none | Corpus capture and authoring |
 | [`build-release-media.mjs`](../../scripts/build-release-media.mjs), [`build-portfolio-demo.mjs`](../../scripts/build-portfolio-demo.mjs), [`render-full-stack-demo.mjs`](../../scripts/render-full-stack-demo.mjs) | `release:media`, `release:portfolio` | Screenshot and video generation |
 | [`db-push.sh`](../../scripts/db-push.sh) | none | Pushes new migrations to the linked hosted project (operator only) |
+| `extract-cards.mjs`, `build-expansion-cards.mjs`, `draft-expansion-labels.mjs`, `apply-expansion-verification.mjs`, `check-expansion-quotes.mjs`, `merge-capture-manifests.mjs`, `expansion-capture-report.mjs`, `expansion-pipeline-metrics.mjs`, `score-expansion-traces.mjs` | none (wrapped by `npm run pipeline`) | Card-expansion stages: [catalog expansion](catalog-expansion.md), [card-expansion pipeline](card-expansion-pipeline.md) |
 
 ## Related
 

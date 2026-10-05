@@ -1,13 +1,13 @@
 ---
 type: Runbook
 title: Catalog release
-description: Publish a bundled catalog as the next hosted release, by the coordinator from the CLI on Evan's chat instruction (pipeline login, publish --confirm) or in the review app (release 2, 2026-10-02.expansion.1, published 2026-10-03 through the assisted browser flow), then verify /v1/catalog and the extension's refresh.
+description: Publish a bundled catalog as the next hosted release, by the coordinator from the CLI on Evan's chat instruction (pipeline login, publish --confirm; release 3, 2026-10-05.renewal.1, published 2026-10-05) or in the review app as the fallback (release 2, 2026-10-02.expansion.1, published 2026-10-03 through the assisted browser flow), then verify /v1/catalog and the extension's refresh.
 status: stable
 tags: [ops, catalog, release, review]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T04:56:00Z
-stale_after: 2026-11-01T00:00:00Z
+  at: 2026-10-05T05:26:46Z
+stale_after: 2026-11-04T00:00:00Z
 sources:
   - resource: ../../tools/catalog-pipeline/src/publish.ts
     title: pipeline publish
@@ -22,7 +22,7 @@ sources:
   - resource: ../../packages/catalog-review/src/index.ts
     title: Capture, draft and rate limits
   - resource: ../../packages/rewards-core/src/catalog-v3.ts
-    title: CATALOG_V3 (2026-10-02.expansion.1)
+    title: CATALOG_V3 (2026-10-05.renewal.1)
   - resource: ../../evals/curation/expansion/catalog-build-report.md
     title: Catalog v3 build report
   - resource: ../../docs/release/publish-runbook.md
@@ -31,11 +31,11 @@ sources:
 
 # Catalog release
 
-How a catalog built in the repository becomes the hosted release that `GET /v1/catalog` serves. Publishing needs Evan's approval of that one release. Since 2026-10-05 that approval is his chat message `publish <version>`, after which the coordinating session publishes from the CLI with a session Evan logged in himself ([agent publish](#agent-publish-cli), Phase 9 milestone 5, built on branch `phase9-m5-agent-publish`; [decision](../decisions/2026-10-05-agent-publish-cli-session.md)); no agent signs in or publishes without it ([user directives](../product/user-directives.md)). Until that branch is merged and deployed, and as the fallback after, Evan publishes in the hosted review app. Since 2026-10-03 the coordinator may drive the rest of the review app in the browser after Evan has signed in ([assisted flow](#assisted-flow-coordinator-drives-the-browser)). The coordinator checks the deploy before and the result after. The first run of this runbook published `2026-10-02.expansion.1` as release 2 on 2026-10-03; release 1 (`2026-09-29.real.1`, 7 cards) was published with [`docs/release/publish-runbook.md`](../../docs/release/publish-runbook.md), whose step-by-step screens this runbook follows.
+How a catalog built in the repository becomes the hosted release that `GET /v1/catalog` serves. Publishing needs Evan's approval of that one release. Since 2026-10-05 that approval is his chat message `publish <version>`, after which the coordinating session publishes from the CLI with a session Evan logged in himself ([agent publish](#agent-publish-cli), Phase 9 milestone 5, merged with PR #53; [decision](../decisions/2026-10-05-agent-publish-cli-session.md)); no agent signs in or publishes without it ([user directives](../product/user-directives.md)). The fallback is the hosted review app, where Evan publishes and, since 2026-10-03, the coordinator may drive the rest of the app in the browser after Evan has signed in ([assisted flow](#assisted-flow-coordinator-drives-the-browser)). The coordinator checks the deploy before and the result after. The CLI path published `2026-10-05.renewal.1` as [release 3](#release-3-published-2026-10-05) on 2026-10-05; the browser runbook published `2026-10-02.expansion.1` as release 2 on 2026-10-03; release 1 (`2026-09-29.real.1`, 7 cards) was published with [`docs/release/publish-runbook.md`](../../docs/release/publish-runbook.md), whose step-by-step screens this runbook follows.
 
 ## Agent publish (CLI)
 
-Phase 9 milestone 5 ([decision](../decisions/2026-10-05-agent-publish-cli-session.md)). The coordinating session (never a subagent) uploads the captures and publishes through the hosted review API with `npm run pipeline -- publish`, on a Supabase session Evan created himself. The agent never sees the password or a token: `login` refuses unless it runs in a terminal, the session file lives outside the repository with mode 600, and no command prints a token. The review API, its validation, rate limits and the database's checks are the same as for the review app.
+Phase 9 milestone 5 ([decision](../decisions/2026-10-05-agent-publish-cli-session.md)), merged with PR #53 on 2026-10-05 and first used for [release 3](#release-3-published-2026-10-05). The coordinating session (never a subagent) uploads the captures and publishes through the hosted review API with `npm run pipeline -- publish`, on a Supabase session Evan created himself. The agent never sees the password or a token: `login` refuses unless it runs in a terminal, the session file lives outside the repository with mode 600, and no command prints a token. The review API, its validation, rate limits and the database's checks are the same as for the review app.
 
 1. **Evan, once, in his own terminal** (for example the desktop app's terminal panel, or any shell in a checkout with `npm ci` done): `npm run pipeline -- login`. It asks for the reviewer account's email and, without echo, its password, checks reviewer access and saves the session to `~/.config/ai-checkout/review-session.json` (or `$XDG_CONFIG_HOME/ai-checkout/`). Supabase rotates the refresh token on every use and the CLI saves the new one; the session lasts until it is revoked or unused past Supabase's refresh-token lifetime. `npm run pipeline -- logout` revokes it and deletes the file.
 2. **Coordinator, ready check:** `npm run pipeline -- whoami --check` (email, API, saved time; refreshes and confirms reviewer access).
@@ -45,6 +45,18 @@ Phase 9 milestone 5 ([decision](../decisions/2026-10-05-agent-publish-cli-sessio
 6. **After publishing:** the steps under [coordinator, after publishing](#coordinator-after-publishing), including `publishedVersions` in the next PR.
 
 If a run stops part way (network, Render restart, rate limit), run the same `--confirm` command again: it resumes the draft and skips captures already attached. An error prints the HTTP status and the API's code only. "session expired or revoked" (exit 2) means Evan runs `login` again.
+
+## Release 3 (published 2026-10-05)
+
+| Item | Value |
+| --- | --- |
+| Release | sequence 3, `2026-10-05.renewal.1`, schema 3, 178 cards, 328 sources, verified 2026-10-05T00:00Z, expires **2026-11-04T00:00:00Z** |
+| Published | 2026-10-05T05:20:50Z (`published_at`), the first [agent publish](#agent-publish-cli): Evan typed "logged in, publish 2026-10-05.renewal.1" in chat (instruction time 2026-10-05T05:18:43Z); the coordinating session ran `pipeline publish --confirm` from the main checkout at `645b1c8` with the 14 capture folders listed under [renewal](#renewal-2026-10-05renewal1-prepared-2026-10-05) |
+| Draft | `2e67343a-2d11-4a9e-8ea6-eb89ccef0d1f`, created on head 2; 328 captures uploaded (one 20 s rate-limit wait); published at revision 2 |
+| Review note | states the catalog is agent-verified, not human-verified, the canonical hash, that all 328 captures match, and "published by the coding agent on Evan's chat instruction of 2026-10-05T05:18:43Z" |
+| Served release | checked by the coordinator after publishing: `/v1/catalog` serves sequence 3, `2026-10-05.renewal.1`; canonical JSON SHA-256 of the served catalog equals `CATALOG_V3` on `main`, `8e4c63946c7a7393684ce103fb9826fa5afdb3434a8421d93b682548451a4f6e`. Release 2 is no longer served |
+| Extension refresh | the extension's own `prepareCatalogUpdate` accepts the served release 3 over a cached release 2 (the `2026-10-02.expansion.1` catalog from `577c025`) and puts `2026-10-05.renewal.1` in effect; checked by the coordinator 2026-10-05 with a throwaway vitest run, not a loaded `build:hosted` extension |
+| Next deadline | the next renewal must be published before **2026-11-04T00:00Z**; it must re-read the NerdWallet estimates (read 2026-10-02). Freedom Flex and Discover Q4 rules end 2026-12-31 |
 
 ## Release 2 (published 2026-10-03)
 
@@ -74,13 +86,13 @@ If a run stops part way (network, Render restart, rate limit), run the same `--c
 ### Coordinator, before Evan starts
 
 1. `curl -s https://ai-checkout-api.onrender.com/health` returns `{"status":"ok"}` (the free instance may take about a minute to wake).
-2. `curl -s https://ai-checkout-api.onrender.com/v1/catalog | head -c 200` returns release `"sequence":1`, `"version":"2026-09-29.real.1"`, not a 503.
-3. Render's latest deploy is the current `main` commit (Render dashboard, or the review bundle at `/review/` contains `2026-10-02.expansion.1`).
+2. `curl -s https://ai-checkout-api.onrender.com/v1/catalog | head -c 200` returns the current head release (sequence 3, `2026-10-05.renewal.1` since 2026-10-05; for release 2 it was sequence 1), not a 503.
+3. Render's latest deploy is the current `main` commit (Render dashboard, or the review bundle at `/review/` contains the version to publish).
 4. `npx supabase migration list --linked` shows all 10 migrations in the Remote column (needs the linked project; Evan or the authorized coordinator).
 
 ### Evan, in the hosted review app
 
-Evan can do every step himself, or use the [assisted flow](#assisted-flow-coordinator-drives-the-browser). All three folders are gitignored copyrighted text; never commit or upload them anywhere else. The session lives in the tab's memory: reloading signs you out (saved revisions and captures are kept).
+The fallback when the [agent publish](#agent-publish-cli) cannot be used. The steps were written for release 2 (`2026-10-02.expansion.1`, three capture folders); for another version use its version, counts and expiry, and the capture folders `pipeline handoff` lists. Evan can do every step himself, or use the [assisted flow](#assisted-flow-coordinator-drives-the-browser). All three folders are gitignored copyrighted text; never commit or upload them anywhere else. The session lives in the tab's memory: reloading signs you out (saved revisions and captures are kept).
 
 1. **Sign in** at https://ai-checkout-api.onrender.com/review/ with the reviewer account.
 2. **Start a new draft.** Choose **Start a new draft**, select **Bundled catalog 2026-10-02.expansion.1 (schema 3, 178 cards)**. Check the summary: schema 3, 178 cards (328 sources to capture), verified Oct 2, 2026, expires Nov 1, 2026, status **Valid now**. Choose **Create draft**, then **Create the draft** in the dialog. The draft opens with every source missing. Nothing is published.
@@ -107,14 +119,14 @@ Evan's directive of 2026-10-03, first used for release 2. The coordinating sessi
 2. **Coordinator** starts the draft (step 2) and opens **Capture all missing sources**.
 3. **Evan** selects the three capture folders in the file picker (step 3); the coordinator runs the capture (step 4) and checks every source reads "Matching evidence captured".
 4. **Coordinator** reviews (step 5) and verifies the draft against the catalog on `main` (canonical JSON SHA-256 of the draft equals `CATALOG_V3`'s), then writes the **Review note**, saying the catalog is agent-verified, not human-verified, and what was checked.
-5. **Evan** ticks **I checked the full source terms and all proposed rules and conditions.** himself and publishes (step 6). The attestation is always Evan's.
+5. **Evan** ticks **I checked the full source terms and all proposed rules and conditions.** himself and publishes (step 6). In this browser flow the attestation is always Evan's tick; in the [agent publish](#agent-publish-cli) it is his chat message.
 
 ### Coordinator, after publishing
 
-1. `curl -s https://ai-checkout-api.onrender.com/v1/catalog | head -c 300` shows `"sequence":N` and `"version":"2026-10-02.expansion.1"`; the full body is about 0.6 MB.
-2. Build a hosted extension: `npm run build:hosted --workspace=ai-checkout-extension`, load `extension/dist`, choose **Check for updated terms** in the popup, and confirm it finishes without an error and that `checkoutCatalogV1` in `chrome.storage.local` (service worker DevTools: `await chrome.storage.local.get('checkoutCatalogV1')`) holds release sequence N, version `2026-10-02.expansion.1`. This closes the open Phase 3 M6 check. The cached release has the bundled catalog's `verifiedAt`, so the cached release is the one in effect (ties go to the cache) and the wallet keeps its inputs.
-3. Update [now](../now.md), [hosting](hosting.md#facts) (published catalog row), the [roadmap](../product/roadmap.md) (Stage 2 done) and [log](../log.md).
-4. In the next PR, add the published version to `publishedVersions` in `evals/curation/catalog-batches.json` (since 2026-10-04 it lists `2026-10-02.expansion.1`; v2's `2026-09-29.real.1` is not built from this config). From then on `npm run catalog:v3` refuses, before writing anything, to build that version with other rule IDs or terms than its entry in `evals/curation/rule-id-ledger.json`, and never rewrites that entry; a changed catalog needs a new `version` ([decision](../decisions/2026-10-04-published-versions-and-proposed-builds.md)).
+1. `curl -s https://ai-checkout-api.onrender.com/v1/catalog | head -c 300` shows `"sequence":N` and `"version":"<version>"`; the full body is about 0.6 MB.
+2. Build a hosted extension: `npm run build:hosted --workspace=ai-checkout-extension`, load `extension/dist`, choose **Check for updated terms** in the popup, and confirm it finishes without an error and that `checkoutCatalogV1` in `chrome.storage.local` (service worker DevTools: `await chrome.storage.local.get('checkoutCatalogV1')`) holds release sequence N and the published version (for release 2 this closed the open Phase 3 M6 check). The cached release has the bundled catalog's `verifiedAt`, so the cached release is the one in effect (ties go to the cache) and the wallet keeps its inputs.
+3. Update [now](../now.md), [hosting](hosting.md#facts) (published catalog row), the [roadmap](../product/roadmap.md), this page (a dated release section) and [log](../log.md).
+4. In the next PR, add the published version to `publishedVersions` in `evals/curation/catalog-batches.json` (it lists `2026-10-02.expansion.1` since 2026-10-04 and `2026-10-05.renewal.1` since 2026-10-05; v2's `2026-09-29.real.1` is not built from this config). From then on `npm run catalog:v3` refuses, before writing anything, to build that version with other rule IDs or terms than its entry in `evals/curation/rule-id-ledger.json`, and never rewrites that entry; a changed catalog needs a new `version` ([decision](../decisions/2026-10-04-published-versions-and-proposed-builds.md)).
 
 For release 2 (2026-10-03), step 2 was done without a loaded `build:hosted` extension: the served body was passed through the extension's own `prepareCatalogUpdate` with release 1 cached, which accepted it and put it in effect ([release 2](#release-2-published-2026-10-03)).
 
@@ -136,7 +148,7 @@ Outline since Phase 9 milestone 3 ([plan](../product/phase-9-freshness.md), [pip
 
 ## Renewal `2026-10-05.renewal.1` (prepared 2026-10-05)
 
-Built from the 2026-10-05 freshness check and ten refresh batches ([results](../../docs/evals/freshness-2026-10.md)); verified 2026-10-05, **expires 2026-11-04T00:00Z**; 178 cards, 328 sources. It must be published before release 2 expires (2026-11-01T00:00Z); target from 2026-10-20, latest 2026-10-28. Merged (PR #50) and deployed: on 2026-10-05T04:40Z the hosted review bundle contained `2026-10-05.renewal.1` and the refresh batch manifests. Evan chose to publish it through the CLI publish path the coordinator runs on his chat instruction (Phase 9 milestone 5, [decision](../decisions/2026-10-05-agent-publish-cli-session.md)), once that is merged and deployed and Evan has run `pipeline login`; the browser steps above remain the fallback. Before publishing, the quote check passes with every capture folder:
+**Published as [release 3](#release-3-published-2026-10-05) on 2026-10-05** through the [agent publish](#agent-publish-cli). Built from the 2026-10-05 freshness check and ten refresh batches ([results](../../docs/evals/freshness-2026-10.md)); verified 2026-10-05, **expires 2026-11-04T00:00Z**; 178 cards, 328 sources. Merged (PR #50) and deployed: on 2026-10-05T04:40Z the hosted review bundle contained `2026-10-05.renewal.1` and the refresh batch manifests. Evan chose the CLI publish path the coordinator runs on his chat instruction (Phase 9 milestone 5, PR #53, [decision](../decisions/2026-10-05-agent-publish-cli-session.md)); the browser steps above remained the fallback. Before publishing, the quote check passes with every capture folder:
 
 ```
 node scripts/check-expansion-quotes.mjs --captures <each folder below>
@@ -173,21 +185,21 @@ npm run pipeline -- publish --version 2026-10-05.renewal.1 \
 
 Offline dry run on branch `phase9-m5-agent-publish` (2026-10-05, `--offline`): **328 of 328 sources match** a bundled manifest hash for their date. A source found in several folders with the same hash is counted for the first folder that has it, so the per-folder "used" counts (expansion 104, real 1, `wells-fargo-refresh-2026-10` 0) are lower than the per-layer counts above; the uploaded text is identical either way.
 
-After Evan publishes, the coordinator adds `2026-10-05.renewal.1` to `publishedVersions` in `evals/curation/catalog-batches.json` in the next PR. The next renewal is due before 2026-11-04 (the NerdWallet estimates read 2026-10-02 must be re-read for any catalog verified after 2026-11-01).
+`2026-10-05.renewal.1` was added to `publishedVersions` in `evals/curation/catalog-batches.json` in the PR that recorded release 3 (branch `wiki-audit-2026-10-05`). The next renewal is due before 2026-11-04 (the NerdWallet estimates read 2026-10-02 must be re-read for any catalog verified after 2026-11-01).
 
 ## If something is blocked
 
 | What you see | What to do |
 | --- | --- |
 | `/health` times out | Render is waking the free instance; wait a minute and reload, then sign in again |
-| No `2026-10-02.expansion.1` option under **Start a new draft** | The deployed review app predates M5/M8, or the catalog expired. Coordinator checks the Render deploy of `main` |
+| No option for the version under **Start a new draft** | The deployed review app predates M5/M8, or the catalog expired. Coordinator checks the Render deploy of `main` |
 | "Your session ended. Sign in again to continue." | The session ended or the token was refused before the upload (the API checks it before reading the body). Reload, sign in, repeat steps 3–4 |
 | "This input is too large…", "Some draft fields are invalid…" or "The draft, dates, or captured evidence are not ready to publish…" during capture | Check the hosted migrations include `20261002222425_catalog_v3` (captures up to 250,000 characters, drafts up to 600 sources) and that the file is the manifest's capture. Retrying is safe |
 | A capture stops with an unavailable error | Render or Supabase (including Auth, which the API asks to check the token) is down or restarting; wait and retry, nothing is attached until all captures succeed |
 | The capture keeps waiting on the rate limit for more than five minutes | Another tab or person is capturing too (the limit is shared per process); stop the other one, then retry |
 | Publish fails with a stale revision or head error | Someone saved or published in between: **Reload latest draft**, rebase if asked, review and approve again |
-| `/v1/catalog` still shows release 1 after publishing | Reload the review app and check the draft shows **Published**; if so and the endpoint is unchanged after a minute, tell the coordinator; do not publish again |
-| It is 2026-11-01 or later | The catalog has expired and cannot be published. A new catalog needs a freshness run and refresh batches ([renewal](#renewing-a-catalog-before-it-expires)) and a rebuild |
+| `/v1/catalog` still shows the previous release after publishing | Reload the review app and check the draft shows **Published**; if so and the endpoint is unchanged after a minute, tell the coordinator; do not publish again |
+| It is the catalog's `expiresAt` or later (2026-11-04T00:00Z for `2026-10-05.renewal.1`) | The catalog has expired and cannot be published. A new catalog needs a freshness run and refresh batches ([renewal](#renewing-a-catalog-before-it-expires)) and a rebuild |
 
 ## Related
 

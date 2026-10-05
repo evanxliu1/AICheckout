@@ -1,15 +1,15 @@
 ---
 type: Domain Concept
 title: Cards
-description: The 178 cards of the bundled catalog v3 (2026-10-02.expansion.1) by issuer and reward type, and the seven original cash-back cards of release 1 with the earning rules the catalog encodes for each.
+description: The 178 cards of the bundled catalog v3 (2026-10-05.renewal.1) by issuer and reward type, and the seven original cash-back cards of release 1 with the earning rules the catalog encodes for each.
 status: stable
 tags: [domain, cards, catalog]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T03:05:00Z
+  at: 2026-10-05T05:26:46Z
 sources:
   - resource: ../../packages/rewards-core/src/catalog-v3.ts
-    title: CATALOG_V3 (generated catalog, version 2026-10-02.expansion.1)
+    title: CATALOG_V3 (generated catalog, version 2026-10-05.renewal.1)
   - resource: ../../evals/curation/expansion/catalog-build-report.md
     title: Catalog v3 build report
   - resource: ../../packages/rewards-core/src/catalog-v2.ts
@@ -22,12 +22,12 @@ sources:
     title: Capture manifest (URLs, capture dates, SHA-256)
   - resource: ../../docs/research/cashback-card-terms-2026.md
     title: Research report, seven cashback cards (checked 2026-09-28)
-stale_after: 2026-11-01T00:00:00Z
+stale_after: 2026-11-04T00:00:00Z
 ---
 
 # Cards
 
-The extension covers 178 U.S. personal credit cards from the ten largest issuers: `CATALOG_V3` ([`catalog-v3.ts`](../../packages/rewards-core/src/catalog-v3.ts)), version `2026-10-02.expansion.1`, verified 2026-10-02, expiring 2026-11-01T00:00Z, bundled in the extension since PR #27 and not yet published to hosted (target 2026-10-28, [catalog release](../ops/catalog-release.md)). It was built from the agent-verified `expansion.v1` corpus (171 cards) plus the seven original cards below, whose names, IDs, rule IDs and rules are unchanged ([catalog expansion](../system/catalog-expansion.md#catalog-v3-build-m5)).
+The extension covers 178 U.S. personal credit cards from the ten largest issuers: `CATALOG_V3` ([`catalog-v3.ts`](../../packages/rewards-core/src/catalog-v3.ts)), version `2026-10-05.renewal.1`, verified 2026-10-05, expiring 2026-11-04T00:00Z, bundled in the extension and published to hosted as release 3 on 2026-10-05 ([catalog release](../ops/catalog-release.md#release-3-published-2026-10-05)); release 2, `2026-10-02.expansion.1`, held the same 178 cards before the renewal. The first v3 build (`2026-10-02.expansion.1`) came from the agent-verified `expansion.v1` corpus (171 cards) plus the seven original cards below, whose names, IDs, rule IDs and rules it kept ([catalog expansion](../system/catalog-expansion.md#catalog-v3-build-m5)). In the Phase 9 renewal 111 cards come from pipeline batches with new dated captures (107 from the ten refresh batches, 4 from the Phase 8 Wells Fargo batch), six of the seven original cards among them: they keep their names and rule-ID prefixes, and rules whose terms changed take new IDs ([build report](../../evals/curation/expansion/catalog-build-report.md), [card-expansion pipeline](../system/card-expansion-pipeline.md#multi-batch-catalog-builder)).
 
 | Issuer | Cards |
 | --- | --- |
@@ -44,15 +44,15 @@ The extension covers 178 U.S. personal credit cards from the ten largest issuers
 
 | Value used for ranking (without a shopper override) | Cards |
 | --- | --- |
-| Cash back (rates are percentages) | 76 |
+| Cash back (rates are percentages) | 77 |
 | Points or miles at a published estimate (NerdWallet, read 2026-10-02) | 56 |
-| Points at the card's issuer-stated value (`statedValueHundredthsOfCent`) | 19 |
+| Points at the card's issuer-stated value (`statedValueHundredthsOfCent`) | 18 |
 | Points at the program's issuer-stated value | 6 |
 | Points with no value: ranked in units after valued cards; the shopper may set one | 21 |
 
 Four cards are closed-loop store cards, accepted only at their brands (Amazon Store Card, Amazon Secured Card, Newegg Store Credit Card, Harbor Freight); eight have chosen or automatic categories.
 
-Counts read from `CATALOG_V3` on 2026-10-03; the per-program values are in [catalog expansion](../system/catalog-expansion.md#reward-program-valuation-m3) and the rule concepts in [Reward rules](reward-rules.md#catalog-v3-rules). Not in the catalog: Marriott Bonvoy Bold and U.S. Bank Shield (no stated base rate), 5 cards with no stated earn rate and 2 fuel cards.
+Counts read from `CATALOG_V3` `2026-10-05.renewal.1` on 2026-10-05; the per-program values are in [catalog expansion](../system/catalog-expansion.md#reward-program-valuation-m3) and the rule concepts in [Reward rules](reward-rules.md#catalog-v3-rules). Not in the catalog: Marriott Bonvoy Bold and U.S. Bank Shield (no stated base rate), 5 cards with no stated earn rate and 2 fuel cards.
 
 ## The seven original cards (release 1)
 
@@ -107,7 +107,7 @@ Exclusions (purchases that never earn), as summarized in the catalog:
 ## Open questions
 
 - A human verification pass on the labels has not happened (planned in [phase2-goal](../archive/phase2-goal.md)). The BCE cap period is the first item to decide.
-- Release 1 expires 2026-10-29 and `CATALOG_V3` 2026-11-01. Eval corpora stay frozen; after 2026-11-01 the catalog is refreshed through hash-only freshness checks and new dated captures, never by overwriting a capture or a label ([Stage 2 plan, decision 1](../product/phase-7-stage-2.md#decisions-on-the-plans-open-questions)). Rotating rules (Freedom Flex, Discover Q4) end 2026-12-31.
+- `CATALOG_V3` (`2026-10-05.renewal.1`, hosted release 3) expires 2026-11-04; the next renewal must be published before then. Eval corpora stay frozen; the catalog is refreshed through hash-only freshness checks and new dated captures, never by overwriting a capture or a label ([Stage 2 plan, decision 1](../product/phase-7-stage-2.md#decisions-on-the-plans-open-questions)). Rotating rules (Freedom Flex, Discover Q4) end 2026-12-31.
 
 ## Related
 

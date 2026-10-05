@@ -6,7 +6,7 @@ status: stable
 tags: [domain, glossary]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-05T05:26:46Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
     title: Catalog and engine types
@@ -37,12 +37,12 @@ Terms a newcomer would not know, in alphabetical order. Each term is defined on 
 | BCE / BCP | American Express Blue Cash Everyday / Blue Cash Preferred | [Cards](cards.md) |
 | BNPL | Buy now, pay later (Affirm, Zip, ...). A payment path. Excluded from Amex online retail | [Reward rules](reward-rules.md) |
 | Cap kinds | `none`, `spend` (amount, period, after-cap rate), `unstated` (issuer silent; on a bonus rule the engine shows a range when that changes the estimate) | [Reward rules](reward-rules.md) |
-| Catalog | The versioned set of merchants, sources and card rules the engine computes with. Schema 1 (pilot) or 2. Has `verifiedAt`/`expiresAt` | [Cards](cards.md) |
+| Catalog | The versioned set of merchants, sources and card rules the engine computes with. Schema 1 (pilot), 2 (release 1) or 3 (178 cards, since release 2). Has `verifiedAt`/`expiresAt` | [Cards](cards.md) |
 | Catalog release | An immutable published catalog in PostgreSQL. Only a release reaches the extension | [Archived design](../archive/design.md) |
 | Channel rule | A rule decided by how the purchase is made (online, internet-flagged), not by MCC. Amex online retail | [Reward rules](reward-rules.md) |
 | Claim precision | Share of non-null predicted values that are correct and cite a resolving quote | [Evaluation](../system/evaluation.md) |
 | Dev / held-out split | Real-corpus partition by issuer. Prompts are tuned on dev only. Held-out needs `--allow-heldout` | [Evaluation](../system/evaluation.md) |
-| Draft | A private, editable catalog revision. Extraction proposals are applied to it, and a human publishes it as a release | [Archived design](../archive/design.md) |
+| Draft | A private, editable catalog revision. Extraction proposals are applied to it, and it becomes a release only when published on Evan's explicit approval ([catalog release](../ops/catalog-release.md)) | [Archived design](../archive/design.md) |
 | Evidence / quote | Verbatim text the model cites for a value. The server resolves it to a span. If it does not resolve, the value is unsupported | [Evaluation](../system/evaluation.md) |
 | `evidence_valid` | Kernel status: mechanical citation checks passed. It does not mean the extraction is correct or approved | [Evaluation](../system/evaluation.md) |
 | Expected category | A merchant profile's predicted category (`electronics`, `general-merchandise`, ...). It gates MCC-group rules | [Merchants](merchants.md) |
@@ -55,7 +55,7 @@ Terms a newcomer would not know, in alphabetical order. Each term is defined on 
 | MCC-group rule | A bonus category defined by MCC groups (supermarkets, gas, dining, ...) | [Reward rules](reward-rules.md) |
 | Online retail | Amex category: paid online on a site or app of a U.S. merchant selling physical goods, and flagged as an internet transaction | [Reward rules](reward-rules.md) |
 | Paid-on-payment | `paidOnPaymentBps`: part of a rate earned only when the balance is paid (Citi Double Cash 1 of 2%) | [Reward rules](reward-rules.md) |
-| Payment path | `card`, `paypal`, `digital-wallet`, `bnpl`. A non-card path makes bonuses uncertain | [Reward rules](reward-rules.md) |
+| Payment path | `card`, `paypal`, `digital-wallet`, `bnpl` (catalog v3 adds `venmo`). A non-card path makes bonuses uncertain | [Reward rules](reward-rules.md) |
 | Portal rule | A bonus earned only when booking through the issuer's travel or entertainment site. Never applies at retail | [Reward rules](reward-rules.md) |
 | Rate vs paid-on-payment | `rateBps` is the total rate. `paidOnPaymentBps` is the part of it that waits for payment. Neither is an increment over the base | [Reward rules](reward-rules.md) |
 | Ranking may change | Flag set when another card's maximum beats the leader's guaranteed minimum | [Reward rules](reward-rules.md) |

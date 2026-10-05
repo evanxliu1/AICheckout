@@ -6,8 +6,7 @@ status: stable
 tags: [product, plan, phase-7, catalog, engine, extension]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T06:45:00Z
-stale_after: 2026-11-01T00:00:00Z
+  at: 2026-10-05T05:26:46Z
 sources:
   - resource: ../system/catalog-expansion.md
     title: Catalog expansion (corpus, known gaps)
@@ -21,7 +20,7 @@ sources:
 
 # Phase 7 Stage 2 plan
 
-Stage 2 makes `expansion.v1` (173 agent-verified cards, merged with PR #17 at `23d3d52`) plus the 7 real cards into one published **catalog v3** of 180 cards that the extension ranks by cash-equivalent value, with current docs and a design for the card-expansion pipeline that comes next. Planned 2026-10-02 from `main` `23d3d52`. Status 2026-10-03: **Stage 2 is complete.** Every milestone merged (PRs #18–#31), and Evan published `2026-10-02.expansion.1` as hosted release 2 at 2026-10-03T06:15Z ([catalog release](../ops/catalog-release.md#release-2-published-2026-10-03)). The M11 design awaits Evan's approval as the start of Phase 8. Decisions: [points valuation](../decisions/2026-10-02-points-valuation-published-estimates.md), [catalog v3](../decisions/2026-10-02-catalog-v3-schema.md). Order after Stage 2: [roadmap](roadmap.md).
+Stage 2 makes `expansion.v1` (173 agent-verified cards, merged with PR #17 at `23d3d52`) plus the 7 real cards into one published **catalog v3** of 180 cards that the extension ranks by cash-equivalent value, with current docs and a design for the card-expansion pipeline that comes next. Planned 2026-10-02 from `main` `23d3d52`. Status 2026-10-03: **Stage 2 is complete.** Every milestone merged (PRs #18–#31), and Evan published `2026-10-02.expansion.1` as hosted release 2 at 2026-10-03T06:15Z ([catalog release](../ops/catalog-release.md#release-2-published-2026-10-03)). The M11 design awaited Evan's approval as the start of Phase 8; he approved it on 2026-10-03 and Phase 8 built it ([card-expansion pipeline](../system/card-expansion-pipeline.md)). This plan is complete and kept as the record; the catalog it produced was replaced as the hosted head by the Phase 9 renewal (release 3, 2026-10-05). Decisions: [points valuation](../decisions/2026-10-02-points-valuation-published-estimates.md), [catalog v3](../decisions/2026-10-02-catalog-v3-schema.md). Order after Stage 2: [roadmap](roadmap.md).
 
 ## Facts that shape the plan
 

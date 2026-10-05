@@ -114,8 +114,8 @@ Then open `chrome://extensions`, turn on Developer mode, and load `extension/dis
 | | |
 | --- | --- |
 | **Working** | The extension on a 178-card catalog from the top 10 U.S. issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank, Wells Fargo), cash back and points |
-| **Live** | [Site](https://ai-checkout-api.onrender.com/), [results](https://ai-checkout-api.onrender.com/results/), [review app](https://ai-checkout-api.onrender.com/review/) (reviewers only) and the [catalog API](https://ai-checkout-api.onrender.com/v1/catalog) on Render and Supabase. Release 2, the 178-card catalog, was published 2026-10-03 and expires 2026-11-01 |
-| **In progress** | Catalog freshness: every source was hash-checked on 2026-10-05, 107 cards were re-verified, and a renewed 178-card catalog is built and waiting to be published before release 2 expires ([freshness results](docs/evals/freshness-2026-10.md)) |
+| **Live** | [Site](https://ai-checkout-api.onrender.com/), [results](https://ai-checkout-api.onrender.com/results/), [review app](https://ai-checkout-api.onrender.com/review/) (reviewers only) and the [catalog API](https://ai-checkout-api.onrender.com/v1/catalog) on Render and Supabase. Release 3, the renewed 178-card catalog, was published 2026-10-05 and expires 2026-11-04 |
+| **Latest** | Catalog freshness: every source was hash-checked on 2026-10-05, 107 cards were re-verified, and the renewed 178-card catalog was published as release 3 on 2026-10-05 ([freshness results](docs/evals/freshness-2026-10.md)) |
 | **Next** | More checkout sites through a merchant pipeline, then a Chrome Web Store release. See the [roadmap](wiki/product/roadmap.md) |
 
 ## License

@@ -6,7 +6,7 @@ status: stable
 tags: [system, database, supabase, postgres, security]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-03T02:00:00Z
+  at: 2026-10-05T05:26:46Z
 sources:
   - resource: ../../supabase/migrations
     title: Migrations
@@ -97,7 +97,7 @@ Corrections are new drafts based on the current head; releases are never edited 
 - `db:reset` is local-only and discards local data.
 - `catalog_hash` identifies the stored payload; it is not a signature.
 - The pgTAP files use `no_plan()`, so assertion counts in `supabase/README.md` are not enforced by the tests.
-- `supabase/README.md` says "six migration files", "seed generated from the pilot catalog" and "migrations have not been applied to the hosted project"; as of 2026-10-03 there are ten migrations and the seed is generated from catalog v3 (catalog v2 until Stage 2 M5). Hosted status is owned by [now.md](../now.md).
+- `supabase/README.md` (checked 2026-10-05) has the ten migrations and the v3 seed right, but still says the hosted project serves release 1; since 2026-10-05 it serves release 3. Hosted status is owned by [now.md](../now.md) and [hosting](../ops/hosting.md).
 
 ## Tests
 

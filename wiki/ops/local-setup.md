@@ -6,7 +6,7 @@ status: stable
 tags: [ops, setup, testing]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T00:50:00Z
+  at: 2026-10-05T05:26:46Z
 sources:
   - resource: ../../package.json
     title: Root scripts and Node engine
@@ -28,7 +28,7 @@ sources:
 
 # Local setup
 
-One npm workspace (root `package-lock.json`) covers `extension/`, `packages/*` and `apps/*`. Application checks need only Node and npm; the database suite needs Docker for the local Supabase stack. Commands come from [`package.json`](../../package.json) and the two CI workflows ([`extension.yml`](../../.github/workflows/extension.yml), [`database.yml`](../../.github/workflows/database.yml)), which run them in the order below.
+One npm workspace (root `package-lock.json`) covers `extension/`, `packages/*`, `apps/*` and `tools/*`. Application checks need only Node and npm; the database suite needs Docker for the local Supabase stack. Commands come from [`package.json`](../../package.json) and the two CI workflows ([`extension.yml`](../../.github/workflows/extension.yml), [`database.yml`](../../.github/workflows/database.yml)), which run them in the order below.
 
 ## Prerequisites
 
