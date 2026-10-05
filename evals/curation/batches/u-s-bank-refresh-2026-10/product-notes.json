@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/draft-expansion-labels.mjs",
+  "description": "Structured hints the extraction schema cannot express, from the research drafts (summaries and conditions clipped to 25 words). An anchored hint cites a quote of at most 25 words that resolves in the captures (research-quote: the research quoted it; keyword-search: a capture sentence with the rate and a keyword, which a verifier must confirm says what the hint says). Unanchored hints cite the research. draftNotes record what drafting dropped.",
+  "cards": [
+    {
+      "cardId": "us-bank-cash-plus",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "5% choice categories (\"two categories you choose\" each quarter) from: \"Fast food\", \"Home utilities\", \"TV, internet & streaming services\", \"Department stores\", \"Cell phone providers\", \"Electronics…",
+          "rate": "5%",
+          "cap": "first $2,000 in combined eligible net purchases each quarter across both 5% categories, then 1%",
+          "conditions": "Cardholder must choose and activate categories each quarter (Rewards Center, mobile app, or phone); selection opens 45 days before the quarter; categories lock 5 days…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "on your first $2,000 in combined eligible purchases each quarter on two categories you choose.3"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "2% everyday choice category (\"one everyday category you choose each quarter\") from: \"Grocery stores and grocery delivery\", \"Restaurants\", \"Gas stations and EV charging stations\"",
+          "rate": "2%",
+          "cap": "none stated (FAQ: 'no limits on your 2% or 1% cash back earnings')",
+          "conditions": "Chosen quarterly with the 5% picks. Grocery excludes discount stores/supercenters and wholesale clubs (Walmart, Target, warehouse clubs).",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "on one everyday category you choose each quarter, like gas stations and EV charging stations*, grocery stores* or restaurants.3"
+        }
+      ],
+      "draftNotes": [
+        "rules.17 (travel-portal, \"prepaid travel\") rateBps: anchor kept, but no 25-word window states the rate (500 bps); check the value against its anchor"
+      ]
+    },
+    {
+      "cardId": "us-bank-smartly",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Smartly Earning Bonus, qualifying balance $10,000-$49,999 (\"Earn a total of 2.5%\", 25% bonus)",
+          "rate": "2.5% total",
+          "cap": "first $10,000 in eligible Net Purchases each billing cycle, then 2%",
+          "conditions": "Requires U.S. Bank Smartly Savings account plus qualifying balances in Smartly Checking and/or Safe Debit accounts. Bonus excludes education/school, gift cards (incl. discount gift card…",
+          "membership": "Requires U.S. Bank Smartly Savings account plus qualifying balances in Smartly Checking and/or Safe Debit accounts. Bonus excludes education/school, gift cards (incl. discount gift card…",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn a total of 2.5%"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "Smartly Earning Bonus, qualifying balance $50,000-$99,999 (\"Earn a total of 3%\", 50% bonus)",
+          "rate": "3% total",
+          "cap": "first $10,000 in eligible Net Purchases each billing cycle, then 2%",
+          "conditions": "Same relationship requirements as above.",
+          "membership": "Same relationship requirements as above.",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn a total of 3%"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "Smartly Earning Bonus, qualifying balance $100,000+ (\"Earn a total of 4%\", 100% bonus)",
+          "rate": "4% total",
+          "cap": "first $10,000 in eligible Net Purchases each billing cycle, then 2%",
+          "conditions": "Same relationship requirements as above.",
+          "membership": "Same relationship requirements as above.",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn a total of 4%"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "us-bank-altitude-go",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": [
+        "rules.1 (dining): an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "us-bank-altitude-connect",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": [
+        "exclusion \"transactions to (ii) buy currency from the U.S.…\": dropped (no resolving quote)",
+        "exclusion \"transactions to (iii) buy cash convertible items\": dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "us-bank-cash-plus-secured",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "5% choice categories (\"two categories you choose\" each quarter) from: \"Fast food\", \"Home utilities\", \"TV, internet & streaming services\", \"Department stores\", \"Cell phone providers\", \"Electronics…",
+          "rate": "5%",
+          "cap": "first $2,000 in combined eligible net purchases each quarter across both 5% categories, then 1%",
+          "conditions": "Cardholder must choose and activate categories each quarter (Rewards Center, mobile app, or phone); selection opens 45 days before the quarter; categories lock 5 days…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "on your first $2,000 in combined eligible purchases each quarter in two categories you choose3"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "2% everyday choice category (\"one everyday category you choose each quarter\") from: \"Grocery stores and grocery delivery\", \"Restaurants\", \"Gas stations and EV charging stations\"",
+          "rate": "2%",
+          "cap": "none stated (FAQ: 'no limits on your 2% or 1% cash back earnings')",
+          "conditions": "Chosen quarterly with the 5% picks. Grocery excludes discount stores/supercenters and wholesale clubs (Walmart, Target, warehouse clubs).",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "on one everyday category you choose each quarter, like gas stations and EV charging stations*, grocery stores* or restaurants3"
+        }
+      ],
+      "draftNotes": [
+        "rules.2 (travel-portal, \"prepaid air, hotel and car reservations booked directly in t\") rateBps: anchor kept, but no 25-word window states the rate (500 bps); check the value against its anchor",
+        "rules.1 (streaming): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.3 (dining): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.4 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.5 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.6 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.7 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.8 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.9 (entertainment): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.10 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.11 (other): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.12 (other): an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "us-bank-altitude-go-secured",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": [
+        "rules.1 (dining): an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "us-bank-harley-davidson-hog-elite",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"At H-D & gas stations\"",
+          "rate": "5X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Harley-Davidson"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/us-bank.json",
+          "researchSources": [
+            "https://www.h-dvisa.com/credit/harley-davidson-hog-elite-visa-signature-credit.do"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "us-bank-harley-davidson-secured",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"eligible Net Purchases\"): rule dropped (no resolving quote)",
+        "exclusion \"transactions to (ii) buy currency from the U.S.…\": dropped (no resolving quote)",
+        "exclusion \"transactions to (iii) buy cash convertible items\": dropped (no resolving quote)",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "us-bank-skypass-skyblue",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"eligible Net Purchases\"): rule dropped (no resolving quote)",
+        "exclusions.4: an anchor that ran on from another was dropped (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "us-bank-skypass-visa-signature",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Qualified Korean Air ticket purchases\" (Korean Air merchant of record, e.g. koreanair.com)",
+          "rate": "2X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Korean Air"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "cardmember earns 2 miles, and SKYPASS Select Visa Signature cardmember earns 3, for every $1 spent in eligible net purchases on qualified Korean Air ticket"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"eligible Net Purchases\"): rule dropped (no resolving quote)",
+        "exclusions.0: an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "us-bank-skypass-select",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Qualified Korean Air ticket purchases\"",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "Korean Air must be merchant of record.",
+          "merchants": [
+            "Korean Air"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "3 Earn 3 miles for every $1 spent in eligible net purchases on qualified Korean Air ticket purchases."
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"eligible Net Purchases\"): rule dropped (no resolving quote)",
+        "rules.1 (dining, \"dining, including takeout and restaurant delivery\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "us-bank-state-farm-premier-cash-rewards",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": [
+        "rules.0 (other, \"insurance premium payments\") cap: a quote over 25 words was dropped (no 25-word window carries the cap amount ($4,000))"
+      ]
+    },
+    {
+      "cardId": "us-bank-edward-jones-triple-rewards",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "automatic-top-category",
+          "summary": "Top three spend categories each month, automatically determined from 18 categories: \"Charity & Non-Profits\", \"Clothing & Department Stores\", \"Dining\", \"Drugstores & Personal Care\", \"Electric Vehicle…",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "Automatic, no enrollment; determined per monthly statement. Excludes purchases at Amazon and discount stores/supercenters such as Target and Walmart. Travel Center purchases do not additionally…",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Clothing & Department Stores"
+        }
+      ],
+      "draftNotes": [
+        "issues.3 (out-of-scope): an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "us-bank-elan-fidelity-rewards",
+      "issuer": "U.S. Bank",
+      "hints": [],
+      "draftNotes": [
+        "pointValueHundredthsOfCent: a quote over 25 words was dropped (no 25-word window carries a cash value)",
+        "issues.2 (out-of-scope): an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    }
+  ]
+}

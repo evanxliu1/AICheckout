@@ -1,0 +1,485 @@
+{
+  "schemaVersion": 1,
+  "packetId": "66a14a64-b67f-46ad-ae28-1be32fe092c1",
+  "batch": "chase-refresh-2026-10",
+  "issuer": "Chase",
+  "provenance": "agent-verified",
+  "cards": [
+    {
+      "cardId": "disney-premier-visa",
+      "issuer": "Chase",
+      "corpusCaseSha256": "d83d8b6135aad8df55dcd2d055f7ac8e3281a2686656f65554997bf6de9b266b",
+      "heldOut": null,
+      "programId": "disney-rewards-dollars",
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Disney+, Hulu and ESPN brands (direct purchases on their sites).",
+          "set": {
+            "brandIds": [
+              "disney-plus",
+              "hulu",
+              "espn"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-product",
+              "quote": "Earn 5% on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com.*"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "gas",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. The terms say purchases through third-party payment accounts or digital wallets may not qualify in a rewards category, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "Purchases submitted through third-party"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "payment accounts, mobile or wireless card"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "readers, online or mobile digital wallets, or"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "similar technology will not qualify in a"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Disney brand; \"most\" locations means a few Disney merchants may not earn it.",
+          "set": {
+            "brandIds": [
+              "disney"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-product",
+              "quote": "Earn 2% on card purchases at gas stations and most Disney U.S. locations.*"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. The terms say purchases through third-party payment accounts or digital wallets may not qualify in a rewards category, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "Purchases submitted through third-party"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "payment accounts, mobile or wireless card"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "readers, online or mobile digital wallets, or"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "similar technology will not qualify in a"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. The terms say purchases through third-party payment accounts or digital wallets may not qualify in a rewards category, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "Purchases submitted through third-party"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "payment accounts, mobile or wireless card"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "readers, online or mobile digital wallets, or"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "similar technology will not qualify in a"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Rewards move to the Disney Rewards Dollars store-credit program (Disney brands). The dollars can also be credited toward airline tickets charged to the card; the program cannot express that, so the catalog takes the conservative Disney-only reading."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Disney+, Hulu and ESPN brand scope.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "marriott-bonvoy-bountiful",
+      "issuer": "Chase",
+      "corpusCaseSha256": "ae0b84ca780662b008d020997bced88cbd9a7d052be2acc294cdf54061f120bc",
+      "heldOut": null,
+      "programId": null,
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Marriott brand (participating Marriott Bonvoy hotels) at the card rate.",
+          "set": {
+            "brandIds": [
+              "marriott"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-bountiful-product",
+              "quote": "Earn 6X points for every $1 spent at over 7,000 hotels participating in Marriott Bonvoy® with the Marriott Bonvoy Bountiful® Credit Card.*"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 400
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "No after-cap rate is stated, so the base 2X applies after the $15,000 cap (O12); the cap is combined, so both rules share one cap ID.",
+          "set": {
+            "cap": {
+              "kind": "spend",
+              "amountCents": 1500000,
+              "period": "year-unspecified",
+              "rateAfterCapBps": 200
+            },
+            "sharedCapId": "grocery-dining"
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-bountiful-product",
+              "quote": "Earn 4X points for every $1 on the first $15,000 in combined purchases annually on grocery stores and dining.*"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 400
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "No after-cap rate is stated, so the base 2X applies after the $15,000 cap (O12); the cap is combined, so both rules share one cap ID.",
+          "set": {
+            "cap": {
+              "kind": "spend",
+              "amountCents": 1500000,
+              "period": "year-unspecified",
+              "rateAfterCapBps": 200
+            },
+            "sharedCapId": "grocery-dining"
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-bountiful-product",
+              "quote": "Earn 4X points for every $1 on the first $15,000 in combined purchases annually on grocery stores and dining.*"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Marriott brand scope at 6X.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "british-airways-visa-signature",
+      "issuer": "Chase",
+      "corpusCaseSha256": "42638c54258f1cf64ca3b18eecdf4c9cd3c2d073745294ef67b3088538c872f1",
+      "heldOut": null,
+      "programId": null,
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the British Airways, Aer Lingus and Iberia brands (flight purchases).",
+          "set": {
+            "brandIds": [
+              "british-airways",
+              "aer-lingus",
+              "iberia"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "british-airways-visa-signature-product",
+              "quote": "Earn 3 Avios for every $1 spent on British Airways, Aer Lingus, and Iberia flight purchases."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: hotel stays booked directly with hotels; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Brand scope on the three Avios airlines.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "aer-lingus-visa-signature",
+      "issuer": "Chase",
+      "corpusCaseSha256": "4a7ca86271d810e58ad29dbcaf9df7f721857727d7d132a7152e9db056a01942",
+      "heldOut": null,
+      "programId": null,
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the British Airways, Aer Lingus and Iberia brands (flight purchases).",
+          "set": {
+            "brandIds": [
+              "british-airways",
+              "aer-lingus",
+              "iberia"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "aer-lingus-visa-signature-product",
+              "quote": "Earn 3 Avios for every $1 spent with Aer Lingus, British Airways, and Iberia flight purchases.*"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: hotel stays booked directly with hotels; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Brand scope on the three Avios airlines.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "iberia-visa-signature",
+      "issuer": "Chase",
+      "corpusCaseSha256": "d1340fc12a468a084d7d82ac27419ccf14e9f74a8301ef9377d13d8e8cb7b3e5",
+      "heldOut": null,
+      "programId": null,
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the British Airways, Aer Lingus and Iberia brands (flight purchases).",
+          "set": {
+            "brandIds": [
+              "british-airways",
+              "aer-lingus",
+              "iberia"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "iberia-visa-signature-product",
+              "quote": "Earn 3 Avios for every $1 spent on Iberia, British Airways, and Aer Lingus flight purchases.*"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: hotel stays booked directly with hotels; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Brand scope on the three Avios airlines.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "gates": [],
+  "programs": [],
+  "programDetails": [],
+  "rewardPrograms": [],
+  "labelLintAcks": []
+}

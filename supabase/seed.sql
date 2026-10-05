@@ -5,9 +5,9 @@
 insert into catalog_private.drafts(id,catalog)
 values ('00000000-0000-4000-8000-000000000001', $catalog${
   "schemaVersion": 3,
-  "version": "2026-10-02.expansion.1",
-  "verifiedAt": "2026-10-02T00:00:00Z",
-  "expiresAt": "2026-11-01T00:00:00Z",
+  "version": "2026-10-05.renewal.1",
+  "verifiedAt": "2026-10-05T00:00:00Z",
+  "expiresAt": "2026-11-04T00:00:00Z",
   "programs": [
     {
       "id": "cash-back",
@@ -940,6 +940,19 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         "expedia",
         "hotels-com",
         "vrbo"
+      ]
+    },
+    {
+      "id": "tsc-rewards",
+      "name": "TSC Rewards",
+      "currency": "cash-back",
+      "unitName": "cents",
+      "valuation": {
+        "basis": "cash",
+        "valueHundredthsOfCent": 100
+      },
+      "redemptionBrandIds": [
+        "tractor-supply"
       ]
     }
   ],
@@ -1945,1285 +1958,1285 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "id": "amex-gold-product",
       "title": "American Express Gold Card",
       "url": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-gold-pricing",
       "title": "American Express Gold Card: Pricing and Terms",
       "url": "https://www.americanexpress.com/en-us/credit-cards/apply/terms/personal/gold-card/25330-10-0/#FeeTable",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-platinum-product",
       "title": "The Platinum Card from American Express",
       "url": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-platinum-pricing",
       "title": "The Platinum Card from American Express: Pricing and Terms",
       "url": "https://www.americanexpress.com/en-us/credit-cards/apply/terms/personal/platinum-card/25330-10-0/#FeeTable",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-delta-skymiles-blue-product",
       "title": "Delta SkyMiles Blue American Express Card",
       "url": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-blue-american-express-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-delta-skymiles-blue-pricing",
       "title": "Delta SkyMiles Blue American Express Card: Pricing and Terms",
       "url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/delta-skymiles-blue-american-express-card/25330-10-0#FeeTable",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-delta-skymiles-gold-product",
       "title": "Delta SkyMiles Gold American Express Card",
       "url": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-delta-skymiles-gold-pricing",
       "title": "Delta SkyMiles Gold American Express Card: Pricing and Terms",
       "url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/delta-skymiles-gold-american-express-card/25330-10-0#FeeTable",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-delta-skymiles-platinum-product",
       "title": "Delta SkyMiles Platinum American Express Card",
       "url": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-delta-skymiles-platinum-pricing",
       "title": "Delta SkyMiles Platinum American Express Card: Pricing and Terms",
       "url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/delta-skymiles-platinum-american-express-card/25330-10-0#FeeTable",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-delta-skymiles-reserve-product",
       "title": "Delta SkyMiles Reserve American Express Card",
       "url": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-delta-skymiles-reserve-pricing",
       "title": "Delta SkyMiles Reserve American Express Card: Pricing and Terms",
       "url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/delta-skymiles-reserve-american-express-card/25330-10-0#FeeTable",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-hilton-honors-product",
       "title": "Hilton Honors American Express Card",
       "url": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-hilton-honors-pricing",
       "title": "Hilton Honors American Express Card: Pricing and Terms",
       "url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/hilton-honors-credit-card/25330-10-0#FeeTable",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-hilton-honors-surpass-product",
       "title": "Hilton Honors American Express Surpass Card",
       "url": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-hilton-honors-surpass-pricing",
       "title": "Hilton Honors American Express Surpass Card: Pricing and Terms",
       "url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/hilton-honors-surpass-credit-card/25330-10-0#FeeTable",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-hilton-honors-aspire-product",
       "title": "Hilton Honors American Express Aspire Card",
       "url": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-hilton-honors-aspire-pricing",
       "title": "Hilton Honors American Express Aspire Card: Pricing and Terms",
       "url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/hilton-honors-aspire-credit-card/25330-10-0#FeeTable",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-marriott-bonvoy-bevy-product",
       "title": "Marriott Bonvoy Bevy American Express Card",
       "url": "https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-bevy/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-marriott-bonvoy-bevy-pricing",
       "title": "Marriott Bonvoy Bevy American Express Card: Pricing and Terms",
       "url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/marriott-bonvoy-bevy-card/25330-10-0#FeeTable",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-marriott-bonvoy-brilliant-product",
       "title": "Marriott Bonvoy Brilliant American Express Card",
       "url": "https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-brilliant/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-marriott-bonvoy-brilliant-pricing",
       "title": "Marriott Bonvoy Brilliant American Express Card: Pricing and Terms",
       "url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/marriott-bonvoy-brilliant-card/25330-10-0#FeeTable",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-customized-cash-rewards-product",
       "title": "Bank of America Customized Cash Rewards credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-customized-cash-rewards-pricing",
       "title": "Bank of America Customized Cash Rewards credit card: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4079537&productoffercode=8H&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-cash-back-category-choices",
       "title": "Bank of America Customized Cash Rewards: Category Choices",
       "url": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/cash-back-category-choices/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-unlimited-cash-rewards-product",
       "title": "Bank of America Unlimited Cash Rewards credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/unlimited-cash-back-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-unlimited-cash-rewards-pricing",
       "title": "Bank of America Unlimited Cash Rewards credit card: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4082058&productoffercode=6E&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-travel-rewards-product",
       "title": "Bank of America Travel Rewards credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/travel-rewards-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-travel-rewards-pricing",
       "title": "Bank of America Travel Rewards credit card: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4079333&productoffercode=75&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-premium-rewards-product",
       "title": "Bank of America Premium Rewards credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-premium-rewards-pricing",
       "title": "Bank of America Premium Rewards credit card: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4079485&productoffercode=UN&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-premium-rewards-elite-product",
       "title": "Bank of America Premium Rewards Elite credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-premium-rewards-elite-pricing",
       "title": "Bank of America Premium Rewards Elite credit card: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4079322&productoffercode=R9&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-customized-cash-rewards-students-product",
       "title": "Bank of America Customized Cash Rewards credit card for Students",
       "url": "https://www.bankofamerica.com/credit-cards/products/student-cash-back-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-customized-cash-rewards-students-pricing",
       "title": "Bank of America Customized Cash Rewards credit card for Students: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4079543&productoffercode=V7&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-unlimited-cash-rewards-students-product",
       "title": "Bank of America Unlimited Cash Rewards credit card for Students",
       "url": "https://www.bankofamerica.com/credit-cards/products/unlimited-cash-back-student-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-travel-rewards-students-product",
       "title": "Bank of America Travel Rewards credit card for Students",
       "url": "https://www.bankofamerica.com/credit-cards/products/student-rewards-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-customized-cash-rewards-secured-product",
       "title": "Bank of America Customized Cash Rewards Secured credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/cash-back-secured-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-customized-cash-rewards-secured-pricing",
       "title": "Bank of America Customized Cash Rewards Secured credit card: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4079151&productoffercode=6S&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-unlimited-cash-rewards-secured-product",
       "title": "Bank of America Unlimited Cash Rewards Secured credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/unlimited-cash-back-secured-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-travel-rewards-secured-product",
       "title": "Bank of America Travel Rewards Secured credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/travel-rewards-secured-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-susan-g-komen-customized-cash-rewards-product",
       "title": "Susan G. Komen Customized Cash Rewards credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/susan-komen-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-susan-g-komen-customized-cash-rewards-pricing",
       "title": "Susan G. Komen Customized Cash Rewards credit card: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4079144&productoffercode=WH&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-atmos-rewards-ascent-product",
       "title": "Atmos Rewards Ascent Visa Signature credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-atmos-rewards-ascent-pricing",
       "title": "Atmos Rewards Ascent Visa Signature credit card: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4082302&productoffercode=YB&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-atmos-rewards-summit-product",
       "title": "Atmos Rewards Summit Visa Infinite credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-atmos-rewards-summit-pricing",
       "title": "Atmos Rewards Summit Visa Infinite credit card: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4080616&productoffercode=EK&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-royal-one-product",
       "title": "Royal ONE Visa Signature credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/royal-one-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-royal-one-pricing",
       "title": "Royal ONE Visa Signature credit card: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4081180&productoffercode=E3&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-royal-one-plus-product",
       "title": "Royal ONE Plus Visa Signature credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/royal-one-plus-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-royal-one-plus-pricing",
       "title": "Royal ONE Plus Visa Signature credit card: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4081136&productoffercode=7F&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-allways-rewards-product",
       "title": "Allways Rewards Visa credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/allegiant-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-allways-rewards-pricing",
       "title": "Allways Rewards Visa credit card: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4079148&productoffercode=MP&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-air-france-klm-product",
       "title": "Air France KLM Visa Signature credit card",
       "url": "https://www.bankofamerica.com/credit-cards/products/air-france-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-air-france-klm-pricing",
       "title": "Air France KLM Visa Signature credit card: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4079102&productoffercode=8S&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-norwegian-cruise-line-world-mastercard-product",
       "title": "Norwegian Cruise Line World Mastercard",
       "url": "https://www.bankofamerica.com/credit-cards/products/norwegian-cruise-lines-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "boa-norwegian-cruise-line-world-mastercard-pricing",
       "title": "Norwegian Cruise Line World Mastercard: Pricing and Terms",
       "url": "https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4079074&productoffercode=9Y&locale=en_US",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-mastercard-titanium-product",
       "title": "Mastercard Titanium Card",
       "url": "https://cards.barclaycardus.com/banking/luxurycards/titaniumcard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-mastercard-titanium-pricing",
       "title": "Mastercard Titanium Card: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48836",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-mastercard-black-product",
       "title": "Mastercard Black Card",
       "url": "https://cards.barclaycardus.com/banking/luxurycards/blackcard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-mastercard-black-pricing",
       "title": "Mastercard Black Card: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48974",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-mastercard-gold-product",
       "title": "Mastercard Gold Card",
       "url": "https://cards.barclaycardus.com/banking/luxurycards/goldcard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-mastercard-gold-pricing",
       "title": "Mastercard Gold Card: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48898",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-gm-rewards-mastercard-product",
       "title": "GM Rewards Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/general-motors/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-gm-rewards-mastercard-pricing",
       "title": "GM Rewards Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc47943",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-jetblue-card-product",
       "title": "JetBlue Card",
       "url": "https://cards.barclaycardus.com/banking/cards/jetblue-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-jetblue-card-pricing",
       "title": "JetBlue Card: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48257",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-jetblue-plus-product",
       "title": "JetBlue Plus Card",
       "url": "https://cards.barclaycardus.com/banking/cards/jetblue-plus-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-jetblue-plus-pricing",
       "title": "JetBlue Plus Card: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48795",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-jetblue-premier-product",
       "title": "JetBlue Premier Card",
       "url": "https://cards.barclaycardus.com/banking/cards/jetblue-premier-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-jetblue-premier-pricing",
       "title": "JetBlue Premier Card: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48794",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-breeze-easy-visa-product",
       "title": "Breeze Easy Visa Credit Card",
       "url": "https://cards.barclaycardus.com/banking/cards/breeze-airways/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-breeze-easy-visa-pricing",
       "title": "Breeze Easy Visa Credit Card: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48953",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-wyndham-rewards-earner-product",
       "title": "Wyndham Rewards Earner Card",
       "url": "https://cards.barclaycardus.com/banking/cards/wyndham-rewards-earner-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-wyndham-rewards-earner-pricing",
       "title": "Wyndham Rewards Earner Card: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48413",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-wyndham-rewards-earner-plus-product",
       "title": "Wyndham Rewards Earner Plus Card",
       "url": "https://cards.barclaycardus.com/banking/cards/wyndham-rewards-earner-plus-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-wyndham-rewards-earner-plus-pricing",
       "title": "Wyndham Rewards Earner Plus Card: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48411",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-wyndham-rewards-earner-premier-product",
       "title": "Wyndham Rewards Earner Premier Card",
       "url": "https://cards.barclaycardus.com/banking/cards/wyndham-rewards-earner-premier-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-wyndham-rewards-earner-premier-pricing",
       "title": "Wyndham Rewards Earner Premier Card: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48434",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-upromise-world-mastercard-product",
       "title": "Upromise World Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/upromise-world-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-upromise-world-mastercard-pricing",
       "title": "Upromise World Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc49025",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-frontier-airlines-world-mastercard-product",
       "title": "Frontier Airlines World Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/frontier-airlines-world-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-frontier-airlines-world-mastercard-pricing",
       "title": "Frontier Airlines World Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48877",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-lufthansa-miles-more-world-elite-product",
       "title": "Lufthansa Miles & More World Elite Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/lufthansa-miles-more-world-elite-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-lufthansa-miles-more-world-elite-pricing",
       "title": "Lufthansa Miles & More World Elite Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48714",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-emirates-skywards-rewards-product",
       "title": "Emirates Skywards Rewards World Elite Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/emirates-skywards-rewards-world-elite-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-emirates-skywards-rewards-pricing",
       "title": "Emirates Skywards Rewards World Elite Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48264",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-emirates-skywards-premium-product",
       "title": "Emirates Skywards Premium World Elite Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/emirates-skywards-premium-world-elite-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-emirates-skywards-premium-pricing",
       "title": "Emirates Skywards Premium World Elite Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48635",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-carnival-rewards-mastercard-product",
       "title": "Carnival Rewards Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/carnival-rewards-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-carnival-rewards-mastercard-pricing",
       "title": "Carnival Rewards Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48596",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-capital-vacations-world-mastercard-product",
       "title": "Capital Vacations World Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/capital-vacations/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-capital-vacations-world-mastercard-pricing",
       "title": "Capital Vacations World Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48558",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-rci-elite-rewards-world-mastercard-product",
       "title": "RCI Elite Rewards World Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/rci-elite-rewards-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-rci-elite-rewards-world-mastercard-pricing",
       "title": "RCI Elite Rewards World Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48579",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-barnes-noble-mastercard-product",
       "title": "Barnes & Noble Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/barnes-noble-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-barnes-noble-mastercard-pricing",
       "title": "Barnes & Noble Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48297",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-gap-encore-mastercard-product",
       "title": "Gap Encore Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/gap-encore-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-gap-encore-mastercard-pricing",
       "title": "Gap Encore Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc47922",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-old-navy-encore-mastercard-product",
       "title": "Old Navy Encore Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/old-navy-encore-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-old-navy-encore-mastercard-pricing",
       "title": "Old Navy Encore Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc47946",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-banana-republic-encore-mastercard-product",
       "title": "Banana Republic Encore Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/banana-republic-encore-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-banana-republic-encore-mastercard-pricing",
       "title": "Banana Republic Encore Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc47929",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-athleta-encore-mastercard-product",
       "title": "Athleta Encore Mastercard",
       "url": "https://cards.barclaycardus.com/banking/cards/athleta-encore-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-athleta-encore-mastercard-pricing",
       "title": "Athleta Encore Mastercard: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc47939",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-aarp-travel-rewards-mastercard-product",
       "title": "AARP Travel Rewards Mastercard from Barclays",
       "url": "https://cards.barclaycardus.com/banking/cards/aarp-travel-rewards-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-aarp-travel-rewards-mastercard-pricing",
       "title": "AARP Travel Rewards Mastercard from Barclays: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48293",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-aarp-essential-rewards-mastercard-product",
       "title": "AARP Essential Rewards Mastercard from Barclays",
       "url": "https://cards.barclaycardus.com/banking/cards/aarp-essential-rewards-mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "barclays-aarp-essential-rewards-mastercard-pricing",
       "title": "AARP Essential Rewards Mastercard from Barclays: Pricing and Terms",
       "url": "https://www.barclaycardus.com/applycontent/TnCs.jsp?tc48294",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-venture-x-product",
       "title": "Capital One Venture X Rewards",
       "url": "https://www.capitalone.com/credit-cards/venture-x/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-venture-x-pricing",
       "title": "Capital One Venture X Rewards: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41788.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-venture-product",
       "title": "Capital One Venture Rewards",
       "url": "https://www.capitalone.com/credit-cards/venture/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-venture-pricing",
       "title": "Capital One Venture Rewards: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41773.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-ventureone-product",
       "title": "Capital One VentureOne Rewards",
       "url": "https://www.capitalone.com/credit-cards/ventureone/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-ventureone-pricing",
       "title": "Capital One VentureOne Rewards: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41779.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-quicksilverone-product",
       "title": "Capital One QuicksilverOne Rewards",
       "url": "https://www.capitalone.com/credit-cards/quicksilverone/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-quicksilverone-pricing",
       "title": "Capital One QuicksilverOne Rewards: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41686.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-quicksilver-student-product",
       "title": "Capital One Quicksilver Rewards for Students",
       "url": "https://www.capitalone.com/credit-cards/quicksilver-student/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-quicksilver-student-pricing",
       "title": "Capital One Quicksilver Rewards for Students: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41641.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-quicksilver-secured-product",
       "title": "Capital One Quicksilver Secured Rewards",
       "url": "https://www.capitalone.com/credit-cards/quicksilver-secured/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-quicksilver-secured-pricing",
       "title": "Capital One Quicksilver Secured Rewards: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41699.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-savorone-product",
       "title": "Capital One SavorOne Rewards",
       "url": "https://www.capitalone.com/credit-cards/savorone/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-savorone-pricing",
       "title": "Capital One SavorOne Rewards: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41693.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-savor-student-product",
       "title": "Capital One Savor Rewards for Students",
       "url": "https://www.capitalone.com/credit-cards/savor-student/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-savor-student-pricing",
       "title": "Capital One Savor Rewards for Students: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41647.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-t-mobile-visa-product",
       "title": "T-Mobile Visa",
       "url": "https://www.capitalone.com/credit-cards/t-mobile/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-t-mobile-visa-pricing",
       "title": "T-Mobile Visa: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41455.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-rei-co-op-mastercard-pricing",
       "title": "REI Co-op Mastercard: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.38374.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-williams-sonoma-key-rewards-visa-pricing",
       "title": "Williams Sonoma Key Rewards Visa: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.39602.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-pottery-barn-key-rewards-visa-pricing",
       "title": "Pottery Barn Key Rewards Visa: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.39604.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-west-elm-key-rewards-visa-pricing",
       "title": "West Elm Key Rewards Visa: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.39606.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-key-rewards-visa-pricing",
       "title": "Key Rewards Visa: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.39608.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-bjs-one-mastercard-pricing",
       "title": "BJ's One Mastercard: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.40483.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-bjs-one-plus-mastercard-pricing",
       "title": "BJ's One+ Mastercard: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.40486.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-bass-pro-shops-club-card-pricing",
       "title": "Bass Pro Shops CLUB Card: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41822.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-cabelas-club-card-pricing",
       "title": "Cabela's CLUB Card: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41826.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-union-plus-cash-rewards-pricing",
       "title": "Union Plus Cash Rewards Credit Card: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41876.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-teamster-privilege-cash-rewards-pricing",
       "title": "Teamster Privilege Cash Rewards Credit Card: Pricing and Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41879.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "chase-freedom-flex-product",
       "title": "Chase Freedom Flex Credit Card",
       "url": "https://creditcards.chase.com/cash-back-credit-cards/freedom/flex",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "chase-freedom-flex-rewards-terms",
       "title": "Chase Freedom Flex Credit Card: Rewards Terms",
       "url": "https://www.chase.com/freedomflex/rewardsagreement",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "chase-rewards-category-faq",
       "title": "Chase Rewards Category FAQ",
       "url": "https://www.chase.com/rewardscategoryfaqs",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "chase-sapphire-preferred-product",
       "title": "Chase Sapphire Preferred Credit Card",
       "url": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "chase-sapphire-preferred-rewards-terms",
       "title": "Chase Sapphire Preferred Credit Card: Rewards Terms",
       "url": "https://asset.chase.com/content/dam/card/rulesregulations/en/RPA0551_0560_Web.pdf",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "chase-sapphire-reserve-product",
       "title": "Chase Sapphire Reserve Credit Card",
       "url": "https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "chase-sapphire-reserve-pricing",
       "title": "Chase Sapphire Reserve Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC64842.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "chase-freedom-rise-product",
       "title": "Chase Freedom Rise Credit Card",
       "url": "https://creditcards.chase.com/cash-back-credit-cards/freedom/rise",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "chase-freedom-rise-pricing",
       "title": "Chase Freedom Rise Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC65397.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "prime-visa-product",
       "title": "Prime Visa",
       "url": "https://creditcards.chase.com/cash-back-credit-cards/amazon-prime-rewards",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "prime-visa-rewards-terms",
       "title": "Prime Visa: Rewards Terms",
       "url": "https://www.chase.com/amazon/rewardsagreement",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "prime-visa-pricing",
       "title": "Prime Visa: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC59329.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amazon-visa-product",
       "title": "Amazon Visa",
       "url": "https://creditcards.chase.com/cash-back-credit-cards/amazon-rewards",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amazon-visa-pricing",
       "title": "Amazon Visa: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC59318.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "doordash-rewards-mastercard-product",
       "title": "DoorDash Rewards Mastercard",
       "url": "https://creditcards.chase.com/cash-back-credit-cards/doordash",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "doordash-rewards-mastercard-pricing",
       "title": "DoorDash Rewards Mastercard: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61934.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "instacart-mastercard-product",
       "title": "Instacart Mastercard",
       "url": "https://creditcards.chase.com/cash-back-credit-cards/instacart",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "instacart-mastercard-pricing",
       "title": "Instacart Mastercard: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC60680.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "disney-inspire-visa-product",
       "title": "Disney Inspire Visa Card",
       "url": "https://creditcards.chase.com/rewards-credit-cards/disney/inspire",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "disney-inspire-visa-pricing",
       "title": "Disney Inspire Visa Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC64083.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "disney-premier-visa-product",
       "title": "Disney Premier Visa Card",
       "url": "https://creditcards.chase.com/rewards-credit-cards/disney/premier",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "disney-premier-visa-rewards-terms",
       "title": "Disney Premier Visa Card: Rewards Terms",
       "url": "https://www.chase.com/disneyrewardsterms",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "disney-premier-visa-pricing",
       "title": "Disney Premier Visa Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC63172.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "disney-visa-product",
       "title": "Disney Visa Card",
       "url": "https://creditcards.chase.com/rewards-credit-cards/disney/rewards",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "disney-visa-pricing",
       "title": "Disney Visa Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC63171.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "united-explorer-product",
       "title": "United Explorer Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "united-explorer-pricing",
       "title": "United Explorer Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC63218.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "united-quest-product",
       "title": "United Quest Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "united-quest-pricing",
       "title": "United Quest Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC65756.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "united-gateway-product",
       "title": "United Gateway Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/united/united-gateway",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "united-gateway-pricing",
       "title": "United Gateway Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC65777.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "united-club-product",
       "title": "United Club Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "united-club-pricing",
       "title": "United Club Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC62957.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "southwest-rapid-rewards-plus-product",
       "title": "Southwest Rapid Rewards Plus Credit Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/southwest/plus",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "southwest-rapid-rewards-plus-pricing",
       "title": "Southwest Rapid Rewards Plus Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC63968.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "southwest-rapid-rewards-premier-product",
       "title": "Southwest Rapid Rewards Premier Credit Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/southwest/premier",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "southwest-rapid-rewards-premier-pricing",
       "title": "Southwest Rapid Rewards Premier Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC63993.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "southwest-rapid-rewards-priority-product",
       "title": "Southwest Rapid Rewards Priority Credit Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/southwest/priority",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "southwest-rapid-rewards-priority-pricing",
       "title": "Southwest Rapid Rewards Priority Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC64006.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "ihg-one-rewards-premier-select-product",
       "title": "IHG One Rewards Premier Select Credit Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier-select",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "ihg-one-rewards-premier-select-pricing",
       "title": "IHG One Rewards Premier Select Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC65336.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "ihg-one-rewards-premier-product",
       "title": "IHG One Rewards Premier Credit Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "ihg-one-rewards-premier-pricing",
       "title": "IHG One Rewards Premier Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC65294.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "ihg-one-rewards-product",
       "title": "IHG One Rewards Credit Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/one-rewards",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "ihg-one-rewards-pricing",
       "title": "IHG One Rewards Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC65295.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "marriott-bonvoy-boundless-product",
       "title": "Marriott Bonvoy Boundless Credit Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "marriott-bonvoy-boundless-pricing",
       "title": "Marriott Bonvoy Boundless Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC65195.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "marriott-bonvoy-bountiful-product",
       "title": "Marriott Bonvoy Bountiful Credit Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/bountiful",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "marriott-bonvoy-bountiful-pricing",
       "title": "Marriott Bonvoy Bountiful Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61472.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "world-of-hyatt-product",
       "title": "World of Hyatt Credit Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "world-of-hyatt-pricing",
       "title": "World of Hyatt Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61032.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "air-canada-aeroplan-product",
       "title": "Chase Air Canada Aeroplan Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/aircanada/aeroplan",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "air-canada-aeroplan-pricing",
       "title": "Chase Air Canada Aeroplan Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC65070.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "british-airways-visa-signature-product",
       "title": "British Airways Visa Signature Credit Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/avios/british-airways",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "british-airways-visa-signature-pricing",
       "title": "British Airways Visa Signature Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61716.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "aer-lingus-visa-signature-product",
       "title": "Aer Lingus Visa Signature Credit Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/avios/aer-lingus",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "aer-lingus-visa-signature-pricing",
       "title": "Aer Lingus Visa Signature Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61785.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "iberia-visa-signature-product",
       "title": "Iberia Visa Signature Credit Card",
       "url": "https://creditcards.chase.com/travel-credit-cards/avios/iberia",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "iberia-visa-signature-pricing",
       "title": "Iberia Visa Signature Credit Card: Pricing and Terms",
       "url": "https://sites.chase.com/services/creatives/pricingandterms.html/content/dam/pricingandterms/LGC61715.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-strata-product",
       "title": "Citi Strata Card",
       "url": "https://www.citi.com/credit-cards/citi-strata-credit-card",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-strata-rewards-terms",
       "title": "Citi Strata Card: Rewards Terms",
       "url": "https://www.citi.com/credit-cards/citi-strata-credit-card/additional-information",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-strata-premier-product",
       "title": "Citi Strata Premier Card",
       "url": "https://www.citi.com/credit-cards/citi-strata-premier-credit-card",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-strata-premier-rewards-terms",
       "title": "Citi Strata Premier Card: Rewards Terms",
       "url": "https://www.citi.com/credit-cards/citi-strata-premier-credit-card/additional-information",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-strata-elite-product",
       "title": "Citi Strata Elite Card",
       "url": "https://www.citi.com/credit-cards/citi-strata-elite-credit-card",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-strata-elite-rewards-terms",
       "title": "Citi Strata Elite Card: Rewards Terms",
       "url": "https://www.citi.com/credit-cards/citi-strata-elite-credit-card/additional-information",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-costco-anywhere-visa-product",
       "title": "Costco Anywhere Visa Card by Citi",
       "url": "https://www.citi.com/credit-cards/costco-anywhere-visa-card",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-costco-anywhere-visa-rewards-terms",
       "title": "Costco Anywhere Visa Card by Citi: Rewards Terms",
       "url": "https://www.citi.com/credit-cards/costco-anywhere-visa-card/additional-information",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-costco-anywhere-visa-categories",
       "title": "Costco Anywhere Visa Card by Citi: Category Information",
       "url": "https://www.citi.com/Costco_Exclusions",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-aadvantage-platinum-select-product",
       "title": "Citi / AAdvantage Platinum Select World Elite Mastercard",
       "url": "https://www.citi.com/credit-cards/citi-aadvantage-platinum-select-world-elite-mastercard",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-aadvantage-platinum-select-rewards-terms",
       "title": "Citi / AAdvantage Platinum Select World Elite Mastercard: Rewards Terms",
       "url": "https://www.citi.com/credit-cards/citi-aadvantage-platinum-select-world-elite-mastercard/additional-information",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-aadvantage-mileup-product",
       "title": "AAdvantage MileUp Card",
       "url": "https://www.citi.com/credit-cards/aadvantage-mile-up-credit-card",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-aadvantage-mileup-rewards-terms",
       "title": "AAdvantage MileUp Card: Rewards Terms",
       "url": "https://www.citi.com/credit-cards/aadvantage-mile-up-credit-card/additional-information",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-aadvantage-executive-product",
       "title": "Citi / AAdvantage Executive World Legend Mastercard",
       "url": "https://www.citi.com/credit-cards/citi-aadvantage-executive-world-legend-mastercard",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-aadvantage-executive-rewards-terms",
       "title": "Citi / AAdvantage Executive World Legend Mastercard: Rewards Terms",
       "url": "https://www.citi.com/credit-cards/citi-aadvantage-executive-world-legend-mastercard/additional-information",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-aadvantage-globe-product",
       "title": "Citi / AAdvantage Globe Mastercard",
       "url": "https://www.citi.com/credit-cards/citi-aadvantage-globe-mastercard",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-aadvantage-globe-rewards-terms",
       "title": "Citi / AAdvantage Globe Mastercard: Rewards Terms",
       "url": "https://www.citi.com/credit-cards/citi-aadvantage-globe-mastercard/additional-information",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-att-points-plus-product",
@@ -3235,679 +3248,679 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "id": "citi-att-points-plus-rewards-terms",
       "title": "AT&T Points Plus Card from Citi: Rewards Terms",
       "url": "https://www.citi.com/credit-cards/citi-att-pointsplus-credit-card/additional-information",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-my-best-buy-visa-product",
       "title": "My Best Buy Visa Card",
       "url": "https://www.citi.com/credit-cards/citi-best-buy-credit-cards",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-my-best-buy-visa-rewards-terms",
       "title": "My Best Buy Visa Card: Rewards Terms",
       "url": "https://www.citi.com/credit-cards/citi-best-buy-credit-cards/additional-information",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-wayfair-mastercard-product",
       "title": "Wayfair Mastercard",
       "url": "https://www.citi.com/credit-cards/wayfair-credit-cards",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-wayfair-mastercard-rewards-terms",
       "title": "Wayfair Mastercard: Rewards Terms",
       "url": "https://www.citi.com/credit-cards/wayfair-credit-cards/additional-information",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-tsc-visa-product",
       "title": "TSC Visa Card",
       "url": "https://www.citi.com/credit-cards/citi-tractor-supply-credit-cards",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-llbean-mastercard-product",
       "title": "L.L.Bean Mastercard",
       "url": "https://www.citi.com/credit-cards/citi-llbean-credit-card",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-dillards-mastercard-product",
       "title": "Dillard's Mastercard",
       "url": "https://www.citi.com/credit-cards/dillards-credit-cards",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-macys-amex-product",
       "title": "Macy's American Express Card",
       "url": "https://www.citi.com/credit-cards/citi-macys-credit-card",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-bloomingdales-amex-product",
       "title": "Bloomingdale's American Express Card",
       "url": "https://www.citi.com/credit-cards/bloomingdales-credit-cards",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "discover-it-cash-back-product",
       "title": "Discover it Cash Back Credit Card",
       "url": "https://www.discover.com/credit-cards/cash-back/it-card.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "discover-it-cash-back-terms",
       "title": "Discover it Cash Back Credit Card: Application Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41564.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "discover-cashback-calendar",
       "title": "Discover 5% Cashback Calendar",
       "url": "https://www.discover.com/credit-cards/cash-back/cashback-calendar.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "discover-it-miles-product",
       "title": "Discover it Miles Credit Card",
       "url": "https://www.discover.com/credit-cards/travel/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "discover-it-miles-terms",
       "title": "Discover it Miles Credit Card: Application Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41597.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "discover-it-chrome-product",
       "title": "Discover it Chrome Gas & Restaurants Credit Card",
       "url": "https://www.discover.com/credit-cards/cash-back/chrome/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "discover-it-chrome-terms",
       "title": "Discover it Chrome Gas & Restaurants Credit Card: Application Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41577.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "discover-it-student-cash-back-product",
       "title": "Discover it Student Cash Back",
       "url": "https://www.discover.com/credit-cards/student-credit-card/it-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "discover-it-student-chrome-product",
       "title": "Discover it Student Chrome",
       "url": "https://www.discover.com/credit-cards/student-credit-card/chrome-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "discover-it-secured-cash-back-product",
       "title": "Discover it Secured Cash Back",
       "url": "https://www.discover.com/credit-cards/secured/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "discover-it-secured-cash-back-terms",
       "title": "Discover it Secured Cash Back: Application Terms",
       "url": "https://disclosures.capitalone.com/disclosure.41586.en-US.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-premier-world-mastercard-product",
       "title": "Synchrony Premier World Mastercard",
       "url": "https://www.synchrony.com/financing/synchrony-mastercards",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-premier-world-mastercard-rewards-terms",
       "title": "Synchrony Premier World Mastercard: Rewards Terms",
       "url": "https://www.synchronycredit.com/essimages/cs/groups/ess_webasset/dualcard/@tru/en/promohtmls/ess048627.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amazon-store-card-product",
       "title": "Amazon Store Card and Amazon Secured Card",
       "url": "https://www.amazon.com/Synchrony-Bank-Amazon-com-Store-Card/dp/B008A0GNA8",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-amazon-store-card-pricing",
       "title": "Amazon Store Card / Prime Store Card: Pricing and Terms",
       "url": "https://apply.syf.com/cs/groups/public/documents/et_tcdoc/e084701.pdf",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-amazon-store-card-categories",
       "title": "Amazon Store Card / Prime Store Card: Category Information",
       "url": "https://www.synchrony.com/amazon",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-paypal-cashback-mastercard-product",
       "title": "PayPal Cashback Mastercard",
       "url": "https://www.paypal.com/us/digital-wallet/manage-money/paypal-cashback-mastercard",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-paypal-cashback-mastercard-rewards-terms",
       "title": "PayPal Cashback Mastercard: Rewards Terms",
       "url": "https://www.synchronycredit.com/gecrbterms/html/PayPalCashbackRewardsTerms.htm",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-paypal-cashback-mastercard-pricing",
       "title": "PayPal Cashback Mastercard: Pricing and Terms",
       "url": "https://www.synchronybankterms.com/gecrbterms/html/PayPalCashbackApplyTerms_combo.htm",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-venmo-credit-card-product",
       "title": "Venmo Credit Card",
       "url": "https://venmo.com/about/creditcard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-venmo-credit-card-rewards-terms",
       "title": "Venmo Credit Card: Rewards Terms",
       "url": "https://www.synchronybankterms.com/syfterms/html/VCCRewardsTerms.htm",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-verizon-visa-card-product",
       "title": "Verizon Visa Card (Verizon Visa Signature Card)",
       "url": "https://www.verizon.com/financial-services/verizon-visa-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-verizon-visa-card-rewards-terms",
       "title": "Verizon Visa Card (Verizon Visa Signature Card): Rewards Terms",
       "url": "https://www.verizon.com/support/verizon-visa-card-rewards-legal/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-verizon-visa-card-partner",
       "title": "Verizon Visa Card (Verizon Visa Signature Card): Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/verizon",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-sams-club-mastercard-product",
       "title": "Sam's Club Mastercard",
       "url": "https://mysamscredit.com/best-gas/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-sams-club-mastercard-partner",
       "title": "Sam's Club Mastercard: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/sams-club",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-carecredit-rewards-mastercard-product",
       "title": "CareCredit Rewards Mastercard",
       "url": "https://www.carecredit.com/mastercard/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-carecredit-rewards-mastercard-pricing",
       "title": "CareCredit Rewards Mastercard: Pricing and Terms",
       "url": "https://etail.mysynchrony.com/cs/groups/public/documents/et_tcdoc/e073091.pdf",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-onepay-cashrewards-card-product",
       "title": "OnePay CashRewards Card",
       "url": "https://www.onepay.com/credit-card",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-onepay-cashrewards-card-rewards-terms",
       "title": "OnePay CashRewards Card: Rewards Terms",
       "url": "https://www.onepay.com/legal/onepay-rewards-terms",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-onepay-cashrewards-card-pricing",
       "title": "OnePay CashRewards Card: Pricing and Terms",
       "url": "https://apply.syf.com/cs/groups/public/documents/et_tcdoc/e079073.pdf",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-mywalgreens-mastercard-product",
       "title": "myWalgreens Mastercard / myWalgreens Credit Card",
       "url": "https://www.walgreens.com/topic/promotion/mywalgreens.jsp",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-mywalgreens-mastercard-rewards-terms",
       "title": "myWalgreens Mastercard / myWalgreens Credit Card: Rewards Terms",
       "url": "https://www.walgreens.com/topic/help/generalhelp/mywalgreens-credit-card-terms-of-use.jsp",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-mywalgreens-mastercard-partner",
       "title": "myWalgreens Mastercard / myWalgreens Credit Card: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/walgreens",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-tjx-rewards-platinum-mastercard-partner",
       "title": "TJX Rewards Platinum Mastercard / TJX Rewards Credit Card: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/tjx",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-newegg-store-credit-card-product",
       "title": "Newegg Store Credit Card",
       "url": "https://www.newegg.com/promotions/nepro/18-1881/index.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-newegg-store-credit-card-categories",
       "title": "Newegg Store Credit Card: Category Information",
       "url": "https://kb.newegg.com/knowledge-base/accepted-payment-methods",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-jcpenney-mastercard-product",
       "title": "JCPenney Mastercard / JCPenney Credit Card",
       "url": "https://www.jcpcreditcard.com/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-jcpenney-mastercard-partner",
       "title": "JCPenney Mastercard / JCPenney Credit Card: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/jcpenney",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-ae-real-rewards-visa-partner",
       "title": "Real Rewards Visa Credit Card / Real Rewards Credit Card (American Eagle & Aerie): Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/ae-outfitters",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-at-home-mastercard-partner",
       "title": "At Home Design Rewards Mastercard / Credit Card: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/athome",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-chicos-mastercard-partner",
       "title": "Chico's Mastercard / Chico's Credit Card: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/chicos",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-soma-mastercard-partner",
       "title": "Soma Mastercard / Soma Credit Card: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/soma",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-whbm-mastercard-partner",
       "title": "White House Black Market (WHBM) Mastercard / Credit Card: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/whbm",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-jcrew-mastercard-partner",
       "title": "J.Crew Mastercard / J.Crew Credit Card: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/jcrew",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-harbor-freight-credit-card-partner",
       "title": "Harbor Freight Credit Card: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/harborfreight",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-cathay-world-elite-mastercard-partner",
       "title": "Cathay World Elite Mastercard: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/cathay",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-virgin-red-rewards-mastercard-partner",
       "title": "Virgin Red Rewards Mastercard: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/virgin-red-rewards-card",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-sun-country-visa-signature-partner",
       "title": "Sun Country Visa Signature Card: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/sun-country/benefits",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "synchrony-sun-country-visa-signature-partner-2",
       "title": "Sun Country Visa Signature Card: Synchrony Partner Page",
       "url": "https://www.synchrony.com/partner/sun-country",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-cash-plus-product",
       "title": "U.S. Bank Cash+ Visa Signature Card",
       "url": "https://www.usbank.com/credit-cards/cash-plus-visa-signature-credit-card.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-cash-plus-rewards-terms",
       "title": "U.S. Bank Cash+ Visa Signature Card: Rewards Terms",
       "url": "https://rewards.usbank.com/benefits/card/CashPlusBenefits/faqs?cardType=V",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-cash-plus-sample-merchants",
       "title": "U.S. Bank Cash+ Categories and Sample Merchants",
       "url": "https://cashplus.usbank.com/cash-plus/samplemerchants",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-smartly-product",
       "title": "U.S. Bank Smartly Visa Signature Card",
       "url": "https://www.usbank.com/credit-cards/bank-smartly-visa-signature-credit-card.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-altitude-go-product",
       "title": "U.S. Bank Altitude Go Visa Signature Card",
       "url": "https://www.usbank.com/credit-cards/altitude-go-visa-signature-credit-card.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-altitude-go-rewards-terms",
       "title": "U.S. Bank Altitude Go Visa Signature Card: Rewards Terms",
       "url": "https://rewards.usbank.com/benefits/card/AltitudeGoBenefits/program-rules",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-altitude-connect-product",
       "title": "U.S. Bank Altitude Connect Visa Signature Card",
       "url": "https://www.usbank.com/credit-cards/altitude-connect-visa-signature-credit-card.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-altitude-connect-rewards-terms",
       "title": "U.S. Bank Altitude Connect Visa Signature Card: Rewards Terms",
       "url": "https://rewards.usbank.com/benefits/card/AltitudeConnectBenefits/program-rules",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-cash-plus-secured-product",
       "title": "U.S. Bank Cash+ Secured Visa Card",
       "url": "https://www.usbank.com/credit-cards/cash-plus-secured-visa-credit-card.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-altitude-go-secured-product",
       "title": "U.S. Bank Altitude Go Secured Visa Card",
       "url": "https://www.usbank.com/credit-cards/altitude-go-secured-visa-credit-card.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-altitude-go-secured-rewards-terms",
       "title": "U.S. Bank Altitude Go Secured Visa Card: Rewards Terms",
       "url": "https://rewards.usbank.com/benefits/card/AltitudeGoSecBenefits/program-rules",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-harley-davidson-visa-signature-product",
       "title": "H-D Visa Signature Card",
       "url": "https://www.h-dvisa.com/credit/harley-davidson-visa-signature-credit.do",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-harley-davidson-hog-elite-product",
       "title": "H-D H.O.G. Elite Visa Signature Card",
       "url": "https://www.h-dvisa.com/credit/harley-davidson-hog-elite-visa-signature-credit.do",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-harley-davidson-secured-product",
       "title": "H-D Visa Secured Card",
       "url": "https://www.h-dvisa.com/credit/harley-davidson-visa-secured-credit.do",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "skypass-visa-cards",
       "title": "SKYPASS Visa Cards",
       "url": "https://www.skypassvisa.com/credit/welcome.do",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-skypass-skyblue-product",
       "title": "SKYPASS SkyBlue Visa Card",
       "url": "https://www.skypassvisa.com/credit/visaSkyBlueCard.do",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-skypass-visa-signature-product",
       "title": "SKYPASS Visa Signature Card",
       "url": "https://www.skypassvisa.com/credit/visaSignatureCard.do",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-skypass-select-product",
       "title": "SKYPASS Select Visa Signature Card",
       "url": "https://www.skypassvisa.com/credit/visaSelectCard.do",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-state-farm-premier-cash-rewards-product",
       "title": "State Farm Premier Cash Rewards Visa Signature Card",
       "url": "https://alliance.usbank.com/en-us/statefarm/credit-cards/premier-cash-rewards-visa-signature-credit-card.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "state-farm-credit-cards",
       "title": "State Farm Credit Cards",
       "url": "https://www.statefarm.com/finances/banking/credit-cards",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-state-farm-premier-cash-rewards-pricing",
       "title": "State Farm Premier Cash Rewards Visa Signature Card: Pricing and Terms",
       "url": "https://applications.usbank.com/oad/termsSimpleApply.controller?locationCode=18635&offerId=7QB2V16QQ6&sourceCode=87083",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-edward-jones-triple-rewards-product",
       "title": "Edward Jones Everyday Solutions Triple Rewards World Elite Mastercard",
       "url": "https://alliance.usbank.com/en-us/edward-jones/credit-cards/triple-rewards-world-elite-mastercard.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-edward-jones-triple-rewards-pricing",
       "title": "Edward Jones Everyday Solutions Triple Rewards World Elite Mastercard: Pricing and Terms",
       "url": "https://applications.usbank.com/pdap/terms?locationCode=35603&offerId=M3GBBR7V4M&sourceCode=87914&st=Y",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-edward-jones-triple-rewards-categories",
       "title": "Edward Jones Everyday Solutions Triple Rewards World Elite Mastercard: Category Information",
       "url": "https://alliance.usbank.com/en-us/edward-jones/credit-cards/triple-rewards-categories.html",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-elan-fidelity-rewards-product",
       "title": "Fidelity Rewards Visa Signature Card",
       "url": "https://www.fidelity.com/spend-save/visa-signature-card",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "us-bank-elan-fidelity-rewards-rewards-terms",
       "title": "Fidelity Rewards Visa Signature Card: Rewards Terms",
       "url": "https://online1.elancard.com/pdap/terms?locationCode=24193&offerId=5W8QWVRP5M&sourceCode=88155&st=y",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "wells-fargo-autograph-product",
-      "title": "Wells Fargo Autograph Card",
+      "title": "Wells Fargo Autograph Visa Credit Card",
       "url": "https://creditcards.wellsfargo.com/autograph-visa-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "wells-fargo-autograph-pricing",
-      "title": "Wells Fargo Autograph Card: Pricing and Terms",
+      "title": "Wells Fargo Autograph Visa Credit Card: Pricing and Terms",
       "url": "https://www.wellsfargo.com/credit-cards/autograph-visa/terms/",
-      "checkedOn": "2026-10-02"
-    },
-    {
-      "id": "wells-fargo-autograph-categories",
-      "title": "Wells Fargo Autograph Card: Category Information",
-      "url": "https://www.wellsfargo.com/credit-cards/autograph-visa/streaming/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "wells-fargo-autograph-journey-product",
-      "title": "Wells Fargo Autograph Journey Card",
+      "title": "Wells Fargo Autograph Journey Visa Credit Card",
       "url": "https://creditcards.wellsfargo.com/autograph-journey-visa-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "wells-fargo-autograph-journey-pricing",
-      "title": "Wells Fargo Autograph Journey Card: Pricing and Terms",
+      "title": "Wells Fargo Autograph Journey Visa Credit Card: Pricing and Terms",
       "url": "https://www.wellsfargo.com/credit-cards/autograph-journey-visa/terms/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "wells-fargo-one-key-product",
       "title": "One Key Card",
       "url": "https://creditcards.wellsfargo.com/one-key-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "wells-fargo-one-key-plus-product",
       "title": "One Key+ Card",
       "url": "https://creditcards.wellsfargo.com/one-key-plus-credit-card/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "wells-fargo-choice-privileges-product",
       "title": "Choice Privileges Mastercard",
       "url": "https://creditcards.wellsfargo.com/choice-hotel-privileges-mastercard/",
-      "checkedOn": "2026-10-02"
-    },
-    {
-      "id": "wells-fargo-choice-privileges-pricing",
-      "title": "Choice Privileges Mastercard: Pricing and Terms",
-      "url": "https://www.wellsfargo.com/credit-cards/choice/terms/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "wells-fargo-choice-privileges-select-product",
       "title": "Choice Privileges Select Mastercard",
       "url": "https://creditcards.wellsfargo.com/choice-hotels-privileges-select-mastercard/",
-      "checkedOn": "2026-10-02"
-    },
-    {
-      "id": "wells-fargo-choice-privileges-select-pricing",
-      "title": "Choice Privileges Select Mastercard: Pricing and Terms",
-      "url": "https://www.wellsfargo.com/credit-cards/choice-select/terms/",
-      "checkedOn": "2026-10-02"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-double-cash-product",
       "title": "Citi Double Cash Card",
       "url": "https://www.citi.com/credit-cards/citi-double-cash-credit-card",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-double-cash-additional-info",
       "title": "Citi Double Cash Card: Additional Information",
       "url": "https://www.citi.com/credit-cards/citi-double-cash-credit-card/additional-information",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "citi-double-cash-terms-pdf",
       "title": "Citi Double Cash ThankYou Terms and Conditions",
       "url": "https://www.citi.com/CRD/PDF/DoubleCashThankyouTC.pdf",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "wells-fargo-active-cash-product",
       "title": "Wells Fargo Active Cash Card",
       "url": "https://creditcards.wellsfargo.com/active-cash-credit-card/",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "chase-freedom-unlimited-product",
       "title": "Chase Freedom Unlimited",
       "url": "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-quicksilver-product",
       "title": "Capital One Quicksilver",
       "url": "https://www.capitalone.com/credit-cards/quicksilver/",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-quicksilver-terms",
       "title": "Capital One Quicksilver: Important Disclosures and Rewards Terms",
       "url": "https://disclosures.capitalone.com/disclosure.40671.en-US.html",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-savor-product",
       "title": "Capital One Savor",
       "url": "https://www.capitalone.com/credit-cards/savor/",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "capital-one-savor-terms",
       "title": "Capital One Savor: Important Disclosures and Rewards Terms",
       "url": "https://disclosures.capitalone.com/disclosure.40679.en-US.html",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-blue-cash-everyday-product",
       "title": "Blue Cash Everyday Card",
       "url": "https://www.americanexpress.com/us/credit-cards/card/blue-cash-everyday/",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-blue-cash-everyday-terms",
       "title": "Blue Cash Everyday Card: Offer and Benefit Terms",
       "url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/blue-cash-everyday-credit-card/25330-10-0",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-blue-cash-preferred-product",
       "title": "Blue Cash Preferred Card",
       "url": "https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-blue-cash-preferred-terms",
       "title": "Blue Cash Preferred Card: Offer and Benefit Terms",
       "url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/blue-cash-preferred-credit-card/25330-10-0",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "amex-rewards-info-retail",
       "title": "American Express Rewards Info: Retail Categories",
       "url": "https://www.americanexpress.com/us/rewards-info/retail.html",
-      "checkedOn": "2026-09-29"
+      "checkedOn": "2026-10-05"
+    },
+    {
+      "id": "wells-fargo-autograph-rewards-terms",
+      "title": "Wells Fargo Autograph Visa Credit Card: Rewards Terms",
+      "url": "https://www.wellsfargo.com/rewards/",
+      "checkedOn": "2026-10-05"
+    },
+    {
+      "id": "wells-fargo-choice-privileges-rewards-terms",
+      "title": "Choice Privileges Mastercard: Rewards Terms",
+      "url": "https://www.wellsfargo.com/credit-cards/choice/terms/",
+      "checkedOn": "2026-10-05"
+    },
+    {
+      "id": "wells-fargo-choice-privileges-select-rewards-terms",
+      "title": "Choice Privileges Select Mastercard: Rewards Terms",
+      "url": "https://www.wellsfargo.com/credit-cards/choice-select/terms/",
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "check-mcc-best-buy",
       "title": "CheckMCC: Best Buy (community MCC lookup, undated)",
       "url": "https://check-mcc.com/merchant/best-buy",
-      "checkedOn": "2026-09-28"
+      "checkedOn": "2026-10-05"
     },
     {
       "id": "check-mcc-newegg",
       "title": "CheckMCC: Newegg (community MCC lookup, undated)",
       "url": "https://check-mcc.com/merchant/newegg",
-      "checkedOn": "2026-09-28"
+      "checkedOn": "2026-10-05"
     }
   ],
   "cards": [
@@ -3924,9 +3937,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "gold-base",
+          "id": "gold-base-v2",
           "category": "all-purchases",
-          "issuerWording": "1X Membership Rewards® point per dollar spent on all other eligible purchases.",
+          "issuerWording": "eligible purchase",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -3948,9 +3961,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "gold-travel-portal",
+          "id": "gold-travel-portal-v2",
           "category": "travel-portal",
-          "issuerWording": "5X Membership Rewards® points per dollar spent on prepaid hotels booked through AmexTravel.com or the Amex Travel App™.",
+          "issuerWording": "prepaid hotels booked through American Express Travel®",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -3976,9 +3989,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "gold-dining",
+          "id": "gold-dining-v2",
           "category": "dining",
-          "issuerWording": "4X Membership Rewards® points per dollar spent on purchases at restaurants worldwide, on up to $50,000 in purchases per calendar year, then 1X points for",
+          "issuerWording": "restaurants worldwide",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4007,9 +4020,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "gold-supermarkets",
+          "id": "gold-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "4X Membership Rewards® points per dollar spent at US supermarkets, on up to $25,000 in purchases per calendar year, then 1X points for the rest",
+          "issuerWording": "supermarkets located in the U.S.",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4038,9 +4051,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "gold-travel-portal-2",
+          "id": "gold-travel-portal-2-v2",
           "category": "travel-portal",
-          "issuerWording": "3X Membership Rewards® points per dollar spent on flights booked through AmexTravel.com or the Amex Travel App™ or purchased directly from airlines.",
+          "issuerWording": "airfare charged directly through American Express Travel",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4066,9 +4079,37 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "gold-travel-portal-3",
+          "id": "gold-travel-portal-3-v2",
           "category": "travel-portal",
-          "issuerWording": "2X Membership Rewards® points per dollar spent on prepaid car rentals booked through AmexTravel.com or the Amex Travel App™ and cruises booked and paid through",
+          "issuerWording": "prepaid car rentals",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
+          "limitedTime": null,
+          "sourceIds": [
+            "amex-gold-product",
+            "amex-gold-pricing"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "gold-travel-portal-4-v2",
+          "category": "travel-portal",
+          "issuerWording": "cruise reservations booked and paid through AmexTravel.com",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4119,8 +4160,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "fees or interest charges, cash advances, person to person payments, purchases of gift cards, purchases of travelers checks, purchases or reloading of prepaid cards, or…",
-        "Add Money transactions"
+        "Fees, interest charges, cash advances, person-to-person payments, gift cards, prepaid card purchases or reloads and other cash equivalents never earn points."
       ]
     },
     {
@@ -4160,9 +4200,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "platinum-travel-portal",
+          "id": "platinum-travel-portal-v2",
           "category": "travel-portal",
-          "issuerWording": "air tickets on scheduled flights, of up to $500,000 in charges per calendar year, booked directly with passenger airlines or through American Express Travel",
+          "issuerWording": "purchases of air tickets on scheduled flights",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4188,9 +4228,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "platinum-travel-portal-2",
+          "id": "platinum-travel-portal-2-v2",
           "category": "travel-portal",
-          "issuerWording": "prepaid hotel reservations booked through American Express Travel",
+          "issuerWording": "purchases of prepaid hotel reservations booked through American Express Travel",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4216,9 +4256,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "platinum-travel-portal-3",
+          "id": "platinum-travel-portal-3-v2",
           "category": "travel-portal",
-          "issuerWording": "prepaid vacation rental reservations booked through AmexTravel.com",
+          "issuerWording": "purchases of prepaid vacation rental reservations booked through AmexTravel.com",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4273,8 +4313,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Add Money transactions",
-        "Portions of charges covered through redemption of Membership Rewards points"
+        "The charge on your Card for an Add Money transaction does not earn rewards and is subject to the Card’s purchase APR.",
+        "Any portion of a charge that the Basic Card Member elects to cover through redemption of Membership Rewards points is not eligible to receive points."
       ]
     },
     {
@@ -4290,9 +4330,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "delta-skymiles-blue-base",
+          "id": "delta-skymiles-blue-base-v2",
           "category": "all-purchases",
-          "issuerWording": "eligible purchases",
+          "issuerWording": "1x Mile on eligible purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4314,9 +4354,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "delta-skymiles-blue-dining",
+          "id": "delta-skymiles-blue-dining-v2",
           "category": "dining",
-          "issuerWording": "restaurants",
+          "issuerWording": "2x Miles at Restaurants",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4342,9 +4382,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "delta-skymiles-blue-delta",
+          "id": "delta-skymiles-blue-delta-v2",
           "category": "other",
-          "issuerWording": "Delta Purchases",
+          "issuerWording": "2x Miles on Delta Purchases",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4390,9 +4430,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "delta-skymiles-gold-base",
+          "id": "delta-skymiles-gold-base-v2",
           "category": "all-purchases",
-          "issuerWording": "Purchases",
+          "issuerWording": "1x Mile on eligible purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4414,9 +4454,37 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "delta-skymiles-gold-supermarkets",
+          "id": "delta-skymiles-gold-dining-v2",
+          "category": "dining",
+          "issuerWording": "2x Miles at Restaurants",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
+          "limitedTime": null,
+          "sourceIds": [
+            "amex-delta-skymiles-gold-product",
+            "amex-delta-skymiles-gold-pricing"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "delta-skymiles-gold-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "U.S. Supermarkets",
+          "issuerWording": "2x Miles at U.S. Supermarkets",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4442,37 +4510,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "delta-skymiles-gold-dining",
-          "category": "dining",
-          "issuerWording": "Restaurants",
-          "rateBps": 200,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [
-            "paypal",
-            "venmo",
-            "digital-wallet"
-          ],
-          "limitedTime": null,
-          "sourceIds": [
-            "amex-delta-skymiles-gold-product",
-            "amex-delta-skymiles-gold-pricing"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "delta-skymiles-gold-delta",
+          "id": "delta-skymiles-gold-delta-v2",
           "category": "other",
-          "issuerWording": "Delta Purchases",
+          "issuerWording": "2x Miles on Delta Purchases",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4501,7 +4541,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Fees or interest charges; cash advances; purchases of travelers checks; purchases of gift cards; person-to-person transactions; purchases or reloading of prepaid cards; purchases of other…",
+        "Fees or interest charges, cash advances, travelers checks, gift cards, person-to-person transactions, prepaid cards, and other cash equivalents",
         "Add Money transactions"
       ]
     },
@@ -4518,9 +4558,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "delta-skymiles-platinum-base",
+          "id": "delta-skymiles-platinum-base-v2",
           "category": "all-purchases",
-          "issuerWording": "all other eligible purchases",
+          "issuerWording": "1X miles on all other eligible purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4542,9 +4582,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "delta-skymiles-platinum-delta",
+          "id": "delta-skymiles-platinum-delta-v2",
           "category": "other",
-          "issuerWording": "Delta Purchases",
+          "issuerWording": "3x Miles on Delta Purchases",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4572,9 +4612,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "delta-skymiles-platinum-dining",
+          "id": "delta-skymiles-platinum-dining-v2",
           "category": "dining",
-          "issuerWording": "restaurants worldwide",
+          "issuerWording": "2X miles at restaurants worldwide‡",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4600,9 +4640,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "delta-skymiles-platinum-supermarkets",
+          "id": "delta-skymiles-platinum-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "U.S. supermarkets",
+          "issuerWording": "2x Miles at U.S. Supermarkets",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4646,9 +4686,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "delta-skymiles-reserve-base",
+          "id": "delta-skymiles-reserve-base-v2",
           "category": "all-purchases",
-          "issuerWording": "eligible purchases",
+          "issuerWording": "1x Mile on eligible purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4670,9 +4710,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "delta-skymiles-reserve-delta",
+          "id": "delta-skymiles-reserve-delta-v2",
           "category": "other",
-          "issuerWording": "3x Miles on Delta Purchases",
+          "issuerWording": "Delta Purchases",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4701,8 +4741,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "fees or interest charges, cash advances, purchases of travelers checks, purchases of gift cards, person-to-person transactions, purchases or reloading of prepaid cards, or purchases of…",
-        "Add Money transactions"
+        "Eligible purchases do NOT include fees or interest charges, cash advances, purchases of travelers checks, purchases of gift cards, person-to-person transactions, purchases or reloading of…",
+        "Add Money transactions do not earn rewards."
       ]
     },
     {
@@ -4857,8 +4897,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Eligible purchases do NOT include fees or interest charges, cash advances, purchases of travelers checks, purchases or reloading of prepaid cards, purchases of gift cards,…",
-        "The charge on your Card for an Add Money transaction does not earn rewards and is subject to the Card's purchase APR."
+        "Fees, interest charges, cash advances, travelers checks, prepaid card purchases or reloads and gift card purchases never earn points."
       ]
     },
     {
@@ -4898,9 +4937,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "hilton-honors-surpass-hilton",
+          "id": "hilton-honors-surpass-hilton-v2",
           "category": "other",
-          "issuerWording": "eligible purchases charged directly with a property within the Hilton portfolio",
+          "issuerWording": "eligible purchases charged directly with a property within the Hilton portfolio, including bookings and incidental charges",
           "rateBps": 1200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4928,9 +4967,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "hilton-honors-surpass-dining",
+          "id": "hilton-honors-surpass-dining-v2",
           "category": "dining",
-          "issuerWording": "U.S. restaurants",
+          "issuerWording": "restaurants located in the U.S.",
           "rateBps": 600,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4956,9 +4995,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "hilton-honors-surpass-supermarkets",
+          "id": "hilton-honors-surpass-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "U.S. supermarkets",
+          "issuerWording": "supermarkets located in the U.S.",
           "rateBps": 600,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -4984,9 +5023,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "hilton-honors-surpass-gas",
+          "id": "hilton-honors-surpass-gas-v2",
           "category": "gas",
-          "issuerWording": "U.S. gas stations",
+          "issuerWording": "gas stations located in the U.S.",
           "rateBps": 600,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -5012,9 +5051,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "hilton-honors-surpass-online",
+          "id": "hilton-honors-surpass-online-v2",
           "category": "online-retail",
-          "issuerWording": "eligible online retail purchases",
+          "issuerWording": "online retail purchases made on a website or a digital application (an app) from a U.S. retail merchant that sells physical goods or merchandise directly",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -5043,7 +5082,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       ],
       "exclusions": [
         "Eligible purchases do NOT include fees or interest charges, cash advances, purchases of travelers checks, purchases or reloading of prepaid cards, purchases of gift cards,…",
-        "Add Money transactions"
+        "Add Money transactions do not earn rewards"
       ]
     },
     {
@@ -5113,34 +5152,6 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "hilton-honors-aspire-dining",
-          "category": "dining",
-          "issuerWording": "U.S. Restaurants",
-          "rateBps": 700,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": true,
-          "excludedPaymentPaths": [
-            "paypal",
-            "venmo",
-            "digital-wallet"
-          ],
-          "limitedTime": null,
-          "sourceIds": [
-            "amex-hilton-honors-aspire-product",
-            "amex-hilton-honors-aspire-pricing"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
           "id": "hilton-honors-aspire-travel-portal",
           "category": "travel-portal",
           "issuerWording": "flights booked through American Express Travel",
@@ -5167,11 +5178,39 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "choice": null,
           "requires": [],
           "requiredPaymentPaths": []
+        },
+        {
+          "id": "hilton-honors-aspire-dining-v2",
+          "category": "dining",
+          "issuerWording": "restaurants located in the U.S.",
+          "rateBps": 700,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "usMerchantsOnly": true,
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
+          "limitedTime": null,
+          "sourceIds": [
+            "amex-hilton-honors-aspire-product",
+            "amex-hilton-honors-aspire-pricing"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
         }
       ],
       "exclusions": [
-        "Eligible purchases do NOT include fees or interest charges, cash advances, purchases of travelers checks, purchases or reloading of prepaid cards, purchases of gift cards,…",
-        "The charge on your Card for an Add Money transaction does not earn rewards and is subject to the Card's purchase APR."
+        "Fees or interest charges, cash advances, travelers checks, prepaid cards, gift cards, person-to-person payments, and other cash equivalents",
+        "Add Money transactions"
       ]
     },
     {
@@ -5305,7 +5344,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       ],
       "exclusions": [
         "Eligible purchases do NOT include fees or interest charges, cash advances, purchases of traveler's checks, person-to-person transactions, the purchase or reloading of prepaid cards, and…",
-        "The charge on your Card for an Add Money transaction does not earn rewards and is subject to the Card's purchase APR."
+        "The charge on your Card for an Add Money transaction does not earn rewards"
       ]
     },
     {
@@ -5345,9 +5384,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "marriott-bonvoy-brilliant-marriott",
+          "id": "marriott-bonvoy-brilliant-marriott-v2",
           "category": "other",
-          "issuerWording": "participating Marriott Bonvoy properties, standalone Marriott branded retail establishments, and Marriott branded online stores",
+          "issuerWording": "hotels participating in Marriott Bonvoy®",
           "rateBps": 600,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -5404,7 +5443,12 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Fees or interest charges, cash advances, purchases of traveler's checks, person-to-person transactions, prepaid card purchases or reloads, and other cash equivalents",
+        "fees or interest charges",
+        "cash advances",
+        "purchases of traveler's checks",
+        "person-to-person transactions",
+        "the purchase or reloading of prepaid cards",
+        "purchases of other cash equivalents",
         "Add Money transactions"
       ]
     },
@@ -5457,9 +5501,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       ],
       "rules": [
         {
-          "id": "customized-cash-rewards-base",
+          "id": "customized-cash-rewards-base-v2",
           "category": "all-purchases",
-          "issuerWording": "all other purchases",
+          "issuerWording": "1% Base Cash Rewards",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -6042,9 +6086,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "customized-cash-rewards-supermarkets",
+          "id": "customized-cash-rewards-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "grocery stores and wholesale clubs, supermarkets, meat and seafood stores, candy, nut or confection stores, dairy stores, and bakeries",
+          "issuerWording": "2% Bonus Category",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -6107,7 +6151,12 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "The following transactions are not considered purchases and will not earn cash rewards: Balance Transfers and Cash Advances (each as defined in your Credit Card…"
+        "Balance Transfers",
+        "Cash Advances",
+        "fees",
+        "interest charges",
+        "fraudulent transactions",
+        "certain other charges"
       ]
     },
     {
@@ -6123,9 +6172,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "unlimited-cash-rewards-base",
+          "id": "unlimited-cash-rewards-base-v2",
           "category": "all-purchases",
-          "issuerWording": "all purchases",
+          "issuerWording": "1.5% Base Cash Rewards",
           "rateBps": 150,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -6148,11 +6197,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance Transfers and Cash Advances",
-        "fees",
-        "interest charges",
-        "fraudulent transactions",
-        "certain other charges"
+        "Balance Transfers, Cash Advances, fees, interest charges, fraudulent transactions and certain other charges"
       ]
     },
     {
@@ -6168,9 +6213,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "travel-rewards-base",
+          "id": "travel-rewards-base-v2",
           "category": "all-purchases",
-          "issuerWording": "1.5 Points",
+          "issuerWording": "everyday purchases",
           "rateBps": 150,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -6192,9 +6237,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "travel-rewards-travel-portal",
+          "id": "travel-rewards-travel-portal-v2",
           "category": "travel-portal",
-          "issuerWording": "Bonus Points at The Travel Center",
+          "issuerWording": "The Travel Center",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -6217,7 +6262,11 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "The following transactions are not considered purchases and will not earn points: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement),…"
+        "Balance Transfers and Cash Advances",
+        "fees",
+        "interest charges",
+        "fraudulent transactions",
+        "certain other charges"
       ]
     },
     {
@@ -6405,9 +6454,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       ],
       "rules": [
         {
-          "id": "customized-cash-rewards-students-base",
+          "id": "customized-cash-rewards-students-base-v2",
           "category": "all-purchases",
-          "issuerWording": "1% Base Cash Rewards",
+          "issuerWording": "all other purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -6430,9 +6479,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "customized-cash-rewards-students-gas-ev-charging-first-year",
+          "id": "customized-cash-rewards-students-gas-ev-charging-first-year-v2",
           "category": "gas",
-          "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations",
+          "issuerWording": "Gas & EV Charging Stations",
           "rateBps": 600,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -6475,9 +6524,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "customized-cash-rewards-students-gas-ev-charging-first-year-2",
+          "id": "customized-cash-rewards-students-gas-ev-charging-first-year-2-v2",
           "category": "ev-charging",
-          "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations",
+          "issuerWording": "Gas & EV Charging Stations",
           "rateBps": 600,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -6745,9 +6794,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "customized-cash-rewards-students-gas-ev-charging",
+          "id": "customized-cash-rewards-students-gas-ev-charging-v2",
           "category": "gas",
-          "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations",
+          "issuerWording": "Gas & EV Charging Stations",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -6780,9 +6829,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "customized-cash-rewards-students-gas-ev-charging-2",
+          "id": "customized-cash-rewards-students-gas-ev-charging-2-v2",
           "category": "ev-charging",
-          "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations",
+          "issuerWording": "Gas & EV Charging Stations",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -6990,9 +7039,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "customized-cash-rewards-students-supermarkets",
+          "id": "customized-cash-rewards-students-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "2% Bonus Category",
+          "issuerWording": "eligible grocery stores and wholesale clubs, supermarkets, meat and seafood stores, candy, nut or confection stores, dairy stores, and bakeries",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -7055,7 +7104,12 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance Transfers and Cash Advances, fees, interest charges, fraudulent transactions and certain other charges"
+        "Balance Transfers",
+        "Cash Advances",
+        "fees",
+        "interest charges",
+        "fraudulent transactions",
+        "certain other charges"
       ]
     },
     {
@@ -7208,9 +7262,54 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "customized-cash-rewards-secured-gas-ev-charging-first-year",
+          "id": "customized-cash-rewards-secured-gas-ev-charging-first-year-v2",
           "category": "gas",
-          "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations",
+          "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations (default)",
+          "rateBps": 600,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "spend",
+            "amountCents": 250000,
+            "period": "quarter",
+            "rateAfterCapBps": 100
+          },
+          "activation": "none",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "bnpl"
+          ],
+          "limitedTime": {
+            "startsOn": null,
+            "endsOn": null
+          },
+          "sourceIds": [
+            "boa-customized-cash-rewards-secured-product",
+            "boa-customized-cash-rewards-secured-pricing",
+            "boa-cash-back-category-choices"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": "customized-cash-bonus",
+          "choice": {
+            "choiceId": "choice-category",
+            "optionId": "gas-ev-charging"
+          },
+          "requires": [
+            {
+              "gateId": "boa-customized-cash-rewards-secured-first-year",
+              "optionIds": [
+                "first-year"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "customized-cash-rewards-secured-gas-ev-charging-first-year-2-v2",
+          "category": "ev-charging",
+          "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations (default)",
           "rateBps": 600,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -7478,54 +7577,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "customized-cash-rewards-secured-gas-ev-charging-first-year-2",
-          "category": "ev-charging",
-          "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations",
-          "rateBps": 600,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "spend",
-            "amountCents": 250000,
-            "period": "quarter",
-            "rateAfterCapBps": 100
-          },
-          "activation": "none",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [
-            "paypal",
-            "venmo",
-            "bnpl"
-          ],
-          "limitedTime": {
-            "startsOn": null,
-            "endsOn": null
-          },
-          "sourceIds": [
-            "boa-customized-cash-rewards-secured-product",
-            "boa-customized-cash-rewards-secured-pricing",
-            "boa-cash-back-category-choices"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": "customized-cash-bonus",
-          "choice": {
-            "choiceId": "choice-category",
-            "optionId": "gas-ev-charging"
-          },
-          "requires": [
-            {
-              "gateId": "boa-customized-cash-rewards-secured-first-year",
-              "optionIds": [
-                "first-year"
-              ]
-            }
-          ],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "customized-cash-rewards-secured-gas-ev-charging",
+          "id": "customized-cash-rewards-secured-gas-ev-charging-v2",
           "category": "gas",
-          "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations",
+          "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations (default)",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -7558,9 +7612,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "customized-cash-rewards-secured-gas-ev-charging-2",
+          "id": "customized-cash-rewards-secured-gas-ev-charging-2-v2",
           "category": "ev-charging",
-          "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations",
+          "issuerWording": "Gas & Electric Vehicle (EV) Charging Stations (default)",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -7833,8 +7887,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance Transfers",
-        "Cash Advances",
+        "Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement)",
         "fees",
         "interest charges",
         "fraudulent transactions",
@@ -7966,9 +8019,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       ],
       "rules": [
         {
-          "id": "susan-g-komen-customized-cash-rewards-base",
+          "id": "susan-g-komen-customized-cash-rewards-base-v2",
           "category": "all-purchases",
-          "issuerWording": "all other purchases",
+          "issuerWording": "1% Base Cash Rewards",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -8551,9 +8604,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "susan-g-komen-customized-cash-rewards-supermarkets",
+          "id": "susan-g-komen-customized-cash-rewards-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "grocery stores and wholesale clubs, supermarkets, meat and seafood stores, candy, nut or confection stores, dairy stores, and bakeries",
+          "issuerWording": "2% Bonus Category",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -8616,7 +8669,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain other charges."
+        "Balance Transfers, Cash Advances, fees, interest charges, fraudulent transactions and certain other charges"
       ]
     },
     {
@@ -8991,9 +9044,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "atmos-rewards-summit-base",
+          "id": "atmos-rewards-summit-base-v2",
           "category": "all-purchases",
-          "issuerWording": "Earn 1 point for every $1 spent on all other purchases.",
+          "issuerWording": "Earn unlimited 1 point for every $1 spent on all other purchases.",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -9012,75 +9065,6 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "sharedCapId": null,
           "choice": null,
           "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "atmos-rewards-summit-dining-checking-or-savings",
-          "category": "dining",
-          "issuerWording": "Earn 3 points for every $1 spent on eligible Dining Net Purchases.",
-          "rateBps": 330,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "boa-atmos-rewards-summit-product",
-            "boa-atmos-rewards-summit-pricing"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [
-            {
-              "gateId": "bofa-eligible-account",
-              "optionIds": [
-                "checking-or-savings",
-                "cd",
-                "merrill-investment"
-              ]
-            }
-          ],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "atmos-rewards-summit-alaska-airlines-checking-or-savings",
-          "category": "other",
-          "issuerWording": "Earn 3 points for every $1 of eligible Alaska Airlines and Hawaiian Airlines Net Purchases.",
-          "rateBps": 330,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "boa-atmos-rewards-summit-product",
-            "boa-atmos-rewards-summit-pricing"
-          ],
-          "brandIds": [
-            "alaska-airlines",
-            "hawaiian-airlines"
-          ],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [
-            {
-              "gateId": "bofa-eligible-account",
-              "optionIds": [
-                "checking-or-savings",
-                "cd",
-                "merrill-investment"
-              ]
-            }
-          ],
           "requiredPaymentPaths": []
         },
         {
@@ -9133,43 +9117,10 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "choice": null,
           "requires": [],
           "requiredPaymentPaths": []
-        },
-        {
-          "id": "atmos-rewards-summit-all-checking-or-savings",
-          "category": "all-purchases",
-          "issuerWording": "Earn 1 point for every $1 spent on all other purchases.",
-          "rateBps": 110,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "none"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "boa-atmos-rewards-summit-product",
-            "boa-atmos-rewards-summit-pricing"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [
-            {
-              "gateId": "bofa-eligible-account",
-              "optionIds": [
-                "checking-or-savings",
-                "cd",
-                "merrill-investment"
-              ]
-            }
-          ],
-          "requiredPaymentPaths": []
         }
       ],
       "exclusions": [
-        "The following transactions are not considered purchases and will not earn points: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement),…"
+        "Balance Transfers and Cash Advances, fees, interest charges, fraudulent transactions, and certain other charges"
       ]
     },
     {
@@ -9613,9 +9564,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "air-france-klm-base",
+          "id": "air-france-klm-base-v2",
           "category": "all-purchases",
-          "issuerWording": "1.5 Miles: Earn 1.5 miles for every $1 of Net Purchases charged to the card each billing cycle.",
+          "issuerWording": "1.5 Miles",
           "rateBps": 150,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -9637,9 +9588,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "air-france-klm-dining",
+          "id": "air-france-klm-dining-v2",
           "category": "dining",
-          "issuerWording": "eligible dining purchases",
+          "issuerWording": "eligible Dining merchants",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -9664,9 +9615,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "air-france-klm-air-france",
+          "id": "air-france-klm-air-france-v2",
           "category": "other",
-          "issuerWording": "eligible Air France, KLM Royal Dutch Airlines and SkyTeam member airline purchases",
+          "issuerWording": "Air France, KLM Royal Dutch Airlines and SkyTeam member airlines",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -9695,7 +9646,12 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain other charges."
+        "Balance Transfers",
+        "Cash Advances",
+        "fees",
+        "interest charges",
+        "fraudulent transactions",
+        "certain other charges"
       ]
     },
     {
@@ -9786,9 +9742,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "mastercard-titanium-base",
+          "id": "mastercard-titanium-base-v2",
           "category": "all-purchases",
-          "issuerWording": "You earn 1 Point for every $1 spent on all Net Purchases made with your Account.",
+          "issuerWording": "all Net Purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -9839,8 +9795,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance transfers, cash advances, fees, interest charges and unauthorized/fraudulent purchases do not earn Points",
-        "Points may not be earned while the Account is past due"
+        "Balance transfers, cash advances (including cash equivalent transactions such as, but not limited to, the use of your Card Account to obtain money orders, traveler’s…"
       ]
     },
     {
@@ -9927,9 +9882,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "mastercard-gold-base",
+          "id": "mastercard-gold-base-v2",
           "category": "all-purchases",
-          "issuerWording": "all Net Purchases",
+          "issuerWording": "You earn 1 Point for every $1 spent on all Net Purchases made with your Account.",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -9980,7 +9935,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance transfers, cash advances (including cash equivalent transactions such as, but not limited to, the use of your Card Account to obtain money orders, traveler’s…"
+        "Balance transfers, cash advances, fees, interest charges and unauthorized/fraudulent purchases do not earn Points.",
+        "Account use while past due does not earn Points."
       ]
     },
     {
@@ -10402,9 +10358,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "jetblue-plus-supermarkets",
+          "id": "jetblue-plus-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "Grocery Stores and Supermarkets",
+          "issuerWording": "eligible grocery stores",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -10562,9 +10518,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "jetblue-premier-dining",
+          "id": "jetblue-premier-dining-v2",
           "category": "dining",
-          "issuerWording": "Restaurants",
+          "issuerWording": "restaurants",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -10590,9 +10546,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "jetblue-premier-supermarkets",
+          "id": "jetblue-premier-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "Grocery Stores and Supermarkets",
+          "issuerWording": "eligible grocery stores",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -11535,7 +11491,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance transfers, cash advances (including cash equivalent transactions such as, but not limited to, the use of your Card Account to obtain money orders, traveler’s…"
+        "Balance transfers, cash advances and cash equivalents, fees, interest charges, and unauthorized or fraudulent purchases do not earn rewards."
       ]
     },
     {
@@ -11575,9 +11531,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "frontier-airlines-frontier-airlines",
+          "id": "frontier-airlines-frontier-airlines-v2",
           "category": "other",
-          "issuerWording": "Frontier Airlines Purchases",
+          "issuerWording": "5X on Frontier Airlines Purchases",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -11634,7 +11590,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance transfers, cash advances (including cash equivalent transactions such as, but not limited to, the use of your Card Account to obtain money orders, traveler’s…"
+        "Balance transfers, cash advances, fees, interest charges and unauthorized/fraudulent purchases do not earn Miles.",
+        "Miles are not earned while the Card Account is past due."
       ]
     },
     {
@@ -11873,9 +11830,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "carnival-rewards-base",
+          "id": "carnival-rewards-base-v2",
           "category": "all-purchases",
-          "issuerWording": "You earn 1 Carnival Rewards Point for every $1 spent on all other eligible Net Purchases made with your Card Account.",
+          "issuerWording": "all other eligible Net Purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -11897,9 +11854,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "carnival-rewards-carnival-cruise-line",
+          "id": "carnival-rewards-carnival-cruise-line-v2",
           "category": "other",
-          "issuerWording": "You earn 3 Carnival Rewards Points for every $1 spent on eligible Net Purchases made with your Card Account on Carnival Cruise Line.",
+          "issuerWording": "Carnival Cruise Line",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -11927,9 +11884,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "carnival-rewards-dining",
+          "id": "carnival-rewards-dining-v2",
           "category": "dining",
-          "issuerWording": "You earn 2 Carnival Rewards Points for every $1 spent on eligible Net Purchases made with your Card Account on restaurants.",
+          "issuerWording": "restaurants",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -11955,9 +11912,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "carnival-rewards-supermarkets",
+          "id": "carnival-rewards-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "earn 2 Carnival Rewards Points for every $1 spent on eligible Net Purchases made with your Card Account on grocery stores excluding Target® and Walmart®.",
+          "issuerWording": "grocery stores",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -11987,8 +11944,11 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance transfers, cash advances, cash equivalent transactions, fees, interest charges and unauthorized/fraudulent purchases",
-        "Use of the Card Account during any period in which the Card Account is past due"
+        "Balance transfers",
+        "Cash advances and cash equivalent transactions",
+        "Fees",
+        "Interest charges",
+        "Unauthorized/fraudulent purchases"
       ]
     },
     {
@@ -12578,10 +12538,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance transfers, cash advances, cash equivalent transactions, fees, interest charges and unauthorized/fraudulent purchases",
-        "Sales tax, shipping charges and non-personal purchases",
-        "Amounts paid with earned rewards, purchase orders, gift cards, merchandise credits, certificates, credit vouchers, refund checks or other store credit",
-        "Purchases made through third parties, online marketplaces, resellers or third-party payment accounts"
+        "Balance transfers, cash advances, fees, interest charges and unauthorized/fraudulent purchases",
+        "Sales tax, shipping charges, and non-personal purchases",
+        "Amounts paid with earned rewards, purchase orders, gift cards, merchandise credits, certificates, vouchers, refund checks, or other store credit"
       ]
     },
     {
@@ -12621,9 +12580,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "old-navy-encore-gap",
+          "id": "old-navy-encore-gap-v2",
           "category": "other",
-          "issuerWording": "Qualifying Purchase at the Gap Inc. Family of Brands",
+          "issuerWording": "Gap Inc. Family of Brands",
           "rateBps": 2500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -12687,9 +12646,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "old-navy-encore-gap-paypal-bnpl",
+          "id": "old-navy-encore-gap-paypal-bnpl-v2",
           "category": "other",
-          "issuerWording": "Qualifying Purchase using a payment platform such as Afterpay, Klarna, PayPal or TikTok",
+          "issuerWording": "payment platform such as Afterpay, Klarna, PayPal or TikTok",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -12720,9 +12679,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Qualifying Purchase amounts do not include amounts for cash advances, balance transfers, sales tax, shipping charges, or non-personal purchases.",
-        "Balance transfers, cash advances, fees, interest charges and unauthorized/fraudulent purchases do not earn points.",
-        "Purchases made through third parties, including online marketplaces and resellers, or using a third-party payment account will not qualify."
+        "Balance transfers, cash advances, cash equivalent transactions, fees, interest charges, and unauthorized/fraudulent purchases",
+        "Sales tax, shipping charges, and non-personal purchases",
+        "Transactions paid with earned rewards, purchase orders, gift cards, merchandise credits, certificates, vouchers, refund checks, or other store credit"
       ]
     },
     {
@@ -12861,9 +12820,15 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance transfers, cash advances (including cash equivalent transactions such as, but not limited to, the use of your Account to obtain money orders, traveler’s checks,…",
-        "Qualifying Purchase amounts do not include amounts for cash advances, balance transfers, sales tax, shipping charges, or non-personal purchases.",
-        "Additionally, purchases made through third parties, including online marketplaces and resellers, or using a third-party payment account will not qualify."
+        "Balance transfers",
+        "Cash advances and cash equivalent transactions",
+        "Fees",
+        "Interest charges",
+        "Unauthorized/fraudulent purchases",
+        "Sales tax",
+        "Shipping charges",
+        "Non-personal purchases",
+        "Transaction amounts paid with earned rewards, purchase orders, gift cards, merchandise credits, mail certificates, gift certificates, credit vouchers, refund checks, or other store credit"
       ]
     },
     {
@@ -13020,9 +12985,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "aarp-travel-rewards-base",
+          "id": "aarp-travel-rewards-base-v2",
           "category": "all-purchases",
-          "issuerWording": "all other Purchases",
+          "issuerWording": "1% Cash Back on all other Purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13044,9 +13009,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "aarp-travel-rewards-dining",
+          "id": "aarp-travel-rewards-dining-v2",
           "category": "dining",
-          "issuerWording": "Restaurant Purchases",
+          "issuerWording": "2% Cash Back on Restaurant Purchases",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13073,7 +13038,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance transfers, cash advances, fees, interest charges and unauthorized/fraudulent purchases do not earn rewards."
+        "Balance transfers, cash advances including cash equivalent transactions, fees, interest charges and unauthorized/fraudulent purchases"
       ]
     },
     {
@@ -13089,9 +13054,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "aarp-essential-rewards-base",
+          "id": "aarp-essential-rewards-base-v2",
           "category": "all-purchases",
-          "issuerWording": "all other Purchases",
+          "issuerWording": "1% Cash Back on all other Purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13113,9 +13078,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "aarp-essential-rewards-gas",
+          "id": "aarp-essential-rewards-gas-v2",
           "category": "gas",
-          "issuerWording": "Gas and Drug Store Purchases",
+          "issuerWording": "3% Cash Back on Gas and Drug Store Purchases",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13141,9 +13106,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "aarp-essential-rewards-drug",
+          "id": "aarp-essential-rewards-drug-v2",
           "category": "drugstores",
-          "issuerWording": "Gas and Drug Store Purchases",
+          "issuerWording": "3% Cash Back on Gas and Drug Store Purchases",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13173,7 +13138,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance transfers, cash advances (including cash equivalent transactions such as, but not limited to, the use of your Card Account to obtain money orders, traveler’s…"
+        "Balance transfers, cash advances and cash equivalents, fees, interest charges and unauthorized or fraudulent purchases do not earn rewards"
       ]
     },
     {
@@ -13286,8 +13251,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Cash advances, balance transfers, and checks used to access your account are not considered purchases and will not earn rewards.",
-        "Rewards earned will be reclaimed if you cancel or return an eligible purchase."
+        "Cash advances, balance transfers, and checks used to access your account",
+        "Rewards will not be earned on the Credit."
       ]
     },
     {
@@ -13303,9 +13268,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "venture-base",
+          "id": "venture-base-v2",
           "category": "all-purchases",
-          "issuerWording": "You will earn 2 miles per dollar on net purchases (purchases minus any credits or returns) only.",
+          "issuerWording": "2 miles per dollar on net purchases",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13327,9 +13292,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "venture-travel-portal",
+          "id": "venture-travel-portal-v2",
           "category": "travel-portal",
-          "issuerWording": "You will earn 5 miles per dollar for purchases (hotel, car rental, and vacation rental only) made through Capital One Travel using this Rewards card",
+          "issuerWording": "5 miles per dollar for purchases (hotel, car rental, and vacation rental only) made through Capital One Travel",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13351,9 +13316,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "venture-entertainment-portal",
+          "id": "venture-entertainment-portal-v2",
           "category": "entertainment-portal",
-          "issuerWording": "You will earn 5 miles per dollar spent on Capital One Entertainment purchases.",
+          "issuerWording": "5 miles per dollar spent on Capital One Entertainment purchases",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13376,7 +13341,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Cash advances, balance transfers, and checks used to access your account are not considered purchases and will not earn rewards."
+        "Cash advances, balance transfers, and checks used to access your account are not considered purchases and will not earn rewards.",
+        "Rewards will not be earned on the Credit."
       ]
     },
     {
@@ -13392,9 +13358,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "ventureone-base",
+          "id": "ventureone-base-v2",
           "category": "all-purchases",
-          "issuerWording": "every purchase",
+          "issuerWording": "1.25 miles per dollar on net purchases (purchases minus any credits or returns) only.",
           "rateBps": 125,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13416,9 +13382,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "ventureone-travel-portal",
+          "id": "ventureone-travel-portal-v2",
           "category": "travel-portal",
-          "issuerWording": "hotels, vacation rentals and rental cars booked through Capital One Travel",
+          "issuerWording": "5 miles per dollar for purchases (hotels, vacation rentals and rental car only) made through Capital One Travel using this Rewards card account.",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13440,9 +13406,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "ventureone-entertainment-portal",
+          "id": "ventureone-entertainment-portal-v2",
           "category": "entertainment-portal",
-          "issuerWording": "Capital One Entertainment purchases",
+          "issuerWording": "5 miles per dollar spent on Capital One Entertainment purchases.",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13465,7 +13431,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Cash advances, balance transfers, and checks used to access your account are not considered purchases and will not earn rewards."
+        "Cash advances, balance transfers, and checks used to access your account"
       ]
     },
     {
@@ -13481,9 +13447,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "quicksilverone-base",
+          "id": "quicksilverone-base-v2",
           "category": "all-purchases",
-          "issuerWording": "1.5% cash back on all other purchases",
+          "issuerWording": "all other purchases",
           "rateBps": 150,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13505,9 +13471,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "quicksilverone-travel-portal",
+          "id": "quicksilverone-travel-portal-v2",
           "category": "travel-portal",
-          "issuerWording": "5% cash back on hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel",
+          "issuerWording": "hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13529,9 +13495,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "quicksilverone-entertainment-portal",
+          "id": "quicksilverone-entertainment-portal-v2",
           "category": "entertainment-portal",
-          "issuerWording": "5% cash back on Capital One Entertainment purchases",
+          "issuerWording": "Capital One Entertainment purchases",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13554,7 +13520,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Cash advances, balance transfers, and checks used to access your account are not considered purchases and will not earn rewards."
+        "Cash advances, balance transfers, and checks used to access your account"
       ]
     },
     {
@@ -13570,9 +13536,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "quicksilver-student-base",
+          "id": "quicksilver-student-base-v2",
           "category": "all-purchases",
-          "issuerWording": "all other purchases",
+          "issuerWording": "1.5% cash back on all other purchases",
           "rateBps": 150,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13594,9 +13560,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "quicksilver-student-travel-portal",
+          "id": "quicksilver-student-travel-portal-v2",
           "category": "travel-portal",
-          "issuerWording": "hotels, vacation rentals and rental cars booked through Capital One Travel",
+          "issuerWording": "5% cash back on hotels, vacation rentals and rental cars booked through Capital One Travel using this Rewards card account",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13618,9 +13584,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "quicksilver-student-entertainment-portal",
+          "id": "quicksilver-student-entertainment-portal-v2",
           "category": "entertainment-portal",
-          "issuerWording": "Capital One Entertainment purchases",
+          "issuerWording": "5% cash back on Capital One Entertainment purchases.",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13772,9 +13738,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "savorone-entertainment-portal",
+          "id": "savorone-entertainment-portal-v2",
           "category": "entertainment-portal",
-          "issuerWording": "Capital One Entertainment purchases",
+          "issuerWording": "purchases made through the Capital One Entertainment ticketing platform",
           "rateBps": 800,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13820,9 +13786,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "savorone-supermarkets",
+          "id": "savorone-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "grocery stores",
+          "issuerWording": "purchases made at grocery stores",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -13936,7 +13902,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Cash advances, balance transfers, and checks used to access your account"
+        "Cash advances, balance transfers, and checks used to access your account are not considered purchases and will not earn rewards."
       ]
     },
     {
@@ -13976,9 +13942,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "savor-student-entertainment-portal",
+          "id": "savor-student-entertainment-portal-v2",
           "category": "entertainment-portal",
-          "issuerWording": "Capital One Entertainment purchases",
+          "issuerWording": "purchases made through the Capital One Entertainment ticketing platform",
           "rateBps": 800,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -14180,9 +14146,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "t-mobile-t-mobile",
+          "id": "t-mobile-t-mobile-v2",
           "category": "other",
-          "issuerWording": "T-Mobile purchases",
+          "issuerWording": "any phone, device, or accessory at T-Mobile",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -14209,7 +14175,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Cash advances and balance transfers"
+        "Cash advances and balance transfers are not considered purchases and will not earn T-Mobile Rewards."
       ]
     },
     {
@@ -15521,7 +15487,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "freedom-flex-base",
+          "id": "freedom-flex-base-v2",
           "category": "all-purchases",
           "issuerWording": "all other purchases",
           "rateBps": 100,
@@ -15534,9 +15500,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "excludedPaymentPaths": [],
           "limitedTime": null,
           "sourceIds": [
+            "chase-rewards-category-faq",
             "chase-freedom-flex-product",
-            "chase-freedom-flex-rewards-terms",
-            "chase-rewards-category-faq"
+            "chase-freedom-flex-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -15546,7 +15512,32 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "freedom-flex-supermarkets-2026-10",
+          "id": "freedom-flex-travel-portal-v2",
+          "category": "travel-portal",
+          "issuerWording": "travel purchased through Chase Travel",
+          "rateBps": 500,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [],
+          "limitedTime": null,
+          "sourceIds": [
+            "chase-rewards-category-faq",
+            "chase-freedom-flex-product",
+            "chase-freedom-flex-rewards-terms"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "freedom-flex-supermarkets-2026-10-v2",
           "category": "supermarkets",
           "issuerWording": "Grocery Stores (excluding Walmart® and Target®)",
           "rateBps": 500,
@@ -15569,9 +15560,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
             "endsOn": "2026-12-31"
           },
           "sourceIds": [
+            "chase-rewards-category-faq",
             "chase-freedom-flex-product",
-            "chase-freedom-flex-rewards-terms",
-            "chase-rewards-category-faq"
+            "chase-freedom-flex-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [
@@ -15584,7 +15575,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "freedom-flex-dining-2026-10",
+          "id": "freedom-flex-dining-2026-10-v2",
           "category": "dining",
           "issuerWording": "Dining",
           "rateBps": 500,
@@ -15607,9 +15598,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
             "endsOn": "2026-12-31"
           },
           "sourceIds": [
+            "chase-rewards-category-faq",
             "chase-freedom-flex-product",
-            "chase-freedom-flex-rewards-terms",
-            "chase-rewards-category-faq"
+            "chase-freedom-flex-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -15619,7 +15610,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "freedom-flex-american-red-cross-2026-10",
+          "id": "freedom-flex-american-red-cross-2026-10-v2",
           "category": "other",
           "issuerWording": "American Red Cross®",
           "rateBps": 500,
@@ -15642,9 +15633,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
             "endsOn": "2026-12-31"
           },
           "sourceIds": [
+            "chase-rewards-category-faq",
             "chase-freedom-flex-product",
-            "chase-freedom-flex-rewards-terms",
-            "chase-rewards-category-faq"
+            "chase-freedom-flex-rewards-terms"
           ],
           "brandIds": [
             "american-red-cross"
@@ -15656,105 +15647,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "freedom-flex-travel-portal",
-          "category": "travel-portal",
-          "issuerWording": "travel purchased through Chase TravelSM",
-          "rateBps": 500,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "chase-freedom-flex-product",
-            "chase-freedom-flex-rewards-terms",
-            "chase-rewards-category-faq"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "freedom-flex-supermarkets-2027-01",
-          "category": "supermarkets",
-          "issuerWording": "Grocery Stores (excluding Walmart® and Target®)",
-          "rateBps": 500,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "spend",
-            "amountCents": 150000,
-            "period": "quarter",
-            "rateAfterCapBps": 100
-          },
-          "activation": "recurring",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [
-            "paypal",
-            "venmo",
-            "digital-wallet"
-          ],
-          "limitedTime": {
-            "startsOn": "2027-01-01",
-            "endsOn": "2027-03-31"
-          },
-          "sourceIds": [
-            "chase-freedom-flex-product",
-            "chase-freedom-flex-rewards-terms",
-            "chase-rewards-category-faq"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [
-            "walmart",
-            "target"
-          ],
-          "sharedCapId": "q1-2027",
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "freedom-flex-streaming-2027-01",
-          "category": "streaming",
-          "issuerWording": "Top Streaming Services",
-          "rateBps": 500,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "spend",
-            "amountCents": 150000,
-            "period": "quarter",
-            "rateAfterCapBps": 100
-          },
-          "activation": "recurring",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [
-            "paypal",
-            "venmo",
-            "digital-wallet"
-          ],
-          "limitedTime": {
-            "startsOn": "2027-01-01",
-            "endsOn": "2027-03-31"
-          },
-          "sourceIds": [
-            "chase-freedom-flex-product",
-            "chase-freedom-flex-rewards-terms",
-            "chase-rewards-category-faq"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": "q1-2027",
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "freedom-flex-dining",
+          "id": "freedom-flex-dining-v2",
           "category": "dining",
           "issuerWording": "dining at restaurants, including takeout and eligible delivery services",
           "rateBps": 300,
@@ -15771,9 +15664,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           ],
           "limitedTime": null,
           "sourceIds": [
+            "chase-rewards-category-faq",
             "chase-freedom-flex-product",
-            "chase-freedom-flex-rewards-terms",
-            "chase-rewards-category-faq"
+            "chase-freedom-flex-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -15783,7 +15676,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "freedom-flex-drug",
+          "id": "freedom-flex-drug-v2",
           "category": "drugstores",
           "issuerWording": "drugstore purchases",
           "rateBps": 300,
@@ -15800,9 +15693,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           ],
           "limitedTime": null,
           "sourceIds": [
+            "chase-rewards-category-faq",
             "chase-freedom-flex-product",
-            "chase-freedom-flex-rewards-terms",
-            "chase-rewards-category-faq"
+            "chase-freedom-flex-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -15812,7 +15705,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "freedom-flex-lyft",
+          "id": "freedom-flex-lyft-v2",
           "category": "other",
           "issuerWording": "Lyft rides",
           "rateBps": 200,
@@ -15828,9 +15721,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
             "endsOn": "2027-09-30"
           },
           "sourceIds": [
+            "chase-rewards-category-faq",
             "chase-freedom-flex-product",
-            "chase-freedom-flex-rewards-terms",
-            "chase-rewards-category-faq"
+            "chase-freedom-flex-rewards-terms"
           ],
           "brandIds": [
             "lyft"
@@ -15845,13 +15738,14 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "exclusions": [
         "balance transfers",
         "cash advances",
+        "travelers checks, foreign currency, money orders, or virtual currency and other similar transactions",
+        "lottery tickets, casino gaming chips, race track",
+        "person-to-person money transfers and account-funding transactions that transfer currency",
+        "any checks that access your account",
         "interest",
         "unauthorized or fraudulent charges",
         "fees of any kind, including an annual fee, if applicable",
-        "cash-like transactions such as travelers checks, foreign currency, money orders, wire transfers and cryptocurrency",
-        "any checks that access your account",
-        "lottery tickets, casino gaming chips, race track wagers and similar betting",
-        "person-to-person money transfers and account-funding transactions"
+        "Any portion of purchases paid for using rewards will not qualify as a category purchase."
       ]
     },
     {
@@ -16212,9 +16106,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "freedom-rise-base",
+          "id": "freedom-rise-base-v2",
           "category": "all-purchases",
-          "issuerWording": "all purchases",
+          "issuerWording": "1.5% cash back on all purchases",
           "rateBps": 150,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -16345,9 +16239,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "prime-travel-portal-member",
+          "id": "prime-travel-portal-member-v2",
           "category": "travel-portal",
-          "issuerWording": "Chase Travel purchases",
+          "issuerWording": "Chase Travel",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -16571,14 +16465,13 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         "travelers checks",
         "foreign currency",
         "money orders",
-        "Purchases made under the Equal Pay promotions do not earn % back rewards.",
+        "Purchases made under the Equal Pay promotions",
         "transactions on Amazon.com to which you choose to apply a promotional financing offer",
-        "interest",
-        "fees of any kind, including an annual fee, if applicable",
-        "unauthorized or fraudulent charges",
+        "wire transfers, cryptocurrency, other similar digital or virtual currency",
         "lottery tickets, casino gaming chips, race track wagers, or similar betting transactions",
+        "person-to-person money transfers and account-funding transactions that transfer currency",
         "any checks that access your card account",
-        "person-to-person money transfers and account-funding transactions"
+        "interest, unauthorized or fraudulent charges, and fees of any kind"
       ]
     },
     {
@@ -17086,9 +16979,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "disney-inspire-disney-plus",
+          "id": "disney-inspire-disney-plus-v2",
           "category": "other",
-          "issuerWording": "card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com",
+          "issuerWording": "DisneyPlus.com, Hulu.com or Stream.ESPN.com",
           "rateBps": 1000,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -17227,7 +17120,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "disney-premier-base",
+          "id": "disney-premier-base-v2",
           "category": "all-purchases",
           "issuerWording": "all other card purchases",
           "rateBps": 100,
@@ -17235,7 +17128,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [],
           "limitedTime": null,
@@ -17252,7 +17145,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "disney-premier-disney-plus",
+          "id": "disney-premier-disney-plus-v2",
           "category": "other",
           "issuerWording": "card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com",
           "rateBps": 500,
@@ -17260,7 +17153,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [],
           "limitedTime": null,
@@ -17281,15 +17174,15 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "disney-premier-gas",
+          "id": "disney-premier-gas-v2",
           "category": "gas",
-          "issuerWording": "card purchases at gas stations",
+          "issuerWording": "gas stations",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -17310,65 +17203,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "disney-premier-supermarkets",
-          "category": "supermarkets",
-          "issuerWording": "card purchases at grocery stores",
-          "rateBps": 200,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [
-            "paypal",
-            "venmo",
-            "digital-wallet"
-          ],
-          "limitedTime": null,
-          "sourceIds": [
-            "disney-premier-visa-product",
-            "disney-premier-visa-rewards-terms",
-            "disney-premier-visa-pricing"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "disney-premier-dining",
-          "category": "dining",
-          "issuerWording": "restaurants",
-          "rateBps": 200,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [
-            "paypal",
-            "venmo",
-            "digital-wallet"
-          ],
-          "limitedTime": null,
-          "sourceIds": [
-            "disney-premier-visa-product",
-            "disney-premier-visa-rewards-terms",
-            "disney-premier-visa-pricing"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "disney-premier-disney",
+          "id": "disney-premier-disney-v2",
           "category": "other",
           "issuerWording": "most Disney U.S. locations",
           "rateBps": 200,
@@ -17376,7 +17211,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": true,
           "excludedPaymentPaths": [],
           "limitedTime": null,
@@ -17393,16 +17228,72 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "choice": null,
           "requires": [],
           "requiredPaymentPaths": []
+        },
+        {
+          "id": "disney-premier-supermarkets-v2",
+          "category": "supermarkets",
+          "issuerWording": "grocery stores",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "none",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
+          "limitedTime": null,
+          "sourceIds": [
+            "disney-premier-visa-product",
+            "disney-premier-visa-rewards-terms",
+            "disney-premier-visa-pricing"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "disney-premier-dining-v2",
+          "category": "dining",
+          "issuerWording": "restaurants",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "none",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
+          "limitedTime": null,
+          "sourceIds": [
+            "disney-premier-visa-product",
+            "disney-premier-visa-rewards-terms",
+            "disney-premier-visa-pricing"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
         }
       ],
       "exclusions": [
-        "balance transfers",
-        "cash advances",
-        "travelers checks, foreign currency, money orders",
-        "fees of any kind, including an annual fee, if applicable.",
-        "unauthorized or fraudulent charges",
-        "lottery tickets, casino gaming chips, race track wagers and similar betting",
-        "any checks that access your Account"
+        "Balance transfers and cash advances",
+        "Cash-like transactions such as travelers checks, foreign currency, money orders, wire transfers and cryptocurrency",
+        "Lottery tickets, casino gaming chips, race track wagers and similar betting",
+        "Person-to-person money transfers and account-funding transactions",
+        "Checks that access the account, interest, unauthorized or fraudulent charges, and fees of any kind"
       ]
     },
     {
@@ -17481,9 +17372,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "united-explorer-united-airlines",
+          "id": "united-explorer-united-airlines-v2",
           "category": "other",
-          "issuerWording": "eligible United purchases",
+          "issuerWording": "all other eligible United purchases",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -17594,9 +17485,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "united-quest-united-airlines",
+          "id": "united-quest-united-airlines-v2",
           "category": "other",
-          "issuerWording": "eligible United purchases",
+          "issuerWording": "all other eligible United purchases",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -17620,9 +17511,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "united-quest-transit",
+          "id": "united-quest-transit-v2",
           "category": "transit",
-          "issuerWording": "all other travel including airfare, trains, local transit, cruise lines, hotels, car rentals, taxicabs, resorts, ride share services and tolls",
+          "issuerWording": "all other travel",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -17644,9 +17535,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "united-quest-dining",
+          "id": "united-quest-dining-v2",
           "category": "dining",
-          "issuerWording": "dining including eligible delivery services",
+          "issuerWording": "dining",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -17707,13 +17598,13 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "united-gateway-base",
+          "id": "united-gateway-base-v2",
           "category": "all-purchases",
           "issuerWording": "all other purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
-            "kind": "unstated"
+            "kind": "none"
           },
           "activation": "unstated",
           "usMerchantsOnly": false,
@@ -17731,13 +17622,13 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "united-gateway-gas",
+          "id": "united-gateway-gas-v2",
           "category": "gas",
           "issuerWording": "gas stations",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
-            "kind": "unstated"
+            "kind": "none"
           },
           "activation": "unstated",
           "usMerchantsOnly": false,
@@ -17755,13 +17646,13 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "united-gateway-transit",
+          "id": "united-gateway-transit-v2",
           "category": "transit",
-          "issuerWording": "local transit and commuting",
+          "issuerWording": "local transit and commuting including ride share services, taxicabs, train tickets, tolls, and mass transit",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
-            "kind": "unstated"
+            "kind": "none"
           },
           "activation": "unstated",
           "usMerchantsOnly": false,
@@ -17779,13 +17670,13 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "united-gateway-united-airlines",
+          "id": "united-gateway-united-airlines-v2",
           "category": "other",
-          "issuerWording": "eligible United purchases",
+          "issuerWording": "2x miles on entire United purchase with the United Gateway Card",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
-            "kind": "unstated"
+            "kind": "none"
           },
           "activation": "unstated",
           "usMerchantsOnly": false,
@@ -17844,9 +17735,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "united-club-united-airlines",
+          "id": "united-club-united-airlines-v2",
           "category": "other",
-          "issuerWording": "eligible United purchases",
+          "issuerWording": "all other eligible United purchases",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -18928,13 +18819,13 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "marriott-bonvoy-bountiful-base",
+          "id": "marriott-bonvoy-bountiful-base-v2",
           "category": "all-purchases",
           "issuerWording": "all other purchases",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
-            "kind": "none"
+            "kind": "unstated"
           },
           "activation": "unstated",
           "usMerchantsOnly": false,
@@ -18952,13 +18843,13 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "marriott-bonvoy-bountiful-marriott",
+          "id": "marriott-bonvoy-bountiful-marriott-v2",
           "category": "other",
-          "issuerWording": "hotels participating in Marriott Bonvoy®",
+          "issuerWording": "hotels participating in Marriott Bonvoy",
           "rateBps": 600,
           "paidOnPaymentBps": 0,
           "cap": {
-            "kind": "none"
+            "kind": "unstated"
           },
           "activation": "unstated",
           "usMerchantsOnly": false,
@@ -19071,9 +18962,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "world-of-hyatt-hyatt",
+          "id": "world-of-hyatt-hyatt-v2",
           "category": "other",
-          "issuerWording": "Hyatt Hotels",
+          "issuerWording": "qualifying purchases at Hyatt Hotels",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -19807,8 +19698,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance transfers, Citi Flex Loans, cash advances, checks that access your Card Account, items returned for credit, unauthorized charges, interest and account fees, travelers checks,…",
-        "Points are not earned on cancelled bookings."
+        "Balance transfers, Citi Flex Loans, cash advances, checks that access your Card Account, items returned for credit, unauthorized charges, interest and account fees, travelers checks,…"
       ]
     },
     {
@@ -19824,9 +19714,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "strata-premier-base",
+          "id": "strata-premier-base-v2",
           "category": "all-purchases",
-          "issuerWording": "all other purchases",
+          "issuerWording": "All Other Purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -19872,9 +19762,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "strata-premier-dining",
+          "id": "strata-premier-dining-v2",
           "category": "dining",
-          "issuerWording": "3 ThankYou Points for each $1 spent at restaurants",
+          "issuerWording": "Restaurants",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -19896,9 +19786,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "strata-premier-supermarkets",
+          "id": "strata-premier-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "3 ThankYou Points for each $1 spent at supermarkets",
+          "issuerWording": "Supermarkets",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -19920,9 +19810,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "strata-premier-gas",
+          "id": "strata-premier-gas-v2",
           "category": "gas",
-          "issuerWording": "3 ThankYou Points for each $1 spent at gas and EV charging stations",
+          "issuerWording": "Gas & EV Charging Stations",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -19944,9 +19834,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "strata-premier-ev-charging",
+          "id": "strata-premier-ev-charging-v2",
           "category": "ev-charging",
-          "issuerWording": "3 ThankYou Points for each $1 spent at gas and EV charging stations",
+          "issuerWording": "Gas & EV Charging Stations",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -19969,20 +19859,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance transfers",
-        "cash advances",
-        "checks that access your card account",
-        "items returned for credit",
-        "unauthorized charges",
-        "interest and account fees",
-        "travelers checks",
-        "foreign currency purchases",
-        "money orders",
-        "wire transfers (and similar cash-like transactions)",
-        "lottery tickets",
-        "gaming chips (and similar betting transactions)",
-        "Points are not earned on cancelled Citi Travel bookings.",
-        "No points on the portion of a Citi Travel hotel purchase offset by the $100 Annual Hotel Benefit."
+        "Balance transfers, cash advances, checks that access your card account, items returned for credit, unauthorized charges, interest and account fees, travelers checks, foreign currency purchases,…",
+        "Points are not earned on cancelled bookings.",
+        "If your hotel purchase booked through the Citi Travel site qualifies for the $100 Annual Hotel Benefit, you won’t earn points on the portion of…"
       ]
     },
     {
@@ -19998,9 +19877,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "strata-elite-base",
+          "id": "strata-elite-base-v2",
           "category": "all-purchases",
-          "issuerWording": "All Other Purchases",
+          "issuerWording": "1.5 ThankYou Points for each $1 spent on all other purchases, including the purchases excluded below.",
           "rateBps": 150,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -20022,9 +19901,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "strata-elite-travel-portal",
+          "id": "strata-elite-travel-portal-v2",
           "category": "travel-portal",
-          "issuerWording": "Hotels, Car Rentals, and Attractions booked on cititravel.com",
+          "issuerWording": "12 ThankYou Points for each $1 spent on hotels, car rentals, and attractions booked through Citi Travel® via cititravel.com or 1-833-737-1288 (TTY:711).",
           "rateBps": 1200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -20046,9 +19925,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "strata-elite-travel-portal-2",
+          "id": "strata-elite-travel-portal-2-v2",
           "category": "travel-portal",
-          "issuerWording": "Air Travel booked on cititravel.com",
+          "issuerWording": "6 ThankYou Points for each $1 spent on air travel booked through Citi Travel via cititravel.com or 1-833-737-1288 (TTY: 711).",
           "rateBps": 600,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -20070,9 +19949,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "strata-elite-dining",
+          "id": "strata-elite-dining-v2",
           "category": "dining",
-          "issuerWording": "Restaurants any other time",
+          "issuerWording": "3 ThankYou Points for each $1 spent at restaurants, including restaurant delivery services, for purchases authorized at any time outside of Citi Nights.",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -20094,7 +19973,12 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         }
       ],
-      "exclusions": []
+      "exclusions": [
+        "returns and refunds",
+        "Balance transfers, Citi Flex Loans, cash advances, checks that access your Card Account, items returned for credit, unauthorized charges, interest and account fees, travelers checks,…",
+        "cancelled bookings that are refundable",
+        "If your hotel purchase booked through the Citi Travel site qualifies for the $300 annual hotel benefit, you won’t earn points on the portion of…"
+      ]
     },
     {
       "id": "citi-costco-anywhere-visa",
@@ -20109,9 +19993,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "costco-anywhere-base",
+          "id": "costco-anywhere-base-v2",
           "category": "all-purchases",
-          "issuerWording": "all other purchases, including non-qualifying purchases listed above",
+          "issuerWording": "all other purchases, including the non-qualifying purchases listed above",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -20134,9 +20018,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "costco-anywhere-gas",
+          "id": "costco-anywhere-gas-v2",
           "category": "gas",
-          "issuerWording": "other eligible gas and electric vehicle (EV) charging purchases worldwide",
+          "issuerWording": "other eligible gas and eligible electric vehicle (EV) charging purchases worldwide",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -20167,9 +20051,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "costco-anywhere-ev-charging",
+          "id": "costco-anywhere-ev-charging-v2",
           "category": "ev-charging",
-          "issuerWording": "other eligible gas and electric vehicle (EV) charging purchases worldwide",
+          "issuerWording": "eligible electric vehicle (EV) charging purchases worldwide",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -20195,9 +20079,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "costco-anywhere-dining",
+          "id": "costco-anywhere-dining-v2",
           "category": "dining",
-          "issuerWording": "restaurant purchases (including cafes, bars, lounges, and fast food restaurants)",
+          "issuerWording": "restaurant (including cafes, bars, lounges and fast food restaurants)",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -20247,7 +20131,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         }
       ],
-      "exclusions": []
+      "exclusions": [
+        "Balance transfers, Citi Flex Loans, cash advances, checks that access your Card Account, items returned for credit, unauthorized charges, interest and account fees, travelers checks,…"
+      ]
     },
     {
       "id": "citi-aadvantage-platinum-select",
@@ -20279,32 +20165,6 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
             "citi-aadvantage-platinum-select-rewards-terms"
           ],
           "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "aadvantage-platinum-select-american-airlines",
-          "category": "other",
-          "issuerWording": "eligible American Airlines purchases",
-          "rateBps": 200,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "none"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "citi-aadvantage-platinum-select-product",
-            "citi-aadvantage-platinum-select-rewards-terms"
-          ],
-          "brandIds": [
-            "american-airlines"
-          ],
           "excludedBrandIds": [],
           "sharedCapId": null,
           "choice": null,
@@ -20358,10 +20218,36 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "choice": null,
           "requires": [],
           "requiredPaymentPaths": []
+        },
+        {
+          "id": "aadvantage-platinum-select-american-airlines",
+          "category": "other",
+          "issuerWording": "eligible American Airlines purchases",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "unstated",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [],
+          "limitedTime": null,
+          "sourceIds": [
+            "citi-aadvantage-platinum-select-product",
+            "citi-aadvantage-platinum-select-rewards-terms"
+          ],
+          "brandIds": [
+            "american-airlines"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
         }
       ],
       "exclusions": [
-        "Balance transfers, cash advances, checks that access your credit card account, items and services returned for credit, unauthorized charges, interest and account fees, traveler's checks,…"
+        "AAdvantage® miles are earned on purchases, except balance transfers, cash advances, checks that access your credit card account, items and services returned for credit, unauthorized…"
       ]
     },
     {
@@ -20381,30 +20267,6 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "category": "all-purchases",
           "issuerWording": "all other purchases",
           "rateBps": 100,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "none"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "citi-aadvantage-mileup-product",
-            "citi-aadvantage-mileup-rewards-terms"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "aadvantage-mileup-supermarkets",
-          "category": "supermarkets",
-          "issuerWording": "grocery stores, including grocery delivery services",
-          "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
             "kind": "none"
@@ -20449,10 +20311,34 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "choice": null,
           "requires": [],
           "requiredPaymentPaths": []
+        },
+        {
+          "id": "aadvantage-mileup-supermarkets",
+          "category": "supermarkets",
+          "issuerWording": "grocery stores, including grocery delivery services",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "unstated",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [],
+          "limitedTime": null,
+          "sourceIds": [
+            "citi-aadvantage-mileup-product",
+            "citi-aadvantage-mileup-rewards-terms"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
         }
       ],
       "exclusions": [
-        "Balance transfers, cash advances, checks that access your credit card account, items and services returned for credit, unauthorized charges, interest and account fees, traveler’s checks,…"
+        "Balance transfers, cash advances, checks accessing the account, returned items and services, unauthorized charges, interest and account fees, traveler's checks, foreign currency, money orders, wire…"
       ]
     },
     {
@@ -20492,9 +20378,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "aadvantage-executive-travel-portal",
+          "id": "aadvantage-executive-travel-portal-v2",
           "category": "travel-portal",
-          "issuerWording": "hotel purchases using your Citi® / AAdvantage® Executive World Legend Mastercard®, when an eligible booking is made on aadvantagehotels.com",
+          "issuerWording": "eligible AAdvantage Hotels® bookings",
           "rateBps": 1200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -20607,8 +20493,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "AAdvantage® miles are earned on purchases, except balance transfers, cash advances, checks that access your credit card account, items and services returned for credit, unauthorized…",
-        "AAdvantage® miles will apply to net purchases (purchases minus any credits or returns) only."
+        "Balance transfers, cash advances, account-access checks, returns, fees, interest, traveler's checks, money orders, wire transfers and other cash-like or betting transactions do not earn miles."
       ]
     },
     {
@@ -20773,18 +20658,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "balance transfers",
-        "cash advances",
-        "checks that access your credit card account",
-        "items and services returned for credit",
-        "unauthorized charges",
-        "interest and account fees",
-        "traveler’s checks",
-        "purchases of foreign currency",
-        "money orders",
-        "wire transfers (and similar cash-like transactions)",
-        "lottery tickets",
-        "gaming chips (and similar betting transactions)"
+        "Balance transfers, cash advances, checks that access your credit card account, items and services returned for credit, unauthorized charges, interest and account fees, traveler’s checks,…"
       ]
     },
     {
@@ -21188,7 +21062,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "name": "TSC Visa Card",
       "shortName": "TSC Visa",
       "issuer": "Citi",
-      "programId": "cash-back",
+      "programId": "tsc-rewards",
       "statedValueHundredthsOfCent": null,
       "acceptance": {
         "kind": "open-loop"
@@ -21196,9 +21070,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "tsc-base",
+          "id": "tsc-base-v2",
           "category": "all-purchases",
-          "issuerWording": "all other purchases",
+          "issuerWording": "All Other Purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -21219,9 +21093,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "tsc-tractor-supply",
+          "id": "tsc-tractor-supply-v2",
           "category": "other",
-          "issuerWording": "eligible Tractor Supply purchases",
+          "issuerWording": "Shop at Tractor Supply",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -21244,9 +21118,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "tsc-gas",
+          "id": "tsc-gas-v2",
           "category": "gas",
-          "issuerWording": "gas stations",
+          "issuerWording": "Gas Stations",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -21267,9 +21141,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "tsc-supermarkets",
+          "id": "tsc-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "grocery stores",
+          "issuerWording": "Grocery Stores",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -21414,6 +21288,31 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
+          "id": "dillards-dillards",
+          "category": "other",
+          "issuerWording": "all eligible Dillard’s purchases",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [],
+          "limitedTime": null,
+          "sourceIds": [
+            "citi-dillards-mastercard-product"
+          ],
+          "brandIds": [
+            "dillards"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
           "id": "dillards-gas",
           "category": "gas",
           "issuerWording": "U.S. gas stations",
@@ -21458,35 +21357,11 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "choice": null,
           "requires": [],
           "requiredPaymentPaths": []
-        },
-        {
-          "id": "dillards-dillards",
-          "category": "other",
-          "issuerWording": "all eligible Dillard’s purchases",
-          "rateBps": 200,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "citi-dillards-mastercard-product"
-          ],
-          "brandIds": [
-            "dillards"
-          ],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
         }
       ],
       "exclusions": [
-        "cash advances, cash equivalents, money orders, traveler’s checks, interest charges, balance transfers, fees, credits, returns, unauthorized purchases, wire transfers, bets, purchases of foreign curren"
+        "You will not earn points for cash advances, cash equivalents, money orders, traveler’s checks, interest charges, balance transfers, fees, credits, returns, unauthorized purchases, wire transfers,…",
+        "the portion of purchases made using Rewards Certificates or a Shopping Pass"
       ]
     },
     {
@@ -21558,9 +21433,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "macys-amex-dining",
+          "id": "macys-amex-dining-v2",
           "category": "dining",
-          "issuerWording": "restaurants including delivery",
+          "issuerWording": "restaurants, including delivery",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -21660,9 +21535,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "macys-amex-macys-silver",
+          "id": "macys-amex-macys",
           "category": "other",
-          "issuerWording": "Everyday Shopping at Macy’s",
+          "issuerWording": "2 points per $1 spent for Silver members",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -21682,20 +21557,11 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "excludedBrandIds": [],
           "sharedCapId": null,
           "choice": null,
-          "requires": [
-            {
-              "gateId": "macys-star-rewards-tier",
-              "optionIds": [
-                "silver"
-              ]
-            }
-          ],
+          "requires": [],
           "requiredPaymentPaths": []
         }
       ],
-      "exclusions": [
-        "Macy’s gift cards, services and fees earn no points."
-      ]
+      "exclusions": []
     },
     {
       "id": "citi-bloomingdales-amex",
@@ -21710,9 +21576,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "bloomingdales-amex-base",
+          "id": "bloomingdales-amex-base-v2",
           "category": "all-purchases",
-          "issuerWording": "anywhere American Express is accepted",
+          "issuerWording": "Shopping Outside of Bloomingdale’s",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -21828,9 +21694,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "bloomingdales-amex-bloomingdales-loyallist",
+          "id": "bloomingdales-amex-bloomingdales-loyallist-v2",
           "category": "other",
-          "issuerWording": "Bloomingdale’s, bloomingdales.com, Bloomingdale’s The Outlet Store",
+          "issuerWording": "Shopping at Bloomingdale’s",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -22152,9 +22018,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "discover-it-chrome-entertainment-portal",
+          "id": "discover-it-chrome-entertainment-portal-v2",
           "category": "entertainment-portal",
-          "issuerWording": "Capital One Entertainment",
+          "issuerWording": "Capital One Entertainment purchases",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -22260,13 +22126,42 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "choice": null,
           "requires": [],
           "requiredPaymentPaths": []
+        },
+        {
+          "id": "discover-it-chrome-ev-charging",
+          "category": "ev-charging",
+          "issuerWording": "some public electric vehicle charging stations",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "spend",
+            "amountCents": 100000,
+            "period": "quarter",
+            "rateAfterCapBps": 100
+          },
+          "activation": "none",
+          "usMerchantsOnly": true,
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
+          "limitedTime": null,
+          "sourceIds": [
+            "discover-it-chrome-product",
+            "discover-it-chrome-terms"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": "gas-restaurants-2-percent",
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
         }
       ],
       "exclusions": [
-        "Cash advances, balance transfers, transfers from Discover or Capital One checking or other deposit accounts, and checks used to access your account",
-        "Portions of purchases paid with rewards",
-        "transactions that do not comply with our policies and/or applicable laws",
-        "any cash you receive in connection with a purchase at the point of sale through Discover’s Cash at Checkout feature"
+        "Cash advances, balance transfers, transfers from Discover or Capital One checking or other deposit accounts, and checks used to access your account are not considered…",
+        "Portions of purchases paid with rewards, transactions that do not comply with our policies and/or applicable laws, or any cash you receive in connection with…"
       ]
     },
     {
@@ -22802,8 +22697,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Amazon Pay purchases",
-        "Purchases using special financing or equal monthly payments"
+        "Amazon Pay purchases made using your Prime Store Card or Prime Secured Card are not eligible to earn reward points.",
+        "The % back benefit cannot be combined with any special financing or equal monthly payments offer; you will have the option to apply either (a)…"
       ]
     },
     {
@@ -22931,38 +22826,6 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "amazon-secured-amazon-member-2",
-          "category": "other",
-          "issuerWording": "purchases made at physical Amazon locations",
-          "rateBps": 200,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "amazon-store-card-product"
-          ],
-          "brandIds": [
-            "amazon"
-          ],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [
-            {
-              "gateId": "amazon-prime",
-              "optionIds": [
-                "member"
-              ]
-            }
-          ],
-          "requiredPaymentPaths": []
-        },
-        {
           "id": "amazon-secured-whole-foods-market-member",
           "category": "other",
           "issuerWording": "participating Whole Foods Markets",
@@ -22996,7 +22859,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Amazon Pay purchases made using your Prime Store Card or Prime Secured Card are not eligible to earn reward points."
+        "Amazon Pay purchases made using your Prime Store Card or Prime Secured Card are not eligible to earn reward points.",
+        "The % back benefit cannot be combined with any special financing or equal monthly payments offer"
       ]
     },
     {
@@ -23012,15 +22876,15 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "paypal-cashback-base",
+          "id": "paypal-cashback-base-v2",
           "category": "all-purchases",
-          "issuerWording": "everywhere else that Mastercard is accepted",
+          "issuerWording": "Earn 1.5% on Eligible Purchases made everywhere else that Mastercard is accepted.",
           "rateBps": 150,
           "paidOnPaymentBps": 0,
           "cap": {
             "kind": "none"
           },
-          "activation": "none",
+          "activation": "unstated",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [],
           "limitedTime": null,
@@ -23037,7 +22901,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "paypal-cashback-all-paypal",
+          "id": "paypal-cashback-all-paypal-v2",
           "category": "all-purchases",
           "issuerWording": "through your PayPal account online",
           "rateBps": 300,
@@ -23045,7 +22909,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "none"
           },
-          "activation": "none",
+          "activation": "unstated",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [],
           "limitedTime": null,
@@ -23232,9 +23096,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "verizon-base",
+          "id": "verizon-base-v2",
           "category": "all-purchases",
-          "issuerWording": "everywhere else Visa is accepted",
+          "issuerWording": "all other Net New Purchases made on your Credit Card Account everywhere else Visa is accepted",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -23257,9 +23121,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "verizon-gas",
+          "id": "verizon-gas-v2",
           "category": "gas",
-          "issuerWording": "Gas purchases",
+          "issuerWording": "gas",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -23282,9 +23146,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "verizon-ev-charging",
+          "id": "verizon-ev-charging-v2",
           "category": "ev-charging",
-          "issuerWording": "EV charging station purchases",
+          "issuerWording": "EV charging stations",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -23307,9 +23171,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "verizon-supermarkets",
+          "id": "verizon-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "grocery stores and supermarkets",
+          "issuerWording": "groceries",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -23357,9 +23221,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "verizon-verizon",
+          "id": "verizon-verizon-v2",
           "category": "other",
-          "issuerWording": "Verizon purchases",
+          "issuerWording": "Verizon operated store, Verizon online, over the phone with a Verizon representative or at an exclusive Verizon Authorized Retailer",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -23385,7 +23249,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "unauthorized or fraudulent charges, debt cancellation products, cash advances, balance transfers, interest or fees"
+        "unauthorized or fraudulent charges, the purchase of debt cancellation products, cash advances, balance transfers, interest or fees"
       ]
     },
     {
@@ -23503,9 +23367,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "sams-club-sams-club-plus",
+          "id": "sams-club-sams-club-plus-v2",
           "category": "other",
-          "issuerWording": "Sam’s Club purchases",
+          "issuerWording": "Sam’s Club purchases for Plus members",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -23537,13 +23401,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "cash advances",
-        "tobacco and smoking related products (including electronic cigarettes)",
-        "prescription purchases",
-        "reloading or purchases of prepaid cards",
-        "gift cards (including third party gift cards)",
-        "traveler’s checks or any cash equivalents",
-        "credits, returns, taxes and adjustments"
+        "credits, returns, taxes and adjustments",
+        "cash advances, tobacco and smoking related products (including electronic cigarettes), prescription purchases, reloading or purchases of prepaid cards, gift cards (including third party gift cards),…"
       ]
     },
     {
@@ -23708,7 +23567,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "onepay-cashrewards-base",
+          "id": "onepay-cashrewards-base-v2",
           "category": "all-purchases",
           "issuerWording": "1.5% Cash Back on all Purchases",
           "rateBps": 150,
@@ -23716,7 +23575,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "none"
           },
-          "activation": "none",
+          "activation": "unstated",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [],
           "limitedTime": null,
@@ -23767,15 +23626,42 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "onepay-cashrewards-all-first-90-days",
-          "category": "all-purchases",
-          "issuerWording": "3% cash back on eligible purchases made outside of Walmart",
+          "id": "onepay-cashrewards-walmart-v2",
+          "category": "other",
+          "issuerWording": "3% Cash Back at Walmart",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
             "kind": "none"
           },
-          "activation": "none",
+          "activation": "unstated",
+          "usMerchantsOnly": true,
+          "excludedPaymentPaths": [],
+          "limitedTime": null,
+          "sourceIds": [
+            "synchrony-onepay-cashrewards-card-product",
+            "synchrony-onepay-cashrewards-card-rewards-terms",
+            "synchrony-onepay-cashrewards-card-pricing"
+          ],
+          "brandIds": [
+            "walmart"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "onepay-cashrewards-all-first-90-days-v2",
+          "category": "all-purchases",
+          "issuerWording": "all other purchases",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "unstated",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [],
           "limitedTime": {
@@ -23802,42 +23688,10 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
             }
           ],
           "requiredPaymentPaths": []
-        },
-        {
-          "id": "onepay-cashrewards-walmart",
-          "category": "other",
-          "issuerWording": "3% Cash Back at Walmart",
-          "rateBps": 300,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "none"
-          },
-          "activation": "none",
-          "usMerchantsOnly": true,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "synchrony-onepay-cashrewards-card-product",
-            "synchrony-onepay-cashrewards-card-rewards-terms",
-            "synchrony-onepay-cashrewards-card-pricing"
-          ],
-          "brandIds": [
-            "walmart"
-          ],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
         }
       ],
       "exclusions": [
-        "returns, refunds, and adjustments",
-        "cash advances and cash-like transactions",
-        "balance transfers",
-        "lottery tickets and similar gaming transactions",
-        "ATM withdrawals",
-        "transactions for cash substitutes (e.g., money orders or wire transfers)"
+        "Balance transfers, cash advances and cash-like transactions, cash substitutes, betting transactions, account checks, unauthorized or fraudulent charges, and ATM withdrawals are not Purchases."
       ]
     },
     {
@@ -23986,9 +23840,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       ],
       "exclusions": [
         "cash advances, disputed transactions, unauthorized or fraudulent transactions, interest, finance charges, fees",
-        "photo orders not picked up in store, alcohol, dairy, tobacco, gift cards, sales tax and shipping",
-        "items or services sold by third-party partners",
-        "prescriptions or services purchased from AR, NJ or NY pharmacies",
+        "photo orders not picked up in store, alcohol, dairy, tobacco, gift cards, sales tax and shipping, or items or services sold by third-party partners",
+        "prescriptions, pharmacy items and services cannot be earned in AR, NJ or NY",
         "prescriptions received through mail-order services"
       ]
     },
@@ -24144,9 +23997,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "newegg-store-newegg",
+          "id": "newegg-store-newegg-v2",
           "category": "other",
-          "issuerWording": "4% everyday discount",
+          "issuerWording": "Save 4% every day1 with your Newegg Store Credit Card",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -24171,8 +24024,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "gift cards, warranties, prior purchases, taxes, or shipping charges",
-        "purchases using special financing"
+        "The 4% discount does not apply to gift cards, warranties, prior purchases, taxes, or shipping charges."
       ]
     },
     {
@@ -25582,9 +25434,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "cash-plus-tv-internet-streaming",
+          "id": "cash-plus-tv-internet-streaming-v2",
           "category": "streaming",
-          "issuerWording": "TV, Internet & Streaming Services",
+          "issuerWording": "TV, internet and streaming",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -25826,9 +25678,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "cash-plus-travel-portal",
+          "id": "cash-plus-travel-portal-v2",
           "category": "travel-portal",
-          "issuerWording": "prepaid air, car and hotel reservations in the travel center",
+          "issuerWording": "prepaid travel",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -25853,6 +25705,40 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         {
           "id": "cash-plus-gas-ev-charging",
           "category": "gas",
+          "issuerWording": "Gas stations and EV charging stations",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "recurring",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [],
+          "limitedTime": null,
+          "sourceIds": [
+            "us-bank-cash-plus-product",
+            "us-bank-cash-plus-rewards-terms",
+            "us-bank-cash-plus-sample-merchants"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [
+            "walmart",
+            "target",
+            "costco",
+            "sams-club",
+            "bjs-wholesale-club"
+          ],
+          "sharedCapId": null,
+          "choice": {
+            "choiceId": "two-percent-category",
+            "optionId": "gas-ev-charging"
+          },
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "cash-plus-gas-ev-charging-2",
+          "category": "ev-charging",
           "issuerWording": "Gas stations and EV charging stations",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
@@ -25945,40 +25831,6 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           },
           "requires": [],
           "requiredPaymentPaths": []
-        },
-        {
-          "id": "cash-plus-gas-ev-charging-2",
-          "category": "ev-charging",
-          "issuerWording": "Gas stations and EV charging stations",
-          "rateBps": 200,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "none"
-          },
-          "activation": "recurring",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "us-bank-cash-plus-product",
-            "us-bank-cash-plus-rewards-terms",
-            "us-bank-cash-plus-sample-merchants"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [
-            "walmart",
-            "target",
-            "costco",
-            "sams-club",
-            "bjs-wholesale-club"
-          ],
-          "sharedCapId": null,
-          "choice": {
-            "choiceId": "two-percent-category",
-            "optionId": "gas-ev-charging"
-          },
-          "requires": [],
-          "requiredPaymentPaths": []
         }
       ],
       "exclusions": [
@@ -26003,9 +25855,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "smartly-base",
+          "id": "smartly-base-v2",
           "category": "all-purchases",
-          "issuerWording": "Earn unlimited 2% cash back on every purchase.1",
+          "issuerWording": "every purchase",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26126,14 +25978,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Convenience Checks",
-        "Balance Transfers",
-        "Advances (including ATM withdrawals, wire transfers, traveler's checks, money orders, foreign cash transactions, betting transactions, and lottery tickets)",
-        "interest charges and fees",
-        "credit insurance premiums",
-        "fund certain prepaid card products",
-        "buy currency from the U.S. Mint",
-        "buy cash convertible items"
+        "Convenience checks, balance transfers, advances, interest charges, fees, credit insurance premiums, prepaid-card funding, U.S. Mint currency purchases, and cash-convertible items"
       ]
     },
     {
@@ -26149,9 +25994,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "altitude-go-base",
+          "id": "altitude-go-base-v2",
           "category": "all-purchases",
-          "issuerWording": "eligible Net Purchases",
+          "issuerWording": "You will earn 1 Point for every $1 in eligible Net Purchases (Net Purchases are purchases minus credits and returns) made with your Account.",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26173,9 +26018,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "altitude-go-dining",
+          "id": "altitude-go-dining-v2",
           "category": "dining",
-          "issuerWording": "restaurant, fast-food restaurant and bar purchases",
+          "issuerWording": "(1) 4 Points (1 base and 3 bonus Points) for every $1 on restaurant, fast-food restaurant and bar purchases on your first $2,000 each quarter.",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26200,9 +26045,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "altitude-go-supermarkets",
+          "id": "altitude-go-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "grocery store and supermarket purchases",
+          "issuerWording": "(3) 2 Points (1 base and 1 bonus Point) for every $1 in grocery store and supermarket purchases.",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26230,9 +26075,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "altitude-go-gas",
+          "id": "altitude-go-gas-v2",
           "category": "gas",
-          "issuerWording": "gas station and EV charging station purchases",
+          "issuerWording": "(2) 2 Points (1 base and 1 bonus Point) for every $1 on gas station and EV charging station purchases.",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26260,9 +26105,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "altitude-go-ev-charging",
+          "id": "altitude-go-ev-charging-v2",
           "category": "ev-charging",
-          "issuerWording": "gas station and EV charging station purchases",
+          "issuerWording": "(2) 2 Points (1 base and 1 bonus Point) for every $1 on gas station and EV charging station purchases.",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26290,9 +26135,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "altitude-go-streaming",
+          "id": "altitude-go-streaming-v2",
           "category": "streaming",
-          "issuerWording": "qualifying streaming subscription service purchases",
+          "issuerWording": "(4) 2 Points (1 base and 1 bonus Point) for every $1 on qualifying streaming subscription service purchases.",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26315,7 +26160,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Convenience Checks; Balance Transfers; Advances; interest charges and fees; credit insurance premiums; funding certain prepaid card products; buying currency from the U.S. Mint; buying cash…"
+        "Not all transactions are considered to be Purchases and eligible to earn rewards, such as transactions posting as Convenience Checks; Balance Transfers; Advances (including ATM…"
       ]
     },
     {
@@ -26331,9 +26176,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "altitude-connect-base",
+          "id": "altitude-connect-base-v2",
           "category": "all-purchases",
-          "issuerWording": "eligible Net Purchases",
+          "issuerWording": "1 Point for every $1 in eligible Net Purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26355,9 +26200,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "altitude-connect-travel-portal",
+          "id": "altitude-connect-travel-portal-v2",
           "category": "travel-portal",
-          "issuerWording": "prepaid car and hotel reservations purchased in the online Travel Center",
+          "issuerWording": "5 Points (1 base and 4 bonus Points) for every $1 spent on prepaid car and hotel reservations purchased in the online Travel Center using",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26379,9 +26224,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "altitude-connect-transit",
+          "id": "altitude-connect-transit-v2",
           "category": "transit",
-          "issuerWording": "travel category purchases",
+          "issuerWording": "4 Points (1 base and 3 bonus Points) for every $1 on travel category purchases",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26403,9 +26248,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "altitude-connect-gas",
+          "id": "altitude-connect-gas-v2",
           "category": "gas",
-          "issuerWording": "gas station and electric vehicle charging station purchases",
+          "issuerWording": "4 Points (1 base and 3 bonus Points) for every $1 on your first $1,000 each quarter on gas station and electric vehicle charging station",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26436,9 +26281,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "altitude-connect-ev-charging",
+          "id": "altitude-connect-ev-charging-v2",
           "category": "ev-charging",
-          "issuerWording": "electric vehicle charging station purchases",
+          "issuerWording": "4 Points (1 base and 3 bonus Points) for every $1 on your first $1,000 each quarter on gas station and electric vehicle charging station",
           "rateBps": 400,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26469,9 +26314,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "altitude-connect-supermarkets",
+          "id": "altitude-connect-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "grocery store and supermarket purchases",
+          "issuerWording": "2 Points (1 base and 1 bonus Point) for every $1 in grocery store and supermarket purchases",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26499,9 +26344,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "altitude-connect-dining",
+          "id": "altitude-connect-dining-v2",
           "category": "dining",
-          "issuerWording": "restaurant, fast-food restaurant or bar purchases",
+          "issuerWording": "2 Points (1 base and 1 bonus Point) for every $1 on restaurant, fast-food restaurant or bar purchases",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26523,9 +26368,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "altitude-connect-streaming",
+          "id": "altitude-connect-streaming-v2",
           "category": "streaming",
-          "issuerWording": "qualifying streaming subscription service purchase",
+          "issuerWording": "2 Points (1 base and 1 bonus Point) for every $1 on qualifying streaming subscription service purchase",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26548,7 +26393,14 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Convenience Checks; Balance Transfers; Advances (including ATM withdrawals, wire transfers, traveler's checks, money orders, foreign cash transactions, betting transactions, and lottery tickets); inte"
+        "transactions posting as Convenience Checks",
+        "Balance Transfers",
+        "Advances (including ATM withdrawals, wire transfers, traveler's checks, money orders, foreign cash transactions, betting transactions, and lottery tickets)",
+        "interest charges and fees",
+        "credit insurance premiums",
+        "transactions to (i) fund certain prepaid card products",
+        "transactions to buy currency from the U.S. Mint",
+        "transactions to buy cash convertible items"
       ]
     },
     {
@@ -26667,9 +26519,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "cash-plus-secured-tv-internet-streaming",
+          "id": "cash-plus-secured-tv-internet-streaming-v2",
           "category": "streaming",
-          "issuerWording": "TV, Internet & Streaming Services",
+          "issuerWording": "TV, internet and streaming",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -26697,6 +26549,30 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
             "choiceId": "five-percent-categories",
             "optionId": "tv-internet-streaming"
           },
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "cash-plus-secured-travel-portal",
+          "category": "travel-portal",
+          "issuerWording": "prepaid air, hotel and car reservations booked directly in the Travel Center",
+          "rateBps": 500,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [],
+          "limitedTime": null,
+          "sourceIds": [
+            "us-bank-cash-plus-secured-product",
+            "us-bank-cash-plus-sample-merchants"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
           "requires": [],
           "requiredPaymentPaths": []
         },
@@ -26904,30 +26780,6 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "cash-plus-secured-travel-portal",
-          "category": "travel-portal",
-          "issuerWording": "prepaid air, hotel and car reservations booked directly in the Travel Center",
-          "rateBps": 500,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "us-bank-cash-plus-secured-product",
-            "us-bank-cash-plus-sample-merchants"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
           "id": "cash-plus-secured-gas-ev-charging",
           "category": "gas",
           "issuerWording": "Gas stations and EV charging stations",
@@ -27076,9 +26928,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "altitude-go-secured-base",
+          "id": "altitude-go-secured-base-v2",
           "category": "all-purchases",
-          "issuerWording": "eligible Net Purchases",
+          "issuerWording": "all other eligible purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -27121,6 +26973,36 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           ],
           "brandIds": [],
           "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "altitude-go-secured-supermarkets",
+          "category": "supermarkets",
+          "issuerWording": "grocery store and supermarket purchases",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "unstated",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [],
+          "limitedTime": null,
+          "sourceIds": [
+            "us-bank-altitude-go-secured-product",
+            "us-bank-altitude-go-secured-rewards-terms"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [
+            "walmart",
+            "target",
+            "costco",
+            "sams-club",
+            "bjs-wholesale-club"
+          ],
           "sharedCapId": null,
           "choice": null,
           "requires": [],
@@ -27187,36 +27069,6 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "altitude-go-secured-supermarkets",
-          "category": "supermarkets",
-          "issuerWording": "grocery store and supermarket purchases",
-          "rateBps": 200,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "none"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "us-bank-altitude-go-secured-product",
-            "us-bank-altitude-go-secured-rewards-terms"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [
-            "walmart",
-            "target",
-            "costco",
-            "sams-club",
-            "bjs-wholesale-club"
-          ],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
           "id": "altitude-go-secured-streaming",
           "category": "streaming",
           "issuerWording": "qualifying streaming subscription service purchases",
@@ -27242,7 +27094,14 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Convenience Checks; Balance Transfers; Advances; interest charges and fees; credit insurance premiums; prepaid card funding; U.S. Mint currency purchases; and cash convertible items"
+        "transactions posting as Convenience Checks",
+        "Balance Transfers",
+        "Advances (including ATM withdrawals, wire transfers, traveler's checks, money orders, foreign cash transactions, betting transactions, and lottery tickets)",
+        "interest charges and fees",
+        "credit insurance premiums",
+        "transactions to fund certain prepaid card products",
+        "transactions to buy currency from the U.S. Mint",
+        "transactions to buy cash convertible items"
       ]
     },
     {
@@ -27397,6 +27256,31 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
+          "id": "harley-davidson-hog-elite-harley-davidson-v2",
+          "category": "other",
+          "issuerWording": "merchants classified as H‑D",
+          "rateBps": 500,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [],
+          "limitedTime": null,
+          "sourceIds": [
+            "us-bank-harley-davidson-hog-elite-product"
+          ],
+          "brandIds": [
+            "harley-davidson"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
           "id": "harley-davidson-hog-elite-gas",
           "category": "gas",
           "issuerWording": "gas stations",
@@ -27413,31 +27297,6 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
             "us-bank-harley-davidson-hog-elite-product"
           ],
           "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "harley-davidson-hog-elite-harley-davidson",
-          "category": "other",
-          "issuerWording": "merchants classified as H‑D (dealerships, H‑D.com, the H‑D Museum, Factory Tours, and H‑D Insurance)",
-          "rateBps": 500,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "us-bank-harley-davidson-hog-elite-product"
-          ],
-          "brandIds": [
-            "harley-davidson"
-          ],
           "excludedBrandIds": [],
           "sharedCapId": null,
           "choice": null,
@@ -27469,7 +27328,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Convenience Checks",
+        "transactions posting as Convenience Checks",
         "Balance Transfers",
         "Advances (including ATM withdrawals, wire transfers, traveler’s checks, money orders, foreign cash transactions, betting transactions, and lottery tickets)",
         "interest charges and fees",
@@ -27514,7 +27373,12 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Convenience Checks; Balance Transfers; Advances; interest charges and fees; credit insurance premiums; prepaid card funding; U.S. Mint currency; cash convertible items"
+        "transactions posting as Convenience Checks",
+        "Balance Transfers",
+        "Advances (including ATM withdrawals, wire transfers, traveler’s checks, money orders, foreign cash transactions, betting transactions, and lottery tickets)",
+        "interest charges and fees",
+        "credit insurance premiums",
+        "transactions to (i) fund certain prepaid card products, (ii) buy currency from the U.S. Mint, or (iii) buy cash convertible items"
       ]
     },
     {
@@ -27554,9 +27418,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "skypass-skyblue-transit",
+          "id": "skypass-skyblue-transit-v2",
           "category": "transit",
-          "issuerWording": "rideshare services",
+          "issuerWording": "rideshare",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -27578,9 +27442,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "skypass-skyblue-streaming",
+          "id": "skypass-skyblue-streaming-v2",
           "category": "streaming",
-          "issuerWording": "streaming services",
+          "issuerWording": "streaming subscription services",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -27603,7 +27467,13 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Advances (including wire transfers, traveler's checks, money orders, foreign cash transactions, betting transactions, lottery tickets and ATM disbursements), Convenience Checks, Balance Transfers, int"
+        "Advances (including wire transfers, traveler's checks, money orders, foreign cash transactions, betting transactions, lottery tickets and ATM disbursements)",
+        "Convenience Checks",
+        "Balance Transfers",
+        "interest charges and Fees",
+        "credit insurance charges",
+        "transactions to fund certain prepaid card products",
+        "transactions to purchase cash convertible items or funds from the U.S. Mint"
       ]
     },
     {
@@ -27643,9 +27513,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "skypass-dining",
+          "id": "skypass-dining-v2",
           "category": "dining",
-          "issuerWording": "dining including takeout and restaurant delivery",
+          "issuerWording": "restaurants, fast-food restaurants or bars",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -27667,9 +27537,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "skypass-korean-air",
+          "id": "skypass-korean-air-v2",
           "category": "other",
-          "issuerWording": "eligible Korean Air ticket purchases",
+          "issuerWording": "Korean Air ticket purchases",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -27694,7 +27564,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Not all transactions are eligible to earn rewards, such as Advances (including wire transfers, traveler's checks, money orders, foreign cash transactions, betting transactions, lottery tickets…"
+        "Advances, Convenience Checks, Balance Transfers, interest charges and Fees, credit insurance charges, prepaid card funding, cash convertible items and U.S. Mint funds"
       ]
     },
     {
@@ -27734,9 +27604,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "skypass-select-korean-air",
+          "id": "skypass-select-korean-air-v2",
           "category": "other",
-          "issuerWording": "qualified Korean Air ticket purchases",
+          "issuerWording": "Korean Air ticket purchases",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -27785,7 +27655,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Advances, Convenience Checks, Balance Transfers, interest charges and Fees, credit insurance charges, transactions to fund certain prepaid card products, and transactions to purchase cash convertible…"
+        "Advances, Convenience Checks, Balance Transfers, interest charges and fees, credit insurance charges, certain prepaid-card funding transactions, and cash-convertible purchases."
       ]
     },
     {
@@ -27876,31 +27746,6 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "state-farm-premier-cash-rewards-drug",
-          "category": "drugstores",
-          "issuerWording": "drug stores",
-          "rateBps": 200,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "us-bank-state-farm-premier-cash-rewards-product",
-            "state-farm-credit-cards",
-            "us-bank-state-farm-premier-cash-rewards-pricing"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
           "id": "state-farm-premier-cash-rewards-supermarkets",
           "category": "supermarkets",
           "issuerWording": "grocery stores",
@@ -27926,9 +27771,34 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "state-farm-premier-cash-rewards-dining",
+          "id": "state-farm-premier-cash-rewards-dining-v2",
           "category": "dining",
-          "issuerWording": "dining",
+          "issuerWording": "restaurants, fast-food restaurants, bars",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [],
+          "limitedTime": null,
+          "sourceIds": [
+            "us-bank-state-farm-premier-cash-rewards-product",
+            "state-farm-credit-cards",
+            "us-bank-state-farm-premier-cash-rewards-pricing"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "state-farm-premier-cash-rewards-drug",
+          "category": "drugstores",
+          "issuerWording": "drug stores",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -27952,14 +27822,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "transactions posting as Convenience Checks",
-        "Balance Transfers",
-        "Advances (including ATM withdrawals, wire transfers, traveler's checks, money orders, foreign cash transactions, betting transactions, and lottery tickets)",
-        "interest charges and fees",
-        "credit insurance premiums",
-        "transactions to (i) fund certain prepaid card products",
-        "buy currency from the U.S. Mint",
-        "buy cash convertible items"
+        "Cash back is not earned for Advances (including wire transfers, travelers checks, money orders, foreign cash transactions, betting transactions, lottery tickets and ATM disbursements), Convenience…"
       ]
     },
     {
@@ -28210,9 +28073,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       ],
       "rules": [
         {
-          "id": "edward-jones-triple-rewards-base",
+          "id": "edward-jones-triple-rewards-base-v2",
           "category": "all-purchases",
-          "issuerWording": "Net Purchases",
+          "issuerWording": "all other eligible net purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -28256,6 +28119,41 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "excludedBrandIds": [],
           "sharedCapId": null,
           "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "edward-jones-triple-rewards-grocery-stores",
+          "category": "supermarkets",
+          "issuerWording": "Grocery Stores",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "none",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [],
+          "limitedTime": null,
+          "sourceIds": [
+            "us-bank-edward-jones-triple-rewards-product",
+            "us-bank-edward-jones-triple-rewards-pricing",
+            "us-bank-edward-jones-triple-rewards-categories"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [
+            "amazon",
+            "target",
+            "walmart",
+            "costco",
+            "sams-club",
+            "bjs-wholesale-club"
+          ],
+          "sharedCapId": null,
+          "choice": {
+            "choiceId": "top-three-categories",
+            "optionId": "grocery-stores"
+          },
           "requires": [],
           "requiredPaymentPaths": []
         },
@@ -28351,105 +28249,6 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "choice": {
             "choiceId": "top-three-categories",
             "optionId": "ev-charging-gas"
-          },
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "edward-jones-triple-rewards-grocery-stores",
-          "category": "supermarkets",
-          "issuerWording": "Grocery Stores",
-          "rateBps": 300,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "none",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "us-bank-edward-jones-triple-rewards-product",
-            "us-bank-edward-jones-triple-rewards-pricing",
-            "us-bank-edward-jones-triple-rewards-categories"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [
-            "amazon",
-            "target",
-            "walmart",
-            "costco",
-            "sams-club",
-            "bjs-wholesale-club"
-          ],
-          "sharedCapId": null,
-          "choice": {
-            "choiceId": "top-three-categories",
-            "optionId": "grocery-stores"
-          },
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "edward-jones-triple-rewards-ground-transportation",
-          "category": "transit",
-          "issuerWording": "Ground Transportation",
-          "rateBps": 300,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "none",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "us-bank-edward-jones-triple-rewards-product",
-            "us-bank-edward-jones-triple-rewards-pricing",
-            "us-bank-edward-jones-triple-rewards-categories"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [
-            "amazon",
-            "target",
-            "walmart"
-          ],
-          "sharedCapId": null,
-          "choice": {
-            "choiceId": "top-three-categories",
-            "optionId": "ground-transportation"
-          },
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "edward-jones-triple-rewards-recreation",
-          "category": "entertainment",
-          "issuerWording": "Recreation",
-          "rateBps": 300,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "unstated"
-          },
-          "activation": "none",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "us-bank-edward-jones-triple-rewards-product",
-            "us-bank-edward-jones-triple-rewards-pricing",
-            "us-bank-edward-jones-triple-rewards-categories"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [
-            "amazon",
-            "target",
-            "walmart"
-          ],
-          "sharedCapId": null,
-          "choice": {
-            "choiceId": "top-three-categories",
-            "optionId": "recreation"
           },
           "requires": [],
           "requiredPaymentPaths": []
@@ -28551,6 +28350,38 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
+          "id": "edward-jones-triple-rewards-ground-transportation",
+          "category": "transit",
+          "issuerWording": "Ground Transportation",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "none",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [],
+          "limitedTime": null,
+          "sourceIds": [
+            "us-bank-edward-jones-triple-rewards-product",
+            "us-bank-edward-jones-triple-rewards-pricing",
+            "us-bank-edward-jones-triple-rewards-categories"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [
+            "amazon",
+            "target",
+            "walmart"
+          ],
+          "sharedCapId": null,
+          "choice": {
+            "choiceId": "top-three-categories",
+            "optionId": "ground-transportation"
+          },
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
           "id": "edward-jones-triple-rewards-hardware-stores",
           "category": "home-improvement",
           "issuerWording": "Hardware Stores",
@@ -28578,6 +28409,38 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "choice": {
             "choiceId": "top-three-categories",
             "optionId": "hardware-stores"
+          },
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "edward-jones-triple-rewards-recreation",
+          "category": "entertainment",
+          "issuerWording": "Recreation",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "none",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [],
+          "limitedTime": null,
+          "sourceIds": [
+            "us-bank-edward-jones-triple-rewards-product",
+            "us-bank-edward-jones-triple-rewards-pricing",
+            "us-bank-edward-jones-triple-rewards-categories"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [
+            "amazon",
+            "target",
+            "walmart"
+          ],
+          "sharedCapId": null,
+          "choice": {
+            "choiceId": "top-three-categories",
+            "optionId": "recreation"
           },
           "requires": [],
           "requiredPaymentPaths": []
@@ -28618,12 +28481,10 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "exclusions": [
         "transactions posting as Convenience Checks",
         "Balance Transfers",
-        "Advances, including ATM withdrawals, wire transfers, traveler's checks, money orders, foreign cash transactions, betting transactions, and lottery tickets",
+        "Advances (including ATM withdrawals, wire transfers, traveler's checks, money orders, foreign cash transactions, betting transactions, and lottery tickets)",
         "interest charges and fees",
         "credit insurance premiums",
-        "transactions to fund certain prepaid card products",
-        "transactions to buy currency from the U.S. Mint",
-        "transactions to buy cash convertible items"
+        "transactions to (i) fund certain prepaid card products, (ii) buy currency from the U.S. Mint, or (iii) buy cash convertible items"
       ]
     },
     {
@@ -28639,9 +28500,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "elan-fidelity-rewards-base",
+          "id": "elan-fidelity-rewards-base-v2",
           "category": "all-purchases",
-          "issuerWording": "eligible net purchases",
+          "issuerWording": "2 Reward Points (\"Points\") for each dollar of Net Purchases charged to your Account",
           "rateBps": 200,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -28664,13 +28525,13 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Certain transactions are not eligible for Reward Points, including Advances, convenience checks, balance transfers, unauthorized or fraudulent charges, overdraft advances, interest charges, fees, cred"
+        "Certain transactions are not eligible for Reward Points, including Advances (as defined in the Agreement, including wire transfers, travelers checks, money orders, foreign cash transactions,…"
       ]
     },
     {
       "id": "wells-fargo-autograph",
-      "name": "Wells Fargo Autograph Card",
-      "shortName": "Autograph",
+      "name": "Wells Fargo Autograph Visa Credit Card",
+      "shortName": "Autograph Visa",
       "issuer": "Wells Fargo",
       "programId": "wells-fargo-rewards",
       "statedValueHundredthsOfCent": 100,
@@ -28680,7 +28541,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "autograph-base",
+          "id": "autograph-base-v2",
           "category": "all-purchases",
           "issuerWording": "Other purchases",
           "rateBps": 100,
@@ -28688,14 +28549,14 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "none"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [],
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-autograph-product",
-            "wells-fargo-autograph-pricing",
-            "wells-fargo-autograph-categories"
+            "wells-fargo-autograph-rewards-terms",
+            "wells-fargo-autograph-pricing"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -28705,35 +28566,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "autograph-dining",
-          "category": "dining",
-          "issuerWording": "Dining",
-          "rateBps": 300,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "none"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [
-            "paypal",
-            "venmo"
-          ],
-          "limitedTime": null,
-          "sourceIds": [
-            "wells-fargo-autograph-product",
-            "wells-fargo-autograph-pricing",
-            "wells-fargo-autograph-categories"
-          ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "autograph-gas",
+          "id": "autograph-gas-v2",
           "category": "gas",
           "issuerWording": "Gas",
           "rateBps": 300,
@@ -28741,7 +28574,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "none"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -28750,8 +28583,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-autograph-product",
-            "wells-fargo-autograph-pricing",
-            "wells-fargo-autograph-categories"
+            "wells-fargo-autograph-rewards-terms",
+            "wells-fargo-autograph-pricing"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -28761,7 +28594,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "autograph-ev-charging",
+          "id": "autograph-ev-charging-v2",
           "category": "ev-charging",
           "issuerWording": "electric vehicle charging stations",
           "rateBps": 300,
@@ -28769,7 +28602,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "none"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -28778,8 +28611,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-autograph-product",
-            "wells-fargo-autograph-pricing",
-            "wells-fargo-autograph-categories"
+            "wells-fargo-autograph-rewards-terms",
+            "wells-fargo-autograph-pricing"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -28789,7 +28622,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "autograph-transit",
+          "id": "autograph-transit-v2",
           "category": "transit",
           "issuerWording": "Transit",
           "rateBps": 300,
@@ -28797,7 +28630,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "none"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -28806,8 +28639,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-autograph-product",
-            "wells-fargo-autograph-pricing",
-            "wells-fargo-autograph-categories"
+            "wells-fargo-autograph-rewards-terms",
+            "wells-fargo-autograph-pricing"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -28817,15 +28650,15 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "autograph-streaming",
-          "category": "streaming",
-          "issuerWording": "Popular streaming services",
+          "id": "autograph-dining-v2",
+          "category": "dining",
+          "issuerWording": "Dining",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
             "kind": "none"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -28834,8 +28667,36 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-autograph-product",
-            "wells-fargo-autograph-pricing",
-            "wells-fargo-autograph-categories"
+            "wells-fargo-autograph-rewards-terms",
+            "wells-fargo-autograph-pricing"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "autograph-streaming-v2",
+          "category": "streaming",
+          "issuerWording": "Popular streaming services",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "none",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo"
+          ],
+          "limitedTime": null,
+          "sourceIds": [
+            "wells-fargo-autograph-product",
+            "wells-fargo-autograph-rewards-terms",
+            "wells-fargo-autograph-pricing"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -28846,26 +28707,21 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Cash Advances and Any Kind of Equivalents",
-        "ATM transactions",
-        "Cash advances",
-        "Money orders",
-        "Pre-paid gift cards",
-        "Traveler’s checks",
-        "Wire transfers",
-        "Digital currencies (to the extent accepted)",
-        "Balance Transfers",
+        "Cash advances and cash equivalents of any kind do not earn points.",
+        "Balance transfers do not earn rewards.",
         "SUPERCHECKS™",
-        "Person-to-person money transfers",
-        "Disputed or illegal purchases",
-        "Fees or interest that post to the account",
-        "Gambling transactions"
+        "Rewards are not earned on any portion of a transaction redeemed through the PWR feature.",
+        "Person-to-person money transfers do not earn rewards points.",
+        "Overdraft protection advances do not earn rewards points.",
+        "Disputed or illegal purchases do not earn rewards points.",
+        "Fees and interest posted to the account do not earn rewards points.",
+        "Gambling transactions do not earn rewards points."
       ]
     },
     {
       "id": "wells-fargo-autograph-journey",
-      "name": "Wells Fargo Autograph Journey Card",
-      "shortName": "Autograph Journey",
+      "name": "Wells Fargo Autograph Journey Visa Credit Card",
+      "shortName": "Autograph Journey Visa",
       "issuer": "Wells Fargo",
       "programId": "wells-fargo-rewards",
       "statedValueHundredthsOfCent": null,
@@ -28875,7 +28731,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "autograph-journey-base",
+          "id": "autograph-journey-base-v2",
           "category": "all-purchases",
           "issuerWording": "Other purchases",
           "rateBps": 100,
@@ -28883,12 +28739,13 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "none"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [],
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-autograph-journey-product",
+            "wells-fargo-autograph-rewards-terms",
             "wells-fargo-autograph-journey-pricing"
           ],
           "brandIds": [],
@@ -28899,7 +28756,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "autograph-journey-dining",
+          "id": "autograph-journey-dining-v2",
           "category": "dining",
           "issuerWording": "Restaurants",
           "rateBps": 300,
@@ -28907,7 +28764,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "none"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -28916,6 +28773,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-autograph-journey-product",
+            "wells-fargo-autograph-rewards-terms",
             "wells-fargo-autograph-journey-pricing"
           ],
           "brandIds": [],
@@ -28927,27 +28785,21 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Cash advances and cash equivalents of any kind",
-        "ATM transactions",
-        "Cash advances",
-        "Money orders",
-        "Pre-paid gift cards",
-        "Traveler’s checks",
-        "Wire transfers",
-        "Digital currencies (to the extent accepted)",
-        "Balance transfers",
-        "SUPERCHECKSTM",
+        "Cash advances and cash equivalents of any kind do not earn points.",
+        "Balance transfers do not earn rewards.",
+        "SUPERCHECKS™",
         "Rewards are not earned on any portion of a transaction redeemed through the PWR feature.",
-        "Person-to-person money transfers",
-        "Disputed or illegal purchases",
-        "Fees or interest that post to the account",
-        "Gambling transactions"
+        "Person-to-person money transfers do not earn rewards points.",
+        "Overdraft protection advances do not earn rewards points.",
+        "Disputed or illegal purchases do not earn rewards points.",
+        "Fees and interest posted to the account do not earn rewards points.",
+        "Gambling transactions do not earn rewards points."
       ]
     },
     {
       "id": "wells-fargo-one-key",
-      "name": "One Key Card",
-      "shortName": "One Key",
+      "name": "One Key Mastercard",
+      "shortName": "One Key Mastercard",
       "issuer": "Wells Fargo",
       "programId": "onekeycash",
       "statedValueHundredthsOfCent": null,
@@ -28980,7 +28832,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "one-key-expedia",
+          "id": "one-key-expedia-v2",
           "category": "other",
           "issuerWording": "eligible accommodation rentals, activities, car rentals, cruises, flights, hotels, and packages booked through the U.S. version of Expedia, Hotels.com, or Vrbo",
           "rateBps": 300,
@@ -28989,7 +28841,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
             "kind": "unstated"
           },
           "activation": "unstated",
-          "usMerchantsOnly": true,
+          "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal"
           ],
@@ -29009,9 +28861,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "one-key-gas",
+          "id": "one-key-gas-v2",
           "category": "gas",
-          "issuerWording": "gas stations, automated fuel dispensers, and electric vehicle charging stations",
+          "issuerWording": "Gas",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -29055,9 +28907,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "one-key-supermarkets",
+          "id": "one-key-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "grocery stores, supermarkets, delis and bakeries",
+          "issuerWording": "Groceries",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -29078,9 +28930,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "one-key-dining",
+          "id": "one-key-dining-v2",
           "category": "dining",
-          "issuerWording": "eating places and restaurants, drinking places, fast food restaurants, and/or caterers",
+          "issuerWording": "Dining",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -29102,16 +28954,24 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Cash advances and cash equivalents of any kind",
-        "Balance transfers",
-        "Fees and interest of any kind",
-        "Gambling transactions of any kind"
+        "cash advances and cash equivalents of any kind",
+        "balance transfers",
+        "disputes, illegal actions, and violations",
+        "fees and interest of any kind",
+        "gambling transactions of any kind",
+        "ATM transactions",
+        "overdraft protection advance",
+        "traveler’s checks",
+        "money orders",
+        "pre-paid gift cards",
+        "peer-to-peer payments",
+        "wire transfers"
       ]
     },
     {
       "id": "wells-fargo-one-key-plus",
-      "name": "One Key+ Card",
-      "shortName": "One Key+",
+      "name": "One Key+ Mastercard",
+      "shortName": "One Key+ Mastercard",
       "issuer": "Wells Fargo",
       "programId": "onekeycash",
       "statedValueHundredthsOfCent": null,
@@ -29144,7 +29004,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "one-key-plus-expedia",
+          "id": "one-key-plus-expedia-v2",
           "category": "other",
           "issuerWording": "eligible accommodation rentals, activities, car rentals, cruises, flights, hotels, and packages booked through the U.S. version of Expedia, Hotels.com, or Vrbo",
           "rateBps": 300,
@@ -29153,7 +29013,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
             "kind": "unstated"
           },
           "activation": "unstated",
-          "usMerchantsOnly": true,
+          "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal"
           ],
@@ -29173,9 +29033,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "one-key-plus-gas",
+          "id": "one-key-plus-gas-v2",
           "category": "gas",
-          "issuerWording": "gas stations, automated fuel dispensers, and electric vehicle charging stations",
+          "issuerWording": "Gas: gas stations, automated fuel dispensers, and electric vehicle charging stations.",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -29219,9 +29079,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "one-key-plus-supermarkets",
+          "id": "one-key-plus-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "grocery stores, supermarkets, delis and bakeries",
+          "issuerWording": "Groceries: grocery stores, supermarkets, delis and bakeries.",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -29242,9 +29102,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "one-key-plus-dining",
+          "id": "one-key-plus-dining-v2",
           "category": "dining",
-          "issuerWording": "eating places and restaurants, drinking places, fast food restaurants, and/or caterers",
+          "issuerWording": "Dining: eating places and restaurants, drinking places, fast food restaurants, and/or caterers.",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -29266,10 +29126,18 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Cash advances and cash equivalents of any kind",
-        "Balance transfers",
-        "Fees and interest of any kind",
-        "Gambling transactions of any kind"
+        "Cash advances and cash equivalents of any kind do not earn OneKeyCash.",
+        "balance transfers",
+        "disputes, illegal actions, and violations",
+        "fees and interest of any kind",
+        "gambling transactions of any kind",
+        "ATM transactions",
+        "overdraft protection advance",
+        "traveler’s checks",
+        "money orders",
+        "pre-paid gift cards",
+        "peer-to-peer payments",
+        "wire transfers"
       ]
     },
     {
@@ -29285,7 +29153,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "choice-privileges-base",
+          "id": "choice-privileges-base-v2",
           "category": "all-purchases",
           "issuerWording": "Other purchases",
           "rateBps": 100,
@@ -29293,13 +29161,13 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [],
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-product",
-            "wells-fargo-choice-privileges-pricing"
+            "wells-fargo-choice-privileges-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -29309,15 +29177,15 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "choice-privileges-choice-hotels",
+          "id": "choice-privileges-choice-hotels-v2",
           "category": "other",
-          "issuerWording": "qualifying stays",
+          "issuerWording": "stays at Eligible Locations",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -29327,7 +29195,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-product",
-            "wells-fargo-choice-privileges-pricing"
+            "wells-fargo-choice-privileges-rewards-terms"
           ],
           "brandIds": [
             "choice-hotels"
@@ -29339,15 +29207,15 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "choice-privileges-choice-hotels-2",
+          "id": "choice-privileges-choice-hotels-2-v2",
           "category": "other",
-          "issuerWording": "Qualifying Net Purchases of Choice Privileges Points",
+          "issuerWording": "Choice Privileges Points",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -29357,7 +29225,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-product",
-            "wells-fargo-choice-privileges-pricing"
+            "wells-fargo-choice-privileges-rewards-terms"
           ],
           "brandIds": [
             "choice-hotels"
@@ -29369,7 +29237,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "choice-privileges-gas",
+          "id": "choice-privileges-gas-v2",
           "category": "gas",
           "issuerWording": "Gas",
           "rateBps": 300,
@@ -29377,7 +29245,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -29387,7 +29255,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-product",
-            "wells-fargo-choice-privileges-pricing"
+            "wells-fargo-choice-privileges-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -29397,7 +29265,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "choice-privileges-ev-charging",
+          "id": "choice-privileges-ev-charging-v2",
           "category": "ev-charging",
           "issuerWording": "electric vehicle charging stations",
           "rateBps": 300,
@@ -29405,7 +29273,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -29415,7 +29283,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-product",
-            "wells-fargo-choice-privileges-pricing"
+            "wells-fargo-choice-privileges-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -29425,7 +29293,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "choice-privileges-supermarkets",
+          "id": "choice-privileges-supermarkets-v2",
           "category": "supermarkets",
           "issuerWording": "Groceries",
           "rateBps": 300,
@@ -29433,7 +29301,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -29443,7 +29311,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-product",
-            "wells-fargo-choice-privileges-pricing"
+            "wells-fargo-choice-privileges-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -29453,7 +29321,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "choice-privileges-home",
+          "id": "choice-privileges-home-v2",
           "category": "home-improvement",
           "issuerWording": "Home improvement",
           "rateBps": 300,
@@ -29461,7 +29329,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -29471,7 +29339,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-product",
-            "wells-fargo-choice-privileges-pricing"
+            "wells-fargo-choice-privileges-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -29483,10 +29351,19 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       ],
       "exclusions": [
         "Cash advances and cash equivalents of any kind",
+        "ATM charges",
+        "Cash advances",
+        "SUPERCHECKS™",
+        "Traveler's checks",
+        "Wire transfers",
         "Balance transfers",
-        "Fees and finance charges",
+        "fees and finance charges",
+        "Pre-paid gift cards",
+        "Person-to-person money transfers",
+        "Overdraft protection advances",
+        "Digital currencies (to the extent accepted)",
         "Disputed or illegal purchases",
-        "Gambling charges"
+        "Gambling Charges"
       ]
     },
     {
@@ -29502,21 +29379,21 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "choice-privileges-select-base",
+          "id": "choice-privileges-select-base-v2",
           "category": "all-purchases",
-          "issuerWording": "Other purchases",
+          "issuerWording": "other Qualifying Net Purchases",
           "rateBps": 100,
           "paidOnPaymentBps": 0,
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [],
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-select-product",
-            "wells-fargo-choice-privileges-select-pricing"
+            "wells-fargo-choice-privileges-select-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -29526,15 +29403,15 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "choice-privileges-select-choice-hotels",
+          "id": "choice-privileges-select-choice-hotels-v2",
           "category": "other",
-          "issuerWording": "Qualifying Choice Hotel stays",
+          "issuerWording": "stays at Eligible Locations",
           "rateBps": 1000,
           "paidOnPaymentBps": 0,
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -29544,7 +29421,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-select-product",
-            "wells-fargo-choice-privileges-select-pricing"
+            "wells-fargo-choice-privileges-select-rewards-terms"
           ],
           "brandIds": [
             "choice-hotels"
@@ -29556,15 +29433,15 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "choice-privileges-select-choice-hotels-2",
+          "id": "choice-privileges-select-choice-hotels-2-v2",
           "category": "other",
-          "issuerWording": "Choice Privileges Points",
+          "issuerWording": "Qualifying Net Purchases of Choice Privileges Points",
           "rateBps": 1000,
           "paidOnPaymentBps": 0,
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -29574,7 +29451,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-select-product",
-            "wells-fargo-choice-privileges-select-pricing"
+            "wells-fargo-choice-privileges-select-rewards-terms"
           ],
           "brandIds": [
             "choice-hotels"
@@ -29586,7 +29463,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "choice-privileges-select-gas",
+          "id": "choice-privileges-select-gas-v2",
           "category": "gas",
           "issuerWording": "Gas",
           "rateBps": 500,
@@ -29594,7 +29471,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -29604,7 +29481,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-select-product",
-            "wells-fargo-choice-privileges-select-pricing"
+            "wells-fargo-choice-privileges-select-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -29614,7 +29491,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "choice-privileges-select-ev-charging",
+          "id": "choice-privileges-select-ev-charging-v2",
           "category": "ev-charging",
           "issuerWording": "electric vehicle charging stations",
           "rateBps": 500,
@@ -29622,7 +29499,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -29632,7 +29509,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-select-product",
-            "wells-fargo-choice-privileges-select-pricing"
+            "wells-fargo-choice-privileges-select-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -29642,7 +29519,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "choice-privileges-select-supermarkets",
+          "id": "choice-privileges-select-supermarkets-v2",
           "category": "supermarkets",
           "issuerWording": "Grocery Purchases",
           "rateBps": 500,
@@ -29650,7 +29527,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -29660,7 +29537,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-select-product",
-            "wells-fargo-choice-privileges-select-pricing"
+            "wells-fargo-choice-privileges-select-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -29670,7 +29547,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "choice-privileges-select-home",
+          "id": "choice-privileges-select-home-v2",
           "category": "home-improvement",
           "issuerWording": "Home improvement",
           "rateBps": 500,
@@ -29678,7 +29555,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "cap": {
             "kind": "unstated"
           },
-          "activation": "unstated",
+          "activation": "none",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [
             "paypal",
@@ -29688,7 +29565,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "limitedTime": null,
           "sourceIds": [
             "wells-fargo-choice-privileges-select-product",
-            "wells-fargo-choice-privileges-select-pricing"
+            "wells-fargo-choice-privileges-select-rewards-terms"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -29699,11 +29576,19 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Cash advances and cash equivalents of any kind do not earn points.",
-        "Balance transfers do not earn rewards.",
+        "Cash advances and cash equivalents of any kind",
         "Fees and finance charges",
+        "ATM charges",
+        "Money orders",
+        "SUPERCHECKS™",
+        "Traveler's checks",
+        "Wire transfers",
+        "Pre-paid gift cards",
+        "Person-to-person money transfers",
+        "Overdraft protection advances",
+        "Digital currencies (to the extent accepted)",
         "Disputed or illegal purchases",
-        "Gambling charges"
+        "Gambling Charges"
       ]
     },
     {
@@ -29719,7 +29604,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "double-cash-base",
+          "id": "double-cash-base-v2",
           "category": "all-purchases",
           "issuerWording": "every purchase",
           "rateBps": 200,
@@ -29732,8 +29617,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "excludedPaymentPaths": [],
           "limitedTime": null,
           "sourceIds": [
-            "citi-double-cash-product",
             "citi-double-cash-additional-info",
+            "citi-double-cash-product",
             "citi-double-cash-terms-pdf"
           ],
           "brandIds": [],
@@ -29744,7 +29629,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "double-cash-travel-portal",
+          "id": "double-cash-travel-portal-v2",
           "category": "travel-portal",
           "issuerWording": "hotels, car rentals, and attractions booked through the Citi Travel® portal",
           "rateBps": 500,
@@ -29757,8 +29642,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "excludedPaymentPaths": [],
           "limitedTime": null,
           "sourceIds": [
-            "citi-double-cash-product",
             "citi-double-cash-additional-info",
+            "citi-double-cash-product",
             "citi-double-cash-terms-pdf"
           ],
           "brandIds": [],
@@ -29770,7 +29655,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Balance transfers, cash advances, cash-like transactions, gift card and prepaid loads, person-to-person payments, and account fees"
+        "Balance transfers, cash advances, checks that access the account, returns, unauthorized purchases, money orders, wire transfers, lottery tickets and gaming chips"
       ]
     },
     {
@@ -29874,9 +29759,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "quicksilver-entertainment-portal",
+          "id": "quicksilver-entertainment-portal-v2",
           "category": "entertainment-portal",
-          "issuerWording": "Capital One Entertainment purchases",
+          "issuerWording": "Capital One Entertainment",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -29899,7 +29784,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Cash advances, balance transfers, and checks used to access your account"
+        "Cash advances, balance transfers, and checks used to access your account are not considered purchases and will not earn rewards."
       ]
     },
     {
@@ -29987,7 +29872,38 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "savor-dining",
+          "id": "savor-supermarkets-v2",
+          "category": "supermarkets",
+          "issuerWording": "grocery stores",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "unstated",
+          "usMerchantsOnly": false,
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
+          "limitedTime": null,
+          "sourceIds": [
+            "capital-one-savor-product",
+            "capital-one-savor-terms"
+          ],
+          "brandIds": [],
+          "excludedBrandIds": [
+            "walmart",
+            "target"
+          ],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": []
+        },
+        {
+          "id": "savor-dining-v2",
           "category": "dining",
           "issuerWording": "dining",
           "rateBps": 300,
@@ -29997,7 +29913,11 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           },
           "activation": "unstated",
           "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
           "limitedTime": null,
           "sourceIds": [
             "capital-one-savor-product",
@@ -30011,7 +29931,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "savor-entertainment",
+          "id": "savor-entertainment-v2",
           "category": "entertainment",
           "issuerWording": "qualified entertainment purchases",
           "rateBps": 300,
@@ -30021,7 +29941,11 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           },
           "activation": "unstated",
           "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
           "limitedTime": null,
           "sourceIds": [
             "capital-one-savor-product",
@@ -30035,7 +29959,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "savor-streaming",
+          "id": "savor-streaming-v2",
           "category": "streaming",
           "issuerWording": "popular streaming services",
           "rateBps": 300,
@@ -30045,31 +29969,11 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           },
           "activation": "unstated",
           "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
-          "limitedTime": null,
-          "sourceIds": [
-            "capital-one-savor-product",
-            "capital-one-savor-terms"
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
           ],
-          "brandIds": [],
-          "excludedBrandIds": [],
-          "sharedCapId": null,
-          "choice": null,
-          "requires": [],
-          "requiredPaymentPaths": []
-        },
-        {
-          "id": "savor-supermarkets",
-          "category": "supermarkets",
-          "issuerWording": "purchases made at grocery stores",
-          "rateBps": 300,
-          "paidOnPaymentBps": 0,
-          "cap": {
-            "kind": "none"
-          },
-          "activation": "unstated",
-          "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
           "limitedTime": null,
           "sourceIds": [
             "capital-one-savor-product",
@@ -30084,7 +29988,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Cash advances, balance transfers, and checks used to access your account"
+        "Cash advances, balance transfers, and checks used to access your account are not considered purchases and will not earn rewards."
       ]
     },
     {
@@ -30100,7 +30004,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "freedom-unlimited-base",
+          "id": "freedom-unlimited-base-v2",
           "category": "all-purchases",
           "issuerWording": "all other purchases",
           "rateBps": 150,
@@ -30113,8 +30017,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "excludedPaymentPaths": [],
           "limitedTime": null,
           "sourceIds": [
-            "chase-freedom-unlimited-product",
-            "chase-rewards-category-faq"
+            "chase-rewards-category-faq",
+            "chase-freedom-unlimited-product"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -30124,21 +30028,21 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "freedom-unlimited-travel-portal",
+          "id": "freedom-unlimited-travel-portal-v2",
           "category": "travel-portal",
-          "issuerWording": "travel purchased through Chase Travel",
+          "issuerWording": "travel purchased through Chase TravelSM",
           "rateBps": 500,
           "paidOnPaymentBps": 0,
           "cap": {
-            "kind": "unstated"
+            "kind": "none"
           },
           "activation": "unstated",
           "usMerchantsOnly": false,
           "excludedPaymentPaths": [],
           "limitedTime": null,
           "sourceIds": [
-            "chase-freedom-unlimited-product",
-            "chase-rewards-category-faq"
+            "chase-rewards-category-faq",
+            "chase-freedom-unlimited-product"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -30148,21 +30052,25 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "freedom-unlimited-dining",
+          "id": "freedom-unlimited-dining-v2",
           "category": "dining",
           "issuerWording": "dining at restaurants, including takeout and eligible delivery services",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
-            "kind": "unstated"
+            "kind": "none"
           },
           "activation": "unstated",
           "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
           "limitedTime": null,
           "sourceIds": [
-            "chase-freedom-unlimited-product",
-            "chase-rewards-category-faq"
+            "chase-rewards-category-faq",
+            "chase-freedom-unlimited-product"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -30172,21 +30080,25 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "freedom-unlimited-drugstores",
+          "id": "freedom-unlimited-drugstores-v2",
           "category": "drugstores",
           "issuerWording": "drugstore purchases",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
-            "kind": "unstated"
+            "kind": "none"
           },
           "activation": "unstated",
           "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
           "limitedTime": null,
           "sourceIds": [
-            "chase-freedom-unlimited-product",
-            "chase-rewards-category-faq"
+            "chase-rewards-category-faq",
+            "chase-freedom-unlimited-product"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -30196,7 +30108,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         }
       ],
-      "exclusions": []
+      "exclusions": [
+        "Any portion of purchases paid for using rewards will not qualify as a category purchase."
+      ]
     },
     {
       "id": "amex-blue-cash-everyday",
@@ -30211,7 +30125,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "bce-base",
+          "id": "bce-base-v2",
           "category": "all-purchases",
           "issuerWording": "all other eligible purchases",
           "rateBps": 100,
@@ -30224,9 +30138,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "excludedPaymentPaths": [],
           "limitedTime": null,
           "sourceIds": [
-            "amex-blue-cash-everyday-product",
             "amex-blue-cash-everyday-terms",
-            "amex-rewards-info-retail"
+            "amex-rewards-info-retail",
+            "amex-blue-cash-everyday-product"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -30236,9 +30150,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "bce-supermarkets",
+          "id": "bce-supermarkets-v2",
           "category": "supermarkets",
-          "issuerWording": "supermarkets located in the U.S.",
+          "issuerWording": "U.S. supermarkets",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -30249,12 +30163,16 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           },
           "activation": "unstated",
           "usMerchantsOnly": true,
-          "excludedPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
           "limitedTime": null,
           "sourceIds": [
-            "amex-blue-cash-everyday-product",
             "amex-blue-cash-everyday-terms",
-            "amex-rewards-info-retail"
+            "amex-rewards-info-retail",
+            "amex-blue-cash-everyday-product"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -30264,7 +30182,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "bce-online-retail",
+          "id": "bce-online-retail-v2",
           "category": "online-retail",
           "issuerWording": "U.S. online retail purchases",
           "rateBps": 300,
@@ -30278,13 +30196,16 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "activation": "unstated",
           "usMerchantsOnly": true,
           "excludedPaymentPaths": [
-            "bnpl"
+            "paypal",
+            "venmo",
+            "bnpl",
+            "digital-wallet"
           ],
           "limitedTime": null,
           "sourceIds": [
-            "amex-blue-cash-everyday-product",
             "amex-blue-cash-everyday-terms",
-            "amex-rewards-info-retail"
+            "amex-rewards-info-retail",
+            "amex-blue-cash-everyday-product"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -30294,9 +30215,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "bce-gas",
+          "id": "bce-gas-v2",
           "category": "gas",
-          "issuerWording": "gasoline at gas stations located in the U.S",
+          "issuerWording": "U.S. gas stations",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -30307,12 +30228,16 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           },
           "activation": "unstated",
           "usMerchantsOnly": true,
-          "excludedPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
           "limitedTime": null,
           "sourceIds": [
-            "amex-blue-cash-everyday-product",
             "amex-blue-cash-everyday-terms",
-            "amex-rewards-info-retail"
+            "amex-rewards-info-retail",
+            "amex-blue-cash-everyday-product"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -30323,7 +30248,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Fees, interest, balance transfers, cash advances, travelers checks, prepaid cards, gift cards, person-to-person transactions, and other cash equivalents"
+        "Eligible purchases do NOT include fees or interest charges, balance transfers, cash advances, purchases of travelers checks, purchases or reloading of prepaid cards, purchases of…",
+        "The charge on your Card for an Add Money transaction does not earn rewards and is subject to the Card's purchase APR."
       ]
     },
     {
@@ -30339,7 +30265,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       "choices": [],
       "rules": [
         {
-          "id": "bcp-base",
+          "id": "bcp-base-v2",
           "category": "all-purchases",
           "issuerWording": "all other eligible purchases",
           "rateBps": 100,
@@ -30352,9 +30278,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "excludedPaymentPaths": [],
           "limitedTime": null,
           "sourceIds": [
-            "amex-blue-cash-preferred-product",
             "amex-blue-cash-preferred-terms",
-            "amex-rewards-info-retail"
+            "amex-rewards-info-retail",
+            "amex-blue-cash-preferred-product"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -30364,7 +30290,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "bcp-supermarkets",
+          "id": "bcp-supermarkets-v2",
           "category": "supermarkets",
           "issuerWording": "supermarkets located in the U.S.",
           "rateBps": 600,
@@ -30377,12 +30303,16 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           },
           "activation": "unstated",
           "usMerchantsOnly": true,
-          "excludedPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
           "limitedTime": null,
           "sourceIds": [
-            "amex-blue-cash-preferred-product",
             "amex-blue-cash-preferred-terms",
-            "amex-rewards-info-retail"
+            "amex-rewards-info-retail",
+            "amex-blue-cash-preferred-product"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -30392,7 +30322,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "bcp-streaming",
+          "id": "bcp-streaming-v2",
           "category": "streaming",
           "issuerWording": "U.S. streaming subscriptions from select providers",
           "rateBps": 600,
@@ -30402,12 +30332,16 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           },
           "activation": "unstated",
           "usMerchantsOnly": true,
-          "excludedPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
           "limitedTime": null,
           "sourceIds": [
-            "amex-blue-cash-preferred-product",
             "amex-blue-cash-preferred-terms",
-            "amex-rewards-info-retail"
+            "amex-rewards-info-retail",
+            "amex-blue-cash-preferred-product"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -30417,9 +30351,9 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "bcp-transit",
+          "id": "bcp-transit-v2",
           "category": "transit",
-          "issuerWording": "transit",
+          "issuerWording": "transit, including trains, taxicabs, ride share services, ferries, tolls, parking, buses, and subways",
           "rateBps": 300,
           "paidOnPaymentBps": 0,
           "cap": {
@@ -30427,12 +30361,16 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           },
           "activation": "unstated",
           "usMerchantsOnly": false,
-          "excludedPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
           "limitedTime": null,
           "sourceIds": [
-            "amex-blue-cash-preferred-product",
             "amex-blue-cash-preferred-terms",
-            "amex-rewards-info-retail"
+            "amex-rewards-info-retail",
+            "amex-blue-cash-preferred-product"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -30442,7 +30380,7 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           "requiredPaymentPaths": []
         },
         {
-          "id": "bcp-gas",
+          "id": "bcp-gas-v2",
           "category": "gas",
           "issuerWording": "gasoline at gas stations located in the U.S.",
           "rateBps": 300,
@@ -30452,12 +30390,16 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
           },
           "activation": "unstated",
           "usMerchantsOnly": true,
-          "excludedPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "digital-wallet"
+          ],
           "limitedTime": null,
           "sourceIds": [
-            "amex-blue-cash-preferred-product",
             "amex-blue-cash-preferred-terms",
-            "amex-rewards-info-retail"
+            "amex-rewards-info-retail",
+            "amex-blue-cash-preferred-product"
           ],
           "brandIds": [],
           "excludedBrandIds": [],
@@ -30468,7 +30410,8 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         }
       ],
       "exclusions": [
-        "Fees, interest, balance transfers, cash advances, travelers checks, prepaid cards, gift cards, person-to-person transactions, and other cash equivalents"
+        "Fees or interest charges, balance transfers, cash advances, travelers checks, prepaid cards, cash equivalents, gift cards, person-to-person transactions, and portions covered by Reward Dollars at…",
+        "Add Money transactions do not earn rewards."
       ]
     }
   ]

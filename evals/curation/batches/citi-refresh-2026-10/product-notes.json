@@ -1,0 +1,292 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/draft-expansion-labels.mjs",
+  "description": "Structured hints the extraction schema cannot express, from the research drafts (summaries and conditions clipped to 25 words). An anchored hint cites a quote of at most 25 words that resolves in the captures (research-quote: the research quoted it; keyword-search: a capture sentence with the rate and a keyword, which a verifier must confirm says what the hint says). Unanchored hints cite the research. draftNotes record what drafting dropped.",
+  "cards": [
+    {
+      "cardId": "citi-strata",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "'eligible Self-Select Category of your choice' (Fitness Clubs, Select Streaming Services, Live Entertainment, Cosmetic Stores/Barber Shops/Hair Salons, or Pet Supply Stores)",
+          "rate": "3x",
+          "cap": "none stated",
+          "conditions": "Default is Select Streaming Services; primary cardmember may change once per calendar quarter at citi.com/selfselect",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "3 points per dollar spent on an eligible Self-Select Category of your choice2"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-strata-premier",
+      "issuer": "Citi",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-strata-elite",
+      "issuer": "Citi",
+      "hints": [],
+      "draftNotes": [
+        "rules.2 (dining, \"6 ThankYou Points for each $1 spent at restaurants, includin\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "citi-costco-anywhere-visa",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'gas purchased at Costco warehouse locations worldwide'",
+          "rate": "5%",
+          "cap": "first $7,000 per year in combined Costco and other eligible gas and/or EV charging purchases, then 1%",
+          "conditions": "Costco membership required",
+          "merchants": [
+            "Costco"
+          ],
+          "membership": "Costco membership required",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "5% cash back on gas purchased at Costco warehouse locations worldwide and 4% cash back on other eligible gas and eligible electric vehicle (EV) charging"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "'all other purchases from Costco and Costco.com'",
+          "rate": "2%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Costco"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "2% cash back on all other purchases from Costco and Costco.com."
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (gas): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.1 (gas): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.2 (ev-charging): an anchor that ran on from another was shortened (no 25+ word run)",
+        "rules.4 (other): an anchor that ran on from another was dropped (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-platinum-select",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible American Airlines purchases' (items billed by American Airlines as merchant of record)",
+          "rate": "2x",
+          "cap": "none stated",
+          "conditions": "Excludes aadvantagecars.com and aadvantagehotels.com bookings",
+          "merchants": [
+            "American Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn 2 AAdvantage® miles for every $1 spent on eligible American Airlines purchases2"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-aadvantage-mileup",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible American Airlines purchases'",
+          "rate": "2x",
+          "cap": "none stated",
+          "conditions": "Billed by AA as merchant of record",
+          "merchants": [
+            "American Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn 2 AAdvantage® miles for every $1 spent on eligible American Airlines purchases2"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-aadvantage-executive",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible American Airlines purchases'",
+          "rate": "4x (5x after $150,000 in purchases in a calendar year, for the rest of that year)",
+          "cap": "none stated",
+          "conditions": "Billed by AA as merchant of record",
+          "merchants": [
+            "American Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn 4 AAdvantage® miles for every $1 spent on eligible American Airlines purchases"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: value dropped (no resolving quote)",
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "rules.0 (all-purchases, \"all other purchases\") rateBps: value dropped (no resolving quote)",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-globe",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible American Airlines purchases'",
+          "rate": "3x",
+          "cap": "none stated",
+          "conditions": "Admirals Club food & beverage also earns 3x",
+          "merchants": [
+            "American Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn 3 AAdvantage® miles for every $1 spent on eligible American Airlines purchases2"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-tsc-visa",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible Tractor Supply purchases' (incl. TractorSupply.com, Petsense)",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Tractor Supply"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/citi.json",
+          "researchSources": [
+            "https://www.citi.com/credit-cards/citi-tractor-supply-credit-cards"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-llbean-mastercard",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'L.L.Bean'",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "L.L.Bean"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases."
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "citi-dillards-mastercard",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible Dillard's purchases'",
+          "rate": "2 points/$",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Dillard's"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/citi.json",
+          "researchSources": [
+            "https://www.citi.com/credit-cards/dillards-credit-cards"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "citi-macys-amex",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Macy's purchases",
+          "rate": "2/3/5 points per $1 for Silver/Gold/Platinum Star Rewards members",
+          "cap": "none stated",
+          "conditions": "Tier depends on Macy's loyalty status",
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/citi.json",
+          "researchSources": [
+            "https://www.citi.com/credit-cards/citi-macys-credit-card"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.4 (other, \"2 points per $1 spent for Silver members, 3 points per $1 sp\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "citi-bloomingdales-amex",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Bloomingdale's purchases and 'anywhere American Express is accepted' (Loyallist tier)",
+          "rate": "3 points/$ (Top of the List: 4)",
+          "cap": "none stated",
+          "conditions": "Tier depends on Bloomingdale's Loyallist status; the page's breakdown between in-store and outside purchases is unclear",
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/citi.json",
+          "researchSources": [
+            "https://www.citi.com/credit-cards/bloomingdales-credit-cards"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (other, \"Bloomingdale’s\"): rule dropped (no resolving quote)",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "citi-double-cash",
+      "issuer": "Citi",
+      "hints": [],
+      "draftNotes": [
+        "exclusion \"The following transactions are not purchases and will…\": dropped (no resolving quote)",
+        "rules.1 (travel-portal): an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    }
+  ]
+}

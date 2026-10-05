@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "description": "Build config of the release catalog v3 (scripts/build-catalog-v3.mjs, scripts/lib/catalog-batches.mjs). Layers in order: a later layer's card replaces an earlier one's in place; new cards append. The base layer (expansion.v1, real.v2.2) is frozen and listed expansion first to keep the card order of CATALOG_V3; the two share no card. Pipeline batches follow as { \"kind\": \"batch\", \"id\": \"<issuer-slug>-<YYYY-MM>\" } (files in evals/curation/batches/<id>/). Dropped cards carry their reason here until the pipeline state supplies it.",
-  "version": "2026-10-02.expansion.1",
+  "version": "2026-10-05.renewal.1",
   "publishedVersions": [
     "2026-10-02.expansion.1"
   ],
@@ -36,6 +36,69 @@
       "overlay": null,
       "notes": null,
       "cards": null,
+      "dropped": {}
+    },
+    {
+      "kind": "batch",
+      "id": "wells-fargo-2026-10",
+      "dropped": {},
+      "exclusionOmissions": {
+        "wells-fargo-choice-privileges": [
+          "Money orders"
+        ],
+        "wells-fargo-choice-privileges-select": [
+          "Balance transfers"
+        ]
+      }
+    },
+    {
+      "kind": "batch",
+      "id": "wells-fargo-refresh-2026-10",
+      "dropped": {}
+    },
+    {
+      "kind": "batch",
+      "id": "american-express-refresh-2026-10",
+      "dropped": {}
+    },
+    {
+      "kind": "batch",
+      "id": "bank-of-america-refresh-2026-10",
+      "dropped": {}
+    },
+    {
+      "kind": "batch",
+      "id": "barclays-refresh-2026-10",
+      "dropped": {}
+    },
+    {
+      "kind": "batch",
+      "id": "capital-one-refresh-2026-10",
+      "dropped": {}
+    },
+    {
+      "kind": "batch",
+      "id": "chase-refresh-2026-10",
+      "dropped": {}
+    },
+    {
+      "kind": "batch",
+      "id": "citi-refresh-2026-10",
+      "dropped": {}
+    },
+    {
+      "kind": "batch",
+      "id": "discover-refresh-2026-10",
+      "dropped": {}
+    },
+    {
+      "kind": "batch",
+      "id": "synchrony-refresh-2026-10",
+      "dropped": {}
+    },
+    {
+      "kind": "batch",
+      "id": "u-s-bank-refresh-2026-10",
       "dropped": {}
     }
   ]

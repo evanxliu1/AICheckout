@@ -1,0 +1,2171 @@
+{
+  "schemaVersion": 1,
+  "packetId": "9783781a-941f-4430-8482-0fc7d901ef94",
+  "batch": "u-s-bank-refresh-2026-10",
+  "issuer": "U.S. Bank",
+  "provenance": "agent-verified",
+  "verifier": {
+    "agent": "card-verifier",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-05",
+    "filesRead": [
+      ".claude/agents/card-verifier.md",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/pipeline/packets/verify.u-s-bank.2.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/u-s-bank.md",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/product-notes.json",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/verify/u-s-bank.md",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/verification/u-s-bank.json",
+      "scripts/lib/expansion-verification.test.mjs",
+      "apps/api/src/curation/v2/schema.ts",
+      "tools/catalog-pipeline/src/gates.ts",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-harley-davidson-secured-product.txt"
+    ]
+  },
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-10-04",
+    "filesRead": [
+      ".claude/agents/card-adjudicator.md",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/pipeline/packets/adjudicate.u-s-bank.2.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/u-s-bank.md",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/verification/u-s-bank.json",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/product-notes.json",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-harley-davidson-secured-product.txt"
+    ]
+  },
+  "cards": [
+    {
+      "cardId": "us-bank-cash-plus",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "TV, Internet & Streaming Services",
+          "corrected": "TV, internet and streaming",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "TV, internet and streaming"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.issuerWording",
+          "current": "Fast-food restaurants",
+          "corrected": "Fast food",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Fast food"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.issuerWording",
+          "current": "clothing, shoes and cosmetics to kitchen goods, housewares and home furnishings",
+          "corrected": "Department stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Department stores"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.issuerWording",
+          "current": "household utilities",
+          "corrected": "Home utilities",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Home utilities"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.issuerWording",
+          "current": "furniture and accessories",
+          "corrected": "Furniture stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Furniture stores"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.7.issuerWording",
+          "current": "latest tech products",
+          "corrected": "Electronic stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Electronic stores"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.8.issuerWording",
+          "current": "most cinemas",
+          "corrected": "Movie theaters",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Movie theaters"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.9.issuerWording",
+          "current": "sports and outdoor equipment",
+          "corrected": "Sporting goods",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Sporting goods"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.11.issuerWording",
+          "current": "sports and recreation facilities",
+          "corrected": "Gyms/fitness centers",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Gyms/fitness centers"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.12.issuerWording",
+          "current": "bus and passenger railway tickets, taxi fares and more",
+          "corrected": "Ground transportation",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Ground transportation"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Missing issue with no anchor stating a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue has no anchor that states a problem (general 16)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Missing issue with no anchor stating a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue has no anchor that states a problem (general 16)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "5% cash back on two categories you choose"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "2% cash back on one everyday category you choose like"
+            }
+          ],
+          "note": "Only the two chosen 5% options and the one chosen 2% option earn the bonus each quarter; the draft lists every option as its own rule (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Conforms to general 6 and 19 and the U.S. Bank Cash+ convention; the anchor states the partial coverage or the choose mechanic."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Full-service restaurants like Applebee's and Olive Garden® are in the Restaurants category."
+            }
+          ],
+          "note": "The Fast food option covers only part of dining (general 19).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Conforms to general 6 and 19 and the U.S. Bank Cash+ convention; the anchor states the partial coverage or the choose mechanic."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Excludes most fast food restaurants like McDonald's®, Subway® or Domino's® — see the fast food category for these."
+            }
+          ],
+          "note": "The 2% Restaurants option covers only part of dining (general 19).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Conforms to general 6 and 19 and the U.S. Bank Cash+ convention; the anchor states the partial coverage or the choose mechanic."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Catch the latest movies at most cinemas and earn cash back."
+            }
+          ],
+          "note": "The Movie theaters option covers only part of entertainment (general 19).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Conforms to general 6 and 19 and the U.S. Bank Cash+ convention; the anchor states the partial coverage or the choose mechanic."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "on your first $2,000 in combined eligible purchases each quarter on two categories you choose."
+          },
+          "note": "Twelve 5% options, choose two each quarter, $2,000 combined quarterly cap then 1%; the terms FAQ confirms quarterly selection.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint matches the capture; anchor is verbatim."
+          }
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "on one everyday category you choose each quarter, like gas stations and EV charging stations*, grocery stores* or restaurants."
+          },
+          "note": "Three 2% options, one chosen each quarter, no cap.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint matches the capture; anchor is verbatim."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "TV, internet and streaming 5% option: purchases through PayPal, Google Play, Amazon or iTunes Store may not qualify.",
+            "rate": "5%"
+          },
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-sample-merchants",
+            "quote": "Purchases made using a third-party service such as PayPal®, Google Play, Amazon, and iTunes Store may not qualify."
+          },
+          "note": "Checkout-method limit stated on the sample-merchants page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Note states a limit or redemption value from the capture that belongs in a product note (general 18, U.S. Bank conventions)."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-smartly",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Missing issue with no anchor stating a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue has no anchor that states a problem (general 16)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "us-bank-smartly-product",
+            "quote": "Includes a 25% Smartly Earning Bonus with a qualifying balance between $10,000 and $49,999."
+          },
+          "note": "2.5% total on the first $10,000 each billing cycle at this balance tier.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint matches the capture; anchor is verbatim."
+          }
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "us-bank-smartly-product",
+            "quote": "Includes a 50% Smartly Earning Bonus with a qualifying balance between $50,000 and $99,999."
+          },
+          "note": "3% total at this tier.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint matches the capture; anchor is verbatim."
+          }
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 2,
+          "anchor": {
+            "sourceId": "us-bank-smartly-product",
+            "quote": "Includes a 100% Smartly Earning Bonus with a qualifying balance of $100,000 or more."
+          },
+          "note": "4% total at this tier.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint matches the capture; anchor is verbatim."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-altitude-go",
+      "verdict": "confirmed",
+      "reason": null,
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "us-bank-altitude-connect",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "transactions to buy currency from the U.S. Mint",
+          "anchors": [
+            {
+              "sourceId": "us-bank-altitude-connect-rewards-terms",
+              "quote": "(ii) buy currency from the U.S. Mint"
+            }
+          ],
+          "note": "Dropped by the drafting; stated in the program rules.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Exclusion stated in the program rules capture; dropped by the drafting."
+          }
+        },
+        {
+          "text": "transactions to buy cash convertible items",
+          "anchors": [
+            {
+              "sourceId": "us-bank-altitude-connect-rewards-terms",
+              "quote": "(iii) buy cash convertible items"
+            }
+          ],
+          "note": "Dropped by the drafting; stated in the program rules.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Exclusion stated in the program rules capture; dropped by the drafting."
+          }
+        }
+      ],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "us-bank-cash-plus-secured",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "TV, Internet & Streaming Services",
+          "corrected": "TV, internet and streaming",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "TV, internet and streaming"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.issuerWording",
+          "current": "Fast-food restaurants",
+          "corrected": "Fast food",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Fast food"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.issuerWording",
+          "current": "wireless phone service provider",
+          "corrected": "Cell phone",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Cell phone"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.issuerWording",
+          "current": "clothing, shoes and cosmetics to kitchen goods, housewares and home furnishings",
+          "corrected": "Department stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Department stores"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.issuerWording",
+          "current": "household utilities",
+          "corrected": "Home utilities",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Home utilities"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.7.issuerWording",
+          "current": "furniture and accessories",
+          "corrected": "Furniture stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Furniture stores"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.8.issuerWording",
+          "current": "latest tech products",
+          "corrected": "Electronic stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Electronic stores"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.9.issuerWording",
+          "current": "most cinemas",
+          "corrected": "Movie theaters",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Movie theaters"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.10.issuerWording",
+          "current": "sports and outdoor equipment",
+          "corrected": "Sporting goods",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Sporting goods"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.11.issuerWording",
+          "current": "standalone clothing stores",
+          "corrected": "Select clothing stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Select clothing stores"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.12.issuerWording",
+          "current": "sports and recreation facilities",
+          "corrected": "Gyms/fitness centers",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Gyms/fitness centers"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.13.issuerWording",
+          "current": "bus and passenger railway tickets, taxi fares and more",
+          "corrected": "Ground transportation",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Ground transportation"
+          },
+          "note": "Issuer wording is the option name on the product page (U.S. Bank convention), not a sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.issues.0.code",
+          "current": "out-of-scope",
+          "corrected": "ambiguous",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "5% cash back on two categories you choose"
+          },
+          "note": "The choose-two/choose-one mechanic is an ambiguous issue, not out-of-scope (U.S. Bank convention): only the chosen options earn the bonus.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The condition is an ambiguous issue, not out-of-scope, per the U.S. Bank conventions (chosen categories, top-three categories, Fidelity deposit condition)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "out-of-scope",
+            "anchors": [
+              "Account must be open and in good standing (not past due or overlimit) on the closing date of the billing cycle to earn and redeem"
+            ]
+          },
+          "note": "Account-standing boilerplate is not an earning problem (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue is boilerplate, moot or not a conflict per general 11 and the U.S. Bank conventions; nothing in the captures contradicts the kept rules."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "earn an additional 4% cash back for every $1 in eligible Net Purchases spent on prepaid air, car and hotel reservations in the travel center"
+            ]
+          },
+          "note": "Moot: the Travel Center rule is already rule 2 at 5% (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue is boilerplate, moot or not a conflict per general 11 and the U.S. Bank conventions; nothing in the captures contradicts the kept rules."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Full-service restaurants like Applebee's and Olive Garden® are in the Restaurants category."
+            }
+          ],
+          "note": "The Fast food option covers only part of dining (general 19).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Conforms to general 6 and 19 and the U.S. Bank Cash+ convention; the anchor states the partial coverage or the choose mechanic."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Excludes most fast food restaurants like McDonald's®, Subway® or Domino's® — see the fast food category for these."
+            }
+          ],
+          "note": "The 2% Restaurants option covers only part of dining (general 19).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Conforms to general 6 and 19 and the U.S. Bank Cash+ convention; the anchor states the partial coverage or the choose mechanic."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Catch the latest movies at most cinemas and earn cash back."
+            }
+          ],
+          "note": "The Movie theaters option covers only part of entertainment (general 19).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Conforms to general 6 and 19 and the U.S. Bank Cash+ convention; the anchor states the partial coverage or the choose mechanic."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Cardmember must enroll each quarter into categories of their choice, or all Net Purchases will earn no more than 1% cash back."
+          },
+          "note": "Same twelve 5% options as Cash+, two chosen each quarter, $2,000 combined quarterly cap then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint matches the capture; anchor is verbatim."
+          }
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "2% cash back on one everyday category you choose like"
+          },
+          "note": "Three 2% options, one chosen each quarter, no cap.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint matches the capture; anchor is verbatim."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "checkout-method",
+            "summary": "TV, internet and streaming 5% option: purchases through PayPal, Google Play, Amazon or iTunes Store may not qualify.",
+            "rate": "5%"
+          },
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-sample-merchants",
+            "quote": "Purchases made using a third-party service such as PayPal®, Google Play, Amazon, and iTunes Store may not qualify."
+          },
+          "note": "Checkout-method limit stated on the sample-merchants page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Note states a limit or redemption value from the capture that belongs in a product note (general 18, U.S. Bank conventions)."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-altitude-go-secured",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Missing issue with no anchor stating a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue has no anchor that states a problem (general 16)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Missing issue with no anchor stating a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue has no anchor that states a problem (general 16)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Missing issue with no anchor stating a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue has no anchor that states a problem (general 16)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "us-bank-harley-davidson-hog-elite",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-hog-elite-product",
+            "quote": "can be redeemed for a $100 H-D Gift Card"
+          },
+          "note": "The only stated value is an H-D Gift Card redemption, not cash; gift-card values leave the point value null (general 3, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Gift-card and deposit-only values are not cash point values (general 3, 13; U.S. Bank point-values convention); a cash-back card has no point value."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.anchors.0",
+          "current": "5 points for every $1 in eligible purchases during each billing cycle at merchants classified as H‑D (dealerships, H‑D.com, the H‑D Museum, Factory Tours, and",
+          "corrected": "and H‑D Insurance) and gas stations.",
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-hog-elite-product",
+            "quote": "and H‑D Insurance) and gas stations."
+          },
+          "note": "The gas rule anchor stopped before gas stations; this span states the 5X sentence covers gas stations.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The verifier's span names gas stations but states no rate, so the gas rule would carry no anchor with its 5X multiple; the product page headline states both within one span.",
+            "corrected": "5X POINTS at H‑D & gas stations",
+            "anchor": {
+              "sourceId": "us-bank-harley-davidson-hog-elite-product",
+              "quote": "5X POINTS at H‑D & gas stations"
+            }
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Missing issue with no anchor stating a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue has no anchor that states a problem (general 16)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "5X points at merchants classified as H-D: dealerships, H-D.com, the H-D Museum, Factory Tours and H-D Insurance.",
+            "rate": "5X",
+            "merchants": [
+              "Harley-Davidson"
+            ]
+          },
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-hog-elite-product",
+            "quote": "merchants classified as H‑D (dealerships, H‑D.com, the H‑D Museum, Factory Tours, and"
+          },
+          "note": "Gas stations are a shared category (own rule); the merchant-specific part is H-D only. Was unanchored.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint matches the capture; anchor is verbatim."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Points redeem for Harley-Davidson Gift Cards: 10,000 points for a $100 H-D Gift Card (not a cash value).",
+            "merchants": [
+              "Harley-Davidson"
+            ]
+          },
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-hog-elite-product",
+            "quote": "can be redeemed for a $100 H-D Gift Card"
+          },
+          "note": "Redemption value recorded as a note, since gift-card values are not point values (general 18).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Note states a limit or redemption value from the capture that belongs in a product note (general 18, U.S. Bank conventions)."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-skypass-skyblue",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Miles are earned on eligible Net Purchases."
+            ]
+          },
+          "note": "Moot once the 1X base rule is added (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue is boilerplate, moot or not a conflict per general 11 and the U.S. Bank conventions; nothing in the captures contradicts the kept rules."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Missing issue with no anchor stating a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue has no anchor that states a problem (general 16)."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other eligible purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-skypass-skyblue-product",
+              "quote": "1X mile on all other eligible purchases"
+            }
+          ],
+          "note": "Base rule dropped by the drafting; every SKYPASS card has a 1X base (U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "us-bank-skypass-visa-signature",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "travel",
+          "corrected": "Korean Air ticket purchases",
+          "anchor": {
+            "sourceId": "us-bank-skypass-visa-signature-product",
+            "quote": "Earn 2 miles for every $1 spent in eligible net purchases on eligible Korean Air ticket purchases."
+          },
+          "note": "The \"2X miles on travel\" headline covers only Korean Air tickets, hotels and dining; this rule is the Korean Air ticket rule (U.S. Bank convention). Other travel earns the base.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.anchors.0",
+          "current": "2X miles on travel",
+          "corrected": "2X miles on Korean Air ticket purchases",
+          "anchor": {
+            "sourceId": "us-bank-skypass-visa-signature-product",
+            "quote": "2X miles on Korean Air ticket purchases"
+          },
+          "note": "Replaces the travel headline anchor, which overstates the rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The travel headline overstates the rule; the Korean Air span is verbatim on the product page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.exclusions.0.text",
+          "current": "Advances (including wire transfers, traveler's checks, money orders, foreign cash transactions, betting transactions, lottery tickets and ATM disbursements), Convenience Checks, Balance Transfers, int",
+          "corrected": "Advances, Convenience Checks, Balance Transfers, interest charges and Fees, credit insurance charges, prepaid card funding, cash convertible items and U.S. Mint funds",
+          "anchor": {
+            "sourceId": "us-bank-skypass-visa-signature-product",
+            "quote": "credit insurance charges, transactions to fund certain prepaid card products, or transactions to purchase cash convertible items or funds from the U.S. Mint."
+          },
+          "note": "The draft text was cut mid-word; this lists the whole exclusion sentence in short form.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft text was cut mid-word; the corrected text summarises the exclusion sentence the anchor states."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Miles are earned on eligible Net Purchases."
+            ]
+          },
+          "note": "Moot once the 1X base rule is added (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue is boilerplate, moot or not a conflict per general 11 and the U.S. Bank conventions; nothing in the captures contradicts the kept rules."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "2X miles on travel",
+              "Earn 2 miles for every $1 spent in eligible net purchases made at hotels, restaurants, fast-food restaurants or bars."
+            ]
+          },
+          "note": "Moot: the travel headline is resolved by the Korean Air and hotel rules (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue is boilerplate, moot or not a conflict per general 11 and the U.S. Bank conventions; nothing in the captures contradicts the kept rules."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "hotels",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-skypass-visa-signature-product",
+              "quote": "2X miles on hotels"
+            }
+          ],
+          "note": "Hotels earn 2X per footnote 4; missing from the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other eligible purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-skypass-visa-signature-product",
+              "quote": "1X mile on all other eligible purchases"
+            }
+          ],
+          "note": "Base rule dropped by the drafting.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "us-bank-skypass-visa-signature-product",
+            "quote": "Earn 2 miles for every $1 spent in eligible net purchases on eligible Korean Air ticket purchases."
+          },
+          "note": "2X on Korean Air tickets where Korean Air is the merchant of record.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint matches the capture; anchor is verbatim."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-skypass-select",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "SKYPASS Select Visa Signature Card: Earn 2 miles for every $1 spent in eligible net purchases made at airlines, hotels, car rental companies, restaurants, fast-food"
+            ]
+          },
+          "note": "No conflict in the captures; the dining rule the drafting dropped is added instead (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue is boilerplate, moot or not a conflict per general 11 and the U.S. Bank conventions; nothing in the captures contradicts the kept rules."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Miles are earned on eligible Net Purchases."
+            ]
+          },
+          "note": "Moot once the 1X base rule is added (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue is boilerplate, moot or not a conflict per general 11 and the U.S. Bank conventions; nothing in the captures contradicts the kept rules."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Korean Air ticket purchases",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-skypass-select-product",
+              "quote": "Earn 3 miles for every $1 spent in eligible net purchases on qualified Korean Air ticket purchases."
+            }
+          ],
+          "note": "Korean Air ticket rule at 3X (U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        },
+        {
+          "rule": {
+            "category": "dining",
+            "issuerWording": "restaurants, fast-food restaurants, or bars",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-skypass-select-product",
+              "quote": "Earn 2 miles for every $1 spent in eligible net purchases made at airlines, hotels, car rental companies, restaurants, fast-food restaurants, or bars."
+            }
+          ],
+          "note": "Dining at 2X was dropped by the drafting.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other eligible purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-skypass-select-product",
+              "quote": "1X mile on all other eligible purchases"
+            }
+          ],
+          "note": "Base rule dropped by the drafting.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "us-bank-skypass-select-product",
+            "quote": "Earn 3 miles for every $1 spent in eligible net purchases on qualified Korean Air ticket purchases."
+          },
+          "note": "3X on Korean Air tickets where Korean Air is the merchant of record.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint matches the capture; anchor is verbatim."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-state-farm-premier-cash-rewards",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.rateBps",
+          "current": null,
+          "corrected": 300,
+          "anchor": {
+            "sourceId": "state-farm-credit-cards",
+            "quote": "3% cash back on insurance premium payments, up to $4,000 spent annually"
+          },
+          "note": "The standing insurance rate is 3%; the draft left it null.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The rate is 3%, but adding the verifier's new anchor at the front of the rule's anchors shifts the agent-offer anchor so the later removal (fixes.2) would hit the wrong span; the rule's existing pricing-page anchor already states the 3% rate and $4,000 cap.",
+            "corrected": 300,
+            "anchor": {
+              "sourceId": "us-bank-state-farm-premier-cash-rewards-product",
+              "quote": "earn 3% cash back for every $1 of the first $4,000 spent annually on Purchases classified as insurance, starting with your January statement and 1%"
+            }
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.limitedTime",
+          "current": {
+            "endsOn": null
+          },
+          "corrected": null,
+          "anchor": {
+            "sourceId": "state-farm-credit-cards",
+            "quote": "3% cash back on insurance premium payments, up to $4,000 spent annually"
+          },
+          "note": "The standing 3% insurance rule is not limited-time; the agent-application first-year offer is an ambiguous issue (U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The standing 3% insurance rule is not limited-time (U.S. Bank State Farm convention); only the agent-application offer is first-year."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.0.anchors.1",
+          "current": "By applying directly through a State Farm agent, earn up to 5% cash back on insurance premium payments for the first year.",
+          "note": "This anchor states the agent-application \"up to 5%\" offer, not the standing 3% rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the up-to-5% agent offer, which the ambiguous issue covers, not the standing rule."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "You will earn 3% cash back for every $1 of the first $4,000 spent annually on Purchases classified as insurance, starting with your January statement",
+              "By applying directly through a State Farm agent, earn up to 5% cash back on insurance premium payments for the first year."
+            ]
+          },
+          "note": "Not a conflict: the \"up to 5%\" agent offer is covered by the ambiguous issue (U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue is boilerplate, moot or not a conflict per general 11 and the U.S. Bank conventions; nothing in the captures contradicts the kept rules."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "You will earn 2% cash back for every $1 spent on Purchases at merchants classified as gas stations, electric vehicle charging stations, restaurants, fast-food restaurants,",
+              "You will earn 1% cash back for every $1 on all other eligible Purchases."
+            ]
+          },
+          "note": "Missing issue whose anchors state rules already in the draft (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue is boilerplate, moot or not a conflict per general 11 and the U.S. Bank conventions; nothing in the captures contradicts the kept rules."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "us-bank-edward-jones-triple-rewards",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-product",
+            "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+          },
+          "note": "Top-three categories are automatic with no enrollment (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Edward Jones top-three categories are automatic with no enrollment (general 6, U.S. Bank convention)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-product",
+            "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+          },
+          "note": "Top-three categories are automatic with no enrollment (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Edward Jones top-three categories are automatic with no enrollment (general 6, U.S. Bank convention)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-product",
+            "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+          },
+          "note": "Top-three categories are automatic with no enrollment (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Edward Jones top-three categories are automatic with no enrollment (general 6, U.S. Bank convention)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-product",
+            "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+          },
+          "note": "Top-three categories are automatic with no enrollment (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Edward Jones top-three categories are automatic with no enrollment (general 6, U.S. Bank convention)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-product",
+            "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+          },
+          "note": "Top-three categories are automatic with no enrollment (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Edward Jones top-three categories are automatic with no enrollment (general 6, U.S. Bank convention)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-product",
+            "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+          },
+          "note": "Top-three categories are automatic with no enrollment (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Edward Jones top-three categories are automatic with no enrollment (general 6, U.S. Bank convention)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.7.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-product",
+            "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+          },
+          "note": "Top-three categories are automatic with no enrollment (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Edward Jones top-three categories are automatic with no enrollment (general 6, U.S. Bank convention)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.8.activation",
+          "current": null,
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-product",
+            "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+          },
+          "note": "Top-three categories are automatic with no enrollment (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Edward Jones top-three categories are automatic with no enrollment (general 6, U.S. Bank convention)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.category",
+          "current": "ev-charging",
+          "corrected": "gas",
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+            "quote": "Public charging stations, automated fuel dispensers, fuel service stations."
+          },
+          "note": "U.S. Bank convention: the EV Charging & Gas Stations option is a single gas rule (20-rule limit); issue 1 notes the EV part.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank convention: the EV Charging & Gas Stations option is a single gas rule within the 20-rule limit; the EV ambiguous issue stays."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.issuerWording",
+          "current": "Home furnishings & equipment (excludes appliance stores), furniture specialty shops.",
+          "corrected": "Furniture Stores",
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+            "quote": "Furniture Stores"
+          },
+          "note": "Issuer wording is the option name, not its description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.issuerWording",
+          "current": "Floral shops, artist supply stores, craft stores, office supply stores, jewelry stores and a variety of specialty retail stores and local shops not otherwise categorized.",
+          "corrected": "Sundry Retail",
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+            "quote": "Sundry Retail"
+          },
+          "note": "Issuer wording is the option name, not its description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issuer wording is the option name on the product page (U.S. Bank Cash+ convention; Edward Jones option names); the quote is verbatim on that page."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.issues.2.code",
+          "current": "out-of-scope",
+          "corrected": "ambiguous",
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-product",
+            "quote": "Earn 3 Loyalty Points per net $1 spent in your top three spending categories."
+          },
+          "note": "Only the top three categories each month earn 3X; this is the single ambiguous issue of general 6.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The condition is an ambiguous issue, not out-of-scope, per the U.S. Bank conventions (chosen categories, top-three categories, Fidelity deposit condition)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Missing issue with no anchor stating a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue has no anchor that states a problem (general 16)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "out-of-scope",
+            "anchors": [
+              "Each merchant's business is identified by a category code established by Mastercard.",
+              "do not determine the category codes applied to merchants' businesses and reserve the right to determine which purchases qualify for additional Loyalty Points."
+            ]
+          },
+          "note": "Merchant-category-code boilerplate is not an earning problem (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue is boilerplate, moot or not a conflict per general 11 and the U.S. Bank conventions; nothing in the captures contradicts the kept rules."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.4",
+          "current": {
+            "code": "out-of-scope",
+            "anchors": [
+              "Account must be open and in good standing (not past due or overlimit) to earn and redeem rewards and benefits."
+            ]
+          },
+          "note": "Account-standing boilerplate is not an earning problem (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue is boilerplate, moot or not a conflict per general 11 and the U.S. Bank conventions; nothing in the captures contradicts the kept rules."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Charity & Non-Profits",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Charity & Non-Profits"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "earn 2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories"
+            }
+          ],
+          "note": "Option \"Charity & Non-Profits\" of the 18 automatic top-three categories (U.S. Bank convention: one rule per option).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Clothing & Department Stores",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Clothing & Department Stores"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "earn 2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories"
+            }
+          ],
+          "note": "Option \"Clothing & Department Stores\" of the 18 automatic top-three categories (U.S. Bank convention: one rule per option).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Electronic & Appliance Stores",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Electronic & Appliance Stores"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "earn 2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories"
+            }
+          ],
+          "note": "Option \"Electronic & Appliance Stores\" of the 18 automatic top-three categories (U.S. Bank convention: one rule per option).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        },
+        {
+          "rule": {
+            "category": "transit",
+            "issuerWording": "Ground Transportation",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Ground Transportation"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "earn 2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories"
+            }
+          ],
+          "note": "Option \"Ground Transportation\" of the 18 automatic top-three categories (U.S. Bank convention: one rule per option).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Hardware Stores",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Hardware Stores"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "earn 2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories"
+            }
+          ],
+          "note": "Option \"Hardware Stores\" of the 18 automatic top-three categories (U.S. Bank convention: one rule per option).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Health Care",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Health Care"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "earn 2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories"
+            }
+          ],
+          "note": "Option \"Health Care\" of the 18 automatic top-three categories (U.S. Bank convention: one rule per option).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Pet Shops & Veterinary Services",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Pet Shops & Veterinary Services"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "earn 2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories"
+            }
+          ],
+          "note": "Option \"Pet Shops & Veterinary Services\" of the 18 automatic top-three categories (U.S. Bank convention: one rule per option).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        },
+        {
+          "rule": {
+            "category": "entertainment",
+            "issuerWording": "Recreation",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Recreation"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "earn 2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories"
+            }
+          ],
+          "note": "Option \"Recreation\" of the 18 automatic top-three categories (U.S. Bank convention: one rule per option).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Specialty Food & Catering",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Specialty Food & Catering"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "earn 2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories"
+            }
+          ],
+          "note": "Option \"Specialty Food & Catering\" of the 18 automatic top-three categories (U.S. Bank convention: one rule per option).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Vehicle Sales, Parts & Service",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Vehicle Sales, Parts & Service"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "earn 2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories"
+            }
+          ],
+          "note": "Option \"Vehicle Sales, Parts & Service\" of the 18 automatic top-three categories (U.S. Bank convention: one rule per option).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule stated verbatim in the card's own capture and required by the U.S. Bank conventions (SKYPASS 1X base and Korean Air rules, Edward Jones one rule per option); category and rate conform."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+            "quote": "Your top three spend categories will be determined based on the 18 categories listed below."
+          },
+          "note": "Automatic top three of 18 categories each monthly statement; Amazon, Target and Walmart excluded.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint matches the capture; anchor is verbatim."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-elan-fidelity-rewards",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "us-bank-elan-fidelity-rewards-product",
+            "quote": "You can earn unlimited 2% cash back when you invest your rewards for your future"
+          },
+          "note": "The product page states a percentage back, so the card is cash-back at 200 bps though points are tracked (general 1, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states a percentage back, so the card is cash-back at 200 bps (general 1, U.S. Bank Smartly and Fidelity convention)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "us-bank-elan-fidelity-rewards-rewards-terms",
+            "quote": "Points have no cash value."
+          },
+          "note": "A cash-back card has no point value (general 13); the 2% value needs a Fidelity deposit.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Gift-card and deposit-only values are not cash point values (general 3, 13; U.S. Bank point-values convention); a cash-back card has no point value."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.issues.2.code",
+          "current": "out-of-scope",
+          "corrected": "ambiguous",
+          "anchor": {
+            "sourceId": "us-bank-elan-fidelity-rewards-product",
+            "quote": "You can earn unlimited 2% cash back when you invest your rewards for your future"
+          },
+          "note": "The 2% value applies only when points are deposited into an eligible Fidelity account; ambiguous, not out-of-scope (U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The condition is an ambiguous issue, not out-of-scope, per the U.S. Bank conventions (chosen categories, top-three categories, Fidelity deposit condition)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Missing issue with no anchor stating a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue has no anchor that states a problem (general 16)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Missing issue with no anchor stating a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Issue has no anchor that states a problem (general 16)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "add",
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "2% value only when points are deposited into an eligible Fidelity account; other redemptions are worth less.",
+            "rate": "2%"
+          },
+          "anchor": {
+            "sourceId": "us-bank-elan-fidelity-rewards-rewards-terms",
+            "quote": "The 2% cash back rewards value applies only to Points redeemed for a deposit into an eligible Fidelity"
+          },
+          "note": "Redemption condition recorded as a note (U.S. Bank convention); closest existing hint type.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Fidelity deposit condition needs a product note (U.S. Bank convention) and relationship-tier is the closest existing hint type (general 18)."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-harley-davidson-secured",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "points",
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-secured-product",
+            "quote": "Points are earned on eligible Net Purchases."
+          },
+          "note": "The card earns H-D points; undrafted, so the currency is written from the product page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 states points are earned on net purchases and the headline is 1X POINT; currency points is the only reading (general 1)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-secured-product",
+            "quote": "for every 2,500 points earned"
+          },
+          "note": "The only stated value is $25 at H-D per 2,500 points, redeemed as an H-D gift card, not cash; null under general 3 and the U.S. Bank point-values convention.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The only value stated is $25 at H-D per 2,500 points, paid as an H-D Gift Card: a gift-card value stays null (general 3, 14; U.S. Bank point-values convention), as on the H.O.G. Elite card."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "everywhere Visa is accepted",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "1X POINT\neverywhere Visa is accepted"
+            }
+          ],
+          "note": "The card's only earn rate: 1 point per dollar on all purchases. No cap or activation sentence, so both stay null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim headline states 1X everywhere Visa is accepted; no cap, activation or limited-time sentence in the capture, so those stay null (general 7, 10, 21)."
+          }
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "transactions posting as Convenience Checks",
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "transactions posting as Convenience Checks"
+            }
+          ],
+          "note": "Listed in footnote 1 as not eligible to earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists convenience checks as not eligible to earn."
+          }
+        },
+        {
+          "text": "Balance Transfers",
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "Balance Transfers"
+            }
+          ],
+          "note": "Listed in footnote 1 as not eligible to earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists balance transfers as not eligible to earn."
+          }
+        },
+        {
+          "text": "Advances (including ATM withdrawals, wire transfers, traveler’s checks, money orders, foreign cash transactions, betting transactions, and lottery tickets)",
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "Advances (including ATM withdrawals, wire transfers, traveler’s checks, money orders, foreign cash transactions, betting transactions, and lottery tickets)"
+            }
+          ],
+          "note": "Cash-like advances do not earn, per footnote 1.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists advances as not eligible to earn; quote is verbatim and under 25 words."
+          }
+        },
+        {
+          "text": "interest charges and fees",
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "interest charges and fees"
+            }
+          ],
+          "note": "Not purchases, per footnote 1.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists interest charges and fees as not eligible to earn."
+          }
+        },
+        {
+          "text": "credit insurance premiums",
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "credit insurance premiums"
+            }
+          ],
+          "note": "Not eligible, per footnote 1.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists credit insurance premiums as not eligible to earn."
+          }
+        },
+        {
+          "text": "transactions to (i) fund certain prepaid card products, (ii) buy currency from the U.S. Mint, or (iii) buy cash convertible items",
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "transactions to (i) fund certain prepaid card products, (ii) buy currency from the U.S. Mint, or (iii) buy cash convertible items"
+            }
+          ],
+          "note": "Prepaid funding, U.S. Mint currency and cash convertible items do not earn, per footnote 1.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists these transactions as not eligible to earn; quote is verbatim and under 25 words."
+          }
+        }
+      ],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "add",
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Points redeem at Harley-Davidson: $25 at H-D for every 2,500 points, issued as an H-D Gift Card (not a cash value).",
+            "merchants": [
+              "Harley-Davidson"
+            ]
+          },
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-secured-product",
+            "quote": "Harley‑Davidson™ Gift Cards issued from H‑D™ Rewards point redemption do not expire."
+          },
+          "note": "Redemption value goes in a product note, as on the H.O.G. Elite card (general 18, U.S. Bank point-values convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Gift-card redemption values belong in a product note (general 18, U.S. Bank point-values convention), matching the H.O.G. Elite note; anchor is verbatim. No store-only ambiguous issue (general 8/14): the capture states no exclusivity, so no anchor states the problem (general 16), consistent with the H.O.G. Elite entry."
+          }
+        }
+      ]
+    }
+  ],
+  "labelLintAcks": [
+    {
+      "cardId": "us-bank-cash-plus-secured",
+      "ruleIndex": 2,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "us-bank-harley-davidson-hog-elite",
+      "ruleIndex": 4,
+      "check": "rate",
+      "reason": "reversed-phrasing"
+    },
+    {
+      "cardId": "us-bank-edward-jones-triple-rewards",
+      "ruleIndex": 1,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "us-bank-edward-jones-triple-rewards",
+      "ruleIndex": 5,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "us-bank-edward-jones-triple-rewards",
+      "ruleIndex": 6,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    }
+  ]
+}

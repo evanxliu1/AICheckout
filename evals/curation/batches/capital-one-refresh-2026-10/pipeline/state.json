@@ -1,0 +1,1356 @@
+{
+  "schemaVersion": 1,
+  "batch": "capital-one-refresh-2026-10",
+  "updatedAt": "2026-10-05T02:39:14.255Z",
+  "cards": {
+    "capital-one-venture-x": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:6586f0f96a17f40ee17c3be5140633230143869037d1d94265b21392dd39da30",
+          "outputs": [
+            {
+              "ref": "manifest:capital-one-venture-x-product",
+              "sha256": "86ff425470da080fc06db181536e0b5ba920266c6b0d518ecf91d59d36e6db94"
+            },
+            {
+              "ref": "source-input:capital-one-venture-x-product",
+              "sha256": "18a81eb6f902026a7bab19f26317420a8a607e04ace03a8dbb192324ceb18759"
+            },
+            {
+              "ref": "manifest:capital-one-venture-x-pricing",
+              "sha256": "b1865860e21efc5aba67ae5e196f71217dc5b07e9cb65cf0526d65f6f7e201a6"
+            },
+            {
+              "ref": "source-input:capital-one-venture-x-pricing",
+              "sha256": "185f0ce7cc8e9db37f25ca278b8ac4020074bc221e1da09686c180d220b1121f"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:12:21.343Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:04747d64f12763b4e2c24adb687d7935d416d3411ba1ce7da510cbf2196b3a79",
+          "outputs": [
+            {
+              "ref": "trace:capital-one-venture-x",
+              "sha256": "dfbd935a6cf92c24e92ab80b936bb2a49ad1dfe192c67c28957910e4304c0c70"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:36:38.788Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:861cdb49b71650dbf401837857ed789030e68cdcdc4d1a82de428fcafe7ff2a0",
+          "outputs": [
+            {
+              "ref": "corpus-draft:capital-one-venture-x",
+              "sha256": "9a18852abd04c9150eba4eca63010d9df55341e240ce225a893a15b2ba53ccbc"
+            }
+          ],
+          "labelsHash": "sha256:2a6378580d755a5b9a1adb6375ad1f81eaeee4bcc6a7bf99823bb61713c57db7",
+          "anchorsHash": "sha256:db17d27c377a9d1468bcee885a5a8ff3926d02349fb935a62c514dd1b8fb0a7f",
+          "finishedAt": "2026-10-05T01:37:36.879Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:ebae91e53b7426be1f348d9843f40abac6b8c47f0d72e34d7aece74ba2ac288d",
+          "labelsHash": "sha256:2a6378580d755a5b9a1adb6375ad1f81eaeee4bcc6a7bf99823bb61713c57db7",
+          "anchorsHash": "sha256:db17d27c377a9d1468bcee885a5a8ff3926d02349fb935a62c514dd1b8fb0a7f",
+          "finishedAt": "2026-10-05T01:40:52.927Z",
+          "attempts": 1,
+          "packetId": "be3d5b3c-0933-40f2-be3f-92367a64ece5",
+          "agentRun": "a4179c81dedaa9b7f",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:40:52.927Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:c8cf0f4bb28902be178ed2b5f587d48cacc91a8e83d8938304857c5937231fae",
+          "finishedAt": "2026-10-05T01:42:46.284Z",
+          "attempts": 1,
+          "packetId": "4f6574ba-8fa4-48d5-8a40-942fb3b2974e",
+          "agentRun": "a52f0c9fef1c37b03",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:42:46.284Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:bb8074be66d39adefdfc7e84e27430c93dcb7f5f44340696d812abdad6423fc2",
+          "outputs": [
+            {
+              "ref": "corpus:capital-one-venture-x",
+              "sha256": "506e7def94876d2a480bf0fa4ddca44263c8a048df45d360e584929e15436e96"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:42:49.275Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:ebd6b00b21caa1158dca1f67b627b5ad6f71aec474a87745b5e1fa1126e9dded",
+          "finishedAt": "2026-10-05T01:44:57.045Z",
+          "attempts": 1,
+          "packetId": "ccf07af4-130d-4e56-a1f2-c27551f18677",
+          "agentRun": "a4426b3eedabfbce2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:57.045Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "capital-one-venture": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:eff8b7305b00125a446141631684c6a5b8a2dc4f9f75d3546608bc543455c2ea",
+          "outputs": [
+            {
+              "ref": "manifest:capital-one-venture-product",
+              "sha256": "90b32c339a74ba0ab14b6155c440c6e41cb18cbe3ea688a238d06cd54e8cc8e0"
+            },
+            {
+              "ref": "source-input:capital-one-venture-product",
+              "sha256": "daecdcc88bc129459b6d54707703ff19a2735a562a4fae47b7b5f75b721915d3"
+            },
+            {
+              "ref": "manifest:capital-one-venture-pricing",
+              "sha256": "0527df0281a3eb098329d80f8e045fa1d6506f3aae88be4583505131826c64fb"
+            },
+            {
+              "ref": "source-input:capital-one-venture-pricing",
+              "sha256": "5ffc766a6c17b47cb6ba0773622a2b5e37ad385e8db2b778d3b85866e93f14c7"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:12:21.343Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:01938db646b5f5f37612c728ee559e84e58bdbc5bbe542eb9549b46056f83570",
+          "outputs": [
+            {
+              "ref": "trace:capital-one-venture",
+              "sha256": "e86c65a14b255e64da9cd1e74810efc1326a8c3180904d2120d262d1c9e3f517"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:36:38.788Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:91205a58309977c5208d47b7217a65ed36af3491a6fcbed7ae41aaa9b6879e58",
+          "outputs": [
+            {
+              "ref": "corpus-draft:capital-one-venture",
+              "sha256": "78c175c7c99a6a15e5389a161ad043d56562fd273c810517ce73a90b62a84734"
+            }
+          ],
+          "labelsHash": "sha256:650a8bb0c46b73371909d7cf9bc1d232068b422836c263901cdc7910212b2a14",
+          "anchorsHash": "sha256:b61d95e4efc59e9ef9dc5c6bc049a2b4c0162e4d3126e73f19fd84669e466f66",
+          "finishedAt": "2026-10-05T01:37:36.879Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:b0a73670785ae3a452d71f93691c3885e24a16d2ec607fdd9f059d49a1d486ee",
+          "labelsHash": "sha256:650a8bb0c46b73371909d7cf9bc1d232068b422836c263901cdc7910212b2a14",
+          "anchorsHash": "sha256:b61d95e4efc59e9ef9dc5c6bc049a2b4c0162e4d3126e73f19fd84669e466f66",
+          "finishedAt": "2026-10-05T01:40:52.927Z",
+          "attempts": 1,
+          "packetId": "be3d5b3c-0933-40f2-be3f-92367a64ece5",
+          "agentRun": "a4179c81dedaa9b7f",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:40:52.927Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:28f1d8a316e1af1f4a3b4faf069a8eb40443762e468ab90047fad1eba3e26a53",
+          "finishedAt": "2026-10-05T01:42:46.284Z",
+          "attempts": 1,
+          "packetId": "4f6574ba-8fa4-48d5-8a40-942fb3b2974e",
+          "agentRun": "a52f0c9fef1c37b03",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:42:46.284Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:20069a8b4b03760f30e49cceedef4fc27eecfde795996f1b4e4dad50fad6bfd5",
+          "outputs": [
+            {
+              "ref": "corpus:capital-one-venture",
+              "sha256": "5383da47850993d25261573da453d8768b167f90eb1f43ba4c1632d77b937817"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:42:49.275Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:2c55e570ca3b94b43da6f081fa4a044de6502ec33de7c76bd062fcee5f032794",
+          "finishedAt": "2026-10-05T01:44:57.045Z",
+          "attempts": 1,
+          "packetId": "ccf07af4-130d-4e56-a1f2-c27551f18677",
+          "agentRun": "a4426b3eedabfbce2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:57.045Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "capital-one-ventureone": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9745e6fb06970b35d270a24c6a3ccfea92a9e89486f4cc1055f41fa06dd3abd5",
+          "outputs": [
+            {
+              "ref": "manifest:capital-one-ventureone-product",
+              "sha256": "728cdf6d27a18c14f9e8f7d5490b2efdac38d381db76e947270cbe9117d97e38"
+            },
+            {
+              "ref": "source-input:capital-one-ventureone-product",
+              "sha256": "60fafec03aa2ad5e595cefdf2229d173d4e427b24c8564702207f5d3c8cc0ab0"
+            },
+            {
+              "ref": "manifest:capital-one-ventureone-pricing",
+              "sha256": "dc3cf1256811ad421e9eeb85987a554344e32a2d09605d409691884e63bacda6"
+            },
+            {
+              "ref": "source-input:capital-one-ventureone-pricing",
+              "sha256": "c0ddb6d833bb7f789edb2e9086d95c74bbcc99cb433884f00ac96b22e33c1a73"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:12:21.343Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:f74914cf34d4d08ca212a776d0bf401131fbe14f996555f8cde8be0b925ddd86",
+          "outputs": [
+            {
+              "ref": "trace:capital-one-ventureone",
+              "sha256": "3fb1e0eeb7743534c4fdd3e24f7c8001d03dcf0197a94322930da93194167383"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:36:38.788Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:d3a639677e30bd38216b103cf8e1da5a7f055f21b15b97db6d46ecd3832ddf9f",
+          "outputs": [
+            {
+              "ref": "corpus-draft:capital-one-ventureone",
+              "sha256": "6b62f376aaee1c4c24530032d9d5fbb52664c082f55ed503c0636a29e2638541"
+            }
+          ],
+          "labelsHash": "sha256:18488fd6959e4af363341050ab8a984a37974e74668d4535846553b910e78355",
+          "anchorsHash": "sha256:25ffea48ab4cbbbe56147d9b87bae9d40574d02580eba3a03a5cb00f85249356",
+          "finishedAt": "2026-10-05T01:37:36.880Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:0fa522e1744c7ddca18f91e5917c99113b54ab2dc94df69bedf26d9f4dd32fe0",
+          "labelsHash": "sha256:18488fd6959e4af363341050ab8a984a37974e74668d4535846553b910e78355",
+          "anchorsHash": "sha256:25ffea48ab4cbbbe56147d9b87bae9d40574d02580eba3a03a5cb00f85249356",
+          "finishedAt": "2026-10-05T01:40:52.927Z",
+          "attempts": 1,
+          "packetId": "be3d5b3c-0933-40f2-be3f-92367a64ece5",
+          "agentRun": "a4179c81dedaa9b7f",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:40:52.927Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:8f1f0099ddcd9e008c009718b4f4c8ec79fc4ed5f0c9d62458259ae6c8acc413",
+          "finishedAt": "2026-10-05T01:42:46.284Z",
+          "attempts": 1,
+          "packetId": "4f6574ba-8fa4-48d5-8a40-942fb3b2974e",
+          "agentRun": "a52f0c9fef1c37b03",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:42:46.284Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:74c2df4564c79ff31e9f1aba5fc618cc255c40ff586b20274b2d306eb7686414",
+          "outputs": [
+            {
+              "ref": "corpus:capital-one-ventureone",
+              "sha256": "2a3a1e1a250135877375ba24187dc4d1fe18908c4e78b9eef945dcb76c419070"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:42:49.275Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:3f421ad2f8254bbff1d38751a44019f55d28e9f17252095254b0580b7c768706",
+          "finishedAt": "2026-10-05T01:44:57.045Z",
+          "attempts": 1,
+          "packetId": "ccf07af4-130d-4e56-a1f2-c27551f18677",
+          "agentRun": "a4426b3eedabfbce2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:57.045Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "capital-one-quicksilverone": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:65ea9eb4c6ac443f220892db175935fc74eaf908abc2113565673b7ae4ad3be4",
+          "outputs": [
+            {
+              "ref": "manifest:capital-one-quicksilverone-product",
+              "sha256": "3ab0fda2b03ba3cf8966911cf311336dd0b27ac6691955aac4ceb657ad420321"
+            },
+            {
+              "ref": "source-input:capital-one-quicksilverone-product",
+              "sha256": "92598f02f17bc9f9685878c81b7963f5bfb9f86932a0ad59a0344a330f72da6e"
+            },
+            {
+              "ref": "manifest:capital-one-quicksilverone-pricing",
+              "sha256": "f25755c3537c94a41e6bb0104551410bfcc4a2ccc533042ccc589a8608a9d304"
+            },
+            {
+              "ref": "source-input:capital-one-quicksilverone-pricing",
+              "sha256": "c31c937591cabb20f66e0dbbdcf7f3541ba4a55715abfc5068d94dec9b56223f"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:12:21.344Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:5589cb8a3eef9270e35c1fc21a968481f504148940e0e47655433319acc6cb6a",
+          "outputs": [
+            {
+              "ref": "trace:capital-one-quicksilverone",
+              "sha256": "66d9b6dbade5a10a9db2add9d01630c0e1e33d698d4425c19f74b79a52822159"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:36:38.789Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:2c51fadfb9caffa23575973bbe565da2a8e411d684585bb88d13646824be4889",
+          "outputs": [
+            {
+              "ref": "corpus-draft:capital-one-quicksilverone",
+              "sha256": "76acec887b626d3408050d776d09048637dadc678cc56ebe516f90a704643a0c"
+            }
+          ],
+          "labelsHash": "sha256:fee162b3b9b73026d6f2961d4fab2705390c7295d6598ac934f6f2a94f2f1087",
+          "anchorsHash": "sha256:3fe3845e32012cd1ae2dba80fd82ba857f29725efb85e148d0b3c890e83eb3f3",
+          "finishedAt": "2026-10-05T01:37:36.880Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:01c617302ccb42a4c4ef84efeb03eb01d556848413ddef0bb79fc9253c56ea51",
+          "labelsHash": "sha256:fee162b3b9b73026d6f2961d4fab2705390c7295d6598ac934f6f2a94f2f1087",
+          "anchorsHash": "sha256:3fe3845e32012cd1ae2dba80fd82ba857f29725efb85e148d0b3c890e83eb3f3",
+          "finishedAt": "2026-10-05T01:40:52.927Z",
+          "attempts": 1,
+          "packetId": "be3d5b3c-0933-40f2-be3f-92367a64ece5",
+          "agentRun": "a4179c81dedaa9b7f",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:40:52.927Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:03e91502e73c2bcad711a11c384121e7ff2faf2189bf475f5283b00718d29337",
+          "finishedAt": "2026-10-05T01:42:46.284Z",
+          "attempts": 1,
+          "packetId": "4f6574ba-8fa4-48d5-8a40-942fb3b2974e",
+          "agentRun": "a52f0c9fef1c37b03",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:42:46.284Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:e226c4c4d14b4055adbb19e799f888fb49257030c19f147611b18ef0346af384",
+          "outputs": [
+            {
+              "ref": "corpus:capital-one-quicksilverone",
+              "sha256": "49cd2adacd7d44c49ff7b34e17bc22c39c7e159ffb973dce71de0e388f1696b6"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:42:49.275Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:d164bb1ff3d7aaf0c6b00fca3b262f45863738d18c8e7cbc34a0f3ac7b164a1d",
+          "finishedAt": "2026-10-05T01:44:57.045Z",
+          "attempts": 1,
+          "packetId": "ccf07af4-130d-4e56-a1f2-c27551f18677",
+          "agentRun": "a4426b3eedabfbce2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:57.045Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "capital-one-quicksilver-student": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:f7c1a9301eceebc47dfab916c33da79120ab6061ea558b14cbafb9e097767776",
+          "outputs": [
+            {
+              "ref": "manifest:capital-one-quicksilver-student-product",
+              "sha256": "5d25375ad3199caf36111f016b67ed784fb2424a919d63d6067b817f36fd80cf"
+            },
+            {
+              "ref": "source-input:capital-one-quicksilver-student-product",
+              "sha256": "8472b48bd400ee331e74ba25a9f61e2043670814d91d765f8d07326cc89a7e06"
+            },
+            {
+              "ref": "manifest:capital-one-quicksilver-student-pricing",
+              "sha256": "8f6765ee6c23b0be7f7e19921c6a252a56c3489d1b5ed0356920e8e0a027130a"
+            },
+            {
+              "ref": "source-input:capital-one-quicksilver-student-pricing",
+              "sha256": "4966c669bb40059e57a434c3f633e3ade92ab32e5cdaeb9916de8605183436c1"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:12:21.344Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:0ba98a3caa2111d7ea8d6d3fbe60b54e8fef9cb00d3c80c239a7ee6dad9a9b8a",
+          "outputs": [
+            {
+              "ref": "trace:capital-one-quicksilver-student",
+              "sha256": "aeb90667f60f6a944beb4a193291a36047e6381f9d857fdb580b3e90594da7f3"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:36:38.789Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:ec4e52ea0744352b6c88a68825e56485196ff418a775ba356bb6b6cdfcd981b3",
+          "outputs": [
+            {
+              "ref": "corpus-draft:capital-one-quicksilver-student",
+              "sha256": "7f826594a82c523482237a2224ae98ce07e3527eb0254c43639be71226ee7919"
+            }
+          ],
+          "labelsHash": "sha256:c73ca9be825480b51a377dc3fba93e161a3b2f32b98461a5e9b605454e47ed0f",
+          "anchorsHash": "sha256:3689dff29427e2dc250cb816afb2e1e4c3949236f87ac614b44b8d773200f105",
+          "finishedAt": "2026-10-05T01:37:36.880Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:e21450044b7b6dfde8dbd934f8c052af4c7f03f5b60af60dc4e2b105d3c59daa",
+          "labelsHash": "sha256:c73ca9be825480b51a377dc3fba93e161a3b2f32b98461a5e9b605454e47ed0f",
+          "anchorsHash": "sha256:3689dff29427e2dc250cb816afb2e1e4c3949236f87ac614b44b8d773200f105",
+          "finishedAt": "2026-10-05T01:40:52.927Z",
+          "attempts": 1,
+          "packetId": "be3d5b3c-0933-40f2-be3f-92367a64ece5",
+          "agentRun": "a4179c81dedaa9b7f",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:40:52.927Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:03819c8ff2d7f8210db5bbcb28c65984cea2132bd792e8d5bcb1112bf86da298",
+          "finishedAt": "2026-10-05T01:42:46.284Z",
+          "attempts": 1,
+          "packetId": "4f6574ba-8fa4-48d5-8a40-942fb3b2974e",
+          "agentRun": "a52f0c9fef1c37b03",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:42:46.284Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:28e7954badc9a97eab56761edfcb26d97e8dcdf7681c76ee1c60cfdf1db4491f",
+          "outputs": [
+            {
+              "ref": "corpus:capital-one-quicksilver-student",
+              "sha256": "b700d19011c8e780dfeabcf50ab06f69103e3427dd21c16d138b9e04027c55a5"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:42:49.275Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:36de67ee6da87282b18e6799bd4c38ad1816e5f3f1ba65822a30d87e4f7bdd77",
+          "finishedAt": "2026-10-05T01:44:57.045Z",
+          "attempts": 1,
+          "packetId": "ccf07af4-130d-4e56-a1f2-c27551f18677",
+          "agentRun": "a4426b3eedabfbce2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:57.045Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "capital-one-quicksilver-secured": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:650741a2e0879e474ba8fc2a0e59eeebb35d316aad0fedfee6d28954f63ffbe8",
+          "outputs": [
+            {
+              "ref": "manifest:capital-one-quicksilver-secured-product",
+              "sha256": "d34258ab99865e0fb0c6fff4b4b020af2b8ad94f9e754411d63d94e264034682"
+            },
+            {
+              "ref": "source-input:capital-one-quicksilver-secured-product",
+              "sha256": "1d09088b94cbf172c46cd8d8752e13420dd46dc0aaf4552d203166a09c3d8b3e"
+            },
+            {
+              "ref": "manifest:capital-one-quicksilver-secured-pricing",
+              "sha256": "9da89932ee6609724a4bbc8e24d95cfa499567d8cbf12c12d9f381eace657dc4"
+            },
+            {
+              "ref": "source-input:capital-one-quicksilver-secured-pricing",
+              "sha256": "0d698c476f0d878b9009dcd8a4885f128b0a2c379d59dd284ba79a7c45439a67"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:12:21.344Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:a2136965b28917d03acd37574510ad53b4bd16ce0a2455ea233d1a26a0936f97",
+          "outputs": [
+            {
+              "ref": "trace:capital-one-quicksilver-secured",
+              "sha256": "d3f1864b663270282fb5fd806d0afe1566319112d988a54664b79d2e80294fdf"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:36:38.789Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:b187a8a2d087e816373d2cf1778f38ee7685b28b5f2082d8773210f08830b18e",
+          "outputs": [
+            {
+              "ref": "corpus-draft:capital-one-quicksilver-secured",
+              "sha256": "37f99bb22b0459f66f506ab7c3a43aa33eb489d54cdc18d15361502e0f0d3bf9"
+            }
+          ],
+          "labelsHash": "sha256:53e251c6ad654d8e8493671c8f261148db2e4d4597aaca1c2d570e8234aa48e5",
+          "anchorsHash": "sha256:72e6561a45d88d5e1fb3c68241ef9e0534626db1558e1c6039e338ca4a0ea658",
+          "finishedAt": "2026-10-05T01:37:36.880Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:56ba872e31865f5af110f1aa4f663185687f1d1841e1dfbf13b1f29549fb4100",
+          "labelsHash": "sha256:53e251c6ad654d8e8493671c8f261148db2e4d4597aaca1c2d570e8234aa48e5",
+          "anchorsHash": "sha256:72e6561a45d88d5e1fb3c68241ef9e0534626db1558e1c6039e338ca4a0ea658",
+          "finishedAt": "2026-10-05T01:40:52.927Z",
+          "attempts": 1,
+          "packetId": "be3d5b3c-0933-40f2-be3f-92367a64ece5",
+          "agentRun": "a4179c81dedaa9b7f",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:40:52.927Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:27ab57527f593278cab7dcff6cf6351b9710b43f8fdd53b33dcc2224b5f621a4",
+          "finishedAt": "2026-10-05T01:42:46.284Z",
+          "attempts": 1,
+          "packetId": "4f6574ba-8fa4-48d5-8a40-942fb3b2974e",
+          "agentRun": "a52f0c9fef1c37b03",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:42:46.284Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:a627a49a1d7a649353d9b62d64c5a9536e5d43a1f4150e5f010c77ec60310f6d",
+          "outputs": [
+            {
+              "ref": "corpus:capital-one-quicksilver-secured",
+              "sha256": "6b8de2497800834d584152892543dda461f932e582ba93f97e09f37edb3aa569"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:42:49.275Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:87fb0a64f92fd6e5a6d8a0f314aa5ff1d6cfc7a15ffc6d3539f3e38f759ea1d2",
+          "finishedAt": "2026-10-05T01:44:57.045Z",
+          "attempts": 1,
+          "packetId": "ccf07af4-130d-4e56-a1f2-c27551f18677",
+          "agentRun": "a4426b3eedabfbce2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:57.045Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "capital-one-savorone": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:6c9d1e7ed53a0d2de98bc3247fa0cfc92def859c0bb015e127336f65db03a9f0",
+          "outputs": [
+            {
+              "ref": "manifest:capital-one-savorone-product",
+              "sha256": "bb300b04b2b66263899c5d425dec3bf16695f394571a1735f2f84d3fb52733cd"
+            },
+            {
+              "ref": "source-input:capital-one-savorone-product",
+              "sha256": "e740c9428196896c5ab0bf50ef5cf5e3e50f158ef045b1d41f29423c915dab5e"
+            },
+            {
+              "ref": "manifest:capital-one-savorone-pricing",
+              "sha256": "d35feb584e603b1e85b863ecd521ed893ce8240c412bebc5b9718e64faebe448"
+            },
+            {
+              "ref": "source-input:capital-one-savorone-pricing",
+              "sha256": "37a2f4523e5b9d3b222539fe8f311b7bea526991adda9e0ef5b939b1bdc1a56c"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:12:21.345Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:e211291fa6cff52fa10653542bced38e4354c97b1919f16d8a555ecd3600fe74",
+          "outputs": [
+            {
+              "ref": "trace:capital-one-savorone",
+              "sha256": "04516a7672be1c885368cd0cac1cffa140813e5fc83936b0413fd341636b13d3"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:36:38.789Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:b31f818f2301306cfde290dfecf4f05501eb87e9cde5c4f5a8927ce015895faf",
+          "outputs": [
+            {
+              "ref": "corpus-draft:capital-one-savorone",
+              "sha256": "971d7630cc550bab265b68fd9899a384269c0acc3be1097a7aec85592fbe51c0"
+            }
+          ],
+          "labelsHash": "sha256:be8013bd4eeffc35054c40c27baa8d66fa1c52bd32f5206aa57d5b8a546e829a",
+          "anchorsHash": "sha256:b58ac5c23a87856ea99ef8ed5b781b8c78155c0a9c0894475b2defcec1bda41b",
+          "finishedAt": "2026-10-05T01:37:36.880Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:01a6bc559f1c02bb6ec2b315e5235fb94ea4897363ed5a61900294c20df91915",
+          "labelsHash": "sha256:be8013bd4eeffc35054c40c27baa8d66fa1c52bd32f5206aa57d5b8a546e829a",
+          "anchorsHash": "sha256:b58ac5c23a87856ea99ef8ed5b781b8c78155c0a9c0894475b2defcec1bda41b",
+          "finishedAt": "2026-10-05T01:40:52.927Z",
+          "attempts": 1,
+          "packetId": "be3d5b3c-0933-40f2-be3f-92367a64ece5",
+          "agentRun": "a4179c81dedaa9b7f",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:40:52.927Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:a36963bf00829be195a0f76e5db88c22645e37435107912f360fcad20ed01b07",
+          "finishedAt": "2026-10-05T01:42:46.284Z",
+          "attempts": 1,
+          "packetId": "4f6574ba-8fa4-48d5-8a40-942fb3b2974e",
+          "agentRun": "a52f0c9fef1c37b03",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:42:46.284Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:fe53f68329d4777aebc7269b4f5987bd0471a8e4396507ba1d4ffd9417bf6b0d",
+          "outputs": [
+            {
+              "ref": "corpus:capital-one-savorone",
+              "sha256": "518489221fde86ef44e462097f948ee1df0b3a21b2f74086a34caad56e7f9415"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:42:49.275Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:da749c96ffe9d3679b8724ca53f3a6ca86dfaac12e901ec0d85f30d2262bf67e",
+          "finishedAt": "2026-10-05T01:44:57.045Z",
+          "attempts": 1,
+          "packetId": "ccf07af4-130d-4e56-a1f2-c27551f18677",
+          "agentRun": "a4426b3eedabfbce2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:57.045Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "capital-one-savor-student": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9c1ada045c8e4afb9bd2e916deedb13f6a2880d0de1e6919aa371643b8bc4b38",
+          "outputs": [
+            {
+              "ref": "manifest:capital-one-savor-student-product",
+              "sha256": "9dc3ca7cf0678b464ee27bf9768cf99e85f2c7223c1e08f8afaa94ca7a0d640d"
+            },
+            {
+              "ref": "source-input:capital-one-savor-student-product",
+              "sha256": "7d764f9068a0f186ef5de15e28bea1602dfa48ab767d3912b33cafe11f8fae40"
+            },
+            {
+              "ref": "manifest:capital-one-savor-student-pricing",
+              "sha256": "1820e08dca0fd9f821d7107f14aabdce0f6308f01ad8321781ce84c563888b15"
+            },
+            {
+              "ref": "source-input:capital-one-savor-student-pricing",
+              "sha256": "0b93031e9782e1b8f418683bc763245e3a7bf28a9542b82df07669c508ec342a"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:12:21.345Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:96d5b46a80e1b11b1458b13dda487eb89373036b510fb4c019738882d5349202",
+          "outputs": [
+            {
+              "ref": "trace:capital-one-savor-student",
+              "sha256": "36ca37d34cedd0dbcd3b9f946e907f4a45f732382ddb2389a57af0bfb109e084"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:36:38.789Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:c5114a193c698212466a5881cf265aeee8694599467413ae2a078a4562596144",
+          "outputs": [
+            {
+              "ref": "corpus-draft:capital-one-savor-student",
+              "sha256": "8e6d5b2597fe102888c80497577b8158648b690def868330633879f45b852f92"
+            }
+          ],
+          "labelsHash": "sha256:ac1296fec45e7decc9b5475e9f37a9dec75fa25c4c9b5fdbce6d911e2a6f6d1d",
+          "anchorsHash": "sha256:37610ca733f719d5c509762fe8e5d0ec26473d2406f59a849b69ae6ce285adaf",
+          "finishedAt": "2026-10-05T01:37:36.880Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:26fd89cd8596629b80632f6cb62d9cb2d479923d100120ca5f5ce4874bf54c55",
+          "labelsHash": "sha256:ac1296fec45e7decc9b5475e9f37a9dec75fa25c4c9b5fdbce6d911e2a6f6d1d",
+          "anchorsHash": "sha256:37610ca733f719d5c509762fe8e5d0ec26473d2406f59a849b69ae6ce285adaf",
+          "finishedAt": "2026-10-05T01:40:52.927Z",
+          "attempts": 1,
+          "packetId": "be3d5b3c-0933-40f2-be3f-92367a64ece5",
+          "agentRun": "a4179c81dedaa9b7f",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:40:52.927Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:c30bd08cedc91613e6258d8f4fc18ebee13bc332f7e6c60438827a5e4411fd5a",
+          "finishedAt": "2026-10-05T01:42:46.284Z",
+          "attempts": 1,
+          "packetId": "4f6574ba-8fa4-48d5-8a40-942fb3b2974e",
+          "agentRun": "a52f0c9fef1c37b03",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:42:46.284Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:8cf0715d3da565819e73dfa92e577b7f0606e1066872109e761cf522c78a9561",
+          "outputs": [
+            {
+              "ref": "corpus:capital-one-savor-student",
+              "sha256": "5056c95a438a0f210a2a825d15c96320408e96c64dbf249cf5365f7bdba819ce"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:42:49.276Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:dfe5ef3be8b75373b72a5c11b6565770d1c060d131b885c23d6029539f025986",
+          "finishedAt": "2026-10-05T01:44:57.045Z",
+          "attempts": 1,
+          "packetId": "ccf07af4-130d-4e56-a1f2-c27551f18677",
+          "agentRun": "a4426b3eedabfbce2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:57.045Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "capital-one-t-mobile-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9565f256af6a9f849bbb780a9be719b2e41bd0e68133d8449ea1f95bbacd60be",
+          "outputs": [
+            {
+              "ref": "manifest:capital-one-t-mobile-visa-product",
+              "sha256": "7d0133628b285296e3ae5fea91206c96208be3457522ad85a8075bcbbf8930c1"
+            },
+            {
+              "ref": "source-input:capital-one-t-mobile-visa-product",
+              "sha256": "ce0004b88c4e337a5c9ee71dfa1e507115c657234deaf2cd9b7750d7fda1bd50"
+            },
+            {
+              "ref": "manifest:capital-one-t-mobile-visa-pricing",
+              "sha256": "7e6c4dfa23b78c344ad580c483cac5493e90b80194125fffe5b529ab75ffe2b9"
+            },
+            {
+              "ref": "source-input:capital-one-t-mobile-visa-pricing",
+              "sha256": "60930ed0c39612c01396fda9aa813097a944ffa8806b87c1f1a6bfcfb35ec5d6"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:12:21.345Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:66b19dd1d9756d7c2d0484ceac8f67c15dcf37eb860393b102120ee9db073a4d",
+          "outputs": [
+            {
+              "ref": "trace:capital-one-t-mobile-visa",
+              "sha256": "5bd15e752620c2199f07910f0b76e81bee1c79d3a465fbc065e54f93a4a493b6"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:36:38.789Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:c109693f7229658c4160fb9897d6fcd5159a20125a232ad3307b4d4da1a492b7",
+          "labelsHash": "sha256:046f2d2d287455bef52abfcd9741234bcbf64aa2b94a172b6a7c88ab4d7b6f3c",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-10-05T01:57:22.929Z",
+          "attempts": 2,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:fcbaeceb23213552ee9bac6c86251098f2f5bac43ea6679f0a6744aa2ad1ff6a",
+          "labelsHash": "sha256:046f2d2d287455bef52abfcd9741234bcbf64aa2b94a172b6a7c88ab4d7b6f3c",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-10-05T02:00:32.093Z",
+          "attempts": 1,
+          "packetId": "09190808-95e3-493a-af0f-f842e516b9d7",
+          "agentRun": "aedf99cf3efddd95e",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:00:32.093Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:dd91d5603d3963f4daa112bd39c0acc33f1c03d88dde9a3454945daba4b75c88",
+          "finishedAt": "2026-10-05T02:02:26.286Z",
+          "attempts": 1,
+          "packetId": "1c286d64-f970-4ef5-a09a-27c1e324e68d",
+          "agentRun": "a31d24e0c2e830ca7",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T02:02:26.286Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:6444b2345c14cfdf9aad656810ac00a54e8cfcdaa7aea8fc16f4bcdd778284d5",
+          "outputs": [
+            {
+              "ref": "corpus:capital-one-t-mobile-visa",
+              "sha256": "5538c41c2f72f149c4c0fc65037553d33304e542ad3fe246d9e2b1bf633d98d0"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:02:27.297Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:d46355368e378ae02007672f3bdd2f36de53e86f255607d21d325689494ea104",
+          "finishedAt": "2026-10-05T02:03:45.862Z",
+          "attempts": 1,
+          "packetId": "9737981f-cfa9-4ff0-a8a0-d6616e6243c0",
+          "agentRun": "a55e3bb37b5cdd21e",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:03:45.862Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "capital-one-quicksilver": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:5acdd4fb913b6cc1695a0198dfead10426ac34ee43db3eccd14916c059ca9677",
+          "outputs": [
+            {
+              "ref": "manifest:capital-one-quicksilver-product",
+              "sha256": "9925002d8be327696eeae682a9344adfd75c12134b5d2cd708323f62b1bd9acf"
+            },
+            {
+              "ref": "source-input:capital-one-quicksilver-product",
+              "sha256": "1906406e540a0ec965f1dd78194ece3e574e7bc3c0c50a6023ab7ea3fb85ae79"
+            },
+            {
+              "ref": "manifest:capital-one-quicksilver-terms",
+              "sha256": "7d5a7cc1945bc52d832742710e1c98d58e4d7cc00ca3422d21312cd0f616442f"
+            },
+            {
+              "ref": "source-input:capital-one-quicksilver-terms",
+              "sha256": "c299c4ef6c28e0504e8edec37778c6477501297cbc1e6ece63d7652817689f87"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:12:21.345Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:cc20cd809dd109a05dd17949e33a26f88c54418fb8d4db4b83b4a6baae157505",
+          "outputs": [
+            {
+              "ref": "trace:capital-one-quicksilver",
+              "sha256": "0cbb39f585dd8f27e60a0ed4ded8f6dedf24bdaf486cd3834c3da734fe71df3c"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:36:38.790Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:bee463195253a72982c749fb7369d6127dce0313bac8bcac8bb148e037b4fb5a",
+          "outputs": [
+            {
+              "ref": "corpus-draft:capital-one-quicksilver",
+              "sha256": "2628cb0c2322f49dad63a010a40ea64cb0eb6990a4632ea918a6b2f9ffe5987b"
+            }
+          ],
+          "labelsHash": "sha256:7dfdcd50364e9995cf310e7a98fbeef6766b4bb651f9c8bc3331cc461704fe48",
+          "anchorsHash": "sha256:bd58570c703a22860f36f3ebafd00f04aeac002d1607f268db1da5756c955399",
+          "finishedAt": "2026-10-05T01:37:36.880Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:29739dba4af9e7ca6babe05073f82831fa050bea0bb8d337eea28c7fb6457b17",
+          "labelsHash": "sha256:7dfdcd50364e9995cf310e7a98fbeef6766b4bb651f9c8bc3331cc461704fe48",
+          "anchorsHash": "sha256:bd58570c703a22860f36f3ebafd00f04aeac002d1607f268db1da5756c955399",
+          "finishedAt": "2026-10-05T01:40:52.927Z",
+          "attempts": 1,
+          "packetId": "be3d5b3c-0933-40f2-be3f-92367a64ece5",
+          "agentRun": "a4179c81dedaa9b7f",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:40:52.927Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:249047249c29a75616570ab82b8af8247c6382a6dcc319ca3e671f45b22eeb70",
+          "finishedAt": "2026-10-05T01:42:46.284Z",
+          "attempts": 1,
+          "packetId": "4f6574ba-8fa4-48d5-8a40-942fb3b2974e",
+          "agentRun": "a52f0c9fef1c37b03",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:42:46.284Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:3c838ced38843bcb82813239bbeb07c8ad9510518719294d6f6cd4dca391bc3b",
+          "outputs": [
+            {
+              "ref": "corpus:capital-one-quicksilver",
+              "sha256": "cb55b15864fd8f7c94c175abf8411ab8b1b4a8f0e84430b9b383e5973afae3b1"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:42:49.276Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:1b4938fe20ef4f8a8fb8f26ac03746ee3ffe12159532274c1af95dde1b642374",
+          "finishedAt": "2026-10-05T01:44:57.045Z",
+          "attempts": 1,
+          "packetId": "ccf07af4-130d-4e56-a1f2-c27551f18677",
+          "agentRun": "a4426b3eedabfbce2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:57.045Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "capital-one-savor": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:c1dc3b2149ae8d0373727fed3bf111199f9cc7a61b26791b9feb89654b3c26d3",
+          "outputs": [
+            {
+              "ref": "manifest:capital-one-savor-product",
+              "sha256": "b3426d7243bb0a5385fa3c96ad459c9321035f80dd695cd38a3ed76f01b7c534"
+            },
+            {
+              "ref": "source-input:capital-one-savor-product",
+              "sha256": "21c0c65f52292f7e2096435e6bdf017b864d8ea6bde885aaff0c1d771a82353f"
+            },
+            {
+              "ref": "manifest:capital-one-savor-terms",
+              "sha256": "5d54618972ece5360dc4f40c47cbb5f3e21c4c2ffe3a008644eb8004744f1f19"
+            },
+            {
+              "ref": "source-input:capital-one-savor-terms",
+              "sha256": "23309c226354b16db80845c55e8614b5e7420ee99fe3dbc123f0dc42dd494f67"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:12:21.346Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:62d5ebe87c0087e26138d3e2bf02fa58836377ff307aeaab72c749dbd3b2d967",
+          "outputs": [
+            {
+              "ref": "trace:capital-one-savor",
+              "sha256": "f254ea90c486263ee37693b9097be7dca70f258bf86545ec0cad04cfeee922e7"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:36:38.790Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:6a755fe67bc245e073948e668ab492c8f54b7d40209e37071a896e65164b04f5",
+          "outputs": [
+            {
+              "ref": "corpus-draft:capital-one-savor",
+              "sha256": "e4d7630188f1f64d3ce692e8908090389a9dcf2ffb6cc27d194b40fb661a7a77"
+            }
+          ],
+          "labelsHash": "sha256:06a5a9c04f8ad4a21e8e5d6ef896ddcf49fdf00a23a2431c9260fa1c82aa3734",
+          "anchorsHash": "sha256:ddbf218d655a23a2e7d4b6716f571c2249f3f2c480647a10cffe8f2f84f8931c",
+          "finishedAt": "2026-10-05T01:37:36.880Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:b8c4af3537cd99d5c9226d17617a3c9454951fd9e44cdde538b0f7d7f62ae366",
+          "labelsHash": "sha256:06a5a9c04f8ad4a21e8e5d6ef896ddcf49fdf00a23a2431c9260fa1c82aa3734",
+          "anchorsHash": "sha256:ddbf218d655a23a2e7d4b6716f571c2249f3f2c480647a10cffe8f2f84f8931c",
+          "finishedAt": "2026-10-05T01:40:52.927Z",
+          "attempts": 1,
+          "packetId": "be3d5b3c-0933-40f2-be3f-92367a64ece5",
+          "agentRun": "a4179c81dedaa9b7f",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:40:52.927Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:7f8be77f96d219e1f59ea3f28901d870a23a7056a69273937be684eb353d7f24",
+          "finishedAt": "2026-10-05T01:42:46.284Z",
+          "attempts": 1,
+          "packetId": "4f6574ba-8fa4-48d5-8a40-942fb3b2974e",
+          "agentRun": "a52f0c9fef1c37b03",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:42:46.284Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:a6ed6b71cc11fa42ed77d9fd48251c2020689c5f3fcb5a89bf5ebeba7ec030c1",
+          "outputs": [
+            {
+              "ref": "corpus:capital-one-savor",
+              "sha256": "6af4069334635536ded1fae2bed852f8882f5084398ea8b923c30b28b8d7626f"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:42:49.276Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:3faa414c7c24189a8c852ccdb33b42825f5e3639e4e8f0f6ec599b24f57050ce",
+          "finishedAt": "2026-10-05T01:44:57.045Z",
+          "attempts": 1,
+          "packetId": "ccf07af4-130d-4e56-a1f2-c27551f18677",
+          "agentRun": "a4426b3eedabfbce2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:57.045Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
+  "issuers": {
+    "capital-one": {
+      "stages": {
+        "research": {
+          "status": "done",
+          "stageVersion": "research.1",
+          "inputHash": "sha256:4d954fb8ea5d9e5603ffecfeb2fc03250fda22d8f94da5941ac468189be9d52a",
+          "finishedAt": "2026-10-05T01:06:54.521Z",
+          "provenance": "seeded"
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "outputs": [
+            {
+              "ref": "verify:capital-one",
+              "sha256": "6eb784aa15d2070045b1df25d5546a3793a0b59ad82e6fdf5a18858262b0d796"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:00:32.093Z",
+          "attempts": 2,
+          "packetId": "09190808-95e3-493a-af0f-f842e516b9d7",
+          "agentRun": "aedf99cf3efddd95e",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:00:32.093Z",
+          "durationMs": 125980,
+          "tokens": 66284
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "outputs": [
+            {
+              "ref": "adjudicate:capital-one",
+              "sha256": "c401c68b29ea1e4924b29e7f362c79210ad09e6ebb90cec37fc676a1b342d4be"
+            },
+            {
+              "ref": "lint-acks:capital-one",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:02:26.286Z",
+          "attempts": 2,
+          "packetId": "1c286d64-f970-4ef5-a09a-27c1e324e68d",
+          "agentRun": "a31d24e0c2e830ca7",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T02:02:26.286Z",
+          "durationMs": 98430,
+          "tokens": 41732
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "outputs": [
+            {
+              "ref": "fragment:capital-one",
+              "sha256": "1f6177207cb9180f99bcca69c847bdf72118f29c4afce8575fc1c16be5c5607e"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:03:45.862Z",
+          "attempts": 2,
+          "packetId": "9737981f-cfa9-4ff0-a8a0-d6616e6243c0",
+          "agentRun": "a55e3bb37b5cdd21e",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:03:45.862Z",
+          "durationMs": 55712,
+          "tokens": 27336
+        }
+      }
+    }
+  },
+  "batchStages": {
+    "build": {
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:b21d854e9bd1d675bb3abf2519e3a8936ad1c80b24bb9bd710f66700d030cdfe",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "689bb3d64b03a4a58a0c2827ed12dee537215d399e95f752eec9fadd2a4376b1"
+        }
+      ],
+      "finishedAt": "2026-10-05T02:38:43.872Z",
+      "attempts": 2,
+      "catalogVersion": "2026-10-05.renewal.1"
+    },
+    "eval": {
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:d8ac8352dcbe39e33603425b9963522eb9f723c5a098e25f47693a1ce4f50745",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "f31a787706e702a6b21d8ffa37077b278585f0b5b9557b6058ff1edde843ca55"
+        }
+      ],
+      "finishedAt": "2026-10-05T02:39:14.255Z",
+      "attempts": 1
+    }
+  }
+}

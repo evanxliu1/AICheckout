@@ -1,0 +1,317 @@
+{
+  "schemaVersion": 1,
+  "packetId": "850d3083-3fae-429c-ae73-0691648db23b",
+  "batch": "wells-fargo-refresh-2026-10",
+  "issuer": "Wells Fargo",
+  "provenance": "agent-verified",
+  "cards": [
+    {
+      "cardId": "wells-fargo-autograph",
+      "issuer": "Wells Fargo",
+      "corpusCaseSha256": "67df7ccfb13dfd6cdf4755603901c5912d3955aadf6c71e95e454d21f13a93a9",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: travel (airlines, hotels, timeshares, car rentals, cruises, travel agencies, campgrounds); no v3 category covers it, and transit is a separate rule."
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wells Fargo reserves the right to decide whether third-party payment account purchases qualify for bonus points: PayPal and Venmo excluded (O10, conservative reading). Wallets are not named in this statement.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "This includes purchases you make using a third-party payment account"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wells Fargo reserves the right to decide whether third-party payment account purchases qualify for bonus points: PayPal and Venmo excluded (O10, conservative reading). Wallets are not named in this statement.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "This includes purchases you make using a third-party payment account"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "transit",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wells Fargo reserves the right to decide whether third-party payment account purchases qualify for bonus points: PayPal and Venmo excluded (O10, conservative reading). Wallets are not named in this statement.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "This includes purchases you make using a third-party payment account"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wells Fargo reserves the right to decide whether third-party payment account purchases qualify for bonus points: PayPal and Venmo excluded (O10, conservative reading). Wallets are not named in this statement.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "This includes purchases you make using a third-party payment account"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "streaming",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wells Fargo reserves the right to decide whether third-party payment account purchases qualify for bonus points: PayPal and Venmo excluded (O10, conservative reading). Wallets are not named in this statement.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-pricing",
+              "quote": "This includes purchases you make using a third-party payment account"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: phone plans (telecom services); no v3 category covers it."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The eligible streaming list sits on a page outside the captures; the streaming rule stays as labelled and the engine matches by category."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Bonus points are computed on purchase amounts rounded to whole dollars; a rounding detail with no catalog field, so the rates stay as labelled."
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "Warehouse clubs, superstores and grocery stores code outside the gas category, so the gas and EV rules stay as labelled; no brand is named."
+        },
+        {
+          "index": 3,
+          "disposition": "noted",
+          "how": [],
+          "note": "Bakeries, grocery stores and delivery services code outside dining; the dining rule stays as labelled."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "PayPal and Venmo are excluded on each kept bonus rule; the base rate still applies to those payments.",
+          "rules": [
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "wells-fargo-autograph-journey",
+      "issuer": "Wells Fargo",
+      "corpusCaseSha256": "14e67ad6c647f66a6df8b6bd95f5b59e27231f031c0adcef0372a11375b50660",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: hotels; no v3 category covers it."
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airlines; no v3 category covers it."
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Wells Fargo reserves the right to decide whether third-party payment account purchases qualify for bonus points: PayPal and Venmo excluded (O10, conservative reading). Wallets are not named in this statement.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "wells-fargo-autograph-journey-pricing",
+              "quote": "This includes purchases you make using a third-party payment account"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: other travel (timeshares, car rentals, cruise lines, travel agencies, campgrounds); no v3 category covers it, and no transit is named."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Points have no stated cash value and transfer to partners one to one; a redemption fact that does not change what a purchase earns."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Bakeries, grocery stores and delivery services code outside dining; the restaurants rule stays as labelled."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "PayPal and Venmo are excluded on the restaurants rule; the other bonus rules are held out.",
+          "rules": [
+            2
+          ]
+        }
+      ]
+    }
+  ],
+  "gates": [],
+  "programs": [],
+  "programDetails": [],
+  "rewardPrograms": [
+    {
+      "cardId": "wells-fargo-autograph",
+      "programId": "wells-fargo-rewards",
+      "statedValueHundredthsOfCent": 100
+    },
+    {
+      "cardId": "wells-fargo-autograph-journey",
+      "programId": "wells-fargo-rewards",
+      "statedValueHundredthsOfCent": null
+    }
+  ],
+  "labelLintAcks": []
+}

@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T01:47:35Z
+  at: 2026-10-05T03:04:00Z
 ---
 
 # Now
 
-As of 2026-10-05T01:47Z.
+As of 2026-10-05T03:04Z.
 
 ## Current state
 
@@ -23,20 +23,15 @@ As of 2026-10-05T01:47Z.
 
 ## Active work
 
-- **Phase 9, catalog freshness** (coordinator, started 2026-10-04): [plan](product/phase-9-freshness.md). Milestones: (1) review app knows pipeline batches, branch `phase9-m1-review-batch-manifests`; (2) pipeline fixes, branch `phase9-m2-pipeline-fixes`; (3) `pipeline freshness`; (4) renewal run. Ready branch by 2026-10-14; Evan publishes from 2026-10-20, latest 2026-10-28; Evan chose (2026-10-04) to include the Wells Fargo batch in the renewal; tell Evan at once if the run is not ready by 2026-10-20.
-- **Phase 8, card-expansion pipeline v1: built** (coordinator, 2026-10-04). PRs #36 (approval), #37 multi-batch builder with the rule-ID ledger, #38 CLI skeleton, #39 `eval`/`handoff`, #40 `claim`/`accept`, gates and label-evidence lint, #41 skill and four pinned agents: all merged after CI and an independent reviewer subagent ([pipeline](system/card-expansion-pipeline.md)).
-- **Acceptance run** (milestone 6), branch `catalog-wells-fargo-2026-10`: Wells Fargo refresh batch `wells-fargo-2026-10`, 6 cards, end to end from one chat request; results in [`docs/evals/pipeline-v1.md`](../docs/evals/pipeline-v1.md). No rate, cap or category differs from `expansion.v1`; rule-ID continuity 790 kept, 30 changed (all Wells Fargo), 0 dropped. Its catalog change is **not** shipped; publishing it is Evan's call ([decision](decisions/2026-10-04-wells-fargo-batch-not-shipped.md)). Gitignored captures and traces live only in `../AICheckout-p8-wf`: keep that worktree (the six merged Phase 8 worktrees were removed 2026-10-04).
-- **Phase 9 milestone 1** (PR #44): the review app bundles every pipeline batch manifest and matches a capture by the source's `checkedOn` ([decision](decisions/2026-10-04-review-app-batch-manifests.md)); a batch is publishable after its merge and the Render deploy.
-- **Phase 9 milestone 3** (branch `phase9-m3-freshness`, ready for review): `pipeline freshness`, freshness-dated sources in the builder and review app, seeded refresh batches (`init --refresh-from-freshness`) and real cards in batches ([decision](decisions/2026-10-05-freshness-records-and-seeded-refresh.md)); next is the milestone 4 renewal run.
-- **Phase 9 milestone 3b** (branch `phase9-m3b-undrafted-cards`, ready for review): undrafted cards (no draft case) are draft `done` and verified from the empty reference, with a second verify and adjudicate packet for a batch already verified ([decision](decisions/2026-10-05-undrafted-cards-in-the-pipeline.md)); unblocks the 13 undrafted cards of the renewal run (`run draft` on them, then `next`).
-- **Phase 9 milestone 2** (PR #45, merged): published versions are never rebuilt with other contents (`publishedVersions`), `run build --proposed --version` ships nothing, `pipeline drop-source`, and `next` groups cards per queue code ([pipeline](system/card-expansion-pipeline.md#built-so-far)).
+- **Phase 9, catalog freshness** (coordinator, started 2026-10-04; [plan](product/phase-9-freshness.md)). Tooling merged: PRs #43 plan, #44 review app knows batch manifests and freshness records, #45 published versions frozen, `--proposed` builds, `drop-source`, #46 `pipeline freshness`, seeded refresh batches, real cards in batches, #47 undrafted cards, #48 builder omissions only for base-layer cards.
+- **Renewal run** (branch `catalog-renewal-2026-10`, checkout `../AICheckout-p8-wf`, which holds every new capture: keep it): freshness 2026-10-05 found 192 of 328 sources unchanged, 135 changed, 1 flagged; 107 cards re-verified in ten refresh batches plus the Phase 8 Wells Fargo batch (Evan, 2026-10-04); `2026-10-05.renewal.1` built (178 cards, expires 2026-11-04; rule IDs 589 kept, 224 changed, 3 added, 7 dropped). Results: [`docs/evals/freshness-2026-10.md`](../docs/evals/freshness-2026-10.md). Next: independent review, PR, merge, Render deploy, then **Evan publishes** ([catalog release](ops/catalog-release.md#renewal-2026-10-05renewal1-prepared-2026-10-05)).
 
 ## Open questions and next steps
 
 1. **Evan: publish the Wells Fargo refresh or not?** It applies general convention 7 (activation `none`) on 22 rules, adds 35 catalog exclusions and drops `usMerchantsOnly` on the One Key Expedia rules (a Phase 7 judgment call); no rate, cap or category changes. Default: not published; Phase 9 renews all sources anyway.
    - Before any pipeline batch can be published, the review app must bundle the batch's manifest (`apps/review/src/manifest.ts` imports fixed paths): a product change and a Render deploy, first task of Phase 9. `pipeline handoff` lists the sources the app would not match.
 2. **Phase 9, catalog freshness, before 2026-11-01T00:00Z**, when release 2 expires and `/v1/catalog` would answer 503: re-check the sources (the pipeline's freshness stage, or a manual refresh with new dated captures) and publish a new release. Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data (Discover not captured).
-2. **Phase 9 in progress** (above). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data (Discover not captured). The renewal after this one must re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01).
+2. **Evan: publish `2026-10-05.renewal.1`** once merged and deployed (from 2026-10-20, latest 2026-10-28; release 2 expires 2026-11-01T00:00Z). Then the next renewal before 2026-11-04 (re-read the NerdWallet estimates). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data (Discover not captured). The renewal after this one must re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01).
 3. Optional (Evan): revoke the legacy HS256 JWT secret in Supabase once sessions issued before the switch have expired.
 - Later phases, in Evan's order (2026-10-03): 9 freshness → 10 merchant-expansion pipeline → Web Store release; 4 terms-change detection is revisited after 9; 6 site coverage harness ([roadmap](product/roadmap.md)).
 - Open for Evan from M3: Aer Lingus and Iberia Avios stay unvalued unless he wants parity with British Airways; a second publisher would value U.S. Bank Altitude, SKYPASS, Lufthansa, Cathay, Frontier.

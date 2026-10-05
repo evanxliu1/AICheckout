@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/extract-cards.mjs",
+  "configuration": {
+    "provider": "codex",
+    "model": "gpt-5.6-luna",
+    "effort": "xhigh",
+    "prompt": "guided.2",
+    "selection": "keyword-window.1",
+    "outputTokens": "visible",
+    "limits": {
+      "attemptTimeoutMs": 600000,
+      "totalTimeoutMs": 900000,
+      "maxInputTokens": 64000,
+      "maxOutputTokens": 8192
+    },
+    "cliVersions": [
+      "codex-cli 0.158.0"
+    ]
+  },
+  "counts": {
+    "needs_review": 8
+  },
+  "cards": [
+    {
+      "cardId": "synchrony-amazon-store-card",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "online-retail",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "ambiguous",
+        "missing"
+      ],
+      "findings": {
+        "missing_evidence": 2,
+        "reported_missing": 3,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "amazon-store-card-product",
+        "synchrony-amazon-store-card-pricing",
+        "synchrony-amazon-store-card-categories"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 226743,
+      "inputTokenEstimate": 11833,
+      "inputTokens": 10211,
+      "outputTokens": 1346,
+      "runAt": "2026-10-05T01:25:11.968Z"
+    },
+    {
+      "cardId": "synchrony-amazon-secured-card",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "all-purchases",
+        "online-retail"
+      ],
+      "issues": [
+        "ambiguous",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "reported_ambiguous": 1,
+        "reported_missing": 2
+      },
+      "documents": [
+        "amazon-store-card-product"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 214664,
+      "inputTokenEstimate": 9428,
+      "inputTokens": 8606,
+      "outputTokens": 1281,
+      "runAt": "2026-10-05T01:25:11.942Z"
+    },
+    {
+      "cardId": "synchrony-paypal-cashback-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "online-retail",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_missing": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "synchrony-paypal-cashback-mastercard-product",
+        "synchrony-paypal-cashback-mastercard-rewards-terms",
+        "synchrony-paypal-cashback-mastercard-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 240198,
+      "inputTokenEstimate": 14805,
+      "inputTokens": 12262,
+      "outputTokens": 991,
+      "runAt": "2026-10-05T01:25:11.974Z"
+    },
+    {
+      "cardId": "synchrony-verizon-visa-card",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 7,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "out-of-scope",
+        "ambiguous",
+        "ambiguous"
+      ],
+      "findings": {
+        "quote_not_found": 1,
+        "reported_out-of-scope": 1,
+        "reported_ambiguous": 2
+      },
+      "documents": [
+        "synchrony-verizon-visa-card-product",
+        "synchrony-verizon-visa-card-rewards-terms",
+        "synchrony-verizon-visa-card-partner"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 326159,
+      "inputTokenEstimate": 10128,
+      "inputTokens": 9235,
+      "outputTokens": 2662,
+      "runAt": "2026-10-05T01:28:46.614Z"
+    },
+    {
+      "cardId": "synchrony-sams-club-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "other"
+      ],
+      "issues": [
+        "out-of-scope",
+        "out-of-scope",
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_out-of-scope": 3
+      },
+      "documents": [
+        "synchrony-sams-club-mastercard-product",
+        "synchrony-sams-club-mastercard-partner"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 189608,
+      "inputTokenEstimate": 5926,
+      "inputTokens": 6831,
+      "outputTokens": 1375,
+      "runAt": "2026-10-05T01:28:58.718Z"
+    },
+    {
+      "cardId": "synchrony-onepay-cashrewards-card",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "ambiguous",
+        "out-of-scope"
+      ],
+      "findings": {
+        "quote_not_found": 3,
+        "reported_missing": 1,
+        "reported_ambiguous": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "synchrony-onepay-cashrewards-card-product",
+        "synchrony-onepay-cashrewards-card-rewards-terms",
+        "synchrony-onepay-cashrewards-card-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 268507,
+      "inputTokenEstimate": 16317,
+      "inputTokens": 13397,
+      "outputTokens": 1768,
+      "runAt": "2026-10-05T01:29:12.182Z"
+    },
+    {
+      "cardId": "synchrony-mywalgreens-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "drugstores",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "conflicting",
+        "ambiguous",
+        "out-of-scope"
+      ],
+      "findings": {
+        "quote_not_found": 3,
+        "reported_conflicting": 1,
+        "reported_ambiguous": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "synchrony-mywalgreens-mastercard-product",
+        "synchrony-mywalgreens-mastercard-rewards-terms",
+        "synchrony-mywalgreens-mastercard-partner"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 308482,
+      "inputTokenEstimate": 10723,
+      "inputTokens": 9261,
+      "outputTokens": 2822,
+      "runAt": "2026-10-05T01:32:08.333Z"
+    },
+    {
+      "cardId": "synchrony-newegg-store-credit-card",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 0,
+      "categories": [],
+      "issues": [
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "synchrony-newegg-store-credit-card-product",
+        "synchrony-newegg-store-credit-card-categories"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 8992,
+      "inputTokenEstimate": 4697,
+      "inputTokens": 5856,
+      "outputTokens": 138,
+      "runAt": "2026-10-05T01:33:40.696Z"
+    }
+  ]
+}

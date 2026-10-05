@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "packetId": "f9fdea25-1068-4fa2-8b72-52761f40804c",
+  "batch": "barclays-refresh-2026-10",
+  "issuer": "Barclays",
+  "provenance": "agent-verified",
+  "cards": [
+    {
+      "cardId": "barclays-aarp-essential-rewards-mastercard",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "1fbfce64b2f5e8dbde4647ee1a89b53e54ea199b8737dedc6b9b06b69dbdb707",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-aarp-essential-rewards-mastercard-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-aarp-essential-rewards-mastercard-pricing",
+              "quote": "or using a third-party payment account will not earn additional rewards."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "checkout-method"
+          ],
+          "note": "The terms exclude Target and Walmart from the drug store rate; they become brand exclusions (O4). Third-party accounts and digital wallets earn only the base rate (O10).",
+          "set": {
+            "excludedBrandIds": [
+              "target",
+              "walmart"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-aarp-essential-rewards-mastercard-pricing",
+              "quote": "as identified by the merchant category code, excluding Target\u00ae and Walmart\u00ae"
+            },
+            {
+              "sourceId": "barclays-aarp-essential-rewards-mastercard-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-aarp-essential-rewards-mastercard-pricing",
+              "quote": "or using a third-party payment account will not earn additional rewards."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: medical (dentists, doctors, hospitals, opticians and similar providers)."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    }
+  ],
+  "gates": [],
+  "programs": [],
+  "programDetails": [],
+  "rewardPrograms": [],
+  "labelLintAcks": []
+}

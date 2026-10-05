@@ -1,0 +1,3285 @@
+{
+  "schemaVersion": 1,
+  "packetId": "c1f80459-8b8c-474f-8aa7-c6ccb358bcd0",
+  "batch": "chase-refresh-2026-10",
+  "provenance": "agent-verified",
+  "issuer": "Chase",
+  "verifier": {
+    "agent": "card-verifier",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-05",
+    "filesRead": [
+      ".claude/agents/card-verifier.md",
+      "evals/curation/batches/chase-refresh-2026-10/pipeline/packets/verify.chase.2.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/chase.md",
+      "evals/curation/batches/chase-refresh-2026-10/verify/chase.md",
+      "evals/curation/batches/chase-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/chase-refresh-2026-10/product-notes.json",
+      "evals/curation/batches/chase-refresh-2026-10/verification/chase.json",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/schema.ts",
+      "tools/catalog-pipeline/src/gates.ts",
+      "tools/catalog-pipeline/src/accept.ts",
+      "tools/catalog-pipeline/src/packets.ts",
+      "evals/curation/batches/chase-refresh-2026-10/captures/disney-premier-visa-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/disney-premier-visa-rewards-terms.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/disney-premier-visa-pricing.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/marriott-bonvoy-bountiful-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/marriott-bonvoy-bountiful-pricing.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/british-airways-visa-signature-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/british-airways-visa-signature-pricing.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/aer-lingus-visa-signature-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/aer-lingus-visa-signature-pricing.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/iberia-visa-signature-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/iberia-visa-signature-pricing.txt"
+    ]
+  },
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-10-05",
+    "filesRead": [
+      ".claude/agents/card-adjudicator.md",
+      "evals/curation/batches/chase-refresh-2026-10/pipeline/packets/adjudicate.chase.2.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/chase.md",
+      "evals/curation/batches/chase-refresh-2026-10/verify/chase.md",
+      "evals/curation/batches/chase-refresh-2026-10/verification/chase.json",
+      "evals/curation/batches/chase-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/chase-refresh-2026-10/product-notes.json",
+      "evals/curation/batches/chase-refresh-2026-10/captures/disney-premier-visa-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/disney-premier-visa-rewards-terms.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/disney-premier-visa-pricing.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/marriott-bonvoy-bountiful-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/marriott-bonvoy-bountiful-pricing.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/british-airways-visa-signature-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/british-airways-visa-signature-pricing.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/aer-lingus-visa-signature-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/aer-lingus-visa-signature-pricing.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/iberia-visa-signature-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/iberia-visa-signature-pricing.txt"
+    ]
+  },
+  "cards": [
+    {
+      "cardId": "chase-freedom-flex",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.rules.4",
+          "current": {
+            "category": "gas",
+            "issuerWording": "Gas Stations",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": null,
+            "limitedTime": {
+              "endsOn": null
+            },
+            "anchors": [
+              "Earn 5% cash back on up to $1,500 in rotating categories each quarter you activate.",
+              "Activate each quarter to earn 5% cash back on up to $1,500 in combined purchases.*"
+            ]
+          },
+          "note": "Gas Stations is a Jul-Sep 2026 category, marked previous quarter on the capture; only the current quarter is kept (general 5).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Jul-Sep 2026 is marked previous quarter on the 2026-10-05 capture; only the current quarter is kept (general 5, Chase conventions)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.5",
+          "current": {
+            "category": "transit",
+            "issuerWording": "Public Transit",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": null,
+            "limitedTime": {
+              "endsOn": null
+            },
+            "anchors": [
+              "Earn 5% cash back on up to $1,500 in rotating categories each quarter you activate.",
+              "Activate each quarter to earn 5% cash back on up to $1,500 in combined purchases.*"
+            ]
+          },
+          "note": "Public Transit is a past (Jul-Sep 2026) quarter category (general 5).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Past-quarter category; removed under general 5."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.6",
+          "current": {
+            "category": "ev-charging",
+            "issuerWording": "EV Charging",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": null,
+            "limitedTime": {
+              "endsOn": null
+            },
+            "anchors": [
+              "Earn 5% cash back on up to $1,500 in rotating categories each quarter you activate.",
+              "Activate each quarter to earn 5% cash back on up to $1,500 in combined purchases.*"
+            ]
+          },
+          "note": "EV Charging is a past (Jul-Sep 2026) quarter category (general 5).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Past-quarter category; removed under general 5."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.7",
+          "current": {
+            "category": "entertainment",
+            "issuerWording": "Select Live Entertainment",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": null,
+            "limitedTime": {
+              "endsOn": null
+            },
+            "anchors": [
+              "Earn 5% cash back on up to $1,500 in rotating categories each quarter you activate.",
+              "Activate each quarter to earn 5% cash back on up to $1,500 in combined purchases.*"
+            ]
+          },
+          "note": "Select Live Entertainment is a past (Jul-Sep 2026) quarter category (general 5).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Past-quarter category; removed under general 5."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.9",
+          "current": {
+            "category": "streaming",
+            "issuerWording": "Top Streaming Services",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": null,
+            "limitedTime": {
+              "endsOn": null
+            },
+            "anchors": [
+              "Earn 5% cash back on up to $1,500 in rotating categories each quarter you activate.",
+              "Activate each quarter to earn 5% cash back on up to $1,500 in combined purchases.*"
+            ]
+          },
+          "note": "Top Streaming Services is a Jan-Mar 2027 (next quarter) category; future quarters go in the rotating product note (general 5).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Jan-Mar 2027 is marked next quarter on the capture; future quarters go in the product note (general 5)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.11",
+          "current": {
+            "category": "other",
+            "issuerWording": "United Way®",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": null,
+            "limitedTime": {
+              "endsOn": null
+            },
+            "anchors": [
+              "Earn 5% cash back on up to $1,500 in rotating categories each quarter you activate.",
+              "Activate each quarter to earn 5% cash back on up to $1,500 in combined purchases.*"
+            ]
+          },
+          "note": "United Way is a past (Jul-Sep 2026) quarter merchant (general 5).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "United Way is listed under the Jul-Sep 2026 previous quarter; removed under general 5."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.8.limitedTime",
+          "current": {
+            "endsOn": null
+          },
+          "corrected": {
+            "endsOn": "2026-12-31"
+          },
+          "anchor": {
+            "sourceId": "chase-freedom-flex-product",
+            "quote": "OCT-DEC 2026 CURRENT QUARTER"
+          },
+          "note": "Grocery stores is an Oct-Dec 2026 current-quarter category, so it ends with the quarter on 2026-12-31 (general 5).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Grocery is under the Oct-Dec 2026 current-quarter heading; endsOn 2026-12-31 per the Chase convention."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.10.limitedTime",
+          "current": {
+            "endsOn": null
+          },
+          "corrected": {
+            "endsOn": "2026-12-31"
+          },
+          "anchor": {
+            "sourceId": "chase-freedom-flex-product",
+            "quote": "OCT-DEC 2026 CURRENT QUARTER"
+          },
+          "note": "Dining 5% is an Oct-Dec 2026 current-quarter category; ends 2026-12-31 (general 5).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Dining is under the Oct-Dec 2026 current-quarter heading; endsOn 2026-12-31 per the Chase convention."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.12.limitedTime",
+          "current": {
+            "endsOn": null
+          },
+          "corrected": {
+            "endsOn": "2026-12-31"
+          },
+          "anchor": {
+            "sourceId": "chase-freedom-flex-product",
+            "quote": "OCT-DEC 2026 CURRENT QUARTER"
+          },
+          "note": "American Red Cross is an Oct-Dec 2026 current-quarter merchant; ends 2026-12-31 (general 5).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "American Red Cross is under the Oct-Dec 2026 current-quarter heading; endsOn 2026-12-31 per the Chase convention."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.13.category",
+          "current": "transit",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "chase-freedom-flex-product",
+            "quote": "Earn 2% total cash back on Lyft rides with your Freedom Flex card through September 30, 2027."
+          },
+          "note": "Lyft is a single-merchant rule, category other, never transit (Chase conventions, general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Lyft is a single-merchant rule, category other and never transit (Chase conventions, general 4)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "rotating-quarterly",
+            "summary": "5% quarterly categories; Oct-Dec 2026: Grocery Stores (excluding Walmart and Target), Dining, American Red Cross",
+            "rate": "5%",
+            "cap": "$1,500 in combined purchases per quarter, then 1%",
+            "conditions": "Activate each quarter. Jul-Sep 2026 (previous): Gas Stations, Public Transit, EV Charging, Select Live Entertainment, United Way. Jan-Mar 2027 (next, activate from December 15, 2026): Grocery Stores excluding Walmart and Target, Top Streaming Services. Apr-Jun 2027: coming soon.",
+            "activation": "recurring"
+          },
+          "anchor": {
+            "sourceId": "chase-freedom-flex-product",
+            "quote": "Activate each quarter to earn 5% cash back on up to $1,500 in combined purchases."
+          },
+          "note": "Adds American Red Cross and the other quarters from the capture; drops the secondary-source activation deadline, which no capture states.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture lists all four quarters with their activation start dates and Apr-Jun 2027 as Coming Soon; the secondary-source deadline is not in any capture."
+          }
+        },
+        {
+          "action": "fix",
+          "hintIndex": 1,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Lyft rides",
+            "rate": "2% total (1% on top of the 1% base)",
+            "cap": "none stated",
+            "conditions": "Promotional through September 30, 2027",
+            "merchants": [
+              "Lyft"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "chase-freedom-flex-product",
+            "quote": "Earn 2% total cash back on Lyft rides with your Freedom Flex card through September 30, 2027."
+          },
+          "note": "The Lyft offer is on the Freedom Flex product page; anchored and the merchant named.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Lyft offer and its September 30, 2027 end date are on the product capture; the merchant is named."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "chase-freedom-rise",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue; removed under general 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue; removed under general 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "drop",
+          "hintIndex": 0,
+          "note": "Neither Freedom Rise capture mentions Lyft or any merchant-specific rate; the hint comes from research only.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Neither Freedom Rise capture mentions Lyft; the unanchored hint is research-only."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "prime-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "prime-visa-product",
+            "quote": "You can also redeem for cash back, gift cards, and travel at Chase.com."
+          },
+          "note": "Amazon \"% back rewards\" are cash-back even though the terms track them as points (Chase conventions, general 1).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Amazon % back rewards are cash-back per the Chase convention (general 1, 13); the capture states cash-back redemption."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.category",
+          "current": "online-retail",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "prime-visa-product",
+            "quote": "Earn unlimited 5% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases with an eligible Prime membership."
+          },
+          "note": "Amazon.com and Audible.com are single-merchant rules (general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Amazon.com and Audible.com pay only at those merchants: other (general 4, Chase conventions)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.category",
+          "current": "supermarkets",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "prime-visa-product",
+            "quote": "Earn unlimited 5% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases with an eligible Prime membership."
+          },
+          "note": "Whole Foods Market is a single merchant, not the supermarkets category (general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Whole Foods Market is a single merchant: other (general 4, Chase conventions)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.3",
+          "current": {
+            "category": "online-retail",
+            "issuerWording": "Amazon.com, Audible.com",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": [
+              "Unlimited 3% back at Amazon.com, Audible.com, and Whole Foods Market"
+            ]
+          },
+          "note": "The 3% Amazon/Audible rule comes from the \"Not a Prime member?\" panel advertising the Amazon Visa (Chase conventions, general 12); the no-Prime fallback stays as issue 0.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 3% line sits under the Not a Prime member? panel advertising the Amazon Visa; removed under general 12 and the Chase convention."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.4",
+          "current": {
+            "category": "supermarkets",
+            "issuerWording": "Whole Foods Market",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": true,
+            "limitedTime": null,
+            "anchors": [
+              "Unlimited 3% back at Amazon.com, Audible.com, and Whole Foods Market",
+              "purchases made at international Whole Foods Markets"
+            ]
+          },
+          "note": "The 3% Whole Foods rule comes from the Amazon Visa panel (Chase conventions, general 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Same sibling-card panel; removed under general 12."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.9",
+          "current": {
+            "category": "online-retail",
+            "issuerWording": "a rotating selection of items and categories on Amazon.com",
+            "rateBps": null,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": {
+              "endsOn": null
+            },
+            "anchors": [
+              "Limited-time offers."
+            ]
+          },
+          "note": "The 10%-or-more Prime Card Bonus covers a rotating selection of items, with no stated rate per category; it is not a category rule and is kept as issue 1.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Prime Card Bonus has no stated rate per category and is a rotating item selection; issue 1 keeps it (general 9, 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Limited-time offers."
+            ]
+          },
+          "note": "Anchored only on \"Limited-time offers.\" with no stated gap; the Prime Card Bonus is covered by issue 1 (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states no gap and the Prime Card Bonus is already issue 1 (general 11)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "transactions on Amazon.com to which you choose to apply a promotional financing offer",
+          "anchors": [
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "transactions on Amazon.com to which you choose to"
+            }
+          ],
+          "note": "Listed in the terms as transactions that do not count as purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim in the rewards terms list of transactions that do not earn; single-line fragments per the Chase convention."
+          }
+        },
+        {
+          "text": "wire transfers, cryptocurrency, other similar digital or virtual currency",
+          "anchors": [
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "wire transfers, cryptocurrency, other similar digital"
+            }
+          ],
+          "note": "Cash-like transactions that do not earn points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim in the rewards terms list of transactions that do not earn; single-line fragments per the Chase convention."
+          }
+        },
+        {
+          "text": "lottery tickets, casino gaming chips, race track wagers, or similar betting transactions",
+          "anchors": [
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "lottery tickets, casino gaming chips, race track"
+            }
+          ],
+          "note": "Cash-like transactions that do not earn points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim in the rewards terms list of transactions that do not earn; single-line fragments per the Chase convention."
+          }
+        },
+        {
+          "text": "person-to-person money transfers and account-funding transactions that transfer currency",
+          "anchors": [
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "person-to-person money transfers and account-"
+            }
+          ],
+          "note": "Cash-like transactions that do not earn points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim in the rewards terms list of transactions that do not earn; single-line fragments per the Chase convention."
+          }
+        },
+        {
+          "text": "any checks that access your card account",
+          "anchors": [
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "any checks that access your card account"
+            }
+          ],
+          "note": "Listed as non-purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim in the rewards terms list of transactions that do not earn; single-line fragments per the Chase convention."
+          }
+        },
+        {
+          "text": "interest, unauthorized or fraudulent charges, and fees of any kind",
+          "anchors": [
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "unauthorized or fraudulent charges"
+            },
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "fees of any kind, including an annual fee, if applicable"
+            }
+          ],
+          "note": "Listed as non-purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim in the rewards terms list of transactions that do not earn; single-line fragments per the Chase convention."
+          }
+        }
+      ],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "prime-visa-product",
+            "quote": "Earn unlimited 5% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases with an eligible Prime membership."
+          },
+          "note": "5% at Amazon.com, Audible.com and Whole Foods Market needs an eligible Prime membership; terms clause (c) gives 3% otherwise.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture ties the 5% to an eligible Prime membership; the terms give 3% otherwise (general 17)."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "amazon-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "amazon-visa-product",
+            "quote": "You can also redeem for cash back, gift cards, and travel at Chase.com."
+          },
+          "note": "Amazon \"% back rewards\" are cash-back (Chase conventions, general 1).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Amazon % back rewards are cash-back per the Chase convention (general 1, 13)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.category",
+          "current": "online-retail",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "amazon-visa-product",
+            "quote": "Earn unlimited 3% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases."
+          },
+          "note": "Amazon.com and Audible.com are single-merchant rules (general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Single-merchant rule: other (general 4)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.category",
+          "current": "supermarkets",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "amazon-visa-product",
+            "quote": "Earn unlimited 3% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases."
+          },
+          "note": "Whole Foods Market is a single merchant (general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Single-merchant rule: other (general 4)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.3",
+          "current": {
+            "category": "online-retail",
+            "issuerWording": "Amazon.com, Audible.com, and Whole Foods Market with an eligible Prime membership",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": [
+              "Unlimited 5% back at Amazon.com, Audible.com, and Whole Foods Market with an eligible Prime membership"
+            ]
+          },
+          "note": "The 5% rule is from the \"Already a Prime member?\" panel advertising the Prime Visa, a sibling card (general 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 5% Prime line is the sibling Prime Visa panel; removed under general 12."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.4",
+          "current": {
+            "category": "supermarkets",
+            "issuerWording": "Whole Foods Market with an eligible Prime membership",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": [
+              "Unlimited 5% back at Amazon.com, Audible.com, and Whole Foods Market with an eligible Prime membership"
+            ]
+          },
+          "note": "The 5% Whole Foods rule is from the Prime Visa panel (general 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Same sibling-card panel; removed under general 12."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "out-of-scope",
+            "anchors": [
+              "Earn unlimited 3% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases.*",
+              "Unlimited 5% back at Amazon.com, Audible.com, and Whole Foods Market with an eligible Prime membership"
+            ]
+          },
+          "note": "The Prime gating issue is moot once the sibling 5% rules are removed (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Amazon Visa itself has no Prime gate once the sibling rules are gone; moot under general 11."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "amazon-visa-product",
+            "quote": "Earn unlimited 3% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases."
+          },
+          "note": "3% at Amazon.com, Audible.com and Whole Foods Market, no Prime needed.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states unlimited 3% at Amazon.com, Audible.com and Whole Foods Market with no membership condition."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "doordash-rewards-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.rateBps",
+          "current": null,
+          "corrected": 400,
+          "anchor": {
+            "sourceId": "doordash-rewards-mastercard-product",
+            "quote": "Earn 4% Cash back on DoorDash and Caviar orders."
+          },
+          "note": "The capture states 4% cash back on DoorDash and Caviar orders.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 4% cash back on DoorDash and Caviar orders."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.issuerWording",
+          "current": "grocery stores online or\u0000a0in-store",
+          "corrected": "grocery stores online or in-store",
+          "anchor": {
+            "sourceId": "doordash-rewards-mastercard-product",
+            "quote": "grocery stores online or in-store"
+          },
+          "note": "Replaces the corrupted non-breaking-space wording with the capture text.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture wording has a plain space; the draft carried a corrupted character."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "DoorDash and Caviar orders",
+            "rate": "4%",
+            "cap": "No earning caps",
+            "conditions": null,
+            "merchants": [
+              "DoorDash",
+              "Caviar"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "doordash-rewards-mastercard-product",
+            "quote": "Earn 4% Cash back on DoorDash and Caviar orders."
+          },
+          "note": "The site and app wording and the DashPass fee exclusion are not in the captures; the captures say every DoorDash order type earns 4% with no caps.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The site/app wording and DashPass exclusion are not in the captures; the capture states 4% on DoorDash and Caviar orders with no earning caps."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "instacart-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16); the dropped 2% rules are added below.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.4",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "dining",
+            "issuerWording": "restaurants, including orders on Instacart powered by Uber Eats",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "instacart-mastercard-product",
+              "quote": "at restaurants, including orders on Instacart powered by Uber Eats, gas stations, and on select streaming services."
+            }
+          ],
+          "note": "2% cash back at restaurants (the draft dropped it).",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The rule is right, but the verifier's anchor abuts the 2% Cash Back heading without stating the rate; the sentence that states 2% is added so the label lint can read it.",
+            "replacement": {
+              "rule": {
+                "category": "dining",
+                "issuerWording": "restaurants, including orders on Instacart powered by Uber Eats",
+                "rateBps": 200,
+                "paidOnPaymentBps": 0,
+                "cap": null,
+                "activation": null,
+                "usMerchantsOnly": null,
+                "limitedTime": null
+              },
+              "anchors": [
+                {
+                  "sourceId": "instacart-mastercard-product",
+                  "quote": "and 2% cash back at restaurants, gas stations, and on select streaming services."
+                },
+                {
+                  "sourceId": "instacart-mastercard-product",
+                  "quote": "at restaurants, including orders on Instacart powered by Uber Eats, gas stations, and on select streaming services."
+                }
+              ]
+            }
+          }
+        },
+        {
+          "rule": {
+            "category": "gas",
+            "issuerWording": "gas stations",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "instacart-mastercard-product",
+              "quote": "at restaurants, including orders on Instacart powered by Uber Eats, gas stations, and on select streaming services."
+            }
+          ],
+          "note": "2% cash back at gas stations (the draft dropped it).",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The rule is right, but the verifier's anchor abuts the 2% Cash Back heading without stating the rate; the sentence that states 2% is added so the label lint can read it.",
+            "replacement": {
+              "rule": {
+                "category": "gas",
+                "issuerWording": "gas stations",
+                "rateBps": 200,
+                "paidOnPaymentBps": 0,
+                "cap": null,
+                "activation": null,
+                "usMerchantsOnly": null,
+                "limitedTime": null
+              },
+              "anchors": [
+                {
+                  "sourceId": "instacart-mastercard-product",
+                  "quote": "and 2% cash back at restaurants, gas stations, and on select streaming services."
+                },
+                {
+                  "sourceId": "instacart-mastercard-product",
+                  "quote": "at restaurants, including orders on Instacart powered by Uber Eats, gas stations, and on select streaming services."
+                }
+              ]
+            }
+          }
+        },
+        {
+          "rule": {
+            "category": "streaming",
+            "issuerWording": "select streaming services",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "instacart-mastercard-product",
+              "quote": "at restaurants, including orders on Instacart powered by Uber Eats, gas stations, and on select streaming services."
+            }
+          ],
+          "note": "2% cash back on select streaming services (the draft dropped it).",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The rule is right, but the verifier's anchor abuts the 2% Cash Back heading without stating the rate; the sentence that states 2% is added so the label lint can read it.",
+            "replacement": {
+              "rule": {
+                "category": "streaming",
+                "issuerWording": "select streaming services",
+                "rateBps": 200,
+                "paidOnPaymentBps": 0,
+                "cap": null,
+                "activation": null,
+                "usMerchantsOnly": null,
+                "limitedTime": null
+              },
+              "anchors": [
+                {
+                  "sourceId": "instacart-mastercard-product",
+                  "quote": "and 2% cash back at restaurants, gas stations, and on select streaming services."
+                },
+                {
+                  "sourceId": "instacart-mastercard-product",
+                  "quote": "at restaurants, including orders on Instacart powered by Uber Eats, gas stations, and on select streaming services."
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Qualifying Instacart.com and Instacart app purchases",
+            "rate": "5%",
+            "cap": "First $6,000 spent annually; after-cap rate not stated",
+            "conditions": null,
+            "merchants": [
+              "Instacart"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "instacart-mastercard-product",
+            "quote": "on qualifying Instacart.com and Instacart app purchases on your first $6,000 spent annually"
+          },
+          "note": "The capture names Instacart.com and the app; the cap start date and the 1% after-cap rate in the hint are not in the captures.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture names Instacart.com and the app and the $6,000 annual cap; the cap start date and the 1% after-cap rate are not in the captures."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "disney-inspire-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.category",
+          "current": "streaming",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "disney-inspire-visa-product",
+            "quote": "Earn 10% on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com."
+          },
+          "note": "The Disney streaming-site rule pays only at Disney sites: other, never streaming (Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rule pays only at Disney streaming sites: other, never streaming (Chase conventions, general 4)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Earn 3% on card purchases at gas stations and most other U.S. Disney locations."
+            ]
+          },
+          "note": "Its anchor (the 3% rate sentence) states no problem (general 11); replaced by the Rewards Dollars issue added below.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Its anchor is the 3% rate sentence and states no problem (general 11); the Rewards Dollars issue replaces it."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "disney-inspire-visa-product",
+              "quote": "Use toward Disney Theme Park Tickets, Resort stays, shopping, dining, Disney Cruise Line sailings and more in the U.S."
+            },
+            {
+              "sourceId": "disney-inspire-visa-product",
+              "quote": "Cardmembers can also redeem Rewards Dollars for a statement credit toward airline tickets purchased with your card."
+            }
+          ],
+          "note": "Disney Rewards Dollars redeem only toward Disney purchases, plus a statement credit toward airline tickets charged to the card (Chase conventions, general 8).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Disney Rewards Dollars are cash-back with the Disney-only ambiguous issue per the Chase convention (general 8); both anchors are on the capture and do not abut."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "disney-inspire-visa-product",
+            "quote": "Earn 10% on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com."
+          },
+          "note": "10% in Disney Rewards Dollars at the three Disney streaming sites.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 10% at DisneyPlus.com, Hulu.com and Stream.ESPN.com."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "disney-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "disney-visa-product",
+              "quote": "Redeem toward most anything Disney at most Disney U.S. locations."
+            }
+          ],
+          "note": "Disney Rewards Dollars redeem only toward Disney purchases (Chase conventions, general 8).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Disney-only redemption issue required by the Chase convention (general 8); anchored on the capture."
+          }
+        }
+      ],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "united-explorer",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "all other eligible United purchases",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "united-explorer-product",
+              "quote": "3x miles on all other eligible United purchases"
+            },
+            {
+              "sourceId": "united-explorer-product",
+              "quote": "plus 3x miles on entire United purchase with United Explorer Card."
+            }
+          ],
+          "note": "The card earns 3x on United purchases, flights included; the 9x flight total includes 6x MileagePlus member earn (general 2).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The card's portion is 3x; the 9x flight total includes 6x MileagePlus member earn (general 2, Chase conventions). Anchors are on separate lines of the capture."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "hotel stays when booked with the hotel",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "united-explorer-product",
+              "quote": "2x miles on hotel stays when booked with the hotel."
+            }
+          ],
+          "note": "Hotels booked direct are other (Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hotels booked direct are other per the Chase convention; the capture states 2x."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "united-explorer-product",
+              "quote": "1x mile on all other purchases."
+            }
+          ],
+          "note": "Base rate dropped by the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 1x on all other purchases; the draft had no base rule."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "united-explorer-product",
+              "quote": "Mileage earning differs for Basic Economy or base option tickets."
+            }
+          ],
+          "note": "United flight earn differs for Basic Economy tickets; the rate is not stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture says Basic Economy earning differs without a rate; a real ambiguity with an anchor."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "united-explorer-product",
+            "quote": "plus 3x miles on entire United purchase with United Explorer Card."
+          },
+          "note": "Card earn is 3x; the 9x total includes 6x member earn.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Card earn 3x; the 9x total includes member earn (general 2)."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "united-quest",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "all other eligible United purchases",
+            "rateBps": 400,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "united-quest-product",
+              "quote": "4x miles on all other eligible United purchases"
+            },
+            {
+              "sourceId": "united-quest-product",
+              "quote": "plus 4x miles on entire United purchase with United Quest Card."
+            }
+          ],
+          "note": "The card earns 4x on United purchases; the 10x flight total includes 6x member earn (general 2).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The card's portion is 4x; the 10x total includes 6x member earn (general 2, Chase conventions)."
+          }
+        },
+        {
+          "rule": {
+            "category": "travel-portal",
+            "issuerWording": "hotel stays when you prepay directly through Renowned Hotels and Resorts for United® Cardmembers",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "united-quest-product",
+              "quote": "5x miles on hotel stays when you prepay directly through Renowned Hotels and Resorts for United® Cardmembers."
+            }
+          ],
+          "note": "Renowned Hotels and Resorts for United Cardmembers is travel-portal (Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Renowned Hotels and Resorts for United Cardmembers is travel-portal per the Chase convention; the capture states 5x."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "united-quest-product",
+              "quote": "1x mile on all other purchases."
+            }
+          ],
+          "note": "Base rate dropped by the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 1x on all other purchases; the draft had no base rule."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "united-quest-product",
+              "quote": "Mileage earning differs for Basic Economy or base option tickets."
+            }
+          ],
+          "note": "United flight earn differs for Basic Economy tickets; the rate is not stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Basic Economy earning differs without a stated rate; anchored."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "united-quest-product",
+            "quote": "plus 4x miles on entire United purchase with United Quest Card."
+          },
+          "note": "Card earn is 4x; the 10x total includes 6x member earn.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Card earn 4x; the 10x total includes member earn (general 2)."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "united-gateway",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.rateBps",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "united-gateway-product",
+            "quote": "1x mile on all other purchases."
+          },
+          "note": "The base rate is 1x.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 1x on all other purchases."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.issuerWording",
+          "current": "Earn on all other travel and every day purchases",
+          "corrected": "all other purchases",
+          "anchor": {
+            "sourceId": "united-gateway-product",
+            "quote": "1x mile on all other purchases."
+          },
+          "note": "The draft wording is a section heading; the capture names the base category as all other purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft wording was a heading; the capture's base wording is all other purchases."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "2x miles at gas stations.*",
+          "corrected": "gas stations",
+          "anchor": {
+            "sourceId": "united-gateway-product",
+            "quote": "2x miles at gas stations."
+          },
+          "note": "Wording without the rate and footnote mark.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Wording without the rate and footnote mark matches the capture."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.issuerWording",
+          "current": "2x miles on local transit and commuting including ride share services, taxicabs, train tickets, tolls, and mass transit.*",
+          "corrected": "local transit and commuting including ride share services, taxicabs, train tickets, tolls, and mass transit",
+          "anchor": {
+            "sourceId": "united-gateway-product",
+            "quote": "2x miles on local transit and commuting including ride share services, taxicabs, train tickets, tolls, and mass transit."
+          },
+          "note": "Wording without the rate and footnote mark.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Wording without the rate and footnote mark matches the capture."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Earn on all other travel and every day purchases"
+            ]
+          },
+          "note": "Moot once rule 0 has its 1x rate (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Moot once the base rule has its rate (general 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Earn 2 checked bags each year,* receive 25% back on United inflight and Club premium drink purchases,* and earn unlimited miles with no annual fee.†"
+            ]
+          },
+          "note": "Its anchor states no gap (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor is a benefits sentence that states no gap (general 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "united-gateway-product",
+            "quote": "plus 2x miles on entire United purchase with the United Gateway Card."
+          },
+          "note": "Card earn is 2x; the 5x (or 8x after $10,000 spend) totals add MileagePlus member earn.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Card earn is 2x; the 5x and post-$10,000 8x totals add MileagePlus member earn paid by United, so the card rate is unchanged (general 2) and no out-of-scope issue is needed."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "united-club",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "all other eligible United purchases",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "united-club-product",
+              "quote": "5x miles on all other eligible United purchases."
+            },
+            {
+              "sourceId": "united-club-product",
+              "quote": "plus 5x miles on entire United purchase with United Club Card."
+            }
+          ],
+          "note": "The card earns 5x on United purchases; the 11x flight total includes 6x member earn (general 2).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The card's portion is 5x; the 11x total includes 6x member earn (general 2, Chase conventions)."
+          }
+        },
+        {
+          "rule": {
+            "category": "travel-portal",
+            "issuerWording": "hotel stays when you prepay directly through Renowned Hotels and Resorts for United® Cardmembers",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "united-club-product",
+              "quote": "5x miles on hotel stays when you prepay directly through Renowned Hotels and Resorts for United® Cardmembers."
+            }
+          ],
+          "note": "Renowned Hotels and Resorts for United Cardmembers is travel-portal (Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Renowned Hotels and Resorts for United Cardmembers is travel-portal per the Chase convention; the capture states 5x."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "united-club-product",
+              "quote": "1x mile on all other purchases."
+            }
+          ],
+          "note": "Base rate dropped by the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 1x on all other purchases; the draft had no base rule."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "united-club-product",
+              "quote": "Mileage earning differs for Basic Economy or base option tickets."
+            }
+          ],
+          "note": "United flight earn differs for Basic Economy tickets; the rate is not stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Basic Economy earning differs without a stated rate; anchored."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "united-club-product",
+            "quote": "plus 5x miles on entire United purchase with United Club Card."
+          },
+          "note": "Card earn is 5x; the 11x total includes 6x member earn.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Card earn 5x; the 11x total includes member earn (general 2)."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "southwest-rapid-rewards-plus",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "points on Southwest Airlines purchases and on the first $5,000 in combined purchases at gas stations and grocery stores per year*"
+            ]
+          },
+          "note": "Moot once the Southwest Airlines rule is added (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Moot once the Southwest Airlines rule is added (general 11)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.4",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Southwest Airlines purchases",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-plus-product",
+              "quote": "Earn 2 points for each dollar spent on Southwest Airlines purchases."
+            }
+          ],
+          "note": "2X on Southwest Airlines purchases (the draft dropped it).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 2 points per dollar on Southwest Airlines purchases; single-merchant other (Chase conventions)."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-plus-product",
+              "quote": "Earn 1 point for each dollar spent on all other purchases."
+            }
+          ],
+          "note": "Base rate dropped by the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 1 point per dollar on all other purchases; the draft had no base rule."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "qualifying Lyft products and services purchased through the Lyft mobile application",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": {
+              "endsOn": "2027-12-31"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-plus-product",
+              "quote": "Earn 2X total points on qualifying Lyft products and services purchased through the Lyft mobile application through 12/31/2027."
+            }
+          ],
+          "note": "2X total on Lyft app purchases through 12/31/2027; Lyft is other (Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 2X total on Lyft app purchases through 12/31/2027: other, limited time with the stated end date (general 10, Chase conventions)."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Southwest Airlines purchases",
+            "rate": "2X",
+            "cap": "none stated",
+            "conditions": null,
+            "merchants": [
+              "Southwest Airlines"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "southwest-rapid-rewards-plus-product",
+            "quote": "Earn 2 points for each dollar spent on Southwest Airlines purchases."
+          },
+          "note": "The flight, inflight, gift card and Getaways wording is not in the captures.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The flight, inflight, gift card and Getaways wording is not in the captures; the hint is cut to the capture text."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Qualifying Lyft products and services purchased through the Lyft mobile application",
+            "rate": "2X total",
+            "cap": "none stated",
+            "conditions": "Promotional through 12/31/2027",
+            "merchants": [
+              "Lyft"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "southwest-rapid-rewards-plus-product",
+            "quote": "Earn 2X total points on qualifying Lyft products and services purchased through the Lyft mobile application through 12/31/2027."
+          },
+          "note": "Names the Lyft merchant of the added Lyft rule (general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Names the Lyft merchant of the added rule (general 4)."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "southwest-rapid-rewards-premier",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Southwest Airlines purchases",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-premier-product",
+              "quote": "Earn 3 points for each dollar spent on Southwest Airlines purchases."
+            }
+          ],
+          "note": "3X on Southwest Airlines purchases (the draft dropped it).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 3 points per dollar on Southwest Airlines purchases; single-merchant other."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-premier-product",
+              "quote": "Earn 1 point for each dollar spent on all other purchases."
+            }
+          ],
+          "note": "Base rate dropped by the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 1 point per dollar on all other purchases; the draft had no base rule."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "qualifying Lyft products and services purchased through the Lyft mobile application",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": {
+              "endsOn": "2027-12-31"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-premier-product",
+              "quote": "Earn 3X total points on qualifying Lyft products and services purchased through the Lyft mobile application through 12/31/2027."
+            }
+          ],
+          "note": "3X total on Lyft app purchases through 12/31/2027; Lyft is other (Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 3X total on Lyft app purchases through 12/31/2027 (general 10, Chase conventions)."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "southwest-rapid-rewards-premier-product",
+            "quote": "Earn 3 points for each dollar spent on Southwest Airlines purchases."
+          },
+          "note": "3X on Southwest Airlines purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 3X on Southwest Airlines purchases."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Qualifying Lyft products and services purchased through the Lyft mobile application",
+            "rate": "3X total",
+            "cap": "none stated",
+            "conditions": "Promotional through 12/31/2027",
+            "merchants": [
+              "Lyft"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "southwest-rapid-rewards-premier-product",
+            "quote": "Earn 3X total points on qualifying Lyft products and services purchased through the Lyft mobile application through 12/31/2027."
+          },
+          "note": "Names the Lyft merchant of the added Lyft rule (general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Names the Lyft merchant of the added rule (general 4)."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "southwest-rapid-rewards-priority",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-priority-product",
+              "quote": "Earn 1 point for each dollar spent on all other purchases."
+            }
+          ],
+          "note": "Base rate dropped by the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 1 point per dollar on all other purchases; the draft had no base rule."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "qualifying Lyft products and services purchased through the Lyft mobile application",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": {
+              "endsOn": "2027-12-31"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-priority-product",
+              "quote": "Earn 5X total points on qualifying Lyft products and services purchased through the Lyft mobile application through 12/31/2027."
+            }
+          ],
+          "note": "5X total on Lyft app purchases through 12/31/2027; Lyft is other (Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 5X total on Lyft app purchases through 12/31/2027 (general 10, Chase conventions)."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Southwest Airlines purchases",
+            "rate": "4X",
+            "cap": "none stated",
+            "conditions": null,
+            "merchants": [
+              "Southwest Airlines"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "southwest-rapid-rewards-priority-product",
+            "quote": "Earn 4 points for each dollar spent on Southwest Airlines purchases."
+          },
+          "note": "The flight, inflight, gift card and Getaways wording is not in the captures.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The flight, inflight, gift card and Getaways wording is not in the captures."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Qualifying Lyft products and services purchased through the Lyft mobile application",
+            "rate": "5X total",
+            "cap": "none stated",
+            "conditions": "Promotional through 12/31/2027",
+            "merchants": [
+              "Lyft"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "southwest-rapid-rewards-priority-product",
+            "quote": "Earn 5X total points on qualifying Lyft products and services purchased through the Lyft mobile application through 12/31/2027."
+          },
+          "note": "Names the Lyft merchant of the added Lyft rule (general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Names the Lyft merchant of the added rule (general 4)."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "world-of-hyatt",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.cap",
+          "current": {
+            "kind": "none",
+            "amountCents": null,
+            "period": null,
+            "rateAfterCapBps": null
+          },
+          "corrected": null,
+          "anchor": {
+            "sourceId": "world-of-hyatt-product",
+            "quote": "4 Bonus Points per $1 spent on qualifying purchases at Hyatt Hotels."
+          },
+          "note": "The \"Unlimited\" tile on the page belongs to the 2X categories, not to the 4X Hyatt rule; no capture says the Hyatt rate is uncapped (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Unlimited tile heading belongs to the 2X Bonus Points tile; no sentence says the 4X Hyatt rate is uncapped, so cap null (general 21)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.0.anchors.1",
+          "current": "Unlimited",
+          "note": "The anchor \"Unlimited\" is the heading of the 2X tile and does not support the Hyatt rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The heading Unlimited is the 2X tile's and does not support the Hyatt rule."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Qualifying purchases at Hyatt Hotels",
+            "rate": "4X card Bonus Points (page markets up to 9X total incl. up to 5 Base Points from World of Hyatt membership)",
+            "cap": "none stated",
+            "conditions": null,
+            "merchants": [
+              "Hyatt"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "world-of-hyatt-product",
+            "quote": "4 Bonus Points per $1 spent on qualifying purchases at Hyatt Hotels."
+          },
+          "note": "Anchored on the capture; the capture says Hyatt Hotels, not hotels and resorts, for the 4X rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture states 4 Bonus Points per $1 at Hyatt Hotels and up to 5 Base Points from Hyatt for membership (general 2)."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "chase-freedom-unlimited",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.exclusions.0",
+          "current": {
+            "text": "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in a rewards…",
+            "anchors": [
+              "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in a rewards"
+            ]
+          },
+          "note": "Payments through wallets or third-party accounts still earn the base rate; they only may miss the category. Not an exclusion; recorded as an issue below.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The wallet and third-party statement means the purchase may miss the category rate, not that it never earns; an issue, not an exclusion."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "Any portion of purchases paid for using rewards will not qualify as a category purchase.",
+          "anchors": [
+            {
+              "sourceId": "chase-rewards-category-faq",
+              "quote": "Any portion of purchases paid for using rewards will not qualify as a category purchase."
+            }
+          ],
+          "note": "The draft dropped this statement from the category FAQ; it matches Freedom Flex exclusion 9.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim in the category FAQ, one of this card's sources; matches the Freedom Flex exclusion."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "chase-rewards-category-faq",
+              "quote": "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in a rewards"
+            }
+          ],
+          "note": "Wallet or third-party payment purchases may not earn the 3% or 5% category rates.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The FAQ statement is a real ambiguity about category qualification; anchored."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "drop",
+          "hintIndex": 0,
+          "note": "Neither Freedom Unlimited capture mentions Lyft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Neither Freedom Unlimited capture mentions Lyft; research-only hint."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "disney-premier-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "disney-premier-visa-product",
+            "quote": "Earn 2% on select card purchases and 1% on all other card purchases."
+          },
+          "note": "Disney Rewards Dollars are a percentage back: cash-back (general 1, Chase conventions). No point value: a cash-back card carries none (general 13).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards Dollars are a stated percentage back: cash-back with no point value (general 1, 13; Chase conventions). Anchor is verbatim on the product capture."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-product",
+              "quote": "Earn 5% on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com."
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "automatically enrolled to begin earning Rewards Dollars upon"
+            }
+          ],
+          "note": "5% at the Disney streaming sites only: single-merchant other, never streaming (Chase conventions). Cardholders are enrolled automatically (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "5% only at the three Disney streaming sites: single-merchant other, never streaming (Chase conventions, general 4). The terms capture says cardholders are enrolled automatically, so activation none (general 7); sibling Disney cards without a terms capture keep null."
+          }
+        },
+        {
+          "rule": {
+            "category": "gas",
+            "issuerWording": "gas stations",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-product",
+              "quote": "Earn 2% on card purchases at gas stations and most Disney U.S. locations."
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "automatically enrolled to begin earning Rewards Dollars upon"
+            }
+          ],
+          "note": "2% at gas stations.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 2% at gas stations; activation none from the automatic-enrollment sentence in the terms (general 7)."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "most Disney U.S. locations",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": true,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-product",
+              "quote": "Earn 2% on card purchases at gas stations and most Disney U.S. locations."
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "automatically enrolled to begin earning Rewards Dollars upon"
+            }
+          ],
+          "note": "2% at most U.S. Disney locations: single-merchant other, U.S. locations only.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2% at most Disney U.S. locations: single-merchant other (Chase conventions); the wording states U.S. locations, so usMerchantsOnly true."
+          }
+        },
+        {
+          "rule": {
+            "category": "supermarkets",
+            "issuerWording": "grocery stores",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-product",
+              "quote": "Earn 2% on card purchases at grocery stores and restaurants."
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "automatically enrolled to begin earning Rewards Dollars upon"
+            }
+          ],
+          "note": "2% at grocery stores.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 2% at grocery stores; shared category supermarkets."
+          }
+        },
+        {
+          "rule": {
+            "category": "dining",
+            "issuerWording": "restaurants",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-product",
+              "quote": "Earn 2% on card purchases at grocery stores and restaurants."
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "automatically enrolled to begin earning Rewards Dollars upon"
+            }
+          ],
+          "note": "2% at restaurants; the terms add takeout and eligible delivery services.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 2% at restaurants; the terms add takeout and eligible delivery, which the dining category covers."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other card purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-product",
+              "quote": "Earn 1% on all other card purchases."
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "automatically enrolled to begin earning Rewards Dollars upon"
+            }
+          ],
+          "note": "1% base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 1% on all other card purchases; base rule with automatic enrollment (general 7)."
+          }
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "Balance transfers and cash advances",
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "balance transfers"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "cash advances"
+            }
+          ],
+          "note": "Listed in the terms as transactions that earn no Rewards Dollars.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Both anchors are single lines of the two-column terms listing transactions that earn no Rewards Dollars (Chase conventions)."
+          }
+        },
+        {
+          "text": "Cash-like transactions such as travelers checks, foreign currency, money orders, wire transfers and cryptocurrency",
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "cash-like transactions including, but not limited to:"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "travelers checks, foreign currency, money orders,"
+            }
+          ],
+          "note": "Cash-like transactions earn nothing per the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored on the cash-like header line and the first item line of the terms; neither anchor abuts the other in the capture."
+          }
+        },
+        {
+          "text": "Lottery tickets, casino gaming chips, race track wagers and similar betting",
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "lottery tickets, casino gaming chips, race track"
+            }
+          ],
+          "note": "Gambling transactions earn nothing per the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Single-line fragment anchor from the two-column terms (Chase conventions)."
+          }
+        },
+        {
+          "text": "Person-to-person money transfers and account-funding transactions",
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "person-to-person money transfers and account-"
+            }
+          ],
+          "note": "Money transfers earn nothing per the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Single-line fragment anchor from the two-column terms (Chase conventions)."
+          }
+        },
+        {
+          "text": "Checks that access the account, interest, unauthorized or fraudulent charges, and fees of any kind",
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "any checks that access your Account"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "unauthorized or fraudulent charges"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "fees of any kind, including an annual fee, if applicable."
+            }
+          ],
+          "note": "Account checks, interest, fraud and fees earn nothing per the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Three single-line fragments of the no-earn list; interest is on the adjacent line of the same list."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-product",
+              "quote": "Use toward Disney Theme Park Tickets, Resort stays, shopping, dining, Disney Cruise Line sailings and more in the U.S."
+            },
+            {
+              "sourceId": "disney-premier-visa-product",
+              "quote": "Cardmembers can also redeem Rewards Dollars for a statement credit toward airline tickets purchased with your card."
+            }
+          ],
+          "note": "Disney Rewards Dollars redeem only toward Disney purchases, plus a statement credit toward airline tickets charged to the card (Chase conventions, general 8).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Disney Rewards Dollars redeem only toward Disney purchases plus airline tickets charged to the card; the ambiguous issue the Chase convention requires (general 8), matching Disney Inspire. Third-party-device streaming purchases are a purchase-level condition left to the overlay, as on Disney Inspire."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "disney-premier-visa-product",
+            "quote": "Earn 5% in Disney Rewards Dollars on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com."
+          },
+          "note": "5% in Disney Rewards Dollars at the three Disney streaming sites.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The hint matches the product capture sentence verbatim."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "marriott-bonvoy-bountiful",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "points",
+          "anchor": {
+            "sourceId": "marriott-bonvoy-bountiful-product",
+            "quote": "Earn 2X points for every $1 you spend on all other purchases"
+          },
+          "note": "Marriott Bonvoy points; no capture states a cash value, so the point value stays null (general 3, 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Marriott Bonvoy points; no capture states a cash redemption value, so point value stays null (general 3, 20)."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "hotels participating in Marriott Bonvoy",
+            "rateBps": 600,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-bountiful-product",
+              "quote": "Earn 6X points for every $1 spent at over 7,000 hotels participating in Marriott Bonvoy® with the Marriott Bonvoy Bountiful® Credit Card."
+            }
+          ],
+          "note": "Card earn is 6X; the 18.5X total adds member and Gold Elite earn paid by Marriott (general 2, Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Card pays 6X at Marriott hotels; the 18.5X total includes member and Gold Elite earn paid by Marriott (general 2, Chase conventions). Cap null: \"Earn Unlimited\" is a tagline heading, not a sentence about this rate (general 21), as decided for World of Hyatt."
+          }
+        },
+        {
+          "rule": {
+            "category": "supermarkets",
+            "issuerWording": "grocery stores",
+            "rateBps": 400,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 1500000,
+              "period": "year-unspecified",
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-bountiful-product",
+              "quote": "Earn 4X points for every $1 on the first $15,000 in combined purchases annually on grocery stores and dining."
+            }
+          ],
+          "note": "4X on the first $15,000 a year combined with dining; the after-cap rate is not stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4X on the first $15,000 combined annually with dining; \"annually\" names no year type, so year-unspecified; no after-cap rate stated. Cap null elsewhere per general 21."
+          }
+        },
+        {
+          "rule": {
+            "category": "dining",
+            "issuerWording": "dining",
+            "rateBps": 400,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 1500000,
+              "period": "year-unspecified",
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-bountiful-product",
+              "quote": "Earn 4X points for every $1 on the first $15,000 in combined purchases annually on grocery stores and dining."
+            }
+          ],
+          "note": "4X on the first $15,000 a year combined with grocery stores; the after-cap rate is not stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4X on the first $15,000 combined annually with grocery stores; same cap and anchor as the grocery rule."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-bountiful-product",
+              "quote": "Earn 2X points for every $1 you spend on all other purchases"
+            }
+          ],
+          "note": "2X base rate (the draft dropped it).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 2X on all other purchases; the draft dropped the base rule. Cap null under general 21."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "marriott-bonvoy-bountiful-product",
+            "quote": "Earn 6X points for every $1 spent at over 7,000 hotels participating in Marriott Bonvoy® with the Marriott Bonvoy Bountiful® Credit Card."
+          },
+          "note": "The card pays 6X at Marriott hotels; the hint's anchor is the 18.5X total, which includes Marriott's own earn.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The hint anchor was the 18.5X total; the 6X sentence is the card-paid rate (general 2)."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "british-airways-visa-signature",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "points",
+          "anchor": {
+            "sourceId": "british-airways-visa-signature-product",
+            "quote": "Earn 1 Avios for every $1 spent on all other purchases."
+          },
+          "note": "Avios are points; no capture states a cash value, so the point value stays null (general 3, 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Avios are points; no cash value stated, so point value null (general 3, 20)."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "British Airways, Aer Lingus, and Iberia flight purchases",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "british-airways-visa-signature-product",
+              "quote": "Earn 3 Avios for every $1 spent on British Airways, Aer Lingus, and Iberia flight purchases."
+            }
+          ],
+          "note": "3X on flights of the three airlines only: single-merchant other (Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3 Avios per $1 on flights of the three named airlines only: single-merchant other (Chase conventions)."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "hotel accommodations booked directly with the hotel",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "british-airways-visa-signature-product",
+              "quote": "In addition earn 2 Avios for every $1 spent on hotel accommodations booked directly with the hotel."
+            }
+          ],
+          "note": "2X on hotels booked direct: other (Chase conventions, travel booked direct).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2 Avios per $1 on hotels booked directly with the hotel: other under the Chase travel-booked-direct convention, as on United Explorer."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "british-airways-visa-signature-product",
+              "quote": "Earn 1 Avios for every $1 spent on all other purchases."
+            }
+          ],
+          "note": "1X base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 1 Avios per $1 on all other purchases."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "british-airways-visa-signature-product",
+            "quote": "Earn 3 Avios for every $1 spent on British Airways, Aer Lingus, and Iberia flight purchases."
+          },
+          "note": "3 Avios per $1 on flights of the three airlines.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The hint matches the product capture sentence verbatim."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "aer-lingus-visa-signature",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "points",
+          "anchor": {
+            "sourceId": "aer-lingus-visa-signature-product",
+            "quote": "Earn 1 Avios for every $1 spent on all other purchases."
+          },
+          "note": "Avios are points; no capture states a cash value, so the point value stays null (general 3, 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Avios are points; no cash value stated, so point value null (general 3, 20)."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Aer Lingus, British Airways, and Iberia flight purchases",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "aer-lingus-visa-signature-product",
+              "quote": "Earn 3 Avios for every $1 spent with Aer Lingus, British Airways, and Iberia flight purchases."
+            }
+          ],
+          "note": "3X on flights of the three airlines only: single-merchant other (Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3 Avios per $1 on flights of the three named airlines only: single-merchant other (Chase conventions); the anchor is verbatim (\"spent with\")."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "hotel accommodations booked directly with the hotel",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "aer-lingus-visa-signature-product",
+              "quote": "Earn 2 Avios for every $1 spent on hotel accommodations booked directly with the hotel."
+            }
+          ],
+          "note": "2X on hotels booked direct: other (Chase conventions, travel booked direct).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2 Avios per $1 on hotels booked directly with the hotel: other under the Chase travel-booked-direct convention."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "aer-lingus-visa-signature-product",
+              "quote": "Earn 1 Avios for every $1 spent on all other purchases."
+            }
+          ],
+          "note": "1X base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 1 Avios per $1 on all other purchases."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Aer Lingus, British Airways, and Iberia flight purchases",
+            "rate": "3 Avios/$1",
+            "cap": "none stated",
+            "conditions": null,
+            "merchants": [
+              "Aer Lingus",
+              "British Airways",
+              "Iberia"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "aer-lingus-visa-signature-product",
+            "quote": "Earn 3 Avios for every $1 spent with Aer Lingus, British Airways, and Iberia flight purchases."
+          },
+          "note": "LEVEL and 'made directly with' are not in the captures; the rule covers the three airlines.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft hint named LEVEL and \"made directly with\", which no capture states; the replacement matches the capture wording and the three airlines."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "iberia-visa-signature",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "points",
+          "anchor": {
+            "sourceId": "iberia-visa-signature-product",
+            "quote": "Earn 1 Avios for every $1 spent on all other purchases."
+          },
+          "note": "Avios are points; no capture states a cash value, so the point value stays null (general 3, 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Avios are points; no cash value stated, so point value null (general 3, 20)."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Iberia, British Airways, and Aer Lingus flight purchases",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "iberia-visa-signature-product",
+              "quote": "Earn 3 Avios for every $1 spent on Iberia, British Airways, and Aer Lingus flight purchases."
+            }
+          ],
+          "note": "3X on flights of the three airlines only: single-merchant other (Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3 Avios per $1 on flights of the three named airlines only: single-merchant other (Chase conventions)."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "hotel accommodations booked directly with the hotel",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "iberia-visa-signature-product",
+              "quote": "Earn 2 Avios for every $1 spent on hotel accommodations booked directly with the hotel."
+            }
+          ],
+          "note": "2X on hotels booked direct: other (Chase conventions, travel booked direct).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2 Avios per $1 on hotels booked directly with the hotel: other under the Chase travel-booked-direct convention."
+          }
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "iberia-visa-signature-product",
+              "quote": "Earn 1 Avios for every $1 spent on all other purchases."
+            }
+          ],
+          "note": "1X base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 1 Avios per $1 on all other purchases."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Iberia, British Airways, and Aer Lingus flight purchases",
+            "rate": "3 Avios/$1",
+            "cap": "none stated",
+            "conditions": null,
+            "merchants": [
+              "Iberia",
+              "British Airways",
+              "Aer Lingus"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "iberia-visa-signature-product",
+            "quote": "Earn 3 Avios for every $1 spent on Iberia, British Airways, and Aer Lingus flight purchases."
+          },
+          "note": "LEVEL and 'made directly with' are not in the captures; the rule covers the three airlines.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft hint named LEVEL and \"made directly with\", which no capture states; the replacement matches the capture wording and the three airlines."
+          }
+        }
+      ]
+    }
+  ],
+  "labelLintAcks": [
+    {
+      "cardId": "chase-freedom-flex",
+      "ruleIndex": 4,
+      "check": "end-date",
+      "reason": "date-outside-anchor"
+    },
+    {
+      "cardId": "chase-freedom-flex",
+      "ruleIndex": 5,
+      "check": "end-date",
+      "reason": "date-outside-anchor"
+    },
+    {
+      "cardId": "chase-freedom-flex",
+      "ruleIndex": 6,
+      "check": "end-date",
+      "reason": "date-outside-anchor"
+    }
+  ]
+}

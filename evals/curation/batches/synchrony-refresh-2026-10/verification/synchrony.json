@@ -1,0 +1,1337 @@
+{
+  "schemaVersion": 1,
+  "packetId": "75f4c48c-4f1d-4e41-ab08-44be2906b251",
+  "batch": "synchrony-refresh-2026-10",
+  "issuer": "Synchrony",
+  "provenance": "agent-verified",
+  "verifier": {
+    "agent": "card-verifier",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-05",
+    "filesRead": [
+      ".claude/agents/card-verifier.md",
+      "evals/curation/batches/synchrony-refresh-2026-10/pipeline/packets/verify.synchrony.2.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/synchrony.md",
+      "evals/curation/batches/synchrony-refresh-2026-10/verify/synchrony.md",
+      "evals/curation/batches/synchrony-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/synchrony-refresh-2026-10/product-notes.json",
+      "evals/curation/batches/synchrony-refresh-2026-10/verification/synchrony.json",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/schema.ts",
+      "tools/catalog-pipeline/src/gates.ts",
+      "tools/catalog-pipeline/src/accept.ts",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/amazon-store-card-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-verizon-visa-card-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-verizon-visa-card-rewards-terms.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-verizon-visa-card-partner.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-newegg-store-credit-card-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-newegg-store-credit-card-categories.txt"
+    ]
+  },
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-10-05",
+    "filesRead": [
+      ".claude/agents/card-adjudicator.md",
+      "evals/curation/batches/synchrony-refresh-2026-10/pipeline/packets/adjudicate.synchrony.2.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/synchrony.md",
+      "evals/curation/batches/synchrony-refresh-2026-10/verification/synchrony.json",
+      "evals/curation/batches/synchrony-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/synchrony-refresh-2026-10/product-notes.json",
+      "apps/api/src/curation/v2/schema.ts",
+      "tools/catalog-pipeline/src/gates.ts",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/amazon-store-card-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-verizon-visa-card-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-verizon-visa-card-rewards-terms.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-verizon-visa-card-partner.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-newegg-store-credit-card-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-newegg-store-credit-card-categories.txt"
+    ]
+  },
+  "cards": [
+    {
+      "cardId": "synchrony-amazon-store-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Prime Store Card members can earn 5% back at Amazon.com and Whole Foods Market"
+          },
+          "note": "The captures state the rate as a percentage back and allow statement credit; Synchrony convention puts Amazon Store on cash-back with rateBps = percent x 100.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product capture states the rate as a percentage back and allows statement credit redemption; the Synchrony convention puts Amazon Store on cash-back (general 1)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.rewardCurrency.anchors.0",
+          "current": "other credits) to which the % back benefit applies, including eligible purchases at participating Whole Foods Market physical stores, will result in you receiving rewards",
+          "note": "The old anchor describes how rewards points are computed, not a points currency; the percentage-back anchor replaces it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The old anchor describes how points are computed and no longer supports a cash-back currency; the percentage-back anchor from the first fix replaces it."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 10000,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "You may see rewards points referred to simply as rewards and reflected as a dollar balance (versus a points balance), with $1 of rewards being"
+          },
+          "note": "A cash-back card carries no point value (general conventions 1 and 13, Synchrony convention for Amazon). The anchor is the existing one, so nothing is added; the next fix removes it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A cash-back card carries no point value (general 13 and the Synchrony convention); the stated value is reused as the anchor of the null."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "You may see rewards points referred to simply as rewards and reflected as a dollar balance (versus a points balance), with $1 of rewards being",
+          "note": "The anchor supported the dropped 10000 value; a null point value carries no anchors.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor supported the removed 10000 value; a null point value carries no anchors per the Synchrony convention."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.category",
+          "current": "online-retail",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores"
+          },
+          "note": "The rate pays only at Amazon, a single merchant: category other (general 4, Synchrony convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 5% pays only at Amazon.com and Amazon stores, a single merchant: category other (general 4, Synchrony convention)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.category",
+          "current": "supermarkets",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Participating Whole Foods Market stores will accept in-store payment with the Store Card and Secured Card through the Amazon In-Store Code"
+          },
+          "note": "The rate pays only at Whole Foods Market, not across supermarkets: category other (general 4, Synchrony convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 5% pays only at Whole Foods Market, not across supermarkets: category other (general 4, Synchrony convention)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.issues.0.code",
+          "current": "missing",
+          "corrected": "out-of-scope",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "The Prime Store Card, an upgrade from Amazon Store Card, is available to customers with an Eligible Prime Membership only"
+          },
+          "note": "The issue names the Prime membership the 5% needs; gated rates carry an out-of-scope issue (general 17, Synchrony convention), not missing.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Prime membership that gates the 5% is an out-of-scope issue (general 17, Synchrony convention)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless issue with no stated problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue without a stated problem (general 16)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Prime Store Card members with an eligible Prime membership can earn 5% back year-round at Amazon.com, Whole Foods Market (In-Store Code usage required at Whole"
+            ]
+          },
+          "note": "Ambiguous issue anchored on the year-round marketing line (the and-more wording); removed per the Synchrony convention and general 16.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The year-round marketing line names no ambiguity; the Synchrony convention removes this issue (general 16)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless issue with no stated problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue without a stated problem (general 16)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Prime Store Card members with an eligible Prime membership can earn 5% back year-round at Amazon.com, Whole Foods Market (In-Store Code usage required at Whole"
+          },
+          "note": "The 5% at Amazon.com and Whole Foods with an eligible Prime membership, and the choice of financing instead, are stated on the product page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product capture states the 5% at Amazon.com and Whole Foods with an eligible Prime membership and the financing alternative."
+          }
+        },
+        {
+          "action": "fix",
+          "hintIndex": 1,
+          "hint": {
+            "type": "closed-loop",
+            "summary": "Store card: usable at Amazon.com, select physical Amazon stores, participating Whole Foods Market stores, and Amazon Pay merchants that enable it.",
+            "merchants": [
+              "Amazon",
+              "Whole Foods Market"
+            ]
+          },
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores"
+          },
+          "note": "The terms name where the card works (Amazon.com, physical Amazon stores, Whole Foods via In-Store Code, Amazon Pay merchants); the hint was unanchored.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms name Amazon.com, physical Amazon stores and Whole Foods via the In-Store Code; the anchored hint matches the Synchrony overlay closed-loop decision."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-paypal-cashback-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.category",
+          "current": "online-retail",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "synchrony-paypal-cashback-mastercard-product",
+            "quote": "unlimited 3% cash back1 when you checkout with PayPal"
+          },
+          "note": "The 3% is paid on PayPal checkout, not across online retail; PayPal checkout rules are category other (general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 3% pays through PayPal checkout, which general 4 lists as category other."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless issue with no stated problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue without a stated problem (general 16)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-paypal-cashback-mastercard-rewards-terms",
+            "quote": "Earn 3% on Eligible Purchases you make using your Card Account through your PayPal account online, or when you use your Card Account to send"
+          },
+          "note": "The rewards terms state 3% through the PayPal account online and on sending money, no purchase maximum, and 1.5% for authorized users.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards terms state 3% through the PayPal account online and on sending money with no purchase maximum."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-sams-club-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Sam’s Club purchases for Plus members",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-sams-club-mastercard-product",
+              "quote": "Earn 3% back in Sam’s Cash on Sam’s Club purchases for Plus members."
+            }
+          ],
+          "note": "The draft dropped the Sam’s Club purchase rule. Plus members earn 3% at Sam’s Club (single merchant: other); the Plus condition is already in issue 0 (general 17).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product capture states 3% at Sam’s Club for Plus members; single merchant is category other (general 4) and the Plus gate is already an issue (general 17)."
+          }
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-sams-club-mastercard-partner",
+              "quote": "may be redeemed only at a Sam’s Club location or at SamsClub.com"
+            }
+          ],
+          "note": "Sam’s Cash is store credit usable only at Sam’s Club (general 8, Synchrony convention on store reward currencies).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Sam’s Cash is redeemable only at Sam’s Club; the Synchrony convention lists it as store credit under general 8."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-sams-club-mastercard-partner",
+            "quote": "back in Sam’s Cash on Sam’s Club purchases for Plus members. (Club members earn 1%)."
+          },
+          "note": "Plus 3% and Club 1% at Sam’s Club, the $5,000 yearly Sam’s Cash maximum and the listed exclusions are stated on the partner page; the hint was unanchored.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The partner capture states the Plus 3% and Club 1% rates and the yearly Sam’s Cash maximum."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-onepay-cashrewards-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.1",
+          "current": "Earn unlimited",
+          "corrected": "There are no caps on the total amount of OnePay Points you can earn through the use of a CashRewards Card.",
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+            "quote": "There are no caps on the total amount of OnePay Points you can earn through the use of a CashRewards Card."
+          },
+          "note": "The two-word heading fragment is not no-cap evidence (general 21); the terms sentence states there are no caps.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A two-word heading is not no-cap evidence (general 21); the terms sentence states there are no caps."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+            "quote": "your Walmart+ membership must be linked to your CashRewards Card"
+          },
+          "note": "Linking a Walmart+ membership to the card for the 5% rate is a one-time enrollment (Synchrony convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Linking a Walmart+ membership to the card is a one-time enrollment per the Synchrony convention (general 7)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.anchors.0",
+          "current": "Earn unlimited",
+          "corrected": "There are no caps on the total amount of OnePay Points you can earn through the use of a CashRewards Card.",
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+            "quote": "There are no caps on the total amount of OnePay Points you can earn through the use of a CashRewards Card."
+          },
+          "note": "The two-word heading fragment is not no-cap evidence (general 21); the terms sentence states there are no caps.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A two-word heading is not no-cap evidence (general 21); the terms sentence states there are no caps."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.rateBps",
+          "current": null,
+          "corrected": 300,
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-product",
+            "quote": "earn 3% cash back on eligible purchases made outside of Walmart with the CashRewards Card for their first 90 days"
+          },
+          "note": "The dropped rate is 3% outside Walmart for the first 90 days after account opening.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product capture states 3% outside Walmart for the first 90 days after account opening."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.limitedTime.endsOn",
+          "current": "2026-12-31",
+          "corrected": null,
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-product",
+            "quote": "Earn 3% cash back on all other purchases for your first 90 days upon account opening."
+          },
+          "note": "The rate runs 90 days from account opening; 12/31 is the last application date, not the end of the rate (Synchrony convention, general 10).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "12/31 is the last application date, not the end of the 90-day rate; the Synchrony convention sets endsOn null (general 10)."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless issue with no stated problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue without a stated problem (general 16)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "Balance transfers, cash advances and cash-like transactions, cash substitutes, betting transactions, account checks, unauthorized or fraudulent charges, and ATM withdrawals are not Purchases.",
+          "anchors": [
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+              "quote": "cash advances or cash-like transactions (e.g. receiving cash back in connection with a debit purchase),"
+            },
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+              "quote": "lottery tickets, casino gaming chips, racetrack wagers or similar betting transactions,"
+            }
+          ],
+          "note": "The draft dropped the Purchase definition exclusions; the terms list transactions that never earn OnePay Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards terms list the transactions that are not Purchases; both anchors resolve verbatim."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+              "quote": "Your Walmart+ membership must be linked to your Account to earn 5% on Walmart Purchases."
+            }
+          ],
+          "note": "The 5% Walmart rate needs a linked Walmart+ membership (general 17, Synchrony convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 5% Walmart rate needs a linked Walmart+ membership: out-of-scope issue per general 17 and the Synchrony convention."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+            "quote": "OnePay Points are earned on Purchases as follows: (i) 5% on Purchases at Walmart for Walmart+ members whose Walmart+ membership is linked to their Account;"
+          },
+          "note": "5% at Walmart with a linked Walmart+ membership; the Walmart definition (U.S. stores, Walmart gas, app, Walmart.com; not Sam’s Club or third-party sellers) is in the same terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The pricing terms state the 5% for linked Walmart+ members and the Walmart definition."
+          }
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+            "quote": "3% Cash Back at Walmart: You earn OnePay Points equal to 3% of each $1 spent on Purchases at Walmart with your CashRewards Card (1.5%"
+          },
+          "note": "3% at Walmart without Walmart+ is stated in the rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards terms state 3% at Walmart without Walmart+."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-mywalgreens-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.rateBps",
+          "current": null,
+          "corrected": 1000,
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+            "quote": "equal to 10% of every USD spent for Eligible Purchases of retail products branded with Walgreens marks or logos"
+          },
+          "note": "The dropped rate: the terms pay 10% on Walgreens-branded products at Walgreens stores and walgreens.com.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards terms state 10% on Walgreens-branded products at Walgreens stores and walgreens.com."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.category",
+          "current": "drugstores",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-product",
+            "quote": "Use your myWalgreens® Credit Card at Walgreens, Duane Reade or Walgreens.com to earn:"
+          },
+          "note": "The 5% pharmacy rate pays only at Walgreens and Duane Reade stores and walgreens.com, not at drugstores generally (general 4, Synchrony convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 5% pharmacy rate pays only at Walgreens and Duane Reade, which the Synchrony convention names as category other (general 4)."
+          }
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.rateBps",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+            "quote": "equal to 1% of every USD spent for Eligible Purchases when you use your myWalgreens Mastercard to make Eligible Purchases everywhere else"
+          },
+          "note": "The dropped base rate: 1% everywhere else Mastercard is accepted.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards terms state 1% everywhere else Mastercard is accepted."
+          }
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "5% on Walgreens branded products",
+              "10% Walgreens Cash rewards on Walgreens brand purchases†"
+            ]
+          },
+          "note": "Not a conflict: the 5% on Walgreens-branded products is the plain myWalgreens membership rate shown beside the card’s 10% in the comparison; the card terms state 10%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 5% on Walgreens-branded products is the plain myWalgreens member rate in the comparison panel, not a card rate; no conflict (general 12)."
+          }
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+              "quote": "may only be used in conjunction with the myWalgreens Program"
+            }
+          ],
+          "note": "Walgreens Cash is store credit usable only through the myWalgreens program (general 8, Synchrony convention on store reward currencies).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Walgreens Cash may only be used within the myWalgreens program; the Synchrony convention lists it as store credit under general 8."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-product",
+              "quote": "earn rewards on veterinary and pet store purchases outside of Walgreens"
+            }
+          ],
+          "note": "The product page also pays 3% on veterinary and pet store purchases, while the terms define the 3% health and wellness category only by MCC.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product capture names veterinary and pet store purchases while the terms define health and wellness only by MCC; the anchor states the problem (general 16)."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+            "quote": "You will earn Walgreens Cash rewards equal to 10% of every USD spent for Eligible Purchases of retail products branded with Walgreens marks or logos"
+          },
+          "note": "10% on Walgreens-branded products at Walgreens Participating Stores (including Duane Reade) and walgreens.com, per the rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards terms state the 10% on Walgreens-branded products."
+          }
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-product",
+            "quote": "5% on all other brands and pharmacy purchases†"
+          },
+          "note": "5% on other brands and pharmacy purchases at Walgreens, stated on the product page and in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product capture states 5% on other brands and pharmacy purchases."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-amazon-secured-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "2% back on Amazon purchases with an eligible Prime membership"
+          },
+          "note": "The Secured Card rate is stated as a percentage back, redeemable as statement credit: cash-back with rateBps = percent x 100 (Synchrony convention for Amazon Store and Secured).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product capture states the Secured Card rate as a percentage back; the Synchrony convention names Amazon Secured as cash-back with rateBps = percent x 100 (general 1). No point-value fix is needed: the empty reference already carries null, which is what a cash-back card must have (general 13)."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Amazon purchases",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "2% back on Amazon purchases with an eligible Prime membership"
+            },
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "For Secured Card accounts opened on or after January 1, 2021, the 2% back benefit may apply to purchases (less returns and other credits)"
+            }
+          ],
+          "note": "The 2% for Secured Card accounts opened from 2021 on, at Amazon.com and physical Amazon locations with an eligible Prime membership; a single merchant, so other (general 4). The Prime condition is an out-of-scope issue.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Section 3 of the terms states 2% back for Secured accounts opened from 2021 on at Amazon.com and physical Amazon locations with an eligible Prime membership; a single merchant, so other (general 4, Synchrony convention). Captures state no cap, so cap null (general 21); the Prime gate is the out-of-scope issue (general 17)."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "participating Whole Foods Markets",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "including eligible purchases at participating Whole Foods Markets, will result in your receiving rewards points equal to the applicable % of such purchases"
+            },
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "Participating Whole Foods Market stores will accept in-store payment with the Store Card and Secured Card through the Amazon In-Store Code"
+            }
+          ],
+          "note": "The % back terms (section 6) cover Whole Foods purchases on the Secured Card at the applicable %, which is 2% for post-2021 accounts. The product page names only Amazon purchases, so this rests on the terms. Single merchant: other.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Section 6 applies the % back benefit, including eligible purchases at participating Whole Foods Markets, to the Secured Card at the applicable %, and section 12 says Whole Foods accepts the Secured Card in store; for accounts opened now that % is the 2% of section 3. The Synchrony convention names Whole Foods on the Secured card as other."
+          }
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "Amazon Pay purchases made using your Prime Store Card or Prime Secured Card are not eligible to earn reward points.",
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "Amazon Pay purchases made using your Prime Store Card or Prime Secured Card are not eligible to earn reward points."
+            }
+          ],
+          "note": "Amazon Pay purchases at other merchants never earn.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim from the terms: Amazon Pay purchases on the Prime Secured Card earn no reward points."
+          }
+        },
+        {
+          "text": "The % back benefit cannot be combined with any special financing or equal monthly payments offer",
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "The % back benefit cannot be combined with any special financing or equal monthly payments offer"
+            }
+          ],
+          "note": "A purchase put on a financing or equal monthly payments offer earns no % back (same exclusion as the Amazon Store Card).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim from the terms: a purchase on a financing or equal monthly payments offer earns no % back, the same exclusion the accepted Amazon Store Card carries."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "The Prime Secured Card, an upgrade from the Amazon Secured Card, is available to customers with an Eligible Prime Membership only"
+            }
+          ],
+          "note": "The 2% needs an eligible Prime membership (general 17, Synchrony convention); the rate stays as stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 2% needs an eligible Prime membership; the Synchrony convention gives the Secured Card an out-of-scope issue naming it (general 17)."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "For Secured Card accounts opened before January 1, 2021, the 5% back benefit may apply to purchases"
+            }
+          ],
+          "note": "Secured accounts opened before 2021 keep 5% back with Prime; the labels carry the 2% that applies to accounts opened now.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states that pre-2021 Secured accounts keep 5% back, a real ambiguity in the labelled 2%; the overlay convention records this split as a gate."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "Each set of features has a different Purchase APR and Late Payment Fee as shown below and may have different rewards available."
+            }
+          ],
+          "note": "After 12 months a cardholder may switch to the Store Card features, whose rewards on a converted Secured account the captures do not state.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the two feature sets may have different rewards, and the captures do not say what a converted account earns; the issue is anchored on the problem (general 16)."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership6"
+          },
+          "note": "2% back on Amazon purchases with an eligible Prime membership is stated on the product page; the security deposit, Amazon Pay and financing conditions are in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states 2% back on Amazon purchases with an eligible Prime membership; the hint matches it."
+          }
+        },
+        {
+          "action": "fix",
+          "hintIndex": 1,
+          "hint": {
+            "type": "closed-loop",
+            "summary": "Store card: usable at Amazon.com, select physical Amazon stores, participating Whole Foods Market stores, and Amazon Pay merchants that enable it.",
+            "merchants": [
+              "Amazon",
+              "Whole Foods Market"
+            ]
+          },
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores"
+          },
+          "note": "The terms name where the Secured Card works; the hint was unanchored.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state use at Amazon.com, select physical Amazon stores, participating Whole Foods Market stores and Amazon Pay merchants that enable the card; the hint now carries an anchor and matches the overlay convention on Amazon closed loop."
+          }
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Secured Card accounts opened before January 1, 2021: 5% back at Amazon with an eligible Prime membership.",
+            "rate": "5%",
+            "merchants": [
+              "Amazon"
+            ],
+            "membership": "Eligible Prime membership; account opened before 2021-01-01"
+          },
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "For Secured Card accounts opened before January 1, 2021, the 5% back benefit may apply to purchases"
+          },
+          "note": "The account-age split of the Secured Card rate, for a later gate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state 5% back for Secured accounts opened before 2021-01-01 with Prime; the overlay convention records this split as a gate, so the hint carries it for later stages."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-verizon-visa-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "synchrony-verizon-visa-card-product",
+            "quote": "you earn a percentage of the purchase in Verizon Dollars"
+          },
+          "note": "Verizon Dollars are a dollar-denominated store credit stated as a percentage: cash-back (general 8), with the store-only issue below.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verizon Dollars are a dollar-denominated store credit earned as a percentage of the purchase; general 8 names them as cash-back with the store-only issue, which the verifier added."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other Net New Purchases made on your Credit Card Account everywhere else Visa is accepted",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "1% in Verizon Dollars for all other Net New Purchases made on your Credit Card Account everywhere else Visa is accepted"
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "Base 1%, no limit; cardholders are enrolled automatically (activation none, general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Base 1% everywhere else Visa is accepted. The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
+        },
+        {
+          "rule": {
+            "category": "gas",
+            "issuerWording": "gas",
+            "rateBps": 400,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "4% in Verizon Dollars for every Net New Purchase of gas and at electric vehicle (“EV”) charging stations."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "4% on gas, no limit.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4% on gas, stated with EV charging in one sentence. The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
+        },
+        {
+          "rule": {
+            "category": "ev-charging",
+            "issuerWording": "EV charging stations",
+            "rateBps": 400,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "4% in Verizon Dollars for every Net New Purchase of gas and at electric vehicle (“EV”) charging stations."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "4% at EV charging stations, from the same sentence as gas.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4% at EV charging stations, from the same sentence as gas; ev-charging is a corpus category. The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
+        },
+        {
+          "rule": {
+            "category": "supermarkets",
+            "issuerWording": "groceries",
+            "rateBps": 400,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "4% in Verizon Dollars for every Net New Purchase of groceries."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "4% on groceries; the terms define them as grocery stores and supermarkets.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4% on groceries, defined by the terms as grocery stores and supermarkets, so the shared category fits. The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
+        },
+        {
+          "rule": {
+            "category": "dining",
+            "issuerWording": "restaurants",
+            "rateBps": 400,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "4% in Verizon Dollars for every Net New Purchase made at restaurants."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "4% at restaurants (product page: including take-out and delivery).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4% at restaurants, defined by the terms as restaurants, drinking places, fast food and caterers. The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Verizon operated store, Verizon online, over the phone with a Verizon representative or at an exclusive Verizon Authorized Retailer",
+            "rateBps": 400,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "4% in Verizon Dollars for every Net New Purchase made at a Verizon operated store, Verizon online, over the phone with a Verizon representative"
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "4% on Verizon purchases (devices and accessories, not bill payment); a single merchant, so other (general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4% on Verizon purchases at Verizon stores, online, by phone and exclusive Authorized Retailers, devices and accessories only; a single merchant, so other (general 4). The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "payment of your Verizon Wireless Account bill and/or your Verizon Fios Account bill",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "1% in Verizon Dollars for every Net New Purchase made for the payment of your Verizon Wireless Account bill"
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "There is no limit on earning Verizon Dollars for any of the Net New Purchases listed above."
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "you agree to be automatically enrolled in the Verizon Visa Signature Card Rewards Program"
+            }
+          ],
+          "note": "Verizon bill payments earn 1%, the base rate, stated as its own rule because the 4% Verizon rule excludes them.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state 1% on Verizon Wireless and Fios bill payments as a separate line and the 4% Verizon rule excludes bill payment, so the rule is labelled; a single merchant, so other (general 4). The Synchrony overlay convention already treats this bill-payment rule as held out at retail, so labelling it is consistent. The terms state the rate as a percentage in Verizon Dollars, say there is no limit on earning for any listed purchase (cap none, general 21) and enrol cardholders automatically (activation none, general 7)."
+          }
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "unauthorized or fraudulent charges, the purchase of debt cancellation products, cash advances, balance transfers, interest or fees",
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "not earned on the following: unauthorized or fraudulent charges, the purchase of debt cancellation products, cash advances, balance transfers, interest or fees"
+            }
+          ],
+          "note": "Transactions that never earn Verizon Dollars, per the rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim from the rewards terms: the listed transactions never earn Verizon Dollars."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-partner",
+              "quote": "earn Verizon Dollars1 to redeem toward Verizon purchases or to use toward your monthly Verizon Wireless or Fios bill2"
+            },
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "Verizon Dollars have no cash value and are issued for rewards purposes only"
+            }
+          ],
+          "note": "Verizon Dollars are store credit usable only with Verizon (general 8, Synchrony convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 8 requires the ambiguous issue that Verizon Dollars are usable only with Verizon; the anchors state redemption toward Verizon purchases or bills and no cash value."
+          }
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-product",
+              "quote": "3% for Verizon Shine Verizon Dollars program and 1% additional benefit for bill pay for cardholders."
+            }
+          ],
+          "note": "The product page adds Verizon Loyalty earn on bill payment (3% from the loyalty program plus 1% for cardholders) that the card terms do not state; only the terms' 1% is labelled (general 2).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states Verizon Loyalty earn on bill payment (3% plus 1%) that the rewards terms do not; only the card's own 1% is labelled (general 2) and the overlay convention notes the Shine/Loyalty extras."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+            "quote": "Verizon purchases include purchases of devices and accessories but do not include the payment of your Verizon Wireless Account bill"
+          },
+          "note": "4% at Verizon stores, online, by phone and exclusive Authorized Retailers, devices and accessories, not bill payment; no limit, per the rewards terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards terms state the 4% Verizon purchase rule, its device-and-accessory scope and the bill-payment exclusion; the hint matches."
+          }
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "synchrony-verizon-visa-card-product",
+            "quote": "1% on Verizon wireless Account bill or Verizon Fios Account bill payment"
+          },
+          "note": "1% on Verizon Wireless or Fios bill payments; the extra Verizon Loyalty earn on bills is on the product page only.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states 1% on Verizon Wireless or Fios bill payment; the hint matches and its loyalty condition is the marketing extra general 2 leaves out of the labels."
+          }
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-newegg-store-credit-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "synchrony-newegg-store-credit-card-product",
+            "quote": "Use your Newegg Store Credit Card, enjoy 4% off every day on your purchase."
+          },
+          "note": "The card pays a 4% point-of-sale discount: cash-back 400 per the Synchrony Newegg convention (not store credit).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Synchrony convention records Newegg's 4% point-of-sale discount as cash-back 400 other with an ambiguous issue, not store credit; the product page states 4% off every day."
+          }
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Save 4% every day1 with your Newegg Store Credit Card",
+            "rateBps": 400,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-newegg-store-credit-card-product",
+              "quote": "Save 4% every day1 with your Newegg Store Credit Card"
+            },
+            {
+              "sourceId": "synchrony-newegg-store-credit-card-product",
+              "quote": "Get 4% off every day when you pay with your Newegg Store Credit Card."
+            }
+          ],
+          "note": "The 4% everyday discount on Newegg purchases; a single merchant, so other (general 4, Synchrony convention). No capture states a cap or an unlimited rate, so cap is null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states 4% off every day when paying with the card; a single merchant, so other (general 4, Synchrony convention). No capture states a cap or that it is unlimited, so cap null (general 21)."
+          }
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "The 4% discount does not apply to gift cards, warranties, prior purchases, taxes, or shipping charges.",
+          "anchors": [
+            {
+              "sourceId": "synchrony-newegg-store-credit-card-product",
+              "quote": "The 4% discount does not apply to gift cards, warranties, prior purchases, taxes, or shipping charges."
+            }
+          ],
+          "note": "Items the discount never covers.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim from the product page FAQ: gift cards, warranties, prior purchases, taxes and shipping never get the discount."
+          }
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-newegg-store-credit-card-product",
+              "quote": "you’ll be prompted to select either special financing (if eligible) or the 4% everyday discount."
+            },
+            {
+              "sourceId": "synchrony-newegg-store-credit-card-product",
+              "quote": "May not be stackable with all promo codes."
+            }
+          ],
+          "note": "The 4% is a point-of-sale discount the cardholder picks at checkout instead of special financing, and may not stack with promo codes (Synchrony Newegg convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Synchrony convention requires the ambiguous issue that the 4% is a discount chosen at checkout instead of financing; the anchors state the choice and the promo-code limit."
+          }
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-newegg-store-credit-card-product",
+            "quote": "Simply choose the discount option at checkout."
+          },
+          "note": "The 4% everyday discount, chosen at checkout instead of financing, excludes gift cards, warranties, taxes and shipping, and may not stack with promo codes.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states the discount is chosen at checkout and lists the exclusions and promo-code limit; the hint matches."
+          }
+        },
+        {
+          "action": "fix",
+          "hintIndex": 1,
+          "hint": {
+            "type": "closed-loop",
+            "summary": "Store card: Newegg lists it as a payment method apart from the card networks; no capture says it works only at Newegg.",
+            "merchants": [
+              "Newegg"
+            ]
+          },
+          "anchor": {
+            "sourceId": "synchrony-newegg-store-credit-card-categories",
+            "quote": "Union Pay Newegg Store Credit Card Newegg.com Gift Card"
+          },
+          "note": "No capture states store-only use; the payment-method list shows the store card apart from Visa, Mastercard and the other networks (Synchrony overlay convention on closed loop by inference).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "No capture says the card works only at Newegg; the payment-method list shows the store card apart from the networks, which is the inference the Synchrony overlay convention records for Newegg closed loop. The hint now says exactly that with an anchor."
+          }
+        }
+      ]
+    }
+  ],
+  "labelLintAcks": [
+    {
+      "cardId": "synchrony-amazon-secured-card",
+      "ruleIndex": 1,
+      "check": "rate",
+      "reason": "split-anchors"
+    }
+  ]
+}

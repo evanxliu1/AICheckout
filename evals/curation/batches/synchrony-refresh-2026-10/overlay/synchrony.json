@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "packetId": "1b238e2f-061d-42bf-beef-6bc7cfb87967",
+  "batch": "synchrony-refresh-2026-10",
+  "issuer": "Synchrony",
+  "provenance": "agent-verified",
+  "cards": [
+    {
+      "cardId": "synchrony-amazon-secured-card",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "27ca7d8e4fa101ee7e6c271f573ebdc6bfeea6a888442dd21155a1d92e615041",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "closed-loop",
+        "brandIds": ["amazon", "whole-foods-market"],
+        "anchors": [
+          { "sourceId": "amazon-store-card-product", "quote": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores" },
+          { "sourceId": "amazon-store-card-product", "quote": "Participating Whole Foods Market stores will accept in-store payment with the Store Card and Secured Card through the Amazon In-Store Code" }
+        ]
+      },
+      "rules": [
+        {
+          "index": 0,
+          "was": { "category": "other", "rateBps": 200 },
+          "disposition": "modelled",
+          "how": ["brand-scope", "gate"],
+          "note": "Amazon.com and physical Amazon locations, only with an eligible Prime membership.",
+          "set": {
+            "brandIds": ["amazon"],
+            "requires": [{ "gateId": "amazon-prime", "optionIds": ["member"] }]
+          },
+          "anchors": [
+            { "sourceId": "amazon-store-card-product", "quote": "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership6" },
+            { "sourceId": "amazon-store-card-product", "quote": "including 1-Click orders and purchases made at physical Amazon locations" }
+          ]
+        },
+        {
+          "index": 1,
+          "was": { "category": "other", "rateBps": 200 },
+          "disposition": "modelled",
+          "how": ["brand-scope", "gate"],
+          "note": "Participating Whole Foods Market stores (Amazon In-Store Code), with the same Prime condition.",
+          "set": {
+            "brandIds": ["whole-foods-market"],
+            "requires": [{ "gateId": "amazon-prime", "optionIds": ["member"] }]
+          },
+          "anchors": [
+            { "sourceId": "amazon-store-card-product", "quote": "including eligible purchases at participating Whole Foods Markets" }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "pre-2021-amazon",
+          "category": "other",
+          "issuerWording": "the 5% back benefit may apply to purchases",
+          "rateBps": 500,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "cap": { "kind": "unstated" },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": ["amazon"],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            { "gateId": "amazon-prime", "optionIds": ["member"] },
+            { "gateId": "amazon-secured-card-opened", "optionIds": ["before-2021"] }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": ["brand-scope", "gate"],
+          "note": "Secured accounts opened before 2021 keep 5% at Amazon with Prime; gated on the account-opening gate.",
+          "anchors": [
+            { "sourceId": "amazon-store-card-product", "quote": "For Secured Card accounts opened before January 1, 2021, the 5% back benefit may apply to purchases" }
+          ]
+        },
+        {
+          "key": "pre-2021-whole-foods",
+          "category": "other",
+          "issuerWording": "eligible purchases at participating Whole Foods Markets",
+          "rateBps": 500,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "cap": { "kind": "unstated" },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": ["whole-foods-market"],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            { "gateId": "amazon-prime", "optionIds": ["member"] },
+            { "gateId": "amazon-secured-card-opened", "optionIds": ["before-2021"] }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": ["brand-scope", "gate"],
+          "note": "The percentage-back benefit covers participating Whole Foods Markets, so pre-2021 accounts earn 5% there too.",
+          "anchors": [
+            { "sourceId": "amazon-store-card-product", "quote": "For Secured Card accounts opened before January 1, 2021, the 5% back benefit may apply to purchases" },
+            { "sourceId": "amazon-store-card-product", "quote": "including eligible purchases at participating Whole Foods Markets" }
+          ]
+        }
+      ],
+      "issues": [
+        { "index": 0, "disposition": "modelled", "how": ["gate"], "note": "The Prime Secured Card needs an eligible Prime membership: every rate rule requires the amazon-prime gate answered member.", "rules": [0, 1, "pre-2021-amazon", "pre-2021-whole-foods"] },
+        { "index": 1, "disposition": "modelled", "how": ["gate"], "note": "The 2% vs 5% split by account-opening date is the amazon-secured-card-opened gate; pre-2021 accounts get added 5% rules.", "rules": ["pre-2021-amazon", "pre-2021-whole-foods"] },
+        { "index": 2, "disposition": "noted", "how": [], "note": "Feature sets differ in APR and fees; the reward differences that matter (Prime, opening date) are already gates." }
+      ],
+      "hints": [
+        { "index": 0, "disposition": "modelled", "how": ["brand-scope", "gate"], "note": "Brand-scoped to Amazon and gated on Prime.", "rules": [0] },
+        { "index": 1, "disposition": "modelled", "how": ["closed-loop"], "note": "Closed loop at Amazon and Whole Foods Market. Amazon Pay merchants accept the card but earn nothing, so they are not accepting brands." },
+        { "index": 2, "disposition": "modelled", "how": ["gate"], "note": "Added 5% rules gated on Prime and an account opened before 2021.", "rules": ["pre-2021-amazon", "pre-2021-whole-foods"] }
+      ]
+    },
+    {
+      "cardId": "synchrony-verizon-visa-card",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "c462ae43a98e13b37721c561ff8312d89bc2b663245df41fa88cea50d317d6ca",
+      "heldOut": null,
+      "programId": "verizon-dollars",
+      "rules": [
+        {
+          "index": 5,
+          "was": { "category": "other", "rateBps": 400 },
+          "disposition": "modelled",
+          "how": ["brand-scope"],
+          "note": "Verizon stores, Verizon online, phone orders and exclusive Verizon Authorized Retailers (devices and accessories).",
+          "set": { "brandIds": ["verizon"] },
+          "anchors": [
+            { "sourceId": "synchrony-verizon-visa-card-rewards-terms", "quote": "4% in Verizon Dollars for every Net New Purchase made at a Verizon operated store, Verizon online, over the phone with a Verizon representative" }
+          ]
+        },
+        {
+          "index": 6,
+          "was": { "category": "other", "rateBps": 100 },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: Verizon Wireless and Fios bill payments are telecom services; the rate equals the base anyway."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        { "index": 0, "disposition": "modelled", "how": ["store-credit-program"], "note": "Verizon Dollars are redeemable only toward Verizon purchases or bills: the verizon-dollars store-credit program." },
+        { "index": 1, "disposition": "noted", "how": [], "note": "The Verizon Shine 3% and bill-pay extra are Verizon program earnings, not paid by the card (general 2)." }
+      ],
+      "hints": [
+        { "index": 0, "disposition": "modelled", "how": ["brand-scope"], "note": "Rule 5 brand-scoped to Verizon.", "rules": [5] },
+        { "index": 1, "disposition": "noted", "how": [], "note": "Bill payments are a telecom service; rule 6 is held out." }
+      ]
+    },
+    {
+      "cardId": "synchrony-newegg-store-credit-card",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "450f74c3b5ca260afad2aa2cdcd85d1bb524cab682c6f6377b0d7ae7a6dabe2d",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "closed-loop",
+        "brandIds": ["newegg"],
+        "anchors": [
+          { "sourceId": "synchrony-newegg-store-credit-card-categories", "quote": "Union Pay Newegg Store Credit Card Newegg.com Gift Card" }
+        ]
+      },
+      "rules": [
+        {
+          "index": 0,
+          "was": { "category": "other", "rateBps": 400 },
+          "disposition": "modelled",
+          "how": ["brand-scope"],
+          "note": "Newegg only; a point-of-sale discount chosen instead of special financing.",
+          "set": { "brandIds": ["newegg"] },
+          "anchors": [
+            { "sourceId": "synchrony-newegg-store-credit-card-product", "quote": "Get 4% off every day when you pay with your Newegg Store Credit Card." }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        { "index": 0, "disposition": "noted", "how": [], "note": "Discount vs special financing is chosen per purchase (a purchase-level condition, O19); the catalog assumes the discount option." }
+      ],
+      "hints": [
+        { "index": 0, "disposition": "modelled", "how": ["brand-scope"], "note": "Rule 0 brand-scoped to Newegg.", "rules": [0] },
+        { "index": 1, "disposition": "modelled", "how": ["closed-loop"], "note": "Closed loop at Newegg: the store card is listed as a payment method apart from the card networks, and the card has no base rate." }
+      ]
+    }
+  ],
+  "gates": [],
+  "programs": [],
+  "programDetails": [],
+  "rewardPrograms": [],
+  "labelLintAcks": []
+}

@@ -6,8 +6,38 @@ import { MIGRATION_NOTICE } from '../src/state/migrate';
 import { emptyState } from '../src/state/contracts';
 import type { AppState, CheckoutResponse } from '../src/state/contracts';
 
-// After the bundled catalog v3 was verified (2026-10-02) and before release 1 expires (2026-10-29).
-const now = Date.parse('2026-10-03T15:00:00Z');
+const DAY_MS = 86_400_000;
+/** The UTC date `offset` days after the bundled catalog v3 was verified. */
+const dayAfterBundle = (offset: number) =>
+  new Date(Date.parse(CATALOG_V3.verifiedAt) + offset * DAY_MS).toISOString().slice(0, 10);
+// 15:00 UTC the day after the bundled catalog v3 was verified, before release 1 expires (2026-10-29).
+const now = Date.parse(`${dayAfterBundle(1)}T15:00:00Z`);
+/** Release-1 rule IDs the 2026-10-05 renewal reissued because their terms changed (build report,
+ * "Rule-ID continuity"): recorded spend on them does not carry over. */
+const REISSUED_RELEASE_1_RULES = [
+  'double-cash-base',
+  'double-cash-travel-portal',
+  'quicksilver-entertainment-portal',
+  'savor-supermarkets',
+  'savor-dining',
+  'savor-entertainment',
+  'savor-streaming',
+  'freedom-unlimited-base',
+  'freedom-unlimited-travel-portal',
+  'freedom-unlimited-dining',
+  'freedom-unlimited-drugstores',
+  'bce-base',
+  'bce-supermarkets',
+  'bce-online-retail',
+  'bce-gas',
+  'bcp-base',
+  'bcp-supermarkets',
+  'bcp-streaming',
+  'bcp-transit',
+  'bcp-gas',
+];
+/** Blue Cash Everyday's online-retail rule in the bundled catalog v3 (reissued from `bce-online-retail`). */
+const BCE_ONLINE_RETAIL_V3 = 'bce-online-retail-v2';
 let data: Record<string, unknown>;
 const storage: StateStorage = {
   get: vi.fn(async () => structuredClone(data)),
@@ -22,15 +52,19 @@ const row = (ruleId: string) => ({
   spentCents: 0,
   activation: 'unknown' as const,
 });
-/** A schema-1 (pilot release) state as it was stored. */
-function pilotState(usage: ReturnType<typeof row>[], release: unknown = null) {
+/** A schema-1 (pilot release) state as it was stored; `usage` is Blue Cash Everyday's. */
+function pilotState(
+  usage: ReturnType<typeof row>[],
+  release: unknown = null,
+  quicksilverUsage: ReturnType<typeof row>[] = [],
+) {
   return {
     schemaVersion: 1,
     revision: 4,
     wallet: {
       defaultCardId: 'amex-blue-cash-everyday',
       cards: [
-        { cardId: 'capital-one-quicksilver', usage: [] },
+        { cardId: 'capital-one-quicksilver', usage: quicksilverUsage },
         { cardId: 'amex-blue-cash-everyday', usage },
       ],
     },
@@ -55,7 +89,10 @@ beforeEach(() => {
 
 describe('pilot state migration (schema 1 → 3)', () => {
   it('keeps card IDs and existing rules, drops usage for removed rules with a notice, and persists once', async () => {
-    data[STATE_KEY] = pilotState([row('bce-online-retail'), row('bce-retired-rule')]);
+    // `quicksilver-base` is in the pilot, release 1 and the bundled v3; the renewal reissued `bce-online-retail`.
+    data[STATE_KEY] = pilotState([row('bce-online-retail'), row('bce-retired-rule')], null, [
+      row('quicksilver-base'),
+    ]);
     const handle = createStateService(storage, () => now);
     const first = ok(await handle({ type: 'checkout:get-state' }));
     expect(first.notice).toBe(MIGRATION_NOTICE);
@@ -64,16 +101,18 @@ describe('pilot state migration (schema 1 → 3)', () => {
       'capital-one-quicksilver',
       'amex-blue-cash-everyday',
     ]);
-    expect(first.state.wallet.cards[1].usage.map((u) => u.ruleId)).toEqual(['bce-online-retail']);
+    expect(first.state.wallet.cards[0].usage.map((u) => u.ruleId)).toEqual(['quicksilver-base']);
+    expect(first.state.wallet.cards[1].usage).toEqual([]);
     expect((data[STATE_KEY] as { schemaVersion: number }).schemaVersion).toBe(3);
     expect(data[CATALOG_KEY]).toEqual({ release: null, lastCheckedAt: null });
     expect(ok(await handle({ type: 'checkout:get-state' })).notice).toBeNull();
   });
   it('migrates silently when every usage row still applies, and the v3 engine accepts the wallet', async () => {
-    data[STATE_KEY] = pilotState([row('bce-online-retail')]);
+    data[STATE_KEY] = pilotState([], null, [row('quicksilver-base')]);
     const handle = createStateService(storage, () => now);
     const read = ok(await handle({ type: 'checkout:get-state' }));
     expect(read.notice).toBeNull();
+    expect(read.state.wallet.cards[0].usage.map((u) => u.ruleId)).toEqual(['quicksilver-base']);
     const compared = ok(
       await handle({
         type: 'checkout:compare',
@@ -88,12 +127,18 @@ describe('pilot state migration (schema 1 → 3)', () => {
         },
       }),
     );
+    // Blue Cash Everyday has no usage row, so its online-retail cap use is unknown (1%-3%).
     expect(compared.comparison).toMatchObject({
       status: 'ready',
-      preferredCardId: 'amex-blue-cash-everyday',
+      preferredCardId: 'capital-one-quicksilver',
     });
     if (compared.comparison?.status !== 'ready') throw new Error('not ready');
-    expect(compared.comparison.estimates[0]).toMatchObject({ minRewardCents: 300, maxRewardCents: 300 });
+    expect(compared.comparison.estimates[0]).toMatchObject({
+      cardId: 'capital-one-quicksilver',
+      appliedRuleId: 'quicksilver-base',
+      minRewardCents: 150,
+      maxRewardCents: 150,
+    });
   });
   it('checks usage against a cached v1 release when one is saved and newer than the bundle', async () => {
     const release = {
@@ -102,10 +147,10 @@ describe('pilot state migration (schema 1 → 3)', () => {
       catalog: {
         ...structuredClone(PILOT_CATALOG),
         version: 'published.3',
-        verifiedAt: '2026-10-03T00:00:00Z',
+        verifiedAt: `${dayAfterBundle(1)}T00:00:00Z`,
       },
       catalog_hash: '3'.repeat(64),
-      published_at: '2026-10-03T12:00:00Z',
+      published_at: `${dayAfterBundle(1)}T12:00:00Z`,
     };
     data[STATE_KEY] = pilotState([row('bce-online-retail'), row('bce-base')], release);
     const read = ok(await createStateService(storage, () => now)({ type: 'checkout:get-state' }));
@@ -128,19 +173,27 @@ describe('pending migration notice', () => {
   });
 });
 
+/** The wallet with usage rows on reissued release-1 rules removed; every other row unchanged. */
+function withoutReissued<T extends { usage: { ruleId: string }[] }>(cards: T[]): T[] {
+  return cards.map((card) => ({
+    ...card,
+    usage: card.usage.filter((u) => !REISSUED_RELEASE_1_RULES.includes(u.ruleId)),
+  }));
+}
+
 describe('catalog v2-era state migration (schema 2 → 3)', () => {
   const cached = (version: string, sequence = 7) => ({
     sequence,
     version,
     // Verified after the bundled catalog, so it stays in effect.
-    catalog: { ...redateCatalog(CATALOG_V2, '2026-10-03'), version },
+    catalog: { ...redateCatalog(CATALOG_V2, dayAfterBundle(1)), version },
     catalog_hash: 'c'.repeat(64),
-    published_at: '2026-10-03T12:00:00Z',
+    published_at: `${dayAfterBundle(1)}T12:00:00Z`,
   });
   /** A schema-2 state as the catalog v2 releases stored it: the catalog cache inside the state. */
   function v2State(release: unknown = null) {
     return {
-      ...pilotState([row('bce-online-retail')], release),
+      ...pilotState([], release, [row('quicksilver-base')]),
       schemaVersion: 2,
       pendingNotice: null,
       savings: [],
@@ -174,9 +227,9 @@ describe('catalog v2-era state migration (schema 2 → 3)', () => {
     const read = ok(await createStateService(storage, () => now)({ type: 'checkout:get-state' }));
     expect(read.catalog.version).toBe(CATALOG_V3.version);
     expect(read.state.walletCatalogVersion).toBe(CATALOG_V3.version);
-    expect(read.state.wallet.cards[1].usage).toHaveLength(1);
+    expect(read.state.wallet.cards[0].usage).toHaveLength(1);
   });
-  it('moves a wallet of the seven real cards from cached hosted release 1 onto the bundled v3, keeping every usage row', async () => {
+  it('moves a wallet of the seven real cards from cached hosted release 1 onto the bundled v3, keeping every usage row the renewal did not reissue', async () => {
     // Hosted release 1 exactly as published: CATALOG_V2, verified 2026-09-29, sequence 1.
     const release1 = {
       sequence: 1,
@@ -200,9 +253,10 @@ describe('catalog v2-era state migration (schema 2 → 3)', () => {
     const handle = createStateService(storage, () => now);
     const read = ok(await handle({ type: 'checkout:get-state' }));
     expect(read.catalog.version).toBe(CATALOG_V3.version);
-    expect(read.notice).toBeNull();
+    expect(read.notice).toBe(MIGRATION_NOTICE);
+    // Shown once in this response, so no longer pending.
     expect(read.state).toMatchObject({ walletCatalogVersion: CATALOG_V3.version, pendingNotice: null });
-    expect(read.state.wallet).toEqual({ defaultCardId: 'citi-double-cash', cards });
+    expect(read.state.wallet).toEqual({ defaultCardId: 'citi-double-cash', cards: withoutReissued(cards) });
     // Release 1 stays cached as the reference for the sequence check.
     expect(data[CATALOG_KEY]).toMatchObject({ release: { sequence: 1, version: CATALOG_V2.version } });
     const compared = ok(
@@ -246,19 +300,19 @@ describe('reconciling with a new catalog in effect (schema 3)', () => {
   }
   it('drops what a new bundled catalog lacks after an extension update, with a notice', async () => {
     // Saved under another bundle: its rule, gate and program IDs are not in the bundled catalog v3.
-    data[STATE_KEY] = v3State('older-bundle.1', [row('bce-online-retail'), row('bce-retired-rule')]);
+    data[STATE_KEY] = v3State('older-bundle.1', [row(BCE_ONLINE_RETAIL_V3), row('bce-retired-rule')]);
     const read = ok(await createStateService(storage, () => now)({ type: 'checkout:get-state' }));
     expect(read.notice).toBe(MIGRATION_NOTICE);
     expect(read.state).toMatchObject({ revision: 10, walletCatalogVersion: CATALOG_V3.version });
     expect(read.state.wallet).toEqual({
       defaultCardId: 'amex-blue-cash-everyday',
-      cards: [{ cardId: 'amex-blue-cash-everyday', usage: [row('bce-online-retail')] }],
+      cards: [{ cardId: 'amex-blue-cash-everyday', usage: [row(BCE_ONLINE_RETAIL_V3)] }],
       gates: [],
       valueOverrides: [],
     });
   });
   it('only stamps the version when nothing is stale, so open pages keep their revision', async () => {
-    data[STATE_KEY] = { ...v3State(null, [row('bce-online-retail')]) };
+    data[STATE_KEY] = { ...v3State(null, [row(BCE_ONLINE_RETAIL_V3)]) };
     const state = data[STATE_KEY] as AppState;
     delete state.wallet.gates;
     delete state.wallet.valueOverrides;
@@ -277,7 +331,7 @@ describe('reconciling with a new catalog in effect (schema 3)', () => {
     ['with cached release 1 (rules compared in v3 form)', true],
     ['without a cache (rules matched by ID)', false],
   ])(
-    'moves a schema 3 wallet stamped with release 1 onto the bundled v3 %s, keeping every usage row',
+    'moves a schema 3 wallet stamped with release 1 onto the bundled v3 %s, keeping every usage row the renewal did not reissue',
     async (_, withCache) => {
       const cards = CATALOG_V2.cards.map((card) => ({
         cardId: card.id,
@@ -306,10 +360,13 @@ describe('reconciling with a new catalog in effect (schema 3)', () => {
         };
       const read = ok(await createStateService(storage, () => now)({ type: 'checkout:get-state' }));
       expect(read.catalog.version).toBe(CATALOG_V3.version);
-      expect(read.notice).toBeNull();
-      // Only the stamp changes, so open pages keep their revision.
-      expect(read.state).toMatchObject({ revision: 9, walletCatalogVersion: CATALOG_V3.version });
-      expect(read.state.wallet).toEqual({ defaultCardId: 'amex-blue-cash-everyday', cards });
+      // Rows on reissued rules are dropped with the notice, so the revision advances.
+      expect(read.notice).toBe(MIGRATION_NOTICE);
+      expect(read.state).toMatchObject({ revision: 10, walletCatalogVersion: CATALOG_V3.version });
+      expect(read.state.wallet).toEqual({
+        defaultCardId: 'amex-blue-cash-everyday',
+        cards: withoutReissued(cards),
+      });
     },
   );
 });

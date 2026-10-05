@@ -1,0 +1,1679 @@
+{
+  "schemaVersion": 1,
+  "batch": "citi-refresh-2026-10",
+  "updatedAt": "2026-10-05T02:39:16.045Z",
+  "cards": {
+    "citi-strata": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:dd70df7257b784ecc651f5a9ef8436fe835fb20b3f416d19ed14ee1fbbe3dcf7",
+          "outputs": [
+            {
+              "ref": "manifest:citi-strata-product",
+              "sha256": "907744220fb607fc5230ef912e5786c88de98aa41558a86ce748c6b87d0a0425"
+            },
+            {
+              "ref": "source-input:citi-strata-product",
+              "sha256": "a17bde29dc404112bee2e284cc0f17cb8c70b83ae6562ac26ceb85d5da5d2549"
+            },
+            {
+              "ref": "manifest:citi-strata-rewards-terms",
+              "sha256": "90eac02313b516671d4a8f50bd9e52613d12b89f4535632e6d46e3c699ae86b1"
+            },
+            {
+              "ref": "source-input:citi-strata-rewards-terms",
+              "sha256": "abf5e8404b10a48433168e8a878a5e8787177bc2d9d42793edcee985f09021ca"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:24:52.254Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:a73963290e1307ce9b6c8af8b828c5878faa83f5c7498a84644fa66f1e8b14a7",
+          "outputs": [
+            {
+              "ref": "trace:citi-strata",
+              "sha256": "6920b8c4a940d93020222f18ad891a43c27a9cb113174e50ff534e34e0a83d2a"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.930Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:3db1697353bc5047b91aec2223ee0410ff2a6c1c25c8416bb224b9bd68912891",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-strata",
+              "sha256": "b162148cee86db544fc63cab8b7c0fafce1127c5140a89bed8bd07b4e13f2d84"
+            }
+          ],
+          "labelsHash": "sha256:c2c18af83a0e6191a09542181fe126531d88b4b0025926dcafb76adaea5eef16",
+          "anchorsHash": "sha256:80bcd8b09608274d1e96e5cf783597c06ceabc37719d0cab67da16fd4dc311cb",
+          "finishedAt": "2026-10-05T01:37:33.743Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:ba35ee0aec77868a278b02e763c1c8a2e30a637c30dd2d0e6ef889bef85beccb",
+          "labelsHash": "sha256:c2c18af83a0e6191a09542181fe126531d88b4b0025926dcafb76adaea5eef16",
+          "anchorsHash": "sha256:80bcd8b09608274d1e96e5cf783597c06ceabc37719d0cab67da16fd4dc311cb",
+          "finishedAt": "2026-10-05T01:44:33.047Z",
+          "attempts": 1,
+          "packetId": "64d832c5-b928-4455-8ad3-bd483370f5cf",
+          "agentRun": "aaaa7817346e6bd64",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:33.047Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:8947223546260bd08163604b9b76e90876d14abd39e857647638e512620bb9ba",
+          "finishedAt": "2026-10-05T01:48:44.645Z",
+          "attempts": 1,
+          "packetId": "ff2cecaf-1416-417b-9fda-0e1082e4811f",
+          "agentRun": "ab81fa937e867fddc",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:48:44.645Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:810471bf4e6fd800b060d54d96f7c02ac8963fad92c82002ea6acb5194e9a246",
+          "outputs": [
+            {
+              "ref": "corpus:citi-strata",
+              "sha256": "17baa1a67a694d9c94c669cddf1aba66641dd01c1a9cb7cdedc64d9911a8c9de"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:48:52.552Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:87ae4c6441949989473e17210162f3e8912ee941f4700aca031ef4e7d9828ba9",
+          "finishedAt": "2026-10-05T01:53:14.262Z",
+          "attempts": 1,
+          "packetId": "817a4d16-61fb-4c6e-adc5-e477f9303ecc",
+          "agentRun": "a5b3d2935b785fda3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:53:14.262Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-strata-premier": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:a889594cf1f790028463e021243e6e99e824db1ace203c6f3b12f9cd01d65777",
+          "outputs": [
+            {
+              "ref": "manifest:citi-strata-premier-product",
+              "sha256": "64c1310f0e5340ed8ea9251bb0b50f7c6983eb103cb31933cf5ac999a76e1e28"
+            },
+            {
+              "ref": "source-input:citi-strata-premier-product",
+              "sha256": "90f0523735565b4232c0203345611b79394ef24f2f599d7ae716068cdc6e72e2"
+            },
+            {
+              "ref": "manifest:citi-strata-premier-rewards-terms",
+              "sha256": "d5e0c9585629821dec91b70bd5471898a49450ebcbfec8d4dd2390d0848d0ac2"
+            },
+            {
+              "ref": "source-input:citi-strata-premier-rewards-terms",
+              "sha256": "106b70c6ec311e87d54505a74cd80a640380439612966f25d8c09857e3c1e809"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:24:52.255Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:5ef3b602e7fec2d37f8b1dd554be8edbfee229bc00092a87e1ceb0a397e457ed",
+          "outputs": [
+            {
+              "ref": "trace:citi-strata-premier",
+              "sha256": "c511a6b6263f066cc785ce16b1aa67f82aced7234d0985bfce5ca24e1c593d69"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.930Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:1e8229df389e49c68b5192966fff0b6f48a5e7918241b3b6a858b78297d45de0",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-strata-premier",
+              "sha256": "bbe48299ce2864e7591e1407580dac59ba9611820cf4d6e38ec90aea2356e61e"
+            }
+          ],
+          "labelsHash": "sha256:761a690e1260607d9baa7a1f6b49c179044df48f3c765fca62f4e52c36befddc",
+          "anchorsHash": "sha256:ac42672da16e6dfddd1217fa356d37ea9adf65894b73dede017416e9b6f3f5ad",
+          "finishedAt": "2026-10-05T01:37:33.744Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:e6dfecdb2f2192eaa9e3953c09c90d6219a909c1e6ec0ac151396b890a9b336c",
+          "labelsHash": "sha256:761a690e1260607d9baa7a1f6b49c179044df48f3c765fca62f4e52c36befddc",
+          "anchorsHash": "sha256:ac42672da16e6dfddd1217fa356d37ea9adf65894b73dede017416e9b6f3f5ad",
+          "finishedAt": "2026-10-05T01:44:33.047Z",
+          "attempts": 1,
+          "packetId": "64d832c5-b928-4455-8ad3-bd483370f5cf",
+          "agentRun": "aaaa7817346e6bd64",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:33.047Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:4cf70a72d75106b96d3eb8691b363c36f11f621cfd8d9a1b3212a025aa5baa4d",
+          "finishedAt": "2026-10-05T01:48:44.645Z",
+          "attempts": 1,
+          "packetId": "ff2cecaf-1416-417b-9fda-0e1082e4811f",
+          "agentRun": "ab81fa937e867fddc",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:48:44.645Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:c854e31a3e4b89544e0fa8c654350d818a30e6552ece2e2700ceb0bc9e8243c0",
+          "outputs": [
+            {
+              "ref": "corpus:citi-strata-premier",
+              "sha256": "ceb6fa791f0e9a6b4a70bda502936835c55ce7fab68cfa9026b035cbac0863fa"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:48:52.552Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:ff509f63ac11ccea701f4b59656d6600aec4b74a074573b1de44320f06056fc4",
+          "finishedAt": "2026-10-05T01:53:14.262Z",
+          "attempts": 1,
+          "packetId": "817a4d16-61fb-4c6e-adc5-e477f9303ecc",
+          "agentRun": "a5b3d2935b785fda3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:53:14.262Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-strata-elite": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:4d476949866ea5cd6421c3341418604e91e4c665507b48dca20e3a2d004a6363",
+          "outputs": [
+            {
+              "ref": "manifest:citi-strata-elite-product",
+              "sha256": "24712d033c9705e27e18c17148698c402b773cf5e37f6d198c796377712fcec7"
+            },
+            {
+              "ref": "source-input:citi-strata-elite-product",
+              "sha256": "7c452b086518c29d0a3c2df1d2178cea58518797d123e8ba2b9a78904012df12"
+            },
+            {
+              "ref": "manifest:citi-strata-elite-rewards-terms",
+              "sha256": "6d9f45759d7742641c035e1b5983cde7245ccd4d48d55e063d14549b9fc3d13f"
+            },
+            {
+              "ref": "source-input:citi-strata-elite-rewards-terms",
+              "sha256": "a5ae073b89a7c65b03c159c51417ec7bfde19a14ed4409c7796dcdf415a4976d"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:24:52.255Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:2b9f9f2bddf181041e313b3c0c81454d1318e08cf72b0c1abbdef17ab23e7b4d",
+          "outputs": [
+            {
+              "ref": "trace:citi-strata-elite",
+              "sha256": "2759e23dc121ed0506b82e0aa1da182526621cae98e834f68d61984d15f5653b"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.930Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:c6ef3bba40fd52753b392de0edf2232aa5a585f4e3c2f1812694a5e87e11eeb3",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-strata-elite",
+              "sha256": "1bd07b435a3eccc288237631b2bdff7949c02f9dd0fed8729484db1ecfd09dca"
+            }
+          ],
+          "labelsHash": "sha256:c5a524ed04959a6327ad967fa4ad45777f89deef8baa2a111aa83e1a876fcbd0",
+          "anchorsHash": "sha256:7381f74c582e09528a2e009aa7322ee2238c36b04e1af9c7d346c4460ff971be",
+          "finishedAt": "2026-10-05T01:37:33.744Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:603328830fb3bc5b57bd30a08a5b6dc2289e3ae49a97b0b960b117134cacdc87",
+          "labelsHash": "sha256:c5a524ed04959a6327ad967fa4ad45777f89deef8baa2a111aa83e1a876fcbd0",
+          "anchorsHash": "sha256:7381f74c582e09528a2e009aa7322ee2238c36b04e1af9c7d346c4460ff971be",
+          "finishedAt": "2026-10-05T01:44:33.047Z",
+          "attempts": 1,
+          "packetId": "64d832c5-b928-4455-8ad3-bd483370f5cf",
+          "agentRun": "aaaa7817346e6bd64",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:33.047Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:eee9d92e8fbd150a1990e668df23617a48fc80a48a64598584e61c79d83398c2",
+          "finishedAt": "2026-10-05T01:48:44.645Z",
+          "attempts": 1,
+          "packetId": "ff2cecaf-1416-417b-9fda-0e1082e4811f",
+          "agentRun": "ab81fa937e867fddc",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:48:44.645Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:17a4d142282d08f3808f42a1312b31432073bfc21b496c5af026c97938d2a0ed",
+          "outputs": [
+            {
+              "ref": "corpus:citi-strata-elite",
+              "sha256": "767e98995a429387c8519587a9b52820cb114134dd57b52416c820f445943a18"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:48:52.552Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:6903388f2ab5e58eec9d4c5fbbda6df2b60cd5aecc0d43a01af70c147b78277c",
+          "finishedAt": "2026-10-05T01:53:14.262Z",
+          "attempts": 1,
+          "packetId": "817a4d16-61fb-4c6e-adc5-e477f9303ecc",
+          "agentRun": "a5b3d2935b785fda3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:53:14.262Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-costco-anywhere-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2c24e4e355e46e7dcf9f259dcc97d34b5c9dd3bae838858bdf703a1f945d4bc5",
+          "outputs": [
+            {
+              "ref": "manifest:citi-costco-anywhere-visa-product",
+              "sha256": "3e1a17967447e6474e1cbd43316c065d2cd03e735c40f8c084d92ae20df1b44f"
+            },
+            {
+              "ref": "source-input:citi-costco-anywhere-visa-product",
+              "sha256": "3778b3a49f84863e6d61934d4bcadf8edd4533a04def2d545ed660e1721eeceb"
+            },
+            {
+              "ref": "manifest:citi-costco-anywhere-visa-rewards-terms",
+              "sha256": "f84fe74bf80f4cef9623e1ac39a957ea0719b2e1f3578b8ffe0efb7a9744b9e5"
+            },
+            {
+              "ref": "source-input:citi-costco-anywhere-visa-rewards-terms",
+              "sha256": "e8e8b3092b0e7aa78315b293aa59e1696c7fbe7833e075903426a9197eabfc0e"
+            },
+            {
+              "ref": "manifest:citi-costco-anywhere-visa-categories",
+              "sha256": "ce420064e5b92a48de4b793bfb1c0babe86c4e24d1bcef0554f59bd98c2aa602"
+            },
+            {
+              "ref": "source-input:citi-costco-anywhere-visa-categories",
+              "sha256": "27192734314e85a72b839f233bb5ede941afdafc6b6bdcc2eb5e1e880c532f75"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:25:30.241Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:1f2e7d1d6623a1f4278a7bb0b8a4cdb941bd10dc342f4717331324d2f32e53ef",
+          "outputs": [
+            {
+              "ref": "trace:citi-costco-anywhere-visa",
+              "sha256": "a4daf32ac043813b414187c0cfb2a780b3404e261875e03c9af3d4e8f236c68b"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.930Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:9095d3ac6afae246e44d88cc4b4d7b6869ef168e007469f5508c14fac78b3236",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-costco-anywhere-visa",
+              "sha256": "7c6c9d03bcf96b6f13e96788f6725a51ff04e786535342ca33cc1f3f32834032"
+            }
+          ],
+          "labelsHash": "sha256:cf18e62631a9464027d64430799225bc26c089c20a5511190c7b84c3a8d6edda",
+          "anchorsHash": "sha256:7d7763e061be660ff2876a0afee38d6894b200e4b0f4c434e7e37cae47f130a5",
+          "finishedAt": "2026-10-05T01:37:33.744Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:a4e2953c0c6ffa8ca053530ac86a9e7540ce4e266a1c90e3c4641d93beaebae1",
+          "labelsHash": "sha256:cf18e62631a9464027d64430799225bc26c089c20a5511190c7b84c3a8d6edda",
+          "anchorsHash": "sha256:7d7763e061be660ff2876a0afee38d6894b200e4b0f4c434e7e37cae47f130a5",
+          "finishedAt": "2026-10-05T01:44:33.047Z",
+          "attempts": 1,
+          "packetId": "64d832c5-b928-4455-8ad3-bd483370f5cf",
+          "agentRun": "aaaa7817346e6bd64",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:33.047Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:ca35176129e3b416c6d8107eafc6a9633fcfcf1907b9e05a757306e83f49ee4f",
+          "finishedAt": "2026-10-05T01:48:44.645Z",
+          "attempts": 1,
+          "packetId": "ff2cecaf-1416-417b-9fda-0e1082e4811f",
+          "agentRun": "ab81fa937e867fddc",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:48:44.645Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:f6bcc2d2bfc9d376f1b8102ff44c189d71173c0ee169eababa988803abd906ca",
+          "outputs": [
+            {
+              "ref": "corpus:citi-costco-anywhere-visa",
+              "sha256": "d06562f1371fb03b6918da62a4f629b3913210d0a0d66678c9b50c664bb248e8"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:48:52.552Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:15d82024f468b79aded21683248c775f3387b3aeafc2d17663b198ecf856d74f",
+          "finishedAt": "2026-10-05T01:53:14.262Z",
+          "attempts": 1,
+          "packetId": "817a4d16-61fb-4c6e-adc5-e477f9303ecc",
+          "agentRun": "a5b3d2935b785fda3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:53:14.262Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-aadvantage-platinum-select": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:c5ade066e285ebf2f3325d1d0084d6c2c2bba6e5a7a3ef94f9c19fa5aba11a8b",
+          "outputs": [
+            {
+              "ref": "manifest:citi-aadvantage-platinum-select-product",
+              "sha256": "aa035ae77b3acba1d43886c66780170b07af960d3e00d9588f44c3e2b045c890"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-platinum-select-product",
+              "sha256": "58aa59b618ac0651d7c83ef1c4e01079ecc2d528758699641c226f82e975525c"
+            },
+            {
+              "ref": "manifest:citi-aadvantage-platinum-select-rewards-terms",
+              "sha256": "0feb967607d42bbca788b8b7220d3f9e51c7833876527d6df40a549d19a1194c"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-platinum-select-rewards-terms",
+              "sha256": "8fd2d875644729a1a091ae9efe8487b9d6c66d0e5c6eed6714cac5cd4662a263"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:24:52.255Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:7c062e0879ed9de5452d770ff1b47a51d09d7e583a90c7c68d6b9c3d59161e6b",
+          "outputs": [
+            {
+              "ref": "trace:citi-aadvantage-platinum-select",
+              "sha256": "f5f9ff488137feb01611186636a02486f3ef18c526327a99c0834aff129a9cf5"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.931Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:804c441dc3b340ceb1b28c692c9e744fcf0a381f4b48d0a607df34cac36297ea",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-aadvantage-platinum-select",
+              "sha256": "f71891f8b1c6522d06081f58c267cf7cc6d1db942def9575f3adc97bde6cf8c8"
+            }
+          ],
+          "labelsHash": "sha256:157362091ffcf6248229d807f108b82a2b42774a0ea453a5afb505e3b1ed2d5f",
+          "anchorsHash": "sha256:e272e8a9ec59d5ffcefff0a089f5c7bf8298c21e0812ed0aa0822e51593d27ad",
+          "finishedAt": "2026-10-05T01:37:33.744Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:0fc9c1abcaeb640cff63e92692e0e5c0e60ebc5f3da8905c1f7e5f38e1357cfe",
+          "labelsHash": "sha256:157362091ffcf6248229d807f108b82a2b42774a0ea453a5afb505e3b1ed2d5f",
+          "anchorsHash": "sha256:e272e8a9ec59d5ffcefff0a089f5c7bf8298c21e0812ed0aa0822e51593d27ad",
+          "finishedAt": "2026-10-05T01:44:33.047Z",
+          "attempts": 1,
+          "packetId": "64d832c5-b928-4455-8ad3-bd483370f5cf",
+          "agentRun": "aaaa7817346e6bd64",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:33.047Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:e82da563064c48b80ecbd3154318a40afe7639a16fc27c573639e0b18f45c460",
+          "finishedAt": "2026-10-05T01:48:44.645Z",
+          "attempts": 1,
+          "packetId": "ff2cecaf-1416-417b-9fda-0e1082e4811f",
+          "agentRun": "ab81fa937e867fddc",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:48:44.645Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:f6cada12cffb659a407049c5bf918adcad266e4464529529056017c1956bc955",
+          "outputs": [
+            {
+              "ref": "corpus:citi-aadvantage-platinum-select",
+              "sha256": "a7e450c7e10188fd406e940849b188862f0df8b5b27ffdeb81605cc717bb2a71"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:48:52.552Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:be5a435697467b5d2aff72fe62a15e256c84b97038dd3f400fd871b2d94d89e3",
+          "finishedAt": "2026-10-05T01:53:14.262Z",
+          "attempts": 1,
+          "packetId": "817a4d16-61fb-4c6e-adc5-e477f9303ecc",
+          "agentRun": "a5b3d2935b785fda3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:53:14.262Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-aadvantage-mileup": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:478d49a2e1e62e4ca18a0507b563dec57cd1d3fadd7646e9a9367a17480c9479",
+          "outputs": [
+            {
+              "ref": "manifest:citi-aadvantage-mileup-product",
+              "sha256": "c271b8c381aa6005d5b3bf040222f2da4e4baaef8026ff6826315181686943f1"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-mileup-product",
+              "sha256": "8ec79dc38e3c842a17adc0ad4c52a6819352e2ddbacd1e70a6223474cfddca6f"
+            },
+            {
+              "ref": "manifest:citi-aadvantage-mileup-rewards-terms",
+              "sha256": "d314b1aed987b630daff6725442e256a72b84098dc991b7531e78e83f2dd2a38"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-mileup-rewards-terms",
+              "sha256": "8c26939beebdabfa11c849dee556b310c75a434aeb114f717c847d0364d487a8"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:24:52.255Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:c4010ace698e6622291b6f1ea19656e764a3608f6ec6ca1793af7b604885ed89",
+          "outputs": [
+            {
+              "ref": "trace:citi-aadvantage-mileup",
+              "sha256": "6f52b7f8d49f0dedef9f66a6f509efba931d631a2f6de58d7cf2460a502ab72d"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.931Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:ab4892909ef6d38fcf0c3c26f946f2f417baf4623c8051399276c49456aa12f0",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-aadvantage-mileup",
+              "sha256": "ee4993c014c3a400072a681925f8cd5e0f550b90a628ee776e627dea94bc752e"
+            }
+          ],
+          "labelsHash": "sha256:e73efce496e3283b4739bdeac63eb07c5193fbeca0949ff4e9e88f878ad93df9",
+          "anchorsHash": "sha256:5ba9cdc2ab30417df3b75607675aecd5c888f2e32fcdc1fa190f2eaeb673fd49",
+          "finishedAt": "2026-10-05T01:37:33.744Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:b08f7d370fd73da66d77361658b2cd09e9d32ed52e9c680dedd7e4b478145a50",
+          "labelsHash": "sha256:e73efce496e3283b4739bdeac63eb07c5193fbeca0949ff4e9e88f878ad93df9",
+          "anchorsHash": "sha256:5ba9cdc2ab30417df3b75607675aecd5c888f2e32fcdc1fa190f2eaeb673fd49",
+          "finishedAt": "2026-10-05T01:44:33.047Z",
+          "attempts": 1,
+          "packetId": "64d832c5-b928-4455-8ad3-bd483370f5cf",
+          "agentRun": "aaaa7817346e6bd64",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:33.047Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:b1046a8dc13915ab3f1310fc70f7432fe5ca56a0fd6c725d699e6a77f3c37e26",
+          "finishedAt": "2026-10-05T01:48:44.645Z",
+          "attempts": 1,
+          "packetId": "ff2cecaf-1416-417b-9fda-0e1082e4811f",
+          "agentRun": "ab81fa937e867fddc",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:48:44.645Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:a16ff223ef69d0f0dd6ccdf36a771d676aa3feb31d670ac7f655d3ad0a757f1c",
+          "outputs": [
+            {
+              "ref": "corpus:citi-aadvantage-mileup",
+              "sha256": "5290a4a234d183a709627b80fd30ec96a69505082c83e58da6967f256964ca43"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:48:52.552Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:afbc60b221a69452761b7353c5ca072e7460d5e291f825cf741cacd141180a0e",
+          "finishedAt": "2026-10-05T01:53:14.262Z",
+          "attempts": 1,
+          "packetId": "817a4d16-61fb-4c6e-adc5-e477f9303ecc",
+          "agentRun": "a5b3d2935b785fda3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:53:14.262Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-aadvantage-executive": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:1542f3b9589696e8b9277f0335c3258da96b445fb24d3542e826cf3daf7b818c",
+          "outputs": [
+            {
+              "ref": "manifest:citi-aadvantage-executive-product",
+              "sha256": "834210d64ac520438207e90c2f6ac27cfaf003d76d7c336c683165c571d84f13"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-executive-product",
+              "sha256": "8dfcfbd57819b3ac90380f3b2a8c649c19448e2df937b146ccab8cb037ec7177"
+            },
+            {
+              "ref": "manifest:citi-aadvantage-executive-rewards-terms",
+              "sha256": "fb4e2fe4cf87e894915b4a18da742055d3fa447509c5d770edf7cb63c631bc99"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-executive-rewards-terms",
+              "sha256": "85239b68e8b3963c7fb0ef7b7dcd5b61e766fb374e021f7fb9301957e0c08a61"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:24:52.256Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:b7acac7e3df8a1299ce8e01233419a58bf23bfb28ff3b9186cccaf1860102b3f",
+          "outputs": [
+            {
+              "ref": "trace:citi-aadvantage-executive",
+              "sha256": "e96550389250140bf9781d0ed9273a73717462f075aa31a187f6fc85b792e7f3"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.931Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:ee4b7e2182c1774c9e2cd170164f486e4e723dbe5d22406e78ccb0843d89052f",
+          "labelsHash": "sha256:c572213c67971e36c4ff7f83c5cbb57c6d06c9288bcaff67b5cdd2609e4be0c6",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-10-05T01:57:25.013Z",
+          "attempts": 2,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:fa0e34dc084c3039babffbf72e2e405f177835fd78ab56b47d7282f2549f24df",
+          "labelsHash": "sha256:c572213c67971e36c4ff7f83c5cbb57c6d06c9288bcaff67b5cdd2609e4be0c6",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-10-05T02:00:56.282Z",
+          "attempts": 1,
+          "packetId": "e27e13a0-7ea2-40d7-bc81-393dcc9bfcee",
+          "agentRun": "a30b8c64646b358d2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:00:56.282Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:42f9b77e1e0899e7b03bdf92a8bd72398527e56a5f9e45e10004c22fbda58fbd",
+          "finishedAt": "2026-10-05T02:04:26.909Z",
+          "attempts": 1,
+          "packetId": "3ed909bc-db18-49af-89ad-f64d4f0c790f",
+          "agentRun": "a2eebbd20ec2c24c4",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T02:04:26.909Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:896f79f1fe33f9424ff585e37aea0834cab9db3e2911bb81eef9b319b69c9c06",
+          "outputs": [
+            {
+              "ref": "corpus:citi-aadvantage-executive",
+              "sha256": "6e074f977cc99ba0ddc390932450a5511aabc6f55d59afe3308957d743b6c067"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:04:27.991Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:866ea945a0a8ebfc492d475714ee3a510fb828cd4b2d14b43d6fa5177242c4fd",
+          "finishedAt": "2026-10-05T02:06:52.776Z",
+          "attempts": 1,
+          "packetId": "5a230152-c2b5-403e-8d8f-94fcad05c939",
+          "agentRun": "ae79c6cc742fe31c2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:06:52.776Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-aadvantage-globe": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9459e45dd5ab89a387c4e33d554ce11bee104ae3e4098214e4a99659eefa6dc8",
+          "outputs": [
+            {
+              "ref": "manifest:citi-aadvantage-globe-product",
+              "sha256": "9419ca061985d3b86cc32ae953f5fd2c04cca8724a6c544ef742d54df5217706"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-globe-product",
+              "sha256": "381bc9e055a86511363bbd6c409b9852c7d825ede02a5bbe7df663023e9f5e17"
+            },
+            {
+              "ref": "manifest:citi-aadvantage-globe-rewards-terms",
+              "sha256": "a5880e01a6e69ab5e797cfdb7640694794de140cdefcbc3099636e9665b8ef02"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-globe-rewards-terms",
+              "sha256": "57eb31874a7a30da9165741f7733956b09ccc1f6a0aba70c6d399608712d2142"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:24:52.256Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:c173a3a1574324ee22ddbf4b286e382a6483e5707332c282261f0b6924fb5fa7",
+          "outputs": [
+            {
+              "ref": "trace:citi-aadvantage-globe",
+              "sha256": "8027d85e3251ec685152625bc65aeb0d7561573d8f70d0544619f75d2c59e880"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.931Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:e0a137cf24f9833ecf3276c309bc39715744231507bf82ded5c7dcc948ee06ca",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-aadvantage-globe",
+              "sha256": "250eb79230017e74254721aee5bc1e0d3b0ce21a0e65bc66adce213877c53352"
+            }
+          ],
+          "labelsHash": "sha256:6288f2686dbe46b1ebeda205f9d54eb08dd497c068f6c0fc755540aad7c22140",
+          "anchorsHash": "sha256:687ea1db7143869d08c972a60ba77cc12756001e25bfa999650d371bf51f6b57",
+          "finishedAt": "2026-10-05T01:37:33.744Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:f25749346cffab029ef2eed880cca426d2f77498b0f1cf5c6050638a8a23c0df",
+          "labelsHash": "sha256:6288f2686dbe46b1ebeda205f9d54eb08dd497c068f6c0fc755540aad7c22140",
+          "anchorsHash": "sha256:687ea1db7143869d08c972a60ba77cc12756001e25bfa999650d371bf51f6b57",
+          "finishedAt": "2026-10-05T01:44:33.047Z",
+          "attempts": 1,
+          "packetId": "64d832c5-b928-4455-8ad3-bd483370f5cf",
+          "agentRun": "aaaa7817346e6bd64",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:33.047Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:d3c04f24963ddb6b4587d6b7511463783dd8527c9efda485ce97cb8481cc89a4",
+          "finishedAt": "2026-10-05T01:48:44.645Z",
+          "attempts": 1,
+          "packetId": "ff2cecaf-1416-417b-9fda-0e1082e4811f",
+          "agentRun": "ab81fa937e867fddc",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:48:44.645Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:4679186aefabd728487a622b274b701e40cc42f01dca65b41a6fbd1588f9abc9",
+          "outputs": [
+            {
+              "ref": "corpus:citi-aadvantage-globe",
+              "sha256": "57d04c9067143281db89a20430f7779448a3374f506c8ffd68541e97343fea77"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:48:52.552Z",
+          "attempts": 1,
+          "metrics": {
+            "lintRateRaised": 1,
+            "lintRateAcked": 1
+          }
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:84f3660f67106e7dd7ebaec11872b7b22b684f4bf896188454a05a74416ec3cc",
+          "finishedAt": "2026-10-05T01:53:14.262Z",
+          "attempts": 1,
+          "packetId": "817a4d16-61fb-4c6e-adc5-e477f9303ecc",
+          "agentRun": "a5b3d2935b785fda3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:53:14.262Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-tsc-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:1bde30a9162b9e8454392472d9d79e52801229cb0101c06b41a1658105a2e24b",
+          "outputs": [
+            {
+              "ref": "manifest:citi-tsc-visa-product",
+              "sha256": "4f66d831e7d5df9a90de4ddb0ced31ccb312aecf7fdfd366aff5405780a2a28a"
+            },
+            {
+              "ref": "source-input:citi-tsc-visa-product",
+              "sha256": "1822db0fba3ba1b934257e56429502041db1703f20452a06de4661675f7daf6c"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:24:52.256Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:9820c3decc4536d48dc920f91fc213841804579a7f127a30bb84d875c48e98b2",
+          "outputs": [
+            {
+              "ref": "trace:citi-tsc-visa",
+              "sha256": "606b937eff307e34de36e66083c53226d0cda2e5a6f687dbca1290f545a7b72e"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.932Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:196d0e953c9e3d68af2d44460b5e0b20409fef677c5fff70dce3b66b7d220d56",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-tsc-visa",
+              "sha256": "6a0bd57487078a74c44a60b98fe8c1a30cef64aadfbdf0016c0e3520657e4ddc"
+            }
+          ],
+          "labelsHash": "sha256:78a0d9297078ec7e139c4bcd0254281ae03dde4525e65866610629f5f8b31d36",
+          "anchorsHash": "sha256:d3cfe9f29d852c0fa30114ef5fcf81ffd03d414e7ca6c8232f3322785bd1b965",
+          "finishedAt": "2026-10-05T01:37:33.744Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:9efcc49dcf374494c2debabdc60ebc3e24480292ec406b6365adfc74b8dc5bb8",
+          "labelsHash": "sha256:78a0d9297078ec7e139c4bcd0254281ae03dde4525e65866610629f5f8b31d36",
+          "anchorsHash": "sha256:d3cfe9f29d852c0fa30114ef5fcf81ffd03d414e7ca6c8232f3322785bd1b965",
+          "finishedAt": "2026-10-05T01:44:33.047Z",
+          "attempts": 1,
+          "packetId": "64d832c5-b928-4455-8ad3-bd483370f5cf",
+          "agentRun": "aaaa7817346e6bd64",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:33.047Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:8c4d5aeed64b614caec3ed5f4fb2028fec3b0624df0b5b4b244e161de8ab4c12",
+          "finishedAt": "2026-10-05T01:48:44.645Z",
+          "attempts": 1,
+          "packetId": "ff2cecaf-1416-417b-9fda-0e1082e4811f",
+          "agentRun": "ab81fa937e867fddc",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:48:44.645Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:16b120e3f238ac8527f8e87aff3d58e8ccc447499f3a4323973e85c611f5bcbc",
+          "outputs": [
+            {
+              "ref": "corpus:citi-tsc-visa",
+              "sha256": "49aea7a2149c94bb5a56f378dc21014f798bef321f92b3d92139b52de1174bc4"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:48:52.552Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:99ecbe927b6b11e5ec4b443bcb510430fadfb7580b9f24d9813f7040ecdc3f72",
+          "finishedAt": "2026-10-05T01:53:14.262Z",
+          "attempts": 1,
+          "packetId": "817a4d16-61fb-4c6e-adc5-e477f9303ecc",
+          "agentRun": "a5b3d2935b785fda3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:53:14.262Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-llbean-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2e5a23c7e1d0843e4bbb2ee1156283588f17893eedbd678af529a74a18b29246",
+          "outputs": [
+            {
+              "ref": "manifest:citi-llbean-mastercard-product",
+              "sha256": "2f3937434ad0cc3f8c3f13b493379f8345b75a36243beb7d67fdbab524af811a"
+            },
+            {
+              "ref": "source-input:citi-llbean-mastercard-product",
+              "sha256": "9152cbf428dd7631271179376763cdeac83c9712ecaebaa21c21c5d04e492041"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:24:52.256Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:3a592a248e8e099105d6cebf5fd0bd5f9bb49e78e08f58dc501d8523cd6dbf6b",
+          "outputs": [
+            {
+              "ref": "trace:citi-llbean-mastercard",
+              "sha256": "6b581ae4c2562cd15eac8d9abd2258f64cea683666018bef2c33a0f643f63039"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.932Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:8af3660e9ddaae8fb2834af02520ef69c7315595b19f792988d9f0087f053b17",
+          "labelsHash": "sha256:c02202dee645f7fbb269e311275a1b4245ddab0f30f7785f4efcbb7239773d92",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-10-05T01:57:25.013Z",
+          "attempts": 2,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:d82edd92b63b0adcd61c3bd9853234599769dd93db9ff89e78d1558b4428a89d",
+          "labelsHash": "sha256:c02202dee645f7fbb269e311275a1b4245ddab0f30f7785f4efcbb7239773d92",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-10-05T02:00:56.282Z",
+          "attempts": 1,
+          "packetId": "e27e13a0-7ea2-40d7-bc81-393dcc9bfcee",
+          "agentRun": "a30b8c64646b358d2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:00:56.282Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:f532ab8396acab6325482ab385a61a052229cfe399462cccc6d0389737234773",
+          "finishedAt": "2026-10-05T02:04:26.909Z",
+          "attempts": 1,
+          "packetId": "3ed909bc-db18-49af-89ad-f64d4f0c790f",
+          "agentRun": "a2eebbd20ec2c24c4",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T02:04:26.909Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:74b68080b91139ceb9a657a4337e15013f4992112e00a0b9f815e0434f0b2948",
+          "outputs": [
+            {
+              "ref": "corpus:citi-llbean-mastercard",
+              "sha256": "2e7543a4ba363d974635025e18a2b5e81f2a1ff802af266c35723a8683de6435"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:04:27.991Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:1c5c1a45640a544cb6bfc25e0478e784aabc91cacf3438f8a831bb47ff1f1012",
+          "finishedAt": "2026-10-05T02:06:52.776Z",
+          "attempts": 1,
+          "packetId": "5a230152-c2b5-403e-8d8f-94fcad05c939",
+          "agentRun": "ae79c6cc742fe31c2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:06:52.776Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-dillards-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:e3f6da6c191d55029a2949eb8e31186ce90e17e26f7828b297abd8c4874aa833",
+          "outputs": [
+            {
+              "ref": "manifest:citi-dillards-mastercard-product",
+              "sha256": "c13969e89fd18b958eda5375f83c5f97a90f787236f7d159c886169a88119d0a"
+            },
+            {
+              "ref": "source-input:citi-dillards-mastercard-product",
+              "sha256": "f23403cfb5b4afee241199dd89c14f15df4379a75ce849f16a7b3eff3a710c5c"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:24:52.256Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:5a2958e762bdb8bb75c263d1243297f44acc6df94c3ce353b205a450dd88f1c7",
+          "outputs": [
+            {
+              "ref": "trace:citi-dillards-mastercard",
+              "sha256": "77b60c220d9e77b7b509a1b161b861e6e6dc2951ab6fec6b3a326dd4e7a732ee"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.932Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:4b521beeccbd03a6512f304003c3382ef685ad75f50159dac69406104f8121ce",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-dillards-mastercard",
+              "sha256": "fd1c3919c598832a8ababf6b3a9508a64a2cbaa53930186376ea5c33bbebf79e"
+            }
+          ],
+          "labelsHash": "sha256:a41cfed3ee819dc4692c6fd094e74dbcd95245ba0aa819dccdabee2faa59555e",
+          "anchorsHash": "sha256:71d8a5af7aa6d793649fdb7e656d9979cfa1d233d165deecc498de2f789f2925",
+          "finishedAt": "2026-10-05T01:37:33.745Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:24c892ac89a92c7273d5875338379bf5331fdf6cbb15880c191bea463785bec9",
+          "labelsHash": "sha256:a41cfed3ee819dc4692c6fd094e74dbcd95245ba0aa819dccdabee2faa59555e",
+          "anchorsHash": "sha256:71d8a5af7aa6d793649fdb7e656d9979cfa1d233d165deecc498de2f789f2925",
+          "finishedAt": "2026-10-05T01:44:33.047Z",
+          "attempts": 1,
+          "packetId": "64d832c5-b928-4455-8ad3-bd483370f5cf",
+          "agentRun": "aaaa7817346e6bd64",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:33.047Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:f1377385e218e7d459b53337077bccb794f7aa867fe18eb08ccae86ec139d093",
+          "finishedAt": "2026-10-05T01:48:44.645Z",
+          "attempts": 1,
+          "packetId": "ff2cecaf-1416-417b-9fda-0e1082e4811f",
+          "agentRun": "ab81fa937e867fddc",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:48:44.645Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:dfdecef8732561209670f664ee6a30bcfbef1d664721a900339c1bba02d9a76d",
+          "outputs": [
+            {
+              "ref": "corpus:citi-dillards-mastercard",
+              "sha256": "cfaaa90297005043474349ce087a14a97d21eacf155dd4f035b9a47ba4afdfb6"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:48:52.552Z",
+          "attempts": 1,
+          "metrics": {
+            "lintRateRaised": 3,
+            "lintRateAcked": 3
+          }
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:572081c6a5e8721d5826c0d4397d5a95ab61f18a4fa6c54138d5812322614eea",
+          "finishedAt": "2026-10-05T01:53:14.262Z",
+          "attempts": 1,
+          "packetId": "817a4d16-61fb-4c6e-adc5-e477f9303ecc",
+          "agentRun": "a5b3d2935b785fda3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:53:14.262Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-macys-amex": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:bbc942d1cfc4239cdf874121c81a3f6026c1b04f3f47618336fc781161a9f623",
+          "outputs": [
+            {
+              "ref": "manifest:citi-macys-amex-product",
+              "sha256": "737a1d561d8257cc3bda07c3b90a534efe001f4b0ab8e4f2728459b1efc0ab5d"
+            },
+            {
+              "ref": "source-input:citi-macys-amex-product",
+              "sha256": "96b418674e1919bc142c6e8ccbcdcae576e05a5d8227034e7d9a5deb2d891555"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:24:52.256Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:ec585a5095acc24b994a804907e7d9c854e7263ae966a59bc3b4245d8631f362",
+          "outputs": [
+            {
+              "ref": "trace:citi-macys-amex",
+              "sha256": "3a397c76c842697c9568d88dd79f274ff40636c5a9eadec0c1db40e6d3885b5a"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.932Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:93e718c686e949236ecb5d487cdd1c78b2220504fc964cacb8b5b5510e3617cd",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-macys-amex",
+              "sha256": "95005ba56ab8f4c773ea326feab7bf8169097fd98e55d26b595c946591863db8"
+            }
+          ],
+          "labelsHash": "sha256:747ff7a86c6b7cf2154863ee7d51d210caaf1bfc7a1341e5d490d420c711f4da",
+          "anchorsHash": "sha256:61b23516a73916aa75f542e3088e2d755eea0714b8c8a2191934c5421353f1ca",
+          "finishedAt": "2026-10-05T01:37:33.745Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:e9d1d65ef24112fc7d7ac36f1e5486412cac9c3e13a593644c613b4ff753f888",
+          "labelsHash": "sha256:747ff7a86c6b7cf2154863ee7d51d210caaf1bfc7a1341e5d490d420c711f4da",
+          "anchorsHash": "sha256:61b23516a73916aa75f542e3088e2d755eea0714b8c8a2191934c5421353f1ca",
+          "finishedAt": "2026-10-05T01:44:33.047Z",
+          "attempts": 1,
+          "packetId": "64d832c5-b928-4455-8ad3-bd483370f5cf",
+          "agentRun": "aaaa7817346e6bd64",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:33.047Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:4b3ec54df080b2b2b1bbb6f02a5ca117018f75a31ad120b312466d3d24ba463a",
+          "finishedAt": "2026-10-05T01:48:44.645Z",
+          "attempts": 1,
+          "packetId": "ff2cecaf-1416-417b-9fda-0e1082e4811f",
+          "agentRun": "ab81fa937e867fddc",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:48:44.645Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:e06943da48f44407588039e6f496f0efecca0dcdd21e60f322f668954de1a829",
+          "outputs": [
+            {
+              "ref": "corpus:citi-macys-amex",
+              "sha256": "5acd1b6a2ca1cb16e15e5e0243b9f152b134852bbd05f8f8abcab7a073c9e4f0"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:48:52.552Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:0fd3427a8f5a367fc9fe3d4fe20abfcd4e978c31b255e20cca066d92ba05b7f4",
+          "finishedAt": "2026-10-05T01:53:14.262Z",
+          "attempts": 1,
+          "packetId": "817a4d16-61fb-4c6e-adc5-e477f9303ecc",
+          "agentRun": "a5b3d2935b785fda3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:53:14.262Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-bloomingdales-amex": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:6d12d2e15509fc779c24042049505249ea0cdd0479c3c7d01fb2504558644fe1",
+          "outputs": [
+            {
+              "ref": "manifest:citi-bloomingdales-amex-product",
+              "sha256": "e5e8ba35f5f5c9d6511df540d703c8a175ff1a3d90e3e985aef8806941306064"
+            },
+            {
+              "ref": "source-input:citi-bloomingdales-amex-product",
+              "sha256": "1b17bfed2238aad25b3f61751821b2eb2c3eff35c42ea520abf05b9562757588"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:24:52.256Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:0df9e33a07030f79cefbf827ccf7ba84f6d1de801586f418411ffad6c1ecdc11",
+          "outputs": [
+            {
+              "ref": "trace:citi-bloomingdales-amex",
+              "sha256": "383ba8dbd1f79581cf113285759dcf7f9b4b5ce3a07026a147e231fe56df2c98"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.932Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:7fa3183dfb1976ead938062d26f9df900942b617131ce51d2d14446c57fed5c4",
+          "labelsHash": "sha256:d0041bcfccbc94c01b47b249ac935932de153f7481ff34948be2704a28b2930f",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-10-05T01:57:25.013Z",
+          "attempts": 2,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:4d598ee9e1391b7c4432cf1e07d1b31d68047bd9ee6df10463f826c09c461d74",
+          "labelsHash": "sha256:d0041bcfccbc94c01b47b249ac935932de153f7481ff34948be2704a28b2930f",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-10-05T02:00:56.282Z",
+          "attempts": 1,
+          "packetId": "e27e13a0-7ea2-40d7-bc81-393dcc9bfcee",
+          "agentRun": "a30b8c64646b358d2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:00:56.282Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:8a36728dd06bf197731c17373ac68ab18c0de20923db3dc3fa28f93d3dfeb85f",
+          "finishedAt": "2026-10-05T02:04:26.909Z",
+          "attempts": 1,
+          "packetId": "3ed909bc-db18-49af-89ad-f64d4f0c790f",
+          "agentRun": "a2eebbd20ec2c24c4",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T02:04:26.909Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:022fb1dfd1f18ff2329e80fe6d59af451277042f85ac49796896be8674369e14",
+          "outputs": [
+            {
+              "ref": "corpus:citi-bloomingdales-amex",
+              "sha256": "c11687dae9f0abd20137b46fa373f86ad53012ac19b88768f587cc04600800e1"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:04:27.991Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:59d24d8fad64f340fd7ca9e769bacb71a9153b26263588a11c0f60bdee602a1a",
+          "finishedAt": "2026-10-05T02:06:52.776Z",
+          "attempts": 1,
+          "packetId": "5a230152-c2b5-403e-8d8f-94fcad05c939",
+          "agentRun": "ae79c6cc742fe31c2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:06:52.776Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-double-cash": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:cd3eb3d4c15ac7c1ceb71610790ba0801594341c38c45bf66307d4f1e5f189b8",
+          "outputs": [
+            {
+              "ref": "manifest:citi-double-cash-product",
+              "sha256": "11cc3fbd2a3e8aa9c1608b81d1dc244be06ac5ae4a44b288ad6ee1c3d520d7be"
+            },
+            {
+              "ref": "source-input:citi-double-cash-product",
+              "sha256": "6b978911f83c2e665557758a5447d4e09796ac6c42b615a1a2e13ec2ca7a3c8a"
+            },
+            {
+              "ref": "manifest:citi-double-cash-additional-info",
+              "sha256": "b4b58e4dd2e9c014d0be12253a1baa92ff0f0b84edd4d56a054ce515df03aaa0"
+            },
+            {
+              "ref": "source-input:citi-double-cash-additional-info",
+              "sha256": "fe1e39eede152feb18c1f4693911110801cb07cb19f1f44e224d71bab1454cd4"
+            },
+            {
+              "ref": "manifest:citi-double-cash-terms-pdf",
+              "sha256": "27c8a04f27c412c181da03f640476d33946baf3ffd1ea4447fe33cb89fd3c058"
+            },
+            {
+              "ref": "source-input:citi-double-cash-terms-pdf",
+              "sha256": "1be4f0616d3830b633915e8f4924e3504d6361a9de8f219ed2b43c4d705dc67e"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:24:52.256Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:ec400297e96fef7704bd70b028462a58c425bba687e79a9872309b201955cc02",
+          "outputs": [
+            {
+              "ref": "trace:citi-double-cash",
+              "sha256": "3422eafaf89edf15136536b7d9a4cac63d5a7a60c69e876607cb9a86fef4746a"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:20.932Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:a9bd7b6ffb96ec1713c9b21a41333f1de76ec13faf3cc42cbae26ca7ef2673f9",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-double-cash",
+              "sha256": "8807b0955f2d1f391102c387ec1d12622aa174f86c043762acf636cf7b342d67"
+            }
+          ],
+          "labelsHash": "sha256:923248c35f6b45897673f7485a9c56132d3ac42311c54d36ea839a41a9e6f4e2",
+          "anchorsHash": "sha256:7811a72d9d63799a9c7191b52ca99df996f58747d0b7b0da808b37dafb7ed6d2",
+          "finishedAt": "2026-10-05T01:37:33.745Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:93c78c333f0395e1a23a46c7443fd9b1964fca751aa0c12f7830c439f15598b9",
+          "labelsHash": "sha256:923248c35f6b45897673f7485a9c56132d3ac42311c54d36ea839a41a9e6f4e2",
+          "anchorsHash": "sha256:7811a72d9d63799a9c7191b52ca99df996f58747d0b7b0da808b37dafb7ed6d2",
+          "finishedAt": "2026-10-05T01:44:33.047Z",
+          "attempts": 1,
+          "packetId": "64d832c5-b928-4455-8ad3-bd483370f5cf",
+          "agentRun": "aaaa7817346e6bd64",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:44:33.047Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:955440d7c539d6d925c4082dd608f06172d9b27bf7ac689d683adc78848eca5b",
+          "finishedAt": "2026-10-05T01:48:44.645Z",
+          "attempts": 1,
+          "packetId": "ff2cecaf-1416-417b-9fda-0e1082e4811f",
+          "agentRun": "ab81fa937e867fddc",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:48:44.645Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:3da04a815f5e25cbae87ae51a84fb3af67ad22a7f985f30df03f09d806cb45ad",
+          "outputs": [
+            {
+              "ref": "corpus:citi-double-cash",
+              "sha256": "5ccebfaae5c9e75c706597329b51e8a6d7ab5871cd6db28114fed0f7c805dc44"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:48:52.552Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:18bb1adb8b68c9ff2ce8abc874ccf76673c21ed04888dd3200c7bad176f50722",
+          "finishedAt": "2026-10-05T01:53:14.262Z",
+          "attempts": 1,
+          "packetId": "817a4d16-61fb-4c6e-adc5-e477f9303ecc",
+          "agentRun": "a5b3d2935b785fda3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T01:53:14.262Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
+  "issuers": {
+    "citi": {
+      "stages": {
+        "research": {
+          "status": "done",
+          "stageVersion": "research.1",
+          "inputHash": "sha256:673ae68783041971d6b01a1858845669e8e8b89139c0cc2cbca49be1a10866e7",
+          "finishedAt": "2026-10-05T01:06:55.120Z",
+          "provenance": "seeded"
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "outputs": [
+            {
+              "ref": "verify:citi",
+              "sha256": "4e3c131123e339eb8c614d717d13bd278397c5f70a4a493fd4e739ab495ed0c6"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:00:56.282Z",
+          "attempts": 2,
+          "packetId": "e27e13a0-7ea2-40d7-bc81-393dcc9bfcee",
+          "agentRun": "a30b8c64646b358d2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:00:56.282Z",
+          "durationMs": 162612,
+          "tokens": 81386
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "outputs": [
+            {
+              "ref": "adjudicate:citi",
+              "sha256": "21cd28a1eee6c573157a27155ef56cd8992b6daab49fe3387d129a046848f8aa"
+            },
+            {
+              "ref": "lint-acks:citi",
+              "sha256": "4dcb3ca7af120bd4b4a5737be4d0ed58919df8dd8fea9aa88d264d317c09a0ce"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:04:26.909Z",
+          "attempts": 2,
+          "packetId": "3ed909bc-db18-49af-89ad-f64d4f0c790f",
+          "agentRun": "a2eebbd20ec2c24c4",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T02:04:26.909Z",
+          "durationMs": 186036,
+          "tokens": 65344
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "outputs": [
+            {
+              "ref": "fragment:citi",
+              "sha256": "d83de9ba55af878a4a100493c4649c7fae9cfea2df1cb20388d32040922ba8f5"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:06:52.776Z",
+          "attempts": 2,
+          "packetId": "5a230152-c2b5-403e-8d8f-94fcad05c939",
+          "agentRun": "ae79c6cc742fe31c2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-10-05T02:06:52.776Z",
+          "durationMs": 111080,
+          "tokens": 48276
+        }
+      }
+    }
+  },
+  "batchStages": {
+    "build": {
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:981565c2373fc705055a792ae7db333263ce8ecbb97e1ea5d681bff072482008",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "4e8c329f99dace72985d8ebcef0ec0a8d58b9e5eab60bf9e2fe95c7c3b4d9e8b"
+        }
+      ],
+      "finishedAt": "2026-10-05T02:38:46.042Z",
+      "attempts": 2,
+      "catalogVersion": "2026-10-05.renewal.1"
+    },
+    "eval": {
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:3fef2a30e8512404e4ede56f3c14bf20da5a622943d832e12e32f7dcabf41ef7",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "ac471fb1ffed898a40a32eb24d9d5dba88ce8e049015b30297b94ed92d47302f"
+        }
+      ],
+      "finishedAt": "2026-10-05T02:39:16.045Z",
+      "attempts": 1
+    }
+  },
+  "resolvedFlags": {
+    "citi-costco-anywhere-visa-categories": {
+      "reason": "expected-short-page",
+      "sha256": "ce420064e5b92a48de4b793bfb1c0babe86c4e24d1bcef0554f59bd98c2aa602",
+      "resolvedAt": "2026-10-05T01:25:30.241Z"
+    }
+  }
+}

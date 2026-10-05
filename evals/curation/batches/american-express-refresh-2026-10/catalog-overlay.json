@@ -1,0 +1,1751 @@
+{
+  "schemaVersion": 1,
+  "version": "american-express-refresh-2026-10.overlay.1",
+  "annotationStatus": "agent-verified",
+  "description": "Catalog overlay of pipeline batch american-express-refresh-2026-10: one entry per corpus card, merged from the overlay/<issuer>.json fragments by pipeline accept overlay.",
+  "programs": [],
+  "programDetails": [],
+  "gates": [],
+  "cards": [
+    {
+      "cardId": "amex-platinum",
+      "issuer": "American Express",
+      "corpusCaseSha256": "99092b7cd9bbc543c9f8ffb1ddc7946b397ac02b043374b72eb00c5bec601702",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 500
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "The $500,000 yearly flight cap exceeds the v3 cap amount limit ($100,000), so the cap is carried as unstated; no single purchase can reach it. Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "cap": {
+              "kind": "unstated"
+            },
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-platinum-pricing",
+              "quote": "of up to $500,000 in charges per calendar year"
+            },
+            {
+              "sourceId": "amex-platinum-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-platinum-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airfare booked directly with passenger airlines. The flight cap it shares with the AmexTravel flight rule is therefore not modelled as shared."
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-platinum-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-platinum-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Membership Rewards redemption value varies by use; no earn change. The program keeps its existing valuation."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "The flight cap is shared by portal and airline-direct flights; the airline-direct rule is held out (not at retail) and the portal rule carries the cap as unstated (amount over the v3 limit), so no shared cap ID."
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "The Venue Collection concessions statement credit is an enrolled benefit at specific venues, not an earn rate; no catalog change."
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "amex-delta-skymiles-blue",
+      "issuer": "American Express",
+      "corpusCaseSha256": "f8ffe42092f4e0ed61ce51306f62a36c501608deb27d5d8970c41f8b1e76304e",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-delta-skymiles-blue-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Delta Purchases are charged directly with Delta as merchant of record; scoped to the delta brand. The deltashop.com and Delta Gift Card carve-out is noted, with no separate brand. Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "brandIds": [
+              "delta"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-delta-skymiles-blue-pricing",
+              "quote": "2x Miles on Delta Purchases"
+            },
+            {
+              "sourceId": "amex-delta-skymiles-blue-product",
+              "quote": "Made directly with Delta."
+            },
+            {
+              "sourceId": "amex-delta-skymiles-blue-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Pay with Miles value (5,000 miles for $50 toward Delta flights) is a travel-only redemption; point value stays null and no earn change."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Delta Purchases rate is brand-scoped to delta. The terms exclude deltashop.com and Delta Gift Cards from Delta Purchases; noted only, no separate brand (Amex convention).",
+          "rules": [
+            1
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Pay with Miles is a travel-only redemption toward Delta flights, not a cash value; program valuation unchanged and no earn change."
+        }
+      ]
+    },
+    {
+      "cardId": "amex-delta-skymiles-gold",
+      "issuer": "American Express",
+      "corpusCaseSha256": "00a0c3fea71660c467c85ecbfcb63aa59d8713b8471077f2dbc12e6ce905ded6",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-delta-skymiles-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-delta-skymiles-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Delta Purchases are charged directly with Delta as merchant of record; scoped to the delta brand. The deltashop.com and Delta Gift Card carve-out is noted, with no separate brand. Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "brandIds": [
+              "delta"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-delta-skymiles-gold-pricing",
+              "quote": "2x Miles on Delta Purchases"
+            },
+            {
+              "sourceId": "amex-delta-skymiles-gold-product",
+              "quote": "Made directly with Delta."
+            },
+            {
+              "sourceId": "amex-delta-skymiles-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Pay with Miles value (5,000 miles for $50 toward Delta flights) is a travel-only redemption; point value stays null and no earn change."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Delta Purchases rate is brand-scoped to delta. The terms exclude deltashop.com and Delta Gift Cards from Delta Purchases; noted only, no separate brand (Amex convention).",
+          "rules": [
+            2
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Pay with Miles is a travel-only redemption toward Delta flights, not a cash value; program valuation unchanged and no earn change."
+        }
+      ]
+    },
+    {
+      "cardId": "amex-delta-skymiles-platinum",
+      "issuer": "American Express",
+      "corpusCaseSha256": "6eff3c0a2e3f90dee58dfc7e0edd75f10ed24c13747601ab8d4279c5733d676e",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-delta-skymiles-platinum-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-delta-skymiles-platinum-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: purchases made directly with hotels (lodging); no v3 category covers hotels."
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Delta Purchases are charged directly with Delta as merchant of record; scoped to the delta brand. The deltashop.com and Delta Gift Card carve-out is noted, with no separate brand. Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "brandIds": [
+              "delta"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-delta-skymiles-platinum-pricing",
+              "quote": "3x Miles on Delta Purchases"
+            },
+            {
+              "sourceId": "amex-delta-skymiles-platinum-product",
+              "quote": "Made directly with Delta."
+            },
+            {
+              "sourceId": "amex-delta-skymiles-platinum-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Delta Purchases rate is brand-scoped to delta. The terms exclude deltashop.com and Delta Gift Cards from Delta Purchases; noted only, no separate brand (Amex convention).",
+          "rules": [
+            4
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Pay with Miles is a travel-only redemption toward Delta flights, not a cash value; program valuation unchanged and no earn change."
+        }
+      ]
+    },
+    {
+      "cardId": "amex-delta-skymiles-reserve",
+      "issuer": "American Express",
+      "corpusCaseSha256": "2d6af30539618cb38e4c65849c3d1f40b4b30549caf5dda2037c304a0b618d35",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Delta Purchases are charged directly with Delta as merchant of record; scoped to the delta brand. The deltashop.com and Delta Gift Card carve-out is noted, with no separate brand. Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "brandIds": [
+              "delta"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-delta-skymiles-reserve-pricing",
+              "quote": "3x Miles on Delta Purchases"
+            },
+            {
+              "sourceId": "amex-delta-skymiles-reserve-product",
+              "quote": "Made directly with Delta."
+            },
+            {
+              "sourceId": "amex-delta-skymiles-reserve-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Delta Purchases rate is brand-scoped to delta. The terms exclude deltashop.com and Delta Gift Cards from Delta Purchases; noted only, no separate brand (Amex convention).",
+          "rules": [
+            0
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Pay with Miles is a travel-only redemption toward Delta flights, not a cash value; program valuation unchanged and no earn change."
+        }
+      ]
+    },
+    {
+      "cardId": "amex-hilton-honors-surpass",
+      "issuer": "American Express",
+      "corpusCaseSha256": "a7bb380db8712507cd2e42f250f434506749536f621de6468af9c040ffa2233c",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 1200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases charged directly with Hilton portfolio properties; scoped to the hilton brand. Third-party payment accounts excluded per the Surpass terms; hedged wallet wording adds digital wallet (O10).",
+          "set": {
+            "brandIds": [
+              "hilton"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-surpass-pricing",
+              "quote": "eligible purchases charged directly with a property within the Hilton portfolio"
+            },
+            {
+              "sourceId": "amex-hilton-honors-surpass-pricing",
+              "quote": "Purchases made through a third-party payment account or on an online marketplace (with multiple retailers) will not receive additional points."
+            },
+            {
+              "sourceId": "amex-hilton-honors-surpass-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "dining",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Surpass terms state third-party payment account purchases earn no additional points (PayPal, Venmo); the hedged wallet wording adds digital wallet (O10).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-surpass-pricing",
+              "quote": "Purchases made through a third-party payment account or on an online marketplace (with multiple retailers) will not receive additional points."
+            },
+            {
+              "sourceId": "amex-hilton-honors-surpass-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Surpass terms state third-party payment account purchases earn no additional points (PayPal, Venmo); the hedged wallet wording adds digital wallet (O10).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-surpass-pricing",
+              "quote": "Purchases made through a third-party payment account or on an online marketplace (with multiple retailers) will not receive additional points."
+            },
+            {
+              "sourceId": "amex-hilton-honors-surpass-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "gas",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Surpass terms state third-party payment account purchases earn no additional points (PayPal, Venmo); the hedged wallet wording adds digital wallet (O10).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-surpass-pricing",
+              "quote": "Purchases made through a third-party payment account or on an online marketplace (with multiple retailers) will not receive additional points."
+            },
+            {
+              "sourceId": "amex-hilton-honors-surpass-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "online-retail",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Online retail bonus excludes third-party payment accounts (PayPal, Venmo) and third-party buy now, pay later installment programs, both stated in the Surpass terms. Hedged wallet wording also excludes digital wallet (O10).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-surpass-pricing",
+              "quote": "Purchases made through a third-party payment account or on an online marketplace (with multiple retailers) will not receive additional points."
+            },
+            {
+              "sourceId": "amex-hilton-honors-surpass-pricing",
+              "quote": "or by using a third-party \"buy now pay later\" installment program"
+            },
+            {
+              "sourceId": "amex-hilton-honors-surpass-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Hilton portfolio rate is brand-scoped to hilton.",
+          "rules": [
+            0
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "PayPal and Venmo are excluded from every bonus rule, so those purchases count at the base rate.",
+          "rules": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "amex-hilton-honors-aspire",
+      "issuer": "American Express",
+      "corpusCaseSha256": "a29227e9ea7dc01138a08f7878c06610d410a6174b740316d399bff86fce9215",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 700
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-aspire-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 700
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-aspire-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 1400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases charged directly with Hilton portfolio properties; scoped to the hilton brand. Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "brandIds": [
+              "hilton"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-aspire-pricing",
+              "quote": "eligible purchases charged directly with a property within the Hilton portfolio"
+            },
+            {
+              "sourceId": "amex-hilton-honors-aspire-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 700
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airfare charged directly with passenger airlines; no v3 category covers airline tickets."
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 700
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: car rentals purchased directly from select rental companies; no v3 category covers car rental."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Concerns the airline-direct and car rental rules, both held out as not at retail; the AmexTravel flight rule stays as labelled."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "The yearly Free Night Reward after a spend threshold is a certificate, not an earn rate; no catalog change."
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "The Venue Collection concessions statement credit is an enrolled benefit at specific venues, not an earn rate; no catalog change."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Hilton portfolio rate is brand-scoped to hilton.",
+          "rules": [
+            3
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "The car rental rule is held out (not at retail); the rental company list lives off-capture."
+        }
+      ]
+    },
+    {
+      "cardId": "amex-marriott-bonvoy-bevy",
+      "issuer": "American Express",
+      "corpusCaseSha256": "6c4cac6e20a83388766ee75295d8d504f9d54325306db3ac6cea1808963394a2",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases at participating Marriott Bonvoy properties and Marriott-branded retail and online stores; scoped to the marriott brand. Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "brandIds": [
+              "marriott"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-marriott-bonvoy-bevy-pricing",
+              "quote": "charged directly with participating Marriott Bonvoy properties, standalone Marriott branded retail establishments, and Marriott branded online stores"
+            },
+            {
+              "sourceId": "amex-marriott-bonvoy-bevy-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The $15,000 yearly cap is combined across restaurants and U.S. supermarkets: one shared cap ID (O12). Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "sharedCapId": "restaurants-supermarkets",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-marriott-bonvoy-bevy-product",
+              "quote": "on up to $15,000 in combined purchases at restaurants and U.S. supermarkets per calendar year"
+            },
+            {
+              "sourceId": "amex-marriott-bonvoy-bevy-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The $15,000 yearly cap is combined across restaurants and U.S. supermarkets: one shared cap ID (O12). Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "sharedCapId": "restaurants-supermarkets",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-marriott-bonvoy-bevy-product",
+              "quote": "on up to $15,000 in combined purchases at restaurants and U.S. supermarkets per calendar year"
+            },
+            {
+              "sourceId": "amex-marriott-bonvoy-bevy-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "shared-cap"
+          ],
+          "note": "The combined restaurant and supermarket cap is one shared cap on both rules.",
+          "rules": [
+            2,
+            3
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Marriott Bonvoy rate is brand-scoped to marriott.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "amex-marriott-bonvoy-brilliant",
+      "issuer": "American Express",
+      "corpusCaseSha256": "2ddb7d91afbe15afc01d3bc74e43248f35cd618287d003a17ee4474ce6a5de37",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases at participating Marriott Bonvoy properties and Marriott-branded retail and online stores; scoped to the marriott brand. Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "brandIds": [
+              "marriott"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-marriott-bonvoy-brilliant-pricing",
+              "quote": "charged directly with participating Marriott Bonvoy properties, standalone Marriott branded retail establishments, and Marriott branded online stores"
+            },
+            {
+              "sourceId": "amex-marriott-bonvoy-brilliant-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-marriott-bonvoy-brilliant-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airfare charged directly with passenger airlines; no v3 category covers airline tickets."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Marriott Bonvoy rate is brand-scoped to marriott.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "amex-blue-cash-everyday",
+      "issuer": "American Express",
+      "corpusCaseSha256": "32d40371578892dcf7a6ca105fb180fc7c3af86dabb346a523f20d1e27fc6234",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-blue-cash-everyday-terms",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "online-retail",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Release 1 excluded buy now, pay later from this rule; the terms still say such purchases earn no additional rewards. Hedged wallet wording also excludes PayPal, Venmo and digital wallet (O10).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-blue-cash-everyday-terms",
+              "quote": "or by using a third party \"buy now pay later\" installment program"
+            },
+            {
+              "sourceId": "amex-blue-cash-everyday-terms",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-blue-cash-everyday-terms",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The Venue Collection concessions statement credit is an enrolled benefit at specific venues, not an earn rate; no catalog change."
+        },
+        {
+          "index": 1,
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "The online retail and gas caps state \"per year\" without saying calendar year; the catalog keeps the unspecified year period.",
+          "rules": [
+            1,
+            2
+          ]
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "amex-blue-cash-preferred",
+      "issuer": "American Express",
+      "corpusCaseSha256": "4fa2ca19837cecb7b4cdc382b1aaafde0d526691294a0fd6f261014761150a3f",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-blue-cash-preferred-terms",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "streaming",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-blue-cash-preferred-terms",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "transit",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-blue-cash-preferred-terms",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus rewards may not be received with a third-party payment account or a mobile or digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-blue-cash-preferred-terms",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The streaming rule stays as labelled; the select provider list lives off-capture and bundled or third-party-billed subscriptions are not modelled."
+        }
+      ]
+    },
+    {
+      "cardId": "amex-gold",
+      "issuer": "American Express",
+      "corpusCaseSha256": "a1bb634bb2dff572f887707d5928ecc66924e95ffc121b2f16bcc6c34865d40b",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "dining",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airfare charged directly with passenger airlines; no v3 category covers airline tickets."
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-gold-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Restaurant-like merchants such as bars, cafeterias, caterers and bakeries earn no dining bonus; the catalog keeps the dining category, so it may overstate the rate at such merchants.",
+          "rules": [
+            1
+          ]
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "amex-hilton-honors",
+      "issuer": "American Express",
+      "corpusCaseSha256": "3da574798f98941ff9d44620e73f1e2879e61b7152b45a4452f06c527529ae7a",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 700
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases charged directly with Hilton portfolio properties; scoped to the hilton brand. Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "brandIds": [
+              "hilton"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-pricing",
+              "quote": "eligible purchases charged directly with a property within the Hilton portfolio"
+            },
+            {
+              "sourceId": "amex-hilton-honors-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "gas",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Amex terms say bonus points may not be received with a third-party payment account or mobile/digital wallet: PayPal, Venmo and digital wallet excluded (O10, conservative reading).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amex-hilton-honors-pricing",
+              "quote": "make a purchase using a third-party payment account or make a purchase using a mobile or digital wallet"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Gasoline bought at supermarkets, superstores or warehouse clubs earns only the base rate; such purchases usually code outside gas stations, so the gas rule stays as labelled.",
+          "rules": [
+            4
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Hilton portfolio rate is brand-scoped to hilton.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    }
+  ]
+}

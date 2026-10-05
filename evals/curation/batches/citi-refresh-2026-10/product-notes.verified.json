@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/apply-expansion-verification.mjs",
+  "description": "Product hints of the verified cards with the verifiers’ adjudicated changes. verification: confirmed, fixed or added by a verifier (anchor quoted from anchorSourceId), or unreviewed.",
+  "cards": [
+    {
+      "cardId": "citi-strata",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "'eligible Self-Select Category of your choice' (Fitness Clubs, Select Streaming Services, Live Entertainment, Cosmetic Stores/Barber Shops/Hair Salons, or Pet Supply Stores)",
+          "rate": "3x",
+          "cap": "none stated",
+          "conditions": "Default is Select Streaming Services; primary cardmember may change once per calendar quarter at citi.com/selfselect",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "When your account is opened, the default Self-Select Category is Select Streaming Services.",
+          "verification": "confirmed",
+          "anchorSourceId": "citi-strata-rewards-terms"
+        }
+      ]
+    },
+    {
+      "cardId": "citi-strata-premier",
+      "issuer": "Citi",
+      "hints": []
+    },
+    {
+      "cardId": "citi-strata-elite",
+      "issuer": "Citi",
+      "hints": []
+    },
+    {
+      "cardId": "citi-costco-anywhere-visa",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'gas purchased at Costco warehouse locations worldwide'",
+          "rate": "5%",
+          "cap": "first $7,000 per year in combined Costco and other eligible gas and/or EV charging purchases, then 1%",
+          "conditions": "Costco membership required",
+          "merchants": [
+            "Costco"
+          ],
+          "membership": "Costco membership required",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "the Costco Anywhere Visa® Card by Citi is exclusively for Costco members.",
+          "verification": "confirmed",
+          "anchorSourceId": "citi-costco-anywhere-visa-product"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "'all other purchases from Costco and Costco.com'",
+          "rate": "2%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Costco"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "On all other Costco and Costco.com purchases",
+          "verification": "confirmed",
+          "anchorSourceId": "citi-costco-anywhere-visa-product"
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-platinum-select",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible American Airlines purchases' (items billed by American Airlines as merchant of record)",
+          "rate": "2x",
+          "cap": "none stated",
+          "conditions": "Excludes aadvantagecars.com and aadvantagehotels.com bookings",
+          "merchants": [
+            "American Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Eligible American Airlines purchases are items billed by American Airlines as the merchant of record.",
+          "verification": "confirmed",
+          "anchorSourceId": "citi-aadvantage-platinum-select-rewards-terms"
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-mileup",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible American Airlines purchases'",
+          "rate": "2x",
+          "cap": "none stated",
+          "conditions": "Billed by AA as merchant of record",
+          "merchants": [
+            "American Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Eligible American Airlines purchases are items billed by American Airlines as the merchant of record.",
+          "verification": "confirmed",
+          "anchorSourceId": "citi-aadvantage-mileup-rewards-terms"
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-executive",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible American Airlines purchases'",
+          "rate": "4x (5x after $150,000 in purchases in a calendar year, for the rest of that year)",
+          "cap": "none stated",
+          "conditions": "Billed by AA as merchant of record",
+          "merchants": [
+            "American Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Upon reaching $150,000 in spend on your Citi® / AAdvantage® Executive World Legend Mastercard in a calendar year",
+          "verification": "confirmed",
+          "anchorSourceId": "citi-aadvantage-executive-rewards-terms"
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-globe",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible American Airlines purchases'",
+          "rate": "3x",
+          "cap": "none stated",
+          "conditions": "Admirals Club food & beverage also earns 3x",
+          "merchants": [
+            "American Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Food and beverage purchases made at the American Airlines Admirals Club® will be awarded 3 AAdvantage® miles",
+          "verification": "confirmed",
+          "anchorSourceId": "citi-aadvantage-globe-rewards-terms"
+        }
+      ]
+    },
+    {
+      "cardId": "citi-tsc-visa",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "5% in Rewards at Tractor Supply; the captures do not say whether TractorSupply.com or Petsense purchases earn 5%",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Tractor Supply"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Shop at Tractor Supply and Earn 5%in Rewards",
+          "anchorSourceId": "citi-tsc-visa-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "citi-llbean-mastercard",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'L.L.Bean'",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "L.L.Bean"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases.",
+          "verification": "confirmed",
+          "anchorSourceId": "citi-llbean-mastercard-product"
+        }
+      ]
+    },
+    {
+      "cardId": "citi-dillards-mastercard",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible Dillard's purchases'",
+          "rate": "2 points/$",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Dillard's"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "verification": "confirmed",
+          "anchorMethod": "verifier",
+          "anchor": "Dillard’s Mastercard members earn 2 points4 for every $1 spent on all eligible Dillard’s purchases.",
+          "anchorSourceId": "citi-dillards-mastercard-product"
+        }
+      ]
+    },
+    {
+      "cardId": "citi-macys-amex",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Macy's purchases: 2/3/5 points per $1 for Silver/Gold/Platinum; new cards open at Silver",
+          "rate": "2/3/5 points per $1 for Silver/Gold/Platinum Star Rewards members",
+          "cap": "none stated",
+          "conditions": "Gold with $500-$1,199 and Platinum with $1,200+ annual spend at Macy's with the card",
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "New credit cards are opened at Silver status. Cardholders can access Gold status with $500 - $1,199 annual spend",
+          "anchorSourceId": "citi-macys-amex-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "citi-bloomingdales-amex",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Loyallist tiers: 3/4/10 points per $1 at Bloomingdale's and 3/4/4 outside for Loyallist/Top of the List/Unlocked",
+          "rate": "Loyallist 3, Top of the List 4, Top of the List Unlocked 10 at Bloomingdale's; 3, 4, 4 outside",
+          "cap": "none stated",
+          "conditions": "Tier qualification is not stated in the capture",
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "4 points per $1 spent for Top of the List",
+          "anchorSourceId": "citi-bloomingdales-amex-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "citi-double-cash",
+      "issuer": "Citi",
+      "hints": []
+    }
+  ]
+}

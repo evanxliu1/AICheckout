@@ -133,7 +133,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     await startNativePopup(popup);
     await popup.checkCards(REAL_CARD_NAMES);
     await expect.poll(popup.text).toContain('online retail spend this year');
-    await popup.fill('spend-bce-online-retail', '0');
+    await popup.fill('spend-bce-online-retail-v2', '0');
     await popup.evaluate(
       "document.querySelector('[aria-labelledby=wallet-heading]').scrollIntoView({block:'start'})",
     );
@@ -190,7 +190,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     await expect.poll(popup.text).toContain('Edit cards');
     await popup.click('Edit cards');
     await expect.poll(popup.text).toContain('online retail spend this year');
-    await popup.fill('spend-bce-online-retail', '');
+    await popup.fill('spend-bce-online-retail-v2', '');
     await popup.click('Save cards');
     await expect.poll(popup.text).toContain('Read cart amount');
     await confirm();
@@ -205,7 +205,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     );
     await popup.click('Edit cards');
     await expect.poll(popup.text).toContain('online retail spend this year');
-    await popup.fill('spend-bce-online-retail', '0');
+    await popup.fill('spend-bce-online-retail-v2', '0');
     await popup.click('Save cards');
     await expect.poll(popup.text).toContain('Read cart amount');
     await popup.click('Read cart amount');

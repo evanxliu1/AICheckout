@@ -47,7 +47,8 @@ function purchase() {
   };
 }
 beforeEach(() => {
-  now = Date.parse('2026-10-03T15:00:00Z');
+  // 15:00 UTC the day after the bundled catalog was verified, inside its validity window.
+  now = Date.parse(CATALOG_V3.verifiedAt) + 39 * 3_600_000;
   data = {
     [STATE_KEY]: {
       ...emptyState(),
@@ -193,7 +194,10 @@ describe('durable cart workflow', () => {
     } else expect(result.error).toContain('date changed');
   });
   it('does not cross a local date boundary while waiting for the page', async () => {
-    now = new Date('2026-10-03T23:59:59').getTime();
+    // One second before local midnight, two days after the bundled catalog was verified.
+    const lateNight = new Date(Date.parse(CATALOG_V3.verifiedAt) + 2 * 86_400_000);
+    lateNight.setHours(23, 59, 59, 0);
+    now = lateNight.getTime();
     read.mockResolvedValue({ ...(await read()), capturedAt: now });
     const captured = await capture();
     const input = purchase();

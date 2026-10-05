@@ -1,0 +1,1566 @@
+{
+  "schemaVersion": 1,
+  "batch": "citi-refresh-2026-10",
+  "generatedBy": "npm run pipeline -- eval",
+  "annotationStatus": "agent-verified",
+  "pipeline": {
+    "schemaVersion": 1,
+    "inputs": {
+      "draft": "expansion.draft.1",
+      "corpus": "citi-refresh-2026-10.v1",
+      "annotationStatus": "agent-verified",
+      "verificationFiles": [
+        "citi.json"
+      ]
+    },
+    "totals": {
+      "cards": 14,
+      "inCorpus": 14,
+      "drafted": 11,
+      "undrafted": 3,
+      "confirmed": 0,
+      "fixed": 14,
+      "dropped": 0,
+      "draftRules": 56,
+      "rulesRemoved": 0,
+      "rulesAdded": 13,
+      "verifiedRules": 69,
+      "draftRulesUnchanged": 51,
+      "ruleFieldValues": 448,
+      "ruleFieldsChanged": 5,
+      "cardFieldValues": 22,
+      "cardFieldsChanged": 3,
+      "ruleFieldCorrectionRate": 0.0112,
+      "cardFieldCorrectionRate": 0.1364,
+      "draftRulesRemovedRate": 0,
+      "draftRulesUnchangedRate": 0.9107
+    },
+    "ruleFields": {
+      "category": {
+        "count": 1,
+        "total": 56,
+        "rate": 0.0179
+      },
+      "issuerWording": {
+        "count": 3,
+        "total": 56,
+        "rate": 0.0536
+      },
+      "rateBps": {
+        "count": 0,
+        "total": 56,
+        "rate": 0
+      },
+      "paidOnPaymentBps": {
+        "count": 0,
+        "total": 56,
+        "rate": 0
+      },
+      "cap": {
+        "count": 0,
+        "total": 56,
+        "rate": 0
+      },
+      "activation": {
+        "count": 1,
+        "total": 56,
+        "rate": 0.0179
+      },
+      "usMerchantsOnly": {
+        "count": 0,
+        "total": 56,
+        "rate": 0
+      },
+      "limitedTime": {
+        "count": 0,
+        "total": 56,
+        "rate": 0
+      }
+    },
+    "cardFields": {
+      "rewardCurrency": {
+        "count": 2,
+        "total": 11,
+        "rate": 0.1818
+      },
+      "pointValueHundredthsOfCent": {
+        "count": 1,
+        "total": 11,
+        "rate": 0.0909
+      }
+    },
+    "items": {
+      "exclusionsRemoved": 0,
+      "exclusionsAdded": 2,
+      "issuesRemoved": 16,
+      "issuesAdded": 8
+    },
+    "undraftedRulesAdded": 9,
+    "findings": {
+      "accepted": 82,
+      "modified": 2,
+      "rejected": 1
+    },
+    "byIssuer": {
+      "Citi": {
+        "cards": 14,
+        "inCorpus": 14,
+        "drafted": 11,
+        "undrafted": 3,
+        "confirmed": 0,
+        "fixed": 14,
+        "dropped": 0,
+        "draftRules": 56,
+        "rulesRemoved": 0,
+        "rulesAdded": 13,
+        "verifiedRules": 69,
+        "draftRulesUnchanged": 51,
+        "ruleFieldValues": 448,
+        "ruleFieldsChanged": 5,
+        "cardFieldValues": 22,
+        "cardFieldsChanged": 3,
+        "ruleFieldCorrectionRate": 0.0112,
+        "cardFieldCorrectionRate": 0.1364,
+        "draftRulesRemovedRate": 0,
+        "draftRulesUnchangedRate": 0.9107
+      }
+    },
+    "cards": {
+      "confirmed": [],
+      "dropped": [],
+      "undrafted": [
+        {
+          "cardId": "citi-aadvantage-executive",
+          "issuer": "Citi",
+          "rules": 4
+        },
+        {
+          "cardId": "citi-bloomingdales-amex",
+          "issuer": "Citi",
+          "rules": 2
+        },
+        {
+          "cardId": "citi-llbean-mastercard",
+          "issuer": "Citi",
+          "rules": 3
+        }
+      ],
+      "valuesUnchanged": [
+        "citi-aadvantage-mileup",
+        "citi-aadvantage-platinum-select",
+        "citi-dillards-mastercard",
+        "citi-strata-premier"
+      ]
+    },
+    "definitions": "scripts/expansion-pipeline-metrics.mjs"
+  },
+  "traces": {
+    "status": "scored",
+    "scorerVersion": "v2-scorer.2",
+    "corpus": {
+      "version": "citi-refresh-2026-10.v1",
+      "hash": "c803a6389f2efca594cd16a6af8a836ee633045604b1f85963d4679a7978faba",
+      "cases": 14
+    },
+    "upperBound": true,
+    "files": 14,
+    "scored": 14,
+    "skipped": 0,
+    "all": {
+      "planned": 14,
+      "observed": 14,
+      "complete": true,
+      "overall": {
+        "runs": 14,
+        "ruleRecall": {
+          "correct": 63,
+          "total": 69,
+          "rate": 0.913
+        },
+        "rulePrecision": {
+          "correct": 63,
+          "total": 64,
+          "rate": 0.9844
+        },
+        "fieldAccuracy": {
+          "correct": 380,
+          "total": 384,
+          "rate": 0.9896
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 380,
+          "total": 423,
+          "rate": 0.8983
+        },
+        "claimPrecision": {
+          "correct": 169,
+          "total": 180,
+          "rate": 0.9389
+        },
+        "evidenceValidity": {
+          "correct": 335,
+          "total": 344,
+          "rate": 0.9738
+        },
+        "issueRecall": {
+          "correct": 10,
+          "total": 21,
+          "rate": 0.4762
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 24,
+          "total": 28,
+          "rate": 0.8571
+        },
+        "unsupportedClaims": 11,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 3,
+            "total": 10,
+            "rate": 0.3
+          },
+          "missing": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "out-of-scope": {
+            "correct": 5,
+            "total": 9,
+            "rate": 0.5556
+          }
+        },
+        "exclusionRecall": {
+          "correct": 15,
+          "total": 16,
+          "rate": 0.9375
+        },
+        "statuses": {
+          "needs_review": 14
+        },
+        "latencyMs": {
+          "p50": 147081,
+          "p95": 249533
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 61,
+            "total": 63,
+            "rate": 0.9683
+          },
+          "paidOnPaymentBps": {
+            "correct": 63,
+            "total": 63,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 62,
+            "total": 63,
+            "rate": 0.9841
+          },
+          "capAmountCents": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "capPeriod": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "capRateAfterCapBps": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "activation": {
+            "correct": 62,
+            "total": 63,
+            "rate": 0.9841
+          },
+          "usMerchantsOnly": {
+            "correct": 63,
+            "total": 63,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 63,
+            "total": 63,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "drafted": {
+      "planned": 11,
+      "observed": 11,
+      "complete": true,
+      "overall": {
+        "runs": 11,
+        "ruleRecall": {
+          "correct": 56,
+          "total": 60,
+          "rate": 0.9333
+        },
+        "rulePrecision": {
+          "correct": 56,
+          "total": 57,
+          "rate": 0.9825
+        },
+        "fieldAccuracy": {
+          "correct": 340,
+          "total": 342,
+          "rate": 0.9942
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 340,
+          "total": 369,
+          "rate": 0.9214
+        },
+        "claimPrecision": {
+          "correct": 153,
+          "total": 161,
+          "rate": 0.9503
+        },
+        "evidenceValidity": {
+          "correct": 297,
+          "total": 303,
+          "rate": 0.9802
+        },
+        "issueRecall": {
+          "correct": 10,
+          "total": 17,
+          "rate": 0.5882
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 19,
+          "total": 22,
+          "rate": 0.8636
+        },
+        "unsupportedClaims": 8,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 3,
+            "total": 8,
+            "rate": 0.375
+          },
+          "missing": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "out-of-scope": {
+            "correct": 5,
+            "total": 7,
+            "rate": 0.7143
+          }
+        },
+        "exclusionRecall": {
+          "correct": 14,
+          "total": 15,
+          "rate": 0.9333
+        },
+        "statuses": {
+          "needs_review": 11
+        },
+        "latencyMs": {
+          "p50": 170522,
+          "p95": 249533
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 55,
+            "total": 56,
+            "rate": 0.9821
+          },
+          "paidOnPaymentBps": {
+            "correct": 56,
+            "total": 56,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 56,
+            "total": 56,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "capPeriod": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "capRateAfterCapBps": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "activation": {
+            "correct": 55,
+            "total": 56,
+            "rate": 0.9821
+          },
+          "usMerchantsOnly": {
+            "correct": 56,
+            "total": 56,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 56,
+            "total": 56,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "undrafted": {
+      "planned": 3,
+      "observed": 3,
+      "complete": true,
+      "overall": {
+        "runs": 3,
+        "ruleRecall": {
+          "correct": 7,
+          "total": 9,
+          "rate": 0.7778
+        },
+        "rulePrecision": {
+          "correct": 7,
+          "total": 7,
+          "rate": 1
+        },
+        "fieldAccuracy": {
+          "correct": 40,
+          "total": 42,
+          "rate": 0.9524
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 40,
+          "total": 54,
+          "rate": 0.7407
+        },
+        "claimPrecision": {
+          "correct": 16,
+          "total": 19,
+          "rate": 0.8421
+        },
+        "evidenceValidity": {
+          "correct": 38,
+          "total": 41,
+          "rate": 0.9268
+        },
+        "issueRecall": {
+          "correct": 0,
+          "total": 4,
+          "rate": 0
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 5,
+          "total": 6,
+          "rate": 0.8333
+        },
+        "unsupportedClaims": 3,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 0,
+            "total": 2,
+            "rate": 0
+          },
+          "out-of-scope": {
+            "correct": 0,
+            "total": 2,
+            "rate": 0
+          }
+        },
+        "exclusionRecall": {
+          "correct": 1,
+          "total": 1,
+          "rate": 1
+        },
+        "statuses": {
+          "needs_review": 3
+        },
+        "latencyMs": {
+          "p50": 101184,
+          "p95": 156251
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 6,
+            "total": 7,
+            "rate": 0.8571
+          },
+          "paidOnPaymentBps": {
+            "correct": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 6,
+            "total": 7,
+            "rate": 0.8571
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "correct": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 7,
+            "total": 7,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "byIssuer": {
+      "Citi": {
+        "runs": 14,
+        "ruleRecall": {
+          "correct": 63,
+          "total": 69,
+          "rate": 0.913
+        },
+        "rulePrecision": {
+          "correct": 63,
+          "total": 64,
+          "rate": 0.9844
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 380,
+          "total": 423,
+          "rate": 0.8983
+        },
+        "cardFieldAccuracy": {
+          "correct": 24,
+          "total": 28,
+          "rate": 0.8571
+        },
+        "issueRecall": {
+          "correct": 10,
+          "total": 21,
+          "rate": 0.4762
+        },
+        "falseClean": 0
+      }
+    }
+  },
+  "crossModel": {
+    "status": "not-run"
+  },
+  "agreement": {
+    "frozen": "expansion.v1",
+    "measure": "agreement-not-accuracy",
+    "note": "Agreement between two agent-verified label sets (this batch and the frozen expansion.v1) on the same cards; neither is human-verified, so this is not accuracy.",
+    "matching": "same category, then closest issuer wording and an equal rate (v2 scorer matchRules)",
+    "overall": {
+      "cards": 13,
+      "cardsIdentical": 3,
+      "rules": {
+        "frozen": 67,
+        "batch": 67,
+        "matched": 67,
+        "onlyFrozen": 0,
+        "onlyBatch": 0
+      },
+      "ruleFields": {
+        "rateBps": {
+          "agree": 67,
+          "total": 67,
+          "rate": 1
+        },
+        "paidOnPaymentBps": {
+          "agree": 67,
+          "total": 67,
+          "rate": 1
+        },
+        "cap": {
+          "agree": 67,
+          "total": 67,
+          "rate": 1
+        },
+        "activation": {
+          "agree": 67,
+          "total": 67,
+          "rate": 1
+        },
+        "usMerchantsOnly": {
+          "agree": 65,
+          "total": 67,
+          "rate": 0.9701
+        },
+        "limitedTime": {
+          "agree": 67,
+          "total": 67,
+          "rate": 1
+        }
+      },
+      "allRuleFields": {
+        "agree": 400,
+        "total": 402,
+        "rate": 0.995
+      },
+      "cardFields": {
+        "rewardCurrency": {
+          "agree": 13,
+          "total": 13,
+          "rate": 1
+        },
+        "pointValueHundredthsOfCent": {
+          "agree": 13,
+          "total": 13,
+          "rate": 1
+        }
+      },
+      "exclusions": {
+        "frozen": 34,
+        "batch": 15
+      },
+      "issues": {
+        "frozen": 16,
+        "batch": 18
+      }
+    },
+    "cards": [
+      {
+        "cardId": "citi-aadvantage-executive",
+        "rules": {
+          "frozen": 4,
+          "batch": 4,
+          "matched": 4
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 2,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "citi-aadvantage-globe",
+        "rules": {
+          "frozen": 6,
+          "batch": 6,
+          "matched": 6
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 12,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "citi-aadvantage-mileup",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "citi-aadvantage-platinum-select",
+        "rules": {
+          "frozen": 4,
+          "batch": 4,
+          "matched": 4
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 3
+        }
+      },
+      {
+        "cardId": "citi-bloomingdales-amex",
+        "rules": {
+          "frozen": 2,
+          "batch": 2,
+          "matched": 2
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 0,
+          "batch": 0
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 2
+        }
+      },
+      {
+        "cardId": "citi-costco-anywhere-visa",
+        "rules": {
+          "frozen": 7,
+          "batch": 7,
+          "matched": 7
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 5,
+            "total": 7,
+            "rate": 0.7143
+          },
+          "limitedTime": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 0,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "citi-dillards-mastercard",
+        "rules": {
+          "frozen": 4,
+          "batch": 4,
+          "matched": 4
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 2
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "citi-llbean-mastercard",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 0,
+          "batch": 0
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "citi-macys-amex",
+        "rules": {
+          "frozen": 5,
+          "batch": 5,
+          "matched": 5
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 0
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 2
+        }
+      },
+      {
+        "cardId": "citi-strata",
+        "rules": {
+          "frozen": 12,
+          "batch": 12,
+          "matched": 12
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 12,
+            "total": 12,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 12,
+            "total": 12,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 12,
+            "total": 12,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 12,
+            "total": 12,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 12,
+            "total": 12,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 12,
+            "total": 12,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 2,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 3,
+          "batch": 4
+        }
+      },
+      {
+        "cardId": "citi-strata-elite",
+        "rules": {
+          "frozen": 5,
+          "batch": 5,
+          "matched": 5
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 0,
+          "batch": 4
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "citi-strata-premier",
+        "rules": {
+          "frozen": 7,
+          "batch": 7,
+          "matched": 7
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 14,
+          "batch": 3
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "citi-tsc-visa",
+        "rules": {
+          "frozen": 5,
+          "batch": 5,
+          "matched": 5
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 0,
+          "batch": 0
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      }
+    ]
+  },
+  "timings": {
+    "startedAt": null,
+    "unavailable": [
+      "startedAt: state records finishedAt and acceptedAt only"
+    ],
+    "stages": {
+      "research": {
+        "records": 1,
+        "done": 1,
+        "attempts": 0,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:06:55.120Z",
+        "lastFinishedAt": "2026-10-05T01:06:55.120Z",
+        "models": []
+      },
+      "capture": {
+        "records": 14,
+        "done": 14,
+        "attempts": 14,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:24:52.254Z",
+        "lastFinishedAt": "2026-10-05T01:25:30.241Z",
+        "models": []
+      },
+      "extract": {
+        "records": 14,
+        "done": 14,
+        "attempts": 14,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:37:20.930Z",
+        "lastFinishedAt": "2026-10-05T01:37:20.932Z",
+        "models": []
+      },
+      "draft": {
+        "records": 14,
+        "done": 14,
+        "attempts": 17,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:37:33.743Z",
+        "lastFinishedAt": "2026-10-05T01:57:25.013Z",
+        "models": []
+      },
+      "verify": {
+        "records": 14,
+        "done": 14,
+        "attempts": 14,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:44:33.047Z",
+        "lastFinishedAt": "2026-10-05T02:00:56.282Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "adjudicate": {
+        "records": 14,
+        "done": 14,
+        "attempts": 14,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:48:44.645Z",
+        "lastFinishedAt": "2026-10-05T02:04:26.909Z",
+        "models": [
+          "claude-fable-5-1"
+        ]
+      },
+      "apply": {
+        "records": 14,
+        "done": 14,
+        "attempts": 14,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:48:52.552Z",
+        "lastFinishedAt": "2026-10-05T02:04:27.991Z",
+        "models": []
+      },
+      "overlay": {
+        "records": 14,
+        "done": 14,
+        "attempts": 14,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:53:14.262Z",
+        "lastFinishedAt": "2026-10-05T02:06:52.776Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "build": {
+        "records": 1,
+        "done": 1,
+        "attempts": 2,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T02:38:46.042Z",
+        "lastFinishedAt": "2026-10-05T02:38:46.042Z",
+        "models": []
+      }
+    },
+    "extract": {
+      "cards": [
+        {
+          "cardId": "citi-strata",
+          "runs": 1,
+          "modelMinutes": 3.96,
+          "inputTokens": 9226,
+          "outputTokens": 3072
+        },
+        {
+          "cardId": "citi-strata-premier",
+          "runs": 1,
+          "modelMinutes": 2.45,
+          "inputTokens": 8736,
+          "outputTokens": 1770
+        },
+        {
+          "cardId": "citi-strata-elite",
+          "runs": 1,
+          "modelMinutes": 3.43,
+          "inputTokens": 12844,
+          "outputTokens": 1879
+        },
+        {
+          "cardId": "citi-costco-anywhere-visa",
+          "runs": 1,
+          "modelMinutes": 4.16,
+          "inputTokens": 8591,
+          "outputTokens": 2605
+        },
+        {
+          "cardId": "citi-aadvantage-platinum-select",
+          "runs": 1,
+          "modelMinutes": 2.45,
+          "inputTokens": 10764,
+          "outputTokens": 1312
+        },
+        {
+          "cardId": "citi-aadvantage-mileup",
+          "runs": 1,
+          "modelMinutes": 1.78,
+          "inputTokens": 8726,
+          "outputTokens": 908
+        },
+        {
+          "cardId": "citi-aadvantage-executive",
+          "runs": 1,
+          "modelMinutes": 2.6,
+          "inputTokens": 13780,
+          "outputTokens": 1293
+        },
+        {
+          "cardId": "citi-aadvantage-globe",
+          "runs": 1,
+          "modelMinutes": 3.58,
+          "inputTokens": 13359,
+          "outputTokens": 2015
+        },
+        {
+          "cardId": "citi-tsc-visa",
+          "runs": 1,
+          "modelMinutes": 2,
+          "inputTokens": 5235,
+          "outputTokens": 804
+        },
+        {
+          "cardId": "citi-llbean-mastercard",
+          "runs": 1,
+          "modelMinutes": 1.27,
+          "inputTokens": 5416,
+          "outputTokens": 495
+        },
+        {
+          "cardId": "citi-dillards-mastercard",
+          "runs": 1,
+          "modelMinutes": 2.39,
+          "inputTokens": 5804,
+          "outputTokens": 1416
+        },
+        {
+          "cardId": "citi-macys-amex",
+          "runs": 1,
+          "modelMinutes": 2.84,
+          "inputTokens": 5479,
+          "outputTokens": 951
+        },
+        {
+          "cardId": "citi-bloomingdales-amex",
+          "runs": 1,
+          "modelMinutes": 1.69,
+          "inputTokens": 5348,
+          "outputTokens": 417
+        },
+        {
+          "cardId": "citi-double-cash",
+          "runs": 1,
+          "modelMinutes": 3.95,
+          "inputTokens": 14889,
+          "outputTokens": 1101
+        }
+      ],
+      "totals": {
+        "cards": 14,
+        "modelMinutes": 38.55,
+        "inputTokens": 128197,
+        "outputTokens": 20038
+      }
+    },
+    "agentStages": {
+      "modelMinutes": 7.66,
+      "tokens": 195006,
+      "perCard": {
+        "modelMinutes": 0.55,
+        "tokens": 13929
+      }
+    }
+  }
+}

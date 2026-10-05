@@ -6,7 +6,7 @@ status: stable
 tags: [ops, catalog, release, review]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T00:05:04Z
+  at: 2026-10-05T03:04:00Z
 stale_after: 2026-11-01T00:00:00Z
 sources:
   - resource: ../../apps/review/src/StartDraft.tsx
@@ -116,6 +116,25 @@ Outline since Phase 9 milestone 3 ([plan](../product/phase-9-freshness.md), [pip
 3. **Decide the rest.** Flagged and unreachable sources get no new date: add a capture hint and re-check with `--only`, drop the source in its batch, or hold the card out, each with a reason. Changed merchant MCC pages: re-capture by hand into `evals/curation/real/merchant-captures` with a new dated manifest entry, or drop.
 4. **Build** under a new version (`run build --version <new>`): `verifiedAt` is the newest effective date; the builder refuses any cited source older than 30 days before it, naming the sources. Rule IDs of changed terms take new IDs (ledger).
 5. **Merge and deploy**, so the review app knows the new batch manifests and freshness records, then `pipeline handoff` and the publish steps above. An unchanged source is matched against the hash the record verified for its date; Evan loads the capture folders `handoff` lists.
+
+## Renewal `2026-10-05.renewal.1` (prepared 2026-10-05)
+
+Built from the 2026-10-05 freshness check and ten refresh batches ([results](../../docs/evals/freshness-2026-10.md)); verified 2026-10-05, **expires 2026-11-04T00:00Z**; 178 cards, 328 sources. It must be published before release 2 expires (2026-11-01T00:00Z); target from 2026-10-20, latest 2026-10-28. Before Evan starts: the renewal branch is merged and Render has deployed `main` (the review app must know the new batch manifests and the freshness record), and the quote check passes with every capture folder:
+
+```
+node scripts/check-expansion-quotes.mjs --captures <each folder below>
+```
+
+Pass the batch folders first, as listed below; the check is then clean. If the expansion folder comes after a batch folder, the check reports seven anchors in the frozen `evals/curation/expansion/` files as not verbatim: a source captured again by a refresh batch keeps its ID, and the checker resolves an ID to the last folder that has it. Those files are clean against their own folders (run the check with only the expansion and real folders); fixing the checker to resolve per file is a Phase 9 follow-up.
+
+Capture folders Evan selects (14; three checkouts):
+
+- `~/Projects/AICheckout-p8-wf/evals/curation/batches/<batch>/captures` for `wells-fargo-2026-10` and the ten `*-refresh-2026-10` batches (11 folders);
+- `~/Projects/AICheckout-expansion/evals/curation/expansion/captures` (181 unchanged expansion sources);
+- `~/Projects/AICheckout/evals/curation/real/captures` (5 unchanged real-card sources);
+- `~/Projects/AICheckout/evals/curation/real/merchant-captures` (2 merchant MCC pages; `pipeline handoff` wrongly names the freshness record for these).
+
+After Evan publishes, the coordinator adds `2026-10-05.renewal.1` to `publishedVersions` in `evals/curation/catalog-batches.json` in the next PR. The next renewal is due before 2026-11-04 (the NerdWallet estimates read 2026-10-02 must be re-read for any catalog verified after 2026-11-01).
 
 ## If something is blocked
 

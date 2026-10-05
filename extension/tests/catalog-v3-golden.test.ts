@@ -74,18 +74,72 @@ const estimate = (result: ReturnType<typeof compare>, cardId: string) =>
   (result as Comparison).estimates.find((e) => e.cardId === cardId)!;
 
 const REAL_CARDS = CATALOG_V2.cards.map((card) => card.id);
-const bceUsed = owned('amex-blue-cash-everyday', { usage: [usage('bce-online-retail', { spentCents: 0 })] });
+// The 2026-10-05 renewal reissued `bce-online-retail` as `bce-online-retail-v2` (build report, "Rule-ID continuity").
+const bceUsed = owned('amex-blue-cash-everyday', {
+  usage: [usage('bce-online-retail-v2', { spentCents: 0 })],
+});
 
 describe('catalog v3 build', () => {
   it('is the release catalog and parses', () => {
     expect(catalogV3Schema.parse(CATALOG_V3)).toEqual(CATALOG_V3);
-    expect(CATALOG_V3.version).toBe('2026-10-02.expansion.1');
+    expect(CATALOG_V3.version).toBe('2026-10-05.renewal.1');
     expect(CATALOG_V3.cards).toHaveLength(178);
     expect(CATALOG_V3.merchants.map((m) => m.id)).toEqual(['best-buy-us', 'newegg-us', 'amazon-us']);
   });
 });
 
-describe('real cards: catalog v3 gives release 1 (catalog v2) results', () => {
+/* Release 1 (catalog v2) with the changes the 2026-10-05 renewal made to the real cards a batch refreshed, as the
+ * build report lists them ("Real cards refreshed by a batch", "Rule-ID continuity"): reissued rule IDs and new
+ * excluded payment paths. Any other difference from release 1 fails the comparison below. */
+const RENEWAL_RULE_IDS: Record<string, string> = Object.fromEntries(
+  [
+    'double-cash-base',
+    'double-cash-travel-portal',
+    'quicksilver-entertainment-portal',
+    'savor-supermarkets',
+    'savor-dining',
+    'savor-entertainment',
+    'savor-streaming',
+    'freedom-unlimited-base',
+    'freedom-unlimited-travel-portal',
+    'freedom-unlimited-dining',
+    'freedom-unlimited-drugstores',
+    'bce-base',
+    'bce-supermarkets',
+    'bce-online-retail',
+    'bce-gas',
+    'bcp-base',
+    'bcp-supermarkets',
+    'bcp-streaming',
+    'bcp-transit',
+    'bcp-gas',
+  ].map((id) => [id, `${id}-v2`]),
+);
+const WALLETS = ['digital-wallet', 'paypal', 'venmo'];
+const RENEWAL_EXCLUDED_PATHS: Record<string, string[]> = {
+  'savor-dining': WALLETS,
+  'savor-entertainment': WALLETS,
+  'savor-streaming': WALLETS,
+  'savor-supermarkets': WALLETS,
+  'freedom-unlimited-dining': WALLETS,
+  'freedom-unlimited-drugstores': WALLETS,
+  'bce-gas': WALLETS,
+  'bce-online-retail': ['bnpl', ...WALLETS],
+  'bce-supermarkets': WALLETS,
+  'bcp-gas': WALLETS,
+  'bcp-streaming': WALLETS,
+  'bcp-supermarkets': WALLETS,
+  'bcp-transit': WALLETS,
+};
+const RELEASE_1_RENEWED = structuredClone(CATALOG_V2);
+for (const card of RELEASE_1_RENEWED.cards)
+  for (const rule of card.rules) {
+    const paths = RENEWAL_EXCLUDED_PATHS[rule.id];
+    if (paths) rule.excludedPaymentPaths = paths as typeof rule.excludedPaymentPaths;
+    rule.id = RENEWAL_RULE_IDS[rule.id] ?? rule.id;
+  }
+
+describe('real cards: catalog v3 gives release 1 (catalog v2) results with the renewal changes', () => {
   const purchases: Partial<Purchase>[] = [
     {},
     { amountCents: 123_457 },
@@ -108,7 +162,7 @@ describe('real cards: catalog v3 gives release 1 (catalog v2) results', () => {
       it(`${merchantId} ${JSON.stringify(extra)}`, () => {
         const cards = REAL_CARDS.map((id) => owned(id));
         const v2 = compareRewards(
-          CATALOG_V2,
+          RELEASE_1_RENEWED,
           wallet(cards),
           {
             merchantId,
@@ -489,8 +543,9 @@ describe('golden ladders on catalog v3', () => {
       ladder: [
         'synchrony-paypal-cashback-mastercard 300..300',
         'citi-double-cash 200..200',
-        // Amex may not code a PayPal checkout as online retail.
-        'amex-blue-cash-everyday 100..300',
+        // The 2026-10-05 renewal excludes PayPal, Venmo and digital wallets from Blue Cash Everyday's online
+        // retail bonus (Amex refresh overlay; build report, "Real cards refreshed by a batch"): base 1% only.
+        'amex-blue-cash-everyday 100..100',
         'synchrony-venmo-credit-card 100..100',
       ],
       rankingMayChange: false,
@@ -501,7 +556,8 @@ describe('golden ladders on catalog v3', () => {
         'synchrony-venmo-credit-card 300..300',
         'citi-double-cash 200..200',
         'synchrony-paypal-cashback-mastercard 150..150',
-        'amex-blue-cash-everyday 100..300',
+        // Venmo is excluded from the online retail bonus too since the 2026-10-05 renewal.
+        'amex-blue-cash-everyday 100..100',
       ],
       rankingMayChange: false,
       tied: false,

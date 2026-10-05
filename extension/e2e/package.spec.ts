@@ -73,7 +73,7 @@ test('the inspected upload ZIP installs and completes a native comparison', asyn
     writeFileSync(testInfo.outputPath('zip-setup.png'), await popup.screenshot());
     await popup.checkCards(REAL_CARD_NAMES);
     await expect.poll(popup.text).toContain('online retail spend this year');
-    await popup.fill('spend-bce-online-retail', '0');
+    await popup.fill('spend-bce-online-retail-v2', '0');
     await popup.click('Save cards');
     await expect
       .poll(popup.text)

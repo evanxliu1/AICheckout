@@ -1,0 +1,1475 @@
+{
+  "schemaVersion": 1,
+  "batch": "barclays-refresh-2026-10",
+  "generatedBy": "npm run pipeline -- eval",
+  "annotationStatus": "agent-verified",
+  "pipeline": {
+    "schemaVersion": 1,
+    "inputs": {
+      "draft": "expansion.draft.1",
+      "corpus": "barclays-refresh-2026-10.v1",
+      "annotationStatus": "agent-verified",
+      "verificationFiles": [
+        "barclays.json"
+      ]
+    },
+    "totals": {
+      "cards": 12,
+      "inCorpus": 12,
+      "drafted": 11,
+      "undrafted": 1,
+      "confirmed": 0,
+      "fixed": 12,
+      "dropped": 0,
+      "draftRules": 43,
+      "rulesRemoved": 4,
+      "rulesAdded": 11,
+      "verifiedRules": 50,
+      "draftRulesUnchanged": 16,
+      "ruleFieldValues": 312,
+      "ruleFieldsChanged": 25,
+      "cardFieldValues": 22,
+      "cardFieldsChanged": 4,
+      "ruleFieldCorrectionRate": 0.0801,
+      "cardFieldCorrectionRate": 0.1818,
+      "draftRulesRemovedRate": 0.093,
+      "draftRulesUnchangedRate": 0.3721
+    },
+    "ruleFields": {
+      "category": {
+        "count": 0,
+        "total": 39,
+        "rate": 0
+      },
+      "issuerWording": {
+        "count": 2,
+        "total": 39,
+        "rate": 0.0513
+      },
+      "rateBps": {
+        "count": 1,
+        "total": 39,
+        "rate": 0.0256
+      },
+      "paidOnPaymentBps": {
+        "count": 0,
+        "total": 39,
+        "rate": 0
+      },
+      "cap": {
+        "count": 0,
+        "total": 39,
+        "rate": 0
+      },
+      "activation": {
+        "count": 22,
+        "total": 39,
+        "rate": 0.5641
+      },
+      "usMerchantsOnly": {
+        "count": 0,
+        "total": 39,
+        "rate": 0
+      },
+      "limitedTime": {
+        "count": 0,
+        "total": 39,
+        "rate": 0
+      }
+    },
+    "cardFields": {
+      "rewardCurrency": {
+        "count": 0,
+        "total": 11,
+        "rate": 0
+      },
+      "pointValueHundredthsOfCent": {
+        "count": 4,
+        "total": 11,
+        "rate": 0.3636
+      }
+    },
+    "items": {
+      "exclusionsRemoved": 1,
+      "exclusionsAdded": 1,
+      "issuesRemoved": 17,
+      "issuesAdded": 6
+    },
+    "undraftedRulesAdded": 4,
+    "findings": {
+      "accepted": 82,
+      "modified": 0,
+      "rejected": 0
+    },
+    "byIssuer": {
+      "Barclays": {
+        "cards": 12,
+        "inCorpus": 12,
+        "drafted": 11,
+        "undrafted": 1,
+        "confirmed": 0,
+        "fixed": 12,
+        "dropped": 0,
+        "draftRules": 43,
+        "rulesRemoved": 4,
+        "rulesAdded": 11,
+        "verifiedRules": 50,
+        "draftRulesUnchanged": 16,
+        "ruleFieldValues": 312,
+        "ruleFieldsChanged": 25,
+        "cardFieldValues": 22,
+        "cardFieldsChanged": 4,
+        "ruleFieldCorrectionRate": 0.0801,
+        "cardFieldCorrectionRate": 0.1818,
+        "draftRulesRemovedRate": 0.093,
+        "draftRulesUnchangedRate": 0.3721
+      }
+    },
+    "cards": {
+      "confirmed": [],
+      "dropped": [],
+      "undrafted": [
+        {
+          "cardId": "barclays-aarp-essential-rewards-mastercard",
+          "issuer": "Barclays",
+          "rules": 4
+        }
+      ],
+      "valuesUnchanged": [
+        "barclays-aarp-travel-rewards-mastercard",
+        "barclays-mastercard-gold"
+      ]
+    },
+    "definitions": "scripts/expansion-pipeline-metrics.mjs"
+  },
+  "traces": {
+    "status": "scored",
+    "scorerVersion": "v2-scorer.2",
+    "corpus": {
+      "version": "barclays-refresh-2026-10.v1",
+      "hash": "6cab3799ba78b170de36e59d1f5fd13eff15747631ed2964b374482aaecb62a1",
+      "cases": 12
+    },
+    "upperBound": true,
+    "files": 12,
+    "scored": 12,
+    "skipped": 0,
+    "all": {
+      "planned": 12,
+      "observed": 12,
+      "complete": true,
+      "overall": {
+        "runs": 12,
+        "ruleRecall": {
+          "correct": 43,
+          "total": 50,
+          "rate": 0.86
+        },
+        "rulePrecision": {
+          "correct": 43,
+          "total": 47,
+          "rate": 0.9149
+        },
+        "fieldAccuracy": {
+          "correct": 235,
+          "total": 258,
+          "rate": 0.9109
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 235,
+          "total": 300,
+          "rate": 0.7833
+        },
+        "claimPrecision": {
+          "correct": 162,
+          "total": 181,
+          "rate": 0.895
+        },
+        "evidenceValidity": {
+          "correct": 355,
+          "total": 356,
+          "rate": 0.9972
+        },
+        "issueRecall": {
+          "correct": 14,
+          "total": 20,
+          "rate": 0.7
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 20,
+          "total": 24,
+          "rate": 0.8333
+        },
+        "unsupportedClaims": 19,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 6,
+            "total": 12,
+            "rate": 0.5
+          },
+          "conflicting": {
+            "correct": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "out-of-scope": {
+            "correct": 7,
+            "total": 7,
+            "rate": 1
+          }
+        },
+        "exclusionRecall": {
+          "correct": 30,
+          "total": 30,
+          "rate": 1
+        },
+        "statuses": {
+          "needs_review": 12
+        },
+        "latencyMs": {
+          "p50": 166461,
+          "p95": 340094
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 42,
+            "total": 43,
+            "rate": 0.9767
+          },
+          "paidOnPaymentBps": {
+            "correct": 43,
+            "total": 43,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 43,
+            "total": 43,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 21,
+            "total": 43,
+            "rate": 0.4884
+          },
+          "usMerchantsOnly": {
+            "correct": 43,
+            "total": 43,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 43,
+            "total": 43,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "drafted": {
+      "planned": 11,
+      "observed": 11,
+      "complete": true,
+      "overall": {
+        "runs": 11,
+        "ruleRecall": {
+          "correct": 39,
+          "total": 46,
+          "rate": 0.8478
+        },
+        "rulePrecision": {
+          "correct": 39,
+          "total": 43,
+          "rate": 0.907
+        },
+        "fieldAccuracy": {
+          "correct": 211,
+          "total": 234,
+          "rate": 0.9017
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 211,
+          "total": 276,
+          "rate": 0.7645
+        },
+        "claimPrecision": {
+          "correct": 150,
+          "total": 168,
+          "rate": 0.8929
+        },
+        "evidenceValidity": {
+          "correct": 337,
+          "total": 337,
+          "rate": 1
+        },
+        "issueRecall": {
+          "correct": 14,
+          "total": 20,
+          "rate": 0.7
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 18,
+          "total": 22,
+          "rate": 0.8182
+        },
+        "unsupportedClaims": 18,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 6,
+            "total": 12,
+            "rate": 0.5
+          },
+          "conflicting": {
+            "correct": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "out-of-scope": {
+            "correct": 7,
+            "total": 7,
+            "rate": 1
+          }
+        },
+        "exclusionRecall": {
+          "correct": 29,
+          "total": 29,
+          "rate": 1
+        },
+        "statuses": {
+          "needs_review": 11
+        },
+        "latencyMs": {
+          "p50": 167019,
+          "p95": 340094
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 38,
+            "total": 39,
+            "rate": 0.9744
+          },
+          "paidOnPaymentBps": {
+            "correct": 39,
+            "total": 39,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 39,
+            "total": 39,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 17,
+            "total": 39,
+            "rate": 0.4359
+          },
+          "usMerchantsOnly": {
+            "correct": 39,
+            "total": 39,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 39,
+            "total": 39,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "undrafted": {
+      "planned": 1,
+      "observed": 1,
+      "complete": true,
+      "overall": {
+        "runs": 1,
+        "ruleRecall": {
+          "correct": 4,
+          "total": 4,
+          "rate": 1
+        },
+        "rulePrecision": {
+          "correct": 4,
+          "total": 4,
+          "rate": 1
+        },
+        "fieldAccuracy": {
+          "correct": 24,
+          "total": 24,
+          "rate": 1
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 24,
+          "total": 24,
+          "rate": 1
+        },
+        "claimPrecision": {
+          "correct": 12,
+          "total": 13,
+          "rate": 0.9231
+        },
+        "evidenceValidity": {
+          "correct": 18,
+          "total": 19,
+          "rate": 0.9474
+        },
+        "issueRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 2,
+          "total": 2,
+          "rate": 1
+        },
+        "unsupportedClaims": 1,
+        "issueRecallByCode": {},
+        "exclusionRecall": {
+          "correct": 1,
+          "total": 1,
+          "rate": 1
+        },
+        "statuses": {
+          "needs_review": 1
+        },
+        "latencyMs": {
+          "p50": 107575,
+          "p95": 107575
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "correct": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "correct": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 4,
+            "total": 4,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "byIssuer": {
+      "Barclays": {
+        "runs": 12,
+        "ruleRecall": {
+          "correct": 43,
+          "total": 50,
+          "rate": 0.86
+        },
+        "rulePrecision": {
+          "correct": 43,
+          "total": 47,
+          "rate": 0.9149
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 235,
+          "total": 300,
+          "rate": 0.7833
+        },
+        "cardFieldAccuracy": {
+          "correct": 20,
+          "total": 24,
+          "rate": 0.8333
+        },
+        "issueRecall": {
+          "correct": 14,
+          "total": 20,
+          "rate": 0.7
+        },
+        "falseClean": 0
+      }
+    }
+  },
+  "crossModel": {
+    "status": "not-run"
+  },
+  "agreement": {
+    "frozen": "expansion.v1",
+    "measure": "agreement-not-accuracy",
+    "note": "Agreement between two agent-verified label sets (this batch and the frozen expansion.v1) on the same cards; neither is human-verified, so this is not accuracy.",
+    "matching": "same category, then closest issuer wording and an equal rate (v2 scorer matchRules)",
+    "overall": {
+      "cards": 12,
+      "cardsIdentical": 4,
+      "rules": {
+        "frozen": 50,
+        "batch": 50,
+        "matched": 50,
+        "onlyFrozen": 0,
+        "onlyBatch": 0
+      },
+      "ruleFields": {
+        "rateBps": {
+          "agree": 50,
+          "total": 50,
+          "rate": 1
+        },
+        "paidOnPaymentBps": {
+          "agree": 50,
+          "total": 50,
+          "rate": 1
+        },
+        "cap": {
+          "agree": 50,
+          "total": 50,
+          "rate": 1
+        },
+        "activation": {
+          "agree": 50,
+          "total": 50,
+          "rate": 1
+        },
+        "usMerchantsOnly": {
+          "agree": 50,
+          "total": 50,
+          "rate": 1
+        },
+        "limitedTime": {
+          "agree": 50,
+          "total": 50,
+          "rate": 1
+        }
+      },
+      "allRuleFields": {
+        "agree": 300,
+        "total": 300,
+        "rate": 1
+      },
+      "cardFields": {
+        "rewardCurrency": {
+          "agree": 12,
+          "total": 12,
+          "rate": 1
+        },
+        "pointValueHundredthsOfCent": {
+          "agree": 12,
+          "total": 12,
+          "rate": 1
+        }
+      },
+      "exclusions": {
+        "frozen": 23,
+        "batch": 30
+      },
+      "issues": {
+        "frozen": 23,
+        "batch": 20
+      }
+    },
+    "cards": [
+      {
+        "cardId": "barclays-aarp-essential-rewards-mastercard",
+        "rules": {
+          "frozen": 4,
+          "batch": 4,
+          "matched": 4
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "barclays-aarp-travel-rewards-mastercard",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "barclays-banana-republic-encore-mastercard",
+        "rules": {
+          "frozen": 6,
+          "batch": 6,
+          "matched": 6
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 4,
+          "batch": 9
+        },
+        "issues": {
+          "frozen": 4,
+          "batch": 3
+        }
+      },
+      {
+        "cardId": "barclays-carnival-rewards-mastercard",
+        "rules": {
+          "frozen": 4,
+          "batch": 4,
+          "matched": 4
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 2,
+          "batch": 5
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 3
+        }
+      },
+      {
+        "cardId": "barclays-frontier-airlines-world-mastercard",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 2
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "barclays-gap-encore-mastercard",
+        "rules": {
+          "frozen": 6,
+          "batch": 6,
+          "matched": 6
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 4,
+          "batch": 3
+        },
+        "issues": {
+          "frozen": 4,
+          "batch": 3
+        }
+      },
+      {
+        "cardId": "barclays-jetblue-plus",
+        "rules": {
+          "frozen": 6,
+          "batch": 6,
+          "matched": 6
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 2
+        }
+      },
+      {
+        "cardId": "barclays-jetblue-premier",
+        "rules": {
+          "frozen": 6,
+          "batch": 6,
+          "matched": 6
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 2
+        }
+      },
+      {
+        "cardId": "barclays-mastercard-gold",
+        "rules": {
+          "frozen": 2,
+          "batch": 2,
+          "matched": 2
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 2
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "barclays-mastercard-titanium",
+        "rules": {
+          "frozen": 2,
+          "batch": 2,
+          "matched": 2
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 2,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "barclays-old-navy-encore-mastercard",
+        "rules": {
+          "frozen": 6,
+          "batch": 6,
+          "matched": 6
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 4,
+          "batch": 3
+        },
+        "issues": {
+          "frozen": 4,
+          "batch": 4
+        }
+      },
+      {
+        "cardId": "barclays-upromise-world-mastercard",
+        "rules": {
+          "frozen": 2,
+          "batch": 2,
+          "matched": 2
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 3,
+          "batch": 2
+        }
+      }
+    ]
+  },
+  "timings": {
+    "startedAt": null,
+    "unavailable": [
+      "startedAt: state records finishedAt and acceptedAt only"
+    ],
+    "stages": {
+      "research": {
+        "records": 1,
+        "done": 1,
+        "attempts": 0,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:06:54.228Z",
+        "lastFinishedAt": "2026-10-05T01:06:54.228Z",
+        "models": []
+      },
+      "capture": {
+        "records": 12,
+        "done": 12,
+        "attempts": 12,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:16:11.353Z",
+        "lastFinishedAt": "2026-10-05T01:16:11.354Z",
+        "models": []
+      },
+      "extract": {
+        "records": 12,
+        "done": 12,
+        "attempts": 12,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:37:41.318Z",
+        "lastFinishedAt": "2026-10-05T01:37:41.320Z",
+        "models": []
+      },
+      "draft": {
+        "records": 12,
+        "done": 12,
+        "attempts": 13,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:40:01.434Z",
+        "lastFinishedAt": "2026-10-05T01:57:22.027Z",
+        "models": []
+      },
+      "verify": {
+        "records": 12,
+        "done": 12,
+        "attempts": 12,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:46:31.616Z",
+        "lastFinishedAt": "2026-10-05T02:00:07.349Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "adjudicate": {
+        "records": 12,
+        "done": 12,
+        "attempts": 12,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:52:32.815Z",
+        "lastFinishedAt": "2026-10-05T02:01:56.364Z",
+        "models": [
+          "claude-fable-5-1"
+        ]
+      },
+      "apply": {
+        "records": 12,
+        "done": 12,
+        "attempts": 12,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:52:35.166Z",
+        "lastFinishedAt": "2026-10-05T02:01:57.495Z",
+        "models": []
+      },
+      "overlay": {
+        "records": 12,
+        "done": 12,
+        "attempts": 12,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T01:56:26.468Z",
+        "lastFinishedAt": "2026-10-05T02:24:42.388Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "build": {
+        "records": 1,
+        "done": 1,
+        "attempts": 2,
+        "paused": 0,
+        "firstFinishedAt": "2026-10-05T02:38:42.830Z",
+        "lastFinishedAt": "2026-10-05T02:38:42.830Z",
+        "models": []
+      }
+    },
+    "extract": {
+      "cards": [
+        {
+          "cardId": "barclays-mastercard-titanium",
+          "runs": 1,
+          "modelMinutes": 3.24,
+          "inputTokens": 10358,
+          "outputTokens": 962
+        },
+        {
+          "cardId": "barclays-mastercard-gold",
+          "runs": 1,
+          "modelMinutes": 2.38,
+          "inputTokens": 11366,
+          "outputTokens": 821
+        },
+        {
+          "cardId": "barclays-jetblue-plus",
+          "runs": 1,
+          "modelMinutes": 2.59,
+          "inputTokens": 9894,
+          "outputTokens": 1723
+        },
+        {
+          "cardId": "barclays-jetblue-premier",
+          "runs": 1,
+          "modelMinutes": 3.51,
+          "inputTokens": 12125,
+          "outputTokens": 2140
+        },
+        {
+          "cardId": "barclays-upromise-world-mastercard",
+          "runs": 1,
+          "modelMinutes": 5.67,
+          "inputTokens": 9653,
+          "outputTokens": 2128
+        },
+        {
+          "cardId": "barclays-frontier-airlines-world-mastercard",
+          "runs": 1,
+          "modelMinutes": 2.78,
+          "inputTokens": 9407,
+          "outputTokens": 675
+        },
+        {
+          "cardId": "barclays-carnival-rewards-mastercard",
+          "runs": 1,
+          "modelMinutes": 2.77,
+          "inputTokens": 8414,
+          "outputTokens": 1937
+        },
+        {
+          "cardId": "barclays-gap-encore-mastercard",
+          "runs": 1,
+          "modelMinutes": 4.59,
+          "inputTokens": 7687,
+          "outputTokens": 2651
+        },
+        {
+          "cardId": "barclays-old-navy-encore-mastercard",
+          "runs": 1,
+          "modelMinutes": 1.89,
+          "inputTokens": 7687,
+          "outputTokens": 3071
+        },
+        {
+          "cardId": "barclays-banana-republic-encore-mastercard",
+          "runs": 1,
+          "modelMinutes": 3.86,
+          "inputTokens": 7775,
+          "outputTokens": 1705
+        },
+        {
+          "cardId": "barclays-aarp-travel-rewards-mastercard",
+          "runs": 1,
+          "modelMinutes": 2.27,
+          "inputTokens": 9678,
+          "outputTokens": 1134
+        },
+        {
+          "cardId": "barclays-aarp-essential-rewards-mastercard",
+          "runs": 1,
+          "modelMinutes": 1.79,
+          "inputTokens": 9442,
+          "outputTokens": 1297
+        }
+      ],
+      "totals": {
+        "cards": 12,
+        "modelMinutes": 37.34,
+        "inputTokens": 113486,
+        "outputTokens": 20244
+      }
+    },
+    "agentStages": {
+      "modelMinutes": 4.66,
+      "tokens": 149932,
+      "perCard": {
+        "modelMinutes": 0.39,
+        "tokens": 12494.33
+      }
+    }
+  }
+}

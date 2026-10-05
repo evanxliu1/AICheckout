@@ -1,0 +1,4418 @@
+{
+  "schemaVersion": 1,
+  "packetId": "c90dcc7f-b086-492a-8d50-621d2dabcd30",
+  "batch": "bank-of-america-refresh-2026-10",
+  "issuer": "Bank of America",
+  "provenance": "agent-verified",
+  "cards": [
+    {
+      "cardId": "boa-customized-cash-rewards",
+      "issuer": "Bank of America",
+      "corpusCaseSha256": "d532905c06848165eda67419faeaeebeb6945daead13d0c4253778c8df3eeaa5",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [
+        {
+          "id": "choice-category",
+          "kind": "chosen",
+          "label": "3% Choice Category",
+          "picks": 1,
+          "options": [
+            {
+              "id": "gas-ev-charging",
+              "label": "Gas & EV Charging Stations"
+            },
+            {
+              "id": "online-shopping",
+              "label": "Online Shopping"
+            },
+            {
+              "id": "dining",
+              "label": "Dining"
+            },
+            {
+              "id": "travel",
+              "label": "Travel"
+            },
+            {
+              "id": "drug-stores",
+              "label": "Drug Stores"
+            },
+            {
+              "id": "home-improvement-furnishings",
+              "label": "Home Improvement/Furnishings"
+            }
+          ],
+          "defaultOptionIds": [
+            "gas-ev-charging"
+          ],
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "Gas & Electric Vehicle (EV) Charging Stations (default), Online Shopping, Dining, Travel, Drug Stores, or Home Improvement/Furnishings."
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Until you change your category it will be set to Gas & EV Charging Stations."
+            }
+          ]
+        }
+      ],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The 2% grocery and wholesale club rule shares the $2,500 quarterly cap with the 3% choice category; third-party payment accounts and BNPL earn no bonus.",
+          "set": {
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "gas",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "online-retail",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option online-shopping; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "online-shopping"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "dining",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option dining; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "dining"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Travel option mapped to transit: only its parking, public transit and taxi/ride share part is represented; airfare, hotels and attractions are not matched. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "travel"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "transit",
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Travel includes your everyday travel purchases, like parking, public transit, taxis/ride share"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option drug-stores; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "drug-stores"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Home Improvement/Furnishings option mapped to home-improvement; furniture stores and contractors in the option are not matched by that category. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "home-improvement-furnishings"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "home-improvement",
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "was": {
+            "category": "online-retail",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option online-shopping; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "online-shopping"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option dining; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "dining"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Travel option mapped to transit: only its parking, public transit and taxi/ride share part is represented; airfare, hotels and attractions are not matched.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "travel"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "transit"
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Travel includes your everyday travel purchases, like parking, public transit, taxis/ride share"
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option drug-stores; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "drug-stores"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Home Improvement/Furnishings option mapped to home-improvement; furniture stores and contractors in the option are not matched by that category.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "home-improvement-furnishings"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "home-improvement"
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "wholesale-clubs-2pct",
+          "issuerWording": "grocery stores and wholesale clubs",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "wholesale-clubs",
+          "cap": {
+            "kind": "spend",
+            "amountCents": 250000,
+            "period": "quarter",
+            "rateAfterCapBps": 100
+          },
+          "activation": "none",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": "customized-cash-bonus",
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "bnpl"
+          ],
+          "how": [
+            "category",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The corpus 2% rule names wholesale clubs but is labelled supermarkets; this rule carries the same rate and the shared quarterly cap to wholesale-club merchants.",
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-product",
+              "quote": "Automatic 2% cash back at grocery stores and wholesale clubs"
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "choice"
+          ],
+          "note": "Only the selected Choice Category earns 3%; each option rule is tied to the card choice.",
+          "rules": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "limited-time",
+            "shared-cap",
+            "gate"
+          ],
+          "note": "First-year 6% rules carry the choice option, a dateless limited time, the account-age gate and the shared cap.",
+          "rules": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "Card choice with six options, Gas & EV Charging Stations as default; 3% rules carry the option and the shared cap.",
+          "rules": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "BofA Rewards bonus with no tier percentages, thresholds or start date in the captures; no gate or rate change (O9)."
+        },
+        {
+          "index": 3,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Every bonus rule excludes PayPal, Venmo and buy now, pay later, so those paths earn the 1% base. Unsupported digital wallets cannot be told apart, so wallets are not excluded.",
+          "rules": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            "wholesale-clubs-2pct"
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards",
+      "issuer": "Bank of America",
+      "corpusCaseSha256": "a486818912ffb844b7340b67f8dc84c7bfd172908ba1b7a48bd8ac84678f0c8a",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "BofA Rewards bonus with no tier percentages, thresholds or start date in the captures; no gate or rate change (O9)."
+        }
+      ]
+    },
+    {
+      "cardId": "boa-travel-rewards",
+      "issuer": "Bank of America",
+      "corpusCaseSha256": "172a56c6a47ee65d802b6773b29e409cd84bc262ac315fd28cdaa2e2758981e2",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Redemption values differ by redemption type; no change to what a purchase earns."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "BofA Rewards bonus with no tier percentages, thresholds or start date in the captures; no gate or rate change (O9)."
+        }
+      ]
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-students",
+      "issuer": "Bank of America",
+      "corpusCaseSha256": "c60cd022c1a587738c2c40f74f2364298ebffafa86bb5ea833bd64788c25f59e",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [
+        {
+          "id": "choice-category",
+          "kind": "chosen",
+          "label": "3% Choice Category",
+          "picks": 1,
+          "options": [
+            {
+              "id": "gas-ev-charging",
+              "label": "Gas & EV Charging Stations"
+            },
+            {
+              "id": "online-shopping",
+              "label": "Online Shopping"
+            },
+            {
+              "id": "dining",
+              "label": "Dining"
+            },
+            {
+              "id": "travel",
+              "label": "Travel"
+            },
+            {
+              "id": "drug-stores",
+              "label": "Drug Stores"
+            },
+            {
+              "id": "home-improvement-furnishings",
+              "label": "Home Improvement/Furnishings"
+            }
+          ],
+          "defaultOptionIds": [
+            "gas-ev-charging"
+          ],
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "Gas & Electric Vehicle (EV) Charging Stations (default), Online Shopping, Dining, Travel, Drug Stores, or Home Improvement/Furnishings."
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Until you change your category it will be set to Gas & EV Charging Stations."
+            }
+          ]
+        }
+      ],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The 2% grocery and wholesale club rule shares the $2,500 quarterly cap with the 3% choice category; third-party payment accounts and BNPL earn no bonus.",
+          "set": {
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "gas",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-students-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-students-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "online-retail",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option online-shopping; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "online-shopping"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "online-retail",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option online-shopping; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "online-shopping"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-students-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option dining; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "dining"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "was": {
+            "category": "dining",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option dining; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "dining"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-students-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Travel option mapped to transit: only its parking, public transit and taxi/ride share part is represented; airfare, hotels and attractions are not matched.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "travel"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "transit"
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Travel includes your everyday travel purchases, like parking, public transit, taxis/ride share"
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Travel option mapped to transit: only its parking, public transit and taxi/ride share part is represented; airfare, hotels and attractions are not matched. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "travel"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "transit",
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-students-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Travel includes your everyday travel purchases, like parking, public transit, taxis/ride share"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option drug-stores; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "drug-stores"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option drug-stores; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "drug-stores"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-students-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Home Improvement/Furnishings option mapped to home-improvement; furniture stores and contractors in the option are not matched by that category.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "home-improvement-furnishings"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "home-improvement"
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Home Improvement/Furnishings option mapped to home-improvement; furniture stores and contractors in the option are not matched by that category. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "home-improvement-furnishings"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "home-improvement",
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-students-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "wholesale-clubs-2pct",
+          "issuerWording": "grocery stores and wholesale clubs",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "wholesale-clubs",
+          "cap": {
+            "kind": "spend",
+            "amountCents": 250000,
+            "period": "quarter",
+            "rateAfterCapBps": 100
+          },
+          "activation": "none",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": "customized-cash-bonus",
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "bnpl"
+          ],
+          "how": [
+            "category",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The corpus 2% rule names wholesale clubs but is labelled supermarkets; this rule carries the same rate and the shared quarterly cap to wholesale-club merchants.",
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-students-product",
+              "quote": "Automatic 2% cash back at grocery stores and wholesale clubs"
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-students-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "choice"
+          ],
+          "note": "Only the selected Choice Category earns 3%; each option rule is tied to the card choice.",
+          "rules": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "limited-time",
+            "shared-cap",
+            "gate"
+          ],
+          "note": "First-year 6% rules carry the choice option, a dateless limited time, the account-age gate and the shared cap.",
+          "rules": [
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "Card choice with six options, Gas & EV Charging Stations as default; 3% rules carry the option and the shared cap.",
+          "rules": [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "BofA Rewards bonus with no tier percentages, thresholds or start date in the captures; no gate or rate change (O9)."
+        },
+        {
+          "index": 3,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Every bonus rule excludes PayPal, Venmo and buy now, pay later, so those paths earn the 1% base. Unsupported digital wallets cannot be told apart, so wallets are not excluded.",
+          "rules": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            "wholesale-clubs-2pct"
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "boa-travel-rewards-students",
+      "issuer": "Bank of America",
+      "corpusCaseSha256": "66acc803abb949e57e6c84f27cee282163510dd15d5d01aa11a2ef64b5feb416",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "BofA Rewards bonus with no tier percentages, thresholds or start date in the captures; no gate or rate change (O9)."
+        }
+      ]
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-secured",
+      "issuer": "Bank of America",
+      "corpusCaseSha256": "c9bef6cb27c7bf0a97337823503574e82be28d7f9a8dde3e3ba13d9b16f9d075",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [
+        {
+          "id": "choice-category",
+          "kind": "chosen",
+          "label": "3% Choice Category",
+          "picks": 1,
+          "options": [
+            {
+              "id": "gas-ev-charging",
+              "label": "Gas & EV Charging Stations"
+            },
+            {
+              "id": "online-shopping",
+              "label": "Online Shopping"
+            },
+            {
+              "id": "dining",
+              "label": "Dining"
+            },
+            {
+              "id": "travel",
+              "label": "Travel"
+            },
+            {
+              "id": "drug-stores",
+              "label": "Drug Stores"
+            },
+            {
+              "id": "home-improvement-furnishings",
+              "label": "Home Improvement/Furnishings"
+            }
+          ],
+          "defaultOptionIds": [
+            "gas-ev-charging"
+          ],
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "Gas & Electric Vehicle (EV) Charging Stations (default), Online Shopping, Dining, Travel, Drug Stores, or Home Improvement/Furnishings."
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Until you change your category it will be set to Gas & EV Charging Stations."
+            }
+          ]
+        }
+      ],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The 2% grocery and wholesale club rule shares the $2,500 quarterly cap with the 3% choice category; third-party payment accounts and BNPL earn no bonus.",
+          "set": {
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "gas",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-secured-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-secured-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "online-retail",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option online-shopping; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "online-shopping"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-secured-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "online-retail",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option online-shopping; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "online-shopping"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "was": {
+            "category": "dining",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option dining; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "dining"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-secured-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option dining; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "dining"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Travel option mapped to transit: only its parking, public transit and taxi/ride share part is represented; airfare, hotels and attractions are not matched. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "travel"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "transit",
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-secured-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Travel includes your everyday travel purchases, like parking, public transit, taxis/ride share"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Travel option mapped to transit: only its parking, public transit and taxi/ride share part is represented; airfare, hotels and attractions are not matched.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "travel"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "transit"
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Travel includes your everyday travel purchases, like parking, public transit, taxis/ride share"
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option drug-stores; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "drug-stores"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-secured-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option drug-stores; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "drug-stores"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Home Improvement/Furnishings option mapped to home-improvement; furniture stores and contractors in the option are not matched by that category. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "home-improvement-furnishings"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "home-improvement",
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-customized-cash-rewards-secured-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Home Improvement/Furnishings option mapped to home-improvement; furniture stores and contractors in the option are not matched by that category.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "home-improvement-furnishings"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "home-improvement"
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "wholesale-clubs-2pct",
+          "issuerWording": "grocery stores and wholesale clubs",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "wholesale-clubs",
+          "cap": {
+            "kind": "spend",
+            "amountCents": 250000,
+            "period": "quarter",
+            "rateAfterCapBps": 100
+          },
+          "activation": "none",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": "customized-cash-bonus",
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "bnpl"
+          ],
+          "how": [
+            "category",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The corpus 2% rule names wholesale clubs but is labelled supermarkets; this rule carries the same rate and the shared quarterly cap to wholesale-club merchants.",
+          "anchors": [
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-product",
+              "quote": "Automatic 2% cash back at grocery stores and wholesale clubs"
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-customized-cash-rewards-secured-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "choice"
+          ],
+          "note": "Only the selected Choice Category earns 3%; each option rule is tied to the card choice.",
+          "rules": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "limited-time",
+            "shared-cap",
+            "gate"
+          ],
+          "note": "First-year 6% rules carry the choice option, a dateless limited time, the account-age gate and the shared cap.",
+          "rules": [
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "Card choice with six options, Gas & EV Charging Stations as default; 3% rules carry the option and the shared cap.",
+          "rules": [
+            3,
+            5,
+            7,
+            9,
+            11,
+            13,
+            15
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "BofA Rewards bonus with no tier percentages, thresholds or start date in the captures; no gate or rate change (O9)."
+        },
+        {
+          "index": 3,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Every bonus rule excludes PayPal, Venmo and buy now, pay later, so those paths earn the 1% base. Unsupported digital wallets cannot be told apart, so wallets are not excluded.",
+          "rules": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            "wholesale-clubs-2pct"
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "boa-susan-g-komen-customized-cash-rewards",
+      "issuer": "Bank of America",
+      "corpusCaseSha256": "ff22b9ae046786799cfa669cf924d045372a6c96160b773db62851bb0e96d9ab",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [
+        {
+          "id": "choice-category",
+          "kind": "chosen",
+          "label": "3% Choice Category",
+          "picks": 1,
+          "options": [
+            {
+              "id": "gas-ev-charging",
+              "label": "Gas & EV Charging Stations"
+            },
+            {
+              "id": "online-shopping",
+              "label": "Online Shopping"
+            },
+            {
+              "id": "dining",
+              "label": "Dining"
+            },
+            {
+              "id": "travel",
+              "label": "Travel"
+            },
+            {
+              "id": "drug-stores",
+              "label": "Drug Stores"
+            },
+            {
+              "id": "home-improvement-furnishings",
+              "label": "Home Improvement/Furnishings"
+            }
+          ],
+          "defaultOptionIds": [
+            "gas-ev-charging"
+          ],
+          "anchors": [
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "Gas & Electric Vehicle (EV) Charging Stations (default), Online Shopping, Dining, Travel, Drug Stores, or Home Improvement/Furnishings."
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Until you change your category it will be set to Gas & EV Charging Stations."
+            }
+          ]
+        }
+      ],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The 2% grocery and wholesale club rule shares the $2,500 quarterly cap with the 3% choice category; third-party payment accounts and BNPL earn no bonus.",
+          "set": {
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "gas",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-susan-g-komen-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-susan-g-komen-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "online-retail",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option online-shopping; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "online-shopping"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-susan-g-komen-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "dining",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option dining; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "dining"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-susan-g-komen-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Travel option mapped to transit: only its parking, public transit and taxi/ride share part is represented; airfare, hotels and attractions are not matched. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "travel"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "transit",
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-susan-g-komen-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Travel includes your everyday travel purchases, like parking, public transit, taxis/ride share"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Choice option drug-stores; earns only while selected, inside the shared $2,500 quarterly bonus cap. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "drug-stores"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-susan-g-komen-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "limited-time",
+            "gate"
+          ],
+          "note": "Home Improvement/Furnishings option mapped to home-improvement; furniture stores and contractors in the option are not matched by that category. First-year 6% rate: dateless limited time, gated on the account-age question (O14, O20).",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "home-improvement-furnishings"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "home-improvement",
+            "limitedTime": {
+              "startsOn": null,
+              "endsOn": null
+            },
+            "requires": [
+              {
+                "gateId": "boa-susan-g-komen-customized-cash-rewards-first-year",
+                "optionIds": [
+                  "first-year"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "post to your account within 365 days of the account open date."
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option gas-ev-charging; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "gas-ev-charging"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "was": {
+            "category": "online-retail",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option online-shopping; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "online-shopping"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option dining; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "dining"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Travel option mapped to transit: only its parking, public transit and taxi/ride share part is represented; airfare, hotels and attractions are not matched.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "travel"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "transit"
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Travel includes your everyday travel purchases, like parking, public transit, taxis/ride share"
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Choice option drug-stores; earns only while selected, inside the shared $2,500 quarterly bonus cap.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "drug-stores"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "category",
+            "choice",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Home Improvement/Furnishings option mapped to home-improvement; furniture stores and contractors in the option are not matched by that category.",
+          "set": {
+            "choice": {
+              "choiceId": "choice-category",
+              "optionId": "home-improvement-furnishings"
+            },
+            "sharedCapId": "customized-cash-bonus",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl"
+            ],
+            "category": "home-improvement"
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "wholesale-clubs-2pct",
+          "issuerWording": "grocery stores and wholesale clubs",
+          "rateBps": 200,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "wholesale-clubs",
+          "cap": {
+            "kind": "spend",
+            "amountCents": 250000,
+            "period": "quarter",
+            "rateAfterCapBps": 100
+          },
+          "activation": "none",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": "customized-cash-bonus",
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [
+            "paypal",
+            "venmo",
+            "bnpl"
+          ],
+          "how": [
+            "category",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The corpus 2% rule names wholesale clubs but is labelled supermarkets; this rule carries the same rate and the shared quarterly cap to wholesale-club merchants.",
+          "anchors": [
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-product",
+              "quote": "Automatic 2% cash back at grocery stores and wholesale clubs"
+            },
+            {
+              "sourceId": "boa-cash-back-category-choices",
+              "quote": "Earn 3% and 2% cash back on up to $2,500 in combined purchases each quarter"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus cash rewards."
+            },
+            {
+              "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+              "quote": "third party “buy now pay later” installment program may not qualify for bonus cash rewards."
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "choice"
+          ],
+          "note": "Only the selected Choice Category earns 3%; each option rule is tied to the card choice.",
+          "rules": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "limited-time",
+            "shared-cap",
+            "gate"
+          ],
+          "note": "First-year 6% rules carry the choice option, a dateless limited time, the account-age gate and the shared cap.",
+          "rules": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "Card choice with six options, Gas & EV Charging Stations as default; 3% rules carry the option and the shared cap.",
+          "rules": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "BofA Rewards bonus with no tier percentages, thresholds or start date in the captures; no gate or rate change (O9)."
+        },
+        {
+          "index": 3,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Every bonus rule excludes PayPal, Venmo and buy now, pay later, so those paths earn the 1% base. Unsupported digital wallets cannot be told apart, so wallets are not excluded.",
+          "rules": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            "wholesale-clubs-2pct"
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "boa-atmos-rewards-summit",
+      "issuer": "Bank of America",
+      "corpusCaseSha256": "2da083c89a3b1d732844c0b56a6dfb9ae5e06bb57ca3cfc5ac7ff697fd0ccfc0",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Alaska Airlines and Hawaiian Airlines purchases booked directly with the airlines.",
+          "set": {
+            "brandIds": [
+              "alaska-airlines",
+              "hawaiian-airlines"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-atmos-rewards-summit-pricing",
+              "quote": "Earn 3 points for every $1 of eligible Alaska Airlines and Hawaiian Airlines Net Purchases."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: foreign-currency or foreign-processed purchases have no catalog category or merchant signal."
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 350
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "held out: Atmos Rewards Dining pays only at participating Rewards Network restaurants, which the captures do not list; no brand scope or category fits; the 3x dining rule still applies."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Relationship boost stated as a percentage of base earn; not modelled because the boosted rate is not stated (coordinator 2026-10-05)."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Status points count only toward airline elite status and are not redeemable; they do not change what a purchase earns."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Relationship boost stated as a percentage of base earn; not modelled because the boosted rate is not stated (coordinator 2026-10-05)."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Atmos Rewards Dining rule is held out (participating restaurants not in the captures)."
+        },
+        {
+          "index": 2,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 2 is scoped to the Alaska Airlines and Hawaiian Airlines brands; third-party bookings are a purchase-level condition the brand scope approximates.",
+          "rules": [
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "boa-air-france-klm",
+      "issuer": "Bank of America",
+      "corpusCaseSha256": "81468a8c2676356d172bde01ed2ba563314cef6d9d5c1dd47d042c399269c0c1",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Third-party payment accounts lose the bonus rate (O10); PayPal and Venmo excluded.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-air-france-klm-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-air-france-klm-pricing",
+              "quote": "will not qualify for the member airlines or Dining category earn rate of 3 miles for every $1 spent."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Scoped to Air France and KLM; the captures do not list the other SkyTeam member airlines, so they are not matched. Third-party payment accounts lose the bonus rate (O10); PayPal and Venmo excluded.",
+          "set": {
+            "brandIds": [
+              "air-france",
+              "klm"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-air-france-klm-product",
+              "quote": "Earn 3 Miles for every $1 spent on eligible Air France, KLM Royal Dutch Airlines and SkyTeam member airline purchases."
+            },
+            {
+              "sourceId": "boa-air-france-klm-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-air-france-klm-pricing",
+              "quote": "will not qualify for the member airlines or Dining category earn rate of 3 miles for every $1 spent."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The co-brand partner rule is brand-scoped to Air France and KLM; unlisted SkyTeam airlines are not matched.",
+          "rules": [
+            2
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The dining and airline bonus rules exclude PayPal and Venmo, so those paths earn the 1.5 base. Unsupported digital wallets cannot be told apart, so wallets are not excluded.",
+          "rules": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "boa-norwegian-cruise-line-world-mastercard",
+      "issuer": "Bank of America",
+      "corpusCaseSha256": "0edd82d57dc758b83c02c4063d5ecc74b5c92ccb10e31e3ef434b11111276e35",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airline and hotel purchases have no v3 category."
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Scoped to the Norwegian Cruise Line brand. Third-party payment accounts lose the bonus rate (O10); PayPal and Venmo excluded.",
+          "set": {
+            "brandIds": [
+              "norwegian-cruise-line"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "boa-norwegian-cruise-line-world-mastercard-product",
+              "quote": "Earn 3 WorldPoints® points for every $1 spent on Norwegian purchases"
+            },
+            {
+              "sourceId": "boa-norwegian-cruise-line-world-mastercard-pricing",
+              "quote": "processes through a third-party payment account"
+            },
+            {
+              "sourceId": "boa-norwegian-cruise-line-world-mastercard-pricing",
+              "quote": "transmission of MCCs will not qualify for bonus rewards."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The co-brand partner rule is brand-scoped; redemption details change no earn rate.",
+          "rules": [
+            2
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The Norwegian bonus rule excludes PayPal and Venmo, so those paths earn the base. Unsupported digital wallets cannot be told apart, so wallets are not excluded.",
+          "rules": [
+            2
+          ]
+        }
+      ]
+    }
+  ],
+  "gates": [],
+  "programs": [],
+  "programDetails": [],
+  "rewardPrograms": [],
+  "labelLintAcks": []
+}

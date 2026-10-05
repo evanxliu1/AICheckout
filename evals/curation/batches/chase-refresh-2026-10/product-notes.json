@@ -1,0 +1,516 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/draft-expansion-labels.mjs",
+  "description": "Structured hints the extraction schema cannot express, from the research drafts (summaries and conditions clipped to 25 words). An anchored hint cites a quote of at most 25 words that resolves in the captures (research-quote: the research quoted it; keyword-search: a capture sentence with the rate and a keyword, which a verifier must confirm says what the hint says). Unanchored hints cite the research. draftNotes record what drafting dropped.",
+  "cards": [
+    {
+      "cardId": "chase-freedom-flex",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "rotating-quarterly",
+          "summary": "Quarterly bonus categories; Oct-Dec 2026: \"Grocery Stores (excluding Walmart® and Target®)\" and \"Dining\"",
+          "rate": "5%",
+          "cap": "$1,500 in combined purchases per quarter, then 1%",
+          "conditions": "Must activate each quarter (secondary sources: activate by Dec 14, 2026; Q4 also includes American Red Cross donations)",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Grocery Stores (excluding Walmart® and Target®)*"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Qualifying Lyft purchases",
+          "rate": "2%",
+          "cap": "none stated",
+          "conditions": "Promotional through 09/30/2027",
+          "merchants": [],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/chase.json",
+          "researchSources": [
+            "https://creditcards.chase.com/cash-back-credit-cards/freedom/flex",
+            "https://creditcards.chase.com/all-credit-cards",
+            "https://www.chase.com/rewardscategoryfaqs",
+            "https://www.nerdwallet.com/credit-cards/news/chase-5-bonus-categories-q4-2026"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "chase-freedom-rise",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Qualifying Lyft purchases",
+          "rate": "2%",
+          "cap": "none stated",
+          "conditions": "Promotional through 09/30/2027",
+          "merchants": [],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/chase.json",
+          "researchSources": [
+            "https://creditcards.chase.com/cash-back-credit-cards/freedom/rise",
+            "https://creditcards.chase.com/all-credit-cards"
+          ]
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "prime-visa",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Amazon.com, Audible.com, Whole Foods Market",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "Requires eligible Prime membership; without Prime, 3%",
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": "Requires eligible Prime membership; without Prime, 3%",
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn unlimited 5% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases with an eligible Prime membership.*"
+        }
+      ],
+      "draftNotes": [
+        "pointValueHundredthsOfCent: value dropped (no resolving quote)",
+        "rules.5 (travel-portal, \"Chase Travel\") rateBps: value dropped (no resolving quote)",
+        "rules.5 (travel-portal, \"Chase Travel\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "amazon-visa",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Amazon.com, Audible.com, Whole Foods Market\"",
+          "rate": "3%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Earn unlimited 3% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases,* unlimited 2% back at gas stations, restaurants, and on local"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "doordash-rewards-mastercard",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"purchases made using your card directly through doordash.com and trycaviar.com or directly through the DoorDash and Caviar mobile applications\"",
+          "rate": "4%",
+          "cap": "none stated",
+          "conditions": "DashPass subscription fee purchases excluded",
+          "merchants": [
+            "DoorDash"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 4% cash back on DoorDash and Caviar orders, 3% cash back on dining when purchased directly from a restaurant, 2% cash back on grocery"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (other, \"DoorDash and Caviar orders\") rateBps: value dropped (no resolving quote)",
+        "rules.2 (supermarkets, \"grocery stores online or\u0000a0in-store\"): issuerWording is not verbatim in the captures; replace it with the capture's wording"
+      ]
+    },
+    {
+      "cardId": "instacart-mastercard",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"qualifying purchases made using your card directly through Instacart.com or the Instacart mobile app\"",
+          "rate": "5%",
+          "cap": "First $6,000 per year (since April 30, 2025), then 1%",
+          "conditions": null,
+          "merchants": [
+            "Instacart"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 5% cash back on qualifying Instacart purchases on your first $6,000 spent annually*, 5% cash back on Chase Travel purchases*, and 2% cash back"
+        }
+      ],
+      "draftNotes": [
+        "rules.2 (dining, \"restaurants, including orders on Instacart powered by Uber E\") rateBps: value dropped (no resolving quote)",
+        "rules.2 (dining, \"restaurants, including orders on Instacart powered by Uber E\"): rule dropped (no resolving quote)",
+        "rules.3 (gas, \"gas stations\") rateBps: value dropped (no resolving quote)",
+        "rules.3 (gas, \"gas stations\"): rule dropped (no resolving quote)",
+        "rules.4 (streaming, \"select streaming services\") rateBps: value dropped (no resolving quote)",
+        "rules.4 (streaming, \"select streaming services\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "disney-inspire-visa",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Purchases at DisneyPlus.com, Hulu.com, or Stream.ESPN.com",
+          "rate": "10%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Disney"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 10% on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com.*"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "disney-premier-visa",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com\"",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Disney"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: value dropped (no resolving quote)",
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "disney-visa",
+      "issuer": "Chase",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "united-explorer",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible United purchases (incl. flights; page markets \"9x total miles\" on flights incl. 6x MileagePlus member earn)",
+          "rate": "3x card miles",
+          "cap": "none stated",
+          "conditions": "Basic Economy earns differently",
+          "merchants": [
+            "United Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "9x total miles on eligible United flights - 6x miles on the Primary Cardmember’s fare from United as a MileagePlus member, plus 3x miles on"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"all other travel and every day purchases\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "united-quest",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible United purchases (page markets \"10x total miles\" on flights incl. 6x MileagePlus member earn)",
+          "rate": "4x card miles",
+          "cap": "none stated",
+          "conditions": "Basic Economy earns differently",
+          "merchants": [
+            "United Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "10x total miles on eligible United flights - 6x miles on the Primary Cardmember's fare from United as a MileagePlus member, plus 4x miles on"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"every day purchases\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "united-gateway",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible United purchases (page markets \"5x total miles\" on flights incl. member earn)",
+          "rate": "2x card miles",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "United Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "5x total miles on eligible United flights - 3x miles on the Primary Cardmember’s fare from United as a MileagePlus member, plus 2x miles on"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "united-club",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible United purchases (page markets \"11x total miles\" on flights incl. 6x member earn)",
+          "rate": "5x card miles",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "United Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "11x total miles on eligible United flights - 6x miles on the Primary Cardmember's fare from United as a MileagePlus member, plus 5x miles on"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "southwest-rapid-rewards-plus",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"purchases made directly with Southwest Airlines®, including flight, inflight, Southwest® gift cards, and Getaways by Southwest™ packages\"",
+          "rate": "2X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Southwest Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 2 points for each dollar spent on Southwest Airlines purchases.*"
+        }
+      ],
+      "draftNotes": [
+        "rules.2 (other, \"Southwest Airlines purchases\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "southwest-rapid-rewards-premier",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Southwest Airlines purchases",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Southwest Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 3 points for each dollar spent on Southwest Airlines purchases.*"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "southwest-rapid-rewards-priority",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"purchases made directly with Southwest Airlines®, including flight, inflight, Southwest® gift cards, and Getaways by Southwest™ packages\"",
+          "rate": "4X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Southwest Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Earn 4 points for each dollar spent on Southwest Airlines purchases.*"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "marriott-bonvoy-bountiful",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"hotels participating in Marriott Bonvoy®\"",
+          "rate": "6X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Marriott"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "total points at hotels participating in Marriott Bonvoy®*"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: value dropped (no resolving quote)",
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "rules.3 (all-purchases, \"all other purchases\") rateBps: value dropped (no resolving quote)",
+        "rules.3 (all-purchases, \"all other purchases\"): rule dropped (no resolving quote)",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "world-of-hyatt",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"qualifying purchases made at Hyatt hotels and resorts\"",
+          "rate": "4X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Hyatt"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/chase.json",
+          "researchSources": [
+            "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card",
+            "https://creditcards.chase.com/all-credit-cards"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.2 (transit): an anchor that ran on from another was dropped (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "british-airways-visa-signature",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"British Airways, Aer Lingus, and Iberia flight purchases\"",
+          "rate": "3 Avios/$1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "British Airways"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "In addition to the bonus, cardmembers earn 3 Avios for every $1 spent on British Airways, Aer Lingus, and Iberia flight purchases, and 2 Avios"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "aer-lingus-visa-signature",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"flight purchases made directly with Aer Lingus, British Airways, Iberia, and LEVEL\"",
+          "rate": "3 Avios/$1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Aer Lingus"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Avios for every $1 spent on Aer Lingus, British Airways, and Iberia flight purchases,* and 2 Avios for every $1 spent on stays booked directly"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "iberia-visa-signature",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"flight purchases made directly with Iberia, British Airways, LEVEL, and Aer Lingus\"",
+          "rate": "3 Avios/$1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Iberia"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Avios for every $1 spent on Iberia, British Airways, and Aer Lingus flight purchases, and 2 Avios for every $1 spent on stays booked directly"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "chase-freedom-unlimited",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Qualifying Lyft purchases",
+          "rate": "2%",
+          "cap": "none stated",
+          "conditions": "Promotional through 09/30/2027",
+          "merchants": [],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/chase.json",
+          "researchSources": [
+            "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
+            "https://creditcards.chase.com/all-credit-cards"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "exclusion \"Any portion of purchases paid for using rewards…\": dropped (no resolving quote)"
+      ]
+    }
+  ]
+}

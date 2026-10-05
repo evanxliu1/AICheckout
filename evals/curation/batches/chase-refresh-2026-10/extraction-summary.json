@@ -1,0 +1,731 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/extract-cards.mjs",
+  "configuration": {
+    "provider": "codex",
+    "model": "gpt-5.6-luna",
+    "effort": "xhigh",
+    "prompt": "guided.2",
+    "selection": "keyword-window.1",
+    "outputTokens": "visible",
+    "limits": {
+      "attemptTimeoutMs": 600000,
+      "totalTimeoutMs": 900000,
+      "maxInputTokens": 64000,
+      "maxOutputTokens": 8192
+    },
+    "cliVersions": [
+      "codex-cli 0.158.0"
+    ]
+  },
+  "counts": {
+    "needs_review": 22
+  },
+  "cards": [
+    {
+      "cardId": "chase-freedom-flex",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 14,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "drugstores",
+        "entertainment",
+        "ev-charging",
+        "gas",
+        "other",
+        "streaming",
+        "supermarkets",
+        "transit",
+        "travel-portal"
+      ],
+      "issues": [],
+      "findings": {
+        "quote_not_found": 10
+      },
+      "documents": [
+        "chase-rewards-category-faq",
+        "chase-freedom-flex-product",
+        "chase-freedom-flex-rewards-terms"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 327381,
+      "inputTokenEstimate": 14708,
+      "inputTokens": 12171,
+      "outputTokens": 3763,
+      "runAt": "2026-10-05T01:25:38.977Z"
+    },
+    {
+      "cardId": "chase-freedom-rise",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "reported_missing": 2
+      },
+      "documents": [
+        "chase-freedom-rise-product",
+        "chase-freedom-rise-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 39598,
+      "inputTokenEstimate": 7250,
+      "inputTokens": 7577,
+      "outputTokens": 293,
+      "runAt": "2026-10-05T01:25:38.950Z"
+    },
+    {
+      "cardId": "prime-visa",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 11,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas",
+        "online-retail",
+        "supermarkets",
+        "transit",
+        "travel-portal"
+      ],
+      "issues": [
+        "ambiguous",
+        "ambiguous",
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 20,
+        "reported_ambiguous": 2,
+        "reported_missing": 1
+      },
+      "documents": [
+        "prime-visa-product",
+        "prime-visa-rewards-terms",
+        "prime-visa-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 362139,
+      "inputTokenEstimate": 14694,
+      "inputTokens": 12747,
+      "outputTokens": 2803,
+      "runAt": "2026-10-05T01:25:38.973Z"
+    },
+    {
+      "cardId": "amazon-visa",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 9,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas",
+        "online-retail",
+        "supermarkets",
+        "transit",
+        "travel-portal"
+      ],
+      "issues": [
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_missing": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "amazon-visa-product",
+        "amazon-visa-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 96368,
+      "inputTokenEstimate": 8337,
+      "inputTokens": 8389,
+      "outputTokens": 1947,
+      "runAt": "2026-10-05T01:25:38.961Z"
+    },
+    {
+      "cardId": "doordash-rewards-mastercard",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 3,
+        "reported_missing": 2
+      },
+      "documents": [
+        "doordash-rewards-mastercard-product",
+        "doordash-rewards-mastercard-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 64893,
+      "inputTokenEstimate": 6662,
+      "inputTokens": 7240,
+      "outputTokens": 691,
+      "runAt": "2026-10-05T01:26:18.553Z"
+    },
+    {
+      "cardId": "instacart-mastercard",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas",
+        "other",
+        "streaming",
+        "travel-portal"
+      ],
+      "issues": [
+        "ambiguous",
+        "ambiguous",
+        "missing",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 6,
+        "reported_ambiguous": 2,
+        "reported_missing": 3
+      },
+      "documents": [
+        "instacart-mastercard-product",
+        "instacart-mastercard-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 148472,
+      "inputTokenEstimate": 5611,
+      "inputTokens": 6506,
+      "outputTokens": 1170,
+      "runAt": "2026-10-05T01:27:15.333Z"
+    },
+    {
+      "cardId": "disney-inspire-visa",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas",
+        "other",
+        "streaming",
+        "supermarkets"
+      ],
+      "issues": [
+        "ambiguous",
+        "missing"
+      ],
+      "findings": {
+        "reported_ambiguous": 1,
+        "reported_missing": 1
+      },
+      "documents": [
+        "disney-inspire-visa-product",
+        "disney-inspire-visa-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 115405,
+      "inputTokenEstimate": 8100,
+      "inputTokens": 8220,
+      "outputTokens": 1257,
+      "runAt": "2026-10-05T01:27:23.450Z"
+    },
+    {
+      "cardId": "disney-premier-visa",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas",
+        "other",
+        "streaming",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "ambiguous"
+      ],
+      "findings": {
+        "quote_not_found": 2,
+        "reported_missing": 1,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "disney-premier-visa-product",
+        "disney-premier-visa-rewards-terms",
+        "disney-premier-visa-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 122835,
+      "inputTokenEstimate": 14285,
+      "inputTokens": 12266,
+      "outputTokens": 1139,
+      "runAt": "2026-10-05T01:29:18.862Z"
+    },
+    {
+      "cardId": "disney-visa",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "reported_missing": 2
+      },
+      "documents": [
+        "disney-visa-product",
+        "disney-visa-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 106408,
+      "inputTokenEstimate": 7294,
+      "inputTokens": 7672,
+      "outputTokens": 305,
+      "runAt": "2026-10-05T01:29:43.812Z"
+    },
+    {
+      "cardId": "united-explorer",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "all-purchases",
+        "dining"
+      ],
+      "issues": [
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 1,
+        "reported_missing": 2
+      },
+      "documents": [
+        "united-explorer-product",
+        "united-explorer-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 48552,
+      "inputTokenEstimate": 8339,
+      "inputTokens": 8337,
+      "outputTokens": 356,
+      "runAt": "2026-10-05T01:31:06.368Z"
+    },
+    {
+      "cardId": "united-quest",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "streaming"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "reported_missing": 3
+      },
+      "documents": [
+        "united-quest-product",
+        "united-quest-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 102015,
+      "inputTokenEstimate": 9398,
+      "inputTokens": 9048,
+      "outputTokens": 697,
+      "runAt": "2026-10-05T01:31:21.703Z"
+    },
+    {
+      "cardId": "united-gateway",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "gas",
+        "other",
+        "transit"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "reported_missing": 3,
+        "reported_out-of-scope": 1,
+        "quote_not_found": 1
+      },
+      "documents": [
+        "united-gateway-product",
+        "united-gateway-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 153854,
+      "inputTokenEstimate": 7803,
+      "inputTokens": 7986,
+      "outputTokens": 1100,
+      "runAt": "2026-10-05T01:31:30.225Z"
+    },
+    {
+      "cardId": "united-club",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "dining",
+        "other"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 2,
+        "reported_missing": 1
+      },
+      "documents": [
+        "united-club-product",
+        "united-club-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 93681,
+      "inputTokenEstimate": 7846,
+      "inputTokens": 7973,
+      "outputTokens": 460,
+      "runAt": "2026-10-05T01:31:41.121Z"
+    },
+    {
+      "cardId": "southwest-rapid-rewards-plus",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "missing",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 2,
+        "reported_missing": 5
+      },
+      "documents": [
+        "southwest-rapid-rewards-plus-product",
+        "southwest-rapid-rewards-plus-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 129184,
+      "inputTokenEstimate": 6933,
+      "inputTokens": 7370,
+      "outputTokens": 809,
+      "runAt": "2026-10-05T01:31:54.924Z"
+    },
+    {
+      "cardId": "southwest-rapid-rewards-premier",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "dining",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 2,
+        "reported_missing": 3
+      },
+      "documents": [
+        "southwest-rapid-rewards-premier-product",
+        "southwest-rapid-rewards-premier-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 86817,
+      "inputTokenEstimate": 6825,
+      "inputTokens": 7313,
+      "outputTokens": 593,
+      "runAt": "2026-10-05T01:33:03.723Z"
+    },
+    {
+      "cardId": "southwest-rapid-rewards-priority",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "dining",
+        "gas",
+        "other"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "reported_missing": 1
+      },
+      "documents": [
+        "southwest-rapid-rewards-priority-product",
+        "southwest-rapid-rewards-priority-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 44170,
+      "inputTokenEstimate": 7352,
+      "inputTokens": 7654,
+      "outputTokens": 517,
+      "runAt": "2026-10-05T01:33:14.809Z"
+    },
+    {
+      "cardId": "marriott-bonvoy-bountiful",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "ambiguous",
+        "out-of-scope",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 5,
+        "rate_not_in_evidence": 4,
+        "reported_ambiguous": 1,
+        "reported_out-of-scope": 1,
+        "reported_missing": 2
+      },
+      "documents": [
+        "marriott-bonvoy-bountiful-product",
+        "marriott-bonvoy-bountiful-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 159773,
+      "inputTokenEstimate": 7396,
+      "inputTokens": 7713,
+      "outputTokens": 1071,
+      "runAt": "2026-10-05T01:33:58.983Z"
+    },
+    {
+      "cardId": "world-of-hyatt",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "transit"
+      ],
+      "issues": [
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 6,
+        "reported_missing": 2
+      },
+      "documents": [
+        "world-of-hyatt-product",
+        "world-of-hyatt-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 171769,
+      "inputTokenEstimate": 7072,
+      "inputTokens": 7531,
+      "outputTokens": 1535,
+      "runAt": "2026-10-05T01:34:04.085Z"
+    },
+    {
+      "cardId": "british-airways-visa-signature",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 0,
+      "categories": [],
+      "issues": [
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_missing": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "british-airways-visa-signature-product",
+        "british-airways-visa-signature-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 35331,
+      "inputTokenEstimate": 6654,
+      "inputTokens": 7172,
+      "outputTokens": 149,
+      "runAt": "2026-10-05T01:34:04.113Z"
+    },
+    {
+      "cardId": "aer-lingus-visa-signature",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 0,
+      "categories": [],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "reported_missing": 1
+      },
+      "documents": [
+        "aer-lingus-visa-signature-product",
+        "aer-lingus-visa-signature-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 10295,
+      "inputTokenEstimate": 6788,
+      "inputTokens": 7265,
+      "outputTokens": 101,
+      "runAt": "2026-10-05T01:34:30.545Z"
+    },
+    {
+      "cardId": "iberia-visa-signature",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 0,
+      "categories": [],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "reported_missing": 1
+      },
+      "documents": [
+        "iberia-visa-signature-product",
+        "iberia-visa-signature-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 7285,
+      "inputTokenEstimate": 6824,
+      "inputTokens": 7305,
+      "outputTokens": 93,
+      "runAt": "2026-10-05T01:34:39.448Z"
+    },
+    {
+      "cardId": "chase-freedom-unlimited",
+      "issuer": "Chase",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "drugstores",
+        "travel-portal"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 4,
+        "reported_missing": 1
+      },
+      "documents": [
+        "chase-rewards-category-faq",
+        "chase-freedom-unlimited-product"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 146761,
+      "inputTokenEstimate": 10308,
+      "inputTokens": 9220,
+      "outputTokens": 1273,
+      "runAt": "2026-10-05T01:34:40.844Z"
+    }
+  ]
+}

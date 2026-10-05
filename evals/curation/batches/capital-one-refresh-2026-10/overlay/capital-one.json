@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "packetId": "9737981f-cfa9-4ff0-a8a0-d6616e6243c0",
+  "batch": "capital-one-refresh-2026-10",
+  "issuer": "Capital One",
+  "provenance": "agent-verified",
+  "cards": [
+    {
+      "cardId": "capital-one-t-mobile-visa",
+      "issuer": "Capital One",
+      "corpusCaseSha256": "5538c41c2f72f149c4c0fc65037553d33304e542ad3fe246d9e2b1bf633d98d0",
+      "heldOut": null,
+      "programId": "t-mobile-rewards",
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Scoped to T-Mobile; third-party digital wallets excluded. The 5% covers phones, devices and accessories only; wireless service and installment payments earn 2% per the terms, which brand scope cannot separate, so a bill checkout overstates.",
+          "set": {
+            "brandIds": [
+              "t-mobile"
+            ],
+            "excludedPaymentPaths": [
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-t-mobile-visa-product",
+              "quote": "made online at T-Mobile.com and in the T-Life app, and at T-Mobile stores and Authorized Retailers"
+            },
+            {
+              "sourceId": "capital-one-t-mobile-visa-pricing",
+              "quote": "You may not accrue enhanced earning on purchases made using 3rd party digital wallets."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "T-Mobile Rewards move to their own cash-back program redeemable only with T-Mobile."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The 5% rule excludes the digital-wallet path, so wallet checkouts count the 2% base rate."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "The 5% rule is scoped to T-Mobile and excludes digital wallets; the service and installment exclusions stay in the label text.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    }
+  ],
+  "gates": [],
+  "programs": [
+    {
+      "id": "t-mobile-rewards",
+      "name": "T-Mobile Rewards",
+      "currency": "cash-back",
+      "unitName": "cents",
+      "redemptionBrandIds": [
+        "t-mobile"
+      ],
+      "anchors": [
+        {
+          "sourceId": "capital-one-t-mobile-visa-pricing",
+          "quote": "Accumulated T-Mobile Rewards may only be redeemed to pay your T-Mobile wireless bill or for purchases of phones, devices, or accessories"
+        }
+      ]
+    }
+  ],
+  "programDetails": [
+    {
+      "programId": "t-mobile-rewards",
+      "unitName": "cents",
+      "redemptionBrandIds": [
+        "t-mobile"
+      ]
+    }
+  ],
+  "rewardPrograms": [],
+  "labelLintAcks": []
+}
