@@ -41,6 +41,12 @@ export default [
     languageOptions: { globals: globals.node },
   },
   { files: ['extension/scripts/**/*.mjs'], rules: js.configs.recommended.rules },
+  // Phase 12 capture tool: Node modules whose in-page functions run in the browser (Playwright evaluate).
+  {
+    files: ['evals/merchants/capture/**/*.mjs'],
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
+    rules: js.configs.recommended.rules,
+  },
   // Boundary: product code never imports the maintainer tooling in tools/ (the catalog pipeline). The pipeline may
   // import product packages, not the reverse. Decision: wiki/decisions/2026-10-02-agent-driven-card-pipeline.md;
   // test: scripts/lib/import-boundary.test.mjs.

@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T23:10:00Z
+  at: 2026-10-05T23:11:40Z
 ---
 
 # Now
 
-As of 2026-10-05T23:10:00Z.
+As of 2026-10-05T23:11:40Z.
 
 ## Current state
 
@@ -29,7 +29,7 @@ As of 2026-10-05T23:10:00Z.
 ## Open questions and next steps
 
 1. **Phase 10 probe results** merged as PR #58 (2026-10-05): verdict **go**, 16 of 25 sites showed a logged-out cart, but only 3 of 8 top-1k sites (bot walls), which limits Phase 12 capture, not the product. The badge frame loaded under every CSP seen. 2 MiB fits `chrome.storage.local` (measured). The prototype reader found 25 of 38 totals, then 31 of 38 after one bug fix with 1 false found (30 of 38 with 2 false found against the original labels) (IKEA superscript cents). Proposed Y is 80% on one-item cart pages ([report](../docs/evals/merchant-probe-2026-10.md), [decision](decisions/2026-10-05-merchant-probe-method.md)). The independent report review ran (agent-verified, approve with fixes; fixes applied). Second labeling done: labeler 2 agrees on 44 of 44 snapshots, no adjudication needed (agent-verified). Merged; Evan accepted go and Y = 80% on 2026-10-05.
-2. **Evan accepted go and Y = 80% (2026-10-05). Phase 12** started 2026-10-06 ([plan](product/phase-12-reader-eval.md)). **12.1** `generic-reader-protocol.1` signed and merged (PR #59, `84bc529`). **Amended to `.2`** on `phase12-protocol-v2` (2026-10-05, before any capture) on Evan's decisions ([decision](decisions/2026-10-05-global-reader-protocol-2.md), proposed): the reader returns total **and currency** on storefronts worldwide; worldwide frame `retail-frame.2` (989 eligible: 480 U.S., 509 non-U.S., 43 currencies); 200 U.S. + 200 non-U.S. candidates, stop at 110 captured per stream; strata band × region group × platform; currency in labels and correctness; pass bar on the whole held-out split, U.S. and non-U.S. reported apart; pipeline held-out list unchanged. Bot-walled sites are a reported gap; attended capture (Claude's built-in browser, Evan solving CAPTCHAs) deferred. Non-USD card recommendations are a later phase. Independent review: sign with fixes (agent-verified), fixes applied (currency evidence precedence with a 10% undetermined stop, minor-unit table, frame audit trail, `geo-blocked`). Next: reviewer's confirmation and signature of `.2`, PR and merge; then 12.2 capture tool, 12.3 captures. Later decisions are asked per phase ([table](product/phase-10-merchant-expansion.md#decisions-for-evan-one-word-each-asked-when-their-phase-starts)).
+2. **Evan accepted go and Y = 80% (2026-10-05). Phase 12** ([plan](product/phase-12-reader-eval.md)): **12.1** `generic-reader-protocol.1` signed and merged (PR #59); amended to **`generic-reader-protocol.2`** (worldwide extractor with currency, bot-walled sites a reported gap, attended capture deferred) and **signed at `3028fff`**, merged as PR #60 ([decision](decisions/2026-10-05-global-reader-protocol-2.md)). **12.2** capture tool `evals/merchants/capture/` ([README](../evals/merchants/capture/README.md), [decision](decisions/2026-10-05-capture-tool-design.md)): independent review changes required → fixed → approved with two low fixes → fixed (agent-verified); PR #61. **Next: 12.3 captures**, after Evan's go-ahead (first step that visits real stores at scale). Some Phase 12 entries are dated 2026-10-06 in error (actual UTC 2026-10-05); a cleanup corrects them, except the frozen selection seed. Later decisions are asked per phase ([table](product/phase-10-merchant-expansion.md#decisions-for-evan-one-word-each-asked-when-their-phase-starts)).
 3. **Next renewal, published before 2026-11-04T00:00Z** ([renewing](ops/catalog-release.md#renewing-a-catalog-before-it-expires)): re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data.
 4. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it instead of per file; `pipeline handoff` names the freshness record for the merchant MCC folder ([renewal record](ops/catalog-release-history.md#renewal-2026-10-05renewal1-prepared-2026-10-05)).
 5. Phase order (Evan, 2026-10-05): 10 ∥ 11 → 12 → 13 → 14 → 15 Release A (replaces Phase 5) → 17; 16 beside 15; Phase 6 folded in; 4 terms-change detection revisited after 9.
