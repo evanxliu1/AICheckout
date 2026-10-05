@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "barclays-refresh-2026-10",
-  "updatedAt": "2026-10-05T02:00:07.373Z",
+  "updatedAt": "2026-10-05T02:01:57.496Z",
   "cards": {
     "barclays-mastercard-titanium": {
       "stages": {
@@ -1338,6 +1338,30 @@
           "agentRun": "a2bd89ee6c68a3a8a",
           "model": "claude-opus-5-5",
           "acceptedAt": "2026-10-05T02:00:07.349Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:6557f3cc6d0823d41a82a532542e648eab81b476c6f18317abbcc017eb91fba3",
+          "finishedAt": "2026-10-05T02:01:56.364Z",
+          "attempts": 1,
+          "packetId": "f17e79b0-5967-464c-89c3-447eab3cd38f",
+          "agentRun": "aa5e868d494e6245e",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T02:01:56.364Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:b0bba8e76a1a3d3267732c436cef0c963f25246d78ed26a2e04e46dd9496822f",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-aarp-essential-rewards-mastercard",
+              "sha256": "1fbfce64b2f5e8dbde4647ee1a89b53e54ea199b8737dedc6b9b06b69dbdb707"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:01:57.495Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -1378,21 +1402,21 @@
           "outputs": [
             {
               "ref": "adjudicate:barclays",
-              "sha256": "e22dd886376da598bc761a8518db20e93f4bb21a10a368425d5622c68298294f"
+              "sha256": "25d2992094e99f824235aa52a4b8cbdc1646711ae742319a798dfc5e32174fee"
             },
             {
               "ref": "lint-acks:barclays",
               "sha256": "dbcb0946f93786f8501738f408d965a042b8edfc41b2ba735241db72370e884c"
             }
           ],
-          "finishedAt": "2026-10-05T01:52:32.815Z",
-          "attempts": 1,
-          "packetId": "35b00b99-04b6-4a49-9b69-f93775fdafe5",
-          "agentRun": "ab0222ee9a59f76bd",
+          "finishedAt": "2026-10-05T02:01:56.364Z",
+          "attempts": 2,
+          "packetId": "f17e79b0-5967-464c-89c3-447eab3cd38f",
+          "agentRun": "aa5e868d494e6245e",
           "model": "claude-fable-5-1",
-          "acceptedAt": "2026-10-05T01:52:32.815Z",
-          "durationMs": 130516,
-          "tokens": 79395
+          "acceptedAt": "2026-10-05T02:01:56.364Z",
+          "durationMs": 78363,
+          "tokens": 41419
         },
         "overlay": {
           "status": "done",

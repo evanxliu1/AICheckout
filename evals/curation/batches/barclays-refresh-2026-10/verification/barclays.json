@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "dfb7bc1b-a190-406d-beac-1cf32ec0681d",
+  "packetId": "f17e79b0-5967-464c-89c3-447eab3cd38f",
   "batch": "barclays-refresh-2026-10",
   "issuer": "Barclays",
   "provenance": "agent-verified",
@@ -25,7 +25,26 @@
       "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-aarp-essential-rewards-mastercard-pricing.txt"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-10-05",
+    "filesRead": [
+      ".claude/agents/card-adjudicator.md",
+      "evals/curation/batches/barclays-refresh-2026-10/pipeline/packets/adjudicate.barclays.3.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/batches/barclays-refresh-2026-10/verification/conventions/barclays.md",
+      "evals/curation/batches/barclays-refresh-2026-10/verification/barclays.json",
+      "evals/curation/batches/barclays-refresh-2026-10/verify/barclays.md",
+      "evals/curation/batches/barclays-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/barclays-refresh-2026-10/product-notes.json",
+      "evals/curation/batches/barclays-refresh-2026-10/captures/barclays-aarp-essential-rewards-mastercard-pricing.txt",
+      "evals/curation/expansion/corpus.json",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/schema.ts"
+    ]
+  },
   "cards": [
     {
       "cardId": "barclays-mastercard-titanium",
@@ -1565,7 +1584,11 @@
             "sourceId": "barclays-aarp-essential-rewards-mastercard-pricing",
             "quote": "You earn rewards, or cash back, for Net Purchases made by you and/or any authorized user(s) of your Account as follows:"
           },
-          "note": "The reward rules define the rewards as cash back and state percentage rates; the point value stays null for a cash-back card (general 1, 13)."
+          "note": "The reward rules define the rewards as cash back and state percentage rates; the point value stays null for a cash-back card (general 1, 13).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The reward rules define Rewards as cash back and state percentage rates, so the currency is cash-back (general 1). No separate point-value fix is needed: the empty reference of an undrafted card already carries null, and a cash-back card never has a point value (general 13)."
+          }
         }
       ],
       "addedRules": [
@@ -1595,7 +1618,11 @@
               "quote": "there is no limit to the total rewards you can earn and your rewards will not expire."
             }
           ],
-          "note": "3% on gas (automated fuel dispensers and service stations); the combined heading is split into a gas and a drugstores rule. Uncapped per the no-limit sentence; activation null per the Barclays convention for AARP."
+          "note": "3% on gas (automated fuel dispensers and service stations); the combined heading is split into a gas and a drugstores rule. Uncapped per the no-limit sentence; activation null per the Barclays convention for AARP.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3% on gas is stated with its own percentage; the combined gas/drug store heading is split into the two shared categories. The no-limit sentence states uncapped earning (general 21); activation stays null for AARP per the Barclays convention."
+          }
         },
         {
           "rule": {
@@ -1627,7 +1654,11 @@
               "quote": "there is no limit to the total rewards you can earn and your rewards will not expire."
             }
           ],
-          "note": "3% on drug stores coded as such, excluding Target and Walmart (those earn the 1% base). Split from the combined heading."
+          "note": "3% on drug stores coded as such, excluding Target and Walmart (those earn the 1% base). Split from the combined heading.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3% on drug stores coded as such, with the Target and Walmart exclusion anchored. Split from the gas heading; cap none per the no-limit sentence (general 21)."
+          }
         },
         {
           "rule": {
@@ -1655,7 +1686,11 @@
               "quote": "there is no limit to the total rewards you can earn and your rewards will not expire."
             }
           ],
-          "note": "2% on medical merchants (dentists, doctors, opticians, hearing aids, hospitals and similar MCCs); no shared category covers medical, so other."
+          "note": "2% on medical merchants (dentists, doctors, opticians, hearing aids, hospitals and similar MCCs); no shared category covers medical, so other.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Medical is a multi-merchant service category with no shared or v3 category (general 4 shared categories, O3 lists medical as not at retail), so other is the conforming label, as in the existing corpus entry for this card. 2% stated in the anchor."
+          }
         },
         {
           "rule": {
@@ -1683,7 +1718,11 @@
               "quote": "there is no limit to the total rewards you can earn and your rewards will not expire."
             }
           ],
-          "note": "Base rate of 1% on all other net purchases, uncapped."
+          "note": "Base rate of 1% on all other net purchases, uncapped.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "1% on all other purchases is the stated base; uncapped per the no-limit sentence (general 21)."
+          }
         }
       ],
       "addedExclusions": [
@@ -1699,7 +1738,11 @@
               "quote": "Balance transfers, cash advances (including cash equivalent transactions"
             }
           ],
-          "note": "Standard non-earning transactions from the reward rules; cash equivalents include money orders, peer-to-peer app payments and lottery tickets."
+          "note": "Standard non-earning transactions from the reward rules; cash equivalents include money orders, peer-to-peer app payments and lottery tickets.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The reward rules sentence lists balance transfers, cash advances, cash equivalents, fees, interest and fraudulent purchases as not Net Purchases; both anchors are in that sentence without overlapping or abutting."
+          }
         }
       ],
       "addedIssues": [],
