@@ -1,6 +1,6 @@
 ---
 name: expand-catalog
-description: Use when Evan asks to add, refresh or check cards in the AI Checkout card catalog, in any words ("expand Wells Fargo as a new batch", "add these Chase cards", "refresh the Citi cards", "add issuer X with these cards"). Drives the tools/catalog-pipeline CLI (`npm run pipeline -- next --json` in a loop) through research, capture, extraction, drafting, subagent verification and adjudication, apply, overlay, build and eval, and stops at a ready branch and `pipeline handoff`; Evan publishes.
+description: Use when Evan asks to add, refresh or check cards in the AI Checkout card catalog, in any words ("expand Wells Fargo as a new batch", "add these Chase cards", "refresh the Citi cards", "add issuer X with these cards"). Drives the tools/catalog-pipeline CLI (`npm run pipeline -- next --json` in a loop) through research, capture, extraction, drafting, subagent verification and adjudication, apply, overlay, build and eval, and stops at a ready branch and `pipeline handoff`; publishing is a separate step on Evan's instruction.
 ---
 
 # Expand the card catalog
@@ -25,7 +25,7 @@ When the request is to renew or re-check the catalog (Phase 9), start with `pipe
 
 ## Hard rules
 
-- **Never publish** a catalog release, never sign in to any hosted service, never push `main`, never merge. The run ends at a pushed branch, a PR the session opens and the `pipeline handoff` checklist. The coordinator merges under Evan's standing authorization only after CI and an independent reviewer subagent pass; Evan publishes in the review app.
+- **Never publish** a catalog release, never sign in to any hosted service, never push `main`, never merge. The run ends at a pushed branch, a PR the session opens and the `pipeline handoff` checklist. The coordinator merges under Evan's standing authorization only after CI and an independent reviewer subagent pass. Publishing is not part of this skill: only the coordinating session publishes, with `pipeline publish --confirm` after Evan types `publish <version>` in chat ([catalog release](../../../wiki/ops/catalog-release.md#agent-publish-cli)), or Evan in the review app.
 - **Ask Evan only** for a `scope-question` and for `publish`. Everything else is the session's.
 - **Captures are frozen.** Never edit or overwrite a capture; a changed page is a new dated capture in a new batch. Never edit released corpora (`real.v2.2`, `expansion.v1`), released prompts or validator versions; never tune prompts on held-out data.
 - **Models only through local subscription CLIs.** Extraction runs inside `pipeline run extract` (Codex); judgment steps are Claude Code subagents. No API keys, no local models, nothing on Render or CI.

@@ -745,9 +745,15 @@ describe('pipeline handoff', () => {
       `${join(h.root, `evals/curation/batches/${BATCH}/captures`)}\`: 1 cited source(s)`,
     );
     expect(text).toMatch(/Release `2026-10-05\.wells-fargo\.1`, expires 2026-11-03T00:00:00Z/);
-    expect(text).toMatch(
-      /The CLI has no publish, push or sign-in command\. Evan ticks the attestation and clicks Publish\. Labels are agent-verified, not human-verified\./,
+    expect(text).toContain(
+      `\`npm run pipeline -- publish --version 2026-10-05.wells-fargo.1 --captures ${join(h.root, `evals/curation/batches/${BATCH}/captures`)}\``,
     );
+    expect(text).toContain(
+      '`--confirm 2026-10-05.wells-fargo.1 --instruction-at <UTC time of that message>`',
+    );
+    expect(text).toMatch(/Evan types `publish 2026-10-05\.wells-fargo\.1` in chat\. Only then/);
+    expect(text).toMatch(/Browser fallback \(assisted flow\)/);
+    expect(text).toMatch(/Labels are agent-verified, not human-verified\./);
     expect(text).toMatch(/Ready: open the PR/);
     expect(text).not.toMatch(/Real cards refreshed/);
     // A replaced real card: its payment-path changes against release 1 are listed for Evan.

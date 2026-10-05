@@ -5,7 +5,7 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T04:45:00Z
+  at: 2026-10-05T04:56:00Z
 ---
 
 # Now
@@ -21,7 +21,7 @@ As of 2026-10-05T04:45Z.
 
 ## Active work
 
-- **Agent publish path** (coordinator, started 2026-10-05; [decision](decisions/2026-10-05-agent-publish-cli-session.md)). Evan wants the coding agent to upload the captures and publish, with his part reduced to logging a CLI session in once and typing `publish <version>` in chat. To build: `pipeline login` / `logout` (Evan types his password into a hidden prompt; refresh token stored outside the repo, mode 600) and `pipeline publish` (match captures to the bundled manifests, upload through `POST /v1/review/sources`, create the draft, check its canonical hash equals `CATALOG_V3`, publish with `--confirm <version>` and the agent-verified review note). One PR, independent review, merge, Render deploy. The renewal waits for it.
+- **Agent publish path** (Phase 9 milestone 5; [decision](decisions/2026-10-05-agent-publish-cli-session.md)): built on branch `phase9-m5-agent-publish` (2026-10-05T04:56Z), not yet reviewed or merged. `pipeline login` / `logout` / `whoami [--check]` and `pipeline publish` (dry run; `--confirm <version> --instruction-at <time>` after Evan's chat message); runbook [agent publish](ops/catalog-release.md#agent-publish-cli). The offline dry run of `2026-10-05.renewal.1` with the 14 capture folders matched 328 of 328 sources. Next: independent review, PR, merge, Render deploy (the API comment change only), then Evan runs `npm run pipeline -- login`. The renewal waits for it.
 
 ## Open questions and next steps
 
