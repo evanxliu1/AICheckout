@@ -26,7 +26,7 @@ As of 2026-10-05T05:27Z.
 
 ## Open questions and next steps
 
-1. Check the extension refresh against release 3 (`prepareCatalogUpdate` over a cached release 2, or a loaded `build:hosted` extension) and that Render serves `645b1c8`.
+1. Optional: confirm in a loaded `build:hosted` extension that **Check for updated terms** picks up release 3 (the update logic itself was checked, see [release 3](ops/catalog-release.md#release-3-published-2026-10-05)).
 2. **Next renewal, published before 2026-11-04T00:00Z**: re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data (Discover not captured; the Freedom Flex Jan–Mar 2027 quarter was omitted from the renewal).
 3. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it instead of per file, and `pipeline handoff` names the freshness record for the merchant MCC folder ([catalog release](ops/catalog-release.md#renewal-2026-10-05renewal1-prepared-2026-10-05)).
 4. Next phases, in Evan's order (2026-10-03): 10 merchant-expansion pipeline → Web Store release; 4 terms-change detection is revisited after 9; 6 site coverage harness ([roadmap](product/roadmap.md)).

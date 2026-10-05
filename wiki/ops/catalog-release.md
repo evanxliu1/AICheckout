@@ -55,7 +55,7 @@ If a run stops part way (network, Render restart, rate limit), run the same `--c
 | Draft | `2e67343a-2d11-4a9e-8ea6-eb89ccef0d1f`, created on head 2; 328 captures uploaded (one 20 s rate-limit wait); published at revision 2 |
 | Review note | states the catalog is agent-verified, not human-verified, the canonical hash, that all 328 captures match, and "published by the coding agent on Evan's chat instruction of 2026-10-05T05:18:43Z" |
 | Served release | checked by the coordinator after publishing: `/v1/catalog` serves sequence 3, `2026-10-05.renewal.1`; canonical JSON SHA-256 of the served catalog equals `CATALOG_V3` on `main`, `8e4c63946c7a7393684ce103fb9826fa5afdb3434a8421d93b682548451a4f6e`. Release 2 is no longer served |
-| Extension refresh | not yet checked (`prepareCatalogUpdate` over a cached release 2) |
+| Extension refresh | the extension's own `prepareCatalogUpdate` accepts the served release 3 over a cached release 2 (the `2026-10-02.expansion.1` catalog from `577c025`) and puts `2026-10-05.renewal.1` in effect; checked by the coordinator 2026-10-05 with a throwaway vitest run, not a loaded `build:hosted` extension |
 | Next deadline | the next renewal must be published before **2026-11-04T00:00Z**; it must re-read the NerdWallet estimates (read 2026-10-02). Freedom Flex and Discover Q4 rules end 2026-12-31 |
 
 ## Release 2 (published 2026-10-03)
