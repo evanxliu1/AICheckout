@@ -6,7 +6,7 @@ status: stable
 tags: [ops, catalog, release, review]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T03:04:00Z
+  at: 2026-10-05T04:45:00Z
 stale_after: 2026-11-01T00:00:00Z
 sources:
   - resource: ../../apps/review/src/StartDraft.tsx
@@ -27,7 +27,7 @@ sources:
 
 # Catalog release
 
-How a catalog built in the repository becomes the hosted release that `GET /v1/catalog` serves. Publishing is Evan's action in the hosted review app: he signs in, ticks the attestation and publishes; no script or agent signs in, ticks the attestation or publishes on its own ([user directives](../product/user-directives.md)). Since 2026-10-03 the coordinator may drive the rest of the review app in the browser after Evan has signed in ([assisted flow](#assisted-flow-coordinator-drives-the-browser)). The coordinator checks the deploy before and the result after. The first run of this runbook published `2026-10-02.expansion.1` as release 2 on 2026-10-03; release 1 (`2026-09-29.real.1`, 7 cards) was published with [`docs/release/publish-runbook.md`](../../docs/release/publish-runbook.md), whose step-by-step screens this runbook follows.
+How a catalog built in the repository becomes the hosted release that `GET /v1/catalog` serves. Publishing needs Evan's approval of that one release. Since 2026-10-05 that approval is his chat message `publish <version>`, after which the coordinating session publishes from the CLI with a session Evan logged in himself (Phase 9 milestone 5, being built; [decision](../decisions/2026-10-05-agent-publish-cli-session.md)); no agent signs in or publishes without it ([user directives](../product/user-directives.md)). Before that path exists, Evan publishes in the hosted review app. Since 2026-10-03 the coordinator may drive the rest of the review app in the browser after Evan has signed in ([assisted flow](#assisted-flow-coordinator-drives-the-browser)). The coordinator checks the deploy before and the result after. The first run of this runbook published `2026-10-02.expansion.1` as release 2 on 2026-10-03; release 1 (`2026-09-29.real.1`, 7 cards) was published with [`docs/release/publish-runbook.md`](../../docs/release/publish-runbook.md), whose step-by-step screens this runbook follows.
 
 ## Release 2 (published 2026-10-03)
 
@@ -119,7 +119,7 @@ Outline since Phase 9 milestone 3 ([plan](../product/phase-9-freshness.md), [pip
 
 ## Renewal `2026-10-05.renewal.1` (prepared 2026-10-05)
 
-Built from the 2026-10-05 freshness check and ten refresh batches ([results](../../docs/evals/freshness-2026-10.md)); verified 2026-10-05, **expires 2026-11-04T00:00Z**; 178 cards, 328 sources. It must be published before release 2 expires (2026-11-01T00:00Z); target from 2026-10-20, latest 2026-10-28. Before Evan starts: the renewal branch is merged and Render has deployed `main` (the review app must know the new batch manifests and the freshness record), and the quote check passes with every capture folder:
+Built from the 2026-10-05 freshness check and ten refresh batches ([results](../../docs/evals/freshness-2026-10.md)); verified 2026-10-05, **expires 2026-11-04T00:00Z**; 178 cards, 328 sources. It must be published before release 2 expires (2026-11-01T00:00Z); target from 2026-10-20, latest 2026-10-28. Merged (PR #50) and deployed: on 2026-10-05T04:40Z the hosted review bundle contained `2026-10-05.renewal.1` and the refresh batch manifests. Evan chose to publish it through the CLI publish path the coordinator runs on his chat instruction (Phase 9 milestone 5, [decision](../decisions/2026-10-05-agent-publish-cli-session.md)), once that is built; the browser steps above remain the fallback. Before publishing, the quote check passes with every capture folder:
 
 ```
 node scripts/check-expansion-quotes.mjs --captures <each folder below>

@@ -6,7 +6,7 @@ status: stable
 tags: [product, plan, phase-9, catalog, freshness]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T03:04:00Z
+  at: 2026-10-05T04:45:00Z
 stale_after: 2026-11-15T00:00:00Z
 sources:
   - resource: ../system/card-expansion-pipeline.md
@@ -49,7 +49,8 @@ One branch and PR each, from the latest `main`. Each gets an independent reviewe
 | 1 | Review app knows pipeline batches | `apps/review/src/manifest.ts` bundles batch manifests, and a source may have several known hashes (one per dated capture). This unblocks publishing any pipeline batch; it reaches Evan through the Render deploy of `main` |
 | 2 | Pipeline fixes from the Phase 8 run | A published version is never rebuilt with other contents (`publishedVersions`); `run build --proposed` builds without changing what ships; `drop-source`; `next` returns all cards of a failed stage |
 | 3 | `pipeline freshness` | Hash-only re-check of every cited source (issuer, real and merchant layers); a freshness record; the builder reads `checkedOn`; refresh batches for changed pages. **Real cards:** a batch may refresh a real card; `checkRealCards` (pinned to release 1, `CATALOG_V2`) is replaced for refreshed real cards by the rule-ID continuity check against the published release, keeping the release-1 names and rule-ID prefixes. Also fixes `capture-issuer-pages.mjs` joining an absolute `--captures`/`--manifest` path under `--dir` |
-| 4 | Renewal run (done 2026-10-05, branch `catalog-renewal-2026-10`; [results](../../docs/evals/freshness-2026-10.md)) | Freshness over all 328 sources, refresh batches for changed pages, renewed catalog under a new version, eval, `handoff`; Evan publishes. Results in `docs/evals/freshness-2026-10.md` |
+| 4 | Renewal run (done 2026-10-05, PR #50 merged and deployed; [results](../../docs/evals/freshness-2026-10.md)) | Freshness over all 328 sources, refresh batches for changed pages, renewed catalog under a new version, eval, `handoff`. Results in `docs/evals/freshness-2026-10.md` |
+| 5 | Agent publish path (added 2026-10-05 at Evan's request; [decision](../decisions/2026-10-05-agent-publish-cli-session.md)) | `pipeline login` / `logout` (Evan's own CLI session, stored outside the repository) and `pipeline publish`: match every cited source to a bundled manifest hash, upload the captures, create the draft, check it equals `CATALOG_V3`, publish only with `--confirm <version>` after Evan's `publish <version>` in chat. Then the renewal is published this way |
 
 ## Milestone 3, built (2026-10-05)
 
@@ -63,7 +64,8 @@ Open for milestone 4: the run over all 328 sources (about 2.5 s per page per hos
 | --- | --- |
 | 2026-10-06 | Milestones 1 and 2 merged |
 | 2026-10-09 | Milestone 3 merged |
-| 2026-10-14 | Renewal run at a ready branch; merged and deployed |
+| 2026-10-14 | Renewal run at a ready branch; merged and deployed (done 2026-10-05) |
+| 2026-10-19 | Milestone 5 (agent publish path) merged and deployed; Evan has run `pipeline login` |
 | from 2026-10-20 | Evan asked to publish (latest 2026-10-28; hard limit 2026-11-01T00:00Z) |
 
 If the renewal run is not at a ready branch by 2026-10-20, tell Evan at once. The fallback is a manual renewal: new dated captures with the existing scripts and a rebuild.
