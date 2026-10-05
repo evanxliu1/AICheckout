@@ -12,8 +12,9 @@ import {
 } from './hash.ts';
 import type { InputRef } from './hash.ts';
 import { issuerSlugOf } from './files.ts';
-import type { Batch, CardEntry, FindingsCard } from './files.ts';
+import type { Batch, CardEntry, CorpusCase, FindingsCard } from './files.ts';
 import type { Stage } from './state.ts';
+import { undraftedCase } from '../../../scripts/lib/expansion-verification.mjs';
 
 /** Bumped by hand when a stage's output changes for the same inputs. */
 export const STAGE_VERSIONS: Record<Stage, string> = {
@@ -207,7 +208,7 @@ export async function cardInputs(batch: Batch, stage: Stage, card: CardEntry): P
       };
     }
     case 'verify': {
-      const draft = batch.draft.get(card.id);
+      const draft = draftCaseOf(batch, card.id);
       if (!draft) return null;
       return {
         ...base,
@@ -238,7 +239,7 @@ export async function cardInputs(batch: Batch, stage: Stage, card: CardEntry): P
       };
     }
     case 'apply': {
-      const draft = batch.draft.get(card.id);
+      const draft = draftCaseOf(batch, card.id);
       const findings = batch.findings.get(card.id);
       if (!draft || !findings) return null;
       return {
@@ -291,8 +292,21 @@ export async function batchInputs(
   return { stageVersion: STAGE_VERSIONS[stage], config: {}, inputs, missingHashed: [], missingToRun: [] };
 }
 
+/** True when the draft run succeeded without a case for the card (state's `undrafted` marker, no case in the file). */
+export const isUndrafted = (batch: Batch, cardId: string): boolean =>
+  batch.state.cards[cardId]?.stages.draft?.undrafted === true && !batch.draft.has(cardId);
+
+/** The case verify, apply and the verify gate read: the draft case, or for an undrafted card the empty reference
+ * `applyVerification` starts from (`undraftedCase`), whose hashes are stable. Null without either. */
+export function draftCaseOf(batch: Batch, cardId: string): CorpusCase | null {
+  const draft = batch.draft.get(cardId);
+  if (draft) return draft;
+  const card = batch.cards.find((entry) => entry.id === cardId);
+  return card && isUndrafted(batch, cardId) ? (undraftedCase(card) as CorpusCase) : null;
+}
+
 /** The draft case's current labels and anchors hashes, or null without a draft case. */
 export function draftSplit(batch: Batch, cardId: string): { labelsHash: string; anchorsHash: string } | null {
-  const draft = batch.draft.get(cardId);
+  const draft = draftCaseOf(batch, cardId);
   return draft ? { labelsHash: labelsHash(draft), anchorsHash: anchorsHash(draft) } : null;
 }
