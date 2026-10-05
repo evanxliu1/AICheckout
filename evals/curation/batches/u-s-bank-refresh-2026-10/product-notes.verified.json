@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/apply-expansion-verification.mjs",
+  "description": "Product hints of the verified cards with the verifiers’ adjudicated changes. verification: confirmed, fixed or added by a verifier (anchor quoted from anchorSourceId), or unreviewed.",
+  "cards": [
+    {
+      "cardId": "us-bank-cash-plus",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "5% choice categories (\"two categories you choose\" each quarter) from: \"Fast food\", \"Home utilities\", \"TV, internet & streaming services\", \"Department stores\", \"Cell phone providers\", \"Electronics…",
+          "rate": "5%",
+          "cap": "first $2,000 in combined eligible net purchases each quarter across both 5% categories, then 1%",
+          "conditions": "Cardholder must choose and activate categories each quarter (Rewards Center, mobile app, or phone); selection opens 45 days before the quarter; categories lock 5 days…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "on your first $2,000 in combined eligible purchases each quarter on two categories you choose.",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-cash-plus-product"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "2% everyday choice category (\"one everyday category you choose each quarter\") from: \"Grocery stores and grocery delivery\", \"Restaurants\", \"Gas stations and EV charging stations\"",
+          "rate": "2%",
+          "cap": "none stated (FAQ: 'no limits on your 2% or 1% cash back earnings')",
+          "conditions": "Chosen quarterly with the 5% picks. Grocery excludes discount stores/supercenters and wholesale clubs (Walmart, Target, warehouse clubs).",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "on one everyday category you choose each quarter, like gas stations and EV charging stations*, grocery stores* or restaurants.",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-cash-plus-product"
+        },
+        {
+          "type": "checkout-method",
+          "summary": "TV, internet and streaming 5% option: purchases through PayPal, Google Play, Amazon or iTunes Store may not qualify.",
+          "rate": "5%",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Purchases made using a third-party service such as PayPal®, Google Play, Amazon, and iTunes Store may not qualify.",
+          "anchorSourceId": "us-bank-cash-plus-sample-merchants",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-smartly",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Smartly Earning Bonus, qualifying balance $10,000-$49,999 (\"Earn a total of 2.5%\", 25% bonus)",
+          "rate": "2.5% total",
+          "cap": "first $10,000 in eligible Net Purchases each billing cycle, then 2%",
+          "conditions": "Requires U.S. Bank Smartly Savings account plus qualifying balances in Smartly Checking and/or Safe Debit accounts. Bonus excludes education/school, gift cards (incl. discount gift card…",
+          "membership": "Requires U.S. Bank Smartly Savings account plus qualifying balances in Smartly Checking and/or Safe Debit accounts. Bonus excludes education/school, gift cards (incl. discount gift card…",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Includes a 25% Smartly Earning Bonus with a qualifying balance between $10,000 and $49,999.",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-smartly-product"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "Smartly Earning Bonus, qualifying balance $50,000-$99,999 (\"Earn a total of 3%\", 50% bonus)",
+          "rate": "3% total",
+          "cap": "first $10,000 in eligible Net Purchases each billing cycle, then 2%",
+          "conditions": "Same relationship requirements as above.",
+          "membership": "Same relationship requirements as above.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Includes a 50% Smartly Earning Bonus with a qualifying balance between $50,000 and $99,999.",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-smartly-product"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "Smartly Earning Bonus, qualifying balance $100,000+ (\"Earn a total of 4%\", 100% bonus)",
+          "rate": "4% total",
+          "cap": "first $10,000 in eligible Net Purchases each billing cycle, then 2%",
+          "conditions": "Same relationship requirements as above.",
+          "membership": "Same relationship requirements as above.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Includes a 100% Smartly Earning Bonus with a qualifying balance of $100,000 or more.",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-smartly-product"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-altitude-go",
+      "issuer": "U.S. Bank",
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-altitude-connect",
+      "issuer": "U.S. Bank",
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-cash-plus-secured",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "5% choice categories (\"two categories you choose\" each quarter) from: \"Fast food\", \"Home utilities\", \"TV, internet & streaming services\", \"Department stores\", \"Cell phone providers\", \"Electronics…",
+          "rate": "5%",
+          "cap": "first $2,000 in combined eligible net purchases each quarter across both 5% categories, then 1%",
+          "conditions": "Cardholder must choose and activate categories each quarter (Rewards Center, mobile app, or phone); selection opens 45 days before the quarter; categories lock 5 days…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Cardmember must enroll each quarter into categories of their choice, or all Net Purchases will earn no more than 1% cash back.",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-cash-plus-secured-product"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "2% everyday choice category (\"one everyday category you choose each quarter\") from: \"Grocery stores and grocery delivery\", \"Restaurants\", \"Gas stations and EV charging stations\"",
+          "rate": "2%",
+          "cap": "none stated (FAQ: 'no limits on your 2% or 1% cash back earnings')",
+          "conditions": "Chosen quarterly with the 5% picks. Grocery excludes discount stores/supercenters and wholesale clubs (Walmart, Target, warehouse clubs).",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "2% cash back on one everyday category you choose like",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-cash-plus-secured-product"
+        },
+        {
+          "type": "checkout-method",
+          "summary": "TV, internet and streaming 5% option: purchases through PayPal, Google Play, Amazon or iTunes Store may not qualify.",
+          "rate": "5%",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Purchases made using a third-party service such as PayPal®, Google Play, Amazon, and iTunes Store may not qualify.",
+          "anchorSourceId": "us-bank-cash-plus-sample-merchants",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-altitude-go-secured",
+      "issuer": "U.S. Bank",
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-harley-davidson-hog-elite",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "5X points at merchants classified as H-D: dealerships, H-D.com, the H-D Museum, Factory Tours and H-D Insurance.",
+          "rate": "5X",
+          "merchants": [
+            "Harley-Davidson"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "merchants classified as H‑D (dealerships, H‑D.com, the H‑D Museum, Factory Tours, and",
+          "anchorSourceId": "us-bank-harley-davidson-hog-elite-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Points redeem for Harley-Davidson Gift Cards: 10,000 points for a $100 H-D Gift Card (not a cash value).",
+          "merchants": [
+            "Harley-Davidson"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "can be redeemed for a $100 H-D Gift Card",
+          "anchorSourceId": "us-bank-harley-davidson-hog-elite-product",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-skypass-skyblue",
+      "issuer": "U.S. Bank",
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-skypass-visa-signature",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Qualified Korean Air ticket purchases\" (Korean Air merchant of record, e.g. koreanair.com)",
+          "rate": "2X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Korean Air"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 2 miles for every $1 spent in eligible net purchases on eligible Korean Air ticket purchases.",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-skypass-visa-signature-product"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-skypass-select",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Qualified Korean Air ticket purchases\"",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "Korean Air must be merchant of record.",
+          "merchants": [
+            "Korean Air"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3 miles for every $1 spent in eligible net purchases on qualified Korean Air ticket purchases.",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-skypass-select-product"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-state-farm-premier-cash-rewards",
+      "issuer": "U.S. Bank",
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-edward-jones-triple-rewards",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "automatic-top-category",
+          "summary": "Top three spend categories each month, automatically determined from 18 categories: \"Charity & Non-Profits\", \"Clothing & Department Stores\", \"Dining\", \"Drugstores & Personal Care\", \"Electric Vehicle…",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "Automatic, no enrollment; determined per monthly statement. Excludes purchases at Amazon and discount stores/supercenters such as Target and Walmart. Travel Center purchases do not additionally…",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Your top three spend categories will be determined based on the 18 categories listed below.",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-edward-jones-triple-rewards-categories"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-elan-fidelity-rewards",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "2% value only when points are deposited into an eligible Fidelity account; other redemptions are worth less.",
+          "rate": "2%",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "The 2% cash back rewards value applies only to Points redeemed for a deposit into an eligible Fidelity",
+          "anchorSourceId": "us-bank-elan-fidelity-rewards-rewards-terms",
+          "verification": "added"
+        }
+      ]
+    }
+  ]
+}
