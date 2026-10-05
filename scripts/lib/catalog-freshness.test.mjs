@@ -1,16 +1,18 @@
 // Phase 9 milestone 3 builder tests: dates from freshness records (in memory, synthetic), the source-window error, the
-// byte identity of today's build with no records, and a pipeline batch replacing a real card. No captures, no network.
+// byte identity of the base layer's build (release 2) with no records, and a pipeline batch replacing a real card. The
+// tests stack on the committed base layer alone, not on the committed batches or freshness records. No captures, no
+// network.
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2.ts';
-import { CATALOG_V3 } from '../../packages/rewards-core/src/catalog-v3.ts';
 import { corpusCases } from './catalog-overlay.mjs';
 import { effectiveSources, loadCatalogBatches, mergeLayers, sha256Json } from './catalog-batches.mjs';
 import {
   buildRelease,
+  catalogSha256,
   checkRealCards,
   citedSourceIds,
   realPaymentPathChanges,
@@ -19,8 +21,29 @@ import {
 import { MERCHANT_LAYER, freshDates, freshnessCounts, freshnessRecordSchema } from './freshness.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
-const base = await loadCatalogBatches(root);
-const ledger = JSON.parse(await readFile(join(root, 'evals/curation/rule-id-ledger.json'), 'utf8'));
+const committed = await loadCatalogBatches(root);
+const RELEASE_2 = '2026-10-02.expansion.1';
+/** The frozen base layer alone, as release 2 was built: no pipeline batch, no freshness record. */
+const base = {
+  ...committed,
+  config: {
+    ...committed.config,
+    version: RELEASE_2,
+    layers: committed.config.layers.filter((layer) => layer.kind === 'base'),
+  },
+  layers: committed.layers.filter((layer) => layer.kind === 'base'),
+  freshness: [],
+};
+const committedLedger = JSON.parse(await readFile(join(root, 'evals/curation/rule-id-ledger.json'), 'utf8'));
+/** The rule-ID ledger as release 2 left it (the ledger is append-only). */
+const ledger = {
+  ...committedLedger,
+  ids: Object.fromEntries(
+    Object.entries(committedLedger.ids).filter(([, entry]) => entry.firstVersion === RELEASE_2),
+  ),
+  catalogs: committedLedger.catalogs.filter((entry) => entry.version === RELEASE_2),
+};
+const release2 = buildRelease(mergeLayers(base)).catalog;
 const config = { ...base.config, version: '2026-10-20.test.1' };
 const real = base.layers.find((layer) => layer.id === 'real.v2.2');
 
@@ -52,11 +75,10 @@ function record(checkedOn, ids, override = {}) {
 }
 const cited = [...citedSourceIds(mergeLayers(base))];
 
-test('with no freshness record the build is today’s catalog, and the cited sources are the catalog’s', () => {
-  assert.deepEqual(base.freshness, [], 'evals/curation/freshness/ holds no record yet');
+test('with no freshness record the base layer builds release 2, and the cited sources are the catalog’s', () => {
   assert.notEqual(base.merchantManifest, null);
-  assert.deepEqual(buildRelease(mergeLayers({ ...base, freshness: [] })).catalog, CATALOG_V3);
-  assert.deepEqual(new Set(cited), new Set(CATALOG_V3.sources.map((source) => source.id)));
+  assert.equal(catalogSha256(release2), ledger.catalogs[0].catalogSha256);
+  assert.deepEqual(new Set(cited), new Set(release2.sources.map((source) => source.id)));
 });
 
 test('a source is dated by the newest record that rendered its manifest hash; merchants by theirs', () => {
@@ -78,7 +100,7 @@ test('a source is dated by the newest record that rendered its manifest hash; me
   assert.equal(dates.oldest, '2026-10-10');
   // Catalog contents other than dates are unchanged.
   const strip = (c) => ({ ...c, version: null, verifiedAt: null, expiresAt: null, sources: null });
-  assert.deepEqual(strip(catalog), strip(CATALOG_V3));
+  assert.deepEqual(strip(catalog), strip(release2));
   // A changed render dates nothing, not even a capture elsewhere with that hash (it could out-date a newer batch).
   assert.equal(freshDates([newer]).get(`amex-gold-product ${'b'.repeat(64)}`), undefined);
 });
@@ -203,7 +225,7 @@ test('a refreshed Amex real card without an overlay patch loses the BNPL exclusi
     c.cards
       .find((card) => card.id === 'amex-blue-cash-everyday')
       .rules.find((r) => r.category === 'online-retail');
-  assert.deepEqual(online(CATALOG_V3).excludedPaymentPaths, ['bnpl']);
+  assert.deepEqual(online(release2).excludedPaymentPaths, ['bnpl']);
   assert.deepEqual(online(catalog).excludedPaymentPaths, []);
   // The build report and handoff list the dropped exclusion for Evan.
   assert.deepEqual(realPaymentPathChanges(catalog, CATALOG_V2, ['amex-blue-cash-everyday']), [
@@ -215,5 +237,5 @@ test('a refreshed Amex real card without an overlay patch loses the BNPL exclusi
       after: [],
     },
   ]);
-  assert.deepEqual(realPaymentPathChanges(CATALOG_V3, CATALOG_V2, ['amex-blue-cash-everyday']), []);
+  assert.deepEqual(realPaymentPathChanges(release2, CATALOG_V2, ['amex-blue-cash-everyday']), []);
 });

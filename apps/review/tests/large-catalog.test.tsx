@@ -78,9 +78,9 @@ it('offers the bundled catalog v3 first once the package exports it, and skips a
     bundledCatalogs({ CATALOG_V2, CATALOG_V3: CATALOG_V3_FIXTURE }).map((catalog) => catalog.schemaVersion),
   ).toEqual([3, 2]);
   expect(bundledCatalogs({ CATALOG_V2, CATALOG_V3: { schemaVersion: 3 } })).toHaveLength(1);
-  // The real package exports both since Stage 2 M5, the 178-card catalog v3 first.
+  // The real package exports both since Stage 2 M5, the 178-card catalog v3 (renewed 2026-10-05) first.
   expect(bundledCatalogs().map((catalog) => catalog.version)).toEqual([
-    '2026-10-02.expansion.1',
+    '2026-10-05.renewal.1',
     CATALOG_V2.version,
   ]);
 });

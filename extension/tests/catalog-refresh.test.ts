@@ -8,6 +8,9 @@ import { emptyState } from '../src/state/contracts';
 import type { AppState, CatalogCache, CheckoutResponse } from '../src/state/contracts';
 
 let data: Record<string, unknown>, now: number, storage: StateStorage;
+/** Blue Cash Everyday's online-retail rule in the bundled catalog v3 (the 2026-10-05 renewal reissued
+ * the pilot's `bce-online-retail`; build report, "Rule-ID continuity"). */
+const BUNDLED_ONLINE_RETAIL = 'bce-online-retail-v2';
 const fetchCatalog = vi.fn();
 function release(sequence = 1): PublishedRelease {
   return {
@@ -56,7 +59,7 @@ beforeEach(() => {
             cardId: 'amex-blue-cash-everyday',
             usage: [
               {
-                ruleId: 'bce-online-retail',
+                ruleId: BUNDLED_ONLINE_RETAIL,
                 calendarYear: 2026,
                 recordedOn: localDate(now),
                 spentCents: 0,
@@ -115,11 +118,12 @@ describe('published catalog lifecycle', () => {
     });
   });
   it('keeps unchanged limits and recovers the published catalog in a new offline worker', async () => {
-    // The bundled catalog is v2, so moving to this v1 release drops the changed rule's usage first.
+    // The bundled catalog is v3, so moving to this v1 release drops the bundled rule's usage first;
+    // the shopper then records usage on the release's rule.
     const usage = structuredClone(state().wallet.cards[0].usage);
     ok(await refresh());
     expect(state().wallet.cards[0].usage).toEqual([]);
-    state().wallet.cards[0].usage = usage;
+    state().wallet.cards[0].usage = usage.map((row) => ({ ...row, ruleId: 'bce-online-retail' }));
     fetchCatalog.mockResolvedValue({ release: release(2) });
     ok(await refresh());
     fetchCatalog.mockRejectedValue(new Error('offline'));

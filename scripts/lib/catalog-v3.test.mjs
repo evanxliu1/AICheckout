@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2.ts';
@@ -8,6 +10,7 @@ import { loadCatalogBatches, mergeLayers } from './catalog-batches.mjs';
 import {
   CATALOG_V3_BYTE_BUDGET,
   buildCatalogV3,
+  buildRelease,
   catalogStats,
   checkRealCards,
   jsonbTextBytes,
@@ -17,15 +20,31 @@ import {
 } from './catalog-v3.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
-const committed = mergeLayers(await loadCatalogBatches(root));
+const loaded = await loadCatalogBatches(root);
+const ledger = JSON.parse(await readFile(join(root, 'evals/curation/rule-id-ledger.json'), 'utf8'));
+const committed = mergeLayers(loaded);
+// Rule IDs as the builder derives them, before ledger continuity renames changed rules.
 const built = buildCatalogV3(committed);
+// The frozen base layer alone, as release 2 was built: no pipeline batch, no freshness record.
+const baseBuilt = buildCatalogV3(
+  mergeLayers({
+    ...loaded,
+    config: { ...loaded.config, version: '2026-10-02.expansion.1' },
+    layers: loaded.layers.filter((layer) => layer.kind === 'base'),
+    freshness: [],
+  }),
+);
 
 test('the committed CATALOG_V3 is the build of the committed inputs', () => {
-  assert.deepEqual(CATALOG_V3, built);
-  assert.equal(built.version, '2026-10-02.expansion.1');
-  assert.equal(built.verifiedAt, '2026-10-02T00:00:00Z');
-  assert.equal(built.expiresAt, '2026-11-01T00:00:00Z');
-  assert.ok(catalogV3Schema.safeParse(built).success);
+  const { catalog } = buildRelease({ ...committed, ledger });
+  assert.deepEqual(CATALOG_V3, catalog);
+  assert.equal(catalog.version, loaded.config.version);
+  assert.equal(catalog.version, '2026-10-05.renewal.1');
+  assert.equal(catalog.verifiedAt, '2026-10-05T00:00:00Z');
+  assert.equal(catalog.expiresAt, '2026-11-04T00:00:00Z');
+  assert.ok(catalogV3Schema.safeParse(catalog).success);
+  // Real cards a batch refreshed are checked by rule-ID continuity instead; the others still match release 1.
+  assert.deepEqual(checkRealCards(catalog, CATALOG_V2, { replaced: committed.replacedReal }), []);
 });
 
 test('every corpus card is in the catalog except the two the overlay holds out', () => {
@@ -39,8 +58,8 @@ test('every corpus card is in the catalog except the two the overlay holds out',
 });
 
 test('the real cards keep release 1 names, rule IDs and rule semantics', () => {
-  assert.deepEqual(checkRealCards(built, CATALOG_V2), []);
-  const changed = structuredClone(built);
+  assert.deepEqual(checkRealCards(baseBuilt, CATALOG_V2), []);
+  const changed = structuredClone(baseBuilt);
   const card = changed.cards.find((c) => c.id === 'amex-blue-cash-everyday');
   card.rules.find((r) => r.id === 'bce-online-retail').excludedPaymentPaths = [];
   changed.cards.find((c) => c.id === 'citi-double-cash').statedValueHundredthsOfCent = 150;
@@ -48,7 +67,7 @@ test('the real cards keep release 1 names, rule IDs and rule semantics', () => {
     'citi-double-cash unit value 150 ≠ 100',
     'amex-blue-cash-everyday rule bce-online-retail differs',
   ]);
-  const points = structuredClone(built);
+  const points = structuredClone(baseBuilt);
   points.cards.find((c) => c.id === 'citi-double-cash').programId = 'citi-thankyou';
   assert.deepEqual(checkRealCards(points, CATALOG_V2), [
     'citi-double-cash program citi-thankyou is not cash back',

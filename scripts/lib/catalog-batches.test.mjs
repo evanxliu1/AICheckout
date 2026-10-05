@@ -1,5 +1,6 @@
 // Multi-batch builder tests on synthetic batches: in-memory layers built from a couple of committed corpus cases and
-// overlay entries (no captures), stacked on the committed base layer.
+// overlay entries (no captures), stacked on the committed base layer alone (not on the batches the committed config
+// lists), so they test the builder independent of the catalog being shipped.
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -20,8 +21,28 @@ import {
 } from './catalog-v3.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
-const base = await loadCatalogBatches(root);
-const ledger = JSON.parse(await readFile(join(root, 'evals/curation/rule-id-ledger.json'), 'utf8'));
+const committed = await loadCatalogBatches(root);
+const RELEASE_2 = '2026-10-02.expansion.1';
+/** The frozen base layer alone, as release 2 was built: no pipeline batch, no freshness record. */
+const base = {
+  ...committed,
+  config: {
+    ...committed.config,
+    version: RELEASE_2,
+    layers: committed.config.layers.filter((layer) => layer.kind === 'base'),
+  },
+  layers: committed.layers.filter((layer) => layer.kind === 'base'),
+  freshness: [],
+};
+const committedLedger = JSON.parse(await readFile(join(root, 'evals/curation/rule-id-ledger.json'), 'utf8'));
+/** The rule-ID ledger as release 2 left it (the ledger is append-only). */
+const ledger = {
+  ...committedLedger,
+  ids: Object.fromEntries(
+    Object.entries(committedLedger.ids).filter(([, entry]) => entry.firstVersion === RELEASE_2),
+  ),
+  catalogs: committedLedger.catalogs.filter((entry) => entry.version === RELEASE_2),
+};
 const expansion = base.layers[0];
 const caseOf = (cardId) => structuredClone(corpusCases(expansion.corpus).get(cardId));
 const entryOf = (cardId) => structuredClone(expansion.overlay.cards.find((entry) => entry.cardId === cardId));
@@ -82,13 +103,14 @@ function refreshBatch() {
   });
 }
 
-test('the base layer alone rebuilds the committed CATALOG_V3, with and without the ledger', () => {
+test('the base layer alone rebuilds release 2 byte for byte, with and without the ledger', () => {
   const inputs = mergeLayers(base);
-  assert.deepEqual(buildRelease(inputs).catalog, CATALOG_V3);
+  const unledgered = buildRelease(inputs).catalog;
+  assert.equal(catalogSha256(unledgered), ledger.catalogs[0].catalogSha256);
   const { catalog, continuity } = buildRelease({ ...inputs, ledger });
-  assert.deepEqual(catalog, CATALOG_V3);
+  assert.deepEqual(catalog, unledgered);
   assert.equal(continuity.previous, null);
-  assert.deepEqual(updateLedger(ledger, catalog), ledger, 'the committed ledger is up to date');
+  assert.deepEqual(updateLedger(ledger, catalog), ledger, 'the release-2 ledger is up to date');
   assert.deepEqual(
     inputs.dropped.map((card) => card.cardId),
     expansion.cards.cards.map((card) => card.id).filter((id) => expansion.dropped[id]),
@@ -101,7 +123,7 @@ test('newest batch wins per card: replaced cards keep their place, new cards app
   const ids = catalog.cards.map((card) => card.id);
   assert.deepEqual(
     ids.slice(0, -1),
-    CATALOG_V3.cards.map((card) => card.id),
+    buildRelease(mergeLayers(base)).catalog.cards.map((card) => card.id),
   );
   assert.equal(ids.at(-1), 'chase-test-new-cash');
   assert.equal(
@@ -373,14 +395,24 @@ test('published versions: the same rule IDs and terms leave the ledger as is; an
   assert.deepEqual(updateLedger(v2.ledger, more).catalogs.at(-1).ruleIds, ['a-base', 'a-dining-v2', 'a-gas']);
 });
 
-test('the committed config lists its version as published, and the committed build matches its ledger entry', () => {
-  assert.ok(base.config.publishedVersions.includes(base.config.version));
-  const { catalog } = buildRelease({ ...mergeLayers(base), ledger });
-  assert.deepEqual(publishedVersionProblems(ledger, catalog), []);
-  assert.equal(updateLedger(ledger, catalog, { published: base.config.publishedVersions }), ledger);
-  // The seeded hash is today's CATALOG_V3, the canonical JSON SHA-256 recorded for release 2.
-  assert.equal(ledger.catalogs.at(-1).catalogSha256, catalogSha256(CATALOG_V3));
-  assert.equal(catalogSha256(CATALOG_V3), '147b48c1a18fa2296d06461b0ae0e647d8c0a8e66f9639ab1cfc10613533eb26');
+test('release 2 stays published and unchanged, and the committed build matches its ledger entry', () => {
+  const { publishedVersions } = committed.config;
+  assert.ok(publishedVersions.includes(RELEASE_2));
+  // Release 2's entry holds the canonical JSON SHA-256 seeded for it; the base layer still rebuilds it as published.
+  assert.equal(
+    ledger.catalogs[0].catalogSha256,
+    '147b48c1a18fa2296d06461b0ae0e647d8c0a8e66f9639ab1cfc10613533eb26',
+  );
+  const release2 = buildRelease({ ...mergeLayers(base), ledger }).catalog;
+  assert.equal(updateLedger(committedLedger, release2, { published: publishedVersions }), committedLedger);
+  // The committed config builds CATALOG_V3, recorded as the newest ledger entry; listed as published only once
+  // Evan has published it (wiki/ops/catalog-release.md).
+  const { catalog } = buildRelease({ ...mergeLayers(committed), ledger: committedLedger });
+  assert.deepEqual(catalog, CATALOG_V3);
+  assert.deepEqual(publishedVersionProblems(committedLedger, catalog), []);
+  assert.deepEqual(updateLedger(committedLedger, catalog, { published: publishedVersions }), committedLedger);
+  assert.equal(committedLedger.catalogs.at(-1).version, CATALOG_V3.version);
+  assert.equal(committedLedger.catalogs.at(-1).catalogSha256, catalogSha256(CATALOG_V3));
 });
 
 test('quote-limit omissions apply only to cards still on the frozen base layer', () => {

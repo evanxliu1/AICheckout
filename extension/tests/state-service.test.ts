@@ -3,6 +3,7 @@ import { createStateService, localDate, RESULT_MAX_AGE_MS, STATE_KEY } from '../
 import type { StateStorage } from '../src/state/service';
 import { emptyState } from '../src/state/contracts';
 import type { CheckoutResponse } from '../src/state/contracts';
+import { CATALOG_V3 } from '../src/domain';
 
 let data: Record<string, unknown>;
 let now: number;
@@ -12,7 +13,8 @@ const wallet = {
   cards: [{ cardId: 'capital-one-quicksilver', usage: [] }],
 };
 beforeEach(() => {
-  now = Date.parse('2026-10-03T15:00:00Z');
+  // 15:00 UTC the day after the bundled catalog was verified, inside its validity window.
+  now = Date.parse(CATALOG_V3.verifiedAt) + 39 * 3_600_000;
   data = {};
   storage = {
     get: vi.fn(async () => structuredClone(data)),

@@ -465,18 +465,27 @@ describe('init --refresh-from-freshness', { timeout: 60_000 }, () => {
   });
 });
 
-describe('freshness on the committed build config', { timeout: 120_000 }, () => {
+describe('freshness on the base-layer build config (release 2)', { timeout: 120_000 }, () => {
   it('plans the 328 cited sources, one entry per card, and seeds a real card from its research entry', async () => {
-    // A copy of the committed config, layers and research (no captures); the record below is synthetic.
+    // A copy of the committed base layers and research (no captures) under the committed config cut to the base
+    // layers, as release 2 was built, so the test does not depend on the batches shipped; the record is synthetic.
     const root = await mkdtemp(join(tmpdir(), 'catalog-freshness-repo-'));
     for (const path of [
-      'evals/curation/catalog-batches.json',
       'evals/curation/expansion',
       'evals/curation/real',
       'docs/research/cards-2026',
       'scripts/capture-issuer-pages.mjs',
     ])
       await cp(join(REPO, path), join(root, path), { recursive: true });
+    const config = JSON.parse(await readFile(join(REPO, 'evals/curation/catalog-batches.json'), 'utf8'));
+    await writeFile(
+      join(root, 'evals/curation/catalog-batches.json'),
+      json({
+        ...config,
+        version: '2026-10-02.expansion.1',
+        layers: config.layers.filter((layer: { kind: string }) => layer.kind === 'base'),
+      }),
+    );
     const plan = await freshnessPlan(root);
     expect(plan.sources).toHaveLength(328);
     expect(new Set(plan.cards.map((card) => card.cardId)).size).toBe(plan.cards.length);

@@ -63,7 +63,7 @@ function release(catalog: PublishedRelease['catalog'], sequence = 1): PublishedR
   };
 }
 const v3 = (version = 'test-v3.1') => ({ ...structuredClone(CATALOG_V3_FIXTURE), version });
-// Verified the same day as the bundled catalog v3, so a cached release of it stays in effect (a tie).
+// Verified on DAY, before the bundled catalog v3 takes effect, so a cached release of it stays in effect.
 const v2Catalog = redateCatalog(CATALOG_V2, DAY);
 const purchase = (merchantId = 'best-buy-us') => ({
   merchantId,
@@ -337,13 +337,17 @@ describe('catalog v3 refresh rules', () => {
     async (failure) => {
       fetchCatalog.mockResolvedValue({ release: release(v3('test-v3.2'), 2) });
       ok(await refresh());
-      const before = local.read();
       const next = release(v3('test-v3.3'), 3);
+      if (failure === 'expired') {
+        // Loading at that time may switch to the valid bundled catalog; that write is not the refresh's.
+        now = Date.parse(next.catalog.expiresAt);
+        ok(await service()({ type: 'checkout:get-state' }));
+      }
+      const before = local.read();
       let response: unknown = { release: next };
       if (failure === 'rollback') response = { release: release(v3('test-v3.1'), 1) };
       if (failure === 'same sequence changed') next.sequence = 2;
       if (failure === 'reused version') next.version = next.catalog.version = 'test-v3.2';
-      if (failure === 'expired') now = Date.parse(next.catalog.expiresAt);
       if (failure === 'future') next.published_at = `${DAY}T16:00:00Z`;
       if (failure === 'invalid')
         (next.catalog as CatalogV3).programs[1].valuation = { basis: 'cash' } as never;
@@ -481,20 +485,33 @@ describe('release 1 (v2) to the bundled catalog v3', () => {
     defaultCardId: null,
     cards: CATALOG_V2.cards.map((card) => ({ cardId: card.id, usage: card.rules.map((r) => usage(r.id)) })),
   });
-  it('keeps every usage row: the real cards keep their rule IDs and terms in v3', () => {
+  /** Release-1 rule IDs the 2026-10-05 renewal kept (same terms); it reissued the others with new IDs
+   * because their terms changed (build report, "Rule-ID continuity"). */
+  const KEPT_RELEASE_1_RULES = [
+    'active-cash-base',
+    'quicksilver-base',
+    'quicksilver-travel-portal',
+    'savor-base',
+    'savor-entertainment-portal',
+    'savor-travel-portal',
+  ];
+  it('keeps every usage row whose rule the renewal kept: same rule ID and terms in v3', () => {
     const result = reconcileWallet(realCards(), CATALOG_V3, CATALOG_V2);
-    expect(result).toMatchObject({ usageDropped: false, optionsDropped: false });
-    expect(result.wallet).toEqual(realCards());
+    expect(result).toMatchObject({ usageDropped: true, optionsDropped: false });
+    const expected = realCards();
+    for (const card of expected.cards)
+      card.usage = card.usage.filter((u) => KEPT_RELEASE_1_RULES.includes(u.ruleId));
+    expect(result.wallet).toEqual(expected);
   });
   it('still drops a row whose rule changed under the same ID, or gained v3 structure', () => {
     const changed = structuredClone(CATALOG_V3);
-    const bce = changed.cards.find((c) => c.id === 'amex-blue-cash-everyday')!;
-    bce.rules.find((r) => r.id === 'bce-online-retail')!.rateBps += 100;
-    bce.rules.find((r) => r.id === 'bce-gas')!.requiredPaymentPaths = ['card'];
+    const savor = changed.cards.find((c) => c.id === 'capital-one-savor')!;
+    savor.rules.find((r) => r.id === 'savor-travel-portal')!.rateBps += 100;
+    savor.rules.find((r) => r.id === 'savor-entertainment-portal')!.requiredPaymentPaths = ['card'];
     const result = reconcileWallet(realCards(), changed, CATALOG_V2);
     expect(result.usageDropped).toBe(true);
-    const kept = result.wallet.cards.find((c) => c.cardId === 'amex-blue-cash-everyday')!.usage;
-    expect(kept.map((u) => u.ruleId)).toEqual(['bce-base', 'bce-supermarkets']);
+    const kept = result.wallet.cards.find((c) => c.cardId === 'capital-one-savor')!.usage;
+    expect(kept.map((u) => u.ruleId)).toEqual(['savor-base']);
   });
 });
 

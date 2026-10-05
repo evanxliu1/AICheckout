@@ -12,9 +12,10 @@ let data: Record<string, unknown>;
 const read = vi.fn();
 beforeEach(() => {
   HTMLElement.prototype.scrollIntoView = vi.fn();
-  // The bundled catalog v3 is valid from 2026-10-02. Only Date.now is mocked; the popup's stale-result
-  // timer takes midnight from the real clock, so this must not be later than the real date.
-  vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-10-02T15:00:00Z'));
+  // 15:00 UTC on the day the bundled catalog v3 was verified. Only the clock is faked (timers stay real);
+  // the popup's stale-result timer takes midnight from `new Date()`, so that is faked too.
+  vi.useFakeTimers({ toFake: ['Date'] });
+  vi.setSystemTime(Date.parse(CATALOG_V3.verifiedAt) + 15 * 60 * 60 * 1000);
   data = {
     checkoutStateV1: {
       ...emptyState(),
@@ -56,6 +57,7 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
+  vi.useRealTimers();
 });
 
 async function fillPurchase() {
