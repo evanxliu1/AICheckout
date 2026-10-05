@@ -151,14 +151,20 @@ export async function freshnessPlan(root: string): Promise<FreshnessPlan> {
   if (problems.length) throw new Error(`Cannot plan the freshness check:\n- ${problems.join('\n- ')}`);
   const layerOf = (cardId: string) =>
     [...loaded.layers].reverse().find((layer) => layer.corpus.cases.some((item) => item.cardId === cardId))!;
-  const cards = merged.corpora
-    .flatMap((corpus) => corpus.cases)
-    .map((item) => ({
-      cardId: item.cardId,
-      issuer: item.issuer,
-      sourceIds: item.sourceIds,
-      layer: layerOf(item.cardId),
-    }));
+  // One entry per card: the real corpus has several cases (variants) per card; their sources are united.
+  const byCard = new Map<string, CatalogCard>();
+  for (const item of merged.corpora.flatMap((corpus) => corpus.cases)) {
+    const card = byCard.get(item.cardId);
+    if (card) card.sourceIds = [...new Set([...card.sourceIds, ...item.sourceIds])];
+    else
+      byCard.set(item.cardId, {
+        cardId: item.cardId,
+        issuer: item.issuer,
+        sourceIds: item.sourceIds,
+        layer: layerOf(item.cardId),
+      });
+  }
+  const cards = [...byCard.values()];
   return { version: loaded.config.version, loaded, sources, cards };
 }
 

@@ -6,7 +6,7 @@ status: stable
 tags: [product, plan, phase-9, catalog, freshness]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T22:11:00Z
+  at: 2026-10-05T00:05:04Z
 stale_after: 2026-11-15T00:00:00Z
 sources:
   - resource: ../system/card-expansion-pipeline.md
@@ -50,6 +50,12 @@ One branch and PR each, from the latest `main`. Each gets an independent reviewe
 | 2 | Pipeline fixes from the Phase 8 run | A published version is never rebuilt with other contents (`publishedVersions`); `run build --proposed` builds without changing what ships; `drop-source`; `next` returns all cards of a failed stage |
 | 3 | `pipeline freshness` | Hash-only re-check of every cited source (issuer, real and merchant layers); a freshness record; the builder reads `checkedOn`; refresh batches for changed pages. **Real cards:** a batch may refresh a real card; `checkRealCards` (pinned to release 1, `CATALOG_V2`) is replaced for refreshed real cards by the rule-ID continuity check against the published release, keeping the release-1 names and rule-ID prefixes. Also fixes `capture-issuer-pages.mjs` joining an absolute `--captures`/`--manifest` path under `--dir` |
 | 4 | Renewal run | Freshness over all 328 sources, refresh batches for changed pages, renewed catalog under a new version, eval, `handoff`; Evan publishes. Results in `docs/evals/freshness-2026-10.md` |
+
+## Milestone 3, built (2026-10-05)
+
+Branch `phase9-m3-freshness`: `pipeline freshness` writes the text-free record `evals/curation/freshness/<date>.json` (328 sources from the build config: issuer, real and merchant layers; one capture process per host into `os.tmpdir()`, text deleted; resumable per day); the builder dates a source by the newest record that found it `unchanged` (merchant MCC `checkedOn` too) and refuses a cited source outside the 30-day window by name; `init --refresh-from-freshness <date>` seeds a refresh batch per issuer from the changed cards' current layers, research recorded `seeded`; a batch may replace a real card (release-1 names and rule-ID scheme, `checkRealCards` skipped only for it, ledger continuity applies); the review app and `handoff` read the records. Details: [pipeline](../system/card-expansion-pipeline.md#built-so-far), [decision](../decisions/2026-10-05-freshness-records-and-seeded-refresh.md). A smoke run on 2026-10-05 of three real-card terms pages (record kept out of the repository): Citi Double Cash terms PDF and Capital One Quicksilver terms unchanged, Amex Blue Cash Everyday terms changed (the probe had seen one-word differences on both Amex terms pages).
+
+Open for milestone 4: the run over all 328 sources (about 2.5 s per page per host; Amex, Chase, Citi, Capital One and others in parallel); commit the record, then seed one refresh batch per issuer with changed cards (`wells-fargo-2026-10` is already a batch id: use `<issuer>-refresh-2026-10`); decide flagged and unreachable sources; re-capture any changed merchant MCC page by hand; a new catalog version; the first committed record changes `CATALOG_V3`'s dates, so the builder's byte-identity test (no records) and `catalog:v3:check` move with it.
 
 ## Schedule
 

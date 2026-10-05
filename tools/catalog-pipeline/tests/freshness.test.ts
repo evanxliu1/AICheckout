@@ -440,3 +440,75 @@ describe('init --refresh-from-freshness', { timeout: 60_000 }, () => {
     expect(w.logs.join('\n')).toContain('found no changed source');
   });
 });
+
+describe('freshness on the committed build config', { timeout: 120_000 }, () => {
+  it('plans the 328 cited sources, one entry per card, and seeds a real card from its research entry', async () => {
+    // A copy of the committed config, layers and research (no captures); the record below is synthetic.
+    const root = await mkdtemp(join(tmpdir(), 'catalog-freshness-repo-'));
+    for (const path of [
+      'evals/curation/catalog-batches.json',
+      'evals/curation/expansion',
+      'evals/curation/real',
+      'docs/research/cards-2026',
+      'scripts/capture-issuer-pages.mjs',
+    ])
+      await cp(join(REPO, path), join(root, path), { recursive: true });
+    const plan = await freshnessPlan(root);
+    expect(plan.sources).toHaveLength(328);
+    expect(new Set(plan.cards.map((card) => card.cardId)).size).toBe(plan.cards.length);
+    const citi = plan.cards.find((card) => card.cardId === 'citi-double-cash')!;
+    expect(citi.layer.id).toBe('real.v2.2');
+    const entries = plan.sources.map((source) => ({
+      sourceId: source.sourceId,
+      layer: source.layer,
+      manifestSha256: source.manifestSha256,
+      sha256: source.sourceId === 'citi-double-cash-product' ? 'f'.repeat(64) : source.manifestSha256,
+      result: source.sourceId === 'citi-double-cash-product' ? 'changed' : 'unchanged',
+      flags: [],
+      checkedOn: '2026-10-20',
+    }));
+    await mkdir(join(root, 'evals/curation/freshness'), { recursive: true });
+    await writeFile(
+      recordPath(root, '2026-10-20'),
+      json({
+        schemaVersion: 1,
+        checkedOn: '2026-10-20',
+        catalogVersion: plan.version,
+        renderer: { captureScriptSha256: 'a'.repeat(64), playwright: null, chromium: null },
+        counts: { unchanged: entries.length - 1, changed: 1, unreachable: 0, flagged: 0 },
+        sources: entries,
+      }),
+    );
+    const logs: string[] = [];
+    const env: Env = {
+      root,
+      now: () => new Date('2026-10-20T09:00:00Z'),
+      exec: async () => 1,
+      env: {},
+      log: (line) => logs.push(line),
+      sleep: async () => {},
+    };
+    expect(
+      await main(
+        ['init', 'citi-refresh-2026-10', '--issuer', 'Citi', '--refresh-from-freshness', '2026-10-20'],
+        env,
+      ),
+    ).toBe(0);
+    const dir = join(root, 'evals/curation/batches/citi-refresh-2026-10');
+    const cards = JSON.parse(await readFile(join(dir, 'cards.json'), 'utf8')).cards;
+    expect(cards).toEqual([
+      expect.objectContaining({
+        id: 'citi-double-cash',
+        issuer: 'Citi',
+        research: 'docs/research/cards-2026/citi.json',
+        sourceIds: citi.sourceIds,
+      }),
+    ]);
+    const sources = JSON.parse(await readFile(join(dir, 'sources.json'), 'utf8')).sources;
+    expect(sources.map((source: { id: string }) => source.id)).toEqual(citi.sourceIds);
+    expect(JSON.parse(await readFile(join(dir, 'pipeline/batch.json'), 'utf8')).seed).toEqual({
+      freshness: '2026-10-20',
+      layers: ['real.v2.2'],
+    });
+  });
+});

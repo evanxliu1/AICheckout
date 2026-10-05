@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-10-05
+* [Freshness records, seeded refresh batches and real cards in batches (Phase 9 milestone 3)](./2026-10-05-freshness-records-and-seeded-refresh.md) — one text-free record per day; only `unchanged` dates a capture; one capture process per host; refresh batches seeded from each card's current layer with research `seeded`; a batch may replace a real card, which keeps its release-1 names and rule-ID scheme and skips only its own `checkRealCards`.
+
 ## 2026-10-04
 * [The review app bundles every pipeline batch manifest and matches a capture by the source's date](./2026-10-04-review-app-batch-manifests.md) — eager Vite glob of `evals/curation/batches/*/manifest.json`; every dated capture per source ID, the one dated `checkedOn` required when it exists, else the newest-dated one; `handoff` mirrors it and drops `conflicts`; a batch is known after merge and the Render deploy.
 * [Published catalog versions, proposed builds, drop-source and grouped next steps (Phase 9 milestone 2)](./2026-10-04-published-versions-and-proposed-builds.md) — `publishedVersions` checked against the ledger entry (rule IDs, order, terms) in `updateLedger`; proposed builds through a would-be config under `pipeline/proposed/`; `drop-source` moves captures to `captures-dropped/` and refuses frozen layers; `next` groups cards per stage and queue code.

@@ -14,6 +14,15 @@ Design: `wiki/system/card-expansion-pipeline.md`. CLI: `tools/catalog-pipeline/R
 3. Restate the request as a batch: id `<issuer-slug>-<YYYY-MM>`, issuer, card names, refresh or new. **Scope questions go to Evan before `init`**: an issuer outside the top 10 (Chase, American Express, Citi, Capital One, Bank of America, Wells Fargo, Discover, U.S. Bank, Barclays, Synchrony), business cards, or an unclear card list. Put his answer in `--summary` (at most 300 characters, his words, no issuer text).
 4. Branch from the latest `origin/main`, then `pipeline init <batch> --issuer "<Name>" --cards "<a, b>" --domains <issuer domains> [--refresh] --summary "<request>"`. Use `--refresh` when any card is already in a released corpus.
 
+## Renewal: freshness and seeded refresh batches
+
+When the request is to renew or re-check the catalog (Phase 9), start with `pipeline freshness` (no model; fetches every cited source into a temporary directory and writes the text-free record `evals/curation/freshness/<YYYY-MM-DD>.json`; re-running the same day resumes; `--only <ids>` re-checks those). Commit the record. Its summary lists, per issuer, the cards with a `changed` source and the `init` command for each:
+
+- `pipeline init <issuer-slug>-refresh-<YYYY-MM> --issuer "<Name>" --refresh-from-freshness <date> [--cards <ids>]` seeds a refresh batch (cards, sources, capture hints from each card's current layer; research done, provenance `seeded`; no researcher agent, no scope questions). Without `--cards` it takes the issuer's changed cards; `--cards` names cards explicitly, unchanged ones included. Then run the loop below as usual: every source of a seeded card is re-captured as a new dated capture.
+- A seeded card may be one of the seven real cards: the catalog keeps its release-1 name and rule-ID prefix; the overlay author must carry the Amex buy-now-pay-later exclusion itself (its agent file says how).
+- `flagged` and `unreachable` sources get no new date and age out: decide per source (a capture hint and `--only` re-check, drop the source in the batch, or hold the card out), each with a reason. Merchant MCC pages that changed are re-captured by hand into `evals/curation/real/merchant-captures` (no merchant stage yet).
+- The builder dates every cited source by the newest record that found it `unchanged` and refuses a build where a cited source is older than 30 days before `verifiedAt`, naming the stale sources.
+
 ## Hard rules
 
 - **Never publish** a catalog release, never sign in to any hosted service, never push `main`, never merge. The run ends at a pushed branch, a PR the session opens and the `pipeline handoff` checklist. The coordinator merges under Evan's standing authorization only after CI and an independent reviewer subagent pass; Evan publishes in the review app.
