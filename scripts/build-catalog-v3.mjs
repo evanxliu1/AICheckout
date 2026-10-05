@@ -218,9 +218,11 @@ exclusions (general rule 22), so the catalog omits them; the corpus keeps them.
 
 ${table(
   ['Card', 'Omitted exclusion (start)'],
-  Object.entries(QUOTE_LIMIT_OMISSIONS).flatMap(([cardId, starts]) =>
-    starts.map((start) => [`\`${cardId}\``, `${start.split(' ').slice(0, 6).join(' ')} …`]),
-  ),
+  Object.entries(QUOTE_LIMIT_OMISSIONS)
+    .filter(([cardId]) => inputs.fromBase.includes(cardId))
+    .flatMap(([cardId, starts]) =>
+      starts.map((start) => [`\`${cardId}\``, `${start.split(' ').slice(0, 6).join(' ')} …`]),
+    ),
 )}
 
 ## Batches and dates
