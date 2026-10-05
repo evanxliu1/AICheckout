@@ -1,100 +1,106 @@
 ---
 type: Product
-title: Phase 10 plan (merchant coverage, draft v5)
-description: Draft v5 after two Fable 5.1 reviews, awaiting Evan's decisions — recommend a card at any U.S. online checkout with a hosted merchant database matched on the device and a deterministic generic cart reader proven on real top-merchant pages; an early click-to-use Web Store release, then consented telemetry and the optional automatic badge; an LLM-drafted, measured merchant pipeline; value metrics and a data room for a buyer or partner.
+title: Phase 10 plan (merchant coverage, draft v6)
+description: Draft v6 after three review rounds (Fable 5.1 ×3, Opus 5.5), awaiting Evan's decisions D1–D14 — recommend a card at any U.S. online checkout with a hosted merchant database matched on the device and a deterministic generic cart reader proven on real top-merchant pages; Release A (click-to-use anywhere) inside the phase, then consented telemetry without browsing data and the optional automatic badge (Release B); a measured LLM merchant pipeline; value metrics and a data room.
 status: draft
 tags: [product, plan, phase-10, merchants, telemetry]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T09:00:00Z
+  at: 2026-10-05T10:00:00Z
 sources:
   - resource: ../system/merchant-coverage-design.md
     title: Merchant coverage design
   - resource: ../system/telemetry-design.md
-    title: Telemetry and value metrics design
+    title: Telemetry, operations and value metrics design
   - resource: ../archive/phase2-goal.md
     title: Archived Phase 2–6 plan (Phase 6 site coverage harness)
 ---
 
-# Phase 10 plan: merchant coverage (draft v5)
+# Phase 10 plan: merchant coverage (draft v6)
 
-**Draft, not approved.** Evan approves this plan and answers D1–D12 before any Phase 10 work starts. History (all 2026-10-05): v1–v3 planned bundled per-site adapters for 10, then 100–500, merchants; v4 followed Evan's direction to work at any merchant like official products, with telemetry and future affiliate offers; **v5** folds in two independent Fable 5.1 reviews (technical, and product/business; agent-verified). Design: [merchant coverage](../system/merchant-coverage-design.md), [telemetry and value metrics](../system/telemetry-design.md).
+**Draft, not approved.** Evan answers D1–D14 before any Phase 10 work starts. History (all 2026-10-05): v1–v3 planned bundled per-site adapters for 10, then 100–500, merchants; v4 followed Evan's direction to work at any merchant like official products, with telemetry and future affiliate offers; v5 folded in two Fable 5.1 reviews (technical; product and business); **v6** folds in a parallel Fable 5.1 and Opus 5.5 review of v5 (all agent-verified). Design: [merchant coverage](../system/merchant-coverage-design.md); [telemetry, operations and value metrics](../system/telemetry-design.md).
 
 ## Goal
 
-A shopper gets a correct card recommendation at **any U.S. online checkout**: the store recognized from a reviewed merchant database (or treated as a generic U.S. online store), the cart amount read automatically where the page allows it and confirmed or typed otherwise, and uncertain categories shown as ranges. The product can **prove its value with data** (users, retention, coverage, accuracy) and is ready for affiliate card offers later. The LLM keeps a measured job: drafting merchant profiles and category evidence through the pipeline pattern, evaluated like the card extraction.
+A shopper gets a correct card recommendation at **any U.S. online checkout**: the store recognized from a reviewed merchant database or treated as a generic U.S. online store, the cart amount read automatically where the page allows and confirmed or typed otherwise, uncertain categories shown as ranges. The product can **prove its value with data** without collecting browsing activity, and is ready for affiliate card offers later. The LLM keeps a measured job: drafting merchant profiles and category evidence, evaluated like the card extraction.
 
-## Success criteria (thresholds X/Y/Z set from the probe before milestone 4)
+## Success criteria
 
-1. **Reader on real pages:** on held-out A, 0 false-found results, with the 95% upper bound reported at the page-state and the site level; found-correct ≥ Y% on the one-item state; p95 reading time under budget.
-2. **Category correctness:** every profiled domain whose plausible category is a catalog bonus category has evidence class 1–3, or its recommendation is shown as a range; share of recommendations shown as ranges is tracked.
-3. **Coverage (field):** ≥ X% of detected checkouts match a **named** profile (the generic profile alone would make any "recognized" metric 100% by construction).
-4. **Merchant pipeline (LLM):** drafted profiles and category evidence measured against adjudicated held-out profiles; results published like the card evals.
-5. **Field quality:** amount correction rate ≤ Z% once telemetry is live.
-6. **Compliance:** store listing, consent screen, privacy policy and event dictionary agree (merge gate before any release that sends events).
-7. **Value pack:** the metrics and data room in the [telemetry design](../system/telemetry-design.md#value-metrics-what-a-buyer-or-partner-asks-for) exist and are current.
+Y is set in the milestone 2 protocol; X and Z are set after 4 weeks of Release B data and reported with n.
+
+1. **Reader on real pages:** on the active held-out split (A, or B once A is retired) 0 false-found results, 95% upper bounds reported at the page-state and site level; found-correct ≥ Y% on the one-item state; p95 reading time within budget.
+2. **Category correctness:** every profiled domain whose plausible category is a catalog bonus category has class 1 or 2 evidence, or its recommendation is a range; the share of range recommendations is reported.
+3. **Coverage (field):** ≥ X% of recommendations at named profiles.
+4. **Merchant pipeline (LLM):** drafted profiles and category evidence measured against the adjudicated held-out profiles frozen in milestone 2.
+5. **Field quality:** amount correction rate ≤ Z%.
+6. **Compliance:** listing, consent screen, privacy policy and event dictionary agree before any release that sends events.
+7. **Value pack:** the [value metrics and data room](../system/telemetry-design.md#value-metrics-what-a-buyer-or-partner-asks-for) exist and are current.
+
+**Phase 10 is done** when 1, 2, 4, 6 and 7 pass and 3 and 5 have been reported once on at least 4 weeks of Release B data.
 
 ## Decisions taken (Evan, 2026-10-05)
 
 - Future affiliate card offers and aggregate internal analytics are wanted; user data is never sold.
-- Collect all proposed event groups (D1 settles how consent works).
-- Account-free until after the MVP.
-- Affiliate offers are a later phase; Phase 10 prepares the metrics.
-
-## What we copy from official products, and what we do not
-
-Copied: a hosted store database with per-store configs as data, generic checkout detection, metrics. Not copied: all-sites data collection, browsing history, per-domain server lookups, bank linking, card-linked offers, retailer affiliate cookies. Details and sources: [design](../system/merchant-coverage-design.md#how-mainstream-products-do-it-researched-2026-10-05).
+- Collect all proposed event groups. The reviewers found two limits Evan confirms in D1 and D11: consent must be an affirmative opt-in, and Chrome's Limited Use forbids automatic browsing data (domains, merchants), so those travel only on a shopper's click; the opportunity event waits for the affiliate phase.
+- Account-free until after the MVP. Affiliate offers are a later phase.
 
 ## Rules kept and rules superseded
 
-Kept: no model at checkout; every catalog and merchant release human-approved; never sign in, create accounts, type secrets, enter addresses or payment details, place orders, bypass bot walls or solve CAPTCHAs on retailer sites; captures gitignored, quotes ≤ 25 words; subscription CLIs only; eval integrity (pre-registered protocol, held-out never tuned on); Web Store submission is Evan's.
+Kept: no model at checkout; every catalog and merchant release human-approved; never sign in, create accounts, type secrets, fill or submit fields, place orders, bypass bot walls or solve CAPTCHAs on retailer sites; captures gitignored, quotes ≤ 25 words; subscription CLIs only, curation and drafting on gpt-5.6-luna `xhigh`; eval integrity; Web Store submission is Evan's.
 
 Superseded on approval (each gets a decision record and a directive row):
 
 | Earlier statement | Becomes |
 | --- | --- |
-| Site adapters bundled in the extension (2026-09-29) | Store configs are reviewed data in the hosted merchant database; reader code stays bundled |
-| Zero-click badge on supported sites through required host permissions (2026-10-01) | Click-to-use everywhere; automatic badge at checkouts after the shopper grants optional all-sites access |
-| Privacy policy draft: "no analytics", "does not run on other websites" | Consented telemetry as designed; injection only on candidate checkout URLs |
-| `goal.md`: "nothing leaves the device"; non-goal "broad scraping" | Nothing leaves the device without consent; bounded capture of cart pages for evaluation (one item, logged out, no orders, snapshots gitignored) is not scraping of catalogs or prices |
-| `docs/release/privacy-review.md`: no analytics added merely to elaborate the policy | Analytics added for product operation at the owner's direction (2026-10-05), under the telemetry design |
+| Site adapters bundled in the extension (2026-09-29) | Store configs are reviewed data in the merchant database, with a bundled fallback if review objects |
+| Zero-click badge through required host permissions (2026-10-01), "local-first" | Click-to-use everywhere; automatic badge after the optional all-sites grant; local-first except consented telemetry |
+| Phase order 9 → 10 → Web Store release (2026-10-03) | Release A ships inside Phase 10 (D8); Release B at milestone 8 |
+| Catalogs only are published by the coordinator on chat approval (2026-10-05) | Also merchant releases, on "publish merchants <version>" |
+| Privacy policy and listing: no analytics; runs on no other site; fetches only on click | Consented telemetry; URL-gated injection on candidate checkouts; weekly background refresh of catalog and merchant database |
+| `goal.md`: nothing leaves the device; few users expected; non-goal "broad scraping" | Nothing leaves without consent; real users and value metrics are goals; bounded capture of cart pages for evaluation is not scraping |
+| `docs/release/privacy-review.md`: no analytics added to elaborate the policy | Analytics added for product operation at the owner's direction (2026-10-05) |
+| Roadmap Phase 6 (site coverage harness) | Folded into milestones 2, 4 and 10 and closed |
 
 ## Milestones
 
-One branch and PR each from the latest `main`; an independent reviewer subagent and CI before the coordinator merges; hosted migrations by the coordinator under the standing authorization.
+One branch (`phase10-mN-<slug>`) and PR each from the latest `main`; an independent reviewer subagent and CI before the coordinator merges; hosted migrations by the coordinator under the standing authorization. Each milestone updates the wiki pages it touches.
 
 | # | Milestone | Verify |
 | --- | --- | --- |
-| 0 | **Approval:** Evan answers D1–D12; directive rows and decision records | Plan and designs `status: stable` |
-| 1 | **Feasibility probe** (no product code): 25 sites stratified by rank band and platform (including shadow-DOM storefronts and a third-party checkout) in a persistent non-Evan profile; reachability, bot walls, prompts, CSP on the badge frame, storage quota; prototype reader steps 1–3 on the snapshots. In parallel, docs only: single-purpose statement, event dictionary draft, privacy memo | `docs/evals/merchant-probe-2026-10.md`; thresholds X/Y/Z and the go/no-go set |
-| 2 | **Eval protocol and capture:** pre-registered protocol (three site splits, states, labeling by two agents, bounds, peek policy); capture tool with recipes; capture all three splits | Reviewer subagent signs the protocol before any tuning; capture tool refuses sign-in, checkout and form fields by test |
-| 3 | **Any-merchant popup:** generic profile, popup merchant search, prefill from the tab domain, `processor` hosts recognized; the shopper can compare at any store by typing the amount | Popup and engine tests; works without the database |
-| 4 | **Generic reader v1**, tuned on development only; the 3 current adapters become store configs | `docs/evals/generic-reader-v1.md` with bounds; gate per criterion 1 |
-| 5 | **Merchant database service and extension use:** schema with Zod/SQL parity and 2 MiB cap, migration, `GET /v1/merchants`, CLI publish, download and cache, suffix matching, `disabled` kill switch, degradation to generic; seeded with the ~250–300 probe, capture and bonus-category domains | Parity cases, API and worker tests, kill-switch test, a published merchant release |
-| 6 | **Release A** (Evan submits): click-to-use at any U.S. checkout, current narrow permissions, no telemetry | Package check, `test:browser`; listing updated |
-| 7 | **Telemetry:** consent screen, batching with `alarms`, ingest endpoint, storage and retention, dashboard in the review app; policy, listing and site rewritten | Chrome prominent-disclosure test passed by a reviewer subagent against the User Data FAQ; contract and retention tests |
-| 8 | **Optional automatic badge:** `https://*/*` optional grant, URL-gated injection, site-access handling → **Release B** with telemetry | `test:browser`, no new required hosts, CPU budget test |
-| 9 | **Merchant pipeline (LLM, measured):** list from license-safe sources, profiles and category evidence drafted and agent-verified, store configs where the reader fails; growth driven by telemetry's growth list toward 1,000 domains | `docs/evals/merchant-pipeline-v1.md`; merchant releases on Evan's approval |
-| 10 | **Operate:** replays monthly for store-config domains and the top 100 only, others triggered by telemetry spikes; reader v2 from development data | Drift report; versioned reader results |
+| 0 | **Approval:** Evan answers D1–D14; directive rows, decision records, roadmap and goal updated; designs marked accepted (not built) | Lint; decision records exist |
+| 1 | **Feasibility probe** (no product code): 25 sites from the D6 source, stratified by rank band and platform (shadow DOM, a third-party checkout), persistent non-Evan profile under a gitignored path; reachability, bot walls, prompts, strict-CSP badge frame, storage quota; prototype reader steps 1–3. Docs in parallel: single-purpose statement and privacy memo in `docs/release/`, event dictionary draft | `docs/evals/merchant-probe-2026-10.md`; go/no-go; proposed Y |
+| 2 | **Protocols and capture:** `docs/evals/generic-reader-protocol.md` (splits, states, labeling and adjudication, bounds, peek policy, capture posture) and the merchant-pipeline protocol (held-out domains and adjudicated profiles frozen); capture tool with recipes; all three splits captured | Reviewer subagent signs both protocols before any tuning or drafting; capture tool refuses sign-in and field input by test |
+| 3 | **Any-merchant popup and engine:** engine takes a passed-in profile and returns ranges (`packages/rewards-core`, `engine-shared.ts`), generic profile, popup merchant search and tab prefill (`extension/src/checkout/merchants.ts`, popup), bundled `processor` seed | Engine tests for generic profiles and ranges; `rewards-v3` golden ladders unchanged; axe on the new screens |
+| 4 | **Generic reader v1**, tuned on development only; the 3 adapters become bundled seed store configs; manifest host list pinned (`e2e/hosts.ts`) | `docs/evals/generic-reader-v1.md` with bounds; criterion 1 |
+| 5 | **Merchant database:** schema (Zod/SQL parity, 2 MiB, regex lint), migration (`npm run supabase -- migration new merchant_releases`), `GET /v1/merchants` with `ETag` and in-memory cache, CLI publish in `tools/catalog-pipeline`, extension download, suffix match, weekly `alarms` refresh, `disabled`, degradation; seeded with the 3 legacy merchants and probe/capture domains at the default category only | Parity, API, worker and kill-switch tests; cold-start test; a published merchant release |
+| 6 | **Release A** (Evan submits): click-to-use at any U.S. checkout; hosted build with weekly catalog and merchant refresh (`alarms`, no new warnings); the 3-site automatic badge per D13; no telemetry; policy, single purpose, permission justifications and privacy review reconciled; Phase 5 prerequisites (publisher, support email, order-URL checks) done | Package check, `test:browser`; reviewer subagent confirms policy, listing and build agree |
+| 7 | **Telemetry:** consent screen, events and per-click "Suggest this store" / "Report a problem", ingest RPC, retention, reviewer dashboard, stop switch; policy, listing, site, support and runbook updated | Prominent-disclosure check against the User Data FAQ by a reviewer subagent; threat-model review of the ingest path; contract, retention and axe tests |
+| 8 | **Optional automatic badge** (`https://*/*` optional, URL-gated injection, site-access handling) → **Release B** with telemetry | `test:browser`, no new required hosts, CPU budget test |
+| 9 | **Merchant pipeline (LLM, measured):** list from license-safe sources (D6); profiles and category evidence drafted by gpt-5.6-luna `xhigh` via Codex, verified and adjudicated by Claude Code subagents; store configs where the reader fails; skill `expand-merchants`; growth from "Suggest this store" toward 1,000 domains | `docs/evals/merchant-pipeline-v1.md` against the frozen held-out set; merchant releases on Evan's approval |
+| 10 | **Operate:** monthly replays for store-config domains and the top 100; reader v2 from development data; dashboard review | Drift report; versioned reader results |
 
-**Sizing:** v4 estimated 8–11 weeks of sessions; the reviewers expect roughly double for one developer with agents. Release A is the first point with real users (milestone 6). **Stop rule:** if fewer than half the probe sites show a logged-out cart, or reader v1 cannot pass criterion 1 within its peek policy, Evan re-decides scope before milestone 5.
+**Sizing:** v4 estimated 8–11 weeks of sessions; reviewers expect about double for one developer with agents. **Stop rule:** if fewer than half the probe sites show a logged-out cart, Evan re-decides scope before milestone 2; if reader v1 fails criterion 1 on both A and B, before milestone 6.
 
-## Decisions for Evan
+## Decisions for Evan (one word each)
 
 | # | Decision | Recommendation |
 | --- | --- | --- |
-| D1 | **Telemetry consent:** off until the shopper agrees on a dedicated screen (Chrome requires an affirmative action for checkout domains), versus default on | Off until agreed; the extension works fully either way |
-| D2 | **Merchant database:** a separate, versioned merchant release reviewed and published like the catalog | Approve |
-| D3 | **All-sites permission:** optional, requested on a click, versus required at install like Honey | Optional |
-| D4 | **Real-page capture:** one known item in a logged-out cart on ~150–200 top sites, persistent non-Evan profile, no CAPTCHAs, monthly replays for a subset | Approve |
-| D5 | **Category evidence:** issuer statements and business-type inference with ranges now; Mastercard merchant API evaluated later | Approve |
-| D6 | **Merchant list source:** Tranco or Chrome UX Report ∩ agent-classified retail, with attribution; NRF Top 100 cross-check; no paid rankings | Approve |
-| D7 | **MVP size:** ~250–300 domains (probe, capture and bonus-category merchants), 1,000 after launch from the growth list | Approve |
-| D8 | **Release order:** Release A (click-to-use anywhere, no telemetry) before telemetry and the automatic badge; this moves part of the Web Store release ahead of the rest of Phase 10 | Approve |
-| D9 | **Licensing:** the repository is MIT and public, so code is not an exclusive asset; keep MIT, or make future data/components proprietary | Your call; decide before investing in sellability |
-| D10 | **Second monetization track:** licensing the curated catalog as an API to fintechs, alongside affiliate offers | Note as a later option |
-| D11 | **LLM role in Phase 10:** merchant profiles and category evidence drafted by the pipeline and measured | Approve |
-| D12 | **Affiliate hard rule:** never touch retailer affiliate links or cookies; offers only as labelled, user-initiated links in the extension's UI | Approve |
+| D1 | Telemetry is **off until the shopper agrees** on a dedicated screen; the opportunity event waits for the affiliate phase | Approve |
+| D2 | Merchant data as a **separate, versioned merchant release**; the coordinator publishes it on your chat "publish merchants <version>"; store configs fall back to bundled if Web Store review objects | Approve |
+| D3 | All-sites access **optional**, asked on a click (not required at install) | Optional |
+| D4 | **Real-page capture:** one known item in a logged-out cart on ~150–200 top sites, non-Evan profile, no CAPTCHAs, monthly replays for a subset | Approve |
+| D5 | **Category evidence:** issuer statements and business-type inference with ranges; the paid Mastercard API only later, by a new directive | Approve |
+| D6 | **Merchant list:** Tranco or Chrome UX Report ∩ agent-classified retail, with attribution; NRF Top 100 cross-check; no paid rankings | Approve |
+| D7 | **MVP size:** 3 legacy merchants plus ~250–300 domains at the default category; bonus-category profiles from the measured pipeline; 1,000 after launch | Approve |
+| D8 | **Release A inside Phase 10**, with weekly background refresh of catalog and merchant data (new disclosed network behaviour) | Approve |
+| D9 | **Licensing:** (a) MIT for everything; (b) MIT for code, future merchant data, eval labels and snapshots proprietary (files already published stay MIT) | a / b |
+| D10 | **LLM role:** merchant profiles and category evidence drafted by gpt-5.6-luna and measured | Approve |
+| D11 | **No automatic browsing data:** events never carry domains or merchants; the growth list comes from "Suggest this store" and "Report a problem" clicks | Approve |
+| D12 | **Affiliate hard rule:** never touch retailer affiliate links or cookies; offers only as labelled, user-initiated links in the extension | Approve |
+| D13 | **Release A keeps the automatic badge on Amazon, Best Buy and Newegg** (required hosts unchanged) until Release B | Keep / drop |
+| D14 | **Hosting:** stay on Render and Supabase free tiers until a usage trigger (weekly installs or egress) you set | Approve, with the trigger |
+
+Later options, not decisions now: licensing the catalog as an API to fintechs; bank linking for real category data; accounts.
 
 ## Related
 

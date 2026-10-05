@@ -22,12 +22,12 @@ As of 2026-10-05T05:47:59Z.
 
 ## Active work
 
-- **Phase 10 plan** (coordinator): [draft v3](product/phase-10-merchant-expansion.md) for the top 100–500 U.S. online merchants, revised after a Fable 5.1 design review; **awaiting Evan's decisions D1–D10**.
+- **Phase 10 plan** (coordinator): [draft v6](product/phase-10-merchant-expansion.md): any U.S. online checkout through a hosted merchant database and a generic cart reader proven on real pages, Release A inside the phase, consented telemetry without browsing data ([merchant coverage design](system/merchant-coverage-design.md), [telemetry design](system/telemetry-design.md)); three review rounds (Fable 5.1 ×3, Opus 5.5); **awaiting Evan's decisions D1–D14**.
 - Release media regenerated for `2026-10-05.renewal.1` (`npm run release:media`, all checks passed, 2026-10-05; [release media](ops/release-media.md)).
 
 ## Open questions and next steps
 
-1. **Evan: approve or change the [Phase 10 plan](product/phase-10-merchant-expansion.md)** and answer decisions D1–D10. No Phase 10 work starts before that.
+1. **Evan: approve or change the [Phase 10 plan](product/phase-10-merchant-expansion.md)** and answer decisions D1–D14. No Phase 10 work starts before that.
 2. **Next renewal, published before 2026-11-04T00:00Z** ([renewing](ops/catalog-release.md#renewing-a-catalog-before-it-expires)): re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data.
 3. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it instead of per file; `pipeline handoff` names the freshness record for the merchant MCC folder ([renewal record](ops/catalog-release-history.md#renewal-2026-10-05renewal1-prepared-2026-10-05)).
 4. Phase order (Evan, 2026-10-03): 10 merchant expansion → Web Store release; 4 terms-change detection revisited after 9; 6 site coverage harness (may fold into 10).
