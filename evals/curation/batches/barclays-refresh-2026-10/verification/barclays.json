@@ -60,7 +60,11 @@
             "sourceId": "barclays-mastercard-titanium-pricing",
             "quote": "Redemptions for Account statement credits have a redemption rate of 1%."
           },
-          "note": "The terms fix statement-credit and bank-deposit redemptions at 1%, so a point is worth 1 cent (Barclays convention: Titanium 100). The 2% airfare rate is travel-only."
+          "note": "The terms fix statement-credit and bank-deposit redemptions at 1%, so a point is worth 1 cent (Barclays convention: Titanium 100). The 2% airfare rate is travel-only.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The pricing capture fixes statement-credit redemption at 1%, a cash value; Barclays convention sets Titanium at 100."
+          }
         },
         {
           "op": "remove",
@@ -73,7 +77,11 @@
               "Redemptions for travel have a redemption rate of 2% when redeeming for airfare."
             ]
           },
-          "note": "The redemption-value ambiguity is settled by the fixed 1% statement-credit rate now recorded as the point value; the airfare rate is travel-only."
+          "note": "The redemption-value ambiguity is settled by the fixed 1% statement-credit rate now recorded as the point value; the airfare rate is travel-only.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The ambiguity is settled by the fixed 1% value now recorded; the 2% airfare rate is travel-only (general 3, 11)."
+          }
         },
         {
           "op": "remove",
@@ -82,7 +90,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor that states a problem (general 16)."
+          "note": "Missing issue with no anchor that states a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16 removes every issue without an anchor that states the problem."
+          }
         },
         {
           "op": "remove",
@@ -91,7 +103,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor that states a problem (general 16)."
+          "note": "Missing issue with no anchor that states a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16 removes every issue without an anchor that states the problem."
+          }
         }
       ],
       "addedRules": [],
@@ -111,7 +127,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor that states a problem (general 16)."
+          "note": "Missing issue with no anchor that states a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16 removes every issue without an anchor that states the problem."
+          }
         }
       ],
       "addedRules": [],
@@ -133,7 +153,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "Purchasing TrueBlue points does not qualify as JetBlue Purchases."
           },
-          "note": "The combined 6X heading is split into JetBlue, JetBlue Vacations and TrueBlue Travel rules (Barclays convention); this rule is JetBlue Purchases, matching its anchor."
+          "note": "The combined 6X heading is split into JetBlue, JetBlue Vacations and TrueBlue Travel rules (Barclays convention); this rule is JetBlue Purchases, matching its anchor.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention splits the combined heading into JetBlue, JetBlue Vacations and TrueBlue Travel rules; this rule's own anchor is the JetBlue sentence, so the wording matches it."
+          }
         },
         {
           "op": "set",
@@ -144,7 +168,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "Qualifying restaurant purchases are defined as: Restaurants, Bars and Fast-Food Restaurants."
           },
-          "note": "The heading wording also names grocery stores, which is a separate rule; the terms define the restaurant category this way."
+          "note": "The heading wording also names grocery stores, which is a separate rule; the terms define the restaurant category this way.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms define the restaurant category in that sentence; grocery stores are the separate rule 2."
+          }
         },
         {
           "op": "set",
@@ -197,7 +225,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor that states a problem (general 16)."
+          "note": "Missing issue with no anchor that states a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16 removes every issue without an anchor that states the problem."
+          }
         }
       ],
       "addedRules": [
@@ -292,7 +324,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "6X on JetBlue, JetBlue Vacations and TrueBlue TravelTM Purchases"
           },
-          "note": "The hint is right about 6X, but its conditions mention a 3X rate the captures do not give for this card; corrected and JetBlue Vacations added."
+          "note": "The hint is right about 6X, but its conditions mention a 3X rate the captures do not give for this card; corrected and JetBlue Vacations added.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The hint's 3X rate is not in this card's captures; the corrected conditions and merchants match the 6X heading and the Vacations definition."
+          }
         }
       ]
     },
@@ -310,7 +346,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "Eligible JetBlue Vacations Purchases are items billed by JetBlue Vacations as merchant of record"
           },
-          "note": "The draft anchor is cut before \"Vacations\" and resolves to the JetBlue sentence; replaced by the 6X heading plus the JetBlue Vacations definition."
+          "note": "The draft anchor is cut before \"Vacations\" and resolves to the JetBlue sentence; replaced by the 6X heading plus the JetBlue Vacations definition.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft anchor resolves to the JetBlue sentence, not the Vacations rule; the 6X heading names JetBlue Vacations and states the rate."
+          }
         },
         {
           "op": "set",
@@ -385,7 +425,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor that states a problem (general 16)."
+          "note": "Missing issue with no anchor that states a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16 removes every issue without an anchor that states the problem."
+          }
         },
         {
           "op": "remove",
@@ -397,7 +441,11 @@
               "Additionally, purchases made through third parties, including online marketplaces and resellers, or using a third-party payment account will not earn additional TrueBlue points."
             ]
           },
-          "note": "The mobile-wallet and third-party payment clause is Barclays boilerplate and is not recorded per card (Barclays convention)."
+          "note": "The mobile-wallet and third-party payment clause is Barclays boilerplate and is not recorded per card (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention: the wallet and third-party payment clause is boilerplate on every Barclays card and is not recorded per card."
+          }
         }
       ],
       "addedRules": [],
@@ -423,7 +471,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "6X on JetBlue, JetBlue Vacations and TrueBlue TravelTM Purchases"
           },
-          "note": "The hint is right about 6X, but its conditions mention a 3X rate the captures do not give for this card; corrected and JetBlue Vacations added."
+          "note": "The hint is right about 6X, but its conditions mention a 3X rate the captures do not give for this card; corrected and JetBlue Vacations added.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The hint's 3X rate is not in this card's captures; the corrected conditions and merchants match the 6X heading and the Vacations definition."
+          }
         }
       ]
     },
@@ -441,7 +493,11 @@
             "sourceId": "barclays-upromise-world-mastercard-pricing",
             "quote": "Cardmembers who are not already Upromise members are enrolled in the Upromise Program and accept the terms of the Upromise Member Agreement as part of"
           },
-          "note": "Cardmembers are enrolled in Upromise as part of the application, so the 1.25% base needs no step of their own (Barclays convention). The 1.529% rule stays enroll-once."
+          "note": "Cardmembers are enrolled in Upromise as part of the application, so the 1.25% base needs no step of their own (Barclays convention). The 1.529% rule stays enroll-once.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention: 'are enrolled in the Upromise Program' makes the 1.25% base activation none; the 1.529% linked-plan rule keeps enroll-once."
+          }
         },
         {
           "op": "remove",
@@ -460,7 +516,11 @@
               "Cardmembers who are not already Upromise members are enrolled in the Upromise Program and accept the terms of the Upromise Member Agreement as part of"
             ]
           },
-          "note": "MyGiftCardsPlus states no earn rate (only up to $250 a year); not a rule. Described in a merchant product note (Barclays convention)."
+          "note": "MyGiftCardsPlus states no earn rate (only up to $250 a year); not a rule. Described in a merchant product note (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention: MyGiftCardsPlus states no earn rate and is a merchant product note, not a rule."
+          }
         },
         {
           "op": "remove",
@@ -479,7 +539,11 @@
               "Cardmembers who are not already Upromise members are enrolled in the Upromise Program and accept the terms of the Upromise Member Agreement as part of"
             ]
           },
-          "note": "Round Up Amounts are an optional extra posted purchase that earns the same 1.529% or 1.25%; not a separate earning rule."
+          "note": "Round Up Amounts are an optional extra posted purchase that earns the same 1.529% or 1.25%; not a separate earning rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The capture says Round Up Amounts are purchases earning the same 1.529% or 1.25%; not a separate earning rule."
+          }
         },
         {
           "op": "remove",
@@ -499,7 +563,11 @@
               "Cardmembers who are not already Upromise members are enrolled in the Upromise Program and accept the terms of the Upromise Member Agreement as part of"
             ]
           },
-          "note": "Round Up Amounts are an optional extra posted purchase that earns the same 1.529% or 1.25%; not a separate earning rule."
+          "note": "Round Up Amounts are an optional extra posted purchase that earns the same 1.529% or 1.25%; not a separate earning rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Same as rule 3: Round Up Amounts earn the base rates already labelled; not a separate rule."
+          }
         },
         {
           "op": "remove",
@@ -510,7 +578,11 @@
               "Get up to $250 in cash back rewards per calendar year on eligible gift card purchases at MyGiftCardsPlus, powered by Upromise."
             ]
           },
-          "note": "Duplicates the out-of-scope MyGiftCardsPlus issue; nothing is missing from the labels."
+          "note": "Duplicates the out-of-scope MyGiftCardsPlus issue; nothing is missing from the labels.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Duplicates the out-of-scope issue 2 on the same sentence; nothing is missing once the merchant note exists (general 11)."
+          }
         },
         {
           "op": "remove",
@@ -522,7 +594,11 @@
               "Upromise Round Up rounds up purchases made by you and/or any authorized user of the Card Account as follows: when a purchase is not a"
             ]
           },
-          "note": "Moot once the Round Up rules are removed; Round Up does not change what a purchase earns."
+          "note": "Moot once the Round Up rules are removed; Round Up does not change what a purchase earns.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Moot once the Round Up rules are removed; Round Up does not change what a purchase earns (general 11)."
+          }
         }
       ],
       "addedRules": [],
@@ -546,7 +622,11 @@
             "sourceId": "barclays-upromise-world-mastercard-product",
             "quote": "Get up to $250 in cash back rewards per calendar year on eligible gift card purchases at MyGiftCardsPlus, powered by Upromise."
           },
-          "note": "The removed MyGiftCardsPlus rule becomes a merchant note, as the Barclays convention asks."
+          "note": "The removed MyGiftCardsPlus rule becomes a merchant note, as the Barclays convention asks.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention asks for the MyGiftCardsPlus benefit as a merchant note; the product capture states the $250 cap and no rate."
+          }
         }
       ]
     },
@@ -564,7 +644,11 @@
             "sourceId": "barclays-frontier-airlines-world-mastercard-pricing",
             "quote": "If none is found, a new FRONTIER Miles Membership Account number will be assigned to you."
           },
-          "note": "The terms assign a Frontier Miles number to cardmembers without one, so activation is none (Barclays convention)."
+          "note": "The terms assign a Frontier Miles number to cardmembers without one, so activation is none (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention names Frontier: the terms assign a Frontier Miles number to cardmembers without one, and this capture adds no acceptance step."
+          }
         },
         {
           "op": "remove",
@@ -573,7 +657,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; the missing Frontier and base rules are added."
+          "note": "Missing issue with no anchor; the missing Frontier and base rules are added.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16 removes every issue without an anchor that states the problem."
+          }
         },
         {
           "op": "remove",
@@ -582,7 +670,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; the missing Frontier and base rules are added."
+          "note": "Missing issue with no anchor; the missing Frontier and base rules are added.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16 removes every issue without an anchor that states the problem."
+          }
         }
       ],
       "addedRules": [
@@ -616,7 +708,11 @@
               "quote": "If none is found, a new FRONTIER Miles Membership Account number will be assigned to you."
             }
           ],
-          "note": "The card pays 5 Miles per $1 on purchases directly from Frontier Airlines; the 12 Frontier Miles member miles are not card earn (general 2)."
+          "note": "The card pays 5 Miles per $1 on purchases directly from Frontier Airlines; the 12 Frontier Miles member miles are not card earn (general 2).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 5 Miles per $1 on Frontier purchases (the 5X heading); Barclays convention keeps the card's 5X of the 'up to 17x' (general 2, 4)."
+          }
         },
         {
           "rule": {
@@ -648,7 +744,11 @@
               "quote": "If none is found, a new FRONTIER Miles Membership Account number will be assigned to you."
             }
           ],
-          "note": "The draft lacks the 1X base rate stated in the terms and on the product page."
+          "note": "The draft lacks the 1X base rate stated in the terms and on the product page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state 1 Mile per $1 on all other Net Purchases, which the draft lacked; no-limit sentence supports the cap."
+          }
         }
       ],
       "addedExclusions": [],
@@ -661,7 +761,11 @@
             "sourceId": "barclays-frontier-airlines-world-mastercard-product",
             "quote": "12 miles for being a Frontier Miles member and booking a non-Basic Fare ticket and 5 miles for using your Frontier Airlines World Mastercard"
           },
-          "note": "The product page splits the \"up to 17\" into 12 member miles and 5 card miles, as the hint says."
+          "note": "The product page splits the \"up to 17\" into 12 member miles and 5 card miles, as the hint says.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product capture splits the 17 into 12 member miles and 5 card miles, as the hint says."
+          }
         }
       ]
     },
@@ -721,7 +825,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor that states a problem (general 16)."
+          "note": "Missing issue with no anchor that states a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16 removes every issue without an anchor that states the problem."
+          }
         }
       ],
       "addedRules": [],
@@ -735,7 +843,11 @@
             "sourceId": "barclays-carnival-rewards-mastercard-product",
             "quote": "Earn 3x points from your card, plus up to 3x points through Carnival Rewards."
           },
-          "note": "The card pays 3X on Carnival purchases; the other 3X comes from the Carnival Rewards program."
+          "note": "The card pays 3X on Carnival purchases; the other 3X comes from the Carnival Rewards program.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product capture states 3x from the card plus up to 3x through Carnival Rewards; the hint keeps the card's 3X (general 2)."
+          }
         }
       ]
     },
@@ -753,7 +865,11 @@
             "sourceId": "barclays-gap-encore-mastercard-product",
             "quote": "500 points = $1 Reward"
           },
-          "note": "Store-only points with a stated fixed value, 500 points = $1 Reward, so 0.2 cent a point (general 14, Barclays convention)."
+          "note": "Store-only points with a stated fixed value, 500 points = $1 Reward, so 0.2 cent a point (general 14, Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention (general 14): Encore points are store-only with a stated fixed value, 500 points = $1, so 20."
+          }
         },
         {
           "op": "set",
@@ -764,7 +880,11 @@
             "sourceId": "barclays-gap-encore-mastercard-pricing",
             "quote": "All Account Cardmembers are eligible to participate in the Program and will be automatically enrolled in the Program when applying for a Gap Inc. credit"
           },
-          "note": "Cardmembers are automatically enrolled in the Encore program when applying, so activation is none (Barclays convention)."
+          "note": "Cardmembers are automatically enrolled in the Encore program when applying, so activation is none (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention: Gap Inc. Encore cardmembers are automatically enrolled when applying, so activation is none."
+          }
         },
         {
           "op": "set",
@@ -775,7 +895,11 @@
             "sourceId": "barclays-gap-encore-mastercard-pricing",
             "quote": "All Account Cardmembers are eligible to participate in the Program and will be automatically enrolled in the Program when applying for a Gap Inc. credit"
           },
-          "note": "Cardmembers are automatically enrolled in the Encore program when applying, so activation is none (Barclays convention)."
+          "note": "Cardmembers are automatically enrolled in the Encore program when applying, so activation is none (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention: Gap Inc. Encore cardmembers are automatically enrolled when applying, so activation is none."
+          }
         },
         {
           "op": "set",
@@ -786,7 +910,11 @@
             "sourceId": "barclays-gap-encore-mastercard-pricing",
             "quote": "All Account Cardmembers are eligible to participate in the Program and will be automatically enrolled in the Program when applying for a Gap Inc. credit"
           },
-          "note": "Cardmembers are automatically enrolled in the Encore program when applying, so activation is none (Barclays convention)."
+          "note": "Cardmembers are automatically enrolled in the Encore program when applying, so activation is none (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention: Gap Inc. Encore cardmembers are automatically enrolled when applying, so activation is none."
+          }
         },
         {
           "op": "set",
@@ -797,7 +925,11 @@
             "sourceId": "barclays-gap-encore-mastercard-pricing",
             "quote": "All Account Cardmembers are eligible to participate in the Program and will be automatically enrolled in the Program when applying for a Gap Inc. credit"
           },
-          "note": "Cardmembers are automatically enrolled in the Encore program when applying, so activation is none (Barclays convention)."
+          "note": "Cardmembers are automatically enrolled in the Encore program when applying, so activation is none (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention: Gap Inc. Encore cardmembers are automatically enrolled when applying, so activation is none."
+          }
         },
         {
           "op": "set",
@@ -808,7 +940,11 @@
             "sourceId": "barclays-gap-encore-mastercard-pricing",
             "quote": "All Account Cardmembers are eligible to participate in the Program and will be automatically enrolled in the Program when applying for a Gap Inc. credit"
           },
-          "note": "Cardmembers are automatically enrolled in the Encore program when applying, so activation is none (Barclays convention)."
+          "note": "Cardmembers are automatically enrolled in the Encore program when applying, so activation is none (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention: Gap Inc. Encore cardmembers are automatically enrolled when applying, so activation is none."
+          }
         },
         {
           "op": "set",
@@ -819,7 +955,11 @@
             "sourceId": "barclays-gap-encore-mastercard-pricing",
             "quote": "All Account Cardmembers are eligible to participate in the Program and will be automatically enrolled in the Program when applying for a Gap Inc. credit"
           },
-          "note": "Cardmembers are automatically enrolled in the Encore program when applying, so activation is none (Barclays convention)."
+          "note": "Cardmembers are automatically enrolled in the Encore program when applying, so activation is none (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention: Gap Inc. Encore cardmembers are automatically enrolled when applying, so activation is none."
+          }
         },
         {
           "op": "remove",
@@ -830,7 +970,11 @@
               "Redeem points for exclusive products, offers, and experiences5"
             ]
           },
-          "note": "Anchored only on a redemption pointer; nothing is missing (Barclays convention on issues)."
+          "note": "Anchored only on a redemption pointer; nothing is missing (Barclays convention on issues).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored only on a redemption pointer; Barclays convention removes such missing issues."
+          }
         }
       ],
       "addedRules": [],
@@ -844,7 +988,11 @@
               "quote": "or 10 points for every dollar spent using your Account if your Account is at the World Mastercard or World Elite Mastercard level"
             }
           ],
-          "note": "Labels use the Mastercard-level rates; accounts at the World or World Elite level earn 10 points instead of 5 (Barclays convention)."
+          "note": "Labels use the Mastercard-level rates; accounts at the World or World Elite level earn 10 points instead of 5 (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention: labels use the Mastercard-level rates with an ambiguous issue for the World and World Elite 10-point rate."
+          }
         },
         {
           "code": "ambiguous",
@@ -854,7 +1002,11 @@
               "quote": "redeemable in the Encore Market with exclusive products, offers, and experiences or on purchases at the Gap Inc. brands"
             }
           ],
-          "note": "Encore points are usable only in the Encore Market or at the Gap Inc. brands (general 8 and 14)."
+          "note": "Encore points are usable only in the Encore Market or at the Gap Inc. brands (general 8 and 14).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention (general 8, 14): the store-only ambiguous issue anchored on the Encore Market and Gap Inc. brands sentence."
+          }
         }
       ],
       "productNoteChanges": [
@@ -879,7 +1031,11 @@
             "sourceId": "barclays-gap-encore-mastercard-pricing",
             "quote": "“Family of Brands” means Gap, Old Navy, Banana Republic, and Athleta brands."
           },
-          "note": "The captures do not mention gap.com or outlet coverage that the hint states; the family is defined in the terms. Gap is one of the four brands."
+          "note": "The captures do not mention gap.com or outlet coverage that the hint states; the family is defined in the terms. Gap is one of the four brands.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures define the Family of Brands and do not mention gap.com or outlets; the corrected hint follows the terms."
+          }
         },
         {
           "action": "add",
@@ -897,7 +1053,11 @@
             "sourceId": "barclays-gap-encore-mastercard-product",
             "quote": "500 points = $1 Reward"
           },
-          "note": "Records the store-only redemption and its value (Barclays convention keeps the value in a closed-loop note)."
+          "note": "Records the store-only redemption and its value (Barclays convention keeps the value in a closed-loop note).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention keeps the 500 points = $1 value in a closed-loop product note."
+          }
         }
       ]
     },
@@ -915,7 +1075,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-product",
             "quote": "500 points = $1 Reward"
           },
-          "note": "Store-only points with a stated fixed value, 500 points = $1 Reward, so 0.2 cent a point (general 14, Barclays convention)."
+          "note": "Store-only points with a stated fixed value, 500 points = $1 Reward, so 0.2 cent a point (general 14, Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention (general 14): Encore points are store-only with a stated fixed value, 500 points = $1, so 20."
+          }
         },
         {
           "op": "set",
@@ -926,7 +1090,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-pricing",
             "quote": "payment platform such as Afterpay, Klarna, PayPal or TikTok, even if you use your Gap Inc. credit card on these platforms, you will earn 5"
           },
-          "note": "The terms state 5 points per $1 at the Mastercard level for payment-platform purchases (10 at World levels, covered by the added issue)."
+          "note": "The terms state 5 points per $1 at the Mastercard level for payment-platform purchases (10 at World levels, covered by the added issue).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The shared terms state 5 points per dollar at the Mastercard level on payment-platform purchases; the World rate is covered by the added issue."
+          }
         },
         {
           "op": "remove",
@@ -951,7 +1119,11 @@
               "All Account Cardmembers are eligible to participate in the Program and will be automatically enrolled in the Program when applying for a Gap Inc. credit"
             ]
           },
-          "note": "Points earned when paying with another form of payment are not earned by this card; not a card earning rule."
+          "note": "Points earned when paying with another form of payment are not earned by this card; not a card earning rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Points earned when paying with another form of payment are not earned by the card, so this is not a card earning rule."
+          }
         },
         {
           "op": "remove",
@@ -962,7 +1134,11 @@
               "Additionally, purchases made through third parties, including online marketplaces and resellers, or using a third-party payment account will not qualify."
             ]
           },
-          "note": "The third-party clause stops these purchases qualifying for the apparel category; they are not shown never to earn. Boilerplate, not recorded per card."
+          "note": "The third-party clause stops these purchases qualifying for the apparel category; they are not shown never to earn. Boilerplate, not recorded per card.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention: the third-party payment clause is boilerplate not recorded per card, and it does not make the purchases never earn."
+          }
         },
         {
           "op": "remove",
@@ -971,7 +1147,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor that states a problem (general 16)."
+          "note": "Missing issue with no anchor that states a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16 removes every issue without an anchor that states the problem."
+          }
         }
       ],
       "addedRules": [],
@@ -985,7 +1165,11 @@
               "quote": "or 10 points for every dollar spent using your Account if your Account is at the World Mastercard or World Elite Mastercard level"
             }
           ],
-          "note": "Labels use the Mastercard-level rates; accounts at the World or World Elite level earn 10 points instead of 5 (Barclays convention)."
+          "note": "Labels use the Mastercard-level rates; accounts at the World or World Elite level earn 10 points instead of 5 (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention: labels use the Mastercard-level rates with an ambiguous issue for the World and World Elite 10-point rate."
+          }
         },
         {
           "code": "ambiguous",
@@ -995,7 +1179,11 @@
               "quote": "redeemable in the Encore Market with exclusive products, offers, and experiences or on purchases at the Gap Inc. brands"
             }
           ],
-          "note": "Encore points are usable only in the Encore Market or at the Gap Inc. brands (general 8 and 14)."
+          "note": "Encore points are usable only in the Encore Market or at the Gap Inc. brands (general 8 and 14).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention (general 8, 14): the store-only ambiguous issue anchored on the Encore Market and Gap Inc. brands sentence."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1020,7 +1208,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-pricing",
             "quote": "“Family of Brands” means Gap, Old Navy, Banana Republic, and Athleta brands."
           },
-          "note": "The captures do not mention gap.com or outlet coverage that the hint states; the family is defined in the terms. Old Navy is one of the four brands."
+          "note": "The captures do not mention gap.com or outlet coverage that the hint states; the family is defined in the terms. Old Navy is one of the four brands.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures define the Family of Brands and do not mention gap.com or outlets; the corrected hint follows the terms."
+          }
         },
         {
           "action": "add",
@@ -1038,7 +1230,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-product",
             "quote": "500 points = $1 Reward"
           },
-          "note": "Records the store-only redemption and its value (Barclays convention keeps the value in a closed-loop note)."
+          "note": "Records the store-only redemption and its value (Barclays convention keeps the value in a closed-loop note).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention keeps the 500 points = $1 value in a closed-loop product note."
+          }
         }
       ]
     },
@@ -1056,7 +1252,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-product",
             "quote": "500 points = $1 Reward"
           },
-          "note": "Store-only points with a stated fixed value, 500 points = $1 Reward, so 0.2 cent a point (general 14, Barclays convention)."
+          "note": "Store-only points with a stated fixed value, 500 points = $1 Reward, so 0.2 cent a point (general 14, Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention (general 14): Encore points are store-only with a stated fixed value, 500 points = $1, so 20."
+          }
         },
         {
           "op": "remove",
@@ -1065,7 +1265,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor that states a problem (general 16)."
+          "note": "Missing issue with no anchor that states a problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless missing issue; general 16 removes every issue without an anchor that states the problem."
+          }
         }
       ],
       "addedRules": [
@@ -1099,7 +1303,11 @@
               "quote": "will be automatically enrolled in the Program when applying for a Gap Inc. credit card (whether approved or declined)"
             }
           ],
-          "note": "The shared Encore terms pay 5 points per $1 on payment-platform purchases at the Mastercard level; the Gap and Old Navy drafts carry this rule."
+          "note": "The shared Encore terms pay 5 points per $1 on payment-platform purchases at the Mastercard level; the Gap and Old Navy drafts carry this rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The shared Encore terms pay 5 points per dollar on payment-platform purchases at the Mastercard level; Barclays convention, matching the Gap and Old Navy drafts."
+          }
         },
         {
           "rule": {
@@ -1131,7 +1339,11 @@
               "quote": "will be automatically enrolled in the Program when applying for a Gap Inc. credit card (whether approved or declined)"
             }
           ],
-          "note": "Brand-store purchases outside the U.S. and Puerto Rico earn 5 points per $1 at the Mastercard level per the shared terms."
+          "note": "Brand-store purchases outside the U.S. and Puerto Rico earn 5 points per $1 at the Mastercard level per the shared terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The shared terms pay 5 points per dollar on brand purchases outside the U.S. and Puerto Rico; the sentence states the location, so usMerchantsOnly false."
+          }
         },
         {
           "rule": {
@@ -1163,7 +1375,11 @@
               "quote": "will be automatically enrolled in the Program when applying for a Gap Inc. credit card (whether approved or declined)"
             }
           ],
-          "note": "Apparel purchases outside the brands and outside the U.S. earn 5 points per $1 at the Mastercard level per the shared terms."
+          "note": "Apparel purchases outside the brands and outside the U.S. earn 5 points per $1 at the Mastercard level per the shared terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The shared terms pay 5 points per dollar on apparel outside the brands and outside the U.S.; usMerchantsOnly false is stated by the sentence."
+          }
         }
       ],
       "addedExclusions": [],
@@ -1176,7 +1392,11 @@
               "quote": "or 10 points for every dollar spent using your Account if your Account is at the World Mastercard or World Elite Mastercard level"
             }
           ],
-          "note": "Labels use the Mastercard-level rates; accounts at the World or World Elite level earn 10 points instead of 5 (Barclays convention)."
+          "note": "Labels use the Mastercard-level rates; accounts at the World or World Elite level earn 10 points instead of 5 (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention: labels use the Mastercard-level rates with an ambiguous issue for the World and World Elite 10-point rate."
+          }
         },
         {
           "code": "ambiguous",
@@ -1186,7 +1406,11 @@
               "quote": "redeemable in the Encore Market with exclusive products, offers, and experiences or on purchases at the Gap Inc. brands"
             }
           ],
-          "note": "Encore points are usable only in the Encore Market or at the Gap Inc. brands (general 8 and 14)."
+          "note": "Encore points are usable only in the Encore Market or at the Gap Inc. brands (general 8 and 14).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention (general 8, 14): the store-only ambiguous issue anchored on the Encore Market and Gap Inc. brands sentence."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1211,7 +1435,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
             "quote": "“Family of Brands” means Gap, Old Navy, Banana Republic, and Athleta brands."
           },
-          "note": "The captures do not mention gap.com or outlet coverage that the hint states; the family is defined in the terms. Banana Republic is one of the four brands."
+          "note": "The captures do not mention gap.com or outlet coverage that the hint states; the family is defined in the terms. Banana Republic is one of the four brands.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures define the Family of Brands and do not mention gap.com or outlets; the corrected hint follows the terms."
+          }
         },
         {
           "action": "add",
@@ -1229,7 +1457,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-product",
             "quote": "500 points = $1 Reward"
           },
-          "note": "Records the store-only redemption and its value (Barclays convention keeps the value in a closed-loop note)."
+          "note": "Records the store-only redemption and its value (Barclays convention keeps the value in a closed-loop note).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Barclays convention keeps the 500 points = $1 value in a closed-loop product note."
+          }
         }
       ]
     },
@@ -1247,7 +1479,11 @@
               "You earn 3% in rewards for every $1 spent on eligible airfare, hotel and car rental Net Purchases made with your Account."
             ]
           },
-          "note": "Anchored only on an earning sentence that is already a rule (Barclays convention on issues)."
+          "note": "Anchored only on an earning sentence that is already a rule (Barclays convention on issues).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored only on an earning sentence already labelled as a rule; Barclays convention removes such missing issues."
+          }
         },
         {
           "op": "remove",
@@ -1258,7 +1494,11 @@
               "You earn 2% in rewards for every $1 spent on eligible restaurant Net Purchases made with your Account."
             ]
           },
-          "note": "Anchored only on an earning sentence that is already a rule (Barclays convention on issues)."
+          "note": "Anchored only on an earning sentence that is already a rule (Barclays convention on issues).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored only on an earning sentence already labelled as a rule; Barclays convention removes such missing issues."
+          }
         }
       ],
       "addedRules": [],
