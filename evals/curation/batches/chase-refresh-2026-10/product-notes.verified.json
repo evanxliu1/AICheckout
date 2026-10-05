@@ -1,0 +1,392 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/apply-expansion-verification.mjs",
+  "description": "Product hints of the verified cards with the verifiers’ adjudicated changes. verification: confirmed, fixed or added by a verifier (anchor quoted from anchorSourceId), or unreviewed.",
+  "cards": [
+    {
+      "cardId": "chase-freedom-flex",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "rotating-quarterly",
+          "summary": "5% quarterly categories; Oct-Dec 2026: Grocery Stores (excluding Walmart and Target), Dining, American Red Cross",
+          "rate": "5%",
+          "cap": "$1,500 in combined purchases per quarter, then 1%",
+          "conditions": "Activate each quarter. Jul-Sep 2026 (previous): Gas Stations, Public Transit, EV Charging, Select Live Entertainment, United Way. Jan-Mar 2027 (next, activate from December 15, 2026): Grocery Stores excluding Walmart and Target, Top Streaming Services. Apr-Jun 2027: coming soon.",
+          "activation": "recurring",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Activate each quarter to earn 5% cash back on up to $1,500 in combined purchases.",
+          "anchorSourceId": "chase-freedom-flex-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Lyft rides",
+          "rate": "2% total (1% on top of the 1% base)",
+          "cap": "none stated",
+          "conditions": "Promotional through September 30, 2027",
+          "merchants": [
+            "Lyft"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 2% total cash back on Lyft rides with your Freedom Flex card through September 30, 2027.",
+          "anchorSourceId": "chase-freedom-flex-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "chase-freedom-rise",
+      "issuer": "Chase",
+      "hints": []
+    },
+    {
+      "cardId": "prime-visa",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Amazon.com, Audible.com, Whole Foods Market",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "Requires eligible Prime membership; without Prime, 3%",
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": "Requires eligible Prime membership; without Prime, 3%",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn unlimited 5% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases with an eligible Prime membership.",
+          "verification": "confirmed",
+          "anchorSourceId": "prime-visa-product"
+        }
+      ]
+    },
+    {
+      "cardId": "amazon-visa",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Amazon.com, Audible.com, Whole Foods Market\"",
+          "rate": "3%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn unlimited 3% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases.",
+          "verification": "confirmed",
+          "anchorSourceId": "amazon-visa-product"
+        }
+      ]
+    },
+    {
+      "cardId": "doordash-rewards-mastercard",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "DoorDash and Caviar orders",
+          "rate": "4%",
+          "cap": "No earning caps",
+          "conditions": null,
+          "merchants": [
+            "DoorDash",
+            "Caviar"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 4% Cash back on DoorDash and Caviar orders.",
+          "anchorSourceId": "doordash-rewards-mastercard-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "instacart-mastercard",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Qualifying Instacart.com and Instacart app purchases",
+          "rate": "5%",
+          "cap": "First $6,000 spent annually; after-cap rate not stated",
+          "conditions": null,
+          "merchants": [
+            "Instacart"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "on qualifying Instacart.com and Instacart app purchases on your first $6,000 spent annually",
+          "anchorSourceId": "instacart-mastercard-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "disney-inspire-visa",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Purchases at DisneyPlus.com, Hulu.com, or Stream.ESPN.com",
+          "rate": "10%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Disney"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 10% on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com.",
+          "verification": "confirmed",
+          "anchorSourceId": "disney-inspire-visa-product"
+        }
+      ]
+    },
+    {
+      "cardId": "disney-visa",
+      "issuer": "Chase",
+      "hints": []
+    },
+    {
+      "cardId": "united-explorer",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible United purchases (incl. flights; page markets \"9x total miles\" on flights incl. 6x MileagePlus member earn)",
+          "rate": "3x card miles",
+          "cap": "none stated",
+          "conditions": "Basic Economy earns differently",
+          "merchants": [
+            "United Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "plus 3x miles on entire United purchase with United Explorer Card.",
+          "verification": "confirmed",
+          "anchorSourceId": "united-explorer-product"
+        }
+      ]
+    },
+    {
+      "cardId": "united-quest",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible United purchases (page markets \"10x total miles\" on flights incl. 6x MileagePlus member earn)",
+          "rate": "4x card miles",
+          "cap": "none stated",
+          "conditions": "Basic Economy earns differently",
+          "merchants": [
+            "United Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "plus 4x miles on entire United purchase with United Quest Card.",
+          "verification": "confirmed",
+          "anchorSourceId": "united-quest-product"
+        }
+      ]
+    },
+    {
+      "cardId": "united-gateway",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible United purchases (page markets \"5x total miles\" on flights incl. member earn)",
+          "rate": "2x card miles",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "United Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "plus 2x miles on entire United purchase with the United Gateway Card.",
+          "verification": "confirmed",
+          "anchorSourceId": "united-gateway-product"
+        }
+      ]
+    },
+    {
+      "cardId": "united-club",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible United purchases (page markets \"11x total miles\" on flights incl. 6x member earn)",
+          "rate": "5x card miles",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "United Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "plus 5x miles on entire United purchase with United Club Card.",
+          "verification": "confirmed",
+          "anchorSourceId": "united-club-product"
+        }
+      ]
+    },
+    {
+      "cardId": "southwest-rapid-rewards-plus",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Southwest Airlines purchases",
+          "rate": "2X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Southwest Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 2 points for each dollar spent on Southwest Airlines purchases.",
+          "anchorSourceId": "southwest-rapid-rewards-plus-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Qualifying Lyft products and services purchased through the Lyft mobile application",
+          "rate": "2X total",
+          "cap": "none stated",
+          "conditions": "Promotional through 12/31/2027",
+          "merchants": [
+            "Lyft"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 2X total points on qualifying Lyft products and services purchased through the Lyft mobile application through 12/31/2027.",
+          "anchorSourceId": "southwest-rapid-rewards-plus-product",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "southwest-rapid-rewards-premier",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Southwest Airlines purchases",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Southwest Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3 points for each dollar spent on Southwest Airlines purchases.",
+          "verification": "confirmed",
+          "anchorSourceId": "southwest-rapid-rewards-premier-product"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Qualifying Lyft products and services purchased through the Lyft mobile application",
+          "rate": "3X total",
+          "cap": "none stated",
+          "conditions": "Promotional through 12/31/2027",
+          "merchants": [
+            "Lyft"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3X total points on qualifying Lyft products and services purchased through the Lyft mobile application through 12/31/2027.",
+          "anchorSourceId": "southwest-rapid-rewards-premier-product",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "southwest-rapid-rewards-priority",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Southwest Airlines purchases",
+          "rate": "4X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Southwest Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 4 points for each dollar spent on Southwest Airlines purchases.",
+          "anchorSourceId": "southwest-rapid-rewards-priority-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Qualifying Lyft products and services purchased through the Lyft mobile application",
+          "rate": "5X total",
+          "cap": "none stated",
+          "conditions": "Promotional through 12/31/2027",
+          "merchants": [
+            "Lyft"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 5X total points on qualifying Lyft products and services purchased through the Lyft mobile application through 12/31/2027.",
+          "anchorSourceId": "southwest-rapid-rewards-priority-product",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "world-of-hyatt",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Qualifying purchases at Hyatt Hotels",
+          "rate": "4X card Bonus Points (page markets up to 9X total incl. up to 5 Base Points from World of Hyatt membership)",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Hyatt"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "4 Bonus Points per $1 spent on qualifying purchases at Hyatt Hotels.",
+          "anchorSourceId": "world-of-hyatt-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "chase-freedom-unlimited",
+      "issuer": "Chase",
+      "hints": []
+    }
+  ]
+}
