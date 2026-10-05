@@ -18,7 +18,7 @@ sources:
 
 # Phase 11 plan: any store, typed amount
 
-Started 2026-10-05, in parallel with Phase 10 ([merchant coverage plan](phase-10-merchant-expansion.md)). Today the popup has a manual merchant select of the three supported stores and the engine answers `unsupported-merchant` for anything else. After this phase, opening the popup on any U.S. online store gives a recommendation with an amount the shopper types. Scope reduced by Evan on 2026-10-05: no store search, no category ranges ([decision](../decisions/2026-10-05-merchant-coverage-phases.md)).
+**Done 2026-10-05:** merged as PR #57 (`f041fef`) after an independent review (agent-verified) and CI. Started 2026-10-05, in parallel with Phase 10 ([merchant coverage plan](phase-10-merchant-expansion.md)). Today the popup has a manual merchant select of the three supported stores and the engine answers `unsupported-merchant` for anything else. After this phase, opening the popup on any U.S. online store gives a recommendation with an amount the shopper types. Scope reduced by Evan on 2026-10-05: no store search, no category ranges ([decision](../decisions/2026-10-05-merchant-coverage-phases.md)).
 
 ## Design
 
