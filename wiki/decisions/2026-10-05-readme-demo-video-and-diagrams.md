@@ -30,7 +30,7 @@ Evan asked on 2026-10-04 for an up-to-date repository README with better-looking
 | **Hand-drawn SVG, light and dark variants in `<picture>`** | Chosen | Matches the Ocean palette and follows GitHub's theme |
 
 ## Decision
-- The README hero is `docs/readme/demo-poster.jpg`, linked to `docs/readme/demo.mp4`: 40.6 s, 1920×1080, 60 fps, about 19 MB.
+- The README hero is `docs/readme/demo-poster.jpg`, linked to `docs/readme/demo.mp4`: 40.6 s, 1920×1080, 60 fps, about 9.5 MB (H.264 CRF 24, under GitHub's 10 MB upload limit).
 - The video uses real captures of the extension built from `main` on 2026-10-04: popup tabs at 3×, and the badge on a neutral "Sample Store" cart served at a supported cart URL. The savings history was filled through the normal badge flow with a clock shim in a copy of the service-worker loader; there is no retailer branding.
 - On-screen text, verbatim:
   1. "Add the cards you already have." / "Search 178+ cards from the biggest U.S. issuers."
