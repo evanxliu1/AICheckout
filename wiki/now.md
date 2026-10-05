@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T19:14:03Z
+  at: 2026-10-05T23:30:00Z
 ---
 
 # Now
 
-As of 2026-10-05T19:14:03Z.
+As of 2026-10-05T23:30:00Z.
 
 ## Current state
 
@@ -27,11 +27,12 @@ As of 2026-10-05T19:14:03Z.
 
 ## Open questions and next steps
 
-1. Phases 10 and 11 in progress; later decisions are asked per phase ([table](product/phase-10-merchant-expansion.md#decisions-for-evan-one-word-each-asked-when-their-phase-starts)).
-2. **Next renewal, published before 2026-11-04T00:00Z** ([renewing](ops/catalog-release.md#renewing-a-catalog-before-it-expires)): re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data.
-3. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it instead of per file; `pipeline handoff` names the freshness record for the merchant MCC folder ([renewal record](ops/catalog-release-history.md#renewal-2026-10-05renewal1-prepared-2026-10-05)).
-4. Phase order (Evan, 2026-10-05): 10 ∥ 11 → 12 → 13 → 14 → 15 Release A (replaces Phase 5) → 17; 16 beside 15; Phase 6 folded in; 4 terms-change detection revisited after 9.
-5. Before the Web Store release: verify the `orderConfirmation` URL patterns on a real order per retailer (Evan); enable GitHub private vulnerability reporting ([`SECURITY.md`](../SECURITY.md)); optionally confirm **Check for updated terms** in a loaded `build:hosted` extension picks up release 3.
-6. Evan's calls: Aer Lingus and Iberia Avios valuation parity; a second luna repeat against gpt-5.5; the human spot-check of agent-verified labels (deferred 2026-10-02); revoking the legacy HS256 JWT secret.
-7. Catalog builder maps gold `usMerchantsOnly: null` to `false`; the catalog omits the Chase Lyft promo and targeted Quicksilver offers ([cards](domain/cards.md)).
-8. Housekeeping: other clones run `git config core.hooksPath .githooks`; Claude Code checkouts need a local `CLAUDE.md` with `@AGENTS.md`; delete the stale local `extension/CLAUDE.md`; revoke the retired `simulation/` keys if not done; remove the merged `AICheckout-p9-m3b`, `AICheckout-p9-m5` and `AICheckout-wiki-audit` worktrees when Evan agrees.
+1. **Phase 10 probe results** on branch `phase10-probe` (not merged): verdict **go**, 16 of 25 sites showed a logged-out cart, but only 3 of 8 top-1k sites (bot walls), which limits Phase 12 capture, not the product. The badge frame loaded under every CSP seen. 2 MiB fits `chrome.storage.local` (measured). The prototype reader found 25 of 38 totals, then 31 of 38 after one bug fix, with 1 false found (IKEA superscript cents). Proposed Y is 80% on one-item cart pages ([report](../docs/evals/merchant-probe-2026-10.md), [decision](decisions/2026-10-05-merchant-probe-method.md)). Pending: second labeler over the gitignored snapshots in `evals/merchants/probe/data/sites/`, an independent report review, then PR and merge; Evan confirms go and Y.
+2. Phase 11 in progress; later decisions are asked per phase ([table](product/phase-10-merchant-expansion.md#decisions-for-evan-one-word-each-asked-when-their-phase-starts)).
+3. **Next renewal, published before 2026-11-04T00:00Z** ([renewing](ops/catalog-release.md#renewing-a-catalog-before-it-expires)): re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data.
+4. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it instead of per file; `pipeline handoff` names the freshness record for the merchant MCC folder ([renewal record](ops/catalog-release-history.md#renewal-2026-10-05renewal1-prepared-2026-10-05)).
+5. Phase order (Evan, 2026-10-05): 10 ∥ 11 → 12 → 13 → 14 → 15 Release A (replaces Phase 5) → 17; 16 beside 15; Phase 6 folded in; 4 terms-change detection revisited after 9.
+6. Before the Web Store release: verify the `orderConfirmation` URL patterns on a real order per retailer (Evan); enable GitHub private vulnerability reporting ([`SECURITY.md`](../SECURITY.md)); optionally confirm **Check for updated terms** in a loaded `build:hosted` extension picks up release 3.
+7. Evan's calls: Aer Lingus and Iberia Avios valuation parity; a second luna repeat against gpt-5.5; the human spot-check of agent-verified labels (deferred 2026-10-02); revoking the legacy HS256 JWT secret.
+8. Catalog builder maps gold `usMerchantsOnly: null` to `false`; the catalog omits the Chase Lyft promo and targeted Quicksilver offers ([cards](domain/cards.md)).
+9. Housekeeping: other clones run `git config core.hooksPath .githooks`; Claude Code checkouts need a local `CLAUDE.md` with `@AGENTS.md`; delete the stale local `extension/CLAUDE.md`; revoke the retired `simulation/` keys if not done; remove the merged `AICheckout-p9-m3b`, `AICheckout-p9-m5` and `AICheckout-wiki-audit` worktrees when Evan agrees.

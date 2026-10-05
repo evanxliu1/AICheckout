@@ -6,7 +6,7 @@ status: stable
 tags: [product, plan, phase-10, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T19:40:00Z
+  at: 2026-10-05T23:30:00Z
 sources:
   - resource: phase-10-merchant-expansion.md
     title: Merchant coverage plan (Phases 10–17)
@@ -17,6 +17,8 @@ sources:
 ---
 
 # Phase 10 plan: merchant feasibility probe
+
+**Status (2026-10-05T23:30Z): steps 1–4 done on branch `phase10-probe`, verdict go (16 of 25 sites showed a logged-out cart), proposed Y = 80%; second labeler and report review pending.** Results: [report](../../docs/evals/merchant-probe-2026-10.md); method choices: [decision](../decisions/2026-10-05-merchant-probe-method.md); working folder `evals/merchants/probe/`.
 
 Started 2026-10-05, in parallel with Phase 11 ([merchant coverage plan](phase-10-merchant-expansion.md)). Evan approved D4 (real-page capture) and D6 (merchant list) the same day ([decision](../decisions/2026-10-05-merchant-coverage-phases.md)). No product code: the output is a report that decides whether the generic-reader plan (Phases 12–13) holds.
 
@@ -47,10 +49,10 @@ Never sign in, create an account, type into any field (no ZIP codes, no email, n
 
 | # | Step | Verify |
 | --- | --- | --- |
-| 1 | Site list and gitignore entries | 25 sites meet the strata; list ID recorded |
-| 2 | Visits and snapshots | every site has an outcome; nothing typed or submitted (the visit script has no fill or type calls) |
-| 3 | Prototype reader and labels | results per site; labels checked by a second subagent |
-| 4 | Report and wiki | report reviewed by an independent subagent; now, log, plan updated |
+| 1 | Site list and gitignore entries | 25 sites meet the strata; list ID recorded — **done**: Tranco 647LX, 8/8/9 per band, 5+ platforms |
+| 2 | Visits and snapshots | every site has an outcome; nothing typed or submitted (the visit script has no fill or type calls) — **done**: 44 snapshots from 16 sites, 9 sites blocked |
+| 3 | Prototype reader and labels | results per site; labels checked by a second subagent — **done except the second labeler** |
+| 4 | Report and wiki | report reviewed by an independent subagent; now, log, plan updated — **done except the review** |
 
 Done when the report is merged from branch `phase10-probe`. Evan then confirms go, or re-decides scope.
 

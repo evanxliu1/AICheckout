@@ -3,6 +3,7 @@
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
 ## 2026-10-05
+* [Phase 10 probe method choices](./2026-10-05-merchant-probe-method.md) — candidate-list site selection on Tranco 647LX, custom computed-style snapshots, a test extension for the frame and storage checks, labels frozen before the first reader run, proposed Y 80%.
 * [Merchant coverage split into Phases 10–17; D4 and D6 approved](./2026-10-05-merchant-coverage-phases.md) — eight shippable phases with their own exit checks and decisions; 10 and 11 in parallel; real-page capture and the Tranco/CrUX retail list approved.
 * [The coordinator publishes catalogs from the CLI on Evan's chat instruction](./2026-10-05-agent-publish-cli-session.md) — Evan's own CLI session (refresh token outside the repo), `publish <version>` in chat as the attestation, `--confirm <version>`; chosen over a scoped database token.
 * [README demo video (Ocean cinematic, extension only) and SVG diagrams](./2026-10-05-readme-demo-video-and-diagrams.md) — video embedded inline from Evan's `user-attachments` upload, source copy `docs/readme/demo.mp4`; extension-only script in Evan's words; light/dark SVG diagrams instead of Mermaid.

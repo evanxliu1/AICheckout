@@ -1,0 +1,765 @@
+{
+ "labeler": "labeler 1: the Phase 10 builder (claude-code/claude-opus-5-5), from the screenshots, before the prototype reader was first run on any snapshot; agent-labelled",
+ "labelledAt": "2026-10-05",
+ "kinds": "afterCredit > estimatedTotal > subtotal; expected = the displayed amount of the most preferred kind in the top frame, null when none is displayed (or only inside a cross-origin iframe)",
+ "secondLabeler": null,
+ "snapshots": [
+  {
+   "id": "allbirds.com/cart",
+   "domSha256": "cd45b7b7c1a53d68e0f3fe1aeaf9d443a9e62eefdece83d000405c3706488978",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2500
+    }
+   ],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 2500
+   },
+   "notes": [
+    "/cart redirects to the home page with the drawer open; same state as minicart"
+   ]
+  },
+  {
+   "id": "allbirds.com/checkout",
+   "domSha256": "166959410c7bbfe73f73f1364a97795b6bddb8587c6a98898a3ba63d712e795d",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2798
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 3001
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 3001
+   },
+   "notes": [
+    "opt-out returns-coverage add-on auto-added to the order"
+   ]
+  },
+  {
+   "id": "allbirds.com/minicart",
+   "domSha256": "fd1bc1eb70f6a57607ea5663de9eb81d89232c0b34fc62b5000eb943663b82f0",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2500
+    }
+   ],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 2500
+   },
+   "notes": []
+  },
+  {
+   "id": "apple.com/cart",
+   "domSha256": "af9d37ef4df34fa75b9f639e3462579eaf577e626fc07dcc03ffc7142637ef6c",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1899
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 1899
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 1899
+   },
+   "notes": [
+    "headline sentence repeats the total above the line items"
+   ]
+  },
+  {
+   "id": "barnesandnoble.com/cart",
+   "domSha256": "e1b33aebc75e58fc0842d02c0b03f8588ae4635b1888eb674d615be5f88d453a",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2750
+    }
+   ],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 2750
+   },
+   "notes": []
+  },
+  {
+   "id": "barnesandnoble.com/checkout",
+   "domSha256": "d69e29d64de9636225b9cbef25aa01c591e5039fa3a8682a6e8db38cbb40beb8",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2750
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2750
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2750
+   },
+   "notes": []
+  },
+  {
+   "id": "barnesandnoble.com/minicart",
+   "domSha256": "51806b32b23e97e7785094e601bbc11c5fb7ff5086391f05998c0f4efc9e0716",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2750
+    }
+   ],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 2750
+   },
+   "notes": []
+  },
+  {
+   "id": "bose.com/cart",
+   "domSha256": "bec72558ccb784a2e96219badc3c7c8b7149373dfde6562d70b4cc9a18120aaa",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2900
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 3595
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 3595
+   },
+   "notes": [
+    "estimated total includes ground shipping"
+   ]
+  },
+  {
+   "id": "bose.com/checkout",
+   "domSha256": "a62471f9481ecc7c8ce178b00b3c2e488e6fe7105e6405bd6ad0ee8974b81304",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2900
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 3595
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 3595
+   },
+   "notes": []
+  },
+  {
+   "id": "bose.com/minicart",
+   "domSha256": "a7a4dc49a6a6de9321c25ad33056f4f5e3fc7e6c09d517332d24185923cb5e8e",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2900
+    }
+   ],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 2900
+   },
+   "notes": []
+  },
+  {
+   "id": "corsair.com/cart",
+   "domSha256": "86e448128c2d3d738879515a9b0a6cc1700c32a942e4b9415f131989f8e55bac",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1699
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 699
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 699
+   },
+   "notes": [
+    "subtotal is pre-discount list price; negative estimated-discount row; total after sale discount"
+   ]
+  },
+  {
+   "id": "corsair.com/checkout",
+   "domSha256": "edda6bf30fa4365f7fe567b508df3f87b7bd1779f5d9f8e5d7d0159a4119cdf7",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 699
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 750
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 750
+   },
+   "notes": []
+  },
+  {
+   "id": "corsair.com/minicart",
+   "domSha256": "079be4a4a5ac90d8398230dc3ccc9d3e974ceda4af1b7e956c9845b7ee92ef94",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 699
+    }
+   ],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 699
+   },
+   "notes": [
+    "total row label is a cart count, not a total word; kind judged subtotal (before tax and shipping)"
+   ]
+  },
+  {
+   "id": "fashionnova.com/cart",
+   "domSha256": "141ac3f8703c8f9966da01c9723cb28704160807b25d0706f6397c5d6658fa7e",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 899
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 899
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 899
+   },
+   "notes": []
+  },
+  {
+   "id": "fashionnova.com/checkout",
+   "domSha256": "5a3f7bedcf1c64e268470ec1251decdba999447fd2d85bf8e1a225c1796e0967",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 899
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 964
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 964
+   },
+   "notes": []
+  },
+  {
+   "id": "fashionnova.com/minicart",
+   "domSha256": "77b4812a697ad7d89de315c31a99a3849ba711004e295777b8550224443163c8",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 899
+    }
+   ],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 899
+   },
+   "notes": []
+  },
+  {
+   "id": "gap.com/cart",
+   "domSha256": "b62ba7ad4e1aaacf5289f3b1ad7feba670466b3af1e264820ad0d73a2ab336c3",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1995
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 1995
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 1995
+   },
+   "notes": []
+  },
+  {
+   "id": "gap.com/checkout",
+   "domSha256": "c314d9d6c40a9495c914a0cc475210a875408eb26eaac5dd878d3189adb2ef13",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1995
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 1995
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 1995
+   },
+   "notes": []
+  },
+  {
+   "id": "gap.com/minicart",
+   "domSha256": "71d6cf2fc6252f50d72f65e07079bb9ffb7c97bce509a4e02ff46e926c0cda7d",
+   "displayed": [],
+   "expected": null,
+   "notes": []
+  },
+  {
+   "id": "glossier.com/cart",
+   "domSha256": "9273bca62cdc999bff7aea52e5d90afbc50174faf43671fb60b678f3364ba050",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 900
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 900
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 900
+   },
+   "notes": []
+  },
+  {
+   "id": "glossier.com/checkout",
+   "domSha256": "a61f8a637e463cb8a8233ee2927771d1fe10103da6372619001f55f079b49063",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 900
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 965
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 965
+   },
+   "notes": []
+  },
+  {
+   "id": "glossier.com/minicart",
+   "domSha256": "f6167c9a6b1633749727e0af2ed9490bbd266e6ff2e573988f9462a1bc2d5bd3",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 900
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 900
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 900
+   },
+   "notes": []
+  },
+  {
+   "id": "gymshark.com/cart",
+   "domSha256": "c9bd63b560ae820d9a71632a9886ba6f23a463efad26078734fffdb94b6bdbb6",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1600
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2100
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2100
+   },
+   "notes": [
+    "estimated total includes a shipping estimate"
+   ]
+  },
+  {
+   "id": "gymshark.com/checkout",
+   "domSha256": "13e93a01a9a0de227ff261e1d3d87a36494e53bcb91126fa34f41de9eba693f9",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1600
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 1716
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 1716
+   },
+   "notes": []
+  },
+  {
+   "id": "gymshark.com/minicart",
+   "domSha256": "2244e1fc4d1fdf8ca17741d57fd4696035ff9237cb79e7cc45f10690ab7f5a21",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1600
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2100
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2100
+   },
+   "notes": [
+    "label corrected 2026-10-05 after run 2: labeler 1 had read only the viewport; the summary sits below the fold of the scrollable drawer (labeler error, not a reader-driven change)"
+   ]
+  },
+  {
+   "id": "hottopic.com/cart",
+   "domSha256": "dbe5e01aaeedde015a72d5d2700ce232844777f589cefce20f9e4791afeb2162",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1090
+    }
+   ],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 1090
+   },
+   "notes": []
+  },
+  {
+   "id": "hottopic.com/minicart",
+   "domSha256": "f0660b7c1f3cd3786420e64c592ef0509dc58e6e8b177fc4a62dca54bf6e3a49",
+   "displayed": [],
+   "expected": null,
+   "notes": [
+    "label corrected 2026-10-05 after run 2: the mini-cart dropdown had closed itself before capture (capture-time screenshot shows no mini-cart); labeler 1 had labelled from an earlier screenshot"
+   ]
+  },
+  {
+   "id": "ikea.com/cart",
+   "domSha256": "6759af00f06c7651a3489a106a89a5cc633dec8015cd22bb8ec56b312777bc8a",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 3999
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 3999
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 3999
+   },
+   "notes": [
+    "total row is before tax; cents in a separate superscript element"
+   ]
+  },
+  {
+   "id": "ikea.com/checkout",
+   "domSha256": "530c28c0019f0996b17494080f351225b4ea09653987479905464858e03f3246",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 3999
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 4587
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 4587
+   },
+   "notes": [
+    "total includes pickup fee and tax; cents in a separate superscript element"
+   ]
+  },
+  {
+   "id": "ikea.com/minicart",
+   "domSha256": "7d7009cad39917709467dc4fda724d1a5d847bb79fd8ffb615b3fae2a0b80f23",
+   "displayed": [],
+   "expected": null,
+   "notes": []
+  },
+  {
+   "id": "logitech.com/cart",
+   "domSha256": "6875f51467f64cf07e5187e35bdebb2f24505a497267f2136570e34c7aa99b5e",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2299
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2299
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2299
+   },
+   "notes": [
+    "line item has no total label; summary has a zero total-savings row"
+   ]
+  },
+  {
+   "id": "logitech.com/checkout",
+   "domSha256": "2bc9575b6281b6f15ea36eeaae475d265defa72c6d73e46bb43ac3cc1f964575",
+   "displayed": [],
+   "expected": null,
+   "notes": [
+    "summary-in-cross-origin-iframe (global-e); displayed subtotal 2299 inside the iframe, not readable from the top frame"
+   ]
+  },
+  {
+   "id": "logitech.com/minicart",
+   "domSha256": "b1f3aedc751d28a18a3a91a4c192df92f3f70855fddae17e3f96c30c7c558aec",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2299
+    }
+   ],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 2299
+   },
+   "notes": []
+  },
+  {
+   "id": "samsung.com/cart",
+   "domSha256": "21bdf55d29c56b6e22e201ccff1eaa0aac075dfadd81996639c14dbb70690d70",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 3499
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 3499
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 3499
+   },
+   "notes": []
+  },
+  {
+   "id": "samsung.com/checkout",
+   "domSha256": "e9f59c300914a0f5836e1a65691a62246e665633cd2a58257ca1e135908316f1",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 3499
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 3499
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 3499
+   },
+   "notes": [
+    "sign-in or guest-email gate page with the order summary"
+   ]
+  },
+  {
+   "id": "sonos.com/cart",
+   "domSha256": "a51134a9a2cba2f643c057b3bc8b2eeda175fe964290bc29882d2368227e01e1",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1900
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 1900
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 1900
+   },
+   "notes": []
+  },
+  {
+   "id": "sonos.com/checkout",
+   "domSha256": "84cee1a77e58e5442143d26eaf4739894741d2e7b4ed815890480ea02d7b21a2",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1900
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 1900
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 1900
+   },
+   "notes": []
+  },
+  {
+   "id": "sonos.com/minicart",
+   "domSha256": "b0fc43ca3f2ee51ad4e55ae57bdd46d626c4226033c04d42ffceed3a023097fe",
+   "displayed": [],
+   "expected": null,
+   "notes": []
+  },
+  {
+   "id": "ulta.com/cart",
+   "domSha256": "770171c6833b4dc6dd6fdc02ca17b2fd4869b8c2fbda4db9d60d25784d5b2f07",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1600
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2295
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2295
+   },
+   "notes": [
+    "estimated total includes shipping"
+   ]
+  },
+  {
+   "id": "ulta.com/checkout",
+   "domSha256": "6c08d79f33d6f856167cce1020d5bb6f4f94c32eaadf7567ef46c9fb62a44344",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1600
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2295
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2295
+   },
+   "notes": []
+  },
+  {
+   "id": "ulta.com/minicart",
+   "domSha256": "257a95fbe4a46e7c469aa3b29d9c0f5be07cd4e34e5bc7bd6fdd266932f0ba84",
+   "displayed": [],
+   "expected": null,
+   "notes": []
+  },
+  {
+   "id": "zumiez.com/cart",
+   "domSha256": "3a50bb00a834dce352fada66d6b7cd0839231a1d444dc60c06b3d6979c30658f",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2595
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2595
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2595
+   },
+   "notes": []
+  },
+  {
+   "id": "zumiez.com/checkout",
+   "domSha256": "9580352f138670bff6ae437490e51fb2e0ae77598e582d686ba6c5f0d1547959",
+   "displayed": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2595
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2595
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2595
+   },
+   "notes": []
+  },
+  {
+   "id": "zumiez.com/minicart",
+   "domSha256": "22b44fe86485e880948062143fca1c1ab268de3983b0190beb53ec5c2f6af150",
+   "displayed": [
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2595
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2595
+   },
+   "notes": []
+  }
+ ],
+ "corrections": [
+  "gymshark.com/minicart and hottopic.com/minicart corrected by labeler 1 after reader run 2 exposed labelling errors; both corrections checked against the capture-time screenshot and DOM, not against the reader output"
+ ]
+}
