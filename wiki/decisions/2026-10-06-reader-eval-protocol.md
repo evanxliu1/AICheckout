@@ -48,4 +48,4 @@ As chosen above, in `generic-reader-protocol.1`. The seed is `ai-checkout/phase-
 - Phase 16 starts by adjudicating the 60 held-out profiles, and its drafting can't read Phase 14 seed rows for them.
 
 ## Status
-Proposed 2026-10-06 by the Phase 12.1 builder (claude-code/claude-opus-5-5) within the approved plan. Accepted 2026-10-06 after the independent review signed the protocol with fixes (agent-verified) and Evan decided the robots posture.
+Proposed 2026-10-06 by the Phase 12.1 builder (claude-code/claude-opus-5-5) within the approved plan. Accepted 2026-10-06 after the independent review signed the protocol with fixes (agent-verified) and Evan decided the robots posture. Amended 2026-10-06 by [generic-reader-protocol.2](2026-10-06-global-reader-protocol-2.md) on Evan's decision: worldwide frame and currency, two candidate streams, new strata and label schema; the rest stands.
