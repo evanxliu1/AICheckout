@@ -1,0 +1,461 @@
+{
+  "schemaVersion": 1,
+  "packetId": "ccf07af4-130d-4e56-a1f2-c27551f18677",
+  "batch": "capital-one-refresh-2026-10",
+  "issuer": "Capital One",
+  "provenance": "agent-verified",
+  "cards": [
+    {
+      "cardId": "capital-one-venture-x",
+      "issuer": "Capital One",
+      "corpusCaseSha256": "506e7def94876d2a480bf0fa4ddca44263c8a048df45d360e584929e15436e96",
+      "heldOut": null,
+      "programId": null,
+      "rules": [],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Redemption values (travel formula, other options that vary) do not change what a purchase earns; miles keep no stated value per the issuer conventions."
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "capital-one-venture",
+      "issuer": "Capital One",
+      "corpusCaseSha256": "5383da47850993d25261573da453d8768b167f90eb1f43ba4c1632d77b937817",
+      "heldOut": null,
+      "programId": null,
+      "rules": [],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "capital-one-ventureone",
+      "issuer": "Capital One",
+      "corpusCaseSha256": "2a3a1e1a250135877375ba24187dc4d1fe18908c4e78b9eef945dcb76c419070",
+      "heldOut": null,
+      "programId": null,
+      "rules": [],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "capital-one-quicksilverone",
+      "issuer": "Capital One",
+      "corpusCaseSha256": "49cd2adacd7d44c49ff7b34e17bc22c39c7e159ffb973dce71de0e388f1696b6",
+      "heldOut": null,
+      "programId": null,
+      "rules": [],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "capital-one-quicksilver-student",
+      "issuer": "Capital One",
+      "corpusCaseSha256": "b700d19011c8e780dfeabcf50ab06f69103e3427dd21c16d138b9e04027c55a5",
+      "heldOut": null,
+      "programId": null,
+      "rules": [],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "capital-one-quicksilver-secured",
+      "issuer": "Capital One",
+      "corpusCaseSha256": "6b8de2497800834d584152892543dda461f932e582ba93f97e09f37edb3aa569",
+      "heldOut": null,
+      "programId": null,
+      "rules": [],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "capital-one-savorone",
+      "issuer": "Capital One",
+      "corpusCaseSha256": "518489221fde86ef44e462097f948ee1df0b3a21b2f74086a34caad56e7f9415",
+      "heldOut": null,
+      "programId": null,
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "checkout-method"
+          ],
+          "note": "Grocery excludes superstores such as Walmart and Target (both brands excluded); third-party payment accounts and digital wallets may not get the higher rate, so paypal, venmo and digital-wallet are excluded.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-savorone-product",
+              "quote": "The 3% grocery earn is limited to purchases made at grocery stores, excluding superstores like Walmart® and Target®"
+            },
+            {
+              "sourceId": "capital-one-savorone-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The category-code footnote says third-party payment accounts and digital wallets may not get the higher rate; under O10 that excludes paypal, venmo and digital-wallet from the dining bonus.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-savorone-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "entertainment",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The category-code footnote says third-party payment accounts and digital wallets may not get the higher rate; under O10 that excludes paypal, venmo and digital-wallet from the entertainment bonus.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-savorone-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "streaming",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The category-code footnote says third-party payment accounts and digital wallets may not get the higher rate; under O10 that excludes paypal, venmo and digital-wallet from the streaming bonus.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-savorone-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "capital-one-savor-student",
+      "issuer": "Capital One",
+      "corpusCaseSha256": "5056c95a438a0f210a2a825d15c96320408e96c64dbf249cf5365f7bdba819ce",
+      "heldOut": null,
+      "programId": null,
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "checkout-method"
+          ],
+          "note": "Grocery excludes superstores such as Walmart and Target (both brands excluded); third-party payment accounts and digital wallets may not get the higher rate, so paypal, venmo and digital-wallet are excluded.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-savor-student-product",
+              "quote": "The 3% grocery earn is limited to purchases made at grocery stores, excluding superstores like Walmart® and Target®"
+            },
+            {
+              "sourceId": "capital-one-savor-student-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The category-code footnote says third-party payment accounts and digital wallets may not get the higher rate; under O10 that excludes paypal, venmo and digital-wallet from the dining bonus.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-savor-student-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "entertainment",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The category-code footnote says third-party payment accounts and digital wallets may not get the higher rate; under O10 that excludes paypal, venmo and digital-wallet from the entertainment bonus.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-savor-student-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "streaming",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The category-code footnote says third-party payment accounts and digital wallets may not get the higher rate; under O10 that excludes paypal, venmo and digital-wallet from the streaming bonus.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-savor-student-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "capital-one-quicksilver",
+      "issuer": "Capital One",
+      "corpusCaseSha256": "cb55b15864fd8f7c94c175abf8411ab8b1b4a8f0e84430b9b383e5973afae3b1",
+      "heldOut": null,
+      "programId": null,
+      "rules": [],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "capital-one-savor",
+      "issuer": "Capital One",
+      "corpusCaseSha256": "6af4069334635536ded1fae2bed852f8882f5084398ea8b923c30b28b8d7626f",
+      "heldOut": null,
+      "programId": null,
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "checkout-method"
+          ],
+          "note": "Grocery excludes superstores such as Walmart and Target (both brands excluded); third-party payment accounts and digital wallets may not get the higher rate, so paypal, venmo and digital-wallet are excluded.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-savor-product",
+              "quote": "The 3% grocery earn is limited to purchases made at grocery stores, excluding superstores like Walmart® and Target®"
+            },
+            {
+              "sourceId": "capital-one-savor-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The category-code footnote says third-party payment accounts and digital wallets may not get the higher rate; under O10 that excludes paypal, venmo and digital-wallet from the dining bonus.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-savor-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "entertainment",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The category-code footnote says third-party payment accounts and digital wallets may not get the higher rate; under O10 that excludes paypal, venmo and digital-wallet from the entertainment bonus.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-savor-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "streaming",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The category-code footnote says third-party payment accounts and digital wallets may not get the higher rate; under O10 that excludes paypal, venmo and digital-wallet from the streaming bonus.",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-savor-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    }
+  ],
+  "gates": [],
+  "programs": [],
+  "programDetails": [],
+  "rewardPrograms": [],
+  "labelLintAcks": []
+}
