@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "33b79968-f7f9-49d5-8377-cb5e4ee944bb",
+  "packetId": "fe5022d5-e487-4d86-afae-12e3a1ab6e22",
   "batch": "discover-refresh-2026-10",
   "issuer": "Discover",
   "provenance": "agent-verified",
@@ -22,7 +22,23 @@
       "apps/api/src/curation/v2/schema.ts"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-10-04",
+    "filesRead": [
+      "evals/curation/batches/discover-refresh-2026-10/pipeline/packets/adjudicate.discover.1.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/discover.md",
+      "evals/curation/batches/discover-refresh-2026-10/verification/discover.json",
+      "evals/curation/batches/discover-refresh-2026-10/verify/discover.md",
+      "evals/curation/batches/discover-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/discover-refresh-2026-10/product-notes.json",
+      "evals/curation/batches/discover-refresh-2026-10/captures/discover-it-chrome-product.txt",
+      "evals/curation/batches/discover-refresh-2026-10/captures/discover-it-chrome-terms.txt"
+    ]
+  },
   "cards": [
     {
       "cardId": "discover-it-chrome",
@@ -40,7 +56,11 @@
             "sourceId": "discover-it-chrome-product",
             "quote": "Earn 2% cash back at gas stations and restaurants on up to $1,000 in combined purchases each quarter, automatically."
           },
-          "note": "The 2% gas rate is a standing, automatic rate with no end date or first-year limit; the 'last day of the offer or promotion' sentence is boilerplate (Discover convention, general 10)."
+          "note": "The 2% gas rate is a standing, automatic rate with no end date or first-year limit; the 'last day of the offer or promotion' sentence is boilerplate (Discover convention, general 10).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Terms and product captures state the 2% gas rate as a standing rate earned automatically with no end date; the offer-or-promotion sentence is boilerplate (Discover convention; general 10)."
+          }
         },
         {
           "op": "set",
@@ -53,7 +73,11 @@
             "sourceId": "discover-it-chrome-product",
             "quote": "Earn 2% cash back at gas stations and restaurants on up to $1,000 in combined purchases each quarter, automatically."
           },
-          "note": "The 2% restaurants rate is a standing, automatic rate with no end date or first-year limit; the 'last day of the offer or promotion' sentence is boilerplate (Discover convention, general 10)."
+          "note": "The 2% restaurants rate is a standing, automatic rate with no end date or first-year limit; the 'last day of the offer or promotion' sentence is boilerplate (Discover convention, general 10).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Same standing 2% rate for restaurants; no end date stated in either capture and the promotion sentence is boilerplate (Discover convention; general 10)."
+          }
         },
         {
           "op": "set",
@@ -66,7 +90,11 @@
             "sourceId": "discover-it-chrome-product",
             "quote": "Earn 2% cash back at gas stations and restaurants on up to $1,000 in combined purchases each quarter, automatically."
           },
-          "note": "The 2% EV charging rate is a standing, automatic rate with no end date or first-year limit; the 'last day of the offer or promotion' sentence is boilerplate (Discover convention, general 10)."
+          "note": "The 2% EV charging rate is a standing, automatic rate with no end date or first-year limit; the 'last day of the offer or promotion' sentence is boilerplate (Discover convention, general 10).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "EV charging is an inclusion of the same standing 2% gas rate; no end date stated (Discover convention; general 10)."
+          }
         },
         {
           "op": "set",
@@ -77,7 +105,11 @@
             "sourceId": "discover-it-chrome-terms",
             "quote": "and some public electric vehicle charging stations."
           },
-          "note": "None of the EV rule's anchors mentioned EV charging. The replaced anchor's rate and quarterly cap are also stated by the product-page anchor kept at index 2; the new window does not abut the after-cap anchor."
+          "note": "None of the EV rule's anchors mentioned EV charging. The replaced anchor's rate and quarterly cap are also stated by the product-page anchor kept at index 2; the new window does not abut the after-cap anchor.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The new anchor is verbatim in the terms capture and is the only sentence naming EV charging; the rate and $1,000 quarterly cap remain stated by the product anchor at index 2, and the new window is separated from the after-cap anchor by over 20 words, so no run exceeds 25 words (general 22)."
+          }
         },
         {
           "op": "remove",
@@ -90,7 +122,11 @@
               "You will earn 5% cash back on purchases (hotels, vacation rentals and rental cars only) made on Capital One Travel."
             ]
           },
-          "note": "No anchor states a problem: the terms capture's reward text is Chrome's own (2% gas and restaurants) and states the 5% Capital One Travel and Entertainment rates plainly (Discover convention; general 11 and 16)."
+          "note": "No anchor states a problem: the terms capture's reward text is Chrome's own (2% gas and restaurants) and states the 5% Capital One Travel and Entertainment rates plainly (Discover convention; general 11 and 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "None of the three anchors states a problem: the card name and the two plain 5% portal sentences from the terms capture; anchorless issues are removed (general 11, 16)."
+          }
         },
         {
           "op": "remove",
@@ -101,7 +137,11 @@
               "To qualify for 2%, the purchase transaction date must be before or on the last day of the offer or promotion."
             ]
           },
-          "note": "The 'last day of the offer or promotion' sentence is boilerplate, not a missing limited-time value (Discover convention, general 10)."
+          "note": "The 'last day of the offer or promotion' sentence is boilerplate, not a missing limited-time value (Discover convention, general 10).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The last-day-of-the-offer sentence is boilerplate about promotion timing, not a missing end date (Discover convention; general 10)."
+          }
         }
       ],
       "addedRules": [],
@@ -115,7 +155,11 @@
               "quote": "and some public electric vehicle charging stations."
             }
           ],
-          "note": "Only some public EV charging stations code as gas stations and earn 2%; others earn the 1% base rate."
+          "note": "Only some public EV charging stations code as gas stations and earn 2%; others earn the 1% base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms capture says only some public EV charging stations are classified as gas stations, so the anchor itself states the ambiguity of the ev-charging rule."
+          }
         }
       ],
       "productNoteChanges": []

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "discover-refresh-2026-10",
-  "updatedAt": "2026-10-05T01:39:42.171Z",
+  "updatedAt": "2026-10-05T01:41:15.112Z",
   "cards": {
     "discover-it-chrome": {
       "stages": {
@@ -77,6 +77,17 @@
           "agentRun": "a48fc3b87c531152e",
           "model": "claude-opus-5-5",
           "acceptedAt": "2026-10-05T01:39:42.164Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:9ab38a5f9fb718a997c18b3c2ffb26797e4a98cecc4f844fcf8de1258d1082d5",
+          "finishedAt": "2026-10-05T01:41:15.105Z",
+          "attempts": 1,
+          "packetId": "fe5022d5-e487-4d86-afae-12e3a1ab6e22",
+          "agentRun": "a12ff4c0b55542dd5",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:41:15.105Z"
         }
       },
       "dropped": null,
@@ -110,6 +121,28 @@
           "acceptedAt": "2026-10-05T01:39:42.164Z",
           "durationMs": 89283,
           "tokens": 49264
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "outputs": [
+            {
+              "ref": "adjudicate:discover",
+              "sha256": "5554150ae532b41a694d4222205bae803081a5b484f68f8036c48cd68c0f1035"
+            },
+            {
+              "ref": "lint-acks:discover",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:41:15.105Z",
+          "attempts": 1,
+          "packetId": "fe5022d5-e487-4d86-afae-12e3a1ab6e22",
+          "agentRun": "a12ff4c0b55542dd5",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T01:41:15.105Z",
+          "durationMs": 0,
+          "tokens": 0
         }
       }
     }
