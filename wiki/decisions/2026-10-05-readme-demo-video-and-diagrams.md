@@ -1,7 +1,7 @@
 ---
 type: Decision
 title: README demo video (Ocean cinematic, extension only) and SVG diagrams
-description: Evan chose an extension-only motion-graphic demo in the Ocean cinematic style for the README, committed under docs/readme/ with a linked poster; the README's Mermaid chart became hand-drawn light/dark SVG diagrams.
+description: Evan chose an extension-only motion-graphic demo in the Ocean cinematic style for the README, committed under docs/readme/ and embedded inline from a GitHub upload; the README's Mermaid chart became hand-drawn light/dark SVG diagrams.
 status: accepted
 tags: [decision, docs, release, design]
 generated:
@@ -25,12 +25,13 @@ Evan asked on 2026-10-04 for an up-to-date repository README with better-looking
 | **Extension-only script, Ocean cinematic style** | Chosen | Evan's pick after two rounds; he cut the uncertainty-range, engine, curation and eval beats ("focus only on the extension"; a later video may cover curation) and rewrote the copy to sound less machine-written |
 | One-camera, calm-light, editorial or blueprint style | Rejected | Evan preferred the Ocean cut of the same script |
 | Animated GIF preview in the README | Rejected | 11 MB even at 640 px and 10 fps, with banding on the navy gradients |
-| **Poster image linked to the committed MP4, plus a `user-attachments` link** | Chosen | Works today; the inline player needs Evan to upload the MP4 once in the GitHub web UI |
+| **`user-attachments` upload embedded inline, MP4 committed as source** | Chosen | GitHub plays it inline; Evan uploaded it once in the web UI (10 MB limit, hence the CRF 24 encode) |
+| Poster image linked to the committed MP4 | Superseded | Used until the upload existed; a click opened the file page, not a player |
 | Styled Mermaid | Rejected | Limited layout and theming control |
 | **Hand-drawn SVG, light and dark variants in `<picture>`** | Chosen | Matches the Ocean palette and follows GitHub's theme |
 
 ## Decision
-- The README hero is `docs/readme/demo-poster.jpg`, linked to `docs/readme/demo.mp4`: 40.6 s, 1920×1080, 60 fps, about 9.5 MB (H.264 CRF 24, under GitHub's 10 MB upload limit).
+- The README hero is the video itself, embedded from a `user-attachments` upload; the source copy is `docs/readme/demo.mp4`: 40.6 s, 1920×1080, 60 fps, about 9.5 MB (H.264 CRF 24, under GitHub's 10 MB upload limit).
 - The video uses real captures of the extension built from `main` on 2026-10-04: popup tabs at 3×, and the badge on a neutral "Sample Store" cart served at a supported cart URL. The savings history was filled through the normal badge flow with a clock shim in a copy of the service-worker loader; there is no retailer branding.
 - On-screen text, verbatim:
   1. "Add the cards you already have." / "Search 178+ cards from the biggest U.S. issuers."
@@ -45,7 +46,7 @@ Evan asked on 2026-10-04 for an up-to-date repository README with better-looking
 
 ## Consequences
 - The video's scene source, render harness and captures are not in the repository; they were made in a session scratchpad, so the video is not reproducible from the repo. If the UI changes visibly, the video must be remade. It is presentation media, not hash-pinned release media ([release media](../ops/release-media.md)).
-- Once Evan uploads the MP4 in the GitHub web UI, its `user-attachments` URL can replace the poster link so the video plays inline.
+- Evan uploaded the MP4 in the GitHub web UI on 2026-10-05; the README embeds its `user-attachments` URL, which plays inline. The committed `docs/readme/demo.mp4` stays as the source copy and the header row's link; no poster image is kept.
 - An independent review (agent-verified) corrected the README and diagram wording before merge. Quotes that don't match the page are flagged for review, not rejected. The catalog is bundled, and the `/v1/catalog` refresh is optional. The real catalog is verified by agents and published by a person, not reviewed condition by condition. All seven held-out rows are shown.
 
 ## Status

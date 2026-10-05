@@ -23,11 +23,7 @@
   <a href="wiki/index.md">Development wiki</a>
 </p>
 
-<p align="center">
-  <a href="docs/readme/demo.mp4"><img src="docs/readme/demo-poster.jpg" width="100%" alt="Demo video: add your cards, shop as usual, and the extension shows the best card on the cart; every card ranked, savings tracked, cards kept in the browser. Click to play (40 seconds)." /></a>
-  <br />
-  <sub><a href="docs/readme/demo.mp4">▶ Watch the 40-second demo</a></sub>
-</p>
+https://github.com/user-attachments/assets/f6575a3d-7a54-449f-818d-8e5908a4fafb
 
 ## Why it's built this way
 
