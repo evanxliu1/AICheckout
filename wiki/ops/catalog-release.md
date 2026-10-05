@@ -125,6 +125,8 @@ Built from the 2026-10-05 freshness check and ten refresh batches ([results](../
 node scripts/check-expansion-quotes.mjs --captures <each folder below>
 ```
 
+With every folder loaded, the check also reports seven anchors in the frozen `evals/curation/expansion/` files as not verbatim: a source captured again by a refresh batch keeps its ID, and the checker resolves an ID to one capture. Those files are clean against their own folders (run the check with only the expansion and real folders); fixing the checker to resolve per file is a Phase 9 follow-up.
+
 Capture folders Evan selects (14; three checkouts):
 
 - `~/Projects/AICheckout-p8-wf/evals/curation/batches/<batch>/captures` for `wells-fargo-2026-10` and the ten `*-refresh-2026-10` batches (11 folders);

@@ -25,8 +25,8 @@ or `packages/rewards-core/src/catalog-v3.ts` is stale. Do not edit by hand.
 
 | Measure | Bytes | Share of 1 MiB | Budget (75%) |
 | --- | --- | --- | --- |
-| JSON (`catalogV3Schema`) | 602,960 | 57.5% | 786,432 |
-| JSONB text (`valid_catalog_v3`, computed) | 643,738 | 61.4% | 786,432 |
+| JSON (`catalogV3Schema`) | 602,925 | 57.5% | 786,432 |
+| JSONB text (`valid_catalog_v3`, computed) | 643,701 | 61.4% | 786,432 |
 
 ## Counts
 
@@ -100,6 +100,8 @@ exclusions (general rule 22), so the catalog omits them; the corpus keeps them.
 | `barclays-athleta-encore-mastercard` | In addition, any transaction amount paid … |
 | `capital-one-williams-sonoma-key-rewards-visa` | Purchases made using promotional financing plans … |
 | `capital-one-williams-sonoma-key-rewards-visa` | Installation Services, volume gift card purchases … |
+| `wells-fargo-choice-privileges` | Money orders … |
+| `wells-fargo-choice-privileges-select` | Balance transfers … |
 
 ## Batches and dates
 
@@ -130,7 +132,7 @@ its place and new cards append (pipeline design, multi-batch builder).
 ## Rule-ID continuity
 
 Checked against `evals/curation/rule-id-ledger.json`, the append-only record of every rule ID issued (card and
-SHA-256 of its terms) and the rule IDs of each catalog version. Previous catalog: `2026-10-02.expansion.1` (820 rules, 602,438 bytes JSON). This catalog: 816 rules, 602,960 bytes JSON.
+SHA-256 of its terms) and the rule IDs of each catalog version. Previous catalog: `2026-10-02.expansion.1` (820 rules, 602,438 bytes JSON). This catalog: 816 rules, 602,925 bytes JSON.
 
 | Rule IDs | Count |
 | --- | --- |

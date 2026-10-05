@@ -74,7 +74,9 @@ Per issuer, rule-field agreement is 96.8–100%, except Wells Fargo's two Autogr
 3. **Fixed in PR #48:** the Phase 7 quote-limit omission list made the build throw for re-labelled cards.
 4. **Handoff names the wrong folder for freshness-dated merchant sources:** it gives the freshness record instead of `real/merchant-captures`.
 5. **The draft script produced an impossible end date** (`1365-10-04`) on Bank of America Secured. The verifier caught it.
-6. **One overlay agent wrote working files to a shared scratchpad.** It overwrote one file there, and no repository file was affected.
+6. **The quote check resolves a source ID to a single capture.** With every capture folder loaded, it reports seven frozen anchors as not verbatim, because a refresh batch captured those sources again under the same IDs. The frozen files are clean against their own folders.
+7. **The quote check over the built catalog found two over-long exclusion runs** on the Wells Fargo Choice cards from the Phase 8 batch, which was never shipped and so never checked. Fixed with per-batch `exclusionOmissions` (PR #49): one non-purchase exclusion on each card.
+8. **One overlay agent wrote working files to a shared scratchpad.** It overwrote one file there, and no repository file was affected.
 
 ## Reproduce
 

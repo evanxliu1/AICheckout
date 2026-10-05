@@ -22038,7 +22038,6 @@ export const CATALOG_V3: CatalogV3 = {
         'Cash advances and cash equivalents of any kind',
         'ATM charges',
         'Cash advances',
-        'Money orders',
         'SUPERCHECKS™',
         "Traveler's checks",
         'Wire transfers',
@@ -22219,7 +22218,6 @@ export const CATALOG_V3: CatalogV3 = {
       ],
       exclusions: [
         'Cash advances and cash equivalents of any kind',
-        'Balance transfers',
         'Fees and finance charges',
         'ATM charges',
         'Money orders',

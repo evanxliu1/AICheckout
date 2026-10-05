@@ -29353,7 +29353,6 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
         "Cash advances and cash equivalents of any kind",
         "ATM charges",
         "Cash advances",
-        "Money orders",
         "SUPERCHECKS™",
         "Traveler's checks",
         "Wire transfers",
@@ -29578,7 +29577,6 @@ values ('00000000-0000-4000-8000-000000000001', $catalog${
       ],
       "exclusions": [
         "Cash advances and cash equivalents of any kind",
-        "Balance transfers",
         "Fees and finance charges",
         "ATM charges",
         "Money orders",
