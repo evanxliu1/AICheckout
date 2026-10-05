@@ -1,0 +1,254 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/apply-expansion-verification.mjs",
+  "description": "Product hints of the verified cards with the verifiers’ adjudicated changes. verification: confirmed, fixed or added by a verifier (anchor quoted from anchorSourceId), or unreviewed.",
+  "cards": [
+    {
+      "cardId": "barclays-mastercard-titanium",
+      "issuer": "Barclays",
+      "hints": []
+    },
+    {
+      "cardId": "barclays-mastercard-gold",
+      "issuer": "Barclays",
+      "hints": []
+    },
+    {
+      "cardId": "barclays-jetblue-plus",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"eligible JetBlue purchases\"",
+          "rate": "6X",
+          "cap": "none stated",
+          "conditions": "6X on JetBlue Purchases (jetblue.com, JetBlue reservations, airport ticket counters), JetBlue Vacations Purchases and TrueBlue Travel (truebluetravel.com), with the listed exclusions.",
+          "merchants": [
+            "JetBlue",
+            "JetBlue Vacations"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "6X on JetBlue, JetBlue Vacations and TrueBlue TravelTM Purchases",
+          "anchorSourceId": "barclays-jetblue-plus-pricing",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-jetblue-premier",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"eligible JetBlue purchases\"",
+          "rate": "6X",
+          "cap": "none stated",
+          "conditions": "6X on JetBlue Purchases (jetblue.com, JetBlue reservations, airport ticket counters), JetBlue Vacations Purchases and TrueBlue Travel (truebluetravel.com), with the listed exclusions.",
+          "merchants": [
+            "JetBlue",
+            "JetBlue Vacations"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "6X on JetBlue, JetBlue Vacations and TrueBlue TravelTM Purchases",
+          "anchorSourceId": "barclays-jetblue-premier-pricing",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-upromise-world-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "MyGiftCardsPlus (powered by Upromise) eligible gift card purchases: up to $250 cash back rewards per calendar year; rate not stated",
+          "rate": "not stated",
+          "cap": "up to $250 in cash back rewards per calendar year",
+          "conditions": null,
+          "merchants": [
+            "MyGiftCardsPlus"
+          ],
+          "membership": "Upromise",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Get up to $250 in cash back rewards per calendar year on eligible gift card purchases at MyGiftCardsPlus, powered by Upromise.",
+          "anchorSourceId": "barclays-upromise-world-mastercard-product",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-frontier-airlines-world-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Purchases directly from Frontier Airlines",
+          "rate": "5X (card); page advertises \"up to 17x\" incl. 12X Frontier Miles member earning on non-Basic fares",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Frontier Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "12 miles for being a Frontier Miles member and booking a non-Basic Fare ticket and 5 miles for using your Frontier Airlines World Mastercard",
+          "verification": "confirmed",
+          "anchorSourceId": "barclays-frontier-airlines-world-mastercard-product"
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-carnival-rewards-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"Carnival purchases\"",
+          "rate": "3X card (\"up to 6x\" incl. up to 3X via Carnival Rewards program)",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Carnival Cruise Line"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3x points from your card, plus up to 3x points through Carnival Rewards.",
+          "verification": "confirmed",
+          "anchorSourceId": "barclays-carnival-rewards-mastercard-product"
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-gap-encore-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Gap Inc. Family of Brands (Gap, Old Navy, Banana Republic, Athleta), U.S. incl. Puerto Rico: terms say 25 points per $1; product page says 5X",
+          "rate": "25 points per $1 (terms); product page advertises 5X",
+          "cap": "none stated",
+          "conditions": "U.S. incl. Puerto Rico. Payment platforms (Afterpay, Klarna, PayPal, TikTok) and brand stores outside the U.S. earn 5 points (10 at World levels).",
+          "merchants": [
+            "Gap",
+            "Old Navy",
+            "Banana Republic",
+            "Athleta"
+          ],
+          "membership": "Encore Membership Program (automatic enrollment)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "“Family of Brands” means Gap, Old Navy, Banana Republic, and Athleta brands.",
+          "anchorSourceId": "barclays-gap-encore-mastercard-pricing",
+          "verification": "fixed"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Encore points: 500 points = $1 Reward, redeemable in the Encore Market or on purchases at the Gap Inc. brands",
+          "merchants": [
+            "Gap",
+            "Old Navy",
+            "Banana Republic",
+            "Athleta"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "500 points = $1 Reward",
+          "anchorSourceId": "barclays-gap-encore-mastercard-product",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-old-navy-encore-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Gap Inc. Family of Brands (Gap, Old Navy, Banana Republic, Athleta), U.S. incl. Puerto Rico: terms say 25 points per $1; product page says 5X",
+          "rate": "25 points per $1 (terms); product page advertises 5X",
+          "cap": "none stated",
+          "conditions": "U.S. incl. Puerto Rico. Payment platforms (Afterpay, Klarna, PayPal, TikTok) and brand stores outside the U.S. earn 5 points (10 at World levels).",
+          "merchants": [
+            "Gap",
+            "Old Navy",
+            "Banana Republic",
+            "Athleta"
+          ],
+          "membership": "Encore Membership Program (automatic enrollment)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "“Family of Brands” means Gap, Old Navy, Banana Republic, and Athleta brands.",
+          "anchorSourceId": "barclays-old-navy-encore-mastercard-pricing",
+          "verification": "fixed"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Encore points: 500 points = $1 Reward, redeemable in the Encore Market or on purchases at the Gap Inc. brands",
+          "merchants": [
+            "Gap",
+            "Old Navy",
+            "Banana Republic",
+            "Athleta"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "500 points = $1 Reward",
+          "anchorSourceId": "barclays-old-navy-encore-mastercard-product",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-banana-republic-encore-mastercard",
+      "issuer": "Barclays",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Gap Inc. Family of Brands (Gap, Old Navy, Banana Republic, Athleta), U.S. incl. Puerto Rico: terms say 25 points per $1; product page says 5X",
+          "rate": "25 points per $1 (terms); product page advertises 5X",
+          "cap": "none stated",
+          "conditions": "U.S. incl. Puerto Rico. Payment platforms (Afterpay, Klarna, PayPal, TikTok) and brand stores outside the U.S. earn 5 points (10 at World levels).",
+          "merchants": [
+            "Gap",
+            "Old Navy",
+            "Banana Republic",
+            "Athleta"
+          ],
+          "membership": "Encore Membership Program (automatic enrollment)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "“Family of Brands” means Gap, Old Navy, Banana Republic, and Athleta brands.",
+          "anchorSourceId": "barclays-banana-republic-encore-mastercard-pricing",
+          "verification": "fixed"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Encore points: 500 points = $1 Reward, redeemable in the Encore Market or on purchases at the Gap Inc. brands",
+          "merchants": [
+            "Gap",
+            "Old Navy",
+            "Banana Republic",
+            "Athleta"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "500 points = $1 Reward",
+          "anchorSourceId": "barclays-banana-republic-encore-mastercard-product",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-aarp-travel-rewards-mastercard",
+      "issuer": "Barclays",
+      "hints": []
+    }
+  ]
+}
