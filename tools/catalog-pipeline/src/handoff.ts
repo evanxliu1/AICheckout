@@ -38,6 +38,13 @@ export interface CitedSource {
   /** The catalog source's checkedOn: the review app requires the capture of this date when a manifest has one. */
   checkedOn?: string;
 }
+export interface PaymentPathChange {
+  cardId: string;
+  category: string;
+  ruleIds: string[];
+  before: string[];
+  after: string[];
+}
 export interface CatalogSummary {
   version: string;
   verifiedAt: string;
@@ -49,6 +56,9 @@ export interface CatalogSummary {
   jsonBytes: number;
   budgetBytes: number;
   layers: { id: string; kind: string; dir: string; cards: number; replaced: number }[];
+  /** Real cards a batch replaced, and their categories whose excluded payment paths differ from release 1. */
+  replacedReal: string[];
+  paymentPathChanges: PaymentPathChange[];
   heldOut: { cardId: string; layer: string; reason: string }[];
   dropped: { cardId: string; layer: string; reason: string }[];
   continuity: {
@@ -418,6 +428,15 @@ export async function handoffReport(
       `- Version ${code(catalog.version)}, verifiedAt ${catalog.verifiedAt}, expiresAt ${catalog.expiresAt}; oldest issuer source date ${catalog.oldestSourceDate}.`,
       `- ${catalog.cards} cards, ${catalog.rules} rules, ${catalog.sources} sources; ${n(catalog.jsonBytes)} bytes JSON of a ${n(catalog.budgetBytes)}-byte budget (${((catalog.jsonBytes / catalog.budgetBytes) * 100).toFixed(1)}%).`,
       `- Layers: ${catalog.layers.map((layer) => `${code(layer.id)} (${layer.kind}, ${layer.cards} cards used, ${layer.replaced} replaced later)`).join(', ')}.`,
+      ...(catalog.replacedReal.length
+        ? [
+            `- Real cards refreshed by a batch (release-1 names and rule-ID prefixes; not checked against release 1): ${catalog.replacedReal.map(code).join(', ')}. Excluded payment paths that differ from release 1: ${catalog.paymentPathChanges.length ? '' : 'none.'}`,
+            ...catalog.paymentPathChanges.map(
+              (c) =>
+                `  - ${code(c.cardId)} ${c.category} (${c.ruleIds.map(code).join(', ') || 'no rule'}): ${c.before.join(', ') || 'none'} → ${c.after.join(', ') || 'none'}`,
+            ),
+          ]
+        : []),
       `- Held out by the overlay: ${catalog.heldOut.length}${catalog.heldOut.length ? '' : '.'}`,
       ...catalog.heldOut.map((item) => `  - ${code(item.cardId)} (${item.layer}): ${item.reason}`),
       `- Dropped: ${catalog.dropped.length}${catalog.dropped.length ? '' : '.'}`,
@@ -549,6 +568,7 @@ interface CatalogLibs {
     overlay: { cards: { cardId: string; heldOut: string | null }[] };
     dropped: { cardId: string; layer: string; reason: string }[];
     layers: { id: string; kind: string; dir: string; cards: number; replaced: string[] }[];
+    replacedReal: string[];
   };
   effectiveSources: (
     layers: Layer[],
@@ -566,6 +586,7 @@ interface CatalogV3Libs {
     dates: { oldest: string };
     continuity: CatalogSummary['continuity'];
   };
+  realPaymentPathChanges: (catalog: unknown, catalogV2: unknown, replaced: string[]) => PaymentPathChange[];
   catalogStats: (catalog: unknown) => { cards: number; rules: number; sources: number };
   jsonBytes: (value: unknown) => number;
   CATALOG_V3_BYTE_BUDGET: number;
@@ -585,6 +606,9 @@ export async function buildCatalogSummary(
     : undefined;
   const { catalog, dates, continuity } = v3.buildRelease({ ...merged, ledger });
   const stats = v3.catalogStats(catalog);
+  const { CATALOG_V2 } = (await import(
+    new URL('../../../packages/rewards-core/src/catalog-v2.ts', import.meta.url).href
+  )) as { CATALOG_V2: unknown };
   // The manifest each source's hash comes from, as mergeLayers picks it (a later, newer capture or check wins).
   const dirs = new Map(loaded.layers.map((layer) => [layer.id, layer.dir]));
   const winner = new Map(
@@ -607,6 +631,8 @@ export async function buildCatalogSummary(
     jsonBytes: v3.jsonBytes(catalog),
     budgetBytes: v3.CATALOG_V3_BYTE_BUDGET,
     layers: merged.layers.map((layer) => ({ ...layer, replaced: layer.replaced.length })),
+    replacedReal: merged.replacedReal,
+    paymentPathChanges: v3.realPaymentPathChanges(catalog, CATALOG_V2, merged.replacedReal),
     heldOut: merged.overlay.cards
       .filter((entry) => entry.heldOut)
       .map((entry) => ({ cardId: entry.cardId, layer: layerOf(entry.cardId), reason: entry.heldOut! })),

@@ -28,6 +28,7 @@ import {
   buildRelease,
   catalogStats,
   checkRealCards,
+  realPaymentPathChanges,
   emptyLedger,
   ledgerText,
   updateLedger,
@@ -63,6 +64,7 @@ const { catalog, dates, continuity } = buildRelease(inputs);
 // Real cards a pipeline batch replaced carry the batch's terms: only the others are pinned to release 1.
 const replacedReal = new Set(inputs.replacedReal);
 const realProblems = checkRealCards(catalog, CATALOG_V2, { replaced: inputs.replacedReal });
+const paymentPathChanges = realPaymentPathChanges(catalog, CATALOG_V2, inputs.replacedReal);
 if (realProblems.length) {
   console.error(`The real cards differ from release 1:\n- ${realProblems.join('\n- ')}`);
   process.exit(1);
@@ -131,7 +133,17 @@ or \`packages/rewards-core/src/catalog-v3.ts\` is stale. Do not edit by hand.
   no extension or release holds the earlier contents.${
     replacedReal.size
       ? `\n- **Real cards refreshed by a batch** (release-1 names and rule-ID prefixes kept; not checked against release 1,
-  rule-ID continuity below applies): ${[...replacedReal].map((id) => `\`${id}\``).join(', ')}.`
+  rule-ID continuity below applies): ${[...replacedReal].map((id) => `\`${id}\``).join(', ')}. Excluded payment
+  paths that differ from release 1: ${
+    paymentPathChanges.length
+      ? paymentPathChanges
+          .map(
+            (c) =>
+              `\`${c.cardId}\` ${c.category} (${c.ruleIds.map((id) => `\`${id}\``).join(', ') || 'no rule'}): ${c.before.join(', ') || 'none'} → ${c.after.join(', ') || 'none'}`,
+          )
+          .join('; ')
+      : 'none'
+  }.`
       : ''
   }
 

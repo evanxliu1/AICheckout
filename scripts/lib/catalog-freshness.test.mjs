@@ -9,7 +9,13 @@ import { CATALOG_V2 } from '../../packages/rewards-core/src/catalog-v2.ts';
 import { CATALOG_V3 } from '../../packages/rewards-core/src/catalog-v3.ts';
 import { corpusCases } from './catalog-overlay.mjs';
 import { effectiveSources, loadCatalogBatches, mergeLayers, sha256Json } from './catalog-batches.mjs';
-import { buildRelease, checkRealCards, citedSourceIds, staleSources } from './catalog-v3.mjs';
+import {
+  buildRelease,
+  checkRealCards,
+  citedSourceIds,
+  realPaymentPathChanges,
+  staleSources,
+} from './catalog-v3.mjs';
 import { MERCHANT_LAYER, freshDates, freshnessCounts, freshnessRecordSchema } from './freshness.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
@@ -199,4 +205,15 @@ test('a refreshed Amex real card without an overlay patch loses the BNPL exclusi
       .rules.find((r) => r.category === 'online-retail');
   assert.deepEqual(online(CATALOG_V3).excludedPaymentPaths, ['bnpl']);
   assert.deepEqual(online(catalog).excludedPaymentPaths, []);
+  // The build report and handoff list the dropped exclusion for Evan.
+  assert.deepEqual(realPaymentPathChanges(catalog, CATALOG_V2, ['amex-blue-cash-everyday']), [
+    {
+      cardId: 'amex-blue-cash-everyday',
+      category: 'online-retail',
+      ruleIds: [online(catalog).id],
+      before: ['bnpl'],
+      after: [],
+    },
+  ]);
+  assert.deepEqual(realPaymentPathChanges(CATALOG_V3, CATALOG_V2, ['amex-blue-cash-everyday']), []);
 });

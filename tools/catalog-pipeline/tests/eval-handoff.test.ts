@@ -678,6 +678,8 @@ describe('pipeline handoff', () => {
     jsonBytes: 1000,
     budgetBytes: 786432,
     layers: [{ id: BATCH, kind: 'batch', dir: `evals/curation/batches/${BATCH}`, cards: 2, replaced: 0 }],
+    replacedReal: [],
+    paymentPathChanges: [],
     heldOut: [],
     dropped: [],
     continuity: { previous: null, kept: [], changed: [], added: ['x-base'], dropped: [] },
@@ -747,6 +749,27 @@ describe('pipeline handoff', () => {
       /The CLI has no publish, push or sign-in command\. Evan ticks the attestation and clicks Publish\. Labels are agent-verified, not human-verified\./,
     );
     expect(text).toMatch(/Ready: open the PR/);
+    expect(text).not.toMatch(/Real cards refreshed/);
+    // A replaced real card: its payment-path changes against release 1 are listed for Evan.
+    h.logs.length = 0;
+    const withReal = deps(cited, cited);
+    withReal.catalog = async () => ({
+      ...summary(cited),
+      replacedReal: ['amex-blue-cash-everyday'],
+      paymentPathChanges: [
+        {
+          cardId: 'amex-blue-cash-everyday',
+          category: 'online-retail',
+          ruleIds: ['bce-online-retail'],
+          before: ['bnpl'],
+          after: [],
+        },
+      ],
+    });
+    expect(await handoff(h.env, BATCH, withReal)).toBe(0);
+    expect(h.logs.join('\n')).toContain(
+      '  - `amex-blue-cash-everyday` online-retail (`bce-online-retail`): bnpl → none',
+    );
   });
 
   it('after a proposed build: summarises its would-be config, says nothing ships, needs no committed layer', async () => {

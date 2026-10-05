@@ -242,8 +242,8 @@ describe('pipeline freshness', { timeout: 60_000 }, () => {
       await writeFile(join(job.dir, 'page.txt'), 'fake words');
       throw new Error('boom');
     };
-    expect(await runFreshness(w.env, { render: failing, date: '2026-10-21' })).toBe(0);
-    expect((await readRecord(w.root, '2026-10-21')).counts.unreachable).toBe(5);
+    expect(await runFreshness(w.env, { render: failing, date: '2026-10-19' })).toBe(0);
+    expect((await readRecord(w.root, '2026-10-19')).counts.unreachable).toBe(5);
     for (const dir of dirs) expect(await exists(dir)).toBe(false);
   });
 
@@ -272,6 +272,30 @@ describe('pipeline freshness', { timeout: 60_000 }, () => {
       'example-bank-beta-product',
     ]);
     expect((await readRecord(w.root, '2026-10-20')).sources).toHaveLength(plan.sources.length);
+  });
+
+  it('refuses a date after today', async () => {
+    const w = await world();
+    expect(await runFreshness(w.env, { render: w.render, date: '2026-10-21' })).toBe(2);
+    expect(w.logs.join('\n')).toContain('is after today (2026-10-20)');
+    expect(await exists(recordPath(w.root, '2026-10-21'))).toBe(false);
+  });
+
+  it('never mixes renderers in one record: another capture script re-checks every source', async () => {
+    const w = await world();
+    const plan = await freshnessPlan(w.root);
+    for (const source of plan.sources) w.page.set(source.sourceId, { text: text(source.sourceId, 1) });
+    await runFreshness(w.env, { render: w.render });
+    await writeFile(join(w.root, 'scripts/capture-issuer-pages.mjs'), '// another renderer\n');
+    w.jobs.length = 0;
+    expect(await runFreshness(w.env, { render: w.render, only: ['example-bank-beta-product'] })).toBe(1);
+    expect(w.jobs).toEqual([]);
+    expect(w.logs.join('\n')).toContain('re-run without --only');
+    expect(await runFreshness(w.env, { render: w.render })).toBe(0);
+    expect(w.jobs.flatMap((job) => job.sources).length).toBe(plan.sources.length);
+    const record = await readRecord(w.root, '2026-10-20');
+    expect(record.renderer.captureScriptSha256).toBe(sha256Hex('// another renderer\n'));
+    expect(record.sources).toHaveLength(plan.sources.length);
   });
 
   it('is refused under CI or RENDER and maps capture flags to codes', async () => {

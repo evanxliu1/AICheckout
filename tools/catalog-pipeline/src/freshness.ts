@@ -6,7 +6,7 @@
 // source dates and `init --refresh-from-freshness` reads for changed pages. No model; refused under CI and RENDER
 // because it fetches live pages.
 import { spawn } from 'node:child_process';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
@@ -274,6 +274,18 @@ export function entryFor(
   return { ...base, sha256, result: problem ? 'flagged' : 'changed', flags };
 }
 
+export const TEMP_PREFIX = 'pipeline-freshness-';
+/** Temporary directories a crashed run left behind (older than an hour, so a concurrent run's are kept). */
+async function removeStaleTempDirs(): Promise<void> {
+  const names = await readdir(tmpdir()).catch(() => [] as string[]);
+  for (const name of names.filter((n) => n.startsWith(TEMP_PREFIX))) {
+    const path = join(tmpdir(), name);
+    const info = await stat(path).catch(() => null);
+    if (info?.isDirectory() && Date.now() - info.mtimeMs > 60 * 60 * 1000)
+      await rm(path, { recursive: true, force: true });
+  }
+}
+
 export interface FreshnessOptions {
   date?: string;
   only?: string[];
@@ -300,6 +312,12 @@ export async function runFreshness(env: Env, options: FreshnessOptions = {}): Pr
   const date = options.date ?? env.now().toISOString().slice(0, 10);
   if (!DATE.test(date) || Number.isNaN(Date.parse(`${date}T00:00:00Z`)))
     throw new Error(`--date must be YYYY-MM-DD: ${date}`);
+  const today = env.now().toISOString().slice(0, 10);
+  if (date > today) {
+    env.log(`--date ${date} is after today (${today}); a record states the day its pages were rendered.`);
+    return 2;
+  }
+  await removeStaleTempDirs();
   const plan = await freshnessPlan(env.root);
   const byId = new Map(plan.sources.map((source) => [source.sourceId, source]));
   const unknown = (options.only ?? []).filter((id) => !byId.has(id));
@@ -307,7 +325,22 @@ export async function runFreshness(env: Env, options: FreshnessOptions = {}): Pr
     env.log(`Not a source the catalog cites: ${unknown.join(', ')}`);
     return 2;
   }
-  const existing = await readFreshnessRecord(env.root, date);
+  const captureScriptSha256 = await fileSha256(join(env.root, CAPTURE_SCRIPT));
+  if (!captureScriptSha256) throw new Error(`${CAPTURE_SCRIPT} is missing.`);
+  let existing = await readFreshnessRecord(env.root, date);
+  // One record, one renderer: a day's record made with another capture script is re-checked whole, never mixed.
+  if (existing && existing.renderer.captureScriptSha256 !== captureScriptSha256) {
+    if (options.only) {
+      env.log(
+        `${FRESHNESS_DIR}/${date}.json was made with another ${CAPTURE_SCRIPT}; re-run without --only to re-check every source with this one.`,
+      );
+      return 1;
+    }
+    env.log(
+      `${FRESHNESS_DIR}/${date}.json was made with another ${CAPTURE_SCRIPT}: re-checking every source.`,
+    );
+    existing = null;
+  }
   const kept = new Map((existing?.sources ?? []).map((entry) => [entry.sourceId, entry]));
   // --only re-checks exactly those; otherwise resume: sources not in today's record, unreachable there, or whose
   // manifest hash moved since.
@@ -317,9 +350,7 @@ export async function runFreshness(env: Env, options: FreshnessOptions = {}): Pr
         const entry = kept.get(source.sourceId);
         return !entry || entry.result === 'unreachable' || entry.manifestSha256 !== source.manifestSha256;
       });
-  const captureScriptSha256 = await fileSha256(join(env.root, CAPTURE_SCRIPT));
-  if (!captureScriptSha256) throw new Error(`${CAPTURE_SCRIPT} is missing.`);
-  let renderer = existing?.renderer.captureScriptSha256 === captureScriptSha256 ? existing.renderer : null;
+  let renderer = existing?.renderer ?? null;
   const render = options.render ?? captureScriptRenderer(env.root);
   const order = new Map(plan.sources.map((source, i) => [source.sourceId, i]));
 
@@ -352,7 +383,7 @@ export async function runFreshness(env: Env, options: FreshnessOptions = {}): Pr
   // Writes are serialized so concurrent hosts never interleave a record write.
   let writing = Promise.resolve<unknown>(null);
   await pool([...hosts.values()], options.concurrency ?? 4, async (group) => {
-    const dir = await mkdtemp(join(tmpdir(), 'pipeline-freshness-'));
+    const dir = await mkdtemp(join(tmpdir(), TEMP_PREFIX));
     try {
       const hints = Object.fromEntries(
         group.filter((source) => source.hint !== undefined).map((source) => [source.sourceId, source.hint]),

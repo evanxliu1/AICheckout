@@ -602,6 +602,39 @@ export function buildRelease(inputs) {
 }
 
 /**
+ * For each real card a pipeline batch replaced, the categories whose excluded payment paths differ from release 1
+ * (`catalogV2`): `{ cardId, category, ruleIds, before, after }`, the union of paths over the category's rules on each
+ * side (a category one side lacks has `[]`). The build report and `handoff` list them, so a dropped exclusion (the
+ * Amex buy-now-pay-later one the builder adds only to a card without an overlay entry) is visible to Evan.
+ */
+export function realPaymentPathChanges(catalog, catalogV2, replaced = []) {
+  const paths = (rules, category) =>
+    [
+      ...new Set(rules.filter((r) => r.category === category).flatMap((r) => r.excludedPaymentPaths ?? [])),
+    ].sort();
+  const changes = [];
+  for (const cardId of replaced) {
+    const old = catalogV2.cards.find((c) => c.id === cardId);
+    const card = catalog.cards.find((c) => c.id === cardId);
+    if (!old || !card) continue;
+    const categories = [...new Set([...old.rules, ...card.rules].map((r) => r.category))].sort();
+    for (const category of categories) {
+      const before = paths(old.rules, category);
+      const after = paths(card.rules, category);
+      if (before.join(',') !== after.join(','))
+        changes.push({
+          cardId,
+          category,
+          ruleIds: card.rules.filter((r) => r.category === category).map((r) => r.id),
+          before,
+          after,
+        });
+    }
+  }
+  return changes;
+}
+
+/**
  * Differences between the real cards of a catalog v3 and release 1 (catalog v2), as strings. Names, rule IDs,
  * wording, rates, caps, activation, U.S.-only, excluded payment paths, end dates, sources and exclusions must
  * match; v3 adds only conditions that are empty for these cards. The value of one rate unit must match: all seven
