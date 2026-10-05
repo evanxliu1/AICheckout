@@ -26,7 +26,7 @@ A shopper gets a correct card recommendation at **any U.S. online checkout**: th
 
 ## Success criteria
 
-Y is set in the Phase 12 protocol; X and Z are set after 4 weeks of Release B data and reported with n.
+**Y = 80%** found-correct on held-out one-item cart pages (Evan, 2026-10-05, from the [Phase 10 probe](../../docs/evals/merchant-probe-2026-10.md)), pre-registered in the Phase 12 protocol; X and Z are set after 4 weeks of Release B data and reported with n.
 
 1. **Reader on real pages:** on the active held-out split (A, or B once A is retired) 0 false-found results, 95% upper bounds reported at the page-state and site level; found-correct ≥ Y% on the one-item state; p95 reading time within budget.
 2. **Category correctness:** every profiled domain whose plausible category is a catalog bonus category has class 1 or 2 evidence, or its recommendation is a range; the share of range recommendations is reported.
@@ -67,7 +67,7 @@ Each phase is one or more branches (`phaseN-<slug>`, one PR per branch) from the
 
 | Phase | Delivers | Was | Needs | Exit check |
 | --- | --- | --- | --- | --- |
-| **10 Feasibility probe** | No product code: 25 sites from the D6 source, stratified by rank band and platform (shadow DOM, a third-party checkout), persistent non-Evan profile under a gitignored path; reachability, logged-out carts, bot walls, prompts, strict-CSP badge frame, storage quota; prototype reader steps 1–3 | M1 | D4, D6 (approved) | `docs/evals/merchant-probe-2026-10.md`; go/no-go; proposed Y |
+| **10 Feasibility probe** ([plan](phase-10-feasibility-probe.md)) | No product code: 25 sites from the D6 source, stratified by rank band and platform (shadow DOM, a third-party checkout), persistent non-Evan profile under a gitignored path; reachability, logged-out carts, bot walls, prompts, strict-CSP badge frame, storage quota; prototype reader steps 1–3 | M1 | D4, D6 (approved) | `docs/evals/merchant-probe-2026-10.md`; go/no-go; proposed Y |
 | **11 Any store, typed amount** ([plan](phase-11-any-store.md)) | At any U.S. online store the popup recommends a card instead of "unsupported": the engine accepts a passed-in profile (`packages/rewards-core/src/engine-v3.ts` merchant lookup, `engine-shared.ts` unsupported-merchant check), a generic profile "Another U.S. online store" (`general-merchandise`, online retail) chosen from the tab's URL, amount typed by the shopper; the 3 supported stores unchanged. No store search and no category ranges (Evan, 2026-10-05): the generic profile always uses the general rate; category ranges and D5 move to Phase 14 | M3 (reduced) | — | Engine tests for the generic profile; `rewards-v3` golden ladders unchanged; axe on the changed popup screens |
 | **12 Eval protocols and captures** | `docs/evals/generic-reader-protocol.md` (splits, states, labeling and adjudication, bounds, peek policy, capture posture) and the merchant-pipeline protocol (held-out domains and adjudicated profiles frozen); capture tool with recipes; all three splits captured | M2 | Phase 10 go | Reviewer subagent signs both protocols before any tuning or drafting; capture tool refuses sign-in and field input by test |
 | **13 Generic reader v1** | Tuned on development only; the 3 adapters become bundled seed store configs; manifest `host_permissions` pinned to the 3 seed hosts as a literal list in `extension/vite.config.ts` (today derived from the adapters as `BADGE_HOSTS`) and `extension/e2e/hosts.ts` | M4 | — | `docs/evals/generic-reader-v1.md` with bounds; criterion 1 |

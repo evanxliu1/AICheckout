@@ -3,6 +3,7 @@
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
 ## 2026-10-05
+* [Phase 10 probe method choices](./2026-10-05-merchant-probe-method.md) — candidate-list site selection on Tranco 647LX, custom computed-style snapshots, a test extension for the frame and storage checks, labels frozen before the first reader run, proposed Y 80%.
 * [Generic "Another U.S. online store" profile supplied by the engine](./2026-10-05-generic-store-profile.md) — engine-supplied `generic-us-online` profile, catalog profile wins on the same id, popup store matched by site, OnePay first-90-days exclusion pinned by a guard test.
 * [Merchant coverage split into Phases 10–17; D4 and D6 approved](./2026-10-05-merchant-coverage-phases.md) — eight shippable phases with their own exit checks and decisions; 10 and 11 in parallel; real-page capture and the Tranco/CrUX retail list approved.
 * [The coordinator publishes catalogs from the CLI on Evan's chat instruction](./2026-10-05-agent-publish-cli-session.md) — Evan's own CLI session (refresh token outside the repo), `publish <version>` in chat as the attestation, `--confirm <version>`; chosen over a scoped database token.

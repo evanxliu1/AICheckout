@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "AI Checkout probe frame test (prototype, not shipped)",
+  "version": "0.0.1",
+  "description": "Phase 10 probe: does a chrome-extension:// frame load on a cart page; does 2 MiB fit chrome.storage.local.",
+  "permissions": ["storage"],
+  "background": { "service_worker": "sw.js" },
+  "content_scripts": [{ "matches": ["https://*/*"], "js": ["content.js"], "run_at": "document_idle" }],
+  "web_accessible_resources": [{ "resources": ["probe.html", "probe.js"], "matches": ["https://*/*"] }]
+}

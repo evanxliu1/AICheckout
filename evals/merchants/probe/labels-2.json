@@ -1,0 +1,982 @@
+{
+ "labeler": 2,
+ "labeledAt": "2026-10-05",
+ "method": "viewport + full-page screenshots, amounts confirmed in dom.json (incl. open shadow roots)",
+ "snapshots": [
+  {
+   "domain": "allbirds.com",
+   "state": "minicart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2500,
+     "label": "Subtotal $25"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "other",
+     "amountCents": 298,
+     "label": "Checkout+ $2.98"
+    }
+   ],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 2500
+   },
+   "notes": "Checkout+ button shows $27.98 (subtotal + optional returns coverage); a button, not a summary row. Drawer same as cart state."
+  },
+  {
+   "domain": "allbirds.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2500,
+     "label": "Subtotal $25"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "other",
+     "amountCents": 298,
+     "label": "Checkout+ $2.98"
+    }
+   ],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 2500
+   },
+   "notes": "Cart is the drawer (?openCartDrawer=true); button Checkout+ | $27.98 not counted."
+  },
+  {
+   "domain": "allbirds.com",
+   "state": "checkout",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2798,
+     "label": "Subtotal \u00b7 2 items"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 3001,
+     "label": "Total USD"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "tax",
+     "amountCents": 203,
+     "label": "Estimated taxes"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 3001
+   }
+  },
+  {
+   "domain": "apple.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1899,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 1899,
+     "label": "Total"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "other",
+     "amountCents": 1899,
+     "label": "Your bag total is $18.99. (headline)"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 1899
+   },
+   "notes": "Shipping FREE; tax $ \u2013 (blank)."
+  },
+  {
+   "domain": "barnesandnoble.com",
+   "state": "minicart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2750,
+     "label": "Subtotal"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 2750
+   },
+   "notes": "Shipping and tax calculated at checkout."
+  },
+  {
+   "domain": "barnesandnoble.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2750,
+     "label": "Estimated Subtotal"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "other",
+     "amountCents": 2750,
+     "label": "1 item"
+    }
+   ],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 2750
+   }
+  },
+  {
+   "domain": "barnesandnoble.com",
+   "state": "checkout",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2750,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2750,
+     "label": "Total USD"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2750
+   },
+   "notes": "Shipping: Enter shipping address."
+  },
+  {
+   "domain": "bose.com",
+   "state": "minicart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2900,
+     "label": "Estimated Subtotal"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 2900
+   }
+  },
+  {
+   "domain": "bose.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2900,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 3595,
+     "label": "Total"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "shipping",
+     "amountCents": 695,
+     "label": "Ground shipping"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 3595
+   },
+   "notes": "Tax $--.--"
+  },
+  {
+   "domain": "bose.com",
+   "state": "checkout",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2900,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 3595,
+     "label": "Total"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "shipping",
+     "amountCents": 695,
+     "label": "Ground shipping"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 3595
+   },
+   "notes": "Tax $--.--"
+  },
+  {
+   "domain": "corsair.com",
+   "state": "minicart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 699,
+     "label": "IN YOUR CART (1) $6.99 Plus Taxes and Shipping"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 699
+   },
+   "notes": "Footer row of the added-to-cart drawer; pre-tax, pre-shipping, so subtotal."
+  },
+  {
+   "domain": "corsair.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1699,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 699,
+     "label": "Total"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "discount",
+     "amountCents": -1000,
+     "label": "Estimated Discount"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 699
+   },
+   "notes": "Total is after a sale-price discount, not a store credit; labelled estimatedTotal. A labeler using afterCredit for any after-discount total would pick the same amount."
+  },
+  {
+   "domain": "corsair.com",
+   "state": "checkout",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 699,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 750,
+     "label": "Total USD"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "tax",
+     "amountCents": 51,
+     "label": "Estimated taxes"
+    },
+    {
+     "kind": "discount",
+     "amountCents": 1000,
+     "label": "TOTAL SAVINGS"
+    },
+    {
+     "kind": "discount",
+     "amountCents": -1000,
+     "label": "SALE PRICE DISCOUNT (line item)"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 750
+   }
+  },
+  {
+   "domain": "fashionnova.com",
+   "state": "minicart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 899,
+     "label": "Subtotal:"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 899
+   }
+  },
+  {
+   "domain": "fashionnova.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 899,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 899,
+     "label": "Total ... + tax"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 899
+   }
+  },
+  {
+   "domain": "fashionnova.com",
+   "state": "checkout",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 899,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 964,
+     "label": "Total USD"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "tax",
+     "amountCents": 65,
+     "label": "Estimated taxes"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 964
+   }
+  },
+  {
+   "domain": "gap.com",
+   "state": "minicart",
+   "totalDisplayed": false,
+   "rows": [],
+   "otherAmounts": [],
+   "expected": null,
+   "notes": "Added-to-bag modal shows only the item price $19.95; no summary total."
+  },
+  {
+   "domain": "gap.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1995,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 1995,
+     "label": "Est. Total Before Tax & Shipping"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 1995
+   }
+  },
+  {
+   "domain": "gap.com",
+   "state": "checkout",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1995,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 1995,
+     "label": "Est. Total"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 1995
+   }
+  },
+  {
+   "domain": "glossier.com",
+   "state": "minicart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 900,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 900,
+     "label": "Estimated total"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 900
+   },
+   "notes": "Same drawer as cart."
+  },
+  {
+   "domain": "glossier.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 900,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 900,
+     "label": "Estimated total"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 900
+   }
+  },
+  {
+   "domain": "glossier.com",
+   "state": "checkout",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 900,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 965,
+     "label": "Total USD"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "tax",
+     "amountCents": 65,
+     "label": "Estimated taxes"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 965
+   }
+  },
+  {
+   "domain": "gymshark.com",
+   "state": "minicart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1600,
+     "label": "Sub Total"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2100,
+     "label": "Total"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "shipping",
+     "amountCents": 500,
+     "label": "Estimated Shipping"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2100
+   },
+   "notes": "LOW CONFIDENCE: order summary is in the drawer DOM (visible styles, y 819-915) but below the sticky Checkout button; not visible in the viewport shot without scrolling the drawer. Counted as displayed (scrollable drawer content)."
+  },
+  {
+   "domain": "gymshark.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1600,
+     "label": "Sub Total"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2100,
+     "label": "Total"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "shipping",
+     "amountCents": 500,
+     "label": "Estimated Shipping"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2100
+   }
+  },
+  {
+   "domain": "gymshark.com",
+   "state": "checkout",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1600,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 1716,
+     "label": "Total USD"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "tax",
+     "amountCents": 116,
+     "label": "Estimated taxes"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 1716
+   }
+  },
+  {
+   "domain": "hottopic.com",
+   "state": "minicart",
+   "totalDisplayed": false,
+   "rows": [],
+   "otherAmounts": [],
+   "expected": null,
+   "notes": "Product page after add; no cart drawer or total visible."
+  },
+  {
+   "domain": "hottopic.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1090,
+     "label": "Estimated Subtotal"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 1090
+   }
+  },
+  {
+   "domain": "ikea.com",
+   "state": "minicart",
+   "totalDisplayed": false,
+   "rows": [],
+   "otherAmounts": [],
+   "expected": null,
+   "notes": "Added-to-bag panel shows item price $39.99 only; no total."
+  },
+  {
+   "domain": "ikea.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 3999,
+     "label": "Products"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 3999,
+     "label": "Total excluding tax"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 3999
+   }
+  },
+  {
+   "domain": "ikea.com",
+   "state": "checkout",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 3999,
+     "label": "Products"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 4587,
+     "label": "Estimated total (Incl. tax)"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "shipping",
+     "amountCents": 200,
+     "label": "Pick up"
+    },
+    {
+     "kind": "tax",
+     "amountCents": 388,
+     "label": "Sales tax"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 4587
+   }
+  },
+  {
+   "domain": "logitech.com",
+   "state": "minicart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2299,
+     "label": "Subtotal (1)"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "subtotal",
+    "amountCents": 2299
+   }
+  },
+  {
+   "domain": "logitech.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2299,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2299,
+     "label": "Total"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "discount",
+     "amountCents": 0,
+     "label": "Total Savings"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2299
+   },
+   "notes": "Summary is inside an open shadow root."
+  },
+  {
+   "domain": "logitech.com",
+   "state": "checkout",
+   "totalDisplayed": false,
+   "rows": [],
+   "otherAmounts": [],
+   "expected": null,
+   "notes": "Order summary (Items total $22.99) is rendered inside the cross-origin webservices.global-e.com Checkout iframe; top-frame DOM has no amounts. Expected null per rule."
+  },
+  {
+   "domain": "samsung.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 3499,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 3499,
+     "label": "Estimated Total"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 3499
+   }
+  },
+  {
+   "domain": "samsung.com",
+   "state": "checkout",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 3499,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 3499,
+     "label": "Estimated Total"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 3499
+   }
+  },
+  {
+   "domain": "sonos.com",
+   "state": "minicart",
+   "totalDisplayed": false,
+   "rows": [],
+   "otherAmounts": [],
+   "expected": null,
+   "notes": "Product page; no cart drawer visible after add."
+  },
+  {
+   "domain": "sonos.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1900,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 1900,
+     "label": "Total"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 1900
+   }
+  },
+  {
+   "domain": "sonos.com",
+   "state": "checkout",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1900,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 1900,
+     "label": "Total"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 1900
+   }
+  },
+  {
+   "domain": "ulta.com",
+   "state": "minicart",
+   "totalDisplayed": false,
+   "rows": [],
+   "otherAmounts": [],
+   "expected": null,
+   "notes": "Added-for-ship drawer shows item $16.00 only; Subtotal $48/$74 rows far below are bundle recommendations, not the cart."
+  },
+  {
+   "domain": "ulta.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1600,
+     "label": "Subtotal (1 item)"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2295,
+     "label": "Estimated total"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "shipping",
+     "amountCents": 695,
+     "label": "Shipping"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2295
+   }
+  },
+  {
+   "domain": "ulta.com",
+   "state": "checkout",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 1600,
+     "label": "Subtotal (1 item)"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2295,
+     "label": "Estimated total"
+    }
+   ],
+   "otherAmounts": [
+    {
+     "kind": "shipping",
+     "amountCents": 695,
+     "label": "Shipping"
+    }
+   ],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2295
+   }
+  },
+  {
+   "domain": "zumiez.com",
+   "state": "minicart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2595,
+     "label": "Order total:"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2595
+   }
+  },
+  {
+   "domain": "zumiez.com",
+   "state": "cart",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2595,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2595,
+     "label": "Order total"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2595
+   }
+  },
+  {
+   "domain": "zumiez.com",
+   "state": "checkout",
+   "totalDisplayed": true,
+   "rows": [
+    {
+     "kind": "subtotal",
+     "amountCents": 2595,
+     "label": "Subtotal"
+    },
+    {
+     "kind": "estimatedTotal",
+     "amountCents": 2595,
+     "label": "Order total"
+    }
+   ],
+   "otherAmounts": [],
+   "expected": {
+    "kind": "estimatedTotal",
+    "amountCents": 2595
+   }
+  }
+ ]
+}

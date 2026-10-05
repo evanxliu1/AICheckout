@@ -6,7 +6,7 @@ status: draft
 tags: [system, design, phase-10, merchants]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T10:00:00Z
+  at: 2026-10-05T23:30:00Z
 sources:
   - resource: ../product/phase-10-merchant-expansion.md
     title: Phase 10 plan
@@ -75,14 +75,14 @@ Chrome's per-extension site-access setting is read at start and on `permissions.
 4. **Currency:** a bare `$` is USD only if no non-USD marker (`CA$`, `C$`, `A$`, `CAD`, `MXN`) is in the region and the page `lang` is not `en-CA` or `en-AU`.
 5. **Stability:** two identical reads 500 ms apart and no `aria-busy` or loading indicator.
 6. **Decide:** one candidate of the most preferred kind (total after credit > estimated total > subtotal) → `found`; several → `ask`; none → `none`; never `found` on a tie.
-7. **Budget:** p95 under 50 ms on captured pages *(probe)*.
+7. **Budget:** p95 under 50 ms on captured pages *(probe)*. Probe 2026-10-05: the prototype's logic took p95 8.5 ms over a pre-built tree, but a whole-page `getComputedStyle` walk took p95 691 ms, so v1 reads styles lazily inside candidate regions ([report](../../docs/evals/merchant-probe-2026-10.md#q5-does-a-prototype-reader-find-the-total)).
 
 ## Real-page evaluation (pre-registered in Phase 12)
 
 | Element | Design |
 | --- | --- |
 | Sites | 150–200 top retail domains stratified by platform (including "none detected", shadow-DOM storefronts, third-party checkouts) and rank band; split **by site** into development, held-out A and held-out B, each platform in every split |
-| Capture | A persistent, non-Evan Chrome profile driven by Playwright, logged out; one known in-stock item; may open a checkout page but never signs in and never fills or submits any field; never bypasses bot walls or solves CAPTCHAs; rate-limited; robots and terms posture recorded; exclusion list reported |
+| Capture | A persistent, non-Evan Chrome profile driven by Playwright, logged out; one known in-stock item; may open a checkout page but never signs in and never fills or submits any field; never bypasses bot walls or solves CAPTCHAs; the tool itself refuses submit and in-form clicks except an add-to-cart allowlist, has no typing or coordinate-click path, and protects any local control server with a token and Origin check (the probe's prototype driver did not, 2026-10-05); rate-limited; robots and terms posture recorded; exclusion list reported |
 | Format | Snapshots with inlined styles (Playwright snapshot or MHTML); the reader's live result recorded at capture as a replay check |
 | Ground truth | The summary rows as displayed: two independent labeler subagents label every amount with its kind; disagreements go to an adjudicator subagent (never a labeler); agreement rate reported. Product price × quantity is a consistency flag only. Correct = returned amount equals the labelled amount of the returned kind, and the kind is the most preferred one present |
 | States | 1 item; quantity 2; 2 items; mini-cart vs cart page; strikethrough sale; promo banner; carousel with prices; tax/shipping estimate; installment widget; free-shipping progress; gift card or credit applied; empty; loading; shadow DOM; third-party checkout |
@@ -99,7 +99,7 @@ The bonus depends on the merchant category code the processor assigns; it is not
 
 - Required: `storage`, `activeTab`, `scripting`, `alarms` (from Release A, for background refresh; no install warning), plus the 3 legacy hosts and the catalog origin until Release B (D13).
 - Optional: `https://*/*` in `optional_host_permissions`, requested on a click ("Show the badge automatically at checkouts"); no install warning; adding it later disables nothing.
-- Badge frame on arbitrary sites: `web_accessible_resources` on all sites lets any page detect the extension; re-evaluate `use_dynamic_url` (today `false` by design: the worker identifies the badge frame by its static URL, and a per-frame nonce stops page copies), changing sender identification with it, or disclose the exposure *(probe: also strict-CSP checkouts)*.
+- Badge frame on arbitrary sites: `web_accessible_resources` on all sites lets any page detect the extension; re-evaluate `use_dynamic_url` (today `false` by design: the worker identifies the badge frame by its static URL, and a per-frame nonce stops page copies), changing sender identification with it, or disclose the exposure *(probe: also strict-CSP checkouts)*. Probe 2026-10-05: a badge-shaped `chrome-extension://` frame loaded on all 44 captured pages, including 4 sites whose CSP restricts `frame-src` ([report](../../docs/evals/merchant-probe-2026-10.md#q4-can-the-badge-frame-show)).
 - Merchant names length- and charset-limited in Zod; `dangerouslySetInnerHTML` forbidden by lint.
 
 ## Related
