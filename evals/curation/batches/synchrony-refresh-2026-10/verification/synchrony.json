@@ -1,0 +1,483 @@
+{
+  "schemaVersion": 1,
+  "packetId": "0ff2964f-8ee2-48da-8dae-a7913d07dd86",
+  "batch": "synchrony-refresh-2026-10",
+  "issuer": "Synchrony",
+  "provenance": "agent-verified",
+  "verifier": {
+    "agent": "card-verifier",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-05",
+    "filesRead": [
+      ".claude/agents/card-verifier.md",
+      "evals/curation/batches/synchrony-refresh-2026-10/pipeline/packets/verify.synchrony.1.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/synchrony.md",
+      "evals/curation/expansion/verification/synchrony.json",
+      "scripts/lib/expansion-verification.mjs",
+      "evals/curation/batches/synchrony-refresh-2026-10/verify/synchrony.md",
+      "evals/curation/batches/synchrony-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/synchrony-refresh-2026-10/product-notes.json",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/amazon-store-card-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-amazon-store-card-pricing.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-amazon-store-card-categories.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-paypal-cashback-mastercard-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-paypal-cashback-mastercard-rewards-terms.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-paypal-cashback-mastercard-pricing.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-sams-club-mastercard-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-sams-club-mastercard-partner.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-onepay-cashrewards-card-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-onepay-cashrewards-card-rewards-terms.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-onepay-cashrewards-card-pricing.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-mywalgreens-mastercard-product.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-mywalgreens-mastercard-rewards-terms.txt",
+      "evals/curation/batches/synchrony-refresh-2026-10/captures/synchrony-mywalgreens-mastercard-partner.txt"
+    ]
+  },
+  "adjudicator": null,
+  "cards": [
+    {
+      "cardId": "synchrony-amazon-store-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Prime Store Card members can earn 5% back at Amazon.com and Whole Foods Market"
+          },
+          "note": "The captures state the rate as a percentage back and allow statement credit; Synchrony convention puts Amazon Store on cash-back with rateBps = percent x 100."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rewardCurrency.anchors.0",
+          "current": "other credits) to which the % back benefit applies, including eligible purchases at participating Whole Foods Market physical stores, will result in you receiving rewards",
+          "note": "The old anchor describes how rewards points are computed, not a points currency; the percentage-back anchor replaces it."
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 10000,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "You may see rewards points referred to simply as rewards and reflected as a dollar balance (versus a points balance), with $1 of rewards being"
+          },
+          "note": "A cash-back card carries no point value (general conventions 1 and 13, Synchrony convention for Amazon). The anchor is the existing one, so nothing is added; the next fix removes it."
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "You may see rewards points referred to simply as rewards and reflected as a dollar balance (versus a points balance), with $1 of rewards being",
+          "note": "The anchor supported the dropped 10000 value; a null point value carries no anchors."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.category",
+          "current": "online-retail",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores"
+          },
+          "note": "The rate pays only at Amazon, a single merchant: category other (general 4, Synchrony convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.category",
+          "current": "supermarkets",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Participating Whole Foods Market stores will accept in-store payment with the Store Card and Secured Card through the Amazon In-Store Code"
+          },
+          "note": "The rate pays only at Whole Foods Market, not across supermarkets: category other (general 4, Synchrony convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.issues.0.code",
+          "current": "missing",
+          "corrected": "out-of-scope",
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "The Prime Store Card, an upgrade from Amazon Store Card, is available to customers with an Eligible Prime Membership only"
+          },
+          "note": "The issue names the Prime membership the 5% needs; gated rates carry an out-of-scope issue (general 17, Synchrony convention), not missing."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless issue with no stated problem (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Prime Store Card members with an eligible Prime membership can earn 5% back year-round at Amazon.com, Whole Foods Market (In-Store Code usage required at Whole"
+            ]
+          },
+          "note": "Ambiguous issue anchored on the year-round marketing line (the and-more wording); removed per the Synchrony convention and general 16."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless issue with no stated problem (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Prime Store Card members with an eligible Prime membership can earn 5% back year-round at Amazon.com, Whole Foods Market (In-Store Code usage required at Whole"
+          },
+          "note": "The 5% at Amazon.com and Whole Foods with an eligible Prime membership, and the choice of financing instead, are stated on the product page."
+        },
+        {
+          "action": "fix",
+          "hintIndex": 1,
+          "hint": {
+            "type": "closed-loop",
+            "summary": "Store card: usable at Amazon.com, select physical Amazon stores, participating Whole Foods Market stores, and Amazon Pay merchants that enable it.",
+            "merchants": [
+              "Amazon",
+              "Whole Foods Market"
+            ]
+          },
+          "anchor": {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores"
+          },
+          "note": "The terms name where the card works (Amazon.com, physical Amazon stores, Whole Foods via In-Store Code, Amazon Pay merchants); the hint was unanchored."
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-paypal-cashback-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.category",
+          "current": "online-retail",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "synchrony-paypal-cashback-mastercard-product",
+            "quote": "unlimited 3% cash back1 when you checkout with PayPal"
+          },
+          "note": "The 3% is paid on PayPal checkout, not across online retail; PayPal checkout rules are category other (general 4)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless issue with no stated problem (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-paypal-cashback-mastercard-rewards-terms",
+            "quote": "Earn 3% on Eligible Purchases you make using your Card Account through your PayPal account online, or when you use your Card Account to send"
+          },
+          "note": "The rewards terms state 3% through the PayPal account online and on sending money, no purchase maximum, and 1.5% for authorized users."
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-sams-club-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Sam’s Club purchases for Plus members",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-sams-club-mastercard-product",
+              "quote": "Earn 3% back in Sam’s Cash on Sam’s Club purchases for Plus members."
+            }
+          ],
+          "note": "The draft dropped the Sam’s Club purchase rule. Plus members earn 3% at Sam’s Club (single merchant: other); the Plus condition is already in issue 0 (general 17)."
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-sams-club-mastercard-partner",
+              "quote": "may be redeemed only at a Sam’s Club location or at SamsClub.com"
+            }
+          ],
+          "note": "Sam’s Cash is store credit usable only at Sam’s Club (general 8, Synchrony convention on store reward currencies)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-sams-club-mastercard-partner",
+            "quote": "back in Sam’s Cash on Sam’s Club purchases for Plus members. (Club members earn 1%)."
+          },
+          "note": "Plus 3% and Club 1% at Sam’s Club, the $5,000 yearly Sam’s Cash maximum and the listed exclusions are stated on the partner page; the hint was unanchored."
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-onepay-cashrewards-card",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.1",
+          "current": "Earn unlimited",
+          "corrected": "There are no caps on the total amount of OnePay Points you can earn through the use of a CashRewards Card.",
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+            "quote": "There are no caps on the total amount of OnePay Points you can earn through the use of a CashRewards Card."
+          },
+          "note": "The two-word heading fragment is not no-cap evidence (general 21); the terms sentence states there are no caps."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.activation",
+          "current": null,
+          "corrected": "enroll-once",
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+            "quote": "your Walmart+ membership must be linked to your CashRewards Card"
+          },
+          "note": "Linking a Walmart+ membership to the card for the 5% rate is a one-time enrollment (Synchrony convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.anchors.0",
+          "current": "Earn unlimited",
+          "corrected": "There are no caps on the total amount of OnePay Points you can earn through the use of a CashRewards Card.",
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+            "quote": "There are no caps on the total amount of OnePay Points you can earn through the use of a CashRewards Card."
+          },
+          "note": "The two-word heading fragment is not no-cap evidence (general 21); the terms sentence states there are no caps."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.rateBps",
+          "current": null,
+          "corrected": 300,
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-product",
+            "quote": "earn 3% cash back on eligible purchases made outside of Walmart with the CashRewards Card for their first 90 days"
+          },
+          "note": "The dropped rate is 3% outside Walmart for the first 90 days after account opening."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.limitedTime.endsOn",
+          "current": "2026-12-31",
+          "corrected": null,
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-product",
+            "quote": "Earn 3% cash back on all other purchases for your first 90 days upon account opening."
+          },
+          "note": "The rate runs 90 days from account opening; 12/31 is the last application date, not the end of the rate (Synchrony convention, general 10)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless issue with no stated problem (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "Balance transfers, cash advances and cash-like transactions, cash substitutes, betting transactions, account checks, unauthorized or fraudulent charges, and ATM withdrawals are not Purchases.",
+          "anchors": [
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+              "quote": "cash advances or cash-like transactions (e.g. receiving cash back in connection with a debit purchase),"
+            },
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+              "quote": "lottery tickets, casino gaming chips, racetrack wagers or similar betting transactions,"
+            }
+          ],
+          "note": "The draft dropped the Purchase definition exclusions; the terms list transactions that never earn OnePay Points."
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+              "quote": "Your Walmart+ membership must be linked to your Account to earn 5% on Walmart Purchases."
+            }
+          ],
+          "note": "The 5% Walmart rate needs a linked Walmart+ membership (general 17, Synchrony convention)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+            "quote": "OnePay Points are earned on Purchases as follows: (i) 5% on Purchases at Walmart for Walmart+ members whose Walmart+ membership is linked to their Account;"
+          },
+          "note": "5% at Walmart with a linked Walmart+ membership; the Walmart definition (U.S. stores, Walmart gas, app, Walmart.com; not Sam’s Club or third-party sellers) is in the same terms."
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+            "quote": "3% Cash Back at Walmart: You earn OnePay Points equal to 3% of each $1 spent on Purchases at Walmart with your CashRewards Card (1.5%"
+          },
+          "note": "3% at Walmart without Walmart+ is stated in the rewards terms."
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-mywalgreens-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.rateBps",
+          "current": null,
+          "corrected": 1000,
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+            "quote": "equal to 10% of every USD spent for Eligible Purchases of retail products branded with Walgreens marks or logos"
+          },
+          "note": "The dropped rate: the terms pay 10% on Walgreens-branded products at Walgreens stores and walgreens.com."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.category",
+          "current": "drugstores",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-product",
+            "quote": "Use your myWalgreens® Credit Card at Walgreens, Duane Reade or Walgreens.com to earn:"
+          },
+          "note": "The 5% pharmacy rate pays only at Walgreens and Duane Reade stores and walgreens.com, not at drugstores generally (general 4, Synchrony convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.rateBps",
+          "current": null,
+          "corrected": 100,
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+            "quote": "equal to 1% of every USD spent for Eligible Purchases when you use your myWalgreens Mastercard to make Eligible Purchases everywhere else"
+          },
+          "note": "The dropped base rate: 1% everywhere else Mastercard is accepted."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "5% on Walgreens branded products",
+              "10% Walgreens Cash rewards on Walgreens brand purchases†"
+            ]
+          },
+          "note": "Not a conflict: the 5% on Walgreens-branded products is the plain myWalgreens membership rate shown beside the card’s 10% in the comparison; the card terms state 10%."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+              "quote": "may only be used in conjunction with the myWalgreens Program"
+            }
+          ],
+          "note": "Walgreens Cash is store credit usable only through the myWalgreens program (general 8, Synchrony convention on store reward currencies)."
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-product",
+              "quote": "earn rewards on veterinary and pet store purchases outside of Walgreens"
+            }
+          ],
+          "note": "The product page also pays 3% on veterinary and pet store purchases, while the terms define the 3% health and wellness category only by MCC."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+            "quote": "You will earn Walgreens Cash rewards equal to 10% of every USD spent for Eligible Purchases of retail products branded with Walgreens marks or logos"
+          },
+          "note": "10% on Walgreens-branded products at Walgreens Participating Stores (including Duane Reade) and walgreens.com, per the rewards terms."
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "synchrony-mywalgreens-mastercard-product",
+            "quote": "5% on all other brands and pharmacy purchases†"
+          },
+          "note": "5% on other brands and pharmacy purchases at Walgreens, stated on the product page and in the terms."
+        }
+      ]
+    }
+  ]
+}
