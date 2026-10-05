@@ -404,3 +404,35 @@ test('quote-limit omissions apply only to cards still on the frozen base layer',
     false,
   );
 });
+
+test('a batch layer may omit exclusions of its own cards from the catalog (quote limit)', () => {
+  const autograph = caseOf('wells-fargo-autograph');
+  const refreshed = batch({
+    cases: [autograph],
+    entries: [entryOf('wells-fargo-autograph')],
+    sources: sourcesOf(autograph).map((source) => ({ ...source, capturedOn: '2026-10-05' })),
+  });
+  refreshed.exclusionOmissions = { 'wells-fargo-autograph': ['Overdraft protection advances'] };
+  const inputs = mergeLayers(stack(refreshed));
+  assert.deepEqual(inputs.batchOmissions, { 'wells-fargo-autograph': ['Overdraft protection advances'] });
+  const { catalog } = buildRelease({ ...inputs, ledger });
+  const card = catalog.cards.find((c) => c.id === 'wells-fargo-autograph');
+  assert.equal(
+    card.exclusions.some((text) => text.startsWith('Overdraft protection advances')),
+    false,
+  );
+  // A start that matches no exclusion fails the build.
+  refreshed.exclusionOmissions = { 'wells-fargo-autograph': ['No such exclusion'] };
+  assert.throws(() => buildRelease({ ...mergeLayers(stack(refreshed)), ledger }), /no exclusion starts with/);
+});
+
+test('exclusionOmissions naming a card the batch does not supply fails the build', () => {
+  const autograph = caseOf('wells-fargo-autograph');
+  const refreshed = batch({
+    cases: [autograph],
+    entries: [entryOf('wells-fargo-autograph')],
+    sources: sourcesOf(autograph).map((source) => ({ ...source, capturedOn: '2026-10-05' })),
+  });
+  refreshed.exclusionOmissions = { 'wells-fargo-autograph-journey': ['Overdraft protection advances'] };
+  assert.throws(() => mergeLayers(stack(refreshed)), /not in its corpus/);
+});

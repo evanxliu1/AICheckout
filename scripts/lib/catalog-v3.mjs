@@ -538,7 +538,9 @@ export function buildRelease(inputs) {
     // The omissions were found on the frozen base labels; a card a batch re-labelled is checked by the quote check
     // over the built catalog instead.
     const omit =
-      !inputs.fromBase || inputs.fromBase.includes(card.id) ? (QUOTE_LIMIT_OMISSIONS[card.id] ?? []) : [];
+      !inputs.fromBase || inputs.fromBase.includes(card.id)
+        ? (QUOTE_LIMIT_OMISSIONS[card.id] ?? [])
+        : (inputs.batchOmissions?.[card.id] ?? []);
     for (const start of omit)
       if (!card.exclusions.some((text) => text.startsWith(start)))
         throw new Error(`${card.id}: no exclusion starts with "${start}"`);
