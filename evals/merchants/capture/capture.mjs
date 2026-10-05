@@ -5,6 +5,7 @@
 //   node evals/merchants/capture/capture.mjs run <recipe.json> [options]     robots check, then the recipe's steps
 //   node evals/merchants/capture/capture.mjs serve <recipe.json> [options]   robots check, recipe steps, then a local
 //                                                                           control server for the operator's steps
+//   node evals/merchants/capture/capture.mjs list-blocked [--out <dir>]      sessions stopped on a block
 // Options: --headless  --out <dir>  --profile <dir>  --second-session
 //
 // Snapshots, robots.txt and terms copies, logs and the browser profile go to gitignored folders. The committable
@@ -27,6 +28,33 @@ export const TOOL_VERSION = 'capture-tool.1';
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const DEFAULT_OUT = path.join(here, 'data');
 export const DEFAULT_PROFILE = path.join(here, 'profile');
+
+/** Blocked-site stop codes; `list-blocked` lists the robot's records with them (useful for a later step). */
+export const BLOCK_CODES = [
+  'blocked-bot-wall',
+  'blocked-http-403',
+  'blocked-http-429',
+  'captcha',
+  'blocked-extension-check',
+];
+
+/**
+ * A URL as committed: no query or fragment, and path segments that look like tokens (long mixed letters and
+ * digits, long hex, UUIDs) replaced by ":token".
+ */
+export function committableUrl(raw) {
+  if (raw === null || raw === undefined) return null;
+  const u = new URL(raw);
+  const tokenLike = (seg) =>
+    /^[0-9a-f]{12,}$/i.test(seg) ||
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(seg) ||
+    (seg.length >= 16 && /[a-z]/i.test(seg) && /\d/.test(seg));
+  const pathname = u.pathname
+    .split('/')
+    .map((seg) => (tokenLike(seg) ? ':token' : seg))
+    .join('/');
+  return `${u.protocol}//${u.host}${pathname}`;
+}
 
 const utcId = (d = new Date()) =>
   d
@@ -171,7 +199,17 @@ export async function runSite(opts) {
         log.push({ step, ok: true });
         return result;
       } catch (e) {
-        log.push({ step, ok: false, error: { name: e.name, code: e.code ?? null } });
+        log.push({
+          step,
+          ok: false,
+          error: {
+            name: e.name,
+            code: e.code ?? null,
+            message: String(e.message ?? e)
+              .split('\n')[0]
+              .slice(0, 300),
+          },
+        });
         throw e;
       }
     };
@@ -179,7 +217,7 @@ export async function runSite(opts) {
     if (robots.stopCode) {
       session.stopped = {
         code: robots.stopCode,
-        detail: `robots.txt posture ${robots.posture}`,
+        detail: `robots-${robots.posture}`,
         evidenceSha256: null,
       };
     } else {
@@ -220,15 +258,13 @@ export async function runSite(opts) {
         } else if (e instanceof RefusalError) {
           session.stopped = {
             code: 'tool-error',
-            detail: `recipe step refused: ${e.code}`,
+            detail: `recipe-step-refused:${e.code}`,
             evidenceSha256: null,
           };
         } else {
           session.stopped = {
             code: 'tool-error',
-            detail: String(e.message ?? e)
-              .split('\n')[0]
-              .slice(0, 200),
+            detail: 'unexpected-error',
             evidenceSha256: null,
           };
         }
@@ -282,13 +318,13 @@ export async function runSite(opts) {
         decision: robots.decision,
       },
       terms: {
-        url: terms?.url ?? recipe.termsUrl ?? null,
+        url: committableUrl(terms?.url ?? recipe.termsUrl ?? null),
         copySha256: terms?.manifestSha256 ?? null,
         prohibitsAutomated: 'unknown',
       },
       states: session.snapshots.map(({ state, url, manifestSha256, domSha256, viewportSha256 }) => ({
         state,
-        url,
+        url: committableUrl(url),
         manifestSha256,
         domSha256,
         viewportSha256,
@@ -340,8 +376,28 @@ export async function listRecords(outRoot = DEFAULT_OUT) {
   return out;
 }
 
+/** Records whose session stopped on a block (bot wall, 403/429, CAPTCHA, extension check). */
+export async function listBlocked(outRoot = DEFAULT_OUT) {
+  return (await listRecords(outRoot))
+    .filter((r) => BLOCK_CODES.includes(r.stop?.code))
+    .map((r) => ({
+      domain: r.domain,
+      sessionId: r.session.id,
+      code: r.stop.code,
+      reason: r.stop.detail,
+      evidenceSha256: r.stop.evidenceSha256,
+      outcome: r.outcome.status,
+      robotsDecision: r.robots.decision,
+    }));
+}
+
 async function main(argv) {
   const [cmd, recipePath, ...rest] = argv;
+  if (cmd === 'list-blocked') {
+    const i = argv.indexOf('--out');
+    console.log(JSON.stringify(await listBlocked(i >= 0 ? argv[i + 1] : DEFAULT_OUT), null, 2));
+    return;
+  }
   const flag = (name) => rest.includes(name);
   const value = (name) => {
     const i = rest.indexOf(name);

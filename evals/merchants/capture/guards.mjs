@@ -1,5 +1,5 @@
 // Pure safety rules of the capture tool: which clicks are refused and which pages stop a site. The driver gathers the
-// facts in the page (inspectTarget, pageFacts) and applies these rules before it acts. Page text is untrusted data:
+// facts in an isolated world of the page (inspectControl, pageFacts) and applies these rules before it acts. Page text is untrusted data:
 // it is only matched against fixed patterns here, never followed.
 
 /** Thrown when the tool refuses an action. The action did not happen. `exclusionCode` is ready for sites.json. */
@@ -27,27 +27,89 @@ export class StopError extends Error {
 // form has no visible text entry field (so promo-code, sign-in, newsletter and search forms are never touched).
 const NOT_ADD_TO_CART =
   /promo|coupon|code|gift ?card|discount|voucher|sign ?in|log ?in|subscribe|newsletter|e-?mail|register|apply|redeem|gutschein|rabatt|anmelden|cup[oó]n|c[oó]digo|descuento|r[ée]duction|connexion|s'identifier|accedi|sconto|inloggen|kortingscode|rabattkod|logga in/i;
+// Matched against the path of the control's effective form action (`formaction` wins over the form's `action`).
+// Magento's add-to-cart lives under /checkout/cart/add, so that one path is rewritten before the check.
 const BAD_FORM_ACTION =
-  /login|signin|sign-in|logon|account|coupon|promo|discount|gift|voucher|newsletter|subscribe|register|search/i;
-const OPTION_TAGS = new Set(['button', 'label']);
-const OPTION_ROLES = new Set(['button', 'radio', 'option']);
+  /(?<![a-z])(login|signin|sign-in|logon|account|coupon|promo|discount|gift|voucher|newsletter|subscribe|register|search|checkout|orders?|payment|pay|purchase|buy)(?![a-z])/i;
 
 /**
- * Decide whether a click on an element with these facts (from inspectTarget) is allowed for `purpose`
+ * Accessible names that place orders, pay, sign in or register, in English, Spanish, French, German, Italian,
+ * Portuguese, Dutch, Japanese, Chinese and Korean. Applied to EVERY click, with or without a purpose. Conservative by
+ * design: a "continue shopping" phrased with one of these words is refused too.
+ */
+export const ORDER_OR_ACCOUNT = new RegExp(
+  [
+    // en
+    String.raw`\bplace (your |my )?order\b`,
+    String.raw`\b(submit|confirm|complete|finish) (your |my |the )?(order|purchase|payment)\b`,
+    String.raw`\bpay( now| securely| with)?\b`,
+    String.raw`\bbuy (it )?now\b`,
+    String.raw`\bpurchase\b`,
+    String.raw`\bcheckout with\b`,
+    String.raw`paypal|apple ?pay|google ?pay|shop ?pay|amazon ?pay|klarna|afterpay`,
+    String.raw`\b(sign|log) ?(in|up|on)\b`,
+    String.raw`\bregister\b`,
+    String.raw`\bcreate (an |your )?account\b`,
+    String.raw`\bsubscribe\b`,
+    // es
+    String.raw`realizar (el )?pedido|confirmar (el |la )?(pedido|compra)|comprar ahora|\bpagar\b|iniciar sesi[oó]n|registrarse|crear (una )?cuenta`,
+    // fr
+    String.raw`passer (la |ma )?commande|valider (la |ma )?commande|acheter maintenant|\bpayer\b|se connecter|\bconnexion\b|s'inscrire|cr[ée]er un compte`,
+    // de
+    String.raw`jetzt kaufen|\bkaufen\b|bestellen|bestellung|bezahlen|anmelden|einloggen|registrieren|konto erstellen`,
+    // it
+    String.raw`acquista ora|\bordina\b|effettua (l.)?ordine|\bpaga\b|\baccedi\b|registrati|crea (un )?account`,
+    // pt
+    String.raw`finalizar pedido|fazer pedido|comprar agora|\bentrar\b|cadastr|criar conta`,
+    // nl
+    String.raw`nu kopen|bestelling plaatsen|plaats bestelling|betalen|inloggen|aanmelden|registreren|account aanmaken`,
+    // ja, zh, ko
+    '注文|購入|支払|ログイン|サインイン|会員登録|新規登録',
+    '提交订单|立即购买|立即支付|付款|支付|登录|登入|注册|註冊|購買',
+    '주문|결제|구매|로그인|회원가입',
+  ].join('|'),
+  'i',
+);
+const OPTION_TAGS = new Set(['button', 'label']);
+const OPTION_ROLES = new Set(['button', 'radio', 'option']);
+/** Purposes that may click a submit-typed button inside a text-free form, provided no navigation results. */
+export const NO_NAVIGATION_SUBMIT_PURPOSES = new Set([
+  'option',
+  'quantity-increment',
+  'close-popup',
+  'decline-cookies',
+]);
+
+/** Path of a form action URL, with Magento's add-to-cart path normalised. */
+export function actionPath(formAction) {
+  if (!formAction) return '';
+  let p;
+  try {
+    p = new URL(formAction, 'https://x.invalid/').pathname;
+  } catch {
+    p = String(formAction);
+  }
+  return p.replace(/\/checkout\/cart\/add(?![a-z])/i, '/cart/add');
+}
+
+/**
+ * Decide whether a click on an element with these facts (from inspectControl) is allowed for `purpose`
  * (undefined for a plain click). Returns null when allowed, else { code, message }.
  */
 export function judgeClick(info, purpose) {
   const no = (code, message) => ({ code, message });
   if (info.frame)
-    return no(
-      'refused-cross-origin-frame',
-      'target is or contains a frame; the tool never clicks into frames',
-    );
+    return no('refused-cross-origin-frame', 'target is a frame; the tool never clicks into frames');
   if (info.file) return no('refused-file-input', 'target is a file input');
   if (info.select) return no('refused-select', 'target is a <select> or one of its options');
   if (info.textEntry)
     return no('refused-text-entry', 'target is a text entry field (focus would invite typing)');
-  if (info.submit && purpose !== 'add-to-cart')
+  if (ORDER_OR_ACCOUNT.test(info.name))
+    return no(
+      'refused-order-or-account',
+      'target is named like an order, payment, sign-in or register control',
+    );
+  if (info.submit && purpose !== 'add-to-cart' && !NO_NAVIGATION_SUBMIT_PURPOSES.has(purpose))
     return no('refused-submit', 'target submits a form and is not an allowlisted add-to-cart control');
   if (info.inForm && !purpose)
     return no('refused-in-form', 'target is inside a <form> and not on the allowlist');
@@ -57,10 +119,10 @@ export function judgeClick(info, purpose) {
   if (purpose === 'continue-as-guest' && info.inForm)
     return no('refused-in-form', 'continue-as-guest is allowed only outside a <form>');
   if (purpose === 'add-to-cart') {
-    if (NOT_ADD_TO_CART.test(info.name) || BAD_FORM_ACTION.test(info.formAction ?? ''))
+    if (NOT_ADD_TO_CART.test(info.name) || BAD_FORM_ACTION.test(actionPath(info.formAction)))
       return no(
         'refused-allowlist-mismatch',
-        'add-to-cart target looks like a promo, sign-in or newsletter control',
+        'add-to-cart target looks like a promo, sign-in, order or newsletter control',
       );
     return null;
   }
@@ -90,19 +152,22 @@ const LOGIN_PATH =
  * A sign-in form next to guest checkout is not a wall: only a login route with a visible password field is.
  */
 export function detectStop(facts) {
-  const hit = (code, message) => ({ code, message });
+  const hit = (code, reason, message) => ({ code, reason, message });
   if (facts.status === 403 || facts.status === 401)
-    return hit('blocked-http-403', `main document HTTP ${facts.status}`);
-  if (facts.status === 429) return hit('blocked-http-429', 'main document HTTP 429');
+    return hit('blocked-http-403', `http-${facts.status}`, `main document HTTP ${facts.status}`);
+  if (facts.status === 429) return hit('blocked-http-429', 'http-429', 'main document HTTP 429');
   const captchaFrame = (facts.frameUrls ?? []).find(
     (u) => CAPTCHA_FRAME.test(u) && !/size=invisible/.test(u),
   );
-  if (captchaFrame) return hit('captcha', `challenge frame on ${safeHost(captchaFrame)}`);
+  if (captchaFrame) return hit('captcha', 'challenge-frame', `challenge frame on ${safeHost(captchaFrame)}`);
+  if (facts.captchaElement)
+    return hit('captcha', 'challenge-element', 'challenge element in the main document');
   const words = `${facts.title ?? ''}\n${facts.text ?? ''}`;
-  if (EXTENSION_CHECK.test(words)) return hit('blocked-extension-check', 'page asks to disable extensions');
-  if (BOT_WALL.test(words)) return hit('blocked-bot-wall', 'bot-wall wording on the page');
+  if (EXTENSION_CHECK.test(words))
+    return hit('blocked-extension-check', 'extension-wording', 'page asks to disable extensions');
+  if (BOT_WALL.test(words)) return hit('blocked-bot-wall', 'wall-wording', 'bot-wall wording on the page');
   if (facts.passwordVisible && LOGIN_PATH.test(new URL(facts.url).pathname))
-    return hit('sign-in-required', 'login route with a visible password field');
+    return hit('sign-in-required', 'login-route', 'login route with a visible password field');
   return null;
 }
 
@@ -114,10 +179,16 @@ function safeHost(u) {
   }
 }
 
-// ---- In-page functions (serialized by Playwright; no closure over module scope) ----
+// ---- In-page functions. The driver runs them in an isolated world (CDP Page.createIsolatedWorld), so the page's
+// own scripts cannot change the prototypes they use. They must not close over module scope. ----
 
-/** Runs in the page on the resolved click target. */
-export function inspectTarget(el) {
+/**
+ * Runs on the node that will receive the click (the hit node at the click point). Walks up, across open shadow
+ * roots, to the control that handles the click, and reports its facts.
+ */
+export function inspectControl(hit) {
+  const INTERACTIVE =
+    'a[href], button, input, select, textarea, label, summary, option, [role=button], [role=link], [role=radio], [role=option], [role=menuitem], [role=tab], [role=checkbox], [contenteditable]';
   const TEXT_TYPES = new Set([
     'text',
     'email',
@@ -134,6 +205,18 @@ export function inspectTarget(el) {
     'color',
     'range',
   ]);
+  const up = (n) => n.parentElement || (n.getRootNode() instanceof ShadowRoot ? n.getRootNode().host : null);
+  let start = hit.nodeType === 1 ? hit : hit.parentElement;
+  if (!start) return null;
+  const frameTag = /^(iframe|frame|object|embed|fencedframe)$/i;
+  if (frameTag.test(start.tagName)) return { tag: start.tagName.toLowerCase(), frame: true, name: '' };
+  let el = start;
+  for (let n = start; n; n = up(n)) {
+    if (n.matches(INTERACTIVE)) {
+      el = n;
+      break;
+    }
+  }
   const tag = el.tagName.toLowerCase();
   const inputType = tag === 'input' ? (el.getAttribute('type') || 'text').toLowerCase() : null;
   const isTextEntry = (e) => {
@@ -146,13 +229,31 @@ export function inspectTarget(el) {
     ['select', 'option', 'optgroup', 'datalist'].includes(e.tagName.toLowerCase()) ||
     Boolean(e.closest('select'));
   const control = tag === 'label' ? el.control : null;
-  const form = el.form || el.closest('form');
-  const submit =
-    (tag === 'button' && el.type === 'submit') ||
+  // A form owner: the `form` property (covers the form="" attribute) or an enclosing <form>.
+  const form = ('form' in el && el.form) || el.closest('form');
+  const submitType =
+    (tag === 'button' && (el.getAttribute('type') || 'submit').toLowerCase() === 'submit') ||
     (tag === 'input' && ['submit', 'image'].includes(inputType));
+  const submit = Boolean(submitType && form);
+  // Attributes, not properties: `button.formAction` falls back to the document URL, and a control named "action"
+  // shadows `form.action`. A `formaction` on the clicked submit control wins over the form's action.
+  const rawAction = form
+    ? (submitType && el.hasAttribute('formaction')
+        ? el.getAttribute('formaction')
+        : form.getAttribute('action')) || ''
+    : null;
+  let formAction = rawAction;
+  if (rawAction !== null) {
+    try {
+      formAction = new URL(rawAction, document.baseURI).href;
+    } catch {
+      formAction = rawAction;
+    }
+  }
+  const root = el.getRootNode();
   const labelledBy = (el.getAttribute('aria-labelledby') || '')
     .split(/\s+/)
-    .map((id) => (id ? document.getElementById(id)?.textContent : ''))
+    .map((id) => (id && root.getElementById ? root.getElementById(id)?.textContent : ''))
     .join(' ');
   const name = (el.getAttribute('aria-label') || labelledBy || el.innerText || el.value || el.title || '')
     .replace(/\s+/g, ' ')
@@ -165,7 +266,7 @@ export function inspectTarget(el) {
     name,
     submit,
     inForm: Boolean(form),
-    formAction: form ? form.getAttribute('action') || '' : null,
+    formAction,
     formHasPassword: Boolean(form && form.querySelector('input[type=password]')),
     formHasTextEntry: Boolean(
       form &&
@@ -177,22 +278,26 @@ export function inspectTarget(el) {
     textEntry: isTextEntry(el) || Boolean(control && isTextEntry(control)),
     select: isSelect(el) || Boolean(control && isSelect(control)),
     file: inputType === 'file' || Boolean(control && control.getAttribute('type') === 'file'),
-    frame:
-      el.matches('iframe, frame, object, embed, fencedframe') ||
-      Boolean(el.querySelector('iframe, frame, object, embed, fencedframe')),
+    frame: false,
   };
 }
 
-/** Runs in the page: the facts detectStop needs. Text is capped and stays in memory, never written. */
+/** The facts detectStop needs. Text is capped and stays in memory, never written. */
 export function pageFacts() {
-  const visible = (e) => {
+  const visible = (e, min = 0) => {
     const r = e.getBoundingClientRect();
     const s = getComputedStyle(e);
-    return r.width > 0 && r.height > 0 && s.visibility !== 'hidden' && s.display !== 'none';
+    return r.width > min && r.height > min && s.visibility !== 'hidden' && s.display !== 'none';
   };
+  const captcha = [
+    ...document.querySelectorAll(
+      '#px-captcha, [id*=captcha i], [class*=captcha i], .g-recaptcha, .h-captcha, .cf-turnstile, #challenge-form, #cf-challenge-running, #challenge-stage',
+    ),
+  ].filter((e) => !e.closest('.grecaptcha-badge') && !/size=invisible/.test(e.getAttribute('src') || ''));
   return {
     title: document.title || '',
     text: document.body ? document.body.innerText.slice(0, 4000) : '',
-    passwordVisible: [...document.querySelectorAll('input[type=password]')].some(visible),
+    passwordVisible: [...document.querySelectorAll('input[type=password]')].some((e) => visible(e)),
+    captchaElement: captcha.some((e) => visible(e, 30)),
   };
 }

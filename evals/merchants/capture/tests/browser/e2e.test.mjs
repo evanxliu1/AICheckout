@@ -30,7 +30,7 @@ const steps = (o) => [
   { do: 'snapshot', state: 'cart-1' },
   { do: 'click', target: { role: 'button', name: 'Increase quantity' }, purpose: 'quantity-increment' },
   { do: 'snapshot', state: 'cart-qty2' },
-  { do: 'click', target: { role: 'link', name: 'Checkout' } },
+  { do: 'click', target: { role: 'link', name: 'Checkout', exact: true } },
   { do: 'snapshot', state: 'checkout-1' },
   { do: 'goto', url: `${o}/terms` },
   { do: 'snapshot', state: 'terms' },
@@ -59,11 +59,12 @@ test('end to end: fixture shop captured; only the add-to-cart form was posted; p
 
     // robots.txt came first, before any page.
     assert.deepEqual(shop.log[0], { site: 'shop', method: 'GET', path: '/robots.txt', body: '' });
-    // The one form submission was the add-to-cart post, with the chosen option.
+    // The one form submission was the add-to-cart post, with the chosen option; the only other write is the
+    // increment's fetch, allowed during its allowlisted click.
     const posts = shop.log.filter((r) => r.method === 'POST');
     assert.deepEqual(
       posts.map((r) => r.path),
-      ['/cart/add'],
+      ['/cart/add', '/cart/change'],
     );
     assert.match(posts[0].body, /size=M/);
     assert.ok(!shop.log.some((r) => ['/promo', '/login', '/newsletter', '/cart/update'].includes(r.path)));
@@ -256,7 +257,7 @@ test('serve: the operator drives the same driver over the control server; refusa
       [403, 200, 422, 422, 200],
     );
     assert.equal(results[2].body.error.code, 'refused-typing');
-    assert.equal(results[3].body.error.code, 'refused-submit');
+    assert.equal(results[3].body.error.code, 'refused-order-or-account');
     assert.equal(record.outcome.status, 'excluded');
     assert.equal(record.outcome.code, 'no-eligible-item');
     assert.match(record.outcome.evidenceSha256, /^[0-9a-f]{64}$/);
@@ -275,7 +276,7 @@ test('third-party checkout: the host is recorded with checkout-1 and nothing pas
         { do: 'goto', url: `${o}/products/tee` },
         { do: 'click', target: { role: 'button', name: 'Add to cart' }, purpose: 'add-to-cart' },
         { do: 'snapshot', state: 'cart-1' },
-        { do: 'click', target: { role: 'link', name: 'Pay with Partner' } },
+        { do: 'click', target: { role: 'link', name: 'Partner checkout' } },
         { do: 'snapshot', state: 'checkout-1' },
         { do: 'click', target: { role: 'link', name: 'Next' } },
       ],

@@ -5,9 +5,10 @@ import { request } from 'node:http';
 import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
+import { committableUrl } from '../capture.mjs';
 import { checkRequest, startControlServer } from '../control-server.mjs';
 import { createDriver, guardApi, parseTarget } from '../driver.mjs';
-import { RefusalError, detectStop, judgeClick } from '../guards.mjs';
+import { ORDER_OR_ACCOUNT, RefusalError, actionPath, detectStop, judgeClick } from '../guards.mjs';
 import { detectPlatform } from '../platform.mjs';
 import { Recipe, SiteRecord } from '../recipe.mjs';
 import { groupFor, isAllowed, parseRobots, robotsPosture } from '../robots.mjs';
@@ -273,14 +274,20 @@ test('click judgement: each refusal', () => {
   assert.equal(code(el({ tag: 'input', inputType: 'text', textEntry: true })), 'refused-text-entry');
   assert.equal(code(el({ tag: 'label', textEntry: true })), 'refused-text-entry');
   assert.equal(code(el({ submit: true, inForm: true })), 'refused-submit');
-  assert.equal(code(el({ submit: true, inForm: true }), 'option'), 'refused-submit');
+  // A submit-typed option button is judged allowed; the driver then aborts any navigation it causes.
+  assert.equal(code(el({ submit: true, inForm: true, name: 'M' }), 'option'), null);
+  assert.equal(
+    code(el({ submit: true, inForm: true, name: 'Guest' }), 'continue-as-guest'),
+    'refused-submit',
+  );
+  assert.equal(code(el({ name: 'Place order' })), 'refused-order-or-account');
   assert.equal(code(el({ inForm: true })), 'refused-in-form');
   assert.equal(
     code(el({ submit: true, inForm: true, formHasTextEntry: true, name: 'Apply' }), 'add-to-cart'),
     'refused-input-form',
   );
   assert.equal(
-    code(el({ submit: true, inForm: true, formHasPassword: true, name: 'Sign in' }), 'add-to-cart'),
+    code(el({ submit: true, inForm: true, formHasPassword: true, name: 'Go' }), 'add-to-cart'),
     'refused-input-form',
   );
   assert.equal(
@@ -424,4 +431,167 @@ test('control server: live, bound to 127.0.0.1, token and Origin enforced', asyn
   } finally {
     await server.close();
   }
+});
+
+// ---- Review fixes (2026-10-06) ----
+
+test('order, payment, sign-in and register names are refused in ten languages', () => {
+  for (const name of [
+    'Place order',
+    'Pay now',
+    'Buy it now',
+    'Sign in',
+    'Log in',
+    'Create an account',
+    'Checkout with PayPal',
+    'Realizar pedido',
+    'Comprar ahora',
+    'Iniciar sesión',
+    'Passer la commande',
+    'Se connecter',
+    'Créer un compte',
+    'Jetzt kaufen',
+    'Zahlungspflichtig bestellen',
+    'Anmelden',
+    'Acquista ora',
+    'Accedi',
+    'Registrati',
+    'Finalizar pedido',
+    'Comprar agora',
+    'Criar conta',
+    'Nu kopen',
+    'Plaats bestelling',
+    'Inloggen',
+    '注文を確定する',
+    '今すぐ購入',
+    'ログイン',
+    '提交订单',
+    '立即购买',
+    '登录',
+    '주문하기',
+    '바로 구매',
+    '로그인',
+  ])
+    assert.match(name, ORDER_OR_ACCOUNT, name);
+  for (const name of [
+    'Add to cart',
+    'In den Warenkorb',
+    'Ajouter au panier',
+    'Añadir a la cesta',
+    'Aggiungi al carrello',
+    'Adicionar ao carrinho',
+    'In winkelwagen',
+    'カートに入れる',
+    '加入购物车',
+    '장바구니 담기',
+    'Checkout',
+    'Continue as guest',
+    'Reject all',
+  ])
+    assert.doesNotMatch(name, ORDER_OR_ACCOUNT, name);
+});
+
+test('form actions: formaction wins, order and account paths refused, Magento add-to-cart allowed', () => {
+  const atc = (formAction) =>
+    judgeClick(el({ submit: true, inForm: true, formAction }), 'add-to-cart')?.code ?? null;
+  assert.equal(atc('https://s.com/cart/add'), null);
+  assert.equal(atc('https://s.com/checkout/cart/add/uenc/x/product/1/'), null);
+  assert.equal(actionPath('https://s.com/checkout/cart/add/'), '/cart/add/');
+  for (const p of [
+    '/checkout/complete',
+    '/order/place',
+    '/payment',
+    '/account/login',
+    '/buy',
+    '/purchase',
+    '/register',
+  ])
+    assert.equal(atc(`https://s.com${p}`), 'refused-allowlist-mismatch', p);
+  // Host words do not count, only the path.
+  assert.equal(atc('https://borders-shop.com/cart/add'), null);
+});
+
+test('robots: user-agent product token before "/" and non-ASCII rule paths', () => {
+  const g = parseRobots('User-agent: AICheckoutCapture/1.0 (+https://x)\nDisallow: /cart\n');
+  assert.equal(
+    robotsPosture({ httpStatus: 200, body: 'User-agent: AICheckoutCapture/2.1\nDisallow: /cart\n' }, [
+      '/cart',
+    ]).decision,
+    'robots-disallow-path',
+  );
+  assert.deepEqual(g[0].agents, ['aicheckoutcapture']);
+  const grp = groupFor(parseRobots('User-agent: *\nDisallow: /warenkörbe\n'), '*');
+  assert.equal(isAllowed(grp, '/warenk%C3%B6rbe'), false);
+  assert.equal(isAllowed(grp, '/warenkörbe'), false);
+  assert.equal(isAllowed(grp, '/warenkorb'), true);
+});
+
+test('committed URLs: no query or fragment, token-like segments replaced', () => {
+  assert.equal(committableUrl('https://s.com/cart?token=abc#x'), 'https://s.com/cart');
+  assert.equal(
+    committableUrl('https://s.com/checkouts/cn/Z2NwLXVzLWVhc3QxOjAxSjk3/information'),
+    'https://s.com/checkouts/cn/:token/information',
+  );
+  assert.equal(committableUrl('https://s.com/c/0123456789abcdef/x'), 'https://s.com/c/:token/x');
+  assert.equal(committableUrl('https://s.com/products/blue-shirt-2'), 'https://s.com/products/blue-shirt-2');
+  assert.equal(committableUrl(null), null);
+});
+
+test('site record: stop detail is a code and committed URLs carry no query', () => {
+  const base = JSON.parse(
+    JSON.stringify({
+      schema: 'capture-site-record.1',
+      domain: 'x.com',
+      recipeSha256: 'a'.repeat(64),
+      tool: { version: 't', browser: 'b', userAgentToken: 'u' },
+      session: { id: '20261006T000000Z', number: 1, startedAt: 's', endedAt: 'e', topLevelNavigations: 0 },
+      robots: {
+        url: 'https://x.com/robots.txt',
+        httpStatus: 200,
+        sha256: null,
+        posture: 'rules',
+        groups: [],
+        checkedPaths: [],
+        decision: 'allowed',
+      },
+      terms: { url: null, copySha256: null, prohibitsAutomated: 'unknown' },
+      states: [],
+      notReached: [],
+      thirdPartyCheckoutHost: null,
+      platform: null,
+      events: [],
+      stop: { code: 'tool-error', detail: 'recipe-step-refused:refused-submit', evidenceSha256: null },
+      outcome: { status: 'incomplete', code: 'tool-error', evidenceSha256: null },
+    }),
+  );
+  assert.ok(SiteRecord.parse(base));
+  assert.equal(
+    SiteRecord.safeParse({ ...base, stop: { ...base.stop, detail: 'Error: page said "Subtotal $20"' } })
+      .success,
+    false,
+  );
+  const st = {
+    state: 'cart-1',
+    url: 'https://x.com/cart?id=1',
+    manifestSha256: 'a'.repeat(64),
+    domSha256: 'a'.repeat(64),
+    viewportSha256: 'a'.repeat(64),
+  };
+  assert.equal(SiteRecord.safeParse({ ...base, states: [st] }).success, false);
+  assert.ok(SiteRecord.parse({ ...base, states: [{ ...st, url: 'https://x.com/cart' }] }));
+});
+
+test('stop detection: a visible challenge element in the main document', () => {
+  assert.equal(
+    detectStop({
+      status: 200,
+      url: 'https://s.com/',
+      title: '',
+      text: '',
+      frameUrls: [],
+      passwordVisible: false,
+      captchaElement: true,
+    }).code,
+    'captcha',
+  );
 });

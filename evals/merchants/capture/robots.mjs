@@ -24,7 +24,8 @@ export function parseRobots(text) {
         groups.push(current);
         sawRule = false;
       }
-      current.agents.push(value.toLowerCase());
+      // RFC 9309: match the product token, the part before any "/", case-insensitively.
+      current.agents.push(value.split('/')[0].trim().toLowerCase());
     } else if (field === 'allow' || field === 'disallow') {
       if (!current) continue; // rules before any user-agent line belong to no group
       sawRule = true;
@@ -42,7 +43,13 @@ export function groupFor(groups, agent) {
   return { agents: [agent], rules: hit.flatMap((g) => g.rules) };
 }
 
-const normalizePct = (s) => s.replace(/%[0-9a-f]{2}/gi, (m) => m.toUpperCase());
+// Percent-encode non-ASCII characters (as UTF-8) and upper-case existing escapes, in rules and paths alike.
+const normalizePct = (s) =>
+  s
+    .replace(/[\u0080-\u{10FFFF}]/gu, (c) =>
+      c.length === 1 && c >= '\uD800' && c <= '\uDFFF' ? c : encodeURIComponent(c),
+    )
+    .replace(/%[0-9a-f]{2}/gi, (m) => m.toUpperCase());
 
 function patternMatches(pattern, path) {
   const anchored = pattern.endsWith('$');

@@ -6,7 +6,7 @@ status: stable
 tags: [product, directives, memory]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T04:00:00Z
+  at: 2026-10-06T10:00:00Z
 ---
 
 # User directives
@@ -15,6 +15,7 @@ Standing instructions from the owner, newest first. A directive stays in force u
 
 | Date | Directive | Scope | Source |
 | --- | --- | --- | --- |
+| 2026-10-06 | Reader-eval storefronts are **worldwide**, not U.S. only: the capture tool records page language, region and currency markers and assumes no U.S. host. **Attended capture of robot-blocked sites is deferred** to a later step through Claude's built-in browser (Evan watches and solves any CAPTCHA himself; Claude never does); nothing is built for it in 12.2. | Merchant coverage, Phase 12 capture | [Capture tool](../../evals/merchants/capture/README.md), [decision](../decisions/2026-10-06-capture-tool-design.md), chat 2026-10-06 via the coordinator |
 | 2026-10-06 | Reader-eval capture posture: **exclude any site whose robots.txt** (for `*` or for the capture tool's own user agent) **disallows the cart or checkout paths the tool would load, or disallows everything**. Terms-of-use clauses against automated access are recorded and reported but do not exclude a site. | Merchant coverage, Phase 12 capture | [Protocol](../../docs/evals/generic-reader-protocol.md#capture-posture), [decision](../decisions/2026-10-06-reader-eval-protocol.md), chat 2026-10-06 |
 | 2026-10-05 | Accepts the Phase 10 probe verdict **go** (fragile for top retailers: bot walls limit which sites Phase 12 can capture) and **Y = 80%** found-correct on held-out one-item cart pages, with zero false found first. Start Phase 12. | Merchant coverage, reader eval | [Probe report](../../docs/evals/merchant-probe-2026-10.md), chat 2026-10-05 |
 | 2026-10-05 | Split the merchant coverage plan into Phases 10–17 and tackle them one by one; run Phases 10 (feasibility probe) and 11 (any store, typed amount) in parallel; ask each phase's decisions when it starts. Approves D4 (logged-out real cart captures, one known item, non-Evan profile, no CAPTCHAs, rate-limited, ~150–200 sites with monthly replays) and D6 (merchant list from Tranco or CrUX ∩ agent-classified retail, with attribution, NRF Top 100 cross-check, no paid rankings). | Merchant coverage, roadmap | [Decision](../decisions/2026-10-05-merchant-coverage-phases.md), chat 2026-10-05 |

@@ -182,6 +182,11 @@ export const Recipe = z
   });
 
 const Sha = z.string().regex(/^[0-9a-f]{64}$/);
+/** A URL as committed in a site record: no query string or fragment (see committableUrl in capture.mjs). */
+const CommittedUrl = Url.refine(
+  (u) => !new URL(u).search && !new URL(u).hash,
+  'no query or fragment in committed URLs',
+);
 const RobotsGroup = z
   .object({
     agents: z.array(z.string()),
@@ -218,22 +223,39 @@ export const SiteRecord = z
       .strict(),
     terms: z
       .object({
-        url: Url.nullable(),
+        url: CommittedUrl.nullable(),
         copySha256: Sha.nullable(),
         prohibitsAutomated: z.enum(['yes', 'no', 'unknown']),
       })
       .strict(),
     states: z.array(
       z
-        .object({ state: SnapshotName, url: Url, manifestSha256: Sha, domSha256: Sha, viewportSha256: Sha })
+        .object({
+          state: SnapshotName,
+          url: CommittedUrl,
+          manifestSha256: Sha,
+          domSha256: Sha,
+          viewportSha256: Sha,
+        })
         .strict(),
     ),
     notReached: z.array(z.object({ state: z.enum(ACTION_STATES), reason: z.string() }).strict()),
     thirdPartyCheckoutHost: z.string().nullable(),
     platform: z.object({ group: z.string(), marker: z.string().nullable() }).strict().nullable(),
-    events: z.array(z.object({ kind: z.string(), detail: z.string().max(200) }).strict()),
+    events: z.array(
+      z
+        .object({
+          kind: z.string().regex(/^[a-z-]{1,40}$/),
+          detail: z.string().regex(/^[A-Za-z0-9 .:_[\]-]{0,200}$/),
+        })
+        .strict(),
+    ),
     stop: z
-      .object({ code: z.enum(EXCLUSION_CODES), detail: z.string().max(200), evidenceSha256: Sha.nullable() })
+      .object({
+        code: z.enum(EXCLUSION_CODES),
+        detail: z.string().regex(/^[a-z0-9:-]{1,80}$/, 'a reason code, never free text'),
+        evidenceSha256: Sha.nullable(),
+      })
       .strict()
       .nullable(),
     outcome: z
