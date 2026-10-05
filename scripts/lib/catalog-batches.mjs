@@ -398,6 +398,8 @@ export function mergeLayers({
         (cardId) => winnerLayer.get(cardId) !== summary.id,
       ),
     })),
+    /** Cards whose labels still come from a frozen base layer (not replaced by a pipeline batch). */
+    fromBase: winners.filter(([, w]) => w.item && w.layer.kind === 'base').map(([cardId]) => cardId),
     /** Real cards (a layer without an overlay) that a pipeline batch replaced. */
     replacedReal: [...plainCards.keys()].filter((cardId) => !plainIds.has(cardId)),
     researched: new Set(layers.flatMap((layer) => (layer.cards?.cards ?? []).map((card) => card.id))).size,
