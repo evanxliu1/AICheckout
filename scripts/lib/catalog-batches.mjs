@@ -53,6 +53,12 @@ const batchLayerSchema = z.strictObject({
   id: z.string().regex(/^[a-z0-9][a-z0-9-]*-[0-9]{4}-[0-9]{2}$/),
   /** Dropped cards with reasons, until milestone 2's pipeline/state.json supplies them (`loadLayer`'s `dropped`). */
   dropped: reasons.default({}),
+  /**
+   * Per card, the starts of corpus exclusions the catalog leaves out because, listed with the card's other
+   * exclusions, they would repeat more than 25 consecutive capture words (general rule 22; found by the quote check
+   * over the built catalog). The batch-layer counterpart of `QUOTE_LIMIT_OMISSIONS`.
+   */
+  exclusionOmissions: z.record(z.string().min(1), z.array(z.string().trim().min(1)).min(1)).default({}),
 });
 /** A catalog version label, e.g. `2026-10-02.expansion.1` (date, name, counter). */
 export const CATALOG_VERSION = /^[0-9]{4}-[0-9]{2}-[0-9]{2}\.[a-z0-9-]+\.[0-9]+$/;
@@ -137,6 +143,7 @@ export async function loadLayer(root, layer, { dropped = {} } = {}) {
     cards: await read(join(dir, 'cards.json')),
     rewardPrograms: await optional(join(dir, 'reward-programs.json')),
     dropped: { ...layer.dropped, ...dropped },
+    exclusionOmissions: layer.exclusionOmissions ?? {},
   };
 }
 
@@ -398,6 +405,12 @@ export function mergeLayers({
         (cardId) => winnerLayer.get(cardId) !== summary.id,
       ),
     })),
+    /** Exclusion omissions of the cards a pipeline batch supplies, from that batch's build-config entry. */
+    batchOmissions: Object.fromEntries(
+      winners
+        .filter(([cardId, w]) => w.item && w.layer.kind === 'batch' && w.layer.exclusionOmissions?.[cardId])
+        .map(([cardId, w]) => [cardId, w.layer.exclusionOmissions[cardId]]),
+    ),
     /** Cards whose labels still come from a frozen base layer (not replaced by a pipeline batch). */
     fromBase: winners.filter(([, w]) => w.item && w.layer.kind === 'base').map(([cardId]) => cardId),
     /** Real cards (a layer without an overlay) that a pipeline batch replaced. */

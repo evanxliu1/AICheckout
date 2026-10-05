@@ -501,9 +501,19 @@ export function withBatchLayer(config: BatchesConfig, batch: Batch, version?: st
     if (card.dropped) dropped[cardId] = card.dropped;
     else if (card.heldOut && !inCorpus.has(cardId)) dropped[cardId] = card.heldOut;
   }
-  const layer = { kind: 'batch', id: batch.id, dropped };
   const layers = [...config.layers];
   const index = layers.findIndex((entry) => entry.kind === 'batch' && entry.id === batch.id);
+  // Exclusion omissions are set by hand in the build config (quote limit); a rebuild keeps them.
+  const kept =
+    index >= 0
+      ? (layers[index] as { exclusionOmissions?: Record<string, string[]> }).exclusionOmissions
+      : undefined;
+  const layer = {
+    kind: 'batch',
+    id: batch.id,
+    dropped,
+    ...(kept && Object.keys(kept).length ? { exclusionOmissions: kept } : {}),
+  };
   if (index >= 0) layers[index] = layer;
   else layers.push(layer);
   return { ...config, ...(version ? { version } : {}), layers };
