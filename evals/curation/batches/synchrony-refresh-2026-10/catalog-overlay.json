@@ -1,0 +1,729 @@
+{
+  "schemaVersion": 1,
+  "version": "synchrony-refresh-2026-10.overlay.1",
+  "annotationStatus": "agent-verified",
+  "description": "Catalog overlay of pipeline batch synchrony-refresh-2026-10: one entry per corpus card, merged from the overlay/<issuer>.json fragments by pipeline accept overlay.",
+  "programs": [],
+  "programDetails": [],
+  "gates": [],
+  "cards": [
+    {
+      "cardId": "synchrony-amazon-store-card",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "588c099259021de886a7e5eacdd1e078e66cda4165bd2b6241ab077409507020",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "closed-loop",
+        "brandIds": [
+          "amazon",
+          "whole-foods-market"
+        ],
+        "anchors": [
+          {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores"
+          },
+          {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Participating Whole Foods Market stores will accept in-store payment with the Store Card and Secured Card through the Amazon In-Store Code"
+          }
+        ]
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Amazon.com only, and only with an eligible Prime membership; a Store Card without Prime earns no percentage back.",
+          "set": {
+            "brandIds": [
+              "amazon"
+            ],
+            "requires": [
+              {
+                "gateId": "amazon-prime",
+                "optionIds": [
+                  "member"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "Prime Store Card members can earn 5% back at Amazon.com and Whole Foods Market"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Whole Foods Market only (paid with the Amazon In-Store Code), with an eligible Prime membership.",
+          "set": {
+            "brandIds": [
+              "whole-foods-market"
+            ],
+            "requires": [
+              {
+                "gateId": "amazon-prime",
+                "optionIds": [
+                  "member"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "Prime Store Card members can earn 5% back at Amazon.com and Whole Foods Market"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Physical Amazon locations count as the Amazon brand; same Prime condition as the Amazon.com rule.",
+          "set": {
+            "brandIds": [
+              "amazon"
+            ],
+            "requires": [
+              {
+                "gateId": "amazon-prime",
+                "optionIds": [
+                  "member"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "including 1-Click orders and purchases made at select physical Amazon locations"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "The 5% needs an eligible Prime membership: every rate rule requires the amazon-prime gate answered member.",
+          "rules": [
+            0,
+            1,
+            2
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Amazon.com and Whole Foods rules are brand-scoped and gated on Prime. Choosing promotional financing instead is a purchase-level choice, not modelled.",
+          "rules": [
+            0,
+            1
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "closed-loop"
+          ],
+          "note": "Closed loop at Amazon and Whole Foods Market. Amazon Pay merchants also accept the card but earn nothing, so they are not listed as accepting brands."
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-paypal-cashback-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "5bff1bbddacb26d362a6274c5d8d3caadd90040928f4c99ff3fc608803d06be2",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Paid only when checking out through PayPal, so it covers all purchases with the paypal payment path required.",
+          "set": {
+            "category": "all-purchases",
+            "requiredPaymentPaths": [
+              "paypal"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-paypal-cashback-mastercard-rewards-terms",
+              "quote": "Earn 3% on Eligible Purchases you make using your Card Account through your PayPal account online"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "Peer-to-peer: sending money to other PayPal users is not a retail purchase."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Authorized users earn 1.5% even through PayPal; the catalog models the primary cardholder, whose PayPal rate applies."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The PayPal checkout rate is rule 1 with paypal required; the send-money half (rule 2) is held out as peer-to-peer.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-sams-club-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "1b8d0a95a7d23198ee19dc1bfb5663dd86c36d98e52a4383ced26767c8c6884d",
+      "heldOut": null,
+      "programId": "sams-cash",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "gas",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap"
+          ],
+          "note": "Gas and EV charging share one $6,000 yearly cap.",
+          "set": {
+            "sharedCapId": "gas-ev"
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-sams-club-mastercard-product",
+              "quote": "on the first $6,000 in gas and EV charging station purchases per year, then 1% thereafter"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap"
+          ],
+          "note": "Shares the gas cap.",
+          "set": {
+            "sharedCapId": "gas-ev"
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-sams-club-mastercard-product",
+              "quote": "on the first $6,000 in gas and EV charging station purchases per year, then 1% thereafter"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Sam's Club purchases earn 3% for Plus members; Club members earn 1%, the base rate.",
+          "set": {
+            "brandIds": [
+              "sams-club"
+            ],
+            "requires": [
+              {
+                "gateId": "sams-club-membership",
+                "optionIds": [
+                  "plus"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-sams-club-mastercard-product",
+              "quote": "Earn 3% back in Sam’s Cash on Sam’s Club purchases for Plus members."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "Plus vs Club is the sams-club-membership gate; Club members fall to the base rate.",
+          "rules": [
+            4
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "shared-cap"
+          ],
+          "note": "EV charging counts toward the same $6,000 gas cap: one shared cap on both rules.",
+          "rules": [
+            1,
+            2
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "A yearly cap on Sam's Cash earned, not on spend (O12)."
+        },
+        {
+          "index": 3,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Sam's Cash is redeemed only at Sam's Club: sams-cash store-credit program."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Rule 4, gated on Plus membership; Club members earn the base rate.",
+          "rules": [
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-onepay-cashrewards-card",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "9738af9f602d5ee11567a583e1f01b01212bde261dd98541e0f8478fc29619c9",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Walmart stores, Walmart gas, app and Walmart.com (not Sam's Club or marketplace sellers).",
+          "set": {
+            "brandIds": [
+              "walmart"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+              "quote": "3% Cash Back at Walmart: You earn OnePay Points equal to 3% of each $1 spent on Purchases at Walmart"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Walmart 5% needs a linked Walmart+ membership: walmart-plus gate; linking stays enroll-once.",
+          "set": {
+            "brandIds": [
+              "walmart"
+            ],
+            "requires": [
+              {
+                "gateId": "walmart-plus",
+                "optionIds": [
+                  "member"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+              "quote": "Your Walmart+ membership must be linked to your Account to earn 5% on Walmart Purchases."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "all-purchases",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "limited-time",
+            "gate"
+          ],
+          "note": "First-90-days 3% applies outside Walmart only; dates stay null and the account-age gate decides it (O14, O20).",
+          "set": {
+            "excludedBrandIds": [
+              "walmart"
+            ],
+            "requires": [
+              {
+                "gateId": "synchrony-onepay-cashrewards-card-first-90-days",
+                "optionIds": [
+                  "first-90-days"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-product",
+              "quote": "earn 3% cash back on eligible purchases made outside of Walmart"
+            },
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-product",
+              "quote": "for their first 90 days, beginning on the date of account opening"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The Bonus Term dates bound when an account must be opened, not when the 3% ends; the rule keeps null dates and the first-90-days gate (Synchrony convention)."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Additional merchant offers through Upside state no card rate; they do not change the catalog earn."
+        },
+        {
+          "index": 2,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "Walmart+ condition is the walmart-plus gate.",
+          "rules": [
+            2
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Rule 2, Walmart brand and walmart-plus gate.",
+          "rules": [
+            2
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 1, Walmart brand.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-mywalgreens-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "e5d559b2bb2430bb111829e4de2d1f37ef1e4c69fd22a8d54b3a3cd686ff8052",
+      "heldOut": null,
+      "programId": "walgreens-cash",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 1000
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "Product-level rate: 10% only on Walgreens-branded items, which the engine cannot see; the 5% Walgreens rule stands for a Walgreens purchase (O19)."
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Walgreens Participating Stores (Walgreens and Duane Reade) and walgreens.com.",
+          "set": {
+            "brandIds": [
+              "walgreens",
+              "duane-reade"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+              "quote": "retail products that are not branded with Walgreens marks or logos when you use your Walgreens Credit Card to make Eligible Purchases"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Pharmacy purchases at Walgreens and Duane Reade stores or walgreens.com.",
+          "set": {
+            "brandIds": [
+              "walgreens",
+              "duane-reade"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+              "quote": "certain prescription drugs and immunizations when you use your Walgreens Credit Card"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: health and wellness merchants outside Walgreens, decided by MCC; the pet store part has no v3 category either."
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "all-purchases",
+            "rateBps": 100
+          },
+          "disposition": "modelled",
+          "how": [
+            "base-rule"
+          ],
+          "note": "Base rule: cardholders are myWalgreens members by the time the account opens and earn automatically, so activation is none (O6).",
+          "set": {
+            "activation": "none"
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+              "quote": "you will automatically earn Walgreens Cash rewards as long as"
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "wholesale-clubs",
+          "issuerWording": "wholesale clubs that sell a full range of goods (often in bulk)",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "wholesale-clubs",
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "enroll-once",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "category"
+          ],
+          "note": "The 3% grocery definition names wholesale clubs, which v3 codes as their own category.",
+          "anchors": [
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+              "quote": "You will earn Walgreens Cash rewards equal to 3% of every USD spent for Eligible Purchases"
+            },
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+              "quote": "wholesale clubs that sell a full range of goods (often in bulk) and services in warehouse style stores"
+            },
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+              "quote": "There is no maximum amount of Eligible Purchases that may earn Walgreens Cash rewards"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The store-only Credit Card and the open-loop Mastercard share these terms; the catalog models the Mastercard, and the outside-Walgreens rates apply only to it."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "A yearly cap on promotional pharmacy rewards earned, not on spend."
+        },
+        {
+          "index": 2,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Walgreens Cash is used only through myWalgreens: walgreens-cash store-credit program."
+        },
+        {
+          "index": 3,
+          "disposition": "noted",
+          "how": [],
+          "note": "Veterinary and pet store earn falls under the health and wellness rule, held out (not at retail; pet stores have no v3 category)."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The 10% Walgreens-brand rate is product-level; rule 0 is held out and the 5% rule applies at Walgreens."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rules 1 and 2, Walgreens and Duane Reade brands.",
+          "rules": [
+            1,
+            2
+          ]
+        }
+      ]
+    }
+  ]
+}
