@@ -22,7 +22,7 @@ As of 2026-10-05T05:47:59Z.
 
 ## Active work
 
-- **Phase 10 plan** (coordinator): [draft v6](product/phase-10-merchant-expansion.md): any U.S. online checkout through a hosted merchant database and a generic cart reader proven on real pages, Release A inside the phase, consented telemetry without browsing data ([merchant coverage design](system/merchant-coverage-design.md), [telemetry design](system/telemetry-design.md)); three review rounds (Fable 5.1 ×3, Opus 5.5); **awaiting Evan's decisions D1–D14**.
+- **Phase 10 plan** (coordinator): [draft v6](product/phase-10-merchant-expansion.md): any U.S. online checkout through a hosted merchant database and a generic cart reader proven on real pages, Release A inside the phase, consented telemetry without browsing data ([merchant coverage design](system/merchant-coverage-design.md), [telemetry design](system/telemetry-design.md)); four review rounds by Fable 5.1 and Opus 5.5; **awaiting Evan's decisions D1–D14**.
 - Release media regenerated for `2026-10-05.renewal.1` (`npm run release:media`, all checks passed, 2026-10-05; [release media](ops/release-media.md)).
 
 ## Open questions and next steps

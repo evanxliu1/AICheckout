@@ -1,7 +1,7 @@
 ---
 type: Product
-title: Phase 10 plan (merchant coverage, draft v6)
-description: Draft v6 after three review rounds (Fable 5.1 ×3, Opus 5.5), awaiting Evan's decisions D1–D14 — recommend a card at any U.S. online checkout with a hosted merchant database matched on the device and a deterministic generic cart reader proven on real top-merchant pages; Release A (click-to-use anywhere) inside the phase, then consented telemetry without browsing data and the optional automatic badge (Release B); a measured LLM merchant pipeline; value metrics and a data room.
+title: Phase 10 plan (merchant coverage, draft v6.1)
+description: Draft v6 after four review rounds by Fable 5.1 and Opus 5.5, awaiting Evan's decisions D1–D14 — recommend a card at any U.S. online checkout with a hosted merchant database matched on the device and a deterministic generic cart reader proven on real top-merchant pages; Release A (click-to-use anywhere) inside the phase, then consented telemetry without browsing data and the optional automatic badge (Release B); a measured LLM merchant pipeline; value metrics and a data room.
 status: draft
 tags: [product, plan, phase-10, merchants, telemetry]
 generated:
@@ -16,9 +16,9 @@ sources:
     title: Archived Phase 2–6 plan (Phase 6 site coverage harness)
 ---
 
-# Phase 10 plan: merchant coverage (draft v6)
+# Phase 10 plan: merchant coverage (draft v6.1)
 
-**Draft, not approved.** Evan answers D1–D14 before any Phase 10 work starts. History (all 2026-10-05): v1–v3 planned bundled per-site adapters for 10, then 100–500, merchants; v4 followed Evan's direction to work at any merchant like official products, with telemetry and future affiliate offers; v5 folded in two Fable 5.1 reviews (technical; product and business); **v6** folds in a parallel Fable 5.1 and Opus 5.5 review of v5 (all agent-verified). Design: [merchant coverage](../system/merchant-coverage-design.md); [telemetry, operations and value metrics](../system/telemetry-design.md).
+**Draft, not approved.** Evan answers D1–D14 before any Phase 10 work starts. History (all 2026-10-05): v1–v3 planned bundled per-site adapters for 10, then 100–500, merchants; v4 followed Evan's direction to work at any merchant like official products, with telemetry and future affiliate offers; v5 folded in two Fable 5.1 reviews (technical; product and business); **v6** folds in a parallel Fable 5.1 and Opus 5.5 review of v5 (all agent-verified); a final parallel Fable 5.1 and Opus 5.5 check of v6 found only line-level fixes, applied in v6.1. Design: [merchant coverage](../system/merchant-coverage-design.md); [telemetry, operations and value metrics](../system/telemetry-design.md).
 
 ## Goal
 
@@ -36,7 +36,7 @@ Y is set in the milestone 2 protocol; X and Z are set after 4 weeks of Release B
 6. **Compliance:** listing, consent screen, privacy policy and event dictionary agree before any release that sends events.
 7. **Value pack:** the [value metrics and data room](../system/telemetry-design.md#value-metrics-what-a-buyer-or-partner-asks-for) exist and are current.
 
-**Phase 10 is done** when 1, 2, 4, 6 and 7 pass and 3 and 5 have been reported once on at least 4 weeks of Release B data.
+**Phase 10 is done** when 1, 2, 6 and 7 pass, 4 is reported, and 3 and 5 have been reported once on at least 4 weeks of Release B data.
 
 ## Decisions taken (Evan, 2026-10-05)
 
@@ -70,10 +70,10 @@ One branch (`phase10-mN-<slug>`) and PR each from the latest `main`; an independ
 | 0 | **Approval:** Evan answers D1–D14; directive rows, decision records, roadmap and goal updated; designs marked accepted (not built) | Lint; decision records exist |
 | 1 | **Feasibility probe** (no product code): 25 sites from the D6 source, stratified by rank band and platform (shadow DOM, a third-party checkout), persistent non-Evan profile under a gitignored path; reachability, bot walls, prompts, strict-CSP badge frame, storage quota; prototype reader steps 1–3. Docs in parallel: single-purpose statement and privacy memo in `docs/release/`, event dictionary draft | `docs/evals/merchant-probe-2026-10.md`; go/no-go; proposed Y |
 | 2 | **Protocols and capture:** `docs/evals/generic-reader-protocol.md` (splits, states, labeling and adjudication, bounds, peek policy, capture posture) and the merchant-pipeline protocol (held-out domains and adjudicated profiles frozen); capture tool with recipes; all three splits captured | Reviewer subagent signs both protocols before any tuning or drafting; capture tool refuses sign-in and field input by test |
-| 3 | **Any-merchant popup and engine:** engine takes a passed-in profile and returns ranges (`packages/rewards-core`, `engine-shared.ts`), generic profile, popup merchant search and tab prefill (`extension/src/checkout/merchants.ts`, popup), bundled `processor` seed | Engine tests for generic profiles and ranges; `rewards-v3` golden ladders unchanged; axe on the new screens |
-| 4 | **Generic reader v1**, tuned on development only; the 3 adapters become bundled seed store configs; manifest host list pinned (`e2e/hosts.ts`) | `docs/evals/generic-reader-v1.md` with bounds; criterion 1 |
+| 3 | **Any-merchant popup and engine:** engine takes a passed-in profile and returns ranges (`packages/rewards-core/src/engine-v3.ts` merchant lookup, `engine-shared.ts` unsupported-merchant check), generic profile, popup merchant search and tab prefill (`extension/src/checkout/merchants.ts`, popup), bundled `processor` seed | Engine tests for generic profiles and ranges; `rewards-v3` golden ladders unchanged; axe on the new screens |
+| 4 | **Generic reader v1**, tuned on development only; the 3 adapters become bundled seed store configs; manifest `host_permissions` pinned to the 3 seed hosts as a literal list in `extension/vite.config.ts` (today derived from the adapters as `BADGE_HOSTS`) and `extension/e2e/hosts.ts` | `docs/evals/generic-reader-v1.md` with bounds; criterion 1 |
 | 5 | **Merchant database:** schema (Zod/SQL parity, 2 MiB, regex lint), migration (`npm run supabase -- migration new merchant_releases`), `GET /v1/merchants` with `ETag` and in-memory cache, CLI publish in `tools/catalog-pipeline`, extension download, suffix match, weekly `alarms` refresh, `disabled`, degradation; seeded with the 3 legacy merchants and probe/capture domains at the default category only | Parity, API, worker and kill-switch tests; cold-start test; a published merchant release |
-| 6 | **Release A** (Evan submits): click-to-use at any U.S. checkout; hosted build with weekly catalog and merchant refresh (`alarms`, no new warnings); the 3-site automatic badge per D13; no telemetry; policy, single purpose, permission justifications and privacy review reconciled; Phase 5 prerequisites (publisher, support email, order-URL checks) done | Package check, `test:browser`; reviewer subagent confirms policy, listing and build agree |
+| 6 | **Release A** (Evan submits): click-to-use at any U.S. checkout; hosted build with weekly catalog and merchant refresh (`alarms`, no new warnings); the 3-site automatic badge per D13; no telemetry; policy, single purpose, permission justifications and privacy review reconciled; Phase 5 prerequisites done (publisher name and verification, support email per `docs/release/README.md`; order-confirmation URLs of the 3 legacy sites checked on real orders by Evan, per `now.md`, or their savings prompt stays off) | Package check, `test:browser`; reviewer subagent confirms policy, listing and build agree |
 | 7 | **Telemetry:** consent screen, events and per-click "Suggest this store" / "Report a problem", ingest RPC, retention, reviewer dashboard, stop switch; policy, listing, site, support and runbook updated | Prominent-disclosure check against the User Data FAQ by a reviewer subagent; threat-model review of the ingest path; contract, retention and axe tests |
 | 8 | **Optional automatic badge** (`https://*/*` optional, URL-gated injection, site-access handling) → **Release B** with telemetry | `test:browser`, no new required hosts, CPU budget test |
 | 9 | **Merchant pipeline (LLM, measured):** list from license-safe sources (D6); profiles and category evidence drafted by gpt-5.6-luna `xhigh` via Codex, verified and adjudicated by Claude Code subagents; store configs where the reader fails; skill `expand-merchants`; growth from "Suggest this store" toward 1,000 domains | `docs/evals/merchant-pipeline-v1.md` against the frozen held-out set; merchant releases on Evan's approval |

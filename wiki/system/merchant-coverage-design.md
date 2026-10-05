@@ -44,8 +44,8 @@ Copied: hosted merchant data, configs as data, generic detection. Not copied: br
 
 | Component | What | Where | Ships by |
 | --- | --- | --- | --- |
-| **Merchant database** | Rows: `hosts` (authored registrable domains, matched by suffix), name, `hostKind` (`merchant` / `processor` / `marketplace`), online retail of physical goods, `plausibleCategories` with evidence class and source, `brandIds`, optional MCC with source, optional store config, optional verified `orderConfirmation`, `disabled` | `GET /v1/merchants`, versioned, reviewed; downloaded **whole**, cached with its release hash; matched on the device | Merchant release |
-| **Engine and catalog (changed)** | The engine takes a merchant profile passed in (named or generic) instead of looking it up in the catalog, and returns a range when `plausibleCategories` has more than one; the catalog's `merchants` keeps the 3 legacy profiles until a merchant release supersedes them; a database `brandId` absent from the catalog in effect is ignored (tested, covers release skew) | Package + hosted catalog | Extension and catalog releases |
+| **Merchant database** | Rows: `hosts` (authored registrable domains, matched by suffix), name, `hostKind` (`merchant` / `processor` / `marketplace`), online retail of physical goods, `plausibleCategories` with evidence class and source, `brandIds`, optional MCC with source, optional store config, optional verified `orderConfirmation`, `disabled`; the release also carries the top-retail **allowlist** that "Suggest this store" checks (sensitive categories removed) | `GET /v1/merchants`, versioned, reviewed; downloaded **whole**, cached with its release hash; matched on the device | Merchant release |
+| **Engine and catalog (changed)** | The engine takes a merchant profile passed in (named or generic) instead of looking it up in the catalog, and returns a range when `plausibleCategories` has more than one, or when its one plausible category is a catalog bonus category without class 1 or 2 evidence (range with `general-merchandise`); the catalog's `merchants` keeps the 3 legacy profiles until a merchant release supersedes them; a database `brandId` absent from the catalog in effect is ignored (tested, covers release skew) | Package + hosted catalog | Extension and catalog releases |
 | **Generic cart reader** | Deterministic code returning `found` / `ask` / `none` | Extension package | Extension release |
 | **Store configs** | Today's adapter JSON: selectors, anchored regexes with length limits and a safe-regex lint (Zod, SQL, publish), bounded counts; **no field may add control flow**; configs never widen where code runs, only which selectors run on an already-detected page | Database rows (bundled seed until milestone 5) | Merchant release |
 
@@ -97,9 +97,9 @@ The bonus depends on the merchant category code the processor assigns; it is not
 
 ## Permissions
 
-- Required: `storage`, `activeTab`, `scripting`, `alarms` (from Release A, for background refresh; no install warning).
+- Required: `storage`, `activeTab`, `scripting`, `alarms` (from Release A, for background refresh; no install warning), plus the 3 legacy hosts and the catalog origin until Release B (D13).
 - Optional: `https://*/*` in `optional_host_permissions`, requested on a click ("Show the badge automatically at checkouts"); no install warning; adding it later disables nothing.
-- Badge frame on arbitrary sites: `web_accessible_resources` on all sites lets any page detect the extension; prefer `use_dynamic_url: true` with nonce routing, or disclose it *(probe: also strict-CSP checkouts)*.
+- Badge frame on arbitrary sites: `web_accessible_resources` on all sites lets any page detect the extension; re-evaluate `use_dynamic_url` (today `false` by design: the worker identifies the badge frame by its static URL, and a per-frame nonce stops page copies), changing sender identification with it, or disclose the exposure *(probe: also strict-CSP checkouts)*.
 - Merchant names length- and charset-limited in Zod; `dangerouslySetInnerHTML` forbidden by lint.
 
 ## Related

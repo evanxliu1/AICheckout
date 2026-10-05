@@ -43,13 +43,13 @@ sources:
 
 ## Events
 
-Every event: `install_id` (random, rotated every 30 days, resettable), `install_month`, `days_since_install` bucket (0, 1–6, 7–13, 14–29, 30+), `consent_version`, `schema_version`, extension, catalog, merchant-database and reader versions, client timestamp; the server adds its own.
+Every event: `install_id` (random, rotated every 30 days, resettable), `install_month`, `days_since_install` bucket (0, 1–6, 7–13, 14–29, 30–59, 60+), `consent_version`, `schema_version`, extension, catalog, merchant-database and reader versions, client timestamp; the server adds its own.
 
 | Group | Events (no domain, no merchant, no amount) |
 | --- | --- |
 | Lifecycle | install (after consent), onboarding complete, consent given |
 | Usage | popup opened, badge shown, badge clicked, recommendation shown (named or generic profile; exact or range) |
-| Reader quality | `found` / `ask` / `none`; reader kind (store config or generic); shopper corrected the amount (relative-difference bucket) |
+| Reader quality | `found` / `ask` / `none`; reader kind (store config or generic, sent only once the merchant release holds at least 25 store configs, so it cannot identify a merchant); shopper corrected the amount (relative-difference bucket) |
 | Catalog health | versions in use, refresh success or failure, expiry errors |
 | Errors | error code, extension version |
 
@@ -60,7 +60,7 @@ Every event: `install_id` (random, rotated every 30 days, resettable), `install_
 ## Ingest and storage
 
 - `POST /v1/events`, anonymous, through a `security definer` insert-only RPC granted to `anon` that validates and caps rows (no new server secret).
-- Strict Zod schema, per-event and per-batch caps, `Origin: chrome-extension://<id>` and content-type checks (not authentication); token bucket keyed by the client IP from Render's `X-Forwarded-For` at a fixed hop count (`trustProxy` set for this route, tested) plus a global cap; IP used transiently, never stored; per-install daily caps; unknown versions dropped.
+- Strict Zod schema, per-event and per-batch caps, `Origin: chrome-extension://<id>` and content-type checks (not authentication); token bucket keyed by the client IP that the events route reads itself from Render's `X-Forwarded-For` at a fixed hop count, plus a global cap; Fastify's server-wide `trustProxy` stays `false`, so the review routes' limits are unchanged; a test shows a forged header does not move the key; IP used transiently, never stored; per-install daily caps; unknown versions dropped.
 - Batched with `alarms`; capped offline queue.
 - Raw table: RLS on, no client role can read it; daily aggregates read by the reviewer dashboard through an authenticated RPC; raw rows deleted at 90 days by `pg_cron` *(to confirm on the hosted plan)*; no export to third parties; the access list is recorded.
 - Policy wording: the application stores no IP addresses; hosting providers' access logs may, under their retention.
@@ -70,7 +70,7 @@ Every event: `install_id` (random, rotated every 30 days, resettable), `install_
 | Area | Control |
 | --- | --- |
 | Accessibility | axe checks at 360 and 480 px on the consent screen, merchant search, "is that right?" prompt and grant prompt |
-| Deletion without accounts | "Delete all local data" clears the queue and ID; raw rows expire in 90 days; a request quoting the install ID shown in settings is honoured within 30 days |
+| Deletion without accounts | "Delete all local data" clears the queue and ID; raw rows expire in 90 days; a request quoting the install ID shown in settings is honoured within 30 days for rows under that ID; rows under earlier, rotated IDs cannot be found and expire at 90 days (the policy says so) |
 | Incident | Remote stop: the ingest answers 410 and clients stop sending; merchant releases roll back by republishing the previous one; `disabled` turns off a store config; support channel and breach-notice owner in `docs/release/support.md` and `deployment-runbook.md` |
 | Security review | Independent threat-model review of the ingest path and remote store configs before Release B |
 | Growth-list integrity | Advisory only, reviewed by Evan; nothing auto-promoted into a release; dashboards count distinct installs, not events |
@@ -83,7 +83,7 @@ Every event: `install_id` (random, rotated every 30 days, resettable), `install_
 | --- | --- |
 | North Star | Weekly active installs with at least one recommendation shown |
 | Funnel | install → onboarding complete → at least one card → first recommendation → active in week 2 |
-| Retention | D7 and D30 from `days_since_install` buckets by `install_month` (no linking of IDs across rotations) |
+| Retention | D7 and D30 from `days_since_install` buckets by `install_month` (D30 = distinct IDs in the 30–59 bucket; no linking of IDs across rotations) |
 | Coverage | share of recommendations at named profiles; "Suggest this store" counts by domain |
 | Quality | reader false-found and found-correct on held-out real pages; field `ask` and correction rates |
 | Uninstalls | rate and reasons (disclosed `setUninstallURL` survey) |
