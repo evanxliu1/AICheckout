@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "197ffee8-bd13-447e-883c-686d6fc5c820",
+  "packetId": "1224181f-4262-4dec-8895-9c1f894aa49d",
   "batch": "u-s-bank-refresh-2026-10",
   "issuer": "U.S. Bank",
   "provenance": "agent-verified",
@@ -10,40 +10,18 @@
     "date": "2026-10-05",
     "filesRead": [
       ".claude/agents/card-verifier.md",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/pipeline/packets/verify.u-s-bank.1.json",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/pipeline/packets/verify.u-s-bank.2.json",
       "evals/curation/expansion/verification/README.md",
       "evals/curation/expansion/verification/conventions/general.md",
       "evals/curation/expansion/verification/conventions/u-s-bank.md",
-      "scripts/lib/expansion-verification.mjs",
-      "apps/api/src/curation/v2/schema.ts",
       "evals/curation/batches/u-s-bank-refresh-2026-10/corpus.draft.json",
       "evals/curation/batches/u-s-bank-refresh-2026-10/product-notes.json",
       "evals/curation/batches/u-s-bank-refresh-2026-10/verify/u-s-bank.md",
-      "evals/curation/batches/capital-one-refresh-2026-10/verification/capital-one.json",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-cash-plus-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-cash-plus-rewards-terms.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-cash-plus-sample-merchants.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-smartly-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-altitude-go-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-altitude-go-rewards-terms.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-altitude-connect-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-altitude-connect-rewards-terms.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-cash-plus-secured-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-altitude-go-secured-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-altitude-go-secured-rewards-terms.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-harley-davidson-hog-elite-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/skypass-visa-cards.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-skypass-skyblue-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-skypass-visa-signature-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-skypass-select-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-state-farm-premier-cash-rewards-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/state-farm-credit-cards.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-state-farm-premier-cash-rewards-pricing.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-edward-jones-triple-rewards-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-edward-jones-triple-rewards-pricing.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-edward-jones-triple-rewards-categories.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-elan-fidelity-rewards-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-elan-fidelity-rewards-rewards-terms.txt"
+      "evals/curation/batches/u-s-bank-refresh-2026-10/verification/u-s-bank.json",
+      "scripts/lib/expansion-verification.test.mjs",
+      "apps/api/src/curation/v2/schema.ts",
+      "tools/catalog-pipeline/src/gates.ts",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-harley-davidson-secured-product.txt"
     ]
   },
   "adjudicator": {
@@ -2010,6 +1988,136 @@
             "decision": "accepted",
             "reason": "The Fidelity deposit condition needs a product note (U.S. Bank convention) and relationship-tier is the closest existing hint type (general 18)."
           }
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-harley-davidson-secured",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "points",
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-secured-product",
+            "quote": "Points are earned on eligible Net Purchases."
+          },
+          "note": "The card earns H-D points; undrafted, so the currency is written from the product page."
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-secured-product",
+            "quote": "for every 2,500 points earned"
+          },
+          "note": "The only stated value is $25 at H-D per 2,500 points, redeemed as an H-D gift card, not cash; null under general 3 and the U.S. Bank point-values convention."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "everywhere Visa is accepted",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "1X POINT\neverywhere Visa is accepted"
+            }
+          ],
+          "note": "The card's only earn rate: 1 point per dollar on all purchases. No cap or activation sentence, so both stay null."
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "transactions posting as Convenience Checks",
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "transactions posting as Convenience Checks"
+            }
+          ],
+          "note": "Listed in footnote 1 as not eligible to earn rewards."
+        },
+        {
+          "text": "Balance Transfers",
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "Balance Transfers"
+            }
+          ],
+          "note": "Listed in footnote 1 as not eligible to earn rewards."
+        },
+        {
+          "text": "Advances (including ATM withdrawals, wire transfers, traveler’s checks, money orders, foreign cash transactions, betting transactions, and lottery tickets)",
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "Advances (including ATM withdrawals, wire transfers, traveler’s checks, money orders, foreign cash transactions, betting transactions, and lottery tickets)"
+            }
+          ],
+          "note": "Cash-like advances do not earn, per footnote 1."
+        },
+        {
+          "text": "interest charges and fees",
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "interest charges and fees"
+            }
+          ],
+          "note": "Not purchases, per footnote 1."
+        },
+        {
+          "text": "credit insurance premiums",
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "credit insurance premiums"
+            }
+          ],
+          "note": "Not eligible, per footnote 1."
+        },
+        {
+          "text": "transactions to (i) fund certain prepaid card products, (ii) buy currency from the U.S. Mint, or (iii) buy cash convertible items",
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "transactions to (i) fund certain prepaid card products, (ii) buy currency from the U.S. Mint, or (iii) buy cash convertible items"
+            }
+          ],
+          "note": "Prepaid funding, U.S. Mint currency and cash convertible items do not earn, per footnote 1."
+        }
+      ],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "add",
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Points redeem at Harley-Davidson: $25 at H-D for every 2,500 points, issued as an H-D Gift Card (not a cash value).",
+            "merchants": [
+              "Harley-Davidson"
+            ]
+          },
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-secured-product",
+            "quote": "Harley‑Davidson™ Gift Cards issued from H‑D™ Rewards point redemption do not expire."
+          },
+          "note": "Redemption value goes in a product note, as on the H.O.G. Elite card (general 18, U.S. Bank point-values convention)."
         }
       ]
     }
