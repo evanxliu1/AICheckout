@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "chase-refresh-2026-10",
-  "updatedAt": "2026-10-05T02:28:23.045Z",
+  "updatedAt": "2026-10-05T02:38:44.974Z",
   "cards": {
     "chase-freedom-flex": {
       "stages": {
@@ -2588,12 +2588,17 @@
   },
   "batchStages": {
     "build": {
-      "status": "failed-gate",
+      "status": "done",
       "stageVersion": "build.1",
       "inputHash": "sha256:5510dbd7f6d1a9c24f07e28b0d0a9664e23b6c7f3bf6cd51015f9c5f5edd284a",
-      "finishedAt": "2026-10-05T02:28:23.045Z",
-      "attempts": 1,
-      "reason": "build-failed",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "e742af34fe43bdb668cb624d69dd6bcb03b709900eaf8fb674d401eb27dcef2d"
+        }
+      ],
+      "finishedAt": "2026-10-05T02:38:44.974Z",
+      "attempts": 2,
       "catalogVersion": "2026-10-05.renewal.1"
     },
     "eval": {

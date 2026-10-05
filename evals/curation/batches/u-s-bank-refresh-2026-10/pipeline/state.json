@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "u-s-bank-refresh-2026-10",
-  "updatedAt": "2026-10-05T02:28:25.567Z",
+  "updatedAt": "2026-10-05T02:38:49.193Z",
   "cards": {
     "us-bank-cash-plus": {
       "stages": {
@@ -1680,12 +1680,17 @@
   },
   "batchStages": {
     "build": {
-      "status": "failed-gate",
+      "status": "done",
       "stageVersion": "build.1",
       "inputHash": "sha256:7f836e0b419baad9a571fdef68dcc2571baa266a0916b12d7e670dd2f008e817",
-      "finishedAt": "2026-10-05T02:28:25.567Z",
-      "attempts": 1,
-      "reason": "build-failed",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "9d4fc454224fdc884fb7a566d6e2a2c577ac57b728139043b13e9b08020032ba"
+        }
+      ],
+      "finishedAt": "2026-10-05T02:38:49.193Z",
+      "attempts": 2,
       "catalogVersion": "2026-10-05.renewal.1"
     },
     "eval": {

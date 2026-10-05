@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "capital-one-refresh-2026-10",
-  "updatedAt": "2026-10-05T02:28:22.396Z",
+  "updatedAt": "2026-10-05T02:38:43.872Z",
   "cards": {
     "capital-one-venture-x": {
       "stages": {
@@ -1326,12 +1326,17 @@
   },
   "batchStages": {
     "build": {
-      "status": "failed-gate",
+      "status": "done",
       "stageVersion": "build.1",
       "inputHash": "sha256:b21d854e9bd1d675bb3abf2519e3a8936ad1c80b24bb9bd710f66700d030cdfe",
-      "finishedAt": "2026-10-05T02:28:22.396Z",
-      "attempts": 1,
-      "reason": "build-failed",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "689bb3d64b03a4a58a0c2827ed12dee537215d399e95f752eec9fadd2a4376b1"
+        }
+      ],
+      "finishedAt": "2026-10-05T02:38:43.872Z",
+      "attempts": 2,
       "catalogVersion": "2026-10-05.renewal.1"
     },
     "eval": {

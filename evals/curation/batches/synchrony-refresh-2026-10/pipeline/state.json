@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "synchrony-refresh-2026-10",
-  "updatedAt": "2026-10-05T02:28:24.925Z",
+  "updatedAt": "2026-10-05T02:38:48.118Z",
   "cards": {
     "synchrony-amazon-store-card": {
       "stages": {
@@ -1014,12 +1014,17 @@
   },
   "batchStages": {
     "build": {
-      "status": "failed-gate",
+      "status": "done",
       "stageVersion": "build.1",
       "inputHash": "sha256:3d83cc261fcaaf6ba5b68b2464cf5bcec39ea479afd2dc6005d742f83d42e1dd",
-      "finishedAt": "2026-10-05T02:28:24.925Z",
-      "attempts": 1,
-      "reason": "build-failed",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "8b4ad8b76391cd909dfdb55e9c7010790a92b16119a143634001118fdf9637ab"
+        }
+      ],
+      "finishedAt": "2026-10-05T02:38:48.118Z",
+      "attempts": 2,
       "catalogVersion": "2026-10-05.renewal.1"
     },
     "eval": {

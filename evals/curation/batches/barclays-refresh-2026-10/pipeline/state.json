@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "barclays-refresh-2026-10",
-  "updatedAt": "2026-10-05T02:28:21.768Z",
+  "updatedAt": "2026-10-05T02:38:42.830Z",
   "cards": {
     "barclays-mastercard-titanium": {
       "stages": {
@@ -1452,12 +1452,17 @@
   },
   "batchStages": {
     "build": {
-      "status": "failed-gate",
+      "status": "done",
       "stageVersion": "build.1",
       "inputHash": "sha256:067fc4035404f9cca01284efcb06dbd55cb2fe209d79c6e34690848522afeb20",
-      "finishedAt": "2026-10-05T02:28:21.768Z",
-      "attempts": 1,
-      "reason": "build-failed",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "839ab1b89e575abc613249d5d76e7d73a16eb21608117930c633fbe19928078b"
+        }
+      ],
+      "finishedAt": "2026-10-05T02:38:42.830Z",
+      "attempts": 2,
       "catalogVersion": "2026-10-05.renewal.1"
     },
     "eval": {

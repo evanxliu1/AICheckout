@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "citi-refresh-2026-10",
-  "updatedAt": "2026-10-05T02:28:23.676Z",
+  "updatedAt": "2026-10-05T02:38:46.042Z",
   "cards": {
     "citi-strata": {
       "stages": {
@@ -1642,12 +1642,17 @@
   },
   "batchStages": {
     "build": {
-      "status": "failed-gate",
+      "status": "done",
       "stageVersion": "build.1",
       "inputHash": "sha256:981565c2373fc705055a792ae7db333263ce8ecbb97e1ea5d681bff072482008",
-      "finishedAt": "2026-10-05T02:28:23.676Z",
-      "attempts": 1,
-      "reason": "build-failed",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "4e8c329f99dace72985d8ebcef0ec0a8d58b9e5eab60bf9e2fe95c7c3b4d9e8b"
+        }
+      ],
+      "finishedAt": "2026-10-05T02:38:46.042Z",
+      "attempts": 2,
       "catalogVersion": "2026-10-05.renewal.1"
     },
     "eval": {
