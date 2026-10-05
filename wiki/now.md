@@ -5,33 +5,33 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:26:46Z
+  at: 2026-10-05T05:47:59Z
 ---
 
 # Now
 
-As of 2026-10-05T05:27Z.
+As of 2026-10-05T05:47:59Z.
 
 ## Current state
 
-- **Phases 7, 8 and 9 are done.** `origin/main` (`645b1c8`) has the Phase 8 card-expansion pipeline (PRs #36–#42, [results](../docs/evals/pipeline-v1.md)) and Phase 9 milestones 1–5 (PRs #43–#50, #53; [plan](product/phase-9-freshness.md), [results](../docs/evals/freshness-2026-10.md)). Phases: [roadmap](product/roadmap.md).
-- **Hosted catalog:** `/v1/catalog` serves **release 3**, `2026-10-05.renewal.1` (178 cards, 328 sources, verified 2026-10-05), published 2026-10-05T05:20:50Z by the coordinator's `pipeline publish --confirm` on Evan's chat instruction of 05:18:43Z, the first agent publish; the served catalog's hash equals `CATALOG_V3` on `main` (checked by the coordinator). It **expires 2026-11-04T00:00Z** ([catalog release](ops/catalog-release.md#release-3-published-2026-10-05)).
-- **Hosted code:** Render last checked serving `e9fe387` (2026-10-05T04:40Z); the deploy of `645b1c8` was not checked in this session. All 10 migrations on hosted Supabase; Auth signs with asymmetric keys ([hosting](ops/hosting.md)).
+- **Phases 7, 8 and 9 are done.** `origin/main` (`c0cb81e`, PR #54) has everything: the Phase 8 card-expansion pipeline ([results](../docs/evals/pipeline-v1.md)), Phase 9 milestones 1–5 ([plan](product/phase-9-freshness.md), [results](../docs/evals/freshness-2026-10.md)) and the release 3 wiki audit. Phases: [roadmap](product/roadmap.md).
+- **Hosted catalog:** `/v1/catalog` serves **release 3**, `2026-10-05.renewal.1` (178 cards, 328 sources), published 2026-10-05T05:20:50Z by the coordinator's `pipeline publish --confirm` on Evan's chat instruction; it **expires 2026-11-04T00:00Z** ([release history](ops/catalog-release-history.md#release-3-published-2026-10-05)).
+- **Hosted code:** Render last checked serving `e9fe387` (2026-10-05T04:40Z); later deploys not checked. All 10 migrations on hosted Supabase ([hosting](ops/hosting.md)).
+- **Captures:** since 2026-10-05 the main checkout holds every gitignored capture (11 batch folders, `expansion/captures` 321, extractions, eval runs); `publish` from it with no `--captures` flag matches 328/328 ([capture folders](ops/catalog-release.md#capture-folders)). `AICheckout-p8-wf` and `AICheckout-expansion` stay as backups until Evan agrees to remove them.
 - **Curation model:** gpt-5.6-luna `xhigh` ([decision](decisions/2026-10-02-gpt-5-6-luna-for-curation.md)).
-- **Worktrees:** `AICheckout` (main), `AICheckout-p8-wf` (`catalog-renewal-2026-10`, merged; holds every Phase 8 and 9 batch capture: **keep it**, renewals need them), `AICheckout-expansion` (`phase7-verify`; the expansion captures and eval runs), `AICheckout-wiki-audit` (`wiki-audit-2026-10-05`), merged `AICheckout-p9-m3b` and `AICheckout-p9-m5`, `AICheckout-docs` (`docs-readme-demo`), `AICheckout-test`. The unmerged local branch `codex/production-readiness-checkpoint` is untouched.
 
 ## Active work
 
-- **Wiki audit** on `wiki-audit-2026-10-05` (agent-verified): current-state pages brought up to release 3 and the agent publish path; `2026-10-05.renewal.1` is added to `publishedVersions` in `evals/curation/catalog-batches.json` in the same PR (coordinator).
+- **`phase10-prep`** (coordinator and wiki subagent): wiki split (pipeline overview, [CLI commands](system/card-pipeline-commands.md), [internals](system/card-pipeline-internals.md); [release history](ops/catalog-release-history.md) out of the runbook), captures moved to the main checkout, and the [Phase 10 plan](product/phase-10-merchant-expansion.md) as a **draft awaiting Evan's approval**.
+- Release media regenerated for `2026-10-05.renewal.1` (`npm run release:media`, all checks passed, 2026-10-05; [release media](ops/release-media.md)).
 
 ## Open questions and next steps
 
-1. Optional: confirm in a loaded `build:hosted` extension that **Check for updated terms** picks up release 3 (the update logic itself was checked, see [release 3](ops/catalog-release.md#release-3-published-2026-10-05)).
-2. **Next renewal, published before 2026-11-04T00:00Z**: re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data (Discover not captured; the Freedom Flex Jan–Mar 2027 quarter was omitted from the renewal).
-3. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it instead of per file, and `pipeline handoff` names the freshness record for the merchant MCC folder ([catalog release](ops/catalog-release.md#renewal-2026-10-05renewal1-prepared-2026-10-05)).
-4. Next phases, in Evan's order (2026-10-03): 10 merchant-expansion pipeline → Web Store release; 4 terms-change detection is revisited after 9; 6 site coverage harness ([roadmap](product/roadmap.md)).
-5. Before the Web Store release: regenerate the release media, still bound to `2026-10-02.expansion.1` ([release media](ops/release-media.md)); verify the `orderConfirmation` URL patterns on a real order per retailer (Evan); enable GitHub private vulnerability reporting, which [`SECURITY.md`](../SECURITY.md) names (Evan).
-6. Open for Evan from Phase 7 M3: Aer Lingus and Iberia Avios stay unvalued unless he wants parity with British Airways; a second publisher would value U.S. Bank Altitude, SKYPASS, Lufthansa, Cathay, Frontier.
-7. Evan's call: a second luna repeat to firm up the comparison with gpt-5.5 (live run); the human spot-check of the agent-verified labels (deferred 2026-10-02); revoking the legacy HS256 JWT secret in Supabase once pre-switch sessions have expired.
-8. Catalog builder maps gold `usMerchantsOnly: null` to `false`, losing "not stated"; the catalog omits the Chase Lyft promo and targeted Quicksilver offers ([cards](domain/cards.md)).
-9. Setup and housekeeping: `core.hooksPath` is `.githooks` in the shared `.git/config` of Evan's clone (other clones run `git config core.hooksPath .githooks`); Claude Code checkouts need a local `CLAUDE.md` with `@AGENTS.md`. Delete the stale local `extension/CLAUDE.md` (gitignored, describes removed code); revoke the keys from the retired `simulation/` prototype if not done; remove the merged `AICheckout-p9-m3b` and `AICheckout-p9-m5` worktrees when Evan agrees.
+1. **Evan: approve or change the [Phase 10 plan](product/phase-10-merchant-expansion.md)** and answer its open questions (merchant list, anonymous-cart capture, scope against Phase 6, adapter author, shared core). No Phase 10 work starts before that.
+2. **Next renewal, published before 2026-11-04T00:00Z** ([renewing](ops/catalog-release.md#renewing-a-catalog-before-it-expires)): re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data.
+3. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it instead of per file; `pipeline handoff` names the freshness record for the merchant MCC folder ([renewal record](ops/catalog-release-history.md#renewal-2026-10-05renewal1-prepared-2026-10-05)).
+4. Phase order (Evan, 2026-10-03): 10 merchant expansion → Web Store release; 4 terms-change detection revisited after 9; 6 site coverage harness (may fold into 10).
+5. Before the Web Store release: verify the `orderConfirmation` URL patterns on a real order per retailer (Evan); enable GitHub private vulnerability reporting ([`SECURITY.md`](../SECURITY.md)); optionally confirm **Check for updated terms** in a loaded `build:hosted` extension picks up release 3.
+6. Evan's calls: Aer Lingus and Iberia Avios valuation parity; a second luna repeat against gpt-5.5; the human spot-check of agent-verified labels (deferred 2026-10-02); revoking the legacy HS256 JWT secret.
+7. Catalog builder maps gold `usMerchantsOnly: null` to `false`; the catalog omits the Chase Lyft promo and targeted Quicksilver offers ([cards](domain/cards.md)).
+8. Housekeeping: other clones run `git config core.hooksPath .githooks`; Claude Code checkouts need a local `CLAUDE.md` with `@AGENTS.md`; delete the stale local `extension/CLAUDE.md`; revoke the retired `simulation/` keys if not done; remove the merged `AICheckout-p9-m3b`, `AICheckout-p9-m5` and `AICheckout-wiki-audit` worktrees when Evan agrees.

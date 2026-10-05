@@ -21,7 +21,7 @@ sources:
 # Pipeline claim/accept, gates and label-evidence lint (Phase 8 milestone 3) (2026-10-04)
 
 ## Context
-Milestone 3 builds `claim`, `accept`, the gates of the agent stages and the label-evidence lint of the [approved design](../system/card-expansion-pipeline.md#work-packets-claim-and-accept). Several details were left to the implementation; the frozen `expansion.v1` files and the default behaviour of every wrapped script had to stay unchanged.
+Milestone 3 builds `claim`, `accept`, the gates of the agent stages and the label-evidence lint of the [approved design](../system/card-pipeline-internals.md#work-packets-claim-and-accept). Several details were left to the implementation; the frozen `expansion.v1` files and the default behaviour of every wrapped script had to stay unchanged.
 
 ## Options considered
 | Question | Chosen | Alternatives |

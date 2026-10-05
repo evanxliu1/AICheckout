@@ -23,7 +23,7 @@ sources:
 # Multi-batch catalog builder (Phase 8 M1) (2026-10-04)
 
 ## Context
-The [approved pipeline](../system/card-expansion-pipeline.md#multi-batch-catalog-builder) builds the release catalog from every batch, newest batch winning per card, with pairing by SHA-256, dates from manifests, completeness and a rule-ID continuity gate. Rebuilding today's inputs must reproduce `CATALOG_V3` `2026-10-02.expansion.1` (hosted release 2) byte for byte, `evals/curation/expansion/` stays frozen, CI has no captures, and `catalog:v3:check` runs where the committed catalog is the output, so the committed catalog cannot serve as "previous".
+The [approved pipeline](../system/card-pipeline-internals.md#multi-batch-catalog-builder) builds the release catalog from every batch, newest batch winning per card, with pairing by SHA-256, dates from manifests, completeness and a rule-ID continuity gate. Rebuilding today's inputs must reproduce `CATALOG_V3` `2026-10-02.expansion.1` (hosted release 2) byte for byte, `evals/curation/expansion/` stays frozen, CI has no captures, and `catalog:v3:check` runs where the committed catalog is the output, so the committed catalog cannot serve as "previous".
 
 ## Options considered
 | Question | Chosen | Alternative and why not |

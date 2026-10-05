@@ -6,7 +6,7 @@ status: stable
 tags: [system, evaluation, llm, curation]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:26:46Z
+  at: 2026-10-05T05:47:59Z
 sources:
   - resource: ../../evals/curation/README.md
     title: Curation evaluations README
@@ -125,7 +125,7 @@ Live providers run through vendor CLIs on subscriptions (`codex exec`, `claude -
 | `fixture.v2/captures/` | yes | Invented text |
 | `evals/curation/runs/` | **no** | Observations and reports (private) |
 | `docs/evals/results.{md,json,svg}`, `results-heldout.svg`, `expansion.{md,json}` | yes | Metrics only, no issuer text |
-| `expansion/captures/`, `expansion/extractions/` | **no** | Issuer text and model quotes; on 2026-10-02 only in the `AICheckout-expansion` worktree |
+| `expansion/captures/`, `expansion/extractions/` | **no** | Issuer text and model quotes; on 2026-10-02 only in the `AICheckout-expansion` worktree, since 2026-10-05 also in the main checkout ([capture folders](../ops/catalog-release.md#capture-folders)) |
 | `evals/curation/baseline.v1.md` | yes | Synthetic v1 diagnostic summary |
 
 ## Results (2026-09-29 and 2026-10-02, summary)
