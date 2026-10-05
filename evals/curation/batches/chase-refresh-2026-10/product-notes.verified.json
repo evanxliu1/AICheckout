@@ -155,6 +155,28 @@
       ]
     },
     {
+      "cardId": "disney-premier-visa",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com\"",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Disney"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 5% in Disney Rewards Dollars on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com.",
+          "verification": "confirmed",
+          "anchorSourceId": "disney-premier-visa-product"
+        }
+      ]
+    },
+    {
       "cardId": "disney-visa",
       "issuer": "Chase",
       "hints": []
@@ -362,6 +384,28 @@
       ]
     },
     {
+      "cardId": "marriott-bonvoy-bountiful",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"hotels participating in Marriott Bonvoy®\"",
+          "rate": "6X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Marriott"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 6X points for every $1 spent at over 7,000 hotels participating in Marriott Bonvoy® with the Marriott Bonvoy Bountiful® Credit Card.",
+          "verification": "confirmed",
+          "anchorSourceId": "marriott-bonvoy-bountiful-product"
+        }
+      ]
+    },
+    {
       "cardId": "world-of-hyatt",
       "issuer": "Chase",
       "hints": [
@@ -379,6 +423,76 @@
           "anchorMethod": "verifier",
           "anchor": "4 Bonus Points per $1 spent on qualifying purchases at Hyatt Hotels.",
           "anchorSourceId": "world-of-hyatt-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "british-airways-visa-signature",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "\"British Airways, Aer Lingus, and Iberia flight purchases\"",
+          "rate": "3 Avios/$1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "British Airways"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3 Avios for every $1 spent on British Airways, Aer Lingus, and Iberia flight purchases.",
+          "verification": "confirmed",
+          "anchorSourceId": "british-airways-visa-signature-product"
+        }
+      ]
+    },
+    {
+      "cardId": "aer-lingus-visa-signature",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Aer Lingus, British Airways, and Iberia flight purchases",
+          "rate": "3 Avios/$1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Aer Lingus",
+            "British Airways",
+            "Iberia"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3 Avios for every $1 spent with Aer Lingus, British Airways, and Iberia flight purchases.",
+          "anchorSourceId": "aer-lingus-visa-signature-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "iberia-visa-signature",
+      "issuer": "Chase",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Iberia, British Airways, and Aer Lingus flight purchases",
+          "rate": "3 Avios/$1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Iberia",
+            "British Airways",
+            "Aer Lingus"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3 Avios for every $1 spent on Iberia, British Airways, and Aer Lingus flight purchases.",
+          "anchorSourceId": "iberia-visa-signature-product",
           "verification": "fixed"
         }
       ]

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "2aae0e2c-0d04-4162-8cb9-aa08fd85d0a3",
+  "packetId": "c1f80459-8b8c-474f-8aa7-c6ccb358bcd0",
   "batch": "chase-refresh-2026-10",
   "provenance": "agent-verified",
   "issuer": "Chase",
@@ -36,7 +36,33 @@
       "evals/curation/batches/chase-refresh-2026-10/captures/iberia-visa-signature-pricing.txt"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-10-05",
+    "filesRead": [
+      ".claude/agents/card-adjudicator.md",
+      "evals/curation/batches/chase-refresh-2026-10/pipeline/packets/adjudicate.chase.2.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/chase.md",
+      "evals/curation/batches/chase-refresh-2026-10/verify/chase.md",
+      "evals/curation/batches/chase-refresh-2026-10/verification/chase.json",
+      "evals/curation/batches/chase-refresh-2026-10/corpus.draft.json",
+      "evals/curation/batches/chase-refresh-2026-10/product-notes.json",
+      "evals/curation/batches/chase-refresh-2026-10/captures/disney-premier-visa-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/disney-premier-visa-rewards-terms.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/disney-premier-visa-pricing.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/marriott-bonvoy-bountiful-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/marriott-bonvoy-bountiful-pricing.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/british-airways-visa-signature-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/british-airways-visa-signature-pricing.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/aer-lingus-visa-signature-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/aer-lingus-visa-signature-pricing.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/iberia-visa-signature-product.txt",
+      "evals/curation/batches/chase-refresh-2026-10/captures/iberia-visa-signature-pricing.txt"
+    ]
+  },
   "cards": [
     {
       "cardId": "chase-freedom-flex",
@@ -2441,7 +2467,11 @@
             "sourceId": "disney-premier-visa-product",
             "quote": "Earn 2% on select card purchases and 1% on all other card purchases."
           },
-          "note": "Disney Rewards Dollars are a percentage back: cash-back (general 1, Chase conventions). No point value: a cash-back card carries none (general 13)."
+          "note": "Disney Rewards Dollars are a percentage back: cash-back (general 1, Chase conventions). No point value: a cash-back card carries none (general 13).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards Dollars are a stated percentage back: cash-back with no point value (general 1, 13; Chase conventions). Anchor is verbatim on the product capture."
+          }
         }
       ],
       "addedRules": [
@@ -2466,7 +2496,11 @@
               "quote": "automatically enrolled to begin earning Rewards Dollars upon"
             }
           ],
-          "note": "5% at the Disney streaming sites only: single-merchant other, never streaming (Chase conventions). Cardholders are enrolled automatically (general 7)."
+          "note": "5% at the Disney streaming sites only: single-merchant other, never streaming (Chase conventions). Cardholders are enrolled automatically (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "5% only at the three Disney streaming sites: single-merchant other, never streaming (Chase conventions, general 4). The terms capture says cardholders are enrolled automatically, so activation none (general 7); sibling Disney cards without a terms capture keep null."
+          }
         },
         {
           "rule": {
@@ -2489,7 +2523,11 @@
               "quote": "automatically enrolled to begin earning Rewards Dollars upon"
             }
           ],
-          "note": "2% at gas stations."
+          "note": "2% at gas stations.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 2% at gas stations; activation none from the automatic-enrollment sentence in the terms (general 7)."
+          }
         },
         {
           "rule": {
@@ -2512,7 +2550,11 @@
               "quote": "automatically enrolled to begin earning Rewards Dollars upon"
             }
           ],
-          "note": "2% at most U.S. Disney locations: single-merchant other, U.S. locations only."
+          "note": "2% at most U.S. Disney locations: single-merchant other, U.S. locations only.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2% at most Disney U.S. locations: single-merchant other (Chase conventions); the wording states U.S. locations, so usMerchantsOnly true."
+          }
         },
         {
           "rule": {
@@ -2535,7 +2577,11 @@
               "quote": "automatically enrolled to begin earning Rewards Dollars upon"
             }
           ],
-          "note": "2% at grocery stores."
+          "note": "2% at grocery stores.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 2% at grocery stores; shared category supermarkets."
+          }
         },
         {
           "rule": {
@@ -2558,7 +2604,11 @@
               "quote": "automatically enrolled to begin earning Rewards Dollars upon"
             }
           ],
-          "note": "2% at restaurants; the terms add takeout and eligible delivery services."
+          "note": "2% at restaurants; the terms add takeout and eligible delivery services.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 2% at restaurants; the terms add takeout and eligible delivery, which the dining category covers."
+          }
         },
         {
           "rule": {
@@ -2581,7 +2631,11 @@
               "quote": "automatically enrolled to begin earning Rewards Dollars upon"
             }
           ],
-          "note": "1% base rate."
+          "note": "1% base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 1% on all other card purchases; base rule with automatic enrollment (general 7)."
+          }
         }
       ],
       "addedExclusions": [
@@ -2597,7 +2651,11 @@
               "quote": "cash advances"
             }
           ],
-          "note": "Listed in the terms as transactions that earn no Rewards Dollars."
+          "note": "Listed in the terms as transactions that earn no Rewards Dollars.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Both anchors are single lines of the two-column terms listing transactions that earn no Rewards Dollars (Chase conventions)."
+          }
         },
         {
           "text": "Cash-like transactions such as travelers checks, foreign currency, money orders, wire transfers and cryptocurrency",
@@ -2611,7 +2669,11 @@
               "quote": "travelers checks, foreign currency, money orders,"
             }
           ],
-          "note": "Cash-like transactions earn nothing per the terms."
+          "note": "Cash-like transactions earn nothing per the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored on the cash-like header line and the first item line of the terms; neither anchor abuts the other in the capture."
+          }
         },
         {
           "text": "Lottery tickets, casino gaming chips, race track wagers and similar betting",
@@ -2621,7 +2683,11 @@
               "quote": "lottery tickets, casino gaming chips, race track"
             }
           ],
-          "note": "Gambling transactions earn nothing per the terms."
+          "note": "Gambling transactions earn nothing per the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Single-line fragment anchor from the two-column terms (Chase conventions)."
+          }
         },
         {
           "text": "Person-to-person money transfers and account-funding transactions",
@@ -2631,7 +2697,11 @@
               "quote": "person-to-person money transfers and account-"
             }
           ],
-          "note": "Money transfers earn nothing per the terms."
+          "note": "Money transfers earn nothing per the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Single-line fragment anchor from the two-column terms (Chase conventions)."
+          }
         },
         {
           "text": "Checks that access the account, interest, unauthorized or fraudulent charges, and fees of any kind",
@@ -2649,7 +2719,11 @@
               "quote": "fees of any kind, including an annual fee, if applicable."
             }
           ],
-          "note": "Account checks, interest, fraud and fees earn nothing per the terms."
+          "note": "Account checks, interest, fraud and fees earn nothing per the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Three single-line fragments of the no-earn list; interest is on the adjacent line of the same list."
+          }
         }
       ],
       "addedIssues": [
@@ -2665,7 +2739,11 @@
               "quote": "Cardmembers can also redeem Rewards Dollars for a statement credit toward airline tickets purchased with your card."
             }
           ],
-          "note": "Disney Rewards Dollars redeem only toward Disney purchases, plus a statement credit toward airline tickets charged to the card (Chase conventions, general 8)."
+          "note": "Disney Rewards Dollars redeem only toward Disney purchases, plus a statement credit toward airline tickets charged to the card (Chase conventions, general 8).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Disney Rewards Dollars redeem only toward Disney purchases plus airline tickets charged to the card; the ambiguous issue the Chase convention requires (general 8), matching Disney Inspire. Third-party-device streaming purchases are a purchase-level condition left to the overlay, as on Disney Inspire."
+          }
         }
       ],
       "productNoteChanges": [
@@ -2676,7 +2754,11 @@
             "sourceId": "disney-premier-visa-product",
             "quote": "Earn 5% in Disney Rewards Dollars on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com."
           },
-          "note": "5% in Disney Rewards Dollars at the three Disney streaming sites."
+          "note": "5% in Disney Rewards Dollars at the three Disney streaming sites.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The hint matches the product capture sentence verbatim."
+          }
         }
       ]
     },
@@ -2694,7 +2776,11 @@
             "sourceId": "marriott-bonvoy-bountiful-product",
             "quote": "Earn 2X points for every $1 you spend on all other purchases"
           },
-          "note": "Marriott Bonvoy points; no capture states a cash value, so the point value stays null (general 3, 20)."
+          "note": "Marriott Bonvoy points; no capture states a cash value, so the point value stays null (general 3, 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Marriott Bonvoy points; no capture states a cash redemption value, so point value stays null (general 3, 20)."
+          }
         }
       ],
       "addedRules": [
@@ -2715,7 +2801,11 @@
               "quote": "Earn 6X points for every $1 spent at over 7,000 hotels participating in Marriott Bonvoy® with the Marriott Bonvoy Bountiful® Credit Card."
             }
           ],
-          "note": "Card earn is 6X; the 18.5X total adds member and Gold Elite earn paid by Marriott (general 2, Chase conventions)."
+          "note": "Card earn is 6X; the 18.5X total adds member and Gold Elite earn paid by Marriott (general 2, Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Card pays 6X at Marriott hotels; the 18.5X total includes member and Gold Elite earn paid by Marriott (general 2, Chase conventions). Cap null: \"Earn Unlimited\" is a tagline heading, not a sentence about this rate (general 21), as decided for World of Hyatt."
+          }
         },
         {
           "rule": {
@@ -2739,7 +2829,11 @@
               "quote": "Earn 4X points for every $1 on the first $15,000 in combined purchases annually on grocery stores and dining."
             }
           ],
-          "note": "4X on the first $15,000 a year combined with dining; the after-cap rate is not stated."
+          "note": "4X on the first $15,000 a year combined with dining; the after-cap rate is not stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4X on the first $15,000 combined annually with dining; \"annually\" names no year type, so year-unspecified; no after-cap rate stated. Cap null elsewhere per general 21."
+          }
         },
         {
           "rule": {
@@ -2763,7 +2857,11 @@
               "quote": "Earn 4X points for every $1 on the first $15,000 in combined purchases annually on grocery stores and dining."
             }
           ],
-          "note": "4X on the first $15,000 a year combined with grocery stores; the after-cap rate is not stated."
+          "note": "4X on the first $15,000 a year combined with grocery stores; the after-cap rate is not stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4X on the first $15,000 combined annually with grocery stores; same cap and anchor as the grocery rule."
+          }
         },
         {
           "rule": {
@@ -2782,7 +2880,11 @@
               "quote": "Earn 2X points for every $1 you spend on all other purchases"
             }
           ],
-          "note": "2X base rate (the draft dropped it)."
+          "note": "2X base rate (the draft dropped it).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 2X on all other purchases; the draft dropped the base rule. Cap null under general 21."
+          }
         }
       ],
       "addedExclusions": [],
@@ -2795,7 +2897,11 @@
             "sourceId": "marriott-bonvoy-bountiful-product",
             "quote": "Earn 6X points for every $1 spent at over 7,000 hotels participating in Marriott Bonvoy® with the Marriott Bonvoy Bountiful® Credit Card."
           },
-          "note": "The card pays 6X at Marriott hotels; the hint's anchor is the 18.5X total, which includes Marriott's own earn."
+          "note": "The card pays 6X at Marriott hotels; the hint's anchor is the 18.5X total, which includes Marriott's own earn.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The hint anchor was the 18.5X total; the 6X sentence is the card-paid rate (general 2)."
+          }
         }
       ]
     },
@@ -2813,7 +2919,11 @@
             "sourceId": "british-airways-visa-signature-product",
             "quote": "Earn 1 Avios for every $1 spent on all other purchases."
           },
-          "note": "Avios are points; no capture states a cash value, so the point value stays null (general 3, 20)."
+          "note": "Avios are points; no capture states a cash value, so the point value stays null (general 3, 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Avios are points; no cash value stated, so point value null (general 3, 20)."
+          }
         }
       ],
       "addedRules": [
@@ -2834,7 +2944,11 @@
               "quote": "Earn 3 Avios for every $1 spent on British Airways, Aer Lingus, and Iberia flight purchases."
             }
           ],
-          "note": "3X on flights of the three airlines only: single-merchant other (Chase conventions)."
+          "note": "3X on flights of the three airlines only: single-merchant other (Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3 Avios per $1 on flights of the three named airlines only: single-merchant other (Chase conventions)."
+          }
         },
         {
           "rule": {
@@ -2853,7 +2967,11 @@
               "quote": "In addition earn 2 Avios for every $1 spent on hotel accommodations booked directly with the hotel."
             }
           ],
-          "note": "2X on hotels booked direct: other (Chase conventions, travel booked direct)."
+          "note": "2X on hotels booked direct: other (Chase conventions, travel booked direct).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2 Avios per $1 on hotels booked directly with the hotel: other under the Chase travel-booked-direct convention, as on United Explorer."
+          }
         },
         {
           "rule": {
@@ -2872,7 +2990,11 @@
               "quote": "Earn 1 Avios for every $1 spent on all other purchases."
             }
           ],
-          "note": "1X base rate."
+          "note": "1X base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 1 Avios per $1 on all other purchases."
+          }
         }
       ],
       "addedExclusions": [],
@@ -2885,7 +3007,11 @@
             "sourceId": "british-airways-visa-signature-product",
             "quote": "Earn 3 Avios for every $1 spent on British Airways, Aer Lingus, and Iberia flight purchases."
           },
-          "note": "3 Avios per $1 on flights of the three airlines."
+          "note": "3 Avios per $1 on flights of the three airlines.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The hint matches the product capture sentence verbatim."
+          }
         }
       ]
     },
@@ -2903,7 +3029,11 @@
             "sourceId": "aer-lingus-visa-signature-product",
             "quote": "Earn 1 Avios for every $1 spent on all other purchases."
           },
-          "note": "Avios are points; no capture states a cash value, so the point value stays null (general 3, 20)."
+          "note": "Avios are points; no capture states a cash value, so the point value stays null (general 3, 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Avios are points; no cash value stated, so point value null (general 3, 20)."
+          }
         }
       ],
       "addedRules": [
@@ -2924,7 +3054,11 @@
               "quote": "Earn 3 Avios for every $1 spent with Aer Lingus, British Airways, and Iberia flight purchases."
             }
           ],
-          "note": "3X on flights of the three airlines only: single-merchant other (Chase conventions)."
+          "note": "3X on flights of the three airlines only: single-merchant other (Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3 Avios per $1 on flights of the three named airlines only: single-merchant other (Chase conventions); the anchor is verbatim (\"spent with\")."
+          }
         },
         {
           "rule": {
@@ -2943,7 +3077,11 @@
               "quote": "Earn 2 Avios for every $1 spent on hotel accommodations booked directly with the hotel."
             }
           ],
-          "note": "2X on hotels booked direct: other (Chase conventions, travel booked direct)."
+          "note": "2X on hotels booked direct: other (Chase conventions, travel booked direct).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2 Avios per $1 on hotels booked directly with the hotel: other under the Chase travel-booked-direct convention."
+          }
         },
         {
           "rule": {
@@ -2962,7 +3100,11 @@
               "quote": "Earn 1 Avios for every $1 spent on all other purchases."
             }
           ],
-          "note": "1X base rate."
+          "note": "1X base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 1 Avios per $1 on all other purchases."
+          }
         }
       ],
       "addedExclusions": [],
@@ -2988,7 +3130,11 @@
             "sourceId": "aer-lingus-visa-signature-product",
             "quote": "Earn 3 Avios for every $1 spent with Aer Lingus, British Airways, and Iberia flight purchases."
           },
-          "note": "LEVEL and 'made directly with' are not in the captures; the rule covers the three airlines."
+          "note": "LEVEL and 'made directly with' are not in the captures; the rule covers the three airlines.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft hint named LEVEL and \"made directly with\", which no capture states; the replacement matches the capture wording and the three airlines."
+          }
         }
       ]
     },
@@ -3006,7 +3152,11 @@
             "sourceId": "iberia-visa-signature-product",
             "quote": "Earn 1 Avios for every $1 spent on all other purchases."
           },
-          "note": "Avios are points; no capture states a cash value, so the point value stays null (general 3, 20)."
+          "note": "Avios are points; no capture states a cash value, so the point value stays null (general 3, 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Avios are points; no cash value stated, so point value null (general 3, 20)."
+          }
         }
       ],
       "addedRules": [
@@ -3027,7 +3177,11 @@
               "quote": "Earn 3 Avios for every $1 spent on Iberia, British Airways, and Aer Lingus flight purchases."
             }
           ],
-          "note": "3X on flights of the three airlines only: single-merchant other (Chase conventions)."
+          "note": "3X on flights of the three airlines only: single-merchant other (Chase conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3 Avios per $1 on flights of the three named airlines only: single-merchant other (Chase conventions)."
+          }
         },
         {
           "rule": {
@@ -3046,7 +3200,11 @@
               "quote": "Earn 2 Avios for every $1 spent on hotel accommodations booked directly with the hotel."
             }
           ],
-          "note": "2X on hotels booked direct: other (Chase conventions, travel booked direct)."
+          "note": "2X on hotels booked direct: other (Chase conventions, travel booked direct).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2 Avios per $1 on hotels booked directly with the hotel: other under the Chase travel-booked-direct convention."
+          }
         },
         {
           "rule": {
@@ -3065,7 +3223,11 @@
               "quote": "Earn 1 Avios for every $1 spent on all other purchases."
             }
           ],
-          "note": "1X base rate."
+          "note": "1X base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Product capture states 1 Avios per $1 on all other purchases."
+          }
         }
       ],
       "addedExclusions": [],
@@ -3091,7 +3253,11 @@
             "sourceId": "iberia-visa-signature-product",
             "quote": "Earn 3 Avios for every $1 spent on Iberia, British Airways, and Aer Lingus flight purchases."
           },
-          "note": "LEVEL and 'made directly with' are not in the captures; the rule covers the three airlines."
+          "note": "LEVEL and 'made directly with' are not in the captures; the rule covers the three airlines.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft hint named LEVEL and \"made directly with\", which no capture states; the replacement matches the capture wording and the three airlines."
+          }
         }
       ]
     }
