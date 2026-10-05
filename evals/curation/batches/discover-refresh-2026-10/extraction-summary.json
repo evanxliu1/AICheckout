@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/extract-cards.mjs",
+  "configuration": {
+    "provider": "codex",
+    "model": "gpt-5.6-luna",
+    "effort": "xhigh",
+    "prompt": "guided.2",
+    "selection": "keyword-window.1",
+    "outputTokens": "visible",
+    "limits": {
+      "attemptTimeoutMs": 600000,
+      "totalTimeoutMs": 900000,
+      "maxInputTokens": 64000,
+      "maxOutputTokens": 8192
+    },
+    "cliVersions": [
+      "codex-cli 0.158.0"
+    ]
+  },
+  "counts": {
+    "needs_review": 1
+  },
+  "cards": [
+    {
+      "cardId": "discover-it-chrome",
+      "issuer": "Discover",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "entertainment-portal",
+        "ev-charging",
+        "gas",
+        "travel-portal"
+      ],
+      "issues": [
+        "ambiguous",
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_ambiguous": 1,
+        "reported_missing": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "discover-it-chrome-product",
+        "discover-it-chrome-terms"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 296965,
+      "inputTokenEstimate": 11998,
+      "inputTokens": 10283,
+      "outputTokens": 2348,
+      "runAt": "2026-10-05T01:25:11.431Z"
+    }
+  ]
+}

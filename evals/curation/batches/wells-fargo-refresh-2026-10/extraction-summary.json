@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/extract-cards.mjs",
+  "configuration": {
+    "provider": "codex",
+    "model": "gpt-5.6-luna",
+    "effort": "xhigh",
+    "prompt": "guided.2",
+    "selection": "keyword-window.1",
+    "outputTokens": "visible",
+    "limits": {
+      "attemptTimeoutMs": 600000,
+      "totalTimeoutMs": 900000,
+      "maxInputTokens": 64000,
+      "maxOutputTokens": 8192
+    },
+    "cliVersions": [
+      "codex-cli 0.158.0"
+    ]
+  },
+  "counts": {
+    "needs_review": 2
+  },
+  "cards": [
+    {
+      "cardId": "wells-fargo-autograph",
+      "issuer": "Wells Fargo",
+      "status": "needs_review",
+      "rules": 8,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "other",
+        "streaming",
+        "transit",
+        "travel-portal"
+      ],
+      "issues": [
+        "ambiguous",
+        "out-of-scope",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 8,
+        "quote_not_found": 2,
+        "reported_ambiguous": 1,
+        "reported_out-of-scope": 1,
+        "reported_missing": 2
+      },
+      "documents": [
+        "wells-fargo-autograph-product",
+        "wells-fargo-autograph-rewards-terms",
+        "wells-fargo-autograph-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 335055,
+      "inputTokenEstimate": 12105,
+      "inputTokens": 10523,
+      "outputTokens": 2364,
+      "runAt": "2026-10-05T01:25:12.942Z"
+    },
+    {
+      "cardId": "wells-fargo-autograph-journey",
+      "issuer": "Wells Fargo",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "ambiguous"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 5,
+        "quote_not_found": 2,
+        "reported_missing": 1,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "wells-fargo-autograph-journey-product",
+        "wells-fargo-autograph-rewards-terms",
+        "wells-fargo-autograph-journey-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 204770,
+      "inputTokenEstimate": 12628,
+      "inputTokens": 10831,
+      "outputTokens": 1564,
+      "runAt": "2026-10-05T01:25:12.954Z"
+    }
+  ]
+}

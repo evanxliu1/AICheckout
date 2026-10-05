@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/draft-expansion-labels.mjs",
+  "description": "Structured hints the extraction schema cannot express, from the research drafts (summaries and conditions clipped to 25 words). An anchored hint cites a quote of at most 25 words that resolves in the captures (research-quote: the research quoted it; keyword-search: a capture sentence with the rate and a keyword, which a verifier must confirm says what the hint says). Unanchored hints cite the research. draftNotes record what drafting dropped.",
+  "cards": [
+    {
+      "cardId": "synchrony-amazon-store-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Amazon.com and Whole Foods Market (\"5% back at Amazon.com, Whole Foods Market (In-Store Code usage required at Whole Foods Market), and more\")",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "Requires eligible Prime membership (Prime Store Card). Non-Prime Amazon Store Card earns no % back. Cannot be combined with Equal Monthly Payments or special financing…",
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": "Requires eligible Prime membership (Prime Store Card). Non-Prime Amazon Store Card earns no % back. Cannot be combined with Equal Monthly Payments or special financing…",
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Prime Store Card members with an eligible Prime membership can earn 5% back year-round at Amazon.com, Whole Foods Market (In-Store Code usage required at Whole"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card: usable only with Amazon (research flag).",
+          "merchants": [
+            "Amazon"
+          ],
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.amazon.com/Synchrony-Bank-Amazon-com-Store-Card/dp/B008A0GNA8",
+            "https://www.synchrony.com/amazon"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"All purchases (less returns and other credits) to which the \"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "synchrony-amazon-secured-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Amazon purchases (\"Prime rewards: 2% back on Amazon purchases with an eligible Prime membership\")",
+          "rate": "2%",
+          "cap": "none stated",
+          "conditions": "Requires eligible Prime membership (Prime Secured Card); security deposit required; Amazon Pay purchases excluded; % back cannot be combined with financing offers",
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": "Requires eligible Prime membership (Prime Secured Card); security deposit required; Amazon Pay purchases excluded; % back cannot be combined with financing offers",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership6"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card: usable only with Amazon (research flag).",
+          "merchants": [
+            "Amazon"
+          ],
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.amazon.com/Synchrony-Bank-Amazon-com-Store-Card/dp/B008A0GNA8",
+            "https://www.synchrony.com/amazon"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (online-retail, \"Amazon purchases\"): rule dropped (no resolving quote)",
+        "rules.1 (all-purchases, \"All purchases (less returns and other credits) to which the \"): rule dropped (no resolving quote)",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "synchrony-paypal-cashback-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "checkout-method",
+          "summary": "purchases made through your PayPal account online, and sending money to PayPal users (\"3% on Eligible Purchases you make using your Card Account through your…",
+          "rate": "3%",
+          "cap": "none stated (\"no maximum amount of Eligible Purchases\")",
+          "conditions": "card must be the linked payment method at PayPal checkout; authorized users earn 1.5% (unless they later add card to own PayPal)",
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "3% on Eligible Purchases you make using your Card Account through your PayPal account online, or when you use your Card Account to send money"
+        }
+      ],
+      "draftNotes": [
+        "issues.1 (out-of-scope): an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "synchrony-verizon-visa-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Verizon purchases (Verizon stores, Verizon online, phone, exclusive Authorized Retailers; devices and accessories)",
+          "rate": "4%",
+          "cap": "no limit",
+          "conditions": "excludes bill payments",
+          "merchants": [
+            "Verizon"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "4% in Verizon Dollars for every Net New Purchase made at a Verizon operated store, Verizon online, over the phone with a Verizon representative or"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Verizon Wireless / Fios bill payments",
+          "rate": "1%",
+          "cap": "no limit",
+          "conditions": "plus Verizon Loyalty adds 1% for paying bill with card (marketing page)",
+          "merchants": [
+            "Verizon"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "1% on Verizon wireless Account bill or Verizon Fios Account bill payment"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "synchrony-sams-club-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Sam's Club purchases",
+          "rate": "3% for Plus members; 1% for Club members",
+          "cap": "$5,000 Sam's Cash/yr overall",
+          "conditions": "excludes tobacco, prescriptions, gift/prepaid cards, cash equivalents",
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.synchrony.com/partner/sams-club",
+            "https://mysamscredit.com/best-gas/"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.4 (other, \"Sam’s Club purchases\"): rule dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "synchrony-onepay-cashrewards-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Walmart (US stores, Walmart-branded gas stations, Walmart app, Walmart.com) with Walmart+",
+          "rate": "5%",
+          "cap": "none stated (\"unlimited\")",
+          "conditions": "Walmart+ membership must be linked to the card by email; excludes Sam's Club and third-party marketplace sellers on Walmart.com",
+          "merchants": [
+            "OnePay / Walmart"
+          ],
+          "membership": "Walmart+ membership must be linked to the card by email; excludes Sam's Club and third-party marketplace sellers on Walmart.com",
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "OnePay Points are earned on Purchases as follows: (i) 5% on Purchases at Walmart for Walmart+ members whose Walmart+ membership is linked to their Account;"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Walmart without Walmart+",
+          "rate": "3%",
+          "cap": "none stated",
+          "conditions": "same Walmart definition",
+          "merchants": [
+            "OnePay / Walmart"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "3% Cash Back at Walmart: You earn OnePay Points equal to 3% of each $1 spent on Purchases at Walmart with your CashRewards Card (1.5%"
+        }
+      ],
+      "draftNotes": [
+        "rules.3 (all-purchases, \"all other purchases\") rateBps: value dropped (no resolving quote)",
+        "exclusion \"Certain transactions do not qualify as Purchases, including…\": dropped (no resolving quote)"
+      ]
+    },
+    {
+      "cardId": "synchrony-mywalgreens-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Walgreens brand purchases at Walgreens, Duane Reade, Walgreens.com",
+          "rate": "10%",
+          "cap": "none stated",
+          "conditions": "exclusions apply; myWalgreens membership required",
+          "merchants": [
+            "Walgreens"
+          ],
+          "membership": "exclusions apply; myWalgreens membership required",
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "You will earn Walgreens Cash rewards equal to 10% of every USD spent for Eligible Purchases of retail products branded with Walgreens marks or logos"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "all other brands and pharmacy purchases at Walgreens",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "exclusions apply",
+          "merchants": [
+            "Walgreens"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "5% on all other brands and pharmacy purchases†"
+        }
+      ],
+      "draftNotes": [
+        "rules.5 (all-purchases, \"All Other Purchases\") rateBps: value dropped (no resolving quote)",
+        "exclusions.3: an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "synchrony-newegg-store-credit-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Newegg purchases (\"4% off every day when you choose the discount option at checkout\")",
+          "rate": "4% discount",
+          "cap": "none stated",
+          "conditions": "must choose discount option instead of special financing (6 mo on $199+, 12 mo on $499+); excludes gift cards, warranties, taxes, shipping; may not stack…",
+          "merchants": [
+            "Newegg"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "When entering your Newegg Store Credit Card, you’ll be prompted to select either special financing (if eligible) or the 4% everyday discount."
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card: usable only with Newegg (research flag).",
+          "merchants": [
+            "Newegg"
+          ],
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/synchrony.json",
+          "researchSources": [
+            "https://www.newegg.com/promotions/nepro/18-1881/index.html",
+            "https://kb.newegg.com/knowledge-base/accepted-payment-methods"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    }
+  ]
+}

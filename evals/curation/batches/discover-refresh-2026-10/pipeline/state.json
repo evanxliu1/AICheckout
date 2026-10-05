@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "discover-refresh-2026-10",
-  "updatedAt": "2026-10-05T01:07:47.730Z",
+  "updatedAt": "2026-10-05T01:37:34.805Z",
   "cards": {
     "discover-it-chrome": {
       "stages": {
@@ -36,6 +36,34 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:5fb072b0ebae6fc45255646d645a13130d51bfe21037948a10d20c33f82ec179",
+          "outputs": [
+            {
+              "ref": "trace:discover-it-chrome",
+              "sha256": "366fd8b1786fbbce774b3f86933b9df9f277804c086a208641cdee7da250ebc3"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:30:08.431Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:f95d5705b7b2835a84fce1d5e4a112a88b35cb580ff903ba006125fef6cde70c",
+          "outputs": [
+            {
+              "ref": "corpus-draft:discover-it-chrome",
+              "sha256": "3cca64f11c638cce9064b7090ae9d472c3928220163b829435b9f77e2ab4227b"
+            }
+          ],
+          "labelsHash": "sha256:28ff7705e61dd88189772d06b1b972a2a1136929a2dc4f5aa785d3f00ca458bc",
+          "anchorsHash": "sha256:739a7096287bdf6f6c184dc6cebff7f94a606a9f9e5b4c272df8b6ef430a22e1",
+          "finishedAt": "2026-10-05T01:37:34.805Z",
+          "attempts": 1
         }
       },
       "dropped": null,

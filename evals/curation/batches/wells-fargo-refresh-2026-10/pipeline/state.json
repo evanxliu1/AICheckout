@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "wells-fargo-refresh-2026-10",
-  "updatedAt": "2026-10-05T01:09:37.925Z",
+  "updatedAt": "2026-10-05T01:37:35.811Z",
   "cards": {
     "wells-fargo-autograph": {
       "stages": {
@@ -44,6 +44,34 @@
             "sources": 3,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:576a89191a78e9511a28555eb2d923f3703bf1b5b6af6ea9da96bd4ac135e1d8",
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-autograph",
+              "sha256": "3f9164766fb0465874d90180896654a42e891a573364a2563a89c692f7fc7bb1"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:30:48.020Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:9b106aed8e9f284393a855880a48ace6975d31c51fabd85ed9f25ea30b9e0018",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-autograph",
+              "sha256": "0c366e0a6b689c4c0681c7ade801fb18238ccaff5c0f8dcb1ca07f10f061d6f6"
+            }
+          ],
+          "labelsHash": "sha256:6d8ba1bd49758cdd4d93330871ea2336621ef6c59e6a114d7a3a34fe616b3c66",
+          "anchorsHash": "sha256:133f5a678f7271cd21421900bd077f4158945ff862df31733414413202d07167",
+          "finishedAt": "2026-10-05T01:37:35.811Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -90,6 +118,34 @@
             "sources": 3,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:84a376998432fc9f124b4d1359a483bd4a287c8e65ba766783d921da944d1042",
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-autograph-journey",
+              "sha256": "57b795a4bf535fe23bf450ff1b805fe0f68ad7ae5c750fae90a991d76febd0f5"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:30:48.020Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:63b11c5742783a2c3c5375cc183e47cc286e4a30e0a1e78631db3396adda1985",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-autograph-journey",
+              "sha256": "733a7f0235ae19952d1ad055c3919f47a4d79eefe2807e875bef7fcdd371c980"
+            }
+          ],
+          "labelsHash": "sha256:eda0cdb6e5305c20b59fb023240071a896ca3e1934bc5a66976c1ab0d092aaff",
+          "anchorsHash": "sha256:184906e66d1418baf45dbbc4c00125139d706608e3ea52f57050b929d72e7e64",
+          "finishedAt": "2026-10-05T01:37:35.811Z",
+          "attempts": 1
         }
       },
       "dropped": null,

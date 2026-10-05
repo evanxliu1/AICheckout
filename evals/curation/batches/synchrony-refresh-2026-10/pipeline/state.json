@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "synchrony-refresh-2026-10",
-  "updatedAt": "2026-10-05T01:13:27.834Z",
+  "updatedAt": "2026-10-05T01:37:38.056Z",
   "cards": {
     "synchrony-amazon-store-card": {
       "stages": {
@@ -44,6 +44,34 @@
             "sources": 3,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:3e634b62b3fbb55a808f70ef4ff92b5809f2810b799f1b1d1dc15f7345356f86",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-amazon-store-card",
+              "sha256": "f52e429ae6215705500103cc5695fa220d544d70a7addb6fdd859a1d5b85b4a0"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:16.845Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:d26982cacd8f73d0d9945c619c1d42eff0005d383655e7f348d757d414a20b7e",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-amazon-store-card",
+              "sha256": "0cf213609f697b585ec21746997bebfccecf37bfe641e61fb8b03c6c8ab0560e"
+            }
+          ],
+          "labelsHash": "sha256:1b92efc10dc81638b1bef445d0704d794b6807aa3f9b68227dd4f571183547d4",
+          "anchorsHash": "sha256:7c4d3b9b62b081311d9f19916353b05803ec6b7a75b9b96b5c110e7fde754ea1",
+          "finishedAt": "2026-10-05T01:37:38.056Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -74,6 +102,27 @@
             "sources": 1,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:48f05fbc73b86e66cb452d9dfc0d977a84fd4e508b2f30b57af4f13fa7fc775b",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-amazon-secured-card",
+              "sha256": "992398e8c88b14d31168dec84b90dbc5d361e16230dc3aff6b0523bb8c3dd0c8"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:16.845Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "failed-gate",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:b1ca981cca1675fd516225b386dad191f0172b41b337b2d453c1dd189471e926",
+          "finishedAt": "2026-10-05T01:37:38.056Z",
+          "attempts": 1,
+          "reason": "no-draft-case"
         }
       },
       "dropped": null,
@@ -120,6 +169,34 @@
             "sources": 3,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:a7b26b442e7c75ff854efd2c846af63a723623b8cd456e84a6772daf44b1a345",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-paypal-cashback-mastercard",
+              "sha256": "1f74a9479c11281328c8a203365b139584e56af9642052e8c0f15bf8037b24a2"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:16.845Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:a432520171155c7e9591035ae001edc6c229f667eaae437d79484e9f3f61e518",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-paypal-cashback-mastercard",
+              "sha256": "340d6bf872c13d533757658a81872645adf71503925bee435722464b96a6acf6"
+            }
+          ],
+          "labelsHash": "sha256:becf93a83b59a33896e7101d120340682698c028106c2bcbc367303eec7f1802",
+          "anchorsHash": "sha256:90532b9c6782c4942c8a4b1b5b7635c3ca63cf8a77042db1a0cf725c1e8e8fe3",
+          "finishedAt": "2026-10-05T01:37:38.056Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -166,6 +243,27 @@
             "sources": 3,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:43f169d93488fafbb658f061114c861d72066076ba0b7ea1b3facda9d4a967e4",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-verizon-visa-card",
+              "sha256": "c3de2a0dfb5fcb44990c40d8a9600e4879968fce424ede749e633f77876b5061"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:16.845Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "failed-gate",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:ef6b0a43750daa91ddf4fabf39426db75a4bbc8103d8d8d53d31f81c52a131e5",
+          "finishedAt": "2026-10-05T01:37:38.056Z",
+          "attempts": 1,
+          "reason": "no-draft-case"
         }
       },
       "dropped": null,
@@ -204,6 +302,34 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:f8014e14b5713df0f822b26506933ea616fa7573340994108028619f6a152475",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-sams-club-mastercard",
+              "sha256": "9b0bc6996d42f3bb70855297316ba01bd775d8f21c2598eb06ea3c749f777332"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:16.846Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:c4be3626b2293eea789aaa4eb7efd3077ee02caff644383047ed2a79f630f1de",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-sams-club-mastercard",
+              "sha256": "f521215df4fc824b59b86978d62cfc3091b03870a2b1d3863267917e91df25f2"
+            }
+          ],
+          "labelsHash": "sha256:5ae11a9beb74a722fdc4aa3672afed98c83a8b1c5730ecd960a89aaba5d17d49",
+          "anchorsHash": "sha256:8ecfc387de17c6a69c1df8d76d5356419bc5a47b214c45492c07b17d9a8bea07",
+          "finishedAt": "2026-10-05T01:37:38.056Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -250,6 +376,34 @@
             "sources": 3,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:5f0215c41e528ce0be7748aa79a7c686a83700f8a9251e4b7a96fc14dcbf939a",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-onepay-cashrewards-card",
+              "sha256": "9f03d73bc1f5989962d4c538d395fd83f566e0230d0cc66de45c1c47db4b8199"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:16.846Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:2e6454734fd56df46892c344a6ac3b065b18af73d290a3a0d253856945ad3155",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-onepay-cashrewards-card",
+              "sha256": "e86e95af288fba7a395ad7f4668cf8981c1eca390c2ae9e6da0b0d340951d63d"
+            }
+          ],
+          "labelsHash": "sha256:cd63657d469dd0d3040c0bd6811c5e2438b06cf767fbbaa67e4c1c5ff5b3f1ec",
+          "anchorsHash": "sha256:b748dc26a553b092a67a0853157856f1b414816260f4534223a5b903a4db77fe",
+          "finishedAt": "2026-10-05T01:37:38.056Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -296,6 +450,34 @@
             "sources": 3,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:340564667612636f641947c89d183e9b937627666acabf3c7adcd8436ca5ed6a",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-mywalgreens-mastercard",
+              "sha256": "dea553fe4fc8f872752e2ca08100d2c4ea4db1e60e0b80479813561b70fe2986"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:16.846Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:7208fac3b4f2cca8760a3cc22a6a612b48aeefeef761f8c67030fd0b1083833a",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-mywalgreens-mastercard",
+              "sha256": "de4906df4a4bd57eed1471c8fe33c3b5b91b6afa9470adf83af302bf76cf86a8"
+            }
+          ],
+          "labelsHash": "sha256:2c6d68da5950e81809303b949bd9aea7557de49df4e3a23028a2562b16b6f178",
+          "anchorsHash": "sha256:66f54dc7d66f2d0c4cef8be9d6ba6166ea67da872d5f3893ed1e122ccf92fce7",
+          "finishedAt": "2026-10-05T01:37:38.056Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -334,6 +516,27 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:b9970b816908894b9eea8329351ead1414ac17df1fa8487d43078c09d40722c3",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-newegg-store-credit-card",
+              "sha256": "77072df78a240d7b24f23530643b06b821cd9a88a53d141eb4869062c107df42"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:37:16.846Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "failed-gate",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:080e6a5e6bedb9d9d00fda2967acabb073dc38dff8edcad030bf62b860a0c7c8",
+          "finishedAt": "2026-10-05T01:37:38.056Z",
+          "attempts": 1,
+          "reason": "no-draft-case"
         }
       },
       "dropped": null,
