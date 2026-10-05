@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "e27e13a0-7ea2-40d7-bc81-393dcc9bfcee",
+  "packetId": "3ed909bc-db18-49af-89ad-f64d4f0c790f",
   "batch": "citi-refresh-2026-10",
   "provenance": "agent-verified",
   "issuer": "Citi",
@@ -36,32 +36,14 @@
       "evals/curation/expansion/verification/README.md",
       "evals/curation/expansion/verification/conventions/general.md",
       "evals/curation/expansion/verification/conventions/citi.md",
-      "evals/curation/batches/citi-refresh-2026-10/pipeline/packets/adjudicate.citi.1.json",
+      "evals/curation/batches/citi-refresh-2026-10/pipeline/packets/adjudicate.citi.2.json",
       "evals/curation/batches/citi-refresh-2026-10/verification/citi.json",
       "evals/curation/batches/citi-refresh-2026-10/corpus.draft.json",
       "evals/curation/batches/citi-refresh-2026-10/product-notes.json",
-      "wiki/decisions/2026-10-03-double-cash-cash-back.md",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-premier-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-premier-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-elite-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-strata-elite-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-costco-anywhere-visa-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-costco-anywhere-visa-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-costco-anywhere-visa-categories.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-platinum-select-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-platinum-select-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-mileup-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-mileup-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-globe-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-globe-rewards-terms.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-tsc-visa-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-dillards-mastercard-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-macys-amex-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-double-cash-product.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-double-cash-additional-info.txt",
-      "evals/curation/batches/citi-refresh-2026-10/captures/citi-double-cash-terms-pdf.txt"
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-executive-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-aadvantage-executive-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-llbean-mastercard-product.txt",
+      "evals/curation/batches/citi-refresh-2026-10/captures/citi-bloomingdales-amex-product.txt"
     ]
   },
   "cards": [
@@ -1162,7 +1144,11 @@
             "sourceId": "citi-aadvantage-executive-product",
             "quote": "Earn 4 AAdvantage® miles for every $1 spent on eligible American Airlines purchases"
           },
-          "note": "Undrafted card: the card earns AAdvantage miles, which count as points."
+          "note": "Undrafted card: the card earns AAdvantage miles, which count as points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The card earns AAdvantage miles per dollar; points is the right currency (general 1), matching the sibling AAdvantage cards."
+          }
         },
         {
           "op": "set",
@@ -1173,7 +1159,11 @@
             "sourceId": "citi-aadvantage-executive-product",
             "quote": "Use your AAdvantage® miles for flights to nearly 1,100 destinations worldwide on American Airlines, oneworld® and partner airlines."
           },
-          "note": "Undrafted card: miles redeem for travel only and no capture states a cash value, so the point value stays null (general 3, 20)."
+          "note": "Undrafted card: miles redeem for travel only and no capture states a cash value, so the point value stays null (general 3, 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Miles redeem for flights and travel; no capture states a cash value, so the point value stays null (general 3, 20), as on the sibling AAdvantage cards."
+          }
         }
       ],
       "addedRules": [
@@ -1203,7 +1193,11 @@
               "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
             }
           ],
-          "note": "Base rate 1X; the terms state no maximum on miles (general 21)."
+          "note": "Base rate 1X; the terms state no maximum on miles (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "1X base on all other purchases is stated on the product page; cap none is anchored on the terms sentence stating no maximum on miles (general 21), as on Globe."
+          }
         },
         {
           "rule": {
@@ -1226,7 +1220,11 @@
               "quote": "Eligible American Airlines purchases are items billed by American Airlines as the merchant of record."
             }
           ],
-          "note": "4X on purchases billed by American Airlines; one merchant, so category other (general 4). The $150,000 threshold to 5X is not a cap: cap null plus an out-of-scope issue (Citi convention)."
+          "note": "4X on purchases billed by American Airlines; one merchant, so category other (general 4). The $150,000 threshold to 5X is not a cap: cap null plus an out-of-scope issue (Citi convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "4X on purchases billed by American Airlines, category other (general 4, Citi AAdvantage convention). Cap null with the out-of-scope issue follows the explicit Citi Executive convention for the $150,000 threshold (general 9); the overlay layer, not the corpus label, carries cap none for this rule."
+          }
         },
         {
           "rule": {
@@ -1258,7 +1256,11 @@
               "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
             }
           ],
-          "note": "12X on hotels booked through aadvantagehotels.com, a partner booking portal (Citi convention: travel-portal)."
+          "note": "12X on hotels booked through aadvantagehotels.com, a partner booking portal (Citi convention: travel-portal).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "12X on hotels booked on aadvantagehotels.com, a partner booking portal (Citi convention: travel-portal); cap none on the no-maximum sentence (general 21)."
+          }
         },
         {
           "rule": {
@@ -1290,7 +1292,42 @@
               "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
             }
           ],
-          "note": "12X on car rentals booked through aadvantagecars.com, a partner booking portal (Citi convention: travel-portal)."
+          "note": "12X on car rentals booked through aadvantagecars.com, a partner booking portal (Citi convention: travel-portal).",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "12X on car rentals booked on aadvantagecars.com, a partner booking portal (Citi convention: travel-portal); cap none on the no-maximum sentence (general 21). The verifier s anchors did not state the 12-mile rate, so the replacement uses the full product sentence and the terms clause that give 12 miles per $1.",
+            "replacement": {
+              "rule": {
+                "category": "travel-portal",
+                "issuerWording": "eligible AAdvantage Cars® bookings",
+                "rateBps": 1200,
+                "paidOnPaymentBps": 0,
+                "cap": {
+                  "kind": "none",
+                  "amountCents": null,
+                  "period": null,
+                  "rateAfterCapBps": null
+                },
+                "activation": null,
+                "usMerchantsOnly": null,
+                "limitedTime": null
+              },
+              "anchors": [
+                {
+                  "sourceId": "citi-aadvantage-executive-product",
+                  "quote": "Earn 12 AAdvantage® miles for every $1 spent on eligible AAdvantage Hotels® bookings and eligible AAdvantage Cars® bookings"
+                },
+                {
+                  "sourceId": "citi-aadvantage-executive-rewards-terms",
+                  "quote": "for a total of 12 AAdvantage® miles, for each $1 spent on eligible car rental purchases"
+                },
+                {
+                  "sourceId": "citi-aadvantage-executive-rewards-terms",
+                  "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
+                }
+              ]
+            }
+          }
         }
       ],
       "addedExclusions": [
@@ -1306,7 +1343,11 @@
               "quote": "wire transfers (and similar cash-like transactions), lottery tickets, and gaming chips (and similar betting transactions) are not purchases and do not earn AAdvantage® miles"
             }
           ],
-          "note": "The terms list transactions that are not purchases and earn no miles."
+          "note": "The terms list transactions that are not purchases and earn no miles.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Both anchors are in the terms sentence listing transactions that are not purchases and earn no miles; the windows do not abut."
+          }
         }
       ],
       "addedIssues": [
@@ -1318,7 +1359,11 @@
               "quote": "spend $150,000 in purchases in a calendar year, earn a total of 5 AAdvantage® miles for every $1 spent on eligible American Airlines purchases"
             }
           ],
-          "note": "American Airlines purchases rise from 4X to 5X for the rest of the calendar year after $150,000 in total card spend; a spend threshold, not a cap (general 9)."
+          "note": "American Airlines purchases rise from 4X to 5X for the rest of the calendar year after $150,000 in total card spend; a spend threshold, not a cap (general 9).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The $150,000 calendar-year spend threshold raising AA purchases to 5X is a threshold, not a cap: out-of-scope issue per general 9 and the Citi Executive convention."
+          }
         },
         {
           "code": "ambiguous",
@@ -1328,7 +1373,11 @@
               "quote": "purchases made through mobile/wireless technology may not earn additional AAdvantage® miles depending on how the technology is set up to process the purchase"
             }
           ],
-          "note": "Mobile or wallet payments may not earn the bonus miles, depending on how they are processed."
+          "note": "Mobile or wallet payments may not earn the bonus miles, depending on how they are processed.",
+          "adjudication": {
+            "decision": "rejected",
+            "reason": "The same mobile/wireless sentence appears in the Globe, Platinum Select and MileUp terms and none of those accepted entries carries an issue for it; it is generic processing boilerplate that applies to every bonus rule, not a rate ambiguity the labels can state. Rejected for consistency with the accepted Citi AAdvantage cards."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1339,7 +1388,11 @@
             "sourceId": "citi-aadvantage-executive-rewards-terms",
             "quote": "Upon reaching $150,000 in spend on your Citi® / AAdvantage® Executive World Legend Mastercard in a calendar year"
           },
-          "note": "The terms confirm 4X on American Airlines purchases, 5X after $150,000 in a calendar year, and the merchant-of-record condition."
+          "note": "The terms confirm 4X on American Airlines purchases, 5X after $150,000 in a calendar year, and the merchant-of-record condition.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state 4X on eligible AA purchases, 5X after $150,000 in a calendar year and the merchant-of-record condition; the hint is accurate and anchored."
+          }
         }
       ]
     },
@@ -1357,7 +1410,11 @@
             "sourceId": "citi-llbean-mastercard-product",
             "quote": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases."
           },
-          "note": "Undrafted card: Bean Bucks are dollar-denominated store rewards stated as percentages, so cash-back (general 1, 8)."
+          "note": "Undrafted card: Bean Bucks are dollar-denominated store rewards stated as percentages, so cash-back (general 1, 8).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bean Bucks are dollar-denominated store rewards stated as percentages: cash-back (general 1, 8; Citi Bean Bucks convention)."
+          }
         },
         {
           "op": "set",
@@ -1368,7 +1425,11 @@
             "sourceId": "citi-llbean-mastercard-product",
             "quote": "1 Bean Buck = $1 savings on your future L.L.Bean purchases"
           },
-          "note": "A cash-back card has no point value (general 13); Bean Bucks are worth $1 each toward L.L.Bean purchases."
+          "note": "A cash-back card has no point value (general 13); Bean Bucks are worth $1 each toward L.L.Bean purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A cash-back card has no point value (general 13)."
+          }
         }
       ],
       "addedRules": [
@@ -1389,7 +1450,11 @@
               "quote": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases."
             }
           ],
-          "note": "5% at one merchant, so category other (general 4). No capture states a cap or enrollment, so both stay null."
+          "note": "5% at one merchant, so category other (general 4). No capture states a cap or enrollment, so both stay null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "5% at one merchant, category other (general 4); the page states no cap and nothing about enrollment, so cap and activation are null (Citi L.L.Bean convention)."
+          }
         },
         {
           "rule": {
@@ -1408,7 +1473,11 @@
               "quote": "Earn Bean Bucks everywhere you shop 5% at L.L.Bean, 2% at restaurants, and 1% on purchases everywhere else"
             }
           ],
-          "note": "2% at restaurants."
+          "note": "2% at restaurants.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2% at restaurants is stated verbatim on the page; dining."
+          }
         },
         {
           "rule": {
@@ -1427,7 +1496,11 @@
               "quote": "Cardmembers earn Bean Bucks® on every purchase including 5% at L.L.Bean, 2% at restaurants, and 1% for all other purchases."
             }
           ],
-          "note": "1% base rate."
+          "note": "1% base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "1% on all other purchases is stated verbatim on the page; base rule."
+          }
         }
       ],
       "addedExclusions": [],
@@ -1440,7 +1513,11 @@
               "quote": "Use Bean Bucks® to make purchases at L.L.Bean."
             }
           ],
-          "note": "Bean Bucks are usable only at L.L.Bean (general 8)."
+          "note": "Bean Bucks are usable only at L.L.Bean (general 8).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bean Bucks are usable only at L.L.Bean; the store-only ambiguous issue is required (general 8, Citi convention)."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1451,7 +1528,11 @@
             "sourceId": "citi-llbean-mastercard-product",
             "quote": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases."
           },
-          "note": "The keyword-search anchor states 5% at L.L.Bean."
+          "note": "The keyword-search anchor states 5% at L.L.Bean.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states 5% at L.L.Bean; the hint is accurate."
+          }
         }
       ]
     },
@@ -1469,7 +1550,11 @@
             "sourceId": "citi-bloomingdales-amex-product",
             "quote": "Loyallists: 3 points per $1 spent"
           },
-          "note": "Undrafted card: the card earns points per dollar (Citi convention: store cards that state only points stay points)."
+          "note": "Undrafted card: the card earns points per dollar (Citi convention: store cards that state only points stay points).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The page states only points per dollar; points per the Citi store-card convention."
+          }
         },
         {
           "op": "set",
@@ -1480,7 +1565,11 @@
             "sourceId": "citi-bloomingdales-amex-product",
             "quote": "5,000 Points = $25 Reward"
           },
-          "note": "5,000 points buy a $25 store Reward, half a cent a point (general 14, Citi convention)."
+          "note": "5,000 points buy a $25 store Reward, half a cent a point (general 14, Citi convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "5,000 points = $25 Reward is a fixed store reward value: 50 hundredths of a cent (general 14, Citi convention)."
+          }
         }
       ],
       "addedRules": [
@@ -1505,7 +1594,11 @@
               "quote": "3 points per $1 spent for Loyallist"
             }
           ],
-          "note": "Bloomingdale's purchases at the Loyallist tier a new cardholder starts in (Citi convention); one merchant, so other (general 4)."
+          "note": "Bloomingdale's purchases at the Loyallist tier a new cardholder starts in (Citi convention); one merchant, so other (general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3X at Bloomingdale s at the Loyallist tier a new cardholder starts in (Citi convention), category other (general 4); both anchors verified."
+          }
         },
         {
           "rule": {
@@ -1528,7 +1621,37 @@
               "quote": "You can use the Bloomingdale’s American Express Card anywhere that American Express is accepted"
             }
           ],
-          "note": "The Amex card earns 3 points per $1 outside Bloomingdale's at the Loyallist tier; the comparison table marks this as the Amex card only."
+          "note": "The Amex card earns 3 points per $1 outside Bloomingdale's at the Loyallist tier; the comparison table marks this as the Amex card only.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The all-purchases wording keeps the capture s own heading for the outside-earn table, which the Citi overlay convention already uses for this card, and the comparison table marks that row as included for the American Express card only. The verifier s anchors stated no rate, so the replacement adds the page sentence giving 3 points per $1 for Loyallists outside Bloomingdale s and keeps the anywhere-accepted sentence.",
+            "replacement": {
+              "rule": {
+                "category": "all-purchases",
+                "issuerWording": "Shopping Outside of Bloomingdale’s",
+                "rateBps": 300,
+                "paidOnPaymentBps": 0,
+                "cap": null,
+                "activation": null,
+                "usMerchantsOnly": null,
+                "limitedTime": null
+              },
+              "anchors": [
+                {
+                  "sourceId": "citi-bloomingdales-amex-product",
+                  "quote": "Rack up points outside of Bloomingdale’s too!"
+                },
+                {
+                  "sourceId": "citi-bloomingdales-amex-product",
+                  "quote": "Loyallists: 3 points per $1 spent"
+                },
+                {
+                  "sourceId": "citi-bloomingdales-amex-product",
+                  "quote": "You can use the Bloomingdale’s American Express Card anywhere that American Express is accepted"
+                }
+              ]
+            }
+          }
         }
       ],
       "addedExclusions": [],
@@ -1541,7 +1664,11 @@
               "quote": "10 points per $1 spent for Top of the List Unlocked"
             }
           ],
-          "note": "Higher Loyallist tiers (Top of the List, Top of the List Unlocked) earn 4X or 10X at Bloomingdale's and 4X outside; tier conditions are not stated (general 17)."
+          "note": "Higher Loyallist tiers (Top of the List, Top of the List Unlocked) earn 4X or 10X at Bloomingdale's and 4X outside; tier conditions are not stated (general 17).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Top of the List and Top of the List Unlocked rates are gated on tiers whose qualification the page does not state (general 17); the out-of-scope issue mirrors the Macy s tier handling."
+          }
         },
         {
           "code": "ambiguous",
@@ -1551,7 +1678,11 @@
               "quote": "Redeem your Reward for merchandise purchased at Bloomingdale’s, bloomingdales.com or Bloomingdale’s The Outlet Store."
             }
           ],
-          "note": "Rewards are usable only at Bloomingdale's (general 14)."
+          "note": "Rewards are usable only at Bloomingdale's (general 14).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rewards redeem only at Bloomingdale s, bloomingdales.com or The Outlet Store; the store-only ambiguous issue is required (general 14, Citi convention)."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1570,7 +1701,11 @@
             "sourceId": "citi-bloomingdales-amex-product",
             "quote": "4 points per $1 spent for Top of the List"
           },
-          "note": "Anchored on the comparison table; the outside rate for Top of the List Unlocked is 4, not 10."
+          "note": "Anchored on the comparison table; the outside rate for Top of the List Unlocked is 4, not 10.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored on the comparison table; the rates per tier match the capture, including 4 outside for Top of the List Unlocked."
+          }
         }
       ]
     }

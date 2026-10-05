@@ -115,6 +115,28 @@
       ]
     },
     {
+      "cardId": "citi-aadvantage-executive",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'eligible American Airlines purchases'",
+          "rate": "4x (5x after $150,000 in purchases in a calendar year, for the rest of that year)",
+          "cap": "none stated",
+          "conditions": "Billed by AA as merchant of record",
+          "merchants": [
+            "American Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Upon reaching $150,000 in spend on your Citi® / AAdvantage® Executive World Legend Mastercard in a calendar year",
+          "verification": "confirmed",
+          "anchorSourceId": "citi-aadvantage-executive-rewards-terms"
+        }
+      ]
+    },
+    {
       "cardId": "citi-aadvantage-globe",
       "issuer": "Citi",
       "hints": [
@@ -159,6 +181,28 @@
       ]
     },
     {
+      "cardId": "citi-llbean-mastercard",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'L.L.Bean'",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "L.L.Bean"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "5% at L.L.Bean, 2% at restaurants, 1% all other purchases.",
+          "verification": "confirmed",
+          "anchorSourceId": "citi-llbean-mastercard-product"
+        }
+      ]
+    },
+    {
       "cardId": "citi-dillards-mastercard",
       "issuer": "Citi",
       "hints": [
@@ -195,6 +239,25 @@
           "anchorMethod": "verifier",
           "anchor": "New credit cards are opened at Silver status. Cardholders can access Gold status with $500 - $1,199 annual spend",
           "anchorSourceId": "citi-macys-amex-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "citi-bloomingdales-amex",
+      "issuer": "Citi",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Loyallist tiers: 3/4/10 points per $1 at Bloomingdale's and 3/4/4 outside for Loyallist/Top of the List/Unlocked",
+          "rate": "Loyallist 3, Top of the List 4, Top of the List Unlocked 10 at Bloomingdale's; 3, 4, 4 outside",
+          "cap": "none stated",
+          "conditions": "Tier qualification is not stated in the capture",
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "4 points per $1 spent for Top of the List",
+          "anchorSourceId": "citi-bloomingdales-amex-product",
           "verification": "fixed"
         }
       ]
