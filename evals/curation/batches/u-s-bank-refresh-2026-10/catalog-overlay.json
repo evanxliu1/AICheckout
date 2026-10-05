@@ -1,0 +1,2764 @@
+{
+  "schemaVersion": 1,
+  "version": "u-s-bank-refresh-2026-10.overlay.1",
+  "annotationStatus": "agent-verified",
+  "description": "Catalog overlay of pipeline batch u-s-bank-refresh-2026-10: one entry per corpus card, merged from the overlay/<issuer>.json fragments by pipeline accept overlay.",
+  "programs": [],
+  "programDetails": [],
+  "gates": [
+    {
+      "id": "us-bank-smartly-balance-tier",
+      "question": "With a U.S. Bank Smartly Savings account, what is your qualifying balance in Smartly Checking and Safe Debit accounts?",
+      "options": [
+        {
+          "id": "none",
+          "label": "No Smartly Savings account, or under $10,000"
+        },
+        {
+          "id": "10k-to-49k",
+          "label": "$10,000 to $49,999.99"
+        },
+        {
+          "id": "50k-to-99k",
+          "label": "$50,000 to $99,999.99"
+        },
+        {
+          "id": "100k-plus",
+          "label": "$100,000 or more"
+        }
+      ],
+      "anchors": [
+        {
+          "sourceId": "us-bank-smartly-product",
+          "quote": "Includes a 25% Smartly Earning Bonus with a qualifying balance between $10,000 and $49,999."
+        },
+        {
+          "sourceId": "us-bank-smartly-product",
+          "quote": "Includes a 100% Smartly Earning Bonus with a qualifying balance of $100,000 or more."
+        },
+        {
+          "sourceId": "us-bank-smartly-product",
+          "quote": "Have or open a U.S. Bank Smartly® Savings account with a minimum opening deposit of $25; and"
+        }
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "cardId": "us-bank-cash-plus",
+      "issuer": "U.S. Bank",
+      "corpusCaseSha256": "7df81545b0e4d51f2660ab75d7852c64490d30c8b9a8cdd6d1ff8e4202b796be",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [
+        {
+          "id": "five-percent-categories",
+          "kind": "chosen",
+          "label": "Two 5% cash back categories, chosen each quarter",
+          "picks": 2,
+          "options": [
+            {
+              "id": "fast-food",
+              "label": "Fast food"
+            },
+            {
+              "id": "home-utilities",
+              "label": "Home utilities"
+            },
+            {
+              "id": "tv-internet-streaming",
+              "label": "TV, internet and streaming"
+            },
+            {
+              "id": "department-stores",
+              "label": "Department stores"
+            },
+            {
+              "id": "cell-phone",
+              "label": "Cell phone"
+            },
+            {
+              "id": "electronic-stores",
+              "label": "Electronic stores"
+            },
+            {
+              "id": "sporting-goods",
+              "label": "Sporting goods"
+            },
+            {
+              "id": "furniture-stores",
+              "label": "Furniture stores"
+            },
+            {
+              "id": "movie-theaters",
+              "label": "Movie theaters"
+            },
+            {
+              "id": "ground-transportation",
+              "label": "Ground transportation"
+            },
+            {
+              "id": "gyms-fitness-centers",
+              "label": "Gyms/fitness centers"
+            },
+            {
+              "id": "select-clothing-stores",
+              "label": "Select clothing stores"
+            }
+          ],
+          "defaultOptionIds": [],
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "5% cash back on two categories you choose"
+            }
+          ]
+        },
+        {
+          "id": "two-percent-category",
+          "kind": "chosen",
+          "label": "One 2% everyday cash back category, chosen each quarter",
+          "picks": 1,
+          "options": [
+            {
+              "id": "grocery",
+              "label": "Grocery stores and grocery delivery"
+            },
+            {
+              "id": "restaurants",
+              "label": "Restaurants"
+            },
+            {
+              "id": "gas-ev-charging",
+              "label": "Gas stations and EV charging stations"
+            }
+          ],
+          "defaultOptionIds": [],
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "2% cash back on one everyday category you choose like"
+            }
+          ]
+        }
+      ],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "streaming",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "brand-exclusion"
+          ],
+          "note": "Chosen 5% option sharing the $2,000 quarterly cap. Streaming bought through PayPal or Amazon may not qualify; the PayPal path and Amazon brand are excluded (conservative). The sample list also names Amazon Music as qualifying, so this may understate it.",
+          "set": {
+            "excludedBrandIds": [
+              "amazon"
+            ],
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "tv-internet-streaming"
+            },
+            "excludedPaymentPaths": [
+              "paypal"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter on two categories you choose.3"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Purchases made using a third-party service such as PayPal®, Google Play, Amazon, and iTunes Store may not qualify."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "Chosen 5% option sharing the $2,000 quarterly cap; narrower than dining, so it keeps the corpus category (O8, general 19).",
+          "set": {
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "fast-food"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter on two categories you choose.3"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: cell phone provider bills are telecom. The option stays in the 5% choice and earns nothing at retail."
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "category",
+            "brand-exclusion"
+          ],
+          "note": "Department stores option moved to the v3 department-stores category; discount stores Walmart, Target and Costco are named as not qualifying, so they are excluded brands. Shares the $2,000 quarterly cap.",
+          "set": {
+            "category": "department-stores",
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco"
+            ],
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "department-stores"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter on two categories you choose.3"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "purchases at discount stores like Wal-Mart®, Target® and Costco® do not qualify."
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: household utility bills. The option stays in the 5% choice and earns nothing at retail."
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: furniture stores. The option stays in the 5% choice; the label is kept."
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "category",
+            "brand-exclusion"
+          ],
+          "note": "Electronics stores option moved to the v3 electronics category; electronics bought from telecom companies (Verizon, AT&T) or discount stores (Target, Walmart) are named as not qualifying, so those brands are excluded.",
+          "set": {
+            "category": "electronics",
+            "excludedBrandIds": [
+              "verizon",
+              "att",
+              "target",
+              "walmart"
+            ],
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "electronic-stores"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter on two categories you choose.3"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Does not include electronics purchases from telecom companies like Verizon or AT&T®, or from discount stores like Target® or Wal-Mart®."
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "was": {
+            "category": "entertainment",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "Chosen 5% option sharing the $2,000 quarterly cap; narrower than entertainment, so it keeps the corpus category (O8, general 19).",
+          "set": {
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "movie-theaters"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter on two categories you choose.3"
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: sporting goods stores. The option stays in the 5% choice; the label is kept."
+        },
+        {
+          "index": 10,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "brand-scope"
+          ],
+          "note": "The option pays only at a closed list of named clothing chains, so it is brand-scoped to those 13 brands (O3) rather than held out as a clothing category. Shares the $2,000 quarterly cap.",
+          "set": {
+            "brandIds": [
+              "aeropostale",
+              "express",
+              "jos-a-bank",
+              "american-eagle",
+              "forever-21",
+              "old-navy",
+              "ann-taylor",
+              "gap",
+              "talbots",
+              "banana-republic",
+              "j-crew",
+              "the-limited",
+              "eddie-bauer"
+            ],
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "select-clothing-stores"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter on two categories you choose.3"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "This category includes only the merchants listed below."
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: gym and fitness membership fees. The option stays in the 5% choice and earns nothing at retail."
+        },
+        {
+          "index": 12,
+          "was": {
+            "category": "transit",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "Chosen 5% option sharing the $2,000 quarterly cap; maps to transit as labelled.",
+          "set": {
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "ground-transportation"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter on two categories you choose.3"
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "was": {
+            "category": "gas",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "brand-exclusion"
+          ],
+          "note": "Gas stations and EV charging option of the 2% choice. Discount stores/supercenters and wholesale clubs earn 1%, so Walmart, Target, Costco, Sam's Club and BJ's are excluded brands.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ],
+            "choice": {
+              "choiceId": "two-percent-category",
+              "optionId": "gas-ev-charging"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "2% cash back on one everyday category you choose like"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "* Excludes discount stores/supercenters and wholesale clubs"
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "brand-exclusion"
+          ],
+          "note": "Gas stations and EV charging option of the 2% choice. Discount stores/supercenters and wholesale clubs earn 1%, so Walmart, Target, Costco, Sam's Club and BJ's are excluded brands.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ],
+            "choice": {
+              "choiceId": "two-percent-category",
+              "optionId": "gas-ev-charging"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "2% cash back on one everyday category you choose like"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "* Excludes discount stores/supercenters and wholesale clubs"
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice"
+          ],
+          "note": "Restaurants option of the 2% choice; excludes most fast food, so it is narrower than dining and keeps the corpus category (O8).",
+          "set": {
+            "choice": {
+              "choiceId": "two-percent-category",
+              "optionId": "restaurants"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "2% cash back on one everyday category you choose like"
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "brand-exclusion"
+          ],
+          "note": "Grocery option of the 2% choice. Target, Walmart and wholesale clubs are excluded, so Walmart, Target, Costco, Sam's Club and BJ's are excluded brands.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ],
+            "choice": {
+              "choiceId": "two-percent-category",
+              "optionId": "grocery"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "2% cash back on one everyday category you choose like"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Grocery store and supermarket purchases at discount stores/supercenters such as Target and Walmart and wholesale clubs are excluded."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Gas at grocery stores may qualify for 2% depending on the location; classification is left to the merchant category, and the discount and wholesale club brands stay excluded on the gas and grocery options."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Merchant cash-back deals are personalized offers, not a standing card rate; no catalog change."
+        },
+        {
+          "index": 2,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "The 5% choice picks two of twelve options and the 2% choice one of three each quarter, no default; the kept 5% rules share one $2,000 quarterly cap.",
+          "rules": [
+            1,
+            2,
+            4,
+            7,
+            8,
+            10,
+            12,
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        {
+          "index": 3,
+          "disposition": "noted",
+          "how": [],
+          "note": "Full-service restaurants fall in the Restaurants option, which keeps the dining category under O8; no catalog change."
+        },
+        {
+          "index": 4,
+          "disposition": "noted",
+          "how": [],
+          "note": "Restaurants option excludes most fast food; under O8 it keeps the dining category, so the catalog may overstate it at fast-food merchants."
+        },
+        {
+          "index": 5,
+          "disposition": "noted",
+          "how": [],
+          "note": "Movie theaters option covers only part of entertainment; under O8 it keeps the entertainment category."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "Chosen 5% categories: card choice picking two of twelve options, the kept rules sharing the $2,000 quarterly cap; held-out options stay in the choice.",
+          "rules": [
+            1,
+            2,
+            4,
+            7,
+            8,
+            10,
+            12
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "brand-exclusion"
+          ],
+          "note": "Chosen 2% everyday category: second card choice picking one of three; grocery and gas options exclude discount and wholesale club brands.",
+          "rules": [
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method",
+            "brand-exclusion"
+          ],
+          "note": "Streaming via PayPal or Amazon may not qualify: PayPal path and Amazon brand excluded on the streaming option. Google Play and iTunes have no brand. The sample list names Amazon Music as qualifying, so this may understate it.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-smartly",
+      "issuer": "U.S. Bank",
+      "corpusCaseSha256": "103344610ccaf01191668a99128b80ec1c8204abd5c07e2bd7384e0243c44bb6",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [],
+      "addedRules": [
+        {
+          "key": "smartly-tier-2-5",
+          "issuerWording": "Earn a total of 2.5%",
+          "rateBps": 250,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "all-purchases",
+          "cap": {
+            "kind": "spend",
+            "amountCents": 1000000,
+            "period": "billing-cycle",
+            "rateAfterCapBps": 200
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "us-bank-smartly-balance-tier",
+              "optionIds": [
+                "10k-to-49k"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "gate"
+          ],
+          "note": "Smartly Earning Bonus tier as a gated all-purchases rule on the first $10,000 each billing cycle, then the 2% base. Education, gift card, insurance, tax, business-to-business and bill-payment purchases earn only the base; not modelled.",
+          "anchors": [
+            {
+              "sourceId": "us-bank-smartly-product",
+              "quote": "Includes a 25% Smartly Earning Bonus with a qualifying balance between $10,000 and $49,999."
+            },
+            {
+              "sourceId": "us-bank-smartly-product",
+              "quote": "Smartly Earning Bonus applies to a maximum of $10,000 in eligible Net Purchases each Card billing cycle."
+            }
+          ]
+        },
+        {
+          "key": "smartly-tier-3",
+          "issuerWording": "Earn a total of 3%",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "all-purchases",
+          "cap": {
+            "kind": "spend",
+            "amountCents": 1000000,
+            "period": "billing-cycle",
+            "rateAfterCapBps": 200
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "us-bank-smartly-balance-tier",
+              "optionIds": [
+                "50k-to-99k"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "gate"
+          ],
+          "note": "Smartly Earning Bonus tier as a gated all-purchases rule on the first $10,000 each billing cycle, then the 2% base. Education, gift card, insurance, tax, business-to-business and bill-payment purchases earn only the base; not modelled.",
+          "anchors": [
+            {
+              "sourceId": "us-bank-smartly-product",
+              "quote": "Includes a 50% Smartly Earning Bonus with a qualifying balance between $50,000 and $99,999."
+            },
+            {
+              "sourceId": "us-bank-smartly-product",
+              "quote": "Smartly Earning Bonus applies to a maximum of $10,000 in eligible Net Purchases each Card billing cycle."
+            }
+          ]
+        },
+        {
+          "key": "smartly-tier-4",
+          "issuerWording": "Earn a total of 4%",
+          "rateBps": 400,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "all-purchases",
+          "cap": {
+            "kind": "spend",
+            "amountCents": 1000000,
+            "period": "billing-cycle",
+            "rateAfterCapBps": 200
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "us-bank-smartly-balance-tier",
+              "optionIds": [
+                "100k-plus"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "gate"
+          ],
+          "note": "Smartly Earning Bonus tier as a gated all-purchases rule on the first $10,000 each billing cycle, then the 2% base. Education, gift card, insurance, tax, business-to-business and bill-payment purchases earn only the base; not modelled.",
+          "anchors": [
+            {
+              "sourceId": "us-bank-smartly-product",
+              "quote": "Includes a 100% Smartly Earning Bonus with a qualifying balance of $100,000 or more."
+            },
+            {
+              "sourceId": "us-bank-smartly-product",
+              "quote": "Smartly Earning Bonus applies to a maximum of $10,000 in eligible Net Purchases each Card billing cycle."
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "Balance tiers become the Smartly balance-tier gate with one gated all-purchases rule per tier.",
+          "rules": [
+            "smartly-tier-2-5",
+            "smartly-tier-3",
+            "smartly-tier-4"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "Tier rule gated on the Smartly qualifying-balance gate, capped at $10,000 per billing cycle then 2%.",
+          "rules": [
+            "smartly-tier-2-5"
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "Tier rule gated on the Smartly qualifying-balance gate, capped at $10,000 per billing cycle then 2%.",
+          "rules": [
+            "smartly-tier-3"
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "Tier rule gated on the Smartly qualifying-balance gate, capped at $10,000 per billing cycle then 2%.",
+          "rules": [
+            "smartly-tier-4"
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-altitude-go",
+      "issuer": "U.S. Bank",
+      "corpusCaseSha256": "ff37039120a471ae49064698f854c5ddeaa602a61b27845040694fe85063e7e4",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 2,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion"
+          ],
+          "note": "Grocery at Target, Walmart and wholesale clubs earns the base: Walmart, Target, Costco, Sam's Club and BJ's are excluded brands.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-altitude-go-rewards-terms",
+              "quote": "Purchases at discount stores/supercenters such as Target and Walmart and wholesale clubs will earn only 1 point."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "gas",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion"
+          ],
+          "note": "Gas and EV charging at discount stores/supercenters and wholesale clubs earn the base: Walmart, Target, Costco, Sam's Club and BJ's are excluded brands. Gas at grocery stores is left to the merchant category.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-altitude-go-rewards-terms",
+              "quote": "Purchases at discount stores/supercenters, wholesale clubs and grocery stores/supermarkets will earn only 1 Point."
+            },
+            {
+              "sourceId": "us-bank-altitude-go-rewards-terms",
+              "quote": "Purchases at discount stores/supercenters such as Target and Walmart and wholesale clubs will earn only 1 point."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion"
+          ],
+          "note": "Gas and EV charging at discount stores/supercenters and wholesale clubs earn the base: Walmart, Target, Costco, Sam's Club and BJ's are excluded brands. Gas at grocery stores is left to the merchant category.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-altitude-go-rewards-terms",
+              "quote": "Purchases at discount stores/supercenters, wholesale clubs and grocery stores/supermarkets will earn only 1 Point."
+            },
+            {
+              "sourceId": "us-bank-altitude-go-rewards-terms",
+              "quote": "Purchases at discount stores/supercenters such as Target and Walmart and wholesale clubs will earn only 1 point."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Redemption value: the maximum point value for a U.S. Bank deposit states no amount, so the program stays unvalued; no earn change."
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-altitude-connect",
+      "issuer": "U.S. Bank",
+      "corpusCaseSha256": "fd6f95bc8aff5364047518a5804221392bc90207eb250ffc8f90725de1e4ddc4",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "category"
+          ],
+          "note": "Travel category recategorized to transit: only the taxi, limousine and passenger-train part is at retail and represented; airlines, hotels, car rentals and cruises are not.",
+          "set": {
+            "category": "transit"
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-altitude-connect-rewards-terms",
+              "quote": "such as purchases made directly with airlines, hotels, car rentals, taxicabs, limousines, passenger trains and cruise line companies"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "gas",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "shared-cap"
+          ],
+          "note": "Gas and EV charging at discount stores/supercenters and wholesale clubs earn the base: Walmart, Target, Costco, Sam's Club and BJ's are excluded brands. Gas at grocery stores is left to the merchant category. Gas and EV share one $1,000 quarterly cap.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ],
+            "sharedCapId": "gas-ev-quarterly"
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-altitude-connect-rewards-terms",
+              "quote": "Purchases at wholesale clubs, discount stores/supercenters and grocery stores/supermarkets will earn only 1 Point."
+            },
+            {
+              "sourceId": "us-bank-altitude-connect-product",
+              "quote": "And 4X points at gas stations/EV charging stations* on your first $1,000 each quarter."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "shared-cap"
+          ],
+          "note": "Gas and EV charging at discount stores/supercenters and wholesale clubs earn the base: Walmart, Target, Costco, Sam's Club and BJ's are excluded brands. Gas at grocery stores is left to the merchant category. Gas and EV share one $1,000 quarterly cap.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ],
+            "sharedCapId": "gas-ev-quarterly"
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-altitude-connect-rewards-terms",
+              "quote": "Purchases at wholesale clubs, discount stores/supercenters and grocery stores/supermarkets will earn only 1 Point."
+            },
+            {
+              "sourceId": "us-bank-altitude-connect-product",
+              "quote": "And 4X points at gas stations/EV charging stations* on your first $1,000 each quarter."
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion"
+          ],
+          "note": "Grocery at Target, Walmart and wholesale clubs earns the base: Walmart, Target, Costco, Sam's Club and BJ's are excluded brands.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-altitude-connect-rewards-terms",
+              "quote": "Purchases at discount stores/supercenters such as Target and Walmart and wholesale clubs will earn only 1 Point."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Redemption value: the maximum point value for deposit or travel states no amount, so the program stays unvalued; no earn change."
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-cash-plus-secured",
+      "issuer": "U.S. Bank",
+      "corpusCaseSha256": "9a382d233f73c45068eb54be20ebf492e7f4769933af1e099c53a2b4a26cab6f",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [
+        {
+          "id": "five-percent-categories",
+          "kind": "chosen",
+          "label": "Two 5% cash back categories, chosen each quarter",
+          "picks": 2,
+          "options": [
+            {
+              "id": "fast-food",
+              "label": "Fast food"
+            },
+            {
+              "id": "home-utilities",
+              "label": "Home utilities"
+            },
+            {
+              "id": "tv-internet-streaming",
+              "label": "TV, internet and streaming"
+            },
+            {
+              "id": "department-stores",
+              "label": "Department stores"
+            },
+            {
+              "id": "cell-phone",
+              "label": "Cell phone"
+            },
+            {
+              "id": "electronic-stores",
+              "label": "Electronic stores"
+            },
+            {
+              "id": "sporting-goods",
+              "label": "Sporting goods"
+            },
+            {
+              "id": "furniture-stores",
+              "label": "Furniture stores"
+            },
+            {
+              "id": "movie-theaters",
+              "label": "Movie theaters"
+            },
+            {
+              "id": "ground-transportation",
+              "label": "Ground transportation"
+            },
+            {
+              "id": "gyms-fitness-centers",
+              "label": "Gyms/fitness centers"
+            },
+            {
+              "id": "select-clothing-stores",
+              "label": "Select clothing stores"
+            }
+          ],
+          "defaultOptionIds": [],
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "5% cash back on two categories you choose"
+            }
+          ]
+        },
+        {
+          "id": "two-percent-category",
+          "kind": "chosen",
+          "label": "One 2% everyday cash back category, chosen each quarter",
+          "picks": 1,
+          "options": [
+            {
+              "id": "grocery",
+              "label": "Grocery stores and grocery delivery"
+            },
+            {
+              "id": "restaurants",
+              "label": "Restaurants"
+            },
+            {
+              "id": "gas-ev-charging",
+              "label": "Gas stations and EV charging stations"
+            }
+          ],
+          "defaultOptionIds": [],
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "2% cash back on one everyday category you choose like"
+            }
+          ]
+        }
+      ],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "streaming",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "checkout-method",
+            "brand-exclusion"
+          ],
+          "note": "Chosen 5% option sharing the $2,000 quarterly cap. Streaming bought through PayPal or Amazon may not qualify; the PayPal path and Amazon brand are excluded (conservative). The sample list also names Amazon Music as qualifying, so this may understate it.",
+          "set": {
+            "excludedBrandIds": [
+              "amazon"
+            ],
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "tv-internet-streaming"
+            },
+            "excludedPaymentPaths": [
+              "paypal"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter in two categories you choose3"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Purchases made using a third-party service such as PayPal®, Google Play, Amazon, and iTunes Store may not qualify."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "dining",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "Chosen 5% option sharing the $2,000 quarterly cap; narrower than dining, so it keeps the corpus category (O8, general 19).",
+          "set": {
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "fast-food"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter in two categories you choose3"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: cell phone provider bills are telecom. The option stays in the 5% choice and earns nothing at retail."
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "category",
+            "brand-exclusion"
+          ],
+          "note": "Department stores option moved to the v3 department-stores category; discount stores Walmart, Target and Costco are named as not qualifying, so they are excluded brands. Shares the $2,000 quarterly cap.",
+          "set": {
+            "category": "department-stores",
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco"
+            ],
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "department-stores"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter in two categories you choose3"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "purchases at discount stores like Wal-Mart®, Target® and Costco® do not qualify."
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: household utility bills. The option stays in the 5% choice and earns nothing at retail."
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: furniture stores. The option stays in the 5% choice; the label is kept."
+        },
+        {
+          "index": 8,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "category",
+            "brand-exclusion"
+          ],
+          "note": "Electronics stores option moved to the v3 electronics category; electronics bought from telecom companies (Verizon, AT&T) or discount stores (Target, Walmart) are named as not qualifying, so those brands are excluded.",
+          "set": {
+            "category": "electronics",
+            "excludedBrandIds": [
+              "verizon",
+              "att",
+              "target",
+              "walmart"
+            ],
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "electronic-stores"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter in two categories you choose3"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Does not include electronics purchases from telecom companies like Verizon or AT&T®, or from discount stores like Target® or Wal-Mart®."
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "was": {
+            "category": "entertainment",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "Chosen 5% option sharing the $2,000 quarterly cap; narrower than entertainment, so it keeps the corpus category (O8, general 19).",
+          "set": {
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "movie-theaters"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter in two categories you choose3"
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: sporting goods stores. The option stays in the 5% choice; the label is kept."
+        },
+        {
+          "index": 11,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap",
+            "brand-scope"
+          ],
+          "note": "The option pays only at a closed list of named clothing chains, so it is brand-scoped to those 13 brands (O3) rather than held out as a clothing category. Shares the $2,000 quarterly cap.",
+          "set": {
+            "brandIds": [
+              "aeropostale",
+              "express",
+              "jos-a-bank",
+              "american-eagle",
+              "forever-21",
+              "old-navy",
+              "ann-taylor",
+              "gap",
+              "talbots",
+              "banana-republic",
+              "j-crew",
+              "the-limited",
+              "eddie-bauer"
+            ],
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "select-clothing-stores"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter in two categories you choose3"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "This category includes only the merchants listed below."
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: gym and fitness membership fees. The option stays in the 5% choice and earns nothing at retail."
+        },
+        {
+          "index": 13,
+          "was": {
+            "category": "transit",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "Chosen 5% option sharing the $2,000 quarterly cap; maps to transit as labelled.",
+          "set": {
+            "sharedCapId": "five-percent-quarterly",
+            "choice": {
+              "choiceId": "five-percent-categories",
+              "optionId": "ground-transportation"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "on your first $2,000 in combined eligible purchases each quarter in two categories you choose3"
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "was": {
+            "category": "gas",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "brand-exclusion"
+          ],
+          "note": "Gas stations and EV charging option of the 2% choice. Discount stores/supercenters and wholesale clubs earn 1%, so Walmart, Target, Costco, Sam's Club and BJ's are excluded brands.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ],
+            "choice": {
+              "choiceId": "two-percent-category",
+              "optionId": "gas-ev-charging"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "2% cash back on one everyday category you choose like"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "* Excludes discount stores/supercenters and wholesale clubs"
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "brand-exclusion"
+          ],
+          "note": "Gas stations and EV charging option of the 2% choice. Discount stores/supercenters and wholesale clubs earn 1%, so Walmart, Target, Costco, Sam's Club and BJ's are excluded brands.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ],
+            "choice": {
+              "choiceId": "two-percent-category",
+              "optionId": "gas-ev-charging"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "2% cash back on one everyday category you choose like"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "* Excludes discount stores/supercenters and wholesale clubs"
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice"
+          ],
+          "note": "Restaurants option of the 2% choice; excludes most fast food, so it is narrower than dining and keeps the corpus category (O8).",
+          "set": {
+            "choice": {
+              "choiceId": "two-percent-category",
+              "optionId": "restaurants"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "2% cash back on one everyday category you choose like"
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "brand-exclusion"
+          ],
+          "note": "Grocery option of the 2% choice. Target, Walmart and wholesale clubs are excluded, so Walmart, Target, Costco, Sam's Club and BJ's are excluded brands.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ],
+            "choice": {
+              "choiceId": "two-percent-category",
+              "optionId": "grocery"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "2% cash back on one everyday category you choose like"
+            },
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Grocery store and supermarket purchases at discount stores/supercenters such as Target and Walmart and wholesale clubs are excluded."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "The 5% choice picks two of twelve options each quarter, no default; the kept 5% rules share one $2,000 quarterly cap.",
+          "rules": [
+            1,
+            3,
+            5,
+            8,
+            9,
+            11,
+            13
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Full-service restaurants fall in the Restaurants option, which keeps the dining category under O8; no catalog change."
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "Restaurants option excludes most fast food; under O8 it keeps the dining category, so the catalog may overstate it at fast-food merchants."
+        },
+        {
+          "index": 3,
+          "disposition": "noted",
+          "how": [],
+          "note": "Movie theaters option covers only part of entertainment; under O8 it keeps the entertainment category."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "shared-cap"
+          ],
+          "note": "Chosen 5% categories: card choice picking two of twelve options, the kept rules sharing the $2,000 quarterly cap; held-out options stay in the choice.",
+          "rules": [
+            1,
+            3,
+            5,
+            8,
+            9,
+            11,
+            13
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "choice",
+            "brand-exclusion"
+          ],
+          "note": "Chosen 2% everyday category: second card choice picking one of three; grocery and gas options exclude discount and wholesale club brands.",
+          "rules": [
+            14,
+            15,
+            16,
+            17
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method",
+            "brand-exclusion"
+          ],
+          "note": "Streaming via PayPal or Amazon may not qualify: PayPal path and Amazon brand excluded on the streaming option. Google Play and iTunes have no brand.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-altitude-go-secured",
+      "issuer": "U.S. Bank",
+      "corpusCaseSha256": "2e9cc750256e441b775f8dda1f6939ccb000932d90c804f7a370be2b7c4658ca",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 2,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion"
+          ],
+          "note": "Grocery at Target, Walmart and wholesale clubs earns the base: Walmart, Target, Costco, Sam's Club and BJ's are excluded brands.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-altitude-go-secured-rewards-terms",
+              "quote": "Purchases at discount stores/supercenters such as Target and Walmart and wholesale clubs will earn only 1 point."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "gas",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion"
+          ],
+          "note": "Gas and EV charging at discount stores/supercenters and wholesale clubs earn the base: Walmart, Target, Costco, Sam's Club and BJ's are excluded brands. Gas at grocery stores is left to the merchant category.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-altitude-go-secured-rewards-terms",
+              "quote": "Purchases at discount stores/supercenters, wholesale clubs and grocery stores/supermarkets will earn only 1 Point."
+            },
+            {
+              "sourceId": "us-bank-altitude-go-secured-rewards-terms",
+              "quote": "Purchases at discount stores/supercenters such as Target and Walmart and wholesale clubs will earn only 1 point."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion"
+          ],
+          "note": "Gas and EV charging at discount stores/supercenters and wholesale clubs earn the base: Walmart, Target, Costco, Sam's Club and BJ's are excluded brands. Gas at grocery stores is left to the merchant category.",
+          "set": {
+            "excludedBrandIds": [
+              "walmart",
+              "target",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-altitude-go-secured-rewards-terms",
+              "quote": "Purchases at discount stores/supercenters, wholesale clubs and grocery stores/supermarkets will earn only 1 Point."
+            },
+            {
+              "sourceId": "us-bank-altitude-go-secured-rewards-terms",
+              "quote": "Purchases at discount stores/supercenters such as Target and Walmart and wholesale clubs will earn only 1 point."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-harley-davidson-hog-elite",
+      "issuer": "U.S. Bank",
+      "corpusCaseSha256": "e4eeec77e2e83130902b87ab25afaf6342f48390bc0146e1a17c864a6c266565",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Merchants classified as H-D (dealerships, H-D.com, museum, factory tours, H-D Insurance) are one brand family: brand scope harley-davidson at 5X.",
+          "set": {
+            "brandIds": [
+              "harley-davidson"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-hog-elite-product",
+              "quote": "merchants classified as H‑D (dealerships, H‑D.com, the H‑D Museum, Factory Tours, and H‑D Insurance)"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: hotels and other lodging have no v3 category."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Points for riding (H.O.G. members) are not purchase earnings; no catalog change."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "5X at merchants classified as H-D: the rule is brand-scoped to harley-davidson.",
+          "rules": [
+            0
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "program-redemption"
+          ],
+          "note": "Points redeem only at Harley-Davidson (gift cards or credit at H-D), so the program lists harley-davidson as its redemption brand; still no cash value."
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-skypass-skyblue",
+      "issuer": "U.S. Bank",
+      "corpusCaseSha256": "1baa66aee53686cf5e129fd31077bb0585ea19f82f1ed724ae554cdee24e91da",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-skypass-visa-signature",
+      "issuer": "U.S. Bank",
+      "corpusCaseSha256": "13fda87491c735381f9c39b0ce847d2be5f1c0c608b83e54ef5f56b5dc4870ab",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Korean Air tickets with Korean Air as merchant of record: brand scope korean-air.",
+          "set": {
+            "brandIds": [
+              "korean-air"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-skypass-visa-signature-product",
+              "quote": "Eligible purchases include Korean Air tickets where Korean Air is the merchant of record on your statement"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: hotels have no v3 category."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Korean Air ticket rule brand-scoped to korean-air.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-skypass-select",
+      "issuer": "U.S. Bank",
+      "corpusCaseSha256": "8fbd89a7e39931729ad6c8ebe772c6165ff353b5fdd8b68656d8b67fe77fc17c",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airlines, hotels and car rental companies have no v3 category."
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Korean Air tickets with Korean Air as merchant of record: brand scope korean-air.",
+          "set": {
+            "brandIds": [
+              "korean-air"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-skypass-select-product",
+              "quote": "Eligible purchases include Korean Air tickets where Korean Air is the merchant of record on your statement"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Korean Air ticket rule brand-scoped to korean-air.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-state-farm-premier-cash-rewards",
+      "issuer": "U.S. Bank",
+      "corpusCaseSha256": "eb4392b5b12de62eaada70744d86ca6980a81586e6681ee77224240df2d8ffe4",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: insurance premium purchases have no v3 category."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The up-to-5% first-year offer applies to insurance premiums, which are not at retail; no catalog change."
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-edward-jones-triple-rewards",
+      "issuer": "U.S. Bank",
+      "corpusCaseSha256": "dc78c1d9d3194513d6ea9dfd75ecb1f98d44219433eea0d7d85b8c9e44fe873c",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [
+        {
+          "id": "top-three-categories",
+          "kind": "automatic",
+          "label": "Top three spend categories each month, set automatically",
+          "picks": 3,
+          "options": [
+            {
+              "id": "charity",
+              "label": "Charity & Non-Profits"
+            },
+            {
+              "id": "clothing-department-stores",
+              "label": "Clothing & Department Stores"
+            },
+            {
+              "id": "dining",
+              "label": "Dining"
+            },
+            {
+              "id": "drugstores-personal-care",
+              "label": "Drugstores & Personal Care"
+            },
+            {
+              "id": "ev-charging-gas",
+              "label": "Electric Vehicle Charging & Gas Stations"
+            },
+            {
+              "id": "electronic-appliance-stores",
+              "label": "Electronic & Appliance Stores"
+            },
+            {
+              "id": "furniture-stores",
+              "label": "Furniture Stores"
+            },
+            {
+              "id": "grocery-stores",
+              "label": "Grocery Stores"
+            },
+            {
+              "id": "ground-transportation",
+              "label": "Ground Transportation"
+            },
+            {
+              "id": "hardware-stores",
+              "label": "Hardware Stores"
+            },
+            {
+              "id": "health-care",
+              "label": "Health Care"
+            },
+            {
+              "id": "pet-shops-veterinary",
+              "label": "Pet Shops & Veterinary Services"
+            },
+            {
+              "id": "recreation",
+              "label": "Recreation"
+            },
+            {
+              "id": "sundry-retail",
+              "label": "Sundry Retail"
+            },
+            {
+              "id": "specialty-food-catering",
+              "label": "Specialty Food & Catering"
+            },
+            {
+              "id": "travel",
+              "label": "Travel"
+            },
+            {
+              "id": "utilities-streaming",
+              "label": "Utilities & Streaming"
+            },
+            {
+              "id": "vehicle-sales-parts-service",
+              "label": "Vehicle Sales, Parts & Service"
+            }
+          ],
+          "defaultOptionIds": [],
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Your top three spend categories will be determined based on the 18 categories listed below."
+            }
+          ]
+        }
+      ],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "automatic-choice",
+            "brand-exclusion"
+          ],
+          "note": "Grocery Stores option; discount and warehouse stores are excluded, so Costco, Sam's Club and BJ's are excluded brands too. Amazon, Target and Walmart are excluded.",
+          "set": {
+            "excludedBrandIds": [
+              "amazon",
+              "target",
+              "walmart",
+              "costco",
+              "sams-club",
+              "bjs-wholesale-club"
+            ],
+            "choice": {
+              "choiceId": "top-three-categories",
+              "optionId": "grocery-stores"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Your top three spend categories will be determined based on the 18 categories"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Purchases made at Amazon and discount stores/supercenters such as Target and Walmart are excluded."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Supermarkets, food stores. Discount/warehouse such as Walmart and Target are excluded."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "automatic-choice",
+            "brand-exclusion"
+          ],
+          "note": "Dining option of the automatic top three. Amazon, Target and Walmart are excluded.",
+          "set": {
+            "excludedBrandIds": [
+              "amazon",
+              "target",
+              "walmart"
+            ],
+            "choice": {
+              "choiceId": "top-three-categories",
+              "optionId": "dining"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Your top three spend categories will be determined based on the 18 categories"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Purchases made at Amazon and discount stores/supercenters such as Target and Walmart are excluded."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "automatic-choice",
+            "brand-exclusion"
+          ],
+          "note": "Drugstores & Personal Care option; wider than drugstores (salons, spas), it keeps the drugstores category for drugstore merchants. Amazon, Target and Walmart are excluded.",
+          "set": {
+            "excludedBrandIds": [
+              "amazon",
+              "target",
+              "walmart"
+            ],
+            "choice": {
+              "choiceId": "top-three-categories",
+              "optionId": "drugstores-personal-care"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Your top three spend categories will be determined based on the 18 categories"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Purchases made at Amazon and discount stores/supercenters such as Target and Walmart are excluded."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "automatic-choice",
+            "brand-exclusion"
+          ],
+          "note": "Gas part of the EV charging & gas option; added rule ej-ev-charging covers the EV part. Amazon, Target and Walmart are excluded.",
+          "set": {
+            "excludedBrandIds": [
+              "amazon",
+              "target",
+              "walmart"
+            ],
+            "choice": {
+              "choiceId": "top-three-categories",
+              "optionId": "ev-charging-gas"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Your top three spend categories will be determined based on the 18 categories"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Purchases made at Amazon and discount stores/supercenters such as Target and Walmart are excluded."
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: furniture stores. The option stays in the automatic choice."
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: sundry and specialty retail (florists, craft, office supply, jewelry). The option stays in the automatic choice."
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airlines, car rental, hotels, cruises and travel agencies. The option stays in the automatic choice."
+        },
+        {
+          "index": 8,
+          "was": {
+            "category": "streaming",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "automatic-choice",
+            "brand-exclusion"
+          ],
+          "note": "Utilities & Streaming option, streaming as labelled; Amazon streaming is excluded via the Amazon brand exclusion. Amazon, Target and Walmart are excluded.",
+          "set": {
+            "excludedBrandIds": [
+              "amazon",
+              "target",
+              "walmart"
+            ],
+            "choice": {
+              "choiceId": "top-three-categories",
+              "optionId": "utilities-streaming"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Your top three spend categories will be determined based on the 18 categories"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Purchases made at Amazon and discount stores/supercenters such as Target and Walmart are excluded."
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: charities and non-profits. The option stays in the automatic choice."
+        },
+        {
+          "index": 11,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "automatic-choice",
+            "brand-exclusion",
+            "category"
+          ],
+          "note": "Clothing & Department Stores is wider than department stores but pays at every department store, so it takes the v3 department-stores category; clothing and shoe stores are not represented (conservative). Amazon, Target and Walmart are excluded.",
+          "set": {
+            "category": "department-stores",
+            "excludedBrandIds": [
+              "amazon",
+              "target",
+              "walmart"
+            ],
+            "choice": {
+              "choiceId": "top-three-categories",
+              "optionId": "clothing-department-stores"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Your top three spend categories will be determined based on the 18 categories"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Purchases made at Amazon and discount stores/supercenters such as Target and Walmart are excluded."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Clothing stores, shoe stores, department stores."
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "automatic-choice",
+            "brand-exclusion",
+            "category"
+          ],
+          "note": "Electronic & Appliance Stores maps to the v3 electronics category; appliance and software stores are included in the option. Amazon, Target and Walmart are excluded.",
+          "set": {
+            "category": "electronics",
+            "excludedBrandIds": [
+              "amazon",
+              "target",
+              "walmart"
+            ],
+            "choice": {
+              "choiceId": "top-three-categories",
+              "optionId": "electronic-appliance-stores"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Your top three spend categories will be determined based on the 18 categories"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Purchases made at Amazon and discount stores/supercenters such as Target and Walmart are excluded."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Electronic appliance stores, household appliance stores, computer software stores."
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "was": {
+            "category": "transit",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "automatic-choice",
+            "brand-exclusion"
+          ],
+          "note": "Ground Transportation option, transit as labelled. Amazon, Target and Walmart are excluded.",
+          "set": {
+            "excludedBrandIds": [
+              "amazon",
+              "target",
+              "walmart"
+            ],
+            "choice": {
+              "choiceId": "top-three-categories",
+              "optionId": "ground-transportation"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Your top three spend categories will be determined based on the 18 categories"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Purchases made at Amazon and discount stores/supercenters such as Target and Walmart are excluded."
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "automatic-choice",
+            "brand-exclusion",
+            "category"
+          ],
+          "note": "Hardware Stores (home supply warehouses, building materials, garden stores) maps to the v3 home-improvement category. Amazon, Target and Walmart are excluded.",
+          "set": {
+            "category": "home-improvement",
+            "excludedBrandIds": [
+              "amazon",
+              "target",
+              "walmart"
+            ],
+            "choice": {
+              "choiceId": "top-three-categories",
+              "optionId": "hardware-stores"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Your top three spend categories will be determined based on the 18 categories"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Purchases made at Amazon and discount stores/supercenters such as Target and Walmart are excluded."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Home supply warehouses, non-commercial lumber & building materials stores, nurseries, lawn & garden stores."
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: medical and health care services. The option stays in the automatic choice."
+        },
+        {
+          "index": 16,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: pet supply stores (with veterinary services). The option stays in the automatic choice."
+        },
+        {
+          "index": 17,
+          "was": {
+            "category": "entertainment",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "automatic-choice",
+            "brand-exclusion"
+          ],
+          "note": "Recreation option, entertainment as labelled; covers more than retail entertainment. Amazon, Target and Walmart are excluded.",
+          "set": {
+            "excludedBrandIds": [
+              "amazon",
+              "target",
+              "walmart"
+            ],
+            "choice": {
+              "choiceId": "top-three-categories",
+              "optionId": "recreation"
+            }
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Your top three spend categories will be determined based on the 18 categories"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Purchases made at Amazon and discount stores/supercenters such as Target and Walmart are excluded."
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: specialty food markets, convenience stores and caterers. The option stays in the automatic choice."
+        },
+        {
+          "index": 19,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: vehicle dealers, auto parts and service. The option stays in the automatic choice."
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "ej-ev-charging",
+          "issuerWording": "Electric Vehicle Charging & Gas Stations",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "ev-charging",
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "none",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [
+            "amazon",
+            "target",
+            "walmart"
+          ],
+          "sharedCapId": null,
+          "choice": {
+            "choiceId": "top-three-categories",
+            "optionId": "ev-charging-gas"
+          },
+          "requires": [],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "automatic-choice",
+            "brand-exclusion"
+          ],
+          "note": "EV charging part of the EV charging & gas option, at the same 3X as the gas rule; the corpus left it out only for its 20-rule limit. Amazon, Target and Walmart are excluded.",
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Public charging stations, automated fuel dispensers, fuel service stations."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Purchases made at Amazon and discount stores/supercenters such as Target and Walmart are excluded."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "You will earn 2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "automatic-choice"
+          ],
+          "note": "The Electric Vehicle Charging & Gas Stations option covers gas and EV charging; the corpus has only the gas rule, so an added EV-charging rule on the same option carries the EV part.",
+          "rules": [
+            4,
+            "ej-ev-charging"
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "automatic-choice"
+          ],
+          "note": "Only the top three of 18 categories earn 3X each month: an automatic choice picking three, with held-out options kept in the list.",
+          "rules": [
+            1,
+            2,
+            3,
+            4,
+            8,
+            11,
+            12,
+            13,
+            14,
+            17,
+            "ej-ev-charging"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "automatic-choice",
+            "brand-exclusion"
+          ],
+          "note": "Automatic top-three choice over 18 options; the kept option rules exclude Amazon, Target and Walmart.",
+          "rules": [
+            1,
+            2,
+            3,
+            4,
+            8,
+            11,
+            12,
+            13,
+            14,
+            17,
+            "ej-ev-charging"
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-elan-fidelity-rewards",
+      "issuer": "U.S. Bank",
+      "corpusCaseSha256": "465aa66c64d6fe3bac3e61955e4619d10f7d7f8734b83dd7b3df48aeb515f242",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The 2% value holds only when points go into an eligible Fidelity account; a redemption condition, not an earn change. The card stays cash back at 2%."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Redemption condition (Fidelity account deposit) with no change to what a purchase earns."
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "4f6574ba-8fa4-48d5-8a40-942fb3b2974e",
+  "packetId": "09190808-95e3-493a-af0f-f842e516b9d7",
   "batch": "capital-one-refresh-2026-10",
   "issuer": "Capital One",
   "provenance": "agent-verified",
@@ -38,7 +38,14 @@
       "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-quicksilver-product.txt",
       "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-quicksilver-terms.txt",
       "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-savor-product.txt",
-      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-savor-terms.txt"
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-savor-terms.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/pipeline/packets/verify.capital-one.2.json",
+      "evals/curation/batches/capital-one-refresh-2026-10/verification/capital-one.json",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-t-mobile-visa-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-t-mobile-visa-pricing.txt",
+      "tools/catalog-pipeline/src/gates.ts",
+      "apps/api/src/curation/v2/schema.ts",
+      "apps/api/src/curation/v2/corpus.ts"
     ]
   },
   "adjudicator": {
@@ -575,6 +582,146 @@
       "addedExclusions": [],
       "addedIssues": [],
       "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-t-mobile-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "capital-one-t-mobile-visa-pricing",
+            "quote": "You will earn 2% back in T-Mobile Rewards on all other purchases."
+          },
+          "note": "Undrafted card. Rewards are a percentage back in T-Mobile Rewards, so cash-back (general 1, Capital One store-only rewards convention). Point value stays null: a cash-back card has none (general 13)."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-t-mobile-visa-pricing",
+              "quote": "You will earn 2% back in T-Mobile Rewards on all other purchases."
+            },
+            {
+              "sourceId": "capital-one-t-mobile-visa-pricing",
+              "quote": "There is no cap to the amount of T-Mobile Rewards you can earn on purchases"
+            }
+          ],
+          "note": "Base rate 2% on all other purchases; the terms say earning has no cap."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "any phone, device, or accessory at T-Mobile",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "capital-one-t-mobile-visa-pricing",
+              "quote": "you will earn 5% back in T-Mobile Rewards on net Qualifying Purchases"
+            },
+            {
+              "sourceId": "capital-one-t-mobile-visa-pricing",
+              "quote": "Qualifying Purchases include phones, devices, and accessories."
+            },
+            {
+              "sourceId": "capital-one-t-mobile-visa-product",
+              "quote": "Earn 5% in rewards on any phone, device, or accessory at T-Mobile."
+            },
+            {
+              "sourceId": "capital-one-t-mobile-visa-pricing",
+              "quote": "There is no cap to the amount of T-Mobile Rewards you can earn on purchases"
+            }
+          ],
+          "note": "Single-merchant rule (general 4): 5% on phones, devices and accessories bought from T-Mobile online, in the T-Life app, in stores and at Authorized Retailers. EIP payments, wireless service and fees are not Qualifying Purchases; the product page shows the T-Mobile bill at the 2% base."
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "Cash advances and balance transfers are not considered purchases and will not earn T-Mobile Rewards.",
+          "anchors": [
+            {
+              "sourceId": "capital-one-t-mobile-visa-pricing",
+              "quote": "Cash advances and balance transfers are not considered purchases and will not earn T-Mobile Rewards."
+            }
+          ],
+          "note": "Cash advances and balance transfers never earn."
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-t-mobile-visa-pricing",
+              "quote": "Accumulated T-Mobile Rewards may only be redeemed to pay your T-Mobile wireless bill or for purchases of phones, devices, or accessories"
+            }
+          ],
+          "note": "Store-only rewards (Capital One convention, general 8): the percentage back is usable only on the T-Mobile bill or T-Mobile devices."
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-t-mobile-visa-pricing",
+              "quote": "You may not accrue enhanced earning on purchases made using 3rd party digital wallets."
+            }
+          ],
+          "note": "Purchases through third-party digital wallets may not earn the 5% T-Mobile rate."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Phones, devices and accessories at T-Mobile.com, T-Life app, T-Mobile stores and Authorized Retailers",
+            "rate": "5%",
+            "cap": "none (terms say earning is uncapped)",
+            "conditions": "Excludes EIP payments, wireless service, fees; no enhanced earn via 3rd-party digital wallets",
+            "merchants": [
+              "T-Mobile"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "capital-one-t-mobile-visa-product",
+            "quote": "made online at T-Mobile.com and in the T-Life app, and at T-Mobile stores and Authorized Retailers"
+          },
+          "note": "The hint is true per the captures; only the cap changes from \"none stated\" to none, since the terms say earning has no cap."
+        }
+      ]
     }
   ]
 }
