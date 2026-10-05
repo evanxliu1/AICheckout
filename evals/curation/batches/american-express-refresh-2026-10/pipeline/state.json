@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "american-express-refresh-2026-10",
-  "updatedAt": "2026-10-05T01:18:31.350Z",
+  "updatedAt": "2026-10-05T01:44:15.528Z",
   "cards": {
     "amex-gold": {
       "stages": {
@@ -36,6 +36,27 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:be445080bf2e8182cc64778c733130c7a268873b99f608e1decc74a6a1dba39e",
+          "outputs": [
+            {
+              "ref": "trace:amex-gold",
+              "sha256": "33bf1c21e5ef6155a04da2a8f19f93cbf0040c9bce185f2827b2100bde91f04b"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:44:00.224Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "failed-gate",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:af7f43308cb6c3feebec3765183b3c48af44735a1445acdfb1cea436289d6144",
+          "finishedAt": "2026-10-05T01:44:15.527Z",
+          "attempts": 1,
+          "reason": "no-draft-case"
         }
       },
       "dropped": null,
@@ -74,6 +95,34 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:bf83b338e5884dcea0f8518057d30732f6a78d2ea93352059788c1901e9acdff",
+          "outputs": [
+            {
+              "ref": "trace:amex-platinum",
+              "sha256": "165936e5fc35972311afd41ed8ca20bb82c382cca339851ccf69497e0897fce4"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:44:00.224Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:437cb193d1de1206cb4f7faa17bbb2c28c0d257c6f7a20e1d27717f7ebbfd3bf",
+          "outputs": [
+            {
+              "ref": "corpus-draft:amex-platinum",
+              "sha256": "310c31365af14c02ae70749e23bad6e00917b147253399738a1064558e7a7505"
+            }
+          ],
+          "labelsHash": "sha256:6e9ac1ff37add99213dc0de08fe1dc3170768d1add335cc4f3498110f91f8dd3",
+          "anchorsHash": "sha256:0d66c51196d24e3eb072cc6b39edf2644148e4afdb0950b93a8f3f9d55c69776",
+          "finishedAt": "2026-10-05T01:44:15.527Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -112,6 +161,34 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:c7bc9b73b49442d3d0da3a7272adb21aead921bd03e4d854f24e3028547417a9",
+          "outputs": [
+            {
+              "ref": "trace:amex-delta-skymiles-blue",
+              "sha256": "6207faaa1b8b126f4c974edcd00ad35a97238782a456ac4447d323b1d01cb772"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:44:00.224Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:8795a0ef7fd2ec7c3e18581b0c9da90e887c5b362ff6b28271400a43262be01b",
+          "outputs": [
+            {
+              "ref": "corpus-draft:amex-delta-skymiles-blue",
+              "sha256": "da57c1cc87024ee0f8b811d7ce481539265c2af7dc2a73aeb34e7504a8980bd0"
+            }
+          ],
+          "labelsHash": "sha256:6aaa826ed8c18633aff7877f5bb4d4c0b8e1443ad0333389a092fe201a8531e6",
+          "anchorsHash": "sha256:803bad1a9ee33374efcf499adbaa9cf0acfafe4223504c24b9e29cc2f15f1214",
+          "finishedAt": "2026-10-05T01:44:15.527Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -150,6 +227,34 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:aedf9a4e28a7fd3e864b5711cf00a89a34f7215ce3419cf04a6b91be513766f3",
+          "outputs": [
+            {
+              "ref": "trace:amex-delta-skymiles-gold",
+              "sha256": "38273c00fe1e2e261af56c31c427b0dceee801d73bf8d740a7881b02b0656ffd"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:44:00.224Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:43ca0a030655d10609f04df794695452f7e2e0a972db6e02c16792c7a76fae51",
+          "outputs": [
+            {
+              "ref": "corpus-draft:amex-delta-skymiles-gold",
+              "sha256": "8ba43a2cca6c35d87f4a49cf6767cae07a33c4018e0325450c1907b78ca982c0"
+            }
+          ],
+          "labelsHash": "sha256:7a079c105fd9874ce0d89a170d933a7bc06ad039eb267c1fc3165112348692bd",
+          "anchorsHash": "sha256:92f6afd743750992cc90df5d8e4a2cade0d468c5eed58db1e12e7b915a692196",
+          "finishedAt": "2026-10-05T01:44:15.527Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -188,6 +293,34 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:719f9e0170bc45281bb4ea6c8da923f54851957d772c46067bd0219235b475db",
+          "outputs": [
+            {
+              "ref": "trace:amex-delta-skymiles-platinum",
+              "sha256": "85f4cd07ddcadec207fce062769789e6e9d98870f2966f9a3d308908a984f354"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:44:00.225Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:4d0cedd6a80c96749d65194f06da6ba89b913c15794a182186357eff961b8abe",
+          "outputs": [
+            {
+              "ref": "corpus-draft:amex-delta-skymiles-platinum",
+              "sha256": "e44934de3e740f153a30fb2f9e78281b91ecb388957e1671e463473f5afe5b6f"
+            }
+          ],
+          "labelsHash": "sha256:31d9f5b552a32c3ffad849e1c76b0589a24abccb84f2cbb47354535953f567ad",
+          "anchorsHash": "sha256:af9d61aa9744e5bc0f28e60eab7931a2b88e7121e1d12714d39b9fa2979ba9ea",
+          "finishedAt": "2026-10-05T01:44:15.527Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -226,6 +359,34 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:0977413c5e164b8782a06089777fe39fa9f2d990a50922d8d434d291c180a0b4",
+          "outputs": [
+            {
+              "ref": "trace:amex-delta-skymiles-reserve",
+              "sha256": "0df7960da4a61ac174c7950bb36fd2f412c8d55e1a0cd5a0b39084e63dec8e4c"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:44:00.225Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:a33d9d65cc66cc6def8522ddf4e53a96a2fbf03caeef53d23ba87a9ac18e60f5",
+          "outputs": [
+            {
+              "ref": "corpus-draft:amex-delta-skymiles-reserve",
+              "sha256": "3486ad7c6ef22aac5415fa4a3c6a7014ff3831389bd2e9a2551c167a5b5fec87"
+            }
+          ],
+          "labelsHash": "sha256:e5a8c0dee96ee5466cd3c80697f6e34ed275a9ad8272c2358cec31087796fb38",
+          "anchorsHash": "sha256:e7941103b56f97ba908b2e006dd0fc84dfdae7c8d8cb694b1471d11b45698eae",
+          "finishedAt": "2026-10-05T01:44:15.527Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -264,6 +425,27 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:a8a0037b44c2fa664063af606b759bdbd46aae53755078cf6eb0ae1350b052f1",
+          "outputs": [
+            {
+              "ref": "trace:amex-hilton-honors",
+              "sha256": "2a582b82a4ee0eb2958333ddec45bea6b2c87f1309bff583e2d1853766707abe"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:44:00.225Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "failed-gate",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:767d80cf9091739434cf95ce3921c30a43fdffd652bf4032b677a4bfaf12e01a",
+          "finishedAt": "2026-10-05T01:44:15.527Z",
+          "attempts": 1,
+          "reason": "no-draft-case"
         }
       },
       "dropped": null,
@@ -302,6 +484,34 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:a04a0eb2bf8b843fe0a75c61af26f134798d9f9565e14eebbe19145e98e941f6",
+          "outputs": [
+            {
+              "ref": "trace:amex-hilton-honors-surpass",
+              "sha256": "0425beaeeb9c3e63f23f2c8dfeecbf061ab92f91555b5c3b23d5586a6586c803"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:44:00.225Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:0a8b7e2e566cc11bd6134287a83dcbec4287f88561a769628f4a5e03335f7c8e",
+          "outputs": [
+            {
+              "ref": "corpus-draft:amex-hilton-honors-surpass",
+              "sha256": "524c58ec44ea82dc18d20114fa70d349fb94b0d6c315bc6980396ec050a91272"
+            }
+          ],
+          "labelsHash": "sha256:0418a4b1c47cf26e2f2a6e64889d3366b6740291909bcc6cb74fa371f0e883ef",
+          "anchorsHash": "sha256:1747bbf2ef93cc11638faed84b8d0bfbb14c83f578ff9f223479fbc7db6d46ab",
+          "finishedAt": "2026-10-05T01:44:15.528Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -340,6 +550,34 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:3e33244e7f53d074918651294ac5bb6f73bc0f55af6a451637e3b3e340619c0b",
+          "outputs": [
+            {
+              "ref": "trace:amex-hilton-honors-aspire",
+              "sha256": "6bd1e4ee4c766cf2b47e480888c554d57217c466c29b5f35aa876bd0173bf54b"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:44:00.225Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:0f8d94f490beca00a52b2728128ddca3468d14c3a96b68a8a331312c51adff96",
+          "outputs": [
+            {
+              "ref": "corpus-draft:amex-hilton-honors-aspire",
+              "sha256": "fed57bc08ea02e18f6780cb9723c40654e156e4896a0a1f0a80a87ea3b6084e8"
+            }
+          ],
+          "labelsHash": "sha256:71cec5fb53115202d93efdbc302bf2d5b8e8ab6a79d36a40679453b00e23b24e",
+          "anchorsHash": "sha256:192f40309b329af68862db9cd1100e4d1082bc7e97dc86b435d30c556100eeee",
+          "finishedAt": "2026-10-05T01:44:15.528Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -378,6 +616,34 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:b61cceb4d9020c6d49a4507d3f9da9243d7b3954209fc7c7aaf8b635013cd632",
+          "outputs": [
+            {
+              "ref": "trace:amex-marriott-bonvoy-bevy",
+              "sha256": "00020e11b829944fd1806e21b4820fc58111111580fac69de269384a392a04c4"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:44:00.226Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:1f140f30ad652b51d59cf561a5e91f0b6eb2d0e86321e8d671724a53ff6a92a4",
+          "outputs": [
+            {
+              "ref": "corpus-draft:amex-marriott-bonvoy-bevy",
+              "sha256": "3477a54833aa247cc08b5fee7b539db34350218caf0d5353490338f4bb2867ba"
+            }
+          ],
+          "labelsHash": "sha256:bb07c588d81ab8993f10d8874505c5e311ec4e6af140d97337fee8c0722a8969",
+          "anchorsHash": "sha256:e04b1cc5842197c6f7dded60d57a3dac842b5ec3035790e776056877ff5d08c7",
+          "finishedAt": "2026-10-05T01:44:15.528Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -416,6 +682,34 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:c6953bea9d57e4f9d2925085eb85803ac4b07be54cc044489c0b0fa365e11860",
+          "outputs": [
+            {
+              "ref": "trace:amex-marriott-bonvoy-brilliant",
+              "sha256": "4d944b8c48b18ebb632025fae8fa3d859f0bea46619f9846a0561a6920d82cec"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:44:00.226Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:fc9aa87837ed304c4f4bdde1576935ba642c4d7660e853963054f222c4bc5b3e",
+          "outputs": [
+            {
+              "ref": "corpus-draft:amex-marriott-bonvoy-brilliant",
+              "sha256": "c918b8728c4ef205048c4acf506bc70e9386574233bb6ec4a6cabf88fe393d3c"
+            }
+          ],
+          "labelsHash": "sha256:3c4d1290f06c695296c951c3121d0ac9733491f3d8117e8cff0fc5c4a1774d0b",
+          "anchorsHash": "sha256:af065ff324f2f31c7ab4dfbdac5523b6327aa4339a20a8e691d1f702419340d5",
+          "finishedAt": "2026-10-05T01:44:15.528Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -462,6 +756,34 @@
             "sources": 3,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:676ea3d7fc93286cf22ec1069ecefcb633850105fc2d23e67b7db5898cbdbcd7",
+          "outputs": [
+            {
+              "ref": "trace:amex-blue-cash-everyday",
+              "sha256": "78fd9eaafb80c3115feb7f9736d33f92676a240c290b350f78425b13f536e812"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:44:00.226Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:50b1c948701576c6b6f44dfb641199f80b89f3690bef680907101f5735b4855d",
+          "outputs": [
+            {
+              "ref": "corpus-draft:amex-blue-cash-everyday",
+              "sha256": "49ffa10348ac5ad680899bc7731c07d94a828f69da72cc28030d67562c2dd102"
+            }
+          ],
+          "labelsHash": "sha256:1344e4031b7daca25ce8a93964a73396b7dd4509e54138fdde7d47c0ef94e6cf",
+          "anchorsHash": "sha256:64304d27e73f92815678dc468f8119273e03eb607fa2ff7be186290587152022",
+          "finishedAt": "2026-10-05T01:44:15.528Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -508,6 +830,34 @@
             "sources": 3,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:034d141bd939edf4ece005b00f14722318b4f19d3b0b6e1a9662f07bec53ae13",
+          "outputs": [
+            {
+              "ref": "trace:amex-blue-cash-preferred",
+              "sha256": "21fffa76f0f6a134ebd55568051be93f2d8d634e67737c298097d5e11d5cdb02"
+            }
+          ],
+          "finishedAt": "2026-10-05T01:44:00.226Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:d17082bb89a1b776e80c776ed44d3c88a1d70ae92308985338da6cff6d21294f",
+          "outputs": [
+            {
+              "ref": "corpus-draft:amex-blue-cash-preferred",
+              "sha256": "6b3e9549e0e5e0d43ad77c8fc8930c5acfa409d7f976fde573382d75c7a40770"
+            }
+          ],
+          "labelsHash": "sha256:ce30c46ab70695d056a4a01e76016a8cdf15411889b139dfdfb61c019c181735",
+          "anchorsHash": "sha256:a8fd9c2e553a183f57f9e6868f9b808a35f6cf2dabb623fd40e1a1e38aafa3d6",
+          "finishedAt": "2026-10-05T01:44:15.528Z",
+          "attempts": 1
         }
       },
       "dropped": null,

@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/draft-expansion-labels.mjs",
+  "description": "Structured hints the extraction schema cannot express, from the research drafts (summaries and conditions clipped to 25 words). An anchored hint cites a quote of at most 25 words that resolves in the captures (research-quote: the research quoted it; keyword-search: a capture sentence with the rate and a keyword, which a verifier must confirm says what the hint says). Unanchored hints cite the research. draftNotes record what drafting dropped.",
+  "cards": [
+    {
+      "cardId": "amex-gold",
+      "issuer": "American Express",
+      "hints": [],
+      "draftNotes": [
+        "rewardCurrency: value dropped (no resolving quote)",
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "rules.0 (all-purchases, \"one\u0001Membership Rewards®\u0001point for each dollar charged for an\") rateBps: value dropped (no resolving quote)",
+        "rules.0 (all-purchases, \"one\u0001Membership Rewards®\u0001point for each dollar charged for an\"): rule dropped (no resolving quote)",
+        "rules.4 (travel-portal, \"2X Membership Rewards® Points on American Express Travel® On\") rateBps: a quote over 25 words was dropped (no 25-word window carries the rate (200 bps))",
+        "rules.7 (travel-portal, \"prepaid car rentals and cruise reservations booked and paid \"): issuerWording is not verbatim in the captures; replace it with the capture's wording",
+        "exclusion \"Fees, interest charges, cash advances, person-to-person payments, gift…\": dropped (no resolving quote)",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "amex-platinum",
+      "issuer": "American Express",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "amex-delta-skymiles-blue",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Delta Purchases",
+          "rate": "2X",
+          "cap": "none stated",
+          "conditions": "Delta Purchases = charged directly with Delta as merchant of record (delta.com, Fly Delta app, phone, counters; incl. Delta Vacations and Delta Stays); excludes Delta…",
+          "merchants": [
+            "Delta"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "2X Miles at Restaurants and on Delta Purchases‡"
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"Eligible purchases\"): rule dropped (no resolving quote)",
+        "rules.0 (dining): an anchor that ran on from another was dropped (no 25+ word run)",
+        "issues.1 (ambiguous): an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "amex-delta-skymiles-gold",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Delta Purchases",
+          "rate": "2X",
+          "cap": "none stated",
+          "conditions": "Delta Purchases = charged directly with Delta as merchant of record (delta.com, Fly Delta app, phone, counters; incl. Delta Vacations and Delta Stays); excludes Delta…",
+          "merchants": [
+            "Delta"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "2X Miles on Delta Purchases, at restaurants and at U.S."
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \"eligible purchases\"): rule dropped (no resolving quote)",
+        "issues.2 (ambiguous): an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "amex-delta-skymiles-platinum",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Delta Purchases",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "Delta Purchases = charged directly with Delta as merchant of record (delta.com, Fly Delta app, phone, counters; incl. Delta Vacations and Delta Stays); excludes Delta…",
+          "merchants": [
+            "Delta"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "3X miles on Delta Purchases‡"
+        }
+      ],
+      "draftNotes": [
+        "rules.4 (other, \"3x Miles on Delta Purchases\"): rule dropped (no resolving quote)",
+        "rules.3 (other): an anchor that ran on from another was dropped (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "amex-delta-skymiles-reserve",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Delta Purchases",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "Delta Purchases = charged directly with Delta as merchant of record (delta.com, Fly Delta app, phone, counters; incl. Delta Vacations and Delta Stays); excludes Delta…",
+          "merchants": [
+            "Delta"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "3X miles on Delta Purchases‡"
+        }
+      ],
+      "draftNotes": []
+    },
+    {
+      "cardId": "amex-hilton-honors",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Hilton portfolio hotels and resorts",
+          "rate": "7X",
+          "cap": "none stated",
+          "conditions": "Charged directly with a property in the Hilton portfolio (booking must be via a Hilton-operated channel; incidentals if charged to room)",
+          "merchants": [
+            "Hilton"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Card Members can earn 7X Points on purchases made directly with hotels and resorts within the Hilton portfolio.‡"
+        }
+      ],
+      "draftNotes": [
+        "rewardCurrency: value dropped (no resolving quote)",
+        "rewardCurrency: no anchored value; card left out of the corpus",
+        "No anchored rules or currency: not drafted."
+      ]
+    },
+    {
+      "cardId": "amex-hilton-honors-surpass",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Hilton portfolio hotels and resorts",
+          "rate": "12X",
+          "cap": "none stated",
+          "conditions": "Charged directly with a property in the Hilton portfolio (booking must be via a Hilton-operated channel; incidentals if charged to room)",
+          "merchants": [
+            "Hilton"
+          ],
+          "membership": null,
+          "status": "unanchored",
+          "research": "docs/research/cards-2026/amex.json",
+          "researchSources": [
+            "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
+            "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/hilton-honors-surpass-credit-card/25330-10-0"
+          ]
+        }
+      ],
+      "draftNotes": [
+        "rules.0 (all-purchases, \" \"): rule dropped (no resolving quote)",
+        "rules.1 (dining): an anchor that ran on from another was dropped (no 25+ word run)",
+        "rules.4 (online-retail): an anchor that ran on from another was dropped (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "amex-hilton-honors-aspire",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Hilton portfolio hotels and resorts",
+          "rate": "14X",
+          "cap": "none stated",
+          "conditions": "Charged directly with a property in the Hilton portfolio (booking must be via a Hilton-operated channel; incidentals if charged to room)",
+          "merchants": [
+            "Hilton"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Card Members can earn 14X Points on purchases made directly with hotels and resorts within the Hilton portfolio.‡"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Car rentals purchased directly from select major car rental companies (list at americanexpress.com/rewards-info)",
+          "rate": "7X",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Hilton"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "Card Members can earn 7X Points on purchases of Flights booked directly with airlines or flights booked through American Express Travel, Car rentals purchased directly"
+        }
+      ],
+      "draftNotes": [
+        "rules.1 (other, \"eligible Hilton purchases\"): rule dropped (no resolving quote)",
+        "rules.2 (other, \"Select Travel\"): rule dropped (no resolving quote)",
+        "rules.3 (travel-portal, \"prepaid hotels and flights booked through American Express T\"): spend cap without an amount set to null"
+      ]
+    },
+    {
+      "cardId": "amex-marriott-bonvoy-bevy",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Marriott Bonvoy properties",
+          "rate": "6X",
+          "cap": "none stated",
+          "conditions": "Charged directly with participating Marriott Bonvoy properties, standalone Marriott retail, and Marriott-branded online stores",
+          "merchants": [
+            "Marriott"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "6X points at hotels participating in Marriott Bonvoy®‡"
+        }
+      ],
+      "draftNotes": [
+        "rules.3 (supermarkets): an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "amex-marriott-bonvoy-brilliant",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Marriott Bonvoy properties",
+          "rate": "6X",
+          "cap": "none stated",
+          "conditions": "Charged directly with participating Marriott Bonvoy properties, standalone Marriott retail, and Marriott-branded online stores",
+          "merchants": [
+            "Marriott"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "keyword-search",
+          "anchor": "6X points at hotels participating in Marriott Bonvoy®‡"
+        }
+      ],
+      "draftNotes": [
+        "exclusions.2: an anchor that ran on from another was shortened (no 25+ word run)"
+      ]
+    },
+    {
+      "cardId": "amex-blue-cash-everyday",
+      "issuer": "American Express",
+      "hints": [],
+      "draftNotes": []
+    },
+    {
+      "cardId": "amex-blue-cash-preferred",
+      "issuer": "American Express",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "'U.S. streaming subscriptions from select providers' (list at americanexpress.com/rewards-info)",
+          "rate": "6%",
+          "cap": "none stated",
+          "conditions": "Bundled or third-party-billed subscriptions may not qualify",
+          "merchants": [],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "research-quote",
+          "anchor": "U.S. streaming subscriptions from select providers"
+        }
+      ],
+      "draftNotes": [
+        "exclusion \"Add Money transactions\": dropped (no resolving quote)"
+      ]
+    }
+  ]
+}
