@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "1224181f-4262-4dec-8895-9c1f894aa49d",
+  "packetId": "9783781a-941f-4430-8482-0fc7d901ef94",
   "batch": "u-s-bank-refresh-2026-10",
   "issuer": "U.S. Bank",
   "provenance": "agent-verified",
@@ -30,40 +30,14 @@
     "date": "2026-10-04",
     "filesRead": [
       ".claude/agents/card-adjudicator.md",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/pipeline/packets/adjudicate.u-s-bank.1.json",
+      "evals/curation/batches/u-s-bank-refresh-2026-10/pipeline/packets/adjudicate.u-s-bank.2.json",
       "evals/curation/expansion/verification/README.md",
       "evals/curation/expansion/verification/conventions/general.md",
       "evals/curation/expansion/verification/conventions/u-s-bank.md",
       "evals/curation/batches/u-s-bank-refresh-2026-10/verification/u-s-bank.json",
       "evals/curation/batches/u-s-bank-refresh-2026-10/corpus.draft.json",
       "evals/curation/batches/u-s-bank-refresh-2026-10/product-notes.json",
-      "scripts/lib/expansion-verification.mjs",
-      "scripts/lib/expansion-quotes.mjs",
-      "apps/api/src/curation/v2/validate.ts",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-cash-plus-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-cash-plus-rewards-terms.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-cash-plus-sample-merchants.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-smartly-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-altitude-go-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-altitude-go-rewards-terms.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-altitude-connect-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-altitude-connect-rewards-terms.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-cash-plus-secured-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-altitude-go-secured-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-altitude-go-secured-rewards-terms.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-harley-davidson-hog-elite-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/skypass-visa-cards.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-skypass-skyblue-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-skypass-visa-signature-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-skypass-select-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-state-farm-premier-cash-rewards-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/state-farm-credit-cards.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-state-farm-premier-cash-rewards-pricing.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-edward-jones-triple-rewards-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-edward-jones-triple-rewards-pricing.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-edward-jones-triple-rewards-categories.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-elan-fidelity-rewards-product.txt",
-      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-elan-fidelity-rewards-rewards-terms.txt"
+      "evals/curation/batches/u-s-bank-refresh-2026-10/captures/us-bank-harley-davidson-secured-product.txt"
     ]
   },
   "cards": [
@@ -2005,7 +1979,11 @@
             "sourceId": "us-bank-harley-davidson-secured-product",
             "quote": "Points are earned on eligible Net Purchases."
           },
-          "note": "The card earns H-D points; undrafted, so the currency is written from the product page."
+          "note": "The card earns H-D points; undrafted, so the currency is written from the product page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 states points are earned on net purchases and the headline is 1X POINT; currency points is the only reading (general 1)."
+          }
         },
         {
           "op": "set",
@@ -2016,7 +1994,11 @@
             "sourceId": "us-bank-harley-davidson-secured-product",
             "quote": "for every 2,500 points earned"
           },
-          "note": "The only stated value is $25 at H-D per 2,500 points, redeemed as an H-D gift card, not cash; null under general 3 and the U.S. Bank point-values convention."
+          "note": "The only stated value is $25 at H-D per 2,500 points, redeemed as an H-D gift card, not cash; null under general 3 and the U.S. Bank point-values convention.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The only value stated is $25 at H-D per 2,500 points, paid as an H-D Gift Card: a gift-card value stays null (general 3, 14; U.S. Bank point-values convention), as on the H.O.G. Elite card."
+          }
         }
       ],
       "addedRules": [
@@ -2037,7 +2019,11 @@
               "quote": "1X POINT\neverywhere Visa is accepted"
             }
           ],
-          "note": "The card's only earn rate: 1 point per dollar on all purchases. No cap or activation sentence, so both stay null."
+          "note": "The card's only earn rate: 1 point per dollar on all purchases. No cap or activation sentence, so both stay null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim headline states 1X everywhere Visa is accepted; no cap, activation or limited-time sentence in the capture, so those stay null (general 7, 10, 21)."
+          }
         }
       ],
       "addedExclusions": [
@@ -2049,7 +2035,11 @@
               "quote": "transactions posting as Convenience Checks"
             }
           ],
-          "note": "Listed in footnote 1 as not eligible to earn rewards."
+          "note": "Listed in footnote 1 as not eligible to earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists convenience checks as not eligible to earn."
+          }
         },
         {
           "text": "Balance Transfers",
@@ -2059,7 +2049,11 @@
               "quote": "Balance Transfers"
             }
           ],
-          "note": "Listed in footnote 1 as not eligible to earn rewards."
+          "note": "Listed in footnote 1 as not eligible to earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists balance transfers as not eligible to earn."
+          }
         },
         {
           "text": "Advances (including ATM withdrawals, wire transfers, traveler’s checks, money orders, foreign cash transactions, betting transactions, and lottery tickets)",
@@ -2069,7 +2063,11 @@
               "quote": "Advances (including ATM withdrawals, wire transfers, traveler’s checks, money orders, foreign cash transactions, betting transactions, and lottery tickets)"
             }
           ],
-          "note": "Cash-like advances do not earn, per footnote 1."
+          "note": "Cash-like advances do not earn, per footnote 1.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists advances as not eligible to earn; quote is verbatim and under 25 words."
+          }
         },
         {
           "text": "interest charges and fees",
@@ -2079,7 +2077,11 @@
               "quote": "interest charges and fees"
             }
           ],
-          "note": "Not purchases, per footnote 1."
+          "note": "Not purchases, per footnote 1.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists interest charges and fees as not eligible to earn."
+          }
         },
         {
           "text": "credit insurance premiums",
@@ -2089,7 +2091,11 @@
               "quote": "credit insurance premiums"
             }
           ],
-          "note": "Not eligible, per footnote 1."
+          "note": "Not eligible, per footnote 1.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists credit insurance premiums as not eligible to earn."
+          }
         },
         {
           "text": "transactions to (i) fund certain prepaid card products, (ii) buy currency from the U.S. Mint, or (iii) buy cash convertible items",
@@ -2099,7 +2105,11 @@
               "quote": "transactions to (i) fund certain prepaid card products, (ii) buy currency from the U.S. Mint, or (iii) buy cash convertible items"
             }
           ],
-          "note": "Prepaid funding, U.S. Mint currency and cash convertible items do not earn, per footnote 1."
+          "note": "Prepaid funding, U.S. Mint currency and cash convertible items do not earn, per footnote 1.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists these transactions as not eligible to earn; quote is verbatim and under 25 words."
+          }
         }
       ],
       "addedIssues": [],
@@ -2117,7 +2127,11 @@
             "sourceId": "us-bank-harley-davidson-secured-product",
             "quote": "Harley‑Davidson™ Gift Cards issued from H‑D™ Rewards point redemption do not expire."
           },
-          "note": "Redemption value goes in a product note, as on the H.O.G. Elite card (general 18, U.S. Bank point-values convention)."
+          "note": "Redemption value goes in a product note, as on the H.O.G. Elite card (general 18, U.S. Bank point-values convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Gift-card redemption values belong in a product note (general 18, U.S. Bank point-values convention), matching the H.O.G. Elite note; anchor is verbatim. No store-only ambiguous issue (general 8/14): the capture states no exclusivity, so no anchor states the problem (general 16), consistent with the H.O.G. Elite entry."
+          }
         }
       ]
     }

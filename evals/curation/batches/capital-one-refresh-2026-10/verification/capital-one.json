@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "09190808-95e3-493a-af0f-f842e516b9d7",
+  "packetId": "1c286d64-f970-4ef5-a09a-27c1e324e68d",
   "batch": "capital-one-refresh-2026-10",
   "issuer": "Capital One",
   "provenance": "agent-verified",
@@ -79,7 +79,11 @@
       "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-quicksilver-product.txt",
       "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-quicksilver-terms.txt",
       "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-savor-product.txt",
-      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-savor-terms.txt"
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-savor-terms.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/pipeline/packets/adjudicate.capital-one.2.json",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-t-mobile-visa-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-10/captures/capital-one-t-mobile-visa-pricing.txt",
+      "evals/curation/expansion/verification/capital-one.json"
     ]
   },
   "cards": [
@@ -597,7 +601,11 @@
             "sourceId": "capital-one-t-mobile-visa-pricing",
             "quote": "You will earn 2% back in T-Mobile Rewards on all other purchases."
           },
-          "note": "Undrafted card. Rewards are a percentage back in T-Mobile Rewards, so cash-back (general 1, Capital One store-only rewards convention). Point value stays null: a cash-back card has none (general 13)."
+          "note": "Undrafted card. Rewards are a percentage back in T-Mobile Rewards, so cash-back (general 1, Capital One store-only rewards convention). Point value stays null: a cash-back card has none (general 13).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The pricing capture states rewards as a percentage back in T-Mobile Rewards, usable only with T-Mobile: cash-back under general 1 and 8 and the Capital One store-only convention. No separate point-value fix is needed: a cash-back card never carries a point value (general 13), so null stands."
+          }
         }
       ],
       "addedRules": [
@@ -627,7 +635,11 @@
               "quote": "There is no cap to the amount of T-Mobile Rewards you can earn on purchases"
             }
           ],
-          "note": "Base rate 2% on all other purchases; the terms say earning has no cap."
+          "note": "Base rate 2% on all other purchases; the terms say earning has no cap.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2% on all other purchases is the base rate at 200 bps (general 1). The no-cap anchor is a sentence stating the card earning as a whole is uncapped, so cap none conforms to general 21. The two pricing anchors do not abut."
+          }
         },
         {
           "rule": {
@@ -663,7 +675,11 @@
               "quote": "There is no cap to the amount of T-Mobile Rewards you can earn on purchases"
             }
           ],
-          "note": "Single-merchant rule (general 4): 5% on phones, devices and accessories bought from T-Mobile online, in the T-Life app, in stores and at Authorized Retailers. EIP payments, wireless service and fees are not Qualifying Purchases; the product page shows the T-Mobile bill at the 2% base."
+          "note": "Single-merchant rule (general 4): 5% on phones, devices and accessories bought from T-Mobile online, in the T-Life app, in stores and at Authorized Retailers. EIP payments, wireless service and fees are not Qualifying Purchases; the product page shows the T-Mobile bill at the 2% base.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Pays only at T-Mobile, so category other with the merchant in issuerWording (general 4). 5% = 500 bps; the same no-cap sentence covers it (general 21). The wireless-bill and EIP carve-out is reflected in the wording, the exclusions sentence and the product note; conventions (general 16, Capital One overlay W4) handle it as a note, so no extra ambiguous issue is required."
+          }
         }
       ],
       "addedExclusions": [
@@ -675,7 +691,11 @@
               "quote": "Cash advances and balance transfers are not considered purchases and will not earn T-Mobile Rewards."
             }
           ],
-          "note": "Cash advances and balance transfers never earn."
+          "note": "Cash advances and balance transfers never earn.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Verbatim sentence from the pricing capture; cash advances and balance transfers never earn."
+          }
         }
       ],
       "addedIssues": [
@@ -687,7 +707,11 @@
               "quote": "Accumulated T-Mobile Rewards may only be redeemed to pay your T-Mobile wireless bill or for purchases of phones, devices, or accessories"
             }
           ],
-          "note": "Store-only rewards (Capital One convention, general 8): the percentage back is usable only on the T-Mobile bill or T-Mobile devices."
+          "note": "Store-only rewards (Capital One convention, general 8): the percentage back is usable only on the T-Mobile bill or T-Mobile devices.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Capital One store-only convention (general 8) requires exactly this ambiguous issue, anchored on the redemption-restriction sentence."
+          }
         },
         {
           "code": "ambiguous",
@@ -697,7 +721,11 @@
               "quote": "You may not accrue enhanced earning on purchases made using 3rd party digital wallets."
             }
           ],
-          "note": "Purchases through third-party digital wallets may not earn the 5% T-Mobile rate."
+          "note": "Purchases through third-party digital wallets may not earn the 5% T-Mobile rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored on the sentence that third-party digital wallets may not accrue enhanced earning; a known checkout-method gap at corpus level, consistent with the Key Rewards wallet issue in the Capital One conventions."
+          }
         }
       ],
       "productNoteChanges": [
@@ -719,7 +747,11 @@
             "sourceId": "capital-one-t-mobile-visa-product",
             "quote": "made online at T-Mobile.com and in the T-Life app, and at T-Mobile stores and Authorized Retailers"
           },
-          "note": "The hint is true per the captures; only the cap changes from \"none stated\" to none, since the terms say earning has no cap."
+          "note": "The hint is true per the captures; only the cap changes from \"none stated\" to none, since the terms say earning has no cap.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Only the cap text changes, from none stated to none, matching the pricing capture sentence that earning is uncapped; the rest of the hint is already true per the captures."
+          }
         }
       ]
     }

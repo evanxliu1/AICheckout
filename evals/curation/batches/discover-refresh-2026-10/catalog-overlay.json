@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "version": "discover-refresh-2026-10.overlay.1",
+  "annotationStatus": "agent-verified",
+  "description": "Catalog overlay of pipeline batch discover-refresh-2026-10: one entry per corpus card, merged from the overlay/<issuer>.json fragments by pipeline accept overlay.",
+  "programs": [],
+  "programDetails": [],
+  "gates": [],
+  "cards": [
+    {
+      "cardId": "discover-it-chrome",
+      "issuer": "Discover",
+      "corpusCaseSha256": "9143409b83ce3a5fae6307ae931d4953dd9094656274986ab28342ed5ab5adf1",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "gas",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The $1,000 quarterly cap is combined across gas stations and restaurants: one shared cap ID (O12). Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "sharedCapId": "gas-restaurants-2-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-it-chrome-product",
+              "quote": "on up to $1,000 in combined purchases each quarter, automatically"
+            },
+            {
+              "sourceId": "discover-it-chrome-terms",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The $1,000 quarterly cap is combined across gas stations and restaurants: one shared cap ID (O12). Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "sharedCapId": "gas-restaurants-2-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-it-chrome-product",
+              "quote": "on up to $1,000 in combined purchases each quarter, automatically"
+            },
+            {
+              "sourceId": "discover-it-chrome-terms",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "EV charging counts as a gas station purchase, so it draws on the same combined $1,000 quarterly cap as gas and restaurants (O12). Hedged wallet wording in the same paragraph excludes the named paths (O10).",
+          "set": {
+            "sharedCapId": "gas-restaurants-2-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-it-chrome-terms",
+              "quote": "Gas station purchases include those made at merchants classified as places that sell automotive gasoline"
+            },
+            {
+              "sourceId": "discover-it-chrome-product",
+              "quote": "on up to $1,000 in combined purchases each quarter, automatically"
+            },
+            {
+              "sourceId": "discover-it-chrome-product",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Cashback Match is a one-time first-year match of all rewards for new cardmembers, not a rate; no catalog change."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Only some public EV charging stations code as gas stations; the labelled EV rule keeps the gas rate and shares the gas cap, with no further catalog change."
+        }
+      ],
+      "hints": []
+    }
+  ]
+}

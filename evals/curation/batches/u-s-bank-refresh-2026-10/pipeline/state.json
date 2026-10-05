@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "u-s-bank-refresh-2026-10",
-  "updatedAt": "2026-10-05T02:00:24.864Z",
+  "updatedAt": "2026-10-05T02:02:10.062Z",
   "cards": {
     "us-bank-cash-plus": {
       "stages": {
@@ -862,6 +862,30 @@
           "agentRun": "a7afbbe2b7fd24789",
           "model": "claude-opus-5-5",
           "acceptedAt": "2026-10-05T01:59:57.544Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:961ea8dc47359816e942e5990c898254c9eb8de791d53be8b0a890d3d75a8131",
+          "finishedAt": "2026-10-05T02:02:08.946Z",
+          "attempts": 1,
+          "packetId": "9783781a-941f-4430-8482-0fc7d901ef94",
+          "agentRun": "a9a44bacb504cc714",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-10-05T02:02:08.946Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:8689a77b4d6fb62cfc7d1363614b71c357f998efa3c133e0c78cbb95cf1c7855",
+          "outputs": [
+            {
+              "ref": "corpus:us-bank-harley-davidson-secured",
+              "sha256": "e295d902e7abaa4ac95a7a52bc0eea4d87e16997cb4173ee7ca1e6c004fc5bb5"
+            }
+          ],
+          "finishedAt": "2026-10-05T02:02:10.062Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -1606,21 +1630,21 @@
           "outputs": [
             {
               "ref": "adjudicate:u-s-bank",
-              "sha256": "7f9e070a618668e4a0e6dcbc37dd2c5ba2207c2a40c0b14bf3f2b502051061fb"
+              "sha256": "548e97cdb89be723736babcb1caf280c009bb81a14a1a8dfe2ba611d1f6c603d"
             },
             {
               "ref": "lint-acks:u-s-bank",
               "sha256": "6beca51b21c0bf4de49d81ae17de4b7a28a5f24d035866b3cf7b3e1c024330ea"
             }
           ],
-          "finishedAt": "2026-10-05T01:56:28.190Z",
-          "attempts": 1,
-          "packetId": "197ffee8-bd13-447e-883c-686d6fc5c820",
-          "agentRun": "a6c0e04a204e5efec",
+          "finishedAt": "2026-10-05T02:02:08.946Z",
+          "attempts": 2,
+          "packetId": "9783781a-941f-4430-8482-0fc7d901ef94",
+          "agentRun": "a9a44bacb504cc714",
           "model": "claude-fable-5-1",
-          "acceptedAt": "2026-10-05T01:56:28.190Z",
-          "durationMs": 302997,
-          "tokens": 125424
+          "acceptedAt": "2026-10-05T02:02:08.946Z",
+          "durationMs": 89380,
+          "tokens": 47489
         },
         "overlay": {
           "status": "done",
