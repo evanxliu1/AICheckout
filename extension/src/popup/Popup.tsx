@@ -21,15 +21,30 @@ import {
 import PopupHeader from '../components/PopupHeader';
 import { PAYMENT_LABELS } from '../components/estimates';
 import { unvaluedPrograms } from '../components/wallet-options';
-import { catalogMerchantIds, formatUsd, parseUsd, usageInputs } from '../domain';
+import { GENERIC_MERCHANT_ID, catalogMerchantIds, formatUsd, parseUsd, usageInputs } from '../domain';
 import type { Eligibility, PaymentPathV3, Wallet } from '../domain';
 import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
 import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY } from '../state/keys';
 import { emptyState } from '../state/contracts';
-import { MERCHANT_IDS, merchantName } from '../checkout/merchants';
+import { MERCHANT_IDS, merchantForTab, merchantName } from '../checkout/merchants';
 
 type View = Extract<CheckoutResponse, { ok: true }>;
+/** The stores the popup offers: the supported stores, then any other U.S. online store. */
+const STORE_IDS: string[] = [...MERCHANT_IDS, GENERIC_MERCHANT_ID];
+
+/** The store of the tab the popup was opened on (its URL is granted by `activeTab`), or null. */
+async function activeTabMerchant() {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    return merchantForTab(tab?.url);
+  } catch {
+    return null;
+  }
+}
+/** Online retail eligibility for a newly chosen store: the generic store sells physical goods
+ * online (its profile, as the badge derives it); a supported store asks the shopper. */
+const storeOnlineRetail = (id: string): Eligibility => (id === GENERIC_MERCHANT_ID ? 'eligible' : 'unknown');
 
 export default function Popup({
   onLock,
@@ -91,26 +106,32 @@ export default function Popup({
     }
   }, [dirty, editing, view?.comparison]);
 
-  const restore = useCallback((next: View) => {
+  /** `tabMerchant`: the store of the tab the popup opened on; it replaces the saved store unless a
+   * read cart is waiting to be compared. */
+  const restore = useCallback((next: View, tabMerchant: string | null = null) => {
     setView(next);
     const cart = next.state.cart;
     const hasPendingCart = !!cart && !next.state.comparison;
+    const saved = hasPendingCart
+      ? cart.merchantId
+      : (next.state.purchase?.merchantId ?? cart?.merchantId ?? 'best-buy-us');
+    const changed = !hasPendingCart && tabMerchant !== null && tabMerchant !== saved;
     setAmount(
-      hasPendingCart
-        ? (cart.amountCents / 100).toFixed(2)
-        : next.state.purchase
-          ? (next.state.purchase.amountCents / 100).toFixed(2)
-          : '',
+      changed
+        ? ''
+        : hasPendingCart
+          ? (cart.amountCents / 100).toFixed(2)
+          : next.state.purchase
+            ? (next.state.purchase.amountCents / 100).toFixed(2)
+            : '',
     );
-    setMerchantId(
-      hasPendingCart
-        ? cart.merchantId
-        : (next.state.purchase?.merchantId ?? cart?.merchantId ?? 'best-buy-us'),
-    );
-    setCartId(cart?.id ?? null);
+    setMerchantId(changed ? tabMerchant : saved);
+    setCartId(changed ? null : (cart?.id ?? null));
     // Restored results are labeled saved; a new comparison requires renewed confirmation.
     setEligible(false);
-    setOnlineRetail(next.state.purchase?.onlineRetail ?? 'unknown');
+    setOnlineRetail(
+      changed ? storeOnlineRetail(tabMerchant) : (next.state.purchase?.onlineRetail ?? 'unknown'),
+    );
     // Venmo is offered only with catalog v3 terms.
     const path = next.state.purchase?.paymentPath ?? 'card';
     setPaymentPath(path === 'venmo' && next.catalog.schemaVersion !== 3 ? 'card' : path);
@@ -132,9 +153,9 @@ export default function Popup({
 
   useEffect(() => {
     let cancelled = false;
-    void checkoutRequest({ type: 'checkout:get-state' })
-      .then((next) => {
-        if (!cancelled) restore(next);
+    void Promise.all([checkoutRequest({ type: 'checkout:get-state' }), activeTabMerchant()])
+      .then(([next, tabMerchant]) => {
+        if (!cancelled) restore(next, tabMerchant);
       })
       .catch((err) => {
         if (!cancelled)
@@ -433,7 +454,7 @@ export default function Popup({
                     <Field
                       id="purchase-merchant"
                       label="Merchant"
-                      helperText="Choose the merchant for manual entry. Reading a supported cart selects its merchant for you."
+                      helperText="Chosen from the page you opened this on. Change it if it is wrong."
                     >
                       {(control) => (
                         <Select
@@ -444,16 +465,16 @@ export default function Popup({
                             setMerchantId(e.target.value);
                             setAmount('');
                             setCartId(null);
-                            setOnlineRetail('unknown');
+                            setOnlineRetail(storeOnlineRetail(e.target.value));
                             setEligible(false);
                             setDirty(true);
                             setError('');
                           }}
                         >
-                          {!MERCHANT_IDS.some((id) => id === merchantId) && (
+                          {!STORE_IDS.includes(merchantId) && (
                             <option value={merchantId}>Unsupported saved merchant</option>
                           )}
-                          {MERCHANT_IDS.map((id) => (
+                          {STORE_IDS.map((id) => (
                             <option key={id} value={id}>
                               {merchantName(id)}
                             </option>
@@ -467,15 +488,19 @@ export default function Popup({
                         terms or an extension update.
                       </AlertInline>
                     )}
-                    <Button
-                      color="secondary"
-                      icon="shopping-cart"
-                      isLoading={pending === 'read'}
-                      disabled={busy && pending !== 'read'}
-                      onClick={() => void readCart()}
-                    >
-                      Read cart amount
-                    </Button>
+                    {merchantId === GENERIC_MERCHANT_ID ? (
+                      <p className="supporting">Type the amount you will pay at this store’s checkout.</p>
+                    ) : (
+                      <Button
+                        color="secondary"
+                        icon="shopping-cart"
+                        isLoading={pending === 'read'}
+                        disabled={busy && pending !== 'read'}
+                        onClick={() => void readCart()}
+                      >
+                        Read cart amount
+                      </Button>
+                    )}
                     {cart && (
                       <AlertInline
                         color="highlight"

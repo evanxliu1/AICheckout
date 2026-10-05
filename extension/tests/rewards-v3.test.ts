@@ -1,11 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import {
   CATALOG_V2,
+  CATALOG_V3,
+  GENERIC_MERCHANT_ID,
+  GENERIC_MERCHANT_PROFILE,
   MAX_AMOUNT_CENTS,
   RULE_STATUSES_V3,
   UNCERTAINTIES_V3,
+  catalogMerchantIds,
   catalogV3Schema,
   compareRewards,
+  ruleCoversMerchant,
   usageInputs,
 } from '../src/domain';
 import type {
@@ -875,6 +880,58 @@ describe('catalog v3 engine: inputs and compatibility', () => {
       status: 'unavailable',
       reason: 'unsupported-merchant',
     });
+  });
+});
+
+describe('catalog v3 engine: another U.S. online store', () => {
+  const generic = { merchantId: GENERIC_MERCHANT_ID };
+  it('applies all-purchases and online-retail rules', () => {
+    const bce = only({ cards: [owned('test-bce', { usage: [known('bce-online')] })], purchase: generic });
+    expect(statusOf(bce, 'bce-online')).toBe('applied');
+    expect(cents(bce)).toEqual([300, 300]);
+    expect(statusOf(only({ cards: [owned('test-prime-visa')], purchase: generic }), 'prime-base')).toBe(
+      'base',
+    );
+  });
+  it('does not apply MCC-group or brand-scoped rules', () => {
+    const flex = only({ cards: [owned('test-freedom-flex')], purchase: generic });
+    expect(statusOf(flex, 'flex-q4-electronics')).toBe('not-at-merchant');
+    expect(statusOf(flex, 'flex-q4-department')).toBe('not-at-merchant');
+    expect(cents(flex)).toEqual([100, 100]);
+    const prime = only({ cards: [owned('test-prime-visa')], purchase: generic });
+    expect(statusOf(prime, 'prime-amazon')).toBe('not-at-merchant');
+  });
+  it('does not accept closed-loop cards', () => {
+    expect(compare({ cards: [owned('test-amazon-store')], purchase: generic })).toEqual({
+      status: 'unavailable',
+      reason: 'no-accepted-card',
+    });
+    const result = ready({ cards: [owned('test-bce'), owned('test-amazon-store')], purchase: generic });
+    expect(result.notAccepted!.map((e) => e.cardId)).toEqual(['test-amazon-store']);
+  });
+  it('prefers a catalog profile with the generic id', () => {
+    const catalog = structuredClone(CATALOG);
+    catalog.merchants.push({ ...GENERIC_MERCHANT_PROFILE, onlineRetail: false });
+    expect(statusOf(only({ cards: [owned('test-bce')], purchase: generic, catalog }), 'bce-online')).toBe(
+      'not-at-merchant',
+    );
+  });
+  // Known limit: the generic profile has no brands, so a rule's brand exclusion cannot fire at a
+  // generic store (e.g. walmart.com). This lists every such rule in the bundled catalog; a new one
+  // must be reviewed (decision 2026-10-05-generic-store-profile).
+  it('lists the bundled rules whose brand exclusions cannot fire at a generic store', () => {
+    const rules = CATALOG_V3.cards.flatMap((c) =>
+      c.rules
+        .filter((r) => r.excludedBrandIds.length > 0 && ruleCoversMerchant(r, GENERIC_MERCHANT_PROFILE))
+        .map((r) => `${c.id}/${r.id} excludes ${r.excludedBrandIds.join(',')}`),
+    );
+    expect(rules).toEqual([
+      'synchrony-onepay-cashrewards-card/onepay-cashrewards-all-first-90-days-v2 excludes walmart',
+    ]);
+  });
+  it('is a covered merchant for v3 catalogs only', () => {
+    expect(catalogMerchantIds(CATALOG)).toContain(GENERIC_MERCHANT_ID);
+    expect(catalogMerchantIds(CATALOG_V2)).not.toContain(GENERIC_MERCHANT_ID);
   });
 });
 

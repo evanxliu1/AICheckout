@@ -66,6 +66,61 @@ async function fillPurchase() {
   fireEvent.click(screen.getByRole('checkbox', { name: /I confirmed the amount/ }));
   fireEvent.click(screen.getByRole('button', { name: 'Compare my cards' }));
 }
+/** The tab the popup opens on (the URL `activeTab` grants). */
+function openOn(url: string) {
+  (globalThis.chrome as unknown as { tabs: unknown }).tabs = {
+    query: vi.fn(async () => [{ id: 3, url }]),
+  };
+}
+const merchantValue = () => (screen.getByLabelText('Merchant') as HTMLSelectElement).value;
+describe('popup store from the open tab', () => {
+  it('preselects a supported store by its host', async () => {
+    openOn('https://www.newegg.com/p/N82E1');
+    render(<Popup />);
+    await screen.findByLabelText('Purchase amount (USD)');
+    await vi.waitFor(() => expect(merchantValue()).toBe('newegg-us'));
+    expect(screen.getByRole('button', { name: 'Read cart amount' })).toBeTruthy();
+  });
+  it('preselects another U.S. online store for any other web page and compares a typed amount', async () => {
+    openOn('https://shop.example.com/checkout');
+    render(<Popup />);
+    await screen.findByLabelText('Purchase amount (USD)');
+    await vi.waitFor(() => expect(merchantValue()).toBe('generic-us-online'));
+    expect(screen.queryByRole('button', { name: 'Read cart amount' })).toBeNull();
+    expect(screen.queryByText(/do not cover/)).toBeNull();
+    expect((screen.getByLabelText('Online retail bonus eligibility') as HTMLSelectElement).value).toBe(
+      'eligible',
+    );
+    await fillPurchase();
+    expect(
+      await screen.findByText('Saved estimate for a $100.00 Another U.S. online store purchase.'),
+    ).toBeTruthy();
+    expect(screen.getByText('$1.50')).toBeTruthy();
+    expect((data.checkoutStateV1 as AppState).purchase?.merchantId).toBe('generic-us-online');
+    // Reopened on a non-web page, the saved generic purchase is restored.
+    cleanup();
+    openOn('chrome://newtab/');
+    render(<Popup />);
+    expect(
+      await screen.findByText('Saved estimate for a $100.00 Another U.S. online store purchase.'),
+    ).toBeTruthy();
+    expect(merchantValue()).toBe('generic-us-online');
+    expect((screen.getByLabelText('Purchase amount (USD)') as HTMLInputElement).value).toBe('100.00');
+  });
+  it('keeps the saved store on a non-web page', async () => {
+    openOn('chrome://extensions/');
+    render(<Popup />);
+    await screen.findByLabelText('Purchase amount (USD)');
+    expect(merchantValue()).toBe('best-buy-us');
+  });
+  it('offers another U.S. online store in the merchant select', async () => {
+    render(<Popup />);
+    await screen.findByLabelText('Purchase amount (USD)');
+    fireEvent.change(screen.getByLabelText('Merchant'), { target: { value: 'generic-us-online' } });
+    expect(screen.queryByRole('button', { name: 'Read cart amount' })).toBeNull();
+    expect(screen.getByText(/Type the amount you will pay/)).toBeTruthy();
+  });
+});
 describe('offline comparison popup', () => {
   it('changes manual merchant without carrying the old amount, confirmation or result across', async () => {
     render(<Popup />);

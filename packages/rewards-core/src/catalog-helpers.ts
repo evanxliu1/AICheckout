@@ -1,5 +1,11 @@
 import { needsActivation } from './engine-v2.ts';
-import { baseRuleV3, capHolder, enrolledByChoice, ruleCoversMerchant } from './engine-v3.ts';
+import {
+  baseRuleV3,
+  capHolder,
+  enrolledByChoice,
+  merchantProfilesV3,
+  ruleCoversMerchant,
+} from './engine-v3.ts';
 import type {
   Catalog,
   CardProductV2,
@@ -20,9 +26,10 @@ export const ACTIVATION_LABELS: Record<RewardRuleV2['activation'], string> = {
   unstated: 'Activation is not mentioned on the issuer’s pages',
 };
 
-/** Merchant IDs a catalog covers, for any schema version. */
+/** Merchant IDs a catalog covers, for any schema version (v3: with the engine's generic store). */
 export function catalogMerchantIds(catalog: Catalog): string[] {
-  return catalog.schemaVersion === 1 ? catalog.merchantIds : catalog.merchants.map((m) => m.id);
+  if (catalog.schemaVersion === 1) return catalog.merchantIds;
+  return (catalog.schemaVersion === 3 ? merchantProfilesV3(catalog) : catalog.merchants).map((m) => m.id);
 }
 
 /** Short shopper-facing names for rule categories. */

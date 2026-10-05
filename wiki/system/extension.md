@@ -6,7 +6,7 @@ status: stable
 tags: [system, extension, chrome, mv3]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:26:46Z
+  at: 2026-10-05T20:45:00Z
 sources:
   - resource: ../../extension/vite.config.ts
     title: Build plugins and generated manifest
@@ -34,6 +34,8 @@ sources:
     title: Adapter interpreter
   - resource: ../../extension/src/checkout/browser.ts
     title: Manual cart read
+  - resource: ../../extension/src/checkout/merchants.ts
+    title: Merchant names and URL matching (merchantForTab)
   - resource: ../../packages/catalog-client/src/index.ts
     title: Catalog fetcher
   - resource: ../archive/phase2-goal.md
@@ -98,7 +100,7 @@ Each merchant is a JSON spec in [`src/checkout/adapters/`](../../extension/src/c
 | `newegg-us` | `newegg-summary-v1` | `secure.newegg.com` | `^/shop/cart/?$` | No |
 | `amazon-us` | `amazon-summary-v1` | `www.amazon.com` | `^/gp/cart/view\.html$`, `^/cart/?$` | No |
 
-[`page-reader.ts:readCheckoutPage`](../../extension/src/checkout/page-reader.ts) is the one interpreter: visible text only, no form values or item names, bounded rows and text, USD only, any ambiguity returns `{status: 'unavailable', reason}` (`unsupported-page`, `empty-cart`, `summary-missing`, `ambiguous-amount`, `unsupported-currency`, `page-loading`). [`merchants.ts:merchantForCheckout`](../../extension/src/checkout/merchants.ts) requires HTTPS, no credentials or port, an exact host and path length ≤ 200.
+[`page-reader.ts:readCheckoutPage`](../../extension/src/checkout/page-reader.ts) is the one interpreter: visible text only, no form values or item names, bounded rows and text, USD only, any ambiguity returns `{status: 'unavailable', reason}` (`unsupported-page`, `empty-cart`, `summary-missing`, `ambiguous-amount`, `unsupported-currency`, `page-loading`). [`merchants.ts:merchantForCheckout`](../../extension/src/checkout/merchants.ts) requires HTTPS, no credentials or port, an exact host and path length ≤ 200. `merchantForTab` (popup only, Phase 11) is looser: an `http(s)` page whose host shares the last two labels with an adapter host (`www.newegg.com` → `newegg-us`, product pages included) is that store, any other web page is `generic-us-online`, a non-web page (`chrome://`, the extension's own pages) is none. `merchantName('generic-us-online')` is "Another U.S. online store".
 
 ### Manual cart read (popup)
 
@@ -106,7 +108,7 @@ Each merchant is a JSON spec in [`src/checkout/adapters/`](../../extension/src/c
 
 ### Popup and onboarding
 
-[`popup/Popup.tsx`](../../extension/src/popup/Popup.tsx) holds the wallet editor, purchase form (merchant, amount, payment path incl. Venmo when the catalog in effect is v3, online-retail eligibility, eligibility confirmation), comparison result, catalog refresh, savings history (card names from `cardIndex`), per-site badge switches ([`BadgeSettings.tsx`](../../extension/src/components/BadgeSettings.tsx)) and protection settings; "Your cards" names any owned points program without a value. [`onboarding/Onboarding.tsx`](../../extension/src/onboarding/Onboarding.tsx) shows the same editor and saves with `checkout:save-wallet`.
+[`popup/Popup.tsx`](../../extension/src/popup/Popup.tsx) holds the wallet editor, purchase form (merchant, amount, payment path incl. Venmo when the catalog in effect is v3, online-retail eligibility, eligibility confirmation), comparison result, catalog refresh, savings history (card names from `cardIndex`), per-site badge switches ([`BadgeSettings.tsx`](../../extension/src/components/BadgeSettings.tsx)) and protection settings; "Your cards" names any owned points program without a value. Any store (Phase 11, [plan](../product/phase-11-any-store.md)): on open the popup reads the active tab's URL (granted by `activeTab`, never stored) with `merchantForTab`; a detected store replaces the saved one unless a read cart is waiting to be compared, and a non-web page keeps the saved store (else Best Buy). The Merchant select offers the three stores and "Another U.S. online store"; at that store "Read cart amount" is replaced by a line asking for the typed amount, and online-retail eligibility starts at "Eligible" (from the generic profile, as the badge's `autoPurchase` derives it); the shopper can change both. The badge, host permissions, savings and order recognition are unchanged; a generic store never gets a badge or an order question. [`onboarding/Onboarding.tsx`](../../extension/src/onboarding/Onboarding.tsx) shows the same editor and saves with `checkout:save-wallet`.
 
 Ocean theme ([decision](../decisions/2026-10-02-ocean-theme.md), since the merge of 2026-10-03): when the comparison has a clear winner (`!tied && !rankingMayChange`, including a single card that guarantees something) its row is a navy block with the amount (`rewardText`) in large white Bricolage and its rate (`rateText`, "up to" unless the estimate is exact and fully at that rate) in sky; the basis badge, value lines, conditions and disclosures stay inside the block. Ranges, "Up to $x" and amounts in units use the smaller hero size. Every other row shows "$X less" only when both amounts are exact dollar amounts (never for a program with no value), prefixed "est." when either rests on a published-estimate point value. A single card that guarantees nothing ($0 or 0 units minimum) gets no block. Ties and rankings that may change stay a plain list. `rowEmphasis` and `lessThanBest` in [`estimates.ts`](../../extension/src/components/estimates.ts) decide this for the popup and the badge. Card name and amount share a baseline and a wide amount moves under the name (`.estimate-head`), so long names and unit ranges fit at 360 px.
 
@@ -131,8 +133,8 @@ Ocean theme ([decision](../decisions/2026-10-02-ocean-theme.md), since the merge
 | State, migration, vault | `state-service.test.ts`, `cart-state.test.ts`, `background.test.ts`, `state-migration.test.ts`, `vault.test.ts`, `vault-gate.test.tsx`, `state-v3.test.ts` (schema 2 → 3 with and without the vault, vault size with a 1 MiB catalog, largest valid state, v3 refresh rules, pruning, badge payload bound) |
 | Adapters and readers | `adapter-interpreter.test.ts`, `site-adapters.test.ts`, `checkout-reader.test.ts`, `amazon-reader.test.ts`, `newegg-reader.test.ts`, `checkout-browser.test.ts` (fixtures in `tests/fixtures/`) |
 | Catalog | `catalog-refresh.test.ts`, `catalog-schema.test.ts` |
-| Popup | `popup.test.tsx`, `comparison-result.test.tsx`, `wallet-editor.test.tsx` (search, 180-card fixture, 20-card limit, options, gates, point values), `v3-results.test.tsx` (v3 wording, Ocean winner block on v3 results), `catalog-slice.test.tsx` (response slice, index, `catalog-cards`, editor loading) |
-| Browser | `e2e/extension.spec.ts` (incl. ranking changes when a chosen category, a point value or a gate answer changes, on the fixture and on the bundled catalog), `checkout.spec.ts`, `newegg.spec.ts`, `lifecycle.spec.ts`, `vault.spec.ts`, `catalog.spec.ts`, `package.spec.ts`, `popup-a11y.spec.ts` (axe and no inline styles at 360 and 480 px, v2 and v3 states incl. onboarding, v3 winner block, the widest amounts on a $99,999.99 purchase and the bundled catalog's longest card names; no overflow inside the popup), `release-assets.spec.ts` |
+| Popup | `popup.test.tsx` (incl. store from the open tab: supported site, other web page, non-web page, generic restore), `comparison-result.test.tsx`, `wallet-editor.test.tsx` (search, 180-card fixture, 20-card limit, options, gates, point values), `v3-results.test.tsx` (v3 wording, Ocean winner block on v3 results), `catalog-slice.test.tsx` (response slice, index, `catalog-cards`, editor loading) |
+| Browser | `e2e/any-store.spec.ts` (native popup on an unsupported host: generic store preselected, typed amount, recommendation, host permissions unchanged), `e2e/extension.spec.ts` (incl. ranking changes when a chosen category, a point value or a gate answer changes, on the fixture and on the bundled catalog), `checkout.spec.ts`, `newegg.spec.ts`, `lifecycle.spec.ts`, `vault.spec.ts`, `catalog.spec.ts`, `package.spec.ts`, `popup-a11y.spec.ts` (axe and no inline styles at 360 and 480 px, v2 and v3 states incl. onboarding and a generic-store comparison, v3 winner block, the widest amounts on a $99,999.99 purchase and the bundled catalog's longest card names; no overflow inside the popup), `release-assets.spec.ts` |
 
 Commands are on [Testing](testing.md).
 

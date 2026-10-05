@@ -160,6 +160,8 @@ describe('fail closed', () => {
   });
   it.each([
     [{ ...purchase, merchantId: 'unknown-shop' }, 'unsupported-merchant'],
+    // The engine's generic store profile is a catalog v3 feature.
+    [{ ...purchase, merchantId: 'generic-us-online' }, 'unsupported-merchant'],
     [{ ...purchase, eligiblePurchase: 'unknown' }, 'purchase-not-confirmed'],
     [{ ...purchase, eligiblePurchase: 'ineligible' }, 'ineligible-purchase'],
   ])('blocks unsupported or unconfirmed purchases', (p, reason) => {

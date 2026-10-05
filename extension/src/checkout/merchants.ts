@@ -1,3 +1,4 @@
+import { GENERIC_MERCHANT_ID, GENERIC_MERCHANT_PROFILE } from '@ai-checkout/rewards-core/generic-merchant';
 import { MERCHANT_IDS, SITE_ADAPTERS, type MerchantId } from './adapters';
 
 /** Installed readers, distinct from the merchant scope of a downloaded catalog. */
@@ -10,7 +11,28 @@ export const MERCHANTS = Object.fromEntries(
 ) as Record<MerchantId, { name: string; extractorVersion: string }>;
 
 export function merchantName(id: string): string {
+  if (id === GENERIC_MERCHANT_ID) return GENERIC_MERCHANT_PROFILE.name;
   return Object.hasOwn(MERCHANTS, id) ? MERCHANTS[id as MerchantId].name : 'Unsupported merchant';
+}
+
+/** The last two labels of a host (`secure.newegg.com` → `newegg.com`); every adapter host is a .com. */
+const site = (host: string) => host.split('.').slice(-2).join('.');
+
+/** The popup's store for a tab URL: a supported store on any page of its site (product pages too,
+ * not only the carts its adapter reads), any other web page the engine's generic store, and null
+ * for a non-web page. The URL is never stored. */
+export function merchantForTab(rawUrl: string | undefined): string | null {
+  try {
+    const url = new URL(rawUrl ?? '');
+    if (url.protocol !== 'https:' && url.protocol !== 'http:') return null;
+    return (
+      MERCHANT_IDS.find((id) =>
+        SITE_ADAPTERS[id].match.hosts.some((host) => site(host) === site(url.hostname)),
+      ) ?? GENERIC_MERCHANT_ID
+    );
+  } catch {
+    return null;
+  }
 }
 
 /** The merchant whose adapter matches this URL: HTTPS, no credentials or port, an exact host,
