@@ -1,0 +1,163 @@
+{
+  "schema": "capture-recipe.3",
+  "domain": "conforama.es",
+  "origin": "https://www.conforama.es/",
+  "listingUrl": "https://www.conforama.es/sofas-sillones-puffs/sofas/sofas-cama",
+  "productUrls": [
+    "https://www.conforama.es/sofa-convertible-en-cama-rio-color-negro",
+    "https://www.conforama.es/sofa-cama-3-plazas-bowy"
+  ],
+  "cartPath": "/checkout/cart",
+  "checkoutPaths": [
+    "/checkout/shipping",
+    "/checkout/payment"
+  ],
+  "allowlist": [
+    {
+      "purpose": "add-to-cart",
+      "target": {
+        "selector": "button.btn-v2.add-to-cart[data-test=\"btn-add-cart\"]"
+      }
+    },
+    {
+      "purpose": "close-popup",
+      "target": {
+        "role": "button",
+        "name": "Cerrar"
+      }
+    },
+    {
+      "purpose": "close-popup",
+      "target": {
+        "role": "button",
+        "name": "Close"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "do": "goto",
+      "url": "https://www.conforama.es/checkout/cart"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "snapshot",
+      "state": "empty-cart"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.conforama.es/sofa-convertible-en-cama-rio-color-negro"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "button.btn-v2.add-to-cart[data-test=\"btn-add-cart\"]"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-01"
+    },
+    {
+      "do": "snapshot",
+      "state": "minicart-1"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.conforama.es/checkout/cart"
+    },
+    {
+      "do": "wait",
+      "ms": 5000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-02"
+    },
+    {
+      "do": "snapshot",
+      "state": "cart-1"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.conforama.es/sofa-convertible-en-cama-rio-color-negro"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "button.btn-v2.add-to-cart[data-test=\"btn-add-cart\"]"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "goto",
+      "url": "https://www.conforama.es/checkout/cart"
+    },
+    {
+      "do": "wait",
+      "ms": 5000
+    },
+    {
+      "do": "snapshot",
+      "state": "cart-qty2"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.conforama.es/sofa-cama-3-plazas-bowy"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "button.btn-v2.add-to-cart[data-test=\"btn-add-cart\"]"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "goto",
+      "url": "https://www.conforama.es/checkout/cart"
+    },
+    {
+      "do": "wait",
+      "ms": 5000
+    },
+    {
+      "do": "snapshot",
+      "state": "cart-2items"
+    },
+    {
+      "do": "end"
+    }
+  ],
+  "recon": {
+    "sessionId": "20261006T071351Z"
+  },
+  "cartHost": "www.conforama.es"
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "capture-recon-record.2",
+  "domain": "ica.se",
+  "entryUrl": "https://handla.ica.se/",
+  "currency": "SEK",
+  "priceBand": [
+    105,
+    2100
+  ],
+  "tool": {
+    "version": "capture-tool.3",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "session": {
+    "id": "20261006T072431Z",
+    "number": 1,
+    "startedAt": "2026-10-06T07:24:31.180Z",
+    "endedAt": "2026-10-06T07:25:44.027Z",
+    "topLevelNavigations": 2,
+    "navigationRequests": 2
+  },
+  "robots": {
+    "url": "https://handla.ica.se/robots.txt",
+    "httpStatus": 200,
+    "sha256": "f2047f248bc592578b37dd455b87632ed4478c8da98f3b7738a48316afc48d17",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "allow",
+            "path": "/"
+          },
+          {
+            "type": "disallow",
+            "path": "/handla/browser"
+          }
+        ]
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "views": 3,
+  "homeLandings": [
+    {
+      "requested": "https://handla.ica.se/",
+      "chain": [
+        "https://handla.ica.se/"
+      ],
+      "landed": "https://handla.ica.se/",
+      "sameSite": true
+    }
+  ],
+  "navigation": [
+    "https://handla.ica.se/",
+    "https://handla.ica.se/kategori/627"
+  ],
+  "stockMismatch": [],
+  "events": [],
+  "stop": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "needs-input",
+    "evidenceSha256": "c91676505e2a18abbcb1e66e555f469ad5955970060a52e53a879999dfb32a13",
+    "draftRecipeSha256": null
+  }
+}

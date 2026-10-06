@@ -1,0 +1,134 @@
+{
+  "schema": "capture-recipe.3",
+  "domain": "lego.com",
+  "origin": "https://www.lego.com/",
+  "listingUrl": "https://www.lego.com/en-us/smart-play/all-sets",
+  "productUrls": [
+    "https://www.lego.com/en-us/product/smart-play-training-house-with-pikachu-72164",
+    "https://www.lego.com/en-us/product/smart-play-charizard-vs-jolteon-ultimate-battle-72167"
+  ],
+  "cartPath": "/en-us/cart",
+  "checkoutPaths": [],
+  "termsUrl": "https://www.lego.com/page/terms-and-conditions",
+  "allowlist": [
+    {
+      "purpose": "add-to-cart",
+      "target": {
+        "selector": "button[data-test=\"add-to-cart-skroll-cta\"].sk-button--full-width"
+      }
+    },
+    {
+      "purpose": "close-popup",
+      "target": {
+        "role": "button",
+        "name": "Close",
+        "exact": true
+      }
+    },
+    {
+      "purpose": "close-popup",
+      "target": {
+        "role": "button",
+        "name": "Continue",
+        "exact": true
+      }
+    },
+    {
+      "purpose": "quantity-increment",
+      "target": {
+        "role": "button",
+        "name": "Increase quantity"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "do": "goto",
+      "url": "https://www.lego.com/en-us/cart"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-01"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.lego.com/en-us/product/smart-play-training-house-with-pikachu-72164"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "button[data-test=\"add-to-cart-skroll-cta\"].sk-button--full-width"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-02"
+    },
+    {
+      "do": "snapshot",
+      "state": "minicart-1"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.lego.com/en-us/cart"
+    },
+    {
+      "do": "wait",
+      "ms": 6000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-03"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.lego.com/page/terms-and-conditions"
+    },
+    {
+      "do": "wait",
+      "ms": 3000
+    },
+    {
+      "do": "snapshot",
+      "state": "terms"
+    },
+    {
+      "do": "end",
+      "notReached": [
+        {
+          "state": "empty-cart",
+          "reason": "cart-page-error-post-aborted"
+        },
+        {
+          "state": "cart-1",
+          "reason": "cart-page-error-post-aborted"
+        },
+        {
+          "state": "cart-qty2",
+          "reason": "cart-page-error-post-aborted"
+        },
+        {
+          "state": "cart-2items",
+          "reason": "cart-page-error-post-aborted"
+        }
+      ]
+    }
+  ],
+  "recon": {
+    "sessionId": "20261006T072015Z"
+  },
+  "cartHost": "www.lego.com"
+}

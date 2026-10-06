@@ -583,9 +583,162 @@
     "note": "first home navigation link /sofas-sillones-puffs is a listing (30 priced tiles shown, 7066 products); the lowest current tile price is 198,90 EUR, above the EUR band 9-185, so no tile qualifies. Cookies declined (Rechazar todas). Review flag: the protocol does not say whether to move to the next candidate link when the listing has no in-band tile; the operator read the rule as fixing the listing, so the site is excluded"
    },
    "statusUnderProtocol5": {
-    "status": "revisit",
+    "status": "captured",
     "code": null,
-    "note": "no-eligible-item came from the old single-listing rule; re-visited under the .5 listing rule; pilot-2 session set aside (Amendment 4, 5)"
+    "note": "second draw (Amendment 4, 5): re-visited under the .5 listing rule from home candidate 1; pilot-2 session set aside"
+   },
+   "protocol5": {
+    "status": "captured",
+    "code": null,
+    "recon": {
+     "sessionId": "20261006T071351Z",
+     "startedAt": "2026-10-06T07:13:51.501Z",
+     "endedAt": "2026-10-06T07:16:58.922Z",
+     "topLevelNavigations": 10,
+     "navigationRequests": 10,
+     "views": 10,
+     "outcome": {
+      "status": "done",
+      "code": null,
+      "evidenceSha256": null,
+      "draftRecipeSha256": "d4e6cea3f670d0f47bc6a31e07d5851e1382deb44769e58f0bbebfe8c4ff7d51"
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "36669a429c9c5980ff01d7ccf6cd8828b621c982634c61efdc5cd8e4fd190683",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.conforama.es/",
+       "chain": [
+        "https://www.conforama.es/"
+       ],
+       "landed": "https://www.conforama.es/",
+       "sameSite": true
+      }
+     ],
+     "record": "capture/records/conforama.es.recon.json"
+    },
+    "capture": {
+     "sessionId": "20261006T071722Z",
+     "startedAt": "2026-10-06T07:17:22.983Z",
+     "endedAt": "2026-10-06T07:19:15.647Z",
+     "topLevelNavigations": 7,
+     "navigationRequests": 7,
+     "record": "capture/records/conforama.es.json",
+     "recipe": "capture/recipes/conforama.es.json"
+    },
+    "listingUrl": "https://www.conforama.es/sofas-sillones-puffs/sofas/sofas-cama",
+    "productUrls": [
+     "https://www.conforama.es/sofa-convertible-en-cama-rio-color-negro",
+     "https://www.conforama.es/sofa-cama-3-plazas-bowy"
+    ],
+    "cartPath": "/checkout/cart",
+    "cartHost": "www.conforama.es",
+    "checkoutPaths": [
+     "/checkout/shipping",
+     "/checkout/payment"
+    ],
+    "observedRegion": null,
+    "observedCurrency": "EUR",
+    "observedCurrencyBasis": "euro symbol only in the first cart state (meta.json); no ISO code marker",
+    "platform": {
+     "group": "none-detected",
+     "marker": null
+    },
+    "robots": {
+     "sha256": "36669a429c9c5980ff01d7ccf6cd8828b621c982634c61efdc5cd8e4fd190683",
+     "httpStatus": 200,
+     "decision": "allowed",
+     "checkedPaths": [
+      {
+       "path": "/checkout/cart",
+       "host": "www.conforama.es",
+       "allowed": false
+      },
+      {
+       "path": "/checkout/shipping",
+       "host": "www.conforama.es",
+       "allowed": false
+      },
+      {
+       "path": "/checkout/payment",
+       "host": "www.conforama.es",
+       "allowed": false
+      }
+     ]
+    },
+    "robotsHosts": [],
+    "terms": {
+     "url": null,
+     "copySha256": null,
+     "prohibitsAutomated": "unknown"
+    },
+    "states": [
+     {
+      "state": "empty-cart",
+      "manifestSha256": "93e01df0edef058428407d54627f599077e4d36d1c8032251906266e3359c1c3",
+      "robotsAllowed": false
+     },
+     {
+      "state": "view-01",
+      "manifestSha256": "10c70192375319c08c7e666ecdc393a8ba6eaf7894002fcd80b6d222cba31ae0",
+      "robotsAllowed": true
+     },
+     {
+      "state": "minicart-1",
+      "manifestSha256": "3683891e5490d2079ae8f7d417f89d64916ba19d8436953bc1b89d921876192a",
+      "robotsAllowed": true
+     },
+     {
+      "state": "view-02",
+      "manifestSha256": "1f38e1a0064b07cb61e667b820b12df206f6f4445bcc9f1761ebb12b87ab2a24",
+      "robotsAllowed": false
+     },
+     {
+      "state": "cart-1",
+      "manifestSha256": "30326791573acd9c091f59b02217b1f753af6033a2f60002a0fc65e840d3a515",
+      "robotsAllowed": false
+     },
+     {
+      "state": "cart-qty2",
+      "manifestSha256": "d480c8e44cda4421c7650f35cd125cff451a41059b44328c38012cf3589444ec",
+      "robotsAllowed": false
+     },
+     {
+      "state": "cart-2items",
+      "manifestSha256": "6c0fe7ee5003341586c4ec8bbd606aedcfc1e75b7750d58f3f1c7a149711d580",
+      "robotsAllowed": false
+     }
+    ],
+    "notReached": [
+     {
+      "state": "checkout-1",
+      "reason": "protocol-5-reported-gap"
+     }
+    ],
+    "events": [
+     {
+      "kind": "robots-disallowed-path",
+      "detail": "www.conforama.es"
+     },
+     {
+      "kind": "request-aborted",
+      "detail": "POST www.conforama.es"
+     }
+    ],
+    "evidenceSha256": null,
+    "reviewFlags": [
+     "home candidates 1-4 (/sofas-sillones-puffs, /sofas, /sofas/chaise-longue, /sofas/rinconeras) are listings with no tile in the EUR band (9-185); per .5 the operator moved to the next home-page candidate, reading 'passed over the same way' as the colon clause (next home candidate), not as opening the listing's own first main-content link",
+     "candidate 5 /sofas-sillones-puffs/sofas/sofas-cama is the listing: item 1 is its 11th tile (RIO, 158,90 EUR), the first in band; item 2 its 17th tile (BOWY, 159,00 EUR); both InStock with an enabled add-to-cart",
+     "the operator also opened home candidate 6 (/sofas/sofas-2-plazas, view-07) in the same batch before reading candidate 5; it does not change the listing (first qualifying candidate wins)",
+     "cart path /checkout/cart is the header cart link (Magento cart path, allowed by the tool's backstop); robots.txt disallows /checkout/, recorded not excluding; checkout paths /checkout/shipping and /checkout/payment are the cart page's step links, recorded only, never visited",
+     "cart-qty2 by a second add-to-cart of item 1; no terms link in the footer DOM at load, so no terms page was loaded",
+     "checkout-1 is a protocol .5 reported gap"
+    ]
    }
   },
   {
@@ -638,6 +791,422 @@
     "status": "excluded-stands",
     "code": "captcha",
     "note": "page-driven block in reconnaissance; no second session (Amendment 4, 5)"
+   }
+  },
+  {
+   "domain": "lego.com",
+   "stream": "us",
+   "visit": 5,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "protocol5": {
+    "status": "captured",
+    "code": null,
+    "recon": {
+     "sessionId": "20261006T072015Z",
+     "startedAt": "2026-10-06T07:20:15.142Z",
+     "endedAt": "2026-10-06T07:22:08.102Z",
+     "topLevelNavigations": 5,
+     "navigationRequests": 5,
+     "views": 6,
+     "outcome": {
+      "status": "done",
+      "code": null,
+      "evidenceSha256": null,
+      "draftRecipeSha256": "05889f46dcd09cb55ea35e9515cd47cc69eeed6f4aa6bfa08b7f7656a22268f9"
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "e6ed4b365a86e8bb081187911e9fc85ba46f7d9bee22a4a2949d619b69694949",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.lego.com/",
+       "chain": [
+        "https://www.lego.com/",
+        "https://www.lego.com/en-us"
+       ],
+       "landed": "https://www.lego.com/en-us",
+       "sameSite": true
+      }
+     ],
+     "record": "capture/records/lego.com.recon.json"
+    },
+    "capture": {
+     "sessionId": "20261006T072230Z",
+     "startedAt": "2026-10-06T07:22:30.449Z",
+     "endedAt": "2026-10-06T07:24:07.771Z",
+     "topLevelNavigations": 4,
+     "navigationRequests": 4,
+     "record": "capture/records/lego.com.json",
+     "recipe": "capture/recipes/lego.com.json"
+    },
+    "listingUrl": "https://www.lego.com/en-us/smart-play/all-sets",
+    "productUrls": [
+     "https://www.lego.com/en-us/product/smart-play-training-house-with-pikachu-72164",
+     "https://www.lego.com/en-us/product/smart-play-charizard-vs-jolteon-ultimate-battle-72167"
+    ],
+    "cartPath": "/en-us/cart",
+    "cartHost": "www.lego.com",
+    "checkoutPaths": [],
+    "observedRegion": "US",
+    "observedCurrency": "USD",
+    "observedCurrencyBasis": "meta.json priceCurrency/ISO markers of the first cart state",
+    "platform": {
+     "group": "none-detected",
+     "marker": null
+    },
+    "robots": {
+     "sha256": "e6ed4b365a86e8bb081187911e9fc85ba46f7d9bee22a4a2949d619b69694949",
+     "httpStatus": 200,
+     "decision": "allowed",
+     "checkedPaths": [
+      {
+       "path": "/en-us/cart",
+       "host": "www.lego.com",
+       "allowed": true
+      }
+     ]
+    },
+    "robotsHosts": [],
+    "terms": {
+     "url": "https://www.lego.com/en-us/page/terms-and-conditions",
+     "copySha256": "677867580894d59511250f6569f5f8a8146dda5f2009e5df4e6af25030d51f83",
+     "prohibitsAutomated": "no"
+    },
+    "states": [
+     {
+      "state": "view-01",
+      "manifestSha256": "48c99a09d9e39c319dd3f0532e440d266cc6a594ea7439e5a29291028b27442d",
+      "robotsAllowed": true
+     },
+     {
+      "state": "view-02",
+      "manifestSha256": "7ddd421474e545d66f434dc8d095102cc2e364d602eb697dfee2326067708122",
+      "robotsAllowed": true
+     },
+     {
+      "state": "minicart-1",
+      "manifestSha256": "badbf0d5cccb3322f85de836007c9ab47047c86c7634597167a42a1c3b2d35eb",
+      "robotsAllowed": true
+     },
+     {
+      "state": "view-03",
+      "manifestSha256": "b8958b63b471c6c7d14404df142c42dac9a3138132de575faf6767f70514512b",
+      "robotsAllowed": true
+     },
+     {
+      "state": "terms",
+      "manifestSha256": "677867580894d59511250f6569f5f8a8146dda5f2009e5df4e6af25030d51f83",
+      "robotsAllowed": true
+     }
+    ],
+    "notReached": [
+     {
+      "state": "empty-cart",
+      "reason": "cart-page-error-post-aborted"
+     },
+     {
+      "state": "cart-1",
+      "reason": "cart-page-error-post-aborted"
+     },
+     {
+      "state": "cart-qty2",
+      "reason": "cart-page-error-post-aborted"
+     },
+     {
+      "state": "cart-2items",
+      "reason": "cart-page-error-post-aborted"
+     },
+     {
+      "state": "checkout-1",
+      "reason": "protocol-5-reported-gap"
+     }
+    ],
+    "events": [
+     {
+      "kind": "request-aborted",
+      "detail": "POST www.lego.com"
+     },
+     {
+      "kind": "request-aborted",
+      "detail": "POST scout.services.lego.com"
+     }
+    ],
+    "evidenceSha256": null,
+    "reviewFlags": [
+     "goto to the origin landed on /en-us?age-gate=grown_up (same-site, recorded in homeLandings); view-01 is that landing with an entry overlay (LEGO.com vs Play Zone); the operator closed it with a plain click on its Continue button (no form, no input)",
+     "listing is home candidate 1 (/en-us/smart-play/all-sets); item 1 is its first tile (USD 69.99), item 2 its second (USD 119.99); both InStock, add-to-cart aria-disabled=false",
+     "cart path /en-us/cart is where the header bag link /cart landed; checkout paths none seen (the empty cart page did not render)",
+     "TOOL DEFECT: the cart page shows 'Looks like something has gone wrong' in reconnaissance and capture; the tool's write guard aborts same-site POST requests outside an add-to-cart click (events request-aborted POST www.lego.com), and the cart appears to load its contents by POST; not worked around. empty-cart, cart-1, cart-qty2 and cart-2items are not-reached; the bag count stays 0 on that page",
+     "minicart-1 is the 'Added to My Bag' modal after the allowlisted add-to-cart (line item and price, no total row visible); it makes the site count as captured under the protocol's definition, but it gives no cart-1 page for Y; flagged for the reviewer",
+     "terms: the first footer terms link (/page/terms-and-conditions, landed /en-us/page/terms-and-conditions) is the sales terms; no automated-access clause seen by the operator (prohibitsAutomated: no)",
+     "checkout-1 is a protocol .5 reported gap"
+    ]
+   },
+   "statusUnderProtocol5": {
+    "status": "captured",
+    "code": null,
+    "note": "captured on minicart-1 only; the cart page did not render (tool write guard, see reviewFlags)"
+   }
+  },
+  {
+   "domain": "ica.se",
+   "stream": "non-us",
+   "visit": 3,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "SE",
+   "frameRegion": "SE",
+   "frameCurrency": "SEK",
+   "protocol5": {
+    "status": "excluded",
+    "code": "needs-input",
+    "recon": {
+     "sessionId": "20261006T072431Z",
+     "startedAt": "2026-10-06T07:24:31.180Z",
+     "endedAt": "2026-10-06T07:25:44.027Z",
+     "topLevelNavigations": 2,
+     "navigationRequests": 2,
+     "views": 3,
+     "outcome": {
+      "status": "excluded",
+      "code": "needs-input",
+      "evidenceSha256": "c91676505e2a18abbcb1e66e555f469ad5955970060a52e53a879999dfb32a13",
+      "draftRecipeSha256": null
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "f2047f248bc592578b37dd455b87632ed4478c8da98f3b7738a48316afc48d17",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://handla.ica.se/",
+       "chain": [
+        "https://handla.ica.se/"
+       ],
+       "landed": "https://handla.ica.se/",
+       "sameSite": true
+      }
+     ],
+     "record": "capture/records/ica.se.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": "c91676505e2a18abbcb1e66e555f469ad5955970060a52e53a879999dfb32a13",
+    "events": [],
+    "reviewFlags": [
+     "home (handla.ica.se) opens a cookie dialog (declined, plain click on Avvisa alla) and a store dialog asking for a postcode (Ditt postnummer) to choose delivery; product tiles show no price, only a Valj butik (choose store) button",
+     "home candidate /kategori/627 (Frukt & Gront, first category link in the main content; the two header links before it are the home itself and www.ica.se) shows the banner 'Valj butik for ratt sortiment, pris och leveransalternativ' and tiles without prices, so no listing exists without typing a postcode",
+     "needs-input with evidence screenshot of that category page (end-time screenshot)"
+    ]
+   },
+   "statusUnderProtocol5": {
+    "status": "excluded",
+    "code": "needs-input",
+    "note": "excluded in reconnaissance: prices and add-to-cart need a store chosen by postcode (typing)"
+   }
+  },
+  {
+   "domain": "napaonline.com",
+   "stream": "us",
+   "visit": 6,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "protocol5": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "recon": {
+     "sessionId": "20261006T072554Z",
+     "startedAt": "2026-10-06T07:25:54.522Z",
+     "endedAt": "2026-10-06T07:26:07.360Z",
+     "topLevelNavigations": 1,
+     "navigationRequests": 1,
+     "views": 0,
+     "outcome": {
+      "status": "excluded",
+      "code": "blocked-http-403",
+      "evidenceSha256": "3e39ac80cdfacc67dbe876021a4ceb91a01ad5cf0427c5051b0130de96c5dd92",
+      "draftRecipeSha256": null
+     },
+     "stop": {
+      "code": "blocked-http-403",
+      "detail": "http-403",
+      "evidenceSha256": "3e39ac80cdfacc67dbe876021a4ceb91a01ad5cf0427c5051b0130de96c5dd92"
+     },
+     "robots": {
+      "sha256": "12759c36f9fc94846e44de19828e9af0f8700f397c2c32bff0c57b86a48a370e",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "stockMismatch": [],
+     "homeLandings": [],
+     "record": "capture/records/napaonline.com.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": "3e39ac80cdfacc67dbe876021a4ceb91a01ad5cf0427c5051b0130de96c5dd92",
+    "events": [
+     {
+      "kind": "request-aborted",
+      "detail": "POST www.napaonline.com"
+     },
+     {
+      "kind": "stop",
+      "detail": "blocked-http-403"
+     }
+    ],
+    "reviewFlags": [
+     "main document HTTP 403 on the first goto to the entry origin; the tool stopped the site before any snapshot (evidence screenshot hash recorded)"
+    ]
+   },
+   "statusUnderProtocol5": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "note": "blocked in reconnaissance (HTTP 403 on the first page)"
+   }
+  },
+  {
+   "domain": "allegro.pl",
+   "stream": "non-us",
+   "visit": 4,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "PL",
+   "frameRegion": "PL",
+   "frameCurrency": "PLN",
+   "protocol5": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "recon": {
+     "sessionId": "20261006T072623Z",
+     "startedAt": "2026-10-06T07:26:23.147Z",
+     "endedAt": "2026-10-06T07:26:36.653Z",
+     "topLevelNavigations": 1,
+     "navigationRequests": 1,
+     "views": 0,
+     "outcome": {
+      "status": "excluded",
+      "code": "blocked-http-403",
+      "evidenceSha256": "1a15fd70e82920d0c73369e25510ee88866974e84f85aac021f460cd319189e9",
+      "draftRecipeSha256": null
+     },
+     "stop": {
+      "code": "blocked-http-403",
+      "detail": "http-403",
+      "evidenceSha256": "1a15fd70e82920d0c73369e25510ee88866974e84f85aac021f460cd319189e9"
+     },
+     "robots": {
+      "sha256": "830b56ef3f52c57ad17e3686765b93e5a575b6ec0221c11dea0feb6ea5de6ab6",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "stockMismatch": [],
+     "homeLandings": [],
+     "record": "capture/records/allegro.pl.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": "1a15fd70e82920d0c73369e25510ee88866974e84f85aac021f460cd319189e9",
+    "events": [
+     {
+      "kind": "stop",
+      "detail": "blocked-http-403"
+     }
+    ],
+    "reviewFlags": [
+     "main document HTTP 403 on the first goto to the entry origin, a slide-to-confirm human check page; the tool stopped the site before any snapshot and nothing was touched"
+    ]
+   },
+   "statusUnderProtocol5": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "note": "blocked in reconnaissance (HTTP 403 challenge on the first page)"
+   }
+  },
+  {
+   "domain": "bedbathandbeyond.com",
+   "stream": "us",
+   "visit": 7,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "protocol5": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "recon": {
+     "sessionId": "20261006T072659Z",
+     "startedAt": "2026-10-06T07:26:59.083Z",
+     "endedAt": "2026-10-06T07:28:33.448Z",
+     "topLevelNavigations": 4,
+     "navigationRequests": 4,
+     "views": 3,
+     "outcome": {
+      "status": "excluded",
+      "code": "blocked-http-403",
+      "evidenceSha256": "6aa419a7253a16e0019f2973283a74f32c705bb74f7f0f502b21cb8eb32f9052",
+      "draftRecipeSha256": null
+     },
+     "stop": {
+      "code": "blocked-http-403",
+      "detail": "http-403",
+      "evidenceSha256": "6aa419a7253a16e0019f2973283a74f32c705bb74f7f0f502b21cb8eb32f9052"
+     },
+     "robots": {
+      "sha256": "de8a0b0723c8ee616d20314996de0315345c7d151fc5e9533f3cd86b6a303ef0",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.bedbathandbeyond.com/",
+       "chain": [
+        "https://www.bedbathandbeyond.com/"
+       ],
+       "landed": "https://www.bedbathandbeyond.com/",
+       "sameSite": true
+      }
+     ],
+     "record": "capture/records/bedbathandbeyond.com.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": "6aa419a7253a16e0019f2973283a74f32c705bb74f7f0f502b21cb8eb32f9052",
+    "events": [
+     {
+      "kind": "request-aborted",
+      "detail": "POST www.bedbathandbeyond.com"
+     },
+     {
+      "kind": "request-aborted",
+      "detail": "POST api.bedbathandbeyond.com"
+     },
+     {
+      "kind": "stop",
+      "detail": "blocked-http-403"
+     }
+    ],
+    "reviewFlags": [
+     "home's first navigation landmark holds no links, so candidates follow document order: off-domain brand-bar links, the skip link, help, account and cart links were skipped; the home logo link (the home itself) was treated as already seen",
+     "candidate 1 /welcome-rewards-plus/benefits (loyalty membership page) is not a listing; its first main-content candidate /welcome-rewards-plus redirected to the same page; candidate 2 was that same URL",
+     "candidate 3 /c/furniture answered HTTP 403 as main document; the tool stopped the site before any snapshot"
+    ]
+   },
+   "statusUnderProtocol5": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "note": "blocked in reconnaissance (HTTP 403 on a category page, fourth navigation)"
    }
   }
  ],

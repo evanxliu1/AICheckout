@@ -1,0 +1,142 @@
+{
+  "schema": "capture-recon-record.2",
+  "domain": "lego.com",
+  "entryUrl": "https://www.lego.com/",
+  "currency": "USD",
+  "priceBand": [
+    10,
+    200
+  ],
+  "tool": {
+    "version": "capture-tool.3",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "session": {
+    "id": "20261006T072015Z",
+    "number": 1,
+    "startedAt": "2026-10-06T07:20:15.142Z",
+    "endedAt": "2026-10-06T07:22:08.102Z",
+    "topLevelNavigations": 5,
+    "navigationRequests": 5
+  },
+  "robots": {
+    "url": "https://www.lego.com/robots.txt",
+    "httpStatus": 200,
+    "sha256": "e6ed4b365a86e8bb081187911e9fc85ba46f7d9bee22a4a2949d619b69694949",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "disallow",
+            "path": "/identity/"
+          },
+          {
+            "type": "disallow",
+            "path": "/checkout"
+          },
+          {
+            "type": "disallow",
+            "path": "/account/wishlist"
+          },
+          {
+            "type": "disallow",
+            "path": "/innovation-intake-ideas"
+          },
+          {
+            "type": "disallow",
+            "path": "/innovation-intake-editor"
+          },
+          {
+            "type": "disallow",
+            "path": "/insiders/event/"
+          },
+          {
+            "type": "disallow",
+            "path": "/kids/search?q="
+          },
+          {
+            "type": "disallow",
+            "path": "/scan/"
+          },
+          {
+            "type": "disallow",
+            "path": "/in-store/"
+          },
+          {
+            "type": "disallow",
+            "path": "/member/"
+          },
+          {
+            "type": "disallow",
+            "path": "/reward/"
+          },
+          {
+            "type": "disallow",
+            "path": "/*?icmp="
+          },
+          {
+            "type": "disallow",
+            "path": "/*/galleries/"
+          },
+          {
+            "type": "disallow",
+            "path": "/careers/"
+          },
+          {
+            "type": "disallow",
+            "path": "/careers/stories*"
+          },
+          {
+            "type": "disallow",
+            "path": "/*.m3u8/*"
+          }
+        ]
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "views": 6,
+  "homeLandings": [
+    {
+      "requested": "https://www.lego.com/",
+      "chain": [
+        "https://www.lego.com/",
+        "https://www.lego.com/en-us"
+      ],
+      "landed": "https://www.lego.com/en-us",
+      "sameSite": true
+    }
+  ],
+  "navigation": [
+    "https://www.lego.com/en-us",
+    "https://www.lego.com/en-us",
+    "https://www.lego.com/en-us/smart-play/all-sets",
+    "https://www.lego.com/en-us/product/:token",
+    "https://www.lego.com/en-us/product/:token",
+    "https://www.lego.com/en-us/cart"
+  ],
+  "stockMismatch": [],
+  "events": [
+    {
+      "kind": "request-aborted",
+      "detail": "POST www.lego.com"
+    },
+    {
+      "kind": "request-aborted",
+      "detail": "POST scout.services.lego.com"
+    }
+  ],
+  "stop": null,
+  "outcome": {
+    "status": "done",
+    "code": null,
+    "evidenceSha256": null,
+    "draftRecipeSha256": "05889f46dcd09cb55ea35e9515cd47cc69eeed6f4aa6bfa08b7f7656a22268f9"
+  }
+}

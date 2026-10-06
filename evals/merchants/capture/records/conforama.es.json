@@ -1,0 +1,247 @@
+{
+  "schema": "capture-site-record.3",
+  "domain": "conforama.es",
+  "recipeSha256": "55535c745e10eb3dded342fbee4b8b55e3c89492c8cfa783ece121f05472a9ce",
+  "tool": {
+    "version": "capture-tool.3",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "recon": {
+    "sessionId": "20261006T071351Z"
+  },
+  "session": {
+    "id": "20261006T071722Z",
+    "number": 1,
+    "startedAt": "2026-10-06T07:17:22.983Z",
+    "endedAt": "2026-10-06T07:19:15.647Z",
+    "topLevelNavigations": 7,
+    "navigationRequests": 7
+  },
+  "robots": {
+    "url": "https://www.conforama.es/robots.txt",
+    "httpStatus": 200,
+    "sha256": "36669a429c9c5980ff01d7ccf6cd8828b621c982634c61efdc5cd8e4fd190683",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "disallow",
+            "path": "/index.php/"
+          },
+          {
+            "type": "disallow",
+            "path": "/customer/"
+          },
+          {
+            "type": "disallow",
+            "path": "/checkout/"
+          },
+          {
+            "type": "disallow",
+            "path": "/lib/"
+          },
+          {
+            "type": "disallow",
+            "path": "/*.php$"
+          },
+          {
+            "type": "disallow",
+            "path": "/skin/"
+          },
+          {
+            "type": "disallow",
+            "path": "/wishlist/"
+          },
+          {
+            "type": "disallow",
+            "path": "*/?item="
+          },
+          {
+            "type": "disallow",
+            "path": "*/?q="
+          },
+          {
+            "type": "disallow",
+            "path": "*nosto"
+          },
+          {
+            "type": "disallow",
+            "path": "*orderby"
+          },
+          {
+            "type": "disallow",
+            "path": "*bundleReferral"
+          },
+          {
+            "type": "disallow",
+            "path": "*refSrc="
+          },
+          {
+            "type": "disallow",
+            "path": "/ShoppingCart/GetHtmlForAvailabilityWarningPopUp"
+          },
+          {
+            "type": "disallow",
+            "path": "/ShoppingCart/Step1DeleteItem"
+          },
+          {
+            "type": "disallow",
+            "path": "/Module/DiscountPopUpModuleFormSubmit"
+          },
+          {
+            "type": "disallow",
+            "path": "/ShoppingCart/Step1UpdateAssembly"
+          },
+          {
+            "type": "disallow",
+            "path": "/ShoppingCart/GetTheoreticalAvailabilityBasketPopUpFormAsHtml"
+          },
+          {
+            "type": "disallow",
+            "path": "/Newsletter"
+          },
+          {
+            "type": "disallow",
+            "path": "/Layout/GetCookieMessageDisplay"
+          },
+          {
+            "type": "disallow",
+            "path": "/ShoppingCart/GetMontajePopUp"
+          },
+          {
+            "type": "disallow",
+            "path": "/outlet*"
+          },
+          {
+            "type": "disallow",
+            "path": "/*?*attribute*"
+          },
+          {
+            "type": "disallow",
+            "path": "*category=categoryfilter"
+          },
+          {
+            "type": "allow",
+            "path": "/*?index=true"
+          },
+          {
+            "type": "disallow",
+            "path": "*/blog/?s="
+          },
+          {
+            "type": "disallow",
+            "path": "/wp-admin"
+          }
+        ]
+      }
+    ],
+    "checkedPaths": [
+      {
+        "path": "/checkout/cart",
+        "host": "www.conforama.es",
+        "allowed": false
+      },
+      {
+        "path": "/checkout/shipping",
+        "host": "www.conforama.es",
+        "allowed": false
+      },
+      {
+        "path": "/checkout/payment",
+        "host": "www.conforama.es",
+        "allowed": false
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "terms": {
+    "url": null,
+    "copySha256": null,
+    "prohibitsAutomated": "unknown"
+  },
+  "states": [
+    {
+      "state": "empty-cart",
+      "url": "https://www.conforama.es/checkout/cart",
+      "manifestSha256": "93e01df0edef058428407d54627f599077e4d36d1c8032251906266e3359c1c3",
+      "domSha256": "5838e1f616fed771e735e1887c638acc31060a1cf40ee296b6efd0b74b7c9d2e",
+      "viewportSha256": "7dacab1f10ee498a2f57575c57f6c274fc8d7ab3eeb966919ba606e6c8b8d59a",
+      "robotsAllowed": false
+    },
+    {
+      "state": "view-01",
+      "url": "https://www.conforama.es/sofa-convertible-en-cama-rio-color-negro",
+      "manifestSha256": "10c70192375319c08c7e666ecdc393a8ba6eaf7894002fcd80b6d222cba31ae0",
+      "domSha256": "f2e976194c70ea8a31b0b83426a38fb4419bd059240453d9e64f52296050a598",
+      "viewportSha256": "07fbdf96d7d480592d5f84b1dd33c0d45ff51ad912a5a04db298597f8d56371a",
+      "robotsAllowed": true
+    },
+    {
+      "state": "minicart-1",
+      "url": "https://www.conforama.es/sofa-convertible-en-cama-rio-color-negro",
+      "manifestSha256": "3683891e5490d2079ae8f7d417f89d64916ba19d8436953bc1b89d921876192a",
+      "domSha256": "60565f3faac06d9eb00548c9f675930248bdef68e8488483b1fe613c6d1db31f",
+      "viewportSha256": "07fbdf96d7d480592d5f84b1dd33c0d45ff51ad912a5a04db298597f8d56371a",
+      "robotsAllowed": true
+    },
+    {
+      "state": "view-02",
+      "url": "https://www.conforama.es/checkout/cart",
+      "manifestSha256": "1f38e1a0064b07cb61e667b820b12df206f6f4445bcc9f1761ebb12b87ab2a24",
+      "domSha256": "b642f458f933a298a97090171169e60c29b1badb6d4d674e527311c02fb5b8aa",
+      "viewportSha256": "7e27ab7d085e384fdddab75d6a3e9793170c3bff42ea91a67a0cd2ddf2659044",
+      "robotsAllowed": false
+    },
+    {
+      "state": "cart-1",
+      "url": "https://www.conforama.es/checkout/cart",
+      "manifestSha256": "30326791573acd9c091f59b02217b1f753af6033a2f60002a0fc65e840d3a515",
+      "domSha256": "7c099b2c5ffddcee15c1c2b0f0a5bccc823d6962f2657e4c30ad31c6d6f75651",
+      "viewportSha256": "7e27ab7d085e384fdddab75d6a3e9793170c3bff42ea91a67a0cd2ddf2659044",
+      "robotsAllowed": false
+    },
+    {
+      "state": "cart-qty2",
+      "url": "https://www.conforama.es/checkout/cart",
+      "manifestSha256": "d480c8e44cda4421c7650f35cd125cff451a41059b44328c38012cf3589444ec",
+      "domSha256": "128b3ddec75ca1ada0dd08809c7d8d40acabc6dc21695745591d51fb4b3b4749",
+      "viewportSha256": "a2f34f91032a42a4ad4362701acd7b3c126f32f91d4487e3e30383e9385fbc5d",
+      "robotsAllowed": false
+    },
+    {
+      "state": "cart-2items",
+      "url": "https://www.conforama.es/checkout/cart",
+      "manifestSha256": "6c0fe7ee5003341586c4ec8bbd606aedcfc1e75b7750d58f3f1c7a149711d580",
+      "domSha256": "a7825abac514398fad0444fe6557c479548b6a6d1ba15ccf34f11f0b3990ff7e",
+      "viewportSha256": "726624e98e9d93fb580040e39409f0b317227f354269756f9afa9256227587e8",
+      "robotsAllowed": false
+    }
+  ],
+  "notReached": [],
+  "platform": {
+    "group": "none-detected",
+    "marker": null
+  },
+  "events": [
+    {
+      "kind": "robots-disallowed-path",
+      "detail": "www.conforama.es"
+    },
+    {
+      "kind": "request-aborted",
+      "detail": "POST www.conforama.es"
+    }
+  ],
+  "stop": null,
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  }
+}
