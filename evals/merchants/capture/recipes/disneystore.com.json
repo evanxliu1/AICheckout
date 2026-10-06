@@ -1,26 +1,234 @@
 {
-  "schema": "capture-recipe.1",
+  "schema": "capture-recipe.2",
   "domain": "disneystore.com",
   "origin": "https://www.disneystore.com/",
-  "listingUrl": "https://www.disneystore.com/home/tabletop-kitchen/drinkware/mugs/",
+  "listingUrl": "https://www.disneystore.com/new/",
   "productUrls": [
-    "https://www.disneystore.com/eeyore-animation-mug-winnie-the-pooh-433110020574.html",
-    "https://www.disneystore.com/mickey-mouse-icon-mug-cream-433119125874.html"
+    "https://www.disneystore.com/buzz-lightyear-christmas-talking-action-figure-toy-story-12-limited-release-417131506095.html",
+    "https://www.disneystore.com/mickey-mouse-ear-hooded-jacket-for-adults-by-columbia-5202107601210M.html"
   ],
-  "cartPath": "/cart",
-  "checkoutPaths": ["/checkout"],
+  "cartPath": "/my-bag",
+  "checkoutPaths": [],
   "allowlist": [
-    { "purpose": "add-to-cart", "target": { "role": "button", "name": "Add to Bag" } },
-    { "purpose": "add-to-cart", "target": { "role": "button", "name": "Add to Cart" } },
-    { "purpose": "close-popup", "target": { "role": "button", "name": "Close", "exact": true } },
-    { "purpose": "close-popup", "target": { "role": "button", "name": "Close dialog" } },
-    { "purpose": "close-popup", "target": { "role": "button", "name": "Close Modal" } },
-    { "purpose": "decline-cookies", "target": { "role": "button", "name": "Reject All" } },
-    { "purpose": "decline-cookies", "target": { "role": "button", "name": "Decline" } },
-    { "purpose": "quantity-increment", "target": { "role": "button", "name": "Increase quantity" } },
-    { "purpose": "quantity-increment", "target": { "role": "button", "name": "Increase" } },
-    { "purpose": "continue-as-guest", "target": { "role": "button", "name": "Continue as Guest" } },
-    { "purpose": "continue-as-guest", "target": { "role": "link", "name": "Continue as Guest" } }
+    {
+      "purpose": "add-to-cart",
+      "target": {
+        "selector": "button.add-to-bag-button"
+      }
+    },
+    {
+      "purpose": "option",
+      "target": {
+        "selector": "a.choose-size[aria-label=\"S \"]"
+      }
+    },
+    {
+      "purpose": "quantity-increment",
+      "target": {
+        "role": "button",
+        "name": "Increase quantity"
+      }
+    },
+    {
+      "purpose": "close-popup",
+      "target": {
+        "role": "button",
+        "name": "Close",
+        "exact": true
+      }
+    },
+    {
+      "purpose": "close-popup",
+      "target": {
+        "role": "button",
+        "name": "Close dialog"
+      }
+    },
+    {
+      "purpose": "decline-cookies",
+      "target": {
+        "role": "button",
+        "name": "Reject All"
+      }
+    },
+    {
+      "purpose": "continue-as-guest",
+      "target": {
+        "role": "button",
+        "name": "Continue as Guest"
+      }
+    },
+    {
+      "purpose": "continue-as-guest",
+      "target": {
+        "role": "link",
+        "name": "Continue as Guest"
+      }
+    },
+    {
+      "purpose": "continue-as-guest",
+      "target": {
+        "role": "button",
+        "name": "Checkout as Guest"
+      }
+    },
+    {
+      "purpose": "continue-as-guest",
+      "target": {
+        "role": "link",
+        "name": "Checkout as Guest"
+      }
+    }
   ],
-  "steps": []
+  "steps": [
+    {
+      "do": "goto",
+      "url": "https://www.disneystore.com/my-bag"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "snapshot",
+      "state": "empty-cart"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.disneystore.com/buzz-lightyear-christmas-talking-action-figure-toy-story-12-limited-release-417131506095.html"
+    },
+    {
+      "do": "wait",
+      "ms": 3000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "button.add-to-bag-button"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 3000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-01"
+    },
+    {
+      "do": "snapshot",
+      "state": "minicart-1"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.disneystore.com/my-bag"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-02"
+    },
+    {
+      "do": "snapshot",
+      "state": "cart-1"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.disneystore.com/buzz-lightyear-christmas-talking-action-figure-toy-story-12-limited-release-417131506095.html"
+    },
+    {
+      "do": "wait",
+      "ms": 3000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "button.add-to-bag-button"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 3000
+    },
+    {
+      "do": "goto",
+      "url": "https://www.disneystore.com/my-bag"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-03"
+    },
+    {
+      "do": "snapshot",
+      "state": "cart-qty2"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.disneystore.com/mickey-mouse-ear-hooded-jacket-for-adults-by-columbia-5202107601210M.html"
+    },
+    {
+      "do": "wait",
+      "ms": 3000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "a.choose-size[aria-label=\"S \"]"
+      },
+      "purpose": "option"
+    },
+    {
+      "do": "wait",
+      "ms": 3000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "button.add-to-bag-button"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 3000
+    },
+    {
+      "do": "goto",
+      "url": "https://www.disneystore.com/my-bag"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-04"
+    },
+    {
+      "do": "snapshot",
+      "state": "cart-2items"
+    },
+    {
+      "do": "end",
+      "notReached": [
+        {
+          "state": "checkout-1",
+          "reason": "operator-checkout-click-denied"
+        }
+      ]
+    }
+  ],
+  "recon": {
+    "sessionId": "20261006T063914Z"
+  },
+  "cartHost": "www.disneystore.com"
 }

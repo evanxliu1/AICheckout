@@ -23,7 +23,7 @@ npm run test:capture:browser    # browser tests against the local fixture shop (
 | `recipe.mjs` | yes | Zod schemas: recipe `capture-recipe.2`, steps, findings, reconnaissance spec and record `capture-recon-record.1`, site record `capture-site-record.2`, exclusion codes |
 | `robots.mjs` | yes | RFC 9309 parsing and the protocol's robots rule (disallow-all only excludes) |
 | `platform.mjs` | yes | Platform groups and markers of the protocol, and the fixed states they are read from |
-| `recipes/`, `records/` | yes | Per-site recipes and text-free site and reconnaissance records. The five pilot recipes and records of 2026-10-06 are `capture-recipe.1` / `capture-site-record.1` under `.3`, kept as history |
+| `recipes/`, `records/` | yes | Per-site recipes (`recipes/<domain>.json`, the capture session's `recipe.recorded.json`) and text-free records (`records/<domain>.json` site record, `records/<domain>.recon.json` reconnaissance record). The five pilot recipes and records of 2026-10-06 are `capture-recipe.1` / `capture-site-record.1` under `.3`, kept as history: eBay's at the top level (its exclusion stands), the four re-visited sites' in `pilot-protocol-3/` |
 | `snapshot.mjs` | yes | Snapshot format `capture-snapshot.1` |
 | `replay.mjs` | yes | The reader's replay hook (Phase 13); never called by capture |
 | `control-server.mjs` | yes | The `serve` mode's local server |

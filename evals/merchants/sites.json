@@ -2,7 +2,7 @@
  "schema": "reader-sites.pilot.1",
  "protocol": "generic-reader-protocol.3",
  "candidatesSha256": "fd01a31f0b1daaed3846f156b4aaeeea722c9889a2cc1103107a380938b28ce7",
- "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history.",
+ "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history. Pilot 2 (2026-10-06 06:37-06:47 UTC, capture-tool.2, operator claude-code/claude-opus-5-5): each site's protocol4 object holds the .4 reconnaissance and capture results; .3 pilot recipes and records moved to capture/recipes/pilot-protocol-3/ and capture/records/pilot-protocol-3/.",
  "operator": "claude-code/claude-opus-5-5",
  "sites": [
   {
@@ -61,13 +61,40 @@
     "endedAt": "2026-10-06T02:46:00.180Z",
     "topLevelNavigations": 0
    },
-   "record": "capture/records/hollisterco.com.json",
-   "recipe": "capture/recipes/hollisterco.com.json",
+   "record": "capture/records/pilot-protocol-3/hollisterco.com.json",
+   "recipe": "capture/recipes/pilot-protocol-3/hollisterco.com.json",
    "reviewFlag": "the disallowed path /shop/OrderItemDisplayView was named by the operator from knowledge before any page load; the site real bag path was not observed",
    "statusUnderProtocol4": {
-    "status": "revisit",
-    "code": null,
+    "status": "incomplete",
+    "code": "tool-error",
     "note": "excluded only by the retired cart-and-checkout robots rule; .3 exclusion void, visited again under .4 in original order with a reconnaissance session (Amendment 3 D)"
+   },
+   "protocol4": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "basis": "recon-home-redirect-view-mismatch",
+    "recon": {
+     "sessionId": "20261006T063803Z",
+     "startedAt": "2026-10-06T06:38:03.427Z",
+     "endedAt": "2026-10-06T06:38:51.844Z",
+     "topLevelNavigations": 1,
+     "views": 1,
+     "outcome": {
+      "status": "incomplete",
+      "code": "tool-error",
+      "evidenceSha256": null,
+      "draftRecipeSha256": null
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "38ac433478416df46f309cd0836c914d453cf3afa259ca1946b0efd6844f3eac",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "record": "capture/records/hollisterco.com.recon.json"
+    },
+    "capture": null,
+    "note": "entry URL https://www.hollisterco.com/ redirects to /shop/us; the tool accepts findings only with a view-NN snapshot whose URL equals the origin exactly, so no findings could ever be accepted; recon ended tool-error after the home view (1 navigation). A second reconnaissance session is allowed on a later UTC day after a tool fix (protocol: tool-error)"
    }
   },
   {
@@ -224,13 +251,137 @@
     "endedAt": "2026-10-06T02:49:07.753Z",
     "topLevelNavigations": 1
    },
-   "record": "capture/records/disneystore.com.json",
-   "recipe": "capture/recipes/disneystore.com.json",
+   "record": "capture/records/pilot-protocol-3/disneystore.com.json",
+   "recipe": "capture/recipes/pilot-protocol-3/disneystore.com.json",
    "reviewFlag": "cart link on the home page is /my-bag, disallowed by Disallow: /my-bag*; the tool aborted the navigation before any request; the tool cannot end a session with this code, so the record outcome is incomplete",
    "statusUnderProtocol4": {
-    "status": "revisit",
+    "status": "captured",
     "code": null,
     "note": "excluded only by the retired cart-and-checkout robots rule; .3 exclusion void, visited again under .4 in original order with a reconnaissance session (Amendment 3 D)"
+   },
+   "protocol4": {
+    "status": "captured",
+    "code": null,
+    "recon": {
+     "sessionId": "20261006T063914Z",
+     "startedAt": "2026-10-06T06:39:14.653Z",
+     "endedAt": "2026-10-06T06:41:05.364Z",
+     "topLevelNavigations": 5,
+     "views": 5,
+     "outcome": {
+      "status": "done",
+      "code": null,
+      "evidenceSha256": null,
+      "draftRecipeSha256": "2428d6eb255807f3e0927f4a42ee94d17e8c9341b5fdf79385774e9a88b8b165"
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "16741baac38b195c4e95900b5cdd640060daf7073ef16bb4a6eec5eed5aca150",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "record": "capture/records/disneystore.com.recon.json"
+    },
+    "capture": {
+     "sessionId": "20261006T064155Z",
+     "startedAt": "2026-10-06T06:41:55.286Z",
+     "endedAt": "2026-10-06T06:44:07.944Z",
+     "topLevelNavigations": 7,
+     "record": "capture/records/disneystore.com.json",
+     "recipe": "capture/recipes/disneystore.com.json"
+    },
+    "listingUrl": "https://www.disneystore.com/new/",
+    "productUrls": [
+     "https://www.disneystore.com/buzz-lightyear-christmas-talking-action-figure-toy-story-12-limited-release-417131506095.html",
+     "https://www.disneystore.com/mickey-mouse-ear-hooded-jacket-for-adults-by-columbia-5202107601210M.html"
+    ],
+    "cartPath": "/my-bag",
+    "cartHost": "www.disneystore.com",
+    "checkoutPaths": [],
+    "observedRegion": null,
+    "observedCurrency": "USD",
+    "observedCurrencyBasis": "page frame and dollar symbol only; no ISO code marker",
+    "platform": {
+     "group": "sfcc",
+     "marker": "/on/demandware.store/"
+    },
+    "robots": {
+     "sha256": "16741baac38b195c4e95900b5cdd640060daf7073ef16bb4a6eec5eed5aca150",
+     "httpStatus": 200,
+     "decision": "allowed",
+     "checkedPaths": [
+      {
+       "path": "/my-bag",
+       "host": "www.disneystore.com",
+       "allowed": false
+      }
+     ]
+    },
+    "terms": {
+     "url": null,
+     "copySha256": null,
+     "prohibitsAutomated": "unknown"
+    },
+    "states": [
+     {
+      "state": "empty-cart",
+      "manifestSha256": "e6690a88cee0bec4eb085bec14e2a117053f06443716f7e4bdc3235770a91f95",
+      "robotsAllowed": false
+     },
+     {
+      "state": "view-01",
+      "manifestSha256": "190c1b9a319dfe2cab7c6dfac7efc3704d787799f6d9c2594b8ca56f80ed0524",
+      "robotsAllowed": true
+     },
+     {
+      "state": "minicart-1",
+      "manifestSha256": "0b530c0c5999df60aee3c417f992019801f4d19b6c92f32f9b4fc0698775dfc4",
+      "robotsAllowed": true
+     },
+     {
+      "state": "view-02",
+      "manifestSha256": "3bd3b42fd0d684ac9da889bd6625453f50c8540a04d7f4e3c65104f8137121aa",
+      "robotsAllowed": false
+     },
+     {
+      "state": "cart-1",
+      "manifestSha256": "f194035f420a54ecb704eb9a6a824f09ef1f91590a32e3fb612dd0096efbee32",
+      "robotsAllowed": false
+     },
+     {
+      "state": "view-03",
+      "manifestSha256": "3c22ef6649109f412476f0e2c425fec225f1532900330042c0fc16840de598c6",
+      "robotsAllowed": false
+     },
+     {
+      "state": "cart-qty2",
+      "manifestSha256": "3d5f50d8e37bccab7351f0d54fa6b4e7ba0bd1f3abcafb5dbc0ba2efb7347693",
+      "robotsAllowed": false
+     },
+     {
+      "state": "view-04",
+      "manifestSha256": "047e8069a996a32d7329ee305a550194ed41e7052fa55fdba0f2e6cff4910441",
+      "robotsAllowed": false
+     },
+     {
+      "state": "cart-2items",
+      "manifestSha256": "c358f4e737eb823e174ff21173a63f11f9950adcc7ccde7b1e1d623f2a8491c4",
+      "robotsAllowed": false
+     }
+    ],
+    "notReached": [
+     {
+      "state": "checkout-1",
+      "reason": "operator-checkout-click-denied"
+     }
+    ],
+    "reviewFlags": [
+     "item 1 (first tile, USD 49.99) shows Backorder: its add-to-cart control is enabled and labelled Backorder, structured data says OutOfStock; taken under the protocol's enabled-control test of in stock",
+     "item 2 (second tile, USD 180.00, InStock) needs a size; the first size in document order (S) was chosen at capture with an allowlisted option click; the recon could not click it",
+     "checkout-1 not reached: the operator's own environment refused the click on the cart's Guest Checkout link (a permission layer outside the capture tool); nothing was sent to the site",
+     "cart path /my-bag is disallowed by robots.txt (Disallow: /my-bag*); recorded, not excluding under .4",
+     "terms: the footer Terms of Use is a button with no on-site URL; no terms page loaded"
+    ]
    }
   },
   {
@@ -285,13 +436,40 @@
     "endedAt": "2026-10-06T02:49:45.714Z",
     "topLevelNavigations": 0
    },
-   "record": "capture/records/extra.com.json",
-   "recipe": "capture/recipes/extra.com.json",
+   "record": "capture/records/pilot-protocol-3/extra.com.json",
+   "recipe": "capture/recipes/pilot-protocol-3/extra.com.json",
    "reviewFlag": "robots.txt disallows /*/cart and /*/checkout for every locale",
    "statusUnderProtocol4": {
-    "status": "revisit",
-    "code": null,
+    "status": "incomplete",
+    "code": "tool-error",
     "note": "excluded only by the retired cart-and-checkout robots rule; .3 exclusion void, visited again under .4 in original order with a reconnaissance session (Amendment 3 D)"
+   },
+   "protocol4": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "basis": "recon-home-redirect-view-mismatch",
+    "recon": {
+     "sessionId": "20261006T064514Z",
+     "startedAt": "2026-10-06T06:45:14.793Z",
+     "endedAt": "2026-10-06T06:45:33.967Z",
+     "topLevelNavigations": 8,
+     "views": 1,
+     "outcome": {
+      "status": "incomplete",
+      "code": "tool-error",
+      "evidenceSha256": null,
+      "draftRecipeSha256": null
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "1ad6eef5faf34bcb0bd58d3256c1dc52b018a87c212f81c5134f9c05e5581071",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "record": "capture/records/extra.com.recon.json"
+    },
+    "capture": null,
+    "note": "entry URL https://www.extra.com/ redirects to /ar-sa (8 top-level navigation requests counted for the one goto); same view-URL defect as hollisterco.com; recon ended tool-error after the home view"
    }
   },
   {
@@ -346,14 +524,92 @@
     "endedAt": "2026-10-06T02:50:11.626Z",
     "topLevelNavigations": 0
    },
-   "record": "capture/records/conforama.es.json",
-   "recipe": "capture/recipes/conforama.es.json",
+   "record": "capture/records/pilot-protocol-3/conforama.es.json",
+   "recipe": "capture/recipes/pilot-protocol-3/conforama.es.json",
    "reviewFlag": "the disallowed path /checkout/cart was named by the operator from knowledge (Magento convention) before any page load; robots.txt also names /ShoppingCart/ subpaths, so the real cart may be elsewhere and allowed",
    "statusUnderProtocol4": {
-    "status": "revisit",
-    "code": null,
+    "status": "excluded",
+    "code": "no-eligible-item",
     "note": "excluded only by the retired cart-and-checkout robots rule; .3 exclusion void, visited again under .4 in original order with a reconnaissance session (Amendment 3 D)"
+   },
+   "protocol4": {
+    "status": "excluded",
+    "code": "no-eligible-item",
+    "basis": "listing-no-tile-in-band",
+    "evidenceSha256": "c7628c7bdafcd49ec61fe25ca8479f26085fed97faeb40d4910cb3ca92ce5216",
+    "recon": {
+     "sessionId": "20261006T064549Z",
+     "startedAt": "2026-10-06T06:45:49.600Z",
+     "endedAt": "2026-10-06T06:46:59.979Z",
+     "topLevelNavigations": 2,
+     "views": 2,
+     "outcome": {
+      "status": "excluded",
+      "code": "no-eligible-item",
+      "evidenceSha256": "c7628c7bdafcd49ec61fe25ca8479f26085fed97faeb40d4910cb3ca92ce5216",
+      "draftRecipeSha256": null
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "36669a429c9c5980ff01d7ccf6cd8828b621c982634c61efdc5cd8e4fd190683",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "record": "capture/records/conforama.es.recon.json"
+    },
+    "capture": null,
+    "listingUrl": "https://www.conforama.es/sofas-sillones-puffs",
+    "listingViewFullPngSha256": "b084d284ce9f83aeb8d0fc6e4c8444bab83d3948177487fbb9fb470d464f1040",
+    "note": "first home navigation link /sofas-sillones-puffs is a listing (30 priced tiles shown, 7066 products); the lowest current tile price is 198,90 EUR, above the EUR band 9-185, so no tile qualifies. Cookies declined (Rechazar todas). Review flag: the protocol does not say whether to move to the next candidate link when the listing has no in-band tile; the operator read the rule as fixing the listing, so the site is excluded"
+   }
+  },
+  {
+   "domain": "loft.com",
+   "stream": "us",
+   "visit": 4,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol4": {
+    "status": "excluded",
+    "code": "captcha",
+    "note": "first visit, under .4"
+   },
+   "protocol4": {
+    "status": "excluded",
+    "code": "captcha",
+    "basis": "tool-stop-challenge-element",
+    "evidenceSha256": "0f29fe6a90ff970e0a98ef5dadb47e63711811b578b9a29048b123d9e10c95d4",
+    "recon": {
+     "sessionId": "20261006T064425Z",
+     "startedAt": "2026-10-06T06:44:25.794Z",
+     "endedAt": "2026-10-06T06:44:59.396Z",
+     "topLevelNavigations": 2,
+     "views": 1,
+     "outcome": {
+      "status": "excluded",
+      "code": "captcha",
+      "evidenceSha256": "0f29fe6a90ff970e0a98ef5dadb47e63711811b578b9a29048b123d9e10c95d4",
+      "draftRecipeSha256": null
+     },
+     "stop": {
+      "code": "captcha",
+      "detail": "challenge-element",
+      "evidenceSha256": "0f29fe6a90ff970e0a98ef5dadb47e63711811b578b9a29048b123d9e10c95d4"
+     },
+     "robots": {
+      "sha256": "8638dadfa14941ad7c9b360f348da758d38e2679213311ff25dc3c254b7af920",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "record": "capture/records/loft.com.recon.json"
+    },
+    "capture": null,
+    "note": "home page loaded (view-01); the second navigation, to the first home navigation candidate /sale/current-offers/cat1780006/, landed on a PerimeterX press-and-hold challenge; the tool stopped before any snapshot; nothing was clicked on the challenge. A decline-cookies click had been refused by the tool (target-not-unique: 0 matches) and did nothing. A block allows no second session"
    }
   }
- ]
+ ],
+ "protocol4": "generic-reader-protocol.4"
 }
