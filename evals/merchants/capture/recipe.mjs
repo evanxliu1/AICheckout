@@ -247,7 +247,7 @@ const Stop = z
 const Event = z
   .object({
     kind: z.string().regex(/^[a-z-]{1,40}$/),
-    detail: z.string().regex(/^[A-Za-z0-9 .:_[\]-]{0,200}$/),
+    detail: z.string().regex(/^[A-Za-z0-9 .:_/[\]-]{0,200}$/),
   })
   .strict();
 const Session = z

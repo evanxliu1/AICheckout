@@ -2,7 +2,7 @@
  "schema": "reader-sites.pilot.1",
  "protocol": "generic-reader-protocol.3",
  "candidatesSha256": "fd01a31f0b1daaed3846f156b4aaeeea722c9889a2cc1103107a380938b28ce7",
- "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history. Pilot 2 (2026-10-06 06:37-06:47 UTC, capture-tool.2, operator claude-code/claude-opus-5-5): each site's protocol4 object holds the .4 reconnaissance and capture results; .3 pilot recipes and records moved to capture/recipes/pilot-protocol-3/ and capture/records/pilot-protocol-3/. Under generic-reader-protocol.5 (Amendment 4, 2026-10-06) each site's statusUnderProtocol5 applies. The top-level `protocol` field names the protocol of the first pilot (when this file was created); per-site `protocol4` holds pilot 2 under .4, and `protocolCurrent` is the latest amendment, which governs new visits (.5 signed at 60c04f3 on 2026-10-06). Batch 1 under .5 (2026-10-06 07:13-07:38 UTC, capture-tool.3, branch phase12-captures-3): each visited site carries a protocol5 object (reconnaissance and capture results, review flags) and its statusUnderProtocol5; sites first visited under .5 have only those fields beside their candidate attributes.",
+ "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history. Pilot 2 (2026-10-06 06:37-06:47 UTC, capture-tool.2, operator claude-code/claude-opus-5-5): each site's protocol4 object holds the .4 reconnaissance and capture results; .3 pilot recipes and records moved to capture/recipes/pilot-protocol-3/ and capture/records/pilot-protocol-3/. Under generic-reader-protocol.5 (Amendment 4, 2026-10-06) each site's statusUnderProtocol5 applies. The top-level `protocol` field names the protocol of the first pilot (when this file was created); per-site `protocol4` holds pilot 2 under .4, and `protocolCurrent` is the latest amendment, which governs new visits (.5 signed at 60c04f3 on 2026-10-06). Batch 1 under .5 (2026-10-06 07:13-07:38 UTC, capture-tool.3, branch phase12-captures-3): each visited site carries a protocol5 object (reconnaissance and capture results, review flags) and its statusUnderProtocol5; sites first visited under .5 have only those fields beside their candidate attributes. Under generic-reader-protocol.6 (Amendment 5) sites with a statusUnderProtocol6 take it; other batch-1 outcomes stand.",
  "operator": "claude-code/claude-opus-5-5",
  "sites": [
   {
@@ -954,6 +954,11 @@
     "status": "captured",
     "code": null,
     "note": "captured on minicart-1 only; the cart page did not render (tool write guard, see reviewFlags)"
+   },
+   "statusUnderProtocol6": {
+    "status": "captured-stands",
+    "code": null,
+    "note": "capture ended without tool-error, so it stands as minicart-1 only (cart-1 not-reached, outside the Y denominator); cart page broken by the old write guard (Amendment 5, 3)"
    }
   },
   {
@@ -1275,6 +1280,11 @@
     "status": "incomplete",
     "code": "tool-error",
     "note": "incomplete (tool-error): the home feed and category results stay empty because the tool's write guard aborts the site's same-site POST data API (h5api.m.goofish.com); one later reconnaissance session is allowed on a later UTC day after a tool decision"
+   },
+   "statusUnderProtocol6": {
+    "status": "revisit",
+    "code": "tool-error",
+    "note": "listings broken by the old write guard; re-visited under .6 as the one later reconnaissance after tool-error, on a later UTC day (Amendment 5, 3)"
    }
   },
   {
@@ -1498,6 +1508,11 @@
     "status": "excluded",
     "code": "sign-in-required",
     "note": "excluded in reconnaissance: the header cart link /cart sends a guest to a sign-in host on another registrable domain (account.bliblitiket.com)"
+   },
+   "statusUnderProtocol6": {
+    "status": "excluded-stands",
+    "code": "sign-in-required",
+    "note": "stands under the session rule (exclusion without tool-error); flagged: the sign-in redirect may have been caused by the old write guard (Amendment 5, 3)"
    }
   },
   {
@@ -1562,6 +1577,15 @@
     "status": "excluded",
     "code": "blocked-bot-wall",
     "note": "bot wall in reconnaissance (Akamai behavioural challenge page at the origin), recorded by the operator's end step"
+   },
+   "statusUnderProtocol6": {
+    "status": "excluded-stands",
+    "code": "blocked-bot-wall",
+    "note": "the reconnaissance views view-01 and view-02 are of the Akamai challenge page: set aside, never labelled, never used (Amendment 5, 3)",
+    "setAsideViews": [
+     "view-01",
+     "view-02"
+    ]
    }
   },
   {
@@ -1618,5 +1642,5 @@
   }
  ],
  "protocol4": "generic-reader-protocol.4",
- "protocolCurrent": "generic-reader-protocol.5"
+ "protocolCurrent": "generic-reader-protocol.6"
 }

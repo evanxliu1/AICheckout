@@ -16,8 +16,10 @@ import {
   RefusalError,
   actionPath,
   detectStop,
+  WRITE_BLOCKED_PATH,
   isCheckoutPath,
   judgeClick,
+  maskPath,
 } from '../guards.mjs';
 import { detectPlatform, platformStates } from '../platform.mjs';
 import { EVIDENCE_REQUIRED, EXCLUSION_CODES, Findings, Recipe, ReconSpec, SiteRecord, StepSchema } from '../recipe.mjs';
@@ -885,4 +887,39 @@ test('protocol .5 backstop: checkout path segments, Magento cart paths allowed',
     assert.equal(isCheckoutPath(p), true, p);
   for (const p of ['/checkout/cart', '/checkout/cart/', '/checkout/cart/add/uenc/x', '/cart', '/my-bag', '/checkoutx', '/'])
     assert.equal(isCheckoutPath(p), false, p);
+});
+
+test('protocol .6: vendor challenge markers stop; sensor scripts on ordinary pages do not', () => {
+  const f = (markup) => detectStop({ status: 200, url: 'https://s.com/', title: '', text: '', frameUrls: [], markup });
+  for (const [markup, code, reason] of [
+    ['<div id="sec-if-cpt-container"></div>', 'blocked-bot-wall', 'vendor-akamai'],
+    ['<script src="/_sec/cp_challenge/ak-challenge-3-3.js"></script>', 'blocked-bot-wall', 'vendor-akamai'],
+    ['<p>Reference #18.x https://errors.edgesuite.net/18.x</p>', 'blocked-bot-wall', 'vendor-akamai'],
+    ['<script>window._cf_chl_opt={}</script>', 'blocked-bot-wall', 'vendor-cloudflare'],
+    ['<div id="challenge-error-text"></div>', 'blocked-bot-wall', 'vendor-cloudflare'],
+    ['<p>Request unsuccessful. Incapsula incident ID: 1-2</p>', 'blocked-bot-wall', 'vendor-imperva'],
+    ['<script src="https://ct.captcha-delivery.com/c.js"></script>', 'captcha', 'vendor-datadome'],
+    ['<div id="px-captcha-wrapper"></div>', 'captcha', 'vendor-perimeterx'],
+  ]) {
+    const hit = f(markup);
+    assert.equal(hit?.code, code, markup);
+    assert.equal(hit?.reason, reason, markup);
+  }
+  for (const markup of [
+    '<script src="/cdn-cgi/challenge-platform/scripts/jsd/main.js"></script>',
+    '<script src="https://js.datadome.co/tags.js"></script>',
+    '<script src="/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e"></script>',
+    '<script src="/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/p.js"></script>',
+    '<h1>Our challenge: great prices</h1>',
+  ])
+    assert.equal(f(markup), null, markup);
+});
+
+test('protocol .6: background writes to checkout, order, payment, sign-in, account or register paths are blocked', () => {
+  const blocked = (p) => WRITE_BLOCKED_PATH.test(actionPath(`https://s.com${p}`));
+  for (const p of ['/checkout/session', '/api/orders', '/api/payment/intent', '/account/login', '/api/register', '/v1/pay'])
+    assert.equal(blocked(p), true, p);
+  for (const p of ['/api/graphql', '/cart/add.js', '/checkout/cart/add/uenc/x', '/api/recommendations', '/_/track'])
+    assert.equal(blocked(p), false, p);
+  assert.equal(maskPath('/api/session/0123456789abcdef0123/x y'), '/api/session/:token/x_y');
 });

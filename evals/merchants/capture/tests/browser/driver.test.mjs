@@ -178,6 +178,38 @@ test('same-site writes by fetch are aborted outside an add-to-cart or increment 
   assert.ok(session.events.some((e) => e.kind === 'request-aborted' && e.detail.startsWith('POST ')));
 });
 
+test('protocol .6: the site\'s own background writes go through, logged; not to account or checkout paths, not after a plain click', async () => {
+  const { driver, session } = await fresh('serve');
+  await driver.goto(`${shop.origin}/bg-load`);
+  await new Promise((r) => setTimeout(r, 500));
+  assert.ok(posts().includes('/api/graphql'));
+  assert.ok(!posts().includes('/api/account/session'));
+  assert.ok(!posts().includes('/checkout/session'));
+  assert.ok(session.events.some((e) => e.kind === 'background-write' && e.detail.endsWith('/api/graphql')));
+  assert.ok(session.events.some((e) => e.kind === 'request-aborted' && e.detail.endsWith('/api/account/session')));
+  // A write 1 s after a plain click is inside the 3 s window: aborted.
+  await driver.click({ role: 'button', name: 'Show more' });
+  await new Promise((r) => setTimeout(r, 1500));
+  assert.ok(!posts().includes('/api/after-click'));
+  assert.ok(session.events.some((e) => e.kind === 'request-aborted' && e.detail.endsWith('/api/after-click')));
+});
+
+test('protocol .6: vendor challenge pages stop the site before any snapshot', async () => {
+  for (const [route, code, reason] of [
+    ['/akamai', 'blocked-bot-wall', 'vendor-akamai'],
+    ['/cf-challenge', 'blocked-bot-wall', 'vendor-cloudflare'],
+  ]) {
+    const { driver, session } = await fresh('serve');
+    await assert.rejects(driver.goto(`${shop.origin}${route}`), stopped(code));
+    assert.equal(session.stopped.detail, reason);
+    await assert.rejects(driver.snapshot('view-01'), refusal('refused-after-stop'));
+    assert.equal(session.snapshots.length, 0);
+  }
+  const { driver } = await fresh('serve');
+  const st = await driver.goto(`${shop.origin}/sensors-only`);
+  assert.equal(st.stopped, null);
+});
+
 test('a GET form submission by script is a form submission', async () => {
   const { driver } = await fresh('serve');
   await driver.goto(`${shop.origin}/products/tee`);

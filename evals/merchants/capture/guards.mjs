@@ -116,6 +116,29 @@ export function isCheckoutPath(pathname) {
   );
 }
 
+/**
+ * Paths a background write (fetch, XHR, beacon) never reaches outside an allowlisted add-to-cart or increment click
+ * (protocol .6): checkout, order, payment, sign-in, account and register endpoints. Matched on `actionPath`, so
+ * Magento's `/checkout/cart/add` is allowed.
+ */
+export const WRITE_BLOCKED_PATH =
+  /(?<![a-z])(checkouts?|secure-checkout|orders?|payments?|pay|login|log-in|signin|sign-in|logon|accounts?|register|signup|sign-up)(?![a-z])/i;
+
+/** A path as committed in events: token-like segments masked, characters outside a safe set replaced. */
+export function maskPath(pathname) {
+  return pathname
+    .split('/')
+    .map((seg) =>
+      /^[0-9a-f]{12,}$/i.test(seg) ||
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(seg) ||
+      (seg.length >= 16 && /[a-z]/i.test(seg) && /\d/.test(seg))
+        ? ':token'
+        : seg.replace(/[^A-Za-z0-9._-]/g, '_'),
+    )
+    .join('/')
+    .slice(0, 120);
+}
+
 const OPTION_TAGS = new Set(['button', 'label']);
 const OPTION_ROLES = new Set(['button', 'radio', 'option']);
 /** Purposes that may click a submit-typed button inside a text-free form, provided no navigation results. */
@@ -194,7 +217,26 @@ const LOGIN_PATH =
   /(^|\/)(log-?in|sign-?in|signin|logon|auth|authenticate|account\/login|anmelden|connexion|iniciar-sesion|accedi|inloggen|logowanie)(\/|$|\.)/i;
 
 /**
- * facts: { status, url, title, text, frameUrls, passwordVisible }. Returns null or { code, message }.
+ * Challenge and block pages of common bot-management vendors, by markers that appear on the challenge or block page
+ * itself and not on ordinary pages that merely load the vendor's sensor script (Cloudflare's
+ * `/cdn-cgi/challenge-platform/scripts/jsd/`, DataDome's `js.datadome.co/tags.js`, Imperva's `_Incapsula_Resource`
+ * script and Kasada's SDK all appear on normal pages, so none of them is a marker). Kasada's challenge answers HTTP
+ * 429, which already stops the site.
+ */
+export const VENDOR_CHALLENGES = [
+  ['akamai', 'blocked-bot-wall', /sec-if-cpt|sec-cpt-if|\/_sec\/cp_challenge\/|errors\.edgesuite\.net/i],
+  [
+    'cloudflare',
+    'blocked-bot-wall',
+    /_cf_chl_opt|cf-chl-widget|cf_chl_(?:captcha|jschl|managed|rc)|id=["']challenge-(?:error-text|body-text|running)/i,
+  ],
+  ['imperva', 'blocked-bot-wall', /incapsula incident id|request unsuccessful\. incapsula|_incapsula_resource\?[^"']*(?:cwudnsai|xinfo)/i],
+  ['datadome', 'captcha', /(?:geo|ct)\.captcha-delivery\.com|dd\.datadome-captcha|datadome captcha/i],
+  ['perimeterx', 'captcha', /px-captcha|_pxcaptcha|captcha\.px-cdn\.net|client\.perimeterx\.net\/[^"']*captcha/i],
+];
+
+/**
+ * facts: { status, url, title, text, frameUrls, passwordVisible, captchaElement, markup }. Returns null or { code, message }.
  * A sign-in form next to guest checkout is not a wall: only a login route with a visible password field is.
  */
 export function detectStop(facts) {
@@ -208,6 +250,10 @@ export function detectStop(facts) {
   if (captchaFrame) return hit('captcha', 'challenge-frame', `challenge frame on ${safeHost(captchaFrame)}`);
   if (facts.captchaElement)
     return hit('captcha', 'challenge-element', 'challenge element in the main document');
+  // Bot-management interstitials recognised by their markup (protocol .6), before any wording or snapshot.
+  const markup = facts.markup ?? '';
+  for (const [vendor, code, re] of VENDOR_CHALLENGES)
+    if (re.test(markup)) return hit(code, `vendor-${vendor}`, `${vendor} challenge page`);
   const words = `${facts.title ?? ''}\n${facts.text ?? ''}`;
   if (EXTENSION_CHECK.test(words))
     return hit('blocked-extension-check', 'extension-wording', 'page asks to disable extensions');
@@ -356,5 +402,7 @@ export function pageFacts() {
     text: document.body ? document.body.innerText.slice(0, 4000) : '',
     passwordVisible: [...document.querySelectorAll('input[type=password]')].some((e) => visible(e)),
     captchaElement: captcha.some((e) => visible(e, 30)),
+    // The document's markup (first 300 kB), for vendor challenge markers. In memory only, never written.
+    markup: document.documentElement ? document.documentElement.outerHTML.slice(0, 300_000) : '',
   };
 }

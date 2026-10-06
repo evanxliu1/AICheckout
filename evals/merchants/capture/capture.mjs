@@ -36,7 +36,7 @@ import {
 import { ROBOTS_TOKEN, pathAllowed, robotsPosture } from './robots.mjs';
 import { sha256 } from './snapshot.mjs';
 
-export const TOOL_VERSION = 'capture-tool.3';
+export const TOOL_VERSION = 'capture-tool.4';
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const DEFAULT_OUT = path.join(here, 'data');
 export const DEFAULT_PROFILE = path.join(here, 'profile');
