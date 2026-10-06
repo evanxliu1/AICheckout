@@ -1,0 +1,27 @@
+{
+  "schema": "capture-recipe.1",
+  "domain": "hollisterco.com",
+  "origin": "https://www.hollisterco.com/",
+  "listingUrl": "https://www.hollisterco.com/shop/us/mens-graphic-tees-tops",
+  "productUrls": [
+    "https://www.hollisterco.com/shop/us/p/relaxed-heavyweight-playstation-graphic-tee-63145141",
+    "https://www.hollisterco.com/shop/us/p/super-boxy-heavyweight-usa-graphic-tee-63025843"
+  ],
+  "cartPath": "/shop/us/bag",
+  "checkoutPaths": ["/shop/us/checkout", "/shop/OrderItemDisplayView"],
+  "allowlist": [
+    { "purpose": "add-to-cart", "target": { "role": "button", "name": "Add to Bag" } },
+    { "purpose": "add-to-cart", "target": { "role": "button", "name": "Add to Cart" } },
+    { "purpose": "option", "target": { "role": "radio", "name": "M", "exact": true } },
+    { "purpose": "option", "target": { "role": "button", "name": "M", "exact": true } },
+    { "purpose": "option", "target": { "role": "radio", "name": "L", "exact": true } },
+    { "purpose": "option", "target": { "role": "button", "name": "L", "exact": true } },
+    { "purpose": "close-popup", "target": { "role": "button", "name": "Close", "exact": true } },
+    { "purpose": "close-popup", "target": { "role": "button", "name": "Close dialog" } },
+    { "purpose": "decline-cookies", "target": { "role": "button", "name": "Reject All" } },
+    { "purpose": "decline-cookies", "target": { "role": "button", "name": "Decline" } },
+    { "purpose": "quantity-increment", "target": { "role": "button", "name": "Increase quantity" } },
+    { "purpose": "continue-as-guest", "target": { "role": "button", "name": "Continue as Guest" } }
+  ],
+  "steps": []
+}

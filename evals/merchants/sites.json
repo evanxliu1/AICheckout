@@ -1,0 +1,359 @@
+{
+ "schema": "reader-sites.pilot.1",
+ "protocol": "generic-reader-protocol.3",
+ "candidatesSha256": "fd01a31f0b1daaed3846f156b4aaeeea722c9889a2cc1103107a380938b28ce7",
+ "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history.",
+ "operator": "claude-code/claude-opus-5-5",
+ "sites": [
+  {
+   "domain": "hollisterco.com",
+   "stream": "us",
+   "visit": 1,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "outcome": {
+    "status": "excluded",
+    "code": "robots-disallow-path",
+    "basis": "recipe-checkout-path-disallowed",
+    "evidenceSha256": null
+   },
+   "toolOutcome": {
+    "status": "excluded",
+    "code": "robots-disallow-path",
+    "evidenceSha256": null
+   },
+   "observedRegion": null,
+   "observedCurrency": null,
+   "platform": null,
+   "robots": {
+    "sha256": "38ac433478416df46f309cd0836c914d453cf3afa259ca1946b0efd6844f3eac",
+    "httpStatus": 200,
+    "decision": "robots-disallow-path",
+    "checkedPaths": [
+     {
+      "path": "/shop/us/bag",
+      "allowed": true
+     },
+     {
+      "path": "/shop/us/checkout",
+      "allowed": true
+     },
+     {
+      "path": "/shop/OrderItemDisplayView",
+      "allowed": false
+     }
+    ]
+   },
+   "terms": {
+    "url": null,
+    "copySha256": null,
+    "prohibitsAutomated": "unknown"
+   },
+   "states": [],
+   "notReached": [],
+   "session": {
+    "id": "20261006T024558Z",
+    "number": 1,
+    "startedAt": "2026-10-06T02:45:58.389Z",
+    "endedAt": "2026-10-06T02:46:00.180Z",
+    "topLevelNavigations": 0
+   },
+   "record": "capture/records/hollisterco.com.json",
+   "recipe": "capture/recipes/hollisterco.com.json",
+   "reviewFlag": "the disallowed path /shop/OrderItemDisplayView was named by the operator from knowledge before any page load; the site real bag path was not observed",
+   "statusUnderProtocol4": {
+    "status": "revisit",
+    "code": null,
+    "note": "excluded only by the retired cart-and-checkout robots rule; .3 exclusion void, visited again under .4 in original order with a reconnaissance session (Amendment 3 D)"
+   }
+  },
+  {
+   "domain": "ebay.com",
+   "stream": "us",
+   "visit": 2,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "basis": "tool-stop-challenge-element",
+    "evidenceSha256": "741b14e1c3c69b569a45b1233b8979071e9653185cef0a4db4c7382f15288de5"
+   },
+   "toolOutcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": "741b14e1c3c69b569a45b1233b8979071e9653185cef0a4db4c7382f15288de5"
+   },
+   "observedRegion": null,
+   "observedCurrency": null,
+   "platform": {
+    "group": "none-detected",
+    "marker": null
+   },
+   "robots": {
+    "sha256": "221797cd7a314aeba19bb83d7868af3ea04325e4f2f8fd9b8ba465649e091970",
+    "httpStatus": 200,
+    "decision": "allowed",
+    "checkedPaths": [
+     {
+      "path": "/",
+      "allowed": true
+     }
+    ]
+   },
+   "terms": {
+    "url": "https://www.ebay.com/splashui/captcha",
+    "copySha256": "5fabfd7d0c7e72538dec4bc36d3bc339e7002843de616bf938fa7dffa76b336e",
+    "prohibitsAutomated": "unknown"
+   },
+   "states": [
+    {
+     "state": "view-01",
+     "manifestSha256": "ca34a835dddd4ea03e681aff33b29ee8f4873f49d14a6fbf6d2eb0373be2e524"
+    },
+    {
+     "state": "terms",
+     "manifestSha256": "5fabfd7d0c7e72538dec4bc36d3bc339e7002843de616bf938fa7dffa76b336e"
+    }
+   ],
+   "notReached": [],
+   "session": {
+    "id": "20261006T024718Z",
+    "number": 1,
+    "startedAt": "2026-10-06T02:47:18.086Z",
+    "endedAt": "2026-10-06T02:47:45.583Z",
+    "topLevelNavigations": 2
+   },
+   "record": "capture/records/ebay.com.json",
+   "recipe": "capture/recipes/ebay.com.json",
+   "reviewFlag": "terms snapshot is the challenge page (eBay redirected the terms URL to /splashui/captcha); not a terms copy. Cart is on cart.ebay.com, not in the frame hosts",
+   "statusUnderProtocol4": {
+    "status": "excluded-stands",
+    "code": "captcha",
+    "note": "a block is page-driven; no second session after a block (Amendment 3 D)"
+   }
+  },
+  {
+   "domain": "disneystore.com",
+   "stream": "us",
+   "visit": 3,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "outcome": {
+    "status": "excluded",
+    "code": "robots-disallow-path",
+    "basis": "tool-refused-cart-navigation",
+    "evidenceSha256": null
+   },
+   "toolOutcome": {
+    "status": "incomplete",
+    "code": null,
+    "evidenceSha256": null
+   },
+   "observedRegion": null,
+   "observedCurrency": null,
+   "platform": {
+    "group": "sfcc",
+    "marker": "/on/demandware.store/"
+   },
+   "robots": {
+    "sha256": "16741baac38b195c4e95900b5cdd640060daf7073ef16bb4a6eec5eed5aca150",
+    "httpStatus": 200,
+    "decision": "allowed",
+    "checkedPaths": [
+     {
+      "path": "/cart",
+      "allowed": true
+     },
+     {
+      "path": "/checkout",
+      "allowed": true
+     }
+    ]
+   },
+   "terms": {
+    "url": null,
+    "copySha256": null,
+    "prohibitsAutomated": "unknown"
+   },
+   "states": [
+    {
+     "state": "view-01",
+     "manifestSha256": "d7f30def251477043f64980ada7659c24af19d6e80dc1e5f0f965e6dee5d6dcc"
+    }
+   ],
+   "notReached": [
+    {
+     "state": "empty-cart",
+     "reason": "robots-disallow-path"
+    },
+    {
+     "state": "minicart-1",
+     "reason": "robots-disallow-path"
+    },
+    {
+     "state": "cart-1",
+     "reason": "robots-disallow-path"
+    },
+    {
+     "state": "checkout-1",
+     "reason": "robots-disallow-path"
+    },
+    {
+     "state": "cart-qty2",
+     "reason": "robots-disallow-path"
+    },
+    {
+     "state": "cart-2items",
+     "reason": "robots-disallow-path"
+    }
+   ],
+   "session": {
+    "id": "20261006T024829Z",
+    "number": 1,
+    "startedAt": "2026-10-06T02:48:29.471Z",
+    "endedAt": "2026-10-06T02:49:07.753Z",
+    "topLevelNavigations": 1
+   },
+   "record": "capture/records/disneystore.com.json",
+   "recipe": "capture/recipes/disneystore.com.json",
+   "reviewFlag": "cart link on the home page is /my-bag, disallowed by Disallow: /my-bag*; the tool aborted the navigation before any request; the tool cannot end a session with this code, so the record outcome is incomplete",
+   "statusUnderProtocol4": {
+    "status": "revisit",
+    "code": null,
+    "note": "excluded only by the retired cart-and-checkout robots rule; .3 exclusion void, visited again under .4 in original order with a reconnaissance session (Amendment 3 D)"
+   }
+  },
+  {
+   "domain": "extra.com",
+   "stream": "non-us",
+   "visit": 1,
+   "band": "top-1k",
+   "regionGroup": "middle-east-africa",
+   "homeList": "SA",
+   "frameRegion": "SA",
+   "frameCurrency": "SAR",
+   "outcome": {
+    "status": "excluded",
+    "code": "robots-disallow-path",
+    "basis": "recipe-cart-and-checkout-paths-disallowed",
+    "evidenceSha256": null
+   },
+   "toolOutcome": {
+    "status": "excluded",
+    "code": "robots-disallow-path",
+    "evidenceSha256": null
+   },
+   "observedRegion": null,
+   "observedCurrency": null,
+   "platform": null,
+   "robots": {
+    "sha256": "1ad6eef5faf34bcb0bd58d3256c1dc52b018a87c212f81c5134f9c05e5581071",
+    "httpStatus": 200,
+    "decision": "robots-disallow-path",
+    "checkedPaths": [
+     {
+      "path": "/en-sa/cart",
+      "allowed": false
+     },
+     {
+      "path": "/en-sa/checkout",
+      "allowed": false
+     }
+    ]
+   },
+   "terms": {
+    "url": null,
+    "copySha256": null,
+    "prohibitsAutomated": "unknown"
+   },
+   "states": [],
+   "notReached": [],
+   "session": {
+    "id": "20261006T024944Z",
+    "number": 1,
+    "startedAt": "2026-10-06T02:49:44.034Z",
+    "endedAt": "2026-10-06T02:49:45.714Z",
+    "topLevelNavigations": 0
+   },
+   "record": "capture/records/extra.com.json",
+   "recipe": "capture/recipes/extra.com.json",
+   "reviewFlag": "robots.txt disallows /*/cart and /*/checkout for every locale",
+   "statusUnderProtocol4": {
+    "status": "revisit",
+    "code": null,
+    "note": "excluded only by the retired cart-and-checkout robots rule; .3 exclusion void, visited again under .4 in original order with a reconnaissance session (Amendment 3 D)"
+   }
+  },
+  {
+   "domain": "conforama.es",
+   "stream": "non-us",
+   "visit": 2,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "ES",
+   "frameRegion": "ES",
+   "frameCurrency": "EUR",
+   "outcome": {
+    "status": "excluded",
+    "code": "robots-disallow-path",
+    "basis": "recipe-cart-path-disallowed",
+    "evidenceSha256": null
+   },
+   "toolOutcome": {
+    "status": "excluded",
+    "code": "robots-disallow-path",
+    "evidenceSha256": null
+   },
+   "observedRegion": null,
+   "observedCurrency": null,
+   "platform": null,
+   "robots": {
+    "sha256": "36669a429c9c5980ff01d7ccf6cd8828b621c982634c61efdc5cd8e4fd190683",
+    "httpStatus": 200,
+    "decision": "robots-disallow-path",
+    "checkedPaths": [
+     {
+      "path": "/checkout/cart",
+      "allowed": false
+     },
+     {
+      "path": "/checkout",
+      "allowed": true
+     }
+    ]
+   },
+   "terms": {
+    "url": null,
+    "copySha256": null,
+    "prohibitsAutomated": "unknown"
+   },
+   "states": [],
+   "notReached": [],
+   "session": {
+    "id": "20261006T025009Z",
+    "number": 1,
+    "startedAt": "2026-10-06T02:50:09.750Z",
+    "endedAt": "2026-10-06T02:50:11.626Z",
+    "topLevelNavigations": 0
+   },
+   "record": "capture/records/conforama.es.json",
+   "recipe": "capture/recipes/conforama.es.json",
+   "reviewFlag": "the disallowed path /checkout/cart was named by the operator from knowledge (Magento convention) before any page load; robots.txt also names /ShoppingCart/ subpaths, so the real cart may be elsewhere and allowed",
+   "statusUnderProtocol4": {
+    "status": "revisit",
+    "code": null,
+    "note": "excluded only by the retired cart-and-checkout robots rule; .3 exclusion void, visited again under .4 in original order with a reconnaissance session (Amendment 3 D)"
+   }
+  }
+ ]
+}

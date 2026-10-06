@@ -1,0 +1,93 @@
+{
+  "schema": "capture-recipe.1",
+  "domain": "ebay.com",
+  "origin": "https://www.ebay.com/",
+  "listingUrl": "https://www.ebay.com/b/USB-C-Cell-Phone-Chargers-Holders/123417/bn_96958605",
+  "productUrls": [
+    "https://www.ebay.com/itm/306577325614",
+    "https://www.ebay.com/itm/176700017984"
+  ],
+  "cartPath": "/",
+  "checkoutPaths": [],
+  "allowlist": [
+    {
+      "purpose": "add-to-cart",
+      "target": {
+        "role": "link",
+        "name": "Add to cart"
+      }
+    },
+    {
+      "purpose": "add-to-cart",
+      "target": {
+        "role": "button",
+        "name": "Add to cart"
+      }
+    },
+    {
+      "purpose": "close-popup",
+      "target": {
+        "role": "button",
+        "name": "Close",
+        "exact": true
+      }
+    },
+    {
+      "purpose": "close-popup",
+      "target": {
+        "role": "button",
+        "name": "Close dialog"
+      }
+    },
+    {
+      "purpose": "close-popup",
+      "target": {
+        "role": "button",
+        "name": "Close overlay"
+      }
+    },
+    {
+      "purpose": "decline-cookies",
+      "target": {
+        "role": "button",
+        "name": "Decline"
+      }
+    },
+    {
+      "purpose": "decline-cookies",
+      "target": {
+        "role": "button",
+        "name": "Reject All"
+      }
+    },
+    {
+      "purpose": "continue-as-guest",
+      "target": {
+        "role": "button",
+        "name": "Continue as guest"
+      }
+    },
+    {
+      "purpose": "continue-as-guest",
+      "target": {
+        "role": "link",
+        "name": "Continue as guest"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "do": "goto",
+      "url": "https://www.ebay.com/"
+    },
+    {
+      "do": "snapshot",
+      "state": "view-01"
+    },
+    {
+      "do": "snapshot",
+      "state": "terms"
+    }
+  ],
+  "notes": "Cart is served on cart.ebay.com (not in the frame's hosts); cartPath names its path. The tool checks robots.txt only on the origin host."
+}

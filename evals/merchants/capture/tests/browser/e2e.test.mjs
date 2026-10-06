@@ -77,8 +77,8 @@ test('end to end: fixture shop captured; only the add-to-cart form was posted; p
     );
     assert.equal(record.robots.decision, 'allowed');
     assert.deepEqual(record.robots.checkedPaths, [
-      { path: '/cart', allowed: true },
-      { path: '/checkout', allowed: true },
+      { path: '/cart', host: new URL(shop.origin).host, allowed: true },
+      { path: '/checkout', host: new URL(shop.origin).host, allowed: true },
     ]);
     assert.deepEqual(record.platform, { group: 'bigcommerce', marker: 'cdn11.bigcommerce.com' });
     assert.equal(record.thirdPartyCheckoutHost, null);
@@ -167,23 +167,18 @@ test('end to end: fixture shop captured; only the add-to-cart form was posted; p
   }
 });
 
-for (const [robots, decision, label] of [
-  ['User-agent: *\nDisallow: /cart\n', 'robots-disallow-path', 'star group, cart path'],
-  ['User-agent: *\nDisallow: /\n', 'robots-disallow-all', 'star group, everything'],
-  [
-    'User-agent: AICheckoutCapture\nDisallow: /checkout\n',
-    'robots-disallow-path',
-    "tool's own group, checkout path",
-  ],
+for (const [robots, label] of [
+  ['User-agent: *\nDisallow: /\n', 'star group'],
+  ['User-agent: AICheckoutCapture\nDisallow: /\n', "tool's own group"],
 ]) {
-  test(`robots: ${decision} (${label}) excludes the site before any page load`, async () => {
+  test(`robots: disallow-all (${label}) excludes the site before any page load`, async () => {
     const shop = await startShop({ robots });
     try {
       const recipe = fixtureRecipe(shop.origin, { steps: steps(shop.origin) });
       const { record } = await runSite({
         recipe,
         mode: 'run',
-        outRoot: path.join(tmp, `robots-${decision}-${Math.random()}`),
+        outRoot: path.join(tmp, `robots-all-${Math.random()}`),
         profileDir: path.join(tmp, 'profile-robots'),
         headless: true,
         paceMs: 50,
@@ -192,14 +187,205 @@ for (const [robots, decision, label] of [
         shop.log.map((r) => r.path),
         ['/robots.txt'],
       );
-      assert.equal(record.robots.decision, decision);
-      assert.deepEqual(record.outcome, { status: 'excluded', code: decision, evidenceSha256: null });
+      assert.equal(record.robots.decision, 'robots-disallow-all');
+      assert.deepEqual(record.outcome, { status: 'excluded', code: 'robots-disallow-all', evidenceSha256: null });
       assert.equal(record.session.topLevelNavigations, 0);
     } finally {
       await shop.close();
     }
   });
 }
+
+test('robots (.4): disallowed cart and checkout paths are recorded, and the site is captured', async () => {
+  const shop = await startShop({ robots: 'User-agent: *\nDisallow: /cart\n\nUser-agent: AICheckoutCapture\nDisallow: /checkout\n' });
+  try {
+    const recipe = fixtureRecipe(shop.origin, { steps: steps(shop.origin) });
+    const { record } = await runSite({
+      recipe,
+      mode: 'run',
+      outRoot: path.join(tmp, `robots-path-${Math.random()}`),
+      profileDir: path.join(tmp, 'profile-robots'),
+      headless: true,
+      paceMs: 50,
+    });
+    assert.equal(record.robots.decision, 'allowed');
+    assert.deepEqual(record.robots.checkedPaths, [
+      { path: '/cart', host: new URL(shop.origin).host, allowed: false },
+      { path: '/checkout', host: new URL(shop.origin).host, allowed: false },
+    ]);
+    assert.equal(record.outcome.status, 'captured');
+    const byState = Object.fromEntries(record.states.map((s) => [s.state, s.robotsAllowed]));
+    assert.deepEqual(byState, {
+      'empty-cart': false,
+      'cart-1': false,
+      'cart-qty2': false,
+      'checkout-1': false,
+      terms: true,
+    });
+  } finally {
+    await shop.close();
+  }
+});
+
+test('reconnaissance first: look-only session writes the draft recipe; the capture session runs from it', async () => {
+  const shop = await startShop();
+  const out = path.join(tmp, 'recon-out');
+  try {
+    const o = shop.origin;
+    const recon = await runSite({
+      mode: 'recon',
+      recon: {
+        domain: '127.0.0.1',
+        entryUrl: `${o}/`,
+        hosts: ['127.0.0.1'],
+        currency: 'GBP',
+        priceBand: [8, 155],
+        steps: [
+          { do: 'goto', url: `${o}/` },
+          { do: 'snapshot', state: 'view-01' },
+          { do: 'goto', url: `${o}/listing` },
+          { do: 'snapshot', state: 'view-02' },
+          { do: 'goto', url: `${o}/products/tee` },
+          { do: 'snapshot', state: 'view-03' },
+          { do: 'goto', url: `${o}/listing` },
+          { do: 'click', target: { role: 'link', name: 'Cart' } },
+          {
+            do: 'end',
+            findings: {
+              listingUrl: `${o}/listing`,
+              productUrls: [`${o}/products/tee`],
+              cartPath: '/cart',
+              checkoutPaths: [],
+              termsUrl: `${o}/terms`,
+            },
+          },
+        ],
+      },
+      outRoot: out,
+      profileDir: path.join(tmp, 'profile-recon'),
+      headless: true,
+      paceMs: 50,
+    });
+    assert.equal(recon.record.outcome.status, 'done');
+    assert.equal(recon.record.views, 3);
+    // The ordered navigation list is committed (masked URLs) for the reviewer.
+    assert.deepEqual(
+      recon.record.navigation.map((u) => new URL(u).pathname),
+      ['/', '/listing', '/products/tee', '/listing', '/cart'],
+    );
+    assert.equal(recon.record.robots.decision, 'allowed');
+    assert.ok(!shop.log.some((r) => r.method === 'POST'));
+    const reconText = await readFile(recon.recordPath, 'utf8');
+    for (const t of ['Fixture Tee', '£', '20.00']) assert.ok(!reconText.includes(t), t);
+    const draft = JSON.parse(await readFile(path.join(recon.sessionDir, 'recipe.draft.json'), 'utf8'));
+    assert.equal(draft.recon.sessionId, recon.record.session.id);
+    assert.equal(draft.cartPath, '/cart');
+    assert.equal(draft.cartHost, new URL(o).host);
+
+    // One reconnaissance session per site.
+    await assert.rejects(
+      runSite({
+        mode: 'recon',
+        recon: { domain: '127.0.0.1', entryUrl: `${o}/`, hosts: ['127.0.0.1'], currency: 'GBP', priceBand: [8, 155] },
+        outRoot: out,
+        profileDir: path.join(tmp, 'profile-recon'),
+        headless: true,
+        paceMs: 50,
+      }),
+      /recon-sessions.json/,
+    );
+
+    // The operator adds the allowlist and steps to the draft and runs the capture session.
+    const recipe = { ...fixtureRecipe(o, { steps: steps(o) }), ...draft, allowlist: fixtureRecipe(o).allowlist, steps: steps(o) };
+    const { record } = await runSite({
+      recipe,
+      mode: 'run',
+      outRoot: out,
+      profileDir: path.join(tmp, 'profile-recon'),
+      headless: true,
+      paceMs: 50,
+    });
+    assert.equal(record.outcome.status, 'captured');
+    assert.deepEqual(record.recon, { sessionId: recon.record.session.id });
+    assert.ok(!record.states.some((s) => s.state.startsWith('view-')));
+    assert.deepEqual(record.platform, { group: 'bigcommerce', marker: 'cdn11.bigcommerce.com' });
+
+    // A recipe whose item is not the reconnaissance finding is refused before any browser starts.
+    const before = shop.log.length;
+    await assert.rejects(
+      runSite({
+        recipe: { ...recipe, productUrls: [`${o}/products/hat`] },
+        mode: 'run',
+        outRoot: out,
+        profileDir: path.join(tmp, 'profile-recon'),
+        headless: true,
+        paceMs: 50,
+      }),
+      /differs from its reconnaissance findings in: productUrls/,
+    );
+    assert.equal(shop.log.length, before);
+  } finally {
+    await shop.close();
+  }
+});
+
+test('a cart on another host of the site: its robots.txt is read up front and the cart path checked against it', async () => {
+  const shop = await startShop({ sisterRobots: 'User-agent: *\nDisallow: /bag\n' });
+  const out = path.join(tmp, 'cart-host-out');
+  try {
+    const o = shop.origin;
+    const recon = await runSite({
+      mode: 'recon',
+      recon: {
+        domain: '127.0.0.1',
+        entryUrl: `${o}/`,
+        hosts: ['127.0.0.1'],
+        currency: 'GBP',
+        priceBand: [8, 155],
+        steps: [
+          { do: 'goto', url: `${o}/` },
+          { do: 'snapshot', state: 'view-01' },
+          { do: 'goto', url: `${o}/listing` },
+          { do: 'snapshot', state: 'view-02' },
+          { do: 'goto', url: `${o}/products/tee` },
+          { do: 'goto', url: `${shop.sister}/bag` },
+          {
+            do: 'end',
+            findings: {
+              listingUrl: `${o}/listing`,
+              productUrls: [`${o}/products/tee`],
+              cartPath: '/bag',
+              checkoutPaths: [],
+            },
+          },
+        ],
+      },
+      outRoot: out,
+      profileDir: path.join(tmp, 'profile-cart-host'),
+      headless: true,
+      paceMs: 50,
+    });
+    assert.equal(recon.record.outcome.status, 'done');
+    assert.equal(recon.draft.cartHost, new URL(shop.sister).host);
+    const robotsBefore = shop.log.filter((r) => r.site === 'sister' && r.path === '/robots.txt').length;
+    const { record } = await runSite({
+      recipe: { ...recon.draft, allowlist: fixtureRecipe(o).allowlist, steps: [] },
+      mode: 'run',
+      outRoot: out,
+      profileDir: path.join(tmp, 'profile-cart-host'),
+      headless: true,
+      paceMs: 50,
+    });
+    assert.equal(shop.log.filter((r) => r.site === 'sister' && r.path === '/robots.txt').length, robotsBefore + 1);
+    assert.deepEqual(record.robots.checkedPaths, [{ path: '/bag', host: new URL(shop.sister).host, allowed: false }]);
+    assert.deepEqual(
+      record.robotsHosts.map((h) => [h.host, h.decision]),
+      [[new URL(shop.sister).host, 'allowed']],
+    );
+  } finally {
+    await shop.close();
+  }
+});
 
 test('serve: the operator drives the same driver over the control server; refusals come back, the session ends', async () => {
   const shop = await startShop();

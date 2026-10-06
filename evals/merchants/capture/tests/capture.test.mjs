@@ -1,16 +1,18 @@
 // Unit tests for the capture tool that need no browser (npm run test:scripts). Browser tests: tests/browser/.
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
+import os from 'node:os';
 import { request } from 'node:http';
 import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { committableUrl } from '../capture.mjs';
+import { checkRecon, committableUrl } from '../capture.mjs';
 import { checkRequest, startControlServer } from '../control-server.mjs';
-import { createDriver, guardApi, parseTarget } from '../driver.mjs';
+import { ADD_TO_CART_NAME, createDriver, guardApi, parseTarget } from '../driver.mjs';
 import { ORDER_OR_ACCOUNT, RefusalError, actionPath, detectStop, judgeClick } from '../guards.mjs';
-import { detectPlatform } from '../platform.mjs';
-import { Recipe, SiteRecord } from '../recipe.mjs';
+import { detectPlatform, platformStates } from '../platform.mjs';
+import { EVIDENCE_REQUIRED, EXCLUSION_CODES, Recipe, ReconSpec, SiteRecord, StepSchema } from '../recipe.mjs';
 import { groupFor, isAllowed, parseRobots, robotsPosture } from '../robots.mjs';
 import { fixtureRecipe } from './fixture-shop.mjs';
 
@@ -20,7 +22,7 @@ const refusal = (code) => (e) => e instanceof RefusalError && e.code === code;
 // ---- Recipe schema ----
 
 const good = () => ({
-  schema: 'capture-recipe.1',
+  schema: 'capture-recipe.2',
   domain: 'example.de',
   origin: 'https://www.example.de',
   listingUrl: 'https://www.example.de/damen',
@@ -79,7 +81,19 @@ test('recipe: rejects off-site and non-https URLs, credentials, bad paths and a 
     { ...good(), steps: [{ do: 'click', target: { selector: '#x' }, purpose: 'checkout' }] },
     { ...good(), steps: [{ do: 'end' }, { do: 'snapshot', state: 'cart-1' }] },
     { ...good(), steps: [{ do: 'snapshot', state: 'cart-3' }] },
-    { ...good(), steps: [{ do: 'end', exclusion: 'robots-disallow-all' }] },
+    { ...good(), steps: [{ do: 'end', exclusion: 'robots-disallow-path' }] },
+    { ...good(), steps: [{ do: 'end', exclusion: 'non-us-storefront' }] },
+    {
+      ...good(),
+      steps: [
+        {
+          do: 'end',
+          findings: { listingUrl: 'https://www.example.de/a', productUrls: ['https://www.example.de/p'], cartPath: '/c', checkoutPaths: [] },
+        },
+      ],
+    },
+    { ...good(), schema: 'capture-recipe.1' },
+    { ...good(), recon: { sessionId: 'yesterday' } },
     { ...good(), domain: 'Example.DE' },
     { ...good(), extra: true },
     { ...good(), allowlist: [good().allowlist[0], good().allowlist[0]] },
@@ -128,7 +142,7 @@ test('robots: longest match, Allow wins ties, wildcards and $', () => {
   assert.equal(isAllowed(null, '/anything'), true);
 });
 
-test('robots posture: the protocol rule (star or tool group, all or a named path)', () => {
+test('robots posture (.4): only a disallow-everything rule excludes; cart and checkout disallows are recorded', () => {
   const ok = { httpStatus: 200, body: 'User-agent: *\nDisallow: /admin\n' };
   assert.equal(robotsPosture(ok, ['/cart', '/checkout']).decision, 'allowed');
   assert.equal(
@@ -136,17 +150,37 @@ test('robots posture: the protocol rule (star or tool group, all or a named path
       .decision,
     'robots-disallow-all',
   );
-  assert.equal(
-    robotsPosture({ httpStatus: 200, body: 'User-agent: *\nDisallow: /checkout\n' }, ['/cart', '/checkout'])
-      .decision,
-    'robots-disallow-path',
-  );
+  const path = robotsPosture({ httpStatus: 200, body: 'User-agent: *\nDisallow: /checkout\n' }, [
+    '/cart',
+    '/checkout',
+  ]);
+  assert.equal(path.decision, 'allowed');
+  assert.equal(path.stopCode, null);
+  assert.deepEqual(path.checkedPaths, [
+    { path: '/cart', allowed: true },
+    { path: '/checkout', allowed: false },
+  ]);
   // The tool's own group applies in addition to `*` (stricter than RFC 9309 group selection).
   const own = {
     httpStatus: 200,
     body: 'User-agent: AICheckoutCapture\nDisallow: /cart\n\nUser-agent: *\nAllow: /\n',
   };
-  assert.equal(robotsPosture(own, ['/cart']).decision, 'robots-disallow-path');
+  assert.equal(robotsPosture(own, ['/cart']).decision, 'allowed');
+  assert.deepEqual(robotsPosture(own, ['/cart']).checkedPaths, [{ path: '/cart', allowed: false }]);
+  assert.equal(
+    robotsPosture({ httpStatus: 200, body: 'User-agent: *\nDisallow: /*\n' }, []).decision,
+    'robots-disallow-all',
+  );
+  // "Disallows everything" = the root path `/` is disallowed under longest-match evaluation.
+  for (const [body, decision] of [
+    ['User-agent: *\nDisallow: /\nAllow: /\n', 'allowed'],
+    ['User-agent: *\nDisallow: /\nAllow: /$\n', 'allowed'],
+    ['User-agent: *\nAllow: /\nDisallow: /*\n', 'robots-disallow-all'],
+    ['User-agent: *\nDisallow: /\nAllow: /cart\n', 'robots-disallow-all'],
+    ['User-agent: *\nDisallow: /$\n', 'robots-disallow-all'],
+    ['User-agent: *\nDisallow: /*?\n', 'allowed'],
+  ])
+    assert.equal(robotsPosture({ httpStatus: 200, body }, []).decision, decision, body);
   assert.equal(
     robotsPosture({ httpStatus: 200, body: 'User-agent: aicheckoutcapture\nDisallow: /\n' }, ['/cart'])
       .decision,
@@ -368,6 +402,14 @@ test('platform: protocol markers, first group wins, marker recorded', () => {
   assert.equal(p('cdn11.bigcommerce.com/s-abc').group, 'bigcommerce');
   assert.equal(p('wp-content/plugins/woocommerce/').group, 'other-detected');
   assert.equal(p('__NEXT_DATA__ _next/static').group, 'none-detected');
+  // The .3 additions to other-detected.
+  for (const [html, marker] of [
+    ['/bundles/storefront/js/app.js', 'shopware'],
+    ['var prestashop = {}', 'prestashop'],
+    ['//img.cafe24.com/x.js', 'cafe24'],
+    ['https://gigaplus.makeshop.jp/x', 'makeshop'],
+  ])
+    assert.deepEqual(p(html), { group: 'other-detected', marker });
   assert.equal(detectPlatform([{ html: 'dwvar_x' }, { html: 'cdn.shopify.com' }]).group, 'shopify');
 });
 
@@ -516,8 +558,13 @@ test('robots: user-agent product token before "/" and non-ASCII rule paths', () 
   assert.equal(
     robotsPosture({ httpStatus: 200, body: 'User-agent: AICheckoutCapture/2.1\nDisallow: /cart\n' }, [
       '/cart',
-    ]).decision,
-    'robots-disallow-path',
+    ]).checkedPaths[0].allowed,
+    false,
+  );
+  assert.equal(
+    robotsPosture({ httpStatus: 200, body: 'User-agent: AICheckoutCapture/2.1\nDisallow: /\n' }, [])
+      .decision,
+    'robots-disallow-all',
   );
   assert.deepEqual(g[0].agents, ['aicheckoutcapture']);
   const grp = groupFor(parseRobots('User-agent: *\nDisallow: /warenkörbe\n'), '*');
@@ -540,10 +587,11 @@ test('committed URLs: no query or fragment, token-like segments replaced', () =>
 test('site record: stop detail is a code and committed URLs carry no query', () => {
   const base = JSON.parse(
     JSON.stringify({
-      schema: 'capture-site-record.1',
+      schema: 'capture-site-record.2',
       domain: 'x.com',
       recipeSha256: 'a'.repeat(64),
       tool: { version: 't', browser: 'b', userAgentToken: 'u' },
+      recon: { sessionId: '20261006T000000Z' },
       session: { id: '20261006T000000Z', number: 1, startedAt: 's', endedAt: 'e', topLevelNavigations: 0 },
       robots: {
         url: 'https://x.com/robots.txt',
@@ -551,9 +599,10 @@ test('site record: stop detail is a code and committed URLs carry no query', () 
         sha256: null,
         posture: 'rules',
         groups: [],
-        checkedPaths: [],
+        checkedPaths: [{ path: '/bag', host: 'cart.x.com', allowed: false }],
         decision: 'allowed',
       },
+      robotsHosts: [],
       terms: { url: null, copySha256: null, prohibitsAutomated: 'unknown' },
       states: [],
       notReached: [],
@@ -576,8 +625,14 @@ test('site record: stop detail is a code and committed URLs carry no query', () 
     manifestSha256: 'a'.repeat(64),
     domSha256: 'a'.repeat(64),
     viewportSha256: 'a'.repeat(64),
+    robotsAllowed: false,
   };
   assert.equal(SiteRecord.safeParse({ ...base, states: [st] }).success, false);
+  // The retired robots code is no longer a decision or an exclusion.
+  assert.equal(
+    SiteRecord.safeParse({ ...base, robots: { ...base.robots, decision: 'robots-disallow-path' } }).success,
+    false,
+  );
   assert.ok(SiteRecord.parse({ ...base, states: [{ ...st, url: 'https://x.com/cart' }] }));
 });
 
@@ -594,4 +649,142 @@ test('stop detection: a visible challenge element in the main document', () => {
     }).code,
     'captcha',
   );
+});
+
+// ---- generic-reader-protocol.4 (Amendment 3) ----
+
+test('exclusion codes are the protocol .4 list, and an end step may record any of them', () => {
+  assert.deepEqual(
+    [...EXCLUSION_CODES].sort(),
+    [
+      'add-to-cart-refused',
+      'blocked-bot-wall',
+      'blocked-extension-check',
+      'blocked-http-403',
+      'blocked-http-429',
+      'captcha',
+      'defunct',
+      'geo-blocked',
+      'needs-input',
+      'no-eligible-item',
+      'not-a-store',
+      'redirected-off-domain',
+      'robots-disallow-all',
+      'sign-in-required',
+      'tool-error',
+      'would-need-forbidden-action',
+    ],
+  );
+  for (const code of EXCLUSION_CODES) assert.ok(StepSchema.parse({ do: 'end', exclusion: code }), code);
+  for (const code of ['non-us-storefront', 'robots-disallow-path'])
+    assert.equal(StepSchema.safeParse({ do: 'end', exclusion: code }).success, false, code);
+  assert.ok(EVIDENCE_REQUIRED.includes('geo-blocked'));
+});
+
+test('platform reads only empty-cart and the first captured cart state', () => {
+  const snaps = ['view-01', 'empty-cart', 'terms', 'minicart-1', 'cart-1', 'checkout-1', 'view-02'].map(
+    (state) => ({ state }),
+  );
+  assert.deepEqual(
+    platformStates(snaps).map((s) => s.state),
+    ['empty-cart', 'cart-1'],
+  );
+  assert.deepEqual(
+    platformStates(snaps.filter((s) => s.state !== 'cart-1')).map((s) => s.state),
+    ['empty-cart', 'minicart-1'],
+  );
+  assert.deepEqual(platformStates([{ state: 'view-01' }, { state: 'terms' }]), []);
+});
+
+test('recon spec: entry host only, popup and cookie purposes only', () => {
+  const spec = {
+    domain: 'example.de',
+    entryUrl: 'https://www.example.de/',
+    hosts: ['www.example.de'],
+    currency: 'EUR',
+    priceBand: [9, 185],
+  };
+  assert.ok(ReconSpec.parse(spec));
+  assert.equal(ReconSpec.safeParse({ ...spec, entryUrl: 'https://www.example.de/damen' }).success, false);
+  assert.equal(ReconSpec.safeParse({ ...spec, entryUrl: 'https://other.de/' }).success, false);
+  assert.equal(ReconSpec.safeParse({ ...spec, entryUrl: 'https://m.example.de/' }).success, false);
+  assert.equal(ReconSpec.safeParse({ ...spec, hosts: [] }).success, false);
+  assert.equal(
+    ReconSpec.safeParse({
+      ...spec,
+      allowlist: [{ purpose: 'add-to-cart', target: { role: 'button', name: 'In den Warenkorb' } }],
+    }).success,
+    false,
+  );
+  assert.ok(
+    ReconSpec.parse({
+      ...spec,
+      allowlist: [{ purpose: 'decline-cookies', target: { role: 'button', name: 'Ablehnen' } }],
+    }),
+  );
+});
+
+test('recon: add-to-cart wording is refused in the main languages', () => {
+  for (const name of [
+    'Add to Cart',
+    'Add to bag',
+    'In den Warenkorb',
+    'Ajouter au panier',
+    'Añadir a la cesta',
+    'Aggiungi al carrello',
+    'Dodaj do koszyka',
+    'Lägg i varukorgen',
+    'Sepete Ekle',
+    'カートに入れる',
+    '加入购物车',
+    '장바구니 담기',
+  ])
+    assert.ok(ADD_TO_CART_NAME.test(name), name);
+  assert.ok(ADD_TO_CART_NAME.test('Comprar ahora'));
+  assert.ok(ADD_TO_CART_NAME.test('Comprar agora'));
+  for (const name of ['Cart', 'View bag', 'Warenkorb', 'Panier', 'Women', 'Sale', 'Comprar', 'Comprar por categoría']) assert.equal(ADD_TO_CART_NAME.test(name), false, name);
+});
+
+test('capture needs a finished reconnaissance session and a recipe equal to its findings', async () => {
+  const out = await mkdtemp(path.join(os.tmpdir(), 'capture-recon-'));
+  try {
+    const recipe = Recipe.parse({ ...good(), origin: 'https://www.example.de/', steps: [] });
+    await assert.rejects(checkRecon(out, recipe), /needs a recipe written from a reconnaissance session/);
+    const withRecon = { ...recipe, recon: { sessionId: '20261006T010000Z' }, cartHost: 'www.example.de' };
+    await assert.rejects(checkRecon(out, withRecon), /did not end with findings/);
+    const site = path.join(out, 'example.de');
+    const dir = path.join(site, 'recon', '20261006T010000Z');
+    await mkdir(dir, { recursive: true });
+    await writeFile(
+      path.join(site, 'recon-sessions.json'),
+      JSON.stringify([{ id: '20261006T010000Z', date: '2026-10-06', stopCode: null, outcome: 'done' }]),
+    );
+    const visited = [
+      'https://www.example.de/',
+      'https://www.example.de/damen',
+      'https://www.example.de/p/1',
+      'https://www.example.de/p/2',
+      'https://www.example.de/warenkorb',
+    ];
+    await writeFile(path.join(dir, 'visited.json'), JSON.stringify(visited));
+    await writeFile(path.join(dir, 'recipe.draft.json'), JSON.stringify({ ...withRecon, allowlist: [] }));
+    await checkRecon(out, withRecon);
+    // A product the reconnaissance loaded but did not find as the item is refused: the recipe must equal the findings.
+    await assert.rejects(
+      checkRecon(out, { ...withRecon, productUrls: ['https://www.example.de/p/2'] }),
+      /differs from its reconnaissance findings in: productUrls/,
+    );
+    await assert.rejects(checkRecon(out, { ...withRecon, checkoutPaths: [] }), /checkoutPaths/);
+    await assert.rejects(checkRecon(out, { ...withRecon, cartHost: 'cart.example.de' }), /cartHost/);
+    await assert.rejects(checkRecon(out, { ...withRecon, origin: 'https://m.example.de/' }), /origin/);
+    // Loopback fixtures without a recon field are exempt (tests only).
+    await checkRecon(out, Recipe.parse(fixtureRecipe('http://127.0.0.1:8080')));
+  } finally {
+    await rm(out, { recursive: true, force: true });
+  }
+});
+
+test('recipe: cartHost must be a host of the site', () => {
+  assert.ok(Recipe.parse({ ...good(), cartHost: 'cart.example.de' }));
+  assert.equal(Recipe.safeParse({ ...good(), cartHost: 'cart.example.com' }).success, false);
 });

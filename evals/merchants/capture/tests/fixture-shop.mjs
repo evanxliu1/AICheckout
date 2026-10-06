@@ -1,6 +1,8 @@
 // A local fixture shop for the capture tool's browser tests. The shop is 127.0.0.1:<port> (its registrable domain
 // for the tool is 127.0.0.1); a second server answers as localhost:<port2>, a different site (third-party checkout,
-// cross-origin frame, off-site link). Every request is logged so tests can prove what was and was not sent.
+// cross-origin frame, off-site link). A third server, 127.0.0.1:<port3>, is another host of the shop's own site (a
+// cart or storefront subdomain) with its own robots.txt (default: disallow everything). Every request is logged so
+// tests can prove what was and was not sent.
 import { createServer } from 'node:http';
 
 const page = (title, body, { lang = 'en-GB', head = '' } = {}) => `<!doctype html>
@@ -11,11 +13,16 @@ const page = (title, body, { lang = 'en-GB', head = '' } = {}) => `<!doctype htm
 </head><body>${body}
 <footer><a href="/terms" id="terms-link">Terms of use</a></footer></body></html>`;
 
-export async function startShop({ robots = 'User-agent: *\nDisallow: /admin\n' } = {}) {
+export async function startShop({
+  robots = 'User-agent: *\nDisallow: /admin\n',
+  sisterRobots = 'User-agent: *\nDisallow: /\n',
+} = {}) {
   const log = [];
   const cart = [];
   let tpPort = 0;
+  let sisterPort = 0;
   const tp = () => `http://localhost:${tpPort}`;
+  const sister = () => `http://127.0.0.1:${sisterPort}`;
 
   const readBody = (req) =>
     new Promise((resolve) => {
@@ -160,6 +167,26 @@ document.getElementById('inc').addEventListener('click', () => { const q = docum
       case 'GET /r-terms':
         res.writeHead(302, { location: '/terms' });
         return res.end();
+      case 'GET /r-px':
+        res.writeHead(302, { location: '/pxwall' });
+        return res.end();
+      case 'GET /r-sister':
+        res.writeHead(302, { location: `${sister()}/bag` });
+        return res.end();
+      case 'GET /r-sister-px':
+        res.writeHead(302, { location: `${sister()}/px` });
+        return res.end();
+      case 'GET /listing':
+        return html(
+          200,
+          page(
+            'Listing',
+            `<nav><a href="/products">All products</a></nav>
+<ul><li><a href="/products/hat">Fixture Hat</a> £4.00</li><li><a href="/products/tee">Fixture Tee</a> £20.00</li></ul>
+<a href="/cart" aria-label="Cart">Bag</a>
+<button type="button" id="plain-atc">Add to cart</button>`,
+          ),
+        );
       case 'GET /products/hat':
         return html(
           200,
@@ -222,21 +249,41 @@ Element.prototype.matches = function () { return false; };
     return res.end('<!doctype html><p>third party</p>');
   });
 
+  const sisterServer = createServer((req, res) => {
+    const url = new URL(req.url, 'http://127.0.0.1');
+    log.push({ site: 'sister', method: req.method, path: url.pathname, body: '' });
+    if (url.pathname === '/robots.txt') {
+      res.writeHead(200, { 'content-type': 'text/plain' });
+      return res.end(sisterRobots);
+    }
+    res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
+    if (url.pathname === '/px')
+      return res.end(page('Store', '<div id="px-captcha" style="width:300px;height:100px">.</div>'));
+    return res.end(page('Bag', '<h1>Your bag is empty</h1>'));
+  });
+
   const listen = (s, host) =>
     new Promise((resolve) => {
       s.listen(0, host, () => resolve(s.address().port));
     });
   const port = await listen(shop, '127.0.0.1');
   tpPort = await listen(third, '127.0.0.1');
+  sisterPort = await listen(sisterServer, '127.0.0.1');
   return {
     origin: `http://127.0.0.1:${port}`,
     thirdParty: tp(),
+    sister: sister(),
     log,
     cart,
     close: async () => {
       shop.closeAllConnections?.();
       third.closeAllConnections?.();
-      await Promise.all([new Promise((r) => shop.close(r)), new Promise((r) => third.close(r))]);
+      sisterServer.closeAllConnections?.();
+      await Promise.all([
+        new Promise((r) => shop.close(r)),
+        new Promise((r) => third.close(r)),
+        new Promise((r) => sisterServer.close(r)),
+      ]);
     },
   };
 }
@@ -244,7 +291,7 @@ Element.prototype.matches = function () { return false; };
 /** The end-to-end recipe for the fixture shop. */
 export function fixtureRecipe(origin, extra = {}) {
   return {
-    schema: 'capture-recipe.1',
+    schema: 'capture-recipe.2',
     domain: '127.0.0.1',
     origin,
     listingUrl: `${origin}/products`,
