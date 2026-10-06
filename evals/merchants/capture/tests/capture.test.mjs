@@ -332,7 +332,6 @@ test('click judgement: each refusal', () => {
     code(el({ submit: true, inForm: true, formAction: '/account/login' }), 'add-to-cart'),
     'refused-allowlist-mismatch',
   );
-  assert.equal(code(el({ inForm: true, name: 'Continue as guest' }), 'continue-as-guest'), 'refused-in-form');
   assert.equal(code(el({ tag: 'div', name: 'M' }), 'option'), 'refused-allowlist-mismatch');
 });
 
@@ -345,7 +344,6 @@ test('click judgement: allowlisted clicks pass in any language', () => {
   assert.equal(judgeClick(el({ inForm: true, name: 'M' }), 'option'), null);
   assert.equal(judgeClick(el({ tag: 'input', inputType: 'radio', inForm: true, name: '' }), 'option'), null);
   assert.equal(judgeClick(el({ inForm: true, name: '+' }), 'quantity-increment'), null);
-  assert.equal(judgeClick(el({ name: 'Als Gast fortfahren' }), 'continue-as-guest'), null);
   assert.equal(judgeClick(el({ name: 'Alle ablehnen' }), 'decline-cookies'), null);
 });
 
@@ -797,6 +795,21 @@ test('findings: a stock mismatch names only a found item', () => {
   };
   assert.ok(Findings.parse({ ...f, stockMismatch: ['https://www.example.de/p/1'] }));
   assert.equal(Findings.safeParse({ ...f, stockMismatch: ['https://www.example.de/p/9'] }).success, false);
+});
+
+test('protocol .5: the continue-as-guest purpose is retired', () => {
+  assert.equal(
+    Recipe.safeParse({
+      ...good(),
+      allowlist: [{ purpose: 'continue-as-guest', target: { role: 'button', name: 'Als Gast fortfahren' } }],
+    }).success,
+    false,
+  );
+  assert.equal(
+    StepSchema.safeParse({ do: 'click', target: { role: 'button', name: 'Guest' }, purpose: 'continue-as-guest' })
+      .success,
+    false,
+  );
 });
 
 test('recipe: cartHost must be a host of the site', () => {

@@ -2,7 +2,7 @@
  "schema": "reader-sites.pilot.1",
  "protocol": "generic-reader-protocol.3",
  "candidatesSha256": "fd01a31f0b1daaed3846f156b4aaeeea722c9889a2cc1103107a380938b28ce7",
- "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history. Pilot 2 (2026-10-06 06:37-06:47 UTC, capture-tool.2, operator claude-code/claude-opus-5-5): each site's protocol4 object holds the .4 reconnaissance and capture results; .3 pilot recipes and records moved to capture/recipes/pilot-protocol-3/ and capture/records/pilot-protocol-3/. Under generic-reader-protocol.5 (Amendment 4, 2026-10-06) each site's statusUnderProtocol5 applies.",
+ "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history. Pilot 2 (2026-10-06 06:37-06:47 UTC, capture-tool.2, operator claude-code/claude-opus-5-5): each site's protocol4 object holds the .4 reconnaissance and capture results; .3 pilot recipes and records moved to capture/recipes/pilot-protocol-3/ and capture/records/pilot-protocol-3/. Under generic-reader-protocol.5 (Amendment 4, 2026-10-06) each site's statusUnderProtocol5 applies. The top-level `protocol` field names the protocol of the first pilot (when this file was created); per-site `protocol4` holds pilot 2 under .4, and `protocolCurrent` is the latest amendment, which governs new visits once signed (until then the signed .4 binds).",
  "operator": "claude-code/claude-opus-5-5",
  "sites": [
   {
@@ -91,7 +91,7 @@
       "httpStatus": 200,
       "decision": "allowed"
      },
-     "record": "capture/records/hollisterco.com.recon.json"
+     "record": "capture/records/pilot-protocol-4/hollisterco.com.recon.json"
     },
     "capture": null,
     "note": "entry URL https://www.hollisterco.com/ redirects to /shop/us; the tool accepts findings only with a view-NN snapshot whose URL equals the origin exactly, so no findings could ever be accepted; recon ended tool-error after the home view (1 navigation). A second reconnaissance session is allowed on a later UTC day after a tool fix (protocol: tool-error)"
@@ -481,7 +481,7 @@
       "httpStatus": 200,
       "decision": "allowed"
      },
-     "record": "capture/records/extra.com.recon.json"
+     "record": "capture/records/pilot-protocol-4/extra.com.recon.json"
     },
     "capture": null,
     "note": "entry URL https://www.extra.com/ redirects to /ar-sa (8 top-level navigation requests counted for the one goto); same view-URL defect as hollisterco.com; recon ended tool-error after the home view"
@@ -575,7 +575,7 @@
       "httpStatus": 200,
       "decision": "allowed"
      },
-     "record": "capture/records/conforama.es.recon.json"
+     "record": "capture/records/pilot-protocol-4/conforama.es.recon.json"
     },
     "capture": null,
     "listingUrl": "https://www.conforama.es/sofas-sillones-puffs",
@@ -641,5 +641,6 @@
    }
   }
  ],
- "protocol4": "generic-reader-protocol.4"
+ "protocol4": "generic-reader-protocol.4",
+ "protocolCurrent": "generic-reader-protocol.5"
 }

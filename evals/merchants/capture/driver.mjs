@@ -1,7 +1,8 @@
 // The capture driver: the only way the tool touches a page. Its API is goto, click, wait, snapshot, status and end.
 // It has no typing, key press, <select>, file, coordinate or mouse path; any other property access throws a
 // RefusalError. Every rule of docs/evals/generic-reader-protocol.md#capture-posture that code can enforce is here:
-// same-site navigation only, one off-site page at most (never captured), no form-submitting navigation except during an
+// same-site navigation only (an off-site redirect landing stops the site as redirected-off-domain), never a recipe
+// checkout path, no form-submitting navigation except during an
 // allowlisted add-to-cart click, no clicks on submit or in-form controls unless allowlisted for a purpose, no frames,
 // at least `paceMs` between navigations and clicks, at most 25 top-level navigations (one per navigating action,
 // protocol .5), and a stop on any block. `checkout-1` is not a robot state since protocol .5.
@@ -322,7 +323,7 @@ export async function createDriver(opts) {
     if (url.protocol !== 'http:' && url.protocol !== 'https:') return refuse('refused-scheme', url.protocol);
     if (session.stopped || session.ended) return refuse('refused-after-stop', 'session over');
     if (session.offsite)
-      return refuse('refused-third-party-page', 'only the first third-party checkout page loads');
+      return refuse('refused-third-party-page', 'the session left the site');
     // One top-level navigation per action (protocol .5): a goto or click and every navigation the page makes
     // before the next action (server and script redirects, reloads) count once.
     const newAction = session.countedSeq !== session.actionSeq;
@@ -338,18 +339,15 @@ export async function createDriver(opts) {
     const formSubmit = req.method() !== 'GET' || (await formReason(req.url()));
     if (formSubmit && Date.now() > session.allowSubmitUntil)
       return refuse('refused-submit', `form submission (${req.method()}) outside an add-to-cart click`);
-    if (!sameSite(url.hostname, domain)) {
-      if (session.action !== 'click') return refuse('refused-off-site', url.host);
-      session.offsite = url.host;
-      event('off-site-page', url.host);
-    } else {
-      // Another host of the site: its robots.txt first. Only a disallow-everything rule (or a blocked or failed
-      // robots.txt) stops the site; a disallowed path is recorded as an event and loads.
-      const posture = await checkHost(url).catch(() => ({ stopCode: 'tool-error', decision: 'not-decided' }));
-      if (posture?.stopCode)
-        return refuse(`robots-host-${posture.stopCode}`, url.host, posture.stopCode, true);
-      if (robotsAllows(url) === false) event('robots-disallowed-path', url.host);
-    }
+    // Protocol .5: no page of another site is ever loaded by the tool (a third-party checkout included).
+    if (!sameSite(url.hostname, domain)) return refuse('refused-off-site', url.host);
+    if (isCheckout(url)) return refuse('refused-checkout', `${url.host} checkout path`);
+    // Another host of the site: its robots.txt first. Only a disallow-everything rule (or a blocked or failed
+    // robots.txt) stops the site; a disallowed path is recorded as an event and loads.
+    const posture = await checkHost(url).catch(() => ({ stopCode: 'tool-error', decision: 'not-decided' }));
+    if (posture?.stopCode)
+      return refuse(`robots-host-${posture.stopCode}`, url.host, posture.stopCode, true);
+    if (robotsAllows(url) === false) event('robots-disallowed-path', url.host);
     if (newAction) {
       session.navigations += 1;
       session.countedSeq = session.actionSeq;
@@ -472,13 +470,14 @@ export async function createDriver(opts) {
     }
     if (landed.protocol !== 'http:' && landed.protocol !== 'https:') return;
     if (!sameSite(landed.hostname, domain)) {
-      if (!session.offsite) {
-        session.offsite = landed.host;
-        event('off-site-page', landed.host);
-      } else if (landed.host !== session.offsite) {
-        await stop('would-need-forbidden-action', 'past-first-third-party-page');
-      }
-    } else if (!session.offsite) {
+      // A redirect (not routed by Playwright) took the page to another site: stop there; nothing more is loaded.
+      session.offsite = landed.host;
+      event('off-site-landing', landed.host);
+      await stop('redirected-off-domain', 'landed-off-domain');
+    } else if (isCheckout(landed)) {
+      // A redirect onto a checkout path: stop before anything happens on it (no session enters a checkout).
+      await stop('would-need-forbidden-action', 'landed-on-checkout');
+    } else {
       // A redirect onto another host of the site loads before its robots.txt can be read: check it now (after the
       // stop check), and stop on a disallow-everything rule before anything else happens on the page.
       const posture = await checkHost(landed).catch(() => ({ stopCode: 'tool-error', decision: 'not-decided' }));
@@ -486,6 +485,11 @@ export async function createDriver(opts) {
       if (robotsAllows(landed) === false) event('robots-disallowed-path', landed.host);
     }
   };
+  const checkoutPaths = new Set((recipe.checkoutPaths ?? []).map((p) => p.replace(/\/+$/, '') || '/'));
+  /** A same-site URL whose path is one of the recipe's checkout paths (exact, trailing slash ignored). */
+  function isCheckout(u) {
+    return sameSite(u.hostname, domain) && checkoutPaths.has(normPath(u));
+  }
   const onProductPage = () => {
     try {
       const u = new URL(page.url());
@@ -509,6 +513,7 @@ export async function createDriver(opts) {
       throw new RefusalError('refused-scheme', 'https only');
     if (!sameSite(u.hostname, domain))
       throw new RefusalError('refused-off-site', `${u.host} is not on ${domain}`);
+    if (isCheckout(u)) throw new RefusalError('refused-checkout', 'checkout paths are never visited');
     if (session.navigations >= MAX_NAVIGATIONS)
       throw new RefusalError('refused-navigation-limit', `${MAX_NAVIGATIONS} navigations used`);
     await checkStop();

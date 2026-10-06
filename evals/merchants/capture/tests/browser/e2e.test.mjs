@@ -445,7 +445,7 @@ test('serve: the operator drives the same driver over the control server; refusa
   }
 });
 
-test('protocol .5: no checkout-1 state; an off-site checkout page loads once and nothing is captured on it', async () => {
+test('protocol .5: no checkout-1 state; a click to an off-site checkout is refused and nothing of it loads', async () => {
   const shop = await startShop();
   try {
     const o = shop.origin;
@@ -455,7 +455,6 @@ test('protocol .5: no checkout-1 state; an off-site checkout page loads once and
         { do: 'click', target: { role: 'button', name: 'Add to cart' }, purpose: 'add-to-cart' },
         { do: 'snapshot', state: 'cart-1' },
         { do: 'click', target: { role: 'link', name: 'Partner checkout' } },
-        { do: 'snapshot', state: 'view-01' },
       ],
     });
     assert.equal(
@@ -474,11 +473,11 @@ test('protocol .5: no checkout-1 state; an off-site checkout page loads once and
       record.states.map((s) => s.state),
       ['cart-1'],
     );
-    // The off-site snapshot was refused; the run stops as a tool error, and the site still counts as captured.
+    // The off-site click was refused; the run stops as a tool error, and the site still counts as captured.
     assert.equal(record.stop.code, 'tool-error');
-    assert.match(record.stop.detail, /refused-third-party-page/);
+    assert.match(record.stop.detail, /refused-off-site/);
     assert.equal(record.outcome.status, 'captured');
-    assert.ok(!shop.log.some((r) => r.site === 'third-party' && r.path === '/next'));
+    assert.ok(!shop.log.some((r) => r.site === 'third-party' && r.path !== '/widget'));
   } finally {
     await shop.close();
   }

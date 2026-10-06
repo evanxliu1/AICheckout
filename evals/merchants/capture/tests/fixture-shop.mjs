@@ -183,6 +183,9 @@ document.getElementById('inc').addEventListener('click', () => { const q = docum
           200,
           page('Loop', "<script>location.replace('/js-loop?n=' + (Number(new URLSearchParams(location.search).get('n')) + 1))</script>"),
         );
+      case 'GET /r-checkout':
+        res.writeHead(302, { location: '/checkout' });
+        return res.end();
       case 'GET /r-px':
         res.writeHead(302, { location: '/pxwall' });
         return res.end();
@@ -319,7 +322,6 @@ export function fixtureRecipe(origin, extra = {}) {
       { purpose: 'option', target: { selector: 'button.size[data-size="M"]' } },
       { purpose: 'add-to-cart', target: { role: 'button', name: 'Add to cart' } },
       { purpose: 'quantity-increment', target: { role: 'button', name: 'Increase quantity' } },
-      { purpose: 'continue-as-guest', target: { role: 'button', name: 'Continue as guest' } },
     ],
     steps: [],
     ...extra,

@@ -73,10 +73,11 @@ const withAllow = (entries) => ({
 
 test('refuses add-to-cart purpose on a promo or sign-in form, and any purpose not on the recipe allowlist', async () => {
   const { driver } = await fresh('serve', {
-    extra: withAllow([
+    // The fixture's sign-in page is its /checkout; no recipe checkout path here, so it may be loaded.
+    extra: { ...withAllow([
       { purpose: 'add-to-cart', target: { role: 'button', name: 'Apply' } },
       { purpose: 'add-to-cart', target: { role: 'button', name: 'Sign in' } },
-    ]),
+    ]), checkoutPaths: [] },
   });
   shop.cart.push({ id: 'tee', size: 'M', qty: 1 });
   await driver.goto(`${shop.origin}/cart`);
@@ -213,13 +214,14 @@ test('an image-only order control is refused by its alt text', async () => {
   assert.ok(!posts().includes('/finalize'));
 });
 
-test('an off-site redirect is caught after the action: offsite is set and nothing may be captured', async () => {
+test('protocol .5: an off-site redirect landing stops the site as redirected-off-domain', async () => {
   const { driver, session } = await fresh('serve');
-  const st = await driver.goto(`${shop.origin}/r`);
-  assert.equal(st.offsite, new URL(shop.thirdParty).host);
+  await assert.rejects(driver.goto(`${shop.origin}/r`), stopped('redirected-off-domain'));
   assert.equal(session.offsite, new URL(shop.thirdParty).host);
-  await assert.rejects(driver.snapshot('cart-1'), refusal('refused-third-party-page'));
-  await assert.rejects(driver.goto(`${shop.origin}/`), refusal('refused-third-party-page'));
+  assert.ok(session.events.some((e) => e.kind === 'off-site-landing'));
+  await assert.rejects(driver.snapshot('view-01'), refusal('refused-after-stop'));
+  await assert.rejects(driver.goto(`${shop.origin}/`), refusal('refused-after-stop'));
+  assert.equal(session.snapshots.length, 0);
 });
 
 test('an add-to-cart POST answered by a 303 to another site is caught the same way', async () => {
@@ -227,9 +229,12 @@ test('an add-to-cart POST answered by a 303 to another site is caught the same w
     extra: { productUrls: [`${shop.origin}/products/tee`, `${shop.origin}/products/hat`] },
   });
   await driver.goto(`${shop.origin}/products/hat`);
-  await driver.click({ role: 'button', name: 'Add to cart' }, 'add-to-cart');
+  await assert.rejects(
+    driver.click({ role: 'button', name: 'Add to cart' }, 'add-to-cart'),
+    stopped('redirected-off-domain'),
+  );
   assert.equal(session.offsite, new URL(shop.thirdParty).host);
-  await assert.rejects(driver.snapshot('cart-1'), refusal('refused-third-party-page'));
+  await assert.rejects(driver.snapshot('cart-1'), refusal('refused-after-stop'));
 });
 
 test('robots (.4): a disallowed path on the entry host loads and is recorded, never refused', async () => {
@@ -243,10 +248,9 @@ test('robots (.4): a disallowed path on the entry host loads and is recorded, ne
   await driver.snapshot('empty-cart');
   assert.equal(session.snapshots[0].robotsAllowed, false);
   assert.ok(session.events.some((e) => e.kind === 'robots-disallowed-path'));
-  // The shop's rules never apply to the third-party host (its /elsewhere loads).
+  // The shop's rules never apply to another site, which is never loaded (protocol .5).
   await driver.goto(`${shop.origin}/products/tee`);
-  const off = await driver.click({ role: 'link', name: 'Partner store' });
-  assert.equal(off.offsite, new URL(shop.thirdParty).host);
+  await assert.rejects(driver.click({ role: 'link', name: 'Partner store' }), refusal('refused-off-site'));
 });
 
 test('robots (.4): another host of the site is checked before its first page; disallow-all stops the site', async () => {
@@ -493,19 +497,43 @@ test('aborts a form-submitting navigation that a plain button triggers in script
   assert.ok(!posts().includes('/newsletter'));
 });
 
-test('an off-site page reached by a click loads once and nothing else happens', async () => {
+test('protocol .5: a click to another site is refused and nothing of it loads', async () => {
   const { driver, session } = await fresh('serve');
   await driver.goto(`${shop.origin}/products/tee`);
-  const st = await driver.click({ role: 'link', name: 'Partner store' });
-  assert.equal(st.offsite, new URL(shop.thirdParty).host);
-  assert.equal(session.offsite, new URL(shop.thirdParty).host);
-  await assert.rejects(driver.goto(`${shop.origin}/cart`), refusal('refused-third-party-page'));
-  await assert.rejects(driver.click({ role: 'link', name: 'Next' }), refusal('refused-third-party-page'));
-  await assert.rejects(driver.snapshot('cart-1'), refusal('refused-third-party-page'));
-  await assert.rejects(driver.snapshot('view-01'), refusal('refused-third-party-page'));
+  const before = shop.log.length;
+  await assert.rejects(driver.click({ role: 'link', name: 'Partner store' }), refusal('refused-off-site'));
+  assert.equal(session.offsite, null);
+  assert.ok(!shop.log.slice(before).some((r) => r.site === 'third-party'));
+  // The session goes on on the shop's own pages.
+  await driver.goto(`${shop.origin}/cart`);
   // checkout-1 is not a robot state since protocol .5.
   await assert.rejects(driver.snapshot('checkout-1'), refusal('refused-bad-state'));
-  assert.ok(!shop.log.some((r) => r.site === 'third-party' && r.path === '/next'));
+});
+
+test('protocol .5: no session enters a checkout (goto refused, click refused, landing stops)', async () => {
+  const a = await fresh('serve');
+  const before = shop.log.length;
+  await assert.rejects(a.driver.goto(`${shop.origin}/checkout`), refusal('refused-checkout'));
+  await assert.rejects(a.driver.goto(`${shop.origin}/checkout/`), refusal('refused-checkout'));
+  shop.cart.push({ id: 'tee', size: 'M', qty: 1 });
+  try {
+    await a.driver.goto(`${shop.origin}/cart`);
+    await assert.rejects(
+      a.driver.click({ role: 'link', name: 'Checkout', exact: true }),
+      refusal('refused-checkout'),
+    );
+  } finally {
+    shop.cart.length = 0;
+  }
+  assert.ok(!shop.log.slice(before).some((r) => r.path === '/checkout'));
+  const b = await fresh('serve');
+  await assert.rejects(b.driver.goto(`${shop.origin}/r-checkout`), stopped('would-need-forbidden-action'));
+  assert.equal(b.session.stopped.detail, 'landed-on-checkout');
+  // The continue-as-guest purpose is retired.
+  await assert.rejects(
+    (await fresh('serve')).driver.click({ role: 'button', name: 'Continue as guest' }, 'continue-as-guest'),
+    refusal('refused-not-allowlisted'),
+  );
 });
 
 for (const [route, code] of [
@@ -528,10 +556,10 @@ for (const [route, code] of [
 }
 
 test('a sign-in form beside guest checkout does not stop the site, and is never touched', async () => {
-  const { driver } = await fresh('serve');
+  // A page with a sign-in form that is not a recipe checkout path (the fixture's /checkout, with none named).
+  const { driver } = await fresh('serve', { extra: { checkoutPaths: [] } });
   const st = await driver.goto(`${shop.origin}/checkout`);
   assert.equal(st.stopped, null);
-  await driver.click({ role: 'button', name: 'Continue as guest' }, 'continue-as-guest');
   assert.ok(!posts().includes('/login'));
 });
 

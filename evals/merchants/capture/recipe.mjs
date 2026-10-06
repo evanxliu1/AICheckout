@@ -42,14 +42,14 @@ export const EVIDENCE_REQUIRED = [
 ];
 
 /** What an allowlisted click may be for (protocol: add-to-cart, size and colour buttons, popup close, cookie decline,
- * non-form continue-as-guest, and the increment control for cart-qty2). */
+ * and the increment control for cart-qty2). `continue-as-guest` was retired in protocol .5: no session enters a
+ * checkout. */
 export const PURPOSES = [
   'add-to-cart',
   'option',
   'quantity-increment',
   'close-popup',
   'decline-cookies',
-  'continue-as-guest',
 ];
 /** The only purposes a reconnaissance session may click: it looks, it never adds, chooses or continues. */
 export const RECON_PURPOSES = ['close-popup', 'decline-cookies'];
@@ -155,6 +155,8 @@ export const Recipe = z
     listingUrl: Url,
     productUrls: z.array(Url).min(1).max(2),
     cartPath: Path,
+    // Kept only for robots.txt posture reporting: never a visit target. The driver refuses a goto to any of them and
+    // stops on landing at one (protocol .5: no session enters a checkout).
     checkoutPaths: z.array(Path).max(3),
     termsUrl: Url.optional(),
     allowlist: z.array(AllowEntry).max(20),

@@ -116,8 +116,6 @@ export function judgeClick(info, purpose) {
   if (!purpose) return null;
   if (info.inForm && (info.formHasTextEntry || info.formHasPassword))
     return no('refused-input-form', 'target belongs to a form with a text, e-mail or password field');
-  if (purpose === 'continue-as-guest' && info.inForm)
-    return no('refused-in-form', 'continue-as-guest is allowed only outside a <form>');
   if (purpose === 'add-to-cart') {
     if (NOT_ADD_TO_CART.test(info.name) || BAD_FORM_ACTION.test(actionPath(info.formAction)))
       return no(
