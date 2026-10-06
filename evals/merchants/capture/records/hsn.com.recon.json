@@ -1,0 +1,128 @@
+{
+  "schema": "capture-recon-record.2",
+  "domain": "hsn.com",
+  "entryUrl": "https://www.hsn.com/",
+  "currency": "USD",
+  "priceBand": [
+    10,
+    200
+  ],
+  "tool": {
+    "version": "capture-tool.3",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "session": {
+    "id": "20261006T073648Z",
+    "number": 1,
+    "startedAt": "2026-10-06T07:36:48.561Z",
+    "endedAt": "2026-10-06T07:37:41.562Z",
+    "topLevelNavigations": 1,
+    "navigationRequests": 1
+  },
+  "robots": {
+    "url": "https://www.hsn.com/robots.txt",
+    "httpStatus": 200,
+    "sha256": "5513d18fbb3dbf75c8f4f568393b5a47c77f321aa9f509b569dd258d37a55a4f",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "disallow",
+            "path": "/account"
+          },
+          {
+            "type": "disallow",
+            "path": "/Ajax/profile"
+          },
+          {
+            "type": "disallow",
+            "path": "/profile"
+          },
+          {
+            "type": "disallow",
+            "path": "/checkout"
+          },
+          {
+            "type": "disallow",
+            "path": "/com"
+          },
+          {
+            "type": "disallow",
+            "path": "/cust"
+          },
+          {
+            "type": "disallow",
+            "path": "/facebook/like"
+          },
+          {
+            "type": "disallow",
+            "path": "/myaccount"
+          },
+          {
+            "type": "disallow",
+            "path": "/products/fluidity-bar-workout-system-wball-bands-and-3-workouts/6992915"
+          },
+          {
+            "type": "disallow",
+            "path": "/products/fluidity-bar-workout-system-wball-bands-and-3-workouts/7242609"
+          },
+          {
+            "type": "disallow",
+            "path": "/search"
+          },
+          {
+            "type": "disallow",
+            "path": "/search-more-products"
+          },
+          {
+            "type": "disallow",
+            "path": "/show-more-products/"
+          },
+          {
+            "type": "disallow",
+            "path": "/smgen.aspx"
+          },
+          {
+            "type": "disallow",
+            "path": "/bonusbuy/PromotionProducts/"
+          }
+        ]
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "views": 2,
+  "homeLandings": [
+    {
+      "requested": "https://www.hsn.com/",
+      "chain": [
+        "https://www.hsn.com/"
+      ],
+      "landed": "https://www.hsn.com/",
+      "sameSite": true
+    }
+  ],
+  "navigation": [
+    "https://www.hsn.com/"
+  ],
+  "stockMismatch": [],
+  "events": [
+    {
+      "kind": "request-aborted",
+      "detail": "POST www.hsn.com"
+    }
+  ],
+  "stop": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": "a24cca4eaaaa01c2bde82e985e7a5ec84cdd39d82989fd1978b770adcb05a5aa",
+    "draftRecipeSha256": null
+  }
+}

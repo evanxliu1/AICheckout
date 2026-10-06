@@ -21,8 +21,11 @@ import {
   StopError,
   detectStop,
   inspectControl,
+  WRITE_BLOCKED_PATH,
+  actionPath,
   isCheckoutPath,
   judgeClick,
+  maskPath,
   pageFacts,
 } from './guards.mjs';
 import {
@@ -39,6 +42,8 @@ import { sha256, writeSnapshot } from './snapshot.mjs';
 
 export const MIN_PACE_MS = 3000;
 export const MAX_NAVIGATIONS = 25;
+/** Background writes stay aborted this long after a click that is not an add-to-cart or increment click. */
+export const WRITE_BLOCK_MS = 3000;
 /** Navigation requests one action may cause (its redirects, reloads and script navigations) before it is refused. */
 export const MAX_REQUESTS_PER_ACTION = 10;
 export const API = Object.freeze(['goto', 'click', 'wait', 'snapshot', 'status', 'end']);
@@ -184,6 +189,9 @@ export async function createDriver(opts) {
     action: null,
     allowSubmitUntil: 0,
     allowMutateUntil: 0,
+    // Background writes are aborted until then: during, and WRITE_BLOCK_MS after, a click that is not an
+    // add-to-cart or increment click.
+    blockWritesUntil: 0,
     noNavigation: false,
     doc: null,
     stopped: null,
@@ -305,16 +313,19 @@ export async function createDriver(opts) {
       return route.abort('blockedbyclient');
     }
     if (!nav) {
-      // fetch, XHR, beacons: a same-site write is allowed only during an allowlisted add-to-cart or increment click.
+      // fetch, XHR, beacons (protocol .6): the site's own background writes (data and GraphQL loads) go through,
+      // logged, except (a) to checkout, order, payment, sign-in, account or register paths and (b) within
+      // WRITE_BLOCK_MS after any click that is not an allowlisted add-to-cart or increment click. During those two
+      // clicks every same-site write goes through, as before.
       const m = req.method();
-      if (
-        !['GET', 'HEAD', 'OPTIONS'].includes(m) &&
-        sameSite(url.hostname, domain) &&
-        Date.now() > session.allowMutateUntil
-      ) {
-        event('request-aborted', `${m} ${url.host}`);
+      if (['GET', 'HEAD', 'OPTIONS'].includes(m) || !sameSite(url.hostname, domain)) return route.continue();
+      if (Date.now() <= session.allowMutateUntil) return route.continue();
+      const where = `${m} ${url.host}${maskPath(url.pathname)}`;
+      if (WRITE_BLOCKED_PATH.test(actionPath(url.href)) || Date.now() <= session.blockWritesUntil) {
+        event('request-aborted', where);
         return route.abort('blockedbyclient');
       }
+      event('background-write', where);
       return route.continue();
     }
     if (!frame) return route.continue();
@@ -427,6 +438,7 @@ export async function createDriver(opts) {
       text: '',
       passwordVisible: false,
       captchaElement: false,
+      markup: '',
     }));
     const hit = detectStop({
       ...facts,
@@ -611,8 +623,9 @@ export async function createDriver(opts) {
     session.actionSeq += 1;
     session.doc = null;
     if (purpose === 'add-to-cart') session.allowSubmitUntil = Date.now() + 15_000;
-    if (purpose === 'add-to-cart' || purpose === 'quantity-increment')
-      session.allowMutateUntil = Date.now() + 15_000;
+    const mutating = purpose === 'add-to-cart' || purpose === 'quantity-increment';
+    if (mutating) session.allowMutateUntil = Date.now() + 15_000;
+    else session.blockWritesUntil = Number.POSITIVE_INFINITY;
     session.noNavigation = info.submit && purpose !== 'add-to-cart';
     let failed = null;
     await el.click({ timeout: 10_000 }).catch((e) => (failed = e));
@@ -622,9 +635,14 @@ export async function createDriver(opts) {
       session.allowSubmitUntil = 0;
       session.allowMutateUntil = 0;
       session.noNavigation = false;
+      if (!mutating) session.blockWritesUntil = Date.now() + WRITE_BLOCK_MS;
       throw new RefusalError('click-failed', String(failed.message).split('\n')[0], 'tool-error');
     }
-    await afterAction(v0);
+    try {
+      await afterAction(v0);
+    } finally {
+      if (!mutating) session.blockWritesUntil = Date.now() + WRITE_BLOCK_MS;
+    }
     record(purpose ? { do: 'click', target, purpose } : { do: 'click', target });
     return status();
   }

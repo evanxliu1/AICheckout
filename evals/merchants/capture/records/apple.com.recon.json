@@ -1,0 +1,93 @@
+{
+  "schema": "capture-recon-record.2",
+  "domain": "apple.com",
+  "entryUrl": "https://www.apple.com/",
+  "currency": "USD",
+  "priceBand": [
+    10,
+    200
+  ],
+  "tool": {
+    "version": "capture-tool.3",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "session": {
+    "id": "20261006T073023Z",
+    "number": 1,
+    "startedAt": "2026-10-06T07:30:23.620Z",
+    "endedAt": "2026-10-06T07:32:19.440Z",
+    "topLevelNavigations": 6,
+    "navigationRequests": 6
+  },
+  "robots": {
+    "url": "https://www.apple.com/robots.txt",
+    "httpStatus": 200,
+    "sha256": "3115f45c98cfa19341978dcab5dfbc0fd3e0ff4eb3ab1fe8192c3fbf7227dee7",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "disallow",
+            "path": "/*shop/browse/overlay/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/*shop/iphone/payments/overlay/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/cn/*/aow/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/tmall*"
+          },
+          {
+            "type": "allow",
+            "path": "/ac/globalnav/2.0/*/images/ac-globalnav/globalnav/search/*"
+          }
+        ]
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "views": 6,
+  "homeLandings": [
+    {
+      "requested": "https://www.apple.com/",
+      "chain": [
+        "https://www.apple.com/"
+      ],
+      "landed": "https://www.apple.com/",
+      "sameSite": true
+    }
+  ],
+  "navigation": [
+    "https://www.apple.com/",
+    "https://www.apple.com/store",
+    "https://www.apple.com/shop/buy-airpods/airpods-5",
+    "https://www.apple.com/shop/product/mkd14zm/a/:token",
+    "https://www.apple.com/shop/product/mk944zm/a/:token",
+    "https://www.apple.com/shop/bag"
+  ],
+  "stockMismatch": [],
+  "events": [
+    {
+      "kind": "request-aborted",
+      "detail": "POST www.apple.com"
+    }
+  ],
+  "stop": null,
+  "outcome": {
+    "status": "done",
+    "code": null,
+    "evidenceSha256": null,
+    "draftRecipeSha256": "dde1a353436699f0a100e63d6c579bbe2208ce09bcd3ff01d6acbe5b5311903f"
+  }
+}

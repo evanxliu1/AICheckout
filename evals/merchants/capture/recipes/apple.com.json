@@ -1,0 +1,135 @@
+{
+  "schema": "capture-recipe.3",
+  "domain": "apple.com",
+  "origin": "https://www.apple.com/",
+  "listingUrl": "https://www.apple.com/store",
+  "productUrls": [
+    "https://www.apple.com/shop/product/mkd14zm/a/iphone-18-pro-techwoven-case-with-magsafe-burgundy",
+    "https://www.apple.com/shop/product/mk944zm/a/iphone-18-pro-max-silicone-case-with-magsafe-navy-blue"
+  ],
+  "cartPath": "/shop/bag",
+  "checkoutPaths": [],
+  "termsUrl": "https://www.apple.com/legal/internet-services/terms/site.html",
+  "allowlist": [
+    {
+      "purpose": "add-to-cart",
+      "target": {
+        "selector": "button#add-to-cart"
+      }
+    },
+    {
+      "purpose": "close-popup",
+      "target": {
+        "role": "button",
+        "name": "Close",
+        "exact": true
+      }
+    }
+  ],
+  "steps": [
+    {
+      "do": "goto",
+      "url": "https://www.apple.com/shop/bag"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "snapshot",
+      "state": "empty-cart"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.apple.com/shop/product/mkd14zm/a/iphone-18-pro-techwoven-case-with-magsafe-burgundy"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "button#add-to-cart"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 5000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-01"
+    },
+    {
+      "do": "snapshot",
+      "state": "cart-1"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.apple.com/shop/product/mkd14zm/a/iphone-18-pro-techwoven-case-with-magsafe-burgundy"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "button#add-to-cart"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 5000
+    },
+    {
+      "do": "snapshot",
+      "state": "cart-qty2"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.apple.com/shop/product/mk944zm/a/iphone-18-pro-max-silicone-case-with-magsafe-navy-blue"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "button#add-to-cart"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 5000
+    },
+    {
+      "do": "snapshot",
+      "state": "cart-2items"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.apple.com/legal/internet-services/terms/site.html"
+    },
+    {
+      "do": "wait",
+      "ms": 3000
+    },
+    {
+      "do": "snapshot",
+      "state": "terms"
+    },
+    {
+      "do": "end"
+    }
+  ],
+  "recon": {
+    "sessionId": "20261006T073023Z"
+  },
+  "cartHost": "www.apple.com"
+}

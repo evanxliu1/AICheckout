@@ -1,0 +1,193 @@
+{
+  "schema": "capture-recon-record.2",
+  "domain": "napaonline.com",
+  "entryUrl": "https://www.napaonline.com/",
+  "currency": "USD",
+  "priceBand": [
+    10,
+    200
+  ],
+  "tool": {
+    "version": "capture-tool.3",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "session": {
+    "id": "20261006T072554Z",
+    "number": 1,
+    "startedAt": "2026-10-06T07:25:54.522Z",
+    "endedAt": "2026-10-06T07:26:07.360Z",
+    "topLevelNavigations": 1,
+    "navigationRequests": 1
+  },
+  "robots": {
+    "url": "https://www.napaonline.com/robots.txt",
+    "httpStatus": 200,
+    "sha256": "12759c36f9fc94846e44de19828e9af0f8700f397c2c32bff0c57b86a48a370e",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "disallow",
+            "path": "/en/cart*"
+          },
+          {
+            "type": "disallow",
+            "path": "/es/cart*"
+          },
+          {
+            "type": "disallow",
+            "path": "*/checkout*"
+          },
+          {
+            "type": "disallow",
+            "path": "*/my-account*"
+          },
+          {
+            "type": "disallow",
+            "path": "*/job*"
+          },
+          {
+            "type": "disallow",
+            "path": "*/aggregate*"
+          },
+          {
+            "type": "disallow",
+            "path": "*pageSize=24*"
+          },
+          {
+            "type": "disallow",
+            "path": "*pageSize=30*"
+          },
+          {
+            "type": "disallow",
+            "path": "/en/search*jobId*"
+          },
+          {
+            "type": "disallow",
+            "path": "/es/search*jobId*"
+          },
+          {
+            "type": "disallow",
+            "path": "/search*jobId*"
+          },
+          {
+            "type": "disallow",
+            "path": "/seo/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/store-nearme"
+          },
+          {
+            "type": "disallow",
+            "path": "/store-finder"
+          },
+          {
+            "type": "disallow",
+            "path": "*referer=sidebar_form-universal"
+          },
+          {
+            "type": "disallow",
+            "path": "*referer=sidebar_form-exactfit"
+          },
+          {
+            "type": "disallow",
+            "path": "*referer=nol-veh-conds"
+          },
+          {
+            "type": "disallow",
+            "path": "/en/my-vehicle/vehicleType/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/es/my-vehicle/vehicleType/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/fr/my-vehicle/vehicleType/*"
+          },
+          {
+            "type": "disallow",
+            "path": "*/years/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/offers/20-savings"
+          },
+          {
+            "type": "allow",
+            "path": "*/en/search/*"
+          },
+          {
+            "type": "disallow",
+            "path": "*/en/search?*"
+          },
+          {
+            "type": "disallow",
+            "path": "*/en/search/?*"
+          },
+          {
+            "type": "disallow",
+            "path": "/cart/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/en/trackorder?*"
+          },
+          {
+            "type": "disallow",
+            "path": "/distil*"
+          },
+          {
+            "type": "disallow",
+            "path": "/accessories/cart*"
+          },
+          {
+            "type": "disallow",
+            "path": "/accessories/checkout*"
+          },
+          {
+            "type": "disallow",
+            "path": "/accessories/new_checkout*"
+          },
+          {
+            "type": "disallow",
+            "path": "/accessories/OrderStatus*"
+          }
+        ]
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "views": 0,
+  "homeLandings": [],
+  "navigation": [],
+  "stockMismatch": [],
+  "events": [
+    {
+      "kind": "request-aborted",
+      "detail": "POST www.napaonline.com"
+    },
+    {
+      "kind": "stop",
+      "detail": "blocked-http-403"
+    }
+  ],
+  "stop": {
+    "code": "blocked-http-403",
+    "detail": "http-403",
+    "evidenceSha256": "3e39ac80cdfacc67dbe876021a4ceb91a01ad5cf0427c5051b0130de96c5dd92"
+  },
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "evidenceSha256": "3e39ac80cdfacc67dbe876021a4ceb91a01ad5cf0427c5051b0130de96c5dd92",
+    "draftRecipeSha256": null
+  }
+}

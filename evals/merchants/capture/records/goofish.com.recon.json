@@ -1,0 +1,85 @@
+{
+  "schema": "capture-recon-record.2",
+  "domain": "goofish.com",
+  "entryUrl": "https://www.goofish.com/",
+  "currency": "CNY",
+  "priceBand": [
+    70,
+    1450
+  ],
+  "tool": {
+    "version": "capture-tool.3",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "session": {
+    "id": "20261006T072859Z",
+    "number": 1,
+    "startedAt": "2026-10-06T07:28:59.077Z",
+    "endedAt": "2026-10-06T07:30:02.742Z",
+    "topLevelNavigations": 2,
+    "navigationRequests": 2
+  },
+  "robots": {
+    "url": "https://www.goofish.com/robots.txt",
+    "httpStatus": 200,
+    "sha256": "be685417d444280a051a32788f4fcbd8981c9a47eae1b1d4410df53c2567477a",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "disallow",
+            "path": "/find-account"
+          },
+          {
+            "type": "disallow",
+            "path": "/select-account"
+          },
+          {
+            "type": "disallow",
+            "path": "/playground"
+          }
+        ]
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "views": 2,
+  "homeLandings": [
+    {
+      "requested": "https://www.goofish.com/",
+      "chain": [
+        "https://www.goofish.com/"
+      ],
+      "landed": "https://www.goofish.com/",
+      "sameSite": true
+    }
+  ],
+  "navigation": [
+    "https://www.goofish.com/",
+    "https://www.goofish.com/search"
+  ],
+  "stockMismatch": [],
+  "events": [
+    {
+      "kind": "request-aborted",
+      "detail": "POST umdc.goofish.com"
+    },
+    {
+      "kind": "request-aborted",
+      "detail": "POST h5api.m.goofish.com"
+    }
+  ],
+  "stop": null,
+  "outcome": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "evidenceSha256": null,
+    "draftRecipeSha256": null
+  }
+}

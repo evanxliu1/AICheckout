@@ -184,6 +184,46 @@ document.getElementById('inc').addEventListener('click', () => { const q = docum
           200,
           page('Loop', "<script>location.replace('/js-loop?n=' + (Number(new URLSearchParams(location.search).get('n')) + 1))</script>"),
         );
+      case 'GET /akamai':
+        // An Akamai interstitial: no wall wording, no challenge frame, no known challenge element.
+        return html(
+          200,
+          page(
+            'Store',
+            '<div id="sec-if-cpt-container"><p>Powered and protected by a vendor</p></div><script src="/_sec/cp_challenge/ak-challenge-3-3.js"></script>',
+          ),
+        );
+      case 'GET /cf-challenge':
+        return html(200, page('Store', '<script>window._cf_chl_opt = { cvId: "3" };</script><p>Please wait</p>'));
+      case 'GET /sensors-only':
+        // An ordinary page that loads vendor sensor scripts: never a stop.
+        return html(
+          200,
+          page(
+            'Store',
+            '<script src="/cdn-cgi/challenge-platform/scripts/jsd/main.js"></script><script src="https://js.datadome.co/tags.js"></script><script src="/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3"></script><p>Hello</p>',
+          ),
+        );
+      case 'GET /bg-load':
+        // The site's own background writes during load: a data POST (allowed) and an account POST (aborted).
+        return html(
+          200,
+          page(
+            'Store',
+            `<p>Loading</p><button type="button" id="later">Show more</button><script>
+fetch('/api/graphql', { method: 'POST', body: '{}' }).catch(() => {});
+fetch('/api/account/session', { method: 'POST', body: '{}' }).catch(() => {});
+fetch('/checkout/session', { method: 'POST', body: '{}' }).catch(() => {});
+document.getElementById('later').addEventListener('click', () => setTimeout(() => fetch('/api/after-click', { method: 'POST', body: '{}' }).catch(() => {}), 1000));
+</script>`,
+          ),
+        );
+      case 'POST /api/graphql':
+      case 'POST /api/account/session':
+      case 'POST /checkout/session':
+      case 'POST /api/after-click':
+        res.writeHead(204);
+        return res.end();
       case 'GET /r-checkout':
         res.writeHead(302, { location: '/checkout' });
         return res.end();

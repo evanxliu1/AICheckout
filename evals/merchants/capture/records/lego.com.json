@@ -1,0 +1,194 @@
+{
+  "schema": "capture-site-record.3",
+  "domain": "lego.com",
+  "recipeSha256": "5e6b7d526041da02b19141cd36185abc234959ba929a70f3dfe46227529f27a3",
+  "tool": {
+    "version": "capture-tool.3",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "recon": {
+    "sessionId": "20261006T072015Z"
+  },
+  "session": {
+    "id": "20261006T072230Z",
+    "number": 1,
+    "startedAt": "2026-10-06T07:22:30.449Z",
+    "endedAt": "2026-10-06T07:24:07.771Z",
+    "topLevelNavigations": 4,
+    "navigationRequests": 4
+  },
+  "robots": {
+    "url": "https://www.lego.com/robots.txt",
+    "httpStatus": 200,
+    "sha256": "e6ed4b365a86e8bb081187911e9fc85ba46f7d9bee22a4a2949d619b69694949",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "disallow",
+            "path": "/identity/"
+          },
+          {
+            "type": "disallow",
+            "path": "/checkout"
+          },
+          {
+            "type": "disallow",
+            "path": "/account/wishlist"
+          },
+          {
+            "type": "disallow",
+            "path": "/innovation-intake-ideas"
+          },
+          {
+            "type": "disallow",
+            "path": "/innovation-intake-editor"
+          },
+          {
+            "type": "disallow",
+            "path": "/insiders/event/"
+          },
+          {
+            "type": "disallow",
+            "path": "/kids/search?q="
+          },
+          {
+            "type": "disallow",
+            "path": "/scan/"
+          },
+          {
+            "type": "disallow",
+            "path": "/in-store/"
+          },
+          {
+            "type": "disallow",
+            "path": "/member/"
+          },
+          {
+            "type": "disallow",
+            "path": "/reward/"
+          },
+          {
+            "type": "disallow",
+            "path": "/*?icmp="
+          },
+          {
+            "type": "disallow",
+            "path": "/*/galleries/"
+          },
+          {
+            "type": "disallow",
+            "path": "/careers/"
+          },
+          {
+            "type": "disallow",
+            "path": "/careers/stories*"
+          },
+          {
+            "type": "disallow",
+            "path": "/*.m3u8/*"
+          }
+        ]
+      }
+    ],
+    "checkedPaths": [
+      {
+        "path": "/en-us/cart",
+        "host": "www.lego.com",
+        "allowed": true
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "terms": {
+    "url": "https://www.lego.com/en-us/page/terms-and-conditions",
+    "copySha256": "677867580894d59511250f6569f5f8a8146dda5f2009e5df4e6af25030d51f83",
+    "prohibitsAutomated": "unknown"
+  },
+  "states": [
+    {
+      "state": "view-01",
+      "url": "https://www.lego.com/en-us/cart",
+      "manifestSha256": "48c99a09d9e39c319dd3f0532e440d266cc6a594ea7439e5a29291028b27442d",
+      "domSha256": "c65a5641438c8f973948beb27232b9a128b5e9b9cac4c005c2f4f9a458134862",
+      "viewportSha256": "1bd7fa67ba745658cc609f65f0e4fe951fdf9c03a76597bcd18de926af82ff24",
+      "robotsAllowed": true
+    },
+    {
+      "state": "view-02",
+      "url": "https://www.lego.com/en-us/product/:token",
+      "manifestSha256": "7ddd421474e545d66f434dc8d095102cc2e364d602eb697dfee2326067708122",
+      "domSha256": "d8f73bbd4f64b8dff02dd1ececabe1cd0ede18d0341aa830f5af6c7b49ce8317",
+      "viewportSha256": "34ffca1dbe5fa53ca92276d2bea0921de72e91123c4fccf04bb92e777eeccd33",
+      "robotsAllowed": true
+    },
+    {
+      "state": "minicart-1",
+      "url": "https://www.lego.com/en-us/product/:token",
+      "manifestSha256": "badbf0d5cccb3322f85de836007c9ab47047c86c7634597167a42a1c3b2d35eb",
+      "domSha256": "d41acf2c5a7876c3e730933444f649485b33ec01d6a6a1e58739e4030394e476",
+      "viewportSha256": "34ffca1dbe5fa53ca92276d2bea0921de72e91123c4fccf04bb92e777eeccd33",
+      "robotsAllowed": true
+    },
+    {
+      "state": "view-03",
+      "url": "https://www.lego.com/en-us/cart",
+      "manifestSha256": "b8958b63b471c6c7d14404df142c42dac9a3138132de575faf6767f70514512b",
+      "domSha256": "c65a5641438c8f973948beb27232b9a128b5e9b9cac4c005c2f4f9a458134862",
+      "viewportSha256": "1bd7fa67ba745658cc609f65f0e4fe951fdf9c03a76597bcd18de926af82ff24",
+      "robotsAllowed": true
+    },
+    {
+      "state": "terms",
+      "url": "https://www.lego.com/en-us/page/terms-and-conditions",
+      "manifestSha256": "677867580894d59511250f6569f5f8a8146dda5f2009e5df4e6af25030d51f83",
+      "domSha256": "3cf50f77863df1c7939c0aaeabc1bfc9d6c1082a0ba022e85861fec8726672a5",
+      "viewportSha256": "c5e023154deedbd7f4e430226a1fab761343b5ec56664c6fe99f74c0c530abb2",
+      "robotsAllowed": true
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart-page-error-post-aborted"
+    },
+    {
+      "state": "cart-1",
+      "reason": "cart-page-error-post-aborted"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "cart-page-error-post-aborted"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "cart-page-error-post-aborted"
+    }
+  ],
+  "platform": {
+    "group": "none-detected",
+    "marker": null
+  },
+  "events": [
+    {
+      "kind": "request-aborted",
+      "detail": "POST www.lego.com"
+    },
+    {
+      "kind": "request-aborted",
+      "detail": "POST scout.services.lego.com"
+    }
+  ],
+  "stop": null,
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  }
+}
