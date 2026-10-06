@@ -6,7 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { after, before, test } from 'node:test';
 import { chromium } from 'playwright';
-import { MAX_NAVIGATIONS, createDriver } from '../../driver.mjs';
+import { MAX_NAVIGATIONS, MAX_REQUESTS_PER_ACTION, createDriver } from '../../driver.mjs';
 import { RefusalError, StopError, inspectControl } from '../../guards.mjs';
 import { parseRobots, robotsPosture } from '../../robots.mjs';
 import { fixtureRecipe, startShop } from '../fixture-shop.mjs';
@@ -213,7 +213,7 @@ test('an image-only order control is refused by its alt text', async () => {
   assert.ok(!posts().includes('/finalize'));
 });
 
-test('an off-site redirect is caught after the action: offsite is set and only checkout-1 may be captured', async () => {
+test('an off-site redirect is caught after the action: offsite is set and nothing may be captured', async () => {
   const { driver, session } = await fresh('serve');
   const st = await driver.goto(`${shop.origin}/r`);
   assert.equal(st.offsite, new URL(shop.thirdParty).host);
@@ -363,6 +363,55 @@ test('recon mode: findings need views of the home page and listing, frame hosts,
   );
 });
 
+test('protocol .5: the home view may be taken where a goto to the origin landed on the same site', async () => {
+  await shop.close();
+  shop = await startShop({ homeRedirect: true });
+  try {
+    const { driver, session } = await fresh('recon', {
+      extra: { productUrls: [], allowlist: [], hosts: ['127.0.0.1'] },
+    });
+    const st = await driver.goto(`${shop.origin}/`);
+    assert.equal(new URL(st.url).pathname, '/shop/us');
+    await driver.snapshot('view-01');
+    await driver.goto(`${shop.origin}/listing`);
+    await driver.snapshot('view-02');
+    await driver.goto(`${shop.origin}/products/tee`);
+    await driver.goto(`${shop.origin}/cart`);
+    await driver.end({
+      findings: {
+        listingUrl: `${shop.origin}/listing`,
+        productUrls: [`${shop.origin}/products/tee`],
+        cartPath: '/cart',
+        checkoutPaths: [],
+      },
+    });
+    assert.deepEqual(
+      session.homeLandings.map((h) => [h.chain.map((u) => new URL(u).pathname), new URL(h.landed).pathname, h.sameSite]),
+      [[['/', '/shop/us'], '/shop/us', true]],
+    );
+  } finally {
+    await shop.close();
+    shop = await startShop();
+  }
+});
+
+test('protocol .5: a goto and the redirects and script navigations it causes count as one navigation', async () => {
+  const { driver, session } = await fresh('serve');
+  await driver.goto(`${shop.origin}/js-hops`);
+  await new Promise((r) => setTimeout(r, 1500));
+  assert.equal(new URL(driver.status().url).pathname, '/terms');
+  assert.equal(session.navigations, 1);
+  assert.equal(session.navigationRequests, 3);
+  await driver.goto(`${shop.origin}/terms`);
+  assert.equal(session.navigations, 2);
+  // A page that keeps navigating is cut off after a fixed number of requests in one action.
+  await assert.rejects(driver.goto(`${shop.origin}/js-loop`), refusal('refused-navigation-loop'));
+  await new Promise((r) => setTimeout(r, 500));
+  assert.equal(session.navigations, 3);
+  assert.equal(session.requestsThisAction, MAX_REQUESTS_PER_ACTION);
+  assert.ok(session.events.some((e) => e.detail.startsWith('refused-navigation-loop')));
+});
+
 test("recon mode: listing and product URLs must be on the frame's hosts", async () => {
   const { driver } = await fresh('recon', {
     extra: { productUrls: [], allowlist: [], hosts: ['www.shop.example'] },
@@ -444,7 +493,7 @@ test('aborts a form-submitting navigation that a plain button triggers in script
   assert.ok(!posts().includes('/newsletter'));
 });
 
-test('third-party checkout: the first page loads and is recorded, then nothing else', async () => {
+test('an off-site page reached by a click loads once and nothing else happens', async () => {
   const { driver, session } = await fresh('serve');
   await driver.goto(`${shop.origin}/products/tee`);
   const st = await driver.click({ role: 'link', name: 'Partner store' });
@@ -453,8 +502,9 @@ test('third-party checkout: the first page loads and is recorded, then nothing e
   await assert.rejects(driver.goto(`${shop.origin}/cart`), refusal('refused-third-party-page'));
   await assert.rejects(driver.click({ role: 'link', name: 'Next' }), refusal('refused-third-party-page'));
   await assert.rejects(driver.snapshot('cart-1'), refusal('refused-third-party-page'));
-  const snap = await driver.snapshot('checkout-1');
-  assert.match(snap.manifestSha256, /^[0-9a-f]{64}$/);
+  await assert.rejects(driver.snapshot('view-01'), refusal('refused-third-party-page'));
+  // checkout-1 is not a robot state since protocol .5.
+  await assert.rejects(driver.snapshot('checkout-1'), refusal('refused-bad-state'));
   assert.ok(!shop.log.some((r) => r.site === 'third-party' && r.path === '/next'));
 });
 

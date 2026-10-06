@@ -12,7 +12,7 @@ import { checkRequest, startControlServer } from '../control-server.mjs';
 import { ADD_TO_CART_NAME, createDriver, guardApi, parseTarget } from '../driver.mjs';
 import { ORDER_OR_ACCOUNT, RefusalError, actionPath, detectStop, judgeClick } from '../guards.mjs';
 import { detectPlatform, platformStates } from '../platform.mjs';
-import { EVIDENCE_REQUIRED, EXCLUSION_CODES, Recipe, ReconSpec, SiteRecord, StepSchema } from '../recipe.mjs';
+import { EVIDENCE_REQUIRED, EXCLUSION_CODES, Findings, Recipe, ReconSpec, SiteRecord, StepSchema } from '../recipe.mjs';
 import { groupFor, isAllowed, parseRobots, robotsPosture } from '../robots.mjs';
 import { fixtureRecipe } from './fixture-shop.mjs';
 
@@ -22,7 +22,7 @@ const refusal = (code) => (e) => e instanceof RefusalError && e.code === code;
 // ---- Recipe schema ----
 
 const good = () => ({
-  schema: 'capture-recipe.2',
+  schema: 'capture-recipe.3',
   domain: 'example.de',
   origin: 'https://www.example.de',
   listingUrl: 'https://www.example.de/damen',
@@ -386,10 +386,8 @@ test('platform: protocol markers, first group wins, marker recorded', () => {
     group: 'shopify',
     marker: 'cdn.shopify.com',
   });
-  assert.deepEqual(p('x', {}, 'https://checkout.shopify.com/1/checkouts/abc'), {
-    group: 'shopify',
-    marker: 'checkout.shopify.com',
-  });
+  // Protocol .5: no checkout page is entered, so a checkout URL never decides.
+  assert.equal(detectPlatform([{ html: 'x' }], 'https://checkout.shopify.com/1/checkouts/abc').group, 'none-detected');
   assert.deepEqual(p('<a href="/on/demandware.store/Sites-x">'), {
     group: 'sfcc',
     marker: '/on/demandware.store/',
@@ -587,12 +585,19 @@ test('committed URLs: no query or fragment, token-like segments replaced', () =>
 test('site record: stop detail is a code and committed URLs carry no query', () => {
   const base = JSON.parse(
     JSON.stringify({
-      schema: 'capture-site-record.2',
+      schema: 'capture-site-record.3',
       domain: 'x.com',
       recipeSha256: 'a'.repeat(64),
       tool: { version: 't', browser: 'b', userAgentToken: 'u' },
       recon: { sessionId: '20261006T000000Z' },
-      session: { id: '20261006T000000Z', number: 1, startedAt: 's', endedAt: 'e', topLevelNavigations: 0 },
+      session: {
+        id: '20261006T000000Z',
+        number: 1,
+        startedAt: 's',
+        endedAt: 'e',
+        topLevelNavigations: 0,
+        navigationRequests: 0,
+      },
       robots: {
         url: 'https://x.com/robots.txt',
         httpStatus: 200,
@@ -606,7 +611,6 @@ test('site record: stop detail is a code and committed URLs carry no query', () 
       terms: { url: null, copySha256: null, prohibitsAutomated: 'unknown' },
       states: [],
       notReached: [],
-      thirdPartyCheckoutHost: null,
       platform: null,
       events: [],
       stop: { code: 'tool-error', detail: 'recipe-step-refused:refused-submit', evidenceSha256: null },
@@ -782,6 +786,17 @@ test('capture needs a finished reconnaissance session and a recipe equal to its 
   } finally {
     await rm(out, { recursive: true, force: true });
   }
+});
+
+test('findings: a stock mismatch names only a found item', () => {
+  const f = {
+    listingUrl: 'https://www.example.de/a',
+    productUrls: ['https://www.example.de/p/1'],
+    cartPath: '/c',
+    checkoutPaths: [],
+  };
+  assert.ok(Findings.parse({ ...f, stockMismatch: ['https://www.example.de/p/1'] }));
+  assert.equal(Findings.safeParse({ ...f, stockMismatch: ['https://www.example.de/p/9'] }).success, false);
 });
 
 test('recipe: cartHost must be a host of the site', () => {

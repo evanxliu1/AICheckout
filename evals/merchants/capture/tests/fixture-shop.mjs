@@ -16,6 +16,7 @@ const page = (title, body, { lang = 'en-GB', head = '' } = {}) => `<!doctype htm
 export async function startShop({
   robots = 'User-agent: *\nDisallow: /admin\n',
   sisterRobots = 'User-agent: *\nDisallow: /\n',
+  homeRedirect = false,
 } = {}) {
   const log = [];
   const cart = [];
@@ -44,6 +45,12 @@ export async function startShop({
         res.writeHead(200, { 'content-type': 'text/plain' });
         return res.end(robots);
       case 'GET /':
+        if (homeRedirect) {
+          res.writeHead(302, { location: '/shop/us' });
+          return res.end();
+        }
+      // falls through: the home page
+      case 'GET /shop/us':
         return html(
           200,
           page(
@@ -167,6 +174,15 @@ document.getElementById('inc').addEventListener('click', () => { const q = docum
       case 'GET /r-terms':
         res.writeHead(302, { location: '/terms' });
         return res.end();
+      case 'GET /js-hops':
+        return html(200, page('Hop', "<script>location.replace('/js-hop-2')</script>"));
+      case 'GET /js-hop-2':
+        return html(200, page('Hop', "<script>location.replace('/terms')</script>"));
+      case 'GET /js-loop':
+        return html(
+          200,
+          page('Loop', "<script>location.replace('/js-loop?n=' + (Number(new URLSearchParams(location.search).get('n')) + 1))</script>"),
+        );
       case 'GET /r-px':
         res.writeHead(302, { location: '/pxwall' });
         return res.end();
@@ -291,7 +307,7 @@ Element.prototype.matches = function () { return false; };
 /** The end-to-end recipe for the fixture shop. */
 export function fixtureRecipe(origin, extra = {}) {
   return {
-    schema: 'capture-recipe.2',
+    schema: 'capture-recipe.3',
     domain: '127.0.0.1',
     origin,
     listingUrl: `${origin}/products`,

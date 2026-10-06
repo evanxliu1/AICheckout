@@ -1,9 +1,10 @@
 // The capture driver: the only way the tool touches a page. Its API is goto, click, wait, snapshot, status and end.
 // It has no typing, key press, <select>, file, coordinate or mouse path; any other property access throws a
 // RefusalError. Every rule of docs/evals/generic-reader-protocol.md#capture-posture that code can enforce is here:
-// same-site navigation only, one third-party checkout page at most, no form-submitting navigation except during an
+// same-site navigation only, one off-site page at most (never captured), no form-submitting navigation except during an
 // allowlisted add-to-cart click, no clicks on submit or in-form controls unless allowlisted for a purpose, no frames,
-// at least `paceMs` between navigations and clicks, at most 25 top-level navigations, and a stop on any block.
+// at least `paceMs` between navigations and clicks, at most 25 top-level navigations (one per navigating action,
+// protocol .5), and a stop on any block. `checkout-1` is not a robot state since protocol .5.
 // Every in-page check runs in a CDP isolated world on the node the click will actually hit, so page scripts cannot
 // fake the facts. Redirects are not routed by Playwright, so where the page lands is checked after every action.
 // Same-site writes by fetch or XHR are aborted outside an add-to-cart or increment click. robots.txt (protocol .4):
@@ -29,6 +30,8 @@ import { sha256, writeSnapshot } from './snapshot.mjs';
 
 export const MIN_PACE_MS = 3000;
 export const MAX_NAVIGATIONS = 25;
+/** Navigation requests one action may cause (its redirects, reloads and script navigations) before it is refused. */
+export const MAX_REQUESTS_PER_ACTION = 10;
 export const API = Object.freeze(['goto', 'click', 'wait', 'snapshot', 'status', 'end']);
 
 export const FORBIDDEN = {
@@ -161,6 +164,13 @@ export async function createDriver(opts) {
   const productPaths = new Set(recipe.productUrls.map((u) => normPath(new URL(u))));
   const session = {
     navigations: 0,
+    // Every main-frame navigation request (redirect hops by script, reloads); reported, not the limit.
+    navigationRequests: 0,
+    actionSeq: 0,
+    countedSeq: 0,
+    requestsThisAction: 0,
+    // Each goto to the entry origin: where it landed and its server redirect chain (protocol .5 home view).
+    homeLandings: [],
     lastActionAt: 0,
     action: null,
     allowSubmitUntil: 0,
@@ -313,8 +323,17 @@ export async function createDriver(opts) {
     if (session.stopped || session.ended) return refuse('refused-after-stop', 'session over');
     if (session.offsite)
       return refuse('refused-third-party-page', 'only the first third-party checkout page loads');
-    if (session.navigations >= MAX_NAVIGATIONS)
+    // One top-level navigation per action (protocol .5): a goto or click and every navigation the page makes
+    // before the next action (server and script redirects, reloads) count once.
+    const newAction = session.countedSeq !== session.actionSeq;
+    if (newAction && session.navigations >= MAX_NAVIGATIONS)
       return refuse('refused-navigation-limit', `${MAX_NAVIGATIONS} navigations`);
+    if (!newAction && session.requestsThisAction >= MAX_REQUESTS_PER_ACTION)
+      return refuse(
+        'refused-navigation-loop',
+        `${MAX_REQUESTS_PER_ACTION} navigation requests in one action`,
+        'tool-error',
+      );
     if (session.noNavigation) return refuse('refused-submit', 'a non-add-to-cart submit control navigated');
     const formSubmit = req.method() !== 'GET' || (await formReason(req.url()));
     if (formSubmit && Date.now() > session.allowSubmitUntil)
@@ -331,7 +350,13 @@ export async function createDriver(opts) {
         return refuse(`robots-host-${posture.stopCode}`, url.host, posture.stopCode, true);
       if (robotsAllows(url) === false) event('robots-disallowed-path', url.host);
     }
-    session.navigations += 1;
+    if (newAction) {
+      session.navigations += 1;
+      session.countedSeq = session.actionSeq;
+      session.requestsThisAction = 0;
+    }
+    session.requestsThisAction += 1;
+    session.navigationRequests += 1;
     return route.continue();
   });
   page.on('response', async (res) => {
@@ -490,15 +515,36 @@ export async function createDriver(opts) {
     await pace();
     const v0 = session.violations.length;
     session.action = 'goto';
+    session.actionSeq += 1;
     session.doc = null;
     let failed = null;
-    await page.goto(u.href, { waitUntil: 'domcontentloaded', timeout: 45_000 }).catch((e) => (failed = e));
+    const response = await page
+      .goto(u.href, { waitUntil: 'domcontentloaded', timeout: 45_000 })
+      .catch((e) => (failed = e) && null);
     if (failed && session.violations.length === v0) {
       session.lastActionAt = Date.now();
       session.action = null;
       throw new RefusalError('navigation-failed', String(failed.message).split('\n')[0], 'tool-error');
     }
     await afterAction(v0);
+    if (visitKey(u.href) === visitKey(recipe.origin)) {
+      // Server redirects from the response; script redirects show in where the page finally landed.
+      const chain = [];
+      for (let r = response?.request() ?? null; r; r = r.redirectedFrom()) chain.unshift(r.url());
+      const landed = page.url();
+      session.homeLandings.push({
+        requested: u.href,
+        chain,
+        landed,
+        sameSite: (() => {
+          try {
+            return sameSite(new URL(landed).hostname, domain);
+          } catch {
+            return false;
+          }
+        })(),
+      });
+    }
     record({ do: 'goto', url: u.href });
     return status();
   }
@@ -549,6 +595,7 @@ export async function createDriver(opts) {
       );
     const v0 = session.violations.length;
     session.action = 'click';
+    session.actionSeq += 1;
     session.doc = null;
     if (purpose === 'add-to-cart') session.allowSubmitUntil = Date.now() + 15_000;
     if (purpose === 'add-to-cart' || purpose === 'quantity-increment')
@@ -608,11 +655,8 @@ export async function createDriver(opts) {
       );
     if (session.snapshots.some((s) => s.state === state))
       throw new RefusalError('refused-duplicate-state', `${state} already captured`, 'tool-error');
-    if (session.offsite && state !== 'checkout-1')
-      throw new RefusalError(
-        'refused-third-party-page',
-        'only checkout-1 may be captured on a third-party host',
-      );
+    if (session.offsite)
+      throw new RefusalError('refused-third-party-page', 'nothing is captured on another site');
     // Never snapshot a challenge, wall or block page: the stop check runs first.
     await checkStop();
     const url = new URL(page.url());
@@ -699,8 +743,11 @@ export async function createDriver(opts) {
       // The reviewer checks the listing and the item against the snapshots: the home page and the listing as seen.
       const viewed = (u) =>
         session.snapshots.some((x) => /^view-\d{2}$/.test(x.state) && visitKey(x.url) === visitKey(u));
+      // The home page is the origin itself, or the same-site page a goto to the origin landed on (protocol .5).
+      const homeViewed =
+        viewed(recipe.origin) || session.homeLandings.some((h) => h.sameSite && viewed(h.landed));
       const missing = [
-        ...(viewed(recipe.origin) ? [] : ['home page']),
+        ...(homeViewed ? [] : ['home page']),
         ...(viewed(found.listingUrl) ? [] : ['listingUrl']),
       ];
       if (missing.length)

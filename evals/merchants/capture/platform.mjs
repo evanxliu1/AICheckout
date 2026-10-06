@@ -1,9 +1,8 @@
 // Platform group detection (docs/evals/generic-reader-protocol.md#platform-detection). Runs over the captured HTML
 // and main-document headers of a fixed set of a site's states (platformStates: `empty-cart` and the first captured
-// cart state), and the checkout-1 host. Operator `view-NN` pages, `terms`, later states and reconnaissance pages are
-// never read. The first group that matches wins, and
-// the matched marker is recorded. Next.js and similar frameworks are not platforms. A `/checkouts/` path counts only
-// on a Shopify-marked host, so it never decides on its own: the host's HTML markers already match `shopify`.
+// cart state). Operator `view-NN` pages, `terms`, later states and reconnaissance pages are never read. Since
+// protocol .5 no checkout page is entered, so the checkout-host marker is gone. The first group that matches wins, and
+// the matched marker is recorded. Next.js and similar frameworks are not platforms.
 
 const GROUPS = [
   {
@@ -63,14 +62,9 @@ export function platformStates(snapshots) {
 const sap = (html) => /\/_ui\//.test(html) && (/\bACC\./.test(html) || /hybris/i.test(html));
 
 /**
- * pages: [{ html: string, headers: { [name]: value } }], checkoutUrl: string|null (the checkout-1 URL, if any).
- * Returns { group, marker }.
+ * pages: [{ html: string, headers: { [name]: value } }]. Returns { group, marker }.
  */
-export function detectPlatform(pages, checkoutUrl = null) {
-  if (checkoutUrl) {
-    const u = new URL(checkoutUrl);
-    if (u.hostname === 'checkout.shopify.com') return { group: 'shopify', marker: 'checkout.shopify.com' };
-  }
+export function detectPlatform(pages) {
   for (const { group, html = [], header = [] } of GROUPS) {
     for (const page of pages) {
       if (group === 'sap-commerce') {

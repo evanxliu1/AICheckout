@@ -2,7 +2,7 @@
  "schema": "reader-sites.pilot.1",
  "protocol": "generic-reader-protocol.3",
  "candidatesSha256": "fd01a31f0b1daaed3846f156b4aaeeea722c9889a2cc1103107a380938b28ce7",
- "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history. Pilot 2 (2026-10-06 06:37-06:47 UTC, capture-tool.2, operator claude-code/claude-opus-5-5): each site's protocol4 object holds the .4 reconnaissance and capture results; .3 pilot recipes and records moved to capture/recipes/pilot-protocol-3/ and capture/records/pilot-protocol-3/.",
+ "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history. Pilot 2 (2026-10-06 06:37-06:47 UTC, capture-tool.2, operator claude-code/claude-opus-5-5): each site's protocol4 object holds the .4 reconnaissance and capture results; .3 pilot recipes and records moved to capture/recipes/pilot-protocol-3/ and capture/records/pilot-protocol-3/. Under generic-reader-protocol.5 (Amendment 4, 2026-10-06) each site's statusUnderProtocol5 applies.",
  "operator": "claude-code/claude-opus-5-5",
  "sites": [
   {
@@ -95,6 +95,11 @@
     },
     "capture": null,
     "note": "entry URL https://www.hollisterco.com/ redirects to /shop/us; the tool accepts findings only with a view-NN snapshot whose URL equals the origin exactly, so no findings could ever be accepted; recon ended tool-error after the home view (1 navigation). A second reconnaissance session is allowed on a later UTC day after a tool fix (protocol: tool-error)"
+   },
+   "statusUnderProtocol5": {
+    "status": "revisit",
+    "code": "tool-error",
+    "note": "recon tool defect (home view on a same-site redirect); re-visited under .5 as the one later session after tool-error, on a later UTC day (Amendment 4, 5)"
    }
   },
   {
@@ -164,6 +169,11 @@
     "status": "excluded-stands",
     "code": "captcha",
     "note": "a block is page-driven; no second session after a block (Amendment 3 D)"
+   },
+   "statusUnderProtocol5": {
+    "status": "excluded-stands",
+    "code": "captcha",
+    "note": "first-pilot block stands"
    }
   },
   {
@@ -382,6 +392,11 @@
      "cart path /my-bag is disallowed by robots.txt (Disallow: /my-bag*); recorded, not excluding under .4",
      "terms: the footer Terms of Use is a button with no on-site URL; no terms page loaded"
     ]
+   },
+   "statusUnderProtocol5": {
+    "status": "captured-stands",
+    "code": null,
+    "note": "complied with .4; checkout-1 not reached, which .5 removes from the robot states (Amendment 4, 5)"
    }
   },
   {
@@ -470,6 +485,11 @@
     },
     "capture": null,
     "note": "entry URL https://www.extra.com/ redirects to /ar-sa (8 top-level navigation requests counted for the one goto); same view-URL defect as hollisterco.com; recon ended tool-error after the home view"
+   },
+   "statusUnderProtocol5": {
+    "status": "revisit",
+    "code": "tool-error",
+    "note": "recon tool defect (home view on a same-site redirect; 8 navigations counted for one goto); re-visited under .5 as the one later session after tool-error, on a later UTC day (Amendment 4, 5)"
    }
   },
   {
@@ -561,6 +581,11 @@
     "listingUrl": "https://www.conforama.es/sofas-sillones-puffs",
     "listingViewFullPngSha256": "b084d284ce9f83aeb8d0fc6e4c8444bab83d3948177487fbb9fb470d464f1040",
     "note": "first home navigation link /sofas-sillones-puffs is a listing (30 priced tiles shown, 7066 products); the lowest current tile price is 198,90 EUR, above the EUR band 9-185, so no tile qualifies. Cookies declined (Rechazar todas). Review flag: the protocol does not say whether to move to the next candidate link when the listing has no in-band tile; the operator read the rule as fixing the listing, so the site is excluded"
+   },
+   "statusUnderProtocol5": {
+    "status": "revisit",
+    "code": null,
+    "note": "no-eligible-item came from the old single-listing rule; re-visited under the .5 listing rule; pilot-2 session set aside (Amendment 4, 5)"
    }
   },
   {
@@ -608,6 +633,11 @@
     },
     "capture": null,
     "note": "home page loaded (view-01); the second navigation, to the first home navigation candidate /sale/current-offers/cat1780006/, landed on a PerimeterX press-and-hold challenge; the tool stopped before any snapshot; nothing was clicked on the challenge. A decline-cookies click had been refused by the tool (target-not-unique: 0 matches) and did nothing. A block allows no second session"
+   },
+   "statusUnderProtocol5": {
+    "status": "excluded-stands",
+    "code": "captcha",
+    "note": "page-driven block in reconnaissance; no second session (Amendment 4, 5)"
    }
   }
  ],
