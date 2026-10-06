@@ -1,0 +1,80 @@
+{
+  "schema": "capture-recipe.3",
+  "domain": "jpc.de",
+  "origin": "https://www.jpc.de/",
+  "listingUrl": "https://www.jpc.de/jpcng/poprock/home",
+  "productUrls": [
+    "https://www.jpc.de/jpcng/poprock/detail/-/art/stoppok-hoppla-hoppla/hnum/12892056",
+    "https://www.jpc.de/jpcng/poprock/detail/-/art/greta-van-fleet-palace-for-the-people/hnum/12848669"
+  ],
+  "cartPath": "/checkout/cart",
+  "checkoutPaths": [],
+  "termsUrl": "https://www.jpc.de/jpcng/home/static/-/page/rechtliches.html",
+  "allowlist": [
+    {
+      "purpose": "add-to-cart",
+      "target": {
+        "selector": "button.to-cart:not([aria-label])"
+      }
+    },
+    {
+      "purpose": "decline-cookies",
+      "target": {
+        "role": "button",
+        "name": "Nur notwendige Cookies",
+        "exact": true
+      }
+    }
+  ],
+  "steps": [
+    {
+      "do": "goto",
+      "url": "https://www.jpc.de/checkout/cart"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "click",
+      "target": {
+        "role": "button",
+        "name": "Nur notwendige Cookies",
+        "exact": true
+      },
+      "purpose": "decline-cookies"
+    },
+    {
+      "do": "wait",
+      "ms": 3000
+    },
+    {
+      "do": "snapshot",
+      "state": "empty-cart"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.jpc.de/jpcng/poprock/detail/-/art/stoppok-hoppla-hoppla/hnum/12892056"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "wait",
+      "ms": 3000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-01"
+    },
+    {
+      "do": "end",
+      "exclusion": "tool-error"
+    }
+  ],
+  "recon": {
+    "sessionId": "20261006T081512Z"
+  },
+  "cartHost": "www.jpc.de"
+}

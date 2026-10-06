@@ -1,0 +1,100 @@
+{
+  "schema": "capture-recon-record.3",
+  "domain": "deghi.it",
+  "entryUrl": "https://www.deghi.it/",
+  "currency": "EUR",
+  "priceBand": [
+    9,
+    185
+  ],
+  "tool": {
+    "version": "capture-tool.5",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "session": {
+    "id": "20261006T081917Z",
+    "number": 1,
+    "startedAt": "2026-10-06T08:19:17.180Z",
+    "endedAt": "2026-10-06T08:22:16.407Z",
+    "topLevelNavigations": 4,
+    "navigationRequests": 4
+  },
+  "robots": {
+    "url": "https://www.deghi.it/robots.txt",
+    "httpStatus": 200,
+    "sha256": "43fc47c7d2b60119bc1c4a1d915b98c9fac160e102e02684d70421875ae3b7b5",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "disallow",
+            "path": "/verifica-il-tuo-account"
+          },
+          {
+            "type": "disallow",
+            "path": "/unsubscribe"
+          },
+          {
+            "type": "disallow",
+            "path": "/success-payment"
+          },
+          {
+            "type": "disallow",
+            "path": "/email-confirmation"
+          },
+          {
+            "type": "disallow",
+            "path": "/aspetta"
+          },
+          {
+            "type": "disallow",
+            "path": "/preview"
+          },
+          {
+            "type": "disallow",
+            "path": "/nonexistent-product"
+          }
+        ]
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "views": 4,
+  "homeLandings": [
+    {
+      "requested": "https://www.deghi.it/",
+      "chain": [
+        "https://www.deghi.it/"
+      ],
+      "landed": "https://www.deghi.it/",
+      "sameSite": true
+    }
+  ],
+  "navigation": [
+    "https://www.deghi.it/",
+    "https://www.deghi.it/bagno",
+    "https://www.deghi.it/:token",
+    "https://www.deghi.it/:token"
+  ],
+  "stockMismatch": [],
+  "events": [],
+  "backgroundWrites": {
+    "count": 28,
+    "sample": [
+      "POST www.deghi.it/graphql"
+    ]
+  },
+  "stop": null,
+  "outcome": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "evidenceSha256": null,
+    "draftRecipeSha256": null
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "schema": "capture-site-record.4",
+  "domain": "jpc.de",
+  "recipeSha256": "1e1610b22505bad09016a90c1176a3a4e0adec205855788f45013c7ac77ec861",
+  "tool": {
+    "version": "capture-tool.5",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "recon": {
+    "sessionId": "20261006T081512Z"
+  },
+  "session": {
+    "id": "20261006T081722Z",
+    "number": 1,
+    "startedAt": "2026-10-06T08:17:22.150Z",
+    "endedAt": "2026-10-06T08:18:18.900Z",
+    "topLevelNavigations": 2,
+    "navigationRequests": 2
+  },
+  "robots": {
+    "url": "https://www.jpc.de/robots.txt",
+    "httpStatus": 200,
+    "sha256": "1e6e627f1f61d37e4c29ebf1878b3c3be1b2110dcb47fe76b2259f048c0eb18c",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "disallow",
+            "path": "/cgi-bin/"
+          },
+          {
+            "type": "disallow",
+            "path": "/moodimage.php"
+          },
+          {
+            "type": "disallow",
+            "path": "/jpcng/*/cart/"
+          },
+          {
+            "type": "disallow",
+            "path": "/checkout/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/jpcng/*/myshop/"
+          },
+          {
+            "type": "disallow",
+            "path": "/myaccount/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/myjpc/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/jpcng/*/notepad/"
+          },
+          {
+            "type": "disallow",
+            "path": "/jpcng/*/recommend/"
+          },
+          {
+            "type": "disallow",
+            "path": "/jpcng/*/xml/"
+          },
+          {
+            "type": "disallow",
+            "path": "/jpcng/home/artist/"
+          },
+          {
+            "type": "disallow",
+            "path": "/jpcng/books/detail/-/isbn/"
+          },
+          {
+            "type": "disallow",
+            "path": "*/kube/loginform/"
+          },
+          {
+            "type": "disallow",
+            "path": "/mp3/"
+          },
+          {
+            "type": "disallow",
+            "path": "/jpcng/jpcws"
+          },
+          {
+            "type": "disallow",
+            "path": "/jpcng/part/"
+          },
+          {
+            "type": "disallow",
+            "path": "*/trackdetailpage/"
+          },
+          {
+            "type": "disallow",
+            "path": "/jpcng/SESSIONID/"
+          },
+          {
+            "type": "disallow",
+            "path": "/jpcng/*/ecwidget/"
+          },
+          {
+            "type": "disallow",
+            "path": "*/-/lang/*"
+          },
+          {
+            "type": "disallow",
+            "path": "*/hnum/jpcng/home/static/-/page/rechtliches.html"
+          }
+        ]
+      }
+    ],
+    "checkedPaths": [
+      {
+        "path": "/checkout/cart",
+        "host": "www.jpc.de",
+        "allowed": false
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "terms": {
+    "url": "https://www.jpc.de/jpcng/home/static/-/page/rechtliches.html",
+    "copySha256": null,
+    "prohibitsAutomated": "unknown"
+  },
+  "states": [
+    {
+      "state": "empty-cart",
+      "url": "https://www.jpc.de/checkout/cart",
+      "manifestSha256": "13609315ccbbaac03e49c8467edf5c373737f34baac75a74d7dab83c56f7aa73",
+      "domSha256": "fa0744034b587c573f9ebddd0a1a3f91790883c7d8bd2c3909dd742cebd947f0",
+      "viewportSha256": "fe02fa24077b0db2132b025dcc07386f86d65aef813f2ac67163e7a1b5840cf4",
+      "robotsAllowed": false
+    },
+    {
+      "state": "view-01",
+      "url": "https://www.jpc.de/jpcng/poprock/detail/-/art/stoppok-hoppla-hoppla/hnum/12892056",
+      "manifestSha256": "bfb325f5ef73fea5daf4b31b7f40300d5f1f494d3c2cbc642dcf5183783055f2",
+      "domSha256": "f869fdb955ea4cf6a0d15f44edbe24b61fad2686bccbba924432b18fcc8ccab9",
+      "viewportSha256": "b8340ae27966c3c50635c2f3cb89ccda4df5d07be240b1942394354737fbe805",
+      "robotsAllowed": true
+    }
+  ],
+  "notReached": [],
+  "platform": {
+    "group": "none-detected",
+    "marker": null
+  },
+  "events": [
+    {
+      "kind": "robots-disallowed-path",
+      "detail": "www.jpc.de"
+    },
+    {
+      "kind": "request-aborted",
+      "detail": "POST www.jpc.de/checkout/cart/recalculate"
+    },
+    {
+      "kind": "request-aborted",
+      "detail": "POST www.jpc.de/cookieconsent/save"
+    }
+  ],
+  "backgroundWrites": {
+    "count": 6,
+    "sample": [
+      "POST use.jpc.de/js/",
+      "POST www.jpc.de/ljc/jpcng/poprock/detail/-/art/stoppok-hoppla-hoppla/hnum/12892056",
+      "POST www.jpc.de/session/cart",
+      "PUT www.jpc.de/session/detail/click/12892056"
+    ]
+  },
+  "stop": null,
+  "outcome": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "evidenceSha256": "b8340ae27966c3c50635c2f3cb89ccda4df5d07be240b1942394354737fbe805"
+  }
+}

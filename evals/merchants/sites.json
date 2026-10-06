@@ -2,7 +2,7 @@
  "schema": "reader-sites.pilot.1",
  "protocol": "generic-reader-protocol.3",
  "candidatesSha256": "fd01a31f0b1daaed3846f156b4aaeeea722c9889a2cc1103107a380938b28ce7",
- "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history. Pilot 2 (2026-10-06 06:37-06:47 UTC, capture-tool.2, operator claude-code/claude-opus-5-5): each site's protocol4 object holds the .4 reconnaissance and capture results; .3 pilot recipes and records moved to capture/recipes/pilot-protocol-3/ and capture/records/pilot-protocol-3/. Under generic-reader-protocol.5 (Amendment 4, 2026-10-06) each site's statusUnderProtocol5 applies. The top-level `protocol` field names the protocol of the first pilot (when this file was created); per-site `protocol4` holds pilot 2 under .4, and `protocolCurrent` is the latest amendment, which governs new visits (.5 signed at 60c04f3 on 2026-10-06). Batch 1 under .5 (2026-10-06 07:13-07:38 UTC, capture-tool.3, branch phase12-captures-3): each visited site carries a protocol5 object (reconnaissance and capture results, review flags) and its statusUnderProtocol5; sites first visited under .5 have only those fields beside their candidate attributes. Under generic-reader-protocol.6 (Amendment 5) sites with a statusUnderProtocol6 take it; other batch-1 outcomes stand.",
+ "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history. Pilot 2 (2026-10-06 06:37-06:47 UTC, capture-tool.2, operator claude-code/claude-opus-5-5): each site's protocol4 object holds the .4 reconnaissance and capture results; .3 pilot recipes and records moved to capture/recipes/pilot-protocol-3/ and capture/records/pilot-protocol-3/. Under generic-reader-protocol.5 (Amendment 4, 2026-10-06) each site's statusUnderProtocol5 applies. The top-level `protocol` field names the protocol of the first pilot (when this file was created); per-site `protocol4` holds pilot 2 under .4, and `protocolCurrent` is the latest amendment, which governs new visits (.5 signed at 60c04f3 on 2026-10-06). Batch 1 under .5 (2026-10-06 07:13-07:38 UTC, capture-tool.3, branch phase12-captures-3): each visited site carries a protocol5 object (reconnaissance and capture results, review flags) and its statusUnderProtocol5; sites first visited under .5 have only those fields beside their candidate attributes. Under generic-reader-protocol.6 (Amendment 5) sites with a statusUnderProtocol6 take it; other batch-1 outcomes stand. Batch 2 under .7 (2026-10-06 07:57-08:22 UTC, capture-tool.5, branch phase12-captures-4): each visited site carries a protocol7 object (reconnaissance and capture summaries, backgroundWrites, review flags) and statusUnderProtocol7; status needs-decision (webstaurantstore.com) and incomplete (jpc.de, deghi.it tool-error) are not final outcomes.",
  "operator": "claude-code/claude-opus-5-5",
  "sites": [
   {
@@ -2504,6 +2504,318 @@
     "status": "excluded",
     "code": "no-eligible-item",
     "note": "excluded in reconnaissance: no home candidate gave a qualifying item (the only listing, the offers page, has no tile in USD 10-200)"
+   }
+  },
+  {
+   "domain": "jpc.de",
+   "stream": "non-us",
+   "visit": 12,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "DE",
+   "frameRegion": "DE",
+   "frameCurrency": "EUR",
+   "protocol7": {
+    "recon": {
+     "sessionId": "20261006T081512Z",
+     "startedAt": "2026-10-06T08:15:12.686Z",
+     "endedAt": "2026-10-06T08:17:01.546Z",
+     "topLevelNavigations": 5,
+     "navigationRequests": 5,
+     "views": 5,
+     "outcome": {
+      "status": "done",
+      "code": null,
+      "evidenceSha256": null,
+      "draftRecipeSha256": "9642f299350096e40e892941d03790713b3129135d5a22d137cfe3ebb2ce7533"
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "1e6e627f1f61d37e4c29ebf1878b3c3be1b2110dcb47fe76b2259f048c0eb18c",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "robotsHosts": [],
+     "stockMismatch": [
+      "https://www.jpc.de/jpcng/poprock/detail/-/art/stoppok-hoppla-hoppla/hnum/12892056",
+      "https://www.jpc.de/jpcng/poprock/detail/-/art/greta-van-fleet-palace-for-the-people/hnum/12848669"
+     ],
+     "homeLandings": [
+      {
+       "requested": "https://www.jpc.de/",
+       "chain": [
+        "https://www.jpc.de/"
+       ],
+       "landed": "https://www.jpc.de/",
+       "sameSite": true
+      }
+     ],
+     "backgroundWrites": {
+      "count": 21,
+      "sample": [
+       "POST www.jpc.de/ljc/",
+       "POST use.jpc.de/js/",
+       "POST www.jpc.de/session/cart",
+       "POST www.jpc.de/ljc/jpcng/poprock/home",
+       "POST www.jpc.de/ljc/jpcng/poprock/detail/-/art/stoppok-hoppla-hoppla/hnum/12892056",
+       "PUT www.jpc.de/session/detail/click/12892056",
+       "POST www.jpc.de/ljc/jpcng/poprock/detail/-/art/greta-van-fleet-palace-for-the-people/hnum/12848669",
+       "PUT www.jpc.de/session/detail/click/12848669"
+      ]
+     },
+     "events": [
+      {
+       "kind": "request-aborted",
+       "detail": "POST www.jpc.de/checkout/cart/recalculate"
+      },
+      {
+       "kind": "robots-disallowed-path",
+       "detail": "www.jpc.de"
+      }
+     ],
+     "record": "capture/records/jpc.de.recon.json"
+    },
+    "capture": {
+     "sessionId": "20261006T081722Z",
+     "startedAt": "2026-10-06T08:17:22.150Z",
+     "endedAt": "2026-10-06T08:18:18.900Z",
+     "topLevelNavigations": 2,
+     "navigationRequests": 2,
+     "record": "capture/records/jpc.de.json",
+     "recipe": "capture/recipes/jpc.de.json",
+     "stop": null,
+     "events": [
+      {
+       "kind": "robots-disallowed-path",
+       "detail": "www.jpc.de"
+      },
+      {
+       "kind": "request-aborted",
+       "detail": "POST www.jpc.de/checkout/cart/recalculate"
+      },
+      {
+       "kind": "request-aborted",
+       "detail": "POST www.jpc.de/cookieconsent/save"
+      }
+     ],
+     "backgroundWrites": {
+      "count": 6,
+      "sample": [
+       "POST use.jpc.de/js/",
+       "POST www.jpc.de/ljc/jpcng/poprock/detail/-/art/stoppok-hoppla-hoppla/hnum/12892056",
+       "POST www.jpc.de/session/cart",
+       "PUT www.jpc.de/session/detail/click/12892056"
+      ]
+     }
+    },
+    "listingUrl": "https://www.jpc.de/jpcng/poprock/home",
+    "productUrls": [
+     "https://www.jpc.de/jpcng/poprock/detail/-/art/stoppok-hoppla-hoppla/hnum/12892056",
+     "https://www.jpc.de/jpcng/poprock/detail/-/art/greta-van-fleet-palace-for-the-people/hnum/12848669"
+    ],
+    "cartPath": "/checkout/cart",
+    "cartHost": "www.jpc.de",
+    "checkoutPaths": [],
+    "platform": {
+     "group": "none-detected",
+     "marker": null
+    },
+    "robots": {
+     "sha256": "1e6e627f1f61d37e4c29ebf1878b3c3be1b2110dcb47fe76b2259f048c0eb18c",
+     "httpStatus": 200,
+     "decision": "allowed",
+     "checkedPaths": [
+      {
+       "path": "/checkout/cart",
+       "host": "www.jpc.de",
+       "allowed": false
+      }
+     ]
+    },
+    "terms": {
+     "url": "https://www.jpc.de/jpcng/home/static/-/page/rechtliches.html",
+     "copySha256": null,
+     "prohibitsAutomated": "unknown"
+    },
+    "states": [
+     {
+      "state": "empty-cart",
+      "manifestSha256": "13609315ccbbaac03e49c8467edf5c373737f34baac75a74d7dab83c56f7aa73",
+      "robotsAllowed": false
+     },
+     {
+      "state": "view-01",
+      "manifestSha256": "bfb325f5ef73fea5daf4b31b7f40300d5f1f494d3c2cbc642dcf5183783055f2",
+      "robotsAllowed": true
+     }
+    ],
+    "notReached": [],
+    "evidenceSha256": "b8340ae27966c3c50635c2f3cb89ccda4df5d07be240b1942394354737fbe805",
+    "observedRegion": "DE",
+    "observedCurrency": "EUR",
+    "observedCurrencyBasis": "EUR prices and priceCurrency EUR microdata on the product page",
+    "status": "incomplete",
+    "code": "tool-error",
+    "reviewFlags": [
+     "reconnaissance: home candidates in the first navigation landmark after the self links and the personal feed (account) link; candidate 1 /jpcng/poprock/home is a listing (priced product tiles); in document order the first tiles (hero carousel, news ticker) carry no price; the first priced tile is Stoppok Hoppla Hoppla CD EUR 17.99 (signed limited edition, not personalised); its tile also shows an Also available link (EUR 26.99) read as part of the same tile; item 2 is the next tile, Greta Van Fleet Palace For The People CD EUR 18.99",
+     "stockMismatch: both items show JSON-LD availability PreOrder (release 2026-10-09) with an enabled In den Warenkorb control, so both count as in stock under .5 point 4 (PreOrder read like backorder; the reviewer should check this reading)",
+     "cart path /checkout/cart is the header Warenkorb link (Magento-style /checkout/cart, allowed by the checkout backstop)",
+     "capture: empty-cart taken after a decline-cookies click (Nur notwendige Cookies); the cookie banner reappeared on the product page, probably because the consent write fell in the 3 s write block after a non-add click (not verified)",
+     "capture: the add-to-cart button (button.to-cart:not([aria-label]), visible, enabled, inside a form without text fields) was refused twice by the tool with inspection-failed before any click; nothing was added; hypothesis (unverified): DOM.getNodeForLocation at the button centre returns a node, perhaps the Font Awesome icon pseudo-element, that DOM.resolveNode cannot resolve; view-01 shows the page as it was",
+     "terms page not loaded (session ended before it)"
+    ]
+   },
+   "statusUnderProtocol7": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "note": "capture ended tool-error (Amendment 6 L1): the allowlisted add-to-cart click was refused twice with inspection-failed (the tool could not inspect the click point), so no cart state could be reached; one later capture session on a later UTC day is allowed"
+   }
+  },
+  {
+   "domain": "homedepot.com",
+   "stream": "us",
+   "visit": 15,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "protocol7": {
+    "recon": {
+     "sessionId": "20261006T081848Z",
+     "startedAt": "2026-10-06T08:18:48.747Z",
+     "endedAt": "2026-10-06T08:19:06.604Z",
+     "topLevelNavigations": 2,
+     "navigationRequests": 2,
+     "views": 1,
+     "outcome": {
+      "status": "excluded",
+      "code": "blocked-http-403",
+      "evidenceSha256": "5f9957ce32f48de789d4b923be0751416d985338df11c33af379aff11da0d115",
+      "draftRecipeSha256": null
+     },
+     "stop": {
+      "code": "blocked-http-403",
+      "detail": "http-403",
+      "evidenceSha256": "5f9957ce32f48de789d4b923be0751416d985338df11c33af379aff11da0d115"
+     },
+     "robots": {
+      "sha256": "395b103de9406961b0e18f618d92a03303d175fcb681d3c3f40e917248e7d444",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "robotsHosts": [],
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.homedepot.com/",
+       "chain": [
+        "https://www.homedepot.com/"
+       ],
+       "landed": "https://www.homedepot.com/",
+       "sameSite": true
+      }
+     ],
+     "backgroundWrites": {
+      "count": 21,
+      "sample": [
+       "POST swasc.homedepot.com/ee/or2/v1/identity/acquire",
+       "POST swasc.homedepot.com/ee/or2/v1/interact",
+       "POST www.homedepot.com/_wduVO/Q78Dz/Timap/_aIB/:token/KyMEeFx7bw/dVYqGCdB/dhI",
+       "POST www.homedepot.com/federation-gateway/graphql",
+       "POST clickstream-producer-api.hd-personalization-prod.gcp.homedepot.com/clickstream-producer/v1/publish",
+       "POST swasc.homedepot.com/ee/or2/v1/collect",
+       "POST www.homedepot.com/_wduVO/Q78Dz/Timap/_aIB/htL7pSiciQJY/LUoIeFx7bw/OjJ3YAB8/LU4R",
+       "POST mr.homedepot.com/v1/p",
+       "POST mr.homedepot.com/v1/t"
+      ]
+     },
+     "events": [
+      {
+       "kind": "stop",
+       "detail": "blocked-http-403"
+      }
+     ],
+     "record": "capture/records/homedepot.com.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": "5f9957ce32f48de789d4b923be0751416d985338df11c33af379aff11da0d115",
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "reviewFlags": [
+     "Phase 10 probe site (development only if captured); home loaded (view-01); candidate 1 /b/Outdoors/N-5yc1vZbx82 answered HTTP 403; the tool stopped the site before any snapshot"
+    ]
+   },
+   "statusUnderProtocol7": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "note": "blocked in reconnaissance: HTTP 403 on the second navigation (home candidate 1)"
+   }
+  },
+  {
+   "domain": "deghi.it",
+   "stream": "non-us",
+   "visit": 13,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "IT",
+   "frameRegion": "IT",
+   "frameCurrency": "EUR",
+   "protocol7": {
+    "recon": {
+     "sessionId": "20261006T081917Z",
+     "startedAt": "2026-10-06T08:19:17.180Z",
+     "endedAt": "2026-10-06T08:22:16.407Z",
+     "topLevelNavigations": 4,
+     "navigationRequests": 4,
+     "views": 4,
+     "outcome": {
+      "status": "incomplete",
+      "code": "tool-error",
+      "evidenceSha256": null,
+      "draftRecipeSha256": null
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "43fc47c7d2b60119bc1c4a1d915b98c9fac160e102e02684d70421875ae3b7b5",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "robotsHosts": [],
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.deghi.it/",
+       "chain": [
+        "https://www.deghi.it/"
+       ],
+       "landed": "https://www.deghi.it/",
+       "sameSite": true
+      }
+     ],
+     "backgroundWrites": {
+      "count": 28,
+      "sample": [
+       "POST www.deghi.it/graphql"
+      ]
+     },
+     "events": [],
+     "record": "capture/records/deghi.it.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": null,
+    "status": "incomplete",
+    "code": "tool-error",
+    "reviewFlags": [
+     "candidate 1 /bagno (first navigation landmark) is a listing; first tile EUR 295.00 (out of band), item 1 would be the next tile Piatto doccia Rok EUR 101.00 (InStock, enabled AGGIUNGI AL CARRELLO, quantity stepper), item 2 Canalina doccia Stiletto EUR 57.00 (InStock); not committed as findings because the session ended without them",
+     "the header cart control is a javascript toggle for a cart drawer (a.cart-toggle); the drawer's view-cart link is the cart path by rule, and opening the drawer was refused by the tool (inspection-failed), so no cart path was loaded",
+     "offline diagnosis on saved snapshots and a synthetic page (no site loaded): DOM.getNodeForLocation resolves the click point in document coordinates while the tool passes viewport coordinates from boundingBox, so any click on a page scrolled away from the top fails (or could inspect a different element); see the batch-2 report"
+    ]
+   },
+   "statusUnderProtocol7": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "note": "reconnaissance ended tool-error (Amendment 6 L1): the header cart control opens a drawer, and the plain click to open it was refused with inspection-failed (same tool defect as jpc.de), so the cart path could not be found; one later reconnaissance session on a later UTC day is allowed"
    }
   }
  ],
