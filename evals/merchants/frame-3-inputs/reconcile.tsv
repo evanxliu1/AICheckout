@@ -1,0 +1,97 @@
+# retail-frame.3 builder reconciliation of classified-hosts.tsv (claude-code/claude-opus-5-5, 2026-10-05), applied by
+# tools/build-retail-frame-3.py in this order: (1) host rows replace a host's code/region/currency; (2) family rows rename a
+# family slug; (3) domain rows set a registrable domain's code/region/currency/family (its storefront for a visitor in the
+# United States); the domain then keeps only the hosts whose code and region match, or all its hosts if none match.
+# Reasons: one classification per site (registrable domain); consistent slugs so one retailer is one family; rules unified
+# across batches (single-brand direct-to-consumer stores are eligible, cross-border-marketplace is for marketplaces;
+# classifieds, vehicle sellers and live-animal sellers are not-a-store; stores selling mostly age-restricted or regulated goods (firearms and
+# ammunition, tobacco and vape, cannabis, alcohol) are sensitive-goods).
+host	m-fr.cupshe.com	eligible	FR	EUR
+host	thehalara.co.uk	eligible	GB	GBP
+host	thehalara.de	eligible	DE	EUR
+host	thehalara.fr	eligible	FR	EUR
+host	m.joybuy.nl	eligible	NL	EUR
+host	allegrolokalnie.pl	not-a-store	PL	PLN
+host	es.wallapop.com	not-a-store	ES	EUR
+host	www.budsgunshop.com	sensitive-goods		
+host	www.cigarbid.com	sensitive-goods		
+host	www.cigarpage.com	sensitive-goods		
+host	www.cigarsinternational.com	sensitive-goods		
+host	grabagun.com	sensitive-goods		
+host	www.gunbroker.com	sensitive-goods		
+host	www.guns.com	sensitive-goods		
+host	smokekind.com	sensitive-goods		
+host	www.totalwine.com	sensitive-goods		
+host	www.vapeclub.co.uk	sensitive-goods		
+host	www.netgun.pl	sensitive-goods		
+host	cannacabana.com	sensitive-goods		
+host	www.sqdc.ca	sensitive-goods		
+host	www.liquorland.com.au	sensitive-goods		
+host	salewine.co.za	sensitive-goods		
+host	www.systembolaget.se	sensitive-goods		
+host	www.midwayusa.com	sensitive-goods		
+host	palmettostatearmory.com	sensitive-goods		
+host	www.tesla.com	not-a-store		
+host	www.min-breeder.com	not-a-store		
+family	1688	alibaba
+family	aldi-sued	aldi-sud
+family	bath-and-body-works	bathandbodyworks
+family	brico-depot	bricodepot
+family	forever-new	forevernew
+family	holland-barrett	hollandandbarrett
+family	jd-sports	jdsports
+family	joybuy	jd
+family	jumbo.com	jumbo-nl
+family	leroy-merlin	leroymerlin
+family	michael-kors	michaelkors
+family	new-balance	newbalance
+family	officedepot.com.mx	officedepot-mx
+family	sears.com.mx	sears-mx
+family	coop.se	coop-se
+family	premium-bandai	p-bandai
+family	steve-madden	stevemadden
+family	ulla-popken	ullapopken
+family	unisport	unisportstore
+family	beko	arcelik
+family	oldnavy	gap
+domain	1688.com	business-supplier	CN	CNY	alibaba
+domain	1kuji.com	eligible	JP	JPY	ichiban-kuji
+domain	aldi.us	no-own-checkout	US	USD	aldi-sud
+domain	aliexpress.com	cross-border-marketplace	US	USD	aliexpress
+domain	amazon.com	legacy-named-merchant	US	USD	amazon
+domain	bidoo.com	multi-market-domain	-	-	bidoo
+domain	biedronka.pl	eligible	PL	PLN	biedronka
+domain	coach.com	eligible	US	USD	coach
+domain	codashop.com	mostly-digital-goods	ID	IDR	codashop
+domain	costco.com	eligible	US	USD	costco
+domain	cupshe.com	eligible	US	USD	cupshe
+domain	docomo.ne.jp	eligible	JP	JPY	docomo
+domain	ecer.com	business-supplier	CN	USD	ecer
+domain	gapcanada.ca	eligible	CA	CAD	gap
+domain	halara.com	eligible	US	USD	halara
+domain	honor.com	multi-market-domain	-	-	honor
+domain	ibraqperfumes.com	eligible	AE	AED	ibraq-perfumes
+domain	iherb.com	eligible	US	USD	iherb
+domain	jellycat.com	eligible	US	USD	jellycat
+domain	kaufland.de	eligible	DE	EUR	kaufland
+domain	kaufland.pl	eligible	PL	PLN	kaufland
+domain	khaadi.com	multi-market-domain	-	-	khaadi
+domain	luvmehair.com	eligible	US	USD	luvmehair
+domain	makro.co.za	eligible	ZA	ZAR	makro
+domain	mercadolibre.com.ar	eligible	AR	ARS	mercadolibre
+domain	mercadolibre.com.mx	eligible	MX	MXN	mercadolibre
+domain	mercari.com	eligible	US	USD	mercari
+domain	michaels.com	eligible	US	USD	michaels
+domain	naver.com	eligible	KR	KRW	naver
+domain	oraimo.com	multi-market-domain	-	-	oraimo
+domain	pandora.net	eligible	US	USD	pandora
+domain	pcpartpicker.com	not-a-store	US	USD	pcpartpicker
+domain	playstation.com	eligible	US	USD	playstation
+domain	puma.com	eligible	US	USD	puma
+domain	rakuten.com	not-a-store	US	USD	rakuten
+domain	revibe.me	eligible	AE	AED	revibe
+domain	shein.com	cross-border-marketplace	US	USD	shein
+domain	tommy.com	eligible	US	USD	tommy
+domain	vevor.com	eligible	US	USD	vevor
+domain	walmart.com	eligible	US	USD	walmart
+domain	yahoo.co.jp	eligible	JP	JPY	yahoo-japan

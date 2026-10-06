@@ -2,15 +2,19 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import {
+  CRUX_BANDS,
   REGION_GROUPS,
+  key,
   loadFrame,
   pipelineHeldout,
   readerCandidates,
   split,
+  streamOf,
 } from './seeded-selection.mjs';
 
 const { frame: frame1, frameSha256: frame1Sha256 } = loadFrame(1);
-const { frame } = loadFrame(2);
+const { frame } = loadFrame(2); // retail-frame.2: committed, superseded by retail-frame.3 for the reader
+const { frame: frame3 } = loadFrame(3);
 const platforms = ['shopify', 'sfcc', 'none-detected', 'adobe-commerce', 'other-detected'];
 
 test('retail-frame.2 keeps every retail-frame.1 domain with its band and probe status', () => {
@@ -38,19 +42,6 @@ test('retail-frame.2: every eligible domain has a region, an ISO 4217 code and a
   assert.ok(frame.domains.every((d) => !('trancoRank' in d) && !('rank' in d)));
 });
 
-test('item price bands cover every eligible frame currency', () => {
-  const bands = JSON.parse(readFileSync(new URL('../item-price-bands.json', import.meta.url), 'utf8')).currencies;
-  for (const d of frame.domains.filter((x) => x.eligible)) assert.ok(bands[d.currency], `${d.domain} ${d.currency}`);
-  for (const [cur, [min, max]] of Object.entries(bands)) assert.ok(min > 0 && max > min, cur);
-});
-
-test('currency minor-unit table covers every eligible frame currency', () => {
-  const units = JSON.parse(readFileSync(new URL('../currency-minor-units.json', import.meta.url), 'utf8')).currencies;
-  for (const d of frame.domains.filter((x) => x.eligible)) assert.ok(units[d.currency] !== undefined, d.currency);
-  for (const c of ['JPY', 'KRW', 'VND', 'CLP']) assert.equal(units[c], 0, c);
-  assert.equal(units.USD, 2);
-});
-
 test('retail-frame.2: one eligible storefront per retailer family', () => {
   const seen = new Map();
   for (const d of frame.domains.filter((x) => x.eligible)) {
@@ -60,17 +51,76 @@ test('retail-frame.2: one eligible storefront per retailer family', () => {
   }
 });
 
-test('reader candidates: 200 per stream, every top-1k and 1k-10k eligible domain, all probe sites in the U.S. stream', () => {
-  const c = readerCandidates(frame);
+test('retail-frame.3: buckets, regions, currencies, one storefront per family per country, legacy and RU/BY excluded', () => {
+  const seen = new Set();
+  for (const d of frame3.domains.filter((x) => x.eligible)) {
+    assert.ok(CRUX_BANDS.includes(d.band), d.domain);
+    assert.match(d.region, /^[A-Z]{2}$/, d.domain);
+    assert.match(d.currency, /^[A-Z]{3}$/, d.domain);
+    assert.ok(REGION_GROUPS.includes(d.regionGroup), d.domain);
+    assert.equal(d.homeList, d.region, d.domain);
+    assert.equal(d.lists[d.homeList], d.band, d.domain);
+    assert.equal(d.exclusion, null, d.domain);
+    assert.ok(d.family && !seen.has(`${d.family}|${d.region}`), `${d.family} ${d.region}`);
+    seen.add(`${d.family}|${d.region}`);
+  }
+  for (const legacy of ['amazon.com', 'bestbuy.com', 'newegg.com']) {
+    const d = frame3.domains.find((x) => x.domain === legacy);
+    assert.ok(!d || d.exclusion === 'legacy-named-merchant', legacy);
+  }
+  assert.ok(frame3.domains.every((d) => !['RU', 'BY'].includes(d.region) || !d.eligible));
+  assert.ok(frame3.domains.every((d) => !('rank' in d)));
+});
+
+test('item price bands and minor-unit table cover every eligible retail-frame.3 currency', () => {
+  const bands = JSON.parse(readFileSync(new URL('../item-price-bands.json', import.meta.url), 'utf8')).currencies;
+  const units = JSON.parse(readFileSync(new URL('../currency-minor-units.json', import.meta.url), 'utf8')).currencies;
+  for (const d of frame3.domains.filter((x) => x.eligible)) {
+    assert.ok(bands[d.currency], `${d.domain} ${d.currency}`);
+    assert.ok(units[d.currency] !== undefined, `${d.domain} ${d.currency}`);
+  }
+});
+
+test('reader candidates: 200 per stream, most popular bucket first, U.S. bucket order by key', () => {
+  const c = readerCandidates(frame3);
   assert.equal(c.length, 400);
   assert.equal(new Set(c.map((x) => x.domain)).size, 400);
-  for (const s of ['us', 'non-us']) assert.equal(c.filter((x) => x.stream === s).length, 200);
-  const top = frame.domains.filter((d) => d.eligible && d.band !== '10k-100k').map((d) => d.domain);
-  for (const d of top) assert.ok(c.some((x) => x.domain === d), d);
-  assert.equal(c.filter((x) => x.probeSite && x.stream === 'us').length, 25);
+  for (const s of ['us', 'non-us']) {
+    const list = c.filter((x) => x.stream === s);
+    assert.equal(list.length, 200);
+    const bandIdx = list.map((x) => CRUX_BANDS.indexOf(x.band));
+    assert.deepEqual(bandIdx, [...bandIdx].sort((a, b) => a - b), `${s} bucket order`);
+    // every eligible domain of a bucket comes before any of a later bucket
+    const last = Math.max(...bandIdx);
+    const pool = frame3.domains.filter((d) => d.eligible && streamOf(d) === s && CRUX_BANDS.indexOf(d.band) < last);
+    for (const d of pool) assert.ok(list.some((x) => x.domain === d.domain), d.domain);
+  }
+  const us = c.filter((x) => x.stream === 'us' && x.band === 'top-1k').map((x) => key('reader-candidates', x.domain));
+  assert.deepEqual(us, [...us].sort());
   assert.ok(c.every((x) => (x.regionGroup === 'us') === (x.stream === 'us')));
-  assert.equal(readerCandidates(frame, { us: 10, 'non-us': 5 }).length, 415);
-  assert.throws(() => readerCandidates(frame1), /retail-frame.2/);
+  assert.equal(readerCandidates(frame3, { us: 10, 'non-us': 5 }).length, 415);
+  assert.throws(() => readerCandidates(frame), /retail-frame.3/);
+  assert.throws(() => readerCandidates(frame1), /retail-frame.3/);
+});
+
+test('reader candidates: the non-U.S. stream round-robins its countries', () => {
+  const list = readerCandidates(frame3).filter((x) => x.stream === 'non-us');
+  const per = {};
+  for (const x of list) per[x.homeList] = (per[x.homeList] ?? 0) + 1;
+  const available = {};
+  for (const d of frame3.domains.filter((x) => x.eligible && x.regionGroup !== 'us' && x.band === 'top-1k'))
+    available[d.homeList] = (available[d.homeList] ?? 0) + 1;
+  const counts = Object.values(per);
+  const full = Object.keys(per).filter((cc) => per[cc] < available[cc]);
+  // countries not used up differ by at most one; a used-up country has fewer
+  const fullCounts = full.map((cc) => per[cc]);
+  assert.ok(Math.max(...fullCounts) - Math.min(...fullCounts) <= 1, JSON.stringify(per));
+  for (const cc of Object.keys(per)) assert.ok(per[cc] <= Math.max(...counts));
+  // within one country, key order
+  for (const cc of Object.keys(per)) {
+    const keys = list.filter((x) => x.homeList === cc).map((x) => key('reader-candidates', x.domain));
+    assert.deepEqual(keys, [...keys].sort(), cc);
+  }
 });
 
 test('pipeline held-out list is unchanged: still retail-frame.1, 6 / 27 / 27, file reproduces', () => {
@@ -84,16 +134,16 @@ test('pipeline held-out list is unchanged: still retail-frame.1, 6 / 27 / 27, fi
 });
 
 const captureSample = () => {
-  const c = readerCandidates(frame);
+  const c = readerCandidates(frame3);
   const take = (s) => c.filter((x) => x.stream === s).slice(0, 110);
   return [...take('us'), ...take('non-us')].map((x, i) => ({ domain: x.domain, platform: platforms[i % platforms.length] }));
 };
 
 test('split: balanced overall, by stream and by region group; probe sites in development; deterministic', () => {
   const sites = captureSample();
-  const a = split(frame, sites);
+  const a = split(frame3, sites);
   const byDomain = (list) => [...list].sort((x, y) => (x.domain < y.domain ? -1 : 1));
-  assert.deepEqual(byDomain(split(frame, [...sites].reverse())), byDomain(a));
+  assert.deepEqual(byDomain(split(frame3, [...sites].reverse())), byDomain(a));
   const n = (s, f = () => true) => a.filter((x) => x.split === s && f(x)).length;
   for (const s of ['development', 'heldout-a', 'heldout-b']) {
     assert.ok(n(s) >= 70 && n(s) <= 77, `${s} ${n(s)}`);
@@ -105,23 +155,35 @@ test('split: balanced overall, by stream and by region group; probe sites in dev
     const counts = ['heldout-a', 'heldout-b'].map((s) => n(s, (x) => x.regionGroup === g));
     assert.ok(Math.abs(counts[0] - counts[1]) <= 1, `${g} ${counts}`);
   }
-  const probe = new Set(frame.domains.filter((d) => d.probeSite).map((d) => d.domain));
+  const probe = new Set(frame3.domains.filter((d) => d.probeSite).map((d) => d.domain));
   assert.ok(a.filter((x) => probe.has(x.domain)).every((x) => x.split === 'development'));
+});
+
+test('split: a retailer family never spans two splits', () => {
+  const a = split(frame3, captureSample());
+  const fam = new Map(frame3.domains.map((d) => [d.domain, d.family]));
+  const where = new Map();
+  for (const x of a) {
+    const f = fam.get(x.domain);
+    assert.ok(!where.has(f) || where.get(f) === x.split, `${f}: ${where.get(f)} and ${x.split}`);
+    where.set(f, x.split);
+  }
+  assert.ok(a.length > new Set(a.map((x) => fam.get(x.domain))).size, 'the sample has a family with several sites');
 });
 
 test('split: takes domain and platform only, so nothing else seen in a page can change it', () => {
   const [site] = captureSample();
-  assert.throws(() => split(frame, [{ ...site, observedCurrency: 'EUR' }]), /domain and platform only/);
-  assert.throws(() => split(frame, [{ ...site, currency: 'EUR' }]), /domain and platform only/);
+  assert.throws(() => split(frame3, [{ ...site, observedCurrency: 'EUR' }]), /domain and platform only/);
+  assert.throws(() => split(frame3, [{ ...site, currency: 'EUR' }]), /domain and platform only/);
 });
 
 test('split: rejects non-candidates, duplicates and unknown platforms', () => {
-  const [c] = readerCandidates(frame);
-  assert.throws(() => split(frame, [{ domain: 'amazon.com', platform: 'shopify' }]), /not a reader candidate/);
-  assert.throws(() => split(frame, [{ domain: 'example-not-in-frame.com', platform: 'shopify' }]), /not a reader candidate/);
+  const [c] = readerCandidates(frame3);
+  assert.throws(() => split(frame3, [{ domain: 'amazon.com', platform: 'shopify' }]), /not a reader candidate/);
+  assert.throws(() => split(frame3, [{ domain: 'example-not-in-frame.com', platform: 'shopify' }]), /not a reader candidate/);
   assert.throws(
-    () => split(frame, [{ domain: c.domain, platform: 'shopify' }, { domain: c.domain, platform: 'shopify' }]),
+    () => split(frame3, [{ domain: c.domain, platform: 'shopify' }, { domain: c.domain, platform: 'shopify' }]),
     /duplicate/,
   );
-  assert.throws(() => split(frame, [{ domain: c.domain, platform: 'nextjs' }]), /unknown platform/);
+  assert.throws(() => split(frame3, [{ domain: c.domain, platform: 'nextjs' }]), /unknown platform/);
 });
