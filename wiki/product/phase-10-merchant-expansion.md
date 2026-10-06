@@ -30,11 +30,11 @@ A shopper gets a correct card recommendation at **any U.S. online checkout**: th
 
 **Y = 80%** found-correct on held-out one-item cart pages (Evan, 2026-10-05, from the [Phase 10 probe](../../docs/evals/merchant-probe-2026-10.md)), pre-registered in the Phase 12 protocol; X and Z are set after 4 weeks of Release B data and reported with n.
 
-1. **Reader on real pages:** on the active held-out split (A, or B once A is retired; U.S. and non-U.S. sites together, reported apart) 0 false-found results, a wrong currency counting as false found, 95% upper bounds reported at the page-state and site level; found-correct ≥ Y% on the one-item state; p95 reading time within budget.
+1. **Reader on real pages** (changing per the [2026-10-06 decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md): ≥ 99% correct on shown amounts, no confirmation prompt; the protocol amendment follows the pane trial): on the active held-out split (A, or B once A is retired; U.S. and non-U.S. sites together, reported apart) 0 false-found results, a wrong currency counting as false found, 95% upper bounds reported at the page-state and site level; found-correct ≥ Y% on the one-item state; p95 reading time within budget.
 2. **Category correctness:** every profiled domain whose plausible category is a catalog bonus category has class 1 or 2 evidence, or its recommendation is a range; the share of range recommendations is reported.
 3. **Coverage (field):** ≥ X% of recommendations at named profiles.
 4. **Merchant pipeline (LLM):** drafted profiles and category evidence measured against the adjudicated held-out profiles of the domains frozen in Phase 12 (profiles adjudicated at the start of Phase 16).
-5. **Field quality:** amount correction rate ≤ Z%.
+5. **Field quality:** rate of reported wrong amounts ≤ Z% (no confirmation prompt since 2026-10-06).
 6. **Compliance:** listing, consent screen, privacy policy and event dictionary agree before any release that sends events.
 7. **Value pack:** the [value metrics and data room](../system/telemetry-design.md#value-metrics-what-a-buyer-or-partner-asks-for) exist and are current.
 
