@@ -3,6 +3,10 @@
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
 ## 2026-10-06
+* **Review** `generic-reader-protocol.8` **signed** at `a1c994d` by the independent reviewer (agent-verified); [decision](decisions/2026-10-06-capture-protocol-8.md) accepted. Its four non-blocking notes were applied before any real capture as a dated [erratum](../docs/evals/generic-reader-protocol.md#erratum-2026-10-06-post-signature-tooling-fixes-to-8):
+  - a final cart-count check (checklist step 9, differences flagged to Evan);
+  - `audit-pane-transcript.mjs` also flags navigation to account, order, profile, address, payment, settings and sign-out paths, Write or Edit outside the capture data folder and pane records, and any Bash network access (tests); clicks by `ref` are stated as not auditable by name;
+  - `pane-export.js`'s header provenance now mirrors the protocol, and the audit hash follows the file. (claude-code/claude-opus-5-5)
 * **Review** independent review of `.8` at `9d79158` (agent-verified): sign with fixes, applied with tests.
   - **M1, format:** `pane-dom.2` adds `v` (checkVisibility), `bx` (box > 1 px) and `k` (non-default clip, clip-path, overflow, opacity, transform, width/height). The rebuild inlines them, hides invisible text, adds `data-pane-box` (never read by a reader) and drops meta refresh. Fixture cases: clipped screen-reader-only price, `opacity:0` parent, closed `<details>`.
   - **M2, auditability:** transcript IDs in pane records, `audit-pane-transcript.mjs` (flags typing, `form_input`, `file_upload`, Claude in Chrome, checkout paths and wording, JavaScript other than export, chunk fetch and `pane-robots-hash.js`), and the subagent `.claude/agents/pane-operator.md` with restricted tools.

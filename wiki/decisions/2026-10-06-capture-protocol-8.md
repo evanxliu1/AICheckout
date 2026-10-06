@@ -2,11 +2,11 @@
 type: Decision
 title: Pane capture and the process of generic-reader-protocol.8
 description: The coordinator's process decisions that carry out Evan's 2026-10-06 decisions (show only certain amounts, ≥ 99% precision, generic reader only, agent-driven pane capture). Covers the pane operator's checklist and record, parallel tabs, simpler item selection, the pane-dom.1 export and offline rebuild, 425 + 1,000 candidates with a 830-site stop and 1 : 2 : 2 split weights, the new outcomes and Clopper–Pearson bound, and the batch 2 calls.
-status: proposed
+status: accepted
 tags: [decision, phase-12, merchants, eval, capture]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T23:30:00Z
+  at: 2026-10-06T23:20:37Z
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol (Amendment 7)
@@ -78,4 +78,4 @@ The process decisions below are **the coordinator's** (the coordinating session,
 - **Shared session:** parallel sessions share one IP and profile, which could raise blocks; concurrency is reported with the blocked rate.
 
 ## Status
-Proposed 2026-10-06 by the amendment builder (claude-code/claude-opus-5-5) on the coordinator's decisions, which carry out Evan's accepted decision. It awaits the independent reviewer's signature of `.8`; `.7` binds until then.
+Proposed 2026-10-06 by the amendment builder (claude-code/claude-opus-5-5) on the coordinator's decisions, which carry out Evan's accepted decision. **Accepted 2026-10-06:** the independent reviewer signed `generic-reader-protocol.8` at `a1c994d` (agent-verified). Its four non-blocking notes were applied before any real capture as a dated erratum: a final cart-count check; the audit also flagging account paths, writes outside the capture folders and Bash network access; and the export header's provenance.

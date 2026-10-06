@@ -5,7 +5,7 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T23:30:00Z
+  at: 2026-10-06T23:20:37Z
 ---
 
 # Now
@@ -38,7 +38,7 @@ As of 2026-10-06T08:30:00Z.
    - **Robots and CAPTCHAs:** robots.txt is recorded and never excludes a store (Evan); CAPTCHAs and bot checks are never touched.
    - **Robot:** retired; its click-point defect is left unfixed.
 
-   [Decision](decisions/2026-10-06-capture-protocol-8.md). Next: signature of `.8`; then pane capture from the frozen order, with re-visits included. Later decisions are asked per phase ([table](product/phase-10-merchant-expansion.md#decisions-for-evan-one-word-each-asked-when-their-phase-starts)).
+   **Signed at `a1c994d`** (agent-verified); post-signature tooling erratum applied ([decision](decisions/2026-10-06-capture-protocol-8.md), accepted). Next: pane capture from the frozen order, with re-visits included. Later decisions are asked per phase ([table](product/phase-10-merchant-expansion.md#decisions-for-evan-one-word-each-asked-when-their-phase-starts)).
 3. **Next renewal, published before 2026-11-04T00:00Z** ([renewing](ops/catalog-release.md#renewing-a-catalog-before-it-expires)): re-read the NerdWallet estimates (read 2026-10-02; valid for catalogs verified up to 2026-11-01). Freedom Flex and Discover Q4 rules end 2026-12-31; a catalog valid past then needs Q1 2027 data.
 4. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it instead of per file; `pipeline handoff` names the freshness record for the merchant MCC folder ([renewal record](ops/catalog-release-history.md#renewal-2026-10-05renewal1-prepared-2026-10-05)).
 5. Phase order (Evan, 2026-10-05): 10 ∥ 11 → 12 → 13 → 14 → 15 Release A (replaces Phase 5) → 17; 16 beside 15; Phase 6 folded in; 4 terms-change detection revisited after 9.

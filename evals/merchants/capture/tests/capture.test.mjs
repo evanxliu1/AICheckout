@@ -1040,11 +1040,21 @@ test('pane transcript audit: allowed calls pass; typing, form input, other scrip
     line(use('computer', { action: 'left_click', ref: 'ref_3', tabId: 't1' })),
     line(use('javascript_tool', { action: 'javascript_exec', text: exportText, tabId: 't1' })),
     line(use('javascript_tool', { action: 'javascript_exec', text: 'window.__aiCheckoutPaneExport.chunk(0)', tabId: 't1' })),
-    line({ type: 'tool_use', name: 'Write', input: { file_path: '/x/dom.json', content: '{}' } }),
+    line({
+      type: 'tool_use',
+      name: 'Write',
+      input: { file_path: '/Users/x/repo/evals/merchants/capture/data/pane/example.de/cart-1/dom.json', content: '{}' },
+    }),
+    line({
+      type: 'tool_use',
+      name: 'Write',
+      input: { file_path: '/Users/x/repo/evals/merchants/capture/records/example.de.pane.json', content: '{}' },
+    }),
+    line({ type: 'tool_use', name: 'Bash', input: { command: 'shasum -a 256 evals/merchants/capture/data/pane/example.de/cart-1/dom.json' } }),
     line(use('tabs_close', { tabId: 't1' })),
   ].join('\n');
   const clean = auditTranscript(ok);
-  assert.equal(clean.toolCalls, 9);
+  assert.equal(clean.toolCalls, 11);
   assert.deepEqual(clean.flags, []);
   const bad = [
     line(use('computer', { action: 'type', text: 'shoes' })),
@@ -1056,6 +1066,13 @@ test('pane transcript audit: allowed calls pass; typing, form input, other scrip
     line(use('find', { query: 'Proceed to checkout' })),
     line(use('browser_batch', { actions: [{ name: 'computer', input: { action: 'type', text: 'a' } }] })),
     line({ type: 'tool_use', name: 'Bash', input: { command: 'curl https://www.example.de/' } }),
+    line({ type: 'tool_use', name: 'Bash', input: { command: 'node -e "fetch(process.argv[1])" x' } }),
+    line({ type: 'tool_use', name: 'Bash', input: { command: 'open x' } }),
+    line({ type: 'tool_use', name: 'Write', input: { file_path: '/Users/x/repo/wiki/now.md', content: 'x' } }),
+    line({ type: 'tool_use', name: 'Edit', input: { file_path: '/Users/x/repo/evals/merchants/capture/records/example.de.json' } }),
+    line(use('navigate', { url: 'https://www.example.de/my-account/orders' })),
+    line(use('navigate', { url: 'https://www.example.de/customer/address/' })),
+    line(use('navigate', { url: 'https://www.example.de/logout' })),
   ].join('\n');
   const rules = auditTranscript(bad).flags.map((f) => f.rule);
   for (const r of [
@@ -1065,8 +1082,13 @@ test('pane transcript audit: allowed calls pass; typing, form input, other scrip
     'checkout-path',
     'javascript-other',
     'checkout-or-order-wording',
-    'bash-web-fetch',
+    'bash-network',
+    'write-outside-capture-folders',
+    'account-path',
   ])
     assert.ok(rules.includes(r), r);
   assert.equal(rules.filter((r) => r === 'typing').length, 3);
+  assert.equal(rules.filter((r) => r === 'bash-network').length, 3);
+  assert.equal(rules.filter((r) => r === 'write-outside-capture-folders').length, 2);
+  assert.equal(rules.filter((r) => r === 'account-path').length, 3);
 });

@@ -14,7 +14,14 @@
 //   - the JavaScript tool, unless its text is exactly one of the three allowed uses: the export script
 //     (`pane-export.js`), a chunk fetch (`window.__aiCheckoutPaneExport.chunk(<n>)`) or the robots hash
 //     (`pane-robots-hash.js`), each recognised after trimming surrounding whitespace;
-//   - a pane tool not on the operator's list, and Bash commands that fetch from the web (`curl`, `wget`).
+//   - `navigate` to an account, order, profile, address, payment, settings or sign-out path (by path segment);
+//   - Write or Edit outside the gitignored capture data folder (`evals/merchants/capture/data/`) and the committed
+//     pane records (`evals/merchants/capture/records/<domain>.pane.json`);
+//   - a pane tool not on the operator's list, and any Bash network access (curl, wget, nc, ncat, telnet, ssh, scp,
+//     open, deno, a URL, or node/python code that fetches: `fetch(`, `http.`, `https.`, `urllib`, `requests.`,
+//     `net.connect`, `http.client`).
+// Not auditable: a click by element `ref` (or coordinate) names no target in the call, so what was clicked is checked
+// against the checklist and the pane record's action log, not here.
 // Prints a JSON report per transcript; the exit code is 1 when anything is flagged.
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -29,6 +36,48 @@ export const ALLOWED_SCRIPTS = {
   robots: sha(readFileSync(path.join(here, 'pane-robots-hash.js'), 'utf8')),
 };
 const CHUNK = /^window\.__aiCheckoutPaneExport\.chunk\(\d{1,4}\);?$/;
+/** Path segments of account, order, profile, address, payment, settings and sign-out pages. */
+export const ACCOUNT_SEGMENTS = new Set([
+  'account',
+  'accounts',
+  'my-account',
+  'myaccount',
+  'customer',
+  'profile',
+  'orders',
+  'order',
+  'order-history',
+  'orderhistory',
+  'address',
+  'addresses',
+  'addressbook',
+  'address-book',
+  'payment',
+  'payments',
+  'payment-methods',
+  'wallet',
+  'settings',
+  'preferences',
+  'signout',
+  'sign-out',
+  'logout',
+  'log-out',
+  'logoff',
+]);
+const accountPath = (pathname) =>
+  pathname
+    .split('/')
+    .map((x) => {
+      try {
+        return decodeURIComponent(x).toLowerCase();
+      } catch {
+        return x.toLowerCase();
+      }
+    })
+    .some((seg) => ACCOUNT_SEGMENTS.has(seg.replace(/\.(html?|aspx?|jsp|php)$/, '')));
+const WRITE_OK = [/\/evals\/merchants\/capture\/data\//, /\/evals\/merchants\/capture\/records\/[a-z0-9.-]+\.pane\.json$/];
+const BASH_NETWORK =
+  /\b(curl|wget|nc|ncat|telnet|ssh|scp|open|deno)\b|https?:\/\/|\bfetch\(|\bhttps?\.(get|request)\b|urllib|\brequests\.|net\.connect|http\.client/;
 /** Pane tools an operator may call (short names). Anything else from the pane server is flagged. */
 export const PANE_TOOLS = new Set([
   'navigate',
@@ -64,6 +113,7 @@ export function auditCall(name, input = {}) {
     }
     if (u && !['http:', 'https:'].includes(u.protocol)) flag('non-web-scheme', u.protocol);
     if (u && isCheckoutPath(u.pathname)) flag('checkout-path', `${u.host}${u.pathname}`);
+    if (u && accountPath(u.pathname)) flag('account-path', `${u.host}${u.pathname}`);
   }
   if (s === 'javascript_tool') {
     const text = String(input.text ?? '').trim();
@@ -75,7 +125,9 @@ export function auditCall(name, input = {}) {
     if (CHECKOUT_NAME.test(words) || ORDER_OR_ACCOUNT.test(words)) flag('checkout-or-order-wording', words.slice(0, 120));
   }
   if (isPane(n) && /Claude_Browser__/.test(n) && !PANE_TOOLS.has(s)) flag('unlisted-pane-tool', s);
-  if (s === 'Bash' && /\b(curl|wget)\b/.test(String(input.command ?? ''))) flag('bash-web-fetch', input.command);
+  if (s === 'Bash' && BASH_NETWORK.test(String(input.command ?? ''))) flag('bash-network', input.command);
+  if ((s === 'Write' || s === 'Edit' || s === 'MultiEdit' || s === 'NotebookEdit') && !WRITE_OK.some((re) => re.test(`/${String(input.file_path ?? '').replace(/^\/+/, '')}`)))
+    flag('write-outside-capture-folders', input.file_path);
   return flags;
 }
 

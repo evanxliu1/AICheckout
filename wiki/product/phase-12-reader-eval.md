@@ -6,7 +6,7 @@ status: stable
 tags: [product, plan, phase-12, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T23:30:00Z
+  at: 2026-10-06T23:20:37Z
 sources:
   - resource: phase-10-merchant-expansion.md
     title: Merchant coverage plan (Phases 10–17)
@@ -92,6 +92,7 @@ As in [Phase 10](phase-10-feasibility-probe.md#safety-and-copyright), enforced b
   - **Batch 2 calls** (`sites.json` `statusUnderProtocol8`):
     - **Settled:** cardkingdom.com is pending the reviewer's no-`<select>` check; pane-trial captures are development data only.
     - **Re-visited by pane:** every robot-era 403/429, CAPTCHA and bot-wall site, savana.com (robots.txt no longer excludes, Evan 2026-10-06), webstaurantstore.com (minimum quantity above 1 makes an item ineligible, so another is picked), jpc.de, deghi.it and the pending robot re-visits. bricklink.com and samsung.com are re-visited as second draws (confirmed by the coordinator).
+  - **Signed at `a1c994d`** (agent-verified); four post-signature tooling notes applied as an erratum (final cart-count check, wider transcript audit, export provenance).
   - **Review at `9d79158`** (sign with fixes, applied):
     - **Format:** `pane-dom.2` with visibility facts and a faithful rebuild.
     - **Audit:** transcript audit script, `pane-operator` subagent with restricted tools, three allowed JavaScript texts.

@@ -1,6 +1,9 @@
-// Pane page export, format `pane-dom.2` (generic-reader-protocol.8; `.2` supersedes `pane-dom.1` before any
-// evaluation capture, adding visibility facts). Approved by Evan on 2026-10-06 as the in-page
-// export script for agent-driven capture in the Claude desktop app's browser pane. Dependency-free; it only reads the
+// Pane page export, format `pane-dom.2` (generic-reader-protocol.8, signed at a1c994d). Provenance: Evan approved
+// on 2026-10-06 "an in-page script that saves each cart page's structure and styles" for agent-driven capture in
+// the Claude desktop app's browser pane (first written as `pane-dom.1`). `pane-dom.2` adds visibility facts after the
+// independent review of `.8` and supersedes `.1` before any evaluation capture; the coordinator treats it as within
+// Evan's 2026-10-06 approval. The transcript audit recognises this file's exact text, so any change to it is a new
+// format version. Dependency-free; it only reads the
 // page. The operator runs this file's text with the pane's JavaScript tool on the page to capture. The script keeps
 // the serialization on `window.__aiCheckoutPaneExport` and returns a short summary only (bytes, SHA-256, chunk
 // count). The operator then fetches the chunks with `window.__aiCheckoutPaneExport.chunk(i)` and writes them, unread,
