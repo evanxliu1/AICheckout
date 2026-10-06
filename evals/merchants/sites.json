@@ -1208,6 +1208,413 @@
     "code": "blocked-http-403",
     "note": "blocked in reconnaissance (HTTP 403 on a category page, fourth navigation)"
    }
+  },
+  {
+   "domain": "goofish.com",
+   "stream": "non-us",
+   "visit": 5,
+   "band": "top-1k",
+   "regionGroup": "asia-pacific",
+   "homeList": "CN",
+   "frameRegion": "CN",
+   "frameCurrency": "CNY",
+   "protocol5": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "recon": {
+     "sessionId": "20261006T072859Z",
+     "startedAt": "2026-10-06T07:28:59.077Z",
+     "endedAt": "2026-10-06T07:30:02.742Z",
+     "topLevelNavigations": 2,
+     "navigationRequests": 2,
+     "views": 2,
+     "outcome": {
+      "status": "incomplete",
+      "code": "tool-error",
+      "evidenceSha256": null,
+      "draftRecipeSha256": null
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "be685417d444280a051a32788f4fcbd8981c9a47eae1b1d4410df53c2567477a",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.goofish.com/",
+       "chain": [
+        "https://www.goofish.com/"
+       ],
+       "landed": "https://www.goofish.com/",
+       "sameSite": true
+      }
+     ],
+     "record": "capture/records/goofish.com.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": null,
+    "events": [
+     {
+      "kind": "request-aborted",
+      "detail": "POST umdc.goofish.com"
+     },
+     {
+      "kind": "request-aborted",
+      "detail": "POST h5api.m.goofish.com"
+     }
+    ],
+    "reviewFlags": [
+     "TOOL DEFECT (same class as lego.com): the home page shows no items ('no recommendations') and the first category link (/search?q=phones, the first home link that is not account, orders, publish, messages, help, login or off-domain) shows 'no items found'; the record's events show request-aborted POST h5api.m.goofish.com (the site's data API) and POST umdc.goofish.com",
+     "the header has no cart, bag or basket link (only login and orders); goofish is a second-hand C2C marketplace, so a later session may well end in an exclusion (no cart path), but no exclusion was recorded because the listing could not be observed",
+     "ended by the operator with tool-error (no evidence screenshot needed); no session was used for capture"
+    ]
+   },
+   "statusUnderProtocol5": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "note": "incomplete (tool-error): the home feed and category results stay empty because the tool's write guard aborts the site's same-site POST data API (h5api.m.goofish.com); one later reconnaissance session is allowed on a later UTC day after a tool decision"
+   }
+  },
+  {
+   "domain": "apple.com",
+   "stream": "us",
+   "visit": 8,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "protocol5": {
+    "status": "captured",
+    "code": null,
+    "recon": {
+     "sessionId": "20261006T073023Z",
+     "startedAt": "2026-10-06T07:30:23.620Z",
+     "endedAt": "2026-10-06T07:32:19.440Z",
+     "topLevelNavigations": 6,
+     "navigationRequests": 6,
+     "views": 6,
+     "outcome": {
+      "status": "done",
+      "code": null,
+      "evidenceSha256": null,
+      "draftRecipeSha256": "dde1a353436699f0a100e63d6c579bbe2208ce09bcd3ff01d6acbe5b5311903f"
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "3115f45c98cfa19341978dcab5dfbc0fd3e0ff4eb3ab1fe8192c3fbf7227dee7",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.apple.com/",
+       "chain": [
+        "https://www.apple.com/"
+       ],
+       "landed": "https://www.apple.com/",
+       "sameSite": true
+      }
+     ],
+     "record": "capture/records/apple.com.recon.json"
+    },
+    "capture": {
+     "sessionId": "20261006T073232Z",
+     "startedAt": "2026-10-06T07:32:32.474Z",
+     "endedAt": "2026-10-06T07:33:56.466Z",
+     "topLevelNavigations": 8,
+     "navigationRequests": 8,
+     "record": "capture/records/apple.com.json",
+     "recipe": "capture/recipes/apple.com.json"
+    },
+    "listingUrl": "https://www.apple.com/store",
+    "productUrls": [
+     "https://www.apple.com/shop/product/mkd14zm/a/iphone-18-pro-techwoven-case-with-magsafe-burgundy",
+     "https://www.apple.com/shop/product/mk944zm/a/iphone-18-pro-max-silicone-case-with-magsafe-navy-blue"
+    ],
+    "cartPath": "/shop/bag",
+    "cartHost": "www.apple.com",
+    "checkoutPaths": [],
+    "observedRegion": "US",
+    "observedCurrency": "USD",
+    "observedCurrencyBasis": "page frame and dollar symbol only; no ISO code marker in meta.json",
+    "platform": {
+     "group": "none-detected",
+     "marker": null
+    },
+    "robots": {
+     "sha256": "3115f45c98cfa19341978dcab5dfbc0fd3e0ff4eb3ab1fe8192c3fbf7227dee7",
+     "httpStatus": 200,
+     "decision": "allowed",
+     "checkedPaths": [
+      {
+       "path": "/shop/bag",
+       "host": "www.apple.com",
+       "allowed": true
+      }
+     ]
+    },
+    "robotsHosts": [],
+    "terms": {
+     "url": "https://www.apple.com/legal/internet-services/terms/site.html",
+     "copySha256": "0f22c30a21ffcb19012f80fed901fee538fef6f20dbd02683d116e13ebb4b1b1",
+     "prohibitsAutomated": "yes"
+    },
+    "states": [
+     {
+      "state": "empty-cart",
+      "manifestSha256": "53d2874e0ea7526aaa56803e7a3e62ae6def1b3dcbd4eeec8c34f05ebda9595a",
+      "robotsAllowed": true
+     },
+     {
+      "state": "view-01",
+      "manifestSha256": "29f33485a677635acfe3dc267491a6e05611946077ccee3cd6330ab07deefc85",
+      "robotsAllowed": true
+     },
+     {
+      "state": "cart-1",
+      "manifestSha256": "b276a031be7c3c86324976761d0d4a574f87da6ae2a8e79a99e6053819383fa0",
+      "robotsAllowed": true
+     },
+     {
+      "state": "cart-qty2",
+      "manifestSha256": "60f95aaf52cde1a13ab30f163f31e75e1d35a94c3c39df99949f1d3124ef6916",
+      "robotsAllowed": true
+     },
+     {
+      "state": "cart-2items",
+      "manifestSha256": "f01de39cf81d43788b178ec6fb4f040ced8880f29acbe2ef7a74fe7307055e5a",
+      "robotsAllowed": true
+     },
+     {
+      "state": "terms",
+      "manifestSha256": "0f22c30a21ffcb19012f80fed901fee538fef6f20dbd02683d116e13ebb4b1b1",
+      "robotsAllowed": true
+     }
+    ],
+    "notReached": [
+     {
+      "state": "checkout-1",
+      "reason": "protocol-5-reported-gap"
+     }
+    ],
+    "events": [
+     {
+      "kind": "request-aborted",
+      "detail": "POST www.apple.com"
+     }
+    ],
+    "evidenceSha256": null,
+    "reviewFlags": [
+     "apple.com is a Phase 10 probe site and a candidate on its own popularity; per the protocol it is captured afresh and goes to development only",
+     "home candidate 1 after the home's own logo link is /us/shop/goto/store, which landed on /store: a listing (product tiles with prices linking to product pages)",
+     "listing order: tiles before the first in-band one are iPhone, Watch and Mac tiles (lowest prices 399-2499 USD; monthly instalment prices ignored). The first in-band tile, AirPods 5 (From USD 129), was passed over: its buy page shows no add-to-bag control until a model, an engraving option and an AppleCare option are chosen, which are not size or colour choices, so it does not count as in stock under the reconnaissance rule (operator reading, flagged)",
+     "item 1 is the next in-band tile, iPhone 18 Pro TechWoven Case (USD 59.00), item 2 the following tile (Silicone Case, USD 49.00); both InStock with an enabled Add to Bag submit (form posts to /shop/pdpAddToBag/...)",
+     "each add-to-cart redirected to /shop/bag, so no minicart; cart-1 taken on that landing; cart-qty2 by a second add-to-cart (the bag's quantity control is a select, never used); cart path /shop/bag is the header bag link",
+     "terms: footer Terms of Use prohibits robots, spiders and page-scraping (prohibitsAutomated: yes; recorded, not excluding)",
+     "checkout-1 is a protocol .5 reported gap"
+    ]
+   },
+   "statusUnderProtocol5": {
+    "status": "captured",
+    "code": null,
+    "note": "captured; probe site (development only per protocol)"
+   }
+  },
+  {
+   "domain": "blibli.com",
+   "stream": "non-us",
+   "visit": 6,
+   "band": "top-1k",
+   "regionGroup": "asia-pacific",
+   "homeList": "ID",
+   "frameRegion": "ID",
+   "frameCurrency": "IDR",
+   "protocol5": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "recon": {
+     "sessionId": "20261006T073432Z",
+     "startedAt": "2026-10-06T07:34:32.737Z",
+     "endedAt": "2026-10-06T07:36:26.696Z",
+     "topLevelNavigations": 5,
+     "navigationRequests": 6,
+     "views": 5,
+     "outcome": {
+      "status": "excluded",
+      "code": "sign-in-required",
+      "evidenceSha256": "96cb704c507e5494994768c2bde3c10e3914905e80cfbb3490d0d290f6f3d646",
+      "draftRecipeSha256": null
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "de294952792f6c2169aad433aaa910c36582ffb8b840c03ba98ca5e581b7560d",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.blibli.com/",
+       "chain": [
+        "https://www.blibli.com/"
+       ],
+       "landed": "https://www.blibli.com/",
+       "sameSite": true
+      }
+     ],
+     "record": "capture/records/blibli.com.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": "96cb704c507e5494994768c2bde3c10e3914905e80cfbb3490d0d290f6f3d646",
+    "events": [
+     {
+      "kind": "request-aborted",
+      "detail": "POST www.blibli.com"
+     },
+     {
+      "kind": "request-aborted",
+      "detail": "POST bwa.blibli.com"
+     },
+     {
+      "kind": "robots-disallowed-path",
+      "detail": "www.blibli.com"
+     },
+     {
+      "kind": "navigation-aborted",
+      "detail": "refused-off-site account.bliblitiket.com"
+     }
+    ],
+    "reviewFlags": [
+     "home has no navigation landmark; candidate 1 in document order is the first main-content link, the Cetaphil flagship store page (/merchant/cetaphil-flagship-store/...), a listing; item 1 would be its third tile (Moisturizing Cream 453g, IDR 280,915, the first in the IDR band 160,000-3,200,000), item 2 its fifth tile (Baby Daily Lotion, IDR 170,700); both InStock with an enabled 'Tambah ke Bag' button",
+     "loading the header cart path /cart triggered a navigation to account.bliblitiket.com (the site's account/sign-in host, another registrable domain), which the tool refused (event navigation-aborted refused-off-site); the end-time evidence screenshot shows that blocked navigation",
+     "caveat for the reviewer: the record also shows request-aborted POST www.blibli.com and bwa.blibli.com; whether the sign-in redirect is the site's guest policy or a consequence of an aborted same-site POST cannot be told from the pages, so sign-in-required is the operator's reading of the observed redirect"
+    ]
+   },
+   "statusUnderProtocol5": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "note": "excluded in reconnaissance: the header cart link /cart sends a guest to a sign-in host on another registrable domain (account.bliblitiket.com)"
+   }
+  },
+  {
+   "domain": "hsn.com",
+   "stream": "us",
+   "visit": 9,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "protocol5": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "recon": {
+     "sessionId": "20261006T073648Z",
+     "startedAt": "2026-10-06T07:36:48.561Z",
+     "endedAt": "2026-10-06T07:37:41.562Z",
+     "topLevelNavigations": 1,
+     "navigationRequests": 1,
+     "views": 2,
+     "outcome": {
+      "status": "excluded",
+      "code": "blocked-bot-wall",
+      "evidenceSha256": "a24cca4eaaaa01c2bde82e985e7a5ec84cdd39d82989fd1978b770adcb05a5aa",
+      "draftRecipeSha256": null
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "5513d18fbb3dbf75c8f4f568393b5a47c77f321aa9f509b569dd258d37a55a4f",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.hsn.com/",
+       "chain": [
+        "https://www.hsn.com/"
+       ],
+       "landed": "https://www.hsn.com/",
+       "sameSite": true
+      }
+     ],
+     "record": "capture/records/hsn.com.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": "a24cca4eaaaa01c2bde82e985e7a5ec84cdd39d82989fd1978b770adcb05a5aa",
+    "events": [
+     {
+      "kind": "request-aborted",
+      "detail": "POST www.hsn.com"
+     }
+    ],
+    "reviewFlags": [
+     "the goto to the origin returned a blank page whose only content is an Akamai challenge (sec-if-cpt markup, 'Powered and protected by Akamai'); it did not resolve after a 10 s wait; nothing was clicked or retried",
+     "TOOL GAP: the tool's stop check did not recognise this challenge (no wall wording, no challenge frame or known challenge element), so the operator took view-01 and view-02 of the challenge page before identifying it; those views are gitignored, never labelled and should be set aside; the operator then ended the session with blocked-bot-wall (end-time screenshot hash recorded, a blank page)",
+     "suggest adding the Akamai sec-if-cpt marker to the tool's stop check (a tool change for the coordinator)"
+    ]
+   },
+   "statusUnderProtocol5": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "note": "bot wall in reconnaissance (Akamai behavioural challenge page at the origin), recorded by the operator's end step"
+   }
+  },
+  {
+   "domain": "savana.com",
+   "stream": "non-us",
+   "visit": 7,
+   "band": "top-1k",
+   "regionGroup": "asia-pacific",
+   "homeList": "IN",
+   "frameRegion": "IN",
+   "frameCurrency": "INR",
+   "protocol5": {
+    "status": "excluded",
+    "code": "robots-disallow-all",
+    "recon": {
+     "sessionId": "20261006T073752Z",
+     "startedAt": "2026-10-06T07:37:52.253Z",
+     "endedAt": "2026-10-06T07:37:54.366Z",
+     "topLevelNavigations": 0,
+     "navigationRequests": 0,
+     "views": 0,
+     "outcome": {
+      "status": "excluded",
+      "code": "robots-disallow-all",
+      "evidenceSha256": null,
+      "draftRecipeSha256": null
+     },
+     "stop": {
+      "code": "robots-disallow-all",
+      "detail": "robots-rules",
+      "evidenceSha256": null
+     },
+     "robots": {
+      "sha256": "b1a641f201d343497b853a09d2c9a4febe8f25fad9552c96ce9d4811646ae037",
+      "httpStatus": 200,
+      "decision": "robots-disallow-all"
+     },
+     "stockMismatch": [],
+     "homeLandings": [],
+     "record": "capture/records/savana.com.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": null,
+    "events": [],
+    "reviewFlags": [
+     "robots.txt (HTTP 200) allows only named search-engine crawlers and has User-agent: * with Disallow: /; the root path is disallowed for *, so robots-disallow-all under Evan s rule; no page was loaded"
+    ]
+   },
+   "statusUnderProtocol5": {
+    "status": "excluded",
+    "code": "robots-disallow-all",
+    "note": "robots.txt disallows everything for User-agent * (Disallow: /), checked before any page load"
+   }
   }
  ],
  "protocol4": "generic-reader-protocol.4",

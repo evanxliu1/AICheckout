@@ -1,0 +1,137 @@
+{
+  "schema": "capture-site-record.3",
+  "domain": "apple.com",
+  "recipeSha256": "f91076193fe226358b23f2a0b130337a9b4290508d524890ee35c2d157cacd73",
+  "tool": {
+    "version": "capture-tool.3",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "recon": {
+    "sessionId": "20261006T073023Z"
+  },
+  "session": {
+    "id": "20261006T073232Z",
+    "number": 1,
+    "startedAt": "2026-10-06T07:32:32.474Z",
+    "endedAt": "2026-10-06T07:33:56.466Z",
+    "topLevelNavigations": 8,
+    "navigationRequests": 8
+  },
+  "robots": {
+    "url": "https://www.apple.com/robots.txt",
+    "httpStatus": 200,
+    "sha256": "3115f45c98cfa19341978dcab5dfbc0fd3e0ff4eb3ab1fe8192c3fbf7227dee7",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "disallow",
+            "path": "/*shop/browse/overlay/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/*shop/iphone/payments/overlay/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/cn/*/aow/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/tmall*"
+          },
+          {
+            "type": "allow",
+            "path": "/ac/globalnav/2.0/*/images/ac-globalnav/globalnav/search/*"
+          }
+        ]
+      }
+    ],
+    "checkedPaths": [
+      {
+        "path": "/shop/bag",
+        "host": "www.apple.com",
+        "allowed": true
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "terms": {
+    "url": "https://www.apple.com/legal/internet-services/terms/site.html",
+    "copySha256": "0f22c30a21ffcb19012f80fed901fee538fef6f20dbd02683d116e13ebb4b1b1",
+    "prohibitsAutomated": "unknown"
+  },
+  "states": [
+    {
+      "state": "empty-cart",
+      "url": "https://www.apple.com/shop/bag",
+      "manifestSha256": "53d2874e0ea7526aaa56803e7a3e62ae6def1b3dcbd4eeec8c34f05ebda9595a",
+      "domSha256": "52f8bc5406d14c0e52e2d5999e772ae250ba21fa0cfe321fde3437f7fab9d5ea",
+      "viewportSha256": "b7cbad5242402a376526a3033d86c70ef8a17feaa006e7748a3de2c822f0a66c",
+      "robotsAllowed": true
+    },
+    {
+      "state": "view-01",
+      "url": "https://www.apple.com/shop/bag",
+      "manifestSha256": "29f33485a677635acfe3dc267491a6e05611946077ccee3cd6330ab07deefc85",
+      "domSha256": "8e02d0f9966a433535eef520eec92a88abb320396a35dc320afdb8d23f1e5525",
+      "viewportSha256": "7dad8c004f0184204ae7108b055926599e608aee383bbc327b59bc9627a1851a",
+      "robotsAllowed": true
+    },
+    {
+      "state": "cart-1",
+      "url": "https://www.apple.com/shop/bag",
+      "manifestSha256": "b276a031be7c3c86324976761d0d4a574f87da6ae2a8e79a99e6053819383fa0",
+      "domSha256": "e2b4bb268dfacf1c95cdaa76ab74e76c05535352ba40dc2161f28e2564607c19",
+      "viewportSha256": "7dad8c004f0184204ae7108b055926599e608aee383bbc327b59bc9627a1851a",
+      "robotsAllowed": true
+    },
+    {
+      "state": "cart-qty2",
+      "url": "https://www.apple.com/shop/bag",
+      "manifestSha256": "60f95aaf52cde1a13ab30f163f31e75e1d35a94c3c39df99949f1d3124ef6916",
+      "domSha256": "5ac188547f90cdb516e76442eb29f39bc678c553d7fba5d6b43ec694452958bf",
+      "viewportSha256": "b50c9669b50c6ac19818fe105d062a5a09babbc0c57dfbe989f6fbe58e2ebf3a",
+      "robotsAllowed": true
+    },
+    {
+      "state": "cart-2items",
+      "url": "https://www.apple.com/shop/bag",
+      "manifestSha256": "f01de39cf81d43788b178ec6fb4f040ced8880f29acbe2ef7a74fe7307055e5a",
+      "domSha256": "bdfb099641a854ecb11565308c8807e6d26ab560dedcef7307b18e5747922c37",
+      "viewportSha256": "fe0e38461d547ba0eb416a227d15f2121a5677fb410480796626d510e12825f5",
+      "robotsAllowed": true
+    },
+    {
+      "state": "terms",
+      "url": "https://www.apple.com/legal/internet-services/terms/site.html",
+      "manifestSha256": "0f22c30a21ffcb19012f80fed901fee538fef6f20dbd02683d116e13ebb4b1b1",
+      "domSha256": "07aefc93c0b1f23f85bb2849b5123b0de0057f1e0279af1427f7419852211494",
+      "viewportSha256": "eaf2c692fbe51d26562ba22430a77e56aab4ef60d580b6623443ea9a161c4c65",
+      "robotsAllowed": true
+    }
+  ],
+  "notReached": [],
+  "platform": {
+    "group": "none-detected",
+    "marker": null
+  },
+  "events": [
+    {
+      "kind": "request-aborted",
+      "detail": "POST www.apple.com"
+    }
+  ],
+  "stop": null,
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  }
+}
