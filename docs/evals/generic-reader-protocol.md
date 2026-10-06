@@ -532,7 +532,7 @@ After the reviewer signed `.8` at `a1c994d`, four non-blocking notes were applie
 1. **Final cart check:** a new checklist step 9. After removals the cart's item count must equal the carried-over count, and any difference is flagged to Evan.
 2. **Audit, account paths:** the transcript audit also flags navigation to account, order, profile, address, payment, settings and sign-out paths. The protocol states that clicks by element `ref` can't be audited by name.
 3. **Export provenance:** `pane-export.js`'s header states the protocol's provenance (`pane-dom.2`, treated by the coordinator as within Evan's 2026-10-06 approval). The audit's allowed-script hash is computed from the file, so it follows the new text.
-4. **Audit, files and network:** the audit flags Write or Edit outside the capture data folder and the committed pane records, and any Bash network access.
+4. **Audit, files and network:** the audit flags Write or Edit outside the capture data folder and the committed pane records, and any Bash network access. **Known limit (independent reviewer, 2026-10-06):** files written through Bash (redirection `>`, `tee`, `cp`, `mv`) are not audited; operators MUST save only through the Write tool into the capture data folder, and the 12.3 reviewer spot-checks Bash commands for writes.
 
 **Erratum (2026-10-05, date only).** Dates in this document written as 2026-10-06 were corrected to 2026-10-05, the actual UTC date of the work. The `frozenOn` fields of the frozen files and the selection seed keep 2026-10-06 so that their hashes and the seeded selections are unchanged. No rule, number or definition changed.
 

@@ -3,6 +3,7 @@
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
 ## 2026-10-06
+* **Review** `generic-reader-protocol.8` **signed** at `a1c994d` (pane capture, `pane-dom.2`, ≥ 99% bar, generic reader only, robots recorded only, signed-in stores captured with guards); post-signature tooling erratum at `1818057` confirmed; known limit recorded: Bash-redirect writes are not audited (agent-verified). (claude-code/claude-opus-5-5)
 * **Review** `generic-reader-protocol.8` **signed** at `a1c994d` by the independent reviewer (agent-verified); [decision](decisions/2026-10-06-capture-protocol-8.md) accepted. Its four non-blocking notes were applied before any real capture as a dated [erratum](../docs/evals/generic-reader-protocol.md#erratum-2026-10-06-post-signature-tooling-fixes-to-8):
   - a final cart-count check (checklist step 9, differences flagged to Evan);
   - `audit-pane-transcript.mjs` also flags navigation to account, order, profile, address, payment, settings and sign-out paths, Write or Edit outside the capture data folder and pane records, and any Bash network access (tests); clicks by `ref` are stated as not auditable by name;
