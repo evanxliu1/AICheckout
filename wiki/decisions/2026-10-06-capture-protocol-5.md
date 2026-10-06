@@ -2,7 +2,7 @@
 type: Decision
 title: Coordinator's process changes after capture pilot 2 (generic-reader-protocol.5)
 description: After pilot 2 captured one of five sites, the coordinator decided (reversibly) that checkout-1 is not a robot state but a reported gap, that the home view may sit on the same-site landing of a goto to the origin, that one navigating action counts as one top-level navigation, that a listing without a qualifying item passes to the next candidate link, and that an enabled add-to-cart control decides stock; pilot 2's sites get a status under .5.
-status: proposed
+status: accepted
 tags: [decision, phase-12, merchants, eval, capture]
 generated:
   by: claude-code/claude-opus-5-5
@@ -47,3 +47,5 @@ These are **the coordinator's decisions** (the coordinating session, claude-code
 
 ## Status
 Proposed 2026-10-06 by the amendment builder (claude-code/claude-opus-5-5) on the coordinator's decisions. Independent review at `bc98c49` (2026-10-06): "sign with fixes" (agent-verified). Applied: no session enters a checkout (the `continue-as-guest` purpose retired, so the consequence about it above no longer holds; every off-site navigation refused and an off-site landing stops as `redirected-off-domain`; recipe checkout paths refused as targets and a landing on one stops); pilot-2 records of re-visited sites in `records/pilot-protocol-4/`; conforama.es's re-visit disclosed as a second draw, the same treatment for any future site a rule change would have affected; the reviewer MUST check each `stockMismatch`. Re-check at `bb005e7`: blocker B1 fixed with a generic checkout backstop (checkout wording refused on every click; `checkout`/`checkouts`/`secure-checkout` path segments refused or stopping, Magento `/checkout/cart` allowed). It awaits the independent reviewer's signature of `.5`; `.4` binds until then.
+
+Signed: the independent reviewer signed `generic-reader-protocol.5` at `60c04f3` and approved `capture-tool.3` on 2026-10-06 after two fix rounds (checkout enforced in the tool, generic checkout backstop; agent-verified); accepted.
