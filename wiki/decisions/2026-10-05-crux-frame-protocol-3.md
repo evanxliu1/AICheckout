@@ -47,7 +47,7 @@ Amend the reader protocol to `generic-reader-protocol.3` ([Amendment 2](../../do
 - Non-U.S. results cover 24 markets at about 4–5 captured sites each; per-country numbers are descriptive only.
 - CrUX misses app traffic and non-Chrome browsers, so China (4 sites), Indonesia (5) and Nigeria (1) are thin. Non-U.S. strata are effectively region group × platform, since every non-U.S. candidate is `top-1k`.
 - **For the reviewer to scrutinise:** the classification is a model's from knowledge. The batches flagged uncertain calls, among them small unknown shops included on their names (for example lymphoria.co, zillionsgift.com, cuddlecomfort.com, gettngood.com, getting-goods.com, glamlora.com, imcparts.net, durzzo.com), bullion dealers, and global `.com` brands set to `US` or `multi-market-domain`. Capture excludes a non-store it meets (`not-a-store`, `defunct`), with evidence.
-- `.3` binds once the independent reviewer signs (its verdict at `95f4124` was "sign with fixes"; fixes applied); until then `.2` binds and 12.3 does not start.
+- `.3` was signed by the independent reviewer at `b232d0e` on 2026-10-05 (agent-verified) after two fix rounds; it binds from then on.
 
 ## Status
-Proposed 2026-10-05 by the amendment builder (claude-code/claude-opus-5-5) on Evan's chat request. Independent review at `95f4124`: sign with fixes (agent-verified); fixes applied. Accepted by Evan in chat 2026-10-05; protocol .3 binds once the independent reviewer signs.
+Proposed 2026-10-05 by the amendment builder (claude-code/claude-opus-5-5) on Evan's chat request. Independent review at `95f4124`: sign with fixes (agent-verified); fixes applied. Accepted by Evan in chat 2026-10-05; protocol .3 binds once the independent reviewer signs. Signed at `b232d0e` (agent-verified).
