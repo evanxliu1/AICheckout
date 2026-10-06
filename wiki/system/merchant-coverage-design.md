@@ -63,7 +63,7 @@ Copied: hosted merchant data, configs as data, generic detection. Not copied: br
 
 1. **Detect on the URL, in the worker.** On a popup click (activeTab) or, with the optional grant, on `tabs.onUpdated`: a named profile's pinned paths or cart/checkout tokens (`/cart`, `/checkout`, `/basket`, `/bag`, `checkouts/`). Page code is injected with `executeScript` only on candidate URLs; no content script runs on all sites. Mini-cart drawers on product pages stay click-to-use.
 2. **Profile:** named, or generic "Another U.S. online store" (`general-merchandise`).
-3. **Amount:** store config if present and not `disabled`, else the generic reader; `found` → prefilled; `ask` → "We found $84.99 — is that right?"; `none` → typed.
+3. **Amount:** the generic reader (store configs dropped 2026-10-06; the three legacy adapters stay until the generic reader matches them); `found` → shown; otherwise no amount is shown and the recommendation shows rates only (no confirmation prompt; [decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md), 2026-10-06; supersedes the `ask` prompt).
 4. **Rank:** the engine uses the amount only (`kind` is for display and savings); weak category evidence → a range.
 5. **Savings:** order recognition and the savings question only at named profiles with a verified `orderConfirmation`; generic stores never ask.
 
