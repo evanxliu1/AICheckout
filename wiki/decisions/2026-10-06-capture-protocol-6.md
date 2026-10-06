@@ -35,7 +35,7 @@ These are **the coordinator's decisions** (the coordinating session, claude-code
 | hsn.com's challenge-page views | Keep; set aside | **Set aside**, never labelled (`sites.json` `statusUnderProtocol6.setAsideViews`) |
 | lego.com (`minicart-1` only) | Re-visit; stand | **Stands** under the session rule: the capture ended without `tool-error`, so no second session. It is outside the Y denominator |
 | goofish.com (`tool-error`) | — | **Re-visited** on a later UTC day |
-| blibli.com (`sign-in-required`, possibly the write guard) | Re-visit; stand | **Stands** under the session rule, flagged for the reviewer. The builder applied the session rule, since the coordinator named only lego.com and goofish.com |
+| blibli.com (`sign-in-required`, possibly the write guard) | Re-visit; stand | **Re-visited** on a later UTC day (coordinator, 2026-10-06), under Amendment 4's principle for exclusions a rule change would have affected; disclosed as a possible second draw, voided session kept. lego.com's capture stands: a captured site is never re-captured |
 | Operator readings | — | **Confirmed in the protocol.** A listing with no in-band item passes to the next home-page candidate, not into its own links. The home page's self-link is not a candidate. An item needing a choice other than size or colour is not eligible |
 
 ## Decision

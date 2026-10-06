@@ -958,7 +958,7 @@
    "statusUnderProtocol6": {
     "status": "captured-stands",
     "code": null,
-    "note": "capture ended without tool-error, so it stands as minicart-1 only (cart-1 not-reached, outside the Y denominator); cart page broken by the old write guard (Amendment 5, 3)"
+    "note": "capture ended without tool-error, so it stands as minicart-1 only (cart-1 not-reached, outside the Y denominator); cart page broken by the old write guard (Amendment 5, 3); a captured site is never re-captured (coordinator decision 2026-10-06)"
    }
   },
   {
@@ -1476,7 +1476,7 @@
        "sameSite": true
       }
      ],
-     "record": "capture/records/blibli.com.recon.json"
+     "record": "capture/records/batch1-protocol-5/blibli.com.recon.json"
     },
     "capture": null,
     "evidenceSha256": "96cb704c507e5494994768c2bde3c10e3914905e80cfbb3490d0d290f6f3d646",
@@ -1510,9 +1510,9 @@
     "note": "excluded in reconnaissance: the header cart link /cart sends a guest to a sign-in host on another registrable domain (account.bliblitiket.com)"
    },
    "statusUnderProtocol6": {
-    "status": "excluded-stands",
-    "code": "sign-in-required",
-    "note": "stands under the session rule (exclusion without tool-error); flagged: the sign-in redirect may have been caused by the old write guard (Amendment 5, 3)"
+    "status": "revisit",
+    "code": null,
+    "note": "possible second draw: sign-in-required may have been caused by the old write guard (same defect as goofish.com); under Amendment 4's principle it is re-visited under .6 on a later UTC day, restarting from candidate link 1; the voided session is kept (record in capture/records/batch1-protocol-5/, gitignored data under capture/data/.batch1-protocol-5/) and does not count toward the one-session rule (Amendment 5, 3; coordinator decision 2026-10-06)"
    }
   },
   {
