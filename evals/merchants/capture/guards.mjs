@@ -228,7 +228,8 @@ export const VENDOR_CHALLENGES = [
   [
     'cloudflare',
     'blocked-bot-wall',
-    /_cf_chl_opt|cf-chl-widget|cf_chl_(?:captcha|jschl|managed|rc)|id=["']challenge-(?:error-text|body-text|running)/i,
+    // Not `cf-chl-widget`: invisible Turnstile renders it in ordinary host pages (protocol .7).
+    /_cf_chl_opt|cf_chl_(?:captcha|jschl|managed|rc)|id=["']challenge-(?:error-text|body-text|running)/i,
   ],
   ['imperva', 'blocked-bot-wall', /incapsula incident id|request unsuccessful\. incapsula|_incapsula_resource\?[^"']*(?:cwudnsai|xinfo)/i],
   ['datadome', 'captcha', /(?:geo|ct)\.captcha-delivery\.com|dd\.datadome-captcha|datadome captcha/i],
@@ -244,8 +245,14 @@ export function detectStop(facts) {
   if (facts.status === 403 || facts.status === 401)
     return hit('blocked-http-403', `http-${facts.status}`, `main document HTTP ${facts.status}`);
   if (facts.status === 429) return hit('blocked-http-429', 'http-429', 'main document HTTP 429');
+  // A Cloudflare frame counts only when a visible (> 30 px) iframe of challenges.cloudflare.com is in the page:
+  // invisible Turnstile on an ordinary host page is not a challenge (protocol .7).
+  const cfVisible = (facts.visibleFrameSrcs ?? []).some((s) => /challenges\.cloudflare\.com/i.test(s));
   const captchaFrame = (facts.frameUrls ?? []).find(
-    (u) => CAPTCHA_FRAME.test(u) && !/size=invisible/.test(u),
+    (u) =>
+      CAPTCHA_FRAME.test(u) &&
+      !/size=invisible/.test(u) &&
+      (!/challenges\.cloudflare\.com/i.test(u) || cfVisible),
   );
   if (captchaFrame) return hit('captcha', 'challenge-frame', `challenge frame on ${safeHost(captchaFrame)}`);
   if (facts.captchaElement)
@@ -402,6 +409,10 @@ export function pageFacts() {
     text: document.body ? document.body.innerText.slice(0, 4000) : '',
     passwordVisible: [...document.querySelectorAll('input[type=password]')].some((e) => visible(e)),
     captchaElement: captcha.some((e) => visible(e, 30)),
+    // Sources of iframes larger than 30 px (to tell a visible challenge frame from invisible Turnstile).
+    visibleFrameSrcs: [...document.querySelectorAll('iframe')]
+      .filter((e) => visible(e, 30))
+      .map((e) => e.getAttribute('src') || ''),
     // The document's markup (first 300 kB), for vendor challenge markers. In memory only, never written.
     markup: document.documentElement ? document.documentElement.outerHTML.slice(0, 300_000) : '',
   };

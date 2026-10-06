@@ -185,13 +185,43 @@ test('protocol .6: the site\'s own background writes go through, logged; not to 
   assert.ok(posts().includes('/api/graphql'));
   assert.ok(!posts().includes('/api/account/session'));
   assert.ok(!posts().includes('/checkout/session'));
-  assert.ok(session.events.some((e) => e.kind === 'background-write' && e.detail.endsWith('/api/graphql')));
+  assert.ok(session.backgroundWrites.sample.some((d) => d.endsWith('/api/graphql')));
   assert.ok(session.events.some((e) => e.kind === 'request-aborted' && e.detail.endsWith('/api/account/session')));
   // A write 1 s after a plain click is inside the 3 s window: aborted.
   await driver.click({ role: 'button', name: 'Show more' });
   await new Promise((r) => setTimeout(r, 1500));
   assert.ok(!posts().includes('/api/after-click'));
   assert.ok(session.events.some((e) => e.kind === 'request-aborted' && e.detail.endsWith('/api/after-click')));
+});
+
+test('protocol .7: blocked write paths apply inside the add-to-cart window; the add-to-cart write goes through', async () => {
+  const { driver, session } = await fresh('serve', {
+    extra: { productUrls: [`${shop.origin}/products/tee`, `${shop.origin}/products/js-atc`] },
+  });
+  await driver.goto(`${shop.origin}/products/js-atc`);
+  await driver.click({ role: 'button', name: 'Add to cart' }, 'add-to-cart');
+  await new Promise((r) => setTimeout(r, 300));
+  assert.ok(posts().includes('/cart/add.js'));
+  assert.ok(!posts().includes('/api/orders/track'));
+  assert.ok(session.events.some((e) => e.kind === 'request-aborted' && e.detail.endsWith('/api/orders/track')));
+});
+
+test('protocol .7: background writes are counted apart from events, so other events are never pushed out', async () => {
+  const { driver, session } = await fresh('serve');
+  await driver.goto(`${shop.origin}/chatty`);
+  await new Promise((r) => setTimeout(r, 1500));
+  assert.equal(session.backgroundWrites.count, 250);
+  assert.equal(session.backgroundWrites.sample.length, 100);
+  assert.ok(!session.events.some((e) => e.kind === 'background-write'));
+  await driver.goto(`${shop.origin}/products/tee`);
+  await assert.rejects(driver.click({ role: 'link', name: 'Partner store' }), refusal('refused-off-site'));
+  assert.ok(session.events.some((e) => e.kind === 'navigation-aborted' && e.detail.startsWith('refused-off-site')));
+});
+
+test('protocol .7: an invisible Turnstile widget in a host page does not stop the site', async () => {
+  const { driver } = await fresh('serve');
+  const st = await driver.goto(`${shop.origin}/turnstile-host`);
+  assert.equal(st.stopped, null);
 });
 
 test('protocol .6: vendor challenge pages stop the site before any snapshot', async () => {

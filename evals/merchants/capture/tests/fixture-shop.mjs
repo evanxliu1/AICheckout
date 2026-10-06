@@ -35,6 +35,11 @@ export async function startShop({
   const shop = createServer(async (req, res) => {
     const url = new URL(req.url, 'http://127.0.0.1');
     const body = req.method === 'POST' ? await readBody(req) : '';
+    if (req.method === 'POST' && url.pathname.startsWith('/api/ping/')) {
+      log.push({ site: 'shop', method: req.method, path: url.pathname, body });
+      res.writeHead(204);
+      return res.end();
+    }
     log.push({ site: 'shop', method: req.method, path: url.pathname, body });
     const html = (status, text) => {
       res.writeHead(status, { 'content-type': 'text/html; charset=utf-8', 'x-fixture': 'shop' });
@@ -222,6 +227,42 @@ document.getElementById('later').addEventListener('click', () => setTimeout(() =
       case 'POST /api/account/session':
       case 'POST /checkout/session':
       case 'POST /api/after-click':
+        res.writeHead(204);
+        return res.end();
+      case 'GET /products/js-atc':
+        // A script add-to-cart (typeless button outside a form) that also posts to an order-tracking endpoint.
+        return html(
+          200,
+          page(
+            'JS product',
+            `<h1>JS product</h1><button type="button" id="js-atc">Add to cart</button><script>
+document.getElementById('js-atc').addEventListener('click', () => {
+  fetch('/cart/add.js', { method: 'POST', body: 'id=1' }).catch(() => {});
+  fetch('/api/orders/track', { method: 'POST', body: '{}' }).catch(() => {});
+});
+</script>`,
+          ),
+        );
+      case 'GET /chatty':
+        // A page that makes 250 distinct background writes on load.
+        return html(
+          200,
+          page(
+            'Chatty',
+            "<p>Busy</p><script>for (let i = 0; i < 250; i += 1) fetch('/api/ping/' + i, { method: 'POST', body: '' }).catch(() => {});</script>",
+          ),
+        );
+      case 'GET /turnstile-host':
+        // An ordinary page with an invisible Turnstile widget (as rendered in a host page): never a stop.
+        return html(
+          200,
+          page(
+            'Store',
+            '<form id="nl"><div class="cf-turnstile" data-size="invisible" style="width:0;height:0"><input type="hidden" name="cf-turnstile-response" id="cf-chl-widget-a1b2c_response"></div></form><p>Hello</p>',
+          ),
+        );
+      case 'POST /cart/add.js':
+      case 'POST /api/orders/track':
         res.writeHead(204);
         return res.end();
       case 'GET /r-checkout':

@@ -36,7 +36,7 @@ import {
 import { ROBOTS_TOKEN, pathAllowed, robotsPosture } from './robots.mjs';
 import { sha256 } from './snapshot.mjs';
 
-export const TOOL_VERSION = 'capture-tool.4';
+export const TOOL_VERSION = 'capture-tool.5';
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const DEFAULT_OUT = path.join(here, 'data');
 export const DEFAULT_PROFILE = path.join(here, 'profile');
@@ -443,6 +443,7 @@ export async function runSite(opts) {
       notReached: session.ended?.notReached ?? [],
       platform,
       events: session.events,
+      backgroundWrites: session.backgroundWrites,
       stop: session.stopped,
       outcome,
     });
@@ -570,6 +571,7 @@ async function runRecon(opts) {
       })),
       navigation: session.navigationLog.map(committableUrl).slice(0, 200),
       events: session.events,
+      backgroundWrites: session.backgroundWrites,
       stop: session.stopped,
       outcome,
     });
