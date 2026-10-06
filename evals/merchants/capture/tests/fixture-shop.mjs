@@ -136,6 +136,7 @@ document.getElementById('inc').addEventListener('click', () => { const q = docum
         );
       }
       case 'GET /checkout':
+      case 'GET /guest-or-sign-in':
         return html(
           200,
           page(

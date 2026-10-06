@@ -16,7 +16,15 @@
 // `view-NN`, every purpose except closing a popup or declining cookies, and any control named like add-to-cart.
 import path from 'node:path';
 import { writeFile } from 'node:fs/promises';
-import { RefusalError, StopError, detectStop, inspectControl, judgeClick, pageFacts } from './guards.mjs';
+import {
+  RefusalError,
+  StopError,
+  detectStop,
+  inspectControl,
+  isCheckoutPath,
+  judgeClick,
+  pageFacts,
+} from './guards.mjs';
 import {
   Findings,
   RECON_PURPOSES,
@@ -488,7 +496,7 @@ export async function createDriver(opts) {
   const checkoutPaths = new Set((recipe.checkoutPaths ?? []).map((p) => p.replace(/\/+$/, '') || '/'));
   /** A same-site URL whose path is one of the recipe's checkout paths (exact, trailing slash ignored). */
   function isCheckout(u) {
-    return sameSite(u.hostname, domain) && checkoutPaths.has(normPath(u));
+    return sameSite(u.hostname, domain) && (checkoutPaths.has(normPath(u)) || isCheckoutPath(u.pathname));
   }
   const onProductPage = () => {
     try {

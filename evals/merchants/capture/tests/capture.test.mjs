@@ -10,7 +10,15 @@ import { fileURLToPath } from 'node:url';
 import { checkRecon, committableUrl } from '../capture.mjs';
 import { checkRequest, startControlServer } from '../control-server.mjs';
 import { ADD_TO_CART_NAME, createDriver, guardApi, parseTarget } from '../driver.mjs';
-import { ORDER_OR_ACCOUNT, RefusalError, actionPath, detectStop, judgeClick } from '../guards.mjs';
+import {
+  CHECKOUT_NAME,
+  ORDER_OR_ACCOUNT,
+  RefusalError,
+  actionPath,
+  detectStop,
+  isCheckoutPath,
+  judgeClick,
+} from '../guards.mjs';
 import { detectPlatform, platformStates } from '../platform.mjs';
 import { EVIDENCE_REQUIRED, EXCLUSION_CODES, Findings, Recipe, ReconSpec, SiteRecord, StepSchema } from '../recipe.mjs';
 import { groupFor, isAllowed, parseRobots, robotsPosture } from '../robots.mjs';
@@ -815,4 +823,66 @@ test('protocol .5: the continue-as-guest purpose is retired', () => {
 test('recipe: cartHost must be a host of the site', () => {
   assert.ok(Recipe.parse({ ...good(), cartHost: 'cart.example.de' }));
   assert.equal(Recipe.safeParse({ ...good(), cartHost: 'cart.example.com' }).success, false);
+});
+
+test('protocol .5 backstop: checkout wording is refused for every click; cart wording is not', () => {
+  for (const name of [
+    'Checkout',
+    'Check out',
+    'Proceed to checkout',
+    'Secure checkout',
+    'Zur Kasse',
+    'Kasse',
+    'Caisse',
+    'Commander',
+    'Passer commande',
+    'Finalizar compra',
+    'Tramitar pedido',
+    'Finalizar pedido',
+    'Cassa',
+    "Procedi all'acquisto",
+    'Afrekenen',
+    'Till kassan',
+    'Przejdź do kasy',
+    'Ödemeye geç',
+    'レジに進む',
+    '購入手続きへ',
+    '去结算',
+    '結帳',
+    '결제하기',
+    '주문하기',
+  ]) {
+    assert.match(name, CHECKOUT_NAME, name);
+    assert.equal(judgeClick({ name, tag: 'a' }, undefined)?.code, 'refused-checkout', name);
+    assert.equal(judgeClick({ name, tag: 'button' }, 'close-popup')?.code, 'refused-checkout', name);
+  }
+  for (const name of [
+    'Cart',
+    'Bag',
+    'View cart',
+    'View bag',
+    'Shopping bag',
+    'Warenkorb',
+    'Panier',
+    'Carrito',
+    'Carrello',
+    'Winkelwagen',
+    'Varukorg',
+    'Koszyk',
+    'Sepetim',
+    'カート',
+    '购物车',
+    '장바구니',
+    'Continue shopping',
+    'Add to cart',
+    'Kassel store',
+  ])
+    assert.doesNotMatch(name, CHECKOUT_NAME, name);
+});
+
+test('protocol .5 backstop: checkout path segments, Magento cart paths allowed', () => {
+  for (const p of ['/checkout', '/checkout/', '/checkouts/abc', '/en/checkout', '/Checkout/Shipping', '/secure-checkout'])
+    assert.equal(isCheckoutPath(p), true, p);
+  for (const p of ['/checkout/cart', '/checkout/cart/', '/checkout/cart/add/uenc/x', '/cart', '/my-bag', '/checkoutx', '/'])
+    assert.equal(isCheckoutPath(p), false, p);
 });

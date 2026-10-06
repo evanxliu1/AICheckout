@@ -473,9 +473,10 @@ test('protocol .5: no checkout-1 state; a click to an off-site checkout is refus
       record.states.map((s) => s.state),
       ['cart-1'],
     );
-    // The off-site click was refused; the run stops as a tool error, and the site still counts as captured.
+    // The click was refused (its checkout wording is caught first; the off-site rule would refuse it too); the run
+    // stops as a tool error, and the site still counts as captured.
     assert.equal(record.stop.code, 'tool-error');
-    assert.match(record.stop.detail, /refused-off-site/);
+    assert.match(record.stop.detail, /refused-checkout/);
     assert.equal(record.outcome.status, 'captured');
     assert.ok(!shop.log.some((r) => r.site === 'third-party' && r.path !== '/widget'));
   } finally {

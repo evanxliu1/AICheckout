@@ -73,11 +73,10 @@ const withAllow = (entries) => ({
 
 test('refuses add-to-cart purpose on a promo or sign-in form, and any purpose not on the recipe allowlist', async () => {
   const { driver } = await fresh('serve', {
-    // The fixture's sign-in page is its /checkout; no recipe checkout path here, so it may be loaded.
     extra: { ...withAllow([
       { purpose: 'add-to-cart', target: { role: 'button', name: 'Apply' } },
       { purpose: 'add-to-cart', target: { role: 'button', name: 'Sign in' } },
-    ]), checkoutPaths: [] },
+    ]) },
   });
   shop.cart.push({ id: 'tee', size: 'M', qty: 1 });
   await driver.goto(`${shop.origin}/cart`);
@@ -85,7 +84,7 @@ test('refuses add-to-cart purpose on a promo or sign-in form, and any purpose no
     driver.click({ role: 'button', name: 'Apply' }, 'add-to-cart'),
     refusal('refused-input-form'),
   );
-  await driver.goto(`${shop.origin}/checkout`);
+  await driver.goto(`${shop.origin}/guest-or-sign-in`);
   await assert.rejects(
     driver.click({ role: 'button', name: 'Sign in' }, 'add-to-cart'),
     refusal('refused-order-or-account'),
@@ -529,6 +528,23 @@ test('protocol .5: no session enters a checkout (goto refused, click refused, la
   const b = await fresh('serve');
   await assert.rejects(b.driver.goto(`${shop.origin}/r-checkout`), stopped('would-need-forbidden-action'));
   assert.equal(b.session.stopped.detail, 'landed-on-checkout');
+  // Backstop when the recipe names no checkout path: checkout-like path segments and checkout wording.
+  const c = await fresh('serve', { extra: { checkoutPaths: [] } });
+  const pre = shop.log.length;
+  for (const p of ['/checkout', '/checkouts/abc', '/en/checkout', '/Secure-Checkout/step1'])
+    await assert.rejects(c.driver.goto(`${shop.origin}${p}`), refusal('refused-checkout'), p);
+  assert.ok(!shop.log.slice(pre).some((r) => /checkout/i.test(r.path)));
+  const ok = await c.driver.goto(`${shop.origin}/checkout/cart`);
+  assert.equal(ok.stopped, null);
+  shop.cart.push({ id: 'tee', size: 'M', qty: 1 });
+  try {
+    await c.driver.goto(`${shop.origin}/cart`);
+    await assert.rejects(c.driver.click({ selector: '#checkout-link' }), refusal('refused-checkout'));
+  } finally {
+    shop.cart.length = 0;
+  }
+  const d = await fresh('serve', { extra: { checkoutPaths: [] } });
+  await assert.rejects(d.driver.goto(`${shop.origin}/r-checkout`), stopped('would-need-forbidden-action'));
   // The continue-as-guest purpose is retired.
   await assert.rejects(
     (await fresh('serve')).driver.click({ role: 'button', name: 'Continue as guest' }, 'continue-as-guest'),
@@ -556,9 +572,9 @@ for (const [route, code] of [
 }
 
 test('a sign-in form beside guest checkout does not stop the site, and is never touched', async () => {
-  // A page with a sign-in form that is not a recipe checkout path (the fixture's /checkout, with none named).
-  const { driver } = await fresh('serve', { extra: { checkoutPaths: [] } });
-  const st = await driver.goto(`${shop.origin}/checkout`);
+  // The fixture's checkout page under a non-checkout path (no session enters a real checkout).
+  const { driver } = await fresh('serve');
+  const st = await driver.goto(`${shop.origin}/guest-or-sign-in`);
   assert.equal(st.stopped, null);
   assert.ok(!posts().includes('/login'));
 });
