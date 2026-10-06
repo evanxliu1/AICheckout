@@ -82,3 +82,7 @@ Do not write any other file. Do not edit anything in any git repository.
   Sierra) and every country storefront of one retailer share an operator. A holding or private-equity owner whose brands
   run their own stores is not an operator. When unsure, group (it only keeps more sites in one split). The per-country
   storefront rule stays on the brand family; splits lock on the operator.
+- Persistence (applied by the build script, not a judgement): an eligible storefront stays eligible only if, in at least
+  one of the CrUX lists of its home country for 2026-02 and 2026-05, one of its storefront hosts, or that host with or
+  without a `www.`, `m.` or `mobile.` label, is within the home list's classified depth (U.S. ranks 1-5,000, others
+  1-1,000). No other subdomain counts. Otherwise: `not-persistently-popular`. Seasonal retailers fall out by design.

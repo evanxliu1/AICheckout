@@ -1,7 +1,7 @@
 {
  "frame": "retail-frame.3",
  "frozenOn": "2026-10-05",
- "source": "Chrome UX Report (CrUX) top lists, month 2026-08 (yyyymm 202608): the global list and the country lists of US GB DE FR IT ES NL PL SE TR JP KR CN IN ID AU CA MX BR AR SA AE ZA NG EG, as cached by github.com/zakird/crux-top-lists (data/global/202608.csv.gz, data/country/<cc>/202608.csv.gz). CrUX ranks origins by completed page loads of opted-in Chrome users in rank-magnitude buckets (1k, 5k, 10k, ...), unordered within a bucket. \"CrUX datasets by Google are licensed under a Creative Commons Attribution 4.0 International License\" (https://developer.chrome.com/docs/crux/methodology). Local copies gitignored under evals/merchants/data/crux/; SHA-256 pinned in evals/merchants/tools/build-retail-frame-3.py. This frame is a filtered and classified subset of those lists and is modified from them (CC BY 4.0 section 3(a)(1)(B)): buckets are aggregated per registrable domain, and the 2026-02 country lists (yyyymm 202602) are used only for the persistence rule.",
+ "source": "Chrome UX Report (CrUX) top lists, month 2026-08 (yyyymm 202608): the global list and the country lists of US GB DE FR IT ES NL PL SE TR JP KR CN IN ID AU CA MX BR AR SA AE ZA NG EG, as cached by github.com/zakird/crux-top-lists (data/global/202608.csv.gz, data/country/<cc>/202608.csv.gz). CrUX ranks origins by completed page loads of opted-in Chrome users in rank-magnitude buckets (1k, 5k, 10k, ...), unordered within a bucket. \"CrUX datasets by Google are licensed under a Creative Commons Attribution 4.0 International License\" (https://developer.chrome.com/docs/crux/methodology). Local copies gitignored under evals/merchants/data/crux/; SHA-256 pinned in evals/merchants/tools/build-retail-frame-3.py. This frame is a filtered and classified subset of those lists and is modified from them (CC BY 4.0 section 3(a)(1)(B)): buckets are aggregated per registrable domain, and the 2026-02 and 2026-05 country lists (yyyymm 202602, 202605) are used only for the persistence rule.",
  "classification": "Agent-classified storefront hosts of online sellers of physical goods (claude-code/claude-opus-5-5, 2026-10-05, nine parallel subagent batches under one rule sheet, merged and reviewed by the builder), no website visited: every origin in the U.S. list to bucket 5k (ranks 1-5,000) and in the 24 other country lists to bucket 1k. Inputs: evals/merchants/frame-3-inputs/ (classified-hosts.tsv, reconcile.tsv, operators.tsv, classification-rules.txt). region / currency: the storefront a visitor in the United States gets at the domain without choosing a country. band: the bucket of the domain's best storefront host in its home list (the U.S. list for region US, else its region's list). Rules and codes: docs/evals/generic-reader-protocol.md#retail-frame",
  "supersedes": "retail-frame.2 for the reader evaluation (retail-frame.2 stays committed, unused); retail-frame.1 stays frozen for the merchant-pipeline held-out list",
  "bands": {
@@ -66,33 +66,70 @@
    "EG": "d92cbd7465772a7a0156f5631c29a996c97de9c233aa45526d965943231c15fd"
   },
   "persistence": {
-   "yyyymm": "202602",
+   "yyyymm": [
+    "202602",
+    "202605"
+   ],
+   "hostVariants": [
+    "www.",
+    "m.",
+    "mobile."
+   ],
    "sha256": {
-    "US": "2a88ed7c7a871d1decb06ff1048c1740692baee9529b87c78157051e97cbe2aa",
-    "GB": "45f551dd4ecd67614403e1b17c701dc65ebf4eb8be3e2e44f52c2075805b0638",
-    "DE": "4967c3d94f7ece0a5e6e1e84b5e52eea552ce8c478dcb634be3c3538277bb995",
-    "FR": "cb73042cea2efbd83a4d2b38060c172ff2fb636b082b2d6d2c4881b5492eac3e",
-    "IT": "2e4fffb55b0bc0c97add26b819a7a28e1bc1f41b2b9c742baad43e6db2e2c2e9",
-    "ES": "0075bf45c9c6c0ffbbfc6c8ff8b75c1e38ab49fd40b6053a463e1a2e84274bb4",
-    "NL": "49e91514306ee033eed98f0e4181d242b8b18d56ccba90df2f6312a53e710aaa",
-    "PL": "24eb885d90f7d69f75b3778f318d79d2725bc8a300d38b0c2d18c6f61006e53d",
-    "SE": "dc387c8097aca0d10165414bffb9bbe073123a4440488758291dcb5ac41163cb",
-    "TR": "68207ed38d2171400905e42141044f4db3bc92a64cddf7a54b983e69fcc93cb8",
-    "JP": "c38a275cfedff6359a66e46d2834d408f47a1d6874c05068e02aa08ee785b8bb",
-    "KR": "51848a1b4761dc0a0999eb0be0c30a78a712ce4b0afadcc6243f8dbff27d284e",
-    "CN": "8ccb67ba312f1c77fe608c757b3594d994ba252de83dfda904719893429d2afd",
-    "IN": "5de42573f11c335af453b48467cdd0bc582746f4a38281698b3fefa1e52f289b",
-    "ID": "4eb79c78a1bea72fcb6a59ebcb4c285ad52d3a259f31f0390d69543303ed1f8c",
-    "AU": "c6c104b4cfd8ca5e4f3660200b0881fb9619fbe36c2832e865b2ef4434d07e35",
-    "CA": "e10bbc25c7b830246f96c67eb820a99e0256d93ffdc732346c334571e9f77100",
-    "MX": "24efd19e098a042ea003ea1c4010afaf2918a4ea94af0e205e8e76b154870c7d",
-    "BR": "e925aa71b6c877a05b1ac8337a368a16bac64188f900633d3cede1e296c58159",
-    "AR": "817656006c99de4bdfab81bfe3d719020c6ed13e22d7bfec0586cde109eafb47",
-    "SA": "2ce0030b48e97989a2ad472c24e05685da6624a254489eafbaa33749f33e1883",
-    "AE": "bb787a03d738b89bb578fb304782eb669bf4451d0623c4430d918d6ec2c5589e",
-    "ZA": "ec818199afc99a48916e6899dcdcbee74bb9b3a98baac8f6efb3c553dd252553",
-    "NG": "49f4dba16e537a0402bc988e537f083eb312c50d917c4c01b75153978a4d429f",
-    "EG": "d403d51affeb9e10cbb4b3234760f005b486c902fe7cd2271c33520385053dd6"
+    "202602": {
+     "US": "2a88ed7c7a871d1decb06ff1048c1740692baee9529b87c78157051e97cbe2aa",
+     "GB": "45f551dd4ecd67614403e1b17c701dc65ebf4eb8be3e2e44f52c2075805b0638",
+     "DE": "4967c3d94f7ece0a5e6e1e84b5e52eea552ce8c478dcb634be3c3538277bb995",
+     "FR": "cb73042cea2efbd83a4d2b38060c172ff2fb636b082b2d6d2c4881b5492eac3e",
+     "IT": "2e4fffb55b0bc0c97add26b819a7a28e1bc1f41b2b9c742baad43e6db2e2c2e9",
+     "ES": "0075bf45c9c6c0ffbbfc6c8ff8b75c1e38ab49fd40b6053a463e1a2e84274bb4",
+     "NL": "49e91514306ee033eed98f0e4181d242b8b18d56ccba90df2f6312a53e710aaa",
+     "PL": "24eb885d90f7d69f75b3778f318d79d2725bc8a300d38b0c2d18c6f61006e53d",
+     "SE": "dc387c8097aca0d10165414bffb9bbe073123a4440488758291dcb5ac41163cb",
+     "TR": "68207ed38d2171400905e42141044f4db3bc92a64cddf7a54b983e69fcc93cb8",
+     "JP": "c38a275cfedff6359a66e46d2834d408f47a1d6874c05068e02aa08ee785b8bb",
+     "KR": "51848a1b4761dc0a0999eb0be0c30a78a712ce4b0afadcc6243f8dbff27d284e",
+     "CN": "8ccb67ba312f1c77fe608c757b3594d994ba252de83dfda904719893429d2afd",
+     "IN": "5de42573f11c335af453b48467cdd0bc582746f4a38281698b3fefa1e52f289b",
+     "ID": "4eb79c78a1bea72fcb6a59ebcb4c285ad52d3a259f31f0390d69543303ed1f8c",
+     "AU": "c6c104b4cfd8ca5e4f3660200b0881fb9619fbe36c2832e865b2ef4434d07e35",
+     "CA": "e10bbc25c7b830246f96c67eb820a99e0256d93ffdc732346c334571e9f77100",
+     "MX": "24efd19e098a042ea003ea1c4010afaf2918a4ea94af0e205e8e76b154870c7d",
+     "BR": "e925aa71b6c877a05b1ac8337a368a16bac64188f900633d3cede1e296c58159",
+     "AR": "817656006c99de4bdfab81bfe3d719020c6ed13e22d7bfec0586cde109eafb47",
+     "SA": "2ce0030b48e97989a2ad472c24e05685da6624a254489eafbaa33749f33e1883",
+     "AE": "bb787a03d738b89bb578fb304782eb669bf4451d0623c4430d918d6ec2c5589e",
+     "ZA": "ec818199afc99a48916e6899dcdcbee74bb9b3a98baac8f6efb3c553dd252553",
+     "NG": "49f4dba16e537a0402bc988e537f083eb312c50d917c4c01b75153978a4d429f",
+     "EG": "d403d51affeb9e10cbb4b3234760f005b486c902fe7cd2271c33520385053dd6"
+    },
+    "202605": {
+     "US": "f6eacb531ab63217d15c2b39fd31c3a20db8bb5fd58522cfbcc473b76fe5741b",
+     "GB": "6c1fc8d4adcaec1812e1f3879bf4461b22692c7da50fbb3fa1c187844d31b731",
+     "DE": "a38196b5bfa9cc6e0ba51a4eab4abbca186d92246ac04146e519ca4268d77ab3",
+     "FR": "c01cd1d279068df6d4320659e0363b83101cea6f57a2ef6c9a6bb8a79e881cdf",
+     "IT": "25c853754cec94f96d198f4e619c030c53071fe63fbe3048fd0cb9a463c1563f",
+     "ES": "c918914de4460952bad8a04c739c35dc93f65ba08cfe8114011338cced7e7270",
+     "NL": "82ab9cbceef47d93a9893483e5fe26b03967f151f7e253323954e8e906ad47ea",
+     "PL": "da5c21e9b867e545ba4784a3d8a30a44a7dab62dfdce82ef93cf3fb4812df292",
+     "SE": "5b557937ef580ac8c32e8c0c1a71118eda50d618f3f25f1a3d10a82ee7f0d855",
+     "TR": "c6e4195dd8909485d4014a2a7af4a3a8e67694a0addb5de0fe4cfb696da68713",
+     "JP": "dc4f616423cc542d39e74aa3cd7123a4b392c0331faec48c51aaa9eb182274d0",
+     "KR": "66f71af034daac0a4f37846dedcef78102ba1ee308098f3fe1b7f8e9b966b4a3",
+     "CN": "27f3fd586eb972f6295a40cfecc0992dc5b002e08fc08d98b6b19386680f21bc",
+     "IN": "2ea975b9665f6c68426ac06efe92429d645defaed46bacad06d0c53ff4d818ae",
+     "ID": "c8ba4546e2ed2abfce1601f6226306e723d5ed136f1c222c57d2fedd699f124f",
+     "AU": "934a272759066bdebed1b9d45d64e819e4cb6146496104388c08a0506b3fa1d5",
+     "CA": "7823a753ee9e5db1d3119cfeb6340b80505d81cbd528bce87f16ca3c29743d33",
+     "MX": "90a192f10496fa358264f86df5a88367b6f02dd2cdce9daf58b9193a5137e42d",
+     "BR": "cc3d0179fd946a335e3fc499ba5453b001b76f215ba066c1c750ec70ba358db8",
+     "AR": "0a825b95b70763b2e17702220e07e6de145c15ed2868d65c4da612823767e05b",
+     "SA": "73166cdb770a9d8261d8fa7a7c897dab2fb42a316fff7f018856076c6e64b3b6",
+     "AE": "c3af78520d0f18cc2a16e355cd7a82a050b7f5726170a5460c30442d0d593c64",
+     "ZA": "6703db40b53426c1e86bfcfe5e3d9078cafd3bad6c827e2c15bedf332893c84f",
+     "NG": "dde74280b9e17a57d0f72dccf40e3c729e86572b054e76762aef7a4a50f88fee",
+     "EG": "928d8dbc967c2e471130cf592493c8e59d0f7d44fbded189f8295b6c624041c2"
+    }
    }
   }
  },
@@ -106,125 +143,125 @@
  "counts": {
   "eligibleByBand": {
    "us": {
-    "top-1k": 98,
-    "1k-5k": 293,
+    "top-1k": 99,
+    "1k-5k": 326,
     "5k-10k": 0
    },
    "non-us": {
-    "top-1k": 1308,
+    "top-1k": 1436,
     "1k-5k": 0,
     "5k-10k": 0
    }
   },
   "eligibleByCountry": {
    "US": {
-    "top-1k": 98,
-    "1k-5k": 293
+    "top-1k": 99,
+    "1k-5k": 326
    },
    "GB": {
-    "top-1k": 86
-   },
-   "DE": {
-    "top-1k": 91
-   },
-   "FR": {
-    "top-1k": 84
-   },
-   "IT": {
-    "top-1k": 63
-   },
-   "ES": {
-    "top-1k": 57
-   },
-   "NL": {
-    "top-1k": 105
-   },
-   "PL": {
-    "top-1k": 96
-   },
-   "SE": {
-    "top-1k": 100
-   },
-   "TR": {
     "top-1k": 92
    },
+   "DE": {
+    "top-1k": 103
+   },
+   "FR": {
+    "top-1k": 90
+   },
+   "IT": {
+    "top-1k": 70
+   },
+   "ES": {
+    "top-1k": 63
+   },
+   "NL": {
+    "top-1k": 114
+   },
+   "PL": {
+    "top-1k": 106
+   },
+   "SE": {
+    "top-1k": 114
+   },
+   "TR": {
+    "top-1k": 98
+   },
    "JP": {
-    "top-1k": 61
+    "top-1k": 63
    },
    "KR": {
-    "top-1k": 26
+    "top-1k": 28
    },
    "CN": {
     "top-1k": 4
    },
    "IN": {
-    "top-1k": 23
+    "top-1k": 24
    },
    "ID": {
     "top-1k": 5
    },
    "AU": {
-    "top-1k": 93
+    "top-1k": 97
    },
    "CA": {
-    "top-1k": 67
+    "top-1k": 73
    },
    "MX": {
-    "top-1k": 47
+    "top-1k": 53
    },
    "BR": {
-    "top-1k": 40
+    "top-1k": 43
    },
    "AR": {
-    "top-1k": 44
+    "top-1k": 56
    },
    "SA": {
-    "top-1k": 13
+    "top-1k": 15
    },
    "AE": {
-    "top-1k": 25
+    "top-1k": 27
    },
    "ZA": {
-    "top-1k": 62
+    "top-1k": 64
    },
    "NG": {
     "top-1k": 1
    },
    "EG": {
-    "top-1k": 23
+    "top-1k": 33
    }
   },
   "eligibleByRegionGroup": {
-   "asia-pacific": 212,
-   "canada-latam": 198,
-   "europe": 774,
-   "middle-east-africa": 124,
-   "us": 391
+   "asia-pacific": 221,
+   "canada-latam": 225,
+   "europe": 850,
+   "middle-east-africa": 140,
+   "us": 425
   },
   "eligibleByCurrency": {
-   "AED": 25,
-   "ARS": 44,
-   "AUD": 93,
-   "BRL": 40,
-   "CAD": 67,
+   "AED": 27,
+   "ARS": 56,
+   "AUD": 97,
+   "BRL": 43,
+   "CAD": 73,
    "CNY": 4,
-   "EGP": 23,
-   "EUR": 400,
-   "GBP": 86,
+   "EGP": 33,
+   "EUR": 440,
+   "GBP": 92,
    "IDR": 5,
-   "INR": 23,
-   "JPY": 61,
-   "KRW": 26,
-   "MXN": 47,
+   "INR": 24,
+   "JPY": 63,
+   "KRW": 28,
+   "MXN": 53,
    "NGN": 1,
-   "PLN": 96,
-   "SAR": 13,
-   "SEK": 100,
-   "TRY": 92,
-   "USD": 391,
-   "ZAR": 62
+   "PLN": 106,
+   "SAR": 15,
+   "SEK": 114,
+   "TRY": 98,
+   "USD": 425,
+   "ZAR": 64
   },
-  "eligible": 1699,
+  "eligible": 1861,
   "excluded": {
    "adult-retailer": 21,
    "business-supplier": 71,
@@ -238,12 +275,12 @@
    "no-fixed-price-cart-or-members-only": 57,
    "no-own-checkout": 37,
    "not-a-store": 283,
-   "not-persistently-popular": 343,
+   "not-persistently-popular": 177,
    "outside-home-list": 19,
    "prescription-or-pharmacy": 92,
    "region-not-in-country-set": 6,
    "registry-service": 3,
-   "same-retailer-other-domain": 37,
+   "same-retailer-other-domain": 41,
    "sensitive-goods": 31
   },
   "domains": 2890,
@@ -253,8 +290,8 @@
   {
    "domain": "0101.co.jp",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "JP",
    "currency": "JPY",
@@ -296,8 +333,8 @@
   {
    "domain": "11teamsports.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "DE",
    "currency": "EUR",
@@ -380,8 +417,8 @@
   {
    "domain": "12gobiking.nl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "NL",
    "currency": "EUR",
@@ -1142,8 +1179,8 @@
   {
    "domain": "adidas.com.eg",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "EG",
    "currency": "EGP",
@@ -1639,8 +1676,8 @@
   {
    "domain": "ajeworld.com.au",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AU",
    "currency": "AUD",
@@ -1933,8 +1970,8 @@
   {
    "domain": "aldoautopartes.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "MX",
    "currency": "MXN",
@@ -2306,8 +2343,8 @@
   {
    "domain": "alraya-store.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "EG",
    "currency": "EGP",
@@ -3015,8 +3052,8 @@
   {
    "domain": "andar.co.kr",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "KR",
    "currency": "KRW",
@@ -3246,8 +3283,8 @@
   {
    "domain": "aosom.it",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "IT",
    "currency": "EUR",
@@ -3685,8 +3722,8 @@
   {
    "domain": "ardene.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "CA",
    "currency": "CAD",
@@ -4862,8 +4899,8 @@
   {
    "domain": "bathu.co.za",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "ZA",
    "currency": "ZAR",
@@ -4967,8 +5004,8 @@
   {
    "domain": "baumschule-horstmann.de",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "DE",
    "currency": "EUR",
@@ -5976,8 +6013,8 @@
   {
    "domain": "bike-components.de",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "DE",
    "currency": "EUR",
@@ -5997,8 +6034,8 @@
   {
    "domain": "bike-discount.de",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "DE",
    "currency": "EUR",
@@ -6060,8 +6097,8 @@
   {
    "domain": "bikester.se",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -6438,8 +6475,8 @@
   {
    "domain": "bloomingdales.ae",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AE",
    "currency": "AED",
@@ -6543,8 +6580,8 @@
   {
    "domain": "bmr.ca",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "CA",
    "currency": "CAD",
@@ -7436,8 +7473,8 @@
   {
    "domain": "bricocenter.it",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "IT",
    "currency": "EUR",
@@ -7499,8 +7536,8 @@
   {
    "domain": "bricoman.pl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "PL",
    "currency": "PLN",
@@ -7835,8 +7872,8 @@
   {
    "domain": "buscalibre.com.ar",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AR",
    "currency": "ARS",
@@ -7898,8 +7935,8 @@
   {
    "domain": "butosklep.pl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "PL",
    "currency": "PLN",
@@ -8214,8 +8251,8 @@
   {
    "domain": "campingvaruhuset.se",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -8235,8 +8272,8 @@
   {
    "domain": "campingwagner.de",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "DE",
    "currency": "EUR",
@@ -8642,8 +8679,8 @@
   {
    "domain": "carrefour.it",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "IT",
    "currency": "EUR",
@@ -9468,8 +9505,8 @@
   {
    "domain": "cheeky.com.ar",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AR",
    "currency": "ARS",
@@ -9699,8 +9736,8 @@
   {
    "domain": "ciosa.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "MX",
    "currency": "MXN",
@@ -9931,8 +9968,8 @@
   {
    "domain": "classicfootballshirts.co.uk",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "GB",
    "currency": "GBP",
@@ -10204,8 +10241,8 @@
   {
    "domain": "compumarts.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "EG",
    "currency": "EGP",
@@ -10372,8 +10409,8 @@
   {
    "domain": "converse.co.za",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "ZA",
    "currency": "ZAR",
@@ -10792,8 +10829,8 @@
   {
    "domain": "countryroad.com.au",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AU",
    "currency": "AUD",
@@ -10900,8 +10937,8 @@
   {
    "domain": "cramersblommor.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -11090,8 +11127,8 @@
   {
    "domain": "crocsgulf.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AE",
    "currency": "AED",
@@ -11300,8 +11337,8 @@
   {
    "domain": "cykelkraft.se",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -11321,8 +11358,8 @@
   {
    "domain": "cykloteket.se",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -11512,8 +11549,8 @@
   {
    "domain": "darlena.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SA",
    "currency": "SAR",
@@ -11785,8 +11822,8 @@
   {
    "domain": "decathlon.eg",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "EG",
    "currency": "EGP",
@@ -12418,8 +12455,8 @@
   {
    "domain": "dewitschijndel.nl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "NL",
    "currency": "EUR",
@@ -12502,8 +12539,8 @@
   {
    "domain": "dia.es",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "ES",
    "currency": "EUR",
@@ -12607,8 +12644,8 @@
   {
    "domain": "dillards.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -12788,8 +12825,8 @@
   {
    "domain": "discsport.se",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -12893,8 +12930,8 @@
   {
    "domain": "divanev.com.tr",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "TR",
    "currency": "TRY",
@@ -13638,8 +13675,8 @@
   {
    "domain": "drogerienatura.pl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "PL",
    "currency": "PLN",
@@ -14019,8 +14056,8 @@
   {
    "domain": "easycosmetic.de",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "DE",
    "currency": "EUR",
@@ -14515,8 +14552,8 @@
   {
    "domain": "ekoi.fr",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "FR",
    "currency": "EUR",
@@ -15179,8 +15216,8 @@
   {
    "domain": "eroski.es",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "ES",
    "currency": "EUR",
@@ -15221,8 +15258,8 @@
   {
    "domain": "ersasaat.com.tr",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "TR",
    "currency": "TRY",
@@ -16397,8 +16434,8 @@
   {
    "domain": "flo.com.tr",
    "band": "top-1k",
-   "eligible": true,
-   "exclusion": null,
+   "eligible": false,
+   "exclusion": "same-retailer-other-domain",
    "probeSite": false,
    "region": "TR",
    "currency": "TRY",
@@ -16734,8 +16771,8 @@
   {
    "domain": "francuskieperfumy.pl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "PL",
    "currency": "PLN",
@@ -16860,8 +16897,8 @@
   {
    "domain": "friendzstore.pl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "PL",
    "currency": "PLN",
@@ -17049,8 +17086,8 @@
   {
    "domain": "futurumshop.nl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "NL",
    "currency": "EUR",
@@ -17368,8 +17405,8 @@
   {
    "domain": "gapcanada.ca",
    "band": "top-1k",
-   "eligible": true,
-   "exclusion": null,
+   "eligible": false,
+   "exclusion": "same-retailer-other-domain",
    "probeSite": false,
    "region": "CA",
    "currency": "CAD",
@@ -17391,8 +17428,8 @@
   {
    "domain": "gapfactory.ca",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "CA",
    "currency": "CAD",
@@ -17434,8 +17471,8 @@
   {
    "domain": "gardeningexpress.co.uk",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "GB",
    "currency": "GBP",
@@ -17749,8 +17786,8 @@
   {
    "domain": "gggolf.ca",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "CA",
    "currency": "CAD",
@@ -17982,8 +18019,8 @@
   {
    "domain": "gold-era.eg",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "EG",
    "currency": "EGP",
@@ -18066,8 +18103,8 @@
   {
    "domain": "golfavenue.ca",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "CA",
    "currency": "CAD",
@@ -18554,8 +18591,8 @@
   {
    "domain": "gsfcarparts.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "GB",
    "currency": "GBP",
@@ -19142,8 +19179,8 @@
   {
    "domain": "hatstore.se",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -19184,8 +19221,8 @@
   {
    "domain": "haydigiy.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "TR",
    "currency": "TRY",
@@ -19205,8 +19242,8 @@
   {
    "domain": "hbm-machines.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "NL",
    "currency": "EUR",
@@ -19268,8 +19305,8 @@
   {
    "domain": "heizoel24.de",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "DE",
    "currency": "EUR",
@@ -19331,8 +19368,8 @@
   {
    "domain": "hemtex.se",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -20146,8 +20183,8 @@
   {
    "domain": "hoogvliet.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "NL",
    "currency": "EUR",
@@ -21006,8 +21043,8 @@
   {
    "domain": "imusic.se",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -21303,8 +21340,8 @@
   {
    "domain": "instreet.com.tr",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "TR",
    "currency": "TRY",
@@ -21576,8 +21613,8 @@
   {
    "domain": "iravin.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "EG",
    "currency": "EGP",
@@ -22139,8 +22176,8 @@
   {
    "domain": "jdsports.co.uk",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "GB",
    "currency": "GBP",
@@ -22708,7 +22745,7 @@
    "domain": "jumbo.com.ar",
    "band": "top-1k",
    "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "exclusion": "same-retailer-other-domain",
    "probeSite": false,
    "region": "AR",
    "currency": "ARS",
@@ -22728,8 +22765,8 @@
   {
    "domain": "jumia.com.eg",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "EG",
    "currency": "EGP",
@@ -23322,8 +23359,8 @@
   {
    "domain": "kent.ca",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "CA",
    "currency": "CAD",
@@ -23385,8 +23422,8 @@
   {
    "domain": "kiabi.it",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "IT",
    "currency": "EUR",
@@ -23490,8 +23527,8 @@
   {
    "domain": "kik.de",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "DE",
    "currency": "EUR",
@@ -23996,8 +24033,8 @@
   {
    "domain": "korendy.com.tr",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "TR",
    "currency": "TRY",
@@ -24164,8 +24201,8 @@
   {
    "domain": "kross.pl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "PL",
    "currency": "PLN",
@@ -24396,8 +24433,8 @@
   {
    "domain": "ladystork.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AR",
    "currency": "ARS",
@@ -24438,8 +24475,8 @@
   {
    "domain": "lafoirfouille.fr",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "FR",
    "currency": "EUR",
@@ -24753,8 +24790,8 @@
   {
    "domain": "lasourisscooters.nl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "NL",
    "currency": "EUR",
@@ -24985,8 +25022,8 @@
   {
    "domain": "lcwaikiki.eg",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "EG",
    "currency": "EGP",
@@ -26215,8 +26252,8 @@
   {
    "domain": "loccomoda.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "TR",
    "currency": "TRY",
@@ -26825,8 +26862,8 @@
   {
    "domain": "madesa.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "BR",
    "currency": "BRL",
@@ -27036,8 +27073,8 @@
   {
    "domain": "manomano.es",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "ES",
    "currency": "EUR",
@@ -27141,8 +27178,8 @@
   {
    "domain": "marisa.com.br",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "BR",
    "currency": "BRL",
@@ -27268,8 +27305,8 @@
   {
    "domain": "marypaz.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "ES",
    "currency": "EUR",
@@ -27563,8 +27600,8 @@
   {
    "domain": "maxiconsumo.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AR",
    "currency": "ARS",
@@ -27605,8 +27642,8 @@
   {
    "domain": "mc2saintbarth.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "IT",
    "currency": "EUR",
@@ -27647,8 +27684,8 @@
   {
    "domain": "meblobranie.pl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "PL",
    "currency": "PLN",
@@ -28261,8 +28298,8 @@
   {
    "domain": "merkal.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "ES",
    "currency": "EUR",
@@ -28387,8 +28424,8 @@
   {
    "domain": "miamicenters.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "EG",
    "currency": "EGP",
@@ -29522,8 +29559,8 @@
   {
    "domain": "motorola.com.mx",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "MX",
    "currency": "MXN",
@@ -29543,8 +29580,8 @@
   {
    "domain": "motostacja.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "PL",
    "currency": "PLN",
@@ -29627,8 +29664,8 @@
   {
    "domain": "mr-bricolage.fr",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "FR",
    "currency": "EUR",
@@ -29921,8 +29958,8 @@
   {
    "domain": "mwave.com.au",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AU",
    "currency": "AUD",
@@ -30386,8 +30423,8 @@
   {
    "domain": "natura.com.mx",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "MX",
    "currency": "MXN",
@@ -31022,8 +31059,8 @@
   {
    "domain": "next.se",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -31648,8 +31685,8 @@
   {
    "domain": "novogar.com.ar",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AR",
    "currency": "ARS",
@@ -31690,8 +31727,8 @@
   {
    "domain": "nutripure.fr",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "FR",
    "currency": "EUR",
@@ -31795,8 +31832,8 @@
   {
    "domain": "obelink.nl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "NL",
    "currency": "EUR",
@@ -32562,8 +32599,8 @@
   {
    "domain": "oprastore.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AR",
    "currency": "ARS",
@@ -32730,8 +32767,8 @@
   {
    "domain": "othaimmarkets.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SA",
    "currency": "SAR",
@@ -32835,8 +32872,8 @@
   {
    "domain": "outletmoto.eu",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "IT",
    "currency": "EUR",
@@ -32856,8 +32893,8 @@
   {
    "domain": "outnorth.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -32961,8 +32998,8 @@
   {
    "domain": "pacificpeche.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "FR",
    "currency": "EUR",
@@ -33192,8 +33229,8 @@
   {
    "domain": "panini.es",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "ES",
    "currency": "EUR",
@@ -33759,8 +33796,8 @@
   {
    "domain": "pembepanjur.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "TR",
    "currency": "TRY",
@@ -33948,8 +33985,8 @@
   {
    "domain": "perfumeriaspigmento.com.ar",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AR",
    "currency": "ARS",
@@ -34536,8 +34573,8 @@
   {
    "domain": "poco.de",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "DE",
    "currency": "EUR",
@@ -34641,8 +34678,8 @@
   {
    "domain": "pokemonkaart.nl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "NL",
    "currency": "EUR",
@@ -35919,8 +35956,8 @@
   {
    "domain": "reebok.com.ar",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AR",
    "currency": "ARS",
@@ -35940,8 +35977,8 @@
   {
    "domain": "reebok.mx",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "MX",
    "currency": "MXN",
@@ -37814,8 +37851,8 @@
   {
    "domain": "sephora.com.au",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AU",
    "currency": "AUD",
@@ -37835,8 +37872,8 @@
   {
    "domain": "sephora.com.br",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "BR",
    "currency": "BRL",
@@ -37940,8 +37977,8 @@
   {
    "domain": "sephora.it",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "IT",
    "currency": "EUR",
@@ -38045,8 +38082,8 @@
   {
    "domain": "sharkninja.co.uk",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "GB",
    "currency": "GBP",
@@ -38087,8 +38124,8 @@
   {
    "domain": "sharkninja.fr",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "FR",
    "currency": "EUR",
@@ -38272,8 +38309,8 @@
   {
    "domain": "shell.eg",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "EG",
    "currency": "EGP",
@@ -38763,8 +38800,8 @@
   {
    "domain": "simplicity.com.ar",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AR",
    "currency": "ARS",
@@ -38973,8 +39010,8 @@
   {
    "domain": "skechers.se",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -39015,8 +39052,8 @@
   {
    "domain": "sklepwedkarski.pl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "PL",
    "currency": "PLN",
@@ -39414,8 +39451,8 @@
   {
    "domain": "sommiercenter.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AR",
    "currency": "ARS",
@@ -39435,8 +39472,8 @@
   {
    "domain": "sonderpreis-baumarkt.de",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "DE",
    "currency": "EUR",
@@ -39750,8 +39787,8 @@
   {
    "domain": "sport-shop.pl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "PL",
    "currency": "PLN",
@@ -39939,8 +39976,8 @@
   {
    "domain": "sportsexperts.ca",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "CA",
    "currency": "CAD",
@@ -40065,8 +40102,8 @@
   {
    "domain": "sportsshoes.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "GB",
    "currency": "GBP",
@@ -40572,8 +40609,8 @@
   {
    "domain": "street-one.de",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "DE",
    "currency": "EUR",
@@ -41247,8 +41284,8 @@
   {
    "domain": "switch-nails.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -41373,8 +41410,8 @@
   {
    "domain": "taf.com.mx",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "MX",
    "currency": "MXN",
@@ -42684,8 +42721,8 @@
   {
    "domain": "tiendamia.com.ar",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AR",
    "currency": "ARS",
@@ -43105,8 +43142,8 @@
   {
    "domain": "topper.com.ar",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "AR",
    "currency": "ARS",
@@ -43820,8 +43857,8 @@
   {
    "domain": "twostroke.se",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "SE",
    "currency": "SEK",
@@ -44051,8 +44088,8 @@
   {
    "domain": "unisportstore.de",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "DE",
    "currency": "EUR",
@@ -44261,8 +44298,8 @@
   {
    "domain": "vanharen.nl",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "NL",
    "currency": "EUR",
@@ -45060,8 +45097,8 @@
   {
    "domain": "vijaysales.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "IN",
    "currency": "INR",
@@ -45649,8 +45686,8 @@
   {
    "domain": "wacoal.jp",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "JP",
    "currency": "JPY",
@@ -46771,8 +46808,8 @@
   {
    "domain": "xexymix.com",
    "band": "top-1k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "KR",
    "currency": "KRW",
@@ -48803,8 +48840,8 @@
   {
    "domain": "aventon.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -48972,8 +49009,8 @@
   {
    "domain": "baublebar.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -49035,8 +49072,8 @@
   {
    "domain": "belroshop.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -49140,8 +49177,8 @@
   {
    "domain": "big5sportinggoods.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -49206,8 +49243,8 @@
   {
    "domain": "blackgirlvitamins.co",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -49439,8 +49476,8 @@
   {
    "domain": "bose.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": true,
    "region": "US",
    "currency": "USD",
@@ -49670,8 +49707,8 @@
   {
    "domain": "campingworld.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -49881,8 +49918,8 @@
   {
    "domain": "cb2.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -50008,8 +50045,8 @@
   {
    "domain": "chicos.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -50365,8 +50402,8 @@
   {
    "domain": "coolstuffinc.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -50785,8 +50822,8 @@
   {
    "domain": "diamondartclub.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -50953,8 +50990,8 @@
   {
    "domain": "doordashstore.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -51037,8 +51074,8 @@
   {
    "domain": "dyson.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -51671,8 +51708,8 @@
   {
    "domain": "fleetfarm.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -51776,8 +51813,8 @@
   {
    "domain": "fragrancex.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -52160,8 +52197,8 @@
   {
    "domain": "glitchproductions.store",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -52392,8 +52429,8 @@
   {
    "domain": "gruv.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -52413,8 +52450,8 @@
   {
    "domain": "gucci.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -52539,8 +52576,8 @@
   {
    "domain": "hannaandersson.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -52603,7 +52640,7 @@
    "domain": "harristeeter.com",
    "band": "1k-5k",
    "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "exclusion": "same-retailer-other-domain",
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -53023,8 +53060,8 @@
   {
    "domain": "invictastores.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -53835,8 +53872,8 @@
   {
    "domain": "lifeisgood.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -53898,8 +53935,8 @@
   {
    "domain": "littlesleepies.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -54327,8 +54364,8 @@
   {
    "domain": "minted.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -54474,8 +54511,8 @@
   {
    "domain": "mouser.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -57007,8 +57044,8 @@
   {
    "domain": "snapfish.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -57521,8 +57558,8 @@
   {
    "domain": "tennis-warehouse.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -57605,8 +57642,8 @@
   {
    "domain": "thereformation.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -57794,8 +57831,8 @@
   {
    "domain": "tommybahama.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -58304,8 +58341,8 @@
   {
    "domain": "wearfigs.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -58409,8 +58446,8 @@
   {
    "domain": "westmarine.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -58620,8 +58657,8 @@
   {
    "domain": "wrangler.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -58830,8 +58867,8 @@
   {
    "domain": "zillionsgift.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",
@@ -58872,8 +58909,8 @@
   {
    "domain": "zulily.com",
    "band": "1k-5k",
-   "eligible": false,
-   "exclusion": "not-persistently-popular",
+   "eligible": true,
+   "exclusion": null,
    "probeSite": false,
    "region": "US",
    "currency": "USD",

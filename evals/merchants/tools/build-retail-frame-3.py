@@ -5,7 +5,7 @@
 #     code, region, currency, family; nine subagent batches under classification-rules.txt, from knowledge, no website
 #     visited), reconciled by the builder's evals/merchants/frame-3-inputs/reconcile.tsv;
 #   - the operator table evals/merchants/frame-3-inputs/operators.tsv (the company running each store; splits lock on it);
-#   - the CrUX country lists for 2026-02 (yyyymm 202602), six months earlier, for the persistence rule;
+#   - the CrUX country lists for 2026-02 and 2026-05 (yyyymm 202602, 202605), for the persistence rule;
 #   - retail-frame.1 (evals/merchants/retail-frame.json) for the Phase 10 probe flag.
 # CrUX publishes rank-magnitude buckets, never exact ranks, so the frame carries buckets as they are.
 # Run from the repository root: python3 evals/merchants/tools/build-retail-frame-3.py [--check]
@@ -17,7 +17,9 @@ CRUX = os.path.join(ROOT, 'evals/merchants/data/crux')
 OUT = os.path.join(ROOT, 'evals/merchants/retail-frame-3.json')
 SEED = 'ai-checkout/phase-12/2026-10-06'
 YYYYMM = '202608'
-PREV_YYYYMM = '202602'  # persistence rule: the home-list storefront host must be in this list's classified depth too
+# Persistence rule: a storefront host (or its www./m./mobile./bare variant) must also be within the home list's classified
+# depth in at least one of these earlier monthly lists.
+PREV_MONTHS = ('202602', '202605')
 
 # The lists the frame reads and how deep each was classified (CrUX rank bucket upper bound).
 US_DEPTH, OTHER_DEPTH = 5000, 1000
@@ -50,7 +52,7 @@ SHA256 = {
     'NG': '399497320f03f07ab4eca3fb28457cfbf9997cfa92883c37c0e805bac9a49edd',
     'EG': 'd92cbd7465772a7a0156f5631c29a996c97de9c233aa45526d965943231c15fd',
 }
-PREV_SHA256 = {
+PREV_SHA256_202602 = {
     'US': '2a88ed7c7a871d1decb06ff1048c1740692baee9529b87c78157051e97cbe2aa',
     'GB': '45f551dd4ecd67614403e1b17c701dc65ebf4eb8be3e2e44f52c2075805b0638',
     'DE': '4967c3d94f7ece0a5e6e1e84b5e52eea552ce8c478dcb634be3c3538277bb995',
@@ -77,6 +79,34 @@ PREV_SHA256 = {
     'NG': '49f4dba16e537a0402bc988e537f083eb312c50d917c4c01b75153978a4d429f',
     'EG': 'd403d51affeb9e10cbb4b3234760f005b486c902fe7cd2271c33520385053dd6',
 }
+PREV_SHA256_202605 = {
+    'US': 'f6eacb531ab63217d15c2b39fd31c3a20db8bb5fd58522cfbcc473b76fe5741b',
+    'GB': '6c1fc8d4adcaec1812e1f3879bf4461b22692c7da50fbb3fa1c187844d31b731',
+    'DE': 'a38196b5bfa9cc6e0ba51a4eab4abbca186d92246ac04146e519ca4268d77ab3',
+    'FR': 'c01cd1d279068df6d4320659e0363b83101cea6f57a2ef6c9a6bb8a79e881cdf',
+    'IT': '25c853754cec94f96d198f4e619c030c53071fe63fbe3048fd0cb9a463c1563f',
+    'ES': 'c918914de4460952bad8a04c739c35dc93f65ba08cfe8114011338cced7e7270',
+    'NL': '82ab9cbceef47d93a9893483e5fe26b03967f151f7e253323954e8e906ad47ea',
+    'PL': 'da5c21e9b867e545ba4784a3d8a30a44a7dab62dfdce82ef93cf3fb4812df292',
+    'SE': '5b557937ef580ac8c32e8c0c1a71118eda50d618f3f25f1a3d10a82ee7f0d855',
+    'TR': 'c6e4195dd8909485d4014a2a7af4a3a8e67694a0addb5de0fe4cfb696da68713',
+    'JP': 'dc4f616423cc542d39e74aa3cd7123a4b392c0331faec48c51aaa9eb182274d0',
+    'KR': '66f71af034daac0a4f37846dedcef78102ba1ee308098f3fe1b7f8e9b966b4a3',
+    'CN': '27f3fd586eb972f6295a40cfecc0992dc5b002e08fc08d98b6b19386680f21bc',
+    'IN': '2ea975b9665f6c68426ac06efe92429d645defaed46bacad06d0c53ff4d818ae',
+    'ID': 'c8ba4546e2ed2abfce1601f6226306e723d5ed136f1c222c57d2fedd699f124f',
+    'AU': '934a272759066bdebed1b9d45d64e819e4cb6146496104388c08a0506b3fa1d5',
+    'CA': '7823a753ee9e5db1d3119cfeb6340b80505d81cbd528bce87f16ca3c29743d33',
+    'MX': '90a192f10496fa358264f86df5a88367b6f02dd2cdce9daf58b9193a5137e42d',
+    'BR': 'cc3d0179fd946a335e3fc499ba5453b001b76f215ba066c1c750ec70ba358db8',
+    'AR': '0a825b95b70763b2e17702220e07e6de145c15ed2868d65c4da612823767e05b',
+    'SA': '73166cdb770a9d8261d8fa7a7c897dab2fb42a316fff7f018856076c6e64b3b6',
+    'AE': 'c3af78520d0f18cc2a16e355cd7a82a050b7f5726170a5460c30442d0d593c64',
+    'ZA': '6703db40b53426c1e86bfcfe5e3d9078cafd3bad6c827e2c15bedf332893c84f',
+    'NG': 'dde74280b9e17a57d0f72dccf40e3c729e86572b054e76762aef7a4a50f88fee',
+    'EG': '928d8dbc967c2e471130cf592493c8e59d0f7d44fbded189f8295b6c624041c2',
+}
+PREV_SHA256 = {'202602': PREV_SHA256_202602, '202605': PREV_SHA256_202605}
 BUCKET = {1000: 'top-1k', 5000: '1k-5k', 10000: '5k-10k', 50000: '10k-50k', 100000: '50k-100k', 500000: '100k-500k',
           1000000: '500k-1m'}
 BAND_ORDER = ['top-1k', '1k-5k', '5k-10k']
@@ -125,7 +155,7 @@ def read_list(name, month=YYYYMM, pins=SHA256):
 
 
 lists = {name: read_list(name) for name in ['global'] + COUNTRIES}
-prev_lists = {name: read_list(name, PREV_YYYYMM, PREV_SHA256) for name in COUNTRIES}
+prev_lists = {m: {name: read_list(name, m, PREV_SHA256[m]) for name in COUNTRIES} for m in PREV_MONTHS}
 depth = {c: US_DEPTH if c == 'US' else OTHER_DEPTH for c in COUNTRIES}
 classified = set(h for c in COUNTRIES for h, r in lists[c].items() if r <= depth[c])
 
@@ -205,8 +235,18 @@ for dm in domain_operator:
     if dm not in domains: sys.exit(f'operators.tsv: unknown domain {dm}')
 
 
+HOST_PREFIXES = ('www.', 'm.', 'mobile.')
+
+
+def host_variants(host):
+    # The same storefront host with or without a www., m. or mobile. label; never any other subdomain.
+    base = next((host[len(p):] for p in HOST_PREFIXES if host.startswith(p)), host)
+    return {base} | {p + base for p in HOST_PREFIXES}
+
+
 def persistent(name, hs):
-    return any(prev_lists[name].get(h, depth[name] + 1) <= depth[name] for h in hs)
+    return any(prev_lists[m][name].get(v, depth[name] + 1) <= depth[name]
+               for m in PREV_MONTHS for h in hs for v in host_variants(h))
 
 
 entries = []
@@ -265,7 +305,7 @@ frame = {
                '(https://developer.chrome.com/docs/crux/methodology). Local copies gitignored under evals/merchants/data/crux/; '
                'SHA-256 pinned in evals/merchants/tools/build-retail-frame-3.py. This frame is a filtered and classified '
                'subset of those lists and is modified from them (CC BY 4.0 section 3(a)(1)(B)): buckets are aggregated per '
-               'registrable domain, and the 2026-02 country lists (yyyymm 202602) are used only for the persistence rule.'),
+               'registrable domain, and the 2026-02 and 2026-05 country lists (yyyymm 202602, 202605) are used only for the persistence rule.'),
     'classification': ('Agent-classified storefront hosts of online sellers of physical goods (claude-code/claude-opus-5-5, '
                        '2026-10-05, nine parallel subagent batches under one rule sheet, merged and reviewed by the builder), '
                        'no website visited: every origin in the U.S. list to bucket 5k (ranks 1-5,000) and in the 24 other '
@@ -279,7 +319,7 @@ frame = {
     'bands': {'top-1k': 'CrUX bucket 1000 (ranks 1-1,000)', '1k-5k': 'CrUX bucket 5000 (ranks 1,001-5,000)',
               '5k-10k': 'CrUX bucket 10000 (ranks 5,001-10,000; not classified in this frame)'},
     'lists': {'classifiedDepth': {c: BUCKET[depth[c]] for c in COUNTRIES}, 'sha256': SHA256,
-              'persistence': {'yyyymm': PREV_YYYYMM, 'sha256': PREV_SHA256}},
+              'persistence': {'yyyymm': list(PREV_MONTHS), 'hostVariants': list(HOST_PREFIXES), 'sha256': PREV_SHA256}},
     'regionGroups': {g: ' '.join(c for c in COUNTRIES if GROUP[c] == g) for g in
                      ('us', 'canada-latam', 'europe', 'asia-pacific', 'middle-east-africa')},
     'counts': counts,

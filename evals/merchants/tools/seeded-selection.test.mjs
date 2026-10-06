@@ -79,6 +79,15 @@ test('retail-frame.3: buckets, regions, currencies, one storefront per family pe
   assert.equal(op('amazon.de'), op('amazon.co.uk'));
 });
 
+test('retail-frame.3 persistence: two earlier lists, www./m./mobile. variants only, seasonal spikes out', () => {
+  assert.deepEqual(frame3.lists.persistence.yyyymm, ['202602', '202605']);
+  assert.deepEqual(frame3.lists.persistence.hostVariants, ['www.', 'm.', 'mobile.']);
+  const d = (dom) => frame3.domains.find((x) => x.domain === dom);
+  for (const ok of ['dillards.com', 'ardene.com', 'haydigiy.com', 'jdsports.co.uk']) assert.ok(d(ok).eligible, ok);
+  for (const out of ['spirithalloween.com', 'playstation.com', 'tiktok.com'])
+    assert.equal(d(out).exclusion, 'not-persistently-popular', out);
+});
+
 test('item price bands and minor-unit table cover every eligible retail-frame.3 currency', () => {
   const bands = JSON.parse(readFileSync(new URL('../item-price-bands.json', import.meta.url), 'utf8')).currencies;
   const units = JSON.parse(readFileSync(new URL('../currency-minor-units.json', import.meta.url), 'utf8')).currencies;
