@@ -44,6 +44,8 @@ export const MIN_PACE_MS = 3000;
 export const MAX_NAVIGATIONS = 25;
 /** Background writes stay aborted this long after a click that is not an add-to-cart or increment click. */
 export const WRITE_BLOCK_MS = 3000;
+/** Distinct allowed background-write details kept per session (the count is exact). */
+export const MAX_WRITE_SAMPLES = 100;
 /** Navigation requests one action may cause (its redirects, reloads and script navigations) before it is refused. */
 export const MAX_REQUESTS_PER_ACTION = 10;
 export const API = Object.freeze(['goto', 'click', 'wait', 'snapshot', 'status', 'end']);
@@ -192,6 +194,7 @@ export async function createDriver(opts) {
     // Background writes are aborted until then: during, and WRITE_BLOCK_MS after, a click that is not an
     // add-to-cart or increment click.
     blockWritesUntil: 0,
+    backgroundWrites: { count: 0, sample: [] },
     noNavigation: false,
     doc: null,
     stopped: null,
@@ -208,6 +211,16 @@ export async function createDriver(opts) {
     // Every page the session landed on, in order (full URLs; the record commits them masked).
     navigationLog: [],
     views: 0,
+  };
+  /**
+   * Allowed background writes (protocol .7): counted, with up to MAX_WRITE_SAMPLES distinct details, apart from the
+   * 200 events, so robots, off-site and refusal events are never pushed out by a chatty page.
+   */
+  const backgroundWrite = (detail) => {
+    const d = String(detail).slice(0, 200);
+    session.backgroundWrites.count += 1;
+    if (session.backgroundWrites.sample.length < MAX_WRITE_SAMPLES && !session.backgroundWrites.sample.includes(d))
+      session.backgroundWrites.sample.push(d);
   };
   const event = (kind, detail = '') => {
     const d = String(detail).slice(0, 200);
@@ -319,13 +332,16 @@ export async function createDriver(opts) {
       // clicks every same-site write goes through, as before.
       const m = req.method();
       if (['GET', 'HEAD', 'OPTIONS'].includes(m) || !sameSite(url.hostname, domain)) return route.continue();
-      if (Date.now() <= session.allowMutateUntil) return route.continue();
       const where = `${m} ${url.host}${maskPath(url.pathname)}`;
-      if (WRITE_BLOCKED_PATH.test(actionPath(url.href)) || Date.now() <= session.blockWritesUntil) {
+      // Protocol .7: the blocked paths apply inside the add-to-cart and increment window too (actionPath keeps
+      // Magento's /checkout/cart/add; Shopify /cart/add.js, SFCC Cart-AddProduct, /api/cart and /basket/add pass).
+      const blockedPath = WRITE_BLOCKED_PATH.test(actionPath(url.href));
+      const inMutateWindow = Date.now() <= session.allowMutateUntil;
+      if (blockedPath || (!inMutateWindow && Date.now() <= session.blockWritesUntil)) {
         event('request-aborted', where);
         return route.abort('blockedbyclient');
       }
-      event('background-write', where);
+      backgroundWrite(where);
       return route.continue();
     }
     if (!frame) return route.continue();

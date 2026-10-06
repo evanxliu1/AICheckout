@@ -3,8 +3,8 @@
 import { z } from 'zod';
 
 export const RECIPE_SCHEMA = 'capture-recipe.3';
-export const SITE_RECORD_SCHEMA = 'capture-site-record.3';
-export const RECON_RECORD_SCHEMA = 'capture-recon-record.2';
+export const SITE_RECORD_SCHEMA = 'capture-site-record.4';
+export const RECON_RECORD_SCHEMA = 'capture-recon-record.3';
 
 /** Action states the robot captures, in capture order. `checkout-1` is not one since protocol .5: the operator's
  * environment refuses entering a checkout, so it is a reported gap deferred to the attended step. */
@@ -250,6 +250,13 @@ const Event = z
     detail: z.string().regex(/^[A-Za-z0-9 .:_/[\]-]{0,200}$/),
   })
   .strict();
+/** Allowed background writes (protocol .7): exact count and up to 100 distinct masked details, apart from events. */
+const BackgroundWrites = z
+  .object({
+    count: z.number().int().min(0),
+    sample: z.array(z.string().regex(/^[A-Za-z0-9 .:_/[\]-]{0,200}$/)).max(100),
+  })
+  .strict();
 const Session = z
   .object({
     id: SessionId,
@@ -307,6 +314,7 @@ export const SiteRecord = z
     notReached: z.array(z.object({ state: z.enum(ACTION_STATES), reason: z.string() }).strict()),
     platform: z.object({ group: z.string(), marker: z.string().nullable() }).strict().nullable(),
     events: z.array(Event),
+    backgroundWrites: BackgroundWrites,
     stop: Stop.nullable(),
     outcome: z
       .object({
@@ -357,6 +365,7 @@ export const ReconRecord = z
     // Found items whose structured data disagreed with an enabled add-to-cart control (masked URLs).
     stockMismatch: z.array(CommittedUrl).max(2),
     events: z.array(Event),
+    backgroundWrites: BackgroundWrites,
     stop: Stop.nullable(),
     outcome: z
       .object({

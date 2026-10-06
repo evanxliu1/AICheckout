@@ -593,7 +593,7 @@ test('committed URLs: no query or fragment, token-like segments replaced', () =>
 test('site record: stop detail is a code and committed URLs carry no query', () => {
   const base = JSON.parse(
     JSON.stringify({
-      schema: 'capture-site-record.3',
+      schema: 'capture-site-record.4',
       domain: 'x.com',
       recipeSha256: 'a'.repeat(64),
       tool: { version: 't', browser: 'b', userAgentToken: 'u' },
@@ -621,6 +621,7 @@ test('site record: stop detail is a code and committed URLs carry no query', () 
       notReached: [],
       platform: null,
       events: [],
+      backgroundWrites: { count: 0, sample: [] },
       stop: { code: 'tool-error', detail: 'recipe-step-refused:refused-submit', evidenceSha256: null },
       outcome: { status: 'incomplete', code: 'tool-error', evidenceSha256: null },
     }),
@@ -922,4 +923,39 @@ test('protocol .6: background writes to checkout, order, payment, sign-in, accou
   for (const p of ['/api/graphql', '/cart/add.js', '/checkout/cart/add/uenc/x', '/api/recommendations', '/_/track'])
     assert.equal(blocked(p), false, p);
   assert.equal(maskPath('/api/session/0123456789abcdef0123/x y'), '/api/session/:token/x_y');
+});
+
+test('protocol .7: invisible Turnstile is not a challenge; a visible Cloudflare challenge frame is', () => {
+  const cf = 'https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/turnstile/if/ov2/av0/rcv0/0/abc/light/normal';
+  const f = (extra) =>
+    detectStop({ status: 200, url: 'https://s.com/', title: '', text: '', frameUrls: [cf], markup: '', ...extra });
+  assert.equal(f({ visibleFrameSrcs: [] }), null);
+  assert.equal(f({ visibleFrameSrcs: ['https://other.example/x'] }), null);
+  assert.equal(f({ visibleFrameSrcs: [cf] })?.code, 'captcha');
+  assert.equal(
+    detectStop({
+      status: 200,
+      url: 'https://s.com/',
+      title: '',
+      text: '',
+      frameUrls: [],
+      markup: '<input type="hidden" name="cf-turnstile-response" id="cf-chl-widget-a1b2c_response">',
+    }),
+    null,
+  );
+});
+
+test('protocol .7: common add-to-cart write endpoints pass the blocked-path rule', () => {
+  const blocked = (p) => WRITE_BLOCKED_PATH.test(actionPath(`https://s.com${p}`));
+  for (const p of [
+    '/checkout/cart/add/uenc/aHR0cHM6Ly9z/product/1/',
+    '/cart/add.js',
+    '/cart/add',
+    '/on/demandware.store/Sites-RefArch-Site/en_US/Cart-AddProduct',
+    '/api/cart',
+    '/api/cart/items',
+    '/basket/add',
+    '/cart/change.js',
+  ])
+    assert.equal(blocked(p), false, p);
 });
