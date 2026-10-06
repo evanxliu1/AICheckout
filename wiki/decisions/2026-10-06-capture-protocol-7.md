@@ -2,7 +2,7 @@
 type: Decision
 title: Review findings on .6 (generic-reader-protocol.7)
 description: The independent reviewer's four low findings on generic-reader-protocol.6 and capture-tool.4, applied as Amendment 6. A tool defect that prevents a protocol state ends the session as tool-error. Allowed background writes are counted apart from events. Invisible Cloudflare Turnstile is not a challenge. Blocked write paths also apply during add-to-cart clicks.
-status: proposed
+status: accepted
 tags: [decision, phase-12, merchants, eval, capture]
 generated:
   by: claude-code/claude-opus-5-5
@@ -38,3 +38,5 @@ The independent reviewer signed `generic-reader-protocol.6` at `89bc619` (agent-
 
 ## Status
 Proposed 2026-10-06 by the amendment builder (claude-code/claude-opus-5-5). It awaits the independent reviewer's signature of `.7`; `.6` binds until then.
+
+Signed: the independent reviewer signed `generic-reader-protocol.7` at `db8de9c` and approved `capture-tool.5` on 2026-10-06 (agent-verified); accepted. Recommended follow-up (logging only): a separate counter for aborted writes so robots, off-site and refusal events can never be crowded out.
