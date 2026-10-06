@@ -1,12 +1,12 @@
 ---
 type: Product
 title: Phase 12 plan (reader eval protocols and captures)
-description: Pre-register the generic cart reader evaluation (splits, states, labels, bounds, peek policy, capture posture, Y = 80%), select the merchant-pipeline held-out domains, build a capture tool that cannot type or submit, and capture and label up to 220 retail sites worldwide (U.S. and non-U.S. halves; the reader must return total and currency) in three site splits — in three PRs.
+description: Pre-register the generic cart reader evaluation (splits, states, labels, bounds, peek policy, capture posture; since `.8` a ≥ 99% precision bar on shown amounts with coverage reported), select the merchant-pipeline held-out domains, build capture tooling (a robot that cannot type or submit, then agent-driven browser-pane capture with an approved export script), and capture and label about 830 retail sites worldwide (the reader shows total and currency only when certain) in three site splits weighted 1 : 2 : 2 — in three PRs.
 status: stable
 tags: [product, plan, phase-12, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T09:00:00Z
+  at: 2026-10-06T23:20:37Z
 sources:
   - resource: phase-10-merchant-expansion.md
     title: Merchant coverage plan (Phases 10–17)
@@ -74,6 +74,30 @@ As in [Phase 10](phase-10-feasibility-probe.md#safety-and-copyright), enforced b
   - **Turnstile:** invisible Turnstile is no longer read as a Cloudflare challenge.
   - **Add-to-cart window:** blocked write paths apply during add-to-cart and increment clicks; the common add-to-cart endpoints pass.
   - **Tool:** `capture-tool.5` (site record `.4`, recon record `.3`), with tests.
+- **12.3 batch 2 under `.7` (2026-10-06 07:57–08:22 UTC, branch `phase12-captures-4`, `capture-tool.5`, operator claude-code/claude-opus-5-5):** visit order from U.S. 10 and non-U.S. 8, streams interleaved; re-visits not due (same UTC day). **Stopped early** after 9 final outcomes on a tool defect (below). `sites.json` `protocol7` and `statusUnderProtocol7`; records in `capture/records/`, recipes in `capture/recipes/`.
+  - **Captured 1:** cardkingdom.com (`empty-cart`, `cart-1`, `cart-2items`; no `minicart-1`; `cart-qty2` not reached, quantity only through a list; `none-detected`). Flagged: its add-to-cart is a dropdown toggle plus the quantity-1 entry of a menu without ARIA roles; the reviewer should confirm that this is within the no-select rule.
+  - **Excluded 8:** bricklink.com and samsung.com `no-eligible-item` (no in-band, in-stock tile within six home candidates); crocs.com `blocked-http-429`; homedepot.com, joshinweb.jp, davidjones.com and notino.nl `blocked-http-403`; innvictus.com `blocked-http-403` on robots.txt.
+  - **Not final 3:** webstaurantstore.com **needs a coordinator decision**: its fixed item has a site minimum quantity of 2, so one add-to-cart put it in the cart at quantity 2 and `cart-1` cannot be reached; the protocol has no rule for this. jpc.de (capture) and deghi.it (reconnaissance) ended `tool-error`; each gets one later session on a later UTC day.
+  - **Tool defect:** the click guard's `inspectAt` passes viewport coordinates (from `boundingBox` after scrolling) to `DOM.getNodeForLocation`. Chrome resolves that point in document coordinates, so on a scrolled page the click is refused (`inspection-failed`), or a different element could be inspected. This was reproduced offline on the saved snapshots and a synthetic page; no site was loaded for it. Every click below the first screen is affected, so the batch stopped until the tool is fixed. Fixing it changes the tool.
+  - **Running counts** (latest status per site, all protocols):
+    - **U.S.**, 15 visited: captured 4 (disneystore, lego, apple, cardkingdom); excluded 9 (`captcha` 2, `blocked-http-403` 3, `blocked-http-429` 1, `blocked-bot-wall` 1, `no-eligible-item` 2); pending 2 (hollisterco.com re-visit, webstaurantstore.com decision).
+    - **Non-U.S.**, 13 visited: captured 1 (conforama); excluded 7 (`needs-input` 1, `blocked-http-403` 5, `robots-disallow-all` 1); incomplete or pending 5 (extra.com, goofish.com and blibli.com re-visits; jpc.de and deghi.it `tool-error`).
+    - **Tool-caused missing states:** lego.com `cart-1` (old write guard), jpc.de (all cart states), deghi.it (reconnaissance).
+  - **Safety:** nothing typed, no sign-in, no checkout entered or clicked. Non-GET requests that reached sites were the sites' own background writes (161 in reconnaissance, 49 in capture, all logged in `backgroundWrites`) and the allowlisted add-to-cart requests (webstaurantstore 1, cardkingdom 2). Aborted writes included order-metrics, checkout-cart API and cookie-consent POSTs.
+- **12.1 amended a seventh time (2026-10-06, branch `phase12-pane-trial`):** `generic-reader-protocol.8` ([Amendment 7](../../docs/evals/generic-reader-protocol.md#amendment-7-2026-10-06-generic-reader-protocol8)), **a substantive change on Evan's decisions** ([Evan's decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md), accepted). Process by the coordinator ([decision](../decisions/2026-10-06-capture-protocol-8.md), proposed). Signature pending; `.7` binds until then.
+  - **Outcomes and bar:** shown-correct, shown-wrong and withheld (no `ask`). The bar is an exact one-sided 95% upper bound of the wrong-amount rate among shown amounts ≤ 1% (299 shown with none wrong) plus p95 ≤ 50 ms. Coverage is reported (target 80% on `cart-1`).
+  - **Scope:** generic reader only; legacy adapters scored apart.
+  - **Capture:** capture method `pane`, run by subagents in the browser pane, in parallel tabs (8 up to 16), with the operator checklist and a per-store record (path, actions, UTC times). Any in-band, in-stock item may be chosen by ordinary navigation. The approved export is `pane-export.js` (`pane-dom.1`), with the offline `rebuild.mjs` and a round-trip test. The robot is retired; its click-point defect is unfixed and irrelevant.
+  - **Sample:** candidates are U.S. 425 and non-U.S. 1,000. Capture stops at 330 + 500 captured sites. Splits are weighted 1 : 2 : 2 (`seeded-selection.mjs --weights-protocol-8`). The builder reports to Evan below 760 captured `cart-1` or below 300 labelled held-out A `cart-1`.
+  - **Batch 2 calls** (`sites.json` `statusUnderProtocol8`):
+    - **Settled:** cardkingdom.com is pending the reviewer's no-`<select>` check; pane-trial captures are development data only.
+    - **Re-visited by pane:** every robot-era 403/429, CAPTCHA and bot-wall site, savana.com (robots.txt no longer excludes, Evan 2026-10-06), webstaurantstore.com (minimum quantity above 1 makes an item ineligible, so another is picked), jpc.de, deghi.it and the pending robot re-visits. bricklink.com and samsung.com are re-visited as second draws (confirmed by the coordinator).
+  - **Signed at `a1c994d`** (agent-verified); four post-signature tooling notes applied as an erratum (final cart-count check, wider transcript audit, export provenance).
+  - **Review at `9d79158`** (sign with fixes, applied):
+    - **Format:** `pane-dom.2` with visibility facts and a faithful rebuild.
+    - **Audit:** transcript audit script, `pane-operator` subagent with restricted tools, three allowed JavaScript texts.
+    - **Sign-ins:** signed-in pane stores are captured under guards (Evan: "the agents can continue"), never removing his items, reported apart.
+    - **Low findings:** within-site correlation stated; one re-export, then `tool-error`; a truncated export without its summary is `not-readable`; meta refresh dropped.
 
 Done when all three PRs are merged; Phase 13 (reader v1) then tunes on the development split only.
 

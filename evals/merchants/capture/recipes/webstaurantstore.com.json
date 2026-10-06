@@ -1,0 +1,106 @@
+{
+  "schema": "capture-recipe.3",
+  "domain": "webstaurantstore.com",
+  "origin": "https://www.webstaurantstore.com/",
+  "listingUrl": "https://www.webstaurantstore.com/restaurant-equipment.html",
+  "productUrls": [
+    "https://www.webstaurantstore.com/regency-24-x-48-nsf-green-epoxy-wire-shelf/460EG2448.html"
+  ],
+  "cartPath": "/cart/",
+  "checkoutPaths": [],
+  "termsUrl": "https://www.webstaurantstore.com/policies.html",
+  "allowlist": [
+    {
+      "purpose": "add-to-cart",
+      "target": {
+        "selector": "input#buyButton"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "do": "goto",
+      "url": "https://www.webstaurantstore.com/cart/"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "snapshot",
+      "state": "empty-cart"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.webstaurantstore.com/regency-24-x-48-nsf-green-epoxy-wire-shelf/460EG2448.html"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "input#buyButton"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 5000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-01"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.webstaurantstore.com/cart/"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-02"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.webstaurantstore.com/policies.html"
+    },
+    {
+      "do": "wait",
+      "ms": 3000
+    },
+    {
+      "do": "snapshot",
+      "state": "terms"
+    },
+    {
+      "do": "end",
+      "notReached": [
+        {
+          "state": "minicart-1",
+          "reason": "no-in-page-cart-opened"
+        },
+        {
+          "state": "cart-1",
+          "reason": "site-minimum-quantity-2"
+        },
+        {
+          "state": "cart-qty2",
+          "reason": "site-minimum-quantity-2-no-protocol-action"
+        },
+        {
+          "state": "cart-2items",
+          "reason": "no-second-in-band-tile"
+        }
+      ]
+    }
+  ],
+  "recon": {
+    "sessionId": "20261006T080228Z"
+  },
+  "cartHost": "www.webstaurantstore.com"
+}

@@ -1,0 +1,171 @@
+{
+  "schema": "capture-recon-record.3",
+  "domain": "bricklink.com",
+  "entryUrl": "https://www.bricklink.com/",
+  "currency": "USD",
+  "priceBand": [
+    10,
+    200
+  ],
+  "tool": {
+    "version": "capture-tool.5",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "session": {
+    "id": "20261006T075759Z",
+    "number": 1,
+    "startedAt": "2026-10-06T07:57:59.447Z",
+    "endedAt": "2026-10-06T08:01:25.062Z",
+    "topLevelNavigations": 12,
+    "navigationRequests": 15
+  },
+  "robots": {
+    "url": "https://www.bricklink.com/robots.txt",
+    "httpStatus": 200,
+    "sha256": "e868b3d66dae1c4ff202a57634dcbc32d7a0a9dfd5615b0a8b5defd3ebf7610c",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "allow",
+            "path": "/"
+          },
+          {
+            "type": "disallow",
+            "path": "/private/"
+          },
+          {
+            "type": "disallow",
+            "path": "/BL_LOG/"
+          },
+          {
+            "type": "disallow",
+            "path": "/browseList.asp"
+          },
+          {
+            "type": "disallow",
+            "path": "/message.asp"
+          },
+          {
+            "type": "disallow",
+            "path": "/catalogPG.asp"
+          },
+          {
+            "type": "disallow",
+            "path": "/v2/search.page"
+          },
+          {
+            "type": "disallow",
+            "path": "/v2/login.page"
+          },
+          {
+            "type": "disallow",
+            "path": "/login.asp"
+          },
+          {
+            "type": "disallow",
+            "path": "/memberlist.asp"
+          },
+          {
+            "type": "disallow",
+            "path": "/catalogListOld.asp"
+          },
+          {
+            "type": "disallow",
+            "path": "/catalogList.asp?*q="
+          }
+        ]
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [
+    {
+      "host": "v2.bricklink.com",
+      "url": "https://v2.bricklink.com/robots.txt",
+      "httpStatus": 200,
+      "sha256": "02d97331746e3958192dc298659116b218b5050339b2e371f7fa06dcf6d126f0",
+      "posture": "rules",
+      "groups": [
+        {
+          "agents": [
+            "*"
+          ],
+          "rules": [
+            {
+              "type": "allow",
+              "path": "/"
+            },
+            {
+              "type": "disallow",
+              "path": "/_next"
+            },
+            {
+              "type": "disallow",
+              "path": "/api"
+            },
+            {
+              "type": "disallow",
+              "path": "/auth"
+            }
+          ]
+        }
+      ],
+      "decision": "allowed"
+    }
+  ],
+  "views": 11,
+  "homeLandings": [
+    {
+      "requested": "https://www.bricklink.com/",
+      "chain": [
+        "https://www.bricklink.com/",
+        "http://www.bricklink.com/v2/main.page",
+        "https://www.bricklink.com/v2/main.page"
+      ],
+      "landed": "https://www.bricklink.com/v2/main.page",
+      "sameSite": true
+    }
+  ],
+  "navigation": [
+    "https://www.bricklink.com/v2/main.page",
+    "https://www.bricklink.com/searchAdvanced.asp",
+    "https://www.bricklink.com/browse.asp",
+    "https://www.bricklink.com/v3/designer-program/2028-wave-1/main.page",
+    "https://www.bricklink.com/v3/designer-program/main.page",
+    "https://www.bricklink.com/v3/designer-program/series-9/main.page",
+    "https://www.bricklink.com/v3/designer-program/series-9/3259/Pumpkin-Patch",
+    "https://v2.bricklink.com/en-us/our-refreshed-look",
+    "https://www.bricklink.com/v2/error.page",
+    "https://www.bricklink.com/catalog.asp",
+    "https://www.bricklink.com/catalogSearch.asp",
+    "https://www.bricklink.com/v3/designer-program/series-9/3259/Pumpkin-Patch"
+  ],
+  "stockMismatch": [],
+  "events": [
+    {
+      "kind": "robots-host-checked",
+      "detail": "v2.bricklink.com allowed"
+    }
+  ],
+  "backgroundWrites": {
+    "count": 29,
+    "sample": [
+      "POST collector.prod.scout.bricklink.com/com.snowplowanalytics.snowplow/tp2",
+      "POST www.bricklink.com/_ajax/getModels.ajax",
+      "POST v2.bricklink.com/relay"
+    ]
+  },
+  "stop": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "no-eligible-item",
+    "evidenceSha256": "c8b0dfc496911f6bc71263b4db77ee9e27a451e7b22871941ffd429b02226acc",
+    "draftRecipeSha256": null
+  }
+}

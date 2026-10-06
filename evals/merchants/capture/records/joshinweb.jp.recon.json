@@ -1,0 +1,84 @@
+{
+  "schema": "capture-recon-record.3",
+  "domain": "joshinweb.jp",
+  "entryUrl": "https://joshinweb.jp/",
+  "currency": "JPY",
+  "priceBand": [
+    1500,
+    30000
+  ],
+  "tool": {
+    "version": "capture-tool.5",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "session": {
+    "id": "20261006T080548Z",
+    "number": 1,
+    "startedAt": "2026-10-06T08:05:48.332Z",
+    "endedAt": "2026-10-06T08:06:11.201Z",
+    "topLevelNavigations": 2,
+    "navigationRequests": 2
+  },
+  "robots": {
+    "url": "https://joshinweb.jp/robots.txt",
+    "httpStatus": 200,
+    "sha256": "49087cf96a5ed143e07014ffb7f3f012cc37873e9df756cec1ff9a8f6f154363",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "disallow",
+            "path": "/cgi-bin/"
+          }
+        ]
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "views": 1,
+  "homeLandings": [
+    {
+      "requested": "https://joshinweb.jp/",
+      "chain": [
+        "https://joshinweb.jp/",
+        "https://joshinweb.jp/top.html"
+      ],
+      "landed": "https://joshinweb.jp/top.html",
+      "sameSite": true
+    }
+  ],
+  "navigation": [
+    "https://joshinweb.jp/top.html"
+  ],
+  "stockMismatch": [],
+  "events": [
+    {
+      "kind": "stop",
+      "detail": "blocked-http-403"
+    }
+  ],
+  "backgroundWrites": {
+    "count": 3,
+    "sample": [
+      "POST joshinweb.jp/:token/:token/Lw9CD1Y_SwE/SR/IpPwtCYwc",
+      "POST joshinweb.jp/akam/13/pixel_6b97c671"
+    ]
+  },
+  "stop": {
+    "code": "blocked-http-403",
+    "detail": "http-403",
+    "evidenceSha256": "e4d85913786c68c6daec21e4220c7e3f80612bb7721ef70809676070de79f2c1"
+  },
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "evidenceSha256": "e4d85913786c68c6daec21e4220c7e3f80612bb7721ef70809676070de79f2c1",
+    "draftRecipeSha256": null
+  }
+}

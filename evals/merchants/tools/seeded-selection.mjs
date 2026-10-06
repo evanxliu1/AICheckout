@@ -12,7 +12,9 @@
 //
 //   node evals/merchants/tools/seeded-selection.mjs pipeline-heldout [--check]        write or check the held-out list
 //   node evals/merchants/tools/seeded-selection.mjs reader-candidates [extras]        print both streams' visit orders
-//   node evals/merchants/tools/seeded-selection.mjs split <captured.json> [extras]    print the split of captured sites
+//   node evals/merchants/tools/seeded-selection.mjs split <captured.json> [extras] [--weights-protocol-8]
+//                                                                                 print the split of captured sites
+//                                                                                 (protocol .8: weights 1 : 2 : 2)
 //   node evals/merchants/tools/seeded-selection.mjs check-frame <tranco.csv> [--frame 1|2]   check a Tranco frame's bands
 //   (retail-frame.3 is checked by rebuilding it: python3 evals/merchants/tools/build-retail-frame-3.py --check)
 //
@@ -35,6 +37,9 @@ export const PLATFORMS = ['shopify', 'sfcc', 'adobe-commerce', 'sap-commerce', '
 export const PIPELINE_HELDOUT_PER_BAND = { 'top-1k': 6, '1k-10k': 27, '10k-100k': 27 };
 export const CANDIDATES_PER_STREAM = 200;
 const SPLITS_TIE_ORDER = ['heldout-a', 'heldout-b', 'development'];
+/** Split weights. `.1`–`.7`: equal thirds. `generic-reader-protocol.8`: development 1, held-out A 2, held-out B 2. */
+export const EQUAL_WEIGHTS = { development: 1, 'heldout-a': 1, 'heldout-b': 1 };
+export const PROTOCOL_8_WEIGHTS = { development: 1, 'heldout-a': 2, 'heldout-b': 2 };
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const framePaths = {
@@ -137,7 +142,10 @@ export function readerCandidates(frame, extra = {}) {
 // split with the fewest sites in its stratum (tie-breaks below) unless a site of its operator is already placed: then it
 // follows that site, so storefronts sharing one company's code (amazon.de and amazon.fr, potterybarn.com and westelm.com)
 // never sit in development and held-out at once.
-export function split(frame, captured, extra = {}) {
+// With weights, every count below is compared as count / weight (a split with weight 2 takes two sites for one).
+export function split(frame, captured, extra = {}, weights = EQUAL_WEIGHTS) {
+  for (const s of SPLITS_TIE_ORDER)
+    if (!(weights[s] > 0)) throw new Error(`split weight for ${s} must be positive`);
   const candidates = new Map(readerCandidates(frame, extra).map((c) => [c.domain, c]));
   const seen = new Set();
   const sites = captured.map((site) => {
@@ -189,12 +197,13 @@ export function split(frame, captured, extra = {}) {
             assign(site, operatorSplit.get(site.operator));
             continue;
           }
+          const w = (s, k) => get(k) / weights[s];
           const rank = (s) => [
-            get(`${s}|${band}|${group}|${platform}`),
-            get(`${s}|${band}|${group}`),
-            get(`${s}|${group}`),
-            get(`${s}|${band}`),
-            get(s),
+            w(s, `${s}|${band}|${group}|${platform}`),
+            w(s, `${s}|${band}|${group}`),
+            w(s, `${s}|${group}`),
+            w(s, `${s}|${band}`),
+            w(s, s),
             SPLITS_TIE_ORDER.indexOf(s),
           ];
           const best = [...SPLITS_TIE_ORDER].sort((a, b) => {
@@ -252,11 +261,12 @@ function main(argv) {
     return 0;
   }
   if (command === 'split' && arg) {
-    console.log(JSON.stringify(split(frame, JSON.parse(readFileSync(arg, 'utf8')), extra), null, 1));
+    const weights = argv.includes('--weights-protocol-8') ? PROTOCOL_8_WEIGHTS : EQUAL_WEIGHTS;
+    console.log(JSON.stringify(split(frame, JSON.parse(readFileSync(arg, 'utf8')), extra, weights), null, 1));
     return 0;
   }
   console.error(
-    'usage: seeded-selection.mjs pipeline-heldout [--check] | reader-candidates | split <captured.json> | check-frame <tranco.csv> [--frame 1|2]; [--extra-us N] [--extra-non-us N]',
+    'usage: seeded-selection.mjs pipeline-heldout [--check] | reader-candidates | split <captured.json> [--weights-protocol-8] | check-frame <tranco.csv> [--frame 1|2]; [--extra-us N] [--extra-non-us N]',
   );
   return 2;
 }

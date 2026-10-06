@@ -47,6 +47,12 @@ export default [
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
     rules: js.configs.recommended.rules,
   },
+  // The pane export script runs only in a page (the browser pane's JavaScript tool).
+  {
+    files: ['evals/merchants/capture/pane-export.js', 'evals/merchants/capture/pane-robots-hash.js'],
+    languageOptions: { globals: globals.browser },
+    rules: js.configs.recommended.rules,
+  },
   // Boundary: product code never imports the maintainer tooling in tools/ (the catalog pipeline). The pipeline may
   // import product packages, not the reverse. Decision: wiki/decisions/2026-10-02-agent-driven-card-pipeline.md;
   // test: scripts/lib/import-boundary.test.mjs.

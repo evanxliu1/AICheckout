@@ -6,7 +6,7 @@ status: draft
 tags: [system, design, phase-10, telemetry, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T10:00:00Z
+  at: 2026-10-06T23:30:00Z
 sources:
   - resource: https://developer.chrome.com/docs/webstore/program-policies/limited-use
     title: Chrome Limited Use (browsing activity only for a user-facing feature; no sale, no ads)
@@ -49,7 +49,7 @@ Every event: `install_id` (random, rotated every 30 days, resettable), `install_
 | --- | --- |
 | Lifecycle | install (after consent), onboarding complete, consent given |
 | Usage | popup opened, badge shown, badge clicked, recommendation shown (named or generic profile; exact or range) |
-| Reader quality | `found` / `ask` / `none`; reader kind (store config or generic, sent only once the merchant release holds at least 25 store configs, so it cannot identify a merchant); shopper corrected the amount (relative-difference bucket) |
+| Reader quality | Shown or withheld (no `ask` since 2026-10-06); reader kind (generic or legacy adapter; no store configs since 2026-10-06); shopper reported a wrong amount or typed one (relative-difference bucket) |
 | Catalog health | versions in use, refresh success or failure, expiry errors |
 | Errors | error code, extension version |
 
@@ -71,8 +71,8 @@ Every event: `install_id` (random, rotated every 30 days, resettable), `install_
 | --- | --- |
 | Accessibility | axe checks at 360 and 480 px on the consent screen, merchant search, "is that right?" prompt and grant prompt |
 | Deletion without accounts | "Delete all local data" clears the queue and ID; raw rows expire in 90 days; a request quoting the install ID shown in settings is honoured within 30 days for rows under that ID; rows under earlier, rotated IDs cannot be found and expire at 90 days (the policy says so) |
-| Incident | Remote stop: the ingest answers 410 and clients stop sending; merchant releases roll back by republishing the previous one; `disabled` turns off a store config; support channel and breach-notice owner in `docs/release/support.md` and `deployment-runbook.md` |
-| Security review | Independent threat-model review of the ingest path and remote store configs before Release B |
+| Incident | Remote stop: the ingest answers 410 and clients stop sending; merchant releases roll back by republishing the previous one; `disabled` turns off a merchant profile; support channel and breach-notice owner in `docs/release/support.md` and `deployment-runbook.md` |
+| Security review | Independent threat-model review of the ingest path and the hosted merchant release before Release B |
 | Growth-list integrity | Advisory only, reviewed by Evan; nothing auto-promoted into a release; dashboards count distinct installs, not events |
 | Uptime and cost | Render free tier sleeps and is a known limit; clients tolerate cold starts; no SLA; upgrade trigger in decision D14; API availability is a tracked metric |
 | Retailer terms | Capture posture (robots, terms, rate limit) recorded in the eval protocol |
@@ -85,7 +85,7 @@ Every event: `install_id` (random, rotated every 30 days, resettable), `install_
 | Funnel | install → onboarding complete → at least one card → first recommendation → active in week 2 |
 | Retention | D7 and D30 from `days_since_install` buckets by `install_month` (D30 = distinct IDs in the 30–59 bucket; no linking of IDs across rotations) |
 | Coverage | share of recommendations at named profiles; "Suggest this store" counts by domain |
-| Quality | reader false-found and found-correct on held-out real pages; field `ask` and correction rates |
+| Quality | reader precision (shown-wrong) and coverage on held-out real pages (protocol `.8`); field rate of reported wrong amounts and typed amounts (no `ask` since 2026-10-06) |
 | Uninstalls | rate and reasons (disclosed `setUninstallURL` survey) |
 | Reputation | Web Store rating and review count; support volume |
 | Availability | API uptime as observed by clients' refresh results |
