@@ -1,5 +1,6 @@
 // Unit tests for the capture tool that need no browser (npm run test:scripts). Browser tests: tests/browser/.
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
@@ -9,7 +10,7 @@ import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { checkRecon, committableUrl } from '../capture.mjs';
 import { rebuildHtml } from '../rebuild.mjs';
-import { auditTranscript } from '../audit-pane-transcript.mjs';
+import { auditCall, auditTranscript, classifyPath } from '../audit-pane-transcript.mjs';
 import { panePlatform, storePlatform } from '../pane-platform.mjs';
 import { checkRequest, startControlServer } from '../control-server.mjs';
 import { ADD_TO_CART_NAME, createDriver, guardApi, parseTarget } from '../driver.mjs';
@@ -1057,7 +1058,7 @@ test('pane transcript audit: allowed calls pass; typing, form input, other scrip
     line({ type: 'tool_use', name: 'Bash', input: { command: 'shasum -a 256 evals/merchants/capture/data/pane/example.de/cart-1/dom.json' } }),
     line(use('tabs_close', { tabId: 't1' })),
   ].join('\n');
-  const clean = auditTranscript(ok);
+  const clean = auditTranscript(ok, { repoRoot: '/Users/x/repo' });
   assert.equal(clean.toolCalls, 11);
   assert.deepEqual(clean.flags, []);
   const bad = [
@@ -1078,7 +1079,7 @@ test('pane transcript audit: allowed calls pass; typing, form input, other scrip
     line(use('navigate', { url: 'https://www.example.de/customer/address/' })),
     line(use('navigate', { url: 'https://www.example.de/logout' })),
   ].join('\n');
-  const rules = auditTranscript(bad).flags.map((f) => f.rule);
+  const rules = auditTranscript(bad, { repoRoot: '/Users/x/repo' }).flags.map((f) => f.rule);
   for (const r of [
     'typing',
     'forbidden-tool',
@@ -1093,6 +1094,7 @@ test('pane transcript audit: allowed calls pass; typing, form input, other scrip
     assert.ok(rules.includes(r), r);
   assert.equal(rules.filter((r) => r === 'typing').length, 3);
   assert.equal(rules.filter((r) => r === 'bash-network').length, 3);
+  assert.equal(rules.filter((r) => r === 'bash-not-allowed').length, 3);
   assert.equal(rules.filter((r) => r === 'write-outside-capture-folders').length, 2);
   assert.equal(rules.filter((r) => r === 'account-path').length, 3);
 });
@@ -1126,7 +1128,32 @@ test('pane platform: markers observable in pane-dom.2 exports, from empty-cart a
     await mkdir(path.join(root, 'shop.example', 'evidence'), { recursive: true });
     assert.equal((await storePlatform(root, 'shop.example')).group, 'shopify');
     assert.deepEqual((await storePlatform(root, 'missing.example')).states, []);
+    // A store stopped after empty-cart is not captured, so the CLI leaves it out of the split input.
+    await mkdir(path.join(root, 'stopped.example', 'empty-cart'), { recursive: true });
+    await writeFile(path.join(root, 'stopped.example', 'empty-cart', 'dom.json'), JSON.stringify(shopify));
+    const cli = execFileSync(process.execPath, [path.join(dir, 'pane-platform.mjs'), root], { encoding: 'utf8' });
+    assert.deepEqual(JSON.parse(cli), [{ domain: 'shop.example', platform: 'shopify' }]);
   } finally {
     await rm(root, { recursive: true, force: true });
   }
+});
+
+test('pane transcript audit: paths are normalised and anchored to the repository; Bash is an allowlist', () => {
+  const root = '/Users/x/repo';
+  const call = (name, input) => auditCall(name, input, { repoRoot: root }).map((f) => f.rule);
+  assert.deepEqual(classifyPath('/Users/x/repo/evals/merchants/capture/data/pane/a.de/cart-1/dom.json', root), 'data');
+  assert.deepEqual(classifyPath('evals/merchants/capture/data/pane/a.de/cart-1/dom.json', root), 'data');
+  assert.deepEqual(classifyPath('evals/merchants/capture/records/a.de.pane.json', root), 'record');
+  // Traversal out of the capture folders, or another checkout's capture folder, is outside.
+  assert.equal(classifyPath('/Users/x/repo/evals/merchants/capture/data/../../../../wiki/now.md', root), 'outside');
+  assert.equal(classifyPath('/tmp/evals/merchants/capture/data/x.json', root), 'outside');
+  assert.equal(classifyPath('evals/merchants/capture/records/../../../../AGENTS.md', root), 'outside');
+  assert.ok(call('Write', { file_path: '/Users/x/repo/evals/merchants/capture/data/../../../../wiki/now.md', content: 'Checkout' }).includes('write-outside-capture-folders'));
+  // The wording skip applies only inside the data folder after normalisation.
+  assert.deepEqual(call('Write', { file_path: '/Users/x/repo/evals/merchants/capture/data/pane/a.de/cart-1/dom.json', content: 'Checkout' }), []);
+  assert.ok(call('Write', { file_path: '/Users/x/repo/evals/merchants/capture/data/../records/x.json', content: 'Checkout' }).includes('checkout-or-order-wording'));
+  for (const ok of ['shasum -a 256 evals/merchants/capture/data/pane/a.de/cart-1/dom.json', 'ls evals/merchants/capture/data/pane/a.de', 'wc -c x.json', 'head -c 200 x.json'])
+    assert.deepEqual(call('Bash', { command: ok }), [], ok);
+  for (const bad of ['cat a > b', 'cat a | tee b', 'cp a b', 'mv a b', 'ls; rm -rf x', 'shasum $(echo x)', 'python3 -c "print(1)"'])
+    assert.ok(call('Bash', { command: bad }).includes('bash-not-allowed'), bad);
 });

@@ -63,7 +63,8 @@ async function main(argv) {
   const out = [];
   for (const domain of list) {
     const p = await storePlatform(root, domain);
-    if (!p.states.length) continue; // not captured: no cart state
+    // Only captured stores: a cart-1 or minicart-1 export (a store stopped after empty-cart is not captured).
+    if (!p.states.some((st) => st === 'cart-1' || st === 'minicart-1')) continue;
     out.push(markers ? { domain, platform: p.group, marker: p.marker, states: p.states } : { domain, platform: p.group });
   }
   console.log(JSON.stringify(out, null, 1));

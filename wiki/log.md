@@ -3,6 +3,14 @@
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
 ## 2026-10-06
+* **Review** independent review of `.9` at `55400ef` (agent-verified): sign with fixes. Applied with tests:
+  - **B:** `pane-platform.mjs` outputs only stores with `cart-1` or `minicart-1`; the split input merges robot and pane captures, one row per domain.
+  - **L1:** audit paths are normalised and anchored to `--repo-root` (traversal test).
+  - **L2:** operator Bash is an allowlist of `shasum`, `ls`, `cat`, `head` and `wc` with plain arguments, which closes the Bash-write known limit.
+  - **L3:** stale `pane-dom.1` text in [now](now.md) and the [design](system/merchant-coverage-design.md) fixed, and Amendment 7 D noted as superseded.
+  - **L5:** platform reported per capture method.
+
+  **Directive** Evan (chat): lingering cart items are not a big deal. They never block a capture, states are named by the actual cart, and cleanup of own items is best effort. This replaces review fixes A and L4 and the stricter H3 ([user directives](product/user-directives.md), [decision](decisions/2026-10-06-capture-protocol-9.md)). (claude-code/claude-opus-5-5)
 * **Update** reader protocol amended to `generic-reader-protocol.9` on `phase12-protocol-9` ([Amendment 8](../docs/evals/generic-reader-protocol.md#amendment-8-2026-10-06-generic-reader-protocol9)): clarifications before any `.8` capture, after an auditor's cross-check; the coordinator's decisions; signature pending, `.8` binds until then.
   - **H1–H2:** `evals/merchants/reader-candidates-8.json` committed (425 + 1,000, `6cdc35a9…`), with `sites.json` `candidates8`. New `evals/merchants/capture/pane-platform.mjs`: the platform of pane captures from `pane-dom.2` exports (no headers or script contents), and the split's input. Tested.
   - **H3–H5:** one cart rule for every store; pane judgement evidence by export, CAPTCHA wording recorded; failed add-to-cart tries up to 3 items.

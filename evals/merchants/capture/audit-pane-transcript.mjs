@@ -2,7 +2,7 @@
 // Audit of pane operator transcripts (generic-reader-protocol.8, M2 of the .8 review). The 12.3 reviewer runs it over
 // every pane operator's subagent transcript (Claude Code JSONL, kept locally and gitignored) and checks every flag.
 //
-//   node evals/merchants/capture/audit-pane-transcript.mjs <transcript.jsonl> [...]
+//   node evals/merchants/capture/audit-pane-transcript.mjs <transcript.jsonl> [...] [--repo-root <checkout>]
 //
 // Every tool call in the transcript is checked (calls inside a browser batch included):
 //   - forbidden outright: any Claude in Chrome tool (`mcp__claude-in-chrome__*`), `form_input`, `file_upload`, and the
@@ -16,7 +16,10 @@
 //     (`pane-robots-hash.js`), each recognised after trimming surrounding whitespace;
 //   - `navigate` to an account, order, profile, address, payment, settings or sign-out path (by path segment);
 //   - Write or Edit outside the gitignored capture data folder (`evals/merchants/capture/data/`) and the committed
-//     pane records (`evals/merchants/capture/records/<domain>.pane.json`);
+//     pane records (`evals/merchants/capture/records/<domain>.pane.json`), after normalising the path (`..` resolved,
+//     relative paths from the repository root, anchored to --repo-root);
+//   - any Bash command other than shasum, ls, cat, head or wc with plain arguments (no redirection, pipe, chaining or
+//     substitution), so `>`, `tee`, `cp` and `mv` are flagged;
 //   - a pane tool not on the operator's list, and any Bash network access (curl, wget, nc, ncat, telnet, ssh, scp,
 //     open, deno, a URL, or node/python code that fetches: `fetch(`, `http.`, `https.`, `urllib`, `requests.`,
 //     `net.connect`, `http.client`).
@@ -75,7 +78,26 @@ const accountPath = (pathname) =>
       }
     })
     .some((seg) => ACCOUNT_SEGMENTS.has(seg.replace(/\.(html?|aspx?|jsp|php)$/, '')));
-const WRITE_OK = [/\/evals\/merchants\/capture\/data\//, /\/evals\/merchants\/capture\/records\/[a-z0-9.-]+\.pane\.json$/];
+/** The repository the audited operator wrote into; override with --repo-root when the transcript came from another
+ * checkout of the repository. */
+export const DEFAULT_REPO_ROOT = path.resolve(here, '..', '..', '..');
+/**
+ * Where a Write or Edit lands, after normalising the path (`..` resolved, relative paths taken from the repository
+ * root): `data` (the gitignored capture data folder), `record` (a committed `<domain>.pane.json`) or `outside`.
+ */
+export function classifyPath(filePath, repoRoot = DEFAULT_REPO_ROOT) {
+  const root = path.posix.normalize(String(repoRoot).replace(/\\/g, '/'));
+  const raw = String(filePath ?? '').replace(/\\/g, '/');
+  const abs = path.posix.normalize(path.posix.isAbsolute(raw) ? raw : path.posix.join(root, raw));
+  const rel = path.posix.relative(root, abs);
+  if (!rel || rel.startsWith('..') || path.posix.isAbsolute(rel)) return 'outside';
+  if (rel.startsWith('evals/merchants/capture/data/')) return 'data';
+  if (/^evals\/merchants\/capture\/records\/[a-z0-9.-]+\.pane\.json$/.test(rel)) return 'record';
+  return 'outside';
+}
+/** The only Bash an operator may run: shasum, ls, cat, head or wc with plain arguments (no redirection, pipes,
+ * chaining or substitution). */
+const BASH_OK = /^\s*(shasum|ls|cat|head|wc)(\s+[^;&|<>`$(){}\n\\]*)?\s*$/;
 const BASH_NETWORK =
   /\b(curl|wget|nc|ncat|telnet|ssh|scp|open|deno)\b|https?:\/\/|\bfetch\(|\bhttps?\.(get|request)\b|urllib|\brequests\.|net\.connect|http\.client/;
 /** Pane tools an operator may call (short names). Anything else from the pane server is flagged. */
@@ -96,7 +118,9 @@ const shortName = (name) => String(name).split('__').pop();
 const isPane = (name) => /Claude_Browser__/.test(name) || !String(name).includes('__');
 
 /** Classify one tool call. Returns a list of { rule, detail }. */
-export function auditCall(name, input = {}) {
+export function auditCall(name, input = {}, { repoRoot = DEFAULT_REPO_ROOT } = {}) {
+  const writes = ['Write', 'Edit', 'MultiEdit', 'NotebookEdit'].includes(shortName(name));
+  const where = writes ? classifyPath(input.file_path, repoRoot) : null;
   const flags = [];
   const flag = (rule, detail = '') => flags.push({ rule, detail: String(detail).slice(0, 160) });
   const n = String(name);
@@ -119,16 +143,19 @@ export function auditCall(name, input = {}) {
     const text = String(input.text ?? '').trim();
     const ok = sha(text) === ALLOWED_SCRIPTS.export || sha(text) === ALLOWED_SCRIPTS.robots || CHUNK.test(text);
     if (!ok) flag('javascript-other', text.slice(0, 80));
-  } else if (s !== 'navigate' && !((s === 'Write' || s === 'Edit') && /\/evals\/merchants\/capture\/data\//.test(`/${String(input.file_path ?? '').replace(/^\/+/, '')}`))) {
+  } else if (s !== 'navigate' && where !== 'data') {
     // Exports written into the capture data folder contain page text ("Checkout", "Sign in"): no wording check there.
     // Navigation is judged by its path above (Magento's /checkout/cart is allowed); other inputs by their wording.
     const words = JSON.stringify(input ?? {});
     if (CHECKOUT_NAME.test(words) || ORDER_OR_ACCOUNT.test(words)) flag('checkout-or-order-wording', words.slice(0, 120));
   }
   if (isPane(n) && /Claude_Browser__/.test(n) && !PANE_TOOLS.has(s)) flag('unlisted-pane-tool', s);
-  if (s === 'Bash' && BASH_NETWORK.test(String(input.command ?? ''))) flag('bash-network', input.command);
-  if ((s === 'Write' || s === 'Edit' || s === 'MultiEdit' || s === 'NotebookEdit') && !WRITE_OK.some((re) => re.test(`/${String(input.file_path ?? '').replace(/^\/+/, '')}`)))
-    flag('write-outside-capture-folders', input.file_path);
+  if (s === 'Bash') {
+    const cmd = String(input.command ?? '');
+    if (!BASH_OK.test(cmd)) flag('bash-not-allowed', cmd);
+    if (BASH_NETWORK.test(cmd)) flag('bash-network', cmd);
+  }
+  if (writes && where === 'outside') flag('write-outside-capture-folders', input.file_path);
   return flags;
 }
 
@@ -158,23 +185,26 @@ export function toolCalls(lines) {
   return calls;
 }
 
-export function auditTranscript(text) {
+export function auditTranscript(text, opts = {}) {
   const calls = toolCalls(text.split('\n'));
   const flags = [];
   calls.forEach((c, index) => {
-    for (const f of auditCall(c.name, c.input)) flags.push({ index, tool: shortName(c.name), ...f });
+    for (const f of auditCall(c.name, c.input, opts)) flags.push({ index, tool: shortName(c.name), ...f });
   });
   return { toolCalls: calls.length, flags };
 }
 
 function main(argv) {
-  if (!argv.length) {
-    console.error('usage: audit-pane-transcript.mjs <transcript.jsonl> [...]');
+  const at = argv.indexOf('--repo-root');
+  const repoRoot = at >= 0 ? argv[at + 1] : DEFAULT_REPO_ROOT;
+  const files = argv.filter((a, i) => a !== '--repo-root' && argv[i - 1] !== '--repo-root');
+  if (!files.length) {
+    console.error('usage: audit-pane-transcript.mjs <transcript.jsonl> [...] [--repo-root <checkout the operator used>]');
     return 2;
   }
   let flagged = 0;
-  for (const file of argv) {
-    const report = { transcript: file, ...auditTranscript(readFileSync(file, 'utf8')) };
+  for (const file of files) {
+    const report = { transcript: file, repoRoot, ...auditTranscript(readFileSync(file, 'utf8'), { repoRoot }) };
     flagged += report.flags.length;
     console.log(JSON.stringify(report, null, 1));
   }
