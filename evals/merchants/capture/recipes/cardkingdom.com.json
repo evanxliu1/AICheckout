@@ -1,0 +1,158 @@
+{
+  "schema": "capture-recipe.3",
+  "domain": "cardkingdom.com",
+  "origin": "https://www.cardkingdom.com/",
+  "listingUrl": "https://www.cardkingdom.com/catalog/search?search=header&filter%5Bname%5D=",
+  "productUrls": [
+    "https://www.cardkingdom.com/mtg/promotional/the-one-ring-bundle-foil",
+    "https://www.cardkingdom.com/mtg/reality-fracture/hexhaven-invigorator"
+  ],
+  "cartPath": "/cart",
+  "checkoutPaths": [],
+  "termsUrl": "https://www.cardkingdom.com/static/tos",
+  "allowlist": [
+    {
+      "purpose": "add-to-cart",
+      "target": {
+        "selector": "li.itemAddToCart.NM.active div.selectQty"
+      }
+    },
+    {
+      "purpose": "add-to-cart",
+      "target": {
+        "selector": "li.itemAddToCart.NM.active ul.qtyList li:nth-child(2)"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "do": "goto",
+      "url": "https://www.cardkingdom.com/cart"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "snapshot",
+      "state": "empty-cart"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.cardkingdom.com/mtg/promotional/the-one-ring-bundle-foil"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "li.itemAddToCart.NM.active div.selectQty"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 2000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "li.itemAddToCart.NM.active ul.qtyList li:nth-child(2)"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 5000
+    },
+    {
+      "do": "snapshot",
+      "state": "view-01"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.cardkingdom.com/cart"
+    },
+    {
+      "do": "wait",
+      "ms": 5000
+    },
+    {
+      "do": "snapshot",
+      "state": "cart-1"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.cardkingdom.com/mtg/reality-fracture/hexhaven-invigorator"
+    },
+    {
+      "do": "wait",
+      "ms": 4000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "li.itemAddToCart.NM.active div.selectQty"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 2000
+    },
+    {
+      "do": "click",
+      "target": {
+        "selector": "li.itemAddToCart.NM.active ul.qtyList li:nth-child(2)"
+      },
+      "purpose": "add-to-cart"
+    },
+    {
+      "do": "wait",
+      "ms": 5000
+    },
+    {
+      "do": "goto",
+      "url": "https://www.cardkingdom.com/cart"
+    },
+    {
+      "do": "wait",
+      "ms": 5000
+    },
+    {
+      "do": "snapshot",
+      "state": "cart-2items"
+    },
+    {
+      "do": "goto",
+      "url": "https://www.cardkingdom.com/static/tos"
+    },
+    {
+      "do": "wait",
+      "ms": 3000
+    },
+    {
+      "do": "snapshot",
+      "state": "terms"
+    },
+    {
+      "do": "end",
+      "notReached": [
+        {
+          "state": "minicart-1",
+          "reason": "no-in-page-cart-opened"
+        },
+        {
+          "state": "cart-qty2",
+          "reason": "quantity-only-by-listbox"
+        }
+      ]
+    }
+  ],
+  "recon": {
+    "sessionId": "20261006T080655Z"
+  },
+  "cartHost": "www.cardkingdom.com"
+}

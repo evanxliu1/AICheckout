@@ -1640,6 +1640,871 @@
     "code": "robots-disallow-all",
     "note": "robots.txt disallows everything for User-agent * (Disallow: /), checked before any page load"
    }
+  },
+  {
+   "domain": "bricklink.com",
+   "stream": "us",
+   "visit": 10,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "protocol7": {
+    "recon": {
+     "sessionId": "20261006T075759Z",
+     "startedAt": "2026-10-06T07:57:59.447Z",
+     "endedAt": "2026-10-06T08:01:25.062Z",
+     "topLevelNavigations": 12,
+     "navigationRequests": 15,
+     "views": 11,
+     "outcome": {
+      "status": "excluded",
+      "code": "no-eligible-item",
+      "evidenceSha256": "c8b0dfc496911f6bc71263b4db77ee9e27a451e7b22871941ffd429b02226acc",
+      "draftRecipeSha256": null
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "e868b3d66dae1c4ff202a57634dcbc32d7a0a9dfd5615b0a8b5defd3ebf7610c",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "robotsHosts": [
+      {
+       "host": "v2.bricklink.com",
+       "sha256": "02d97331746e3958192dc298659116b218b5050339b2e371f7fa06dcf6d126f0",
+       "httpStatus": 200,
+       "decision": "allowed"
+      }
+     ],
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.bricklink.com/",
+       "chain": [
+        "https://www.bricklink.com/",
+        "http://www.bricklink.com/v2/main.page",
+        "https://www.bricklink.com/v2/main.page"
+       ],
+       "landed": "https://www.bricklink.com/v2/main.page",
+       "sameSite": true
+      }
+     ],
+     "backgroundWrites": {
+      "count": 29,
+      "sample": [
+       "POST collector.prod.scout.bricklink.com/com.snowplowanalytics.snowplow/tp2",
+       "POST www.bricklink.com/_ajax/getModels.ajax",
+       "POST v2.bricklink.com/relay"
+      ]
+     },
+     "events": [
+      {
+       "kind": "robots-host-checked",
+       "detail": "v2.bricklink.com allowed"
+      }
+     ],
+     "record": "capture/records/bricklink.com.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": "c8b0dfc496911f6bc71263b4db77ee9e27a451e7b22871941ffd429b02226acc",
+    "status": "excluded",
+    "code": "no-eligible-item",
+    "reviewFlags": [
+     "home / redirected on the same site to /v2/main.page (homeLandings); the first navigation landmark (header) holds only dropdown buttons, no links in the DOM, so candidates are the home links in document order",
+     "skipped as non-candidates: the logo self-link, /v2/main.page#bannerCarousel (self), a link_gateway banner whose url parameter points to another registrable domain (visitlinkin.bio)",
+     "candidate 1 /searchAdvanced.asp (search form, not a listing; its first main-content candidate after the account link My Favorite Searches is /browse.asp, a category index, not a listing)",
+     "candidate 2 designer-program 2028-wave-1 via link_gateway (voting page without prices; its first main-content link Back -> /v3/designer-program/main.page, not a listing)",
+     "candidate 3 designer-program series-9 via link_gateway: a listing (5 tiles with prices); only in-band tile Pumpkin Patch USD 49.99 shows Available for pre-order soon with no add-to-cart control (view-07), so not in stock; the other tiles are USD 219.99-349.99, outside the band",
+     "candidate 4 link_gateway to v2.bricklink.com/our-refreshed-look (another host of the domain, outside the frame hosts; an announcement page, no listing; its main-content links are help and the home page)",
+     "candidate 5 /v2/community/newsview.page landed on a same-site Resource Not Found error page",
+     "candidate 6 /catalog.asp (catalog index, not a listing; its first main-content candidate after FAQ and Help is /catalogSearch.asp, a search form)",
+     "evidence screenshot taken on the Pumpkin Patch page after the six candidates; hidden DOM links outside the first navigation landmark were counted in document order (operator reading, flagged)"
+    ]
+   },
+   "statusUnderProtocol7": {
+    "status": "excluded",
+    "code": "no-eligible-item",
+    "note": "excluded in reconnaissance: no home candidate gave a qualifying item (the only listing's single in-band tile is a pre-order not yet open, no add-to-cart)"
+   }
+  },
+  {
+   "domain": "innvictus.com",
+   "stream": "non-us",
+   "visit": 8,
+   "band": "top-1k",
+   "regionGroup": "canada-latam",
+   "homeList": "MX",
+   "frameRegion": "MX",
+   "frameCurrency": "MXN",
+   "protocol7": {
+    "recon": {
+     "sessionId": "20261006T080216Z",
+     "startedAt": "2026-10-06T08:02:16.089Z",
+     "endedAt": "2026-10-06T08:02:16.815Z",
+     "topLevelNavigations": 0,
+     "navigationRequests": 0,
+     "views": 0,
+     "outcome": {
+      "status": "excluded",
+      "code": "blocked-http-403",
+      "evidenceSha256": null,
+      "draftRecipeSha256": null
+     },
+     "stop": {
+      "code": "blocked-http-403",
+      "detail": "robots-blocked",
+      "evidenceSha256": null
+     },
+     "robots": {
+      "sha256": null,
+      "httpStatus": 403,
+      "decision": "not-decided"
+     },
+     "robotsHosts": [],
+     "stockMismatch": [],
+     "homeLandings": [],
+     "backgroundWrites": {
+      "count": 0,
+      "sample": []
+     },
+     "events": [],
+     "record": "capture/records/innvictus.com.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": null,
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "reviewFlags": [
+     "the entry host's robots.txt fetch returned HTTP 403; the tool stops 401/403 robots answers as blocked (no page loaded, no screenshot, so no evidence hash; block codes need none)"
+    ]
+   },
+   "statusUnderProtocol7": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "note": "blocked in reconnaissance: robots.txt answered HTTP 403 before any page load"
+   }
+  },
+  {
+   "domain": "webstaurantstore.com",
+   "stream": "us",
+   "visit": 11,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "protocol7": {
+    "recon": {
+     "sessionId": "20261006T080228Z",
+     "startedAt": "2026-10-06T08:02:28.755Z",
+     "endedAt": "2026-10-06T08:03:44.588Z",
+     "topLevelNavigations": 4,
+     "navigationRequests": 4,
+     "views": 4,
+     "outcome": {
+      "status": "done",
+      "code": null,
+      "evidenceSha256": null,
+      "draftRecipeSha256": "a7c73c7a4e0235864d3a3efc93d76117ec0ab9b755a9c207276744d190e0e1d0"
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "1c1cd1e34ba762f7a6f4d065f8c22f8b757254f7ced7d75163e1ab38b7de96fb",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "robotsHosts": [],
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.webstaurantstore.com/",
+       "chain": [
+        "https://www.webstaurantstore.com/"
+       ],
+       "landed": "https://www.webstaurantstore.com/",
+       "sameSite": true
+      }
+     ],
+     "backgroundWrites": {
+      "count": 35,
+      "sample": [
+       "POST www.webstaurantstore.com/api/getabfeatureflag/",
+       "POST stash.webstaurantstore.com/PageView",
+       "POST stash.webstaurantstore.com/facebookConversion",
+       "POST www.webstaurantstore.com/api/getabfeatureflags",
+       "POST stash.webstaurantstore.com/pinterestConversion",
+       "POST www.webstaurantstore.com/api/productrecommendations",
+       "POST www.webstaurantstore.com/g25w/g/measurement/conversion",
+       "POST www.webstaurantstore.com/g25w/ag/g/c",
+       "POST www.webstaurantstore.com/api/recommendationitems",
+       "POST www.webstaurantstore.com/api/relateditems",
+       "POST www.webstaurantstore.com/new/api/cart/getrecommendeditems"
+      ]
+     },
+     "events": [
+      {
+       "kind": "robots-disallowed-path",
+       "detail": "www.webstaurantstore.com"
+      },
+      {
+       "kind": "request-aborted",
+       "detail": "POST www.webstaurantstore.com/orders_log.metrics/"
+      }
+     ],
+     "record": "capture/records/webstaurantstore.com.recon.json"
+    },
+    "capture": {
+     "sessionId": "20261006T080401Z",
+     "startedAt": "2026-10-06T08:04:01.941Z",
+     "endedAt": "2026-10-06T08:05:27.122Z",
+     "topLevelNavigations": 4,
+     "navigationRequests": 4,
+     "record": "capture/records/webstaurantstore.com.json",
+     "recipe": "capture/recipes/webstaurantstore.com.json",
+     "stop": null,
+     "events": [
+      {
+       "kind": "robots-disallowed-path",
+       "detail": "www.webstaurantstore.com"
+      },
+      {
+       "kind": "request-aborted",
+       "detail": "POST www.webstaurantstore.com/orders_log.metrics/"
+      }
+     ],
+     "backgroundWrites": {
+      "count": 35,
+      "sample": [
+       "POST www.webstaurantstore.com/api/getabfeatureflag/",
+       "POST www.webstaurantstore.com/new/api/cart/getrecommendeditems",
+       "POST stash.webstaurantstore.com/PageView",
+       "POST stash.webstaurantstore.com/facebookConversion",
+       "POST www.webstaurantstore.com/api/getabfeatureflags",
+       "POST stash.webstaurantstore.com/pinterestConversion",
+       "POST www.webstaurantstore.com/api/recommendationitems",
+       "POST www.webstaurantstore.com/api/relateditems",
+       "POST www.webstaurantstore.com/viewcart.cfm"
+      ]
+     }
+    },
+    "listingUrl": "https://www.webstaurantstore.com/restaurant-equipment.html",
+    "productUrls": [
+     "https://www.webstaurantstore.com/regency-24-x-48-nsf-green-epoxy-wire-shelf/460EG2448.html"
+    ],
+    "cartPath": "/cart/",
+    "cartHost": "www.webstaurantstore.com",
+    "checkoutPaths": [],
+    "platform": {
+     "group": "none-detected",
+     "marker": null
+    },
+    "robots": {
+     "sha256": "1c1cd1e34ba762f7a6f4d065f8c22f8b757254f7ced7d75163e1ab38b7de96fb",
+     "httpStatus": 200,
+     "decision": "allowed",
+     "checkedPaths": [
+      {
+       "path": "/cart/",
+       "host": "www.webstaurantstore.com",
+       "allowed": false
+      }
+     ]
+    },
+    "terms": {
+     "url": "https://www.webstaurantstore.com/policies.html",
+     "copySha256": "d93296b3a995e9f4f8862e9316865cd6c250ee66a51dc71bf40147bd1ca7082f",
+     "prohibitsAutomated": "yes"
+    },
+    "states": [
+     {
+      "state": "empty-cart",
+      "manifestSha256": "6830d7a91130141b3e1ab99596472f7f6f5c63da36f20fce08c405c6113cab1f",
+      "robotsAllowed": false
+     },
+     {
+      "state": "view-01",
+      "manifestSha256": "c0938ab92dfb2c567981fa166726017c1b9343af1d84ec88412f740f7e37383f",
+      "robotsAllowed": true
+     },
+     {
+      "state": "view-02",
+      "manifestSha256": "5756aa3add2b945341b96f1e03de55b25976873d4f64e10b11080daa5996709d",
+      "robotsAllowed": false
+     },
+     {
+      "state": "terms",
+      "manifestSha256": "d93296b3a995e9f4f8862e9316865cd6c250ee66a51dc71bf40147bd1ca7082f",
+      "robotsAllowed": true
+     }
+    ],
+    "notReached": [
+     {
+      "state": "minicart-1",
+      "reason": "no-in-page-cart-opened"
+     },
+     {
+      "state": "cart-1",
+      "reason": "site-minimum-quantity-2"
+     },
+     {
+      "state": "cart-qty2",
+      "reason": "site-minimum-quantity-2-no-protocol-action"
+     },
+     {
+      "state": "cart-2items",
+      "reason": "no-second-in-band-tile"
+     }
+    ],
+    "evidenceSha256": null,
+    "observedRegion": "US",
+    "observedCurrency": "USD",
+    "observedCurrencyBasis": "dollar prices on a U.S. storefront; frame currency",
+    "status": "needs-decision",
+    "code": null,
+    "reviewFlags": [
+     "reconnaissance: home candidate 1 /restaurant-equipment.html is a listing (a best-seller carousel of 21 priced product tiles); tiles 0-18 are USD 205-5139 (out of band), tile 19 Regency 24x48 green epoxy wire shelf USD 31.49 is the first in band, InStock in JSON-LD with an enabled Add to Cart submit; no second in-band tile, so cart-2items not-reached",
+     "the product page states a manufacturer minimum of 2 per order, with the quantity chosen in a select defaulting to 2; the operator missed this in reconnaissance; the protocol's item rule does not exclude a minimum-quantity item",
+     "capture: one allowlisted add-to-cart (input#buyButton) added the shelf at quantity 2 (the page's inline confirmation, view-01); the cart page shows the one item at quantity 2 (operator view view-02, not a state, never labelled); cart-1 (quantity 1) is not reachable within the posture, and the cart page was not taken as cart-1 or cart-qty2 because neither definition fits",
+     "terms: Terms of Use forbids robots, spiders or other automatic means (prohibitsAutomated: yes; recorded, not excluding)",
+     "options for the coordinator: accept as not captured (a new code or add-to-cart-refused by analogy, evidence view-01/view-02), or a rule allowing a site-minimum quantity as cart-1"
+    ]
+   },
+   "statusUnderProtocol7": {
+    "status": "needs-decision",
+    "code": null,
+    "note": "capture ended without cart-1 or minicart-1: the fixed item has a site minimum order quantity of 2 (quantity only through a select), so one add-to-cart put it in the cart at quantity 2; outcome needs a coordinator decision (protocol has no rule for a site-imposed minimum quantity); not counted as a final outcome"
+   }
+  },
+  {
+   "domain": "joshinweb.jp",
+   "stream": "non-us",
+   "visit": 9,
+   "band": "top-1k",
+   "regionGroup": "asia-pacific",
+   "homeList": "JP",
+   "frameRegion": "JP",
+   "frameCurrency": "JPY",
+   "protocol7": {
+    "recon": {
+     "sessionId": "20261006T080548Z",
+     "startedAt": "2026-10-06T08:05:48.332Z",
+     "endedAt": "2026-10-06T08:06:11.201Z",
+     "topLevelNavigations": 2,
+     "navigationRequests": 2,
+     "views": 1,
+     "outcome": {
+      "status": "excluded",
+      "code": "blocked-http-403",
+      "evidenceSha256": "e4d85913786c68c6daec21e4220c7e3f80612bb7721ef70809676070de79f2c1",
+      "draftRecipeSha256": null
+     },
+     "stop": {
+      "code": "blocked-http-403",
+      "detail": "http-403",
+      "evidenceSha256": "e4d85913786c68c6daec21e4220c7e3f80612bb7721ef70809676070de79f2c1"
+     },
+     "robots": {
+      "sha256": "49087cf96a5ed143e07014ffb7f3f012cc37873e9df756cec1ff9a8f6f154363",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "robotsHosts": [],
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://joshinweb.jp/",
+       "chain": [
+        "https://joshinweb.jp/",
+        "https://joshinweb.jp/top.html"
+       ],
+       "landed": "https://joshinweb.jp/top.html",
+       "sameSite": true
+      }
+     ],
+     "backgroundWrites": {
+      "count": 3,
+      "sample": [
+       "POST joshinweb.jp/:token/:token/Lw9CD1Y_SwE/SR/IpPwtCYwc",
+       "POST joshinweb.jp/akam/13/pixel_6b97c671"
+      ]
+     },
+     "events": [
+      {
+       "kind": "stop",
+       "detail": "blocked-http-403"
+      }
+     ],
+     "record": "capture/records/joshinweb.jp.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": "e4d85913786c68c6daec21e4220c7e3f80612bb7721ef70809676070de79f2c1",
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "reviewFlags": [
+     "home / redirected on the same site to /top.html (view-01 taken); candidate 1 (after skipping other-domain company, store-locator and trade-in links, the self link, account, help and cart links) /dp/discpier.html answered HTTP 403; the tool stopped the site before any snapshot"
+    ]
+   },
+   "statusUnderProtocol7": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "note": "blocked in reconnaissance: HTTP 403 on the second navigation (home candidate 1)"
+   }
+  },
+  {
+   "domain": "crocs.com",
+   "stream": "us",
+   "visit": 12,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "protocol7": {
+    "recon": {
+     "sessionId": "20261006T080628Z",
+     "startedAt": "2026-10-06T08:06:28.917Z",
+     "endedAt": "2026-10-06T08:06:32.677Z",
+     "topLevelNavigations": 1,
+     "navigationRequests": 1,
+     "views": 0,
+     "outcome": {
+      "status": "excluded",
+      "code": "blocked-http-429",
+      "evidenceSha256": "a24cca4eaaaa01c2bde82e985e7a5ec84cdd39d82989fd1978b770adcb05a5aa",
+      "draftRecipeSha256": null
+     },
+     "stop": {
+      "code": "blocked-http-429",
+      "detail": "http-429",
+      "evidenceSha256": "a24cca4eaaaa01c2bde82e985e7a5ec84cdd39d82989fd1978b770adcb05a5aa"
+     },
+     "robots": {
+      "sha256": "73ae5862b1ce0072cc9ad808642c2986d097ae4e2bc7fb286d58eee4d7e77322",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "robotsHosts": [],
+     "stockMismatch": [],
+     "homeLandings": [],
+     "backgroundWrites": {
+      "count": 2,
+      "sample": [
+       "POST www.crocs.com/cdn-cgi/challenge-platform/h/b/jsd/oneshot/:token/:token/:token",
+       "POST www.crocs.com/:token/:token/tl"
+      ]
+     },
+     "events": [
+      {
+       "kind": "stop",
+       "detail": "blocked-http-429"
+      }
+     ],
+     "record": "capture/records/crocs.com.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": "a24cca4eaaaa01c2bde82e985e7a5ec84cdd39d82989fd1978b770adcb05a5aa",
+    "status": "excluded",
+    "code": "blocked-http-429",
+    "reviewFlags": [
+     "main document HTTP 429 on the first goto to the entry origin (Kasada-style challenges answer 429); the tool stopped the site before any snapshot"
+    ]
+   },
+   "statusUnderProtocol7": {
+    "status": "excluded",
+    "code": "blocked-http-429",
+    "note": "blocked in reconnaissance: HTTP 429 on the first page"
+   }
+  },
+  {
+   "domain": "davidjones.com",
+   "stream": "non-us",
+   "visit": 10,
+   "band": "top-1k",
+   "regionGroup": "asia-pacific",
+   "homeList": "AU",
+   "frameRegion": "AU",
+   "frameCurrency": "AUD",
+   "protocol7": {
+    "recon": {
+     "sessionId": "20261006T080642Z",
+     "startedAt": "2026-10-06T08:06:42.562Z",
+     "endedAt": "2026-10-06T08:06:45.646Z",
+     "topLevelNavigations": 1,
+     "navigationRequests": 2,
+     "views": 0,
+     "outcome": {
+      "status": "excluded",
+      "code": "blocked-http-403",
+      "evidenceSha256": "da1a65292dd860f9c8a7ee60b52970af14ac7211bf9335fe1e7c65912edc2067",
+      "draftRecipeSha256": null
+     },
+     "stop": {
+      "code": "blocked-http-403",
+      "detail": "http-403",
+      "evidenceSha256": "da1a65292dd860f9c8a7ee60b52970af14ac7211bf9335fe1e7c65912edc2067"
+     },
+     "robots": {
+      "sha256": "64d6b50b71b1cb11465300ab40fd4e2229d7057cb71943273853de6f98a1f57d",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "robotsHosts": [],
+     "stockMismatch": [],
+     "homeLandings": [],
+     "backgroundWrites": {
+      "count": 2,
+      "sample": [
+       "POST www.davidjones.com/kes-be-great-the-and-scome-call-By-make-are-And-/:token",
+       "POST www.davidjones.com/w-of-Macbethe-Seywarrorsed-vpon-the-subble-to-be"
+      ]
+     },
+     "events": [
+      {
+       "kind": "stop",
+       "detail": "blocked-http-403"
+      }
+     ],
+     "record": "capture/records/davidjones.com.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": "da1a65292dd860f9c8a7ee60b52970af14ac7211bf9335fe1e7c65912edc2067",
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "reviewFlags": [
+     "main document HTTP 403 on the first goto to the entry origin; the tool stopped the site before any snapshot"
+    ]
+   },
+   "statusUnderProtocol7": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "note": "blocked in reconnaissance: HTTP 403 on the first page"
+   }
+  },
+  {
+   "domain": "cardkingdom.com",
+   "stream": "us",
+   "visit": 13,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "protocol7": {
+    "recon": {
+     "sessionId": "20261006T080655Z",
+     "startedAt": "2026-10-06T08:06:55.258Z",
+     "endedAt": "2026-10-06T08:09:22.623Z",
+     "topLevelNavigations": 8,
+     "navigationRequests": 8,
+     "views": 8,
+     "outcome": {
+      "status": "done",
+      "code": null,
+      "evidenceSha256": null,
+      "draftRecipeSha256": "d52d8f94f86dc562a7030c61da408262c0c2632a74861666ba75ddf1562ebb78"
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "e8cbce2f33d5a7caa69aaa96e794e70c9df4de13e3a69e5feb5df7a927f2f151",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "robotsHosts": [],
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.cardkingdom.com/",
+       "chain": [
+        "https://www.cardkingdom.com/"
+       ],
+       "landed": "https://www.cardkingdom.com/",
+       "sameSite": true
+      }
+     ],
+     "backgroundWrites": {
+      "count": 9,
+      "sample": [
+       "POST www.cardkingdom.com/cdn-cgi/challenge-platform/h/b/jsd/oneshot/:token/:token/:token",
+       "POST www.cardkingdom.com/cdn-cgi/rum"
+      ]
+     },
+     "events": [],
+     "record": "capture/records/cardkingdom.com.recon.json"
+    },
+    "capture": {
+     "sessionId": "20261006T080942Z",
+     "startedAt": "2026-10-06T08:09:42.372Z",
+     "endedAt": "2026-10-06T08:11:13.160Z",
+     "topLevelNavigations": 6,
+     "navigationRequests": 6,
+     "record": "capture/records/cardkingdom.com.json",
+     "recipe": "capture/recipes/cardkingdom.com.json",
+     "stop": null,
+     "events": [],
+     "backgroundWrites": {
+      "count": 8,
+      "sample": [
+       "POST www.cardkingdom.com/cdn-cgi/rum",
+       "POST www.cardkingdom.com/api/cart/add"
+      ]
+     }
+    },
+    "listingUrl": "https://www.cardkingdom.com/catalog/search?search=header&filter%5Bname%5D=",
+    "productUrls": [
+     "https://www.cardkingdom.com/mtg/promotional/the-one-ring-bundle-foil",
+     "https://www.cardkingdom.com/mtg/reality-fracture/hexhaven-invigorator"
+    ],
+    "cartPath": "/cart",
+    "cartHost": "www.cardkingdom.com",
+    "checkoutPaths": [],
+    "platform": {
+     "group": "none-detected",
+     "marker": null
+    },
+    "robots": {
+     "sha256": "e8cbce2f33d5a7caa69aaa96e794e70c9df4de13e3a69e5feb5df7a927f2f151",
+     "httpStatus": 200,
+     "decision": "allowed",
+     "checkedPaths": [
+      {
+       "path": "/cart",
+       "host": "www.cardkingdom.com",
+       "allowed": true
+      }
+     ]
+    },
+    "terms": {
+     "url": "https://www.cardkingdom.com/static/tos",
+     "copySha256": "c2d5d37a91a7ec846823d2722c450ddfc059384bba6367364e5d75570aa8b8ec",
+     "prohibitsAutomated": "yes"
+    },
+    "states": [
+     {
+      "state": "empty-cart",
+      "manifestSha256": "cfd4e6d7c598b710719f803ce68aa738047b35dd8564a017715e4a7b3a71a2b4",
+      "robotsAllowed": true
+     },
+     {
+      "state": "view-01",
+      "manifestSha256": "b446342f781b47024d357902be58033489fe5cdfbedcb676236cc1fbc1594f74",
+      "robotsAllowed": true
+     },
+     {
+      "state": "cart-1",
+      "manifestSha256": "19551cd17e5847f14191362c7a16ee29086145859d677f77bc03b64f9a438e21",
+      "robotsAllowed": true
+     },
+     {
+      "state": "cart-2items",
+      "manifestSha256": "b8518655d4f76be13e63e75d06cd422730040ee142def9e1c1a2edf90dadcc15",
+      "robotsAllowed": true
+     },
+     {
+      "state": "terms",
+      "manifestSha256": "c2d5d37a91a7ec846823d2722c450ddfc059384bba6367364e5d75570aa8b8ec",
+      "robotsAllowed": true
+     }
+    ],
+    "notReached": [
+     {
+      "state": "minicart-1",
+      "reason": "no-in-page-cart-opened"
+     },
+     {
+      "state": "cart-qty2",
+      "reason": "quantity-only-by-listbox"
+     }
+    ],
+    "evidenceSha256": null,
+    "observedRegion": "US",
+    "observedCurrency": "USD",
+    "observedCurrencyBasis": "cart summary shows Subtotal ... USD on the product sidebar; frame currency",
+    "status": "captured",
+    "code": null,
+    "reviewFlags": [
+     "home has no navigation landmark; candidates in document order after skipping the skip link, logo self-link, sign-in and wishlist (sign-in), the buy and sell carts, and off-domain links",
+     "candidate 1 /purchasing/how_to_sell (not a listing); its first main-content candidate after self links, /purchasing/mtg_singles, is the buy list (prices the store pays to sellers), read as not a listing of items for sale (operator reading, flagged)",
+     "candidate 2 /static/about (not a listing; no main-content candidate)",
+     "candidate 3 Shop All Singles /catalog/search?search=header&filter[name]= (a header link URL, no search box used): a listing; tile prices are per condition (NM/EX/VG/G), read as a range with the lowest amount; tiles before tile 18 all have lowest prices above USD 200; item 1 The One Ring (Bundle Foil) NM USD 139.99 (lowest G 97.99), item 2 Hexhaven Invigorator NM USD 37.99, the next in-band tile",
+     "the condition (NM) is preselected on the product page and needs no choice; operator read condition as not a choice other than size or colour because none is made (flagged)",
+     "add-to-cart is a two-step control inside the add-to-cart form: the Add to Cart dropdown toggle (div.selectQty) then the quantity 1 entry of a menu without ARIA roles (li:nth-child(2)); both allowlisted as add-to-cart; the reviewer should check that picking 1 from that menu is within the no-select rule (the cart page's equivalent quantity list uses role=option and would be refused)",
+     "the product page shows a persistent Shopping Cart sidebar that was not opened by the add, so minicart-1 not reached (view-01 shows it after the add)",
+     "cart-qty2 not reached: quantity changes only through quantity lists (role=option on the cart page; a menu on the product page sets, not adds); no increment control",
+     "terms: Terms of Service forbid robots and data mining (prohibitsAutomated: yes; recorded, not excluding)"
+    ]
+   },
+   "statusUnderProtocol7": {
+    "status": "captured",
+    "code": null,
+    "note": "captured (empty-cart, cart-1, cart-2items); minicart-1 and cart-qty2 not reached"
+   }
+  },
+  {
+   "domain": "notino.nl",
+   "stream": "non-us",
+   "visit": 11,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "NL",
+   "frameRegion": "NL",
+   "frameCurrency": "EUR",
+   "protocol7": {
+    "recon": {
+     "sessionId": "20261006T081138Z",
+     "startedAt": "2026-10-06T08:11:38.909Z",
+     "endedAt": "2026-10-06T08:11:55.721Z",
+     "topLevelNavigations": 2,
+     "navigationRequests": 2,
+     "views": 1,
+     "outcome": {
+      "status": "excluded",
+      "code": "blocked-http-403",
+      "evidenceSha256": "478aa03043130047a1de887c7c020e7895ebe3f34e7f33fca411b5c7755508b4",
+      "draftRecipeSha256": null
+     },
+     "stop": {
+      "code": "blocked-http-403",
+      "detail": "http-403",
+      "evidenceSha256": "478aa03043130047a1de887c7c020e7895ebe3f34e7f33fca411b5c7755508b4"
+     },
+     "robots": {
+      "sha256": "585958a0aba466ad716bfb3187b90411e049ceb7ec957c3d61e3205b935ce195",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "robotsHosts": [],
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.notino.nl/",
+       "chain": [
+        "https://www.notino.nl/"
+       ],
+       "landed": "https://www.notino.nl/",
+       "sameSite": true
+      }
+     ],
+     "backgroundWrites": {
+      "count": 6,
+      "sample": [
+       "POST www.notino.nl/cdn-cgi/challenge-platform/h/b/jsd/oneshot/:token/:token/:token",
+       "POST www.notino.nl/googletaggatewayall/ga/g/c",
+       "POST www.notino.nl/cdn-cgi/rum",
+       "POST www.notino.nl/cdn-cgi/challenge-platform/h/b/fo/:token/:token/:token"
+      ]
+     },
+     "events": [
+      {
+       "kind": "request-aborted",
+       "detail": "POST www.notino.nl/api/checkout/cart/cartContent"
+      },
+      {
+       "kind": "request-aborted",
+       "detail": "POST www.notino.nl/api/checkout/config/deliverySettings"
+      },
+      {
+       "kind": "stop",
+       "detail": "blocked-http-403"
+      }
+     ],
+     "record": "capture/records/notino.nl.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": "478aa03043130047a1de887c7c020e7895ebe3f34e7f33fca411b5c7755508b4",
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "reviewFlags": [
+     "home loaded (view-01); candidate 1 after the sign-in link, /kortingen/, answered HTTP 403; the tool stopped the site before any snapshot"
+    ]
+   },
+   "statusUnderProtocol7": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "note": "blocked in reconnaissance: HTTP 403 on the second navigation (home candidate 1)"
+   }
+  },
+  {
+   "domain": "samsung.com",
+   "stream": "us",
+   "visit": 14,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "protocol7": {
+    "recon": {
+     "sessionId": "20261006T081204Z",
+     "startedAt": "2026-10-06T08:12:04.737Z",
+     "endedAt": "2026-10-06T08:14:45.888Z",
+     "topLevelNavigations": 11,
+     "navigationRequests": 11,
+     "views": 9,
+     "outcome": {
+      "status": "excluded",
+      "code": "no-eligible-item",
+      "evidenceSha256": "8bd722bd1b1aa0746fb13b7fc319e2aee795519de3fec6a966f0ba26147cf944",
+      "draftRecipeSha256": null
+     },
+     "stop": null,
+     "robots": {
+      "sha256": "e07ce06f3220d0496ee9bec373ddb2e2fdc272391a4b0153c453bd39b08e39f8",
+      "httpStatus": 200,
+      "decision": "allowed"
+     },
+     "robotsHosts": [
+      {
+       "host": "shop.samsung.com",
+       "sha256": "8cce0ce7bb324e4501731db8ffb2b915543ac338a1b5b5dca7ccea12996d260e",
+       "httpStatus": 200,
+       "decision": "allowed"
+      }
+     ],
+     "stockMismatch": [],
+     "homeLandings": [
+      {
+       "requested": "https://www.samsung.com/",
+       "chain": [
+        "https://www.samsung.com/",
+        "https://www.samsung.com/us/"
+       ],
+       "landed": "https://www.samsung.com/us/",
+       "sameSite": true
+      }
+     ],
+     "backgroundWrites": {
+      "count": 5,
+      "sample": [
+       "POST api-recommender.bigdata.samsung.com/prodrec/recommendation"
+      ]
+     },
+     "events": [
+      {
+       "kind": "robots-host-checked",
+       "detail": "shop.samsung.com allowed"
+      }
+     ],
+     "record": "capture/records/samsung.com.recon.json"
+    },
+    "capture": null,
+    "evidenceSha256": "8bd722bd1b1aa0746fb13b7fc319e2aee795519de3fec6a966f0ba26147cf944",
+    "status": "excluded",
+    "code": "no-eligible-item",
+    "reviewFlags": [
+     "operator error, disclosed: the first goto was to https://shop.samsung.com/ (a frame host, not the entry host www.samsung.com); it redirected on the same site to www.samsung.com/us/ and nothing was snapshotted; the operator then loaded the entry origin https://www.samsung.com/ (landed /us/, homeLandings) and took view-01 there; one extra navigation, no effect on the findings",
+     "candidate 1 /us/shop/ (after the logo self-link and the cart link) redirected to /us/offer/: a listing; its product tiles are USD 249.99 and up (promotional save-amounts are not tile prices), so no qualifying tile",
+     "candidate 2 /us/tablets/galaxy-tab-s12/ (marketing page, not a listing); its first main-content candidate after the account benefits link is /us/shop/all-deals/, which redirected to the same /us/offer/ listing (view-04)",
+     "candidates 3-6 are product buy pages (Galaxy Z Fold8, Z Fold8 Ultra, Z Flip8, Watch Ultra2), not listings; each page's first main-content candidate is /us/shop/offer-program/, opened once (view-06, not a listing) and not re-opened for candidates 4-6",
+     "evidence screenshot taken on the /us/offer/ listing"
+    ]
+   },
+   "statusUnderProtocol7": {
+    "status": "excluded",
+    "code": "no-eligible-item",
+    "note": "excluded in reconnaissance: no home candidate gave a qualifying item (the only listing, the offers page, has no tile in USD 10-200)"
+   }
   }
  ],
  "protocol4": "generic-reader-protocol.4",

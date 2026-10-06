@@ -1,0 +1,205 @@
+{
+  "schema": "capture-recon-record.3",
+  "domain": "notino.nl",
+  "entryUrl": "https://www.notino.nl/",
+  "currency": "EUR",
+  "priceBand": [
+    9,
+    185
+  ],
+  "tool": {
+    "version": "capture-tool.5",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "session": {
+    "id": "20261006T081138Z",
+    "number": 1,
+    "startedAt": "2026-10-06T08:11:38.909Z",
+    "endedAt": "2026-10-06T08:11:55.721Z",
+    "topLevelNavigations": 2,
+    "navigationRequests": 2
+  },
+  "robots": {
+    "url": "https://www.notino.nl/robots.txt",
+    "httpStatus": 200,
+    "sha256": "585958a0aba466ad716bfb3187b90411e049ceb7ec957c3d61e3205b935ce195",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "disallow",
+            "path": "/*.jpg$"
+          },
+          {
+            "type": "disallow",
+            "path": "/*.jpeg$"
+          },
+          {
+            "type": "disallow",
+            "path": "/*.png$"
+          },
+          {
+            "type": "disallow",
+            "path": "/*.gif$"
+          },
+          {
+            "type": "disallow",
+            "path": "/order.asp*"
+          },
+          {
+            "type": "disallow",
+            "path": "/order-multistep.asp*"
+          },
+          {
+            "type": "disallow",
+            "path": "/order-summary.asp*"
+          },
+          {
+            "type": "disallow",
+            "path": "/orderFrame.asp*"
+          },
+          {
+            "type": "disallow",
+            "path": "/detailsend.asp*"
+          },
+          {
+            "type": "disallow",
+            "path": "/addvote.asp*"
+          },
+          {
+            "type": "disallow",
+            "path": "/newpassword.asp*"
+          },
+          {
+            "type": "disallow",
+            "path": "/myaccount.asp*"
+          },
+          {
+            "type": "disallow",
+            "path": "/mynotino/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/try-and-buy/error*"
+          },
+          {
+            "type": "disallow",
+            "path": "/cart/*"
+          },
+          {
+            "type": "disallow",
+            "path": "/upselling*"
+          },
+          {
+            "type": "disallow",
+            "path": "/checkout*"
+          },
+          {
+            "type": "disallow",
+            "path": "/.well-known*"
+          },
+          {
+            "type": "disallow",
+            "path": "/api/"
+          },
+          {
+            "type": "disallow",
+            "path": "/productDetail"
+          },
+          {
+            "type": "disallow",
+            "path": "/thankyou*"
+          },
+          {
+            "type": "disallow",
+            "path": "/delivery-and-payment*"
+          },
+          {
+            "type": "disallow",
+            "path": "/summary*"
+          },
+          {
+            "type": "disallow",
+            "path": "/cdn-cgi/"
+          },
+          {
+            "type": "disallow",
+            "path": "/googletaggatewayspecific/"
+          },
+          {
+            "type": "disallow",
+            "path": "/googletaggatewayall/"
+          },
+          {
+            "type": "allow",
+            "path": "/.well-known/assetlinks.json"
+          },
+          {
+            "type": "allow",
+            "path": "/api/beautyblog"
+          },
+          {
+            "type": "allow",
+            "path": "/api/faqs"
+          }
+        ]
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "views": 1,
+  "homeLandings": [
+    {
+      "requested": "https://www.notino.nl/",
+      "chain": [
+        "https://www.notino.nl/"
+      ],
+      "landed": "https://www.notino.nl/",
+      "sameSite": true
+    }
+  ],
+  "navigation": [
+    "https://www.notino.nl/"
+  ],
+  "stockMismatch": [],
+  "events": [
+    {
+      "kind": "request-aborted",
+      "detail": "POST www.notino.nl/api/checkout/cart/cartContent"
+    },
+    {
+      "kind": "request-aborted",
+      "detail": "POST www.notino.nl/api/checkout/config/deliverySettings"
+    },
+    {
+      "kind": "stop",
+      "detail": "blocked-http-403"
+    }
+  ],
+  "backgroundWrites": {
+    "count": 6,
+    "sample": [
+      "POST www.notino.nl/cdn-cgi/challenge-platform/h/b/jsd/oneshot/:token/:token/:token",
+      "POST www.notino.nl/googletaggatewayall/ga/g/c",
+      "POST www.notino.nl/cdn-cgi/rum",
+      "POST www.notino.nl/cdn-cgi/challenge-platform/h/b/fo/:token/:token/:token"
+    ]
+  },
+  "stop": {
+    "code": "blocked-http-403",
+    "detail": "http-403",
+    "evidenceSha256": "478aa03043130047a1de887c7c020e7895ebe3f34e7f33fca411b5c7755508b4"
+  },
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "evidenceSha256": "478aa03043130047a1de887c7c020e7895ebe3f34e7f33fca411b5c7755508b4",
+    "draftRecipeSha256": null
+  }
+}
