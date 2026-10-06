@@ -2,7 +2,7 @@
 type: Decision
 title: Reconnaissance session and disallow-all-only robots rule (generic-reader-protocol.4)
 description: After a five-site pilot captured nothing, Amendment 3 makes robots.txt exclude a site only when it disallows everything (Evan, 2026-10-06), adds a look-only reconnaissance session that finds the listing, first in-band item and real cart path by fixed rules before the one capture session, aligns the capture tool's exclusion codes, per-host robots checks, stop order and platform states with the protocol, and re-visits the four pilot sites excluded only by the retired path rule.
-status: proposed
+status: accepted
 tags: [decision, phase-12, merchants, eval, capture, robots]
 generated:
   by: claude-code/claude-opus-5-5
@@ -50,4 +50,4 @@ On 2026-10-06 Evan decided in chat to relax the robots rule: a site is excluded 
 - Found while aligning the tool: `platform.mjs` lacked the protocol's `.3` additions to `other-detected` (Shopware `/bundles/storefront/`, PrestaShop, Cafe24, MakeShop); added with a test, before any split is computed.
 
 ## Status
-Proposed 2026-10-06 by the amendment builder (claude-code/claude-opus-5-5). Independent review at `7070917` (2026-10-06): "sign with fixes" (agent-verified); applied with tests: recipe equals the findings exactly, home and listing `view-NN` required and the navigation order committed (12.3 reviewer MUST check recipes against them), frame `hosts` for listing and items, cart path checked against the cart host's robots.txt, disallow-all defined as `/` disallowed under longest match, narrower add-to-cart backstop, `add-to-cart-refused` without substitution when the fixed item is unavailable. The robots rule is Evan's decision in chat (2026-10-06); the rest awaits the independent reviewer's signature of `.4`. Amends the robots and stop-order rows of [capture tool design choices](2026-10-05-capture-tool-design.md).
+Proposed 2026-10-06 by the amendment builder (claude-code/claude-opus-5-5). Independent review at `7070917` (2026-10-06): "sign with fixes" (agent-verified); applied with tests: recipe equals the findings exactly, home and listing `view-NN` required and the navigation order committed (12.3 reviewer MUST check recipes against them), frame `hosts` for listing and items, cart path checked against the cart host's robots.txt, disallow-all defined as `/` disallowed under longest match, narrower add-to-cart backstop, `add-to-cart-refused` without substitution when the fixed item is unavailable. The robots rule is Evan's decision in chat (2026-10-06); the rest awaits the independent reviewer's signature of `.4`. Amends the robots and stop-order rows of [capture tool design choices](2026-10-05-capture-tool-design.md). Re-check at `2eebbeb`: **signed `generic-reader-protocol.4`, `capture-tool.2` approved** (agent-verified); accepted. The robots posture is Evan's decision (chat, 2026-10-06).
