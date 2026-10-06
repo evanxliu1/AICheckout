@@ -171,6 +171,16 @@ test('robots posture (.4): only a disallow-everything rule excludes; cart and ch
     robotsPosture({ httpStatus: 200, body: 'User-agent: *\nDisallow: /*\n' }, []).decision,
     'robots-disallow-all',
   );
+  // "Disallows everything" = the root path `/` is disallowed under longest-match evaluation.
+  for (const [body, decision] of [
+    ['User-agent: *\nDisallow: /\nAllow: /\n', 'allowed'],
+    ['User-agent: *\nDisallow: /\nAllow: /$\n', 'allowed'],
+    ['User-agent: *\nAllow: /\nDisallow: /*\n', 'robots-disallow-all'],
+    ['User-agent: *\nDisallow: /\nAllow: /cart\n', 'robots-disallow-all'],
+    ['User-agent: *\nDisallow: /$\n', 'robots-disallow-all'],
+    ['User-agent: *\nDisallow: /*?\n', 'allowed'],
+  ])
+    assert.equal(robotsPosture({ httpStatus: 200, body }, []).decision, decision, body);
   assert.equal(
     robotsPosture({ httpStatus: 200, body: 'User-agent: aicheckoutcapture\nDisallow: /\n' }, ['/cart'])
       .decision,
@@ -589,7 +599,7 @@ test('site record: stop detail is a code and committed URLs carry no query', () 
         sha256: null,
         posture: 'rules',
         groups: [],
-        checkedPaths: [],
+        checkedPaths: [{ path: '/bag', host: 'cart.x.com', allowed: false }],
         decision: 'allowed',
       },
       robotsHosts: [],
@@ -690,12 +700,15 @@ test('recon spec: entry host only, popup and cookie purposes only', () => {
   const spec = {
     domain: 'example.de',
     entryUrl: 'https://www.example.de/',
+    hosts: ['www.example.de'],
     currency: 'EUR',
     priceBand: [9, 185],
   };
   assert.ok(ReconSpec.parse(spec));
   assert.equal(ReconSpec.safeParse({ ...spec, entryUrl: 'https://www.example.de/damen' }).success, false);
   assert.equal(ReconSpec.safeParse({ ...spec, entryUrl: 'https://other.de/' }).success, false);
+  assert.equal(ReconSpec.safeParse({ ...spec, entryUrl: 'https://m.example.de/' }).success, false);
+  assert.equal(ReconSpec.safeParse({ ...spec, hosts: [] }).success, false);
   assert.equal(
     ReconSpec.safeParse({
       ...spec,
@@ -727,35 +740,51 @@ test('recon: add-to-cart wording is refused in the main languages', () => {
     '장바구니 담기',
   ])
     assert.ok(ADD_TO_CART_NAME.test(name), name);
-  for (const name of ['Cart', 'View bag', 'Warenkorb', 'Panier', 'Women', 'Sale']) assert.equal(ADD_TO_CART_NAME.test(name), false, name);
+  assert.ok(ADD_TO_CART_NAME.test('Comprar ahora'));
+  assert.ok(ADD_TO_CART_NAME.test('Comprar agora'));
+  for (const name of ['Cart', 'View bag', 'Warenkorb', 'Panier', 'Women', 'Sale', 'Comprar', 'Comprar por categoría']) assert.equal(ADD_TO_CART_NAME.test(name), false, name);
 });
 
-test('capture needs a finished reconnaissance session whose loaded pages include the recipe URLs', async () => {
+test('capture needs a finished reconnaissance session and a recipe equal to its findings', async () => {
   const out = await mkdtemp(path.join(os.tmpdir(), 'capture-recon-'));
   try {
-    const recipe = Recipe.parse({ ...good(), steps: [] });
+    const recipe = Recipe.parse({ ...good(), origin: 'https://www.example.de/', steps: [] });
     await assert.rejects(checkRecon(out, recipe), /needs a recipe written from a reconnaissance session/);
-    const withRecon = { ...recipe, recon: { sessionId: '20261006T010000Z' } };
+    const withRecon = { ...recipe, recon: { sessionId: '20261006T010000Z' }, cartHost: 'www.example.de' };
     await assert.rejects(checkRecon(out, withRecon), /did not end with findings/);
     const site = path.join(out, 'example.de');
-    await mkdir(path.join(site, 'recon', '20261006T010000Z'), { recursive: true });
+    const dir = path.join(site, 'recon', '20261006T010000Z');
+    await mkdir(dir, { recursive: true });
     await writeFile(
       path.join(site, 'recon-sessions.json'),
       JSON.stringify([{ id: '20261006T010000Z', date: '2026-10-06', stopCode: null, outcome: 'done' }]),
     );
-    const visited = ['https://www.example.de/', 'https://www.example.de/damen', 'https://www.example.de/p/1'];
-    await writeFile(path.join(site, 'recon', '20261006T010000Z', 'visited.json'), JSON.stringify(visited));
-    await assert.rejects(checkRecon(out, withRecon), /never loaded: \/warenkorb/);
-    visited.push('https://www.example.de/warenkorb');
-    await writeFile(path.join(site, 'recon', '20261006T010000Z', 'visited.json'), JSON.stringify(visited));
+    const visited = [
+      'https://www.example.de/',
+      'https://www.example.de/damen',
+      'https://www.example.de/p/1',
+      'https://www.example.de/p/2',
+      'https://www.example.de/warenkorb',
+    ];
+    await writeFile(path.join(dir, 'visited.json'), JSON.stringify(visited));
+    await writeFile(path.join(dir, 'recipe.draft.json'), JSON.stringify({ ...withRecon, allowlist: [] }));
     await checkRecon(out, withRecon);
+    // A product the reconnaissance loaded but did not find as the item is refused: the recipe must equal the findings.
     await assert.rejects(
       checkRecon(out, { ...withRecon, productUrls: ['https://www.example.de/p/2'] }),
-      /never loaded: https:\/\/www.example.de\/p\/2/,
+      /differs from its reconnaissance findings in: productUrls/,
     );
+    await assert.rejects(checkRecon(out, { ...withRecon, checkoutPaths: [] }), /checkoutPaths/);
+    await assert.rejects(checkRecon(out, { ...withRecon, cartHost: 'cart.example.de' }), /cartHost/);
+    await assert.rejects(checkRecon(out, { ...withRecon, origin: 'https://m.example.de/' }), /origin/);
     // Loopback fixtures without a recon field are exempt (tests only).
     await checkRecon(out, Recipe.parse(fixtureRecipe('http://127.0.0.1:8080')));
   } finally {
     await rm(out, { recursive: true, force: true });
   }
+});
+
+test('recipe: cartHost must be a host of the site', () => {
+  assert.ok(Recipe.parse({ ...good(), cartHost: 'cart.example.de' }));
+  assert.equal(Recipe.safeParse({ ...good(), cartHost: 'cart.example.com' }).success, false);
 });

@@ -74,8 +74,11 @@ export function isAllowed(group, path) {
   return !best || best.type === 'allow';
 }
 
-const disallowsAll = (group) =>
-  Boolean(group?.rules.some((r) => r.type === 'disallow' && ['/', '/*', '/*$'].includes(r.path)));
+/**
+ * "Disallows everything" (protocol .4): the root path `/` is disallowed under standard longest-match evaluation, so
+ * `Disallow: /` with `Allow: /` (or `Allow: /$`) does not exclude, while `Disallow: /` with only `Allow: /cart` does.
+ */
+const disallowsAll = (group) => Boolean(group) && !isAllowed(group, '/');
 
 /**
  * Decide one host's robots posture before any page of that host loads.

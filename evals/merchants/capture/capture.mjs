@@ -33,7 +33,7 @@ import {
   isLoopback,
   parseRecipe,
 } from './recipe.mjs';
-import { ROBOTS_TOKEN, robotsPosture } from './robots.mjs';
+import { ROBOTS_TOKEN, pathAllowed, robotsPosture } from './robots.mjs';
 import { sha256 } from './snapshot.mjs';
 
 export const TOOL_VERSION = 'capture-tool.2';
@@ -150,9 +150,15 @@ export async function checkRecon(outRoot, recipe) {
   const s = sessions.find((x) => x.id === recipe.recon.sessionId);
   if (!s || s.outcome !== 'done')
     throw new Error(`reconnaissance session ${recipe.recon.sessionId} of ${recipe.domain} did not end with findings`);
-  const visited = new Set(
-    JSON.parse(await readFile(path.join(siteDir, 'recon', recipe.recon.sessionId, 'visited.json'), 'utf8')),
+  const dir = path.join(siteDir, 'recon', recipe.recon.sessionId);
+  // The recipe's site, listing, items, cart and checkout MUST equal the reconnaissance findings exactly.
+  const draft = JSON.parse(await readFile(path.join(dir, 'recipe.draft.json'), 'utf8'));
+  const differs = ['origin', 'listingUrl', 'productUrls', 'cartPath', 'checkoutPaths', 'cartHost'].filter(
+    (k) => JSON.stringify(recipe[k] ?? null) !== JSON.stringify(draft[k] ?? null),
   );
+  if (differs.length)
+    throw new Error(`recipe differs from its reconnaissance findings in: ${differs.join(', ')}`);
+  const visited = new Set(JSON.parse(await readFile(path.join(dir, 'visited.json'), 'utf8')));
   const unseen = [recipe.listingUrl, ...recipe.productUrls].filter((u) => !visited.has(visitKey(u)));
   const cart = recipe.cartPath.replace(/\/+$/, '') || '/';
   if (![...visited].some((k) => (new URL(k).pathname.replace(/\/+$/, '') || '/') === cart)) unseen.push(cart);
@@ -221,6 +227,15 @@ async function drive({ recipe, mode, sessionDir, opts, paths, steps }) {
   const page = context.pages()[0] ?? (await context.newPage());
   const version = await browserVersion(context, page);
   const robots = await fetchRobots(context, recipe.origin, sessionDir, paths);
+  // A cart the reconnaissance found on another host of the site: that host's robots.txt is read up front too.
+  const entry = new URL(recipe.origin);
+  const cartRobots =
+    recipe.cartHost && recipe.cartHost !== entry.host
+      ? {
+          ...(await fetchRobots(context, `${entry.protocol}//${recipe.cartHost}`, sessionDir, null)),
+          host: recipe.cartHost,
+        }
+      : null;
   const { driver, session } = await createDriver({
     context,
     page,
@@ -231,6 +246,7 @@ async function drive({ recipe, mode, sessionDir, opts, paths, steps }) {
     mode,
     robotsGroups: robots.groups,
     fetchRobots: (origin) => fetchRobots(context, origin, sessionDir, null),
+    knownRobotsHosts: cartRobots ? [cartRobots] : [],
   });
   const log = [];
   const exec = async (step) => {
@@ -256,6 +272,8 @@ async function drive({ recipe, mode, sessionDir, opts, paths, steps }) {
 
   if (robots.stopCode) {
     session.stopped = { code: robots.stopCode, detail: `robots-${robots.posture}`, evidenceSha256: null };
+  } else if (cartRobots?.stopCode) {
+    session.stopped = { code: cartRobots.stopCode, detail: `cart-host-robots-${cartRobots.posture}`, evidenceSha256: null };
   } else {
     try {
       for (const step of steps) await exec(step);
@@ -298,7 +316,7 @@ async function drive({ recipe, mode, sessionDir, opts, paths, steps }) {
       }
     }
   }
-  return { context, session, robots, version, log };
+  return { context, session, robots, cartRobots, version, log };
 }
 
 /** The session's outcome code for sessions.json: a stop, else an `end` exclusion. */
@@ -338,7 +356,24 @@ export async function runSite(opts) {
       steps: recipe.steps,
     });
     context = driven.context;
-    const { session, robots, version, log } = driven;
+    const { session, robots, cartRobots, version, log } = driven;
+    // Each recipe path against the rules of the host it is served on: the cart path against the cart host's.
+    const entryHost = new URL(recipe.origin).host;
+    const decided = (r) => r && (r.posture === 'rules' || r.posture === 'no-robots-4xx');
+    const checkedPaths = [
+      ...(decided(cartRobots ?? robots)
+        ? [
+            {
+              path: recipe.cartPath,
+              host: cartRobots?.host ?? entryHost,
+              allowed: pathAllowed((cartRobots ?? robots).groups, recipe.cartPath),
+            },
+          ]
+        : []),
+      ...(decided(robots)
+        ? recipe.checkoutPaths.map((p) => ({ path: p, host: entryHost, allowed: pathAllowed(robots.groups, p) }))
+        : []),
+    ];
 
     // Platform only from empty-cart and the first captured cart state, and the checkout-1 host.
     const pages = [];
@@ -386,7 +421,7 @@ export async function runSite(opts) {
         sha256: robots.sha256,
         posture: robots.posture,
         groups: robots.groups,
-        checkedPaths: robots.checkedPaths,
+        checkedPaths,
         decision: robots.decision,
       },
       robotsHosts: hostRecords(session),
@@ -460,7 +495,13 @@ async function runRecon(opts) {
     const sessionDir = path.join(siteDir, 'recon', sessionId);
     await mkdir(sessionDir, { recursive: true });
     const origin = new URL(spec.entryUrl).origin;
-    const pseudo = { domain: spec.domain, origin: `${origin}/`, productUrls: [], allowlist: spec.allowlist };
+    const pseudo = {
+      domain: spec.domain,
+      origin: `${origin}/`,
+      hosts: spec.hosts,
+      productUrls: [],
+      allowlist: spec.allowlist,
+    };
     const driven = await drive({
       recipe: pseudo,
       mode: 'recon',
@@ -480,6 +521,7 @@ async function runRecon(opts) {
         domain: spec.domain,
         origin: `${origin}/`,
         recon: { sessionId },
+        cartHost: session.ended.cartHost,
         ...findings,
         allowlist: spec.allowlist,
         steps: [],
@@ -524,6 +566,7 @@ async function runRecon(opts) {
       },
       robotsHosts: hostRecords(session),
       views: session.views,
+      navigation: session.navigationLog.map(committableUrl).slice(0, 200),
       events: session.events,
       stop: session.stopped,
       outcome,
@@ -556,6 +599,7 @@ export async function reconSpecFor(domain) {
   return {
     domain,
     entryUrl: `https://${site.entryHost}/`,
+    hosts: site.hosts,
     currency: site.currency,
     priceBand: bands.currencies[site.currency] ?? null,
   };

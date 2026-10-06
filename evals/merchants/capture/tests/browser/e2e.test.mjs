@@ -77,8 +77,8 @@ test('end to end: fixture shop captured; only the add-to-cart form was posted; p
     );
     assert.equal(record.robots.decision, 'allowed');
     assert.deepEqual(record.robots.checkedPaths, [
-      { path: '/cart', allowed: true },
-      { path: '/checkout', allowed: true },
+      { path: '/cart', host: new URL(shop.origin).host, allowed: true },
+      { path: '/checkout', host: new URL(shop.origin).host, allowed: true },
     ]);
     assert.deepEqual(record.platform, { group: 'bigcommerce', marker: 'cdn11.bigcommerce.com' });
     assert.equal(record.thirdPartyCheckoutHost, null);
@@ -210,8 +210,8 @@ test('robots (.4): disallowed cart and checkout paths are recorded, and the site
     });
     assert.equal(record.robots.decision, 'allowed');
     assert.deepEqual(record.robots.checkedPaths, [
-      { path: '/cart', allowed: false },
-      { path: '/checkout', allowed: false },
+      { path: '/cart', host: new URL(shop.origin).host, allowed: false },
+      { path: '/checkout', host: new URL(shop.origin).host, allowed: false },
     ]);
     assert.equal(record.outcome.status, 'captured');
     const byState = Object.fromEntries(record.states.map((s) => [s.state, s.robotsAllowed]));
@@ -237,14 +237,16 @@ test('reconnaissance first: look-only session writes the draft recipe; the captu
       recon: {
         domain: '127.0.0.1',
         entryUrl: `${o}/`,
+        hosts: ['127.0.0.1'],
         currency: 'GBP',
         priceBand: [8, 155],
         steps: [
           { do: 'goto', url: `${o}/` },
-          { do: 'goto', url: `${o}/listing` },
           { do: 'snapshot', state: 'view-01' },
-          { do: 'goto', url: `${o}/products/tee` },
+          { do: 'goto', url: `${o}/listing` },
           { do: 'snapshot', state: 'view-02' },
+          { do: 'goto', url: `${o}/products/tee` },
+          { do: 'snapshot', state: 'view-03' },
           { do: 'goto', url: `${o}/listing` },
           { do: 'click', target: { role: 'link', name: 'Cart' } },
           {
@@ -265,7 +267,12 @@ test('reconnaissance first: look-only session writes the draft recipe; the captu
       paceMs: 50,
     });
     assert.equal(recon.record.outcome.status, 'done');
-    assert.equal(recon.record.views, 2);
+    assert.equal(recon.record.views, 3);
+    // The ordered navigation list is committed (masked URLs) for the reviewer.
+    assert.deepEqual(
+      recon.record.navigation.map((u) => new URL(u).pathname),
+      ['/', '/listing', '/products/tee', '/listing', '/cart'],
+    );
     assert.equal(recon.record.robots.decision, 'allowed');
     assert.ok(!shop.log.some((r) => r.method === 'POST'));
     const reconText = await readFile(recon.recordPath, 'utf8');
@@ -273,12 +280,13 @@ test('reconnaissance first: look-only session writes the draft recipe; the captu
     const draft = JSON.parse(await readFile(path.join(recon.sessionDir, 'recipe.draft.json'), 'utf8'));
     assert.equal(draft.recon.sessionId, recon.record.session.id);
     assert.equal(draft.cartPath, '/cart');
+    assert.equal(draft.cartHost, new URL(o).host);
 
     // One reconnaissance session per site.
     await assert.rejects(
       runSite({
         mode: 'recon',
-        recon: { domain: '127.0.0.1', entryUrl: `${o}/`, currency: 'GBP', priceBand: [8, 155] },
+        recon: { domain: '127.0.0.1', entryUrl: `${o}/`, hosts: ['127.0.0.1'], currency: 'GBP', priceBand: [8, 155] },
         outRoot: out,
         profileDir: path.join(tmp, 'profile-recon'),
         headless: true,
@@ -302,7 +310,7 @@ test('reconnaissance first: look-only session writes the draft recipe; the captu
     assert.ok(!record.states.some((s) => s.state.startsWith('view-')));
     assert.deepEqual(record.platform, { group: 'bigcommerce', marker: 'cdn11.bigcommerce.com' });
 
-    // A recipe naming an item the reconnaissance never loaded is refused before any browser starts.
+    // A recipe whose item is not the reconnaissance finding is refused before any browser starts.
     const before = shop.log.length;
     await assert.rejects(
       runSite({
@@ -313,9 +321,67 @@ test('reconnaissance first: look-only session writes the draft recipe; the captu
         headless: true,
         paceMs: 50,
       }),
-      /never loaded/,
+      /differs from its reconnaissance findings in: productUrls/,
     );
     assert.equal(shop.log.length, before);
+  } finally {
+    await shop.close();
+  }
+});
+
+test('a cart on another host of the site: its robots.txt is read up front and the cart path checked against it', async () => {
+  const shop = await startShop({ sisterRobots: 'User-agent: *\nDisallow: /bag\n' });
+  const out = path.join(tmp, 'cart-host-out');
+  try {
+    const o = shop.origin;
+    const recon = await runSite({
+      mode: 'recon',
+      recon: {
+        domain: '127.0.0.1',
+        entryUrl: `${o}/`,
+        hosts: ['127.0.0.1'],
+        currency: 'GBP',
+        priceBand: [8, 155],
+        steps: [
+          { do: 'goto', url: `${o}/` },
+          { do: 'snapshot', state: 'view-01' },
+          { do: 'goto', url: `${o}/listing` },
+          { do: 'snapshot', state: 'view-02' },
+          { do: 'goto', url: `${o}/products/tee` },
+          { do: 'goto', url: `${shop.sister}/bag` },
+          {
+            do: 'end',
+            findings: {
+              listingUrl: `${o}/listing`,
+              productUrls: [`${o}/products/tee`],
+              cartPath: '/bag',
+              checkoutPaths: [],
+            },
+          },
+        ],
+      },
+      outRoot: out,
+      profileDir: path.join(tmp, 'profile-cart-host'),
+      headless: true,
+      paceMs: 50,
+    });
+    assert.equal(recon.record.outcome.status, 'done');
+    assert.equal(recon.draft.cartHost, new URL(shop.sister).host);
+    const robotsBefore = shop.log.filter((r) => r.site === 'sister' && r.path === '/robots.txt').length;
+    const { record } = await runSite({
+      recipe: { ...recon.draft, allowlist: fixtureRecipe(o).allowlist, steps: [] },
+      mode: 'run',
+      outRoot: out,
+      profileDir: path.join(tmp, 'profile-cart-host'),
+      headless: true,
+      paceMs: 50,
+    });
+    assert.equal(shop.log.filter((r) => r.site === 'sister' && r.path === '/robots.txt').length, robotsBefore + 1);
+    assert.deepEqual(record.robots.checkedPaths, [{ path: '/bag', host: new URL(shop.sister).host, allowed: false }]);
+    assert.deepEqual(
+      record.robotsHosts.map((h) => [h.host, h.decision]),
+      [[new URL(shop.sister).host, 'allowed']],
+    );
   } finally {
     await shop.close();
   }

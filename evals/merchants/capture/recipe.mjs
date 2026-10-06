@@ -153,6 +153,11 @@ export const Recipe = z
     steps: z.array(StepSchema).max(80),
     // The reconnaissance session the recipe was written from (required for every real site; capture.mjs checks it).
     recon: z.object({ sessionId: SessionId }).strict().optional(),
+    // The host the reconnaissance loaded the cart path on (another host of the site is allowed for the cart).
+    cartHost: z
+      .string()
+      .regex(/^[a-z0-9.-]{1,253}(:\d{1,5})?$/)
+      .optional(),
     notes: z.string().max(300).optional(),
   })
   .strict()
@@ -192,6 +197,8 @@ export const Recipe = z
       if (s.do === 'end' && s.findings)
         ctx.addIssue({ code: 'custom', message: 'findings belong to a reconnaissance session', path: ['steps', i] });
     });
+    if (r.cartHost && !sameSite(r.cartHost.replace(/:\d+$/, ''), r.domain))
+      ctx.addIssue({ code: 'custom', message: 'cartHost is off-site', path: ['cartHost'] });
   });
 
 const Sha = z.string().regex(/^[0-9a-f]{64}$/);
@@ -259,7 +266,8 @@ export const SiteRecord = z
         sha256: Sha.nullable(),
         posture: RobotsPosture,
         groups: z.array(RobotsGroup),
-        checkedPaths: z.array(z.object({ path: z.string(), allowed: z.boolean() }).strict()),
+        // Each recipe path with the host whose rules were applied (the cart host for cartPath).
+        checkedPaths: z.array(z.object({ path: z.string(), host: z.string(), allowed: z.boolean() }).strict()),
         decision: RobotsDecision,
       })
       .strict(),
@@ -325,6 +333,8 @@ export const ReconRecord = z
       .strict(),
     robotsHosts: z.array(RobotsHost),
     views: z.number().int().min(0),
+    // Every page the session landed on, in order, as committable URLs (no query, token-like segments masked).
+    navigation: z.array(CommittedUrl).max(200),
     events: z.array(Event),
     stop: Stop.nullable(),
     outcome: z
@@ -347,6 +357,8 @@ export const ReconSpec = z
   .object({
     domain: Domain,
     entryUrl: Url,
+    // The frame's storefront hosts: listing and product URLs must be on one of them.
+    hosts: z.array(z.string().min(1)).min(1),
     currency: z.string().regex(/^[A-Z]{3}$/).nullable(),
     priceBand: z.tuple([z.number(), z.number()]).nullable(),
     allowlist: z
@@ -364,6 +376,8 @@ export const ReconSpec = z
       ctx.addIssue({ code: 'custom', message: 'entryUrl must be scheme://host/ only', path: ['entryUrl'] });
     if (u.protocol !== 'https:' && !(isLoopback(u.hostname) && u.protocol === 'http:'))
       ctx.addIssue({ code: 'custom', message: 'entryUrl must be https', path: ['entryUrl'] });
+    if (!r.hosts.includes(u.hostname))
+      ctx.addIssue({ code: 'custom', message: 'entryUrl must be on one of the hosts', path: ['entryUrl'] });
   });
 
 export function parseRecipe(json) {

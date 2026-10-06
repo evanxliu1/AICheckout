@@ -332,8 +332,11 @@ test('recon mode: look only (view-NN snapshots, no add-to-cart, no choices) and 
   assert.equal(session.views, 1);
 });
 
-test('recon mode: end with findings once the cart path was loaded', async () => {
-  const { driver, session } = await fresh('recon', { extra: { productUrls: [], allowlist: [] } });
+test('recon mode: findings need views of the home page and listing, frame hosts, and record the cart host', async () => {
+  const { driver, session } = await fresh('recon', {
+    extra: { productUrls: [], allowlist: [], hosts: ['127.0.0.1'] },
+  });
+  await driver.goto(`${shop.origin}/`);
   await driver.goto(`${shop.origin}/listing`);
   await driver.goto(`${shop.origin}/products/tee`);
   await driver.goto(`${shop.origin}/listing`);
@@ -344,8 +347,43 @@ test('recon mode: end with findings once the cart path was loaded', async () => 
     cartPath: '/cart',
     checkoutPaths: ['/checkout'],
   };
+  // No view-NN of the home page or the listing yet.
+  await assert.rejects(driver.end({ findings }), refusal('refused-findings-no-view'));
+  await driver.goto(`${shop.origin}/`);
+  await driver.snapshot('view-01');
+  await assert.rejects(driver.end({ findings }), refusal('refused-findings-no-view'));
+  await driver.goto(`${shop.origin}/listing`);
+  await driver.snapshot('view-02');
   await driver.end({ findings });
   assert.deepEqual(session.ended.findings, findings);
+  assert.equal(session.ended.cartHost, new URL(shop.origin).host);
+  assert.deepEqual(
+    session.navigationLog.map((u) => new URL(u).pathname),
+    ['/', '/listing', '/products/tee', '/listing', '/cart', '/', '/listing'],
+  );
+});
+
+test("recon mode: listing and product URLs must be on the frame's hosts", async () => {
+  const { driver } = await fresh('recon', {
+    extra: { productUrls: [], allowlist: [], hosts: ['www.shop.example'] },
+  });
+  await driver.goto(`${shop.origin}/`);
+  await driver.snapshot('view-01');
+  await driver.goto(`${shop.origin}/listing`);
+  await driver.snapshot('view-02');
+  await driver.goto(`${shop.origin}/products/tee`);
+  await driver.goto(`${shop.origin}/cart`);
+  await assert.rejects(
+    driver.end({
+      findings: {
+        listingUrl: `${shop.origin}/listing`,
+        productUrls: [`${shop.origin}/products/tee`],
+        cartPath: '/cart',
+        checkoutPaths: [],
+      },
+    }),
+    refusal('refused-findings-off-hosts'),
+  );
 });
 
 test('a challenge element in the main document stops the site', async () => {

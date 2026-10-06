@@ -95,7 +95,7 @@ export const ADD_TO_CART_NAME = new RegExp(
     'ajouter au panier',
     String.raw`a[ñn]adir (a la cesta|al carrito)|agregar al carrito`,
     'aggiungi al carrello',
-    String.raw`adicionar (ao carrinho|à sacola)|comprar`,
+    String.raw`adicionar (ao carrinho|à sacola)|comprar (ahora|agora|ya|já|ja)\b`,
     'in (de )?winkel(wagen|mand)',
     'dodaj do koszyka',
     String.raw`l[äa]gg i (varukorgen|kundvagnen)`,
@@ -137,7 +137,16 @@ export function parseTarget(raw) {
  * Returns { driver, session } — `driver` is the guarded API, `session` the record the runner finalizes.
  */
 export async function createDriver(opts) {
-  const { context, page, recipe, sessionDir, browserVersion, robotsGroups = [], fetchRobots = null } = opts;
+  const {
+    context,
+    page,
+    recipe,
+    sessionDir,
+    browserVersion,
+    robotsGroups = [],
+    fetchRobots = null,
+    knownRobotsHosts = [],
+  } = opts;
   const recon = opts.mode === 'recon';
   const paceMs = opts.paceMs ?? MIN_PACE_MS;
   const originHost = new URL(recipe.origin).host;
@@ -167,8 +176,10 @@ export async function createDriver(opts) {
     steps: [],
     allowlist: [...recipe.allowlist],
     // robots.txt of hosts other than the entry host, by host: robotsPosture(...) plus { host, url }.
-    robotsHosts: new Map(),
+    robotsHosts: new Map(knownRobotsHosts.map((r) => [r.host, r])),
     visited: new Set(),
+    // Every page the session landed on, in order (full URLs; the record commits them masked).
+    navigationLog: [],
     views: 0,
   };
   const event = (kind, detail = '') => {
@@ -419,7 +430,10 @@ export async function createDriver(opts) {
   const visit = () => {
     try {
       const u = new URL(page.url());
-      if (u.protocol === 'http:' || u.protocol === 'https:') session.visited.add(visitKey(u.href));
+      if (u.protocol === 'http:' || u.protocol === 'https:') {
+        session.visited.add(visitKey(u.href));
+        if (session.navigationLog.at(-1) !== u.href) session.navigationLog.push(u.href);
+      }
     } catch {
       /* not a URL */
     }
@@ -670,6 +684,36 @@ export async function createDriver(opts) {
           `findings must be pages this session loaded on ${domain}: ${unseen.join(', ') || 'off-site URL'}`,
           'tool-error',
         );
+      // Listing and items stay on the frame's storefront hosts; only the cart and checkout may be elsewhere.
+      if (recipe.hosts) {
+        const outside = [found.listingUrl, ...found.productUrls].filter(
+          (u) => !recipe.hosts.includes(new URL(u).hostname),
+        );
+        if (outside.length)
+          throw new RefusalError(
+            'refused-findings-off-hosts',
+            `listing and product URLs must be on the frame's hosts (${recipe.hosts.join(', ')})`,
+            'tool-error',
+          );
+      }
+      // The reviewer checks the listing and the item against the snapshots: the home page and the listing as seen.
+      const viewed = (u) =>
+        session.snapshots.some((x) => /^view-\d{2}$/.test(x.state) && visitKey(x.url) === visitKey(u));
+      const missing = [
+        ...(viewed(recipe.origin) ? [] : ['home page']),
+        ...(viewed(found.listingUrl) ? [] : ['listingUrl']),
+      ];
+      if (missing.length)
+        throw new RefusalError(
+          'refused-findings-no-view',
+          `a view-NN snapshot is required of: ${missing.join(', ')}`,
+          'tool-error',
+        );
+      // The host the cart path was loaded on (another host of the site is allowed for the cart).
+      const cart = found.cartPath.replace(/\/+$/, '') || '/';
+      session.cartHost = session.navigationLog
+        .map((h) => new URL(h))
+        .find((u) => sameSite(u.hostname, domain) && normPath(u) === cart).host;
     }
     const evidenceSha256 = exclusion ? await evidence(exclusion) : null;
     session.ended = {
@@ -677,6 +721,7 @@ export async function createDriver(opts) {
       evidenceSha256,
       notReached: notReached ?? [],
       findings: found,
+      cartHost: found ? session.cartHost : null,
     };
     record({
       do: 'end',
