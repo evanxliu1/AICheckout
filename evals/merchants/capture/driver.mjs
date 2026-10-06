@@ -6,13 +6,25 @@
 // at least `paceMs` between navigations and clicks, at most 25 top-level navigations, and a stop on any block.
 // Every in-page check runs in a CDP isolated world on the node the click will actually hit, so page scripts cannot
 // fake the facts. Redirects are not routed by Playwright, so where the page lands is checked after every action.
-// Same-site writes by fetch or XHR are aborted outside an add-to-cart or increment click; robots.txt is applied to
-// every top-level navigation on the recipe's origin host (never to other hosts).
+// Same-site writes by fetch or XHR are aborted outside an add-to-cart or increment click. robots.txt (protocol .4):
+// before the first page of any other host of the site loads (a cart or storefront subdomain), that host's robots.txt
+// is fetched, and a disallow-everything rule stops the site (robots-disallow-all); a disallowed path is only recorded.
+// The stop check always runs before any robots decision or snapshot on a landing, so a challenge page is never
+// snapshotted. In `recon` mode (a look-only reconnaissance session) the driver also refuses every snapshot except
+// `view-NN`, every purpose except closing a popup or declining cookies, and any control named like add-to-cart.
 import path from 'node:path';
 import { writeFile } from 'node:fs/promises';
 import { RefusalError, StopError, detectStop, inspectControl, judgeClick, pageFacts } from './guards.mjs';
-import { ACTION_STATES, SnapshotName, Target, isLoopback, sameSite, sameTarget } from './recipe.mjs';
-import { isAllowed } from './robots.mjs';
+import {
+  Findings,
+  RECON_PURPOSES,
+  SnapshotName,
+  Target,
+  isLoopback,
+  sameSite,
+  sameTarget,
+} from './recipe.mjs';
+import { pathAllowed } from './robots.mjs';
 import { sha256, writeSnapshot } from './snapshot.mjs';
 
 export const MIN_PACE_MS = 3000;
@@ -65,6 +77,36 @@ export function guardApi(api) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const normPath = (u) => u.pathname.replace(/\/+$/, '') || '/';
+/** A visited page as compared with a recipe URL: origin, path and query, no fragment. */
+export const visitKey = (raw) => {
+  const u = new URL(raw);
+  return `${u.origin}${u.pathname}${u.search}`;
+};
+
+/**
+ * Add-to-cart wording, refused for every click of a reconnaissance session (which never adds anything). A backstop
+ * beside the write guard, which already aborts same-site POSTs outside an allowlisted add-to-cart click.
+ */
+export const ADD_TO_CART_NAME = new RegExp(
+  [
+    String.raw`\badd(ed)? to (cart|bag|basket|trolley)\b`,
+    String.raw`\badd to shopping (cart|bag)\b`,
+    'in den (warenkorb|einkaufswagen)',
+    'ajouter au panier',
+    String.raw`a[ñn]adir (a la cesta|al carrito)|agregar al carrito`,
+    'aggiungi al carrello',
+    String.raw`adicionar (ao carrinho|à sacola)|comprar`,
+    'in (de )?winkel(wagen|mand)',
+    'dodaj do koszyka',
+    String.raw`l[äa]gg i (varukorgen|kundvagnen)`,
+    'sepete ekle',
+    'カートに入れる|カートに追加',
+    '加入购物车|加入購物車',
+    '장바구니',
+    'أضف إلى السلة|اضف الى السلة',
+  ].join('|'),
+  'i',
+);
 
 /** Parse a click/wait target strictly; coordinates, positions and frame-entering selectors are refused. */
 export function parseTarget(raw) {
@@ -88,12 +130,15 @@ export function parseTarget(raw) {
 
 /**
  * Create a driver for one site session.
- * opts: { context, page, recipe, sessionDir, paceMs, browserVersion, robotsGroups } (both modes behave the same;
- * the allowlist is always the recipe's)
+ * opts: { context, page, recipe, sessionDir, paceMs, browserVersion, mode, robotsGroups, fetchRobots }.
+ * `run` and `serve` behave the same (the allowlist is always the recipe's); `recon` is look-only. robotsGroups are the
+ * entry host's rules; fetchRobots(origin) returns robotsPosture(...) for another host of the site (omitted in tests
+ * that do not load other hosts).
  * Returns { driver, session } — `driver` is the guarded API, `session` the record the runner finalizes.
  */
 export async function createDriver(opts) {
-  const { context, page, recipe, sessionDir, browserVersion, robotsGroups = [] } = opts;
+  const { context, page, recipe, sessionDir, browserVersion, robotsGroups = [], fetchRobots = null } = opts;
+  const recon = opts.mode === 'recon';
   const paceMs = opts.paceMs ?? MIN_PACE_MS;
   const originHost = new URL(recipe.origin).host;
   const loopbackOnly = isLoopback(new URL(recipe.origin).hostname);
@@ -121,14 +166,34 @@ export async function createDriver(opts) {
     snapshots: [],
     steps: [],
     allowlist: [...recipe.allowlist],
+    // robots.txt of hosts other than the entry host, by host: robotsPosture(...) plus { host, url }.
+    robotsHosts: new Map(),
+    visited: new Set(),
+    views: 0,
   };
   const event = (kind, detail = '') => {
     const d = String(detail).slice(0, 200);
     if (session.events.length < 200 && !session.events.some((e) => e.kind === kind && e.detail === d))
       session.events.push({ kind, detail: d });
   };
-  const robotsOk = (u) =>
-    u.host !== originHost || robotsGroups.every((g) => isAllowed(g, u.pathname + u.search));
+  /** robots.txt groups of a host, or null when the host's robots.txt was not fetched (third-party or unchecked). */
+  const groupsFor = (u) =>
+    u.host === originHost ? robotsGroups : (session.robotsHosts.get(u.host)?.groups ?? null);
+  /** Whether robots.txt allows the page's path: recorded, never refusing. null when no rules apply to its host. */
+  const robotsAllows = (u) => {
+    const g = groupsFor(u);
+    return g === null ? null : pathAllowed(g, u.pathname + u.search);
+  };
+  /** Fetch robots.txt of another host of the site once, before its first page. Returns the posture. */
+  const checkHost = async (u) => {
+    if (u.host === originHost || !fetchRobots) return null;
+    const known = session.robotsHosts.get(u.host);
+    if (known) return known;
+    const posture = await fetchRobots(`${u.protocol}//${u.host}`);
+    session.robotsHosts.set(u.host, { ...posture, host: u.host });
+    event('robots-host-checked', `${u.host} ${posture.decision}`);
+    return session.robotsHosts.get(u.host);
+  };
 
   // CDP: navigation reasons (to see GET form submissions) and an isolated world for every in-page check, so page
   // scripts cannot fake the facts the guards read.
@@ -228,8 +293,8 @@ export async function createDriver(opts) {
       return route.abort('blockedbyclient');
     }
     if (frame !== page.mainFrame()) return route.continue(); // subframe document: never interacted with
-    const refuse = (code, detail, exclusionCode) => {
-      session.violations.push({ code, detail, exclusionCode });
+    const refuse = (code, detail, exclusionCode, stops = false) => {
+      session.violations.push({ code, detail, exclusionCode, stops });
       event('navigation-aborted', `${code} ${url.host}`);
       return route.abort('blockedbyclient');
     };
@@ -247,8 +312,13 @@ export async function createDriver(opts) {
       if (session.action !== 'click') return refuse('refused-off-site', url.host);
       session.offsite = url.host;
       event('off-site-page', url.host);
-    } else if (!robotsOk(url)) {
-      return refuse('robots-disallow-path', 'robots.txt disallows this path', 'robots-disallow-path');
+    } else {
+      // Another host of the site: its robots.txt first. Only a disallow-everything rule (or a blocked or failed
+      // robots.txt) stops the site; a disallowed path is recorded as an event and loads.
+      const posture = await checkHost(url).catch(() => ({ stopCode: 'tool-error', decision: 'not-decided' }));
+      if (posture?.stopCode)
+        return refuse(`robots-host-${posture.stopCode}`, url.host, posture.stopCode, true);
+      if (robotsAllows(url) === false) event('robots-disallowed-path', url.host);
     }
     session.navigations += 1;
     return route.continue();
@@ -327,7 +397,10 @@ export async function createDriver(opts) {
     });
     if (hit) await stop(hit.code, hit.reason, hit.message);
   };
-  /** After every action: aborted navigations, where the page landed (redirects are not routed), then stops. */
+  /**
+   * After every action: the stop check FIRST (so a challenge page is caught before any robots decision or refusal),
+   * then aborted navigations, then where the page landed (redirects are not routed).
+   */
   const afterAction = async (startViolations) => {
     await page.waitForLoadState('domcontentloaded', { timeout: 15_000 }).catch(() => {});
     await sleep(Math.min(1000, paceMs));
@@ -336,10 +409,20 @@ export async function createDriver(opts) {
     session.allowSubmitUntil = 0;
     session.allowMutateUntil = 0;
     session.noNavigation = false;
+    await checkStop();
     const v = session.violations.slice(startViolations);
+    if (v.length && v[0].stops) await stop(v[0].exclusionCode, v[0].code);
     if (v.length) throw new RefusalError(v[0].code, `navigation aborted: ${v[0].detail}`, v[0].exclusionCode);
     await checkLanding();
-    await checkStop();
+    visit();
+  };
+  const visit = () => {
+    try {
+      const u = new URL(page.url());
+      if (u.protocol === 'http:' || u.protocol === 'https:') session.visited.add(visitKey(u.href));
+    } catch {
+      /* not a URL */
+    }
   };
   const checkLanding = async () => {
     let landed;
@@ -356,13 +439,12 @@ export async function createDriver(opts) {
       } else if (landed.host !== session.offsite) {
         await stop('would-need-forbidden-action', 'past-first-third-party-page');
       }
-    } else if (!session.offsite && !robotsOk(landed)) {
-      event('robots-disallowed-landing', landed.host);
-      throw new RefusalError(
-        'robots-disallow-path',
-        'landed on a path robots.txt disallows',
-        'robots-disallow-path',
-      );
+    } else if (!session.offsite) {
+      // A redirect onto another host of the site loads before its robots.txt can be read: check it now (after the
+      // stop check), and stop on a disallow-everything rule before anything else happens on the page.
+      const posture = await checkHost(landed).catch(() => ({ stopCode: 'tool-error', decision: 'not-decided' }));
+      if (posture?.stopCode) await stop(posture.stopCode, `landing-host-${posture.stopCode}`);
+      if (robotsAllows(landed) === false) event('robots-disallowed-path', landed.host);
     }
   };
   const onProductPage = () => {
@@ -412,6 +494,8 @@ export async function createDriver(opts) {
     notOffsite();
     const target = parseTarget(rawTarget);
     // The allowlist is the recipe's, in every mode: an operator session cannot add to it.
+    if (recon && purpose !== undefined && !RECON_PURPOSES.includes(purpose))
+      throw new RefusalError('refused-recon-purpose', `a reconnaissance session never clicks for ${purpose}`);
     if (
       purpose !== undefined &&
       !session.allowlist.some((a) => a.purpose === purpose && sameTarget(a.target, target))
@@ -442,6 +526,8 @@ export async function createDriver(opts) {
     if (!info) throw new RefusalError('inspection-failed', 'could not inspect the click point', 'tool-error');
     const verdict = judgeClick(info, purpose);
     if (verdict) throw new RefusalError(verdict.code, verdict.message);
+    if (recon && ADD_TO_CART_NAME.test(info.name))
+      throw new RefusalError('refused-recon-add-to-cart', 'a reconnaissance session never adds to the cart');
     if (purpose === 'add-to-cart' && !onProductPage())
       throw new RefusalError(
         'refused-not-product-page',
@@ -491,8 +577,9 @@ export async function createDriver(opts) {
         });
       record({ do: 'wait', for: target, ...(arg.timeoutMs ? { timeoutMs } : {}) });
     }
-    await checkLanding();
     await checkStop();
+    await checkLanding();
+    visit();
     return status();
   }
 
@@ -500,6 +587,11 @@ export async function createDriver(opts) {
     active();
     const parsed = SnapshotName.safeParse(state);
     if (!parsed.success) throw new RefusalError('refused-bad-state', 'unknown snapshot name', 'tool-error');
+    if (recon && !/^view-\d{2}$/.test(state))
+      throw new RefusalError(
+        'refused-recon-snapshot',
+        'a reconnaissance session takes only view-NN snapshots, which never count',
+      );
     if (session.snapshots.some((s) => s.state === state))
       throw new RefusalError('refused-duplicate-state', `${state} already captured`, 'tool-error');
     if (session.offsite && state !== 'checkout-1')
@@ -507,9 +599,10 @@ export async function createDriver(opts) {
         'refused-third-party-page',
         'only checkout-1 may be captured on a third-party host',
       );
+    // Never snapshot a challenge, wall or block page: the stop check runs first.
+    await checkStop();
     const url = new URL(page.url());
-    if (!session.offsite && ACTION_STATES.includes(state) && state !== 'minicart-1' && !robotsOk(url))
-      await stop('robots-disallow-path', 'snapshot-path-disallowed');
+    const robotsAllowed = session.offsite ? null : robotsAllows(url);
     const snap = await writeSnapshot({
       page,
       context,
@@ -525,8 +618,10 @@ export async function createDriver(opts) {
       manifestSha256: snap.manifestSha256,
       domSha256: snap.files['dom.json'],
       viewportSha256: snap.files['viewport.png'],
+      robotsAllowed,
       dir: snap.dir,
     });
+    if (recon) session.views += 1;
     record({ do: 'snapshot', state });
     return { state, manifestSha256: snap.manifestSha256 };
   }
@@ -542,14 +637,53 @@ export async function createDriver(opts) {
     };
   }
 
-  async function end({ exclusion, notReached } = {}) {
+  async function end({ exclusion, notReached, findings } = {}) {
     if (session.ended) throw new RefusalError('refused-after-stop', 'session already ended', 'tool-error');
     const captured = session.snapshots.some((s) => s.state === 'cart-1' || s.state === 'minicart-1');
     if (exclusion && captured)
       throw new RefusalError('refused-bad-end', 'a captured site cannot also be excluded', 'tool-error');
+    if (findings && !recon)
+      throw new RefusalError('refused-bad-end', 'findings belong to a reconnaissance session', 'tool-error');
+    if (recon && Boolean(findings) === Boolean(exclusion))
+      throw new RefusalError(
+        'refused-bad-end',
+        'a reconnaissance session ends with either findings or an exclusion',
+        'tool-error',
+      );
+    if (recon && notReached?.length)
+      throw new RefusalError('refused-bad-end', 'a reconnaissance session reaches no states', 'tool-error');
+    let found = null;
+    if (findings) {
+      found = Findings.parse(findings);
+      // The recipe's listing, items and cart path must be pages this session actually loaded: never guessed.
+      const seen = (u) => session.visited.has(visitKey(u));
+      const paths = [...session.visited].map((k) => new URL(k)).filter((u) => sameSite(u.hostname, domain));
+      const unseen = [
+        ...(seen(found.listingUrl) ? [] : ['listingUrl']),
+        ...found.productUrls.filter((u) => !seen(u)).map(() => 'productUrls'),
+        ...(paths.some((u) => normPath(u) === (found.cartPath.replace(/\/+$/, '') || '/')) ? [] : ['cartPath']),
+      ];
+      const off = [found.listingUrl, ...found.productUrls].some((u) => !sameSite(new URL(u).hostname, domain));
+      if (unseen.length || off)
+        throw new RefusalError(
+          'refused-findings-not-seen',
+          `findings must be pages this session loaded on ${domain}: ${unseen.join(', ') || 'off-site URL'}`,
+          'tool-error',
+        );
+    }
     const evidenceSha256 = exclusion ? await evidence(exclusion) : null;
-    session.ended = { exclusion: exclusion ?? null, evidenceSha256, notReached: notReached ?? [] };
-    record({ do: 'end', ...(exclusion ? { exclusion } : {}), ...(notReached?.length ? { notReached } : {}) });
+    session.ended = {
+      exclusion: exclusion ?? null,
+      evidenceSha256,
+      notReached: notReached ?? [],
+      findings: found,
+    };
+    record({
+      do: 'end',
+      ...(exclusion ? { exclusion } : {}),
+      ...(notReached?.length ? { notReached } : {}),
+      ...(found ? { findings: found } : {}),
+    });
     return status();
   }
 
@@ -570,7 +704,7 @@ export async function runStep(driver, step) {
     case 'status':
       return driver.status();
     case 'end':
-      return driver.end({ exclusion: step.exclusion, notReached: step.notReached });
+      return driver.end({ exclusion: step.exclusion, notReached: step.notReached, findings: step.findings });
     default:
       throw new RefusalError('refused-unknown-action', `no step "${step.do}"`);
   }

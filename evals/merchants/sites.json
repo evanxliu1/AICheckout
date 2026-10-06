@@ -2,7 +2,7 @@
  "schema": "reader-sites.pilot.1",
  "protocol": "generic-reader-protocol.3",
  "candidatesSha256": "fd01a31f0b1daaed3846f156b4aaeeea722c9889a2cc1103107a380938b28ce7",
- "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/.",
+ "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history.",
  "operator": "claude-code/claude-opus-5-5",
  "sites": [
   {
@@ -63,7 +63,12 @@
    },
    "record": "capture/records/hollisterco.com.json",
    "recipe": "capture/recipes/hollisterco.com.json",
-   "reviewFlag": "the disallowed path /shop/OrderItemDisplayView was named by the operator from knowledge before any page load; the site real bag path was not observed"
+   "reviewFlag": "the disallowed path /shop/OrderItemDisplayView was named by the operator from knowledge before any page load; the site real bag path was not observed",
+   "statusUnderProtocol4": {
+    "status": "revisit",
+    "code": null,
+    "note": "excluded only by the retired cart-and-checkout robots rule; .3 exclusion void, visited again under .4 in original order with a reconnaissance session (Amendment 3 D)"
+   }
   },
   {
    "domain": "ebay.com",
@@ -127,7 +132,12 @@
    },
    "record": "capture/records/ebay.com.json",
    "recipe": "capture/recipes/ebay.com.json",
-   "reviewFlag": "terms snapshot is the challenge page (eBay redirected the terms URL to /splashui/captcha); not a terms copy. Cart is on cart.ebay.com, not in the frame hosts"
+   "reviewFlag": "terms snapshot is the challenge page (eBay redirected the terms URL to /splashui/captcha); not a terms copy. Cart is on cart.ebay.com, not in the frame hosts",
+   "statusUnderProtocol4": {
+    "status": "excluded-stands",
+    "code": "captcha",
+    "note": "a block is page-driven; no second session after a block (Amendment 3 D)"
+   }
   },
   {
    "domain": "disneystore.com",
@@ -216,7 +226,12 @@
    },
    "record": "capture/records/disneystore.com.json",
    "recipe": "capture/recipes/disneystore.com.json",
-   "reviewFlag": "cart link on the home page is /my-bag, disallowed by Disallow: /my-bag*; the tool aborted the navigation before any request; the tool cannot end a session with this code, so the record outcome is incomplete"
+   "reviewFlag": "cart link on the home page is /my-bag, disallowed by Disallow: /my-bag*; the tool aborted the navigation before any request; the tool cannot end a session with this code, so the record outcome is incomplete",
+   "statusUnderProtocol4": {
+    "status": "revisit",
+    "code": null,
+    "note": "excluded only by the retired cart-and-checkout robots rule; .3 exclusion void, visited again under .4 in original order with a reconnaissance session (Amendment 3 D)"
+   }
   },
   {
    "domain": "extra.com",
@@ -272,7 +287,12 @@
    },
    "record": "capture/records/extra.com.json",
    "recipe": "capture/recipes/extra.com.json",
-   "reviewFlag": "robots.txt disallows /*/cart and /*/checkout for every locale"
+   "reviewFlag": "robots.txt disallows /*/cart and /*/checkout for every locale",
+   "statusUnderProtocol4": {
+    "status": "revisit",
+    "code": null,
+    "note": "excluded only by the retired cart-and-checkout robots rule; .3 exclusion void, visited again under .4 in original order with a reconnaissance session (Amendment 3 D)"
+   }
   },
   {
    "domain": "conforama.es",
@@ -328,7 +348,12 @@
    },
    "record": "capture/records/conforama.es.json",
    "recipe": "capture/recipes/conforama.es.json",
-   "reviewFlag": "the disallowed path /checkout/cart was named by the operator from knowledge (Magento convention) before any page load; robots.txt also names /ShoppingCart/ subpaths, so the real cart may be elsewhere and allowed"
+   "reviewFlag": "the disallowed path /checkout/cart was named by the operator from knowledge (Magento convention) before any page load; robots.txt also names /ShoppingCart/ subpaths, so the real cart may be elsewhere and allowed",
+   "statusUnderProtocol4": {
+    "status": "revisit",
+    "code": null,
+    "note": "excluded only by the retired cart-and-checkout robots rule; .3 exclusion void, visited again under .4 in original order with a reconnaissance session (Amendment 3 D)"
+   }
   }
  ]
 }

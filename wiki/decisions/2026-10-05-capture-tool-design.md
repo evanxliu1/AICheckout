@@ -52,4 +52,4 @@ As chosen above, in `capture-tool.1` (`evals/merchants/capture/`), with recipe `
 - Phase 13's harness loads snapshots through `openReplay`, which checks the manifest hash against the frozen value.
 
 ## Status
-Proposed 2026-10-05 by the Phase 12.2 builder (claude-code/claude-opus-5-5). The independent review of 2026-10-05 required changes (agent-verified); they are applied, each with a fixture test that fails without it. Accepted 2026-10-05: the reviewer's re-review approved (agent-verified), with two low fixes applied (image-only control names, a discriminating isolation fixture).
+Proposed 2026-10-05 by the Phase 12.2 builder (claude-code/claude-opus-5-5). The independent review of 2026-10-05 required changes (agent-verified); they are applied, each with a fixture test that fails without it. Accepted 2026-10-05: the reviewer's re-review approved (agent-verified), with two low fixes applied (image-only control names, a discriminating isolation fixture). The robots and stop-order rows are amended by [reconnaissance session and robots posture](2026-10-06-capture-recon-and-robots.md) (2026-10-06, `capture-tool.2`).

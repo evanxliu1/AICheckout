@@ -1,5 +1,7 @@
 // Platform group detection (docs/evals/generic-reader-protocol.md#platform-detection). Runs over the captured HTML
-// and main-document headers of every state of a site, and its checkout host. The first group that matches wins, and
+// and main-document headers of a fixed set of a site's states (platformStates: `empty-cart` and the first captured
+// cart state), and the checkout-1 host. Operator `view-NN` pages, `terms`, later states and reconnaissance pages are
+// never read. The first group that matches wins, and
 // the matched marker is recorded. Next.js and similar frameworks are not platforms. A `/checkouts/` path counts only
 // on a Shopify-marked host, so it never decides on its own: the host's HTML markers already match `shopify`.
 
@@ -40,9 +42,23 @@ const GROUPS = [
       ['wix-ecommerce', /wix-?ecommerce|wixstores/i],
       ['squarespace-commerce', /squarespace[^"']{0,40}commerce|commerce[^"']{0,40}squarespace/i],
       ['atg', /\/atg\/(commerce|userprofiling|dynamo)\//i],
+      ['shopware', /\/bundles\/storefront\//i],
+      ['prestashop', /prestashop/i],
+      ['cafe24', /cafe24/i],
+      ['makeshop', /makeshop/i],
     ],
   },
 ];
+
+/**
+ * The snapshots platform detection reads: `empty-cart` and the first captured cart state (`cart-1`, or `minicart-1`
+ * when `cart-1` was not captured). Nothing else, whatever else the session captured.
+ */
+export function platformStates(snapshots) {
+  const by = (state) => snapshots.find((s) => s.state === state);
+  const cart = by('cart-1') ?? by('minicart-1');
+  return [by('empty-cart'), cart].filter(Boolean);
+}
 
 const sap = (html) => /\/_ui\//.test(html) && (/\bACC\./.test(html) || /hybris/i.test(html));
 

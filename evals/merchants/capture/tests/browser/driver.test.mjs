@@ -8,7 +8,7 @@ import { after, before, test } from 'node:test';
 import { chromium } from 'playwright';
 import { MAX_NAVIGATIONS, createDriver } from '../../driver.mjs';
 import { RefusalError, StopError, inspectControl } from '../../guards.mjs';
-import { parseRobots } from '../../robots.mjs';
+import { parseRobots, robotsPosture } from '../../robots.mjs';
 import { fixtureRecipe, startShop } from '../fixture-shop.mjs';
 
 let browser;
@@ -33,6 +33,12 @@ async function fresh(mode = 'serve', { extra = {}, robotsGroups = [] } = {}) {
   open.push(context);
   const page = await context.newPage();
   const sessionDir = await mkdtemp(path.join(tmp, 's-'));
+  // As capture.mjs does: another host's robots.txt through the browser's request context, never a page.
+  const fetchRobots = async (origin) => {
+    const res = await context.request.get(`${origin}/robots.txt`, { failOnStatusCode: false });
+    const body = res.status() < 300 ? await res.text() : null;
+    return { ...robotsPosture({ httpStatus: res.status(), body }), url: `${origin}/robots.txt` };
+  };
   const { driver, session } = await createDriver({
     context,
     page,
@@ -42,6 +48,7 @@ async function fresh(mode = 'serve', { extra = {}, robotsGroups = [] } = {}) {
     mode,
     browserVersion: 'test',
     robotsGroups,
+    fetchRobots,
   });
   return { driver, session, page };
 }
@@ -225,17 +232,120 @@ test('an add-to-cart POST answered by a 303 to another site is caught the same w
   await assert.rejects(driver.snapshot('cart-1'), refusal('refused-third-party-page'));
 });
 
-test('robots.txt applies to every navigation on the origin host, redirects included, never to other hosts', async () => {
-  const groups = parseRobots('User-agent: *\nDisallow: /terms\nDisallow: /elsewhere\n');
-  const { driver } = await fresh('serve', { robotsGroups: groups });
-  const before = shop.log.length;
-  await assert.rejects(driver.goto(`${shop.origin}/terms`), refusal('robots-disallow-path'));
-  assert.ok(!shop.log.slice(before).some((r) => r.path === '/terms'));
-  await assert.rejects(driver.goto(`${shop.origin}/r-terms`), refusal('robots-disallow-path'));
+test('robots (.4): a disallowed path on the entry host loads and is recorded, never refused', async () => {
+  const groups = parseRobots('User-agent: *\nDisallow: /terms\nDisallow: /cart\n');
+  const { driver, session } = await fresh('serve', { robotsGroups: groups });
+  const st = await driver.goto(`${shop.origin}/terms`);
+  assert.equal(st.stopped, null);
+  assert.ok(shop.log.some((r) => r.path === '/terms'));
+  await driver.goto(`${shop.origin}/r-terms`);
+  await driver.goto(`${shop.origin}/cart`);
+  await driver.snapshot('empty-cart');
+  assert.equal(session.snapshots[0].robotsAllowed, false);
+  assert.ok(session.events.some((e) => e.kind === 'robots-disallowed-path'));
   // The shop's rules never apply to the third-party host (its /elsewhere loads).
   await driver.goto(`${shop.origin}/products/tee`);
-  const st = await driver.click({ role: 'link', name: 'Partner store' });
-  assert.equal(st.offsite, new URL(shop.thirdParty).host);
+  const off = await driver.click({ role: 'link', name: 'Partner store' });
+  assert.equal(off.offsite, new URL(shop.thirdParty).host);
+});
+
+test('robots (.4): another host of the site is checked before its first page; disallow-all stops the site', async () => {
+  const { driver, session } = await fresh('serve');
+  const before = shop.log.length;
+  await assert.rejects(driver.goto(`${shop.sister}/bag`), stopped('robots-disallow-all'));
+  const sent = shop.log.slice(before).filter((r) => r.site === 'sister');
+  assert.deepEqual(
+    sent.map((r) => r.path),
+    ['/robots.txt'],
+  );
+  assert.equal(session.robotsHosts.get(new URL(shop.sister).host).decision, 'robots-disallow-all');
+  await assert.rejects(driver.snapshot('empty-cart'), refusal('refused-after-stop'));
+});
+
+test('robots (.4): a redirect onto a disallow-all host stops the site after landing, with no snapshot', async () => {
+  const { driver, session } = await fresh('serve');
+  await assert.rejects(driver.goto(`${shop.origin}/r-sister`), stopped('robots-disallow-all'));
+  assert.equal(session.stopped.detail, 'landing-host-robots-disallow-all');
+  await assert.rejects(driver.snapshot('terms'), refusal('refused-after-stop'));
+  assert.equal(session.snapshots.length, 0);
+});
+
+test('stop check before robots: a redirect onto a challenge page on a disallow-all host stops as captcha', async () => {
+  const { driver, session } = await fresh('serve');
+  await assert.rejects(driver.goto(`${shop.origin}/r-sister-px`), stopped('captcha'));
+  assert.equal(session.stopped.code, 'captcha');
+  await assert.rejects(driver.snapshot('terms'), refusal('refused-after-stop'));
+  assert.equal(session.snapshots.length, 0);
+});
+
+test('a host allowed by its robots.txt loads; a later landing there is not re-fetched', async () => {
+  await shop.close();
+  shop = await startShop({ sisterRobots: 'User-agent: *\nDisallow: /bag-private\n' });
+  try {
+    const { driver, session } = await fresh('serve');
+    const st = await driver.goto(`${shop.sister}/bag`);
+    assert.equal(st.stopped, null);
+    await driver.goto(`${shop.origin}/r-sister`);
+    assert.equal(shop.log.filter((r) => r.site === 'sister' && r.path === '/robots.txt').length, 1);
+    await driver.snapshot('empty-cart');
+    assert.equal(session.snapshots[0].robotsAllowed, true);
+  } finally {
+    await shop.close();
+    shop = await startShop();
+  }
+});
+
+test('no snapshot of a challenge page: a redirect to one stops the site, and so does a wall that appears late', async () => {
+  const a = await fresh('serve');
+  await assert.rejects(a.driver.goto(`${shop.origin}/r-px`), stopped('captcha'));
+  await assert.rejects(a.driver.snapshot('terms'), refusal('refused-after-stop'));
+  assert.equal(a.session.snapshots.length, 0);
+  const b = await fresh('serve');
+  await b.driver.goto(`${shop.origin}/late-wall`);
+  await new Promise((r) => setTimeout(r, 600));
+  await assert.rejects(b.driver.snapshot('terms'), stopped('blocked-bot-wall'));
+  assert.equal(b.session.snapshots.length, 0);
+});
+
+test('recon mode: look only (view-NN snapshots, no add-to-cart, no choices) and findings must be pages it loaded', async () => {
+  const { driver, session } = await fresh('recon', { extra: { productUrls: [], allowlist: [] } });
+  await driver.goto(`${shop.origin}/listing`);
+  await driver.snapshot('view-01');
+  for (const state of ['empty-cart', 'cart-1', 'terms'])
+    await assert.rejects(driver.snapshot(state), refusal('refused-recon-snapshot'));
+  await assert.rejects(
+    driver.click({ role: 'button', name: 'Add to cart' }, 'add-to-cart'),
+    refusal('refused-recon-purpose'),
+  );
+  await assert.rejects(driver.click({ selector: '#plain-atc' }), refusal('refused-recon-add-to-cart'));
+  await driver.goto(`${shop.origin}/products/tee`);
+  await assert.rejects(
+    driver.click({ selector: 'button.size[data-size="M"]' }, 'option'),
+    refusal('refused-recon-purpose'),
+  );
+  await assert.rejects(driver.click({ role: 'button', name: 'Add to cart' }), refusal('refused-submit'));
+  assert.deepEqual(posts(), []);
+  const base = { listingUrl: `${shop.origin}/listing`, productUrls: [`${shop.origin}/products/tee`], checkoutPaths: [] };
+  await assert.rejects(driver.end({ findings: { ...base, cartPath: '/cart' } }), refusal('refused-findings-not-seen'));
+  await assert.rejects(driver.end({}), refusal('refused-bad-end'));
+  assert.equal(session.ended, null);
+  assert.equal(session.views, 1);
+});
+
+test('recon mode: end with findings once the cart path was loaded', async () => {
+  const { driver, session } = await fresh('recon', { extra: { productUrls: [], allowlist: [] } });
+  await driver.goto(`${shop.origin}/listing`);
+  await driver.goto(`${shop.origin}/products/tee`);
+  await driver.goto(`${shop.origin}/listing`);
+  await driver.click({ role: 'link', name: 'Cart' });
+  const findings = {
+    listingUrl: `${shop.origin}/listing`,
+    productUrls: [`${shop.origin}/products/tee`],
+    cartPath: '/cart',
+    checkoutPaths: ['/checkout'],
+  };
+  await driver.end({ findings });
+  assert.deepEqual(session.ended.findings, findings);
 });
 
 test('a challenge element in the main document stops the site', async () => {

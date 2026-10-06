@@ -1,8 +1,8 @@
-// robots.txt posture for the capture tool (Evan's decision, 2026-10-05; docs/evals/generic-reader-protocol.md).
-// Parsed as RFC 9309 (groups, longest match, Allow wins a tie, `*` and `$`). The protocol rule is stricter than
-// RFC 9309 group selection: the rules for `User-agent: *` AND for the tool's own token both apply, and the site is
-// excluded if either has `Disallow: /` (robots-disallow-all) or disallows a cart or checkout path the recipe names
-// (robots-disallow-path).
+// robots.txt posture for the capture tool (Evan's decision of 2026-10-06, generic-reader-protocol.4;
+// docs/evals/generic-reader-protocol.md). Parsed as RFC 9309 (groups, longest match, Allow wins a tie, `*` and `$`).
+// The rules for `User-agent: *` AND for the tool's own token both apply (stricter than RFC 9309 group selection). A
+// site is excluded only if either group disallows everything (robots-disallow-all), on the entry host or on any other
+// host of the site that a session loads. A disallowed cart or checkout path is recorded and reported, never excluding.
 
 /** The product token this tool answers to in robots.txt. The browser itself sends its normal Chrome user agent. */
 export const ROBOTS_TOKEN = 'AICheckoutCapture';
@@ -78,12 +78,13 @@ const disallowsAll = (group) =>
   Boolean(group?.rules.some((r) => r.type === 'disallow' && ['/', '/*', '/*$'].includes(r.path)));
 
 /**
- * Decide the site's robots posture before any page load.
+ * Decide one host's robots posture before any page of that host loads.
  * fetched: { httpStatus: number|null, body: string|null } (httpStatus null = network error).
- * paths: the cart and checkout paths the recipe names.
- * Returns { posture, groups, checkedPaths, decision, stopCode }.
+ * paths: the cart and checkout paths the recipe names (recorded with `allowed`; they never decide).
+ * Returns { posture, groups, checkedPaths, decision, stopCode }; decision is `allowed`, `robots-disallow-all` or
+ * `not-decided`.
  */
-export function robotsPosture(fetched, paths, token = ROBOTS_TOKEN) {
+export function robotsPosture(fetched, paths = [], token = ROBOTS_TOKEN) {
   const base = { groups: [], checkedPaths: [] };
   const status = fetched.httpStatus;
   if (status === null || status >= 500)
@@ -104,9 +105,7 @@ export function robotsPosture(fetched, paths, token = ROBOTS_TOKEN) {
   const parsed = parseRobots(fetched.body ?? '');
   const groups = [groupFor(parsed, '*'), groupFor(parsed, token.toLowerCase())].filter(Boolean);
   const checkedPaths = paths.map((path) => ({ path, allowed: groups.every((g) => isAllowed(g, path)) }));
-  let decision = 'allowed';
-  if (groups.some(disallowsAll)) decision = 'robots-disallow-all';
-  else if (checkedPaths.some((p) => !p.allowed)) decision = 'robots-disallow-path';
+  const decision = groups.some(disallowsAll) ? 'robots-disallow-all' : 'allowed';
   return {
     posture: 'rules',
     groups,
@@ -114,4 +113,9 @@ export function robotsPosture(fetched, paths, token = ROBOTS_TOKEN) {
     decision,
     stopCode: decision === 'allowed' ? null : decision,
   };
+}
+
+/** True when the merged groups allow `path` (a path with its query). Recorded per loaded page; never excluding. */
+export function pathAllowed(groups, path) {
+  return groups.every((g) => isAllowed(g, path));
 }
