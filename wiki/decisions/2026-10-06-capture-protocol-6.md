@@ -2,7 +2,7 @@
 type: Decision
 title: Background writes and vendor challenge pages (generic-reader-protocol.6)
 description: After capture batch 1 under .5, the coordinator decided (reversibly) to let the site's own same-site background writes through, logged, except to checkout/order/payment/sign-in/account/register paths and for 3 s after a non-add-to-cart click; to recognise common bot-management challenge pages by markup before any snapshot; to set aside hsn.com's two challenge-page views; and to confirm three operator readings of the listing and item rules.
-status: proposed
+status: accepted
 tags: [decision, phase-12, merchants, eval, capture]
 generated:
   by: claude-code/claude-opus-5-5
@@ -49,3 +49,5 @@ These are **the coordinator's decisions** (the coordinating session, claude-code
 
 ## Status
 Proposed 2026-10-06 by the amendment builder (claude-code/claude-opus-5-5) on the coordinator's decisions. It awaits the independent reviewer's signature of `.6`; `.5` binds until then.
+
+Signed: the independent reviewer signed `generic-reader-protocol.6` at `89bc619` and approved `capture-tool.4` on 2026-10-06 (agent-verified); accepted. Its low findings (tool-error rule for tool-caused missing states, separate background-write log cap, Turnstile marker note) go into `.7`.
