@@ -2,7 +2,7 @@
  "schema": "reader-sites.pilot.1",
  "protocol": "generic-reader-protocol.3",
  "candidatesSha256": "fd01a31f0b1daaed3846f156b4aaeeea722c9889a2cc1103107a380938b28ce7",
- "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history. Pilot 2 (2026-10-06 06:37-06:47 UTC, capture-tool.2, operator claude-code/claude-opus-5-5): each site's protocol4 object holds the .4 reconnaissance and capture results; .3 pilot recipes and records moved to capture/recipes/pilot-protocol-3/ and capture/records/pilot-protocol-3/. Under generic-reader-protocol.5 (Amendment 4, 2026-10-06) each site's statusUnderProtocol5 applies. The top-level `protocol` field names the protocol of the first pilot (when this file was created); per-site `protocol4` holds pilot 2 under .4, and `protocolCurrent` is the latest amendment, which governs new visits (.5 signed at 60c04f3 on 2026-10-06). Batch 1 under .5 (2026-10-06 07:13-07:38 UTC, capture-tool.3, branch phase12-captures-3): each visited site carries a protocol5 object (reconnaissance and capture results, review flags) and its statusUnderProtocol5; sites first visited under .5 have only those fields beside their candidate attributes. Under generic-reader-protocol.6 (Amendment 5) sites with a statusUnderProtocol6 take it; other batch-1 outcomes stand. Batch 2 under .7 (2026-10-06 07:57-08:22 UTC, capture-tool.5, branch phase12-captures-4): each visited site carries a protocol7 object (reconnaissance and capture summaries, backgroundWrites, review flags) and statusUnderProtocol7; status needs-decision (webstaurantstore.com) and incomplete (jpc.de, deghi.it tool-error) are not final outcomes. Under generic-reader-protocol.8 (Amendment 7) each site's statusUnderProtocol8 applies; method says whether the next visit is by pane.",
+ "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history. Pilot 2 (2026-10-06 06:37-06:47 UTC, capture-tool.2, operator claude-code/claude-opus-5-5): each site's protocol4 object holds the .4 reconnaissance and capture results; .3 pilot recipes and records moved to capture/recipes/pilot-protocol-3/ and capture/records/pilot-protocol-3/. Under generic-reader-protocol.5 (Amendment 4, 2026-10-06) each site's statusUnderProtocol5 applies. The top-level `protocol` field names the protocol of the first pilot (when this file was created); per-site `protocol4` holds pilot 2 under .4, and `protocolCurrent` is the latest amendment, which governs new visits (.5 signed at 60c04f3 on 2026-10-06). Batch 1 under .5 (2026-10-06 07:13-07:38 UTC, capture-tool.3, branch phase12-captures-3): each visited site carries a protocol5 object (reconnaissance and capture results, review flags) and its statusUnderProtocol5; sites first visited under .5 have only those fields beside their candidate attributes. Under generic-reader-protocol.6 (Amendment 5) sites with a statusUnderProtocol6 take it; other batch-1 outcomes stand. Batch 2 under .7 (2026-10-06 07:57-08:22 UTC, capture-tool.5, branch phase12-captures-4): each visited site carries a protocol7 object (reconnaissance and capture summaries, backgroundWrites, review flags) and statusUnderProtocol7; status needs-decision (webstaurantstore.com) and incomplete (jpc.de, deghi.it tool-error) are not final outcomes. Under generic-reader-protocol.8 (Amendment 7) each site's statusUnderProtocol8 applies; method says whether the next visit is by pane. generic-reader-protocol.8 was signed at a1c994d (agent-verified); generic-reader-protocol.9 (Amendment 8, clarifications, signature pending) follows. candidatesSha256 is the .3-.7 list (reader-candidates.json); candidates8 names the .8 list (reader-candidates-8.json).",
  "operator": "claude-code/claude-opus-5-5",
  "sites": [
   {
@@ -2988,5 +2988,14 @@
   }
  ],
  "protocol4": "generic-reader-protocol.4",
- "protocolCurrent": "generic-reader-protocol.8"
+ "protocolCurrent": "generic-reader-protocol.9",
+ "candidates8": {
+  "file": "evals/merchants/reader-candidates-8.json",
+  "sha256": "6cdc35a98a6f8d398771765d3b9efdc6da719b2959647ef0e14300362755c0e6",
+  "command": "seeded-selection.mjs reader-candidates --extra-us 225 --extra-non-us 800",
+  "counts": {
+   "us": 425,
+   "non-us": 1000
+  }
+ }
 }

@@ -119,7 +119,8 @@ export function auditCall(name, input = {}) {
     const text = String(input.text ?? '').trim();
     const ok = sha(text) === ALLOWED_SCRIPTS.export || sha(text) === ALLOWED_SCRIPTS.robots || CHUNK.test(text);
     if (!ok) flag('javascript-other', text.slice(0, 80));
-  } else if (s !== 'navigate') {
+  } else if (s !== 'navigate' && !((s === 'Write' || s === 'Edit') && /\/evals\/merchants\/capture\/data\//.test(`/${String(input.file_path ?? '').replace(/^\/+/, '')}`))) {
+    // Exports written into the capture data folder contain page text ("Checkout", "Sign in"): no wording check there.
     // Navigation is judged by its path above (Magento's /checkout/cart is allowed); other inputs by their wording.
     const words = JSON.stringify(input ?? {});
     if (CHECKOUT_NAME.test(words) || ORDER_OR_ACCOUNT.test(words)) flag('checkout-or-order-wording', words.slice(0, 120));

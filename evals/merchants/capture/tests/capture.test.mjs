@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { checkRecon, committableUrl } from '../capture.mjs';
 import { rebuildHtml } from '../rebuild.mjs';
 import { auditTranscript } from '../audit-pane-transcript.mjs';
+import { panePlatform, storePlatform } from '../pane-platform.mjs';
 import { checkRequest, startControlServer } from '../control-server.mjs';
 import { ADD_TO_CART_NAME, createDriver, guardApi, parseTarget } from '../driver.mjs';
 import {
@@ -1043,7 +1044,10 @@ test('pane transcript audit: allowed calls pass; typing, form input, other scrip
     line({
       type: 'tool_use',
       name: 'Write',
-      input: { file_path: '/Users/x/repo/evals/merchants/capture/data/pane/example.de/cart-1/dom.json', content: '{}' },
+      input: {
+        file_path: '/Users/x/repo/evals/merchants/capture/data/pane/example.de/cart-1/dom.json',
+        content: '{"t":"a","c":[{"x":"Proceed to checkout"}]},{"x":"Sign in"}',
+      },
     }),
     line({
       type: 'tool_use',
@@ -1091,4 +1095,38 @@ test('pane transcript audit: allowed calls pass; typing, form input, other scrip
   assert.equal(rules.filter((r) => r === 'bash-network').length, 3);
   assert.equal(rules.filter((r) => r === 'write-outside-capture-folders').length, 2);
   assert.equal(rules.filter((r) => r === 'account-path').length, 3);
+});
+
+// ---- Platform of pane captures (protocol .9, H2) ----
+
+test('pane platform: markers observable in pane-dom.2 exports, from empty-cart and the first cart state only', async () => {
+  const doc = (children) => ({ format: 'pane-dom.2', styleProps: [], root: { t: 'html', d: 'block', c: children } });
+  const script = (src) => ({ t: 'script', a: { src }, d: 'none' });
+  const shopify = doc([script('https://cdn.shopify.com/s/files/x.js')]);
+  const sfcc = doc([{ t: 'a', a: { href: '/on/demandware.store/Sites-x/Cart-Show' }, d: 'inline', c: [{ x: 'Bag' }] }]);
+  const plain = doc([{ t: 'p', d: 'block', c: [{ x: 'Hello' }] }]);
+  assert.deepEqual(panePlatform({ 'empty-cart': plain, 'cart-1': shopify }), {
+    group: 'shopify',
+    marker: 'cdn.shopify.com',
+    states: ['empty-cart', 'cart-1'],
+  });
+  // minicart-1 counts only when cart-1 is missing; later states never count.
+  assert.equal(panePlatform({ 'minicart-1': sfcc, 'cart-1': plain }).group, 'none-detected');
+  assert.equal(panePlatform({ 'minicart-1': sfcc }).group, 'sfcc');
+  assert.equal(panePlatform({ 'cart-qty2': shopify, 'cart-1': plain }).group, 'none-detected');
+  // Script contents are not exported, so a script-only marker (Shopify.shop) can't match.
+  const inline = doc([{ t: 'script', d: 'none', c: [{ x: 'Shopify.shop = "x";' }] }]);
+  assert.equal(panePlatform({ 'cart-1': inline }).group, 'none-detected');
+  assert.throws(() => panePlatform({ 'cart-1': { ...plain, format: 'pane-dom.1' } }), /pane-dom.2/);
+  // From disk, the split input form.
+  const root = await mkdtemp(path.join(os.tmpdir(), 'pane-platform-'));
+  try {
+    await mkdir(path.join(root, 'shop.example', 'cart-1'), { recursive: true });
+    await writeFile(path.join(root, 'shop.example', 'cart-1', 'dom.json'), JSON.stringify(shopify));
+    await mkdir(path.join(root, 'shop.example', 'evidence'), { recursive: true });
+    assert.equal((await storePlatform(root, 'shop.example')).group, 'shopify');
+    assert.deepEqual((await storePlatform(root, 'missing.example')).states, []);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
 });
