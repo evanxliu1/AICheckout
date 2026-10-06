@@ -65,3 +65,20 @@ Output columns (tab-separated, no header): `host  domain  code  region  currency
 Write the TSV to `out-N.tsv` (same N as your batch) in the same folder, sorted as the input. Then reply with: the number
 of input lines read, the number of output lines, counts per code, and any hosts you were unsure about (<= 30), with why.
 Do not write any other file. Do not edit anything in any git repository.
+
+## Added by the builder after the independent review (2026-10-05); applied in reconcile.tsv and operators.tsv, not by the batches
+- `no-fixed-price-cart-or-members-only`: auctions (bids, not a fixed-price cart), multi-level-marketing and consultant
+  shops, members-only or verified-group stores (military exchanges, professional discounts, inmate packages), flash-sale
+  clubs that need sign-in (Veepee, Showroomprivé, Privalia, Zalando Privé, BestSecret, limango, Rue La La, Gilt),
+  lease-to-own, crowdfunding pledges, duty-free pre-orders and lotteries. Warehouse clubs (Costco, Sam's Club, BJ's)
+  and marketplaces with fixed prices (eBay) stay eligible.
+- `carrier-device-shop`: a mobile carrier's device shop (Orange, Movistar, Claro, MTN, Vodafone, Zain, AT&T, Verizon,
+  T-Mobile and the like), in every country.
+- `sensitive-goods`: stores selling mostly firearms and ammunition (and suppressors), tobacco, snus and vape, cannabis or
+  alcohol (state liquor boards included).
+- `not-a-store` also covers storefront-hosting platforms whose subdomains or links are other merchants' shops.
+- Operator (operators.tsv): the company that runs a site's online store. Sister brands run by one company on its store
+  platform (Pottery Barn, West Elm and Williams Sonoma; Abercrombie and Hollister; T.J. Maxx, Marshalls, HomeGoods and
+  Sierra) and every country storefront of one retailer share an operator. A holding or private-equity owner whose brands
+  run their own stores is not an operator. When unsure, group (it only keeps more sites in one split). The per-country
+  storefront rule stays on the brand family; splits lock on the operator.

@@ -6,7 +6,8 @@
 // generic-reader-protocol.2 (2026-10-05) moved the reader evaluation to retail-frame.2 (worldwide, Tranco).
 // generic-reader-protocol.3 (2026-10-05) moved it to retail-frame.3 (retail-frame-3.json): the most-visited retailers by
 // Chrome UX Report (CrUX) country lists, U.S. and 24 other countries, in CrUX rank buckets. Candidates are taken most
-// popular bucket first; the non-U.S. stream round-robins the countries. Splits keep a retailer family in one split.
+// popular bucket first; the non-U.S. stream round-robins the countries. Splits keep all sites of one operator (the
+// company running the stores, from the frame) in one split.
 // The merchant-pipeline held-out list stays on retail-frame.1 (retail-frame.json) and its procedure is unchanged.
 //
 //   node evals/merchants/tools/seeded-selection.mjs pipeline-heldout [--check]        write or check the held-out list
@@ -19,7 +20,7 @@
 // with Evan's approval, protocol "Candidate sampling" step 3).
 // <captured.json>: [{ "domain": "x.com", "platform": "shopify" }, ...]. Nothing else: band, region group and probe
 // status come from the frame, and the split never sees anything seen in a page except the platform group the
-// committed marker script detected. Family comes from the frame.
+// committed marker script detected. Operator comes from the frame.
 import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -124,6 +125,7 @@ export function readerCandidates(frame, extra = {}) {
           region: d.region,
           currency: d.currency,
           family: d.family,
+          operator: d.operator,
           probeSite: d.probeSite,
         }),
       );
@@ -132,8 +134,9 @@ export function readerCandidates(frame, extra = {}) {
 }
 
 // Probe sites go to development. Then strata band x region group x platform, sites in reader-split key order, each to the
-// split with the fewest sites in its stratum (tie-breaks below) unless a site of its retailer family is already placed:
-// then it follows that site, so sister storefronts (amazon.de, amazon.fr) never sit in development and held-out at once.
+// split with the fewest sites in its stratum (tie-breaks below) unless a site of its operator is already placed: then it
+// follows that site, so storefronts sharing one company's code (amazon.de and amazon.fr, potterybarn.com and westelm.com)
+// never sit in development and held-out at once.
 export function split(frame, captured, extra = {}) {
   const candidates = new Map(readerCandidates(frame, extra).map((c) => [c.domain, c]));
   const seen = new Set();
@@ -150,7 +153,7 @@ export function split(frame, captured, extra = {}) {
       band: c.band,
       regionGroup: c.regionGroup,
       platform: site.platform,
-      family: c.family,
+      operator: c.operator,
       probeSite: c.probeSite,
     };
   });
@@ -158,9 +161,9 @@ export function split(frame, captured, extra = {}) {
   const bump = (k) => count.set(k, (count.get(k) ?? 0) + 1);
   const get = (k) => count.get(k) ?? 0;
   const out = [];
-  const familySplit = new Map();
+  const operatorSplit = new Map();
   const assign = (site, s) => {
-    familySplit.set(site.family, s);
+    operatorSplit.set(site.operator, s);
     out.push({
       domain: site.domain,
       band: site.band,
@@ -182,8 +185,8 @@ export function split(frame, captured, extra = {}) {
           .filter((s) => !s.probeSite && s.band === band && s.regionGroup === group && s.platform === platform)
           .sort(byKey('reader-split'));
         for (const site of stratum) {
-          if (familySplit.has(site.family)) {
-            assign(site, familySplit.get(site.family));
+          if (operatorSplit.has(site.operator)) {
+            assign(site, operatorSplit.get(site.operator));
             continue;
           }
           const rank = (s) => [

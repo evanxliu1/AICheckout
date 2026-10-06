@@ -1,11 +1,17 @@
-# retail-frame.3 builder reconciliation of classified-hosts.tsv (claude-code/claude-opus-5-5, 2026-10-05), applied by
-# tools/build-retail-frame-3.py in this order: (1) host rows replace a host's code/region/currency; (2) family rows rename a
-# family slug; (3) domain rows set a registrable domain's code/region/currency/family (its storefront for a visitor in the
-# United States); the domain then keeps only the hosts whose code and region match, or all its hosts if none match.
+# retail-frame.3 builder reconciliation of classified-hosts.tsv (claude-code/claude-opus-5-5, 2026-10-05; review fixes the
+# same day), applied by tools/build-retail-frame-3.py in this order: (1) host rows replace a host's code (and region and
+# currency when given); (2) family rows rename a family slug; (3) domain rows set a registrable domain's code, region,
+# currency and family (its storefront for a visitor in the United States); the domain then keeps only the hosts whose code
+# and region match, or all its hosts if none match; (4) add rows add a storefront host the batches missed (host, domain,
+# code, region, currency, family).
 # Reasons: one classification per site (registrable domain); consistent slugs so one retailer is one family; rules unified
 # across batches (single-brand direct-to-consumer stores are eligible, cross-border-marketplace is for marketplaces;
-# classifieds, vehicle sellers and live-animal sellers are not-a-store; stores selling mostly age-restricted or regulated goods (firearms and
-# ammunition, tobacco and vape, cannabis, alcohol) are sensitive-goods).
+# classifieds, vehicle sellers, live-animal sellers and storefront-hosting platforms are not-a-store; stores selling
+# mostly age-restricted or regulated goods (firearms and ammunition, tobacco and vape, cannabis, alcohol) are
+# sensitive-goods; auctions, multi-level-marketing, members-only, flash-sale clubs needing sign-in, lease-to-own, pledge
+# and duty-free stores are no-fixed-price-cart-or-members-only; mobile carriers' device shops are carrier-device-shop;
+# Instacart-run grocers are no-own-checkout; hottopic.com was missed by batch 1).
+# Frozen with generic-reader-protocol.3: changed only by a dated amendment.
 host	m-fr.cupshe.com	eligible	FR	EUR
 host	thehalara.co.uk	eligible	GB	GBP
 host	thehalara.de	eligible	DE	EUR
@@ -33,6 +39,95 @@ host	www.midwayusa.com	sensitive-goods
 host	palmettostatearmory.com	sensitive-goods		
 host	www.tesla.com	not-a-store		
 host	www.min-breeder.com	not-a-store		
+host	www.saq.com	sensitive-goods		
+host	www.lcbo.com	sensitive-goods		
+host	www.danmurphys.com.au	sensitive-goods		
+host	www.snusbolaget.se	sensitive-goods		
+host	www.lepetitvapoteur.com	sensitive-goods		
+host	www.smokingpipes.com	sensitive-goods		
+host	www.targetsportsusa.com	sensitive-goods		
+host	www.bearcreekarsenal.com	sensitive-goods		
+host	www.sigsauer.com	sensitive-goods		
+host	www.silencershop.com	sensitive-goods		
+host	www.silencercentral.com	sensitive-goods		
+host	www.naturabuy.fr	sensitive-goods		
+host	www.gall.nl	sensitive-goods		
+host	www.proxibid.com	no-fixed-price-cart-or-members-only		
+host	www.auctionninja.com	no-fixed-price-cart-or-members-only		
+host	www.ebth.com	no-fixed-price-cart-or-members-only		
+host	www.whatnot.com	no-fixed-price-cart-or-members-only		
+host	gobid.co.za	no-fixed-price-cart-or-members-only		
+host	www.gobid.co.za	no-fixed-price-cart-or-members-only		
+host	www.grays.com	no-fixed-price-cart-or-members-only		
+host	www.myherbalife.com	no-fixed-price-cart-or-members-only		
+host	ng.oriflame.com	no-fixed-price-cart-or-members-only		
+host	www.asclepiuswellness.com	no-fixed-price-cart-or-members-only		
+host	www.avon.co.za	no-fixed-price-cart-or-members-only		
+host	www.avon.com.tr	no-fixed-price-cart-or-members-only		
+host	www.expertvoice.com	no-fixed-price-cart-or-members-only		
+host	www.accesssecurepak.com	no-fixed-price-cart-or-members-only		
+host	auctionet.com	no-fixed-price-cart-or-members-only		
+host	www.bukowskis.com	no-fixed-price-cart-or-members-only		
+host	www.catawiki.com	no-fixed-price-cart-or-members-only		
+host	www.johnpyeauctions.co.uk	no-fixed-price-cart-or-members-only		
+host	johnpyesubastas.es	no-fixed-price-cart-or-members-only		
+host	www.klaravik.se	no-fixed-price-cart-or-members-only		
+host	sikoauktioner.se	no-fixed-price-cart-or-members-only		
+host	www.sikoauktioner.se	no-fixed-price-cart-or-members-only		
+host	www.todocoleccion.net	no-fixed-price-cart-or-members-only		
+host	www.tradera.com	no-fixed-price-cart-or-members-only		
+host	www.zoll-auktion.de	no-fixed-price-cart-or-members-only		
+host	www.biddergy.com	no-fixed-price-cart-or-members-only		
+host	www.equip-bid.com	no-fixed-price-cart-or-members-only		
+host	www.govdeals.com	no-fixed-price-cart-or-members-only		
+host	www.jnjonlineauction.com	no-fixed-price-cart-or-members-only		
+host	www.k-bid.com	no-fixed-price-cart-or-members-only		
+host	nellisauction.com	no-fixed-price-cart-or-members-only		
+host	www.nellisauction.com	no-fixed-price-cart-or-members-only		
+host	www.pristineauction.com	no-fixed-price-cart-or-members-only		
+host	m.publicsurplus.com	no-fixed-price-cart-or-members-only		
+host	www.publicsurplus.com	no-fixed-price-cart-or-members-only		
+host	www.lloydsonline.com.au	no-fixed-price-cart-or-members-only		
+host	1kuji.com	no-fixed-price-cart-or-members-only		
+host	on-line.1kuji.com	no-fixed-price-cart-or-members-only		
+host	m-kr.atomy.com	no-fixed-price-cart-or-members-only		
+host	www.melaleuca.com	no-fixed-price-cart-or-members-only		
+host	www.pamperedchef.com	no-fixed-price-cart-or-members-only		
+host	clubs.scholastic.com	no-fixed-price-cart-or-members-only		
+host	www.aarons.com	no-fixed-price-cart-or-members-only		
+host	gamefound.com	no-fixed-price-cart-or-members-only		
+host	www.ssgdfs.com	no-fixed-price-cart-or-members-only		
+host	tienda.payjoy.com	no-fixed-price-cart-or-members-only		
+host	www.ersag.com.tr	no-fixed-price-cart-or-members-only		
+host	shopgoodwill.com	no-fixed-price-cart-or-members-only		
+host	www.mynavyexchange.com	no-fixed-price-cart-or-members-only		
+host	www.govx.com	no-fixed-price-cart-or-members-only		
+host	www.bestsecret.com	no-fixed-price-cart-or-members-only		
+host	www.veepee.fr	no-fixed-price-cart-or-members-only		
+host	www.showroomprive.com	no-fixed-price-cart-or-members-only		
+host	www.showroomprive.es	no-fixed-price-cart-or-members-only		
+host	es.privalia.com	no-fixed-price-cart-or-members-only		
+host	www.zalando-prive.fr	no-fixed-price-cart-or-members-only		
+host	www.zalando-prive.es	no-fixed-price-cart-or-members-only		
+host	www.zalando-prive.it	no-fixed-price-cart-or-members-only		
+host	www.saldiprivati.com	no-fixed-price-cart-or-members-only		
+host	www.limango.de	no-fixed-price-cart-or-members-only		
+host	www.limango.pl	no-fixed-price-cart-or-members-only		
+host	www.ruelala.com	no-fixed-price-cart-or-members-only		
+host	www.gilt.com	no-fixed-price-cart-or-members-only		
+host	tienda.claro.com.ar	carrier-device-shop		
+host	tiendaonline.movistar.com.ar	carrier-device-shop		
+host	tienda.movistar.com.mx	carrier-device-shop		
+host	shop.mtn.ng	carrier-device-shop		
+host	eshop.orange.eg	carrier-device-shop		
+host	boutique.orange.fr	carrier-device-shop		
+host	eshop.vodafone.com.eg	carrier-device-shop		
+host	shop.sa.zain.com	carrier-device-shop		
+host	shop.sosh.fr	carrier-device-shop		
+host	mashdaf.myeasyorders.com	not-a-store		
+host	www.shopier.com	not-a-store		
+host	www.publix.com	no-own-checkout		
+host	www.instacart.ca	no-own-checkout		
 family	1688	alibaba
 family	aldi-sued	aldi-sud
 family	bath-and-body-works	bathandbodyworks
@@ -95,3 +190,4 @@ domain	tommy.com	eligible	US	USD	tommy
 domain	vevor.com	eligible	US	USD	vevor
 domain	walmart.com	eligible	US	USD	walmart
 domain	yahoo.co.jp	eligible	JP	JPY	yahoo-japan
+add	www.hottopic.com	hottopic.com	eligible	US	USD	hottopic

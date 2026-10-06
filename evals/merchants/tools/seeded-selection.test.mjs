@@ -61,6 +61,8 @@ test('retail-frame.3: buckets, regions, currencies, one storefront per family pe
     assert.equal(d.homeList, d.region, d.domain);
     assert.equal(d.lists[d.homeList], d.band, d.domain);
     assert.equal(d.exclusion, null, d.domain);
+    assert.ok(d.operator, d.domain);
+    assert.ok(d.hosts.includes(d.entryHost), d.domain);
     assert.ok(d.family && !seen.has(`${d.family}|${d.region}`), `${d.family} ${d.region}`);
     seen.add(`${d.family}|${d.region}`);
   }
@@ -70,6 +72,11 @@ test('retail-frame.3: buckets, regions, currencies, one storefront per family pe
   }
   assert.ok(frame3.domains.every((d) => !['RU', 'BY'].includes(d.region) || !d.eligible));
   assert.ok(frame3.domains.every((d) => !('rank' in d)));
+  // sister brands that share one company's store are one operator
+  const op = (dom) => frame3.domains.find((x) => x.domain === dom)?.operator;
+  assert.equal(op('potterybarn.com'), op('westelm.com'));
+  assert.equal(op('abercrombie.com'), op('hollisterco.com'));
+  assert.equal(op('amazon.de'), op('amazon.co.uk'));
 });
 
 test('item price bands and minor-unit table cover every eligible retail-frame.3 currency', () => {
@@ -159,16 +166,16 @@ test('split: balanced overall, by stream and by region group; probe sites in dev
   assert.ok(a.filter((x) => probe.has(x.domain)).every((x) => x.split === 'development'));
 });
 
-test('split: a retailer family never spans two splits', () => {
+test('split: an operator never spans two splits', () => {
   const a = split(frame3, captureSample());
-  const fam = new Map(frame3.domains.map((d) => [d.domain, d.family]));
+  const op = new Map(frame3.domains.map((d) => [d.domain, d.operator]));
   const where = new Map();
   for (const x of a) {
-    const f = fam.get(x.domain);
-    assert.ok(!where.has(f) || where.get(f) === x.split, `${f}: ${where.get(f)} and ${x.split}`);
-    where.set(f, x.split);
+    const o = op.get(x.domain);
+    assert.ok(!where.has(o) || where.get(o) === x.split, `${o}: ${where.get(o)} and ${x.split}`);
+    where.set(o, x.split);
   }
-  assert.ok(a.length > new Set(a.map((x) => fam.get(x.domain))).size, 'the sample has a family with several sites');
+  assert.ok(a.length > new Set(a.map((x) => op.get(x.domain))).size, 'the sample has an operator with several sites');
 });
 
 test('split: takes domain and platform only, so nothing else seen in a page can change it', () => {

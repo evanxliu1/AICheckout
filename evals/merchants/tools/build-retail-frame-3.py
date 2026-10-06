@@ -4,6 +4,8 @@
 #   - the agent's storefront-host classification, evals/merchants/frame-3-inputs/classified-hosts.tsv (host, domain,
 #     code, region, currency, family; nine subagent batches under classification-rules.txt, from knowledge, no website
 #     visited), reconciled by the builder's evals/merchants/frame-3-inputs/reconcile.tsv;
+#   - the operator table evals/merchants/frame-3-inputs/operators.tsv (the company running each store; splits lock on it);
+#   - the CrUX country lists for 2026-02 (yyyymm 202602), six months earlier, for the persistence rule;
 #   - retail-frame.1 (evals/merchants/retail-frame.json) for the Phase 10 probe flag.
 # CrUX publishes rank-magnitude buckets, never exact ranks, so the frame carries buckets as they are.
 # Run from the repository root: python3 evals/merchants/tools/build-retail-frame-3.py [--check]
@@ -15,6 +17,7 @@ CRUX = os.path.join(ROOT, 'evals/merchants/data/crux')
 OUT = os.path.join(ROOT, 'evals/merchants/retail-frame-3.json')
 SEED = 'ai-checkout/phase-12/2026-10-06'
 YYYYMM = '202608'
+PREV_YYYYMM = '202602'  # persistence rule: the home-list storefront host must be in this list's classified depth too
 
 # The lists the frame reads and how deep each was classified (CrUX rank bucket upper bound).
 US_DEPTH, OTHER_DEPTH = 5000, 1000
@@ -47,6 +50,33 @@ SHA256 = {
     'NG': '399497320f03f07ab4eca3fb28457cfbf9997cfa92883c37c0e805bac9a49edd',
     'EG': 'd92cbd7465772a7a0156f5631c29a996c97de9c233aa45526d965943231c15fd',
 }
+PREV_SHA256 = {
+    'US': '2a88ed7c7a871d1decb06ff1048c1740692baee9529b87c78157051e97cbe2aa',
+    'GB': '45f551dd4ecd67614403e1b17c701dc65ebf4eb8be3e2e44f52c2075805b0638',
+    'DE': '4967c3d94f7ece0a5e6e1e84b5e52eea552ce8c478dcb634be3c3538277bb995',
+    'FR': 'cb73042cea2efbd83a4d2b38060c172ff2fb636b082b2d6d2c4881b5492eac3e',
+    'IT': '2e4fffb55b0bc0c97add26b819a7a28e1bc1f41b2b9c742baad43e6db2e2c2e9',
+    'ES': '0075bf45c9c6c0ffbbfc6c8ff8b75c1e38ab49fd40b6053a463e1a2e84274bb4',
+    'NL': '49e91514306ee033eed98f0e4181d242b8b18d56ccba90df2f6312a53e710aaa',
+    'PL': '24eb885d90f7d69f75b3778f318d79d2725bc8a300d38b0c2d18c6f61006e53d',
+    'SE': 'dc387c8097aca0d10165414bffb9bbe073123a4440488758291dcb5ac41163cb',
+    'TR': '68207ed38d2171400905e42141044f4db3bc92a64cddf7a54b983e69fcc93cb8',
+    'JP': 'c38a275cfedff6359a66e46d2834d408f47a1d6874c05068e02aa08ee785b8bb',
+    'KR': '51848a1b4761dc0a0999eb0be0c30a78a712ce4b0afadcc6243f8dbff27d284e',
+    'CN': '8ccb67ba312f1c77fe608c757b3594d994ba252de83dfda904719893429d2afd',
+    'IN': '5de42573f11c335af453b48467cdd0bc582746f4a38281698b3fefa1e52f289b',
+    'ID': '4eb79c78a1bea72fcb6a59ebcb4c285ad52d3a259f31f0390d69543303ed1f8c',
+    'AU': 'c6c104b4cfd8ca5e4f3660200b0881fb9619fbe36c2832e865b2ef4434d07e35',
+    'CA': 'e10bbc25c7b830246f96c67eb820a99e0256d93ffdc732346c334571e9f77100',
+    'MX': '24efd19e098a042ea003ea1c4010afaf2918a4ea94af0e205e8e76b154870c7d',
+    'BR': 'e925aa71b6c877a05b1ac8337a368a16bac64188f900633d3cede1e296c58159',
+    'AR': '817656006c99de4bdfab81bfe3d719020c6ed13e22d7bfec0586cde109eafb47',
+    'SA': '2ce0030b48e97989a2ad472c24e05685da6624a254489eafbaa33749f33e1883',
+    'AE': 'bb787a03d738b89bb578fb304782eb669bf4451d0623c4430d918d6ec2c5589e',
+    'ZA': 'ec818199afc99a48916e6899dcdcbee74bb9b3a98baac8f6efb3c553dd252553',
+    'NG': '49f4dba16e537a0402bc988e537f083eb312c50d917c4c01b75153978a4d429f',
+    'EG': 'd403d51affeb9e10cbb4b3234760f005b486c902fe7cd2271c33520385053dd6',
+}
 BUCKET = {1000: 'top-1k', 5000: '1k-5k', 10000: '5k-10k', 50000: '10k-50k', 100000: '50k-100k', 500000: '100k-500k',
           1000000: '500k-1m'}
 BAND_ORDER = ['top-1k', '1k-5k', '5k-10k']
@@ -59,7 +89,8 @@ for c in 'SA AE ZA NG EG'.split(): GROUP[c] = 'middle-east-africa'
 
 CODES = set('''eligible legacy-named-merchant cross-border-marketplace prescription-or-pharmacy adult-retailer card-unusable-market
 mostly-digital-goods no-own-checkout business-supplier registry-service not-a-store multi-market-domain
-duplicate-of-another-domain defunct-2025 sensitive-goods'''.split())
+duplicate-of-another-domain defunct-2025 sensitive-goods
+no-fixed-price-cart-or-members-only carrier-device-shop'''.split())
 LEGACY = {'amazon.com', 'bestbuy.com', 'newegg.com'}
 
 # Registrable domain: the last two labels, or three under these second-level public suffixes (the ones the 25 lists use).
@@ -80,12 +111,12 @@ def key(purpose, domain):
     return hashlib.sha256(f'{SEED}|{purpose}|{domain}'.encode()).hexdigest()
 
 
-def read_list(name):
-    path = os.path.join(CRUX, f'global-{YYYYMM}.csv.gz' if name == 'global' else f'country-{name.lower()}-{YYYYMM}.csv.gz')
+def read_list(name, month=YYYYMM, pins=SHA256):
+    path = os.path.join(CRUX, f'global-{month}.csv.gz' if name == 'global' else f'country-{name.lower()}-{month}.csv.gz')
     raw = open(path, 'rb').read()
     digest = hashlib.sha256(raw).hexdigest()
-    if digest != SHA256[name]:
-        sys.exit(f'{path}: SHA-256 {digest} is not the pinned {SHA256[name]}')
+    if digest != pins[name]:
+        sys.exit(f'{path}: SHA-256 {digest} is not the pinned {pins[name]}')
     best = {}
     for row in csv.DictReader(gzip.decompress(raw).decode().splitlines()):
         host, rank = row['origin'].split('://', 1)[1], int(row['rank'])
@@ -94,6 +125,7 @@ def read_list(name):
 
 
 lists = {name: read_list(name) for name in ['global'] + COUNTRIES}
+prev_lists = {name: read_list(name, PREV_YYYYMM, PREV_SHA256) for name in COUNTRIES}
 depth = {c: US_DEPTH if c == 'US' else OTHER_DEPTH for c in COUNTRIES}
 classified = set(h for c in COUNTRIES for h, r in lists[c].items() if r <= depth[c])
 
@@ -113,9 +145,10 @@ for where, (host, dom, code, region, cur, family) in rows('classified-hosts.tsv'
                  'currency': None if cur == '-' else cur, 'family': family}
 
 # Builder reconciliation (reconcile.tsv): host rows, then family renames, then domain rows.
-host_fix, family_fix, domain_fix = {}, {}, {}
+host_fix, family_fix, domain_fix, added = {}, {}, {}, []
 for where, cols in rows('reconcile.tsv'):
     if cols[0] == 'host': host_fix[cols[1]] = cols[2:5]
+    elif cols[0] == 'add': added.append(cols[1:7])
     elif cols[0] == 'family': family_fix[cols[1]] = cols[2]
     elif cols[0] == 'domain': domain_fix[cols[1]] = cols[2:6]
     else: sys.exit(f'{where}: unknown row kind {cols[0]}')
@@ -132,6 +165,9 @@ for dom, (code, region, cur, family) in domain_fix.items():
     for x in members:
         if x in keep: raw[x].update(code=code, region=region, currency=cur, family=family)
         else: del raw[x]
+for host, dom, code, region, cur, family in added:
+    if host in raw: sys.exit(f'reconcile.tsv: add of a classified host {host}')
+    raw[host] = {'domain': dom, 'code': code, 'region': region, 'currency': cur, 'family': family}
 
 hosts = {}
 for host, h in raw.items():
@@ -157,6 +193,22 @@ def bucket_in(name, hs, limit=None):
     return BUCKET[min(ranks)] if ranks else None
 
 
+family_operator, domain_operator = {}, {}
+for where, cols in rows('operators.tsv'):
+    if cols[0] == 'family': family_operator[cols[1]] = cols[2]
+    elif cols[0] == 'domain': domain_operator[cols[1]] = cols[2]
+    else: sys.exit(f'{where}: unknown row kind {cols[0]}')
+families = {d['family'] for d in domains.values()}
+for f in family_operator:
+    if f not in families: sys.exit(f'operators.tsv: unknown family {f}')
+for dm in domain_operator:
+    if dm not in domains: sys.exit(f'operators.tsv: unknown domain {dm}')
+
+
+def persistent(name, hs):
+    return any(prev_lists[name].get(h, depth[name] + 1) <= depth[name] for h in hs)
+
+
 entries = []
 for dom, d in sorted(domains.items()):
     seen_in = {c: b for c in COUNTRIES if (b := bucket_in(c, d['hosts'], depth[c]))}
@@ -166,17 +218,21 @@ for dom, d in sorted(domains.items()):
     if code == 'eligible' and d['region'] in ('RU', 'BY'): code = 'card-unusable-market'
     if code == 'eligible' and home is None: code = 'region-not-in-country-set'
     elif code == 'eligible' and band is None: code = 'outside-home-list'
+    elif code == 'eligible' and not persistent(home, d['hosts']): code = 'not-persistently-popular'
+    in_home = [h for h in d['hosts'] if home and lists[home].get(h, depth[home] + 1) <= depth[home]]
+    entry = min(in_home, key=lambda h: (lists[home][h], d['hosts'].index(h))) if in_home else None
     entries.append({
         'domain': dom, 'band': band, 'eligible': code == 'eligible', 'exclusion': None if code == 'eligible' else code,
         'probeSite': dom in probe, 'region': d['region'], 'currency': d['currency'],
-        'regionGroup': GROUP.get(d['region']) if d['region'] else None, 'family': d['family'], 'homeList': home,
-        'lists': seen_in, 'globalBucket': bucket_in('global', d['hosts']), 'hosts': d['hosts'],
+        'regionGroup': GROUP.get(d['region']) if d['region'] else None, 'family': d['family'],
+        'operator': domain_operator.get(dom, family_operator.get(d['family'], d['family'])), 'homeList': home,
+        'lists': seen_in, 'globalBucket': bucket_in('global', d['hosts']), 'entryHost': entry, 'hosts': d['hosts'],
     })
 
 # One storefront per retailer family per country: among a family's eligible domains in one region, the most popular band
 # wins, then the lowest SHA-256("<seed>|retailer-family|<domain>"); the others are same-retailer-other-domain.
 groups = {}
-for e in entries:
+for e in entries:  # one storefront per brand family per country; splits lock on operator instead
     if e['eligible']: groups.setdefault((e['family'], e['region']), []).append(e)
 for members in groups.values():
     members.sort(key=lambda e: (BAND_ORDER.index(e['band']), key('retailer-family', e['domain'])))
@@ -207,12 +263,14 @@ frame = {
                'opted-in Chrome users in rank-magnitude buckets (1k, 5k, 10k, ...), unordered within a bucket. "CrUX datasets '
                'by Google are licensed under a Creative Commons Attribution 4.0 International License" '
                '(https://developer.chrome.com/docs/crux/methodology). Local copies gitignored under evals/merchants/data/crux/; '
-               'SHA-256 pinned in evals/merchants/tools/build-retail-frame-3.py.'),
+               'SHA-256 pinned in evals/merchants/tools/build-retail-frame-3.py. This frame is a filtered and classified '
+               'subset of those lists and is modified from them (CC BY 4.0 section 3(a)(1)(B)): buckets are aggregated per '
+               'registrable domain, and the 2026-02 country lists (yyyymm 202602) are used only for the persistence rule.'),
     'classification': ('Agent-classified storefront hosts of online sellers of physical goods (claude-code/claude-opus-5-5, '
                        '2026-10-05, nine parallel subagent batches under one rule sheet, merged and reviewed by the builder), '
                        'no website visited: every origin in the U.S. list to bucket 5k (ranks 1-5,000) and in the 24 other '
                        'country lists to bucket 1k. Inputs: evals/merchants/frame-3-inputs/ (classified-hosts.tsv, '
-                       'reconcile.tsv, classification-rules.txt). region / '
+                       'reconcile.tsv, operators.tsv, classification-rules.txt). region / '
                        'currency: the storefront a visitor in the United States gets at the domain without choosing a country. '
                        'band: the bucket of the domain\'s best storefront host in its home list (the U.S. list for region US, '
                        'else its region\'s list). Rules and codes: docs/evals/generic-reader-protocol.md#retail-frame'),
@@ -220,7 +278,8 @@ frame = {
                    'frozen for the merchant-pipeline held-out list'),
     'bands': {'top-1k': 'CrUX bucket 1000 (ranks 1-1,000)', '1k-5k': 'CrUX bucket 5000 (ranks 1,001-5,000)',
               '5k-10k': 'CrUX bucket 10000 (ranks 5,001-10,000; not classified in this frame)'},
-    'lists': {'classifiedDepth': {c: BUCKET[depth[c]] for c in COUNTRIES}, 'sha256': SHA256},
+    'lists': {'classifiedDepth': {c: BUCKET[depth[c]] for c in COUNTRIES}, 'sha256': SHA256,
+              'persistence': {'yyyymm': PREV_YYYYMM, 'sha256': PREV_SHA256}},
     'regionGroups': {g: ' '.join(c for c in COUNTRIES if GROUP[c] == g) for g in
                      ('us', 'canada-latam', 'europe', 'asia-pacific', 'middle-east-africa')},
     'counts': counts,
