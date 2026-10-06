@@ -9,6 +9,7 @@ import path from 'node:path';
 import { after, before, test } from 'node:test';
 import { chromium } from 'playwright';
 import { runSite } from '../../capture.mjs';
+import { Recipe } from '../../recipe.mjs';
 import { openReplay, verifySnapshot } from '../../replay.mjs';
 import { fixtureRecipe, startShop } from '../fixture-shop.mjs';
 
@@ -30,8 +31,6 @@ const steps = (o) => [
   { do: 'snapshot', state: 'cart-1' },
   { do: 'click', target: { role: 'button', name: 'Increase quantity' }, purpose: 'quantity-increment' },
   { do: 'snapshot', state: 'cart-qty2' },
-  { do: 'click', target: { role: 'link', name: 'Checkout', exact: true } },
-  { do: 'snapshot', state: 'checkout-1' },
   { do: 'goto', url: `${o}/terms` },
   { do: 'snapshot', state: 'terms' },
   {
@@ -73,7 +72,7 @@ test('end to end: fixture shop captured; only the add-to-cart form was posted; p
     assert.equal(record.outcome.status, 'captured');
     assert.deepEqual(
       record.states.map((s) => s.state),
-      ['empty-cart', 'cart-1', 'cart-qty2', 'checkout-1', 'terms'],
+      ['empty-cart', 'cart-1', 'cart-qty2', 'terms'],
     );
     assert.equal(record.robots.decision, 'allowed');
     assert.deepEqual(record.robots.checkedPaths, [
@@ -81,7 +80,6 @@ test('end to end: fixture shop captured; only the add-to-cart form was posted; p
       { path: '/checkout', host: new URL(shop.origin).host, allowed: true },
     ]);
     assert.deepEqual(record.platform, { group: 'bigcommerce', marker: 'cdn11.bigcommerce.com' });
-    assert.equal(record.thirdPartyCheckoutHost, null);
     assert.equal(record.stop, null);
     assert.equal(record.notReached.length, 2);
     assert.equal(record.terms.url, `${shop.origin}/terms`);
@@ -133,15 +131,6 @@ test('end to end: fixture shop captured; only the add-to-cart form was posted; p
       }));
       assert.deepEqual(seen, { shadow: '£20.00', strike: 'line-through', promo: '', scripts: 0 });
       await context.close();
-      const co = await openReplay(browser, path.join(sessionDir, 'checkout-1'));
-      assert.deepEqual(
-        await co.page.evaluate(() => [
-          document.getElementById('email').value,
-          document.getElementById('password').value,
-        ]),
-        ['', ''],
-      );
-      await co.context.close();
       await assert.rejects(
         openReplay(browser, cart, { expectedManifestSha256: '0'.repeat(64) }),
         /not the expected/,
@@ -219,7 +208,6 @@ test('robots (.4): disallowed cart and checkout paths are recorded, and the site
       'empty-cart': false,
       'cart-1': false,
       'cart-qty2': false,
-      'checkout-1': false,
       terms: true,
     });
   } finally {
@@ -257,6 +245,7 @@ test('reconnaissance first: look-only session writes the draft recipe; the captu
               cartPath: '/cart',
               checkoutPaths: [],
               termsUrl: `${o}/terms`,
+              stockMismatch: [`${o}/products/tee`],
             },
           },
         ],
@@ -281,6 +270,9 @@ test('reconnaissance first: look-only session writes the draft recipe; the captu
     assert.equal(draft.recon.sessionId, recon.record.session.id);
     assert.equal(draft.cartPath, '/cart');
     assert.equal(draft.cartHost, new URL(o).host);
+    // A structured-data stock mismatch is recorded in the reconnaissance record, never in the recipe.
+    assert.deepEqual(recon.record.stockMismatch, [`${o}/products/tee`]);
+    assert.equal('stockMismatch' in draft, false);
 
     // One reconnaissance session per site.
     await assert.rejects(
@@ -453,7 +445,7 @@ test('serve: the operator drives the same driver over the control server; refusa
   }
 });
 
-test('third-party checkout: the host is recorded with checkout-1 and nothing past its first page loads', async () => {
+test('protocol .5: no checkout-1 state; a click to an off-site checkout is refused and nothing of it loads', async () => {
   const shop = await startShop();
   try {
     const o = shop.origin;
@@ -463,10 +455,12 @@ test('third-party checkout: the host is recorded with checkout-1 and nothing pas
         { do: 'click', target: { role: 'button', name: 'Add to cart' }, purpose: 'add-to-cart' },
         { do: 'snapshot', state: 'cart-1' },
         { do: 'click', target: { role: 'link', name: 'Partner checkout' } },
-        { do: 'snapshot', state: 'checkout-1' },
-        { do: 'click', target: { role: 'link', name: 'Next' } },
       ],
     });
+    assert.equal(
+      Recipe.safeParse({ ...recipe, steps: [{ do: 'snapshot', state: 'checkout-1' }] }).success,
+      false,
+    );
     const { record } = await runSite({
       recipe,
       mode: 'run',
@@ -475,16 +469,16 @@ test('third-party checkout: the host is recorded with checkout-1 and nothing pas
       headless: true,
       paceMs: 50,
     });
-    assert.equal(record.thirdPartyCheckoutHost, new URL(shop.thirdParty).host);
     assert.deepEqual(
       record.states.map((s) => s.state),
-      ['cart-1', 'checkout-1'],
+      ['cart-1'],
     );
-    // The recipe's last click was refused; the run stops as a tool error, and the site still counts as captured.
+    // The click was refused (its checkout wording is caught first; the off-site rule would refuse it too); the run
+    // stops as a tool error, and the site still counts as captured.
     assert.equal(record.stop.code, 'tool-error');
-    assert.match(record.stop.detail, /refused-third-party-page/);
+    assert.match(record.stop.detail, /refused-checkout/);
     assert.equal(record.outcome.status, 'captured');
-    assert.ok(!shop.log.some((r) => r.site === 'third-party' && r.path === '/next'));
+    assert.ok(!shop.log.some((r) => r.site === 'third-party' && r.path !== '/widget'));
   } finally {
     await shop.close();
   }

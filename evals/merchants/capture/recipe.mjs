@@ -2,12 +2,13 @@
 // A recipe is committed data: one site's URLs, cart and checkout paths, click allowlist and steps. No code.
 import { z } from 'zod';
 
-export const RECIPE_SCHEMA = 'capture-recipe.2';
-export const SITE_RECORD_SCHEMA = 'capture-site-record.2';
-export const RECON_RECORD_SCHEMA = 'capture-recon-record.1';
+export const RECIPE_SCHEMA = 'capture-recipe.3';
+export const SITE_RECORD_SCHEMA = 'capture-site-record.3';
+export const RECON_RECORD_SCHEMA = 'capture-recon-record.2';
 
-/** Action states of the protocol, in capture order. */
-export const ACTION_STATES = ['empty-cart', 'minicart-1', 'cart-1', 'checkout-1', 'cart-qty2', 'cart-2items'];
+/** Action states the robot captures, in capture order. `checkout-1` is not one since protocol .5: the operator's
+ * environment refuses entering a checkout, so it is a reported gap deferred to the attended step. */
+export const ACTION_STATES = ['empty-cart', 'minicart-1', 'cart-1', 'cart-qty2', 'cart-2items'];
 /** Snapshot names: action states, the terms page, and operator views (`view-01`…) that are never page-states. */
 export const SnapshotName = z.union([z.enum([...ACTION_STATES, 'terms']), z.string().regex(/^view-\d{2}$/)]);
 
@@ -41,14 +42,14 @@ export const EVIDENCE_REQUIRED = [
 ];
 
 /** What an allowlisted click may be for (protocol: add-to-cart, size and colour buttons, popup close, cookie decline,
- * non-form continue-as-guest, and the increment control for cart-qty2). */
+ * and the increment control for cart-qty2). `continue-as-guest` was retired in protocol .5: no session enters a
+ * checkout. */
 export const PURPOSES = [
   'add-to-cart',
   'option',
   'quantity-increment',
   'close-popup',
   'decline-cookies',
-  'continue-as-guest',
 ];
 /** The only purposes a reconnaissance session may click: it looks, it never adds, chooses or continues. */
 export const RECON_PURPOSES = ['close-popup', 'decline-cookies'];
@@ -103,8 +104,15 @@ export const Findings = z
     cartPath: Path,
     checkoutPaths: z.array(Path).max(3),
     termsUrl: Url.optional(),
+    // Protocol .5: items whose add-to-cart control was enabled (so in stock) while the page's structured data said
+    // out of stock or backorder. Recorded in the reconnaissance record; never in the recipe.
+    stockMismatch: z.array(Url).max(2).optional(),
   })
-  .strict();
+  .strict()
+  .refine((f) => (f.stockMismatch ?? []).every((u) => f.productUrls.includes(u)), {
+    message: 'stockMismatch names only the found items',
+    path: ['stockMismatch'],
+  });
 
 export const StepSchema = z.union([
   z.object({ do: z.literal('goto'), url: Url }).strict(),
@@ -147,6 +155,8 @@ export const Recipe = z
     listingUrl: Url,
     productUrls: z.array(Url).min(1).max(2),
     cartPath: Path,
+    // Kept only for robots.txt posture reporting: never a visit target. The driver refuses a goto to any of them and
+    // stops on landing at one (protocol .5: no session enters a checkout).
     checkoutPaths: z.array(Path).max(3),
     termsUrl: Url.optional(),
     allowlist: z.array(AllowEntry).max(20),
@@ -247,6 +257,8 @@ const Session = z
     startedAt: z.string(),
     endedAt: z.string(),
     topLevelNavigations: z.number().int().min(0),
+    // Every main-frame navigation request, redirects and script navigations included (reported only).
+    navigationRequests: z.number().int().min(0),
   })
   .strict();
 
@@ -293,7 +305,6 @@ export const SiteRecord = z
         .strict(),
     ),
     notReached: z.array(z.object({ state: z.enum(ACTION_STATES), reason: z.string() }).strict()),
-    thirdPartyCheckoutHost: z.string().nullable(),
     platform: z.object({ group: z.string(), marker: z.string().nullable() }).strict().nullable(),
     events: z.array(Event),
     stop: Stop.nullable(),
@@ -333,8 +344,18 @@ export const ReconRecord = z
       .strict(),
     robotsHosts: z.array(RobotsHost),
     views: z.number().int().min(0),
+    // Each goto to the entry origin: the server redirect chain and where it landed (masked URLs).
+    homeLandings: z
+      .array(
+        z
+          .object({ requested: CommittedUrl, chain: z.array(CommittedUrl), landed: CommittedUrl, sameSite: z.boolean() })
+          .strict(),
+      )
+      .max(25),
     // Every page the session landed on, in order, as committable URLs (no query, token-like segments masked).
     navigation: z.array(CommittedUrl).max(200),
+    // Found items whose structured data disagreed with an enabled add-to-cart control (masked URLs).
+    stockMismatch: z.array(CommittedUrl).max(2),
     events: z.array(Event),
     stop: Stop.nullable(),
     outcome: z

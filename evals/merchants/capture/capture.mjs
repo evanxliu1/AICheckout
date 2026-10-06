@@ -36,7 +36,7 @@ import {
 import { ROBOTS_TOKEN, pathAllowed, robotsPosture } from './robots.mjs';
 import { sha256 } from './snapshot.mjs';
 
-export const TOOL_VERSION = 'capture-tool.2';
+export const TOOL_VERSION = 'capture-tool.3';
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const DEFAULT_OUT = path.join(here, 'data');
 export const DEFAULT_PROFILE = path.join(here, 'profile');
@@ -375,15 +375,14 @@ export async function runSite(opts) {
         : []),
     ];
 
-    // Platform only from empty-cart and the first captured cart state, and the checkout-1 host.
+    // Platform only from empty-cart and the first captured cart state (protocol .5: no checkout page).
     const pages = [];
     for (const s of platformStates(session.snapshots)) {
       const html = await readFile(path.join(s.dir, 'page.html'), 'utf8');
       const doc = JSON.parse(await readFile(path.join(s.dir, 'headers.json'), 'utf8'));
       pages.push({ html, headers: doc?.headers ?? {} });
     }
-    const checkout = session.snapshots.find((s) => s.state === 'checkout-1');
-    const platform = pages.length ? detectPlatform(pages, checkout?.url ?? null) : null;
+    const platform = pages.length ? detectPlatform(pages) : null;
     const terms = session.snapshots.find((s) => s.state === 'terms');
 
     const captured = session.snapshots.some((s) => s.state === 'cart-1' || s.state === 'minicart-1');
@@ -414,6 +413,7 @@ export async function runSite(opts) {
         startedAt: startedAt.toISOString(),
         endedAt: new Date().toISOString(),
         topLevelNavigations: session.navigations,
+        navigationRequests: session.navigationRequests,
       },
       robots: {
         url: robots.url,
@@ -441,12 +441,6 @@ export async function runSite(opts) {
         }),
       ),
       notReached: session.ended?.notReached ?? [],
-      // An off-site page counts as a third-party checkout only if checkout-1 was captured on it; any other off-site
-      // landing (for example a regional redirect) stays an event.
-      thirdPartyCheckoutHost:
-        session.offsite && checkout && new URL(checkout.url).host === session.offsite
-          ? session.offsite
-          : null,
       platform,
       events: session.events,
       stop: session.stopped,
@@ -522,7 +516,7 @@ async function runRecon(opts) {
         origin: `${origin}/`,
         recon: { sessionId },
         cartHost: session.ended.cartHost,
-        ...findings,
+        ...Object.fromEntries(Object.entries(findings).filter(([k]) => k !== 'stockMismatch')),
         allowlist: spec.allowlist,
         steps: [],
       });
@@ -555,6 +549,7 @@ async function runRecon(opts) {
         startedAt: startedAt.toISOString(),
         endedAt: new Date().toISOString(),
         topLevelNavigations: session.navigations,
+        navigationRequests: session.navigationRequests,
       },
       robots: {
         url: robots.url,
@@ -566,6 +561,13 @@ async function runRecon(opts) {
       },
       robotsHosts: hostRecords(session),
       views: session.views,
+      stockMismatch: (findings?.stockMismatch ?? []).map(committableUrl),
+      homeLandings: session.homeLandings.map((h) => ({
+        requested: committableUrl(h.requested),
+        chain: h.chain.map(committableUrl),
+        landed: committableUrl(h.landed),
+        sameSite: h.sameSite,
+      })),
       navigation: session.navigationLog.map(committableUrl).slice(0, 200),
       events: session.events,
       stop: session.stopped,

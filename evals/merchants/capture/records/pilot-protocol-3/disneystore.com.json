@@ -1,21 +1,18 @@
 {
-  "schema": "capture-site-record.2",
+  "schema": "capture-site-record.1",
   "domain": "disneystore.com",
-  "recipeSha256": "b82a730f867ead4523660aa24142b0b887c49e30389667f3aa12acfbee95da84",
+  "recipeSha256": "e5a45e994dccf51081f1a9214f9891ce7095eae064f0478873030716159b27de",
   "tool": {
-    "version": "capture-tool.2",
+    "version": "capture-tool.1",
     "browser": "Chrome/153.0.8010.12",
     "userAgentToken": "AICheckoutCapture"
   },
-  "recon": {
-    "sessionId": "20261006T063914Z"
-  },
   "session": {
-    "id": "20261006T064155Z",
+    "id": "20261006T024829Z",
     "number": 1,
-    "startedAt": "2026-10-06T06:41:55.286Z",
-    "endedAt": "2026-10-06T06:44:07.944Z",
-    "topLevelNavigations": 7
+    "startedAt": "2026-10-06T02:48:29.471Z",
+    "endedAt": "2026-10-06T02:49:07.753Z",
+    "topLevelNavigations": 1
   },
   "robots": {
     "url": "https://www.disneystore.com/robots.txt",
@@ -169,14 +166,16 @@
     ],
     "checkedPaths": [
       {
-        "path": "/my-bag",
-        "host": "www.disneystore.com",
-        "allowed": false
+        "path": "/cart",
+        "allowed": true
+      },
+      {
+        "path": "/checkout",
+        "allowed": true
       }
     ],
     "decision": "allowed"
   },
-  "robotsHosts": [],
   "terms": {
     "url": null,
     "copySha256": null,
@@ -184,82 +183,37 @@
   },
   "states": [
     {
-      "state": "empty-cart",
-      "url": "https://www.disneystore.com/my-bag",
-      "manifestSha256": "e6690a88cee0bec4eb085bec14e2a117053f06443716f7e4bdc3235770a91f95",
-      "domSha256": "4f0a90c0857110795a8cb8d831edbc633e2a135fe64bb5f40721281f1d83ab4b",
-      "viewportSha256": "02e50820960a1859f0cbde6a3b13fc8b2c885aa22608cf2e7d30e55de017fd38",
-      "robotsAllowed": false
-    },
-    {
       "state": "view-01",
-      "url": "https://www.disneystore.com/:token",
-      "manifestSha256": "190c1b9a319dfe2cab7c6dfac7efc3704d787799f6d9c2594b8ca56f80ed0524",
-      "domSha256": "e50ff34b3f63ab2c049f186e54d32b35fd145ed2967251cb559be3855c0e61e2",
-      "viewportSha256": "76909850794a5b8fe4a7faa813f4fb959fe4096456ed6146c4d7e066f03435a8",
-      "robotsAllowed": true
-    },
-    {
-      "state": "minicart-1",
-      "url": "https://www.disneystore.com/:token",
-      "manifestSha256": "0b530c0c5999df60aee3c417f992019801f4d19b6c92f32f9b4fc0698775dfc4",
-      "domSha256": "c2cf5189da16041cee7d14263135e6a98ea3d5620bd39d5b65c183c651dee2be",
-      "viewportSha256": "76909850794a5b8fe4a7faa813f4fb959fe4096456ed6146c4d7e066f03435a8",
-      "robotsAllowed": true
-    },
-    {
-      "state": "view-02",
-      "url": "https://www.disneystore.com/my-bag",
-      "manifestSha256": "3bd3b42fd0d684ac9da889bd6625453f50c8540a04d7f4e3c65104f8137121aa",
-      "domSha256": "ec8f32512f577ce84edcb0971a1a9e8ed9674b9cb05c7e9837d539675fdb0bcd",
-      "viewportSha256": "4aabc4a8d4387a01ee2069df3338c4551ac3810f2e436cd8b1b99b350e492d34",
-      "robotsAllowed": false
-    },
-    {
-      "state": "cart-1",
-      "url": "https://www.disneystore.com/my-bag",
-      "manifestSha256": "f194035f420a54ecb704eb9a6a824f09ef1f91590a32e3fb612dd0096efbee32",
-      "domSha256": "ec8f32512f577ce84edcb0971a1a9e8ed9674b9cb05c7e9837d539675fdb0bcd",
-      "viewportSha256": "4aabc4a8d4387a01ee2069df3338c4551ac3810f2e436cd8b1b99b350e492d34",
-      "robotsAllowed": false
-    },
-    {
-      "state": "view-03",
-      "url": "https://www.disneystore.com/my-bag",
-      "manifestSha256": "3c22ef6649109f412476f0e2c425fec225f1532900330042c0fc16840de598c6",
-      "domSha256": "fd1aed282a92dfc819aacc666ae2a0ada432d9ff527ed763148a15ccb045b910",
-      "viewportSha256": "f55b72de87154e0244bef79d8a4e113ab81fd5aa14ac99bb51ad336527c164c8",
-      "robotsAllowed": false
-    },
-    {
-      "state": "cart-qty2",
-      "url": "https://www.disneystore.com/my-bag",
-      "manifestSha256": "3d5f50d8e37bccab7351f0d54fa6b4e7ba0bd1f3abcafb5dbc0ba2efb7347693",
-      "domSha256": "fd1aed282a92dfc819aacc666ae2a0ada432d9ff527ed763148a15ccb045b910",
-      "viewportSha256": "f55b72de87154e0244bef79d8a4e113ab81fd5aa14ac99bb51ad336527c164c8",
-      "robotsAllowed": false
-    },
-    {
-      "state": "view-04",
-      "url": "https://www.disneystore.com/my-bag",
-      "manifestSha256": "047e8069a996a32d7329ee305a550194ed41e7052fa55fdba0f2e6cff4910441",
-      "domSha256": "2369d51de1e15c103b7f5e79237346b081810226ea9ba32f212fc93db05dd490",
-      "viewportSha256": "a5d00f768e338a9b2d3d62dbcedaa01d127a70ea1c8cd3ebbe92fd9d3d0972d5",
-      "robotsAllowed": false
-    },
-    {
-      "state": "cart-2items",
-      "url": "https://www.disneystore.com/my-bag",
-      "manifestSha256": "c358f4e737eb823e174ff21173a63f11f9950adcc7ccde7b1e1d623f2a8491c4",
-      "domSha256": "2369d51de1e15c103b7f5e79237346b081810226ea9ba32f212fc93db05dd490",
-      "viewportSha256": "a5d00f768e338a9b2d3d62dbcedaa01d127a70ea1c8cd3ebbe92fd9d3d0972d5",
-      "robotsAllowed": false
+      "url": "https://www.disneystore.com/",
+      "manifestSha256": "d7f30def251477043f64980ada7659c24af19d6e80dc1e5f0f965e6dee5d6dcc",
+      "domSha256": "ba0fbde86e408644bc0ab183efe44c30d707f46ec618d625870588499e343bcb",
+      "viewportSha256": "098d87702160fbcb749a9e5d9696e2b852a7d78546115716c0a9153af753d11e"
     }
   ],
   "notReached": [
     {
+      "state": "empty-cart",
+      "reason": "robots-disallow-path"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "robots-disallow-path"
+    },
+    {
+      "state": "cart-1",
+      "reason": "robots-disallow-path"
+    },
+    {
       "state": "checkout-1",
-      "reason": "operator-checkout-click-denied"
+      "reason": "robots-disallow-path"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "robots-disallow-path"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "robots-disallow-path"
     }
   ],
   "thirdPartyCheckoutHost": null,
@@ -269,17 +223,17 @@
   },
   "events": [
     {
-      "kind": "robots-disallowed-path",
-      "detail": "www.disneystore.com"
-    },
-    {
       "kind": "request-aborted",
       "detail": "POST www.disneystore.com"
+    },
+    {
+      "kind": "navigation-aborted",
+      "detail": "robots-disallow-path www.disneystore.com"
     }
   ],
   "stop": null,
   "outcome": {
-    "status": "captured",
+    "status": "incomplete",
     "code": null,
     "evidenceSha256": null
   }

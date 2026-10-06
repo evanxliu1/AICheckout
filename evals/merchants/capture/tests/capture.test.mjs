@@ -10,9 +10,17 @@ import { fileURLToPath } from 'node:url';
 import { checkRecon, committableUrl } from '../capture.mjs';
 import { checkRequest, startControlServer } from '../control-server.mjs';
 import { ADD_TO_CART_NAME, createDriver, guardApi, parseTarget } from '../driver.mjs';
-import { ORDER_OR_ACCOUNT, RefusalError, actionPath, detectStop, judgeClick } from '../guards.mjs';
+import {
+  CHECKOUT_NAME,
+  ORDER_OR_ACCOUNT,
+  RefusalError,
+  actionPath,
+  detectStop,
+  isCheckoutPath,
+  judgeClick,
+} from '../guards.mjs';
 import { detectPlatform, platformStates } from '../platform.mjs';
-import { EVIDENCE_REQUIRED, EXCLUSION_CODES, Recipe, ReconSpec, SiteRecord, StepSchema } from '../recipe.mjs';
+import { EVIDENCE_REQUIRED, EXCLUSION_CODES, Findings, Recipe, ReconSpec, SiteRecord, StepSchema } from '../recipe.mjs';
 import { groupFor, isAllowed, parseRobots, robotsPosture } from '../robots.mjs';
 import { fixtureRecipe } from './fixture-shop.mjs';
 
@@ -22,7 +30,7 @@ const refusal = (code) => (e) => e instanceof RefusalError && e.code === code;
 // ---- Recipe schema ----
 
 const good = () => ({
-  schema: 'capture-recipe.2',
+  schema: 'capture-recipe.3',
   domain: 'example.de',
   origin: 'https://www.example.de',
   listingUrl: 'https://www.example.de/damen',
@@ -332,7 +340,6 @@ test('click judgement: each refusal', () => {
     code(el({ submit: true, inForm: true, formAction: '/account/login' }), 'add-to-cart'),
     'refused-allowlist-mismatch',
   );
-  assert.equal(code(el({ inForm: true, name: 'Continue as guest' }), 'continue-as-guest'), 'refused-in-form');
   assert.equal(code(el({ tag: 'div', name: 'M' }), 'option'), 'refused-allowlist-mismatch');
 });
 
@@ -345,7 +352,6 @@ test('click judgement: allowlisted clicks pass in any language', () => {
   assert.equal(judgeClick(el({ inForm: true, name: 'M' }), 'option'), null);
   assert.equal(judgeClick(el({ tag: 'input', inputType: 'radio', inForm: true, name: '' }), 'option'), null);
   assert.equal(judgeClick(el({ inForm: true, name: '+' }), 'quantity-increment'), null);
-  assert.equal(judgeClick(el({ name: 'Als Gast fortfahren' }), 'continue-as-guest'), null);
   assert.equal(judgeClick(el({ name: 'Alle ablehnen' }), 'decline-cookies'), null);
 });
 
@@ -386,10 +392,8 @@ test('platform: protocol markers, first group wins, marker recorded', () => {
     group: 'shopify',
     marker: 'cdn.shopify.com',
   });
-  assert.deepEqual(p('x', {}, 'https://checkout.shopify.com/1/checkouts/abc'), {
-    group: 'shopify',
-    marker: 'checkout.shopify.com',
-  });
+  // Protocol .5: no checkout page is entered, so a checkout URL never decides.
+  assert.equal(detectPlatform([{ html: 'x' }], 'https://checkout.shopify.com/1/checkouts/abc').group, 'none-detected');
   assert.deepEqual(p('<a href="/on/demandware.store/Sites-x">'), {
     group: 'sfcc',
     marker: '/on/demandware.store/',
@@ -587,12 +591,19 @@ test('committed URLs: no query or fragment, token-like segments replaced', () =>
 test('site record: stop detail is a code and committed URLs carry no query', () => {
   const base = JSON.parse(
     JSON.stringify({
-      schema: 'capture-site-record.2',
+      schema: 'capture-site-record.3',
       domain: 'x.com',
       recipeSha256: 'a'.repeat(64),
       tool: { version: 't', browser: 'b', userAgentToken: 'u' },
       recon: { sessionId: '20261006T000000Z' },
-      session: { id: '20261006T000000Z', number: 1, startedAt: 's', endedAt: 'e', topLevelNavigations: 0 },
+      session: {
+        id: '20261006T000000Z',
+        number: 1,
+        startedAt: 's',
+        endedAt: 'e',
+        topLevelNavigations: 0,
+        navigationRequests: 0,
+      },
       robots: {
         url: 'https://x.com/robots.txt',
         httpStatus: 200,
@@ -606,7 +617,6 @@ test('site record: stop detail is a code and committed URLs carry no query', () 
       terms: { url: null, copySha256: null, prohibitsAutomated: 'unknown' },
       states: [],
       notReached: [],
-      thirdPartyCheckoutHost: null,
       platform: null,
       events: [],
       stop: { code: 'tool-error', detail: 'recipe-step-refused:refused-submit', evidenceSha256: null },
@@ -784,7 +794,95 @@ test('capture needs a finished reconnaissance session and a recipe equal to its 
   }
 });
 
+test('findings: a stock mismatch names only a found item', () => {
+  const f = {
+    listingUrl: 'https://www.example.de/a',
+    productUrls: ['https://www.example.de/p/1'],
+    cartPath: '/c',
+    checkoutPaths: [],
+  };
+  assert.ok(Findings.parse({ ...f, stockMismatch: ['https://www.example.de/p/1'] }));
+  assert.equal(Findings.safeParse({ ...f, stockMismatch: ['https://www.example.de/p/9'] }).success, false);
+});
+
+test('protocol .5: the continue-as-guest purpose is retired', () => {
+  assert.equal(
+    Recipe.safeParse({
+      ...good(),
+      allowlist: [{ purpose: 'continue-as-guest', target: { role: 'button', name: 'Als Gast fortfahren' } }],
+    }).success,
+    false,
+  );
+  assert.equal(
+    StepSchema.safeParse({ do: 'click', target: { role: 'button', name: 'Guest' }, purpose: 'continue-as-guest' })
+      .success,
+    false,
+  );
+});
+
 test('recipe: cartHost must be a host of the site', () => {
   assert.ok(Recipe.parse({ ...good(), cartHost: 'cart.example.de' }));
   assert.equal(Recipe.safeParse({ ...good(), cartHost: 'cart.example.com' }).success, false);
+});
+
+test('protocol .5 backstop: checkout wording is refused for every click; cart wording is not', () => {
+  for (const name of [
+    'Checkout',
+    'Check out',
+    'Proceed to checkout',
+    'Secure checkout',
+    'Zur Kasse',
+    'Kasse',
+    'Caisse',
+    'Commander',
+    'Passer commande',
+    'Finalizar compra',
+    'Tramitar pedido',
+    'Finalizar pedido',
+    'Cassa',
+    "Procedi all'acquisto",
+    'Afrekenen',
+    'Till kassan',
+    'Przejdź do kasy',
+    'Ödemeye geç',
+    'レジに進む',
+    '購入手続きへ',
+    '去结算',
+    '結帳',
+    '결제하기',
+    '주문하기',
+  ]) {
+    assert.match(name, CHECKOUT_NAME, name);
+    assert.equal(judgeClick({ name, tag: 'a' }, undefined)?.code, 'refused-checkout', name);
+    assert.equal(judgeClick({ name, tag: 'button' }, 'close-popup')?.code, 'refused-checkout', name);
+  }
+  for (const name of [
+    'Cart',
+    'Bag',
+    'View cart',
+    'View bag',
+    'Shopping bag',
+    'Warenkorb',
+    'Panier',
+    'Carrito',
+    'Carrello',
+    'Winkelwagen',
+    'Varukorg',
+    'Koszyk',
+    'Sepetim',
+    'カート',
+    '购物车',
+    '장바구니',
+    'Continue shopping',
+    'Add to cart',
+    'Kassel store',
+  ])
+    assert.doesNotMatch(name, CHECKOUT_NAME, name);
+});
+
+test('protocol .5 backstop: checkout path segments, Magento cart paths allowed', () => {
+  for (const p of ['/checkout', '/checkout/', '/checkouts/abc', '/en/checkout', '/Checkout/Shipping', '/secure-checkout'])
+    assert.equal(isCheckoutPath(p), true, p);
+  for (const p of ['/checkout/cart', '/checkout/cart/', '/checkout/cart/add/uenc/x', '/cart', '/my-bag', '/checkoutx', '/'])
+    assert.equal(isCheckoutPath(p), false, p);
 });

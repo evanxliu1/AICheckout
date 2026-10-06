@@ -1,0 +1,26 @@
+{
+  "schema": "capture-recipe.1",
+  "domain": "disneystore.com",
+  "origin": "https://www.disneystore.com/",
+  "listingUrl": "https://www.disneystore.com/home/tabletop-kitchen/drinkware/mugs/",
+  "productUrls": [
+    "https://www.disneystore.com/eeyore-animation-mug-winnie-the-pooh-433110020574.html",
+    "https://www.disneystore.com/mickey-mouse-icon-mug-cream-433119125874.html"
+  ],
+  "cartPath": "/cart",
+  "checkoutPaths": ["/checkout"],
+  "allowlist": [
+    { "purpose": "add-to-cart", "target": { "role": "button", "name": "Add to Bag" } },
+    { "purpose": "add-to-cart", "target": { "role": "button", "name": "Add to Cart" } },
+    { "purpose": "close-popup", "target": { "role": "button", "name": "Close", "exact": true } },
+    { "purpose": "close-popup", "target": { "role": "button", "name": "Close dialog" } },
+    { "purpose": "close-popup", "target": { "role": "button", "name": "Close Modal" } },
+    { "purpose": "decline-cookies", "target": { "role": "button", "name": "Reject All" } },
+    { "purpose": "decline-cookies", "target": { "role": "button", "name": "Decline" } },
+    { "purpose": "quantity-increment", "target": { "role": "button", "name": "Increase quantity" } },
+    { "purpose": "quantity-increment", "target": { "role": "button", "name": "Increase" } },
+    { "purpose": "continue-as-guest", "target": { "role": "button", "name": "Continue as Guest" } },
+    { "purpose": "continue-as-guest", "target": { "role": "link", "name": "Continue as Guest" } }
+  ],
+  "steps": []
+}

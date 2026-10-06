@@ -3,6 +3,7 @@
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
 ## 2026-10-06
+* [Coordinator's process changes after capture pilot 2 (`generic-reader-protocol.5`)](./2026-10-06-capture-protocol-5.md) — `checkout-1` a reported gap, not a robot state; home view on the same-site landing of the origin; one navigating action = one top-level navigation; a listing without a qualifying item passes to the next candidate; enabled add-to-cart decides stock; pilot 2 statuses. Coordinator's, reversible; proposed until `.5` is signed.
 * [Reconnaissance session and disallow-all-only robots rule (`generic-reader-protocol.4`)](./2026-10-06-capture-recon-and-robots.md) — Evan: robots.txt excludes a site only when it disallows everything (cart and checkout disallows recorded); a look-only reconnaissance session per site finds the listing, first in-band item and cart path by fixed rules before the one capture session, enforced by the tool; tool codes, per-host robots, stop-before-robots order and platform states aligned; the four pilot sites excluded by the old path rule re-visited, eBay's CAPTCHA stands. Proposed until `.4` is signed.
 
 ## 2026-10-05

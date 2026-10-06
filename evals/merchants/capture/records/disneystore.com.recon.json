@@ -1,0 +1,200 @@
+{
+  "schema": "capture-recon-record.1",
+  "domain": "disneystore.com",
+  "entryUrl": "https://www.disneystore.com/",
+  "currency": "USD",
+  "priceBand": [
+    10,
+    200
+  ],
+  "tool": {
+    "version": "capture-tool.2",
+    "browser": "Chrome/153.0.8010.12",
+    "userAgentToken": "AICheckoutCapture"
+  },
+  "session": {
+    "id": "20261006T063914Z",
+    "number": 1,
+    "startedAt": "2026-10-06T06:39:14.653Z",
+    "endedAt": "2026-10-06T06:41:05.364Z",
+    "topLevelNavigations": 5
+  },
+  "robots": {
+    "url": "https://www.disneystore.com/robots.txt",
+    "httpStatus": 200,
+    "sha256": "16741baac38b195c4e95900b5cdd640060daf7073ef16bb4a6eec5eed5aca150",
+    "posture": "rules",
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "rules": [
+          {
+            "type": "disallow",
+            "path": "*OneID-Responder*"
+          },
+          {
+            "type": "disallow",
+            "path": "/*Product-ShowQuickView*"
+          },
+          {
+            "type": "disallow",
+            "path": "/*Product-Variation*"
+          },
+          {
+            "type": "disallow",
+            "path": "/Product-SizeChart*"
+          },
+          {
+            "type": "disallow",
+            "path": "/Promotion-Details*"
+          },
+          {
+            "type": "disallow",
+            "path": "/secure*"
+          },
+          {
+            "type": "disallow",
+            "path": "/*pmin*"
+          },
+          {
+            "type": "disallow",
+            "path": "/*pmax*"
+          },
+          {
+            "type": "disallow",
+            "path": "/*isProductSearch*"
+          },
+          {
+            "type": "disallow",
+            "path": "/my-bag*"
+          },
+          {
+            "type": "disallow",
+            "path": "/account*"
+          },
+          {
+            "type": "disallow",
+            "path": "/register*"
+          },
+          {
+            "type": "disallow",
+            "path": "/wishlist*"
+          },
+          {
+            "type": "disallow",
+            "path": "/payment*"
+          },
+          {
+            "type": "disallow",
+            "path": "/billing*"
+          },
+          {
+            "type": "disallow",
+            "path": "/shipping*"
+          },
+          {
+            "type": "disallow",
+            "path": "/order*"
+          },
+          {
+            "type": "disallow",
+            "path": "/product-print*"
+          },
+          {
+            "type": "disallow",
+            "path": "/contentsearch*"
+          },
+          {
+            "type": "disallow",
+            "path": "*prefn*"
+          },
+          {
+            "type": "disallow",
+            "path": "*prefv*"
+          },
+          {
+            "type": "disallow",
+            "path": "/*Search-UpdateGrid*"
+          },
+          {
+            "type": "disallow",
+            "path": "/CQRecomm-Start*"
+          },
+          {
+            "type": "disallow",
+            "path": "/login*"
+          },
+          {
+            "type": "disallow",
+            "path": "/RedirectURL-Start*"
+          },
+          {
+            "type": "disallow",
+            "path": "/Login-SecureURLs*"
+          },
+          {
+            "type": "disallow",
+            "path": "/CheckoutShippingServices-UpdateShippingMethodsList*"
+          },
+          {
+            "type": "disallow",
+            "path": "/Cart-AddProduct*"
+          },
+          {
+            "type": "disallow",
+            "path": "/Wishlist-AddProduct*"
+          },
+          {
+            "type": "disallow",
+            "path": "/Login-Logout*"
+          },
+          {
+            "type": "disallow",
+            "path": "/CSRF-Generate*"
+          },
+          {
+            "type": "disallow",
+            "path": "/Paypal-Return*"
+          },
+          {
+            "type": "disallow",
+            "path": "/ocapi/cc/orderconfirmation*"
+          },
+          {
+            "type": "disallow",
+            "path": "/SaveForLater-AddProduct*"
+          }
+        ]
+      }
+    ],
+    "decision": "allowed"
+  },
+  "robotsHosts": [],
+  "views": 5,
+  "navigation": [
+    "https://www.disneystore.com/",
+    "https://www.disneystore.com/new/",
+    "https://www.disneystore.com/:token",
+    "https://www.disneystore.com/:token",
+    "https://www.disneystore.com/my-bag"
+  ],
+  "events": [
+    {
+      "kind": "request-aborted",
+      "detail": "POST www.disneystore.com"
+    },
+    {
+      "kind": "robots-disallowed-path",
+      "detail": "www.disneystore.com"
+    }
+  ],
+  "stop": null,
+  "outcome": {
+    "status": "done",
+    "code": null,
+    "evidenceSha256": null,
+    "draftRecipeSha256": "2428d6eb255807f3e0927f4a42ee94d17e8c9341b5fdf79385774e9a88b8b165"
+  }
+}

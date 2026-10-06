@@ -70,6 +70,52 @@ export const ORDER_OR_ACCOUNT = new RegExp(
   ].join('|'),
   'i',
 );
+/**
+ * Checkout wording (protocol .5: no session enters a checkout), applied to EVERY click whatever its form or purpose.
+ * Cart wording ("Cart", "Bag", "View cart", "Warenkorb", "Panier", "カート", "장바구니") is deliberately not matched.
+ */
+export const CHECKOUT_NAME = new RegExp(
+  [
+    // en
+    String.raw`\bcheck ?-?out\b`,
+    String.raw`\bproceed to (checkout|payment)\b`,
+    // de, da, no, sv, nl
+    String.raw`\b(zur |til |till )?kass(e|en|an)\b`,
+    String.raw`\bafrekenen\b`,
+    // fr
+    String.raw`\bcaisse\b|\bcommander\b|passer (la |ma )?commande`,
+    // es, pt
+    String.raw`finalizar (la )?(compra|pedido)|tramitar (el )?pedido|fechar pedido|ir para o pagamento`,
+    // it
+    String.raw`\bcassa\b|procedi (all'acquisto|al pagamento|all'ordine)`,
+    // pl, tr
+    String.raw`do kasy|przejdź do płatności|ödeme|siparişi tamamla`,
+    // ja, zh, ko
+    'レジ|購入手続き|ご購入手続き',
+    '结算|結帳|結算|去结账|去結帳',
+    '결제|주문하기',
+  ].join('|'),
+  'i',
+);
+
+/**
+ * A path that is a checkout page (protocol .5 backstop for sites whose recipe names no checkout path): any segment
+ * `checkout`, `checkouts` or `secure-checkout` (case-insensitive), unless the next segment is `cart` (Magento's cart
+ * `/checkout/cart` and add-to-cart `/checkout/cart/add` stay allowed).
+ */
+export function isCheckoutPath(pathname) {
+  const segs = pathname.split('/').map((x) => {
+    try {
+      return decodeURIComponent(x).toLowerCase();
+    } catch {
+      return x.toLowerCase();
+    }
+  });
+  return segs.some(
+    (seg, i) => ['checkout', 'checkouts', 'secure-checkout'].includes(seg) && segs[i + 1] !== 'cart',
+  );
+}
+
 const OPTION_TAGS = new Set(['button', 'label']);
 const OPTION_ROLES = new Set(['button', 'radio', 'option']);
 /** Purposes that may click a submit-typed button inside a text-free form, provided no navigation results. */
@@ -104,6 +150,8 @@ export function judgeClick(info, purpose) {
   if (info.select) return no('refused-select', 'target is a <select> or one of its options');
   if (info.textEntry)
     return no('refused-text-entry', 'target is a text entry field (focus would invite typing)');
+  if (CHECKOUT_NAME.test(info.name))
+    return no('refused-checkout', 'target is named like a checkout control; no session enters a checkout');
   if (ORDER_OR_ACCOUNT.test(info.name))
     return no(
       'refused-order-or-account',
@@ -116,8 +164,6 @@ export function judgeClick(info, purpose) {
   if (!purpose) return null;
   if (info.inForm && (info.formHasTextEntry || info.formHasPassword))
     return no('refused-input-form', 'target belongs to a form with a text, e-mail or password field');
-  if (purpose === 'continue-as-guest' && info.inForm)
-    return no('refused-in-form', 'continue-as-guest is allowed only outside a <form>');
   if (purpose === 'add-to-cart') {
     if (NOT_ADD_TO_CART.test(info.name) || BAD_FORM_ACTION.test(actionPath(info.formAction)))
       return no(
