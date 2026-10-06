@@ -265,6 +265,28 @@ document.getElementById('js-atc').addEventListener('click', () => {
       case 'POST /api/orders/track':
         res.writeHead(204);
         return res.end();
+      case 'GET /pane-fixture':
+        // A cart page for the pane export round trip: open shadow root, strikethrough, hidden and invisible
+        // amounts, a cross-origin iframe, script-added text and an inline handler.
+        return html(
+          200,
+          page(
+            'Cart',
+            `<h1>Your cart</h1>
+<div class="line">Fixture Tee <span class="was">£25.00</span> <b>£20.00</b></div>
+<div class="hidden">Old total £99.00</div>
+<span style="visibility:hidden">Ghost £77.00</span>
+<p>Price &amp; tax &lt;estimated&gt; "quoted"</p>
+<cart-summary id="summary"></cart-summary>
+<iframe src="${tp()}/widget" title="widget" width="300" height="80"></iframe>
+<button type="button" onclick="alert(1)">Remove</button>
+<div id="late"></div>
+<script>
+document.getElementById('summary').attachShadow({ mode: 'open' }).innerHTML = '<style>b{font-weight:700}</style><p>Subtotal <b>£20.00</b></p><p>Estimated total <b>£24.00</b></p>';
+document.getElementById('late').textContent = 'Delivery £4.00';
+</script>`,
+          ),
+        );
       case 'GET /r-checkout':
         res.writeHead(302, { location: '/checkout' });
         return res.end();

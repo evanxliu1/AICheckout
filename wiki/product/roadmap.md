@@ -6,7 +6,7 @@ status: stable
 tags: [product, roadmap]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T19:14:03Z
+  at: 2026-10-06T23:30:00Z
 sources:
   - resource: ../archive/phase2-goal.md
     title: Phase 2–6 plan (archived; full step lists and exit criteria)
@@ -36,7 +36,7 @@ Phases from the archived [Phase 2–6 plan](../archive/phase2-goal.md), which ke
 | 10 Merchant feasibility probe | 25 top retail sites tested logged out (carts, bot walls, shadow DOM, strict CSP), prototype reader; go/no-go | **Done 2026-10-05** ([plan](phase-10-feasibility-probe.md), [report](../../docs/evals/merchant-probe-2026-10.md)): **go**, fragile for top retailers (16/25 logged-out carts; top-1k 3/8); proposed Y 80%; merged as PR #58; Evan accepted go and Y = 80% |
 | 11 Any store, typed amount | The popup recommends a card at any U.S. online store with the generic "Another U.S. online store" profile and a typed amount (no store search, no category ranges) | **Done 2026-10-05** (PR #57, [plan](phase-11-any-store.md)); brand websites deferred to Phase 14 |
 | 12 Reader eval protocols and captures | Pre-registered real-page and merchant-pipeline protocols; 150–200 sites captured into three splits | Started 2026-10-05 ([plan](phase-12-reader-eval.md)): 12.1 protocol, 12.2 capture tool, 12.3 captures |
-| 13 Generic cart reader v1 | Deterministic reader measured on held-out real pages; the 3 adapters become seed store configs | Not started |
+| 13 Generic cart reader v1 | Deterministic reader that shows an amount only when certain, measured on held-out real pages (≥ 99% correct on shown amounts, Evan 2026-10-06); no store configs; the 3 legacy adapters stay until it matches them, then retire | Not started |
 | 14 Merchant database | Hosted, versioned merchant releases, `GET /v1/merchants`, on-device matching and weekly refresh; category evidence and ranges (D5) | Not started |
 | 15 Release A | Click-to-use at any U.S. checkout on the Chrome Web Store, no telemetry (replaces Phase 5) | Not started |
 | 16 Merchant pipeline (LLM) | gpt-5.6-luna drafts merchant profiles and category evidence, measured against a frozen held-out set | Not started |

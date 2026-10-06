@@ -2,7 +2,7 @@
  "schema": "reader-sites.pilot.1",
  "protocol": "generic-reader-protocol.3",
  "candidatesSha256": "fd01a31f0b1daaed3846f156b4aaeeea722c9889a2cc1103107a380938b28ce7",
- "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history. Pilot 2 (2026-10-06 06:37-06:47 UTC, capture-tool.2, operator claude-code/claude-opus-5-5): each site's protocol4 object holds the .4 reconnaissance and capture results; .3 pilot recipes and records moved to capture/recipes/pilot-protocol-3/ and capture/records/pilot-protocol-3/. Under generic-reader-protocol.5 (Amendment 4, 2026-10-06) each site's statusUnderProtocol5 applies. The top-level `protocol` field names the protocol of the first pilot (when this file was created); per-site `protocol4` holds pilot 2 under .4, and `protocolCurrent` is the latest amendment, which governs new visits (.5 signed at 60c04f3 on 2026-10-06). Batch 1 under .5 (2026-10-06 07:13-07:38 UTC, capture-tool.3, branch phase12-captures-3): each visited site carries a protocol5 object (reconnaissance and capture results, review flags) and its statusUnderProtocol5; sites first visited under .5 have only those fields beside their candidate attributes. Under generic-reader-protocol.6 (Amendment 5) sites with a statusUnderProtocol6 take it; other batch-1 outcomes stand. Batch 2 under .7 (2026-10-06 07:57-08:22 UTC, capture-tool.5, branch phase12-captures-4): each visited site carries a protocol7 object (reconnaissance and capture summaries, backgroundWrites, review flags) and statusUnderProtocol7; status needs-decision (webstaurantstore.com) and incomplete (jpc.de, deghi.it tool-error) are not final outcomes.",
+ "note": "Phase 12.3 five-site pilot (first 3 U.S., first 2 non-U.S. candidates). Text-free; snapshots, screenshots and robots copies stay gitignored under capture/data/. Under generic-reader-protocol.4 (Amendment 3, 2026-10-06) each site's statusUnderProtocol4 applies; the .3 outcomes are history. Pilot 2 (2026-10-06 06:37-06:47 UTC, capture-tool.2, operator claude-code/claude-opus-5-5): each site's protocol4 object holds the .4 reconnaissance and capture results; .3 pilot recipes and records moved to capture/recipes/pilot-protocol-3/ and capture/records/pilot-protocol-3/. Under generic-reader-protocol.5 (Amendment 4, 2026-10-06) each site's statusUnderProtocol5 applies. The top-level `protocol` field names the protocol of the first pilot (when this file was created); per-site `protocol4` holds pilot 2 under .4, and `protocolCurrent` is the latest amendment, which governs new visits (.5 signed at 60c04f3 on 2026-10-06). Batch 1 under .5 (2026-10-06 07:13-07:38 UTC, capture-tool.3, branch phase12-captures-3): each visited site carries a protocol5 object (reconnaissance and capture results, review flags) and its statusUnderProtocol5; sites first visited under .5 have only those fields beside their candidate attributes. Under generic-reader-protocol.6 (Amendment 5) sites with a statusUnderProtocol6 take it; other batch-1 outcomes stand. Batch 2 under .7 (2026-10-06 07:57-08:22 UTC, capture-tool.5, branch phase12-captures-4): each visited site carries a protocol7 object (reconnaissance and capture summaries, backgroundWrites, review flags) and statusUnderProtocol7; status needs-decision (webstaurantstore.com) and incomplete (jpc.de, deghi.it tool-error) are not final outcomes. Under generic-reader-protocol.8 (Amendment 7) each site's statusUnderProtocol8 applies; method says whether the next visit is by pane.",
  "operator": "claude-code/claude-opus-5-5",
  "sites": [
   {
@@ -100,6 +100,12 @@
     "status": "revisit",
     "code": "tool-error",
     "note": "recon tool defect (home view on a same-site redirect); re-visited under .5 as the one later session after tool-error, on a later UTC day (Amendment 4, 5)"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "pending robot re-visit (tool-error) done by pane (Amendment 7, G)"
    }
   },
   {
@@ -174,6 +180,12 @@
     "status": "excluded-stands",
     "code": "captcha",
     "note": "first-pilot block stands"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot-era captcha; re-visited by pane as a second attempt by a different method; all such sites treated alike (Amendment 7, G)"
    }
   },
   {
@@ -397,6 +409,12 @@
     "status": "captured-stands",
     "code": null,
     "note": "complied with .4; checkout-1 not reached, which .5 removes from the robot states (Amendment 4, 5)"
+   },
+   "statusUnderProtocol8": {
+    "status": "captured-stands",
+    "code": null,
+    "method": "robot",
+    "note": "robot capture, valid as robot (Amendment 7, G)"
    }
   },
   {
@@ -490,6 +508,12 @@
     "status": "revisit",
     "code": "tool-error",
     "note": "recon tool defect (home view on a same-site redirect; 8 navigations counted for one goto); re-visited under .5 as the one later session after tool-error, on a later UTC day (Amendment 4, 5)"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "pending robot re-visit (tool-error) done by pane (Amendment 7, G)"
    }
   },
   {
@@ -739,6 +763,12 @@
      "cart-qty2 by a second add-to-cart of item 1; no terms link in the footer DOM at load, so no terms page was loaded",
      "checkout-1 is a protocol .5 reported gap"
     ]
+   },
+   "statusUnderProtocol8": {
+    "status": "captured-stands",
+    "code": null,
+    "method": "robot",
+    "note": "robot capture, valid as robot (Amendment 7, G)"
    }
   },
   {
@@ -791,6 +821,12 @@
     "status": "excluded-stands",
     "code": "captcha",
     "note": "page-driven block in reconnaissance; no second session (Amendment 4, 5)"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot-era captcha; re-visited by pane as a second attempt by a different method (Amendment 7, G)"
    }
   },
   {
@@ -960,6 +996,12 @@
     "code": null,
     "note": "capture ended without tool-error, so it stands as minicart-1 only (cart-1 not-reached, outside the Y denominator); cart page broken by the old write guard (Amendment 5, 3); a captured site is never re-captured (coordinator decision 2026-10-06)",
     "reportAs": "cart-1 not-reached is tool-caused (old write guard); reported in its own count (Amendment 6, L1)"
+   },
+   "statusUnderProtocol8": {
+    "status": "captured-stands",
+    "code": null,
+    "method": "robot",
+    "note": "robot capture (minicart-1 only), valid as robot; cart-1 tool-caused not-reached (Amendment 7, G)"
    }
   },
   {
@@ -1019,6 +1061,12 @@
     "status": "excluded",
     "code": "needs-input",
     "note": "excluded in reconnaissance: prices and add-to-cart need a store chosen by postcode (typing)"
+   },
+   "statusUnderProtocol8": {
+    "status": "excluded-stands",
+    "code": "needs-input",
+    "method": "robot",
+    "note": "prices need a postcode (typing); unchanged (Amendment 7, G)"
    }
   },
   {
@@ -1080,6 +1128,12 @@
     "status": "excluded",
     "code": "blocked-http-403",
     "note": "blocked in reconnaissance (HTTP 403 on the first page)"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot-era HTTP 403; re-visited by pane (second attempt, different method) (Amendment 7, G)"
    }
   },
   {
@@ -1137,6 +1191,12 @@
     "status": "excluded",
     "code": "blocked-http-403",
     "note": "blocked in reconnaissance (HTTP 403 challenge on the first page)"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot-era HTTP 403; re-visited by pane (second attempt, different method) (Amendment 7, G)"
    }
   },
   {
@@ -1213,6 +1273,12 @@
     "status": "excluded",
     "code": "blocked-http-403",
     "note": "blocked in reconnaissance (HTTP 403 on a category page, fourth navigation)"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot-era HTTP 403; re-visited by pane (second attempt, different method) (Amendment 7, G)"
    }
   },
   {
@@ -1286,6 +1352,12 @@
     "status": "revisit",
     "code": "tool-error",
     "note": "listings broken by the old write guard; re-visited under .6 as the one later reconnaissance after tool-error, on a later UTC day (Amendment 5, 3)"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "pending robot re-visit (tool-error) done by pane (Amendment 7, G)"
    }
   },
   {
@@ -1433,6 +1505,12 @@
     "status": "captured",
     "code": null,
     "note": "captured; probe site (development only per protocol)"
+   },
+   "statusUnderProtocol8": {
+    "status": "captured-stands",
+    "code": null,
+    "method": "robot",
+    "note": "robot capture, valid as robot; probe site, development only; pane-trial capture development data only (Amendment 7, G)"
    }
   },
   {
@@ -1514,6 +1592,12 @@
     "status": "revisit",
     "code": null,
     "note": "possible second draw: sign-in-required may have been caused by the old write guard (same defect as goofish.com); under Amendment 4's principle it is re-visited under .6 on a later UTC day, restarting from candidate link 1; the voided session is kept (record in capture/records/batch1-protocol-5/, gitignored data under capture/data/.batch1-protocol-5/) and does not count toward the one-session rule (Amendment 5, 3; coordinator decision 2026-10-06)"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "pending re-visit (possible second draw) done by pane (Amendment 7, G)"
    }
   },
   {
@@ -1587,6 +1671,12 @@
      "view-01",
      "view-02"
     ]
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot-era bot wall; re-visited by pane as a second attempt by a different method; its two robot challenge views stay set aside (Amendment 7, G)"
    }
   },
   {
@@ -1639,6 +1729,12 @@
     "status": "excluded",
     "code": "robots-disallow-all",
     "note": "robots.txt disallows everything for User-agent * (Disallow: /), checked before any page load"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robots-disallow-all under .5; robots.txt no longer excludes under .8 (Evan, 2026-10-06); re-visited by pane like the other method-change re-visits; visited despite a disallow-all, counted in the report (Amendment 7, H)"
    }
   },
   {
@@ -1727,6 +1823,12 @@
     "status": "excluded",
     "code": "no-eligible-item",
     "note": "excluded in reconnaissance: no home candidate gave a qualifying item (the only listing's single in-band tile is a pre-order not yet open, no add-to-cart)"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "no-eligible-item under the old listing rule, which .8 removes; re-visited by pane as a disclosed second draw under Amendment 4 principle; builder application, flagged for coordinator confirmation (Amendment 7, G)"
    }
   },
   {
@@ -1784,6 +1886,12 @@
     "status": "excluded",
     "code": "blocked-http-403",
     "note": "blocked in reconnaissance: robots.txt answered HTTP 403 before any page load"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot-era HTTP 403 on robots.txt; re-visited by pane (second attempt, different method) (Amendment 7, G)"
    }
   },
   {
@@ -1975,6 +2083,12 @@
     "status": "needs-decision",
     "code": null,
     "note": "capture ended without cart-1 or minicart-1: the fixed item has a site minimum order quantity of 2 (quantity only through a select), so one add-to-cart put it in the cart at quantity 2; outcome needs a coordinator decision (protocol has no rule for a site-imposed minimum quantity); not counted as a final outcome"
+   },
+   "statusUnderProtocol8": {
+    "status": "excluded",
+    "code": "add-to-cart-refused",
+    "method": "robot",
+    "note": "site minimum quantity 2 (coordinator call) (Amendment 7, G)"
    }
   },
   {
@@ -2050,6 +2164,12 @@
     "status": "excluded",
     "code": "blocked-http-403",
     "note": "blocked in reconnaissance: HTTP 403 on the second navigation (home candidate 1)"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot-era HTTP 403; re-visited by pane (second attempt, different method) (Amendment 7, G)"
    }
   },
   {
@@ -2115,6 +2235,12 @@
     "status": "excluded",
     "code": "blocked-http-429",
     "note": "blocked in reconnaissance: HTTP 429 on the first page"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot-era HTTP 429; re-visited by pane (second attempt, different method) (Amendment 7, G)"
    }
   },
   {
@@ -2180,6 +2306,12 @@
     "status": "excluded",
     "code": "blocked-http-403",
     "note": "blocked in reconnaissance: HTTP 403 on the first page"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot-era HTTP 403; re-visited by pane (second attempt, different method) (Amendment 7, G)"
    }
   },
   {
@@ -2339,6 +2471,12 @@
     "status": "captured",
     "code": null,
     "note": "captured (empty-cart, cart-1, cart-2items); minicart-1 and cart-qty2 not reached"
+   },
+   "statusUnderProtocol8": {
+    "status": "captured-pending-review",
+    "code": null,
+    "method": "robot",
+    "note": "robot capture stands pending the 12.3 reviewer check against the no-select rule (Amendment 7, G)"
    }
   },
   {
@@ -2423,6 +2561,12 @@
     "status": "excluded",
     "code": "blocked-http-403",
     "note": "blocked in reconnaissance: HTTP 403 on the second navigation (home candidate 1)"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot-era HTTP 403; re-visited by pane (second attempt, different method); its pane-trial capture is development data only, never labelled for a held-out split (Amendment 7, G)"
    }
   },
   {
@@ -2504,6 +2648,12 @@
     "status": "excluded",
     "code": "no-eligible-item",
     "note": "excluded in reconnaissance: no home candidate gave a qualifying item (the only listing, the offers page, has no tile in USD 10-200)"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "no-eligible-item under the old listing rule, which .8 removes; re-visited by pane as a disclosed second draw under Amendment 4 principle; builder application, flagged for coordinator confirmation (Amendment 7, G)"
    }
   },
   {
@@ -2669,6 +2819,12 @@
     "status": "incomplete",
     "code": "tool-error",
     "note": "capture ended tool-error (Amendment 6 L1): the allowlisted add-to-cart click was refused twice with inspection-failed (the tool could not inspect the click point), so no cart state could be reached; one later capture session on a later UTC day is allowed"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot tool-error; re-visited by pane on a later UTC day (Amendment 7, G)"
    }
   },
   {
@@ -2750,6 +2906,12 @@
     "status": "excluded",
     "code": "blocked-http-403",
     "note": "blocked in reconnaissance: HTTP 403 on the second navigation (home candidate 1)"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot-era HTTP 403; re-visited by pane (second attempt, different method); probe site, development only; its pane-trial capture is development data only (Amendment 7, G)"
    }
   },
   {
@@ -2816,9 +2978,15 @@
     "status": "incomplete",
     "code": "tool-error",
     "note": "reconnaissance ended tool-error (Amendment 6 L1): the header cart control opens a drawer, and the plain click to open it was refused with inspection-failed (same tool defect as jpc.de), so the cart path could not be found; one later reconnaissance session on a later UTC day is allowed"
+   },
+   "statusUnderProtocol8": {
+    "status": "revisit-pane",
+    "code": null,
+    "method": "pane",
+    "note": "robot tool-error; re-visited by pane on a later UTC day (Amendment 7, G)"
    }
   }
  ],
  "protocol4": "generic-reader-protocol.4",
- "protocolCurrent": "generic-reader-protocol.7"
+ "protocolCurrent": "generic-reader-protocol.8"
 }

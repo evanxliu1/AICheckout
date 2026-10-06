@@ -8,6 +8,7 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { checkRecon, committableUrl } from '../capture.mjs';
+import { rebuildHtml } from '../rebuild.mjs';
 import { checkRequest, startControlServer } from '../control-server.mjs';
 import { ADD_TO_CART_NAME, createDriver, guardApi, parseTarget } from '../driver.mjs';
 import {
@@ -958,4 +959,41 @@ test('protocol .7: common add-to-cart write endpoints pass the blocked-path rule
     '/cart/change.js',
   ])
     assert.equal(blocked(p), false, p);
+});
+
+test('pane-dom.1 rebuild: escapes text and attributes, drops scripts and handlers, keeps hidden subtrees hidden', () => {
+  const doc = {
+    format: 'pane-dom.1',
+    styleProps: ['display', 'text-decoration-line'],
+    root: {
+      t: 'html',
+      a: { lang: 'de-DE' },
+      d: 'block',
+      c: [
+        { t: 'head', d: 'none', c: [{ t: 'style', d: 'none', c: [{ x: 'b{font-weight:700}' }] }] },
+        {
+          t: 'body',
+          d: 'block',
+          c: [
+            { t: 'p', a: { title: 'a "q" & b', onclick: 'x()' }, d: 'block', s: ['block', 'none'], c: [{ x: '1 < 2 & 3' }] },
+            { t: 'div', d: 'none', c: [{ t: 'span', d: 'inline', s: ['inline', 'none'], c: [{ x: '€99,00' }] }] },
+            { t: 'script', a: { src: 'https://x/y.js' }, d: 'none' },
+            { t: 'iframe', a: { src: 'https://pay.example/' }, d: 'inline', o: 'https://pay.example', b: [0, 0, 300, 80] },
+            { t: 'x-cart', d: 'block', sr: [{ t: 'b', d: 'inline', s: ['inline', 'none'], c: [{ x: '€20,00' }] }] },
+            { t: 'img', a: { alt: 'x' }, d: 'inline' },
+          ],
+        },
+      ],
+    },
+  };
+  const html = rebuildHtml(doc);
+  assert.match(html, /^<!doctype html><html lang="de-DE">/);
+  assert.match(html, /<p title="a &quot;q&quot; &amp; b" style="display:block;text-decoration-line:none">1 &lt; 2 &amp; 3<\/p>/);
+  assert.match(html, /<div style="display:none"><span/);
+  assert.ok(!/script|onclick|pay\.example\//.test(html));
+  assert.match(html, /<iframe data-pane-origin="https:\/\/pay.example" width="300" height="80"><\/iframe>/);
+  assert.match(html, /<x-cart><template shadowrootmode="open"><b [^>]*>€20,00<\/b><\/template><\/x-cart>/);
+  assert.match(html, /<style[^>]*>b\{font-weight:700\}<\/style>/);
+  assert.match(html, /<img alt="x">(?!<\/img>)/);
+  assert.throws(() => rebuildHtml({ format: 'pane-trial-dom.1' }), /not a pane-dom.1 export/);
 });

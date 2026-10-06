@@ -1,12 +1,12 @@
 ---
 type: Product
 title: Phase 12 plan (reader eval protocols and captures)
-description: Pre-register the generic cart reader evaluation (splits, states, labels, bounds, peek policy, capture posture, Y = 80%), select the merchant-pipeline held-out domains, build a capture tool that cannot type or submit, and capture and label up to 220 retail sites worldwide (U.S. and non-U.S. halves; the reader must return total and currency) in three site splits — in three PRs.
+description: Pre-register the generic cart reader evaluation (splits, states, labels, bounds, peek policy, capture posture; since `.8` a ≥ 99% precision bar on shown amounts with coverage reported), select the merchant-pipeline held-out domains, build capture tooling (a robot that cannot type or submit, then agent-driven browser-pane capture with an approved export script), and capture and label about 830 retail sites worldwide (the reader shows total and currency only when certain) in three site splits weighted 1 : 2 : 2 — in three PRs.
 status: stable
 tags: [product, plan, phase-12, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T09:00:00Z
+  at: 2026-10-06T23:30:00Z
 sources:
   - resource: phase-10-merchant-expansion.md
     title: Merchant coverage plan (Phases 10–17)
@@ -84,6 +84,14 @@ As in [Phase 10](phase-10-feasibility-probe.md#safety-and-copyright), enforced b
     - **Non-U.S.**, 13 visited: captured 1 (conforama); excluded 7 (`needs-input` 1, `blocked-http-403` 5, `robots-disallow-all` 1); incomplete or pending 5 (extra.com, goofish.com and blibli.com re-visits; jpc.de and deghi.it `tool-error`).
     - **Tool-caused missing states:** lego.com `cart-1` (old write guard), jpc.de (all cart states), deghi.it (reconnaissance).
   - **Safety:** nothing typed, no sign-in, no checkout entered or clicked. Non-GET requests that reached sites were the sites' own background writes (161 in reconnaissance, 49 in capture, all logged in `backgroundWrites`) and the allowlisted add-to-cart requests (webstaurantstore 1, cardkingdom 2). Aborted writes included order-metrics, checkout-cart API and cookie-consent POSTs.
+- **12.1 amended a seventh time (2026-10-06, branch `phase12-pane-trial`):** `generic-reader-protocol.8` ([Amendment 7](../../docs/evals/generic-reader-protocol.md#amendment-7-2026-10-06-generic-reader-protocol8)), **a substantive change on Evan's decisions** ([Evan's decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md), accepted). Process by the coordinator ([decision](../decisions/2026-10-06-capture-protocol-8.md), proposed). Signature pending; `.7` binds until then.
+  - **Outcomes and bar:** shown-correct, shown-wrong and withheld (no `ask`). The bar is an exact one-sided 95% upper bound of the wrong-amount rate among shown amounts ≤ 1% (299 shown with none wrong) plus p95 ≤ 50 ms. Coverage is reported (target 80% on `cart-1`).
+  - **Scope:** generic reader only; legacy adapters scored apart.
+  - **Capture:** capture method `pane`, run by subagents in the browser pane, in parallel tabs (8 up to 16), with the operator checklist and a per-store record (path, actions, UTC times). Any in-band, in-stock item may be chosen by ordinary navigation. The approved export is `pane-export.js` (`pane-dom.1`), with the offline `rebuild.mjs` and a round-trip test. The robot is retired; its click-point defect is unfixed and irrelevant.
+  - **Sample:** candidates are U.S. 425 and non-U.S. 1,000. Capture stops at 330 + 500 captured sites. Splits are weighted 1 : 2 : 2 (`seeded-selection.mjs --weights-protocol-8`). The builder reports to Evan below 760 captured `cart-1` or below 300 labelled held-out A `cart-1`.
+  - **Batch 2 calls** (`sites.json` `statusUnderProtocol8`):
+    - **Settled:** webstaurantstore.com is `add-to-cart-refused`; cardkingdom.com is pending the reviewer's no-`<select>` check; pane-trial captures are development data only.
+    - **Re-visited by pane:** every robot-era 403/429, CAPTCHA and bot-wall site, savana.com (robots.txt no longer excludes, Evan 2026-10-06), jpc.de, deghi.it and the pending robot re-visits. bricklink.com and samsung.com are re-visited as second draws (the builder's application, flagged).
 
 Done when all three PRs are merged; Phase 13 (reader v1) then tunes on the development split only.
 
