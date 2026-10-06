@@ -1,4 +1,5 @@
-// Pane page export, format `pane-dom.1` (generic-reader-protocol.8). Approved by Evan on 2026-10-06 as the in-page
+// Pane page export, format `pane-dom.2` (generic-reader-protocol.8; `.2` supersedes `pane-dom.1` before any
+// evaluation capture, adding visibility facts). Approved by Evan on 2026-10-06 as the in-page
 // export script for agent-driven capture in the Claude desktop app's browser pane. Dependency-free; it only reads the
 // page. The operator runs this file's text with the pane's JavaScript tool on the page to capture. The script keeps
 // the serialization on `window.__aiCheckoutPaneExport` and returns a short summary only (bytes, SHA-256, chunk
@@ -13,6 +14,12 @@
 //   - for every element, its computed `display` (`d`); for elements that hold their own text, and for img, input,
 //     button, select and textarea, the computed STYLE_PROPS (`s`) and the bounding box (`b`, x/y/width/height
 //     relative to the document);
+//   - for the same elements, `v`: checkVisibility({ opacityProperty, visibilityProperty }) (false inside display:none,
+//     content-visibility:hidden or a closed <details>, under opacity 0 or visibility hidden) and `bx`: whether the box
+//     is larger than 1 px in both directions (false for clipped screen-reader-only text);
+//   - for every element, `k`: the clipping and visibility styles that differ from their defaults (clip, clip-path,
+//     overflow-x, overflow-y, opacity, transform, and width and height when it clips or is clipped), so the rebuild
+//     hides what the page hid;
 //   - iframes are not walked: each is kept as an element with its origin and box, and counted;
 //   - document `lang`, title, URL without query or fragment, viewport and scroll size.
 // No input value, form state, cookie or storage is read.
@@ -33,6 +40,15 @@
     'direction',
     'unicode-bidi',
   ];
+  // Non-default clipping and visibility styles, recorded on every element where they differ from the default.
+  const CLIP_DEFAULTS = {
+    clip: 'auto',
+    'clip-path': 'none',
+    'overflow-x': 'visible',
+    'overflow-y': 'visible',
+    opacity: '1',
+    transform: 'none',
+  };
   const BOXED = new Set(['img', 'input', 'button', 'select', 'textarea', 'svg']);
   const SKIP_TEXT = new Set(['script', 'noscript']);
   const MAX_NODES = 60000;
@@ -89,6 +105,16 @@
     if (Object.keys(attrs).length) node.a = attrs;
     const cs = getComputedStyle(el);
     node.d = cs.display;
+    const k = {};
+    for (const [p, def] of Object.entries(CLIP_DEFAULTS)) {
+      const v = cs.getPropertyValue(p);
+      if (v && v !== def) k[p] = v;
+    }
+    if (k.clip || k['clip-path'] || k['overflow-x'] || k['overflow-y']) {
+      k.width = cs.width;
+      k.height = cs.height;
+    }
+    if (Object.keys(k).length) node.k = k;
     if (tag === 'iframe' || tag === 'frame') {
       node.b = box(el);
       node.o = origin(el.getAttribute('src') || '');
@@ -98,6 +124,8 @@
     if (ownText(el) || BOXED.has(tag)) {
       node.s = STYLE_PROPS.map((p) => cs.getPropertyValue(p));
       node.b = box(el);
+      node.v = el.checkVisibility({ opacityProperty: true, visibilityProperty: true });
+      node.bx = node.b[2] > 1 && node.b[3] > 1;
     }
     if (el.shadowRoot && el.shadowRoot.mode === 'open') {
       shadowRoots += 1;
@@ -110,7 +138,7 @@
 
   const u = new URL(location.href);
   const doc = {
-    format: 'pane-dom.1',
+    format: 'pane-dom.2',
     url: `${u.origin}${u.pathname}`,
     lang: document.documentElement.getAttribute('lang') || '',
     title: document.title || '',
@@ -135,7 +163,7 @@
     chunk: (i) => json.slice(i * CHUNK, (i + 1) * CHUNK),
   };
   return {
-    format: 'pane-dom.1',
+    format: 'pane-dom.2',
     url: doc.url,
     bytes: bytes.length,
     sha256,

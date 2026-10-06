@@ -276,6 +276,9 @@ document.getElementById('js-atc').addEventListener('click', () => {
 <div class="line">Fixture Tee <span class="was">£25.00</span> <b>£20.00</b></div>
 <div class="hidden">Old total £99.00</div>
 <span style="visibility:hidden">Ghost £77.00</span>
+<span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">Screen reader total £55.00</span>
+<div style="opacity:0"><span>Faded £66.00</span></div>
+<details><summary>More</summary><p>Hidden total £88.00</p></details>
 <p>Price &amp; tax &lt;estimated&gt; "quoted"</p>
 <cart-summary id="summary"></cart-summary>
 <iframe src="${tp()}/widget" title="widget" width="300" height="80"></iframe>
@@ -285,6 +288,7 @@ document.getElementById('js-atc').addEventListener('click', () => {
 document.getElementById('summary').attachShadow({ mode: 'open' }).innerHTML = '<style>b{font-weight:700}</style><p>Subtotal <b>£20.00</b></p><p>Estimated total <b>£24.00</b></p>';
 document.getElementById('late').textContent = 'Delivery £4.00';
 </script>`,
+            { head: '<meta http-equiv="refresh" content="600;url=/elsewhere">' },
           ),
         );
       case 'GET /r-checkout':

@@ -1,4 +1,4 @@
-// Round trip of the pane export (pane-export.js, format pane-dom.1) and its offline rebuild (rebuild.mjs): the rebuilt
+// Round trip of the pane export (pane-export.js, format pane-dom.2) and its offline rebuild (rebuild.mjs): the rebuilt
 // page, loaded with all network blocked, shows the same visible text and amounts as the source page, keeps hidden
 // amounts hidden, keeps strikethrough, and runs no script. 127.0.0.1 only.
 import assert from 'node:assert/strict';
@@ -35,8 +35,10 @@ const visibleText = () => {
       if (n.nodeType === 3) {
         const t = n.nodeValue.trim();
         const p = n.parentElement;
+        const r = p?.getBoundingClientRect();
         if (t && p && !['SCRIPT', 'STYLE', 'TITLE'].includes(p.tagName)
-          && p.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true }))
+          && p.checkVisibility({ opacityProperty: true, visibilityProperty: true })
+          && r.width > 1 && r.height > 1)
           out.push(t);
       } else if (n.nodeType === 1) {
         if (n.shadowRoot) walk(n.shadowRoot);
@@ -48,13 +50,13 @@ const visibleText = () => {
   return out.join(' ').replace(/\s+/g, ' ');
 };
 
-test('pane-dom.1: export in page, rebuild offline, same visible text and amounts; hidden stays hidden', async () => {
+test('pane-dom.2: export in page, rebuild offline, same visible text and amounts; hidden stays hidden', async () => {
   const exportScript = await readFile(path.join(here, '..', '..', 'pane-export.js'), 'utf8');
   const context = await browser.newContext({ viewport: { width: 1024, height: 768 } });
   const page = await context.newPage();
   await page.goto(`${shop.origin}/pane-fixture?session=abc`);
   const summary = await page.evaluate(exportScript);
-  assert.equal(summary.format, 'pane-dom.1');
+  assert.equal(summary.format, 'pane-dom.2');
   assert.equal(summary.url, `${shop.origin}/pane-fixture`);
   assert.equal(summary.shadowRoots, 1);
   assert.equal(summary.iframes, 1);
@@ -90,7 +92,22 @@ test('pane-dom.1: export in page, rebuild offline, same visible text and amounts
   assert.equal(rebuiltText, sourceText);
   assert.deepEqual(amounts(rebuiltText), amounts(sourceText));
   assert.deepEqual(amounts(sourceText), ['£25.00', '£20.00', '£20.00', '£24.00', '£4.00']);
-  assert.ok(!rebuiltText.includes('£99.00') && !rebuiltText.includes('£77.00'));
+  // Hidden in the source, hidden in the rebuild: display:none, visibility:hidden, a clipped screen-reader-only price,
+  // an opacity:0 parent and a closed <details>.
+  for (const hidden of ['£99.00', '£77.00', '£55.00', '£66.00', '£88.00']) {
+    assert.ok(!sourceText.includes(hidden), `source shows ${hidden}`);
+    assert.ok(!rebuiltText.includes(hidden), `rebuild shows ${hidden}`);
+  }
+  assert.ok(!/http-equiv="refresh"/i.test(html));
+  assert.match(html, /data-pane-box="/);
+  const dom = JSON.parse(await readFile(file, 'utf8'));
+  const find = (n, pred) => (pred(n) ? n : [...(n.c ?? []), ...(n.sr ?? [])].map((c) => find(c, pred)).find(Boolean));
+  const sr = find(dom.root, (n) => n.a?.class === 'sr-only');
+  assert.equal(sr.v, true);
+  assert.equal(sr.bx, false);
+  assert.equal(sr.k['overflow-x'], 'hidden');
+  const faded = find(dom.root, (n) => n.c?.[0]?.x === 'Faded £66.00');
+  assert.equal(faded.v, false);
   assert.match(sourceText, /Price & tax <estimated> "quoted"/);
   assert.equal(
     await rp.evaluate(() => getComputedStyle(document.querySelector('.was')).textDecorationLine),

@@ -1,20 +1,29 @@
 #!/usr/bin/env node
-// Offline rebuild of a `pane-dom.1` export (pane-export.js) into one static HTML file with inline styles
+// Offline rebuild of a `pane-dom.2` export (pane-export.js; `pane-dom.1` pane-trial exports are also read) into one
+// static HTML file with inline styles
 // (generic-reader-protocol.8). The rebuilt file is what labellers screenshot and what the reader's replay loads in
 // Playwright with all network blocked; it runs no script.
 //
 //   node evals/merchants/capture/rebuild.mjs <dom.json> [out.html] [--sha256 <expected>]
 //
-// Rules: every element and attribute is kept except `<script>` elements and `on*` event-handler attributes; text is
+// The replay MUST load the rebuilt file with JavaScript disabled and all network blocked.
+//
+// Rules: every element and attribute is kept except `<script>` elements, `<meta http-equiv="refresh">` and `on*`
+// event-handler attributes; text is
 // escaped; `<style>` contents are kept; elements with recorded computed styles get them as an inline `style` (after
 // the page's own inline style, so they win); an element whose recorded `display` is `none` gets `display:none`
-// inline, so hidden subtrees stay hidden; open shadow roots become declarative shadow DOM
-// (`<template shadowrootmode="open">`); iframes become empty `<iframe>` stubs with `data-pane-origin`.
+// inline, so hidden subtrees stay hidden; `pane-dom.2` clipping and visibility styles (`k`: clip, clip-path, overflow,
+// opacity, transform, and width/height when clipping) are inlined on every element that had them; a text element the
+// page reported invisible (`v: false`) also gets `visibility:hidden`, so hidden text stays hidden; elements with a
+// recorded box get `data-pane-box="x,y,w,h"` (for labellers; a reader must never read `data-pane-*` attributes);
+// open shadow roots become declarative shadow DOM (`<template shadowrootmode="open">`); iframes become empty
+// `<iframe>` stubs with `data-pane-origin`.
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 
-export const PANE_FORMAT = 'pane-dom.1';
+export const PANE_FORMAT = 'pane-dom.2';
+export const PANE_FORMATS = ['pane-dom.1', 'pane-dom.2'];
 const VOID = new Set([
   'area',
   'base',
@@ -43,6 +52,7 @@ function render(node, styleProps, out) {
   }
   const tag = node.t;
   if (!tag || !validName(tag) || tag === 'script') return;
+  if (tag === 'meta' && /^\s*refresh\s*$/i.test(node.a?.['http-equiv'] ?? '')) return;
   const attrs = { ...(node.a ?? {}) };
   for (const k of Object.keys(attrs)) if (/^on/i.test(k) || !validName(k)) delete attrs[k];
   if (tag === 'iframe' || tag === 'frame') {
@@ -54,6 +64,9 @@ function render(node, styleProps, out) {
   const inline = [];
   if (node.s) node.s.forEach((v, i) => v !== '' && inline.push(`${styleProps[i]}:${v}`));
   else if (node.d === 'none') inline.push('display:none');
+  for (const [p, v] of Object.entries(node.k ?? {})) inline.push(`${p}:${v}`);
+  if (node.v === false) inline.push('visibility:hidden');
+  if (node.b) attrs['data-pane-box'] = node.b.join(',');
   if (inline.length) {
     const own = attrs.style ? `${attrs.style.replace(/;?\s*$/, '')};` : '';
     attrs.style = `${own}${inline.join(';')}`;
@@ -76,7 +89,7 @@ function render(node, styleProps, out) {
 
 /** Turn a parsed pane-dom.1 document into a static HTML string. */
 export function rebuildHtml(doc) {
-  if (doc?.format !== PANE_FORMAT) throw new Error(`not a ${PANE_FORMAT} export`);
+  if (!PANE_FORMATS.includes(doc?.format)) throw new Error(`not a ${PANE_FORMATS.join(' or ')} export`);
   const out = ['<!doctype html>'];
   render(doc.root, doc.styleProps ?? [], out);
   return out.join('');

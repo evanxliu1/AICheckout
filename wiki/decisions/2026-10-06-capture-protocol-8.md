@@ -50,6 +50,23 @@ The process decisions below are **the coordinator's** (the coordinating session,
 | Coverage | Pass condition; reported | **Reported only** per stream and state, with a target of 80% on `cart-1` |
 | Batch 2 calls | — | The coordinator's calls are as listed in the protocol. The builder applied Amendment 4's principle to bricklink.com and samsung.com (re-visit by pane, as a second draw), flagged for confirmation |
 
+
+**Review fixes (independent review at `9d79158`, "sign with fixes", agent-verified):**
+- **Format:** `pane-dom.2` supersedes `.1`, within Evan's approval of the in-page script. It adds checkVisibility, box > 1 px and non-default clipping, opacity and transform styles; the rebuild keeps hidden text hidden and drops meta refresh. Replay runs with JavaScript disabled, and readers never read `data-pane-*`.
+- **Auditability:**
+  - transcript IDs go in the record;
+  - `audit-pane-transcript.mjs` flags forbidden calls;
+  - the `pane-operator` subagent has no form-input, file-upload or Claude in Chrome tools;
+  - the JavaScript tool has exactly three allowed texts (export, chunk fetch, `pane-robots-hash.js`).
+- **Pane sign-ins:** the pane keeps sign-ins across app use. Evan (chat, 2026-10-06): "do not worry if we are signed in, the agents can continue, i do not mind". Signed-in stores are captured normally under guards: no sign-out, no account pages, no settings; only the operator's own items are removed afterwards; pre-existing items are recorded as carried-over and `empty-cart` is `not-reached`; the store is flagged `signedIn` and reported apart; personal data is never committed. This replaces a short-lived `signed-in-pane` exclusion.
+- **Item rule:** an item with a minimum quantity above 1 is ineligible and another is picked, so webstaurantstore.com is re-visited.
+- **Low findings:**
+  - within-site correlation is stated, and the site-cluster bound is always reported;
+  - the chunk path and main-world tampering are disclosed, with one re-export and then `tool-error`;
+  - a truncated export without its summary is `not-readable`;
+  - the telemetry design's stale `ask` is fixed;
+  - the bricklink.com and samsung.com re-visits are confirmed.
+
 ## Decision
 `generic-reader-protocol.8` (Amendment 7). Tool additions: `pane-export.js` (`pane-dom.1`), `rebuild.mjs`, and `seeded-selection.mjs --weights-protocol-8` (new SHA-256). Existing robot tooling is unchanged.
 

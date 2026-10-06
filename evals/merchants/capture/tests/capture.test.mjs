@@ -9,6 +9,7 @@ import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { checkRecon, committableUrl } from '../capture.mjs';
 import { rebuildHtml } from '../rebuild.mjs';
+import { auditTranscript } from '../audit-pane-transcript.mjs';
 import { checkRequest, startControlServer } from '../control-server.mjs';
 import { ADD_TO_CART_NAME, createDriver, guardApi, parseTarget } from '../driver.mjs';
 import {
@@ -995,5 +996,77 @@ test('pane-dom.1 rebuild: escapes text and attributes, drops scripts and handler
   assert.match(html, /<x-cart><template shadowrootmode="open"><b [^>]*>€20,00<\/b><\/template><\/x-cart>/);
   assert.match(html, /<style[^>]*>b\{font-weight:700\}<\/style>/);
   assert.match(html, /<img alt="x">(?!<\/img>)/);
-  assert.throws(() => rebuildHtml({ format: 'pane-trial-dom.1' }), /not a pane-dom.1 export/);
+  assert.throws(() => rebuildHtml({ format: 'pane-trial-dom.1' }), /not a pane-dom.1 or pane-dom.2 export/);
+});
+
+test('pane-dom.2 rebuild: clipping styles, invisible text and boxes; meta refresh dropped', () => {
+  const html = rebuildHtml({
+    format: 'pane-dom.2',
+    styleProps: ['display'],
+    root: {
+      t: 'html',
+      d: 'block',
+      c: [
+        { t: 'head', d: 'none', c: [{ t: 'meta', a: { 'http-equiv': 'Refresh', content: '0;url=https://x/' }, d: 'none' }] },
+        {
+          t: 'body',
+          d: 'block',
+          c: [
+            { t: 'div', d: 'block', k: { opacity: '0' }, c: [{ t: 'span', d: 'inline', s: ['inline'], b: [0, 0, 40, 10], v: false, bx: true, c: [{ x: '€6,00' }] }] },
+            { t: 'span', d: 'block', s: ['block'], b: [0, 0, 1, 1], v: true, bx: false, k: { clip: 'rect(0px, 0px, 0px, 0px)', 'overflow-x': 'hidden', 'overflow-y': 'hidden', width: '1px', height: '1px' }, c: [{ x: '€5,00' }] },
+          ],
+        },
+      ],
+    },
+  });
+  assert.ok(!/refresh/i.test(html));
+  assert.match(html, /<div style="opacity:0">/);
+  assert.match(html, /<span data-pane-box="0,0,40,10" style="display:inline;visibility:hidden">€6,00/);
+  assert.match(html, /<span data-pane-box="0,0,1,1" style="display:block;clip:rect\(0px, 0px, 0px, 0px\);overflow-x:hidden;overflow-y:hidden;width:1px;height:1px">€5,00/);
+});
+
+// ---- Pane transcript audit (protocol .8 review, M2) ----
+
+test('pane transcript audit: allowed calls pass; typing, form input, other scripts, checkout paths and Chrome tools are flagged', () => {
+  const exportText = readFileSync(path.join(dir, 'pane-export.js'), 'utf8');
+  const robotsText = readFileSync(path.join(dir, 'pane-robots-hash.js'), 'utf8');
+  const use = (name, input) => ({ type: 'tool_use', name: `mcp__Claude_Browser__${name}`, input });
+  const line = (...content) => JSON.stringify({ type: 'assistant', message: { content } });
+  const ok = [
+    line(use('tabs_create', {})),
+    line(use('navigate', { url: 'https://www.example.de/robots.txt', tabId: 't1' })),
+    line(use('javascript_tool', { action: 'javascript_exec', text: `\n${robotsText}\n`, tabId: 't1' })),
+    line(use('navigate', { url: 'https://www.example.de/checkout/cart', tabId: 't1' })),
+    line(use('computer', { action: 'left_click', ref: 'ref_3', tabId: 't1' })),
+    line(use('javascript_tool', { action: 'javascript_exec', text: exportText, tabId: 't1' })),
+    line(use('javascript_tool', { action: 'javascript_exec', text: 'window.__aiCheckoutPaneExport.chunk(0)', tabId: 't1' })),
+    line({ type: 'tool_use', name: 'Write', input: { file_path: '/x/dom.json', content: '{}' } }),
+    line(use('tabs_close', { tabId: 't1' })),
+  ].join('\n');
+  const clean = auditTranscript(ok);
+  assert.equal(clean.toolCalls, 9);
+  assert.deepEqual(clean.flags, []);
+  const bad = [
+    line(use('computer', { action: 'type', text: 'shoes' })),
+    line(use('computer', { action: 'key', text: 'Enter' })),
+    line(use('form_input', { ref: 'ref_1', value: 'x' })),
+    line({ type: 'tool_use', name: 'mcp__claude-in-chrome__navigate', input: { url: 'https://x.com' } }),
+    line(use('navigate', { url: 'https://www.example.de/en/checkout' })),
+    line(use('javascript_tool', { action: 'javascript_exec', text: 'document.querySelector("form").submit()' })),
+    line(use('find', { query: 'Proceed to checkout' })),
+    line(use('browser_batch', { actions: [{ name: 'computer', input: { action: 'type', text: 'a' } }] })),
+    line({ type: 'tool_use', name: 'Bash', input: { command: 'curl https://www.example.de/' } }),
+  ].join('\n');
+  const rules = auditTranscript(bad).flags.map((f) => f.rule);
+  for (const r of [
+    'typing',
+    'forbidden-tool',
+    'claude-in-chrome',
+    'checkout-path',
+    'javascript-other',
+    'checkout-or-order-wording',
+    'bash-web-fetch',
+  ])
+    assert.ok(rules.includes(r), r);
+  assert.equal(rules.filter((r) => r === 'typing').length, 3);
 });

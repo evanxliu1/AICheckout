@@ -90,8 +90,13 @@ As in [Phase 10](phase-10-feasibility-probe.md#safety-and-copyright), enforced b
   - **Capture:** capture method `pane`, run by subagents in the browser pane, in parallel tabs (8 up to 16), with the operator checklist and a per-store record (path, actions, UTC times). Any in-band, in-stock item may be chosen by ordinary navigation. The approved export is `pane-export.js` (`pane-dom.1`), with the offline `rebuild.mjs` and a round-trip test. The robot is retired; its click-point defect is unfixed and irrelevant.
   - **Sample:** candidates are U.S. 425 and non-U.S. 1,000. Capture stops at 330 + 500 captured sites. Splits are weighted 1 : 2 : 2 (`seeded-selection.mjs --weights-protocol-8`). The builder reports to Evan below 760 captured `cart-1` or below 300 labelled held-out A `cart-1`.
   - **Batch 2 calls** (`sites.json` `statusUnderProtocol8`):
-    - **Settled:** webstaurantstore.com is `add-to-cart-refused`; cardkingdom.com is pending the reviewer's no-`<select>` check; pane-trial captures are development data only.
-    - **Re-visited by pane:** every robot-era 403/429, CAPTCHA and bot-wall site, savana.com (robots.txt no longer excludes, Evan 2026-10-06), jpc.de, deghi.it and the pending robot re-visits. bricklink.com and samsung.com are re-visited as second draws (the builder's application, flagged).
+    - **Settled:** cardkingdom.com is pending the reviewer's no-`<select>` check; pane-trial captures are development data only.
+    - **Re-visited by pane:** every robot-era 403/429, CAPTCHA and bot-wall site, savana.com (robots.txt no longer excludes, Evan 2026-10-06), webstaurantstore.com (minimum quantity above 1 makes an item ineligible, so another is picked), jpc.de, deghi.it and the pending robot re-visits. bricklink.com and samsung.com are re-visited as second draws (confirmed by the coordinator).
+  - **Review at `9d79158`** (sign with fixes, applied):
+    - **Format:** `pane-dom.2` with visibility facts and a faithful rebuild.
+    - **Audit:** transcript audit script, `pane-operator` subagent with restricted tools, three allowed JavaScript texts.
+    - **Sign-ins:** signed-in pane stores are captured under guards (Evan: "the agents can continue"), never removing his items, reported apart.
+    - **Low findings:** within-site correlation stated; one re-export, then `tool-error`; a truncated export without its summary is `not-readable`; meta refresh dropped.
 
 Done when all three PRs are merged; Phase 13 (reader v1) then tunes on the development split only.
 

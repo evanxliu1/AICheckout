@@ -3,6 +3,13 @@
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
 ## 2026-10-06
+* **Review** independent review of `.8` at `9d79158` (agent-verified): sign with fixes, applied with tests.
+  - **M1, format:** `pane-dom.2` adds `v` (checkVisibility), `bx` (box > 1 px) and `k` (non-default clip, clip-path, overflow, opacity, transform, width/height). The rebuild inlines them, hides invisible text, adds `data-pane-box` (never read by a reader) and drops meta refresh. Fixture cases: clipped screen-reader-only price, `opacity:0` parent, closed `<details>`.
+  - **M2, auditability:** transcript IDs in pane records, `audit-pane-transcript.mjs` (flags typing, `form_input`, `file_upload`, Claude in Chrome, checkout paths and wording, JavaScript other than export, chunk fetch and `pane-robots-hash.js`), and the subagent `.claude/agents/pane-operator.md` with restricted tools.
+  - **M3, sign-ins:** the pane keeps sign-ins. Evan (chat): "do not worry if we are signed in, the agents can continue". Signed-in stores are captured under guards and reported apart; this replaces a draft `signed-in-pane` exclusion.
+  - **M4, item rule:** a minimum quantity above 1 makes an item ineligible, and another is picked; webstaurantstore.com is re-visited.
+  - **L1–L6:** within-site correlation; chunk path and main-world disclosure; truncated export becomes `not-readable`; replay with JavaScript off; telemetry `ask` removed; bricklink.com and samsung.com confirmed.
+  - **Pages:** [user directives](product/user-directives.md), [decision](decisions/2026-10-06-capture-protocol-8.md) (still proposed). (claude-code/claude-opus-5-5)
 * **Update** reader protocol amended to `generic-reader-protocol.8` on `phase12-pane-trial` ([Amendment 7](../docs/evals/generic-reader-protocol.md#amendment-7-2026-10-06-generic-reader-protocol8)), a substantive change on Evan's decisions of 2026-10-06 ([decision](decisions/2026-10-06-reader-shows-only-certain-amounts.md)), merged in from `reader-precision-decision`. The process is the coordinator's. Signature pending; `.7` binds until then.
   - **Outcomes and bar:** shown-correct, shown-wrong and withheld (no `ask`). The bar is the exact one-sided 95% Clopper–Pearson upper bound of the wrong-amount rate among shown amounts ≤ 1% (299 shown with none wrong) plus p95 ≤ 50 ms. Coverage is reported with a target of 80% on `cart-1`. Legacy adapters are scored apart; no store configs.
   - **Capture:** capture method `pane`, with the operator checklist, a per-store record and parallel tabs (8 up to 16, one IP and one profile). Item selection is any in-band, in-stock item by ordinary navigation.

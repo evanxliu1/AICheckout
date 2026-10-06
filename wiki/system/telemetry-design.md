@@ -85,7 +85,7 @@ Every event: `install_id` (random, rotated every 30 days, resettable), `install_
 | Funnel | install → onboarding complete → at least one card → first recommendation → active in week 2 |
 | Retention | D7 and D30 from `days_since_install` buckets by `install_month` (D30 = distinct IDs in the 30–59 bucket; no linking of IDs across rotations) |
 | Coverage | share of recommendations at named profiles; "Suggest this store" counts by domain |
-| Quality | reader false-found and found-correct on held-out real pages; field `ask` and correction rates |
+| Quality | reader precision (shown-wrong) and coverage on held-out real pages (protocol `.8`); field rate of reported wrong amounts and typed amounts (no `ask` since 2026-10-06) |
 | Uninstalls | rate and reasons (disclosed `setUninstallURL` survey) |
 | Reputation | Web Store rating and review count; support volume |
 | Availability | API uptime as observed by clients' refresh results |

@@ -2,7 +2,7 @@
 
 **Since `generic-reader-protocol.8` (2026-10-06) the main capture method is `pane`**: Claude Code subagents drive the Claude desktop app's browser pane (operator checklist, record and parallel-tab rules in the [protocol](../../../docs/evals/generic-reader-protocol.md#pane-capture-new-in-8)), export each state with `pane-export.js` and rebuild it offline with `rebuild.mjs` (below). The Playwright robot described in the rest of this README is kept but retired as the main path; its captures stay valid as `robot`. Its click-point defect from batch 2 (viewport coordinates passed to `DOM.getNodeForLocation`, which expects document coordinates) is unfixed and irrelevant while it is retired.
 
-## Pane export and rebuild (`pane-dom.1`)
+## Pane export, rebuild and audit (`pane-dom.2`)
 
 ```sh
 # in the pane: run the text of pane-export.js with the JavaScript tool; it returns {bytes, sha256, chunks, ...}
@@ -13,9 +13,12 @@ node evals/merchants/capture/rebuild.mjs capture/data/pane/<domain>/<state>/dom.
 
 | File | What |
 | --- | --- |
-| `pane-export.js` | Evan-approved in-page export, dependency-free and read-only. Records every element with all attributes, text nodes (script contents dropped, style contents kept), open shadow roots (`sr`), computed `display` on every element, 14 computed styles and the document-coordinate box on text-holding and form elements, iframe stubs with origin, `lang`, title, URL without query, viewport and scroll size |
-| `rebuild.mjs` | Offline: `pane-dom.1` to one static HTML file, styles inline, scripts and `on*` attributes dropped, shadow roots as `<template shadowrootmode="open">`, hidden elements kept hidden, iframes as stubs. Labellers screenshot it; the reader's replay loads it with network blocked |
-| `tests/browser/pane.test.mjs` | Round trip on the fixture shop: same visible text and amounts, hidden stays hidden, strikethrough kept, no script, nothing fetched |
+| `pane-export.js` | Evan-approved in-page export, dependency-free and read-only, format `pane-dom.2` (the pane trial's exports are `pane-dom.1`). Records visibility facts (`v`: checkVisibility with opacity and visibility; `bx`: box larger than 1 px; `k`: non-default clip, clip-path, overflow, opacity, transform, and width/height when clipping), and every element with all attributes, text nodes (script contents dropped, style contents kept), open shadow roots (`sr`), computed `display` on every element, 14 computed styles and the document-coordinate box on text-holding and form elements, iframe stubs with origin, `lang`, title, URL without query, viewport and scroll size |
+| `rebuild.mjs` | Offline: `pane-dom.2` (or `.1`) to one static HTML file, styles and `k` inline, invisible text kept invisible, `data-pane-box` for labellers (a reader never reads `data-pane-*`), scripts, `on*` attributes and `<meta http-equiv="refresh">` dropped, shadow roots as `<template shadowrootmode="open">`, hidden elements kept hidden, iframes as stubs. Labellers screenshot it; the reader's replay loads it with network blocked |
+| `tests/browser/pane.test.mjs` | Round trip on the fixture shop: same visible text and amounts; hidden stays hidden (display:none, visibility:hidden, a clipped screen-reader-only price, an opacity:0 parent, a closed `<details>`); strikethrough kept; no script; nothing fetched. Replay MUST use JavaScript disabled |
+| `pane-robots-hash.js` | The allowed in-page robots.txt hash (exact text) |
+| `audit-pane-transcript.mjs` | The 12.3 reviewer's audit of every pane operator transcript: flags typing (`type`/`key`), `form_input`, `file_upload`, Claude in Chrome tools, checkout paths, checkout or order wording, JavaScript other than the three allowed texts, unlisted pane tools and Bash web fetches |
+| `../../../.claude/agents/pane-operator.md` | The pane operator subagent: tools limited to Read, Write, Bash and the listed pane tools |
 
 ## Robot (`.1`–`.7`)
 

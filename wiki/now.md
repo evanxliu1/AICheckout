@@ -33,7 +33,8 @@ As of 2026-10-06T08:30:00Z.
    - **Outcomes and bar:** shown/withheld outcomes and the precision bar, with coverage reported.
    - **Capture:** pane capture in parallel tabs, with an operator checklist and per-store record; any in-band item by ordinary navigation; `pane-dom.1` export and offline rebuild.
    - **Sample:** U.S. 425 + non-U.S. 1,000 candidates; stop at 830 captured; splits weighted 1 : 2 : 2.
-   - **Batch 2:** webstaurantstore.com is `add-to-cart-refused`; blocked sites and `tool-error` sites are re-visited by pane.
+   - **Batch 2:** blocked, `tool-error` and rule-driven exclusions (including webstaurantstore.com, bricklink.com and samsung.com) are re-visited by pane.
+   - **Review at `9d79158`:** fixes applied. The format is now `pane-dom.2`; there is a transcript audit and a `pane-operator` subagent; signed-in pane stores are captured under guards (Evan) and reported apart.
    - **Robots and CAPTCHAs:** robots.txt is recorded and never excludes a store (Evan); CAPTCHAs and bot checks are never touched.
    - **Robot:** retired; its click-point defect is left unfixed.
 

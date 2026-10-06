@@ -49,7 +49,7 @@ export default [
   },
   // The pane export script runs only in a page (the browser pane's JavaScript tool).
   {
-    files: ['evals/merchants/capture/pane-export.js'],
+    files: ['evals/merchants/capture/pane-export.js', 'evals/merchants/capture/pane-robots-hash.js'],
     languageOptions: { globals: globals.browser },
     rules: js.configs.recommended.rules,
   },
