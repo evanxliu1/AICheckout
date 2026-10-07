@@ -9,3 +9,4 @@ Runbooks: procedures someone will repeat. Numbered steps, exact commands, expect
 * [Database migrations](database-migrations.md) — create and test a migration locally, keep the seed in sync, hand the hosted push to Evan.
 * [Live model runs](live-model-runs.md) — local live evals through the Codex and Claude Code CLI subscriptions, matrix runner and resume.
 * [Release media](release-media.md) — npm scripts that regenerate store and portfolio media, and their prerequisites.
+* [Reader capture workflow](reader-capture-workflow.md) — Phase 12.3: how the coordinator runs pane capture as Claude workflows (pilot, full capture, split/label/review/freeze) under `generic-reader-protocol.10`; stop-and-ask points; merge only after CI passes.
