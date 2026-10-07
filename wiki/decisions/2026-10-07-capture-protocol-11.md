@@ -2,7 +2,7 @@
 type: Decision
 title: Pane exports collected from the operator transcript (generic-reader-protocol.11)
 description: Coordinator, 2026-10-07, on Evan's "figure it out" — after a 16-store pilot with 0 captures, the operator no longer writes exports; a committed, tested collector rebuilds each pane-dom.2 export byte-exact from the operator's transcript (inline or harness-saved chunk results), checks its SHA-256 and stamps step times; one record schema; pilot tool-error stores and hsn.com get their one more session.
-status: proposed
+status: accepted
 tags: [decision, phase-12, capture, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
