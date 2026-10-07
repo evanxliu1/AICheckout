@@ -1,0 +1,245 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "chewy.com",
+  "stream": "us",
+  "visit": 37,
+  "session": 1,
+  "entryHost": "www.chewy.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-aa98c1b223cab43d6",
+  "startUtc": "2026-10-07T07:02:26.973Z",
+  "endUtc": "2026-10-07T07:03:56.353Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.chewy.com",
+      "status": 200,
+      "sha256": "222b0261ee4d989851592e7ede082076354b032c04bce9998052ba7cce54632f",
+      "bytes": 2513,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.chewy.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.chewy.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.chewy.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home (single reload)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at entry: home page blank (likely bot wall)"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at entry: home page blank (likely bot wall)"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at entry: home page blank (likely bot wall)"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at entry: home page blank (likely bot wall)"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at entry: home page blank (likely bot wall)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.chewy.com/",
+    "title": "",
+    "wording": "(none: blank page, empty title, empty accessibility tree and body text after about 20 s and one reload)",
+    "marker": "blank document with no title or content, consistent with a silent bot-management interstitial; HTTP status not observable in the pane"
+  },
+  "problems": [
+    "Home page rendered blank (no title, no body text, empty accessibility tree, white screenshot) on two loads about 20 s apart, while robots.txt on the same host loaded fine; treated as a silent bot wall and not exported.",
+    "Classification uncertain: no visible challenge wording or vendor widget; reviewer may reclassify as tool-error (which would allow one more session).",
+    "Sign-in state and starting cart count could not be observed (left null)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:02:26.973Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:02:28.188Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:02:28.192Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:02:33.516Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:02:39.621Z",
+      "tool": "navigate",
+      "url": "https://www.chewy.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:02:39.723Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:02:46.746Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:02:50.781Z",
+      "tool": "navigate",
+      "url": "https://www.chewy.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:02:50.844Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:02:56.773Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:02:56.775Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:03:03.514Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:03:06.750Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:03:09.663Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:03:10.014Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:03:23.254Z",
+      "tool": "navigate",
+      "url": "https://www.chewy.com/"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:03:23.790Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:03:24.330Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:03:39.305Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:03:50.496Z",
+      "tool": "Write"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T07:03:56.353Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}
