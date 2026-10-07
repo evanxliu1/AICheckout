@@ -24,6 +24,32 @@ node evals/merchants/capture/rebuild.mjs capture/data/pane/<domain>/<state>/dom.
 | `audit-pane-transcript.mjs` | The 12.3 reviewer's audit of every pane operator transcript: flags typing (`type`/`key`), `form_input`, `file_upload`, Claude in Chrome tools, checkout paths, checkout or order wording, JavaScript other than the three allowed texts, account/order/profile/address/payment/settings/sign-out paths, Write or Edit outside `data/` and `records/<domain>.pane.json` (since `.11` also any write into `data/`, any read of a tool-results file and JavaScript inside a batch), unlisted pane tools and any Bash network access. Clicks by element `ref` can't be audited by name |
 | `../../../.claude/agents/pane-operator.md` | The pane operator subagent: tools limited to Read, Write, Bash and the listed pane tools |
 
+## Workflow 3 tools (split, label, freeze)
+
+Phase 12.3 after capture ([runbook](../../../wiki/ops/reader-capture-workflow.md#workflow-3-split-label-review-freeze), [protocol](../../../docs/evals/generic-reader-protocol.md#labelling)). Tooling only: none of these runs a reader or decides a label. Not built yet: the offline variant generator and its manifest, and the 10% derived-label sample check.
+
+```sh
+# 1. split input -> captured.json + captured-methods.json (evals/merchants/), then the split (commit splits.json before any labeller starts)
+node evals/merchants/capture/build-split-input.mjs
+node evals/merchants/tools/seeded-selection.mjs split evals/merchants/captured.json --extra-us 225 --extra-non-us 800 --weights-protocol-10 > evals/merchants/splits.json
+# 2. labeller screenshots of every pane state (skips rendered states unless --force)
+node evals/merchants/capture/render-pane.mjs evals/merchants/capture/data/pane [domain ...]
+# 3. labels: validate each file, then agreement and adjudication per split
+node evals/merchants/labels/validate-labels.mjs <labels.json>
+node evals/merchants/labels/agreement.mjs <labeller-a.json> <labeller-b.json> [--adjudication <adj.json> --out <final.json>] [--report <report.json>]
+# 4. freeze both splits at once; the harness runs --check before scoring
+node evals/merchants/labels/freeze.mjs --labels <final-development.json> --labels <final-heldout-a.json> --variants <variant-manifest.json> --splits evals/merchants/splits.json --data evals/merchants/capture/data/pane
+node evals/merchants/labels/freeze.mjs --check evals/merchants/freeze.json --data evals/merchants/capture/data/pane
+```
+
+| File | What |
+| --- | --- |
+| `build-split-input.mjs` | One `{domain, platform}` row per captured domain. Pane: the record's `outcome.status` is `captured` and `collected.exports` has a cart-state export; platform from `pane-platform.mjs`, each export read checked against the collector's SHA-256. Robot: latest `statusUnderProtocolN` (N ≥ 8) `captured-stands` or `captured-pending-review`, platform from the latest `protocolN.platform`, else the top-level one. A domain captured both ways is refused. Prints the stores not taken and the platform groups per method. Tests: `tests/split-input.test.mjs` |
+| `render-pane.mjs` | For each `data/pane/<domain>/<state>/` (the six pane states; not `evidence/`): checks `dom.json` against `meta.json`'s SHA-256, rebuilds it to `rebuilt.html`, loads it in Chromium with JavaScript off and every other request aborted, writes `viewport.png` (1280 × 900), `full.png` (full page, capped at 12,000 px) and `render.json` (`pane-render.1`: SHA-256 of dom, rebuilt page and both images, Chromium version, viewport, page height, cap, blocked requests, UTC). The SHA-256 of `render.json` is the pane page-state's `snapshotSha256`. Test: `tests/browser/render.test.mjs` |
+| `../labels/schema.mjs`, `../labels/validate-labels.mjs` | Zod schema of `reader-labels.2` and its checks: currency in `currency-minor-units.json`, expected is the most preferred displayed kind (`afterCredit` > `estimatedTotal` > `subtotal`) unless null with a matching reason, unique ids, id parts match state and origin, quotes in notes at most 25 words (notes at most 60 words, a tool guard). A displayed row's currency may be null only with `currency-undetermined`. File: `{schema, role: labeller or final, split, labeller?, sources?, adjudicated?, labels}` |
+| `../labels/agreement.mjs` | Expected, currency, row, readable and per-tag agreement (counts and rates), disagreement ids, currency-undetermined share of real `cart-1` and evidence-rule counts per stream; exit 3 on a stop rule (expected agreement below 90%, more than 10% undetermined). `--adjudication` (`reader-adjudication.1`) merges: agreed labels keep the common fields, the union of tags, confidence low if either was low, empty notes; refused when a decision isn't a disagreement, a disagreement has no decision, or the adjudicator labelled the split |
+| `../labels/freeze.mjs` | Writes `snapshot-manifest.json` (`reader-snapshots.1`: every labelled real page-state's dom and render SHA-256s, re-hashed from the files and checked against the labels; robot states checked against `sites.json`) and `freeze.json` (`reader-freeze.1`: SHA-256 of the final labels, variant manifests, snapshot manifest, `currency-minor-units.json`, `item-price-bands.json`, `retail-frame-3.json`, `splits.json`; commit and UTC). `--check` re-hashes them (and, with `--data`, every pane snapshot) |
+
 ## Robot (`.1`–`.7`)
 
 Captures real retail pages for the generic reader evaluation (Phase 12.2, [plan](../../../wiki/product/phase-12-reader-eval.md), [protocol](../../../docs/evals/generic-reader-protocol.md#capture-posture), `generic-reader-protocol.7`). It drives a headed Chromium on a capture-only profile with Playwright, one site per run: first a look-only **reconnaissance session** that finds the listing, item and cart and writes the draft recipe, then one capture session from the committed **recipe**. The posture rules are enforced in code; they don't depend on the operator. No reader, prototype reader or replay hook runs during capture.
