@@ -1,0 +1,448 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "almanea.sa",
+  "stream": "non-us",
+  "visit": 71,
+  "session": 1,
+  "entryHost": "www.almanea.sa",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a7ec5d17808ffece1",
+  "startUtc": "2026-10-07T08:09:53.387Z",
+  "endUtc": "2026-10-07T08:13:01.735Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.almanea.sa",
+      "status": 200,
+      "sha256": "aea94ff790d54588371940727093d1af7777a1447af0582bf49de95d3830d20e",
+      "bytes": 454,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.almanea.sa/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.almanea.sa/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.almanea.sa/small-appliances-c-523/personal-care-c-545"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.almanea.sa/cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.almanea.sa/small-appliances-c-523/personal-care-c-545"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.almanea.sa/product/vgr-professional-digital-shaver-dry-gold-v-921-p-160132701999024"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.almanea.sa/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "personal care listing"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (starting count)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "personal care listing"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "product link V-921 (did not navigate)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product V-921"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "add to cart (Arabic)"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (city chooser modal)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (final count)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "efde68fecff7d29ea15f8f4b8d51594ba4e6de12510f8261e0c1c063a46aa7a0",
+      "bytes": 92108,
+      "chunks": 1,
+      "url": "https://www.almanea.sa/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "814dcfb516df3d2743484ee177d44989978712a28ea0c11c31de00cb0eb22da1",
+      "bytes": 541671,
+      "chunks": 2,
+      "url": "https://www.almanea.sa/product/vgr-professional-digital-shaver-dry-gold-v-921-p-160132701999024"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart opens a mandatory delivery-city chooser (location input beyond size/colour)"
+    },
+    {
+      "state": "cart-1",
+      "reason": "no item added: needs-input"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "no item added: needs-input"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no item added: needs-input"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.almanea.sa/small-appliances-c-523/personal-care-c-545",
+    "productUrl": "https://www.almanea.sa/product/vgr-professional-digital-shaver-dry-gold-v-921-p-160132701999024",
+    "price": "149 SAR",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "SAR",
+  "observedRegion": "SA",
+  "outcome": {
+    "status": "excluded",
+    "code": "needs-input",
+    "evidenceSha256": "814dcfb516df3d2743484ee177d44989978712a28ea0c11c31de00cb0eb22da1"
+  },
+  "challenge": null,
+  "problems": [
+    "Add-to-cart opened a modal requiring the shopper to choose a delivery city (searchable list); this is a location choice, not size/colour, so it was not made; cart stayed empty.",
+    "The city gate appears site-wide (header shows a city chooser), so other items were not tried.",
+    "Cookie banner offers only accept/customise, no decline; left alone.",
+    "robots.txt disallows /cart and /checkout for *; recorded only.",
+    "First click on the product link did not navigate; opened the product by URL instead."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:09:53.387Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:09:54.519Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:09:54.525Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:09:57.705Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:10:01.509Z",
+      "tool": "navigate",
+      "url": "https://www.almanea.sa/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:10:01.558Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:10:09.581Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:10:14.070Z",
+      "tool": "navigate",
+      "url": "https://www.almanea.sa/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:10:14.072Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:10:23.152Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:10:23.154Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:10:29.790Z",
+      "tool": "navigate",
+      "url": "https://www.almanea.sa/:token/:token"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:10:29.795Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:10:36.112Z",
+      "tool": "navigate",
+      "url": "https://www.almanea.sa/cart"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:10:36.113Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:10:41.317Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:10:41.321Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:11:15.896Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:11:20.680Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:11:25.018Z",
+      "tool": "navigate",
+      "url": "https://www.almanea.sa/:token/:token"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:11:25.023Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:11:29.728Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:11:29.732Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:11:34.525Z",
+      "tool": "navigate",
+      "url": "https://www.almanea.sa/product/:token"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:11:34.529Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:11:40.288Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:11:40.291Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:11:40.291Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:11:51.409Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:11:58.134Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:12:19.700Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T08:12:22.671Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T08:12:25.477Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T08:12:29.080Z",
+      "tool": "navigate",
+      "url": "https://www.almanea.sa/cart"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T08:12:29.682Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T08:12:30.112Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T08:12:37.756Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T08:12:54.201Z",
+      "tool": "Write"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T08:13:01.735Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "efde68fecff7d29ea15f8f4b8d51594ba4e6de12510f8261e0c1c063a46aa7a0"
+      },
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "814dcfb516df3d2743484ee177d44989978712a28ea0c11c31de00cb0eb22da1"
+      }
+    ],
+    "errors": []
+  }
+}

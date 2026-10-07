@@ -1,0 +1,267 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "oliveyoung.co.kr",
+  "stream": "non-us",
+  "visit": 89,
+  "session": 1,
+  "entryHost": "m.oliveyoung.co.kr",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-ae73e315ac49a25e4",
+  "startUtc": "2026-10-07T08:35:16.468Z",
+  "endUtc": "2026-10-07T08:36:31.825Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "m.oliveyoung.co.kr",
+      "status": 200,
+      "sha256": "af0a11bfe06f6c4cbc77531d51ce50f967fe157c37878f55c1771b31c87d544d",
+      "bytes": 19097,
+      "rootDisallowed": true,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    },
+    {
+      "host": "www.oliveyoung.co.kr",
+      "status": 200,
+      "sha256": "f768aece65c1ef26cd2520796dc06cd0035f0b00418ae404e6f8a50799de4704",
+      "bytes": 9372,
+      "rootDisallowed": true,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://m.oliveyoung.co.kr/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.oliveyoung.co.kr/store/main/main.do"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.oliveyoung.co.kr/robots.txt"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.oliveyoung.co.kr/store/cart/getCart.do"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "m.oliveyoung.co.kr/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "m.oliveyoung.co.kr robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry m.oliveyoung.co.kr/ (to www)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "www.oliveyoung.co.kr/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "www.oliveyoung.co.kr robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart getCart.do (to login page)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart URL redirected to the sign-in page (sign-in wall)"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at sign-in wall before any add"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at sign-in wall"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at sign-in wall"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at sign-in wall"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "KRW",
+  "observedRegion": "KR",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Entry m.oliveyoung.co.kr/ redirected to www.oliveyoung.co.kr/store/main/main.do (same registrable domain, frame host); www robots.txt read after that landing.",
+    "Opening the cart URL www.oliveyoung.co.kr/store/cart/getCart.do landed on the login page (title '로그인 | 올리브영', CJ ONE ID/password form): sign-in wall; stopped, no evidence export (not a judgement exclusion).",
+    "robots.txt on both hosts: User-agent * Disallow: / (recorded only; cart paths /m/cart and /store/cart also disallowed for named AI bots).",
+    "One stray chunk fetch (window.__aiCheckoutPaneExport.chunk(0)) was run on the robots.txt page with no export present; it errored (undefined) and returned nothing.",
+    "Starting cart count unknown: cart not viewable without sign-in."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:35:16.468Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:35:17.747Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:35:17.753Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:35:20.426Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:35:23.928Z",
+      "tool": "navigate",
+      "url": "https://m.oliveyoung.co.kr/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:35:23.947Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:35:31.696Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:35:35.978Z",
+      "tool": "navigate",
+      "url": "https://m.oliveyoung.co.kr/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:35:35.982Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:35:45.937Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:35:49.482Z",
+      "tool": "navigate",
+      "url": "https://www.oliveyoung.co.kr/robots.txt"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:35:51.762Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:35:55.460Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:35:58.441Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:36:00.791Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:36:03.887Z",
+      "tool": "navigate",
+      "url": "https://www.oliveyoung.co.kr/store/cart/getCart.do"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:36:04.263Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:36:12.050Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:36:26.047Z",
+      "tool": "Write"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:36:31.825Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

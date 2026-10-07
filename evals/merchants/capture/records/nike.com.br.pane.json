@@ -1,0 +1,183 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "nike.com.br",
+  "stream": "non-us",
+  "visit": 92,
+  "session": 1,
+  "entryHost": "www.nike.com.br",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-aabdd9232de12eb08",
+  "startUtc": "2026-10-07T08:39:38.221Z",
+  "endUtc": "2026-10-07T08:40:28.741Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.nike.com.br",
+      "status": 200,
+      "sha256": "5ac57838ccbf3c7a78c491dfdff100a91754b355f85e0923946c5da852bbe38a",
+      "bytes": 760,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.nike.com.br/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.nike.com.br/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall on entry page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.nike.com.br/",
+    "title": "Access Denied",
+    "marker": "Akamai errors.edgesuite.net reference",
+    "wording": "Access Denied. You don't have permission to access \"http://www.nike.com.br/\" on this server."
+  },
+  "problems": [
+    "Akamai Access Denied page on the first storefront load (right after robots.txt); not exported, per protocol",
+    "robots.txt disallows only /carrinho? with a query; the /carrinho path itself and checkout are not disallowed",
+    "Signed-in state and starting cart count could not be observed (null)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:39:38.221Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:39:39.885Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:39:39.893Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:39:43.157Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:39:46.270Z",
+      "tool": "navigate",
+      "url": "https://www.nike.com.br/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:39:50.550Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:40:00.225Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:40:04.449Z",
+      "tool": "navigate",
+      "url": "https://www.nike.com.br/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:40:04.454Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:40:11.507Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:40:21.843Z",
+      "tool": "Write"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:40:28.741Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

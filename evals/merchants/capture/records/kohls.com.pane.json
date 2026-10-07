@@ -1,0 +1,362 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "kohls.com",
+  "stream": "us",
+  "visit": 91,
+  "session": 1,
+  "entryHost": "www.kohls.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a1dd13443f2753410",
+  "startUtc": "2026-10-07T08:08:36.664Z",
+  "endUtc": "2026-10-07T08:12:01.176Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 1,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": false,
+      "note": "no remove control in the added-to-cart panel; the cart page is /checkout/shopping_cart.jsp, a checkout-segment path the checklist forbids opening, so the item was left in the cart"
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.kohls.com",
+      "status": 200,
+      "sha256": "34e4531975ae299979abc82cc03eeb9b9fd63916204eab515fb2f8219b4805e1",
+      "bytes": 766,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.kohls.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.kohls.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.kohls.com/catalog/sale-yankee-candle-candles-home-decor.jsp"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.kohls.com/product/prd-7725196/yankee-candle-apple-pumpkin-large-jar-scented-candle-22-oz.jsp"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home page"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Yankee Candle candles."
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Yankee Candle Apple Pumpkin Large Jar Sc"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "4c0ff5e216392f09e4861b76217644caa2be7011e19eee165b6730bc99b7d573",
+      "bytes": 2238786,
+      "chunks": 6,
+      "url": "https://www.kohls.com/product/prd-7725196/yankee-candle-apple-pumpkin-large-jar-scented-candle-22-oz.jsp",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart page is /checkout/shopping_cart.jsp (checkout path segment, forbidden to open); header showed 0 items at start"
+    },
+    {
+      "state": "cart-1",
+      "reason": "would-need-forbidden-action: the only cart page (View Cart and header cart link) is /checkout/shopping_cart.jsp"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "needs the cart page, a checkout-segment path"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no lingering items; not attempted"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.kohls.com/catalog/sale-yankee-candle-candles-home-decor.jsp",
+    "productUrl": "https://www.kohls.com/product/prd-7725196/yankee-candle-apple-pumpkin-large-jar-scented-candle-22-oz.jsp",
+    "price": "$19.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "incomplete",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Kohl's cart page is /checkout/shopping_cart.jsp; the checkout-segment rule (only Magento /checkout/cart excepted) forbids opening it, so only minicart-1 (the Added to Cart for Shipping panel) was exported. Reviewer: decide whether this cart path should be allowed in a later session.",
+    "Own item (1 candle, $19.99) left in the shared-profile cart: no remove control outside the forbidden cart page. End cart count 1 vs start 0.",
+    "All 6 minicart-1 chunks were oversized and saved by the harness to tool-results files (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:08:36.664Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:08:37.804Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:08:37.812Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:08:40.768Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:08:47.423Z",
+      "tool": "navigate",
+      "url": "https://www.kohls.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:08:47.583Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:08:59.762Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:09:03.525Z",
+      "tool": "navigate",
+      "url": "https://www.kohls.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:09:03.529Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:09:10.795Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:09:18.061Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:09:18.065Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:09:30.306Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:09:41.214Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:09:45.421Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:09:45.422Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:09:49.409Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:09:53.329Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:09:56.717Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:10:02.422Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:10:02.711Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:10:02.712Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:10:12.155Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:10:41.515Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:10:45.420Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:10:49.669Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:10:53.945Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:11:03.645Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:11:07.958Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:11:11.708Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:11:25.376Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T08:11:30.065Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T08:11:51.212Z",
+      "tool": "Write"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T08:12:01.176Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "4c0ff5e216392f09e4861b76217644caa2be7011e19eee165b6730bc99b7d573"
+      }
+    ],
+    "errors": []
+  }
+}

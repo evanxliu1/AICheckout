@@ -1,0 +1,345 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "cashcrusaders.co.za",
+  "stream": "non-us",
+  "visit": 87,
+  "session": 1,
+  "entryHost": "cashcrusaders.co.za",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a82d14243bfd5f3ec",
+  "startUtc": "2026-10-07T08:32:14.180Z",
+  "endUtc": "2026-10-07T08:35:49.061Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "cashcrusaders.co.za",
+      "status": 200,
+      "sha256": "0efc1000df8a9ab22e5fc534a9837a5d0f53a59fac3936ba0a040f3adbde8eae",
+      "bytes": 165,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://cashcrusaders.co.za/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://cashcrusaders.co.za/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://cashcrusaders.co.za/browse/newgoods"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://cashcrusaders.co.za/new-goods/dxnpro-4-3-way-kevlar-component-car-speakers/stockcode44767"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Browse New Goods"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/browse/newgoods (click did not navigate)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "DXNPRO 4\" 3-Way Kevlar Component Car Spe"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Select Store"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "050209ae5293a275d6e96ccf6d4568b59c275202144efe53cd999e7e37474909",
+      "bytes": 424738,
+      "chunks": 2,
+      "url": "https://cashcrusaders.co.za/new-goods/dxnpro-4-3-way-kevlar-component-car-speakers/stockcode44767"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "store exclusion needs-input before any cart was opened"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "needs-input: product page has no add-to-cart until a store is selected"
+    },
+    {
+      "state": "cart-1",
+      "reason": "needs-input"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "needs-input"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "needs-input"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://cashcrusaders.co.za/browse/newgoods",
+    "productUrl": "https://cashcrusaders.co.za/new-goods/dxnpro-4-3-way-kevlar-component-car-speakers/stockcode44767",
+    "price": "R319.90 (displayed as R319 with superscript 90)",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "ZAR",
+  "observedRegion": "ZA",
+  "outcome": {
+    "status": "excluded",
+    "code": "needs-input",
+    "evidenceSha256": "050209ae5293a275d6e96ccf6d4568b59c275202144efe53cd999e7e37474909"
+  },
+  "challenge": null,
+  "problems": [
+    "Product page offers only a 'Select Store' button instead of add-to-cart; the store-switch modal needs a typed 'Search Location' or 'Use my current location' (geolocation). Page says 'Online orders are processed one store at a time.' Store choice is not a size/colour choice, so every item is ineligible.",
+    "Starting cart count not readable: header mini-cart showed 'Loading Cart'; header Cart link points to shop.cashcrusaders.co.za (a host outside the frame's hosts), not loaded.",
+    "Not signed in (header shows Login).",
+    "Clicking 'Browse New Goods' on the home page did not navigate; opened the same-site href by URL.",
+    "Chunk 0 of evidence-1 was oversized and saved by the harness to a tool-results file (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:32:14.180Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:32:14.831Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:32:15.051Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:32:17.171Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:32:25.881Z",
+      "tool": "navigate",
+      "url": "https://cashcrusaders.co.za/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:32:25.935Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:32:34.039Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:32:54.125Z",
+      "tool": "navigate",
+      "url": "https://cashcrusaders.co.za/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:32:54.127Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:33:01.534Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:33:01.538Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:33:05.529Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:33:12.780Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:33:18.096Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:33:21.829Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:33:26.910Z",
+      "tool": "navigate",
+      "url": "https://cashcrusaders.co.za/browse/newgoods"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:33:26.913Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:33:39.734Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:33:49.979Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:33:58.853Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:34:03.630Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:34:07.880Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:34:15.209Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:34:19.518Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:34:22.812Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:35:07.732Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:35:12.468Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:35:16.017Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:35:20.996Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:35:39.724Z",
+      "tool": "Write"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:35:49.061Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "050209ae5293a275d6e96ccf6d4568b59c275202144efe53cd999e7e37474909"
+      }
+    ],
+    "errors": []
+  }
+}

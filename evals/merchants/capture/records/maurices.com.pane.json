@@ -1,0 +1,675 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "maurices.com",
+  "stream": "us",
+  "visit": 97,
+  "session": 1,
+  "entryHost": "www.maurices.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-af9e4db0bf822b9a8",
+  "startUtc": "2026-10-07T08:13:40.262Z",
+  "endUtc": "2026-10-07T08:20:39.380Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.maurices.com",
+      "status": 200,
+      "sha256": "8e37fa59d96d26e300fcd56ca21e0736b48813b60063f97db4938c335876f248",
+      "bytes": 8192,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.maurices.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.maurices.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.maurices.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.maurices.com/category/clothing/tops/shirts-and-blouses"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.maurices.com/product/split-neck-henley-3-4-sleeve-blouse/242859"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.maurices.com/product/split-neck-henley-3-4-sleeve-blouse/242859"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.maurices.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "Close (cookie banner, no reject option)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "shirts & blouses listing"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Split Neck Henley 3/4 Sleeve Blouse"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "radio",
+      "name": "MEDIUM"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "add to bag"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increment Quantity for Split Neck Henley"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Yes, remove item"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "c7f3dbbdd56a052aa2c1c94018351526357700016d607e91cd62fb5d7550b235",
+      "bytes": 573421,
+      "chunks": 2,
+      "url": "https://www.maurices.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "967cff756ffe7511f53089aaca878a44f5e6d0d9d33646dd6ff942e3bcb800d6",
+      "bytes": 765374,
+      "chunks": 2,
+      "url": "https://www.maurices.com/product/split-neck-henley-3-4-sleeve-blouse/242859",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "1dd82301b5c2ffe003b9e40aa3263cf9661ec48566bd3e1414e6dd381a40baa6",
+      "bytes": 610966,
+      "chunks": 2,
+      "url": "https://www.maurices.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "618daa4931a41c702e66fc051da38f23e158df5ec230f37644c7fb89511fa301",
+      "bytes": 616582,
+      "chunks": 2,
+      "url": "https://www.maurices.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart started empty, core states captured"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.maurices.com/category/clothing/tops/shirts-and-blouses",
+    "productUrl": "https://www.maurices.com/product/split-neck-henley-3-4-sleeve-blouse/242859",
+    "price": "$34.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cookie banner had no reject control at top level; closed it with Close instead of opening settings.",
+    "Navigation 6 is the size-choice radio, which changed the URL query (same path).",
+    "Cart page renders lazily; waited before reading and exporting.",
+    "Remove needed a confirmation dialog ('Yes, remove item').",
+    "robots.txt comments describe AI crawler policy; not addressed to agents, recorded only."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:13:40.262Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:13:41.313Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:13:41.320Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:13:46.891Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:13:53.538Z",
+      "tool": "navigate",
+      "url": "https://www.maurices.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:13:53.543Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:14:01.114Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:14:08.048Z",
+      "tool": "navigate",
+      "url": "https://www.maurices.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:14:08.050Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:14:18.011Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:14:18.014Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:14:18.015Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:14:22.772Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:14:29.770Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:14:29.773Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:14:29.781Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:14:34.486Z",
+      "tool": "navigate",
+      "url": "https://www.maurices.com/cart"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:14:34.489Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:14:39.687Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:14:39.690Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:15:17.645Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:15:25.003Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:15:28.728Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:15:33.464Z",
+      "tool": "navigate",
+      "url": "https://www.maurices.com/category/clothing/tops/shirts-and-blouses"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:15:33.467Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:15:39.315Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:15:42.753Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:15:45.893Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:15:49.040Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:16:08.437Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:16:08.965Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T08:16:16.899Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T08:16:22.749Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T08:16:22.752Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T08:16:22.752Z",
+      "tool": "find"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T08:16:29.287Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T08:16:33.996Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T08:16:33.997Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T08:16:33.997Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T08:17:06.602Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T08:17:12.812Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T08:17:17.597Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T08:17:33.040Z",
+      "tool": "navigate",
+      "url": "https://www.maurices.com/cart"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T08:17:33.045Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T08:17:33.045Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T08:17:42.672Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T08:17:42.676Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T08:18:16.432Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T08:18:22.646Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T08:18:26.713Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T08:18:30.183Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T08:18:33.527Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T08:18:44.053Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T08:18:44.055Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T08:19:19.967Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T08:19:23.852Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T08:19:27.698Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T08:19:32.216Z",
+      "tool": "find"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T08:19:35.701Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T08:19:39.398Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T08:19:39.447Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T08:19:47.026Z",
+      "tool": "find"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T08:19:47.127Z",
+      "tool": "find"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T08:19:52.418Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T08:19:56.340Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T08:19:56.342Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T08:20:05.561Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T08:20:30.638Z",
+      "tool": "Write"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T08:20:39.380Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "c7f3dbbdd56a052aa2c1c94018351526357700016d607e91cd62fb5d7550b235"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "967cff756ffe7511f53089aaca878a44f5e6d0d9d33646dd6ff942e3bcb800d6"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "1dd82301b5c2ffe003b9e40aa3263cf9661ec48566bd3e1414e6dd381a40baa6"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "618daa4931a41c702e66fc051da38f23e158df5ec230f37644c7fb89511fa301"
+      }
+    ],
+    "errors": []
+  }
+}

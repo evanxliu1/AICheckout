@@ -1,0 +1,204 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "foodlion.com",
+  "stream": "us",
+  "visit": 114,
+  "session": 1,
+  "entryHost": "foodlion.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-ab6b4df250c705a71",
+  "startUtc": "2026-10-07T08:37:07.966Z",
+  "endUtc": "2026-10-07T08:38:01.666Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "foodlion.com",
+      "status": 200,
+      "sha256": "b17803b76e37b7f70c50eaad08a6525173be46f3f8e2b99d3b07f90b955df6ac",
+      "bytes": 3647,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://foodlion.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://foodlion.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry home page"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at DataDome device check on entry"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at DataDome device check on entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at DataDome device check on entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at DataDome device check on entry"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at DataDome device check on entry"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://foodlion.com/",
+    "title": "https://foodlion.com/",
+    "marker": "DataDome device check frame (accessibility tree: generic 'DataDome Device Check'); page otherwise blank",
+    "wording": "DataDome Device Check"
+  },
+  "problems": [
+    "Entry page showed only a DataDome Device Check element with no visible text; stopped without interacting or exporting.",
+    "Robots: '/' allowed for *; /product-search/ and /browse-aisles/ disallowed for *; cart and checkout paths not disallowed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:37:07.966Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:37:09.093Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:37:09.104Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:37:11.260Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:37:18.887Z",
+      "tool": "navigate",
+      "url": "https://foodlion.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:37:18.942Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:37:25.481Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:37:29.111Z",
+      "tool": "navigate",
+      "url": "https://foodlion.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:37:29.540Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:37:32.790Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:37:33.159Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:37:39.578Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:37:43.057Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:37:46.872Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:37:56.460Z",
+      "tool": "Write"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:38:01.666Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

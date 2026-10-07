@@ -1,0 +1,300 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "jd.com",
+  "stream": "non-us",
+  "visit": 75,
+  "session": 1,
+  "entryHost": "item.jd.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a2994d515b6fb8695",
+  "startUtc": "2026-10-07T08:16:39.181Z",
+  "endUtc": "2026-10-07T08:18:29.183Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "item.jd.com",
+      "status": 200,
+      "sha256": "618bcec58130e8449ebc6e70ae594a315e1ed70cd584894e0d7cc0c2cd8040ed",
+      "bytes": 105,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    },
+    {
+      "host": "www.jd.com",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    },
+    {
+      "host": "cart.jd.com",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://item.jd.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://pc-frequent-pro.pf.jd.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://corporate.jd.com/home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://corporate.jd.com/home"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://h5st.m.jd.com/file-no.2/public/error.html"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://passport.jd.com/new/login.aspx"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "item.jd.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "item.jd.com robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "item.jd.com/ (to frequency-control page)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "www.jd.com/robots.txt (to corporate)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "www.jd.com/ (to corporate.jd.com)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart.jd.com/robots.txt (error page)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart.jd.com/cart_index (to login)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart page redirected to passport.jd.com sign-in"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "no storefront reachable; stopped at sign-in wall"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at sign-in wall"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at sign-in wall"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at sign-in wall"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "CNY",
+  "observedRegion": "CN",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://passport.jd.com/new/login.aspx",
+    "title": "京东-欢迎登录",
+    "marker": "cart_index redirected to passport login page (password/SMS/QR login)"
+  },
+  "problems": [
+    "item.jd.com/ redirected to pc-frequent-pro.pf.jd.com (title 'PC频控页', frequency-control page) showing an item-link-invalid message; not treated as a challenge",
+    "www.jd.com/ and www.jd.com/robots.txt redirect this US connection to corporate.jd.com (investor site), so no storefront listing was reachable by ordinary navigation",
+    "cart.jd.com/robots.txt returned an error page; no robots hash recorded for www or cart hosts",
+    "cart.jd.com/cart_index redirected to passport.jd.com login: stopped as sign-in-required; login page not exported",
+    "startCartCount unknown: cart page briefly showed count (0) before the login redirect"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:16:39.181Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:16:40.420Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:16:40.427Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:16:43.889Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:16:51.462Z",
+      "tool": "navigate",
+      "url": "https://item.jd.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:16:51.520Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:17:01.083Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:17:12.789Z",
+      "tool": "navigate",
+      "url": "https://item.jd.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:17:12.791Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:17:25.259Z",
+      "tool": "navigate",
+      "url": "https://www.jd.com/robots.txt"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:17:25.264Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:17:33.970Z",
+      "tool": "navigate",
+      "url": "https://www.jd.com/"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:17:33.971Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:17:42.149Z",
+      "tool": "navigate",
+      "url": "https://cart.jd.com/robots.txt"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:17:42.155Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:17:52.482Z",
+      "tool": "navigate",
+      "url": "https://cart.jd.com/cart_index"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:17:52.487Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:17:59.299Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:18:08.486Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:18:23.135Z",
+      "tool": "Write"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:18:29.183Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

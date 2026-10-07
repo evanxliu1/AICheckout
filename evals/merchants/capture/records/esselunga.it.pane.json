@@ -1,0 +1,250 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "esselunga.it",
+  "stream": "non-us",
+  "visit": 83,
+  "session": 1,
+  "entryHost": "www.esselunga.it",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-ae839dc0d3861bca1",
+  "startUtc": "2026-10-07T08:25:54.181Z",
+  "endUtc": "2026-10-07T08:27:30.188Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.esselunga.it",
+      "status": 200,
+      "sha256": "958e60bf9b66b659c75d619aae949db477166b12d460cc0291c35f2a83008021",
+      "bytes": 426,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.esselunga.it/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.esselunga.it/it-it/homepage.html"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://account.esselunga.it/area-utenti/applicationCheck"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Continua senza accettare"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Carrello (header cart button)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "header cart button redirects to sign-in page on account.esselunga.it"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at sign-in wall before any item"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at sign-in wall"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at sign-in wall"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at sign-in wall"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EUR",
+  "observedRegion": "IT",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "The header cart button on www.esselunga.it redirected (the site's own redirect) to a login page, title 'Login | Esselunga', at account.esselunga.it/area-utenti/applicationCheck, which robots.txt disallows (/area-utenti*). Stopped there as a sign-in wall; no export taken because sign-in-required is not on the evidence-export list.",
+    "www.esselunga.it is an informational site; online grocery shopping lives on spesaonline.esselunga.it, which is not among the frame hosts, so no product was reached on www.",
+    "Starting cart count unknown: no count shown before the redirect."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:25:54.181Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:25:55.278Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:25:55.286Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:26:01.926Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:26:05.915Z",
+      "tool": "navigate",
+      "url": "https://www.esselunga.it/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:26:05.917Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:26:12.913Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:26:18.012Z",
+      "tool": "navigate",
+      "url": "https://www.esselunga.it/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:26:18.014Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:26:28.539Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:26:28.546Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:26:32.659Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:26:32.662Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:26:36.322Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:26:45.026Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:26:45.030Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:26:50.561Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:26:50.617Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:26:58.466Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:27:05.899Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:27:22.168Z",
+      "tool": "Write"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:27:30.188Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

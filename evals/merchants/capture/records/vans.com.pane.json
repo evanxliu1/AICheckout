@@ -1,0 +1,282 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "vans.com",
+  "stream": "us",
+  "visit": 116,
+  "session": 1,
+  "entryHost": "www.vans.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a94b4fd58df19754c",
+  "startUtc": "2026-10-07T08:38:06.983Z",
+  "endUtc": "2026-10-07T08:39:44.829Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.vans.com",
+      "status": 200,
+      "sha256": "c0185c678f0f850dd2b7d2e0c866c8e8cfea836887aecaece9f080ddfa55ba08",
+      "bytes": 705,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.vans.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.vans.com/en-us"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.vans.com/en-us/c/mens/shoes-1100"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.vans.com/en-us/p/shoes/icons/authentic-5310/authentic-shoe-VN000D7YFST"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Men's Shoes (did not navigate)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Men's Shoes listing (link href)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Authentic Shoe (did not navigate)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Authentic Shoe product (link href)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "stopped at PerimeterX press-and-hold challenge on product page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at PerimeterX press-and-hold challenge on product page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at PerimeterX press-and-hold challenge on product page"
+    },
+    {
+      "state": "empty-cart",
+      "reason": "not exported before challenge; header showed Cart - 0 items"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.vans.com/en-us/c/mens/shoes-1100",
+    "productUrl": "https://www.vans.com/en-us/p/shoes/icons/authentic-5310/authentic-shoe-VN000D7YFST",
+    "price": "$70.00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.vans.com/en-us/p/shoes/icons/authentic-5310/authentic-shoe-VN000D7YFST",
+    "title": "Access to this page has been denied",
+    "vendor": "PerimeterX/HUMAN (press and hold)",
+    "wording": "BEFORE WE CONTINUE... Press & Hold to confirm you are a human (and not a bot)."
+  },
+  "problems": [
+    "Link clicks by ref did not navigate (pane hidden); navigated to the link hrefs by URL instead",
+    "PerimeterX press-and-hold challenge on the first product page; not interacted with, not exported",
+    "No add made, so no removals; end cart count not re-read after the stop"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:38:06.983Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:38:07.628Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:38:07.932Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:38:17.062Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:38:20.733Z",
+      "tool": "navigate",
+      "url": "https://www.vans.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:38:20.790Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:38:27.655Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:38:32.282Z",
+      "tool": "navigate",
+      "url": "https://www.vans.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:38:32.287Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:38:36.627Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:38:43.663Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:38:44.089Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:38:49.566Z",
+      "tool": "navigate",
+      "url": "https://www.vans.com/en-us/c/mens/shoes-1100"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:38:49.571Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:38:55.074Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:38:58.767Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:38:58.795Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:39:07.140Z",
+      "tool": "navigate",
+      "url": "https://www.vans.com/en-us/p/shoes/icons/authentic-5310/:token"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:39:07.144Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:39:11.796Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:39:11.801Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:39:19.065Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:39:37.009Z",
+      "tool": "Write"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:39:44.829Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

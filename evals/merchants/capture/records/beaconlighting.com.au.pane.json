@@ -1,0 +1,801 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "beaconlighting.com.au",
+  "stream": "non-us",
+  "visit": 80,
+  "session": 1,
+  "entryHost": "www.beaconlighting.com.au",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-aa90b8f17b9b52fc2",
+  "startUtc": "2026-10-07T08:23:42.633Z",
+  "endUtc": "2026-10-07T08:28:44.133Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2 line)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.beaconlighting.com.au",
+      "status": 200,
+      "sha256": "ede00a68fe6665a06dba84304c292d23f865fd97ef292f88da5ff7e721309372",
+      "bytes": 689,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.beaconlighting.com.au/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.beaconlighting.com.au/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.beaconlighting.com.au/cart/review"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.beaconlighting.com.au/interior/lamps/table-lamps"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.beaconlighting.com.au/misha-ceramic-table-lamp-in-fawn"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.beaconlighting.com.au/cart/review"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (start count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Table Lamps listing (menu link)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "heading",
+      "name": "Misha Ceramic Table Lamp in Fawn"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "product card link (no navigation)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (listing href)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart - $149.00 (blocked by overlay)"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Cookie Settings"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "REJECT ALL"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart - $149.00"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "57478787a35330de077db38aa21fdc13d1ac6de1fa823880dfbdf8ed01e2a2c6",
+      "bytes": 457248,
+      "chunks": 2,
+      "url": "https://www.beaconlighting.com.au/cart/review",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "5d6edd30ce54afafb15dcc8a7f4745a464bc8a7b0fa21c2cf1f1d4b74a9c0325",
+      "bytes": 1383572,
+      "chunks": 4,
+      "url": "https://www.beaconlighting.com.au/misha-ceramic-table-lamp-in-fawn",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "f4f88d24adf41b61b7563e29d1f17a2227757e7945cee20329b6aba8a9a5a8c6",
+      "bytes": 444610,
+      "chunks": 2,
+      "url": "https://www.beaconlighting.com.au/cart/review",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "605b56a16935234419cd05ce92b9841049cf300d8b4126306f552a2fcf01f309",
+      "bytes": 446649,
+      "chunks": 2,
+      "url": "https://www.beaconlighting.com.au/cart/review",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; focus on core cart states, cart started empty"
+    },
+    {
+      "state": "cart-other",
+      "reason": "cart held no lingering items"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.beaconlighting.com.au/interior/lamps/table-lamps",
+    "productUrl": "https://www.beaconlighting.com.au/misha-ceramic-table-lamp-in-fawn",
+    "price": "149.00 AUD",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "AUD",
+  "observedRegion": "AU",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt disallows /cart/ and /checkout/ for *; cart page /cart/review visited (recorded only, per .8)",
+    "cookie consent modal overlay intercepted clicks (first add-to-cart and listing link clicks had no effect); declined via Cookie Settings > Reject all",
+    "product page opened by URL from the listing's own link href after the overlay blocked the click",
+    "one stray chunk(0) fetch ran on the listing page with no export present (TypeError, no data); allowed text, no effect",
+    "product has a 'Lamp only' / 'Lamp & Globe' radio; left at default 'Lamp only'",
+    "quantity 2 triggered the site's '30% off any second item' promo: cart-qty2 shows a strikethrough and discounted line total"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:23:42.633Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:23:43.767Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:23:43.772Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:23:47.133Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:23:51.108Z",
+      "tool": "navigate",
+      "url": "https://www.beaconlighting.com.au/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:23:51.186Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:23:58.843Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:24:05.830Z",
+      "tool": "navigate",
+      "url": "https://www.beaconlighting.com.au/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:24:05.838Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:24:10.590Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:24:10.596Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:24:16.145Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:24:16.159Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:24:19.630Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:24:19.709Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:24:23.635Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:24:28.205Z",
+      "tool": "navigate",
+      "url": "https://www.beaconlighting.com.au/cart/review"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:24:28.208Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:24:39.903Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:24:40.261Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:24:45.832Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:25:07.051Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:25:09.631Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:25:12.390Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:25:15.397Z",
+      "tool": "navigate",
+      "url": "https://www.beaconlighting.com.au/interior/lamps/table-lamps"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:25:15.914Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:25:19.910Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:25:22.533Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:25:22.843Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:25:26.088Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:25:29.361Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T08:25:29.878Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T08:25:32.393Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T08:25:32.828Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T08:25:36.175Z",
+      "tool": "navigate",
+      "url": "https://www.beaconlighting.com.au/misha-ceramic-table-lamp-in-fawn"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T08:25:36.561Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T08:25:40.183Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T08:25:42.791Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T08:25:43.178Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T08:25:46.737Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T08:25:46.926Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T08:25:47.442Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T08:25:52.480Z",
+      "tool": "find"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T08:25:52.808Z",
+      "tool": "find"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T08:25:55.221Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T08:25:58.059Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T08:26:00.472Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T08:26:00.902Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T08:26:04.017Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T08:26:06.730Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T08:26:07.110Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T08:26:10.217Z",
+      "tool": "find"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T08:26:13.938Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T08:26:14.321Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T08:26:18.634Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T08:26:19.055Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T08:26:21.644Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T08:26:22.181Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T08:26:25.365Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T08:26:25.746Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T08:26:26.362Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T08:26:49.000Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T08:26:52.479Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T08:26:53.158Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T08:26:54.007Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T08:26:54.713Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T08:26:58.926Z",
+      "tool": "navigate",
+      "url": "https://www.beaconlighting.com.au/cart/review"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T08:26:58.983Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T08:26:59.432Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-07T08:27:24.072Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-07T08:27:27.073Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-07T08:27:27.546Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-07T08:27:30.685Z",
+      "tool": "find"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-07T08:27:33.257Z",
+      "tool": "find"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-07T08:27:33.636Z",
+      "tool": "find"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-07T08:27:36.907Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-07T08:27:37.042Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-07T08:27:37.473Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-07T08:28:00.455Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-07T08:28:03.959Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-07T08:28:04.440Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-07T08:28:07.845Z",
+      "tool": "find"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-07T08:28:10.856Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-07T08:28:11.255Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-07T08:28:11.780Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 85,
+      "utc": "2026-10-07T08:28:16.233Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 86,
+      "utc": "2026-10-07T08:28:37.267Z",
+      "tool": "Write"
+    },
+    {
+      "n": 87,
+      "utc": "2026-10-07T08:28:44.133Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "5d6edd30ce54afafb15dcc8a7f4745a464bc8a7b0fa21c2cf1f1d4b74a9c0325"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "f4f88d24adf41b61b7563e29d1f17a2227757e7945cee20329b6aba8a9a5a8c6"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "605b56a16935234419cd05ce92b9841049cf300d8b4126306f552a2fcf01f309"
+      }
+    ],
+    "errors": [
+      {
+        "target": "empty-cart",
+        "error": "undecodable-chunk-0"
+      }
+    ]
+  }
+}

@@ -8,9 +8,9 @@
   "session": 1,
   "entryHost": "m.marshalls.com",
   "operator": "claude-code/claude-opus-5-5",
-  "transcriptId": null,
-  "startUtc": null,
-  "endUtc": null,
+  "transcriptId": "wf_d6c28255-d7d/agent-accf3dca9297e059f",
+  "startUtc": "2026-10-07T08:07:12.741Z",
+  "endUtc": "2026-10-07T08:08:40.777Z",
   "signedIn": false,
   "startCartCount": null,
   "endCartCount": null,
@@ -27,27 +27,77 @@
     }
   ],
   "navigations": [
-    { "n": 1, "utc": null, "url": "https://m.marshalls.com/robots.txt" },
-    { "n": 2, "utc": null, "url": "https://m.marshalls.com/us/m/index.jsp" }
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://m.marshalls.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://m.marshalls.com/us/m/index.jsp"
+    }
   ],
   "actions": [
-    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
-    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
-    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "entry host root" }
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host root"
+    }
   ],
   "states": [],
   "evidence": [],
   "notReached": [
-    { "state": "empty-cart", "reason": "blocked-bot-wall at entry" },
-    { "state": "minicart-1", "reason": "blocked-bot-wall at entry" },
-    { "state": "cart-1", "reason": "blocked-bot-wall at entry" },
-    { "state": "cart-qty2", "reason": "blocked-bot-wall at entry" },
-    { "state": "cart-2items", "reason": "blocked-bot-wall at entry" }
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall at entry"
+    }
   ],
-  "itemPath": { "listingUrl": "", "productUrl": "", "price": "", "secondProductUrl": null },
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
   "observedCurrency": "",
   "observedRegion": null,
-  "outcome": { "status": "excluded", "code": "blocked-bot-wall", "evidenceSha256": null },
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
   "challenge": {
     "url": "https://m.marshalls.com/us/m/index.jsp",
     "title": "",
@@ -59,5 +109,91 @@
     "Reviewer flag: a read_page call a few seconds later showed the interstitial had resolved by itself to www.marshalls.com/us/store/index.jsp with store content (not signed in). I did not act on that page; the challenge had already been seen, so the store was stopped as blocked-bot-wall.",
     "Reviewer flag: the site's cart link is www.marshalls.com/us/store/checkout/cart.jsp, which has a 'checkout' segment (not Magento), so cart-page states would be a forbidden path under the checklist even without the block. robots.txt disallows /us/store/checkout/ for *, which also covers the cart; recorded as cartDisallowed true.",
     "Start and end cart counts not read (stopped before any cart view)."
-  ]
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:07:12.741Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:07:13.942Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:07:13.949Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:07:16.488Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:07:23.056Z",
+      "tool": "navigate",
+      "url": "https://m.marshalls.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:07:23.070Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:07:35.216Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:07:40.231Z",
+      "tool": "navigate",
+      "url": "https://m.marshalls.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:07:40.284Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:07:45.004Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:07:57.247Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:08:03.938Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:08:12.925Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:08:31.450Z",
+      "tool": "Write"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:08:40.777Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
 }

@@ -1,0 +1,511 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "delitea.se",
+  "stream": "non-us",
+  "visit": 73,
+  "session": 1,
+  "entryHost": "www.delitea.se",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a721c260e6c31c33d",
+  "startUtc": "2026-10-07T08:13:23.129Z",
+  "endUtc": "2026-10-07T08:17:04.735Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2 -> 1, decrease control in cart drawer)",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "item": "own item 1 (qty 1 -> 0, decrease control in cart drawer)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.delitea.se",
+      "status": 200,
+      "sha256": "459de62fcc73fa6ad47f4e674367a652451cce02856e7dfd738e056712ab1d6f",
+      "bytes": 406,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.delitea.se/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.delitea.se/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.delitea.se/frantoio-muraglia-extra-virgin-olivolja-regnbagskrus-500ml"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home page"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Avvisa"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Frantoio Muraglia Extra Virgin Olivolja"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Köp"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Varukorg (header cart icon)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Öka antal Frantoio Muraglia Extra Virgin"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Minska antal Frantoio Muraglia Extra Vi"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Minska antal Frantoio Muraglia Extra Vi"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "757b44364a480bf7e8ba7537028673354455601bf96341e3bb192258d4d5e60e",
+      "bytes": 620802,
+      "chunks": 2,
+      "url": "https://www.delitea.se/frantoio-muraglia-extra-virgin-olivolja-regnbagskrus-500ml",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "7cd24de46e9c2c087776692d937fe5756c463c06e1da71e15b2855ac66385879",
+      "bytes": 621034,
+      "chunks": 2,
+      "url": "https://www.delitea.se/frantoio-muraglia-extra-virgin-olivolja-regnbagskrus-500ml",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "199181d350f7d1cc657d695e95924056c24a3adc30aebf1efde65649be099d5a",
+      "bytes": 607097,
+      "chunks": 2,
+      "url": "https://www.delitea.se/frantoio-muraglia-extra-virgin-olivolja-regnbagskrus-500ml",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-1",
+      "reason": "no standalone cart page: the cart drawer's only link leads to /nyakassan (the checkout, robots-disallowed); the drawer itself was exported as minicart-1"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no lingering items; not attempted"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.delitea.se/",
+    "productUrl": "https://www.delitea.se/frantoio-muraglia-extra-virgin-olivolja-regnbagskrus-500ml",
+    "price": "495 kr",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "SEK",
+  "observedRegion": "SE",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cart exists only as an in-page drawer on the product page; the drawer's 'Till kassan' link goes to /nyakassan (Swedish 'new checkout'), which was not opened. cart-qty2 and empty-cart are exports of that same drawer (qty 2 at 990 kr; then emptied). Reviewer: confirm drawer states are acceptable as cart states.",
+    "Own item removed by clicking the drawer's decrease control twice (no separate remove control); recorded as remove-item.",
+    "All chunks of all three exports were oversized and saved by the harness to tool-results files (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:13:23.129Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:13:24.241Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:13:24.247Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:13:30.017Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:13:32.837Z",
+      "tool": "navigate",
+      "url": "https://www.delitea.se/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:13:33.049Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:13:42.641Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:13:47.785Z",
+      "tool": "navigate",
+      "url": "https://www.delitea.se/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:13:47.794Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:13:54.757Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:13:54.759Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:13:59.933Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:14:05.430Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:14:09.193Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:14:11.801Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:14:14.458Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:14:16.981Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:14:20.947Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:14:23.455Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:14:26.400Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:14:29.336Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:14:31.694Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:14:34.467Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:14:37.617Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:14:40.028Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:15:00.869Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:15:03.791Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:15:06.818Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:15:11.385Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:15:16.891Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:15:19.635Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T08:15:23.105Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T08:15:43.806Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T08:15:47.143Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T08:15:50.250Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T08:15:53.651Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T08:15:56.713Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T08:15:59.005Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T08:16:01.762Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T08:16:02.212Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T08:16:06.944Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T08:16:09.680Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T08:16:30.954Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T08:16:33.695Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T08:16:36.548Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T08:16:39.499Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T08:16:39.969Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T08:16:59.171Z",
+      "tool": "Write"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T08:17:04.735Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "757b44364a480bf7e8ba7537028673354455601bf96341e3bb192258d4d5e60e"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "7cd24de46e9c2c087776692d937fe5756c463c06e1da71e15b2855ac66385879"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "199181d350f7d1cc657d695e95924056c24a3adc30aebf1efde65649be099d5a"
+      }
+    ],
+    "errors": []
+  }
+}
