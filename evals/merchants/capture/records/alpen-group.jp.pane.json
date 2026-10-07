@@ -1,0 +1,559 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "alpen-group.jp",
+  "stream": "non-us",
+  "visit": 56,
+  "session": 1,
+  "entryHost": "store.alpen-group.jp",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a27d3492cc02383d5",
+  "startUtc": "2026-10-07T07:46:58.589Z",
+  "endUtc": "2026-10-07T07:51:25.163Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "store.alpen-group.jp",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false,
+      "note": "/robots.txt redirected to the store home page (/); no robots.txt served, hash script not run on a non-robots page"
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://store.alpen-group.jp/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://store.alpen-group.jp/Form/Order/CartList.aspx"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://store.alpen-group.jp/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://store.alpen-group.jp/Form/Product/ProductList.aspx"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://store.alpen-group.jp/Form/Product/ProductDetail.aspx"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://store.alpen-group.jp/Form/Product/ProductDetail.aspx"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://store.alpen-group.jp/Form/Order/CartList.aspx"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://store.alpen-group.jp/Form/Order/CartList.aspx"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt (redirected to /)"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page (start count)"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "swim cap listing (cat=128006)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "product tile 2ウェイシリコーンキャップ"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "link",
+      "name": "カートに入れる"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "カートへ進む"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "削除"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "a8e4ef4baf5a462c073e6ff6368d8d0768ba8fe859e5dcae20228f41eec6e15c",
+      "bytes": 2385948,
+      "chunks": 6,
+      "url": "https://store.alpen-group.jp/Form/Order/CartList.aspx",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "296d758d0d84b20790430ffe62c6fc77b0ce2b53b34dec6f5cfc4c56369a1438",
+      "bytes": 1180344,
+      "chunks": 3,
+      "url": "https://store.alpen-group.jp/Form/Product/ProductDetail.aspx",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "d9d86d25e637b15f973699a68eb1eab51809c0498f34b0802e9797f65e327cfa",
+      "bytes": 2451394,
+      "chunks": 6,
+      "url": "https://store.alpen-group.jp/Form/Order/CartList.aspx",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-qty2",
+      "reason": "cart quantity is a <select> offering only 1; no increment control"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no lingering items; second item not attempted"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://store.alpen-group.jp/Form/Product/ProductList.aspx",
+    "productUrl": "https://store.alpen-group.jp/Form/Product/ProductDetail.aspx",
+    "price": "¥1,989",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "JPY",
+  "observedRegion": "JP",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt request redirected to the home page; no robots hash recorded",
+    "minicart-1 is the add-to-cart confirmation modal on the product page",
+    "all export chunks were oversized and saved to harness tool-results files (not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:46:58.589Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:46:59.757Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:46:59.765Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:47:02.420Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:47:07.010Z",
+      "tool": "navigate",
+      "url": "https://store.alpen-group.jp/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:47:07.138Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:47:20.506Z",
+      "tool": "find"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:47:20.510Z",
+      "tool": "find"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:47:25.113Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:47:28.789Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:47:32.748Z",
+      "tool": "navigate",
+      "url": "https://store.alpen-group.jp/Form/Order/CartList.aspx"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:47:33.024Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:48:03.197Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:48:14.606Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:48:18.892Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:48:22.726Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:48:26.436Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:48:33.544Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:48:37.579Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:48:44.502Z",
+      "tool": "navigate",
+      "url": "https://store.alpen-group.jp/"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T07:48:44.505Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T07:48:48.686Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T07:48:52.768Z",
+      "tool": "navigate",
+      "url": "https://store.alpen-group.jp/Form/Product/ProductList.aspx"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T07:48:52.774Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T07:48:59.742Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T07:49:03.193Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T07:49:10.009Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T07:49:13.700Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T07:49:17.422Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T07:49:20.122Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T07:49:24.204Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T07:49:26.942Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T07:49:29.975Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T07:49:50.747Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T07:49:53.900Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T07:49:57.134Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T07:50:00.137Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T07:50:03.183Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T07:50:06.184Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T07:50:06.554Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T07:50:28.145Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T07:50:31.597Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T07:50:34.754Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T07:50:37.885Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T07:50:41.060Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T07:50:44.046Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T07:50:47.471Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T07:50:50.704Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T07:50:54.836Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T07:50:55.062Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T07:50:58.012Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T07:50:58.441Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T07:51:04.097Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T07:51:20.349Z",
+      "tool": "Write"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T07:51:25.163Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "a8e4ef4baf5a462c073e6ff6368d8d0768ba8fe859e5dcae20228f41eec6e15c"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "296d758d0d84b20790430ffe62c6fc77b0ce2b53b34dec6f5cfc4c56369a1438"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "d9d86d25e637b15f973699a68eb1eab51809c0498f34b0802e9797f65e327cfa"
+      }
+    ],
+    "errors": []
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "hoka.com",
+  "stream": "us",
+  "visit": 75,
+  "session": 1,
+  "entryHost": "www.hoka.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a9054bc44a68b287d",
+  "startUtc": "2026-10-07T07:46:53.561Z",
+  "endUtc": "2026-10-07T07:48:18.444Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.hoka.com",
+      "status": 200,
+      "sha256": "7e03157ee190b912c3b12b4402cc90ea1d718ebed361a5d04beb2b1e824d68fa",
+      "bytes": 9987,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.hoka.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.hoka.com/en/us/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host (redirected to /en/us/)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at DataDome device check on entry page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at DataDome device check on entry page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at DataDome device check on entry page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at DataDome device check on entry page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.hoka.com/en/us/",
+    "title": "https://www.hoka.com/en/us/ (no document title)",
+    "marker": "DataDome",
+    "wording": "DataDome Device Check"
+  },
+  "problems": [
+    "Entry page rendered blank (no text, white screenshot) for over 15 s; accessibility tree showed only a 'DataDome Device Check' element. Not interacted with, not exported.",
+    "Sign-in state and starting cart count could not be checked before the block.",
+    "robots.txt disallows */cart/* and */checkout/* for *; root allowed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:46:53.561Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:46:54.918Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:46:54.921Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:46:57.549Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:47:02.106Z",
+      "tool": "navigate",
+      "url": "https://www.hoka.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:47:06.542Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:47:19.659Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:47:24.086Z",
+      "tool": "navigate",
+      "url": "https://www.hoka.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:47:28.833Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:47:32.795Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:47:37.032Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:47:37.048Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:47:45.925Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:47:49.555Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:47:50.117Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:48:02.750Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:48:13.034Z",
+      "tool": "Write"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:48:18.444Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

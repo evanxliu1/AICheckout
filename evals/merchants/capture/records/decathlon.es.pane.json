@@ -1,0 +1,512 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "decathlon.es",
+  "stream": "non-us",
+  "visit": 49,
+  "session": 1,
+  "entryHost": "www.decathlon.es",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-af36631e089d5fee0",
+  "startUtc": "2026-10-07T07:33:57.892Z",
+  "endUtc": "2026-10-07T07:39:37.281Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2, one remove control)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.decathlon.es",
+      "status": 200,
+      "sha256": "80aab0eeb4761eb4d773bb0efc2630170d42c904ba3b7fae093d0678409ef0ba",
+      "bytes": 2262,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.decathlon.es/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.decathlon.es/es"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.decathlon.es/es/p/botella-fitness-azul-motivacional-500-ml/366591/m8946495"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.decathlon.es/es/checkout/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Continuar sin aceptar"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product URL from home page link"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Añadir a la cesta"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Ir a la cesta (1)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Añadir 1 artículo de PHOENIX Botella Fitn"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Eliminar PHOENIX Botella Fitness Azul Mo"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "5530f7527f9068252ce6a45139f03dfa085a87a518e0a75107afe7ec96ff5d4d",
+      "bytes": 599377,
+      "chunks": 2,
+      "url": "https://www.decathlon.es/es/p/botella-fitness-azul-motivacional-500-ml/366591/m8946495",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "6f4409413d8be40a08f5fadbf91ce9fab099f7ff840c3b83bed7a599bba695fb",
+      "bytes": 163258,
+      "chunks": 1,
+      "url": "https://www.decathlon.es/es/checkout/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "abe0602454f1a00c973ffd856f1944c95a76d8006d4a389a4338ecbb819ec67e",
+      "bytes": 165761,
+      "chunks": 1,
+      "url": "https://www.decathlon.es/es/checkout/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "4a7890cf7b56d8861b8a0bc4af91033e3ac6847921afd66ceacaed5529d42642",
+      "bytes": 104044,
+      "chunks": 1,
+      "url": "https://www.decathlon.es/es/checkout/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart started empty and capture focused on one item"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.decathlon.es/es",
+    "productUrl": "https://www.decathlon.es/es/p/botella-fitness-azul-motivacional-500-ml/366591/m8946495",
+    "price": "9,99 €",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EUR",
+  "observedRegion": "ES",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cart page is /es/checkout/cart (site's own cart link, not Magento); treated as within the /checkout/cart exception; reviewer to confirm.",
+    "robots.txt disallows /*/checkout/ for *, so the cart path is disallowed; recorded only.",
+    "Product link on home page was off-viewport; product opened by URL taken from that link.",
+    "empty-cart exported after removing own item (cart actually empty), not at session start."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:33:57.892Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:33:59.465Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:33:59.468Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:34:02.599Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:34:12.839Z",
+      "tool": "navigate",
+      "url": "https://www.decathlon.es/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:34:12.944Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:34:20.898Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:34:24.873Z",
+      "tool": "navigate",
+      "url": "https://www.decathlon.es/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:34:24.885Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:34:30.665Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:34:34.657Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:34:41.124Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:34:45.131Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:34:50.253Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:34:59.181Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:35:04.418Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:35:04.422Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:35:08.911Z",
+      "tool": "navigate",
+      "url": "https://www.decathlon.es/es/p/:token/366591/m8946495"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:35:08.915Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:35:13.517Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T07:35:17.457Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T07:35:22.133Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T07:35:22.616Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T07:35:22.618Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T07:35:54.924Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T07:35:58.773Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T07:36:03.281Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T07:36:10.051Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T07:36:10.421Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T07:36:10.426Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T07:36:42.032Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T07:36:45.654Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T07:37:04.428Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T07:37:08.785Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T07:37:27.319Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T07:37:27.695Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T07:37:27.696Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T07:38:04.928Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T07:38:10.125Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T07:38:14.713Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T07:38:22.890Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T07:38:23.248Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T07:38:23.255Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T07:38:55.804Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T07:39:00.969Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T07:39:04.736Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T07:39:29.147Z",
+      "tool": "Write"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T07:39:37.281Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "5530f7527f9068252ce6a45139f03dfa085a87a518e0a75107afe7ec96ff5d4d"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "6f4409413d8be40a08f5fadbf91ce9fab099f7ff840c3b83bed7a599bba695fb"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "abe0602454f1a00c973ffd856f1944c95a76d8006d4a389a4338ecbb819ec67e"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "4a7890cf7b56d8861b8a0bc4af91033e3ac6847921afd66ceacaed5529d42642"
+      }
+    ],
+    "errors": []
+  }
+}

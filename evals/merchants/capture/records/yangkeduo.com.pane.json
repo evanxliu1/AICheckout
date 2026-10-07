@@ -1,0 +1,217 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "yangkeduo.com",
+  "stream": "non-us",
+  "visit": 52,
+  "session": 1,
+  "entryHost": "mobile.yangkeduo.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a230e2dda0a18106a",
+  "startUtc": "2026-10-07T07:42:03.496Z",
+  "endUtc": "2026-10-07T07:43:17.737Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "mobile.yangkeduo.com",
+      "status": 200,
+      "sha256": "12baed1ab4f9528e2a55a0437a5c4133e9ffe081caabe6065944e2ae59c72f3f",
+      "bytes": 341,
+      "rootDisallowed": true,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://mobile.yangkeduo.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://mobile.yangkeduo.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://mobile.yangkeduo.com/login.html"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "home feed product tile (246.05 CNY)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "sign-in wall on product open; stopped"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "sign-in wall on product open; stopped"
+    },
+    {
+      "state": "cart-1",
+      "reason": "sign-in wall on product open; stopped"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "sign-in wall on product open; stopped"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "sign-in wall on product open; stopped"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://mobile.yangkeduo.com/",
+    "productUrl": null,
+    "price": "246.05 CNY",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "CNY",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://mobile.yangkeduo.com/login.html",
+    "title": "登录",
+    "marker": "Clicking a home-feed product redirected to the login page (phone login, send verification code); refer_page_name=goods_detail"
+  },
+  "problems": [
+    "Logged-out visitors are redirected to /login.html when opening any product (refer_page_name=goods_detail); no product or cart page reachable without sign-in.",
+    "Starting cart count unknown: no cart reachable logged out (the mobile web nav shows no cart entry).",
+    "robots.txt disallows / for User-agent *; visited anyway per .8 rule.",
+    "No export taken: sign-in wall is a stop, not a judgement exclusion requiring evidence."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:42:03.496Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:42:03.510Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:42:07.883Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:42:12.325Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:42:17.812Z",
+      "tool": "navigate",
+      "url": "https://mobile.yangkeduo.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:42:17.839Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:42:25.148Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:42:29.888Z",
+      "tool": "navigate",
+      "url": "https://mobile.yangkeduo.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:42:29.896Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:42:35.807Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:42:39.023Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:42:43.132Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:42:43.138Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:42:52.711Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:43:08.977Z",
+      "tool": "Write"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:43:17.737Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

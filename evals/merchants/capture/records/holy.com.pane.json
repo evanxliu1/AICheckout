@@ -1,0 +1,570 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "holy.com",
+  "stream": "non-us",
+  "visit": 59,
+  "session": 1,
+  "entryHost": "de.holy.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a2e97e735ec1a942e",
+  "startUtc": "2026-10-07T07:51:09.698Z",
+  "endUtc": "2026-10-07T07:54:48.248Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (Energy Starter Set bundle)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "de.holy.com",
+      "status": 200,
+      "sha256": "19e92c4eadcb754ff15fb75481cd50437ff30bcc5c9f54ee99d3c0a6230cd55d",
+      "bytes": 5508,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://de.holy.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://de.holy.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://de.holy.com/collections/neueinsteiger-packs/products/starter-set-energy"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://de.holy.com/cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://de.holy.com/collections/neueinsteiger-packs/products/starter-set-energy"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Energy Starter Set (no navigation)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page by URL"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (redirected to home)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Warenkorb (blocked by cookie modal)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Anpassen"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Ablehnen"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Warenkorb (open cart drawer)"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page by URL"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "IN DEN WARENKORB (ref click, no effect)"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "IN DEN WARENKORB"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Entfernen (ref click, no effect)"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Entfernen"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "050d74496a93e825e4aea135fe95d590cad2ba0a198b08e8c99509c40c4392b5",
+      "bytes": 2185633,
+      "chunks": 6,
+      "url": "https://de.holy.com/",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "f280c72d516bf4f9082391b0522f8624f95cf50732be3afe7a105b305a046e7f",
+      "bytes": 889796,
+      "chunks": 3,
+      "url": "https://de.holy.com/collections/neueinsteiger-packs/products/starter-set-energy",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-1",
+      "reason": "no cart page: /cart redirects to the home page; the cart is a drawer only (captured as minicart-1)"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "cart drawer has no quantity-increment control (remove link only)"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "cart held no lingering items"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://de.holy.com/",
+    "productUrl": "https://de.holy.com/collections/neueinsteiger-packs/products/starter-set-energy",
+    "price": "24,99 EUR",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EUR",
+  "observedRegion": "DE",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "empty-cart export is the home page with the empty cart drawer open (no standalone cart page)",
+    "item is a preselected bundle (box + shaker) shown in the drawer as one set at 24,99 EUR; header counts 2 products; no option chosen",
+    "ref-based clicks on the add-to-cart and remove controls landed off target (no effect); repeated by screenshot coordinate",
+    "cart drawer offers a ZUR KASSE control; not clicked"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:51:09.698Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:51:10.736Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:51:10.738Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:51:13.396Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:51:17.202Z",
+      "tool": "navigate",
+      "url": "https://de.holy.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:51:20.871Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:51:28.218Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:51:33.288Z",
+      "tool": "navigate",
+      "url": "https://de.holy.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:51:38.448Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:51:44.474Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:51:48.339Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:51:56.222Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:51:56.223Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:52:01.053Z",
+      "tool": "navigate",
+      "url": "https://de.holy.com/collections/neueinsteiger-packs/products/starter-set-energy"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:52:08.834Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:52:08.939Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:52:15.303Z",
+      "tool": "navigate",
+      "url": "https://de.holy.com/cart"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:52:15.308Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:52:21.610Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:52:24.985Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T07:52:28.228Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T07:52:32.121Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T07:52:35.728Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T07:52:36.191Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T07:52:39.247Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T07:52:39.780Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T07:52:43.128Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T07:52:43.655Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T07:53:05.009Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T07:53:08.248Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T07:53:11.676Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T07:53:14.774Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T07:53:17.797Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T07:53:20.829Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T07:53:24.063Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T07:53:27.501Z",
+      "tool": "navigate",
+      "url": "https://de.holy.com/collections/neueinsteiger-packs/products/starter-set-energy"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T07:53:27.962Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T07:53:32.107Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T07:53:32.585Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T07:53:36.665Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T07:53:37.301Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T07:53:58.952Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T07:54:02.028Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T07:54:05.088Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T07:54:08.081Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T07:54:11.998Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T07:54:15.781Z",
+      "tool": "find"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T07:54:19.112Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T07:54:19.605Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T07:54:23.438Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T07:54:23.861Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T07:54:26.694Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T07:54:41.732Z",
+      "tool": "Write"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T07:54:48.248Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "050d74496a93e825e4aea135fe95d590cad2ba0a198b08e8c99509c40c4392b5"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "f280c72d516bf4f9082391b0522f8624f95cf50732be3afe7a105b305a046e7f"
+      }
+    ],
+    "errors": []
+  }
+}

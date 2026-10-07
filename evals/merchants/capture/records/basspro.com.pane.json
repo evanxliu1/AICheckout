@@ -1,0 +1,245 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "basspro.com",
+  "stream": "us",
+  "visit": 70,
+  "session": 1,
+  "entryHost": "www.basspro.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a42e9088bd4152010",
+  "startUtc": "2026-10-07T07:42:35.150Z",
+  "endUtc": "2026-10-07T07:44:05.220Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.basspro.com",
+      "status": 200,
+      "sha256": "fb558b9a538f35bc64994f5d25dbdbdce78f630ba7cf6403b07f76314972e4f3",
+      "bytes": 3848,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.basspro.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.basspro.com/home"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.basspro.com/l/bait-buckets-management"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.google.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host root"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "listing bait-buckets-management"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "NO (age-verification modal)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped: redirected off-domain before cart"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped: redirected off-domain before add"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped: redirected off-domain before add"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped: redirected off-domain before add"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped: redirected off-domain before add"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.basspro.com/l/bait-buckets-management",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "redirected-off-domain",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Every page shows a blocking 'Verify your age' modal (18+, firearms marketing) with YES/NO; no close control.",
+    "Operator clicked NO (the restrictive answer, avoiding an age attestation); the site redirected the tab to www.google.com, so the store stopped as redirected-off-domain per the stop rule.",
+    "Reviewer flag: the off-domain redirect was triggered by the operator's answer, not by the site on entry; a session 2 could decide whether answering YES to the age gate is within the posture.",
+    "Cookie banner had OK/PREFERENCES only (no decline); left alone.",
+    "Starting cart count 0 read from the header badge; end count 0 inferred (nothing added, cart not re-read after the redirect).",
+    "robots.txt disallows /cart/ and /checkout/ for *; root allowed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:42:35.150Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:42:36.426Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:42:36.437Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:42:41.315Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:42:44.532Z",
+      "tool": "navigate",
+      "url": "https://www.basspro.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:42:51.036Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:42:57.545Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:43:01.150Z",
+      "tool": "navigate",
+      "url": "https://www.basspro.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:43:06.733Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:43:13.893Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:43:17.774Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:43:27.037Z",
+      "tool": "navigate",
+      "url": "https://www.basspro.com/l/bait-buckets-management"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:43:31.047Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:43:35.732Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:43:39.128Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:43:39.757Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:43:46.423Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:43:58.850Z",
+      "tool": "Write"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:44:05.220Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

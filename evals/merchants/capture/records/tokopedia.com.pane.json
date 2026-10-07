@@ -1,0 +1,219 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "tokopedia.com",
+  "stream": "non-us",
+  "visit": 53,
+  "session": 1,
+  "entryHost": "www.tokopedia.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-ad56a443d3b9fb704",
+  "startUtc": "2026-10-07T07:43:23.843Z",
+  "endUtc": "2026-10-07T07:44:38.890Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.tokopedia.com",
+      "status": 200,
+      "sha256": "0556e11b788f78c0537e5e605ffe901f3f5e6324d261a30b3c8062c3ad0f7d52",
+      "bytes": 4698,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.tokopedia.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.tokopedia.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.tokopedia.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.tokopedia.com/login"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL (redirected to login)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart URL redirects to the login page (sign-in wall)"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at sign-in wall"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at sign-in wall"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at sign-in wall"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at sign-in wall"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "IDR",
+  "observedRegion": "ID",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.tokopedia.com/login",
+    "title": "Masuk / Login | Tokopedia",
+    "marker": "/cart redirected to /login with ld=<cart URL>; login form (phone or email, QR, Google, TikTok)"
+  },
+  "problems": [
+    "Logged-out /cart redirects to /login: sign-in wall, stopped per checklist step 6; no item added, so cart counts unknown and nothing to remove.",
+    "robots.txt disallows /cart?* and /cart/* but not /cart itself; no checkout path listed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:43:23.843Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:43:25.073Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:43:25.084Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:43:27.750Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:43:31.679Z",
+      "tool": "navigate",
+      "url": "https://www.tokopedia.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:43:35.558Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:43:42.716Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:43:46.262Z",
+      "tool": "navigate",
+      "url": "https://www.tokopedia.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:43:53.911Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:43:59.473Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:43:59.475Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:44:03.231Z",
+      "tool": "navigate",
+      "url": "https://www.tokopedia.com/cart"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:44:08.641Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:44:14.398Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:44:30.847Z",
+      "tool": "Write"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:44:38.890Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

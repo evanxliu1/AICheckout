@@ -1,0 +1,195 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "fanatics.com",
+  "stream": "us",
+  "visit": 86,
+  "session": 1,
+  "entryHost": "www.fanatics.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a722e69fee2a74371",
+  "startUtc": "2026-10-07T08:02:48.219Z",
+  "endUtc": "2026-10-07T08:03:47.447Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.fanatics.com",
+      "status": 200,
+      "sha256": "a44e74205a6ed41a801b577e429277cb399379c15ab1950e2aa7d641da5875a5",
+      "bytes": 887,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.fanatics.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.fanatics.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall on entry page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.fanatics.com/",
+    "title": "",
+    "marker": "Akamai challenge page: unlabelled button, Akamai logo, link to akamai.com/privacy; no store content",
+    "wording": "Powered and protected by [Akamai] Privacy"
+  },
+  "problems": [
+    "Entry page served an Akamai bot-manager challenge (empty title, single unlabelled button); not interacted with, not exported.",
+    "Screenshot blank (pane likely hidden); detection from read_page and get_page_text.",
+    "Sign-in and starting cart count not determinable (blocked before any store page); recorded signedIn false, counts null.",
+    "robots.txt disallows /cart for *; root allowed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:02:48.219Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:02:49.180Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:02:49.188Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:02:52.976Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:02:56.558Z",
+      "tool": "navigate",
+      "url": "https://www.fanatics.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:03:05.000Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:03:11.276Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:03:15.752Z",
+      "tool": "navigate",
+      "url": "https://www.fanatics.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:03:20.011Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:03:23.995Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:03:28.173Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:03:31.317Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:03:41.447Z",
+      "tool": "Write"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:03:47.447Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "famousfootwear.com",
+  "stream": "us",
+  "visit": 71,
+  "session": 1,
+  "entryHost": "www.famousfootwear.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-ac020d4421791f3d9",
+  "startUtc": "2026-10-07T07:43:29.157Z",
+  "endUtc": "2026-10-07T07:44:13.053Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.famousfootwear.com",
+      "status": 200,
+      "sha256": "2a7106947337bf61eede78a3627a57b9cce471e7982113ecb7a396358e75d908",
+      "bytes": 245,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.famousfootwear.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.famousfootwear.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "blocked by Cloudflare challenge on entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked by Cloudflare challenge on entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked by Cloudflare challenge on entry"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked by Cloudflare challenge on entry"
+    },
+    {
+      "state": "empty-cart",
+      "reason": "blocked by Cloudflare challenge on entry"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.famousfootwear.com/",
+    "title": "Challenge",
+    "vendor": "Cloudflare",
+    "marker": "__cf_chl_rt_tk query parameter on redirect; Cloudflare Ray ID shown",
+    "wording": "Performing security verification. This page is displayed while the website verifies you are not a bot."
+  },
+  "problems": [
+    "Entry page redirected to a Cloudflare challenge (title 'Challenge') before any store page loaded; not interacted with, not exported.",
+    "robots.txt disallows /shopping-cart for User-agent: * (recorded only)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:43:29.157Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:43:30.318Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:43:30.327Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:43:32.938Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:43:36.457Z",
+      "tool": "navigate",
+      "url": "https://www.famousfootwear.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:43:36.606Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:43:43.008Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:43:48.140Z",
+      "tool": "navigate",
+      "url": "https://www.famousfootwear.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:43:48.145Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:43:52.127Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:44:05.967Z",
+      "tool": "Write"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:44:13.053Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

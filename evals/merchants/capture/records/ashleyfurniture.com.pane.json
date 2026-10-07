@@ -1,0 +1,332 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "ashleyfurniture.com",
+  "stream": "us",
+  "visit": 81,
+  "session": 1,
+  "entryHost": "www.ashleyfurniture.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-ae66bb3f1e68f1bcc",
+  "startUtc": "2026-10-07T07:54:33.917Z",
+  "endUtc": "2026-10-07T07:56:31.381Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.ashleyfurniture.com",
+      "status": 200,
+      "sha256": "8e49dd5d065ed4033af4465efdedb1507efcdb85cb9fcd96bd29109ccd32d460",
+      "bytes": 1106,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.ashleyfurniture.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.ashleyfurniture.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.ashleyfurniture.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.ashleyfurniture.com/c/home-decor/throw-pillows/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Close (no decline control)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "Close delivery zip prompt"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "throw pillows listing (menu link URL)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "ab880d16d0ed636075f6363dc5687ec3659efe8978efdb08f93f05eb5931082b",
+      "bytes": 680387,
+      "chunks": 2,
+      "url": "https://www.ashleyfurniture.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "captcha on listing page before any item was added"
+    },
+    {
+      "state": "cart-1",
+      "reason": "captcha on listing page before any item was added"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "captcha on listing page before any item was added"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "captcha on listing page before any item was added"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.ashleyfurniture.com/c/home-decor/throw-pillows/",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.ashleyfurniture.com/c/home-decor/throw-pillows/",
+    "title": "Access to this page has been denied",
+    "marker": "PerimeterX/HUMAN press-and-hold widget (seen by screenshot; not exported)",
+    "wording": "Before we continue... Press & Hold to confirm you are a human (and not a bot)."
+  },
+  "problems": [
+    "robots.txt rendered blank in the pane (get_page_text and screenshot empty); hash script returned 200 and 1106 bytes, so disallow flags are unknown (null)",
+    "cookie banner had Configure / Accept All / Close only; closed it, no decline control",
+    "PerimeterX press-and-hold challenge on the first listing navigation; stopped without interacting; empty-cart was exported before the block (both chunks oversized, saved to harness files, not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:54:33.917Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:54:35.139Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:54:35.147Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:54:38.209Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:54:41.658Z",
+      "tool": "navigate",
+      "url": "https://www.ashleyfurniture.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:54:45.493Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:54:48.827Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:54:55.853Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:55:01.660Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:55:05.315Z",
+      "tool": "navigate",
+      "url": "https://www.ashleyfurniture.com/"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:55:08.793Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:55:09.087Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:55:11.461Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:55:14.555Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:55:17.177Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:55:20.857Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:55:21.373Z",
+      "tool": "navigate",
+      "url": "https://www.ashleyfurniture.com/cart"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:55:25.715Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:55:46.544Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:55:49.220Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T07:55:52.428Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T07:55:56.263Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T07:56:00.736Z",
+      "tool": "navigate",
+      "url": "https://www.ashleyfurniture.com/c/home-decor/throw-pillows/"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T07:56:03.597Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T07:56:06.364Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T07:56:11.983Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T07:56:25.736Z",
+      "tool": "Write"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T07:56:31.381Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "ab880d16d0ed636075f6363dc5687ec3659efe8978efdb08f93f05eb5931082b"
+      }
+    ],
+    "errors": []
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "marshalls.com",
+  "stream": "us",
+  "visit": 90,
+  "session": 1,
+  "entryHost": "m.marshalls.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "m.marshalls.com",
+      "status": 200,
+      "sha256": "9b04cb00b4e2224b03d3395341a51f58448d704670f29a4be381553932f7b64c",
+      "bytes": 583,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://m.marshalls.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://m.marshalls.com/us/m/index.jsp" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "entry host root" }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    { "state": "empty-cart", "reason": "blocked-bot-wall at entry" },
+    { "state": "minicart-1", "reason": "blocked-bot-wall at entry" },
+    { "state": "cart-1", "reason": "blocked-bot-wall at entry" },
+    { "state": "cart-qty2", "reason": "blocked-bot-wall at entry" },
+    { "state": "cart-2items", "reason": "blocked-bot-wall at entry" }
+  ],
+  "itemPath": { "listingUrl": "", "productUrl": "", "price": "", "secondProductUrl": null },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": { "status": "excluded", "code": "blocked-bot-wall", "evidenceSha256": null },
+  "challenge": {
+    "url": "https://m.marshalls.com/us/m/index.jsp",
+    "title": "",
+    "marker": "Akamai-style interstitial: empty title, no store content, vendor 'protected by' footer only",
+    "wording": "Powered and protected by Privacy"
+  },
+  "problems": [
+    "Entry root redirected to /us/m/index.jsp, where get_page_text showed only a vendor interstitial ('Powered and protected by ... Privacy', empty title), same pattern as tjx.com; stopped without interacting and not exported.",
+    "Reviewer flag: a read_page call a few seconds later showed the interstitial had resolved by itself to www.marshalls.com/us/store/index.jsp with store content (not signed in). I did not act on that page; the challenge had already been seen, so the store was stopped as blocked-bot-wall.",
+    "Reviewer flag: the site's cart link is www.marshalls.com/us/store/checkout/cart.jsp, which has a 'checkout' segment (not Magento), so cart-page states would be a forbidden path under the checklist even without the block. robots.txt disallows /us/store/checkout/ for *, which also covers the cart; recorded as cartDisallowed true.",
+    "Start and end cart counts not read (stopped before any cart view)."
+  ]
+}

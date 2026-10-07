@@ -1,0 +1,357 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "cabelas.com",
+  "stream": "us",
+  "visit": 73,
+  "session": 1,
+  "entryHost": "www.cabelas.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-adb39099fb43784a8",
+  "startUtc": "2026-10-07T07:44:20.946Z",
+  "endUtc": "2026-10-07T07:46:47.227Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.cabelas.com",
+      "status": 200,
+      "sha256": "27f864e8f254c2ddc6746d5fc52db417fab382d77e281b5c4e4c29f185e6622a",
+      "bytes": 3099,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.cabelas.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.cabelas.com/home"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.cabelas.com/l/drinkware"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.cabelas.com/p/bass-pro-shops-coffee-mug-with-multifunction-lid"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host root (redirects to /home)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "menu link Drinkware"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "product link (refused: off-viewport)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product link href (coffee mug)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (age gate on product page)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "f5554458776fe99a90165a2f1bef9670864f6ba94fe655b2a09c30e788a40a48",
+      "bytes": 959979,
+      "chunks": 3,
+      "url": "https://www.cabelas.com/p/bass-pro-shops-coffee-mug-with-multifunction-lid"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at age-verification modal before cart"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart covered by modal age gate requiring an 18+ attestation"
+    },
+    {
+      "state": "cart-1",
+      "reason": "no add"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "no add"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no add"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.cabelas.com/l/drinkware",
+    "productUrl": "https://www.cabelas.com/p/bass-pro-shops-coffee-mug-with-multifunction-lid",
+    "price": "$14.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "needs-input",
+    "evidenceSha256": "f5554458776fe99a90165a2f1bef9670864f6ba94fe655b2a09c30e788a40a48"
+  },
+  "challenge": null,
+  "problems": [
+    "Every page shows a blocking 'Verify your age' modal (18+, firearms marketing) with YES/NO buttons and no close control; it covers the add-to-cart.",
+    "Operator did not answer: YES would attest the user's age, and NO sent the tab off-site on basspro.com (same platform). Stopped as needs-input with a pane-dom.2 evidence export.",
+    "Reviewer flag: a session 2 could proceed if Evan rules that answering YES to the age gate is within the posture (same question as basspro.com).",
+    "Not signed in (header shows a sign-in button); starting cart 0 from header badge; nothing added, end count 0 (badge not re-read after the stop).",
+    "robots.txt disallows /cart/ and /checkout/ for *; root allowed.",
+    "All 3 evidence chunks were oversized and saved by the harness to tool-results files (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:44:20.946Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:44:22.013Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:44:22.017Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:44:26.484Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:44:30.605Z",
+      "tool": "navigate",
+      "url": "https://www.cabelas.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:44:30.628Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:44:38.130Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:44:42.515Z",
+      "tool": "navigate",
+      "url": "https://www.cabelas.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:44:42.518Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:44:48.523Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:44:55.907Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:45:01.620Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:45:07.902Z",
+      "tool": "navigate",
+      "url": "https://www.cabelas.com/l/drinkware"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:45:07.910Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:45:12.603Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:45:20.715Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:45:24.477Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:45:24.482Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:45:29.534Z",
+      "tool": "navigate",
+      "url": "https://www.cabelas.com/p/bass-pro-shops-coffee-mug-with-multifunction-lid"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:45:29.931Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T07:45:29.932Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T07:45:35.662Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T07:45:35.723Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T07:45:42.469Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T07:45:47.749Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T07:45:54.849Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T07:45:54.854Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T07:46:17.892Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T07:46:21.205Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T07:46:21.909Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T07:46:22.564Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T07:46:25.711Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T07:46:40.582Z",
+      "tool": "Write"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T07:46:47.227Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "f5554458776fe99a90165a2f1bef9670864f6ba94fe655b2a09c30e788a40a48"
+      }
+    ],
+    "errors": []
+  }
+}
