@@ -6,7 +6,7 @@ status: stable
 tags: [product, plan, phase-10, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T23:30:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: phase-10-merchant-expansion.md
     title: Merchant coverage plan (Phases 10–17)
@@ -18,7 +18,7 @@ sources:
 
 # Phase 10 plan: merchant feasibility probe
 
-**Evan accepted go and Y = 80% on 2026-10-05.** **Status (2026-10-05T23:30Z): steps 1–4 done on branch `phase10-probe`, verdict go (16 of 25 sites showed a logged-out cart), proposed Y = 80%; second labeling done, 44/44 agreement (agent-verified); the independent report review ran (agent-verified, approve with fixes; fixes applied).** Results: [report](../../docs/evals/merchant-probe-2026-10.md); method choices: [decision](../decisions/2026-10-05-merchant-probe-method.md); working folder `evals/merchants/probe/`.
+**Done 2026-10-05:** merged as PR #58 (`763fda5`, 2026-10-05T21:52Z); Evan accepted go and Y = 80% the same day. On 2026-10-06 Y was replaced by the ≥ 99% shown-amount bar, with 80% on `cart-1` kept as a coverage reporting target ([decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md)). **Status at merge (2026-10-05): steps 1–4 done on branch `phase10-probe`, verdict go (16 of 25 sites showed a logged-out cart), proposed Y = 80%; second labeling done, 44/44 agreement (agent-verified); the independent report review ran (agent-verified, approve with fixes; fixes applied).** Results: [report](../../docs/evals/merchant-probe-2026-10.md); method choices: [decision](../decisions/2026-10-05-merchant-probe-method.md); working folder `evals/merchants/probe/`.
 
 Started 2026-10-05, in parallel with Phase 11 ([merchant coverage plan](phase-10-merchant-expansion.md)). Evan approved D4 (real-page capture) and D6 (merchant list) the same day ([decision](../decisions/2026-10-05-merchant-coverage-phases.md)). No product code: the output is a report that decides whether the generic-reader plan (Phases 12–13) holds.
 

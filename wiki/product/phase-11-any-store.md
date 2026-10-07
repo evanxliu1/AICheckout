@@ -6,7 +6,7 @@ status: stable
 tags: [product, plan, phase-11, merchants, engine, extension]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T20:45:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: phase-10-merchant-expansion.md
     title: Merchant coverage plan (Phases 10–17)
@@ -18,7 +18,7 @@ sources:
 
 # Phase 11 plan: any store, typed amount
 
-**Done 2026-10-05:** merged as PR #57 (`f041fef`) after an independent review (agent-verified) and CI. Started 2026-10-05, in parallel with Phase 10 ([merchant coverage plan](phase-10-merchant-expansion.md)). Today the popup has a manual merchant select of the three supported stores and the engine answers `unsupported-merchant` for anything else. After this phase, opening the popup on any U.S. online store gives a recommendation with an amount the shopper types. Scope reduced by Evan on 2026-10-05: no store search, no category ranges ([decision](../decisions/2026-10-05-merchant-coverage-phases.md)).
+**Done 2026-10-05:** merged as PR #57 (`f041fef`) after an independent review (agent-verified) and CI. Started 2026-10-05, in parallel with Phase 10 ([merchant coverage plan](phase-10-merchant-expansion.md)). Before this phase the popup had a manual merchant select of the three supported stores and the engine answered `unsupported-merchant` for anything else. Since this phase, opening the popup on any U.S. online store gives a recommendation with an amount the shopper types. Scope reduced by Evan on 2026-10-05: no store search, no category ranges ([decision](../decisions/2026-10-05-merchant-coverage-phases.md)).
 
 ## Design
 
@@ -46,10 +46,10 @@ Done when steps 1–4 pass, an independent reviewer subagent approves and CI pas
 
 ## Progress
 
-Steps 1–4 built on `phase11-any-store` on 2026-10-05 (claude-code/claude-opus-5-5); reviewer subagent and CI pending. Where the build differs from the design above ([decision](../decisions/2026-10-05-generic-store-profile.md)):
+Steps 1–4 built on `phase11-any-store` on 2026-10-05 (claude-code/claude-opus-5-5); the independent reviewer approved (agent-verified, fixes applied), CI passed and the branch merged as PR #57 (`f041fef`, 2026-10-05T21:33Z). Where the build differs from the design above ([decision](../decisions/2026-10-05-generic-store-profile.md)):
 
 - **Store match by site, not exact host.** The Newegg adapter's only host is `secure.newegg.com` (the cart), so an exact host match would call a Newegg product page a generic store. `merchantForTab` matches a supported store when the tab's host shares its last two labels with an adapter host; every adapter host is a `.com`, so `amazon.co.uk` stays generic.
-- **The exclusion guard is not empty.** One bundled rule can apply at the generic profile and has a brand exclusion: Synchrony OnePay CashRewards `onepay-cashrewards-all-first-90-days-v2` (3% on all purchases, excluding Walmart, gated on the first 90 days). The guard pins that list, so any new such rule fails the test; the limit is documented in [Merchants](../domain/merchants.md#another-us-online-store-phase-11). Evan to decide whether it needs handling before Phase 14.
+- **The exclusion guard is not empty.** One bundled rule can apply at the generic profile and has a brand exclusion: Synchrony OnePay CashRewards `onepay-cashrewards-all-first-90-days-v2` (3% on all purchases, excluding Walmart, gated on the first 90 days). The guard pins that list, so any new such rule fails the test; the limit is documented in [Merchants](../domain/merchants.md#another-us-online-store-phase-11). Evan deferred brand websites, and with them this rule's Walmart exclusion, to Phase 14 on 2026-10-05.
 - **Profile module.** `GENERIC_MERCHANT_PROFILE` lives in `packages/rewards-core/src/generic-merchant.ts` (exported as `@ai-checkout/rewards-core/generic-merchant`, no Zod, no catalog) because `extension/src/checkout/merchants.ts`, which content scripts import, needs its name; content-script bundles are unchanged in size. `catalogMerchantIds` includes the generic id for v3 catalogs, so the popup shows no "terms do not cover" warning for it.
 - **Eligibility default.** The popup preselects "Eligible goods, paid directly online" only for the generic store (tab detection or select); supported stores keep "I'm not sure", as before.
 
