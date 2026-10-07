@@ -1,0 +1,84 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "tcgplayer.com",
+  "stream": "us",
+  "visit": 55,
+  "session": 1,
+  "entryHost": "store.tcgplayer.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    { "n": 1, "item": "own item 1 (qty 2, one Remove click)", "ok": true }
+  ],
+  "robots": [
+    { "host": "store.tcgplayer.com", "status": 200, "sha256": "a214f6a1ecfa69415fcb0801bd4219c850861a5a10e75c7c1836d7fca954e8d9", "bytes": 77, "rootDisallowed": false, "cartDisallowed": false, "checkoutDisallowed": false },
+    { "host": "www.tcgplayer.com", "status": 200, "sha256": "a581a1dde243c0f0baacd1121d6485f366a4727fe46bbc2c6dc6d7fbc789a0be", "bytes": 289, "rootDisallowed": false, "cartDisallowed": false, "checkoutDisallowed": false }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://store.tcgplayer.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://store.tcgplayer.com/" },
+    { "n": 3, "utc": null, "url": "https://www.tcgplayer.com/robots.txt" },
+    { "n": 4, "utc": null, "url": "https://www.tcgplayer.com/" },
+    { "n": 5, "utc": null, "url": "https://www.tcgplayer.com/cart" },
+    { "n": 6, "utc": null, "url": "https://www.tcgplayer.com/product/704143" },
+    { "n": 7, "utc": null, "url": "https://www.tcgplayer.com/cart" },
+    { "n": 8, "utc": null, "url": "https://www.tcgplayer.com/product/704143" },
+    { "n": 9, "utc": null, "url": "https://www.tcgplayer.com/product/704143" },
+    { "n": 10, "utc": null, "url": "https://www.tcgplayer.com/cart" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "store robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "store.tcgplayer.com" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "entry (redirects to www)" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "www robots.txt" },
+    { "n": 5, "utc": null, "kind": "robots-hash", "role": "", "name": "www.tcgplayer.com" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 7, "utc": null, "kind": "navigate", "role": "", "name": "cart (start count)" },
+    { "n": 8, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 9, "utc": null, "kind": "navigate", "role": "", "name": "product (home best-seller link)" },
+    { "n": 10, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to cart, 30th Celebration Elite Tra" },
+    { "n": 11, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 12, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 13, "utc": null, "kind": "navigate", "role": "", "name": "product (rendered blank)" },
+    { "n": 14, "utc": null, "kind": "navigate", "role": "", "name": "product (reload)" },
+    { "n": 15, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to cart, 30th Celebration Elite Tra" },
+    { "n": 16, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 17, "utc": null, "kind": "export", "role": "", "name": "cart-qty2" },
+    { "n": 18, "utc": null, "kind": "remove-item", "role": "button", "name": "Remove" }
+  ],
+  "states": [
+    { "state": "empty-cart", "sha256": "6a404cba7a3e48100e91010faeb4f774c43e2f8bc059ec310aea6a73c016edb1", "bytes": 469939, "chunks": 2, "url": "https://www.tcgplayer.com/cart", "startCartCount": 0 },
+    { "state": "cart-1", "sha256": "93edbc08668f8c9d34bf468cf8da53bd8c460ba8c1f1cce80f9b198394d225f8", "bytes": 580940, "chunks": 2, "url": "https://www.tcgplayer.com/cart", "startCartCount": 0 },
+    { "state": "cart-qty2", "sha256": "86297ce14e6e1481d964fd8419d4f10e3253adb92432132b9e97b5e115cb59eb", "bytes": 544166, "chunks": 2, "url": "https://www.tcgplayer.com/cart", "startCartCount": 0 }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "minicart-1", "reason": "no in-page cart after add; only the header badge count changes (hover showed nothing)" },
+    { "state": "cart-2items", "reason": "not attempted; cart was empty at start, kept to one item" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.tcgplayer.com/",
+    "productUrl": "https://www.tcgplayer.com/product/704143",
+    "price": "$12.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "entry host store.tcgplayer.com redirects to www.tcgplayer.com; www robots.txt read after the redirect landed",
+    "www robots.txt has Crawl-Delay: 10; recorded only",
+    "cart quantity is a <select>, so qty 2 was reached by a second add-to-cart of the same listing from the product page",
+    "item is a marketplace listing (30th Celebration Player's Guide ONLY, seller listing on the ETB product page), price $12.99",
+    "product page rendered blank once on direct load; reloaded with the site's own Language=English parameter",
+    "cart-1 subtotal briefly showed NaN before load; exported after it rendered $12.99"
+  ]
+}

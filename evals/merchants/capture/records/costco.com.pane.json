@@ -1,0 +1,126 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "costco.com",
+  "stream": "us",
+  "visit": 52,
+  "session": 1,
+  "entryHost": "www.costco.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.costco.com",
+      "status": 200,
+      "sha256": "ed8ed1579bf2033e61209616014293912eb9770ec86c4a49d54c79c8b6efcb27",
+      "bytes": 3997,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.costco.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.costco.com/" },
+    { "n": 3, "utc": null, "url": "https://www.costco.com/CheckoutCartDisplayView" },
+    { "n": 4, "utc": null, "url": "https://www.costco.com/" },
+    { "n": 5, "utc": null, "url": "https://www.costco.com/halloween.html" },
+    { "n": 6, "utc": null, "url": "https://www.costco.com/halloween-decorations.html" },
+    { "n": 7, "utc": null, "url": "https://www.costco.com/p/-/halloween-embroidered-faux-fur-pillow/4201044597" },
+    { "n": 8, "utc": null, "url": "https://www.costco.com/p/-/30-disney-the-nightmare-before-christmas-pre-lit-led-wreath/4201007403" },
+    { "n": 9, "utc": null, "url": "https://www.costco.com/halloween-decorations.html" },
+    { "n": 10, "utc": null, "url": "https://www.costco.com/CheckoutCartDisplayView" },
+    { "n": 11, "utc": null, "url": "https://www.costco.com/grocery-household.html" },
+    { "n": 12, "utc": null, "url": "https://www.costco.com/CheckoutCartDisplayView" },
+    { "n": 13, "utc": null, "url": "https://www.costco.com/grocery-household.html" },
+    { "n": 14, "utc": null, "url": "https://www.costco.com/p/-/kirkland-signature-organic-extra-virgin-olive-oil-2-l/100334841" },
+    { "n": 15, "utc": null, "url": "https://www.costco.com/CheckoutCartDisplayView" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "entry home" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "cart (/CheckoutCartView)" },
+    { "n": 5, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 7, "utc": null, "kind": "popup-close", "role": "button", "name": "No Thanks" },
+    { "n": 8, "utc": null, "kind": "click", "role": "link", "name": "Halloween promo (no navigation)" },
+    { "n": 9, "utc": null, "kind": "navigate", "role": "", "name": "halloween.html (promo link href)" },
+    { "n": 10, "utc": null, "kind": "click", "role": "generic", "name": "Halloween Decorations" },
+    { "n": 11, "utc": null, "kind": "click", "role": "link", "name": "Faux Fur Pillow product tile" },
+    { "n": 12, "utc": null, "kind": "navigate", "role": "", "name": "Pre-Lit LED Wreath (listing link href)" },
+    { "n": 13, "utc": null, "kind": "navigate", "role": "", "name": "halloween-decorations.html" },
+    { "n": 14, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to Cart (wreath tile)" },
+    { "n": 15, "utc": null, "kind": "export", "role": "", "name": "evidence-1 (add 1 error)" },
+    { "n": 16, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 17, "utc": null, "kind": "navigate", "role": "", "name": "grocery-household.html" },
+    { "n": 18, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add (KS Paper Towels tile)" },
+    { "n": 19, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 20, "utc": null, "kind": "navigate", "role": "", "name": "grocery-household.html" },
+    { "n": 21, "utc": null, "kind": "click", "role": "heading", "name": "KS Organic EVOO 2 L tile" },
+    { "n": 22, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add Kirkland Signature, Organic Extra V" },
+    { "n": 23, "utc": null, "kind": "export", "role": "", "name": "evidence-2 (add 3 refused)" },
+    { "n": 24, "utc": null, "kind": "navigate", "role": "", "name": "cart (final check)" }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "c7fc368e7968760d1412e6944c9e08e3067c208cf9d4e6add797cf2fd6e1a188",
+      "bytes": 330896,
+      "chunks": 1,
+      "url": "https://www.costco.com/CheckoutCartDisplayView",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "1376d5ec166999049b0d6cd1894ff8b9afa4a338dcf8452d0b197389bff8ee3e",
+      "bytes": 1545518,
+      "chunks": 4,
+      "url": "https://www.costco.com/halloween-decorations.html"
+    },
+    {
+      "name": "evidence-2",
+      "sha256": "bb70ec29710a433b19e0797836c6828f37e8d29c1a2b9661611f0f9a9764f8df",
+      "bytes": 2256020,
+      "chunks": 6,
+      "url": "https://www.costco.com/p/-/kirkland-signature-organic-extra-virgin-olive-oil-2-l/100334841"
+    }
+  ],
+  "notReached": [
+    { "state": "minicart-1", "reason": "add-to-cart refused for 3 items; cart stayed empty" },
+    { "state": "cart-1", "reason": "add-to-cart refused for 3 items" },
+    { "state": "cart-qty2", "reason": "add-to-cart refused for 3 items" },
+    { "state": "cart-2items", "reason": "add-to-cart refused for 3 items" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.costco.com/grocery-household.html",
+    "productUrl": "https://www.costco.com/p/-/kirkland-signature-organic-extra-virgin-olive-oil-2-l/100334841",
+    "price": "$20.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "add-to-cart-refused",
+    "evidenceSha256": "bb70ec29710a433b19e0797836c6828f37e8d29c1a2b9661611f0f9a9764f8df"
+  },
+  "challenge": null,
+  "problems": [
+    "Logged out (Sign In / Register shown). Three adds failed: wreath $84.99 listing Add to Cart and KS Paper Towels $23.99 grocery tile Add both showed 'Error adding item to cart' with cart staying empty; KS Organic EVOO $20.99 product-page Add showed 'the item cannot be added to cart at this time'.",
+    "evidence-1 (halloween listing after add 1 failure) was exported intending minicart-1; the cart page then showed empty, so it is reclassified as evidence, not a state.",
+    "Halloween pillow $19.99 skipped before any add: product page said item unavailable for delivery at the site-chosen ZIP 95618.",
+    "Costco may require membership sign-in to add to cart; no sign-in attempted. Site-chosen ZIP 95618 and warehouse not changed.",
+    "Robots: cart /CheckoutCartView not disallowed; checkout views (CheckoutReviewDisplayView etc.) and AjaxManageShoppingCartCmd disallowed.",
+    "One read_page result was saved by the harness to a tool-results file; not opened. Screenshots rendered blank (hidden pane)."
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "sephora.com",
+  "stream": "us",
+  "visit": 38,
+  "session": 1,
+  "entryHost": "www.sephora.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.sephora.com",
+      "status": 200,
+      "sha256": "6db6d384d147400f69d1e18cb55c710eef6ae7abc0a2684f8017de7e8550ad70",
+      "bytes": 922,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.sephora.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.sephora.com/" },
+    { "n": 3, "utc": null, "url": "https://www.sephora.com/basket" },
+    { "n": 4, "utc": null, "url": "https://www.sephora.com/shop/value-sets" },
+    { "n": 5, "utc": null, "url": "https://www.sephora.com/product/the-edge-lip-shaping-pencil-P525429" },
+    { "n": 6, "utc": null, "url": "https://www.sephora.com/basket" },
+    { "n": 7, "utc": null, "url": "https://www.sephora.com/shop/bath-body" },
+    { "n": 8, "utc": null, "url": "https://www.sephora.com/product/in-bed-whipped-vanilla-milk-cashmere-musk-whipped-argan-oil-refilllable-body-butter-jar-P525667" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "entry host" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "basket (starting count)" },
+    { "n": 5, "utc": null, "kind": "popup-close", "role": "button", "name": "Close sign-in modal" },
+    { "n": 6, "utc": null, "kind": "click", "role": "link", "name": "Must Haves Under $50" },
+    { "n": 7, "utc": null, "kind": "navigate", "role": "", "name": "product page (lip liner)" },
+    { "n": 8, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to Basket" },
+    { "n": 9, "utc": null, "kind": "popup-close", "role": "button", "name": "Close modal" },
+    { "n": 10, "utc": null, "kind": "navigate", "role": "", "name": "basket (check add)" },
+    { "n": 11, "utc": null, "kind": "click", "role": "link", "name": "Bath & Body (no navigation)" },
+    { "n": 12, "utc": null, "kind": "navigate", "role": "", "name": "Bath & Body listing" },
+    { "n": 13, "utc": null, "kind": "click", "role": "link", "name": "JOSIE MARAN tile (no navigation)" },
+    { "n": 14, "utc": null, "kind": "navigate", "role": "", "name": "product page (body butter)" },
+    { "n": 15, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to Basket" },
+    { "n": 16, "utc": null, "kind": "export", "role": "", "name": "evidence-1" }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "60d537dfc7764e3500617566e3ceddf9944074838711bcb91452a567c4c4cff5",
+      "bytes": 839616,
+      "chunks": 3,
+      "url": "https://www.sephora.com/product/in-bed-whipped-vanilla-milk-cashmere-musk-whipped-argan-oil-refilllable-body-butter-jar-P525667"
+    }
+  ],
+  "notReached": [
+    { "state": "empty-cart", "reason": "basket page rendered no cart body for the guest session (blank main area, sign-in modal); not exported" },
+    { "state": "minicart-1", "reason": "Add to Basket opened a Sign In modal; mini-basket stayed empty" },
+    { "state": "cart-1", "reason": "no item added (sign-in wall at add-to-basket)" },
+    { "state": "cart-qty2", "reason": "no item added" },
+    { "state": "cart-2items", "reason": "no item added" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.sephora.com/shop/bath-body",
+    "productUrl": "https://www.sephora.com/product/in-bed-whipped-vanilla-milk-cashmere-musk-whipped-argan-oil-refilllable-body-butter-jar-P525667",
+    "price": "$36.00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": "60d537dfc7764e3500617566e3ceddf9944074838711bcb91452a567c4c4cff5"
+  },
+  "challenge": null,
+  "problems": [
+    "Two in-band items ($24 lip liner, $36 body butter): each Add to Basket click opened a Sign In modal and the mini-basket stayed empty; stopped as sign-in-required per the coordinator's stop rule rather than trying a third item (add-to-cart-refused is the alternative reading).",
+    "The same Sign In modal also appeared unprompted on the basket and a listing page; the basket page showed no cart body as guest.",
+    "Pane was hidden: most screenshots failed or showed stale frames; two link clicks did not navigate, so the pages were opened by URL.",
+    "Evidence export chunk 2 came back inline (L2); reviewer should check that export for a hidden reCAPTCHA frame (invisible wrapper, no visible challenge seen).",
+    "First item was reached from a value-sets listing link to a product page, not the listing grid (grid did not render).",
+    "robots.txt disallows /basket and /checkout for *; recorded only."
+  ]
+}

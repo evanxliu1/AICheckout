@@ -108,12 +108,34 @@ function setup() {
     finalFile('heldout-a', [label('held.example/cart-1', snap['held.example/cart-1'])]),
   ];
   const reports = [reportFile('development', labels[0]), reportFile('heldout-a', labels[1])];
-  const variants = path.join(dir, 'variant-manifest.json');
-  writeFileSync(variants, '{"schema":"synthetic"}');
+  // One variant manifest per split (variants/generate.mjs shape), with its labels file and one variant export.
+  const variantSet = (split, labelsFile) => {
+    const id = `${split === 'development' ? 'dev' : 'held'}.example/cart-1/class-rename`;
+    const rel = `${split}/${id}/dom.json`;
+    const dom = path.join(dir, 'variants', rel);
+    mkdirSync(path.dirname(dom), { recursive: true });
+    writeFileSync(dom, `{"format":"pane-dom.2","v":"${id}"}`);
+    const vl = path.join(dir, `${split}-variant-labels.json`);
+    writeFileSync(vl, JSON.stringify({ schema: 'reader-labels.2', role: 'final', split, labels: [] }));
+    const m = path.join(dir, `${split}-manifest.json`);
+    writeFileSync(
+      m,
+      JSON.stringify({
+        schema: 'reader-variants.1',
+        split,
+        baseLabels: { path: path.basename(labelsFile), sha256: sha(readFileSync(labelsFile)) },
+        variantLabels: { path: path.basename(vl), sha256: sha(readFileSync(vl)) },
+        dataRoot: 'variants',
+        variants: [{ id, path: rel, domSha256: sha(readFileSync(dom)) }],
+      }),
+    );
+    return { manifest: m, dom, labels: vl };
+  };
+  const vsets = [variantSet('development', labels[0]), variantSet('heldout-a', labels[1])];
   const opts = {
     labels,
     reports,
-    variants: [variants],
+    variants: vsets.map((v) => v.manifest),
     splits,
     data,
     sites: sitesFile,
@@ -135,6 +157,8 @@ function setup() {
     finalFile,
     reportFile,
     devLabels,
+    vsets,
+    variantSet,
     opts,
   };
 }
@@ -152,6 +176,9 @@ test('freeze: snapshot manifest and freeze.json with every hash; --check passes,
       'agreement-report',
       'agreement-report',
       'variant-manifest',
+      'variant-labels',
+      'variant-manifest',
+      'variant-labels',
       'snapshot-manifest',
       'currency-minor-units',
       'item-price-bands',
@@ -347,7 +374,8 @@ test('freeze.mjs CLI: writes freeze.json; --check exits 0, then 1 after a change
   args.push('--splits', o.splits);
   for (const l of o.labels) args.push('--labels', l);
   for (const r of o.reports) args.push('--report', r);
-  args.push('--variants', o.variants[0], '--commit', 'abc', '--utc', '2026-10-07T00:00:00Z');
+  for (const v of o.variants) args.push('--variants', v);
+  args.push('--commit', 'abc', '--utc', '2026-10-07T00:00:00Z');
   execFileSync('node', args, { encoding: 'utf8' });
   const check0 = [cli, '--check', 'freeze.json', '--root', s.dir, '--data', s.data];
   assert.equal(JSON.parse(execFileSync('node', check0, { encoding: 'utf8' })).ok, true);
@@ -359,5 +387,55 @@ test('freeze.mjs CLI: writes freeze.json; --check exits 0, then 1 after a change
     err = e;
   }
   assert.equal(err?.status, 1);
-  assert.match(err.stdout, /variant-manifest.json: SHA-256 differs/);
+  assert.match(err.stdout, /development-manifest.json: SHA-256 differs/);
+});
+
+test('review M4: one variant manifest per split, for the frozen labels, with its labels and exports unchanged', () => {
+  const a = setup();
+  assert.throws(
+    () => freeze({ ...a.opts, variants: [a.opts.variants[0]] }),
+    /one variant manifest per split/,
+  );
+  assert.throws(
+    () => freeze({ ...a.opts, variants: [a.opts.variants[0], a.opts.variants[0]] }),
+    /two variant manifests for development/,
+  );
+  // A manifest generated from other final labels.
+  const b = setup();
+  const stale = b.variantSet('heldout-a', b.opts.labels[0]);
+  assert.throws(
+    () => freeze({ ...b.opts, variants: [b.opts.variants[0], stale.manifest] }),
+    /heldout-a: the variant manifest is not for these final labels/,
+  );
+  const c = setup();
+  writeFileSync(c.vsets[1].labels, '{"labels":[1]}');
+  assert.throws(() => freeze(c.opts), /heldout-a: the variant labels file differs from the manifest/);
+  const d = setup();
+  writeFileSync(d.vsets[0].dom, '{}');
+  assert.throws(
+    () => freeze(d.opts),
+    /development: dev.example\/cart-1\/class-rename: variant export differs from the manifest/,
+  );
+  // --check with --data re-hashes the variant exports too; it needs a variant manifest per split.
+  const e = setup();
+  freeze(e.opts);
+  const file = path.join(e.dir, 'freeze.json');
+  assert.deepEqual(check(file, { data: e.data, root: e.dir }), []);
+  writeFileSync(e.vsets[1].dom, '{"changed":1}');
+  assert.deepEqual(check(file, { data: e.data, root: e.dir }), [
+    'heldout-a: held.example/cart-1/class-rename: variant export differs from the manifest',
+  ]);
+  assert.deepEqual(check(file, { root: e.dir }), []);
+  const f = JSON.parse(readFileSync(file, 'utf8'));
+  writeFileSync(
+    file,
+    JSON.stringify({
+      ...f,
+      files: f.files.filter((x) => !(x.split === 'heldout-a' && x.role.startsWith('variant'))),
+    }),
+  );
+  assert.deepEqual(check(file, { root: e.dir }), [
+    'missing role variant-manifest for heldout-a',
+    'missing role variant-labels for heldout-a',
+  ]);
 });

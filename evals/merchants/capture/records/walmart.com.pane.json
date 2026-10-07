@@ -1,0 +1,107 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "walmart.com",
+  "stream": "us",
+  "visit": 49,
+  "session": 1,
+  "entryHost": "www.walmart.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [{ "n": 1, "item": "own item 1 (qty 2)", "ok": true }],
+  "robots": [
+    {
+      "host": "www.walmart.com",
+      "status": 200,
+      "sha256": "2a7f8d1550d91c0ef5262f4fca3099a89a117249ee59999b9e70db30de3d3eeb",
+      "bytes": 3584,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.walmart.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.walmart.com/" },
+    { "n": 3, "utc": null, "url": "https://www.walmart.com/cart" },
+    { "n": 4, "utc": null, "url": "https://www.walmart.com/cp/home/4044" },
+    { "n": 5, "utc": null, "url": "https://www.walmart.com/cart" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 5, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 6, "utc": null, "kind": "click", "role": "link", "name": "Shop Home" },
+    { "n": 7, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to cart - Mainstays Wooden Decorati" },
+    { "n": 8, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 9, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 10, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 11, "utc": null, "kind": "quantity-increment", "role": "button", "name": "Increase quantity Mainstays Wooden Deco" },
+    { "n": 12, "utc": null, "kind": "export", "role": "", "name": "cart-qty2" },
+    { "n": 13, "utc": null, "kind": "remove-item", "role": "button", "name": "Remove Mainstays Wooden Decorative Tabl" }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "71c7cfdba2aacc1e6d60229215d1b3548ab2f53d0f47e09ec6b4b942d63ae579",
+      "bytes": 423444,
+      "chunks": 2,
+      "url": "https://www.walmart.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "84ca5001b70482a2941de3bf4dc777f56998f85e1e3cc963be67c5a89f86e588",
+      "bytes": 1356900,
+      "chunks": 4,
+      "url": "https://www.walmart.com/cp/home/4044",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "68cf9ec7062d19b057122c5c2255da008468dbb2df70ed4e62cf8701cde970b2",
+      "bytes": 107747,
+      "chunks": 1,
+      "url": "https://www.walmart.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "f337bdb0e3d2ebdcecd349a7d855c8feb1572c05fa96e33f59bfbad26395d47b",
+      "bytes": 110065,
+      "chunks": 1,
+      "url": "https://www.walmart.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted: own item already at qty 2 and decrement is not an allowed control; kept session short"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.walmart.com/cp/home/4044",
+    "productUrl": null,
+    "price": "USD 19.72",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "minicart-1: no flyout opened after the listing quick-add; the export is the listing page with the updated header cart badge and inline quantity stepper",
+    "item added from the category listing's quick-add button; product page not opened, so productUrl is null",
+    "cart page showed a site-chosen ZIP; left unchanged"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "therealreal.com",
+  "stream": "us",
+  "visit": 48,
+  "session": 1,
+  "entryHost": "www.therealreal.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.therealreal.com",
+      "status": 200,
+      "sha256": "be558d39f95fb19a15db41a4ab68e9e95b8f4efe292d9feec4a987725378ddc2",
+      "bytes": 786,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.therealreal.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.therealreal.com/" },
+    { "n": 3, "utc": null, "url": "https://www.therealreal.com/sales/shop-new-arrivals-5753" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "cookie-decline", "role": "button", "name": "Reject All" },
+    { "n": 5, "utc": null, "kind": "navigate", "role": "", "name": "new arrivals listing (home page link)" }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    { "state": "minicart-1", "reason": "captcha on first listing page" },
+    { "state": "cart-1", "reason": "captcha on first listing page" },
+    { "state": "cart-qty2", "reason": "captcha on first listing page" },
+    { "state": "cart-2items", "reason": "captcha on first listing page" }
+  ],
+  "itemPath": { "listingUrl": "", "productUrl": "", "price": "", "secondProductUrl": null },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": { "status": "excluded", "code": "captcha", "evidenceSha256": null },
+  "challenge": {
+    "url": "https://www.therealreal.com/sales/shop-new-arrivals-5753",
+    "title": "Access to this page has been denied",
+    "marker": "PerimeterX/HUMAN-style press-and-hold widget",
+    "wording": "Press & Hold to confirm you are a human (and not a bot)."
+  },
+  "problems": [
+    "Home page loaded behind a sign-up modal with no close control; not interacted with",
+    "Start cart count not read: no cart control visible to a logged-out visitor on the home page before the challenge",
+    "Challenge not interacted with or exported, per protocol"
+  ]
+}

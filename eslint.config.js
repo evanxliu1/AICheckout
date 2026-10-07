@@ -47,9 +47,9 @@ export default [
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
     rules: js.configs.recommended.rules,
   },
-  // Phase 12.3 label tools (schema, agreement, freeze): Node only.
+  // Phase 12.3 label tools (schema, agreement, freeze) and the offline variant generator: Node only.
   {
-    files: ['evals/merchants/labels/**/*.mjs'],
+    files: ['evals/merchants/labels/**/*.mjs', 'evals/merchants/variants/**/*.mjs'],
     languageOptions: { globals: globals.node },
     rules: js.configs.recommended.rules,
   },

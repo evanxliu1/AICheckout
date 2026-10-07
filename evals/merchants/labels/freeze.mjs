@@ -9,26 +9,29 @@
 //     page-states have exactly one final label: pane (sites.json standing status captured by pane) = each collected
 //     state export of `records/<domain>.pane.json`; robot = each action state with a manifest in the standing
 //     robot capture (the latest `protocolN` block with `states`);
+//   - there is one variant manifest (variants/generate.mjs, `reader-variants.1`) per split, generated from that
+//     split's final labels file (baseLabels.sha256), its variant labels file unchanged (variantLabels.sha256) and
+//     every variant export re-hashed (under --variant-data, default the manifest's dataRoot);
 //   - pane: dom.json is the export the committed record collected and the one in meta.json, the render files hash
 //     to render.json, and the label's domSha256 and snapshotSha256 (= SHA-256 of render.json) are those; robot: the
 //     label's snapshotSha256 is the standing capture's manifest SHA-256 for that state.
 // Then writes, into --out-dir:
 //   snapshot-manifest.json  `reader-snapshots.1`: every labelled real page-state with its dom SHA-256 and render
 //                           SHA-256s (pane) or manifest SHA-256 (robot)
-//   freeze.json             `reader-freeze.1`: SHA-256 of each final labels file and agreement report, the variant
-//                           manifest(s), the snapshot manifest, currency-minor-units.json, item-price-bands.json,
+//   freeze.json             `reader-freeze.1`: SHA-256 of each final labels file and agreement report, each split's
+//                           variant manifest and variant labels file, the snapshot manifest, currency-minor-units.json, item-price-bands.json,
 //                           retail-frame-3.json and splits.json, with the git commit and the UTC time
-// `--check` requires every role (labels and agreement report per split, a variant manifest, the snapshot manifest,
-// the three reference files, splits), re-hashes every file freeze.json names (and, with --data, every pane snapshot
-// in the manifest) and exits 1 on any problem; the reader harness refuses to score then. A frozen file is never
+// `--check` requires every role (labels, agreement report, variant manifest and variant labels per split, the
+// snapshot manifest, the three reference files, splits), re-hashes every file freeze.json names (and, with --data,
+// every pane snapshot in the manifest and every variant export) and exits 1 on any problem; the reader harness refuses to score then. A frozen file is never
 // edited; errata go in errata/<split>.json.
 //
 //   node evals/merchants/labels/freeze.mjs --labels <final-development.json> --labels <final-heldout-a.json>
 //        --report <agreement-development.json> --report <agreement-heldout-a.json>
-//        --variants <variant-manifest.json> [--variants ...] --splits evals/merchants/splits.json
-//        --data <capture/data/pane> [--records <capture/records>] [--sites <sites.json>] [--commit <sha>]
+//        --variants <development-manifest.json> --variants <heldout-a-manifest.json> --splits evals/merchants/splits.json
+//        --data <capture/data/pane> [--variant-data <capture/data/variants>] [--records <capture/records>] [--sites <sites.json>] [--commit <sha>]
 //        [--utc <iso>] [--out-dir <dir>]
-//   node evals/merchants/labels/freeze.mjs --check [<freeze.json>] [--data <capture/data/pane>]
+//   node evals/merchants/labels/freeze.mjs --check [<freeze.json>] [--data <capture/data/pane>] [--variant-data <dir>]
 // Paths in freeze.json are relative to the repository root (--root to override).
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -193,6 +196,56 @@ function checkReports(finals, reports) {
   });
 }
 
+export const VARIANT_MANIFEST_SCHEMA = 'reader-variants.1';
+
+/** Re-hash every variant export a manifest lists: [problem]. Exports live under `variantData` or its dataRoot. */
+function variantExportProblems(m, { root, variantData }) {
+  const base = variantData ?? path.resolve(root, m.dataRoot ?? '');
+  const out = [];
+  for (const v of m.variants ?? []) {
+    const f = path.join(base, v.path);
+    if (!existsSync(f)) out.push(`${m.split}: ${v.id}: variant export missing`);
+    else if (fileSha(f) !== v.domSha256)
+      out.push(`${m.split}: ${v.id}: variant export differs from the manifest`);
+  }
+  return out;
+}
+
+/**
+ * Check the variant manifests (variants/generate.mjs, `reader-variants.1`): one per split, generated from that
+ * split's final labels file, its variant labels file unchanged and every variant export re-hashed.
+ * Returns [{split, file, labelsFile}].
+ */
+function checkVariants(finals, variants, { root, variantData }) {
+  const bySplit = new Map();
+  for (const file of variants) {
+    const m = readJson(file);
+    if (m.schema !== VARIANT_MANIFEST_SCHEMA)
+      throw new Error(`${file}: not a ${VARIANT_MANIFEST_SCHEMA} manifest`);
+    if (bySplit.has(m.split)) throw new Error(`two variant manifests for ${m.split}`);
+    bySplit.set(m.split, { file, m });
+  }
+  if ([...bySplit.keys()].sort().join() !== [...SPLITS].sort().join())
+    throw new Error(
+      `freeze needs one variant manifest per split (${SPLITS.join(', ')}), got ${[...bySplit.keys()].join(', ')}`,
+    );
+  const problems = [];
+  const out = finals.map((f) => {
+    const { file, m } = bySplit.get(f.split);
+    if (m.baseLabels?.sha256 !== fileSha(f.file))
+      problems.push(`${f.split}: the variant manifest is not for these final labels`);
+    const labelsFile = path.resolve(root, m.variantLabels?.path ?? '');
+    if (!m.variantLabels?.path || !existsSync(labelsFile))
+      problems.push(`${f.split}: the variant labels file is missing`);
+    else if (fileSha(labelsFile) !== m.variantLabels.sha256)
+      problems.push(`${f.split}: the variant labels file differs from the manifest`);
+    problems.push(...variantExportProblems(m, { root, variantData }));
+    return { split: f.split, file, labelsFile };
+  });
+  if (problems.length) throw new Error(problems.join('; '));
+  return out;
+}
+
 /** Write snapshot-manifest.json and freeze.json; returns the freeze object. */
 export function freeze({
   labels,
@@ -205,6 +258,7 @@ export function freeze({
   commit,
   utc,
   outDir,
+  variantData,
   root = REPO_ROOT,
 }) {
   if (!labels?.length || !variants?.length || !splits || !data || !sites || !records)
@@ -223,6 +277,7 @@ export function freeze({
     records,
     splitRows: readJson(splits),
   });
+  const variantFiles = checkVariants(finals, variants, { root, variantData });
   const manifestPath = path.join(outDir, 'snapshot-manifest.json');
   writeFileSync(manifestPath, JSON.stringify(manifest, null, 1) + '\n');
   const entry = (role, file, extra = {}) => ({
@@ -239,7 +294,10 @@ export function freeze({
     files: [
       ...finals.map((f) => entry('labels', f.file, { split: f.split })),
       ...reportFiles.map((r) => entry('agreement-report', r.file, { split: r.split })),
-      ...variants.map((v) => entry('variant-manifest', v)),
+      ...variantFiles.flatMap((v) => [
+        entry('variant-manifest', v.file, { split: v.split }),
+        entry('variant-labels', v.labelsFile, { split: v.split }),
+      ]),
       entry('snapshot-manifest', manifestPath),
       ...Object.entries(REFERENCE_FILES).map(([role, file]) => entry(role, file)),
       entry('splits', splits),
@@ -250,15 +308,15 @@ export function freeze({
 }
 
 /** Verify a freeze file: [problem]; empty when every role is there and every hash matches. */
-export function check(freezeFile, { data, root = REPO_ROOT } = {}) {
+export function check(freezeFile, { data, variantData, root = REPO_ROOT } = {}) {
   const f = readJson(freezeFile);
   const problems = [];
   if (f.schema !== FREEZE_SCHEMA) problems.push(`not a ${FREEZE_SCHEMA} file`);
   const files = f.files ?? [];
   const has = (role, split) => files.some((e) => e.role === role && (!split || e.split === split));
-  for (const role of ['labels', 'agreement-report'])
+  for (const role of ['labels', 'agreement-report', 'variant-manifest', 'variant-labels'])
     for (const split of SPLITS) if (!has(role, split)) problems.push(`missing role ${role} for ${split}`);
-  for (const role of ['variant-manifest', 'snapshot-manifest', ...Object.keys(REFERENCE_FILES), 'splits'])
+  for (const role of ['snapshot-manifest', ...Object.keys(REFERENCE_FILES), 'splits'])
     if (!has(role)) problems.push(`missing role ${role}`);
   for (const e of files) {
     const p = path.resolve(root, e.path);
@@ -278,6 +336,12 @@ export function check(freezeFile, { data, root = REPO_ROOT } = {}) {
       for (const k of ['snapshotSha256', 'domSha256', 'rebuiltSha256', 'viewportSha256', 'fullSha256'])
         if (s[k] !== e[k]) problems.push(`${e.id}: ${k} differs from the freeze`);
     }
+  if (data || variantData)
+    for (const e of files.filter((x) => x.role === 'variant-manifest')) {
+      const p = path.resolve(root, e.path);
+      if (existsSync(p) && fileSha(p) === e.sha256)
+        problems.push(...variantExportProblems(readJson(p), { root, variantData }));
+    }
   return problems;
 }
 
@@ -287,9 +351,14 @@ function main(argv) {
   const root = one('--root') ?? REPO_ROOT;
   if (argv.includes('--check')) {
     const file =
-      argv.find((a, i) => !a.startsWith('--') && !['--data', '--root'].includes(argv[i - 1])) ??
-      'evals/merchants/freeze.json';
-    const problems = check(path.resolve(root, file), { data: one('--data'), root });
+      argv.find(
+        (a, i) => !a.startsWith('--') && !['--data', '--variant-data', '--root'].includes(argv[i - 1]),
+      ) ?? 'evals/merchants/freeze.json';
+    const problems = check(path.resolve(root, file), {
+      data: one('--data'),
+      variantData: one('--variant-data'),
+      root,
+    });
     console.log(JSON.stringify({ ok: problems.length === 0, problems }, null, 1));
     return problems.length ? 1 : 0;
   }
@@ -304,6 +373,7 @@ function main(argv) {
     commit: one('--commit'),
     utc: one('--utc'),
     outDir: one('--out-dir') ?? MERCHANTS,
+    variantData: one('--variant-data'),
     root,
   });
   console.log(JSON.stringify(out, null, 1));

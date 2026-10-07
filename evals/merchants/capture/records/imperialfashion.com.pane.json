@@ -1,0 +1,90 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "imperialfashion.com",
+  "stream": "non-us",
+  "visit": 37,
+  "session": 1,
+  "entryHost": "www.imperialfashion.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.imperialfashion.com",
+      "status": 200,
+      "sha256": "29640dba3f4fc6d155ee70f26c70fb159342a5e7b0b50f9261f137f323cf37e1",
+      "bytes": 1624,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.imperialfashion.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.imperialfashion.com/int/en" },
+    { "n": 3, "utc": null, "url": "https://www.imperialfashion.com/int/en/checkout/cart" },
+    { "n": 4, "utc": null, "url": "https://www.imperialfashion.com/int/en/trending-now-woman" },
+    { "n": 5, "utc": null, "url": "https://www.imperialfashion.com/int/en" },
+    { "n": 6, "utc": null, "url": "https://www.imperialfashion.com/int/en/trending-now-woman" },
+    { "n": 7, "utc": null, "url": "https://www.imperialfashion.com/int/en/trending-now-man" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "robots.txt" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "entry host (redirected to /int/en)" },
+    { "n": 4, "utc": null, "kind": "cookie-decline", "role": "button", "name": "Reject" },
+    { "n": 5, "utc": null, "kind": "popup-close", "role": "button", "name": "Close (newsletter popup)" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "cart by URL" },
+    { "n": 7, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 8, "utc": null, "kind": "navigate", "role": "menuitem", "name": "WOMAN (trending-now-woman)" },
+    { "n": 9, "utc": null, "kind": "click", "role": "menuitem", "name": "WOMAN" },
+    { "n": 10, "utc": null, "kind": "navigate", "role": "link", "name": "home" },
+    { "n": 11, "utc": null, "kind": "click", "role": "generic", "name": "Discover woman" },
+    { "n": 12, "utc": null, "kind": "navigate", "role": "menuitem", "name": "MAN (trending-now-man)" },
+    { "n": 13, "utc": null, "kind": "export", "role": "", "name": "evidence-1 no-eligible-item" }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "3546d214844abd62dd0e5b6fd80329376b85dd6a4cb153e2c17c9bae7f7da544",
+      "bytes": 160260,
+      "chunks": 1,
+      "url": "https://www.imperialfashion.com/int/en/checkout/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "18d3e303975112386768ddc9d75c14c4e384d646ea0e2a5ace7bb1bd0fc8fb61",
+      "bytes": 370183,
+      "chunks": 1,
+      "url": "https://www.imperialfashion.com/int/en/trending-now-man"
+    }
+  ],
+  "notReached": [
+    { "state": "minicart-1", "reason": "no-eligible-item: International storeview served to US visitor shows no product listings or prices" },
+    { "state": "cart-1", "reason": "no-eligible-item" },
+    { "state": "cart-qty2", "reason": "no-eligible-item" },
+    { "state": "cart-2items", "reason": "no-eligible-item" }
+  ],
+  "itemPath": { "listingUrl": "", "productUrl": "", "price": "", "secondProductUrl": null },
+  "observedCurrency": "",
+  "observedRegion": "International storeview (int/en)",
+  "outcome": { "status": "excluded", "code": "no-eligible-item", "evidenceSha256": "18d3e303975112386768ddc9d75c14c4e384d646ea0e2a5ace7bb1bd0fc8fb61" },
+  "challenge": null,
+  "problems": [
+    "Entry host redirected to the International storeview (/int/en); its WOMAN and MAN menus lead only to editorial campaign pages with no product links, prices or categories; country storeviews (e.g. /it/it/) were not opened because changing the storefront is not allowed.",
+    "Banner on the International storeview said the site no longer ships to the UK and redirected to the International storeview; no explicit US geo-block wording seen. Reviewer may consider geo-blocked instead of no-eligible-item.",
+    "Newsletter popup contains a reCAPTCHA checkbox inside a signup form; not a page challenge, not interacted with.",
+    "robots.txt disallows /checkout/ (covers Magento /checkout/cart) and /customer/; root allowed.",
+    "Both chunk(0) results exceeded the inline limit and were saved by the harness to tool-results files (not opened)."
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "carrefour.com.ar",
+  "stream": "non-us",
+  "visit": 45,
+  "session": 1,
+  "entryHost": "www.carrefour.com.ar",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.carrefour.com.ar",
+      "status": 200,
+      "sha256": "166f778c8066473ffbb63aaee05f47b15d6ea5fa6add00b9ad7b176135cfc90f",
+      "bytes": 356,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.carrefour.com.ar/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.carrefour.com.ar/" },
+    { "n": 3, "utc": null, "url": "https://www.carrefour.com.ar/hogar-y-electro" },
+    { "n": 4, "utc": null, "url": "https://www.carrefour.com.ar/electro-y-tecnologia/pequenos-electrodomesticos" },
+    { "n": 5, "utc": null, "url": "https://www.carrefour.com.ar/afilador-de-cuchillos-electrico-mandine-mks60-/p" },
+    { "n": 6, "utc": null, "url": "https://www.carrefour.com.ar/" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "cookie-decline", "role": "button", "name": "Rechazar todo" },
+    { "n": 5, "utc": null, "kind": "navigate", "role": "", "name": "hogar-y-electro" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "pequenos-electrodomesticos listing" },
+    { "n": 7, "utc": null, "kind": "click", "role": "link", "name": "Afilador de Cuchillos Eléctrico Mandine" },
+    { "n": 8, "utc": null, "kind": "navigate", "role": "", "name": "product page" },
+    { "n": 9, "utc": null, "kind": "add-to-cart", "role": "generic", "name": "Agregar" },
+    { "n": 10, "utc": null, "kind": "export", "role": "", "name": "evidence-1" }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "b804e83d6b343122199bcf499988c74a1749ce13415f6542d20a2fa043414db1",
+      "bytes": 1572732,
+      "chunks": 4,
+      "url": "https://www.carrefour.com.ar/"
+    }
+  ],
+  "notReached": [
+    { "state": "empty-cart", "reason": "cart page is under /checkout (VTEX); not opened; store stopped at needs-input" },
+    { "state": "minicart-1", "reason": "add-to-cart opens a delivery-method modal needing a typed postcode or branch choice" },
+    { "state": "cart-1", "reason": "needs-input" },
+    { "state": "cart-qty2", "reason": "needs-input" },
+    { "state": "cart-2items", "reason": "needs-input" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.carrefour.com.ar/electro-y-tecnologia/pequenos-electrodomesticos",
+    "productUrl": "https://www.carrefour.com.ar/afilador-de-cuchillos-electrico-mandine-mks60-/p",
+    "price": "ARS 28.990,00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "ARS",
+  "observedRegion": "AR",
+  "outcome": { "status": "excluded", "code": "needs-input", "evidenceSha256": "b804e83d6b343122199bcf499988c74a1749ce13415f6542d20a2fa043414db1" },
+  "challenge": null,
+  "problems": [
+    "Add-to-cart ('Agregar') opened a site-wide modal 'ELEGÍ TU MÉTODO DE ENTREGA' with a postcode field (tel input) or branch pickup; cart stayed at 0 items.",
+    "URL changed to home with a returnUrl query after the add click; evidence export taken there with the modal open.",
+    "VTEX store: the cart page lives at /checkout (also robots-disallowed), so the cart page could not be opened under the checkout-path rule in any case.",
+    "Listing link click did not navigate; product page opened by URL instead.",
+    "All 4 evidence chunks were oversized and saved by the harness to tool-results files (not opened)."
+  ]
+}

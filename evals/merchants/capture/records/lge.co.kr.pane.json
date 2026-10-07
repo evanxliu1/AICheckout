@@ -1,0 +1,116 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "lge.co.kr",
+  "stream": "non-us",
+  "visit": 43,
+  "session": 1,
+  "entryHost": "www.lge.co.kr",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [{ "n": 1, "item": "own item 1 (qty 2)", "ok": true }],
+  "robots": [
+    {
+      "host": "www.lge.co.kr",
+      "status": 200,
+      "sha256": "cc1f69e90baad767147c20082bc81210698c97511c068b2c7838d9182d2fb9e0",
+      "bytes": 1635,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.lge.co.kr/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.lge.co.kr/home" },
+    { "n": 3, "utc": null, "url": "https://www.lge.co.kr/shop/cart/index" },
+    { "n": 4, "utc": null, "url": "https://www.lge.co.kr/category/care-accessories/air-purifier" },
+    { "n": 5, "utc": null, "url": "https://www.lge.co.kr/care-accessories/360-air-purifier/adq30041412" },
+    { "n": 6, "utc": null, "url": "https://www.lge.co.kr/shop/cart/index" },
+    { "n": 7, "utc": null, "url": "https://www.lge.co.kr/shop/cart/index" },
+    { "n": 8, "utc": null, "url": "https://www.lge.co.kr/shop/cart/index" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "cart (start count)" },
+    { "n": 5, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 6, "utc": null, "kind": "click", "role": "link", "name": "케어용품/소모품 (menu tab, no navigation)" },
+    { "n": 7, "utc": null, "kind": "click", "role": "link", "name": "공기청정기 (care category)" },
+    { "n": 8, "utc": null, "kind": "click", "role": "generic", "name": "LG 360 공기청정기 퓨리청정 H 필터" },
+    { "n": 9, "utc": null, "kind": "add-to-cart", "role": "generic", "name": "장바구니 담기" },
+    { "n": 10, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 11, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 12, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 13, "utc": null, "kind": "quantity-increment", "role": "button", "name": "quantity plus (unnamed)" },
+    { "n": 14, "utc": null, "kind": "quantity-increment", "role": "button", "name": "변경 (apply quantity)" },
+    { "n": 15, "utc": null, "kind": "navigate", "role": "", "name": "cart reload" },
+    { "n": 16, "utc": null, "kind": "export", "role": "", "name": "cart-qty2" },
+    { "n": 17, "utc": null, "kind": "remove-item", "role": "generic", "name": "제품 삭제" },
+    { "n": 18, "utc": null, "kind": "navigate", "role": "", "name": "cart (final count)" }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "b5d6879035d12848569d8be94aa0117703796c9de5c8a1aa4d18f2f48aa24e54",
+      "bytes": 962899,
+      "chunks": 3,
+      "url": "https://www.lge.co.kr/shop/cart/index",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "2859e069598760171f77c6a061d500575325180c53cbf04645ef40dec87e0d71",
+      "bytes": 1384550,
+      "chunks": 4,
+      "url": "https://www.lge.co.kr/care-accessories/360-air-purifier/adq30041412",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "ee89bf8488fe2343cfa69533a549bd9ef4d4f0b14893510d9a6c22c4a93c9977",
+      "bytes": 1077862,
+      "chunks": 3,
+      "url": "https://www.lge.co.kr/shop/cart/index",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "31a73901b7dccf956b26f49d188ec602275f63cf64421cbff13831ba4664b9f7",
+      "bytes": 1079622,
+      "chunks": 3,
+      "url": "https://www.lge.co.kr/shop/cart/index",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "cart-2items", "reason": "not attempted; focus on cart and site structure, no lingering items" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.lge.co.kr/category/care-accessories/air-purifier",
+    "productUrl": "https://www.lge.co.kr/care-accessories/360-air-purifier/adq30041412",
+    "price": "58,900 KRW",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "KRW",
+  "observedRegion": "KR",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "robots.txt disallows /shop/ for * (cart lives at /shop/cart/index) and /add-to-cart/; root allowed; visited per .8 rule",
+    "empty-cart chunk(0) fetched twice (duplicate identical fetch before navigating away); collector should use either",
+    "minicart-1 is the in-page add-to-cart confirmation layer on the product page; header badge also updates",
+    "quantity change needed the plus button then the cart's '변경' (apply) button; qty 2 verified via order button text after reload",
+    "background-tab screenshots rendered blank or stale after scrolling; verification used find/read_page",
+    "one read_page result was oversized and saved by the harness to a tool-results file; not opened",
+    "removal confirmation notice could not be dismissed (off-viewport ref); cart reloaded and showed 0 items"
+  ]
+}

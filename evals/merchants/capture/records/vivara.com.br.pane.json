@@ -1,0 +1,91 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "vivara.com.br",
+  "stream": "non-us",
+  "visit": 46,
+  "session": 1,
+  "entryHost": "www.vivara.com.br",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [{ "n": 1, "item": "own item 1", "ok": true }],
+  "robots": [
+    {
+      "host": "www.vivara.com.br",
+      "status": 200,
+      "sha256": "382615cc354a55c62afa436465c3fbc020513162f8f0af4cf8425a6f89c94375",
+      "bytes": 269,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.vivara.com.br/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.vivara.com.br/" },
+    { "n": 3, "utc": null, "url": "https://www.vivara.com.br/vivara/joias/brincos" },
+    { "n": 4, "utc": null, "url": "https://www.vivara.com.br/life/joias/brincos" },
+    { "n": 5, "utc": null, "url": "https://www.vivara.com.br/brinco-life-petit-em-prata-925-com-zirconia-incolor-bl00002994/p" },
+    { "n": 6, "utc": null, "url": "https://www.vivara.com.br/brinco-life-petit-em-prata-925-com-zirconia-incolor-bl00002994/p" },
+    { "n": 7, "utc": null, "url": "https://www.vivara.com.br/checkout" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "cookie-decline", "role": "button", "name": "Do not sell" },
+    { "n": 5, "utc": null, "kind": "navigate", "role": "", "name": "Vivara brincos listing" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "Life brincos listing" },
+    { "n": 7, "utc": null, "kind": "click", "role": "link", "name": "Brinco Life Petit em Prata 925 com Zirc" },
+    { "n": 8, "utc": null, "kind": "navigate", "role": "", "name": "product page reload (blank render)" },
+    { "n": 9, "utc": null, "kind": "add-to-cart", "role": "generic", "name": "Adicionar à Sacola" },
+    { "n": 10, "utc": null, "kind": "click", "role": "button", "name": "Carrinho com 1 itens" },
+    { "n": 11, "utc": null, "kind": "export", "role": "", "name": "evidence-1" },
+    { "n": 12, "utc": null, "kind": "remove-item", "role": "link", "name": "remover" }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "5b647b582070703f261015b30587c2fe3f1511423de6da97ba9fe63aff17ff73",
+      "bytes": 530582,
+      "chunks": 2,
+      "url": "https://www.vivara.com.br/checkout"
+    }
+  ],
+  "notReached": [
+    { "state": "empty-cart", "reason": "only cart page is VTEX /checkout#/cart, a forbidden checkout path" },
+    { "state": "minicart-1", "reason": "no in-page minicart; header cart button navigates to /checkout#/cart" },
+    { "state": "cart-1", "reason": "cart lives at /checkout#/cart (checkout segment); store stopped" },
+    { "state": "cart-qty2", "reason": "store stopped; item also showed 1 available" },
+    { "state": "cart-2items", "reason": "store stopped" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.vivara.com.br/life/joias/brincos",
+    "productUrl": "https://www.vivara.com.br/brinco-life-petit-em-prata-925-com-zirconia-incolor-bl00002994/p",
+    "price": "R$ 210,00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "BRL",
+  "observedRegion": "BR",
+  "outcome": {
+    "status": "excluded",
+    "code": "would-need-forbidden-action",
+    "evidenceSha256": "5b647b582070703f261015b30587c2fe3f1511423de6da97ba9fe63aff17ff73"
+  },
+  "challenge": null,
+  "problems": [
+    "VTEX store: the header cart button (site's own control) navigated to /checkout#/cart; landing on a checkout-segment path stops the store, so no cart state was exported.",
+    "Evidence export is of the /checkout#/cart page as landed (cart view, not signed in); reviewer should confirm whether VTEX /checkout#/cart deserves a Magento-style exception in a later protocol version.",
+    "After the stop, one remove-item click on the landed cart page removed my own item (cleanup); cart ended empty.",
+    "Product page first rendered blank after the listing click; reloaded once by URL.",
+    "Pane hidden: screenshots failed after the first two; used find/read_page/get_page_text.",
+    "robots.txt disallows /checkout/ for * (cart and checkout both under /checkout)."
+  ]
+}
