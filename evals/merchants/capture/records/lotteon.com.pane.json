@@ -1,0 +1,166 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "lotteon.com",
+  "stream": "non-us",
+  "visit": 19,
+  "session": 1,
+  "entryHost": "www.lotteon.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_fd33ec5a-fa0/agent-ae8154642252137f1",
+  "startUtc": "2026-10-07T06:37:51.214Z",
+  "endUtc": "2026-10-07T06:38:33.622Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.lotteon.com",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null,
+      "note": "robots.txt request answered with an Imperva/Incapsula block page; in-page hash fetch failed (TypeError: Failed to fetch); posture unknown"
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.lotteon.com/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "failed: Failed to fetch"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall at robots.txt"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall at robots.txt"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall at robots.txt"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall at robots.txt"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall at robots.txt"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.lotteon.com/robots.txt",
+    "title": "",
+    "marker": "Imperva/Incapsula incident ID",
+    "wording": "Request unsuccessful. Incapsula incident ID: <id>"
+  },
+  "problems": [
+    "First page load (robots.txt) served an Incapsula block page; stopped at once, nothing exported, no store page loaded",
+    "Robots hash script ran once on the block page and threw TypeError: Failed to fetch",
+    "Sign-in state and starting cart count not observable (store never loaded)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:37:51.214Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:37:52.417Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:37:52.431Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:37:55.203Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:37:58.715Z",
+      "tool": "navigate",
+      "url": "https://www.lotteon.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:37:58.772Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:38:05.705Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:38:09.172Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:38:13.036Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:38:26.200Z",
+      "tool": "Write"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:38:33.622Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

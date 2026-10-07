@@ -1,0 +1,135 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "qvc.com",
+  "stream": "us",
+  "visit": 27,
+  "session": 1,
+  "entryHost": "www.qvc.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_a638f4e9-151/agent-ab0f60a32c4353b7c",
+  "startUtc": "2026-10-07T06:39:44.070Z",
+  "endUtc": "2026-10-07T06:40:34.130Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [],
+  "navigations": [],
+  "actions": [],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "no tab could be opened; no store page loaded"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "no tab could be opened; no store page loaded"
+    },
+    {
+      "state": "cart-1",
+      "reason": "no tab could be opened; no store page loaded"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "no tab could be opened; no store page loaded"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no tab could be opened; no store page loaded"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "tabs_create failed 5 times ('Could not open a new tab (Browser pane gone, gate off, or tab cap reached)'); tabs_context showed 9 tabs held by other sessions, pane hidden; likely tab cap",
+    "No store page, robots.txt or other tab touched; session 1 ends as tool-error, so one more pane session is allowed"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:39:44.070Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:39:45.498Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:39:45.505Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:39:48.680Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:39:51.236Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:39:56.054Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:39:59.625Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:40:02.409Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:40:05.682Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:40:08.191Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:40:12.535Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:40:27.016Z",
+      "tool": "Write"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:40:34.130Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

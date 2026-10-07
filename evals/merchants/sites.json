@@ -108,15 +108,22 @@
     "note": "pending robot re-visit (tool-error) done by pane (Amendment 7, G)"
    },
    "statusUnderProtocol10": {
-    "status": "incomplete",
-    "code": "tool-error",
+    "status": "captured",
+    "code": null,
     "method": "pane",
-    "session": 1,
+    "session": 2,
     "signedIn": false,
-    "states": [],
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
     "record": "capture/records/hollisterco.com.pane.json",
-    "run": "pilot 2026-10-07",
-    "note": "export-size defect: chunk result over the pane JavaScript tool limit, dom.json not written; one more pane session allowed after the fix (M9)"
+    "transcript": "wf_a638f4e9-151/agent-acbd83a55a8df585e",
+    "concurrency": 12,
+    "note": ""
    }
   },
   {
@@ -199,15 +206,12 @@
     "note": "robot-era captcha; re-visited by pane as a second attempt by a different method; all such sites treated alike (Amendment 7, G)"
    },
    "statusUnderProtocol10": {
-    "status": "incomplete",
-    "code": "tool-error",
+    "status": "not-started",
+    "code": "tab-cap",
     "method": "pane",
     "session": 1,
-    "signedIn": false,
-    "states": [],
-    "record": "capture/records/ebay.com.pane.json",
-    "run": "pilot 2026-10-07",
-    "note": "export-size defect: chunk result over the pane JavaScript tool limit, dom.json not written; one more pane session allowed after the fix (M9)"
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_53a2bd24-f83/agent-ae60f672863a0ad96"
    }
   },
   {
@@ -538,15 +542,23 @@
     "note": "pending robot re-visit (tool-error) done by pane (Amendment 7, G)"
    },
    "statusUnderProtocol10": {
-    "status": "incomplete",
-    "code": "tool-error",
+    "status": "captured",
+    "code": null,
     "method": "pane",
-    "session": 1,
+    "session": 2,
     "signedIn": false,
-    "states": [],
+    "states": [
+     "minicart-1",
+     "cart-1",
+     "cart-qty2",
+     "cart-other",
+     "empty-cart"
+    ],
+    "realCart1": true,
     "record": "capture/records/extra.com.pane.json",
-    "run": "pilot 2026-10-07",
-    "note": "export-size defect: chunk result over the pane JavaScript tool limit, dom.json not written; one more pane session allowed after the fix (M9)"
+    "transcript": "wf_fd33ec5a-fa0/agent-ad1369cb9abb1b9ae",
+    "concurrency": 12,
+    "note": ""
    }
   },
   {
@@ -1180,15 +1192,19 @@
     "note": "robot-era HTTP 403; re-visited by pane (second attempt, different method) (Amendment 7, G)"
    },
    "statusUnderProtocol10": {
-    "status": "incomplete",
-    "code": "tool-error",
+    "status": "excluded",
+    "code": "blocked-bot-wall",
     "method": "pane",
-    "session": 1,
+    "session": 2,
     "signedIn": false,
-    "states": [],
+    "states": [
+     "empty-cart"
+    ],
+    "realCart1": false,
     "record": "capture/records/napaonline.com.pane.json",
-    "run": "pilot 2026-10-07",
-    "note": "export-size defect: chunk result over the pane JavaScript tool limit, dom.json not written; one more pane session allowed after the fix (M9)"
+    "transcript": "wf_fd33ec5a-fa0/agent-a856bf3888463bb5c",
+    "concurrency": 12,
+    "note": ""
    }
   },
   {
@@ -1347,15 +1363,17 @@
     "note": "robot-era HTTP 403; re-visited by pane (second attempt, different method) (Amendment 7, G)"
    },
    "statusUnderProtocol10": {
-    "status": "incomplete",
-    "code": "tool-error",
+    "status": "excluded",
+    "code": "blocked-bot-wall",
     "method": "pane",
-    "session": 1,
+    "session": 2,
     "signedIn": false,
     "states": [],
+    "realCart1": false,
     "record": "capture/records/bedbathandbeyond.com.pane.json",
-    "run": "pilot 2026-10-07",
-    "note": "export-size defect: chunk result over the pane JavaScript tool limit, dom.json not written; one more pane session allowed after the fix (M9)"
+    "transcript": "wf_a638f4e9-151/agent-a031cc635ba25cb5b",
+    "concurrency": 12,
+    "note": ""
    }
   },
   {
@@ -1778,15 +1796,17 @@
     "note": "robot-era bot wall; re-visited by pane as a second attempt by a different method; its two robot challenge views stay set aside (Amendment 7, G)"
    },
    "statusUnderProtocol10": {
-    "status": "incomplete",
-    "code": "tool-error",
+    "status": "excluded",
+    "code": "blocked-bot-wall",
     "method": "pane",
-    "session": 1,
+    "session": 2,
     "signedIn": false,
     "states": [],
+    "realCart1": false,
     "record": "capture/records/hsn.com.pane.json",
-    "run": "pilot 2026-10-07",
-    "note": "re-queued as tool-error under .11 I4 (no evidence export: export-size defect); one more session exports the product page before any add-to-bag and does not add; session-1 item remains in the logged-out bag"
+    "transcript": "wf_fd33ec5a-fa0/agent-aabe7632ca45be7d1",
+    "concurrency": 12,
+    "note": ""
    }
   },
   {
@@ -1847,15 +1867,20 @@
     "note": "robots-disallow-all under .5; robots.txt no longer excludes under .8 (Evan, 2026-10-06); re-visited by pane like the other method-change re-visits; visited despite a disallow-all, counted in the report (Amendment 7, H)"
    },
    "statusUnderProtocol10": {
-    "status": "incomplete",
-    "code": "tool-error",
+    "status": "captured",
+    "code": null,
     "method": "pane",
-    "session": 1,
+    "session": 2,
     "signedIn": false,
-    "states": [],
+    "states": [
+     "empty-cart",
+     "cart-1"
+    ],
+    "realCart1": true,
     "record": "capture/records/savana.com.pane.json",
-    "run": "pilot 2026-10-07",
-    "note": "export-size defect: chunk result over the pane JavaScript tool limit, dom.json not written; one more pane session allowed after the fix (M9)"
+    "transcript": "wf_a638f4e9-151/agent-abb78d9c992f1e338",
+    "concurrency": 12,
+    "note": ""
    }
   },
   {
@@ -2026,15 +2051,21 @@
     "note": "robot-era HTTP 403 on robots.txt; re-visited by pane (second attempt, different method) (Amendment 7, G)"
    },
    "statusUnderProtocol10": {
-    "status": "incomplete",
-    "code": "tool-error",
+    "status": "captured",
+    "code": null,
     "method": "pane",
-    "session": 1,
+    "session": 2,
     "signedIn": false,
-    "states": [],
+    "states": [
+     "cart-1",
+     "cart-qty2",
+     "empty-cart"
+    ],
+    "realCart1": true,
     "record": "capture/records/innvictus.com.pane.json",
-    "run": "pilot 2026-10-07",
-    "note": "export-size defect: chunk result over the pane JavaScript tool limit, dom.json not written; one more pane session allowed after the fix (M9)"
+    "transcript": "wf_53a2bd24-f83/agent-a454e8956eb4ed7cb",
+    "concurrency": 12,
+    "note": ""
    }
   },
   {
@@ -2234,15 +2265,12 @@
     "note": "rule-driven: under .8 an item with a minimum quantity above 1 is ineligible and another item is picked (review M4); replaces the first call add-to-cart-refused (Amendment 7, G)"
    },
    "statusUnderProtocol10": {
-    "status": "incomplete",
-    "code": "tool-error",
+    "status": "not-started",
+    "code": "tab-cap",
     "method": "pane",
     "session": 1,
-    "signedIn": false,
-    "states": [],
-    "record": "capture/records/webstaurantstore.com.pane.json",
-    "run": "pilot 2026-10-07",
-    "note": "export-size defect: chunk result over the pane JavaScript tool limit, dom.json not written; one more pane session allowed after the fix (M9)"
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_53a2bd24-f83/agent-a5a9468e562a42b5f"
    }
   },
   {
@@ -3531,6 +3559,588 @@
     "record": "capture/records/gap.com.pane.json",
     "transcript": "wf_2cdd30ac-3bf/agent-a383d84e3742a55fa",
     "concurrency": 8,
+    "note": ""
+   }
+  },
+  {
+   "domain": "partsgeek.com",
+   "stream": "us",
+   "visit": 21,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_a638f4e9-151/agent-a5da866a12b208225"
+   }
+  },
+  {
+   "domain": "harborfreight.com",
+   "stream": "us",
+   "visit": 24,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_a638f4e9-151/agent-aacec807d6c113a21"
+   }
+  },
+  {
+   "domain": "very.co.uk",
+   "stream": "non-us",
+   "visit": 20,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "GB",
+   "frameRegion": "GB",
+   "frameCurrency": "GBP",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_a638f4e9-151/agent-a2d55a9089559809f"
+   }
+  },
+  {
+   "domain": "konga.com",
+   "stream": "non-us",
+   "visit": 23,
+   "band": "top-1k",
+   "regionGroup": "middle-east-africa",
+   "homeList": "NG",
+   "frameRegion": "NG",
+   "frameCurrency": "NGN",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_a638f4e9-151/agent-ad3c494d6e96256b1"
+   }
+  },
+  {
+   "domain": "qvc.com",
+   "stream": "us",
+   "visit": 27,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_a638f4e9-151/agent-ab0f60a32c4353b7c"
+   }
+  },
+  {
+   "domain": "iberlibro.com",
+   "stream": "non-us",
+   "visit": 26,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "ES",
+   "frameRegion": "ES",
+   "frameCurrency": "EUR",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_a638f4e9-151/agent-ac70d9398096694c6"
+   }
+  },
+  {
+   "domain": "talbots.com",
+   "stream": "us",
+   "visit": 30,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_a638f4e9-151/agent-ad252a265caab6715"
+   }
+  },
+  {
+   "domain": "apple.com.cn",
+   "stream": "non-us",
+   "visit": 29,
+   "band": "top-1k",
+   "regionGroup": "asia-pacific",
+   "homeList": "CN",
+   "frameRegion": "CN",
+   "frameCurrency": "CNY",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_a638f4e9-151/agent-abbc2ac34aecd6672"
+   }
+  },
+  {
+   "domain": "revolve.com",
+   "stream": "us",
+   "visit": 33,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_a638f4e9-151/agent-a8e383abf21a62db1"
+   }
+  },
+  {
+   "domain": "lotteon.com",
+   "stream": "non-us",
+   "visit": 19,
+   "band": "top-1k",
+   "regionGroup": "asia-pacific",
+   "homeList": "KR",
+   "frameRegion": "KR",
+   "frameCurrency": "KRW",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/lotteon.com.pane.json",
+    "transcript": "wf_fd33ec5a-fa0/agent-ae8154642252137f1",
+    "concurrency": 12,
+    "note": ""
+   }
+  },
+  {
+   "domain": "macys.com",
+   "stream": "us",
+   "visit": 23,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_fd33ec5a-fa0/agent-abd2436f2f7d291a3"
+   }
+  },
+  {
+   "domain": "estantevirtual.com.br",
+   "stream": "non-us",
+   "visit": 22,
+   "band": "top-1k",
+   "regionGroup": "canada-latam",
+   "homeList": "BR",
+   "frameRegion": "BR",
+   "frameCurrency": "BRL",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_fd33ec5a-fa0/agent-a542c896c052912e8"
+   }
+  },
+  {
+   "domain": "potterybarn.com",
+   "stream": "us",
+   "visit": 26,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_fd33ec5a-fa0/agent-a2fd6de87c85e81f0"
+   }
+  },
+  {
+   "domain": "jarir.com",
+   "stream": "non-us",
+   "visit": 25,
+   "band": "top-1k",
+   "regionGroup": "middle-east-africa",
+   "homeList": "SA",
+   "frameRegion": "SA",
+   "frameCurrency": "SAR",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_fd33ec5a-fa0/agent-ac1febf8c57ffcabe"
+   }
+  },
+  {
+   "domain": "notino.pl",
+   "stream": "non-us",
+   "visit": 28,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "PL",
+   "frameRegion": "PL",
+   "frameCurrency": "PLN",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_fd33ec5a-fa0/agent-ab63419ace26bebb5"
+   }
+  },
+  {
+   "domain": "ring.com",
+   "stream": "us",
+   "visit": 29,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2",
+     "cart-other"
+    ],
+    "realCart1": true,
+    "record": "capture/records/ring.com.pane.json",
+    "transcript": "wf_fd33ec5a-fa0/agent-a0ecc76b9ccaaf2b9",
+    "concurrency": 12,
+    "note": ""
+   }
+  },
+  {
+   "domain": "boat-lifestyle.com",
+   "stream": "non-us",
+   "visit": 31,
+   "band": "top-1k",
+   "regionGroup": "asia-pacific",
+   "homeList": "IN",
+   "frameRegion": "IN",
+   "frameCurrency": "INR",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/boat-lifestyle.com.pane.json",
+    "transcript": "wf_fd33ec5a-fa0/agent-ab4b22d8ea616ad47",
+    "concurrency": 12,
+    "note": "audit flags: 1"
+   }
+  },
+  {
+   "domain": "dell.com",
+   "stream": "us",
+   "visit": 32,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "cart-2items",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/dell.com.pane.json",
+    "transcript": "wf_fd33ec5a-fa0/agent-abde05e47bfedcba8",
+    "concurrency": 12,
+    "note": ""
+   }
+  },
+  {
+   "domain": "laanonima.com.ar",
+   "stream": "non-us",
+   "visit": 21,
+   "band": "top-1k",
+   "regionGroup": "canada-latam",
+   "homeList": "AR",
+   "frameRegion": "AR",
+   "frameCurrency": "ARS",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "needs-input",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart"
+    ],
+    "realCart1": false,
+    "record": "capture/records/laanonima.com.ar.pane.json",
+    "transcript": "wf_53a2bd24-f83/agent-ae1b2d40782d5a1f9",
+    "concurrency": 12,
+    "note": ""
+   }
+  },
+  {
+   "domain": "thriftbooks.com",
+   "stream": "us",
+   "visit": 22,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1"
+    ],
+    "realCart1": true,
+    "record": "capture/records/thriftbooks.com.pane.json",
+    "transcript": "wf_53a2bd24-f83/agent-a8f910771d8248e93",
+    "concurrency": 12,
+    "note": ""
+   }
+  },
+  {
+   "domain": "guitarcenter.com",
+   "stream": "us",
+   "visit": 25,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "cart-1",
+     "cart-qty2",
+     "empty-cart"
+    ],
+    "realCart1": true,
+    "record": "capture/records/guitarcenter.com.pane.json",
+    "transcript": "wf_53a2bd24-f83/agent-a03b318832b398de6",
+    "concurrency": 12,
+    "note": ""
+   }
+  },
+  {
+   "domain": "petco.com",
+   "stream": "us",
+   "visit": 28,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "captcha",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/petco.com.pane.json",
+    "transcript": "wf_53a2bd24-f83/agent-a7a6f2c44630fa7e1",
+    "concurrency": 12,
+    "note": ""
+   }
+  },
+  {
+   "domain": "logammulia.com",
+   "stream": "non-us",
+   "visit": 30,
+   "band": "top-1k",
+   "regionGroup": "asia-pacific",
+   "homeList": "ID",
+   "frameRegion": "ID",
+   "frameCurrency": "IDR",
+   "statusUnderProtocol10": {
+    "status": "not-started",
+    "code": "tab-cap",
+    "method": "pane",
+    "session": 0,
+    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
+    "transcript": "wf_53a2bd24-f83/agent-ae73445be4920efa3"
+   }
+  },
+  {
+   "domain": "sweetwater.com",
+   "stream": "us",
+   "visit": 31,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/sweetwater.com.pane.json",
+    "transcript": "wf_53a2bd24-f83/agent-a749ad23411f40437",
+    "concurrency": 12,
+    "note": ""
+   }
+  },
+  {
+   "domain": "stokomani.fr",
+   "stream": "non-us",
+   "visit": 24,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "FR",
+   "frameRegion": "FR",
+   "frameCurrency": "EUR",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "no-eligible-item",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart"
+    ],
+    "realCart1": false,
+    "record": "capture/records/stokomani.fr.pane.json",
+    "transcript": "wf_53a2bd24-f83/agent-ac3914617e18c461c",
+    "concurrency": 12,
+    "note": ""
+   }
+  },
+  {
+   "domain": "cykloteket.se",
+   "stream": "non-us",
+   "visit": 27,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "SE",
+   "frameRegion": "SE",
+   "frameCurrency": "SEK",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-qty2"
+    ],
+    "realCart1": false,
+    "record": "capture/records/cykloteket.se.pane.json",
+    "transcript": "wf_53a2bd24-f83/agent-a9533a0077f457d4e",
+    "concurrency": 12,
+    "note": "audit flags: 1"
+   }
+  },
+  {
+   "domain": "gamestop.com",
+   "stream": "us",
+   "visit": 34,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1"
+    ],
+    "realCart1": true,
+    "record": "capture/records/gamestop.com.pane.json",
+    "transcript": "wf_53a2bd24-f83/agent-a49315dc0122ac820",
+    "concurrency": 12,
     "note": ""
    }
   }

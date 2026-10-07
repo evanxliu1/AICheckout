@@ -1,0 +1,127 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "partsgeek.com",
+  "stream": "us",
+  "visit": 21,
+  "session": 1,
+  "entryHost": "www.partsgeek.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_a638f4e9-151/agent-a5da866a12b208225",
+  "startUtc": "2026-10-07T06:37:52.439Z",
+  "endUtc": "2026-10-07T06:38:45.613Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [],
+  "navigations": [],
+  "actions": [],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "session never started: tabs_create failed twice (tab cap reached)"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "session never started: tabs_create failed twice (tab cap reached)"
+    },
+    {
+      "state": "cart-1",
+      "reason": "session never started: tabs_create failed twice (tab cap reached)"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "session never started: tabs_create failed twice (tab cap reached)"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "session never started: tabs_create failed twice (tab cap reached)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "tabs_create failed: 'Could not open a new tab (Browser pane gone, gate off, or tab cap reached)'; tabs_context showed 9 open tabs; after a 10 s wait the retry failed the same way.",
+    "The 10 s wait was issued with tabId 'seed' (the coordinator's tab) because the computer tool needed a tab; a wait only, no page action. Reviewer flag.",
+    "No store page was loaded; robots.txt not fetched. Session 1 ended as tool-error; one more pane session is allowed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:37:52.439Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:37:53.711Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:37:53.728Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:37:56.320Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:37:59.066Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:38:02.501Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:38:11.270Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:38:24.482Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:38:28.356Z",
+      "tool": "Read"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:38:39.316Z",
+      "tool": "Write"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:38:45.613Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

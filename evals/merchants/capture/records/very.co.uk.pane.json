@@ -1,0 +1,113 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "very.co.uk",
+  "stream": "non-us",
+  "visit": 20,
+  "session": 1,
+  "entryHost": "www.very.co.uk",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_a638f4e9-151/agent-a2d55a9089559809f",
+  "startUtc": "2026-10-07T06:38:52.416Z",
+  "endUtc": "2026-10-07T06:39:36.400Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [],
+  "navigations": [],
+  "actions": [],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "tool-error: tabs_create failed twice; no store page loaded"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "tool-error: tabs_create failed twice; no store page loaded"
+    },
+    {
+      "state": "cart-1",
+      "reason": "tool-error: tabs_create failed twice; no store page loaded"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "tool-error: tabs_create failed twice; no store page loaded"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "tabs_create returned 'Could not open a new tab (Browser pane gone, gate off, or tab cap reached)' twice; tabs_context showed 9 tabs open, likely the tab cap",
+    "The 10 s wait between retries was issued as computer wait with tabId 'seed' (coordinator tab) because computer needs a tab; wait only, no other action on that tab",
+    "No store page, robots.txt or export was loaded; session 1 of 2, store eligible for its one more pane session"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:38:52.416Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:38:53.655Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:38:53.663Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:38:57.023Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:38:59.498Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:39:03.302Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:39:16.679Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:39:28.651Z",
+      "tool": "Write"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:39:36.400Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

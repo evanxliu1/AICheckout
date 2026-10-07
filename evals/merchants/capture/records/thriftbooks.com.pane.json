@@ -1,0 +1,482 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "thriftbooks.com",
+  "stream": "us",
+  "visit": 22,
+  "session": 1,
+  "entryHost": "www.thriftbooks.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_53a2bd24-f83/agent-a8f910771d8248e93",
+  "startUtc": "2026-10-07T06:37:51.427Z",
+  "endUtc": "2026-10-07T06:42:28.157Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.thriftbooks.com",
+      "status": 200,
+      "sha256": "f38d4dee04b12de7d41588c59538aaba6ab02bf757867d874d7150d0cc15b275",
+      "bytes": 904,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.thriftbooks.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.thriftbooks.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.thriftbooks.com/shopping-cart/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.thriftbooks.com/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.thriftbooks.com/w/carls-doomsday-scenario-dungeon-crawler-carl/55447676/"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.thriftbooks.com/addtocart/64162606/21/"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.thriftbooks.com/shopping-cart/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "shopping-cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Carl's Doomsday Scenario"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "View Cart"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "10f04ace90ff9351280d4aaa4f86bdfbd738090add9ce96ccdae708b5eb7220d",
+      "bytes": 493310,
+      "chunks": 2,
+      "url": "https://www.thriftbooks.com/shopping-cart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "97d483a3576b1d2b8e2971ab94ae762f0d7eca563fe813305fd4a3235fd4c4e5",
+      "bytes": 483063,
+      "chunks": 2,
+      "url": "https://www.thriftbooks.com/addtocart/64162606/21/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "9dac68cdf42a30d6483aa6d593c17842b57fe4094990110dac1bdd3b5875dac9",
+      "bytes": 482457,
+      "chunks": 2,
+      "url": "https://www.thriftbooks.com/shopping-cart/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-qty2",
+      "reason": "cart quantity control is a select (1-10+); no increment button; selects are forbidden"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no lingering item; second own add not attempted (focus on cart and site structure)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.thriftbooks.com/",
+    "productUrl": "https://www.thriftbooks.com/w/carls-doomsday-scenario-dungeon-crawler-carl/55447676/",
+    "price": "$20.93",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "minicart-1 is a post-add confirmation page (/addtocart/...) the site navigated to after Add to Cart, not an in-page drawer; it shows the cart subtotal",
+    "all six chunk results exceeded the inline limit and were saved by the harness to tool-results files (not opened)",
+    "product page default selection was Hardcover, New at $20.93 (homepage 'from' price $15.56 was paperback)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:37:51.427Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:37:52.804Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:37:52.805Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:37:56.010Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:37:59.213Z",
+      "tool": "navigate",
+      "url": "https://www.thriftbooks.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:38:02.751Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:38:09.060Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:38:14.045Z",
+      "tool": "navigate",
+      "url": "https://www.thriftbooks.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:38:14.212Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:38:21.117Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:38:21.119Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:38:25.678Z",
+      "tool": "navigate",
+      "url": "https://www.thriftbooks.com/shopping-cart/"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:38:25.679Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T06:38:55.579Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T06:39:02.551Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T06:39:06.430Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T06:39:12.611Z",
+      "tool": "navigate",
+      "url": "https://www.thriftbooks.com/"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T06:39:12.615Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T06:39:17.435Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T06:39:26.118Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T06:39:29.784Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T06:39:36.099Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T06:39:56.535Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T06:39:56.689Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T06:40:05.161Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T06:40:36.468Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T06:40:40.043Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T06:40:43.752Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T06:40:47.239Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T06:40:51.023Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T06:40:55.094Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T06:41:24.178Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T06:41:27.631Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T06:41:31.437Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T06:41:35.533Z",
+      "tool": "find"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T06:41:39.002Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T06:41:42.975Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T06:41:46.548Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T06:41:50.458Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T06:41:50.466Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T06:41:56.307Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T06:42:19.373Z",
+      "tool": "Write"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T06:42:28.157Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "10f04ace90ff9351280d4aaa4f86bdfbd738090add9ce96ccdae708b5eb7220d"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "97d483a3576b1d2b8e2971ab94ae762f0d7eca563fe813305fd4a3235fd4c4e5"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "9dac68cdf42a30d6483aa6d593c17842b57fe4094990110dac1bdd3b5875dac9"
+      }
+    ],
+    "errors": []
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "potterybarn.com",
+  "stream": "us",
+  "visit": 26,
+  "session": 1,
+  "entryHost": "www.potterybarn.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_fd33ec5a-fa0/agent-a2fd6de87c85e81f0",
+  "startUtc": "2026-10-07T06:39:42.170Z",
+  "endUtc": "2026-10-07T06:40:33.087Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [],
+  "navigations": [],
+  "actions": [],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "tabs_create failed twice; no store page loaded"
+    },
+    {
+      "state": "cart-1",
+      "reason": "tabs_create failed twice; no store page loaded"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "tabs_create failed twice; no store page loaded"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "tabs_create failed twice (Browser pane gone, gate off, or tab cap reached); tabs_context showed 9 open tabs, pane hidden",
+    "The 10 s wait between attempts was a computer wait call made with tabId 'seed' (the coordinator's tab); it did nothing else, but it is a use of another tab and should be flagged",
+    "Session 1 of 2: store eligible for one more pane session after tool-error"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:39:42.170Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:39:43.687Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:39:43.691Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:39:47.864Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:39:50.643Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:39:54.574Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:40:01.034Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:40:14.066Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:40:26.320Z",
+      "tool": "Write"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:40:33.087Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "petco.com",
+  "stream": "us",
+  "visit": 28,
+  "session": 1,
+  "entryHost": "www.petco.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_53a2bd24-f83/agent-a7a6f2c44630fa7e1",
+  "startUtc": "2026-10-07T06:42:35.424Z",
+  "endUtc": "2026-10-07T06:43:19.404Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.petco.com",
+      "status": 403,
+      "sha256": "f08ca6500108f026f2612779951b447f4bc715b9976254edb572d1ce6f039a50",
+      "bytes": 769,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.petco.com/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt (HTTP 403)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "DataDome CAPTCHA served on robots.txt; store stopped before any store page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "DataDome CAPTCHA served on robots.txt; store stopped before any store page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "DataDome CAPTCHA served on robots.txt; store stopped before any store page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "DataDome CAPTCHA served on robots.txt; store stopped before any store page"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "DataDome CAPTCHA served on robots.txt; store stopped before any store page"
+    },
+    {
+      "state": "cart-other",
+      "reason": "DataDome CAPTCHA served on robots.txt; store stopped before any store page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.petco.com/robots.txt",
+    "title": "https://www.petco.com/robots.txt",
+    "marker": "accessibility tree: generic \"DataDome CAPTCHA\" (DataDome vendor challenge); robots fetch HTTP 403",
+    "wording": "DataDome CAPTCHA"
+  },
+  "problems": [
+    "The first page load (robots.txt) showed only a DataDome CAPTCHA frame; get_page_text was empty and the screenshot blank (pane likely hidden), so the only visible wording is the frame's accessible name 'DataDome CAPTCHA'.",
+    "The robots hash re-fetch returned HTTP 403 (769 bytes); the hash is of the block response, not a robots.txt file, so the robots posture is unknown (null).",
+    "Stopped at once; no interaction with the challenge, no export, no store page loaded, cart count not observed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:42:35.424Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:42:36.674Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:42:36.685Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:42:39.295Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:42:42.735Z",
+      "tool": "navigate",
+      "url": "https://www.petco.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:42:42.754Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:42:49.781Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:42:54.079Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:42:57.833Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:43:01.207Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:43:01.840Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:43:13.714Z",
+      "tool": "Write"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:43:19.404Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

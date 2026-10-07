@@ -1,0 +1,117 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "konga.com",
+  "stream": "non-us",
+  "visit": 23,
+  "session": 1,
+  "entryHost": "www.konga.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_a638f4e9-151/agent-ad3c494d6e96256b1",
+  "startUtc": "2026-10-07T06:39:43.824Z",
+  "endUtc": "2026-10-07T06:40:17.968Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [],
+  "navigations": [],
+  "actions": [],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "no tab: tabs_create failed (tab cap reached), store never loaded"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "no tab: tabs_create failed (tab cap reached), store never loaded"
+    },
+    {
+      "state": "cart-1",
+      "reason": "no tab: tabs_create failed (tab cap reached), store never loaded"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "no tab: tabs_create failed (tab cap reached), store never loaded"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "tabs_create failed 4 times with 'Could not open a new tab (Browser pane gone, gate off, or tab cap reached)'; tabs_context showed 9 open tabs (other operators'), pane hidden",
+    "no store page, robots.txt or export loaded; session 1 counts as tool-error, store eligible for one more pane session",
+    "no other tab was read, used or closed"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:39:43.824Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:39:45.278Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:39:45.286Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:39:48.286Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:39:50.973Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:39:54.564Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:39:58.066Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:40:00.827Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:40:11.839Z",
+      "tool": "Write"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:40:17.968Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

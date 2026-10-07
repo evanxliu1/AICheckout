@@ -1,0 +1,131 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "macys.com",
+  "stream": "us",
+  "visit": 23,
+  "session": 1,
+  "entryHost": "www.macys.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_fd33ec5a-fa0/agent-abd2436f2f7d291a3",
+  "startUtc": "2026-10-07T06:38:41.057Z",
+  "endUtc": "2026-10-07T06:39:33.556Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [],
+  "navigations": [],
+  "actions": [],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "tabs_create failed twice (tab cap reached); no page of the store was loaded"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "tabs_create failed twice (tab cap reached); no page of the store was loaded"
+    },
+    {
+      "state": "cart-1",
+      "reason": "tabs_create failed twice (tab cap reached); no page of the store was loaded"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "tabs_create failed twice (tab cap reached); no page of the store was loaded"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "tabs_create failed twice (tab cap reached); no page of the store was loaded"
+    },
+    {
+      "state": "cart-other",
+      "reason": "tabs_create failed twice (tab cap reached); no page of the store was loaded"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "tabs_create failed: 'Could not open a new tab (Browser pane gone, gate off, or tab cap reached)'; tabs_context showed the pane open with 9 tabs; retried once after a 10 s wait, failed again.",
+    "The 10 s wait was issued with tabId 'seed' (the coordinator's tab) because the computer tool needs a tab; wait only, no action on that tab's page.",
+    "No store page loaded, so robots.txt was not read and nothing was exported; session 1 ends as tool-error, session 2 allowed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:38:41.057Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:38:42.328Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:38:42.332Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:38:45.070Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:38:48.350Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:38:51.945Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:38:57.025Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:39:11.009Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:39:15.393Z",
+      "tool": "Read"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:39:26.758Z",
+      "tool": "Write"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:39:33.556Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}
