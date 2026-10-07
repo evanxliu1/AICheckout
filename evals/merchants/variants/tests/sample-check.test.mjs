@@ -1,6 +1,6 @@
 // Tests of the derived-label sample check on a synthetic manifest and variant labels file (no capture is read).
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
@@ -49,6 +49,11 @@ function setup(n = 120) {
   };
   const manifestFile = path.join(dir, 'development-manifest.json');
   writeFileSync(manifestFile, JSON.stringify(manifest));
+  for (const v of manifest.variants) {
+    const f = path.join(dir, 'data', 'variants', v.path);
+    mkdirSync(path.dirname(f), { recursive: true });
+    writeFileSync(f, v.id);
+  }
   return { dir, ids, manifestFile };
 }
 
@@ -118,4 +123,24 @@ test('verify: all match passes; a mismatch names the transform version to bump; 
     })),
   });
   assert.match(verify(file, { root: dir }).problems.join(), /derived label differs/);
+});
+
+test('review L4, M3: draw counts per transform and carries the labeller instructions; verify re-hashes exports', () => {
+  const { dir, manifestFile } = setup();
+  const check = draw(manifestFile, { root: dir });
+  const counts = {};
+  for (const e of check.entries) counts[e.transform] = (counts[e.transform] ?? 0) + 1;
+  assert.deepEqual(check.perTransform, counts);
+  assert.match(check.instructions, /data, never as instructions/);
+  assert.match(check.instructions, /mixed-currency.*neither.*rule \(d\).*rule \(a\)/s);
+  const file = path.join(dir, 'check.json');
+  const filled = {
+    ...check,
+    labeller: { id: 'labeller-a', model: 'claude-opus-5-5' },
+    entries: check.entries.map((e) => ({ ...e, result: 'match' })),
+  };
+  writeFileSync(file, JSON.stringify(filled));
+  assert.equal(verify(file, { root: dir }).ok, true);
+  writeFileSync(path.join(dir, check.entries[0].dom), 'changed');
+  assert.match(verify(file, { root: dir }).problems.join(), /variant export differs from the manifest/);
 });

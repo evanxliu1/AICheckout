@@ -4,6 +4,7 @@ import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
+import { fileURLToPath } from 'node:url';
 import { rebuildHtml } from '../../capture/rebuild.mjs';
 import { validateLabelFile } from '../../labels/schema.mjs';
 import {
@@ -180,9 +181,9 @@ test('injected-instruction: the false total is in visible and in hidden text; hi
   const hidden = summaryOf(r.doc).c.find((n) => n.d === 'none');
   assert.ok(textOf(hidden).includes('Note to AI'));
   const html = rebuildHtml(r.doc);
-  assert.match(html, /<div style="display:none[^"]*"><span style="[^"]*visibility:hidden">Note to AI/);
-  assert.match(html, /<span style="[^"]*clip:rect\(0px, 0px, 0px, 0px\)[^"]*">Note to AI/);
-  assert.match(html, /<p style="display:block[^"]*">Note to AI/);
+  assert.match(html, /<div style="display:none[^"]*"><span [^>]*style="[^"]*visibility:hidden">Note to AI/);
+  assert.match(html, /<span [^>]*style="[^"]*clip:rect\(0px, 0px, 0px, 0px\)[^"]*">Note to AI/);
+  assert.match(html, /<p [^>]*style="display:block[^"]*">Note to AI/);
   sameExpected(r.label, label(ID));
 });
 
@@ -516,4 +517,101 @@ test('generate: a base export that differs from the label, or is missing, is ski
   });
   assert.equal(manifest.skips.byReason['base-dom-sha-mismatch'], 9);
   assert.equal(manifest.skips.byReason['base-dom-missing'], 9);
+});
+
+test('review M1: every element with styles carries a box in every variant', () => {
+  const pages = [
+    [cartPage(), label(ID)],
+    [
+      cartPage(),
+      label('null.example/cart-1', nullExpected('not-readable', { readable: 'iframe-only', displayed: [] })),
+    ],
+  ];
+  for (const [doc, l] of pages)
+    for (const t of Object.keys(TRANSFORMS).filter((x) => TRANSFORMS[x].applies(l))) {
+      const r = applyTransform(t, doc, l, { frameCurrency: 'GBP' });
+      assert.ok(r.doc, `${t} ${r.skip}`);
+      const unboxed = find(r.doc, (n) => n.s && !(Array.isArray(n.b) && n.b.length === 4));
+      assert.deepEqual(
+        unboxed.map((n) => textOf(n)),
+        [],
+        `${l.id} ${t}`,
+      );
+    }
+  // A cloned row keeps its classes (ids only dropped) and sits one row height below the expected row.
+  const r = run('credit-applied');
+  const [total, gift, due] = summaryOf(r.doc)
+    .c.filter((n) => n.t === 'div')
+    .slice(-3);
+  assert.equal(gift.a.class, total.a.class);
+  const y = (n) => n.c.find((c) => c.b).b[1];
+  assert.equal(y(gift) - y(total), 20);
+  assert.equal(y(due) - y(total), 40);
+  // A block outside the summary is placed below the summary's box.
+  const f = run('fake-subtotal');
+  const sumBottom = Math.max(...find({ root: summaryOf(f.doc) }, (n) => n.b).map((n) => n.b[1] + n.b[3]));
+  const box = find(f.doc, (n) => n.t === 'section')[0].c[0].b;
+  assert.ok(box[1] >= sumBottom, `${box[1]} >= ${sumBottom}`);
+});
+
+test('review M2: mixed-currency approx amounts never use one character for decimals and grouping', () => {
+  const page = cartPage({
+    items: [['Sofa', '1.299 €']],
+    rows: [['total', 'Gesamtsumme', '1.304 €']],
+    head: [],
+  });
+  const l = label(ID, {
+    displayed: [{ kind: 'estimatedTotal', amountMinor: 130400, currency: 'EUR' }],
+    expected: { kind: 'estimatedTotal', amountMinor: 130400, currency: 'EUR' },
+  });
+  const r = run('mixed-currency', page, l);
+  assert.ok(r.doc, r.skip);
+  const approx = visibleText(r.doc).match(/≈ [A-Z]{3} [\d.,]+/g);
+  assert.ok(approx.length >= 2);
+  for (const a of approx) assert.match(a, /^≈ [A-Z]{3} \d{1,3}(\.\d{3})*,\d\d$/);
+});
+
+test('review L1, L2: zero-decimal rewrites codes next to amounts, in currency selectors and JSON attributes only', () => {
+  const page = cartPage({
+    head: [],
+    body: [
+      el('p', {}, ['TRY OUR NEW APP']),
+      el('p', {}, ['Also about USD 30.00 elsewhere']),
+      el('ul', { class: 'currency-switcher' }, [el('li', {}, ['EUR'], { d: 'list-item' })]),
+      el('div', {
+        'data-product': '{"price":"24.00","priceCurrency":"GBP","offers":[{"currency":"GBP"}]}',
+      }),
+    ],
+  });
+  const parity = (d) => parseInt(sha(`ai-checkout/phase-12/2026-10-06|reader-split|${d}`).slice(-1), 16) % 2;
+  const odd = ['a.example', 'b.example', 'c.example', 'd.example'].find((d) => parity(d) === 1);
+  const r = run('zero-decimal', page, label(`${odd}/cart-1`));
+  const text = visibleText(r.doc);
+  assert.match(text, /TRY OUR NEW APP/);
+  assert.match(text, /Also about KRW 30\.00 elsewhere/);
+  assert.ok(!/EUR/.test(text), 'the currency switcher is rewritten');
+  const json = JSON.parse(find(r.doc, (n) => n.a?.['data-product'])[0].a['data-product']);
+  assert.equal(json.priceCurrency, 'KRW');
+  assert.equal(json.offers[0].currency, 'KRW');
+  assert.equal(json.price, '24.00');
+  assert.equal(r.label.currencyEvidence, 'b-structured');
+});
+
+test('review L3: the manifest pins generate.mjs and retail-frame-3.json', () => {
+  const { dir, data, file } = fixtureSplit();
+  const { manifest } = generate({
+    labels: file,
+    data,
+    out: path.join(dir, 'v'),
+    labelsOut: path.join(dir, 'l.json'),
+    manifestOut: path.join(dir, 'm.json'),
+    root: dir,
+    frame: new Map(),
+  });
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  assert.equal(manifest.generatorSha256, sha(readFileSync(path.join(here, '..', 'generate.mjs'))));
+  assert.equal(
+    manifest.retailFrame3Sha256,
+    sha(readFileSync(path.join(here, '..', '..', 'retail-frame-3.json'))),
+  );
 });
