@@ -1045,21 +1045,13 @@ test('pane transcript audit: allowed calls pass; typing, form input, other scrip
     line({
       type: 'tool_use',
       name: 'Write',
-      input: {
-        file_path: '/Users/x/repo/evals/merchants/capture/data/pane/example.de/cart-1/dom.json',
-        content: '{"t":"a","c":[{"x":"Proceed to checkout"}]},{"x":"Sign in"}',
-      },
-    }),
-    line({
-      type: 'tool_use',
-      name: 'Write',
       input: { file_path: '/Users/x/repo/evals/merchants/capture/records/example.de.pane.json', content: '{}' },
     }),
     line({ type: 'tool_use', name: 'Bash', input: { command: 'shasum -a 256 evals/merchants/capture/data/pane/example.de/cart-1/dom.json' } }),
     line(use('tabs_close', { tabId: 't1' })),
   ].join('\n');
   const clean = auditTranscript(ok, { repoRoot: '/Users/x/repo' });
-  assert.equal(clean.toolCalls, 11);
+  assert.equal(clean.toolCalls, 10);
   assert.deepEqual(clean.flags, []);
   const bad = [
     line(use('computer', { action: 'type', text: 'shoes' })),
@@ -1161,8 +1153,17 @@ test('pane transcript audit: paths are normalised and anchored to the repository
   assert.equal(classifyPath('/tmp/evals/merchants/capture/data/x.json', root), 'outside');
   assert.equal(classifyPath('evals/merchants/capture/records/../../../../AGENTS.md', root), 'outside');
   assert.ok(call('Write', { file_path: '/Users/x/repo/evals/merchants/capture/data/../../../../wiki/now.md', content: 'Checkout' }).includes('write-outside-capture-folders'));
-  // The wording skip applies only inside the data folder after normalisation.
-  assert.deepEqual(call('Write', { file_path: '/Users/x/repo/evals/merchants/capture/data/pane/a.de/cart-1/dom.json', content: 'Checkout' }), []);
+  // The wording skip applies only inside the data folder after normalisation; since .11 any operator write there is
+  // flagged on its own (the collector writes exports).
+  assert.deepEqual(call('Write', { file_path: '/Users/x/repo/evals/merchants/capture/data/pane/a.de/cart-1/dom.json', content: 'Checkout' }), ['write-into-data']);
+  // .11: reading a harness tool-results file, and the JavaScript tool inside a browser batch, are flagged.
+  assert.deepEqual(call('Read', { file_path: '/Users/x/.claude/projects/p/s/tool-results/mcp-x.txt' }), ['tool-results-read']);
+  assert.ok(call('Bash', { command: 'head -c 100 /Users/x/.claude/projects/p/s/tool-results/mcp-x.txt' }).includes('tool-results-read'));
+  const batched = auditTranscript(
+    JSON.stringify({ type: 'tool_use', name: 'mcp__Claude_Browser__browser_batch', input: { actions: [{ name: 'javascript_tool', input: { action: 'javascript_exec', text: 'window.__aiCheckoutPaneExport.chunk(0)' } }] } }),
+    { repoRoot: root },
+  );
+  assert.deepEqual(batched.flags.map((f) => f.rule), ['javascript-in-batch']);
   assert.ok(call('Write', { file_path: '/Users/x/repo/evals/merchants/capture/data/../records/x.json', content: 'Checkout' }).includes('checkout-or-order-wording'));
   for (const ok of ['shasum -a 256 evals/merchants/capture/data/pane/a.de/cart-1/dom.json', 'ls evals/merchants/capture/data/pane/a.de', 'wc -c x.json', 'head -c 200 x.json'])
     assert.deepEqual(call('Bash', { command: ok }), [], ok);

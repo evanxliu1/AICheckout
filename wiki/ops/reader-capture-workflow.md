@@ -45,7 +45,9 @@ A workflow script cannot read files: the coordinator reads the candidate list an
 - **Pilot stores are real evaluation visits** under the one-session rule; there is no do-over (only the protocol's one retry after a failure). A change to `pane-export.js` is a new format version and an amendment.
 - **Transcripts:** subagent transcripts live under `~/.claude/projects/-Users-evanliu-Projects-AICheckout/<session>/subagents/agent-<id>.jsonl`; confirm the location for workflow agents in the pilot and record each store's transcript ID in its record.
 - **Audit:** `node evals/merchants/capture/audit-pane-transcript.mjs <transcript.jsonl>... --repo-root /Users/evanliu/Projects/AICheckout` (exit 1 on any flag; every flag is explained or reported as a deviation).
-- After it: commit the records, run the audit, open 2–3 exports and rebuild them (`rebuild.mjs`, JavaScript off) to check fidelity, and compute cost per store. Fix anything structural before the full run (a tool fix is a reviewed change; a rule change is an amendment).
+- **After each store (since `.11`):** run the collector `node evals/merchants/capture/collect-pane-exports.mjs <transcript> --record <record> --transcript-id <workflow>/agent-<id>` before committing the record; it writes `dom.json`/`meta.json` and stamps times. A collector error is the store's export mismatch (one more session, M9).
+- After it: commit the records, run the audit, open 2–3 exports and rebuild them (`rebuild.mjs`, JavaScript off) to check fidelity, and compute cost per store.
+- **Before any re-queued (second-session) store runs:** at least one first-session store has an export with an inline chunk collected with a matching SHA-256 (`.11` M4). hsn.com's second session exports the product page as evidence before any add-to-bag and does not add (`.11` I4). Fix anything structural before the full run (a tool fix is a reviewed change; a rule change is an amendment).
 
 ## Workflow 2: full capture
 

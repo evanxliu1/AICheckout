@@ -22,7 +22,7 @@
 // session in order with its UTC time, tool, action and masked URL), since the operator has no clock.
 // It never sends anything anywhere and never reads a page.
 import { createHash } from 'node:crypto';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { maskPath } from './guards.mjs';
@@ -33,6 +33,8 @@ const EXPORT_TEXT = readFileSync(path.join(here, 'pane-export.js'), 'utf8').trim
 const CHUNK_CALL = /^window\.__aiCheckoutPaneExport\.chunk\((\d{1,4})\);?$/;
 const SAVED = /Output has been saved to (\S+?\.txt)/;
 const JS_TOOL = /javascript_tool$/;
+/** The protocol's pane states (step 7); anything else in a record's states[] is refused. */
+export const STATES = new Set(['empty-cart', 'minicart-1', 'cart-1', 'cart-qty2', 'cart-2items', 'cart-other']);
 
 /** The leading JSON string literal of a result text, decoded; null when the text doesn't start with one. */
 export function leadingJsonString(text) {
@@ -162,12 +164,12 @@ export function recordTargets(record) {
   const states = Array.isArray(record.states) ? record.states : Object.entries(record.states || {}).map(([state, v]) => ({ state, ...v }));
   for (const s of states) {
     const sha = s.sha256 || s.exportSha256 || s.meta?.sha256;
-    if (s.state && sha) out.push({ kind: 'state', name: s.state, sha256: sha });
+    if (s.state && sha) out.push({ kind: 'state', name: s.state, sha256: sha, bytes: s.bytes, chunks: s.chunks });
   }
   const ev = record.evidence ? (Array.isArray(record.evidence) ? record.evidence : [record.evidence]) : [];
   ev.forEach((e, i) => {
     const sha = e.sha256 || e.exportSha256;
-    if (sha) out.push({ kind: 'evidence', name: e.name || `evidence-${i + 1}`, sha256: sha });
+    if (sha) out.push({ kind: 'evidence', name: e.name || `evidence-${i + 1}`, sha256: sha, bytes: e.bytes, chunks: e.chunks });
   });
   const osha = record.outcome?.evidenceSha256;
   if (osha && !out.some((t) => t.sha256 === osha)) out.push({ kind: 'evidence', name: 'evidence-1', sha256: osha });
@@ -184,6 +186,7 @@ export function collect({ transcriptPath, recordPath, dataRoot, transcriptId, dr
   const record = JSON.parse(readFileSync(recordPath, 'utf8'));
   const domain = record.domain;
   if (!domain || /[/\\]|\.\./.test(domain)) throw new Error('record has no valid domain');
+  if (path.basename(recordPath) !== `${domain}.pane.json`) throw new Error('record file name does not match its domain');
   const report = { domain, exports: exports.length, written: [], errors: [] };
   for (const t of recordTargets(record)) {
     const candidates = exports.filter((e) => e.summary?.sha256 === t.sha256);
@@ -205,8 +208,13 @@ export function collect({ transcriptPath, recordPath, dataRoot, transcriptId, dr
       report.errors.push({ target: t.name, error: lastError });
       continue;
     }
-    if (!/^[a-z0-9-]+$/.test(t.name)) {
+    if (t.kind === 'state' ? !STATES.has(t.name) : !/^[a-z0-9-]+$/.test(t.name)) {
       report.errors.push({ target: t.name, error: 'bad-state-name' });
+      continue;
+    }
+    const sum = done.exp.summary;
+    if ((t.bytes != null && t.bytes !== sum.bytes) || (t.chunks != null && t.chunks !== sum.chunks)) {
+      report.errors.push({ target: t.name, error: 'record-summary-mismatch' });
       continue;
     }
     const dir = path.join(dataRoot, domain, t.kind === 'evidence' ? path.join('evidence', t.name) : t.name);
@@ -225,6 +233,11 @@ export function collect({ transcriptPath, recordPath, dataRoot, transcriptId, dr
       iframes: s.iframes,
       collectedBy: 'collect-pane-exports.mjs',
     };
+    const metaPath = path.join(dir, 'meta.json');
+    if (existsSync(path.join(dir, 'dom.json')) && !(existsSync(metaPath) && JSON.parse(readFileSync(metaPath, 'utf8')).collectedBy)) {
+      report.errors.push({ target: t.name, error: 'existing-file-not-from-collector' });
+      continue;
+    }
     if (!dryRun) {
       mkdirSync(dir, { recursive: true });
       writeFileSync(path.join(dir, 'dom.json'), done.json);

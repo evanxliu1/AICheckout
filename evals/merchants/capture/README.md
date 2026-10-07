@@ -5,9 +5,11 @@
 ## Pane export, rebuild and audit (`pane-dom.2`)
 
 ```sh
-# in the pane: run the text of pane-export.js with the JavaScript tool; it returns {bytes, sha256, chunks, ...}
-# then fetch window.__aiCheckoutPaneExport.chunk(i) for each chunk and write them, unread, to
-#   capture/data/pane/<domain>/<state>/dom.json   (gitignored), and check the SHA-256
+# in the pane (operator): run the text of pane-export.js with the JavaScript tool; it returns {bytes, sha256, chunks, ...};
+# then fetch window.__aiCheckoutPaneExport.chunk(i) for each chunk (results too large for the tool are saved by the
+# harness to a tool-results file). Since .11 the operator writes no export; after the session the coordinator runs:
+node evals/merchants/capture/collect-pane-exports.mjs <operator transcript.jsonl> --record evals/merchants/capture/records/<domain>.pane.json --transcript-id <id>
+#   -> capture/data/pane/<domain>/<state>/dom.json + meta.json (gitignored), SHA-256 checked; record stamped with times
 node evals/merchants/capture/rebuild.mjs capture/data/pane/<domain>/<state>/dom.json [out.html] --sha256 <sha>
 ```
 
@@ -17,8 +19,9 @@ node evals/merchants/capture/rebuild.mjs capture/data/pane/<domain>/<state>/dom.
 | `rebuild.mjs` | Offline: `pane-dom.2` (or `.1`) to one static HTML file, styles and `k` inline, invisible text kept invisible, `data-pane-box` for labellers (a reader never reads `data-pane-*`), scripts, `on*` attributes and `<meta http-equiv="refresh">` dropped, shadow roots as `<template shadowrootmode="open">`, hidden elements kept hidden, iframes as stubs. Labellers screenshot it; the reader's replay loads it with network blocked |
 | `tests/browser/pane.test.mjs` | Round trip on the fixture shop: same visible text and amounts; hidden stays hidden (display:none, visibility:hidden, a clipped screen-reader-only price, an opacity:0 parent, a closed `<details>`); strikethrough kept; no script; nothing fetched. Replay MUST use JavaScript disabled |
 | `pane-robots-hash.js` | The allowed in-page robots.txt hash (exact text) |
+| `collect-pane-exports.mjs` | `.11`: rebuilds each export byte-exact from the operator's transcript (inline chunk results or the harness's saved tool-results files), checks SHA-256 and bytes against the export summary, writes `dom.json` and `meta.json` by the record's state SHA-256, and stamps the record with transcript ID, UTC times and a text-free `timeline`. Tests in `tests/collect.test.mjs` |
 | `pane-platform.mjs` | Offline (`.9`): platform group of pane captures from the `pane-dom.2` exports of `empty-cart` and the first cart state, with `platform.mjs`'s markers over every element's attributes and text. No headers or script contents, so `x-magento-*`, `Shopify.shop` and SAP `ACC.` can't match. Output `[{domain, platform}]` is the split's input (`--markers` adds the matched marker). `node evals/merchants/capture/pane-platform.mjs evals/merchants/capture/data/pane > captured.json` |
-| `audit-pane-transcript.mjs` | The 12.3 reviewer's audit of every pane operator transcript: flags typing (`type`/`key`), `form_input`, `file_upload`, Claude in Chrome tools, checkout paths, checkout or order wording, JavaScript other than the three allowed texts, account/order/profile/address/payment/settings/sign-out paths, Write or Edit outside `data/` and `records/<domain>.pane.json`, unlisted pane tools and any Bash network access. Clicks by element `ref` can't be audited by name |
+| `audit-pane-transcript.mjs` | The 12.3 reviewer's audit of every pane operator transcript: flags typing (`type`/`key`), `form_input`, `file_upload`, Claude in Chrome tools, checkout paths, checkout or order wording, JavaScript other than the three allowed texts, account/order/profile/address/payment/settings/sign-out paths, Write or Edit outside `data/` and `records/<domain>.pane.json` (since `.11` also any write into `data/`, any read of a tool-results file and JavaScript inside a batch), unlisted pane tools and any Bash network access. Clicks by element `ref` can't be audited by name |
 | `../../../.claude/agents/pane-operator.md` | The pane operator subagent: tools limited to Read, Write, Bash and the listed pane tools |
 
 ## Robot (`.1`–`.7`)

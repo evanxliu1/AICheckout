@@ -1,7 +1,7 @@
 // Tests of collect-pane-exports.mjs (generic-reader-protocol.11, checklist step 7).
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtempSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
@@ -113,4 +113,65 @@ test('a record domain with a path separator is refused', () => {
   const { t, rec, data } = setup(DOC);
   writeFileSync(rec, JSON.stringify({ domain: '../x', states: [] }));
   assert.throws(() => collect({ transcriptPath: t, recordPath: rec, dataRoot: data }), /valid domain/);
+});
+
+test('states outside the protocol list, a record/summary mismatch and a file the collector did not write are refused', () => {
+  const { t, rec, data } = setup(DOC);
+  writeFileSync(rec, JSON.stringify({ domain: 'shop.example', states: [{ state: 'checkout-1', sha256: sha(DOC) }] }));
+  assert.equal(collect({ transcriptPath: t, recordPath: rec, dataRoot: data }).errors[0].error, 'bad-state-name');
+  writeFileSync(rec, JSON.stringify({ domain: 'shop.example', states: [{ state: 'cart-1', sha256: sha(DOC), chunks: 2 }] }));
+  assert.equal(collect({ transcriptPath: t, recordPath: rec, dataRoot: data }).errors[0].error, 'record-summary-mismatch');
+  const dir = path.join(data, 'shop.example', 'cart-1');
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(path.join(dir, 'dom.json'), '{"operator":"wrote this"}');
+  writeFileSync(rec, JSON.stringify({ domain: 'shop.example', states: [{ state: 'cart-1', sha256: sha(DOC) }] }));
+  assert.equal(collect({ transcriptPath: t, recordPath: rec, dataRoot: data }).errors[0].error, 'existing-file-not-from-collector');
+});
+
+test('a record whose file name is not its domain is refused', () => {
+  const { t, dir, data } = setup(DOC);
+  const other = path.join(dir, 'other.example.pane.json');
+  writeFileSync(other, JSON.stringify({ domain: 'shop.example', states: [] }));
+  assert.throws(() => collect({ transcriptPath: t, recordPath: other, dataRoot: data }), /file name/);
+});
+
+test('a retried chunk uses its last result; two exports keep their own chunks; evidence[] form', () => {
+  const dir = mkdtempSync(path.join(os.tmpdir(), 'collect-'));
+  const a = DOC;
+  const b = JSON.stringify({ format: 'pane-dom.2', other: 'second page €' });
+  const entries = [];
+  const add = (text, result, ts) => {
+    const [id, e] = use(JS, { action: 'javascript_exec', tabId: 'tab-1', text }, ts);
+    entries.push(e, res(id, result));
+  };
+  add(EXPORT_TEXT, summary(a, 1), '2026-10-07T07:00:00.000Z');
+  add('window.__aiCheckoutPaneExport.chunk(0)', JSON.stringify('garbage') + TAB, '2026-10-07T07:00:01.000Z');
+  add('window.__aiCheckoutPaneExport.chunk(0)', JSON.stringify(a) + TAB, '2026-10-07T07:00:02.000Z');
+  add(EXPORT_TEXT, summary(b, 1), '2026-10-07T07:00:03.000Z');
+  add('window.__aiCheckoutPaneExport.chunk(0)', JSON.stringify(b) + TAB, '2026-10-07T07:00:04.000Z');
+  const t = transcript(dir, entries);
+  const rec = path.join(dir, 'shop.example.pane.json');
+  writeFileSync(rec, JSON.stringify({ domain: 'shop.example', states: [{ state: 'cart-1', sha256: sha(a) }], evidence: [{ name: 'evidence-1', sha256: sha(b) }] }));
+  const data = path.join(dir, 'data');
+  const r = collect({ transcriptPath: t, recordPath: rec, dataRoot: data });
+  assert.deepEqual(r.errors, []);
+  assert.equal(readFileSync(path.join(data, 'shop.example', 'cart-1', 'dom.json'), 'utf8'), a);
+  assert.equal(readFileSync(path.join(data, 'shop.example', 'evidence', 'evidence-1', 'dom.json'), 'utf8'), b);
+  // Collecting again overwrites the collector's own files.
+  assert.deepEqual(collect({ transcriptPath: t, recordPath: rec, dataRoot: data }).errors, []);
+});
+
+test('a byte-count mismatch and an undecodable chunk are refused', () => {
+  const dir = mkdtempSync(path.join(os.tmpdir(), 'collect-'));
+  const [ex, exE] = use(JS, { action: 'javascript_exec', text: EXPORT_TEXT }, '2026-10-07T08:00:00.000Z');
+  const bad = JSON.parse(summary(DOC, 1).split(TAB)[0]);
+  bad.bytes += 1;
+  const [c, cE] = use(JS, { action: 'javascript_exec', text: 'window.__aiCheckoutPaneExport.chunk(0)' }, '2026-10-07T08:00:01.000Z');
+  const t = transcript(dir, [exE, res(ex, JSON.stringify(bad) + TAB), cE, res(c, JSON.stringify(DOC) + TAB)]);
+  const rec = path.join(dir, 'shop.example.pane.json');
+  writeFileSync(rec, JSON.stringify({ domain: 'shop.example', states: [{ state: 'cart-1', sha256: sha(DOC) }] }));
+  assert.equal(collect({ transcriptPath: t, recordPath: rec, dataRoot: path.join(dir, 'd') }).errors[0].error, 'bytes-mismatch');
+  const [c2, cE2] = use(JS, { action: 'javascript_exec', text: 'window.__aiCheckoutPaneExport.chunk(0)' }, '2026-10-07T08:00:02.000Z');
+  const t2 = transcript(dir, [exE, res(ex, summary(DOC, 1)), cE2, res(c2, 'Error: tab closed')]);
+  assert.equal(collect({ transcriptPath: t2, recordPath: rec, dataRoot: path.join(dir, 'd') }).errors[0].error, 'undecodable-chunk-0');
 });
