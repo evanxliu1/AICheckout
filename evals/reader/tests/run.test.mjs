@@ -27,10 +27,13 @@ const row = (n, split = 'heldout-a') => ({
   split,
   heldoutRun: split === 'development' ? null : n,
   frozenLabelSha256: H('a'),
+  frozenVariantLabelSha256: H('a'),
   freezeSha256: H('f'),
   readerBundleSha256: H('b'),
+  legacyBundleSha256: H('c'),
   chromium: '140.0',
   pageStates: 1,
+  variants: 0,
   // A run that crashed still counts.
   status: n === 1 ? 'failed' : 'complete',
 });
@@ -116,4 +119,59 @@ test('bundle: refuses a reader that imports a file outside packages/cart-reader/
       "import frame from '../../../evals/merchants/retail-frame-3.json';\nexport const readCart = () => ({ shown: false, reason: String(frame.domains.length) });",
   });
   await assert.rejects(bundleReader({ root }), /may only contain packages\/cart-reader\/src/);
+});
+
+test('review 8: heldout-fresh (or any other split) is refused', async () => {
+  const e = env();
+  await assert.rejects(
+    run({ split: 'heldout-fresh', confirmHeldoutRun: '1', ...e }),
+    /unknown split heldout-fresh/,
+  );
+  await assert.rejects(run({ split: 'heldout-b', ...e }), /unknown split/);
+});
+
+test('review 4: appendRun holds an O_EXCL lock and re-checks the run limit inside it', () => {
+  const e = env();
+  const runs = path.join(e.root, 'runs.json');
+  appendRun(runs, row(1), { confirm: '1' });
+  // Another run took the last run between this run's check and its append.
+  appendRun(runs, row(2));
+  assert.throws(() => appendRun(runs, { ...row(3), heldoutRun: 2 }, { confirm: '2' }), /used 2 of 2/);
+  writeFileSync(`${runs}.lock`, '');
+  assert.throws(() => appendRun(runs, row(3, 'development')), /lock exists/);
+  rmSync(`${runs}.lock`);
+  appendRun(runs, row(3, 'development'), { confirm: null });
+  assert.equal(readRuns(runs).runs.length, 3);
+});
+
+test('review 3: answer-lookup tripwire refuses a bundle with a split domain or many frame domains', async () => {
+  const root = readerRoot({
+    'packages/cart-reader/src/index.ts':
+      "const M: Record<string, string> = { 'shop.example': 'CAD' };\nexport const readCart = (_d: Document, o: { url: string }) => ({ shown: false, reason: M[new URL(o.url).hostname] ? 'a' : 'b' });",
+  });
+  await assert.rejects(
+    bundleReader({ root, splitDomains: ['shop.example'], frameDomains: ['shop.example'] }),
+    /domain\(s\) of the split being run/,
+  );
+  // A domain of another split: allowed up to three, refused beyond.
+  await bundleReader({ root, splitDomains: ['other.example'], frameDomains: ['shop.example'] });
+  const many = readerRoot({
+    'packages/cart-reader/src/index.ts':
+      "const L = ['a1.example', 'a2.example', 'a3.example', 'a4.example'];\nexport const readCart = () => ({ shown: false, reason: String(L.length) });",
+  });
+  const frameDomains = ['a1.example', 'a2.example', 'a3.example', 'a4.example'];
+  await assert.rejects(bundleReader({ root: many, frameDomains }), /4 retail-frame-3 domains/);
+  // Parts of longer host names don't count.
+  await bundleReader({ root: many, frameDomains: ['1.example', 'example'] });
+});
+
+test('review 2: the legacy bundle holds the three extension adapters only', async () => {
+  const b = await bundleReader({ mode: 'legacy' });
+  assert.ok(b.inputs.includes('extension/src/checkout/page-reader.ts'));
+  assert.ok(b.inputs.includes('extension/src/checkout/adapters/amazon-us.json'));
+  assert.ok(
+    b.inputs.every((p) =>
+      /^(evals\/reader\/legacy-entry\.ts|extension\/src\/checkout\/|packages\/rewards-core\/src\/)/.test(p),
+    ),
+  );
 });

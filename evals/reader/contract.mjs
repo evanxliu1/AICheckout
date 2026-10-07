@@ -1,7 +1,8 @@
+// The reader's output contract, owned by the harness (not by packages/cart-reader, so the reader developer can't
+// loosen it). Every read is checked against it; anything else is a crash.
 import { z } from 'zod';
-import { READING_KINDS } from './types.ts';
 
-/** Zod contract of one reader output; the evaluation harness validates every read against it. */
+export const READING_KINDS = ['afterCredit', 'estimatedTotal', 'subtotal'];
 export const cartReadingSchema = z.discriminatedUnion('shown', [
   z.strictObject({
     shown: z.literal(true),
