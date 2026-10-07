@@ -2,7 +2,7 @@
 type: Decision
 title: Clarifications before any .8 capture (generic-reader-protocol.9)
 description: After an auditor subagent cross-checked the binding text of generic-reader-protocol.8, the coordinator decided process clarifications before any pane capture. The .8 candidate list is committed; an offline pane platform script is added; one cart rule applies to every store; pane evidence and failed adds are defined; robot-only rules are labelled; pane session limits and labeller inputs are set; the operator agent and transcript audit are tightened.
-status: proposed
+status: accepted
 tags: [decision, phase-12, merchants, eval, capture]
 generated:
   by: claude-code/claude-opus-5-5
@@ -58,3 +58,5 @@ These are **the coordinator's** decisions, process only.
 
 ## Status
 Proposed 2026-10-06 by the amendment builder (claude-code/claude-opus-5-5) on the coordinator's decisions. It awaits the independent reviewer's signature of `.9`; `.8` binds until then.
+
+Signed: the independent reviewer signed `generic-reader-protocol.9` at `cbf2c72` on 2026-10-06 after two fix rounds (attribution machinery replaced by Evan's lingering-items simplification; `cart-other`; captured definition; path normalization; Bash allowlist closing the Bash-write limit; agent-verified); accepted.

@@ -3,6 +3,7 @@
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
 ## 2026-10-06
+* **Review** `generic-reader-protocol.9` **signed** at `cbf2c72` (clarifications before any `.8` capture: `.8` candidate list committed, pane platform script, Evan's lingering-items rule, `cart-other`, pane evidence and retry rules, audit hardening; agent-verified). (claude-code/claude-opus-5-5)
 * **Review** re-check of `.9` at `3bbf7c5` (agent-verified): three fixes before signing.
   - **Captured:** a pane store is captured when any real cart-state export has the operator's item. Its platform comes from `empty-cart` plus the first of `cart-1`, `minicart-1`, `cart-qty2`, `cart-2items`, `cart-other` (`pane-platform.mjs`; a store with only `cart-2items` is output, tested).
   - **New state `cart-other`:** a cart count no state describes. It is labelled, counts in the precision bar and is left out of the coverage denominator.
