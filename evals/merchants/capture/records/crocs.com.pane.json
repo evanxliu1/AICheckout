@@ -1,0 +1,296 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "crocs.com",
+  "stream": "us",
+  "visit": 12,
+  "session": 1,
+  "entryHost": "www.crocs.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2db7e336-87f/agent-a50a98d5605d12ab1",
+  "startUtc": "2026-10-07T06:20:19.228Z",
+  "endUtc": "2026-10-07T06:22:19.672Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.crocs.com",
+      "status": 200,
+      "sha256": "73ae5862b1ce0072cc9ad808642c2986d097ae4e2bc7fb286d58eee4d7e77322",
+      "bytes": 6742,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.crocs.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.crocs.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.crocs.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.crocs.com/c/women"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home (reload)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "category /c/women"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "storefront pages served blank; stopped as block"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "storefront pages served blank; stopped as block"
+    },
+    {
+      "state": "cart-1",
+      "reason": "storefront pages served blank; stopped as block"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "storefront pages served blank; stopped as block"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "storefront pages served blank; stopped as block"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.crocs.com/c/women",
+    "title": "",
+    "wording": "No visible wording: empty document title and empty body/accessibility tree on home (twice) and a category page; robots.txt served normally.",
+    "marker": "blank page; HTTP status not observable in the pane (consistent with a silent edge block such as a Kasada 429)"
+  },
+  "problems": [
+    "Pane was closed at start; navigate without tabId opened it on a shared tab 'seed', which another operator then moved to samsclub.com robots.txt. Left that tab alone; created own tab tab-5 and redid robots there.",
+    "Block code is a judgement: storefront pages were blank with no title and no challenge text; status code not observable. If the reviewer prefers tool-error, a second session is allowed.",
+    "Sign-in state and starting cart count could not be read (pages blank)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:20:19.228Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:20:20.534Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:20:20.753Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:20:23.448Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:20:27.175Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:20:35.065Z",
+      "tool": "navigate",
+      "url": "https://www.crocs.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:20:38.779Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:20:42.365Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:20:46.198Z",
+      "tool": "navigate",
+      "url": "https://www.crocs.com/robots.txt"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:20:49.583Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:20:55.903Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:21:02.061Z",
+      "tool": "navigate",
+      "url": "https://www.crocs.com/"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:21:02.064Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T06:21:06.562Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T06:21:06.949Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T06:21:11.934Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T06:21:14.329Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T06:21:17.873Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T06:21:17.929Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T06:21:29.349Z",
+      "tool": "navigate",
+      "url": "https://www.crocs.com/"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T06:21:29.967Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T06:21:30.486Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T06:21:41.593Z",
+      "tool": "navigate",
+      "url": "https://www.crocs.com/c/women"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T06:21:42.287Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T06:21:42.639Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T06:22:00.406Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T06:22:13.021Z",
+      "tool": "Write"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T06:22:19.672Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}
