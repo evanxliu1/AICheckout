@@ -26,7 +26,7 @@ node evals/merchants/capture/rebuild.mjs capture/data/pane/<domain>/<state>/dom.
 
 ## Workflow 3 tools (split, label, freeze)
 
-Phase 12.3 after capture ([runbook](../../../wiki/ops/reader-capture-workflow.md#workflow-3-split-label-review-freeze), [protocol](../../../docs/evals/generic-reader-protocol.md#labelling)). Tooling only: none of these runs a reader or decides a label. Not built yet: the offline variant generator and its manifest, and the 10% derived-label sample check.
+Phase 12.3 after capture ([runbook](../../../wiki/ops/reader-capture-workflow.md#workflow-3-split-label-review-freeze), [protocol](../../../docs/evals/generic-reader-protocol.md#labelling)). Tooling only: none of these runs a reader or decides a label. The offline variant generator and the 10% derived-label sample check are in [`../variants/`](../variants/README.md).
 
 ```sh
 # 1. split input -> captured.json + captured-methods.json (evals/merchants/), then the split (commit splits.json before any labeller starts)
@@ -37,8 +37,12 @@ node evals/merchants/capture/render-pane.mjs evals/merchants/capture/data/pane [
 # 3. labels: validate each file, then agreement and adjudication per split
 node evals/merchants/labels/validate-labels.mjs <labels.json>
 node evals/merchants/labels/agreement.mjs <labeller-a.json> <labeller-b.json> [--adjudication <adj.json> --out <final.json>] [--report <report.json>]
-# 4. freeze both splits at once; the harness runs --check before scoring
-node evals/merchants/labels/freeze.mjs --labels <final-development.json> --labels <final-heldout-a.json> --variants <variant-manifest.json> --splits evals/merchants/splits.json --data evals/merchants/capture/data/pane
+# 4. offline variants per split from its final labels, then the labeller's 10% check (../variants/README.md)
+node evals/merchants/variants/generate.mjs --labels <final-development.json>
+node evals/merchants/variants/sample-check.mjs draw --manifest evals/merchants/variants/development-manifest.json
+node evals/merchants/variants/sample-check.mjs verify evals/merchants/variants/development-variant-check.json
+# 5. freeze both splits at once; the harness runs --check before scoring
+node evals/merchants/labels/freeze.mjs --labels <final-development.json> --labels <final-heldout-a.json> --variants evals/merchants/variants/development-manifest.json --variants evals/merchants/variants/heldout-a-manifest.json --splits evals/merchants/splits.json --data evals/merchants/capture/data/pane
 node evals/merchants/labels/freeze.mjs --check evals/merchants/freeze.json --data evals/merchants/capture/data/pane
 ```
 

@@ -13,7 +13,7 @@
     "node": ">=24 <25"
   },
   "scripts": {
-    "lint": "eslint extension/src extension/tests extension/e2e extension/scripts packages apps scripts tools evals/merchants/capture evals/merchants/labels",
+    "lint": "eslint extension/src extension/tests extension/e2e extension/scripts packages apps scripts tools evals/merchants/capture evals/merchants/labels evals/merchants/variants",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present && npm run test:scripts",
     "build": "npm run build --workspaces --if-present",
@@ -44,7 +44,7 @@
     "pipeline": "node tools/catalog-pipeline/src/cli.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test:scripts": "node --test \"scripts/lib/*.test.mjs\" \"evals/merchants/tools/*.test.mjs\" \"evals/merchants/capture/tests/*.test.mjs\" \"evals/merchants/labels/tests/*.test.mjs\"",
+    "test:scripts": "node --test \"scripts/lib/*.test.mjs\" \"evals/merchants/tools/*.test.mjs\" \"evals/merchants/capture/tests/*.test.mjs\" \"evals/merchants/labels/tests/*.test.mjs\" \"evals/merchants/variants/tests/*.test.mjs\"",
     "test:capture:browser": "node --test --test-concurrency=1 \"evals/merchants/capture/tests/browser/*.test.mjs\"",
     "eval:matrix": "node scripts/run-eval-matrix.mjs",
     "eval:summarize": "node scripts/summarize-evals.mjs"

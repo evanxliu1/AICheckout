@@ -1,0 +1,49 @@
+# Offline variants (Phase 12.3)
+
+The offline variant generator and the labeller's 10% check of derived labels, as the [protocol](../../../docs/evals/generic-reader-protocol.md#offline-variants) defines them (`generic-reader-protocol.11`). Tooling only: no reader code, no reader output, no label decided beyond each transform's rule applied to the final base label. Built 2026-10-07 and tested on synthetic `pane-dom.2` exports only; no capture was read.
+
+```sh
+# per split, after its final labels (agreement.mjs --out) and before the freeze
+node evals/merchants/variants/generate.mjs --labels <final-<split>.json> [--data evals/merchants/capture/data/pane] [--out evals/merchants/capture/data/variants]
+#   -> capture/data/variants/<split>/<domain>/<state>/<transform>/{dom.json, variant.json}   (gitignored)
+#   -> evals/merchants/variants/<split>-variant-labels.json, <split>-manifest.json           (committed)
+node evals/merchants/variants/sample-check.mjs draw --manifest evals/merchants/variants/<split>-manifest.json
+#   -> <split>-variant-check.json; one of the split's labellers fills labeller, result (match / mismatch), notes
+node evals/merchants/variants/sample-check.mjs verify evals/merchants/variants/<split>-variant-check.json
+#   exit 0 all match; 3 a mismatch (the transform named gets a new version in VERSIONS, regenerate every variant); 1 invalid
+```
+
+| File | What |
+| --- | --- |
+| `generate.mjs` | Reads a `reader-labels.2` final file (role `final`) and each real page-state's `dom.json`, checked against the label's `domSha256`. Applies every transform whose "Applied to" rule fits, writes the variant export and `variant.json` (`reader-variant.1`: id, transform version, generator, seed, base and variant SHA-256), the derived labels and the manifest. Deterministic: the same inputs give the same bytes |
+| `<split>-variant-labels.json` | `reader-labels.2`, role `final`, `sources.base` = the base file and its SHA-256. Each label: id `<domain>/<state>/<transform>`, origin `variant`, `domSha256` of the variant export, `snapshotSha256` of its `variant.json`, notes `derived by <version>` |
+| `<split>-manifest.json` | `reader-variants.1`: protocol, generator, seed, split, transform versions, base labels and `currency-minor-units.json` SHA-256, variant labels path and SHA-256, data root, counts (eligible and generated per transform), skips (by reason, by transform, every entry) and one entry per variant (id, version, base id and SHA-256s, path, `domSha256`, `variantSha256`). `freeze.mjs --variants` hashes it as a `variant-manifest` file; it doesn't read its shape, and the manifest pins the variant labels and every variant export |
+| `sample-check.mjs` | `draw`: the seeded sample (ascending key of purpose `variant-sample` over variant ids; max(10, ⌈10%⌉), all when fewer) with each entry's variant path, SHA-256 and derived label. `verify`: labeller named, every entry `match` or `mismatch`, the entries and derived labels still the seeded draw of the unchanged manifest; lists the transform versions that need a new version |
+| `tests/` | `node:test`, run by `npm run test:scripts`: each transform's output and label, skips, determinism, the zero-decimal parity, injected text visible and hidden (also through `rebuild.mjs`), the sample size, draw and verify |
+
+## What each transform does
+
+| Transform | Applied to | Generator |
+| --- | --- | --- |
+| `class-rename.1` | real `cart-1`, `checkout-1` | Every class token and id renamed to `k-<hex>` / `i-<hex>` (SHA-256 key of purpose `variant-class-rename`, lengthened on a collision, so a bijection per page); id references (`for`, `form`, `list`, `headers`, `aria-*` id lists, `href="#…"`, `url(#…)`) and `.class` / `#id` selectors in `<style>` text follow. Text and structure unchanged |
+| `promo-row.1` | real `cart-1`, expected non-null | A copy of the expected row (ids and boxes dropped) inserted before it: "Offer: <10> off orders over <Q>" and the amount 10, where 10 and 100 are major units (100 minor units for minor-unit-0 currencies) and Q is 100, raised to the next 100 above the expected so the offer never applies |
+| `fake-subtotal.1` | real `cart-1` | A "Recommended for you" section right after the summary (end of body when there is none) with the page's own subtotal word when its visible text has one, else "Subtotal", and an amount different from every displayed one |
+| `injected-instruction.1` | real `cart-1` | One English note to AI agents naming a false total: visible after the summary, inside a `display:none` block right after the expected row, and in a clipped 1 px span at the end of the body |
+| `credit-applied.1` | real `cart-1`, expected non-null | After the expected row: "Gift card applied -C" and "Amount due expected − C", C = min(5 major units, ⌊expected ÷ 2⌋). Label: `afterCredit` expected − C added to `displayed` and made `expected`, tag `credit-applied` |
+| `format-swap.1` | real `cart-1`, expected non-null, minor unit 2 | Every amount of the page's currency (text and `aria-label`, `aria-description`, `aria-valuetext`, `title`, `alt`) to the other convention, keeping its decimals and whether it was grouped. Tags: format tags replaced by `decimal-comma` (+ `thousands-dot`) when the result uses a decimal comma |
+| `format-space-after.1` | same | Every amount as `1 299,00 £`: decimal comma, U+00A0 grouping, two decimals, the marker the page showed after the amount with a space. Tags `decimal-comma`, `currency-after-amount`, `thousands-space` when an amount reaches 1,000 |
+| `zero-decimal.1` | same | Every amount as its minor units with comma grouping, as `JPY 2,400` when the last hex digit of the site's `reader-split` key is even and `₩2,400` when odd; ISO codes of `currency-minor-units.json` in text, and codes in currency attributes (`data-currency…`, `content` of a `…currency` `itemprop` / `property` / `name`) rewritten to the target. Label: same `amountMinor`, currency JPY or KRW on expected and displayed rows, evidence `a-code` (JPY; KRW when the summary shows the code), `b-structured` (KRW with a rewritten currency attribute), else `c-symbol`; `currencyConflict` false |
+| `mixed-currency.1` | real `cart-1`, expected non-null | A currency list first in the body (the page's currency marked selected, then three of USD, EUR, GBP, CAD, AUD, CHF in seeded order), "(≈ <code> <amount>)" after each visible amount outside the summary, and an "Approx." copy of the expected row after it, all at one seeded rate. Tag `multiple-currencies-shown` |
+
+Expected labels are otherwise the base label's, as the protocol's table says, including `currencyEvidence` and `currencyConflict`.
+
+## Decisions the protocol leaves to the generator
+
+- **Amount grammar.** An amount is an optional sign, a marker of the page's currency (its ISO code, symbols and country-named prefixes in `MARKERS`; the protocol's rule (a) and (c) lists plus common ones) and a number, in either order with at most one space, inside **one text node**. Bare numbers are not amounts. The page's currency is the expected's, else the displayed rows', else the frame's storefront currency. The decimal and grouping characters are voted from every amount (a last separator followed by 1–2 digits is decimal, by 3 is grouping); two decimal characters, two grouping characters, one character as both, a decimal in a minor-unit-0 currency, or an amount that doesn't parse make the grammar not unique (`amount-grammar-not-unique`).
+- **Expected row.** The smallest element around a **visible** amount equal to the expected whose visible text matches the kind's label (multilingual word lists in `SUBTOTAL_RE`, `TOTAL_RE` with subtotal words removed, `AFTER_CREDIT_RE`) and that holds no other amount. Hidden duplicates (for example a `display:none` mobile summary) don't count. None: `expected-row-not-found`; more than one: `expected-row-not-unique`. The summary is the smallest ancestor of the row whose amounts include every displayed row's amount.
+- **Which transforms need what.** class-rename needs neither. promo-row, credit-applied and mixed-currency need the row and a writable format; fake-subtotal and injected-instruction need a writable format and the row when the expected is non-null (to place the block outside the summary); the three format transforms need the row, a unique grammar and no amount split across text nodes (`amount-split-across-nodes`: a visible text node that is only a currency marker or only a decimal fraction). A new amount needing a decimal character the page never shows is `amount-grammar-not-unique`. format-swap on a page with no decimals and no grouping is `format-unchanged`; credit-applied with C = 0 is `credit-zero` and on an `afterCredit` base (a second, different `afterCredit` amount would make it ambiguous) `base-after-credit`. Base exports missing, not matching the label's SHA-256 or not `pane-dom.2` are `base-dom-missing`, `base-dom-sha-mismatch`, `unsupported-format`.
+- **Language.** Inserted text is English except fake-subtotal's word, as the protocol says only for that one.
+- **mixed-currency and rule (d).** The protocol's table keeps the label unchanged ("the currency charged") although other currency codes now appear on the page, which under rule (d) alone would make a `d-frame` page `currency-undetermined`. The generator follows the table.
+- **Observed tags.** Tags a transform plainly creates or removes are updated (above); others are kept.
+- **Seeds.** Every seeded choice is a SHA-256 key `<SEED>|variant-<transform>|<variant id>|<what>` (`seeded-selection.mjs` `key`), except zero-decimal's parity, which is the site's `reader-split` key.
+- **Labeller check.** The check file shows the derived label beside the variant (a check, not a blind label). The labeller rebuilds the variant with `rebuild.mjs`; `render-pane.mjs` doesn't walk the variants folder.
