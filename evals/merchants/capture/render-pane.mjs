@@ -7,24 +7,30 @@
 //   viewport.png   the first 1280 x 900 CSS pixels
 //   full.png       the full page, capped at 12,000 px tall (render.json says when the cap applied)
 //   render.json    `pane-render.1`: SHA-256 of dom.json, rebuilt.html and both images, Chromium version, viewport,
-//                  page height, blocked request count, UTC time
+//                  page height, blocked request count, SHA-256 of rebuild.mjs and render-pane.mjs, UTC time
 // The SHA-256 of render.json is the page-state's snapshot manifest hash (`snapshotSha256` in reader-labels.2), so a
 // state is never re-rendered after labelling: one with a render.json for the same dom SHA-256 is skipped unless
 // --force. Only the six pane states are rendered; evidence exports are not.
 //
 //   node evals/merchants/capture/render-pane.mjs <data/pane> [domain ...] [--force]
 import { createHash } from 'node:crypto';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { STATES } from './collect-pane-exports.mjs';
 import { rebuildFile } from './rebuild.mjs';
 
 export const RENDER_FORMAT = 'pane-render.1';
 export const VIEWPORT = { width: 1280, height: 900 };
 export const MAX_FULL_HEIGHT = 12000;
+const here = path.dirname(fileURLToPath(import.meta.url));
 const sha256 = (buf) => createHash('sha256').update(buf).digest('hex');
+/** SHA-256 of the two scripts that produce a render, recorded in render.json. */
+const TOOL_SHA256 = {
+  rebuildScriptSha256: sha256(readFileSync(path.join(here, 'rebuild.mjs'))),
+  rendererSha256: sha256(readFileSync(fileURLToPath(import.meta.url))),
+};
 
 /** Render one state folder. Returns {state, status: 'rendered' | 'skipped', render?}. */
 export async function renderState(browser, dir, { force = false, maxHeight = MAX_FULL_HEIGHT } = {}) {
@@ -69,6 +75,7 @@ export async function renderState(browser, dir, { force = false, maxHeight = MAX
     const render = {
       format: RENDER_FORMAT,
       renderer: 'render-pane.mjs',
+      ...TOOL_SHA256,
       state: meta.state ?? path.basename(dir),
       domSha256: meta.sha256,
       rebuiltSha256: sha256(html),

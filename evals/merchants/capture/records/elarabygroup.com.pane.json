@@ -1,0 +1,365 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "elarabygroup.com",
+  "stream": "non-us",
+  "visit": 18,
+  "session": 1,
+  "entryHost": "www.elarabygroup.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2cdd30ac-3bf/agent-ab00c26ac81e46138",
+  "startUtc": "2026-10-07T06:27:13.566Z",
+  "endUtc": "2026-10-07T06:30:41.884Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.elarabygroup.com",
+      "status": 404,
+      "sha256": "4655b9f1259f69c231577d3fcb66a77831afe84708ea13acbff12b1ae41e5633",
+      "bytes": 193823,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.elarabygroup.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.elarabygroup.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.elarabygroup.com/ar/shop-elaraby-brands/tornado-products/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.elarabygroup.com/ar/offers-and-discounts"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.elarabygroup.com/ar/checkout/cart/"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.elarabygroup.com/en/"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.elarabygroup.com/ar/checkout/cart/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt (HTTP 404)"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry origin"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "link",
+      "name": "Tornado brand listing (site link href)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "link",
+      "name": "offers listing (site link href)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "link",
+      "name": "cart (site header link href)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "English store root"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (for evidence export)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (cart page 404)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "500b577ed77c75e6d8d75b67a6b867f8dcd12e605a5807c93be61f2e01fb76db",
+      "bytes": 239645,
+      "chunks": 1,
+      "url": "https://www.elarabygroup.com/ar/checkout/cart/"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart page serves a 404 Not Found body"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "no product listing reachable; every page served 404"
+    },
+    {
+      "state": "cart-1",
+      "reason": "no item could be added"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "no item could be added"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no item could be added"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EGP",
+  "observedRegion": "EG",
+  "outcome": {
+    "status": "excluded",
+    "code": "defunct",
+    "evidenceSha256": "500b577ed77c75e6d8d75b67a6b867f8dcd12e605a5807c93be61f2e01fb76db"
+  },
+  "challenge": null,
+  "problems": [
+    "Every page loaded (root, /ar/ brand listing, /ar/offers-and-discounts, /ar/checkout/cart/, /en/) served title '404 Not Found' with body 'We Can't Find that Page!' inside the Arabic store header; page CSS appeared unloaded.",
+    "Header showed a cart link with count 0 and a sign-in link, so startCartCount 0 is from the header badge; the cart page itself was a 404, so endCartCount is null.",
+    "Code 'defunct' is a judgement: the cause may be transient breakage or a silent refusal of U.S. visitors (no geo wording seen). Reviewer may prefer a second session instead.",
+    "robots.txt returned HTTP 404 (an HTML 404 page, hashed as served); no rules, nothing disallowed.",
+    "Observed currency EGP is from the header's cart badge suffix (ج.م); region EG from the frame.",
+    "Evidence chunk 0 was oversized and saved by the harness to a tool-results file; not opened."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:27:13.566Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:27:14.789Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:27:14.795Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:27:28.248Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:27:32.879Z",
+      "tool": "navigate",
+      "url": "https://www.elarabygroup.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:27:32.943Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:27:44.826Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:27:49.370Z",
+      "tool": "navigate",
+      "url": "https://www.elarabygroup.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:27:49.376Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:28:09.805Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:28:10.288Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:28:31.627Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:28:34.617Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T06:28:38.453Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T06:28:43.008Z",
+      "tool": "navigate",
+      "url": "https://www.elarabygroup.com/ar/shop-elaraby-brands/tornado-products/"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T06:28:43.383Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T06:28:47.784Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T06:29:06.594Z",
+      "tool": "navigate",
+      "url": "https://www.elarabygroup.com/ar/offers-and-discounts"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T06:29:06.995Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T06:29:12.276Z",
+      "tool": "navigate",
+      "url": "https://www.elarabygroup.com/ar/checkout/cart/"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T06:29:12.761Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T06:29:19.452Z",
+      "tool": "navigate",
+      "url": "https://www.elarabygroup.com/en/"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T06:29:19.900Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T06:29:27.866Z",
+      "tool": "navigate",
+      "url": "https://www.elarabygroup.com/ar/checkout/cart/"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T06:29:28.290Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T06:29:50.007Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T06:30:12.329Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T06:30:18.818Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T06:30:34.375Z",
+      "tool": "Write"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T06:30:41.884Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "500b577ed77c75e6d8d75b67a6b867f8dcd12e605a5807c93be61f2e01fb76db"
+      }
+    ],
+    "errors": []
+  }
+}

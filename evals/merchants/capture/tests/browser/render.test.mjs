@@ -101,3 +101,47 @@ test('render-pane: refuses an export whose SHA-256 is not the one in meta.json',
   assert.equal(report[0].status, 'error');
   assert.match(report[0].error, /SHA-256/);
 });
+
+test('review L8: an export that references the shop for an image, a stylesheet and a font fetches nothing', async () => {
+  const o = shop.origin;
+  const dom = JSON.stringify({
+    format: 'pane-dom.2',
+    styleProps: [],
+    root: {
+      t: 'html',
+      c: [
+        {
+          t: 'head',
+          c: [
+            { t: 'link', a: { rel: 'stylesheet', href: `${o}/assets/site.css` } },
+            {
+              t: 'style',
+              c: [{ x: `@font-face{font-family:F;src:url(${o}/assets/f.woff2)}body{font-family:F}` }],
+            },
+          ],
+        },
+        {
+          t: 'body',
+          c: [
+            { t: 'img', a: { src: `${o}/assets/item.png`, alt: 'item' } },
+            { t: 'p', c: [{ x: 'Subtotal £20.00' }] },
+          ],
+        },
+      ],
+    },
+  });
+  const dir = path.join(root, 'external.test', 'cart-1');
+  await mkdir(dir, { recursive: true });
+  await writeFile(path.join(dir, 'dom.json'), dom);
+  await writeFile(path.join(dir, 'meta.json'), JSON.stringify({ state: 'cart-1', sha256: sha(dom) }));
+  const before = shop.log.length;
+  const r = await renderState(browser, dir);
+  assert.equal(shop.log.length, before, 'the shop received no request');
+  assert.ok(r.render.blockedRequests > 0, 'the external requests were aborted');
+});
+
+test('review L9: render.json records the SHA-256 of rebuild.mjs and render-pane.mjs', async () => {
+  const render = JSON.parse(await readFile(path.join(root, 'fixture.test', 'cart-1', 'render.json'), 'utf8'));
+  assert.equal(render.rebuildScriptSha256, sha(await readFile(path.join(here, '..', '..', 'rebuild.mjs'))));
+  assert.equal(render.rendererSha256, sha(await readFile(path.join(here, '..', '..', 'render-pane.mjs'))));
+});

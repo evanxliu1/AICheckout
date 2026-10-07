@@ -1,0 +1,656 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "homedepot.com",
+  "stream": "us",
+  "visit": 15,
+  "session": 1,
+  "entryHost": "www.homedepot.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2db7e336-87f/agent-a2e586504e6d5282c",
+  "startUtc": "2026-10-07T06:22:26.316Z",
+  "endUtc": "2026-10-07T06:26:56.252Z",
+  "signedIn": false,
+  "startCartCount": 1,
+  "endCartCount": 1,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2 line)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.homedepot.com",
+      "status": 200,
+      "sha256": "395b103de9406961b0e18f618d92a03303d175fcb681d3c3f40e917248e7d444",
+      "bytes": 1411,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.homedepot.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.homedepot.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.homedepot.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.homedepot.com/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.homedepot.com/b/Tool-Savings/N-5yc1vZ1z1zuqf"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.homedepot.com/p/DEWALT-1-1-4-in-x-23-Gauge-Pin-Nail-2000-Pack-DWPN23125/328798484"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.homedepot.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (start count check)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Navigate to UP TO $100 OFF Select Tools"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "product link DWPN23125"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-2items"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increment"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-other"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "0654ac1dd80be15e78ed36f281ef605612f8cbc4161f7b8ed5f45be65f0a3844",
+      "bytes": 1548369,
+      "chunks": 4,
+      "url": "https://www.homedepot.com/p/DEWALT-1-1-4-in-x-23-Gauge-Pin-Nail-2000-Pack-DWPN23125/328798484",
+      "startCartCount": 1
+    },
+    {
+      "state": "cart-2items",
+      "sha256": "c6542609de9c52536000959c571b9f085395a5051ee9139226b8d225fb2f0497",
+      "bytes": 932412,
+      "chunks": 3,
+      "url": "https://www.homedepot.com/cart",
+      "startCartCount": 1
+    },
+    {
+      "state": "cart-other",
+      "sha256": "5074d0ab5fb38d5e2c398f4c70c366903f07421e1c3a8f34ec6b214d3ffcda11",
+      "bytes": 982178,
+      "chunks": 3,
+      "url": "https://www.homedepot.com/cart",
+      "startCartCount": 1
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart held 1 lingering item at start; not actually empty"
+    },
+    {
+      "state": "cart-1",
+      "reason": "lingering item present; cart with own item is cart-2items"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "lingering item present; own item at qty 2 plus lingering item recorded as cart-other"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.homedepot.com/b/Tool-Savings/N-5yc1vZ1z1zuqf",
+    "productUrl": "https://www.homedepot.com/p/DEWALT-1-1-4-in-x-23-Gauge-Pin-Nail-2000-Pack-DWPN23125/328798484",
+    "price": "USD 18.78",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt disallows /cart and /checkout* for *; visited cart per .8 record-only rule",
+    "logged out; cart held 1 lingering item (not added by operator) at start and end; left in place",
+    "all export chunks were oversized and saved by the harness to tool-results files; not opened",
+    "background tab rendered blank in screenshots after scroll; page state read via get_page_text/read_page"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:22:26.316Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:22:27.526Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:22:27.623Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:22:31.074Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:22:34.806Z",
+      "tool": "navigate",
+      "url": "https://www.homedepot.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:22:34.816Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:22:41.826Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:22:46.650Z",
+      "tool": "navigate",
+      "url": "https://www.homedepot.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:22:46.661Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:22:55.248Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:22:58.400Z",
+      "tool": "navigate",
+      "url": "https://www.homedepot.com/cart"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:22:58.949Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:23:03.704Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T06:23:04.137Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T06:23:10.523Z",
+      "tool": "navigate",
+      "url": "https://www.homedepot.com/"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T06:23:10.903Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T06:23:14.825Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T06:23:17.582Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T06:23:21.484Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T06:23:22.274Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T06:23:22.622Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T06:23:29.055Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T06:23:32.321Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T06:23:35.392Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T06:23:35.813Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T06:23:38.399Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T06:23:38.724Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T06:23:42.997Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T06:23:46.021Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T06:23:49.424Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T06:23:50.241Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T06:23:50.507Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T06:23:55.841Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T06:23:59.203Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T06:23:59.896Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T06:24:00.247Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T06:24:24.627Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T06:24:28.339Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T06:24:31.461Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T06:24:34.777Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T06:24:38.331Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T06:24:41.133Z",
+      "tool": "navigate",
+      "url": "https://www.homedepot.com/cart"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T06:24:41.841Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T06:24:42.205Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T06:25:08.830Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T06:25:11.613Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T06:25:14.470Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T06:25:17.644Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T06:25:21.868Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T06:25:25.005Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T06:25:27.678Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T06:25:30.405Z",
+      "tool": "find"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T06:25:33.018Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T06:25:33.385Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T06:25:36.265Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T06:25:41.406Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T06:25:42.039Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T06:25:42.462Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T06:26:06.765Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T06:26:09.958Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T06:26:13.454Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T06:26:16.330Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T06:26:19.353Z",
+      "tool": "find"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T06:26:23.463Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T06:26:24.100Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T06:26:24.493Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T06:26:30.980Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T06:26:49.764Z",
+      "tool": "Write"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T06:26:56.252Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "0654ac1dd80be15e78ed36f281ef605612f8cbc4161f7b8ed5f45be65f0a3844"
+      },
+      {
+        "target": "cart-2items",
+        "kind": "state",
+        "sha256": "c6542609de9c52536000959c571b9f085395a5051ee9139226b8d225fb2f0497"
+      },
+      {
+        "target": "cart-other",
+        "kind": "state",
+        "sha256": "5074d0ab5fb38d5e2c398f4c70c366903f07421e1c3a8f34ec6b214d3ffcda11"
+      }
+    ],
+    "errors": []
+  }
+}

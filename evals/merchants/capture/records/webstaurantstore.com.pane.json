@@ -1,145 +1,757 @@
 {
-  "format": "capture-pane-record.1",
-  "protocol": "generic-reader-protocol.10",
-  "domain": "webstaurantstore.com",
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
   "method": "pane",
+  "domain": "webstaurantstore.com",
   "stream": "us",
   "visit": 11,
-  "band": "top-1k",
-  "region": "us",
+  "session": 2,
   "entryHost": "www.webstaurantstore.com",
-  "session": 1,
-  "sessionNote": "pane re-visit of a robot-era outcome (second attempt by a different method); ended tool-error, so one more pane session is allowed under .9",
-  "operator": {
-    "model": "claude-opus-5-5",
-    "transcriptId": null
-  },
-  "startUtc": "2026-10-07T05:02:22.088Z",
-  "endUtc": "2026-10-07T05:04:08.250Z",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a39cc768cc85ee652",
+  "startUtc": "2026-10-07T06:52:20.656Z",
+  "endUtc": "2026-10-07T06:59:50.835Z",
   "signedIn": false,
-  "signedInNote": "header showed a sign-in link and no account name or greeting",
   "startCartCount": 0,
-  "startCartCountNote": "header cart link named 0 items; cart page showed the empty-cart message",
   "endCartCount": 0,
-  "endCartCountNote": "no item was added, so the end count equals the start count (cart not re-read after the stop)",
-  "removals": [],
-  "removalsNote": "No item was added in this session, so nothing was removed.",
-  "robots": {
-    "host": "www.webstaurantstore.com",
-    "url": "https://www.webstaurantstore.com/robots.txt",
-    "status": 200,
-    "bytes": 17821,
-    "sha256": "1c1cd1e34ba762f7a6f4d065f8c22f8b757254f7ced7d75163e1ab38b7de96fb",
-    "rootDisallowedForStar": false,
-    "rootDisallowedForAICheckoutCapture": false,
-    "cartPath": "/cart/",
-    "cartPathDisallowed": true,
-    "checkoutPathDisallowed": true,
-    "notes": "User-agent * disallows /cart/, /cart?, /checkout/complete, /paypal_checkout, /additemtocart.cfm, /login, /myaccount* and other narrower paths; no AICheckoutCapture group; root not disallowed",
-    "decision": "recorded only (robots.txt never excludes under .8+); cart page visited despite a cart-path disallow"
-  },
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 2 (toilet paper case)",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "item": "own item 1 (paper towel case, qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.webstaurantstore.com",
+      "status": 200,
+      "sha256": "1c1cd1e34ba762f7a6f4d065f8c22f8b757254f7ced7d75163e1ab38b7de96fb",
+      "bytes": 17821,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
   "navigations": [
     {
       "n": 1,
       "utc": null,
-      "action": "navigate",
-      "url": "https://www.webstaurantstore.com/robots.txt",
-      "note": "robots.txt read and hashed"
+      "url": "https://www.webstaurantstore.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.webstaurantstore.com/"
     },
     {
       "n": 3,
       "utc": null,
-      "action": "navigate",
-      "url": "https://www.webstaurantstore.com/",
-      "landing": "https://www.webstaurantstore.com/",
-      "note": "home page; screenshot showed no challenge; no cookie banner seen"
+      "url": "https://www.webstaurantstore.com/cart/"
     },
     {
       "n": 4,
       "utc": null,
-      "action": "click",
-      "url": "https://www.webstaurantstore.com/cart/",
-      "landing": "https://www.webstaurantstore.com/cart/",
-      "note": "header cart link; cart page, empty; no challenge"
+      "url": "https://www.webstaurantstore.com/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.webstaurantstore.com/lavex-janitorial-800-natural-brown-kraft-hardwound-roll-paper-towel-case/5001RT800N.html"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.webstaurantstore.com/cart/"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.webstaurantstore.com/"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.webstaurantstore.com/lavex-janitorial-individually-wrapped-2-ply-standard-500-sheet-toilet-paper-roll-case/5002TP3X496E.html"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "url": "https://www.webstaurantstore.com/cart/"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "url": "https://www.webstaurantstore.com/cart/"
     }
   ],
-  "navigatingActions": 3,
   "actions": [
     {
       "n": 1,
       "utc": null,
       "kind": "navigate",
-      "target": "https://www.webstaurantstore.com/robots.txt"
+      "role": "",
+      "name": "robots.txt"
     },
     {
       "n": 2,
       "utc": null,
       "kind": "robots-hash",
-      "script": "pane-robots-hash.js"
+      "role": "",
+      "name": "pane-robots-hash.js"
     },
     {
       "n": 3,
       "utc": null,
       "kind": "navigate",
-      "target": "https://www.webstaurantstore.com/"
+      "role": "",
+      "name": "home"
     },
     {
       "n": 4,
       "utc": null,
-      "kind": "click",
-      "role": "link",
-      "name": "Your cart has 0 items. View your cart."
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
     },
     {
       "n": 5,
       "utc": null,
       "kind": "export",
-      "state": "empty-cart",
-      "script": "pane-export.js",
-      "result": "bytes 438809, sha256 fa0a8325edd741030ed7ca4e374a4f57f62d24ebd84fe9dd4c481e21d63cb52d, chunks 2, nodes 2070, shadowRoots 1, iframes 3, truncated false"
+      "role": "",
+      "name": "empty-cart"
     },
     {
       "n": 6,
       "utc": null,
-      "kind": "chunk-fetch",
-      "chunk": 0,
-      "result": "failed: result (576,083 chars) exceeded the pane JavaScript tool's maximum output and spilled to a local tool-results file in a JSON envelope that the allowed Bash commands cannot unwrap"
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
     },
     {
       "n": 7,
       "utc": null,
-      "kind": "stop",
-      "code": "tool-error"
+      "kind": "click",
+      "role": "link",
+      "name": "Lavex 8\" Natural Kraft Hardwound Paper"
     },
     {
       "n": 8,
       "utc": null,
-      "kind": "tab-close"
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase Quantity"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Lavex 3 1/2\" x 4 1/4\" Individually Wra"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-2items"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove Lavex 3 1/2\" x 4 1/4\" Individua"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove Lavex 8\" Natural Kraft Hardwound"
+    },
+    {
+      "n": 21,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (final count)"
     }
   ],
-  "states": {},
-  "notReached": {
-    "empty-cart": "tool-error: export computed (sha256 fa0a8325...) but chunk 0 could not be fetched through the JavaScript tool, so dom.json was never written",
-    "minicart-1": "tool-error: session ended before any add (the same chunk-size defect would block every export)",
-    "cart-1": "tool-error: session ended before any add",
-    "cart-qty2": "tool-error: session ended before any add",
-    "cart-2items": "tool-error: session ended before any add",
-    "cart-other": "tool-error: session ended before any add"
-  },
-  "itemPath": null,
-  "cartPath": "/cart/",
-  "observedCurrency": "USD",
-  "observedCurrencyNote": "U.S. storefront with dollar prices on the home page; no item page opened",
-  "outcome": {
-    "code": "tool-error",
-    "evidenceSha256": null,
-    "note": "Tool defect (.7 rule): pane-export.js uses CHUNK = 400000 characters; chunk(0) of a 438,809-byte export exceeded the pane JavaScript tool's maximum result size, so no export could be written exactly. Stopped before adding any item, so nothing lingers in the cart."
-  },
-  "challengeWording": null,
-  "problems": [
-    "Export chunk too large for the pane JavaScript tool's result limit (same defect as innvictus.com); every export over the limit fails until the chunk size changes (a new format version or chunk-call rule).",
-    "Operator ran one grep on the protocol file via Bash to list headings before switching to Read; grep is outside the allowed Bash command list (local file read only, no network)."
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "925aee248283e4ff1d047c938648c15a3e7274441dd65da38d95d359b18c5b19",
+      "bytes": 439007,
+      "chunks": 2,
+      "url": "https://www.webstaurantstore.com/cart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "b4bb54275f8b49f6b9efe85c5f5899a6c0c805e5085c1743427e8b57a39298f7",
+      "bytes": 1000011,
+      "chunks": 3,
+      "url": "https://www.webstaurantstore.com/lavex-janitorial-800-natural-brown-kraft-hardwound-roll-paper-towel-case/5001RT800N.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "8cf81fa5f1e4cd0c88bb089b5b17d4454f0181e26acf4df9c5ef5b0f9ecf080d",
+      "bytes": 911231,
+      "chunks": 3,
+      "url": "https://www.webstaurantstore.com/cart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "f8f65d8a4c53477bfbb7db015c2650d006abaf51c6e827ba3c359a2f08ca5f24",
+      "bytes": 913940,
+      "chunks": 3,
+      "url": "https://www.webstaurantstore.com/cart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-2items",
+      "sha256": "77d2ed0479a45f60b71ddefb3e368df53c77c8626fa1f82e184d9f8ee3a58854",
+      "bytes": 892251,
+      "chunks": 3,
+      "url": "https://www.webstaurantstore.com/cart/",
+      "startCartCount": 0
+    }
   ],
-  "transcriptId": "wf_b123b839-57a/agent-a3245e70537d98d72",
-  "coordinatorNote": "transcriptId, startUtc and endUtc stamped by the coordinator from the transcript (operators have no clock); per-step utc left null in the pilot"
+  "evidence": [],
+  "notReached": [],
+  "itemPath": {
+    "listingUrl": "https://www.webstaurantstore.com/",
+    "productUrl": "https://www.webstaurantstore.com/lavex-janitorial-800-natural-brown-kraft-hardwound-roll-paper-towel-case/5001RT800N.html",
+    "price": "$25.49/Case",
+    "secondProductUrl": "https://www.webstaurantstore.com/lavex-janitorial-individually-wrapped-2-ply-standard-500-sheet-toilet-paper-roll-case/5002TP3X496E.html"
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "cart-2items holds two distinct own line items, but item 1 is still at qty 2 from the cart-qty2 step (no decrement control is allowed); reviewer may prefer cart-other",
+    "minicart-1 is the product page with the in-page added-to-cart confirmation; product link reached from the home page's recommended items, not a category listing",
+    "robots.txt disallows /cart/ and /checkout/complete for *; cart visited by protocol (record only)",
+    "all chunks returned oversized and were saved to harness tool-results files, not opened",
+    "item 1 options (Color Brown, Length 800') were preselected; no choice made",
+    "page loads an invisible reCAPTCHA Enterprise badge (grecaptcha-badge, visibility hidden); no challenge shown"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:52:20.656Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:52:21.950Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:52:21.957Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:52:24.568Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:52:28.491Z",
+      "tool": "navigate",
+      "url": "https://www.webstaurantstore.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:52:28.495Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:52:36.062Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:52:39.966Z",
+      "tool": "navigate",
+      "url": "https://www.webstaurantstore.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:52:39.970Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:52:45.918Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:52:45.921Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:52:51.671Z",
+      "tool": "navigate",
+      "url": "https://www.webstaurantstore.com/cart/"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:52:51.679Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T06:53:24.555Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T06:53:29.313Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T06:53:34.786Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T06:53:41.777Z",
+      "tool": "navigate",
+      "url": "https://www.webstaurantstore.com/"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T06:53:41.783Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T06:53:46.332Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T06:53:54.201Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T06:53:54.206Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T06:54:00.884Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T06:54:04.894Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T06:54:09.028Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T06:54:09.059Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T06:54:42.419Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T06:54:55.922Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T06:54:59.845Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T06:55:03.822Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T06:55:11.377Z",
+      "tool": "navigate",
+      "url": "https://www.webstaurantstore.com/cart/"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T06:55:11.386Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T06:55:42.815Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T06:55:46.641Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T06:55:50.795Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T06:55:57.495Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T06:56:00.987Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T06:56:04.387Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T06:56:08.290Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T06:56:08.340Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T06:56:42.539Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T06:56:49.040Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T06:56:52.734Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T06:56:56.543Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T06:57:01.820Z",
+      "tool": "navigate",
+      "url": "https://www.webstaurantstore.com/"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T06:57:01.824Z",
+      "tool": "find"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T06:57:08.386Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T06:57:13.670Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T06:57:13.671Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T06:57:13.671Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T06:57:20.154Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T06:57:25.248Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T06:57:28.582Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T06:57:33.242Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T06:57:33.244Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T06:57:45.795Z",
+      "tool": "navigate",
+      "url": "https://www.webstaurantstore.com/cart/"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T06:57:45.797Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T06:58:16.728Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T06:58:20.933Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T06:58:25.147Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T06:58:30.105Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T06:58:33.912Z",
+      "tool": "find"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T06:58:38.291Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T06:58:43.322Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T06:58:43.362Z",
+      "tool": "find"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T06:58:50.805Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T06:58:55.750Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T06:58:56.116Z",
+      "tool": "navigate",
+      "url": "https://www.webstaurantstore.com/cart/"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T06:58:56.122Z",
+      "tool": "find"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T06:59:05.235Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-07T06:59:42.791Z",
+      "tool": "Write"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-07T06:59:50.835Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "925aee248283e4ff1d047c938648c15a3e7274441dd65da38d95d359b18c5b19"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "b4bb54275f8b49f6b9efe85c5f5899a6c0c805e5085c1743427e8b57a39298f7"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "8cf81fa5f1e4cd0c88bb089b5b17d4454f0181e26acf4df9c5ef5b0f9ecf080d"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "f8f65d8a4c53477bfbb7db015c2650d006abaf51c6e827ba3c359a2f08ca5f24"
+      },
+      {
+        "target": "cart-2items",
+        "kind": "state",
+        "sha256": "77d2ed0479a45f60b71ddefb3e368df53c77c8626fa1f82e184d9f8ee3a58854"
+      }
+    ],
+    "errors": []
+  }
 }

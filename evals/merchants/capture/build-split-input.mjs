@@ -1,16 +1,20 @@
 #!/usr/bin/env node
 // Split input of Phase 12.3 (docs/evals/generic-reader-protocol.md#platform-detection, "Split input"): one row per
-// captured domain, `{domain, platform}`, from two sources, plus the capture method of each row.
-//   Pane: a store whose record `records/<domain>.pane.json` has `outcome.status` `captured` and whose collector
-//         stamp (`collected.exports`) has at least one cart-state export (protocol .9: captured when any real
-//         cart-state export with the operator's item exists). The platform is pane-platform.mjs's over
-//         `data/pane/<domain>/`, and each export it reads must have the SHA-256 the collector recorded.
-//   Robot: a standing robot capture in sites.json, by its latest `statusUnderProtocolN` with N >= 8:
-//         `captured-stands` or `captured-pending-review`. The platform is the latest `protocolN.platform` group in
-//         its site record, else its top-level `platform`.
-// A domain with both is refused (a domain has one row: its standing capture). Writes captured.json
+// captured domain, `{domain, platform}`, from two sources, plus the capture method of each row. A site's standing
+// status is its latest `statusUnderProtocolN` with N >= 8 in sites.json.
+//   Pane: the latest status has N >= 10, `method` `pane` and `status` `captured`. Its record
+//         `records/<domain>.pane.json` must agree: `outcome.status` `captured`, and the status's `states` equal to
+//         the collector's state targets (`collected.exports`, kind `state`), at least one of them a cart state
+//         (protocol .9: captured when any real cart-state export with the operator's item exists). Every collected
+//         state export must be at `data/pane/<domain>/<state>/dom.json` with the collected SHA-256, and no pane state
+//         folder may lack a collected entry. A record that says captured while sites.json doesn't is refused too.
+//         The platform is pane-platform.mjs's over `data/pane/<domain>/`.
+//   Robot: the latest status has a `method` other than `pane` and is `captured-stands` or `captured-pending-review`.
+//         The platform is that of the standing capture (the latest `protocolN` block of the site record with
+//         `states`), else the top-level `platform`.
+// Any disagreement throws; nothing is guessed. A domain listed twice in sites.json is refused. Writes captured.json
 // ([{domain, platform}], what `seeded-selection.mjs split` takes) and captured-methods.json ([{domain, method}]),
-// and prints a text-free report with the stores that were not taken and why.
+// and prints a text-free report (platform groups per method, robot rows without a platform).
 //
 //   node evals/merchants/capture/build-split-input.mjs [--data <capture/data/pane>] [--records <capture/records>]
 //        [--sites <sites.json>] [--out-dir <dir>]
@@ -21,6 +25,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { STATES as PANE_STATES } from './collect-pane-exports.mjs';
 import { PANE_CART_STATES, storePlatform } from './pane-platform.mjs';
 import { PLATFORMS } from '../tools/seeded-selection.mjs';
 
@@ -29,14 +34,51 @@ const MERCHANTS = path.join(here, '..');
 const ROBOT_CAPTURED = ['captured-stands', 'captured-pending-review'];
 const sha256 = (buf) => createHash('sha256').update(buf).digest('hex');
 
-/** The site's latest `<prefix>N` value for N >= min: [N, value] or null. */
-function latest(site, prefix, min = 0) {
+/** The site's latest `<prefix>N` value for N >= min (with a predicate): [N, value] or null. */
+function latest(site, prefix, min = 0, ok = (v) => v != null) {
   const re = new RegExp(`^${prefix}(\\d+)$`);
   const hits = Object.entries(site)
     .map(([k, v]) => [Number(k.match(re)?.[1]), v])
-    .filter(([n, v]) => n >= min && v != null)
+    .filter(([n, v]) => n >= min && ok(v))
     .sort((a, b) => b[0] - a[0]);
   return hits[0] ?? null;
+}
+
+/** The site's standing status: its latest `statusUnderProtocolN` with N >= 8, as [N, status], or null. */
+export const standingStatus = (site) => latest(site, 'statusUnderProtocol', 8);
+
+/** Whether the standing status is a pane capture (N >= 10, method pane, captured). */
+export function isPaneCaptured(site) {
+  const s = standingStatus(site);
+  return Boolean(s && s[0] >= 10 && s[1].method === 'pane' && s[1].status === 'captured');
+}
+
+/** Whether the standing status is a standing robot capture. */
+export function isRobotCaptured(site) {
+  const s = standingStatus(site)?.[1];
+  return Boolean(s && s.method !== 'pane' && ROBOT_CAPTURED.includes(s.status));
+}
+
+/** The standing robot capture: the latest `protocolN` block with `states` (else the top level). */
+export function standingRobotCapture(site) {
+  return latest(site, 'protocol', 0, (v) => Array.isArray(v?.states))?.[1] ?? site;
+}
+
+/** Collected state exports of a pane record: Map(state -> sha256). */
+export const collectedStates = (record) =>
+  new Map(
+    (record.collected?.exports ?? []).filter((e) => e.kind === 'state').map((e) => [e.target, e.sha256]),
+  );
+
+const stateNames = (states) => (states ?? []).map((s) => (typeof s === 'string' ? s : s.state));
+
+/** Refuse duplicate domains in sites.json. */
+export function checkUniqueSites(sites) {
+  const seen = new Set();
+  for (const s of sites.sites ?? []) {
+    if (seen.has(s.domain)) throw new Error(`duplicate domain in sites.json: ${s.domain}`);
+    seen.add(s.domain);
+  }
 }
 
 /** Standing robot captures: [{domain, platform}] and skipped [{domain, reason}]. */
@@ -44,13 +86,8 @@ export function robotRows(sites) {
   const rows = [];
   const skipped = [];
   for (const site of sites.sites ?? []) {
-    const status = latest(site, 'statusUnderProtocol', 8)?.[1]?.status;
-    if (!ROBOT_CAPTURED.includes(status)) continue;
-    const platforms = Object.entries(site)
-      .map(([k, v]) => [Number(k.match(/^protocol(\d+)$/)?.[1]), v?.platform?.group])
-      .filter(([n, g]) => n >= 0 && g)
-      .sort((a, b) => b[0] - a[0]);
-    const platform = platforms[0]?.[1] ?? site.platform?.group;
+    if (!isRobotCaptured(site)) continue;
+    const platform = standingRobotCapture(site).platform?.group ?? site.platform?.group;
     if (!PLATFORMS.includes(platform))
       skipped.push({ domain: site.domain, reason: 'robot-without-platform' });
     else rows.push({ domain: site.domain, platform });
@@ -58,51 +95,60 @@ export function robotRows(sites) {
   return { rows, skipped };
 }
 
-/** Captured pane stores: [{domain, platform}] and skipped [{domain, reason}]. */
-export async function paneRows(recordsDir, dataDir) {
-  const rows = [];
-  const skipped = [];
-  const files = existsSync(recordsDir)
-    ? readdirSync(recordsDir)
-        .filter((f) => f.endsWith('.pane.json'))
-        .sort()
-    : [];
-  for (const f of files) {
-    const record = JSON.parse(readFileSync(path.join(recordsDir, f), 'utf8'));
-    const domain = record.domain;
-    if (`${domain}.pane.json` !== f)
-      throw new Error(`${f}: record domain ${domain} doesn't match its file name`);
-    if (record.outcome?.status !== 'captured') continue;
-    const collected = new Map(
-      (record.collected?.exports ?? []).filter((e) => e.kind === 'state').map((e) => [e.target, e.sha256]),
-    );
-    if (!PANE_CART_STATES.some((s) => collected.has(s))) {
-      skipped.push({ domain, reason: 'captured-without-collected-cart-export' });
-      continue;
-    }
-    const p = await storePlatform(dataDir, domain);
-    if (!p.states.some((s) => PANE_CART_STATES.includes(s))) {
-      skipped.push({ domain, reason: 'cart-export-missing-in-data' });
-      continue;
-    }
-    const stale = p.states.filter(
-      (s) => collected.get(s) !== sha256(readFileSync(path.join(dataDir, domain, s, 'dom.json'))),
-    );
-    if (stale.length)
-      throw new Error(`${domain}: ${stale.join(', ')} export is not the one the collector recorded`);
-    rows.push({ domain, platform: p.group });
+/** Check one captured pane store's record and data against its sites.json status; returns the collected map. */
+export function checkPaneStore(site, recordsDir, dataDir) {
+  const domain = site.domain;
+  const recordPath = path.join(recordsDir, `${domain}.pane.json`);
+  if (!existsSync(recordPath)) throw new Error(`${domain}: sites.json says captured, no pane record`);
+  const record = JSON.parse(readFileSync(recordPath, 'utf8'));
+  if (record.domain !== domain) throw new Error(`${domain}: record domain ${record.domain} doesn't match`);
+  if (record.outcome?.status !== 'captured')
+    throw new Error(`${domain}: sites.json says captured, the record says ${record.outcome?.status}`);
+  const collected = collectedStates(record);
+  const listed = stateNames(standingStatus(site)[1].states).sort();
+  if (listed.join() !== [...collected.keys()].sort().join())
+    throw new Error(`${domain}: sites.json states [${listed.join(', ')}] are not the collected states`);
+  if (!PANE_CART_STATES.some((s) => collected.has(s)))
+    throw new Error(`${domain}: captured without a cart-state export`);
+  for (const [state, sha] of collected) {
+    const file = path.join(dataDir, domain, state, 'dom.json');
+    if (!existsSync(file)) throw new Error(`${domain}: ${state} export is missing in the data`);
+    if (sha256(readFileSync(file)) !== sha)
+      throw new Error(`${domain}: ${state} export is not the one the collector recorded`);
   }
-  return { rows, skipped };
+  const dir = path.join(dataDir, domain);
+  for (const state of existsSync(dir) ? readdirSync(dir) : [])
+    if (PANE_STATES.has(state) && !collected.has(state))
+      throw new Error(`${domain}: state folder ${state} has no collected export`);
+  return collected;
+}
+
+/** Captured pane stores: [{domain, platform}]. Throws on any disagreement between sites.json, records and data. */
+export async function paneRows(sites, recordsDir, dataDir) {
+  const captured = (sites.sites ?? []).filter(isPaneCaptured);
+  const domains = new Set(captured.map((s) => s.domain));
+  const files = existsSync(recordsDir) ? readdirSync(recordsDir).filter((f) => f.endsWith('.pane.json')) : [];
+  for (const f of files.sort()) {
+    const record = JSON.parse(readFileSync(path.join(recordsDir, f), 'utf8'));
+    if (`${record.domain}.pane.json` !== f)
+      throw new Error(`${f}: record domain ${record.domain} doesn't match its file name`);
+    if (record.outcome?.status === 'captured' && !domains.has(record.domain))
+      throw new Error(`${record.domain}: the record says captured, sites.json doesn't`);
+  }
+  const rows = [];
+  for (const site of captured) {
+    checkPaneStore(site, recordsDir, dataDir);
+    rows.push({ domain: site.domain, platform: (await storePlatform(dataDir, site.domain)).group });
+  }
+  return { rows };
 }
 
 /** Build both files' contents: { captured, methods, skipped }. */
 export async function buildSplitInput({ dataDir, recordsDir, sitesFile }) {
-  const pane = await paneRows(recordsDir, dataDir);
-  const robot = robotRows(JSON.parse(readFileSync(sitesFile, 'utf8')));
-  const paneDomains = new Set(pane.rows.map((r) => r.domain));
-  const both = robot.rows.filter((r) => paneDomains.has(r.domain)).map((r) => r.domain);
-  if (both.length)
-    throw new Error(`captured by both pane and robot (one row per domain): ${both.join(', ')}`);
+  const sites = JSON.parse(readFileSync(sitesFile, 'utf8'));
+  checkUniqueSites(sites);
+  const pane = await paneRows(sites, recordsDir, dataDir);
+  const robot = robotRows(sites);
   const tagged = [
     ...pane.rows.map((r) => ({ ...r, method: 'pane' })),
     ...robot.rows.map((r) => ({ ...r, method: 'robot' })),
@@ -110,7 +156,7 @@ export async function buildSplitInput({ dataDir, recordsDir, sitesFile }) {
   return {
     captured: tagged.map(({ domain, platform }) => ({ domain, platform })),
     methods: tagged.map(({ domain, method }) => ({ domain, method })),
-    skipped: [...pane.skipped, ...robot.skipped],
+    skipped: robot.skipped,
   };
 }
 

@@ -1,0 +1,637 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "gamestop.com",
+  "stream": "us",
+  "visit": 34,
+  "session": 1,
+  "entryHost": "www.gamestop.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_53a2bd24-f83/agent-a49315dc0122ac820",
+  "startUtc": "2026-10-07T06:44:12.411Z",
+  "endUtc": "2026-10-07T06:49:02.019Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.gamestop.com",
+      "status": 200,
+      "sha256": "a1818656ca131aa25c0122810fe102eeef478dc4c80ec608c839032351c2037c",
+      "bytes": 2105,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.gamestop.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.gamestop.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.gamestop.com/cart/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.gamestop.com/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.gamestop.com/collectibles/funko"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.gamestop.com/collectibles/funko/pop/products/funko-pop-movies-coraline---coraline-with-doll-3.8-in-vinyl-figure/427384.html"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.gamestop.com/collectibles/funko"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.gamestop.com/collectibles/funko/pop/products/funko-pop-animation-one-piece-luffy-gear-5-5.2-in-vinyl-figure-gamestop-exclusive/402528.html"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "url": "https://www.gamestop.com/cart/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Opt-Out"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (start count)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Funko (category tile)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Funko POP! Movies: Coraline - Coraline"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "back (item needed address verify)"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Funko POP! Animation: One Piece Luffy G"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "remove"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "7ffce4164892fc3ae9d4bc3342a0ffa084ca7e1b69796199c8fdfaefd73ce6c3",
+      "bytes": 328972,
+      "chunks": 1,
+      "url": "https://www.gamestop.com/cart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "bb975aa7adab30eb19ccf7b2d43af8fcb617634e48378cbdeda093a045494e53",
+      "bytes": 1631159,
+      "chunks": 5,
+      "url": "https://www.gamestop.com/collectibles/funko/pop/products/funko-pop-animation-one-piece-luffy-gear-5-5.2-in-vinyl-figure-gamestop-exclusive/402528.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "6ba24f955974a76035f11c1eb1c0fdd0b0dac0c8380bf5142f0fecb242048d54",
+      "bytes": 477763,
+      "chunks": 2,
+      "url": "https://www.gamestop.com/cart/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-qty2",
+      "reason": "cart quantity control is a <select> (Qty 1-5); choosing from a select is forbidden"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no lingering items; second item not added (focus on cart and structure)"
+    },
+    {
+      "state": "cart-other",
+      "reason": "no lingering items"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.gamestop.com/collectibles/funko",
+    "productUrl": "https://www.gamestop.com/collectibles/funko/pop/products/funko-pop-animation-one-piece-luffy-gear-5-5.2-in-vinyl-figure-gamestop-exclusive/402528.html",
+    "price": "$15.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "First candidate item (Coraline POP) showed 'Verify Address' instead of Add to Cart (ship-to-home unavailable); skipped without clicking, not an add failure.",
+    "Own item was added with the site's preselected fulfilment, store pickup; the cart shows it under Store Pickup with estimated tax.",
+    "All export chunks except minicart-1 chunk 4 exceeded the inline limit and were saved by the harness to tool-results files (not opened).",
+    "robots.txt disallows /cart/ and /checkout/* for *; cart visited per .8 rule (record only)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:44:12.411Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:44:13.666Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:44:13.667Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:44:24.992Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:44:28.502Z",
+      "tool": "navigate",
+      "url": "https://www.gamestop.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:44:28.522Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:44:35.196Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:44:39.794Z",
+      "tool": "navigate",
+      "url": "https://www.gamestop.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:44:39.799Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:44:45.365Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:44:45.868Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:44:45.870Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:44:49.709Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T06:45:01.302Z",
+      "tool": "navigate",
+      "url": "https://www.gamestop.com/cart/"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T06:45:01.323Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T06:45:31.522Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T06:45:38.351Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T06:45:45.446Z",
+      "tool": "navigate",
+      "url": "https://www.gamestop.com/"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T06:45:45.455Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T06:45:49.872Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T06:45:54.446Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T06:45:58.260Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T06:46:01.735Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T06:46:07.321Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T06:46:11.198Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T06:46:15.136Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T06:46:19.257Z",
+      "tool": "navigate",
+      "url": "back"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T06:46:19.754Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T06:46:23.588Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T06:46:27.144Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T06:46:29.617Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T06:46:32.489Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T06:46:34.964Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T06:46:40.488Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T06:46:40.914Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T06:46:43.931Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T06:46:46.165Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T06:46:49.203Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T06:46:52.062Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T06:46:54.883Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T06:46:57.526Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T06:47:18.598Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T06:47:21.514Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T06:47:24.583Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T06:47:27.730Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T06:47:30.996Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T06:47:34.334Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T06:47:37.617Z",
+      "tool": "navigate",
+      "url": "https://www.gamestop.com/cart/"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T06:47:38.042Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T06:48:01.077Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T06:48:03.828Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T06:48:06.722Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T06:48:11.538Z",
+      "tool": "find"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T06:48:11.960Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T06:48:15.761Z",
+      "tool": "find"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T06:48:18.244Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T06:48:21.067Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T06:48:24.855Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T06:48:28.750Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T06:48:31.434Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T06:48:34.279Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T06:48:55.344Z",
+      "tool": "Write"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T06:49:02.019Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "7ffce4164892fc3ae9d4bc3342a0ffa084ca7e1b69796199c8fdfaefd73ce6c3"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "bb975aa7adab30eb19ccf7b2d43af8fcb617634e48378cbdeda093a045494e53"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "6ba24f955974a76035f11c1eb1c0fdd0b0dac0c8380bf5142f0fecb242048d54"
+      }
+    ],
+    "errors": []
+  }
+}

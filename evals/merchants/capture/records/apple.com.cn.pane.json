@@ -1,0 +1,105 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "apple.com.cn",
+  "stream": "non-us",
+  "visit": 29,
+  "session": 1,
+  "entryHost": "www.apple.com.cn",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_a638f4e9-151/agent-abbc2ac34aecd6672",
+  "startUtc": "2026-10-07T06:41:14.666Z",
+  "endUtc": "2026-10-07T06:41:45.705Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [],
+  "navigations": [],
+  "actions": [],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "no own tab: tabs_create failed twice"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "no own tab: tabs_create failed twice"
+    },
+    {
+      "state": "cart-1",
+      "reason": "no own tab: tabs_create failed twice"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "no own tab: tabs_create failed twice"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "tabs_create failed twice ('Could not open a new tab (Browser pane gone, gate off, or tab cap reached)'); tabs_context showed the pane open with 9 tabs, likely a tab cap. No store page loaded; session 1 used, one more pane session allowed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:41:14.666Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:41:15.881Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:41:15.884Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:41:20.101Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:41:22.625Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:41:26.619Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:41:38.692Z",
+      "tool": "Write"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:41:45.705Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}
