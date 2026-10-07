@@ -1,5 +1,6 @@
 // Unit tests for the capture tool that need no browser (npm run test:scripts). Browser tests: tests/browser/.
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
@@ -9,7 +10,8 @@ import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { checkRecon, committableUrl } from '../capture.mjs';
 import { rebuildHtml } from '../rebuild.mjs';
-import { auditTranscript } from '../audit-pane-transcript.mjs';
+import { auditCall, auditTranscript, classifyPath } from '../audit-pane-transcript.mjs';
+import { panePlatform, storePlatform } from '../pane-platform.mjs';
 import { checkRequest, startControlServer } from '../control-server.mjs';
 import { ADD_TO_CART_NAME, createDriver, guardApi, parseTarget } from '../driver.mjs';
 import {
@@ -1043,7 +1045,10 @@ test('pane transcript audit: allowed calls pass; typing, form input, other scrip
     line({
       type: 'tool_use',
       name: 'Write',
-      input: { file_path: '/Users/x/repo/evals/merchants/capture/data/pane/example.de/cart-1/dom.json', content: '{}' },
+      input: {
+        file_path: '/Users/x/repo/evals/merchants/capture/data/pane/example.de/cart-1/dom.json',
+        content: '{"t":"a","c":[{"x":"Proceed to checkout"}]},{"x":"Sign in"}',
+      },
     }),
     line({
       type: 'tool_use',
@@ -1053,7 +1058,7 @@ test('pane transcript audit: allowed calls pass; typing, form input, other scrip
     line({ type: 'tool_use', name: 'Bash', input: { command: 'shasum -a 256 evals/merchants/capture/data/pane/example.de/cart-1/dom.json' } }),
     line(use('tabs_close', { tabId: 't1' })),
   ].join('\n');
-  const clean = auditTranscript(ok);
+  const clean = auditTranscript(ok, { repoRoot: '/Users/x/repo' });
   assert.equal(clean.toolCalls, 11);
   assert.deepEqual(clean.flags, []);
   const bad = [
@@ -1074,7 +1079,7 @@ test('pane transcript audit: allowed calls pass; typing, form input, other scrip
     line(use('navigate', { url: 'https://www.example.de/customer/address/' })),
     line(use('navigate', { url: 'https://www.example.de/logout' })),
   ].join('\n');
-  const rules = auditTranscript(bad).flags.map((f) => f.rule);
+  const rules = auditTranscript(bad, { repoRoot: '/Users/x/repo' }).flags.map((f) => f.rule);
   for (const r of [
     'typing',
     'forbidden-tool',
@@ -1089,6 +1094,78 @@ test('pane transcript audit: allowed calls pass; typing, form input, other scrip
     assert.ok(rules.includes(r), r);
   assert.equal(rules.filter((r) => r === 'typing').length, 3);
   assert.equal(rules.filter((r) => r === 'bash-network').length, 3);
+  assert.equal(rules.filter((r) => r === 'bash-not-allowed').length, 3);
   assert.equal(rules.filter((r) => r === 'write-outside-capture-folders').length, 2);
   assert.equal(rules.filter((r) => r === 'account-path').length, 3);
+});
+
+// ---- Platform of pane captures (protocol .9, H2) ----
+
+test('pane platform: markers observable in pane-dom.2 exports, from empty-cart and the first cart state only', async () => {
+  const doc = (children) => ({ format: 'pane-dom.2', styleProps: [], root: { t: 'html', d: 'block', c: children } });
+  const script = (src) => ({ t: 'script', a: { src }, d: 'none' });
+  const shopify = doc([script('https://cdn.shopify.com/s/files/x.js')]);
+  const sfcc = doc([{ t: 'a', a: { href: '/on/demandware.store/Sites-x/Cart-Show' }, d: 'inline', c: [{ x: 'Bag' }] }]);
+  const plain = doc([{ t: 'p', d: 'block', c: [{ x: 'Hello' }] }]);
+  assert.deepEqual(panePlatform({ 'empty-cart': plain, 'cart-1': shopify }), {
+    group: 'shopify',
+    marker: 'cdn.shopify.com',
+    states: ['empty-cart', 'cart-1'],
+  });
+  // minicart-1 counts only when cart-1 is missing; later states never count.
+  assert.equal(panePlatform({ 'minicart-1': sfcc, 'cart-1': plain }).group, 'none-detected');
+  assert.equal(panePlatform({ 'minicart-1': sfcc }).group, 'sfcc');
+  assert.equal(panePlatform({ 'cart-qty2': shopify, 'cart-1': plain }).group, 'none-detected');
+  // Fixed order cart-1, minicart-1, cart-qty2, cart-2items, cart-other: the first present decides with empty-cart.
+  assert.deepEqual(panePlatform({ 'cart-other': sfcc, 'cart-2items': shopify }).states, ['cart-2items']);
+  assert.equal(panePlatform({ 'cart-other': sfcc }).group, 'sfcc');
+  // Script contents are not exported, so a script-only marker (Shopify.shop) can't match.
+  const inline = doc([{ t: 'script', d: 'none', c: [{ x: 'Shopify.shop = "x";' }] }]);
+  assert.equal(panePlatform({ 'cart-1': inline }).group, 'none-detected');
+  assert.throws(() => panePlatform({ 'cart-1': { ...plain, format: 'pane-dom.1' } }), /pane-dom.2/);
+  // From disk, the split input form.
+  const root = await mkdtemp(path.join(os.tmpdir(), 'pane-platform-'));
+  try {
+    await mkdir(path.join(root, 'shop.example', 'cart-1'), { recursive: true });
+    await writeFile(path.join(root, 'shop.example', 'cart-1', 'dom.json'), JSON.stringify(shopify));
+    await mkdir(path.join(root, 'shop.example', 'evidence'), { recursive: true });
+    assert.equal((await storePlatform(root, 'shop.example')).group, 'shopify');
+    assert.deepEqual((await storePlatform(root, 'missing.example')).states, []);
+    // A store stopped after empty-cart is not captured, so the CLI leaves it out of the split input.
+    await mkdir(path.join(root, 'stopped.example', 'empty-cart'), { recursive: true });
+    await writeFile(path.join(root, 'stopped.example', 'empty-cart', 'dom.json'), JSON.stringify(shopify));
+    // A store whose only cart state is cart-2items (a lingering item plus the operator's) is captured.
+    await mkdir(path.join(root, 'two.example', 'cart-2items'), { recursive: true });
+    await writeFile(path.join(root, 'two.example', 'cart-2items', 'dom.json'), JSON.stringify(sfcc));
+    const cli = execFileSync(process.execPath, [path.join(dir, 'pane-platform.mjs'), root], { encoding: 'utf8' });
+    assert.deepEqual(
+      JSON.parse(cli).sort((a, b) => (a.domain < b.domain ? -1 : 1)),
+      [
+        { domain: 'shop.example', platform: 'shopify' },
+        { domain: 'two.example', platform: 'sfcc' },
+      ],
+    );
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('pane transcript audit: paths are normalised and anchored to the repository; Bash is an allowlist', () => {
+  const root = '/Users/x/repo';
+  const call = (name, input) => auditCall(name, input, { repoRoot: root }).map((f) => f.rule);
+  assert.deepEqual(classifyPath('/Users/x/repo/evals/merchants/capture/data/pane/a.de/cart-1/dom.json', root), 'data');
+  assert.deepEqual(classifyPath('evals/merchants/capture/data/pane/a.de/cart-1/dom.json', root), 'data');
+  assert.deepEqual(classifyPath('evals/merchants/capture/records/a.de.pane.json', root), 'record');
+  // Traversal out of the capture folders, or another checkout's capture folder, is outside.
+  assert.equal(classifyPath('/Users/x/repo/evals/merchants/capture/data/../../../../wiki/now.md', root), 'outside');
+  assert.equal(classifyPath('/tmp/evals/merchants/capture/data/x.json', root), 'outside');
+  assert.equal(classifyPath('evals/merchants/capture/records/../../../../AGENTS.md', root), 'outside');
+  assert.ok(call('Write', { file_path: '/Users/x/repo/evals/merchants/capture/data/../../../../wiki/now.md', content: 'Checkout' }).includes('write-outside-capture-folders'));
+  // The wording skip applies only inside the data folder after normalisation.
+  assert.deepEqual(call('Write', { file_path: '/Users/x/repo/evals/merchants/capture/data/pane/a.de/cart-1/dom.json', content: 'Checkout' }), []);
+  assert.ok(call('Write', { file_path: '/Users/x/repo/evals/merchants/capture/data/../records/x.json', content: 'Checkout' }).includes('checkout-or-order-wording'));
+  for (const ok of ['shasum -a 256 evals/merchants/capture/data/pane/a.de/cart-1/dom.json', 'ls evals/merchants/capture/data/pane/a.de', 'wc -c x.json', 'head -c 200 x.json'])
+    assert.deepEqual(call('Bash', { command: ok }), [], ok);
+  for (const bad of ['cat a > b', 'cat a | tee b', 'cp a b', 'mv a b', 'ls; rm -rf x', 'shasum $(echo x)', 'python3 -c "print(1)"'])
+    assert.ok(call('Bash', { command: bad }).includes('bash-not-allowed'), bad);
 });

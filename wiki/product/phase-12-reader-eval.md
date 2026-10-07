@@ -98,6 +98,13 @@ As in [Phase 10](phase-10-feasibility-probe.md#safety-and-copyright), enforced b
     - **Audit:** transcript audit script, `pane-operator` subagent with restricted tools, three allowed JavaScript texts.
     - **Sign-ins:** signed-in pane stores are captured under guards (Evan: "the agents can continue"), never removing his items, reported apart.
     - **Low findings:** within-site correlation stated; one re-export, then `tool-error`; a truncated export without its summary is `not-readable`; meta refresh dropped.
+- **12.1 amended an eighth time (2026-10-06, branch `phase12-protocol-9`):** `generic-reader-protocol.9` ([Amendment 8](../../docs/evals/generic-reader-protocol.md#amendment-8-2026-10-06-generic-reader-protocol9)), clarifications before any `.8` capture ([decision](../decisions/2026-10-06-capture-protocol-9.md), proposed; `.8` binds until signed):
+  - **Candidates:** `reader-candidates-8.json` committed.
+  - **Tools:** offline `pane-platform.mjs`; the audit skips its wording check for exports.
+  - **Cart rule:** lingering cart items never block a capture, and cleanup is best effort (Evan).
+  - **Review at `55400ef`:** sign with fixes, applied (platform output only for captured stores, merged split input, audit path anchoring, Bash allowlist, platform per method).
+  - **Pane rules:** pane evidence by export; up to 3 add attempts; one plus one pane sessions; labeller inputs.
+  - **Text:** robot-only bullets labelled.
 
 Done when all three PRs are merged; Phase 13 (reader v1) then tunes on the development split only.
 

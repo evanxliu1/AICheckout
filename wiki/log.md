@@ -3,6 +3,25 @@
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
 ## 2026-10-06
+* **Review** `generic-reader-protocol.9` **signed** at `cbf2c72` (clarifications before any `.8` capture: `.8` candidate list committed, pane platform script, Evan's lingering-items rule, `cart-other`, pane evidence and retry rules, audit hardening; agent-verified). (claude-code/claude-opus-5-5)
+* **Review** re-check of `.9` at `3bbf7c5` (agent-verified): three fixes before signing.
+  - **Captured:** a pane store is captured when any real cart-state export has the operator's item. Its platform comes from `empty-cart` plus the first of `cart-1`, `minicart-1`, `cart-qty2`, `cart-2items`, `cart-other` (`pane-platform.mjs`; a store with only `cart-2items` is output, tested).
+  - **New state `cart-other`:** a cart count no state describes. It is labelled, counts in the precision bar and is left out of the coverage denominator.
+  - **`minicart-1` with lingering items:** the in-page cart right after the first add, with the starting count recorded beside it. (claude-code/claude-opus-5-5)
+* **Review** independent review of `.9` at `55400ef` (agent-verified): sign with fixes. Applied with tests:
+  - **B:** `pane-platform.mjs` outputs only stores with `cart-1` or `minicart-1`; the split input merges robot and pane captures, one row per domain.
+  - **L1:** audit paths are normalised and anchored to `--repo-root` (traversal test).
+  - **L2:** operator Bash is an allowlist of `shasum`, `ls`, `cat`, `head` and `wc` with plain arguments, which closes the Bash-write known limit.
+  - **L3:** stale `pane-dom.1` text in [now](now.md) and the [design](system/merchant-coverage-design.md) fixed, and Amendment 7 D noted as superseded.
+  - **L5:** platform reported per capture method.
+
+  **Directive** Evan (chat): lingering cart items are not a big deal. They never block a capture, states are named by the actual cart, and cleanup of own items is best effort. This replaces review fixes A and L4 and the stricter H3 ([user directives](product/user-directives.md), [decision](decisions/2026-10-06-capture-protocol-9.md)). (claude-code/claude-opus-5-5)
+* **Update** reader protocol amended to `generic-reader-protocol.9` on `phase12-protocol-9` ([Amendment 8](../docs/evals/generic-reader-protocol.md#amendment-8-2026-10-06-generic-reader-protocol9)): clarifications before any `.8` capture, after an auditor's cross-check; the coordinator's decisions; signature pending, `.8` binds until then.
+  - **H1–H2:** `evals/merchants/reader-candidates-8.json` committed (425 + 1,000, `6cdc35a9…`), with `sites.json` `candidates8`. New `evals/merchants/capture/pane-platform.mjs`: the platform of pane captures from `pane-dom.2` exports (no headers or script contents), and the split's input. Tested.
+  - **H3–H5:** one cart rule for every store; pane judgement evidence by export, CAPTCHA wording recorded; failed add-to-cart tries up to 3 items.
+  - **H6–H7:** robot-only bullets labelled; pane form-submit and background-write statement; attended-capture text marked as history.
+  - **M9–M15:** pane session limit; labeller inputs; `pane-dom.2` references; old numbers labelled; `pane-operator.md` cart check and Write-only saving; audit wording check skipped for `capture/data/` writes (tested); pane CAPTCHA detection.
+  - **Pages:** [decision](decisions/2026-10-06-capture-protocol-9.md). (claude-code/claude-opus-5-5)
 * **Review** `generic-reader-protocol.8` **signed** at `a1c994d` (pane capture, `pane-dom.2`, ≥ 99% bar, generic reader only, robots recorded only, signed-in stores captured with guards); post-signature tooling erratum at `1818057` confirmed; known limit recorded: Bash-redirect writes are not audited (agent-verified). (claude-code/claude-opus-5-5)
 * **Review** `generic-reader-protocol.8` **signed** at `a1c994d` by the independent reviewer (agent-verified); [decision](decisions/2026-10-06-capture-protocol-8.md) accepted. Its four non-blocking notes were applied before any real capture as a dated [erratum](../docs/evals/generic-reader-protocol.md#erratum-2026-10-06-post-signature-tooling-fixes-to-8):
   - a final cart-count check (checklist step 9, differences flagged to Evan);
