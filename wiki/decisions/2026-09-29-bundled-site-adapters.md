@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, extension, policy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../archive/phase2-goal.md
     title: Phase 2–6 plan (archived)
@@ -32,3 +32,5 @@ Chrome Web Store policy (checked 2026-09-29) forbids interpreters running comman
 
 ## Status
 Accepted 2026-09-29. Recorded retroactively on 2026-10-02 from the archived plan; the body summarizes it, the archive holds the original wording.
+
+Partly superseded 2026-10-06 by [reader shows only certain amounts](2026-10-06-reader-shows-only-certain-amounts.md): no new adapters and no store configs anywhere; the three bundled adapters are legacy and retire once the generic reader matches them. Phase 6 (site coverage harness) was folded into Phases 12, 13 and 16 on 2026-10-05. The bundling rule (reader logic ships in the package, never downloaded) stands for the generic reader.

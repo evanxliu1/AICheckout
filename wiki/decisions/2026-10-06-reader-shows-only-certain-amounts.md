@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, phase-12, phase-13, reader, extension]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T22:46:16Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../product/phase-12-reader-eval.md
     title: Phase 12 plan
@@ -38,3 +38,5 @@ As chosen. A 3-store pane trial (apple.com, homedepot.com, notino.nl) measures y
 
 ## Status
 Accepted 2026-10-06 by Evan in chat ("it should just be correct … at least 99% … agent driven please"); recorded by the coordinator (claude-code/claude-opus-5-5).
+
+Carried out by `generic-reader-protocol.8` ([capture protocol 8](2026-10-06-capture-protocol-8.md), signed at `a1c994d`): outcomes shown-correct, shown-wrong and withheld; bar = one-sided 95% Clopper–Pearson upper bound of wrong shown amounts ≤ 1% (0 wrong in 299 shown, or 1 in 473); coverage reported with a target of 80% on `cart-1`.

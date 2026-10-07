@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, phase-12, merchants, eval, capture]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T23:20:37Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol (Amendment 7)
@@ -79,3 +79,5 @@ The process decisions below are **the coordinator's** (the coordinating session,
 
 ## Status
 Proposed 2026-10-06 by the amendment builder (claude-code/claude-opus-5-5) on the coordinator's decisions, which carry out Evan's accepted decision. **Accepted 2026-10-06:** the independent reviewer signed `generic-reader-protocol.8` at `a1c994d` (agent-verified). Its four non-blocking notes were applied before any real capture as a dated erratum: a final cart-count check; the audit also flagging account paths, writes outside the capture folders and Bash network access; and the export header's provenance.
+
+Format note: the export is `pane-dom.2` (review finding M1), not `pane-dom.1` as parts of this record read. Clarified by `.9` ([capture protocol 9](2026-10-06-capture-protocol-9.md), signed at `cbf2c72`), which also replaced the carried-over-items rule with Evan's lingering-items rule.

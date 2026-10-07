@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, phase-12, merchants, eval, capture]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T08:20:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol (Amendment 5)
@@ -51,3 +51,5 @@ These are **the coordinator's decisions** (the coordinating session, claude-code
 Proposed 2026-10-06 by the amendment builder (claude-code/claude-opus-5-5) on the coordinator's decisions. It awaits the independent reviewer's signature of `.6`; `.5` binds until then.
 
 Signed: the independent reviewer signed `generic-reader-protocol.6` at `89bc619` and approved `capture-tool.4` on 2026-10-06 (agent-verified); accepted. Its low findings (tool-error rule for tool-caused missing states, separate background-write log cap, Turnstile marker note) go into `.7`.
+
+Robot rules: the robot was retired as the main capture path by `.8` (2026-10-06, [capture protocol 8](2026-10-06-capture-protocol-8.md)); robot captures made under these rules stay valid.

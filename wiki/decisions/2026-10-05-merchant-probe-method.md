@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, phase-10, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T23:30:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../product/phase-10-feasibility-probe.md
     title: Phase 10 plan (merchant feasibility probe)
@@ -41,3 +41,5 @@ As chosen above. Clicks were limited to size, colour, add-to-cart, closing popup
 
 ## Status
 Accepted 2026-10-05 by the Phase 10 builder (claude-code/claude-opus-5-5) within the approved plan; Y is a proposal for Evan.
+
+Y = 80% was accepted by Evan on 2026-10-05 and superseded on 2026-10-06 by [reader shows only certain amounts](2026-10-06-reader-shows-only-certain-amounts.md): 80% on `cart-1` is now a coverage reporting target, and the bar is ≤ 1% wrong among shown amounts (one-sided 95% upper bound).

@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, phase-12, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T23:59:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol (.3)
@@ -51,3 +51,5 @@ Amend the reader protocol to `generic-reader-protocol.3` ([Amendment 2](../../do
 
 ## Status
 Proposed 2026-10-05 by the amendment builder (claude-code/claude-opus-5-5) on Evan's chat request. Independent review at `95f4124`: sign with fixes (agent-verified); fixes applied. Accepted by Evan in chat 2026-10-05; protocol .3 binds once the independent reviewer signs. Signed at `b232d0e` (agent-verified).
+
+Candidate counts replaced by `.8` ([capture protocol 8](2026-10-06-capture-protocol-8.md): 425 U.S. + 1,000 non-U.S. candidates, stop at 330 + 500 captured); the frame `retail-frame.3` stands.

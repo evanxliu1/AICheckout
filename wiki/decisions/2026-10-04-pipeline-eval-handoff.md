@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, catalog, pipeline, phase-8, eval, release]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-04T01:40:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../system/card-expansion-pipeline.md
     title: Card-expansion pipeline (design and what is built)
@@ -40,3 +40,7 @@ Milestone 5 adds `pipeline eval` (stage 10) and `pipeline handoff` (the step bef
 
 ## Decision
 As chosen above.
+
+## Status
+
+Accepted 2026-10-04 by the Phase 8 milestone 5 session (claude-code/claude-opus-5-5); merged with PR #39. Status section added 2026-10-07 by the wiki audit.

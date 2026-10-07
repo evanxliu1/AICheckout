@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, phase-12, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T23:10:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol (.2)
@@ -52,3 +52,5 @@ Amend the reader protocol to `generic-reader-protocol.2` as chosen above ([Amend
 
 ## Status
 Proposed 2026-10-05 by the amendment builder (claude-code/claude-opus-5-5) on Evan's chat decisions. Independent review 2026-10-05 at `ca4dbac`: sign with fixes (agent-verified); fixes applied. The reviewer confirmed the fixes and **signed `generic-reader-protocol.2` at `3028fff`** on 2026-10-05 (agent-verified); accepted.
+
+Rows since replaced: the streams of 200 and the stop at 110 each (by `.3` and `.8`); the 0 false found / Y = 80% bar and the found/ask outcomes (by [reader shows only certain amounts](2026-10-06-reader-shows-only-certain-amounts.md): no ask, shown or withheld, ≤ 1% wrong among shown); attended capture with Evan solving CAPTCHAs (by `.8`, [capture protocol 8](2026-10-06-capture-protocol-8.md): agent pane capture, CAPTCHAs never solved or touched). The worldwide scope with currency stands.

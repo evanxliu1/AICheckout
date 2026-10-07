@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, plan, phase-10, merchants]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T19:14:03Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../product/phase-10-merchant-expansion.md
     title: Merchant coverage plan (Phases 10–17)
@@ -36,3 +36,5 @@ Phases: 10 feasibility probe, 11 any store with a typed amount, 12 eval protocol
 
 ## Status
 Accepted 2026-10-05 by Evan in chat (structure, order, D4, D6); recorded by the coordinator (claude-code/claude-opus-5-5).
+
+Phases 14 and 16 narrowed on 2026-10-06 ([reader shows only certain amounts](2026-10-06-reader-shows-only-certain-amounts.md)): no store configs; merchant data is profiles, categories, `processor` and `disabled` only, and the merchant pipeline drafts no site adapters. D4's capture method was replaced by `.8` pane capture ([capture protocol 8](2026-10-06-capture-protocol-8.md)).

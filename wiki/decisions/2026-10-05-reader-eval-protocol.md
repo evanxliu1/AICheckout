@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, phase-12, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T21:00:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol
@@ -49,3 +49,5 @@ As chosen above, in `generic-reader-protocol.1`. The seed is `ai-checkout/phase-
 
 ## Status
 Proposed 2026-10-05 by the Phase 12.1 builder (claude-code/claude-opus-5-5) within the approved plan. Accepted 2026-10-05 after the independent review signed the protocol with fixes (agent-verified) and Evan decided the robots posture. Amended 2026-10-05 by [generic-reader-protocol.2](2026-10-05-global-reader-protocol-2.md) on Evan's decision: worldwide frame and currency, two candidate streams, new strata and label schema; the rest stands.
+
+Further amended: by `.3` ([CrUX frame](2026-10-05-crux-frame-protocol-3.md): frame and candidates); by `.4` ([robots](2026-10-06-capture-recon-and-robots.md): robots excludes only on disallow-all); by `.8` ([capture protocol 8](2026-10-06-capture-protocol-8.md): robots recorded only, candidates 425 + 1,000, stop at 330 + 500 captured, splits 1 : 2 : 2, pane capture); and by [reader shows only certain amounts](2026-10-06-reader-shows-only-certain-amounts.md) (the zero-false-found and Y bar replaced by ≤ 1% wrong among shown amounts, coverage reported).
