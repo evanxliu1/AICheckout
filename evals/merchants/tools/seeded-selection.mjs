@@ -12,9 +12,10 @@
 //
 //   node evals/merchants/tools/seeded-selection.mjs pipeline-heldout [--check]        write or check the held-out list
 //   node evals/merchants/tools/seeded-selection.mjs reader-candidates [extras]        print both streams' visit orders
-//   node evals/merchants/tools/seeded-selection.mjs split <captured.json> [extras] [--weights-protocol-8]
+//   node evals/merchants/tools/seeded-selection.mjs split <captured.json> [extras] [--weights-protocol-8|-10]
 //                                                                                 print the split of captured sites
-//                                                                                 (protocol .8: weights 1 : 2 : 2)
+//                                                                                 (protocol .8: weights 1 : 2 : 2;
+//                                                                                 .10: 3 : 2, no held-out B)
 //   node evals/merchants/tools/seeded-selection.mjs check-frame <tranco.csv> [--frame 1|2]   check a Tranco frame's bands
 //   (retail-frame.3 is checked by rebuilding it: python3 evals/merchants/tools/build-retail-frame-3.py --check)
 //
@@ -40,6 +41,9 @@ const SPLITS_TIE_ORDER = ['heldout-a', 'heldout-b', 'development'];
 /** Split weights. `.1`–`.7`: equal thirds. `generic-reader-protocol.8`: development 1, held-out A 2, held-out B 2. */
 export const EQUAL_WEIGHTS = { development: 1, 'heldout-a': 1, 'heldout-b': 1 };
 export const PROTOCOL_8_WEIGHTS = { development: 1, 'heldout-a': 2, 'heldout-b': 2 };
+/** `generic-reader-protocol.10` (Evan, 2026-10-07): two splits, development 3 : held-out A 2 (60% / 40%); held-out B
+ * has weight 0 and is not used. */
+export const PROTOCOL_10_WEIGHTS = { development: 3, 'heldout-a': 2, 'heldout-b': 0 };
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const framePaths = {
@@ -142,10 +146,13 @@ export function readerCandidates(frame, extra = {}) {
 // split with the fewest sites in its stratum (tie-breaks below) unless a site of its operator is already placed: then it
 // follows that site, so storefronts sharing one company's code (amazon.de and amazon.fr, potterybarn.com and westelm.com)
 // never sit in development and held-out at once.
-// With weights, every count below is compared as count / weight (a split with weight 2 takes two sites for one).
+// With weights, every count below is compared as count / weight (a split with weight 2 takes two sites for one). A
+// split with weight 0 is not used (`.10`: held-out B); development and held-out A must have positive weights.
 export function split(frame, captured, extra = {}, weights = EQUAL_WEIGHTS) {
-  for (const s of SPLITS_TIE_ORDER)
+  for (const s of ['development', 'heldout-a'])
     if (!(weights[s] > 0)) throw new Error(`split weight for ${s} must be positive`);
+  if (!(weights['heldout-b'] >= 0)) throw new Error('split weight for heldout-b must be positive or 0');
+  const active = SPLITS_TIE_ORDER.filter((s) => weights[s] > 0);
   const candidates = new Map(readerCandidates(frame, extra).map((c) => [c.domain, c]));
   const seen = new Set();
   const sites = captured.map((site) => {
@@ -206,7 +213,7 @@ export function split(frame, captured, extra = {}, weights = EQUAL_WEIGHTS) {
             w(s, s),
             SPLITS_TIE_ORDER.indexOf(s),
           ];
-          const best = [...SPLITS_TIE_ORDER].sort((a, b) => {
+          const best = [...active].sort((a, b) => {
             const ra = rank(a);
             const rb = rank(b);
             for (let i = 0; i < ra.length; i += 1) if (ra[i] !== rb[i]) return ra[i] - rb[i];
@@ -261,12 +268,16 @@ function main(argv) {
     return 0;
   }
   if (command === 'split' && arg) {
-    const weights = argv.includes('--weights-protocol-8') ? PROTOCOL_8_WEIGHTS : EQUAL_WEIGHTS;
+    const weights = argv.includes('--weights-protocol-10')
+      ? PROTOCOL_10_WEIGHTS
+      : argv.includes('--weights-protocol-8')
+        ? PROTOCOL_8_WEIGHTS
+        : EQUAL_WEIGHTS;
     console.log(JSON.stringify(split(frame, JSON.parse(readFileSync(arg, 'utf8')), extra, weights), null, 1));
     return 0;
   }
   console.error(
-    'usage: seeded-selection.mjs pipeline-heldout [--check] | reader-candidates | split <captured.json> [--weights-protocol-8] | check-frame <tranco.csv> [--frame 1|2]; [--extra-us N] [--extra-non-us N]',
+    'usage: seeded-selection.mjs pipeline-heldout [--check] | reader-candidates | split <captured.json> [--weights-protocol-8 | --weights-protocol-10] | check-frame <tranco.csv> [--frame 1|2]; [--extra-us N] [--extra-non-us N]',
   );
   return 2;
 }

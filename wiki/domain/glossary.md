@@ -6,7 +6,7 @@ status: stable
 tags: [domain, glossary]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T00:20:00Z
+  at: 2026-10-07T01:06:25Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
     title: Catalog and engine types
@@ -69,7 +69,7 @@ Terms a newcomer would not know, in alphabetical order. Each term is defined on 
 | Reward currency | `cash-back` or `points`. Points carry `pointValueHundredthsOfCent` (Citi ThankYou: 100 = 1¢). Catalog v3 maps each card to a rewards program whose value has a basis (cash, published estimate, issuer-stated or none) | [Cards](cards.md), [reward-program valuation](../system/reward-program-valuation.md) |
 | Selection | What page text the model sees: `full` or `keyword-window.1` | [Evaluation](../system/evaluation.md) |
 | Shown / shown-wrong / withheld | Reader outcomes since 2026-10-06: the reader shows an amount only when certain (shown-correct or shown-wrong, a wrong currency counting as wrong), otherwise withholds and the recommendation shows rates only. There is no `ask` outcome. Bar: one-sided 95% upper bound of wrong shown amounts ≤ 1% | [Merchant coverage design](../system/merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12) |
-| Site splits (reader eval) | Development, held-out A and held-out B, split by site (not page) and weighted 1 : 2 : 2 since `.8`; the reader is tuned on development only; held-out A runs at most twice | [Merchant coverage design](../system/merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12) |
+| Site splits (reader eval) | Development and held-out A, split by site (not page) and weighted 3 : 2 (60% / 40%) since `.10` (Evan, 2026-10-07; 1 : 2 : 2 with held-out B under `.8`–`.9`). The reader is tuned on development only. Held-out A runs at most twice; if it fails twice it becomes development data and a fresh held-out set is captured | [Merchant coverage design](../system/merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12) |
 | Uncertainty code | Why an estimate is a range (`cap-unstated`, `payment-path-uncertain`, ...) | [Reward rules](reward-rules.md) |
 | Unstated | Catalog value for "the issuer's pages say nothing" (cap, activation). Mapped from a null gold label | [Reward rules](reward-rules.md) |
 | Variant kinds | Mechanical edits of real captures that test the extractor: `injection`, `conflicting-rate`, `stale-promo`, `remove-cap` | [Evaluation](../system/evaluation.md) |

@@ -11,6 +11,7 @@ import {
   split,
   EQUAL_WEIGHTS,
   PROTOCOL_8_WEIGHTS,
+  PROTOCOL_10_WEIGHTS,
   streamOf,
 } from './seeded-selection.mjs';
 
@@ -231,4 +232,30 @@ test('split, protocol .8 weights 1 : 2 : 2: held-out A and B take about 40% each
   // Equal weights reproduce the .1–.7 behaviour exactly.
   assert.deepEqual(split(frame3, captureSample(), {}, EQUAL_WEIGHTS), split(frame3, captureSample()));
   assert.throws(() => split(frame3, [], {}, { development: 0, 'heldout-a': 1, 'heldout-b': 1 }), /must be positive/);
+});
+
+test('split, protocol .10 weights 3 : 2: development about 60%, held-out A about 40%, no held-out B; operators locked', () => {
+  const extra = { us: 225, 'non-us': 800 };
+  const c = readerCandidates(frame3, extra);
+  const sites = c.map((x, i) => ({ domain: x.domain, platform: platforms[i % platforms.length] }));
+  const a = split(frame3, sites, extra, PROTOCOL_10_WEIGHTS);
+  const n = (s, f = () => true) => a.filter((x) => x.split === s && f(x)).length;
+  assert.equal(n('heldout-b'), 0);
+  const shareA = n('heldout-a') / a.length;
+  assert.ok(shareA > 0.38 && shareA < 0.42, `heldout-a ${shareA}`);
+  for (const g of REGION_GROUPS) {
+    const total = a.filter((x) => x.regionGroup === g).length;
+    const inA = n('heldout-a', (x) => x.regionGroup === g);
+    assert.ok(total === 0 || Math.abs(inA / total - 0.4) < 0.06, `${g} ${inA}/${total}`);
+  }
+  const op = new Map(frame3.domains.map((d) => [d.domain, d.operator]));
+  const where = new Map();
+  for (const x of a) {
+    const o = op.get(x.domain);
+    assert.ok(!where.has(o) || where.get(o) === x.split, o);
+    where.set(o, x.split);
+  }
+  // Earlier options are unchanged.
+  assert.deepEqual(split(frame3, captureSample(), {}, EQUAL_WEIGHTS), split(frame3, captureSample()));
+  assert.throws(() => split(frame3, [], {}, { development: 3, 'heldout-a': 0, 'heldout-b': 0 }), /heldout-a must be positive/);
 });

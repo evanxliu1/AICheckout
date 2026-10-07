@@ -1,12 +1,12 @@
 ---
 type: Product
 title: Phase 12 plan (reader eval protocols and captures)
-description: Pre-register the generic cart reader evaluation (splits, states, labels, bounds, peek policy, capture posture; since `.8` a ≥ 99% precision bar on shown amounts with coverage reported), select the merchant-pipeline held-out domains, build capture tooling (a robot that cannot type or submit, then agent-driven browser-pane capture with an approved export script), and capture and label 330 U.S. + 500 non-U.S. retail sites (the reader shows total and currency only when certain) in three site splits weighted 1 : 2 : 2 — planned as three PRs, merged so far as PRs #59–#71.
+description: Pre-register the generic cart reader evaluation (splits, states, labels, bounds, peek policy, capture posture; since `.8` a ≥ 99% precision bar on shown amounts with coverage reported), select the merchant-pipeline held-out domains, build capture tooling (a robot that cannot type or submit, then agent-driven browser-pane capture with an approved export script), and capture and label 330 U.S. + 500 non-U.S. retail sites (the reader shows total and currency only when certain) in two site splits weighted 3 : 2 (development : held-out A, since `.10`; 1 : 2 : 2 with held-out B under `.8`–`.9`) — planned as three PRs, merged so far as PRs #59–#71.
 status: stable
 tags: [product, plan, phase-12, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T00:20:00Z
+  at: 2026-10-07T01:06:25Z
 sources:
   - resource: phase-10-merchant-expansion.md
     title: Merchant coverage plan (Phases 10–17)
@@ -110,6 +110,12 @@ Since `.8` (2026-10-06) the main path is pane capture: `pane-operator` subagents
 - **Full pane capture under `.9`: not started (2026-10-07).** It runs as a Claude workflow from a fresh chat: `pane-operator` subagents, 8–16 tabs, from the frozen order in `reader-candidates-8.json`, re-visits included, until 330 U.S. + 500 non-U.S. stores are captured; then labelling and the split freeze.
 
 Done when the capture reaches the stop rule (or the stop-and-report thresholds), all three splits are labelled and frozen with hashes, and `docs/evals/reader-captures-2026-10.md` is reviewed and merged; Phase 13 (reader v1) then tunes on the development split only.
+- **12.1 amended a ninth time (2026-10-07, branch `phase12-protocol-10`):** `generic-reader-protocol.10` ([Amendment 9](../../docs/evals/generic-reader-protocol.md#amendment-9-2026-10-07-generic-reader-protocol10)) on **Evan's decision "Dev 60% / held-out A 40%"** ([decision](../decisions/2026-10-07-split-dev-60-heldout-40.md), proposed; `.9` binds until signed).
+  - **Splits:** two, weighted 3 : 2 (`--weights-protocol-10`; simulated 498 / 332 of 830 captured).
+  - **Stop:** at 800 captured sites with a real `cart-1`, so A has about 304 `cart-1` pages with an expected amount.
+  - **If A fails twice:** it becomes development data, and a fresh held-out set is captured (≥ 300 expected `cart-1`, operators in development skipped).
+  - **Freeze and labelling:** development and A frozen together, both double-labelled.
+  - **After the final score:** all pages may become development data for reader v2.
 
 ## Related
 

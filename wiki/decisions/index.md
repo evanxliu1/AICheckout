@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-10-07
+* [Development 60%, held-out A 40% (`generic-reader-protocol.10`)](./2026-10-07-split-dev-60-heldout-40.md) — Evan: two splits 3 : 2, B merged into development, a fresh held-out set if A fails twice, all pages to development after the final score. Proposed until `.10` is signed.
+
 ## 2026-10-06
 * [Clarifications before any .8 capture (`generic-reader-protocol.9`)](./2026-10-06-capture-protocol-9.md) — `.8` candidate list committed, pane platform script, one cart rule, pane evidence and failed adds, robot-only labels, pane session limit, labeller inputs; Evan's lingering-items rule and `cart-other`. Coordinator's; signed at `cbf2c72` (agent-verified).
 * [Pane capture and the process of `generic-reader-protocol.8`](./2026-10-06-capture-protocol-8.md) — carries out Evan's show-only-certain decision: pane capture with operator checklist, record and parallel tabs; any in-band item; `pane-dom.2` export and rebuild (drafted as `.1`); U.S. 425 + non-U.S. 1,000 candidates, stop at 330 U.S. + 500 non-U.S. captured, splits 1 : 2 : 2; exact Clopper–Pearson bound; batch 2 calls; robot retired as the main path. Coordinator's; signed at `a1c994d` with a post-signature erratum `1818057` (agent-verified); clarified by `.9`.
