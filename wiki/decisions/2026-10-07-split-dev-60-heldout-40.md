@@ -2,7 +2,7 @@
 type: Decision
 title: Development 60%, held-out A 40%; a fresh held-out set replaces held-out B (generic-reader-protocol.10)
 description: Evan, 2026-10-07 — two reader-eval splits weighted 3 : 2 (development : held-out A); held-out B merges into development from the start; A is the one measurement for the ≥ 99% claim; if A fails twice it becomes development data and a fresh held-out set is captured from the remaining candidates; after the final score all pages may become development data for reader v2.
-status: proposed
+status: accepted
 tags: [decision, phase-12, phase-13, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
@@ -46,3 +46,5 @@ sources:
 
 ## Status
 Proposed 2026-10-07 by the amendment builder (claude-code/claude-opus-5-5) on Evan's decision in chat. It awaits the independent reviewer's signature of `.10`; `.9` binds until then.
+
+Signed: the independent reviewer signed `generic-reader-protocol.10` at `779855e` on 2026-10-07 after one fix round (developer may not browse non-development candidates; exhausted-U.S. case reported to Evan; stop at 840 real `cart-1` with a re-split remedy before freeze; agent-verified); accepted. Residual: no reader-developer activity on development stores before the final split and freeze.

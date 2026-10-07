@@ -8,7 +8,7 @@ Pre-registered on 2026-10-05 in Phase 12.1 ([plan](../../wiki/product/phase-12-r
 - if A fails twice it becomes development data, and a fresh held-out set is captured from the remaining candidates;
 - after the final score, all pages may become development data for reader v2.
 
-The independent signature of `.10` is pending, and `.9` binds until then. Before it: protocol **`generic-reader-protocol.9`**, amended on 2026-10-06 before any `.8` capture ([Amendment 8](#amendment-8-2026-10-06-generic-reader-protocol9)), process clarifications only after a cross-check of the binding text. The changes:
+The independent reviewer **signed `generic-reader-protocol.10` at commit `779855e` on 2026-10-07** (agent-verified); `.10` binds from then on. **Reviewer's residual, recorded at signing:** the re-split remedy can move a store between development and held-out A, so no reader-developer activity on development stores (browsing included) starts before the final split and freeze. Before it: protocol **`generic-reader-protocol.9`**, amended on 2026-10-06 before any `.8` capture ([Amendment 8](#amendment-8-2026-10-06-generic-reader-protocol9)), process clarifications only after a cross-check of the binding text. The changes:
 - the `.8` candidate list is committed;
 - pane platform detection gets its own script;
 - lingering cart items never block a capture (Evan);
