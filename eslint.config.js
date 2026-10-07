@@ -53,6 +53,12 @@ export default [
     languageOptions: { globals: globals.node },
     rules: js.configs.recommended.rules,
   },
+  // Phase 13 reader harness: Node modules whose in-page functions run in the browser (Playwright evaluate).
+  {
+    files: ['evals/reader/**/*.mjs'],
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
+    rules: js.configs.recommended.rules,
+  },
   // The pane export script runs only in a page (the browser pane's JavaScript tool).
   {
     files: ['evals/merchants/capture/pane-export.js', 'evals/merchants/capture/pane-robots-hash.js'],
