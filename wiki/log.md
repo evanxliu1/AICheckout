@@ -3,6 +3,11 @@
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
 ## 2026-10-07
+* **Review** independent review of `.10` at `598dc4b` (agent-verified): sign with fixes, applied.
+  - **M1:** the reader developer never browses candidate stores outside development, unvisited candidates included.
+  - **M2:** the exhausted U.S. stream case is stated, with Evan's go required before any fresh capture.
+  - **L1:** the stop is raised to 840 captured sites with a real `cart-1` (336 + 504; A about 316–319 expected), with a re-split remedy if A is short.
+  - **L2:** `operator-in-development` skips are reported by stream. (claude-code/claude-opus-5-5)
 * **Update** reader protocol amended to `generic-reader-protocol.10` on `phase12-protocol-10` ([Amendment 9](../docs/evals/generic-reader-protocol.md#amendment-9-2026-10-07-generic-reader-protocol10)) on Evan's decision "Dev 60% / held-out A 40%". Before any `.8`/`.9` capture; signature pending, `.9` binds until then.
   - **Splits:** two, development and held-out A, weighted 3 : 2 (`seeded-selection.mjs --weights-protocol-10`, B at weight 0, default and earlier options unchanged, tested; SHA-256 `3a797e4c…f561`; simulated 852 / 573 of 1,425 and 498 / 332 of 830).
   - **Stop:** at 800 captured sites with a real `cart-1` (A ≈ 320, about 304 with an expected amount); report rules re-derived.

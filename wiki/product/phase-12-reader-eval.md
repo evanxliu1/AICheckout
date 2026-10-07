@@ -112,7 +112,7 @@ Since `.8` (2026-10-06) the main path is pane capture: `pane-operator` subagents
 Done when the capture reaches the stop rule (or the stop-and-report thresholds), all three splits are labelled and frozen with hashes, and `docs/evals/reader-captures-2026-10.md` is reviewed and merged; Phase 13 (reader v1) then tunes on the development split only.
 - **12.1 amended a ninth time (2026-10-07, branch `phase12-protocol-10`):** `generic-reader-protocol.10` ([Amendment 9](../../docs/evals/generic-reader-protocol.md#amendment-9-2026-10-07-generic-reader-protocol10)) on **Evan's decision "Dev 60% / held-out A 40%"** ([decision](../decisions/2026-10-07-split-dev-60-heldout-40.md), proposed; `.9` binds until signed).
   - **Splits:** two, weighted 3 : 2 (`--weights-protocol-10`; simulated 498 / 332 of 830 captured).
-  - **Stop:** at 800 captured sites with a real `cart-1`, so A has about 304 `cart-1` pages with an expected amount.
+  - **Stop:** at 840 captured sites with a real `cart-1` (raised at review), so A has about 316–319 `cart-1` pages with an expected amount; if it is short, more sites are captured and the split re-run.
   - **If A fails twice:** it becomes development data, and a fresh held-out set is captured (≥ 300 expected `cart-1`, operators in development skipped).
   - **Freeze and labelling:** development and A frozen together, both double-labelled.
   - **After the final score:** all pages may become development data for reader v2.

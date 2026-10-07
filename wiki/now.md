@@ -20,7 +20,7 @@ As of 2026-10-07T01:06Z.
 - **Reader rules (Evan, 2026-10-06, [decision](decisions/2026-10-06-reader-shows-only-certain-amounts.md)):** the reader shows an amount only when certain, otherwise withholds and the recommendation shows rates only (no "is that right?" prompt). Bar: one-sided 95% Clopper–Pearson upper bound of wrong shown amounts ≤ 1% on the held-out split (0 wrong in 299, or 1 in 473); coverage reported, target 80% on `cart-1`. Generic reader only, no store configs; the 3 legacy adapters retire once it matches them.
 - **Phase 12** ([progress](product/phase-12-reader-eval.md#progress)): protocol signed through `.9` (`cbf2c72`). **`.10` on `phase12-protocol-10`** (Evan, 2026-10-07: "Dev 60% / held-out A 40%"; signature pending):
   - two splits, 3 : 2, with held-out B merged into development;
-  - stop at 800 captured sites with a `cart-1`;
+  - stop at 840 captured sites with a `cart-1`;
   - a fresh held-out set if A fails twice ([decision](decisions/2026-10-07-split-dev-60-heldout-40.md)). The robot capture tool is retired as the main path (kept; 5 robot captures). A 3-store pane trial reached 3 of 3 carts.
 
 ## Active work

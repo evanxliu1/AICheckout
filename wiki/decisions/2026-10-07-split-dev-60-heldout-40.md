@@ -24,10 +24,17 @@ sources:
 | --- | --- | --- |
 | Splits | 1 : 2 : 2 with B as the backup; 3 : 2 with a fresh set on failure | **3 : 2, two splits** (Evan). B merges into development from the start, about three times the development data of `.8` |
 | What replaces B | Keep B; fresh capture after A retires | **A fresh held-out set.** It is captured from the remaining candidates in the frozen visit order, under the same rules and strata, sized for ≥ 300 `cart-1` pages with an expected amount (320 sites with a real `cart-1`), skipping operators already in development. It is double-labelled, adjudicated, frozen before any run, and runs at most twice |
-| Stop threshold | Keep 830 captured / 760 `cart-1`; re-derive | **800 captured sites with a real `cart-1`** (320 U.S. + 480 non-U.S.). A at 40% gives about 320 `cart-1`, about 304 with an expected amount at 5% null labels; 760 would give about 289 |
+| Stop threshold | Keep 830 captured / 760 `cart-1`; re-derive | **840 captured sites with a real `cart-1`** (336 U.S. + 504 non-U.S.; 800 in the first draft, raised by the coordinator at review). A at 40% gives about 333–336 `cart-1`, about 316–319 with an expected amount at an assumed 5% null labels. If A ends below 300 before the freeze, more sites are captured and the deterministic split is re-run before any freeze or reader run |
 | After the final score | Keep held-out pages hidden; release them | **Release them:** all pages may become development data for reader v2. A later claim about unseen stores needs a new held-out set |
 
 **Coordinator's reasoning, recorded with Evan's decision.** The reader is hand-written rules tuned by an agent. Any page it sees can always be fitted, so a claim about unseen stores needs pages the developer never saw. A therefore stays untouched as the one measurement, and a retired A is replaced by fresh pages rather than reused.
+
+**Review at `598dc4b`** ("sign with fixes", agent-verified):
+- **Applied:**
+  - **M1:** the reader developer never browses candidate stores outside development, unvisited candidates included.
+  - **M2:** when the U.S. stream is exhausted, a fresh set is reported per stream with the U.S. gap stated, and Evan's go is required before any fresh capture.
+  - **L1:** the stop is raised to 840, with the re-split remedy.
+  - **L2:** the fresh set's operator skips are reported by stream.
 
 ## Decision
 `generic-reader-protocol.10` (Amendment 9). `seeded-selection.mjs --weights-protocol-10` assigns development 3 : held-out A 2, with B at weight 0. Default output and earlier options are unchanged (tested). Simulated: 852 / 573 of all 1,425 candidates; 498 / 332 of the first 830.
