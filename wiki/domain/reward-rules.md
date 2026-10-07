@@ -6,7 +6,7 @@ status: stable
 tags: [domain, rewards, engine]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T20:45:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
     title: Catalog v2 types (RewardRuleV2, RuleCap, PaymentPath, Uncertainty)
@@ -115,6 +115,7 @@ Shopper inputs for v3: per card the chosen options; per wallet the gate answers 
 
 ## Gotchas
 
+- **Planned rates-only path (not built, Phases 13–15).** When the generic reader withholds an amount, the recommendation will show rates only ([decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md)). Rates alone can mislead: spend caps, minimums and after-cap rates depend on the amount and can change which card wins, so the rates-only view must say so.
 - `activation: unstated` is a product decision. Issuers state enrollment requirements explicitly, so silence is treated as no activation, and the shopper is never asked to confirm (comment in `engine-v2.ts`).
 - Validation allows an after-cap rate below the base (0..rateBps). The base is always an option, so no rule can pull a card below it.
 - The MCC is never observed at checkout. MCC-group rules depend on a predicted merchant category (see [Merchants](merchants.md)). Channel rules (online retail) and portal rules can be decided with more confidence.
