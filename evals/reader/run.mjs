@@ -57,6 +57,8 @@ export const GENERIC = '__aiCheckoutGenericReader';
 export const LEGACY = '__aiCheckoutLegacyReader';
 const READER_DIR = 'packages/cart-reader';
 const HARNESS_PATHS = ['evals/reader', 'evals/merchants/capture/rebuild.mjs', 'evals/merchants/capture/replay.mjs'];
+/** The legacy adapters' source (read in held-out runs too, so it must be committed). */
+const LEGACY_PATHS = ['extension/src/checkout', 'packages/rewards-core/src'];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /** A frozen input whose hash doesn't match: the whole run stops. */
@@ -169,7 +171,8 @@ export async function stripPaneAttributes(page) {
 
 /** Inject a bundled reader under a global name (not a read; not timed). */
 export async function installReader(page, code, name = GENERIC) {
-  await page.evaluate(`${code}\nglobalThis.${name} = __aiCheckoutCartReader; undefined;`);
+  // Inside a function, so the bundle's `var` stays local and only the named (deletable) global remains.
+  await page.evaluate(`(() => {\n${code}\nglobalThis.${name} = __aiCheckoutCartReader;\n})(); undefined;`);
 }
 
 /** One read: the reader's page-reading function called once, wall time measured in the page. */
@@ -228,6 +231,31 @@ export async function readPage(page, url, { gapMs = STABILITY_GAP_MS, name = GEN
     crash,
     readMs: [...timed, s1, s2].map((r) => Math.round(r.ms * 1000) / 1000),
   };
+}
+
+/** Check one target's frozen files without a browser (the loaders check again). Throws on a mismatch. */
+export function preflight(where) {
+  if (where.kind === 'pane') {
+    const html = rebuildHtml(JSON.parse(readChecked(where.domFile, where.domSha256, 'dom.json')));
+    if (where.rebuiltSha256 && textSha(html) !== where.rebuiltSha256)
+      throw new IntegrityError('the rebuild differs from the frozen rebuilt.html');
+  } else if (where.kind === 'variant') {
+    const { label, domSha256, variantSha256 } = where;
+    if (label.domSha256 !== domSha256 || label.snapshotSha256 !== variantSha256)
+      throw new IntegrityError('the variant label is not for the manifest entry');
+    readChecked(where.metaFile, variantSha256, 'variant.json');
+    rebuildHtml(JSON.parse(readChecked(where.domFile, domSha256, 'variant dom.json')));
+  } else {
+    const file = path.join(where.dir, 'manifest.json');
+    if (!existsSync(file)) throw new IntegrityError('robot snapshot: manifest.json is missing');
+    const raw = readFileSync(file);
+    if (sha256(raw) !== where.manifestSha256) throw new IntegrityError('robot snapshot: manifest is not the frozen one');
+    for (const [name, expected] of Object.entries(JSON.parse(raw.toString('utf8')).files ?? {})) {
+      const f = path.join(where.dir, name);
+      if (name.includes('/') || name.includes('\\') || !existsSync(f) || sha256(readFileSync(f)) !== expected)
+        throw new IntegrityError(`robot snapshot: hash mismatch for ${name}`);
+    }
+  }
 }
 
 /** Where a snapshot-manifest entry's snapshot lives. */
@@ -291,13 +319,18 @@ export async function run({
   const reader = testOnlyReaderCommit
     ? { commit: testOnlyReaderCommit, dirty: false }
     : gitState(readerRoot, [READER_DIR]);
-  const harness = testOnlyReaderCommit ? { commit: testOnlyReaderCommit, dirty: false } : gitState(REPO_ROOT, HARNESS_PATHS);
-  if (heldout && (reader.dirty || harness.dirty))
-    throw new Error('the reader or the harness has uncommitted changes; a held-out run must name commits');
+  const testState = { commit: testOnlyReaderCommit, dirty: false };
+  const harness = testOnlyReaderCommit ? testState : gitState(REPO_ROOT, HARNESS_PATHS);
+  const legacyState = testOnlyReaderCommit ? testState : gitState(REPO_ROOT, LEGACY_PATHS);
+  if (heldout && (reader.dirty || harness.dirty || legacyState.dirty))
+    throw new Error(
+      'the reader, the harness or the legacy adapters have uncommitted changes; a held-out run must name commits',
+    );
   const bundle = await bundleReader({
     root: readerRoot,
     frameDomains: frozen.frameDomains(),
-    splitDomains: frozen.splitDomains(split),
+    // Every held-out domain, on development runs too: no run may carry held-out answers.
+    splitDomains: [...new Set([...frozen.splitDomains(split), ...frozen.nonDevelopmentDomains()])],
   });
   // The legacy adapters are harness-side: always the repository's extension code.
   const legacy = await bundleReader({ root: REPO_ROOT, mode: 'legacy' });
@@ -336,6 +369,14 @@ export async function run({
       },
     });
   }
+
+  // Browser-free preflight of every frozen input, before the run is logged: a mismatch leaves no row.
+  for (const [i, t] of targets.entries())
+    try {
+      preflight(t.where);
+    } catch (err) {
+      throw new IntegrityError(`${say(t.id, i)}: ${err.message}`);
+    }
 
   const { chromium } = givenBrowser ? {} : await import('playwright');
   const browser = givenBrowser ?? (await chromium.launch({ headless: true }));
@@ -379,7 +420,7 @@ export async function run({
           runId,
           split,
           reader: { ...reader, bundleSha256: bundle.sha256, inputs: bundle.inputs },
-          legacy: { bundleSha256: legacy.sha256, inputs: legacy.inputs },
+          legacy: { ...legacyState, paths: LEGACY_PATHS, bundleSha256: legacy.sha256, inputs: legacy.inputs },
           harness: { ...harness, paths: HARNESS_PATHS },
           chromium: browser.version(),
           machine: {
@@ -403,9 +444,11 @@ export async function run({
         else opened = await openRobot(browser, t.where);
         await stripPaneAttributes(opened.page);
         await installReader(opened.page, bundle.code, GENERIC);
-        await installReader(opened.page, legacy.code, LEGACY);
         opened.network.mark();
         Object.assign(row, await readPage(opened.page, opened.url, { gapMs, name: GENERIC }));
+        // The generic reader is gone before the legacy one arrives, so neither can see the other.
+        await opened.page.evaluate((name) => delete globalThis[name], GENERIC);
+        await installReader(opened.page, legacy.code, LEGACY);
         const legacyMatches = await opened.page.evaluate(
           ({ name, url }) => globalThis[name].matches(url),
           { name: LEGACY, url: opened.url },

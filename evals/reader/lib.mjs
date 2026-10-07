@@ -174,6 +174,12 @@ export function loadFrozen({ root = REPO_ROOT, freezeFile, paneData, variantData
         .filter((r) => r.split === split)
         .map((r) => r.domain);
     },
+    /** Domains of every split other than development in the frozen splits.json. */
+    nonDevelopmentDomains() {
+      return readJson(abs(entry('splits')))
+        .filter((r) => r.split !== 'development')
+        .map((r) => r.domain);
+    },
     /** Every retail-frame-3 domain (for the answer-lookup tripwire). */
     frameDomains() {
       return readJson(abs(entry('retail-frame-3'))).domains.map((d) => d.domain);

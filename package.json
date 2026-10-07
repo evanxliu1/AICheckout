@@ -14,7 +14,7 @@
   },
   "scripts": {
     "lint": "eslint extension/src extension/tests extension/e2e extension/scripts packages apps scripts tools evals/merchants/capture evals/merchants/labels evals/merchants/variants evals/reader",
-    "typecheck": "npm run typecheck --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present && tsc --noEmit -p evals/reader/tsconfig.json",
     "test": "npm run test --workspaces --if-present && npm run test:scripts",
     "build": "npm run build --workspaces --if-present",
     "release:media": "node scripts/build-release-media.mjs",

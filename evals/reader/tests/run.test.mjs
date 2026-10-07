@@ -165,6 +165,33 @@ test('review 3: answer-lookup tripwire refuses a bundle with a split domain or m
   await bundleReader({ root: many, frameDomains: ['1.example', 'example'] });
 });
 
+test('re-check A: a browser-free preflight refuses a rebuild mismatch before the run is logged', async () => {
+  const e = frozenEnv({
+    pages: { 'd.example/cart-1': { format: 'pane-dom.2', root: { t: 'html' } } },
+    labels: { development: [label('d.example/cart-1')] },
+    frame: [{ domain: 'd.example', operator: 'd', regionGroup: 'us' }],
+    staleRebuild: ['d.example/cart-1'],
+  });
+  await assert.rejects(
+    run({ split: 'development', ...e, testOnlyReaderCommit: 'abc1234' }),
+    /d\.example\/cart-1: the rebuild differs from the frozen rebuilt\.html/,
+  );
+  assert.deepEqual(readRuns(path.join(e.root, 'runs.json')).runs, [], 'no row in runs.json');
+});
+
+test('re-check E: a development run refuses a reader that names a held-out domain', async () => {
+  const e = env();
+  const src = readerRoot({
+    'packages/cart-reader/src/index.ts':
+      "export const readCart = (_d: Document, o: { url: string }) => ({ shown: false, reason: o.url.includes('h.example') ? 'a' : 'b' });",
+  });
+  await assert.rejects(
+    run({ split: 'development', ...e, readerRoot: src, testOnlyReaderCommit: 'abc1234' }),
+    /domain\(s\) of the split being run/,
+  );
+  assert.deepEqual(readRuns(path.join(e.root, 'runs.json')).runs, []);
+});
+
 test('review 2: the legacy bundle holds the three extension adapters only', async () => {
   const b = await bundleReader({ mode: 'legacy' });
   assert.ok(b.inputs.includes('extension/src/checkout/page-reader.ts'));

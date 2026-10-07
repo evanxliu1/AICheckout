@@ -43,7 +43,7 @@ export function commitAll(root, message = 'test') {
  *   labels:   { development: [label], 'heldout-a': [label] }
  *   frame:    [{ domain, operator, regionGroup }]
  */
-export function frozenEnv({ pages = {}, robots = {}, variants = {}, labels = {}, frame = [] }) {
+export function frozenEnv({ pages = {}, robots = {}, variants = {}, labels = {}, frame = [], staleRebuild = [] }) {
   const root = mkdtempSync(path.join(os.tmpdir(), 'reader-harness-'));
   const put = (rel, text) => {
     const p = path.join(root, rel);
@@ -56,7 +56,8 @@ export function frozenEnv({ pages = {}, robots = {}, variants = {}, labels = {},
   for (const [id, doc] of Object.entries(pages)) {
     const dir = path.join('data', 'pane', id);
     const dom = JSON.stringify(doc);
-    const html = rebuildHtml(doc);
+    // staleRebuild: a rebuilt.html (consistently hashed in the freeze) that today's rebuild.mjs doesn't produce.
+    const html = rebuildHtml(doc) + (staleRebuild.includes(id) ? '<!-- older rebuild -->' : '');
     put(path.join(dir, 'dom.json'), dom);
     put(path.join(dir, 'rebuilt.html'), html);
     put(path.join(dir, 'viewport.png'), 'v');

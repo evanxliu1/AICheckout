@@ -3,6 +3,14 @@
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
 ## 2026-10-07
+* **Review** re-check of `phase13-harness` at `b0fe2a8` (agent-verified): approve with fixes, applied with tests.
+  - **A, preflight:** every frozen input is checked without a browser before `runs.json` is written, so a mismatch leaves no row.
+  - **B, isolation:** the generic reader is deleted from the page before the legacy one is injected.
+  - **C, dirty check:** held-out runs also need `extension/src/checkout` and `packages/rewards-core/src` committed.
+  - **D, typecheck:** `legacy-entry.ts` is typechecked by `npm run typecheck` (`evals/reader/tsconfig.json`).
+  - **E, tripwire:** the held-out-domain tripwire also runs on development runs.
+  - **Legacy n = 0:** reported as n = 0 with the reason (the three legacy stores are excluded from `retail-frame-3`). The replacement condition stays untested; retiring them needs separate evidence or Evan's decision.
+  - Pages: [reader harness README](../evals/reader/README.md). (claude-code/claude-opus-5-5)
 * **Review** independent review of `phase13-harness` at `2a2ba4a` (agent-verified): approve with fixes, applied with new tests (the code at `2a2ba4a` fails them) after merging `phase12-capture-run`.
   - **Integrity and errors:** a hash mismatch aborts the whole run (`failed`); any other page error is `missing` (class `harness-error`), so criterion 1 can't pass.
   - **Legacy adapters:** the Amazon, Best Buy and Newegg adapters (`legacy-entry.ts`) are read in the same counted run on pages their URL rule matches, and reported apart.

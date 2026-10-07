@@ -296,7 +296,45 @@ test('run + score: real pages, variants, a robot page and legacy reads in one co
   assert.deepEqual(hits, []);
 });
 
-test('review 1: an integrity failure aborts the whole run (status failed); held-out messages name no page', async () => {
+test('re-check B: the generic reader never sees the legacy global, nor the legacy reader the generic one', async () => {
+  const env = frozenEnv({
+    pages: { 'dev.example/cart-1': cartPage('https://www.bestbuy.com/cart') },
+    labels: { development: [label('dev.example/cart-1')] },
+    frame,
+  });
+  const readerRoot = mkdtempSync(path.join(os.tmpdir(), 'reader-src-'));
+  mkdirSync(path.join(readerRoot, 'packages', 'cart-reader', 'src'), { recursive: true });
+  writeFileSync(
+    path.join(readerRoot, 'packages', 'cart-reader', 'src', 'index.ts'),
+    `export function readCart() {
+  const g = globalThis as Record<string, unknown>;
+  const seen = Object.keys(g).some((k) => /legacy|cartreader/i.test(k) && k !== '__aiCheckoutGenericReader');
+  return { shown: false as const, reason: seen || '__aiCheckoutLegacyReader' in g ? 'saw-legacy' : 'alone' };
+}
+`,
+  );
+  const r = await run({ split: 'development', ...env, readerRoot, browser, testOnlyReaderCommit: 'abc1234', gapMs: 50 });
+  const [row] = readFileSync(r.outputsFile, 'utf8').trim().split('\n').map(JSON.parse);
+  assert.equal(row.output.reason, 'alone');
+  assert.ok(row.legacy, 'the legacy reader still ran on the Best Buy URL');
+  // And in the page after both: only the legacy global remains, the generic one deleted.
+  const opened = await openPane(browser, {
+    domFile: path.join(env.root, 'data', 'pane', 'dev.example', 'cart-1', 'dom.json'),
+    ...env.hashes['dev.example/cart-1'],
+  });
+  try {
+    await installReader(opened.page, (await bundleReader()).code);
+    await opened.page.evaluate(() => delete globalThis.__aiCheckoutGenericReader);
+    assert.deepEqual(
+      await opened.page.evaluate(() => ['__aiCheckoutGenericReader', '__aiCheckoutCartReader'].map((k) => k in globalThis)),
+      [false, false],
+    );
+  } finally {
+    await opened.close();
+  }
+});
+
+test('review 1 / re-check A: an integrity failure refuses the run before it is logged; held-out messages name no page', async () => {
   const mhtml = await mhtmlOf('<html><body><p>Subtotal $20.00</p></body></html>');
   const env = frozenEnv({
     pages: { 'dev.example/cart-1': cartPage() },
@@ -310,7 +348,32 @@ test('review 1: an integrity failure aborts the whole run (status failed); held-
   const err = await run({ split: 'heldout-a', confirmHeldoutRun: '1', ...opts }).catch((e) => e);
   assert.match(err.message, /held-out page-state #1: robot snapshot: hash mismatch/);
   assert.ok(!/robot\.example/.test(err.message), 'no domain in a held-out error');
+  // The preflight caught it: no reader code ran and nothing was logged.
+  assert.deepEqual(readRuns(path.join(env.root, 'runs.json')).runs, []);
+});
+
+test('review 1: a page that fails to load inside a logged run is a harness error, and the run still counts', async () => {
+  const env = frozenEnv({
+    pages: { 'held.example/cart-1': cartPage() },
+    labels: { 'heldout-a': [label('held.example/cart-1')] },
+    frame,
+  });
+  // A browser whose contexts can't be created: the run is logged, then the first page fails to open.
+  const broken = { version: () => browser.version(), newContext: () => Promise.reject(new Error('no context')) };
+  const r = await run({
+    split: 'heldout-a',
+    confirmHeldoutRun: '1',
+    ...env,
+    browser: broken,
+    testOnlyReaderCommit: 'abc1234',
+  });
+  assert.equal(r.errors, 1);
+  const [line] = readFileSync(r.outputsFile, 'utf8').trim().split('\n').map(JSON.parse);
+  assert.match(line.harnessError, /no context/);
   const [row] = readRuns(path.join(env.root, 'runs.json')).runs;
-  assert.equal(row.status, 'failed');
-  assert.equal(row.heldoutRun, 1, 'the failed run still counts');
+  assert.deepEqual([row.status, row.heldoutRun], ['complete', 1]);
+  await assert.rejects(
+    run({ split: 'heldout-a', confirmHeldoutRun: '1', ...env, browser, testOnlyReaderCommit: 'abc1234' }),
+    /not this run's number 2/,
+  );
 });

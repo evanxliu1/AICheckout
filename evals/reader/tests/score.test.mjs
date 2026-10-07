@@ -160,6 +160,8 @@ test('report: counts, three levels, coverage without cart-other, variants apart'
     },
   });
   assert.equal(r.legacy.pageStates, 0);
+  assert.match(r.legacy.reason, /^n = 0: amazon\.com, bestbuy\.com and newegg\.com are excluded from retail-frame-3/);
+  assert.match(r.legacy.retirement, /untested.*separate evidence or Evan/);
 });
 
 function allCorrect(n, readMs = [1, 2, 3, 4, 5]) {
@@ -224,6 +226,7 @@ test('review 2: legacy reads are scored apart, never pooled with the generic rea
   assert.equal(r.legacy.pageStates, 2);
   assert.equal(r.legacy.counts.shownCorrect, 1);
   assert.equal(r.legacy.counts.withheld, 1);
+  assert.equal(r.legacy.reason, undefined);
 });
 
 const realLabels = labels;
