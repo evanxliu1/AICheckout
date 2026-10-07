@@ -1,0 +1,62 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "amazon.ae",
+  "stream": "non-us",
+  "visit": 38,
+  "session": 1,
+  "entryHost": "www.amazon.ae",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.amazon.ae",
+      "status": 200,
+      "sha256": "224c62f6d49b1afb81cfea716e9487032e5177e775922d80dc30722f0be6abf5",
+      "bytes": 6711,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.amazon.ae/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.amazon.ae/" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    { "state": "empty-cart", "reason": "stopped at bot-check interstitial on entry" },
+    { "state": "minicart-1", "reason": "stopped at bot-check interstitial on entry" },
+    { "state": "cart-1", "reason": "stopped at bot-check interstitial on entry" },
+    { "state": "cart-qty2", "reason": "stopped at bot-check interstitial on entry" },
+    { "state": "cart-2items", "reason": "stopped at bot-check interstitial on entry" }
+  ],
+  "itemPath": { "listingUrl": null, "productUrl": null, "price": null, "secondProductUrl": null },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": { "status": "excluded", "code": "blocked-bot-wall", "evidenceSha256": null },
+  "challenge": {
+    "url": "https://www.amazon.ae/",
+    "title": "https://www.amazon.ae/",
+    "wording": "انقر فوق الزر أدناه لمتابعة التسوق (Arabic: 'Click the button below to continue shopping'); button 'متابعة التسوق.'",
+    "marker": "Amazon bot-check interstitial: form with three hidden token fields and a single continue-shopping submit button, replacing the home page"
+  },
+  "problems": [
+    "Entry page served Amazon's bot-check interstitial (continue-shopping form with hidden tokens) instead of the storefront; not clicked, not exported, per the stop rule.",
+    "Sign-in state and starting cart count could not be read (null).",
+    "robots.txt: / allowed for *; /gp/cart disallowed for *; Claude-User, ClaudeBot and many AI agents disallowed from / (recorded only per protocol)."
+  ]
+}

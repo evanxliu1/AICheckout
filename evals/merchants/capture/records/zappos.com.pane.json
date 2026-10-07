@@ -1,0 +1,94 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "zappos.com",
+  "stream": "us",
+  "visit": 50,
+  "session": 1,
+  "entryHost": "www.zappos.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    { "n": 1, "item": "own item 2 (Vans Classic Slip-On)", "ok": true },
+    { "n": 2, "item": "own item 1 (Converse Chuck Taylor Hi)", "ok": true }
+  ],
+  "robots": [
+    {
+      "host": "www.zappos.com",
+      "status": 200,
+      "sha256": "07e08a1e8691b1004f0971f81761a2cae42b742000b79f44affceea5530ac16b",
+      "bytes": 1230,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.zappos.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.zappos.com/" },
+    { "n": 3, "utc": null, "url": "https://www.zappos.com/cart" },
+    { "n": 4, "utc": null, "url": "https://www.zappos.com/" },
+    { "n": 5, "utc": null, "url": "https://www.zappos.com/men-sneakers-athletic-shoes/:token" },
+    { "n": 6, "utc": null, "url": "https://www.zappos.com/p/unisex-converse-chuck-taylor-all-star-high-top-sneaker-black/product/107999/color/3" },
+    { "n": 7, "utc": null, "url": "https://www.zappos.com/cart" },
+    { "n": 8, "utc": null, "url": "https://www.zappos.com/p/unisex-vans-classic-slip-on/product/7226411" },
+    { "n": 9, "utc": null, "url": "https://www.zappos.com/cart" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 5, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 6, "utc": null, "kind": "click", "role": "link", "name": "Home Page" },
+    { "n": 7, "utc": null, "kind": "click", "role": "link", "name": "All Men's Sneakers (hidden menu, no nav)" },
+    { "n": 8, "utc": null, "kind": "click", "role": "link", "name": "Sneakers (hidden menu, no nav)" },
+    { "n": 9, "utc": null, "kind": "navigate", "role": "", "name": "men's sneakers listing (menu link href)" },
+    { "n": 10, "utc": null, "kind": "click", "role": "link", "name": "Converse - Chuck Taylor All Star High-T" },
+    { "n": 11, "utc": null, "kind": "choose-option", "role": "radio", "name": "Size 9" },
+    { "n": 12, "utc": null, "kind": "add-to-cart", "role": "generic", "name": "Add to Bag" },
+    { "n": 13, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 14, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 15, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 16, "utc": null, "kind": "click", "role": "image", "name": "Vans Classic Slip-On" },
+    { "n": 17, "utc": null, "kind": "choose-option", "role": "radio", "name": "Size 9" },
+    { "n": 18, "utc": null, "kind": "add-to-cart", "role": "generic", "name": "Add to Bag" },
+    { "n": 19, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 20, "utc": null, "kind": "export", "role": "", "name": "cart-2items" },
+    { "n": 21, "utc": null, "kind": "remove-item", "role": "button", "name": "Remove Item" },
+    { "n": 22, "utc": null, "kind": "remove-item", "role": "button", "name": "Remove Item" }
+  ],
+  "states": [
+    { "state": "empty-cart", "sha256": "9d9c84b98509f6e1f2f7517829508b60cb17fbf30d2a861343fcf696ae5e9e49", "bytes": 201619, "chunks": 1, "url": "https://www.zappos.com/cart", "startCartCount": 0 },
+    { "state": "minicart-1", "sha256": "61bca463411c0d9a104ff4d46aff768cd15602f74a9d6bbd688cd4c61431767f", "bytes": 930297, "chunks": 3, "url": "https://www.zappos.com/p/unisex-converse-chuck-taylor-all-star-high-top-sneaker-black/product/107999/color/3", "startCartCount": 0 },
+    { "state": "cart-1", "sha256": "ada70c3ed1cdb7b8aa3b089986a58fac38e2397629c25bc8e7e0f73819c22c1c", "bytes": 245892, "chunks": 1, "url": "https://www.zappos.com/cart", "startCartCount": 0 },
+    { "state": "cart-2items", "sha256": "7f257b742c72c54b97a8dbf79c84e6b106d739448aeb1f38a2cff940d1a9ce8c", "bytes": 263992, "chunks": 1, "url": "https://www.zappos.com/cart", "startCartCount": 0 }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "cart-qty2", "reason": "cart quantity is a number input needing typing; no increment control" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.zappos.com/men-sneakers-athletic-shoes/:token",
+    "productUrl": "https://www.zappos.com/p/unisex-converse-chuck-taylor-all-star-high-top-sneaker-black/product/107999/color/3",
+    "price": "$65.00",
+    "secondProductUrl": "https://www.zappos.com/p/unisex-vans-classic-slip-on/product/7226411"
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "robots.txt disallows /cart$ for *; cart visited per .8 record-only rule",
+    "two clicks on hidden mega-menu links did nothing (ref at 0,0); listing opened by its menu href URL instead",
+    "second item (Vans, $65) reached from the cart's Frequently Bought Together; cart-2items holds two own items, no lingering items",
+    "size choice defaulted to the Women gender toggle the site preselected; no gender toggle clicked",
+    "all chunk results oversized and saved by the harness to tool-results files; not opened"
+  ]
+}

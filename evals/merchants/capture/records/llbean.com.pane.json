@@ -1,0 +1,109 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "llbean.com",
+  "stream": "us",
+  "visit": 57,
+  "session": 1,
+  "entryHost": "www.llbean.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [{ "n": 1, "item": "own item 1 (qty 2)", "ok": true }],
+  "robots": [
+    {
+      "host": "www.llbean.com",
+      "status": 200,
+      "sha256": "dc9d0639e19e84656e8a2c6b537449e09a95d4d5dbfd86eeedd2db84ea2ff7f0",
+      "bytes": 1972,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.llbean.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.llbean.com/" },
+    { "n": 3, "utc": null, "url": "https://www.llbean.com/shoppingbag" },
+    { "n": 4, "utc": null, "url": "https://www.llbean.com/llb/shop/50" },
+    { "n": 5, "utc": null, "url": "https://www.llbean.com/llb/shop/20010658" },
+    { "n": 6, "utc": null, "url": "https://www.llbean.com/shoppingbag" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "shopping bag" },
+    { "n": 5, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "Bags & Travel listing" },
+    { "n": 7, "utc": null, "kind": "click", "role": "link", "name": "Boat and Tote, Open-Top (no navigation)" },
+    { "n": 8, "utc": null, "kind": "navigate", "role": "", "name": "product page (link href)" },
+    { "n": 9, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to bag" },
+    { "n": 10, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 11, "utc": null, "kind": "navigate", "role": "", "name": "shopping bag" },
+    { "n": 12, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 13, "utc": null, "kind": "quantity-increment", "role": "button", "name": "Increase quantity" },
+    { "n": 14, "utc": null, "kind": "export", "role": "", "name": "cart-qty2" },
+    { "n": 15, "utc": null, "kind": "remove-item", "role": "button", "name": "Remove Item" }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "51475c1d970e399c0c7dc5193715239c7cefd1d2f3d8d29e11ac8c18090790c8",
+      "bytes": 256452,
+      "chunks": 1,
+      "url": "https://www.llbean.com/shoppingbag",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "114e2df276a5eac1cf3b369cd60d50ac583e97ca045883587ac750a049a96246",
+      "bytes": 460659,
+      "chunks": 2,
+      "url": "https://www.llbean.com/llb/shop/20010658",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "b53bcdebf04308256db9d12a08565d9e1fc198d000f8d0056ce1441c4bbd982a",
+      "bytes": 400994,
+      "chunks": 2,
+      "url": "https://www.llbean.com/shoppingbag",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "db433e1790708dd1fc75241228cd2093b42cf676fd6359481f18cec2d4d83937",
+      "bytes": 478282,
+      "chunks": 2,
+      "url": "https://www.llbean.com/shoppingbag",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "cart-2items", "reason": "cart started empty; no lingering item" },
+    { "state": "cart-other", "reason": "cart started empty; no lingering items" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.llbean.com/llb/shop/50",
+    "productUrl": "https://www.llbean.com/llb/shop/20010658",
+    "price": "$16.95",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "robots.txt disallows /shoppingbag (cart) and /checkout; recorded only, visited per .8 rule",
+    "first click on a listing link did not navigate; product opened by its same-site href instead",
+    "item shows an estimated ship date (backorder) with add-to-cart enabled; counted as in stock per item rule",
+    "all chunk results except cart-1 chunk 1 were oversized and saved by the harness to tool-results files; not opened"
+  ]
+}

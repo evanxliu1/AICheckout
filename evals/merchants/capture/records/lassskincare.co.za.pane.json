@@ -1,0 +1,104 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "lassskincare.co.za",
+  "stream": "non-us",
+  "visit": 41,
+  "session": 1,
+  "entryHost": "lassskincare.co.za",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "lassskincare.co.za",
+      "status": 404,
+      "sha256": "cc0b4e42510d49c6decd464123ecf3b14ae9b47f9b4ed2ee64893e2d6520a264",
+      "bytes": 355,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://lassskincare.co.za/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://lassskincare.co.za/" },
+    { "n": 3, "utc": null, "url": "https://lassskincare.co.za/products.php" },
+    { "n": 4, "utc": null, "url": "https://lassskincare.co.za/product-details.php" },
+    { "n": 5, "utc": null, "url": "https://lassskincare.co.za/products.php" },
+    { "n": 6, "utc": null, "url": "https://lassskincare.co.za/product-details.php" },
+    { "n": 7, "utc": null, "url": "https://lassskincare.co.za/products.php" },
+    { "n": 8, "utc": null, "url": "https://lassskincare.co.za/products.php" },
+    { "n": 9, "utc": null, "url": "https://lassskincare.co.za/cart1.php" },
+    { "n": 10, "utc": null, "url": "https://lassskincare.co.za/product-details.php" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "click", "role": "link", "name": "Shopping" },
+    { "n": 5, "utc": null, "kind": "click", "role": "link", "name": "Lass Skincare T-Shirt" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "products listing" },
+    { "n": 7, "utc": null, "kind": "click", "role": "link", "name": "Lass Skincare Sweater" },
+    { "n": 8, "utc": null, "kind": "navigate", "role": "", "name": "products listing" },
+    { "n": 9, "utc": null, "kind": "click", "role": "listitem", "name": "Starter Kits (no navigation)" },
+    { "n": 10, "utc": null, "kind": "click", "role": "link", "name": "Starter Kits link (no navigation)" },
+    { "n": 11, "utc": null, "kind": "navigate", "role": "", "name": "Starter Kits category" },
+    { "n": 12, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 13, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 14, "utc": null, "kind": "navigate", "role": "", "name": "sweater product page" },
+    { "n": 15, "utc": null, "kind": "export", "role": "", "name": "evidence-1" }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "b10d6bf5d2939944235d8fa7473a97e46f2cea51714d8d561a6a7e90f13bc202",
+      "bytes": 59076,
+      "chunks": 1,
+      "url": "https://lassskincare.co.za/cart1.php",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "719bfb5be5b6b71634fc7fac94388598eeed7b629e0373193115d081ebb446a5",
+      "bytes": 92475,
+      "chunks": 1,
+      "url": "https://lassskincare.co.za/product-details.php"
+    }
+  ],
+  "notReached": [
+    { "state": "minicart-1", "reason": "no eligible item: both in-band items (R250, R320) show OUT OF STOCK" },
+    { "state": "cart-1", "reason": "no eligible item" },
+    { "state": "cart-qty2", "reason": "no eligible item" },
+    { "state": "cart-2items", "reason": "no eligible item" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://lassskincare.co.za/products.php",
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": "ZAR",
+  "observedRegion": "ZA",
+  "outcome": {
+    "status": "excluded",
+    "code": "no-eligible-item",
+    "evidenceSha256": "719bfb5be5b6b71634fc7fac94388598eeed7b629e0373193115d081ebb446a5"
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt returns HTTP 404 (no rules); hash is of the 404 body",
+    "All 12 listed products; only T-Shirt R250 and Sweater R320 lie in the 180-3600 ZAR band, and both product pages show OUT OF STOCK; others are R40-R90",
+    "Starter Kits category (cat_id=1) lists no products; the category link click did not navigate, so it was opened by URL on the same domain",
+    "Evidence export is the sweater product page (out of stock); the T-Shirt page was observed out of stock but not exported",
+    "Cart was empty at start, so empty-cart was exported; no items added, nothing to remove"
+  ]
+}

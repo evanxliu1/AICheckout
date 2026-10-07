@@ -1,0 +1,87 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "nordstromrack.com",
+  "stream": "us",
+  "visit": 36,
+  "session": 1,
+  "entryHost": "www.nordstromrack.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    { "n": 1, "item": "own item (first Remove in cart list, listed first: own item 2)", "ok": true },
+    { "n": 2, "item": "own item (remaining: own item 1)", "ok": true }
+  ],
+  "robots": [
+    {
+      "host": "www.nordstromrack.com",
+      "status": 200,
+      "sha256": "f6d80792e564c86339209f787004c9df2f65780702dee01ca1a36bc5d2abb3e2",
+      "bytes": 1322,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.nordstromrack.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.nordstromrack.com/" },
+    { "n": 3, "utc": null, "url": "https://www.nordstromrack.com/shopping-bag" },
+    { "n": 4, "utc": null, "url": "https://www.nordstromrack.com/shop/accessories" },
+    { "n": 5, "utc": null, "url": "https://www.nordstromrack.com/s/marc-jacobs-bold-slg-small-crossbody-pouch-bag/8027512" },
+    { "n": 6, "utc": null, "url": "https://www.nordstromrack.com/shopping-bag" },
+    { "n": 7, "utc": null, "url": "https://www.nordstromrack.com/s/kurt-geiger-london-kensington-leather-mini-crossbody-bag/7674062" },
+    { "n": 8, "utc": null, "url": "https://www.nordstromrack.com/shopping-bag" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "entry home" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "shopping bag (start count)" },
+    { "n": 5, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "accessories listing" },
+    { "n": 7, "utc": null, "kind": "click", "role": "link", "name": "Bold SLG Small Crossbody Pouch Bag" },
+    { "n": 8, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to Bag" },
+    { "n": 9, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 10, "utc": null, "kind": "navigate", "role": "", "name": "shopping bag" },
+    { "n": 11, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 12, "utc": null, "kind": "navigate", "role": "", "name": "second product (from listing)" },
+    { "n": 13, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to Bag" },
+    { "n": 14, "utc": null, "kind": "navigate", "role": "", "name": "shopping bag" },
+    { "n": 15, "utc": null, "kind": "export", "role": "", "name": "cart-2items" },
+    { "n": 16, "utc": null, "kind": "remove-item", "role": "button", "name": "Remove" },
+    { "n": 17, "utc": null, "kind": "remove-item", "role": "button", "name": "Remove" }
+  ],
+  "states": [
+    { "state": "empty-cart", "sha256": "b175d1fd464f5e01426768ef0b833187c22e9a93e935c62d0fbfa4deb624899c", "bytes": 370322, "chunks": 1, "url": "https://www.nordstromrack.com/shopping-bag", "startCartCount": 0 },
+    { "state": "minicart-1", "sha256": "c14d3afa0f32e35c4897bbf1e3ef55ddf75fe342ca47b11670d83eddcf9ec526", "bytes": 714342, "chunks": 2, "url": "https://www.nordstromrack.com/s/marc-jacobs-bold-slg-small-crossbody-pouch-bag/8027512", "startCartCount": 0 },
+    { "state": "cart-1", "sha256": "6e252a7cda579b8cda8502c4794098337b199366b534d672b433078915963183", "bytes": 519916, "chunks": 2, "url": "https://www.nordstromrack.com/shopping-bag", "startCartCount": 0 },
+    { "state": "cart-2items", "sha256": "d74a216fcdb19ee5f8fa3ee0e91def5b4f79cd19f8537b01a2172171c5affcbb", "bytes": 606522, "chunks": 2, "url": "https://www.nordstromrack.com/shopping-bag", "startCartCount": 0 }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "cart-qty2", "reason": "cart quantity control is a select (combobox); choosing from a select is not allowed and no increment button exists" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.nordstromrack.com/shop/accessories",
+    "productUrl": "https://www.nordstromrack.com/s/marc-jacobs-bold-slg-small-crossbody-pouch-bag/8027512",
+    "price": "$69.97",
+    "secondProductUrl": "https://www.nordstromrack.com/s/kurt-geiger-london-kensington-leather-mini-crossbody-bag/7674062"
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "robots.txt disallows /shopping-bag* for *; cart visited and captured anyway per .8 rule (record only)",
+    "second item ($99.97) was opened by URL taken from the accessories listing link rather than by a click; cart-2items holds two own items, no lingering items",
+    "product page fulfillment radio (pickup/shipping) left at the page default; add-to-cart clicked without choosing",
+    "removal order: first Remove was the item listed first in the cart (likely own item 2); both own items removed, cart empty at end"
+  ]
+}

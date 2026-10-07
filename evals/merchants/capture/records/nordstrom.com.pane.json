@@ -1,0 +1,89 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "nordstrom.com",
+  "stream": "us",
+  "visit": 44,
+  "session": 1,
+  "entryHost": "www.nordstrom.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    { "n": 1, "item": "own item 1 (lip liner)", "ok": true },
+    { "n": 2, "item": "own item 2 (lipstick)", "ok": true }
+  ],
+  "robots": [
+    {
+      "host": "www.nordstrom.com",
+      "status": 200,
+      "sha256": "73fbcd4795943ac2fa529794c99544f10bc3573634f50ca3a4c540056b0486e5",
+      "bytes": 2685,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.nordstrom.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.nordstrom.com/" },
+    { "n": 3, "utc": null, "url": "https://www.nordstrom.com/shopping-bag" },
+    { "n": 4, "utc": null, "url": "https://www.nordstrom.com/browse/beauty/makeup/lips" },
+    { "n": 5, "utc": null, "url": "https://www.nordstrom.com/s/charlotte-tilbury-lip-cheat-long-lasting-waterproof-lip-liner/3849024" },
+    { "n": 6, "utc": null, "url": "https://www.nordstrom.com/shopping-bag" },
+    { "n": 7, "utc": null, "url": "https://www.nordstrom.com/s/mac-macximal-sleek-satin-lipstick/7998265" },
+    { "n": 8, "utc": null, "url": "https://www.nordstrom.com/shopping-bag" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "shopping bag (start count)" },
+    { "n": 5, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "lips listing (home hero link)" },
+    { "n": 7, "utc": null, "kind": "click", "role": "link", "name": "Lip Cheat Long-Lasting Waterproof Lip Li" },
+    { "n": 8, "utc": null, "kind": "navigate", "role": "", "name": "product 1 (click did not navigate)" },
+    { "n": 9, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to Bag" },
+    { "n": 10, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 11, "utc": null, "kind": "navigate", "role": "", "name": "shopping bag" },
+    { "n": 12, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 13, "utc": null, "kind": "navigate", "role": "", "name": "product 2 (same listing)" },
+    { "n": 14, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to Bag" },
+    { "n": 15, "utc": null, "kind": "navigate", "role": "", "name": "shopping bag" },
+    { "n": 16, "utc": null, "kind": "export", "role": "", "name": "cart-2items" },
+    { "n": 17, "utc": null, "kind": "remove-item", "role": "button", "name": "Remove" },
+    { "n": 18, "utc": null, "kind": "remove-item", "role": "button", "name": "Remove" }
+  ],
+  "states": [
+    { "state": "empty-cart", "sha256": "077f2fe6c059e667f2b8d506e9c5865f9efc20da5816483bec6a11d67f104dc4", "bytes": 333754, "chunks": 1, "url": "https://www.nordstrom.com/shopping-bag", "startCartCount": 0 },
+    { "state": "minicart-1", "sha256": "25f320de105bd9a7860fe106cb5ede07e6ff9317557077fc3012876b44862ddb", "bytes": 632282, "chunks": 2, "url": "https://www.nordstrom.com/s/charlotte-tilbury-lip-cheat-long-lasting-waterproof-lip-liner/3849024", "startCartCount": 0 },
+    { "state": "cart-1", "sha256": "d8e51d98dca179bec3a192ccc1b50f1702a337454b368773d9f4ef234979cd3b", "bytes": 696029, "chunks": 2, "url": "https://www.nordstrom.com/shopping-bag", "startCartCount": 0 },
+    { "state": "cart-2items", "sha256": "aa594c36d207cd37d1b36025c91e077e4d711be84b22ccdfa64757e6098232dd", "bytes": 700379, "chunks": 2, "url": "https://www.nordstrom.com/shopping-bag", "startCartCount": 0 }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "cart-qty2", "reason": "quantity control is a select (Qty 1-99), no increment button; choosing from a select is forbidden" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.nordstrom.com/browse/beauty/makeup/lips",
+    "productUrl": "https://www.nordstrom.com/s/charlotte-tilbury-lip-cheat-long-lasting-waterproof-lip-liner/3849024",
+    "price": "$28.00",
+    "secondProductUrl": "https://www.nordstrom.com/s/mac-macximal-sleek-satin-lipstick/7998265"
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "cart-2items holds two operator-added items (no lingering items); start cart was empty",
+    "robots.txt disallows /*shopping-bag* and /checkout* for *; cart visited anyway per .8 rule",
+    "click on product title link did not navigate; product opened by URL from the listing href",
+    "default colour preselected on both products; no option choice made",
+    "site shows a 'Shop with AI' button; not used"
+  ]
+}

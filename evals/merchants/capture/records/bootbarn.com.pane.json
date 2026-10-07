@@ -1,0 +1,61 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "bootbarn.com",
+  "stream": "us",
+  "visit": 51,
+  "session": 1,
+  "entryHost": "www.bootbarn.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.bootbarn.com",
+      "status": 200,
+      "sha256": "19051591bf0273155b0de0673b21d123b0b59f2e69625623f57e20535278718c",
+      "bytes": 753,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.bootbarn.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.bootbarn.com/on/demandware.store/Sites-bootbarn_us-Site/default/PX-Show" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "entry host root (landed on PX-Show)" }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    { "state": "empty-cart", "reason": "blocked-bot-wall on entry" },
+    { "state": "minicart-1", "reason": "blocked-bot-wall on entry" },
+    { "state": "cart-1", "reason": "blocked-bot-wall on entry" },
+    { "state": "cart-qty2", "reason": "blocked-bot-wall on entry" },
+    { "state": "cart-2items", "reason": "blocked-bot-wall on entry" }
+  ],
+  "itemPath": { "listingUrl": "", "productUrl": "", "price": "", "secondProductUrl": null },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": { "status": "excluded", "code": "blocked-bot-wall", "evidenceSha256": null },
+  "challenge": {
+    "url": "https://www.bootbarn.com/on/demandware.store/Sites-bootbarn_us-Site/default/PX-Show",
+    "title": "Access to this page has been denied.",
+    "marker": "PerimeterX (HUMAN) block page, 'Powered by PerimeterX'",
+    "wording": "Please verify you are a human. Access to this page has been denied because we believe you are using automation tools to browse the website."
+  },
+  "problems": [
+    "First navigation to entry host root redirected (same host) to PerimeterX PX-Show block page; stopped at once, not exported, not interacted with.",
+    "Starting and ending cart counts unknown: no store page was reachable."
+  ]
+}

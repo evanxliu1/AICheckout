@@ -1,0 +1,124 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "halara.com",
+  "stream": "us",
+  "visit": 40,
+  "session": 1,
+  "entryHost": "www.halara.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    { "n": 1, "item": "own item 1 (qty decremented 2 to 1, then trash icon + DELETE confirm)", "ok": true }
+  ],
+  "robots": [
+    {
+      "host": "www.halara.com",
+      "status": 200,
+      "sha256": "1cf0d806bd375b3b64d1c2812ff8ebcaf6fb7eb97f9d362e0704de48859eb093",
+      "bytes": 2724,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.halara.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.halara.com/" },
+    { "n": 3, "utc": null, "url": "https://www.halara.com/cart" },
+    { "n": 4, "utc": null, "url": "https://www.halara.com/collections/leggings" },
+    { "n": 5, "utc": null, "url": "https://www.halara.com/products/everyday-leggings-high-rise-full-length-side-pocket" },
+    { "n": 6, "utc": null, "url": "https://www.halara.com/bag" },
+    { "n": 7, "utc": null, "url": "https://www.halara.com/products/Seamless-Flow-Mid-Rise-Tummy-Control-Butt-Lifting-78-Yoga-Leggings-10-662" },
+    { "n": 8, "utc": null, "url": "https://www.halara.com/bag" },
+    { "n": 9, "utc": null, "url": "https://www.halara.com/products/socinched-high-waisted-butt-lifting-tummy-control-side-pocket-shaping-training-ultrasculpt-leggings" },
+    { "n": 10, "utc": null, "url": "https://www.halara.com/bag" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "popup-close", "role": "button", "name": "close (lucky wheel popup, coordinate)" },
+    { "n": 5, "utc": null, "kind": "navigate", "role": "", "name": "/cart (redirected to /bag)" },
+    { "n": 6, "utc": null, "kind": "popup-close", "role": "generic", "name": "NO THANKS" },
+    { "n": 7, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 8, "utc": null, "kind": "navigate", "role": "", "name": "leggings listing" },
+    { "n": 9, "utc": null, "kind": "navigate", "role": "", "name": "item 1 (href from listing)" },
+    { "n": 10, "utc": null, "kind": "choose-option", "role": "button", "name": "size M (repeated, did not register)" },
+    { "n": 11, "utc": null, "kind": "popup-close", "role": "generic", "name": "NO THANKS (several times)" },
+    { "n": 12, "utc": null, "kind": "add-to-cart", "role": "button", "name": "+ ADD TO BAG (several, no size taken)" },
+    { "n": 13, "utc": null, "kind": "choose-option", "role": "button", "name": "size L" },
+    { "n": 14, "utc": null, "kind": "add-to-cart", "role": "button", "name": "+ ADD TO BAG" },
+    { "n": 15, "utc": null, "kind": "navigate", "role": "", "name": "bag (still empty: add 1 failed)" },
+    { "n": 16, "utc": null, "kind": "navigate", "role": "", "name": "item 2 (href from listing)" },
+    { "n": 17, "utc": null, "kind": "choose-option", "role": "button", "name": "size M then L" },
+    { "n": 18, "utc": null, "kind": "add-to-cart", "role": "button", "name": "+ ADD TO BAG" },
+    { "n": 19, "utc": null, "kind": "navigate", "role": "", "name": "bag (still empty: add 2 failed)" },
+    { "n": 20, "utc": null, "kind": "navigate", "role": "", "name": "item 3 (href from listing)" },
+    { "n": 21, "utc": null, "kind": "choose-option", "role": "generic", "name": "size L (12/14)" },
+    { "n": 22, "utc": null, "kind": "add-to-cart", "role": "button", "name": "+ ADD TO BAG" },
+    { "n": 23, "utc": null, "kind": "navigate", "role": "", "name": "bag (1 item)" },
+    { "n": 24, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 25, "utc": null, "kind": "quantity-increment", "role": "button", "name": "Increase quantity of Halara UltraSculpt" },
+    { "n": 26, "utc": null, "kind": "export", "role": "", "name": "cart-qty2" },
+    { "n": 27, "utc": null, "kind": "click", "role": "button", "name": "Decrease quantity (2 to 1, cleanup)" },
+    { "n": 28, "utc": null, "kind": "click", "role": "button", "name": "trash icon (coordinate)" },
+    { "n": 29, "utc": null, "kind": "remove-item", "role": "button", "name": "DELETE" }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "7e35de97d4e931164d5a19f5c12be9758f3e247f4e7030f0289f8ccd02a92842",
+      "bytes": 163962,
+      "chunks": 1,
+      "url": "https://www.halara.com/bag",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "eb7db7877b306f6310896308ed2ec19ab7d3e9712be1e906aae1a1a6378d252f",
+      "bytes": 312399,
+      "chunks": 1,
+      "url": "https://www.halara.com/bag",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "9e39565be0de616c1da23c2f558c1c41e9ee7cec821b04369d127310e32a11af",
+      "bytes": 314698,
+      "chunks": 1,
+      "url": "https://www.halara.com/bag",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "minicart-1", "reason": "no in-page cart appeared after add; store confirms adds only on the /bag page" },
+    { "state": "cart-2items", "reason": "skipped: adds were unreliable (2 of 3 failed silently) and the item budget was spent" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.halara.com/collections/leggings",
+    "productUrl": "https://www.halara.com/products/socinched-high-waisted-butt-lifting-tummy-control-side-pocket-shaping-training-ultrasculpt-leggings",
+    "price": "$39.95",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "Pane screenshots were often blank or stale; screenshot frame (800x600) appeared offset from the 1024x768 viewport, so coordinate clicks were unreliable.",
+    "Size clicks on items 1 and 2 often did not register (a sticky add-to-bag bar overlapped the size row); adds 1 and 2 failed silently. Item 3 succeeded and was the third and last allowed try.",
+    "Product pages opened by URL from listing link hrefs, since ref clicks on listing cards were stale or off-screen.",
+    "Cookie banner offered only 'I Understand' and 'Cookies Settings' (no decline); it was left alone and later disappeared.",
+    "One stray chunk(0) call was made before any export existed on a product page (TypeError, no data).",
+    "/cart redirects to /bag on the same host; robots.txt disallows /cart and /checkout for *.",
+    "Empty-cart chunk and both cart chunk results were oversized and saved by the harness to files (not opened)."
+  ]
+}

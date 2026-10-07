@@ -1,0 +1,82 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "tjc.co.uk",
+  "stream": "non-us",
+  "visit": 44,
+  "session": 1,
+  "entryHost": "www.tjc.co.uk",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [{ "n": 1, "item": "own item 1 (qty 2)", "ok": true }],
+  "robots": [
+    {
+      "host": "www.tjc.co.uk",
+      "status": 200,
+      "sha256": "9dddbf720e33c89d85b1f4d1aab76d83009209f36fa595fde9b1c8986457bfe2",
+      "bytes": 899,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.tjc.co.uk/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.tjc.co.uk/" },
+    { "n": 3, "utc": null, "url": "https://www.tjc.co.uk/cart" },
+    { "n": 4, "utc": null, "url": "https://www.tjc.co.uk/collections/jewellery" },
+    { "n": 5, "utc": null, "url": "https://www.tjc.co.uk/collections/earrings" },
+    { "n": 6, "utc": null, "url": "https://www.tjc.co.uk/products/evertrue-white-diamond-full-hoop-earring" },
+    { "n": 7, "utc": null, "url": "https://www.tjc.co.uk/cart" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 5, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "collections/jewellery" },
+    { "n": 7, "utc": null, "kind": "click", "role": "link", "name": "Earrings" },
+    { "n": 8, "utc": null, "kind": "click", "role": "heading", "name": "Natural White Diamond Hoop Earrings" },
+    { "n": 9, "utc": null, "kind": "add-to-cart", "role": "generic", "name": "Add to bag" },
+    { "n": 10, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 11, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 12, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 13, "utc": null, "kind": "click", "role": "button", "name": "Quantity: 1" },
+    { "n": 14, "utc": null, "kind": "quantity-increment", "role": "option", "name": "2" },
+    { "n": 15, "utc": null, "kind": "export", "role": "", "name": "cart-qty2" },
+    { "n": 16, "utc": null, "kind": "remove-item", "role": "button", "name": "Remove" }
+  ],
+  "states": [
+    { "state": "empty-cart", "sha256": "9d880afee3a0183fdcf80cc1a66bd4a7c77b8237399e432e5240579fcc1024fd", "bytes": 387789, "chunks": 1, "url": "https://www.tjc.co.uk/cart", "startCartCount": 0 },
+    { "state": "minicart-1", "sha256": "bcbc1b9d591a81f877b78ae76bc757bb469e5ef159c2aeb04280474720512ece", "bytes": 946421, "chunks": 3, "url": "https://www.tjc.co.uk/products/evertrue-white-diamond-full-hoop-earring", "startCartCount": 0 },
+    { "state": "cart-1", "sha256": "c0c7acd335549da699b41fc0455ea27da0610515c533606e00846ced3d4f7c18", "bytes": 457918, "chunks": 2, "url": "https://www.tjc.co.uk/cart", "startCartCount": 0 },
+    { "state": "cart-qty2", "sha256": "f9cbd35ba4fcdb3b51ab363ce4e672c847acd53418dbff570cedc68262582f05", "bytes": 457663, "chunks": 2, "url": "https://www.tjc.co.uk/cart", "startCartCount": 0 }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "cart-2items", "reason": "not attempted; cart and site structure captured with one item (focus guidance)" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.tjc.co.uk/collections/earrings",
+    "productUrl": "https://www.tjc.co.uk/products/evertrue-white-diamond-full-hoop-earring",
+    "price": "GBP 9.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "GBP",
+  "observedRegion": "GB",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "Quantity control on /cart is a custom button+listbox (not a native select); qty 2 was set by clicking option '2', recorded as quantity-increment.",
+    "Cookie banner offered Accept All / Manage Cookies only, no direct decline; left alone.",
+    "robots.txt disallows /cart* and /checkout* for *; visited cart per .8 record-only rule.",
+    "robots.txt comments mention /llms.txt and /agents.md discovery files; not opened."
+  ]
+}

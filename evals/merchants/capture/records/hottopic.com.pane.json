@@ -1,0 +1,92 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "hottopic.com",
+  "stream": "us",
+  "visit": 43,
+  "session": 1,
+  "entryHost": "www.hottopic.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    { "n": 1, "item": "own item 1 (qty 2), first attempt by coordinate", "ok": false },
+    { "n": 2, "item": "own item 1 (qty 2), retry by ref", "ok": true }
+  ],
+  "robots": [
+    {
+      "host": "www.hottopic.com",
+      "status": 200,
+      "sha256": "3ea4ec30b3de0bf2bd61ab255691e840193e8b97d0b5ac26e744f24928417050",
+      "bytes": 1542,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.hottopic.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.hottopic.com/" },
+    { "n": 3, "utc": null, "url": "https://www.hottopic.com/cart" },
+    { "n": 4, "utc": null, "url": "https://www.hottopic.com/backpacks-bags/" },
+    { "n": 5, "utc": null, "url": "https://www.hottopic.com/product/cosmic-aura-celestial-flap-wallet/36945599.html" },
+    { "n": 6, "utc": null, "url": "https://www.hottopic.com/cart" },
+    { "n": 7, "utc": null, "url": "https://www.hottopic.com/product/cosmic-aura-celestial-flap-wallet/36945599.html" },
+    { "n": 8, "utc": null, "url": "https://www.hottopic.com/cart" },
+    { "n": 9, "utc": null, "url": "https://www.hottopic.com/cart" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "cookie-decline", "role": "button", "name": "Reject Targeting" },
+    { "n": 5, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 6, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 7, "utc": null, "kind": "navigate", "role": "", "name": "backpacks-bags listing" },
+    { "n": 8, "utc": null, "kind": "click", "role": "link", "name": "Cosmic Aura Celestial Flap Wallet" },
+    { "n": 9, "utc": null, "kind": "add-to-cart", "role": "button", "name": "ADD TO BAG" },
+    { "n": 10, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 11, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 12, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 13, "utc": null, "kind": "navigate", "role": "", "name": "product page (re-add for qty 2)" },
+    { "n": 14, "utc": null, "kind": "add-to-cart", "role": "button", "name": "ADD TO BAG" },
+    { "n": 15, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 16, "utc": null, "kind": "export", "role": "", "name": "cart-qty2" },
+    { "n": 17, "utc": null, "kind": "remove-item", "role": "button", "name": "Remove product Cosmic Aura Celestial" },
+    { "n": 18, "utc": null, "kind": "remove-item", "role": "button", "name": "REMOVE (confirm dialog, coordinate)" },
+    { "n": 19, "utc": null, "kind": "navigate", "role": "", "name": "cart (reload, item still present)" },
+    { "n": 20, "utc": null, "kind": "remove-item", "role": "button", "name": "Remove product Cosmic Aura Celestial" },
+    { "n": 21, "utc": null, "kind": "remove-item", "role": "button", "name": "Remove (confirm dialog)" }
+  ],
+  "states": [
+    { "state": "empty-cart", "sha256": "e725d351f56e1e547d4b572d52966636d970a756d469be2c298c4ab4d3cb098a", "bytes": 1295906, "chunks": 4, "url": "https://www.hottopic.com/cart", "startCartCount": 0 },
+    { "state": "minicart-1", "sha256": "8b8013d33f6b1c57e96203f75435565cdcb0eb186f6beff5b2235230528f6247", "bytes": 1723520, "chunks": 5, "url": "https://www.hottopic.com/product/cosmic-aura-celestial-flap-wallet/36945599.html", "startCartCount": 0 },
+    { "state": "cart-1", "sha256": "70c49b01005950dcbe50c750c34cc9de5b25e4d0c0ed89cfcfcdde8b031aa298", "bytes": 1761191, "chunks": 5, "url": "https://www.hottopic.com/cart", "startCartCount": 0 },
+    { "state": "cart-qty2", "sha256": "bdbcc5cebdc9af189600d9889dcee6abf1f4a35a032e120559cd278c7d5a4212", "bytes": 1761178, "chunks": 5, "url": "https://www.hottopic.com/cart", "startCartCount": 0 }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "cart-2items", "reason": "not attempted; no lingering items and a second distinct item was not added (kept within focus on cart structure)" },
+    { "state": "cart-other", "reason": "cart held only the operator's item" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.hottopic.com/backpacks-bags/",
+    "productUrl": "https://www.hottopic.com/product/cosmic-aura-celestial-flap-wallet/36945599.html",
+    "price": "$15.92",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "cart quantity control is a <select> (not allowed); cart-qty2 reached by a second ADD TO BAG on the same product page",
+    "robots.txt disallows /cart* and /checkout* for *; recorded only",
+    "first removal attempt (confirm click by coordinate) did not take; retry by ref succeeded"
+  ]
+}

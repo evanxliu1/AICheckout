@@ -1,0 +1,64 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "bathandbodyworks.com",
+  "stream": "us",
+  "visit": 46,
+  "session": 1,
+  "entryHost": "www.bathandbodyworks.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.bathandbodyworks.com",
+      "status": 200,
+      "sha256": "baa029388765d6d060045b9c7b27708322b1b8d91e6aaa17cf5eeab1da43ea56",
+      "bytes": 717,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.bathandbodyworks.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.bathandbodyworks.com/" },
+    { "n": 3, "utc": null, "url": "https://www.bathandbodyworks.com/cart" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "cart (starting count check)" }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    { "state": "empty-cart", "reason": "blocked-bot-wall on /cart before any add" },
+    { "state": "minicart-1", "reason": "blocked-bot-wall; stopped" },
+    { "state": "cart-1", "reason": "blocked-bot-wall; stopped" },
+    { "state": "cart-qty2", "reason": "blocked-bot-wall; stopped" },
+    { "state": "cart-2items", "reason": "blocked-bot-wall; stopped" }
+  ],
+  "itemPath": { "listingUrl": "", "productUrl": "", "price": "", "secondProductUrl": null },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": { "status": "excluded", "code": "blocked-bot-wall", "evidenceSha256": null },
+  "challenge": {
+    "url": "https://www.bathandbodyworks.com/cart",
+    "title": "Access to this page has been denied",
+    "wording": "Press & Hold to confirm you area human (and not a bot).",
+    "marker": "PerimeterX/HUMAN-style press-and-hold block page"
+  },
+  "problems": [
+    "Home page loaded normally (not signed in: header shows 'Sign in or sign up'); the press-and-hold challenge appeared on the first /cart load by URL. Not interacted with, not exported.",
+    "Starting cart count unknown: the header cart link was not found via find before the cart was opened by URL.",
+    "robots.txt disallows /cart* and /checkout/shipping|billing|order* for *; root allowed. Recorded only."
+  ]
+}

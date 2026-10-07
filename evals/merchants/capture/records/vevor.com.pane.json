@@ -1,0 +1,84 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "vevor.com",
+  "stream": "us",
+  "visit": 39,
+  "session": 1,
+  "entryHost": "www.vevor.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [{ "n": 1, "item": "own item 1 (qty 2, one line)", "ok": true }],
+  "robots": [
+    {
+      "host": "www.vevor.com",
+      "status": 200,
+      "sha256": "ecadf4960d4581cf7b7e8ae82b65707fc51b28ccb7a92ea95c817407a945211f",
+      "bytes": 568,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.vevor.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.vevor.com/" },
+    { "n": 3, "utc": null, "url": "https://www.vevor.com/cart" },
+    { "n": 4, "utc": null, "url": "https://www.vevor.com/tool-carts-c_41738" },
+    { "n": 5, "utc": null, "url": "https://www.vevor.com/tool-cart-c_11329/vevor-4-tier-tool-cart-on-wheels-350-lb-rolling-work-cart-with-drawer-pegboard-p_010818836395" },
+    { "n": 6, "utc": null, "url": "https://www.vevor.com/cart" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "cookie-decline", "role": "link", "name": "Reject All" },
+    { "n": 5, "utc": null, "kind": "navigate", "role": "", "name": "cart (start count)" },
+    { "n": 6, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 7, "utc": null, "kind": "navigate", "role": "", "name": "Tool Carts listing (home menu link)" },
+    { "n": 8, "utc": null, "kind": "click", "role": "link", "name": "VEVOR 4-Tier Tool Cart with Wheels, 350" },
+    { "n": 9, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to Cart" },
+    { "n": 10, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 11, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 12, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 13, "utc": null, "kind": "quantity-increment", "role": "button", "name": "+" },
+    { "n": 14, "utc": null, "kind": "export", "role": "", "name": "cart-qty2" },
+    { "n": 15, "utc": null, "kind": "remove-item", "role": "button", "name": "Delete" },
+    { "n": 16, "utc": null, "kind": "remove-item", "role": "button", "name": "Confirm (delete dialog)" }
+  ],
+  "states": [
+    { "state": "empty-cart", "sha256": "9380fbf99c8e0b7ebc254103bcd69f271fa3fbe941b3ce87d3aab11c3a99116b", "bytes": 457074, "chunks": 2, "url": "https://www.vevor.com/cart", "startCartCount": 0 },
+    { "state": "minicart-1", "sha256": "2a1145b0ad0c98424a53cd6350e64a3979f53a1ba6d08f268f6a51a6e613e02b", "bytes": 6567119, "chunks": 17, "url": "https://www.vevor.com/tool-cart-c_11329/vevor-4-tier-tool-cart-on-wheels-350-lb-rolling-work-cart-with-drawer-pegboard-p_010818836395", "startCartCount": 0 },
+    { "state": "cart-1", "sha256": "3de6e66d82e2cbc07b2e87dfbd821429c3eb53cdd453bb966171bca30d09010d", "bytes": 494232, "chunks": 2, "url": "https://www.vevor.com/cart", "startCartCount": 0 },
+    { "state": "cart-qty2", "sha256": "32476532d2f46f00c0326e97920c2e692d8fa34dc5077771591eadf80ab7728f", "bytes": 925228, "chunks": 3, "url": "https://www.vevor.com/cart", "startCartCount": 0 }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "cart-2items", "reason": "not attempted: after cart-qty2 a second item would make cart-other (no decrement control allowed); kept session short" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.vevor.com/tool-carts-c_41738",
+    "productUrl": "https://www.vevor.com/tool-cart-c_11329/vevor-4-tier-tool-cart-on-wheels-350-lb-rolling-work-cart-with-drawer-pegboard-p_010818836395",
+    "price": "USD 88.90",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "Listing reached by URL taken from a home-page menu link (not a click); still ordinary navigation, no search used.",
+    "Product has a 'number of drawers' variant; default '1 drawer' was preselected and left unchanged (no choice made).",
+    "minicart-1 is the product page with the site's post-add drawer (shows 'Checkout (1)'); drawer not visible in screenshot but present in DOM.",
+    "Site pre-filled the search box with a suggestion and chose a delivery ZIP itself; neither was touched.",
+    "Delete opened a confirm dialog; clicked Confirm as part of removing own item.",
+    "All chunk results exceeded inline size and were saved to harness tool-results files (expected; not opened).",
+    "Called tabs_context once (read-only) to confirm my tab's URL; no other tab used."
+  ]
+}

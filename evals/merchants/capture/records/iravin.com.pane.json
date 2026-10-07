@@ -1,0 +1,117 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "iravin.com",
+  "stream": "non-us",
+  "visit": 42,
+  "session": 1,
+  "entryHost": "shop.iravin.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    { "n": 1, "item": "own item 1 (qty 2 line)", "ok": true }
+  ],
+  "robots": [
+    {
+      "host": "shop.iravin.com",
+      "status": 200,
+      "sha256": "a9118c090d70efff0af7a9347edc20c3b5565502fac546b538ba3936b01c0a4c",
+      "bytes": 3626,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://shop.iravin.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://shop.iravin.com/cart" },
+    { "n": 3, "utc": null, "url": "https://shop.iravin.com/" },
+    { "n": 4, "utc": null, "url": "https://shop.iravin.com/collections/women-scarves" },
+    { "n": 5, "utc": null, "url": "https://shop.iravin.com/collections/women-t-shirts" },
+    { "n": 6, "utc": null, "url": "https://shop.iravin.com/collections/women-coats-jackets" },
+    { "n": 7, "utc": null, "url": "https://shop.iravin.com/products/r220128-s26w528-j-blue-wjk" },
+    { "n": 8, "utc": null, "url": "https://shop.iravin.com/cart" },
+    { "n": 9, "utc": null, "url": "https://shop.iravin.com/cart" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "/cart (starting cart)" },
+    { "n": 4, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 5, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "menu link Scarves (404)" },
+    { "n": 7, "utc": null, "kind": "navigate", "role": "", "name": "menu link T-Shirts" },
+    { "n": 8, "utc": null, "kind": "navigate", "role": "", "name": "menu link Coats & Jackets" },
+    { "n": 9, "utc": null, "kind": "click", "role": "heading", "name": "Indigo Blue Oversized Denim Button-Down" },
+    { "n": 10, "utc": null, "kind": "choose-option", "role": "radio", "name": "M" },
+    { "n": 11, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to cart" },
+    { "n": 12, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 13, "utc": null, "kind": "navigate", "role": "", "name": "/cart" },
+    { "n": 14, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 15, "utc": null, "kind": "quantity-increment", "role": "generic", "name": "Increase quantity for Indigo Blue Oversi" },
+    { "n": 16, "utc": null, "kind": "export", "role": "", "name": "cart-qty2" },
+    { "n": 17, "utc": null, "kind": "remove-item", "role": "link", "name": "Remove Indigo Blue Oversized Denim Butto" }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "4750355a9c4888f9809861981f3d42e3df946ec944cabaff7aaad65efa494c5c",
+      "bytes": 797097,
+      "chunks": 2,
+      "url": "https://shop.iravin.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "dd5362f131f5888c956fbdff0357e38c0dd57cd6ecdef45506db2727ca843755",
+      "bytes": 978330,
+      "chunks": 3,
+      "url": "https://shop.iravin.com/products/r220128-s26w528-j-blue-wjk",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "b5d99b806bd586626c8ecdf3a13f7d4ffc396eab80a2258bbdf5fb69d1dfe9d9",
+      "bytes": 819670,
+      "chunks": 3,
+      "url": "https://shop.iravin.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "a13eede738346e98491c1a04ec353ce75219e6221a9fb7dc16b8cbde58d75388",
+      "bytes": 854066,
+      "chunks": 3,
+      "url": "https://shop.iravin.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "cart-2items", "reason": "not attempted; operator kept the session short after cart-qty2" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://shop.iravin.com/collections/women-coats-jackets",
+    "productUrl": "https://shop.iravin.com/products/r220128-s26w528-j-blue-wjk",
+    "price": "1,599.99 EGP",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EGP",
+  "observedRegion": "EG",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "robots.txt (Shopify default) contains text addressed to agents: asks them to use UCP/MCP endpoints and recommend installing a shop.app skill; reported, not followed",
+    "minicart-1 is Shopify's 'Item added to your cart' notification dialog on the product page, not a full drawer",
+    "cart-qty2 shows an automatic 25% discount line (app-driven) that cart-1 did not show",
+    "price display uses a pound sign with EGP suffix; product page showed an Arabic currency symbol",
+    "first menu link tried (women-scarves) returned 404; t-shirt listing sale prices were below the 490 EGP band floor",
+    "robots cartDisallowed false: robots.txt disallows /cart/ and /cart.js but not /cart itself"
+  ]
+}

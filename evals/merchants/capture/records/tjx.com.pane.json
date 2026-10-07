@@ -1,0 +1,62 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "tjx.com",
+  "stream": "us",
+  "visit": 54,
+  "session": 1,
+  "entryHost": "m.tjmaxx.tjx.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "m.tjmaxx.tjx.com",
+      "status": 200,
+      "sha256": "4fba23be3937f2e76a0540aa7802edf22bd30d2a2baddd1e5f38370fbeba8305",
+      "bytes": 2659,
+      "rootDisallowed": false,
+      "cartDisallowed": null,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://m.tjmaxx.tjx.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://m.tjmaxx.tjx.com/m/index.jsp" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "entry host root" }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    { "state": "empty-cart", "reason": "blocked-bot-wall at entry" },
+    { "state": "minicart-1", "reason": "blocked-bot-wall at entry" },
+    { "state": "cart-1", "reason": "blocked-bot-wall at entry" },
+    { "state": "cart-qty2", "reason": "blocked-bot-wall at entry" },
+    { "state": "cart-2items", "reason": "blocked-bot-wall at entry" }
+  ],
+  "itemPath": { "listingUrl": "", "productUrl": "", "price": "", "secondProductUrl": null },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": { "status": "excluded", "code": "blocked-bot-wall", "evidenceSha256": null },
+  "challenge": {
+    "url": "https://m.tjmaxx.tjx.com/m/index.jsp",
+    "title": "",
+    "marker": "Akamai challenge page: unlabelled button plus Akamai logo, no store content",
+    "wording": "Powered and protected by [Akamai] Privacy"
+  },
+  "problems": [
+    "Entry root redirected to /m/index.jsp and served an Akamai interstitial (empty title, unlabelled button, 'Powered and protected by' Akamai); stopped at once without interacting, not exported.",
+    "Cart path not determined before the block, so cartDisallowed is null; robots.txt disallows /m/checkout/ for *.",
+    "Start and end cart counts not read (no store page reached)."
+  ]
+}

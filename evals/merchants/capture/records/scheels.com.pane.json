@@ -1,0 +1,122 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "scheels.com",
+  "stream": "us",
+  "visit": 41,
+  "session": 1,
+  "entryHost": "www.scheels.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.scheels.com",
+      "status": 200,
+      "sha256": "18eb3ad210f71d09fc76aff6a1cfe33f9ad4295b81976f5105cae46cfd93e5e3",
+      "bytes": 1073,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.scheels.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.scheels.com/" },
+    { "n": 3, "utc": null, "url": "https://www.scheels.com/cart" },
+    { "n": 4, "utc": null, "url": "https://www.scheels.com/" },
+    { "n": 5, "utc": null, "url": "https://www.scheels.com/p/74613418066" },
+    { "n": 6, "utc": null, "url": "https://www.scheels.com/cart" },
+    { "n": 7, "utc": null, "url": "https://www.scheels.com/" },
+    { "n": 8, "utc": null, "url": "https://www.scheels.com/p/67341940547" },
+    { "n": 9, "utc": null, "url": "https://www.scheels.com/cart" },
+    { "n": 10, "utc": null, "url": "https://www.scheels.com/c/building-sets-and-kits" },
+    { "n": 11, "utc": null, "url": "https://www.scheels.com/p/67341940560" },
+    { "n": 12, "utc": null, "url": "https://www.scheels.com/p/67341940378" },
+    { "n": 13, "utc": null, "url": "https://www.scheels.com/cart" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "click", "role": "link", "name": "My Cart" },
+    { "n": 5, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 6, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 7, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 8, "utc": null, "kind": "click", "role": "link", "name": "2024-25 Panini Select NBA Basketball Tra" },
+    { "n": 9, "utc": null, "kind": "navigate", "role": "", "name": "product (link href from home)" },
+    { "n": 10, "utc": null, "kind": "popup-close", "role": "button", "name": "dismiss cookie message" },
+    { "n": 11, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to cart" },
+    { "n": 12, "utc": null, "kind": "export", "role": "", "name": "evidence-1 (product page after add 1)" },
+    { "n": 13, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 14, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 15, "utc": null, "kind": "navigate", "role": "", "name": "product (link href from home)" },
+    { "n": 16, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to cart" },
+    { "n": 17, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 18, "utc": null, "kind": "navigate", "role": "", "name": "listing building sets" },
+    { "n": 19, "utc": null, "kind": "click", "role": "link", "name": "LEGO Harry Potter Hogwarts Castle Herbol" },
+    { "n": 20, "utc": null, "kind": "navigate", "role": "", "name": "product (link href from listing)" },
+    { "n": 21, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to cart" },
+    { "n": 22, "utc": null, "kind": "export", "role": "", "name": "evidence-2 (product page after add 3)" },
+    { "n": 23, "utc": null, "kind": "navigate", "role": "", "name": "cart" }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "41c2244a8f983b5962dd5459c06a2b89e9cdabb88a5adac208c492e1c356dc3c",
+      "bytes": 227852,
+      "chunks": 1,
+      "url": "https://www.scheels.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "e8172fc6287397c48429bd3c26dc5b555fc983010cfe1fadfe950c5306a4294b",
+      "bytes": 595020,
+      "chunks": 2,
+      "url": "https://www.scheels.com/p/74613418066"
+    },
+    {
+      "name": "evidence-2",
+      "sha256": "07d639680992280f2317a8244d40145044439f44ca6edd3bd1efa82ba4959ccb",
+      "bytes": 570951,
+      "chunks": 2,
+      "url": "https://www.scheels.com/p/67341940378"
+    }
+  ],
+  "notReached": [
+    { "state": "minicart-1", "reason": "add-to-cart refused: three items, the cart drawer opened blank and the cart stayed empty" },
+    { "state": "cart-1", "reason": "add-to-cart refused" },
+    { "state": "cart-qty2", "reason": "add-to-cart refused" },
+    { "state": "cart-2items", "reason": "add-to-cart refused" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.scheels.com/c/building-sets-and-kits",
+    "productUrl": "https://www.scheels.com/p/67341940378",
+    "price": "USD 39.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "add-to-cart-refused",
+    "evidenceSha256": "07d639680992280f2317a8244d40145044439f44ca6edd3bd1efa82ba4959ccb"
+  },
+  "challenge": null,
+  "problems": [
+    "Add to cart tried on 3 in-band items (USD 39.99, 159.99, 39.99): each time the button spun, a 'My Cart' drawer opened blank, and /cart then showed an empty cart. No visible error or challenge wording. Cause unknown (possibly a silent bot-management refusal of the add call, or the background tab).",
+    "Evidence-1 was exported right after add attempt 1, before /cart showed the add had failed; it was first meant as minicart-1 and was moved to evidence. Evidence-2 is the product page after the third failed add.",
+    "Clicks by ref on links in a carousel or listing (nav 4, 19) hit the viewport centre: the first did not navigate, and the second opened a different product (/p/67341940560, USD 343.99, out of band, not used). The intended products were then opened by their link href.",
+    "Cookie banner had only a dismiss control; closed it (logged as popup-close).",
+    "robots.txt disallows /s/ and /search but not /cart or a checkout path; root allowed."
+  ]
+}

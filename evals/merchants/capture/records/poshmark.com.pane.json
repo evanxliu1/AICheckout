@@ -1,0 +1,83 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "poshmark.com",
+  "stream": "us",
+  "visit": 42,
+  "session": 1,
+  "entryHost": "poshmark.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "poshmark.com",
+      "status": 200,
+      "sha256": "c32322d92f106664bc02244f956789fa036c13a94c891fee3a81d58f98248fed",
+      "bytes": 1027,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://poshmark.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://poshmark.com/" },
+    { "n": 3, "utc": null, "url": "https://poshmark.com/category/Men" },
+    { "n": 4, "utc": null, "url": "https://poshmark.com/listing/Tommy-Bahama-Mens-Blue-Plaid-Chino-Shorts-Size-38-:token" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "category Men" },
+    { "n": 5, "utc": null, "kind": "click", "role": "link", "name": "listing link (stale ref, no effect)" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "listing (href from category page)" },
+    { "n": 7, "utc": null, "kind": "add-to-cart", "role": "generic", "name": "Add To Bundle" },
+    { "n": 8, "utc": null, "kind": "export", "role": "", "name": "evidence-1 (sign-up modal)" }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "511a7e19d7c85339c8e0ba7fefb48d136c78e20e2275b9f02e7d4d0093ab04ef",
+      "bytes": 890547,
+      "chunks": 3,
+      "url": "https://poshmark.com/listing/Tommy-Bahama-Mens-Blue-Plaid-Chino-Shorts-Size-38-:token"
+    }
+  ],
+  "notReached": [
+    { "state": "empty-cart", "reason": "no cart or bag for logged-out visitors; bundle needs an account" },
+    { "state": "minicart-1", "reason": "Add To Bundle opened a sign-up modal (sign-in wall)" },
+    { "state": "cart-1", "reason": "sign-in wall; only other purchase path is Buy Now into checkout" },
+    { "state": "cart-qty2", "reason": "sign-in wall; single-quantity resale listings" },
+    { "state": "cart-2items", "reason": "sign-in wall" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://poshmark.com/category/Men",
+    "productUrl": "https://poshmark.com/listing/Tommy-Bahama-Mens-Blue-Plaid-Chino-Shorts-Size-38-:token",
+    "price": "$20",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": "511a7e19d7c85339c8e0ba7fefb48d136c78e20e2275b9f02e7d4d0093ab04ef"
+  },
+  "challenge": null,
+  "problems": [
+    "Logged-out listing page offers only Buy Now (goes to checkout, forbidden), Make an Offer, and Add To Bundle; Add To Bundle opened a modal asking to sign up to create a bundle. Stopped as sign-in-required.",
+    "startCartCount/endCartCount null: no cart or bag indicator exists for logged-out visitors.",
+    "robots.txt disallows /order and /listing/*/buy (recorded as checkoutDisallowed); root and listing pages allowed.",
+    "One click by stale ref failed with no effect; listing then opened by its same-site href.",
+    "Evidence chunks 0-2 were all oversized and saved by the harness to tool-results files (not opened)."
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "dickssportinggoods.com",
+  "stream": "us",
+  "visit": 47,
+  "session": 1,
+  "entryHost": "www.dickssportinggoods.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.dickssportinggoods.com",
+      "status": 200,
+      "sha256": "45c8559ce9c84d51501b3473d1eb5f49805ae1fc534201a54578ba2981d24b4f",
+      "bytes": 1739,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.dickssportinggoods.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.dickssportinggoods.com/" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "entry host home" }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    { "state": "empty-cart", "reason": "stopped on Akamai challenge page at entry" },
+    { "state": "minicart-1", "reason": "stopped on Akamai challenge page at entry" },
+    { "state": "cart-1", "reason": "stopped on Akamai challenge page at entry" },
+    { "state": "cart-qty2", "reason": "stopped on Akamai challenge page at entry" },
+    { "state": "cart-2items", "reason": "stopped on Akamai challenge page at entry" }
+  ],
+  "itemPath": { "listingUrl": "", "productUrl": "", "price": "", "secondProductUrl": null },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": { "status": "excluded", "code": "blocked-bot-wall", "evidenceSha256": null },
+  "challenge": {
+    "url": "https://www.dickssportinggoods.com/",
+    "title": "",
+    "marker": "Akamai interstitial: empty title, unlabeled button, Akamai logo, akamai.com privacy link",
+    "wording": "Powered and protected by Akamai. Privacy"
+  },
+  "problems": [
+    "Entry page first showed an Akamai challenge interstitial (get_page_text and read_page); stopped per checklist step 6, not exported, not interacted with.",
+    "Reviewer flag: a screenshot taken a few seconds later (no interaction) showed the ordinary homepage, so the interstitial cleared itself; treated as a block by the fixed rule, coordinator may judge.",
+    "Homepage header in that screenshot showed a sign-in prompt, so signedIn false; starting cart count not read.",
+    "robots.txt: / allowed for *; /Cart, /OrderItemDisplay, /Checkout disallowed."
+  ]
+}

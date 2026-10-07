@@ -1,0 +1,83 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "svpsports.ca",
+  "stream": "non-us",
+  "visit": 40,
+  "session": 1,
+  "entryHost": "www.svpsports.ca",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    { "n": 1, "item": "own item 1 (backpack, qty 2); site-added package protection line removed with it", "ok": true }
+  ],
+  "robots": [
+    {
+      "host": "www.svpsports.ca",
+      "status": 200,
+      "sha256": "4bf02ca0dfd675342b01a9d9517a5766aa26a486b508c9b11516c902ae4bda45",
+      "bytes": 3626,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.svpsports.ca/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.svpsports.ca/cart" },
+    { "n": 3, "utc": null, "url": "https://www.svpsports.ca/" },
+    { "n": 4, "utc": null, "url": "https://www.svpsports.ca/collections/accessories" },
+    { "n": 5, "utc": null, "url": "https://www.svpsports.ca/collections/accessories-bags" },
+    { "n": 6, "utc": null, "url": "https://www.svpsports.ca/collections/accessories-bags/products/jansport-superbreak-plus-backpack-4quegp0" },
+    { "n": 7, "utc": null, "url": "https://www.svpsports.ca/cart" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "/cart (starting count)" },
+    { "n": 4, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 5, "utc": null, "kind": "navigate", "role": "", "name": "entry host home" },
+    { "n": 6, "utc": null, "kind": "click", "role": "link", "name": "ACCESSORIES" },
+    { "n": 7, "utc": null, "kind": "click", "role": "link", "name": "Bags" },
+    { "n": 8, "utc": null, "kind": "click", "role": "link", "name": "Jansport - Superbreak Plus Backpack" },
+    { "n": 9, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to Cart" },
+    { "n": 10, "utc": null, "kind": "click", "role": "link", "name": "cart icon (navigates to /cart)" },
+    { "n": 11, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 12, "utc": null, "kind": "quantity-increment", "role": "button", "name": "+" },
+    { "n": 13, "utc": null, "kind": "export", "role": "", "name": "cart-qty2" },
+    { "n": 14, "utc": null, "kind": "remove-item", "role": "button", "name": "remove (x) backpack row" }
+  ],
+  "states": [
+    { "state": "empty-cart", "sha256": "11481237fd01a27c5882611b18b506824ad1257b687d09f782c84704eea4686d", "bytes": 673250, "chunks": 2, "url": "https://www.svpsports.ca/cart", "startCartCount": 0 },
+    { "state": "cart-1", "sha256": "66484328c880aa6dac67f52198934c81b7a036267ec9b9bbe7ca9e6a0a000091", "bytes": 719191, "chunks": 2, "url": "https://www.svpsports.ca/cart", "startCartCount": 0 },
+    { "state": "cart-qty2", "sha256": "7d4a29cca448fdea3423b414925ab2ed8156c7cc84868c4b40dc31ffd2018ef1", "bytes": 719165, "chunks": 2, "url": "https://www.svpsports.ca/cart", "startCartCount": 0 }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "minicart-1", "reason": "no in-page cart: add-to-cart showed no drawer and the cart icon navigates to /cart" },
+    { "state": "cart-2items", "reason": "skipped to keep naming unambiguous: site auto-adds a package-protection line, so a second item would give 3 lines" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.svpsports.ca/collections/accessories-bags",
+    "productUrl": "https://www.svpsports.ca/collections/accessories-bags/products/jansport-superbreak-plus-backpack-4quegp0",
+    "price": "49.99 CAD",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "CAD",
+  "observedRegion": "CA",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "robots.txt comments address agents (recommend installing a shop.app skill, use UCP/MCP endpoints); reported, not followed",
+    "site auto-added a paid 'SVP Package Protection' line (0.99, then 1.99 at qty 2) on first add; cart-1 and cart-qty2 show it beside the operator's item",
+    "robots.txt disallows /cart/ (trailing slash) but not /cart; checkout disallowed",
+    "find/read_page failed on the cart page (invalid selector in accessibility tree generator); used screenshots and get_page_text",
+    "all chunk results oversized and saved by the harness to tool-results files (not opened)"
+  ]
+}

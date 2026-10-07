@@ -1,0 +1,97 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "watsons.com.tr",
+  "stream": "non-us",
+  "visit": 39,
+  "session": 1,
+  "entryHost": "www.watsons.com.tr",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    { "n": 1, "item": "own item 2 (NYX foundation, qty 1)", "ok": true },
+    { "n": 2, "item": "own item 1 (L'Oreal foundation, qty 2)", "ok": true }
+  ],
+  "robots": [
+    {
+      "host": "www.watsons.com.tr",
+      "status": 200,
+      "sha256": "905c053bf6ca5b4afa3dbda9d074f9941503fc24d31b5a175cf5f181b4a153ec",
+      "bytes": 1957,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.watsons.com.tr/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.watsons.com.tr/" },
+    { "n": 3, "utc": null, "url": "https://www.watsons.com.tr/cart" },
+    { "n": 4, "utc": null, "url": "https://www.watsons.com.tr/makyaj/yuz-makyaji/fondoten/c/1001" },
+    { "n": 5, "utc": null, "url": "https://www.watsons.com.tr/loreal-paris-true-match-fondoten-no-1n/p/BP_170637" },
+    { "n": 6, "utc": null, "url": "https://www.watsons.com.tr/cart" },
+    { "n": 7, "utc": null, "url": "https://www.watsons.com.tr/makyaj/yuz-makyaji/fondoten/c/1001" },
+    { "n": 8, "utc": null, "url": "https://www.watsons.com.tr/nyx-professional-makeup-make-em-wonder-fondoten-04-cool-porcelain/p/BP_1483356" },
+    { "n": 9, "utc": null, "url": "https://www.watsons.com.tr/cart" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "cookie-decline", "role": "button", "name": "reddet" },
+    { "n": 5, "utc": null, "kind": "navigate", "role": "", "name": "cart (start check)" },
+    { "n": 6, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 7, "utc": null, "kind": "navigate", "role": "", "name": "Fondoten listing (menu link URL)" },
+    { "n": 8, "utc": null, "kind": "click", "role": "link", "name": "product tile: True Match 1N" },
+    { "n": 9, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Sepete Ekle" },
+    { "n": 10, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 11, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 12, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 13, "utc": null, "kind": "quantity-increment", "role": "button", "name": "+" },
+    { "n": 14, "utc": null, "kind": "export", "role": "", "name": "cart-qty2" },
+    { "n": 15, "utc": null, "kind": "navigate", "role": "", "name": "Fondoten listing" },
+    { "n": 16, "utc": null, "kind": "click", "role": "link", "name": "product tile: NYX Make em Wonder 04" },
+    { "n": 17, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Sepete Ekle" },
+    { "n": 18, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 19, "utc": null, "kind": "export", "role": "", "name": "cart-other" },
+    { "n": 20, "utc": null, "kind": "remove-item", "role": "button", "name": "remove icon (NYX line)" },
+    { "n": 21, "utc": null, "kind": "remove-item", "role": "button", "name": "Sil (confirm dialog)" },
+    { "n": 22, "utc": null, "kind": "remove-item", "role": "button", "name": "remove icon (L'Oreal line)" },
+    { "n": 23, "utc": null, "kind": "remove-item", "role": "button", "name": "Sil (confirm dialog)" }
+  ],
+  "states": [
+    { "state": "empty-cart", "sha256": "06b12e1eed4030f3ef03b8ec5b7c57e85930d76cfef1f6d573c4c524c362dbef", "bytes": 986446, "chunks": 3, "url": "https://www.watsons.com.tr/cart", "startCartCount": 0 },
+    { "state": "minicart-1", "sha256": "0a12d79364fe29545b8b1511635bbb4e23a4d791f79b2872b2514806ed4d6675", "bytes": 1058747, "chunks": 3, "url": "https://www.watsons.com.tr/loreal-paris-true-match-fondoten-no-1n/p/BP_170637", "startCartCount": 0 },
+    { "state": "cart-1", "sha256": "1d7a2983ddad036c6af86d4551423280213f694ecff2a4da3be2288ece623620", "bytes": 999455, "chunks": 3, "url": "https://www.watsons.com.tr/cart", "startCartCount": 0 },
+    { "state": "cart-qty2", "sha256": "8bd5d5e4adcf18e6df0f74effb659aaa32babdb70b3449ea19d41d6463a66fb8", "bytes": 1002529, "chunks": 3, "url": "https://www.watsons.com.tr/cart", "startCartCount": 0 },
+    { "state": "cart-other", "sha256": "11a5cbbac0dafa94ce2db23d38fbc50610e9bdc7ac59a5ccd44a53e462cd5401", "bytes": 1003364, "chunks": 3, "url": "https://www.watsons.com.tr/cart", "startCartCount": 0 }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "cart-2items", "reason": "second own item was added while item 1 was at qty 2 (no decrement allowed), so the two-line cart (3 units) was exported as cart-other" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.watsons.com.tr/makyaj/yuz-makyaji/fondoten/c/1001",
+    "productUrl": "https://www.watsons.com.tr/loreal-paris-true-match-fondoten-no-1n/p/BP_170637",
+    "price": "997,90 TRY",
+    "secondProductUrl": "https://www.watsons.com.tr/nyx-professional-makeup-make-em-wonder-fondoten-04-cool-porcelain/p/BP_1483356"
+  },
+  "observedCurrency": "TRY",
+  "observedRegion": "TR",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "robots.txt disallows /cart and /checkout for *; recorded only (cart visited, checkout never opened)",
+    "listing reached by URL from the home page's main-menu link href (Makyaj > Fondoten), not by a menu click",
+    "home get_page_text first returned only a 'Powered and protected by ... Privacy' widget fragment; screenshot showed the normal store with a cookie banner, no challenge",
+    "cart-other holds only own items: item 1 at qty 2 plus item 2 at qty 1 (second-item price 699,90 TRY, in band)",
+    "removal used the site's remove icon then a 'Sil' confirm in the removal dialog",
+    "all export chunks were oversized and saved by the harness to tool-results files; not opened"
+  ]
+}

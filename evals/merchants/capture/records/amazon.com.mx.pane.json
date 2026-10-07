@@ -1,0 +1,84 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "amazon.com.mx",
+  "stream": "non-us",
+  "visit": 32,
+  "session": 1,
+  "entryHost": "www.amazon.com.mx",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [{ "n": 1, "item": "own item 1 (qty 2)", "ok": true }],
+  "robots": [
+    {
+      "host": "www.amazon.com.mx",
+      "status": 200,
+      "sha256": "7b14edbd7787e9f6907d061c6b83a1ba75c08b222aae2799a2187c63c67afc7f",
+      "bytes": 6983,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.amazon.com.mx/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.amazon.com.mx/" },
+    { "n": 3, "utc": null, "url": "https://www.amazon.com.mx/gp/cart/view.html" },
+    { "n": 4, "utc": null, "url": "https://www.amazon.com.mx/" },
+    { "n": 5, "utc": null, "url": "https://www.amazon.com.mx/Crayola-Super-Washable-Markers-Count/dp/B071CP6X88" },
+    { "n": 6, "utc": null, "url": "https://www.amazon.com.mx/cart/smart-wagon" },
+    { "n": 7, "utc": null, "url": "https://www.amazon.com.mx/gp/cart/view.html" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "cart by URL" },
+    { "n": 5, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 7, "utc": null, "kind": "click", "role": "link", "name": "Crayola Super Washable Markers (home)" },
+    { "n": 8, "utc": null, "kind": "click", "role": "radio", "name": "Precio sin oferta (buy-box accordion)" },
+    { "n": 9, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Agregar al carrito" },
+    { "n": 10, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 11, "utc": null, "kind": "navigate", "role": "", "name": "cart by URL" },
+    { "n": 12, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 13, "utc": null, "kind": "quantity-increment", "role": "button", "name": "Aumentar la cantidad en uno" },
+    { "n": 14, "utc": null, "kind": "quantity-increment", "role": "button", "name": "Aumentar la cantidad en uno (coord)" },
+    { "n": 15, "utc": null, "kind": "quantity-increment", "role": "button", "name": "Aumentar la cantidad en uno" },
+    { "n": 16, "utc": null, "kind": "export", "role": "", "name": "cart-qty2" },
+    { "n": 17, "utc": null, "kind": "remove-item", "role": "button", "name": "Eliminar (own item)" }
+  ],
+  "states": [
+    { "state": "empty-cart", "sha256": "7f98555c568475bc835b7af0b9634e92e0df44fae65f28a54c44b2de07baea27", "bytes": 202107, "chunks": 1, "url": "https://www.amazon.com.mx/gp/cart/view.html", "startCartCount": 0 },
+    { "state": "minicart-1", "sha256": "bb97b38608754cc567b9edad496e6e1c697168dc84b12ea3663be80e29b38f3f", "bytes": 874254, "chunks": 3, "url": "https://www.amazon.com.mx/cart/smart-wagon", "startCartCount": 0 },
+    { "state": "cart-1", "sha256": "a074ecfc25bcf7cb51eebeb3f44229bf24c24160ce8a46a0c1f342e2a614e023", "bytes": 535337, "chunks": 2, "url": "https://www.amazon.com.mx/gp/cart/view.html", "startCartCount": 0 },
+    { "state": "cart-qty2", "sha256": "e7b9880b001b7a5d51b5c575467ed0f70f938e28678da7d6d2bc6c91799de2e1", "bytes": 540852, "chunks": 2, "url": "https://www.amazon.com.mx/gp/cart/view.html", "startCartCount": 0 }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "cart-2items", "reason": "not attempted; cart started empty and capture kept to one own item" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.amazon.com.mx/",
+    "productUrl": "https://www.amazon.com.mx/Crayola-Super-Washable-Markers-Count/dp/B071CP6X88",
+    "price": "MXN 469.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "MXN",
+  "observedRegion": "MX",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "minicart-1 is Amazon's post-add confirmation page (/cart/smart-wagon), reached by the add-to-cart navigation, not an in-page flyout.",
+    "Buy box defaulted to a Prime-only offer (MXN 430.00); operator expanded the non-Prime 'Precio sin oferta' accordion (a radio typed submit) to reach the MXN 469.99 add-to-cart; flag for reviewer.",
+    "Quantity increment needed three clicks: the first two (ref click, then coordinate click) produced no change; the third ref click set quantity to 2 (cart shows 2, not 3).",
+    "robots.txt disallows /gp/cart for *; cart page /gp/cart/view.html visited and captured per .8 rule (record only). robots.txt also disallows Claude-User and ClaudeBot at /.",
+    "Product URL path carries Amazon's ASIN segment (not token-like); kept."
+  ]
+}
