@@ -119,6 +119,7 @@ Done when the capture reaches the stop rule (or the stop-and-report thresholds),
 
 ## Related
 
+* [Reader capture workflow runbook](../ops/reader-capture-workflow.md)
 * [Merchant coverage plan](phase-10-merchant-expansion.md)
 * [Phase 10 probe report](../../docs/evals/merchant-probe-2026-10.md)
 * [Merchant coverage design](../system/merchant-coverage-design.md)

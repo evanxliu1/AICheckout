@@ -3,6 +3,7 @@
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
 ## 2026-10-07
+* **Create** [reader capture workflow](ops/reader-capture-workflow.md) runbook for running Phase 12.3 as Claude workflows from a fresh chat; PR #73 (`.10`) merged as `472222a`; now.md updated. (claude-code/claude-opus-5-5)
 * **Review** `generic-reader-protocol.10` **signed** at `779855e` (Evan's split: development 60% / held-out A 40%, fresh held-out set if A retires; stop at 840 real `cart-1`; agent-verified); residual recorded: no reader-developer activity before the final split and freeze. (claude-code/claude-opus-5-5)
 * **Review** independent review of `.10` at `598dc4b` (agent-verified): sign with fixes, applied.
   - **M1:** the reader developer never browses candidate stores outside development, unvisited candidates included.
