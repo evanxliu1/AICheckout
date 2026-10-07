@@ -8,9 +8,9 @@
   "session": 1,
   "entryHost": "poshmark.com",
   "operator": "claude-code/claude-opus-5-5",
-  "transcriptId": null,
-  "startUtc": null,
-  "endUtc": null,
+  "transcriptId": "wf_d6c28255-d7d/agent-aad97cc58eeae1471",
+  "startUtc": "2026-10-07T07:10:29.338Z",
+  "endUtc": "2026-10-07T07:12:41.197Z",
   "signedIn": false,
   "startCartCount": null,
   "endCartCount": null,
@@ -27,20 +27,84 @@
     }
   ],
   "navigations": [
-    { "n": 1, "utc": null, "url": "https://poshmark.com/robots.txt" },
-    { "n": 2, "utc": null, "url": "https://poshmark.com/" },
-    { "n": 3, "utc": null, "url": "https://poshmark.com/category/Men" },
-    { "n": 4, "utc": null, "url": "https://poshmark.com/listing/Tommy-Bahama-Mens-Blue-Plaid-Chino-Shorts-Size-38-:token" }
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://poshmark.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://poshmark.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://poshmark.com/category/Men"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://poshmark.com/listing/Tommy-Bahama-Mens-Blue-Plaid-Chino-Shorts-Size-38-:token"
+    }
   ],
   "actions": [
-    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
-    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
-    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
-    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "category Men" },
-    { "n": 5, "utc": null, "kind": "click", "role": "link", "name": "listing link (stale ref, no effect)" },
-    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "listing (href from category page)" },
-    { "n": 7, "utc": null, "kind": "add-to-cart", "role": "generic", "name": "Add To Bundle" },
-    { "n": 8, "utc": null, "kind": "export", "role": "", "name": "evidence-1 (sign-up modal)" }
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "category Men"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "listing link (stale ref, no effect)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "listing (href from category page)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add To Bundle"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (sign-up modal)"
+    }
   ],
   "states": [],
   "evidence": [
@@ -53,11 +117,26 @@
     }
   ],
   "notReached": [
-    { "state": "empty-cart", "reason": "no cart or bag for logged-out visitors; bundle needs an account" },
-    { "state": "minicart-1", "reason": "Add To Bundle opened a sign-up modal (sign-in wall)" },
-    { "state": "cart-1", "reason": "sign-in wall; only other purchase path is Buy Now into checkout" },
-    { "state": "cart-qty2", "reason": "sign-in wall; single-quantity resale listings" },
-    { "state": "cart-2items", "reason": "sign-in wall" }
+    {
+      "state": "empty-cart",
+      "reason": "no cart or bag for logged-out visitors; bundle needs an account"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "Add To Bundle opened a sign-up modal (sign-in wall)"
+    },
+    {
+      "state": "cart-1",
+      "reason": "sign-in wall; only other purchase path is Buy Now into checkout"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "sign-in wall; single-quantity resale listings"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "sign-in wall"
+    }
   ],
   "itemPath": {
     "listingUrl": "https://poshmark.com/category/Men",
@@ -79,5 +158,201 @@
     "robots.txt disallows /order and /listing/*/buy (recorded as checkoutDisallowed); root and listing pages allowed.",
     "One click by stale ref failed with no effect; listing then opened by its same-site href.",
     "Evidence chunks 0-2 were all oversized and saved by the harness to tool-results files (not opened)."
-  ]
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:10:29.338Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:10:30.586Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:10:30.591Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:10:33.854Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:10:37.486Z",
+      "tool": "navigate",
+      "url": "https://poshmark.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:10:37.507Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:10:45.069Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:10:50.247Z",
+      "tool": "navigate",
+      "url": "https://poshmark.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:10:50.251Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:10:56.548Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:10:56.561Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:11:02.587Z",
+      "tool": "navigate",
+      "url": "https://poshmark.com/category/Men"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:11:02.590Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:11:10.485Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:11:10.488Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:11:16.154Z",
+      "tool": "navigate",
+      "url": "https://poshmark.com/listing/:token"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:11:16.155Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:11:22.881Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:11:22.885Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:11:29.400Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T07:11:29.403Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T07:11:29.403Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T07:11:37.763Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T07:11:37.765Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T07:11:41.757Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T07:11:44.747Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T07:12:07.465Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T07:12:10.186Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T07:12:13.560Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T07:12:16.683Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T07:12:20.184Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T07:12:34.788Z",
+      "tool": "Write"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T07:12:41.197Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "511a7e19d7c85339c8e0ba7fefb48d136c78e20e2275b9f02e7d4d0093ab04ef"
+      }
+    ],
+    "errors": []
+  }
 }

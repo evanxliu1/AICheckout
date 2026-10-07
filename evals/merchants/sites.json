@@ -3845,12 +3845,21 @@
    "frameRegion": "CN",
    "frameCurrency": "CNY",
    "statusUnderProtocol10": {
-    "status": "not-started",
-    "code": "tab-cap",
+    "status": "captured",
+    "code": null,
     "method": "pane",
-    "session": 0,
-    "note": "tabs_create refused (pane tab cap); no store page loaded, so no visit; re-queued (coordinator reading, flagged for the 12.3 reviewer)",
-    "transcript": "wf_a638f4e9-151/agent-abbc2ac34aecd6672"
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "cart-1",
+     "cart-2items"
+    ],
+    "realCart1": true,
+    "record": "capture/records/apple.com.cn.pane.json",
+    "transcript": "wf_17756d11-17e/agent-a158ca73e33017b95",
+    "concurrency": 7,
+    "note": ""
    },
    "notStarted": [
     {
@@ -4467,6 +4476,1047 @@
     "realCart1": true,
     "record": "capture/records/discogs.com.pane.json",
     "transcript": "wf_d6c28255-d7d/agent-aaa3f4c632cc5b838",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "nordstromrack.com",
+   "stream": "us",
+   "visit": 36,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-2items"
+    ],
+    "realCart1": true,
+    "record": "capture/records/nordstromrack.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a83ee56ed16ba6486",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "sephora.com",
+   "stream": "us",
+   "visit": 38,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/sephora.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a750fe6342ff74a2f",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "vevor.com",
+   "stream": "us",
+   "visit": 39,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/vevor.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a17b4b128457fbb47",
+    "concurrency": 7,
+    "note": "audit flags: 1"
+   }
+  },
+  {
+   "domain": "poshmark.com",
+   "stream": "us",
+   "visit": 42,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/poshmark.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-aad97cc58eeae1471",
+    "concurrency": 7,
+    "note": "audit flags: 1"
+   }
+  },
+  {
+   "domain": "halara.com",
+   "stream": "us",
+   "visit": 40,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/halara.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-ad6023df1f4b2fe40",
+    "concurrency": 7,
+    "note": "collector: empty-cart:undecodable-chunk-0; audit flags: 3"
+   }
+  },
+  {
+   "domain": "scheels.com",
+   "stream": "us",
+   "visit": 41,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "add-to-cart-refused",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart"
+    ],
+    "realCart1": false,
+    "record": "capture/records/scheels.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a1c20c293596ebb4b",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "bathandbodyworks.com",
+   "stream": "us",
+   "visit": 46,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/bathandbodyworks.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a6b6a8d3540128e34",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "dickssportinggoods.com",
+   "stream": "us",
+   "visit": 47,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/dickssportinggoods.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-ab90dee6a8569ff89",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "hottopic.com",
+   "stream": "us",
+   "visit": 43,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/hottopic.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a7694d1fe52823e36",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "therealreal.com",
+   "stream": "us",
+   "visit": 48,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "captcha",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/therealreal.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-abd44406efd126b43",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "nordstrom.com",
+   "stream": "us",
+   "visit": 44,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-2items"
+    ],
+    "realCart1": true,
+    "record": "capture/records/nordstrom.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a7d0e769fa6bbac4d",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "bootbarn.com",
+   "stream": "us",
+   "visit": 51,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/bootbarn.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-ad06e07f48502ef49",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "petsmart.com",
+   "stream": "us",
+   "visit": 45,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-2items"
+    ],
+    "realCart1": true,
+    "record": "capture/records/petsmart.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a438d133d85777db9",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "walmart.com",
+   "stream": "us",
+   "visit": 49,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/walmart.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a6941a76cdd721c26",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "tjx.com",
+   "stream": "us",
+   "visit": 54,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/tjx.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-aa3651e1b5ad67e73",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "zappos.com",
+   "stream": "us",
+   "visit": 50,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-2items"
+    ],
+    "realCart1": true,
+    "record": "capture/records/zappos.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a63cb3591b33775a0",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "belk.com",
+   "stream": "us",
+   "visit": 56,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/belk.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-aff27aa04915b0f99",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "bigbadtoystore.com",
+   "stream": "us",
+   "visit": 53,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "cart-1",
+     "cart-2items"
+    ],
+    "realCart1": true,
+    "record": "capture/records/bigbadtoystore.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a4a6b9f60d80a139f",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "costco.com",
+   "stream": "us",
+   "visit": 52,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "add-to-cart-refused",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart"
+    ],
+    "realCart1": false,
+    "record": "capture/records/costco.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a5b2f102d83a8ff2b",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "tcgplayer.com",
+   "stream": "us",
+   "visit": 55,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/tcgplayer.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a36fc079fb8634f5d",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "llbean.com",
+   "stream": "us",
+   "visit": 57,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/llbean.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a87bfc95b66c6db71",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "comfrt.com",
+   "stream": "us",
+   "visit": 59,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/comfrt.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-a2c9b333a0e4c582c",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "hobbylobby.com",
+   "stream": "us",
+   "visit": 58,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/hobbylobby.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-ad8b1f5f7b6d388cd",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "amazon.com.mx",
+   "stream": "non-us",
+   "visit": 32,
+   "band": "top-1k",
+   "regionGroup": "canada-latam",
+   "homeList": "MX",
+   "frameRegion": "MX",
+   "frameCurrency": "MXN",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/amazon.com.mx.pane.json",
+    "transcript": "wf_17756d11-17e/agent-a633a3750170434d1",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "dinos.co.jp",
+   "stream": "non-us",
+   "visit": 33,
+   "band": "top-1k",
+   "regionGroup": "asia-pacific",
+   "homeList": "JP",
+   "frameRegion": "JP",
+   "frameCurrency": "JPY",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "cart-1"
+    ],
+    "realCart1": true,
+    "record": "capture/records/dinos.co.jp.pane.json",
+    "transcript": "wf_17756d11-17e/agent-a4f829daa0e2624e2",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "amazon.com.au",
+   "stream": "non-us",
+   "visit": 34,
+   "band": "top-1k",
+   "regionGroup": "asia-pacific",
+   "homeList": "AU",
+   "frameRegion": "AU",
+   "frameCurrency": "AUD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1"
+    ],
+    "realCart1": true,
+    "record": "capture/records/amazon.com.au.pane.json",
+    "transcript": "wf_17756d11-17e/agent-a15d957b2a8322186",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "thomann.nl",
+   "stream": "non-us",
+   "visit": 35,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "NL",
+   "frameRegion": "NL",
+   "frameCurrency": "EUR",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "cart-1",
+     "cart-qty2",
+     "cart-2items"
+    ],
+    "realCart1": true,
+    "record": "capture/records/thomann.nl.pane.json",
+    "transcript": "wf_17756d11-17e/agent-a1de1d4f361ab25e9",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "imperialfashion.com",
+   "stream": "non-us",
+   "visit": 37,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "IT",
+   "frameRegion": "IT",
+   "frameCurrency": "EUR",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "no-eligible-item",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart"
+    ],
+    "realCart1": false,
+    "record": "capture/records/imperialfashion.com.pane.json",
+    "transcript": "wf_17756d11-17e/agent-a325476f4a4b463dc",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "amazon.ae",
+   "stream": "non-us",
+   "visit": 38,
+   "band": "top-1k",
+   "regionGroup": "middle-east-africa",
+   "homeList": "AE",
+   "frameRegion": "AE",
+   "frameCurrency": "AED",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/amazon.ae.pane.json",
+    "transcript": "wf_17756d11-17e/agent-aa1b233ed5cfcaf09",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "netto-online.de",
+   "stream": "non-us",
+   "visit": 36,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "DE",
+   "frameRegion": "DE",
+   "frameCurrency": "EUR",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "cart-1",
+     "cart-qty2",
+     "cart-other"
+    ],
+    "realCart1": true,
+    "record": "capture/records/netto-online.de.pane.json",
+    "transcript": "wf_17756d11-17e/agent-a1b7edbeb5ee9ac9d",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "svpsports.ca",
+   "stream": "non-us",
+   "visit": 40,
+   "band": "top-1k",
+   "regionGroup": "canada-latam",
+   "homeList": "CA",
+   "frameRegion": "CA",
+   "frameCurrency": "CAD",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/svpsports.ca.pane.json",
+    "transcript": "wf_17756d11-17e/agent-a40d65256c5682591",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "watsons.com.tr",
+   "stream": "non-us",
+   "visit": 39,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "TR",
+   "frameRegion": "TR",
+   "frameCurrency": "TRY",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2",
+     "cart-other"
+    ],
+    "realCart1": true,
+    "record": "capture/records/watsons.com.tr.pane.json",
+    "transcript": "wf_17756d11-17e/agent-a8be7a49332b0870f",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "lassskincare.co.za",
+   "stream": "non-us",
+   "visit": 41,
+   "band": "top-1k",
+   "regionGroup": "middle-east-africa",
+   "homeList": "ZA",
+   "frameRegion": "ZA",
+   "frameCurrency": "ZAR",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "no-eligible-item",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart"
+    ],
+    "realCart1": false,
+    "record": "capture/records/lassskincare.co.za.pane.json",
+    "transcript": "wf_17756d11-17e/agent-a4785567d4c85b40f",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "iravin.com",
+   "stream": "non-us",
+   "visit": 42,
+   "band": "top-1k",
+   "regionGroup": "middle-east-africa",
+   "homeList": "EG",
+   "frameRegion": "EG",
+   "frameCurrency": "EGP",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/iravin.com.pane.json",
+    "transcript": "wf_17756d11-17e/agent-a3f5034f9b9d8cb33",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "tjc.co.uk",
+   "stream": "non-us",
+   "visit": 44,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "GB",
+   "frameRegion": "GB",
+   "frameCurrency": "GBP",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/tjc.co.uk.pane.json",
+    "transcript": "wf_17756d11-17e/agent-a19859ed1286ed3db",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "lge.co.kr",
+   "stream": "non-us",
+   "visit": 43,
+   "band": "top-1k",
+   "regionGroup": "asia-pacific",
+   "homeList": "KR",
+   "frameRegion": "KR",
+   "frameCurrency": "KRW",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/lge.co.kr.pane.json",
+    "transcript": "wf_17756d11-17e/agent-a8a5a175443b9777d",
+    "concurrency": 7,
+    "note": "audit flags: 2"
+   }
+  },
+  {
+   "domain": "carrefour.com.ar",
+   "stream": "non-us",
+   "visit": 45,
+   "band": "top-1k",
+   "regionGroup": "canada-latam",
+   "homeList": "AR",
+   "frameRegion": "AR",
+   "frameCurrency": "ARS",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "needs-input",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/carrefour.com.ar.pane.json",
+    "transcript": "wf_17756d11-17e/agent-aba63b63688ca71ab",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "vivara.com.br",
+   "stream": "non-us",
+   "visit": 46,
+   "band": "top-1k",
+   "regionGroup": "canada-latam",
+   "homeList": "BR",
+   "frameRegion": "BR",
+   "frameCurrency": "BRL",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "would-need-forbidden-action",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/vivara.com.br.pane.json",
+    "transcript": "wf_17756d11-17e/agent-af5a3cddcb5c6bc39",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "histoiredor.com",
+   "stream": "non-us",
+   "visit": 47,
+   "band": "top-1k",
+   "regionGroup": "europe",
+   "homeList": "FR",
+   "frameRegion": "FR",
+   "frameCurrency": "EUR",
+   "statusUnderProtocol10": {
+    "status": "captured",
+    "code": null,
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [
+     "empty-cart",
+     "minicart-1",
+     "cart-1",
+     "cart-qty2"
+    ],
+    "realCart1": true,
+    "record": "capture/records/histoiredor.com.pane.json",
+    "transcript": "wf_17756d11-17e/agent-aaf7dffc67acbef06",
+    "concurrency": 7,
+    "note": ""
+   }
+  },
+  {
+   "domain": "autozone.com",
+   "stream": "us",
+   "visit": 62,
+   "band": "top-1k",
+   "regionGroup": "us",
+   "homeList": "US",
+   "frameRegion": "US",
+   "frameCurrency": "USD",
+   "statusUnderProtocol10": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "method": "pane",
+    "session": 1,
+    "signedIn": false,
+    "states": [],
+    "realCart1": false,
+    "record": "capture/records/autozone.com.pane.json",
+    "transcript": "wf_d6c28255-d7d/agent-adbefbdd65a3d969a",
     "concurrency": 7,
     "note": ""
    }
