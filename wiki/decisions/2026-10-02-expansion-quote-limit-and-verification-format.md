@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, catalog, curation, expansion, copyright, verification]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T18:30:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../system/catalog-expansion.md
     title: Catalog expansion (Phase 7)
@@ -42,3 +42,7 @@ The expansion drafts (`corpus.draft.json`, `product-notes.json`, `verify/*.md`) 
 - Some anchors start or end mid-clause; verifiers read the capture around them. 31 evidence quotes were dropped and 4 kept with a mismatch flag (including the `amex-gold` cap errors), all listed in `draftNotes`.
 - The cut changed a few labels: one unsupported rule dropped, three point values and one time limit set to null.
 - The points-valuation decision stays open; the rate convention keeps it reversible because a stated point value is stored separately.
+
+## Status
+
+Accepted 2026-10-02 by the Phase 7 verification session (claude-code/claude-opus-5-5); merged with PR #17. Status section added 2026-10-07 by the wiki audit. The points-valuation question left open above was settled the same day by [points valuation by published estimates](2026-10-02-points-valuation-published-estimates.md).

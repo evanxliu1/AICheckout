@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, phase-12, merchants, eval, capture, robots]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T06:40:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol (Amendment 3)
@@ -51,3 +51,5 @@ On 2026-10-06 Evan decided in chat to relax the robots rule: a site is excluded 
 
 ## Status
 Proposed 2026-10-06 by the amendment builder (claude-code/claude-opus-5-5). Independent review at `7070917` (2026-10-06): "sign with fixes" (agent-verified); applied with tests: recipe equals the findings exactly, home and listing `view-NN` required and the navigation order committed (12.3 reviewer MUST check recipes against them), frame `hosts` for listing and items, cart path checked against the cart host's robots.txt, disallow-all defined as `/` disallowed under longest match, narrower add-to-cart backstop, `add-to-cart-refused` without substitution when the fixed item is unavailable. The robots rule is Evan's decision in chat (2026-10-06); the rest awaits the independent reviewer's signature of `.4`. Amends the robots and stop-order rows of [capture tool design choices](2026-10-05-capture-tool-design.md). Re-check at `2eebbeb`: **signed `generic-reader-protocol.4`, `capture-tool.2` approved** (agent-verified); accepted. The robots posture is Evan's decision (chat, 2026-10-06).
+
+For pane capture the robots row and the reconnaissance session are superseded by `.8` ([capture protocol 8](2026-10-06-capture-protocol-8.md)): robots.txt is recorded, never excluding, and there is no reconnaissance session. The rules stand for the robot captures made under `.4`–`.7`.

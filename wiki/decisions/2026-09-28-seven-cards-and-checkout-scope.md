@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, domain, scope]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../archive/phase2-goal.md
     title: Phase 2–6 plan (archived)
@@ -32,3 +32,5 @@ A measurable corpus needed a fixed card set, and the product only runs at online
 
 ## Status
 Accepted 2026-09-28 by Evan Liu. Recorded retroactively on 2026-10-02 from the archived plan; the body summarizes it, the archive holds the original wording. The card list is being widened by [Expand the catalog to the top-10 U.S. issuers' consumer cards](2026-10-01-top-ten-issuer-card-expansion.md) (2026-10-01, in progress); the checkout-scope rule stands.
+
+The widening finished: catalog v3 with 178 cards was bundled on 2026-10-03 ([bundled catalog v3](2026-10-03-bundled-catalog-v3.md)) and published as hosted release 2 the same day.

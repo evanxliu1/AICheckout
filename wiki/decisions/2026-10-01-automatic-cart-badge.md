@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, extension, product, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T03:00:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../archive/phase2-goal.md
     title: Phase 2–6 plan (archived)
@@ -35,3 +35,5 @@ The owner asked for Honey / Capital One Shopping style behavior: the answer appe
 
 ## Status
 Accepted 2026-10-01 by Evan Liu. Recorded retroactively on 2026-10-02 from the archived plan; the body summarizes it, the archive holds the original wording.
+
+Amended in effect: since Phase 11 (2026-10-05, [generic store profile](2026-10-05-generic-store-profile.md)) the popup also recommends at any U.S. online store with a typed amount, without a badge; since 2026-10-06 ([reader shows only certain amounts](2026-10-06-reader-shows-only-certain-amounts.md)) a read amount is shown only when the reader is certain.

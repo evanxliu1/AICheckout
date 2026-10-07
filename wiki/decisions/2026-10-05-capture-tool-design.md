@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, phase-12, merchants, eval, capture]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T23:05:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol
@@ -53,3 +53,5 @@ As chosen above, in `capture-tool.1` (`evals/merchants/capture/`), with recipe `
 
 ## Status
 Proposed 2026-10-05 by the Phase 12.2 builder (claude-code/claude-opus-5-5). The independent review of 2026-10-05 required changes (agent-verified); they are applied, each with a fixture test that fails without it. Accepted 2026-10-05: the reviewer's re-review approved (agent-verified), with two low fixes applied (image-only control names, a discriminating isolation fixture). The robots and stop-order rows are amended by [reconnaissance session and robots posture](2026-10-06-capture-recon-and-robots.md) (2026-10-06, `capture-tool.2`).
+
+Retired as the main capture path by `.8` (2026-10-06, [capture protocol 8](2026-10-06-capture-protocol-8.md)); the tool is kept, its click-point defect is unfixed, and its captures stay valid as robot captures. The attended-pane deferral was replaced by agent pane capture without CAPTCHA solving; robots.txt has been recorded only since `.8`.

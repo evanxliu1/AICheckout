@@ -6,7 +6,7 @@ status: stable
 tags: [domain, cards, catalog]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:26:46Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../packages/rewards-core/src/catalog-v3.ts
     title: CATALOG_V3 (generated catalog, version 2026-10-05.renewal.1)
@@ -52,7 +52,9 @@ The extension covers 178 U.S. personal credit cards from the ten largest issuers
 
 Four cards are closed-loop store cards, accepted only at their brands (Amazon Store Card, Amazon Secured Card, Newegg Store Credit Card, Harbor Freight); eight have chosen or automatic categories.
 
-Counts read from `CATALOG_V3` `2026-10-05.renewal.1` on 2026-10-05; the per-program values are in [catalog expansion](../system/catalog-expansion.md#reward-program-valuation-m3) and the rule concepts in [Reward rules](reward-rules.md#catalog-v3-rules). Not in the catalog: Marriott Bonvoy Bold and U.S. Bank Shield (no stated base rate), 5 cards with no stated earn rate and 2 fuel cards.
+At the generic "Another U.S. online store" (Phase 11) closed-loop store cards are not accepted and brand-scoped rules are not applied; brand websites get their brands in Phase 14 ([Merchants](merchants.md#another-us-online-store-phase-11)).
+
+Counts read from `CATALOG_V3` `2026-10-05.renewal.1` on 2026-10-05; the per-program values are in [reward-program valuation](../system/reward-program-valuation.md) and the rule concepts in [Reward rules](reward-rules.md#catalog-v3-rules). Not in the catalog: Marriott Bonvoy Bold and U.S. Bank Shield (no stated base rate), 5 cards with no stated earn rate and 2 fuel cards.
 
 ## The seven original cards (release 1)
 

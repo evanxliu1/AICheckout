@@ -6,7 +6,7 @@ status: accepted
 tags: [decision, catalog, curation, expansion, verification]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T23:00:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../system/catalog-expansion.md
     title: Catalog expansion (Phase 7)
@@ -41,3 +41,7 @@ Nine verifier subagents (one per issuer, plus a second opinion on Chase) checked
 - Labels are consistent across issuers for the same mechanic. The final pass changed Gap Inc. Encore point values (null → 20), added store-only, gate and partial-option issues, and removed two issues that stated no problem; it reopened no other adjudicated decision.
 - Gated rates (17) and redemption values that are not point values (18) are known gaps until Stage-2 engine work.
 - A new issuer decision goes into that issuer's file with its date, not into the general rules, unless it applies across issuers.
+
+## Status
+
+Accepted 2026-10-02 by the Phase 7 verification session (claude-code/claude-opus-5-5); merged with PR #17. Status section added 2026-10-07 by the wiki audit.

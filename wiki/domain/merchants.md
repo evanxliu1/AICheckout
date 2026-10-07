@@ -6,7 +6,7 @@ status: stable
 tags: [domain, merchants, mcc]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T20:45:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../evals/curation/real/merchants.json
     title: Merchant profiles (input to the catalog builder)
@@ -59,7 +59,7 @@ Both CheckMCC pages were re-checked unchanged (same SHA-256) by `pipeline freshn
 
 ## Another U.S. online store (Phase 11)
 
-Since Phase 11 the engine, not the catalog, supplies one more profile: `GENERIC_MERCHANT_PROFILE` in [`generic-merchant.ts`](../../packages/rewards-core/src/generic-merchant.ts) ([decision](../decisions/2026-10-05-generic-store-profile.md)). The popup uses it for any web page that is not one of the three supported stores.
+Since Phase 11 the engine, not the catalog, supplies one more profile: `GENERIC_MERCHANT_PROFILE` in [`generic-merchant.ts`](../../packages/rewards-core/src/generic-merchant.ts) ([decision](../decisions/2026-10-05-generic-store-profile.md)). The popup uses it for any `http(s)` page whose site (last two host labels) is not one of the three supported stores.
 
 | `id` | Name | Online retail | Physical goods | U.S. | `expectedCategory` | MCC | Brands |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -68,10 +68,14 @@ Since Phase 11 the engine, not the catalog, supplies one more profile: `GENERIC_
 - `compareV3` adds it to the catalog's merchants unless the catalog has a profile with that id (`merchantProfilesV3`), so every v3 release, bundled or hosted, supports it with no schema, SQL or migration change. v1 and v2 catalogs still answer `unsupported-merchant`. `catalogMerchantIds` lists it for v3 catalogs.
 - What applies there: `all-purchases` and `online-retail` rules. MCC-group rules do not (no reward category is `general-merchandise`), brand-scoped rules do not, and closed-loop cards are not accepted.
 - **Known limit.** It has no brands, so a rule's `excludedBrandIds` cannot fire at a generic store. A guard test in `extension/tests/rewards-v3.test.ts` lists every bundled rule that can apply there and has exclusions. In `2026-10-05.renewal.1` there is one: the Synchrony OnePay CashRewards first-90-days 3% on all purchases, which excludes Walmart, so at walmart.com a shopper who says they are in the first 90 days sees 3% where Walmart purchases earn under the card's own Walmart rule. Named profiles for such stores come with the merchant database (Phase 14).
+- The amount is typed by the shopper (no cart reading at a generic store), and online-retail eligibility starts at "Eligible", which the shopper can change.
+- **Brand websites deferred (Evan, 2026-10-05):** at the website of a brand the catalog knows (walmart.com, target.com, …) brand-scoped rules and exclusions do not apply and closed-loop cards are not accepted until Phase 14 gives those domains their brands, before Release A.
+- **Generic reader only (Evan, 2026-10-06):** no store configs anywhere; when the future generic reader is not certain of an amount it withholds and the recommendation shows rates only ([decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md)). The three supported stores' adapters are legacy and retire once the generic reader matches them.
 
 ## Gotchas
 
 - The research report recommends the label "community, medium-low confidence". The catalog stores `low`.
+- At a generic store the online-retail answer defaults to "Eligible", so a BCE-style online-retail bonus applies unless the shopper changes it; a payment processor page (PayPal, Shop Pay) also gets the generic answer.
 - Browser cart observations do not show how a transaction will post. The shopper's `onlineRetail` answer and the payment path decide whether BCE's 3% is certain or a range.
 
 ## Related

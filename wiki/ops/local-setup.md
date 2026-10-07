@@ -6,7 +6,7 @@ status: stable
 tags: [ops, setup, testing]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:47:59Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../package.json
     title: Root scripts and Node engine
@@ -37,7 +37,7 @@ One npm workspace (root `package-lock.json`) covers `extension/`, `packages/*`, 
 | Node | 24 ([`.nvmrc`](../../.nvmrc); `engines: ">=24 <25"`) | Everything |
 | npm | Ships with Node 24 | Install, scripts |
 | Docker daemon | Running | `db:*` scripts; the pinned `supabase` CLI (2.118.0) is an npm devDependency and pulls images on first start |
-| Playwright Chromium | `npx playwright install chromium` (CI adds `--with-deps`) | `test:browser`, `test:catalog:browser` |
+| Playwright Chromium | `npx playwright install chromium` (CI adds `--with-deps`) | `test:browser`, `test:catalog:browser`, `test:capture:browser` |
 | ffmpeg, ffprobe | On `PATH` | `release:media`, `release:portfolio` only ([Release media](release-media.md)) |
 | Codex CLI / Claude Code CLI | Signed in | Live evals only ([Live model runs](live-model-runs.md)) |
 
@@ -45,10 +45,10 @@ One npm workspace (root `package-lock.json`) covers `extension/`, `packages/*`, 
 
 1. `nvm use` (or otherwise select Node 24).
 2. `npm ci`
-3. `npm run lint` (ESLint over `extension/src`, `extension/tests`, `extension/e2e`, `extension/scripts`, `packages`, `apps`, `scripts`, `tools`).
+3. `npm run lint` (ESLint over `extension/src`, `extension/tests`, `extension/e2e`, `extension/scripts`, `packages`, `apps`, `scripts`, `tools`, `evals/merchants/capture`).
 4. `npm run format:check` (Prettier; fix with `npm run format`). `docs/` and build output are excluded by [`.prettierignore`](../../.prettierignore).
 5. `npm run typecheck` (every workspace's `typecheck`).
-6. `npm test` (every workspace's Vitest suite, the extension package test, the `packages/ui` icon check, then `test:scripts` = `node --test scripts/lib/*.test.mjs`).
+6. `npm test` (every workspace's Vitest suite, the extension package test, the `packages/ui` icon check, then `test:scripts` = `node --test` over `scripts/lib/*.test.mjs`, `evals/merchants/tools/*.test.mjs` and `evals/merchants/capture/tests/*.test.mjs`).
 7. Offline eval gates, no model call: `npm run eval:curation -- --check`, `npm run eval:v2 -- --check`, `npm run catalog:v2:check`, `npm run catalog:v3:check`.
 8. Card-expansion pipeline (maintainer only): `npm run pipeline -- status` and `npm run pipeline -- next --json`; commands in [card pipeline CLI commands](../system/card-pipeline-commands.md). Stages that read captures (and `publish`) run in Evan's main checkout, which holds every gitignored capture since 2026-10-05 ([capture folders](catalog-release.md#capture-folders)).
 9. `npm run build` (every workspace's `build`; the extension lands in `extension/dist/`).
@@ -58,9 +58,10 @@ One npm workspace (root `package-lock.json`) covers `extension/`, `packages/*`, 
    - `npm run test:browser --workspace=ai-checkout-extension`
    - `npm run test:browser --workspace=@ai-checkout/review -- e2e/a11y.spec.ts` (the other review specs need the local database)
    - `npm run test:catalog:browser`
+   - `npm run test:capture:browser` (Phase 12 capture tool and pane export round trip on a 127.0.0.1 fixture shop)
    - `npm run test:package:browser --workspace=ai-checkout-extension` (packages the zip into `extension/artifacts/`, then tests it)
 
-### Verified 2026-10-02
+### Verified 2026-10-02 (historical snapshot; counts have grown since)
 
 Run in the `llm-wiki` worktree on macOS with Node v24.6.0:
 

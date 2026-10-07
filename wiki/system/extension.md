@@ -6,7 +6,7 @@ status: stable
 tags: [system, extension, chrome, mv3]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T21:10:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../extension/vite.config.ts
     title: Build plugins and generated manifest
@@ -91,6 +91,8 @@ Reconciliation ([`migrate.ts:reconcileState`](../../extension/src/state/migrate.
 The catalog in effect ([`state/catalog.ts:currentCatalog(cache, now)`](../../extension/src/state/catalog.ts)) is, of the cached release's catalog (v1, v2 or v3) and the bundled `BUNDLED_CATALOG` (`CATALOG_V3`, since Stage 2 M5 `2026-10-02.expansion.1` and since the Phase 9 renewal, PR #50, `2026-10-05.renewal.1`; `CATALOG_V2` before), the one valid now; when both are valid, the one with the later `verifiedAt` (the cached release on a tie); when both have expired, again the one verified later; when neither is valid otherwise (one not yet valid), the cached release, so comparisons report its state ([decision](../decisions/2026-10-03-newest-valid-catalog-wins.md), [both expired](../decisions/2026-10-03-expired-catalogs-keep-answers.md)). An expired catalog in effect never prunes choices, gate answers or point values (`reconcileWallet(…, { keepOptions })`, also in `validateWallet`); comparisons get an in-memory copy without unknown IDs (`wallet.ts:engineWallet`). Only the worker imports this module. `checkout:refresh-catalog` is user-triggered from the popup and exists only in builds with `VITE_CATALOG_API_URL` ([`catalog-config.ts`](../../extension/src/catalog-config.ts)); the URL must be a fixed HTTPS `/v1/catalog` endpoint or the build fails. [`prepareCatalogUpdate`](../../extension/src/state/catalog.ts) accepts every catalog schema and rejects: invalid schema, a null release after one was cached, expired or future releases, a lower sequence, same sequence with different content, a reused version. On acceptance it drops usage rows whose rule changed or disappeared, and choices, gate answers and point values whose IDs the new catalog lacks, stamps `walletCatalogVersion`, clears the saved comparison and writes cache and state together; a check that finds nothing new writes only `lastCheckedAt` to the cache. A release older than the bundled catalog in effect is cached (the reference for the next sequence check) without touching the state ([decision](../decisions/2026-10-02-extension-state-v3.md)).
 
 ### Site adapters
+
+**Legacy since 2026-10-06** (Evan, [decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md)): no new adapters or store configs; the three adapters stay until the Phase 13 generic reader matches them on their stores, then retire.
 
 Each merchant is a JSON spec in [`src/checkout/adapters/`](../../extension/src/checkout/adapters) validated by [`schema.ts:siteAdapterSchema`](../../extension/src/checkout/adapters/schema.ts) at build time (in `vite.config.ts`) and in tests, never at runtime, so Zod stays out of content scripts. A spec declares hosts and anchored path regexes, `matchPatterns` (content-script reach), `orderConfirmation` paths, summary/row/label/amount selectors, label→kind map, loading and empty-cart markers, `requiredKinds`, duplicate and combine policy.
 
