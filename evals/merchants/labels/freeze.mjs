@@ -336,7 +336,7 @@ export function check(freezeFile, { data, variantData, root = REPO_ROOT } = {}) 
       for (const k of ['snapshotSha256', 'domSha256', 'rebuiltSha256', 'viewportSha256', 'fullSha256'])
         if (s[k] !== e[k]) problems.push(`${e.id}: ${k} differs from the freeze`);
     }
-  if (data)
+  if (data || variantData)
     for (const e of files.filter((x) => x.role === 'variant-manifest')) {
       const p = path.resolve(root, e.path);
       if (existsSync(p) && fileSha(p) === e.sha256)
