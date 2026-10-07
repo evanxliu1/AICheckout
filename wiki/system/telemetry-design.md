@@ -1,12 +1,12 @@
 ---
-type: System
-title: Telemetry, operations and value metrics design (Phase 10, draft)
+type: System Component
+title: Telemetry, operations and value metrics design (Phase 17, draft)
 description: Proposed consented telemetry with no automatic browsing data (no domains or merchants in events; shopper-initiated "Suggest this store" and "Report a problem" instead), rotating install IDs with day-since-install buckets, an anonymous rate-limited ingest RPC, 90-day retention, operations and diligence controls, value metrics and a data room for a buyer or partner, and affiliate rules. Draft v6; nothing here is built.
 status: draft
 tags: [system, design, phase-10, telemetry, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-06T23:30:00Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: https://developer.chrome.com/docs/webstore/program-policies/limited-use
     title: Chrome Limited Use (browsing activity only for a user-facing feature; no sale, no ads)
@@ -22,9 +22,9 @@ sources:
     title: Current privacy policy draft (to be rewritten)
 ---
 
-# Telemetry, operations and value metrics design (Phase 10, draft)
+# Telemetry, operations and value metrics design (Phase 17, draft)
 
-**Draft v6, not built, not approved.** Companion to the [merchant coverage design](merchant-coverage-design.md) and the [Phase 10 plan](../product/phase-10-merchant-expansion.md). Evan's direction (2026-10-05): collect usage data to run the product and, later, to support affiliate card offers; never sell user data; account-free until after the MVP. The **disclosed** use is measuring product quality and reliability; nothing is collected for affiliate offers until a later consent.
+**Draft v6, not built, not approved.** Companion to the [merchant coverage design](merchant-coverage-design.md) and the [Phases 10–17 plan](../product/phase-10-merchant-expansion.md). Evan's direction (2026-10-05): collect usage data to run the product and, later, to support affiliate card offers; never sell user data; account-free until after the MVP. The **disclosed** use is measuring product quality and reliability; nothing is collected for affiliate offers until a later consent.
 
 ## Policy frame (Chrome policy text read 2026-10-05)
 
@@ -53,7 +53,7 @@ Every event: `install_id` (random, rotated every 30 days, resettable), `install_
 | Catalog health | versions in use, refresh success or failure, expiry errors |
 | Errors | error code, extension version |
 
-**Shopper-initiated, per click** (user-facing features, described on the listing and in the UI): **"Suggest this store"** in the popup at a generic store sends its registrable domain (from the merchant release's top-retail allowlist, sensitive categories removed; otherwise refused); **"Report a problem"** sends the domain, the reader result and the shopper's note. These feed the merchant growth list and store-config fixes; monthly replays of our own captures cover drift.
+**Shopper-initiated, per click** (user-facing features, described on the listing and in the UI): **"Suggest this store"** in the popup at a generic store sends its registrable domain (from the merchant release's top-retail allowlist, sensitive categories removed; otherwise refused); **"Report a problem"** sends the domain, the reader result and the shopper's note. These feed the merchant growth list and generic-reader fixes (no store configs since 2026-10-06); monthly replays of our own captures cover drift.
 
 **Deferred** to the affiliate phase: the "opportunity" event (best owned vs best catalog rate). Reserved names, not emitted: `offer_impression`, `offer_click` with `offer_id`, `placement`, client `click_id`. Dictionary published as `docs/telemetry/events.md` (public, like `docs/evals/`, not wiki material).
 
@@ -69,13 +69,13 @@ Every event: `install_id` (random, rotated every 30 days, resettable), `install_
 
 | Area | Control |
 | --- | --- |
-| Accessibility | axe checks at 360 and 480 px on the consent screen, merchant search, "is that right?" prompt and grant prompt |
+| Accessibility | axe checks at 360 and 480 px on the consent screen, the withheld-amount (rates-only) state and the grant prompt (no merchant search since Phase 11's scope cut, no "is that right?" prompt since 2026-10-06) |
 | Deletion without accounts | "Delete all local data" clears the queue and ID; raw rows expire in 90 days; a request quoting the install ID shown in settings is honoured within 30 days for rows under that ID; rows under earlier, rotated IDs cannot be found and expire at 90 days (the policy says so) |
 | Incident | Remote stop: the ingest answers 410 and clients stop sending; merchant releases roll back by republishing the previous one; `disabled` turns off a merchant profile; support channel and breach-notice owner in `docs/release/support.md` and `deployment-runbook.md` |
 | Security review | Independent threat-model review of the ingest path and the hosted merchant release before Release B |
 | Growth-list integrity | Advisory only, reviewed by Evan; nothing auto-promoted into a release; dashboards count distinct installs, not events |
 | Uptime and cost | Render free tier sleeps and is a known limit; clients tolerate cold starts; no SLA; upgrade trigger in decision D14; API availability is a tracked metric |
-| Retailer terms | Capture posture (robots, terms, rate limit) recorded in the eval protocol |
+| Retailer terms | Capture posture in the eval protocol: robots.txt and terms recorded, never excluding (since `.8`); CAPTCHA and bot-wall stores skipped and reported, never solved |
 
 ## Value metrics (what a buyer or partner asks for)
 

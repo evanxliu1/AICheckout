@@ -6,7 +6,7 @@ status: stable
 tags: [system, code-map]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:26:46Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../package.json
     title: Root workspaces and scripts
@@ -42,6 +42,8 @@ One npm workspace repo (`extension`, `packages/*`, `apps/*`, `tools/*`), Node 24
 | --- | --- | --- |
 | [`supabase/`](../../supabase) | `config.toml`, 10 migrations, generated `seed.sql`, pgTAP tests in `supabase/tests/` | [Database](database.md) |
 | [`evals/curation/`](../../evals/curation) | v1 synthetic corpus, v2 fixture and real corpora (captures gitignored), matrix configs | [Evaluation](evaluation.md) |
+| [`evals/merchants/`](../../evals/merchants) | Phase 12 reader eval data and tools: retail frames, candidate lists (`reader-candidates-8.json`), `sites.json`, seeded selection (`tools/seeded-selection.mjs`), capture (`capture/`: retired Playwright robot, `pane-export.js`, `rebuild.mjs`, `audit-pane-transcript.mjs`, `pane-platform.mjs`, text-free records); exports gitignored | [Merchant coverage design](merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12), [Phase 12 plan](../product/phase-12-reader-eval.md) |
+| [`.claude/agents/`](../../.claude/agents) | Pinned Claude Code subagents: the four card-pipeline agents and `pane-operator` (Phase 12 pane capture, restricted tools) | [Card-expansion pipeline](card-expansion-pipeline.md), [Phase 12 plan](../product/phase-12-reader-eval.md#safety-and-copyright) |
 | [`docs/evals/`](../../docs/evals) | Committed results (`results.json`, `results.md`, SVG charts); the site copies them at build | [Evaluation](evaluation.md), [Public site](public-site.md) |
 | [`scripts/`](../../scripts) | Root Node scripts (below) and [`lint_wiki.py`](../../scripts/lint_wiki.py) | [Testing](testing.md) |
 | [`.github/workflows/`](../../.github/workflows) | `extension.yml` ("Application checks") and `database.yml` ("Database checks") | [Testing](testing.md#ci) |
@@ -66,6 +68,8 @@ One npm workspace repo (`extension`, `packages/*`, `apps/*`, `tools/*`), Node 24
 | [`run-eval-matrix.mjs`](../../scripts/run-eval-matrix.mjs), [`summarize-evals.mjs`](../../scripts/summarize-evals.mjs) | `eval:matrix`, `eval:summarize` | Resumable matrix runner; aggregate results into `docs/evals/` |
 | [`capture-issuer-pages.mjs`](../../scripts/capture-issuer-pages.mjs), [`author-real-corpus.mjs`](../../scripts/author-real-corpus.mjs), [`author-curation-corpus.mjs`](../../scripts/author-curation-corpus.mjs), [`build-verification-page.mjs`](../../scripts/build-verification-page.mjs) | none | Corpus capture and authoring |
 | [`build-release-media.mjs`](../../scripts/build-release-media.mjs), [`build-portfolio-demo.mjs`](../../scripts/build-portfolio-demo.mjs), [`render-full-stack-demo.mjs`](../../scripts/render-full-stack-demo.mjs) | `release:media`, `release:portfolio` | Screenshot and video generation |
+| `node --test` over `scripts/lib`, `evals/merchants/tools` and `evals/merchants/capture/tests` | `test:scripts` (part of `npm test`) | Script, selection and capture unit tests ([testing](testing.md)) |
+| `node --test` over `evals/merchants/capture/tests/browser` | `test:capture:browser` | Capture tool and pane export round trip on a 127.0.0.1 fixture shop (Playwright Chromium) |
 | [`db-push.sh`](../../scripts/db-push.sh) | none | Pushes new migrations to the linked hosted project (operator only) |
 | `extract-cards.mjs`, `build-expansion-cards.mjs`, `draft-expansion-labels.mjs`, `apply-expansion-verification.mjs`, `check-expansion-quotes.mjs`, `merge-capture-manifests.mjs`, `expansion-capture-report.mjs`, `expansion-pipeline-metrics.mjs`, `score-expansion-traces.mjs` | none (wrapped by `npm run pipeline`) | Card-expansion stages: [catalog expansion](catalog-expansion.md), [card-expansion pipeline](card-expansion-pipeline.md) |
 

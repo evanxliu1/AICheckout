@@ -6,7 +6,7 @@ status: stable
 tags: [system, evaluation, llm, curation]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:47:59Z
+  at: 2026-10-07T00:20:00Z
 sources:
   - resource: ../../evals/curation/README.md
     title: Curation evaluations README
@@ -171,7 +171,7 @@ Full page: [`docs/evals/expansion.md`](../../docs/evals/expansion.md). The expan
 
 ## Related
 
-* [Generic cart reader evaluation protocol](../../docs/evals/generic-reader-protocol.md) — the merchant-side eval (real retail pages worldwide since `.2`, total and currency, three site splits, peek policy), pre-registered 2026-10-06; not a curation eval
+* [Generic cart reader evaluation protocol](../../docs/evals/generic-reader-protocol.md) — the merchant-side eval (real retail pages worldwide since `.2`, total and currency, three site splits weighted 1 : 2 : 2, peek policy), pre-registered 2026-10-05; binding text `generic-reader-protocol.9` (signed `cbf2c72`; `.8` signed `a1c994d`); pass bar: one-sided 95% upper bound of wrong shown amounts ≤ 1%, coverage reported; not a curation eval
 * [Cards](../domain/cards.md)
 * [Reward rules](../domain/reward-rules.md)
 * [Glossary](../domain/glossary.md)

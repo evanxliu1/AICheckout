@@ -52,7 +52,7 @@ The extension covers 178 U.S. personal credit cards from the ten largest issuers
 
 Four cards are closed-loop store cards, accepted only at their brands (Amazon Store Card, Amazon Secured Card, Newegg Store Credit Card, Harbor Freight); eight have chosen or automatic categories.
 
-Counts read from `CATALOG_V3` `2026-10-05.renewal.1` on 2026-10-05; the per-program values are in [catalog expansion](../system/catalog-expansion.md#reward-program-valuation-m3) and the rule concepts in [Reward rules](reward-rules.md#catalog-v3-rules). Not in the catalog: Marriott Bonvoy Bold and U.S. Bank Shield (no stated base rate), 5 cards with no stated earn rate and 2 fuel cards.
+Counts read from `CATALOG_V3` `2026-10-05.renewal.1` on 2026-10-05; the per-program values are in [reward-program valuation](../system/reward-program-valuation.md) and the rule concepts in [Reward rules](reward-rules.md#catalog-v3-rules). Not in the catalog: Marriott Bonvoy Bold and U.S. Bank Shield (no stated base rate), 5 cards with no stated earn rate and 2 fuel cards.
 
 ## The seven original cards (release 1)
 
