@@ -1116,6 +1116,9 @@ test('pane platform: markers observable in pane-dom.2 exports, from empty-cart a
   assert.equal(panePlatform({ 'minicart-1': sfcc, 'cart-1': plain }).group, 'none-detected');
   assert.equal(panePlatform({ 'minicart-1': sfcc }).group, 'sfcc');
   assert.equal(panePlatform({ 'cart-qty2': shopify, 'cart-1': plain }).group, 'none-detected');
+  // Fixed order cart-1, minicart-1, cart-qty2, cart-2items, cart-other: the first present decides with empty-cart.
+  assert.deepEqual(panePlatform({ 'cart-other': sfcc, 'cart-2items': shopify }).states, ['cart-2items']);
+  assert.equal(panePlatform({ 'cart-other': sfcc }).group, 'sfcc');
   // Script contents are not exported, so a script-only marker (Shopify.shop) can't match.
   const inline = doc([{ t: 'script', d: 'none', c: [{ x: 'Shopify.shop = "x";' }] }]);
   assert.equal(panePlatform({ 'cart-1': inline }).group, 'none-detected');
@@ -1131,8 +1134,17 @@ test('pane platform: markers observable in pane-dom.2 exports, from empty-cart a
     // A store stopped after empty-cart is not captured, so the CLI leaves it out of the split input.
     await mkdir(path.join(root, 'stopped.example', 'empty-cart'), { recursive: true });
     await writeFile(path.join(root, 'stopped.example', 'empty-cart', 'dom.json'), JSON.stringify(shopify));
+    // A store whose only cart state is cart-2items (a lingering item plus the operator's) is captured.
+    await mkdir(path.join(root, 'two.example', 'cart-2items'), { recursive: true });
+    await writeFile(path.join(root, 'two.example', 'cart-2items', 'dom.json'), JSON.stringify(sfcc));
     const cli = execFileSync(process.execPath, [path.join(dir, 'pane-platform.mjs'), root], { encoding: 'utf8' });
-    assert.deepEqual(JSON.parse(cli), [{ domain: 'shop.example', platform: 'shopify' }]);
+    assert.deepEqual(
+      JSON.parse(cli).sort((a, b) => (a.domain < b.domain ? -1 : 1)),
+      [
+        { domain: 'shop.example', platform: 'shopify' },
+        { domain: 'two.example', platform: 'sfcc' },
+      ],
+    );
   } finally {
     await rm(root, { recursive: true, force: true });
   }

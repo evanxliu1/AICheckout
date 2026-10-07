@@ -27,7 +27,7 @@ Follow the protocol's operator checklist in order: robots, sign-in check and sta
 - **Robots:** record only. robots.txt never excludes a store.
 - **Lingering cart items (every store; Evan: "not a big deal, focus on capturing cart and site structure data"):**
   - Record how many items the cart holds at the start, then capture as usual; lingering items never block a capture.
-  - Name each cart state by what the cart actually shows (one lingering item plus yours is `cart-2items`); take `empty-cart` only when the cart is actually empty.
+  - Name each cart state by what the cart actually shows: one lingering item plus yours is `cart-2items`, and any other count with your item and lingering items is `cart-other`. `minicart-1` is the in-page cart right after your first add, whatever else the cart holds; record the starting count beside it. Take `empty-cart` only when the cart is actually empty.
   - At the end, try to remove the items you added in this session (record each removal, or note that it failed). Never remove items you didn't add.
 - **Signed in (Evan: the agents can continue):** record `signedIn: true` and capture normally. Never sign out, never open an account, profile, address, payment or order-history page, and never change a setting. Exports may contain personal data; they stay in the gitignored data folder, and you never copy personal data into records or summaries.
 - **Allowed form submits:** add-to-cart, remove-item and quantity-increment controls only. Don't try to control the page's background writes.
