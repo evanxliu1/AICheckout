@@ -47,6 +47,12 @@ export default [
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
     rules: js.configs.recommended.rules,
   },
+  // Phase 12.3 label tools (schema, agreement, freeze): Node only.
+  {
+    files: ['evals/merchants/labels/**/*.mjs'],
+    languageOptions: { globals: globals.node },
+    rules: js.configs.recommended.rules,
+  },
   // The pane export script runs only in a page (the browser pane's JavaScript tool).
   {
     files: ['evals/merchants/capture/pane-export.js', 'evals/merchants/capture/pane-robots-hash.js'],
