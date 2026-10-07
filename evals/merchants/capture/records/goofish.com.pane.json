@@ -1,0 +1,118 @@
+{
+  "format": "pane-record",
+  "protocol": "generic-reader-protocol.10",
+  "domain": "goofish.com",
+  "stream": "non-us",
+  "visit": 5,
+  "band": "top-1k",
+  "region": "CN",
+  "regionGroup": "asia-pacific",
+  "entryHost": "www.goofish.com",
+  "session": 1,
+  "method": "pane",
+  "operator": "claude-opus-5-5",
+  "transcriptId": "wf_ac947c9f-521/agent-a46f554e74b3deeb5",
+  "startUtc": "2026-10-07T04:58:30.341Z",
+  "endUtc": "2026-10-07T05:00:08.739Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "startCartNote": "The site shows no cart link or cart page (C2C marketplace; header offers sign-in and orders only); no cart count observable before the stop.",
+  "endCartCount": null,
+  "endCartNote": "Nothing was added; no cart observable.",
+  "removals": [],
+  "robots": {
+    "host": "www.goofish.com",
+    "url": "https://www.goofish.com/robots.txt",
+    "status": 200,
+    "bytes": 86,
+    "sha256": "be685417d444280a051a32788f4fcbd8981c9a47eae1b1d4410df53c2567477a",
+    "rootDisallowedForStar": false,
+    "rootDisallowedForAICheckoutCapture": false,
+    "cartPathDisallowed": false,
+    "checkoutPathDisallowed": false,
+    "disallowFacts": "User-agent * disallows three account-selection and playground paths only; no cart or checkout path named.",
+    "decision": "recorded only; robots.txt never excludes under .8+"
+  },
+  "navigationPath": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.goofish.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.goofish.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "url": "https://www.goofish.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "url": "https://www.goofish.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "home feed item tile (furniture, CNY 280)",
+      "result": "no navigation; a sign-in modal opened over the page (QR-code login)"
+    }
+  ],
+  "states": {},
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "sign-in-required: no cart reachable logged out; store stopped"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "sign-in-required: opening an item raised a sign-in modal"
+    },
+    {
+      "state": "cart-1",
+      "reason": "sign-in-required"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "sign-in-required"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "sign-in-required"
+    }
+  ],
+  "itemPath": {
+    "listing": "https://www.goofish.com/ (home feed)",
+    "productUrl": null,
+    "note": "Clicking the first in-band physical tile opened a sign-in modal instead of the item page."
+  },
+  "observedCurrency": "CNY",
+  "outcome": {
+    "code": "sign-in-required",
+    "stopUrl": "https://www.goofish.com/",
+    "stopTitle": "goofish home (Chinese title)",
+    "marker": "sign-in modal (phone QR-code login) shown on clicking an item tile while logged out",
+    "evidenceSha256": null
+  },
+  "exports": [],
+  "problems": [
+    "Operator ran one Bash grep (heading listing of the protocol) before switching to Read; grep is outside the allowed Bash list and will be flagged by the audit. Read-only, no network.",
+    "goofish.com (Xianyu) is a C2C second-hand marketplace with no visible cart; buying is via chat or buy-now, both requiring sign-in. Reviewer may consider not-a-store instead of sign-in-required.",
+    "zoom region crop not supported in the pane; full screenshots used."
+  ],
+  "coordinatorNote": "transcriptId, startUtc and endUtc stamped by the coordinator from the transcript (operators have no clock); per-step utc left null in the pilot"
+}

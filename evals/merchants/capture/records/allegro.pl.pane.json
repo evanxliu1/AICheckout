@@ -1,0 +1,108 @@
+{
+  "format": "capture-pane-record.1",
+  "protocol": "generic-reader-protocol.10",
+  "domain": "allegro.pl",
+  "method": "pane",
+  "stream": "non-us",
+  "visit": 4,
+  "band": "top-1k",
+  "region": "PL",
+  "regionGroup": "europe",
+  "entryHost": "allegro.pl",
+  "session": 1,
+  "sessionNote": "pane re-visit of a robot-era outcome (second attempt by a different method)",
+  "operator": {
+    "model": "claude-opus-5-5",
+    "transcriptId": null
+  },
+  "startUtc": "2026-10-07T04:58:30.341Z",
+  "endUtc": "2026-10-07T05:00:01.655Z",
+  "signedIn": false,
+  "signedInNote": "not determined: the store was stopped at the vendor challenge before the header could be checked; no signed-in indicator observed",
+  "startCartCount": null,
+  "endCartCount": null,
+  "cartCountNote": "cart never opened; store stopped at entry",
+  "removals": [],
+  "robots": {
+    "host": "allegro.pl",
+    "url": "https://allegro.pl/robots.txt",
+    "status": 200,
+    "bytes": 1144,
+    "sha256": "830b56ef3f52c57ad17e3686765b93e5a575b6ec0221c11dea0feb6ea5de6ab6",
+    "rootDisallowedForStar": false,
+    "rootDisallowedForAICheckoutCapture": false,
+    "cartPath": "/koszyk",
+    "cartPathDisallowed": false,
+    "checkoutPath": "/transakcja/",
+    "checkoutPathDisallowed": true,
+    "decision": "recorded only (robots.txt never excludes under .8+)"
+  },
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "action": "navigate",
+      "url": "https://allegro.pl/robots.txt",
+      "requests": 1
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "action": "navigate",
+      "url": "https://allegro.pl/",
+      "landing": "https://allegro.pl/",
+      "note": "DataDome device check interstitial, then a script redirect to the home page with a dd_referrer query (query not recorded)"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "target": "https://allegro.pl/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "target": "https://allegro.pl/robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "target": "https://allegro.pl/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "stop",
+      "code": "blocked-bot-wall"
+    }
+  ],
+  "states": {},
+  "notReached": {
+    "empty-cart": "store stopped at entry (DataDome vendor challenge)",
+    "minicart-1": "store stopped at entry (DataDome vendor challenge)",
+    "cart-1": "store stopped at entry (DataDome vendor challenge)",
+    "cart-qty2": "store stopped at entry (DataDome vendor challenge)",
+    "cart-2items": "store stopped at entry (DataDome vendor challenge)",
+    "cart-other": "store stopped at entry (DataDome vendor challenge)"
+  },
+  "itemPath": null,
+  "observedCurrency": "PLN",
+  "outcome": {
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null,
+    "challenge": {
+      "url": "https://allegro.pl/",
+      "title": null,
+      "vendor": "DataDome",
+      "marker": "accessibility tree showed a single element named \"DataDome Device Check\"; blank screenshot",
+      "visibleWording": "none visible (blank page); accessible name \"DataDome Device Check\""
+    },
+    "note": "The device check resolved by itself without any interaction and redirected to the home page with a dd_referrer query. The operator stopped per checklist step 6 (vendor challenge) and did not export or continue; reviewer may judge whether a self-resolving device check should count as a block."
+  },
+  "transcriptId": "wf_ac947c9f-521/agent-a5c8b74652baddff7",
+  "coordinatorNote": "transcriptId, startUtc and endUtc stamped by the coordinator from the transcript (operators have no clock); per-step utc left null in the pilot"
+}

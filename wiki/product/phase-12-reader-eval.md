@@ -117,6 +117,13 @@ Done when the capture reaches the stop rule (or the stop-and-report thresholds),
   - **Freeze and labelling:** development and A frozen together, both double-labelled.
   - **After the final score:** all pages may become development data for reader v2.
 
+- **12.3 pane pilot under `.10` (2026-10-07 04:58–05:05 UTC, branch `phase12-capture-run`):** the first 8 U.S. and 8 non-U.S. stores of the work list (all re-visits of robot-era outcomes), one `pane-operator` session each, 8 concurrent (two workflows of 4; one workflow runs at most 6 agents on this 8-CPU machine). Records `capture/records/<domain>.pane.json`, `sites.json` `statusUnderProtocol10`. **0 captured.**
+  - **`tool-error` 8** (hollisterco, ebay, napaonline, bedbathandbeyond, webstaurantstore, extra, innvictus, savana): **export-size defect.** `pane-export.js` chunks are 400,000 characters, but the pane JavaScript tool's result limit is far lower (a 164,615-byte, one-chunk export failed). The harness saves the oversized result to a JSON-wrapped tool-results file, which the operator's allowed tools can't turn into `dom.json`. The coordinator decoded one such file offline, byte-exact (SHA-256 matched the export's), and `rebuild.mjs` rebuilt it. Each store gets its one more pane session (M9) after a fix.
+  - **Blocked 4:** loft.com `captcha` (PerimeterX press-and-hold), davidjones.com `captcha` (Imperva, after a listing reload), allegro.pl `blocked-bot-wall` (DataDome device check that resolved by itself; reviewer to confirm), joshinweb.jp `blocked-bot-wall` ("Access Denied", likely Akamai).
+  - **Other 4:** blibli.com and bricklink.com `redirected-off-domain` (guest cart → sign-in on another domain), goofish.com `sign-in-required` (C2C, no cart; reviewer may prefer `not-a-store`), hsn.com `would-need-forbidden-action` (cart is `/checkout/bag`; evidence export not saved by the same defect; one operator item left in the logged-out bag).
+  - **Audit:** 49 flags, all explained: 16 read-only `grep`s caused by the coordinator's prompt, 30 checkout wording in the operators' own record writes and results, 3 sign-in `find` queries (step 2). No typing, no forbidden tool, no checkout or account navigation, no other JavaScript.
+  - **Cost:** about 0.99M subagent tokens for 16 stores (≈ 62k per store, no exports written), 1.5–6.5 min per store.
+
 ## Related
 
 * [Reader capture workflow runbook](../ops/reader-capture-workflow.md)

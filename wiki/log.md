@@ -3,6 +3,7 @@
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
 ## 2026-10-07
+* **Update** Phase 12.3 pane pilot under `.10` on `phase12-capture-run` (2026-10-07 04:58–05:05 UTC, 16 re-visit stores, 8 concurrent `pane-operator` agents in two workflows): **0 captured**; 8 `tool-error` (export-size defect: every `chunk(n)` result over the pane JavaScript tool's output limit is diverted to a harness tool-results file, so no `dom.json` could be written), 2 `captcha`, 2 `blocked-bot-wall`, 2 `redirected-off-domain`, 1 `sign-in-required`, 1 `would-need-forbidden-action`. Records, `sites.json` `statusUnderProtocol10`; transcript audit flags all explained. Full run on hold for Evan's decision on the export fix. Pages: [Phase 12 plan](product/phase-12-reader-eval.md#progress), [now](now.md). (claude-code/claude-opus-5-5)
 * **Create** [reader capture workflow](ops/reader-capture-workflow.md) runbook for running Phase 12.3 as Claude workflows from a fresh chat; PR #73 (`.10`) merged as `472222a`; now.md updated. (claude-code/claude-opus-5-5)
 * **Review** `generic-reader-protocol.10` **signed** at `779855e` (Evan's split: development 60% / held-out A 40%, fresh held-out set if A retires; stop at 840 real `cart-1`; agent-verified); residual recorded: no reader-developer activity before the final split and freeze. (claude-code/claude-opus-5-5)
 * **Review** independent review of `.10` at `598dc4b` (agent-verified): sign with fixes, applied.

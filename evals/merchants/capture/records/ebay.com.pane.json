@@ -1,0 +1,185 @@
+{
+  "format": "pane-record.1",
+  "protocol": "generic-reader-protocol.10",
+  "domain": "ebay.com",
+  "stream": "us",
+  "visit": 2,
+  "band": "top-1k",
+  "region": "us",
+  "entryHost": "www.ebay.com",
+  "session": 1,
+  "method": "pane",
+  "operator": {
+    "model": "claude-opus-5-5",
+    "transcriptId": null
+  },
+  "start": {
+    "utc": null
+  },
+  "end": {
+    "utc": null
+  },
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "endCartCountNote": "No item was added; the cart was empty at its only reading (step 5) and no later action could change it.",
+  "removals": [],
+  "robots": {
+    "decision": "recorded-only (robots.txt never excludes under .8-.10)",
+    "hosts": [
+      {
+        "host": "www.ebay.com",
+        "status": 200,
+        "bytes": 24164,
+        "sha256": "221797cd7a314aeba19bb83d7868af3ea04325e4f2f8fd9b8ba465649e091970",
+        "rootDisallowedForStar": false,
+        "rootDisallowedForAICheckoutCapture": false,
+        "cartPathDisallowed": "cart page is on cart.ebay.com; /gh/cart (an endpoint, not the cart page) is disallowed on www",
+        "checkoutPathDisallowed": "no checkout path loaded or recorded; none listed on www"
+      },
+      {
+        "host": "cart.ebay.com",
+        "status": 200,
+        "bytes": 1595,
+        "sha256": "cc6efe217cdcf6c3c96e1838bf4c7fe88976d0bf29be26a6b6b588ff39966e8c",
+        "rootDisallowedForStar": true,
+        "rootDisallowedForAICheckoutCapture": true,
+        "cartPathDisallowed": true,
+        "checkoutPathDisallowed": "not separately listed; covered by Disallow: / for *"
+      }
+    ],
+    "visitedDespiteDisallowAll": true,
+    "note": "cart.ebay.com disallows everything for *; visited by the .4 cart-host rule and the .8 record-only rule. Both files carry a comment block addressed to agents about checkouts (reported, not acted on; no checkout was entered)."
+  },
+  "navigation": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.ebay.com/robots.txt",
+      "kind": "goto",
+      "challenge": "none"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.ebay.com/",
+      "kind": "goto",
+      "challenge": "none"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://cart.ebay.com/robots.txt",
+      "kind": "goto",
+      "challenge": "none"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://cart.ebay.com/",
+      "kind": "goto",
+      "challenge": "none"
+    }
+  ],
+  "navigatingActions": 4,
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://www.ebay.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "type": "robots-hash",
+      "host": "www.ebay.com"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://www.ebay.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "type": "read-header-cart",
+      "role": "link",
+      "name": "Your shopping cart contains 0 items"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://cart.ebay.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "type": "robots-hash",
+      "host": "cart.ebay.com"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://cart.ebay.com/"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "type": "export",
+      "state": "empty-cart",
+      "result": "script ok: bytes 495764, chunks 2, nodes 1337, shadowRoots 0, iframes 1, sha256 e6cdc70a82570b4b7eb1b2b31a9ce9a4cc6a15abd9ad23d8919067a8630045e8"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "type": "chunk-fetch",
+      "chunk": 0,
+      "result": "failed: result of 468,690 characters exceeded the JavaScript tool's output limit; harness diverted it to a tool-results file; not writable unread with the permitted tools"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "type": "tab-close"
+    }
+  ],
+  "states": {},
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "reached (cart actually empty) but export not writable: chunk 0 exceeds the pane JavaScript tool's output limit (tool defect)"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "session ended as tool-error before any add (every eBay export would hit the same chunk-size limit)"
+    },
+    {
+      "state": "cart-1",
+      "reason": "session ended as tool-error"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "session ended as tool-error"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "session ended as tool-error"
+    }
+  ],
+  "itemPath": null,
+  "observedStorefrontCurrency": "USD",
+  "observedStorefrontRegion": "US",
+  "outcome": {
+    "code": "tool-error",
+    "evidenceSha256": null,
+    "detail": "The pane-export.js chunk size (400,000 chars) exceeds the pane JavaScript tool's maximum output; chunk(0) of a 495,764-byte export (468,690 chars returned) could not be returned inline, so no export could be written and checked. Protocol .7/.10: a tool defect preventing a protocol state ends the session as tool-error. Session 1 of at most 2; one more pane session is allowed."
+  },
+  "challengeWording": null,
+  "transcriptId": "wf_b123b839-57a/agent-af2c049a2a2797cc3",
+  "startUtc": "2026-10-07T04:58:19.406Z",
+  "endUtc": "2026-10-07T05:00:36.511Z",
+  "coordinatorNote": "transcriptId, startUtc and endUtc stamped by the coordinator from the transcript (operators have no clock); per-step utc left null in the pilot"
+}

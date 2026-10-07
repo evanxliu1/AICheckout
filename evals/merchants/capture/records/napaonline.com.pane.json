@@ -1,0 +1,129 @@
+{
+  "format": "capture-pane-record.1",
+  "protocol": "generic-reader-protocol.10",
+  "domain": "napaonline.com",
+  "stream": "us",
+  "visit": 6,
+  "band": "top-1k",
+  "region": "us",
+  "entryHost": "www.napaonline.com",
+  "session": 1,
+  "method": "pane",
+  "operator": {
+    "model": "claude-opus-5-5",
+    "transcriptId": null
+  },
+  "startUtc": "2026-10-07T04:58:19.407Z",
+  "endUtc": "2026-10-07T05:00:37.768Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "removalsNote": "No item was added in this session, so nothing was removed.",
+  "robots": {
+    "host": "www.napaonline.com",
+    "url": "https://www.napaonline.com/robots.txt",
+    "status": 200,
+    "bytes": 3003,
+    "sha256": "12759c36f9fc94846e44de19828e9af0f8700f397c2c32bff0c57b86a48a370e",
+    "rootDisallowedForStar": false,
+    "rootDisallowedForAICheckoutCapture": false,
+    "cartPathDisallowed": true,
+    "cartPathRules": [
+      "Disallow: /en/cart*",
+      "Disallow: /cart/*"
+    ],
+    "checkoutPathDisallowed": true,
+    "checkoutPathRules": [
+      "Disallow: */checkout*"
+    ],
+    "decision": "recorded only; robots.txt never excludes a store under .8+"
+  },
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "goto",
+      "url": "https://www.napaonline.com/robots.txt",
+      "challenge": false
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "goto",
+      "url": "https://www.napaonline.com/",
+      "challenge": false
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "url": "https://www.napaonline.com/en/cart",
+      "challenge": false
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://www.napaonline.com/robots.txt"
+    },
+    {
+      "n": 1.1,
+      "utc": null,
+      "type": "robots-hash"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://www.napaonline.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "type": "popup-close",
+      "role": "button",
+      "name": "Close",
+      "note": "cookie banner; no decline control on the banner itself, so closed"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "type": "click",
+      "role": "link",
+      "name": "My Shopping Cart 0 Item"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "type": "export",
+      "state": "empty-cart",
+      "sha256": "6e65b74b0d707970efa3e46a1b3d60ba318838e03a5cbf1aa5307f13b8b371c1",
+      "bytes": 691435,
+      "chunks": 2,
+      "result": "chunk 0 could not be written: the chunk fetch result (471,192 characters) exceeded the pane tool's maximum output size and was diverted to a tool-results file in JSON-wrapped form; the operator's allowed tools cannot extract it to dom.json"
+    }
+  ],
+  "states": {},
+  "notReached": {
+    "empty-cart": "tool-error: export summary obtained (sha256 6e65b74b0d707970efa3e46a1b3d60ba318838e03a5cbf1aa5307f13b8b371c1, 691435 bytes, 3823 nodes, 7 iframes, 0 shadow roots) but chunk 0 exceeded the JavaScript tool's output limit and could not be written",
+    "minicart-1": "session ended at tool-error before add-to-cart",
+    "cart-1": "session ended at tool-error before add-to-cart",
+    "cart-qty2": "session ended at tool-error before add-to-cart",
+    "cart-2items": "session ended at tool-error before add-to-cart",
+    "cart-other": "session ended at tool-error before add-to-cart"
+  },
+  "itemPath": null,
+  "cartPath": "/en/cart",
+  "observedCurrency": "USD",
+  "outcome": {
+    "code": "tool-error",
+    "evidenceSha256": null,
+    "reason": "Chunk fetch output (400,000-character chunks of pane-export.js) exceeds the pane JavaScript tool's maximum result size; the export cannot be written unread to dom.json with the allowed tools (Write, and Bash limited to shasum/ls/cat/head/wc). Protocol .7 rule: a tool defect preventing a protocol state ends the session with tool-error. One more pane session is allowed."
+  },
+  "challenge": null,
+  "transcriptId": "wf_b123b839-57a/agent-a30742e6dd7bbc203",
+  "coordinatorNote": "transcriptId, startUtc and endUtc stamped by the coordinator from the transcript (operators have no clock); per-step utc left null in the pilot"
+}

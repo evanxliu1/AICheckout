@@ -1,0 +1,110 @@
+{
+  "schema": "capture-pane-record.1",
+  "protocol": "generic-reader-protocol.10",
+  "domain": "joshinweb.jp",
+  "method": "pane",
+  "stream": "non-us",
+  "visit": 9,
+  "band": "top-1k",
+  "region": "JP",
+  "regionGroup": "asia-pacific",
+  "entryHost": "joshinweb.jp",
+  "session": 1,
+  "operator": {
+    "model": "claude-opus-5-5",
+    "transcriptId": null
+  },
+  "startUtc": "2026-10-07T05:00:21.261Z",
+  "endUtc": "2026-10-07T05:01:51.354Z",
+  "signedIn": false,
+  "signedInNote": "not determinable: access-denied page served on entry before any store page loaded",
+  "startCartCount": null,
+  "endCartCount": null,
+  "cartCountNote": "cart never reached; no items added",
+  "removals": [],
+  "robots": {
+    "url": "https://joshinweb.jp/robots.txt",
+    "httpStatus": 200,
+    "bytes": 1898,
+    "sha256": "49087cf96a5ed143e07014ffb7f3f012cc37873e9df756cec1ff9a8f6f154363",
+    "rootDisallowedForStar": false,
+    "rootDisallowedForAICheckoutCapture": false,
+    "cartPathDisallowed": false,
+    "checkoutPathDisallowed": false,
+    "notes": "User-agent * disallows only /cgi-bin/; no AICheckoutCapture group; /dp/cart/ is disallowed only in the Googlebot group; recorded only, never excludes",
+    "decision": "recorded-only"
+  },
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "action": "navigate",
+      "url": "https://joshinweb.jp/robots.txt",
+      "note": "robots.txt read and hashed"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "action": "navigate",
+      "url": "https://joshinweb.jp/",
+      "landedUrl": "https://joshinweb.jp/top.html",
+      "note": "Access Denied page served; store stopped"
+    }
+  ],
+  "navigatingActions": 2,
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://joshinweb.jp/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "type": "robots-hash",
+      "script": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://joshinweb.jp/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "type": "screenshot-check",
+      "result": "access-denied block page detected; no interaction, not exported"
+    }
+  ],
+  "states": {},
+  "notReached": {
+    "empty-cart": "stopped: blocked on entry",
+    "minicart-1": "stopped: blocked on entry",
+    "cart-1": "stopped: blocked on entry",
+    "cart-qty2": "stopped: blocked on entry",
+    "cart-2items": "stopped: blocked on entry",
+    "cart-other": "stopped: blocked on entry"
+  },
+  "itemPath": null,
+  "observedCurrency": null,
+  "outcome": {
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null,
+    "challenge": {
+      "url": "https://joshinweb.jp/top.html",
+      "title": "Access Denied",
+      "vendor": "likely Akamai (generic 'Access Denied ... on this server' block page)",
+      "marker": "Access Denied wording; HTTP status not observable in the pane (Akamai serves this page with 403)",
+      "wording": "Access Denied. You don't have permission to access joshinweb.jp on this server."
+    },
+    "notExported": "bot-check/block pages are never exported"
+  },
+  "problems": [
+    "Operator ran one grep on the protocol file via Bash (to list headings) before switching to Read; grep is outside the allowed Bash command list (local file read only, no network).",
+    "HTTP status of the block page is not observable in the pane; recorded as blocked-bot-wall on the visible 'Access Denied' wording. Reviewer may reclassify as blocked-http-403 if the status is established."
+  ],
+  "transcriptId": "wf_ac947c9f-521/agent-a8bc52726ecd21042",
+  "coordinatorNote": "transcriptId, startUtc and endUtc stamped by the coordinator from the transcript (operators have no clock); per-step utc left null in the pilot"
+}

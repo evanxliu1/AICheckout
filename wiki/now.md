@@ -10,7 +10,7 @@ generated:
 
 # Now
 
-As of 2026-10-07T01:23Z.
+As of 2026-10-07T05:15Z.
 
 ## Current state
 
@@ -22,7 +22,8 @@ As of 2026-10-07T01:23Z.
 
 ## Active work
 
-- **Next: the full pane capture under `.10`, not started.** It runs as Claude workflows from a fresh chat per the [reader capture workflow](ops/reader-capture-workflow.md) runbook: a 16-store pilot, then full capture by `pane-operator` subagents in the browser pane (8–16 tabs, frozen order in `evals/merchants/reader-candidates-8.json` plus re-visits), then split, label, review and freeze. CAPTCHAs and bot checks are never solved (skipped and reported); robots.txt is recorded only; signed-in stores are captured under guards; lingering cart items never block a capture.
+- **Pilot done (2026-10-07, branch `phase12-capture-run`, not merged): 0 of 16 captured**, 8 of them `tool-error` from an export-size defect (chunk results over the pane JavaScript tool's limit; [progress](product/phase-12-reader-eval.md#progress)). **Full run on hold** until Evan decides the fix (a change to checklist step 7 needs an amendment signed by an independent reviewer).
+- **Full pane capture under `.10`, not started.** It runs as Claude workflows from a fresh chat per the [reader capture workflow](ops/reader-capture-workflow.md) runbook: a 16-store pilot, then full capture by `pane-operator` subagents in the browser pane (8–16 tabs, frozen order in `evals/merchants/reader-candidates-8.json` plus re-visits), then split, label, review and freeze. CAPTCHAs and bot checks are never solved (skipped and reported); robots.txt is recorded only; signed-in stores are captured under guards; lingering cart items never block a capture.
 
 ## Open questions and next steps
 

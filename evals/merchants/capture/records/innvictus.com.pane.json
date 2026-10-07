@@ -1,0 +1,137 @@
+{
+  "format": "capture-pane-record.1",
+  "protocol": "generic-reader-protocol.10",
+  "domain": "innvictus.com",
+  "method": "pane",
+  "stream": "non-us",
+  "visit": 8,
+  "band": "top-1k",
+  "region": "MX",
+  "regionGroup": "canada-latam",
+  "entryHost": "www.innvictus.com",
+  "session": 1,
+  "sessionNote": "pane re-visit of a robot-era outcome (second attempt by a different method); ended tool-error, so one more pane session is allowed under .9",
+  "operator": {
+    "model": "claude-opus-5-5",
+    "transcriptId": null
+  },
+  "startUtc": "2026-10-07T05:00:10.805Z",
+  "endUtc": "2026-10-07T05:02:10.475Z",
+  "signedIn": false,
+  "signedInNote": "header showed create-account and sign-in links; no signed-in greeting",
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "cartCountNote": "cart page showed the empty-cart message at start; no item was added, so the end count equals the start count (not re-read after the stop)",
+  "removals": [],
+  "robots": {
+    "host": "www.innvictus.com",
+    "url": "https://www.innvictus.com/robots.txt",
+    "status": 200,
+    "bytes": 1053,
+    "sha256": "20a44b23d8b5c4425c622aef6bedbe7bce895851c8c060eb91efbf5fff01ca76",
+    "rootDisallowedForStar": false,
+    "rootDisallowedForAICheckoutCapture": false,
+    "cartPath": "/cart",
+    "cartPathDisallowed": true,
+    "checkoutPath": "/checkout",
+    "checkoutPathDisallowed": true,
+    "notes": "User-agent * disallows /cart, /checkout, /my-account, /login, /register, /_ui (favicon allows); no AICheckoutCapture group",
+    "decision": "recorded only (robots.txt never excludes under .8+); cart page visited despite a cart-path disallow"
+  },
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "action": "navigate",
+      "url": "https://www.innvictus.com/robots.txt",
+      "note": "robots.txt read and hashed"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "action": "navigate",
+      "url": "https://www.innvictus.com/",
+      "landing": "https://www.innvictus.com/",
+      "note": "home page; screenshot showed no challenge; no cookie banner seen"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "action": "navigate",
+      "url": "https://www.innvictus.com/cart",
+      "landing": "https://www.innvictus.com/cart",
+      "note": "cart page, empty; no challenge"
+    }
+  ],
+  "navigatingActions": 3,
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "target": "https://www.innvictus.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "script": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "target": "https://www.innvictus.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "target": "https://www.innvictus.com/cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "state": "empty-cart",
+      "script": "pane-export.js",
+      "result": "bytes 164615, sha256 cbe2f4982c49ab1b35a2b67a83022c40a424b9d44fe372ffe44f1afc03cec920, chunks 1, nodes 1249, shadowRoots 0, iframes 5, truncated false"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "chunk-fetch",
+      "chunk": 0,
+      "result": "failed: the pane JavaScript tool refused to return the 400,000-char chunk inline (result exceeded the tool's maximum output; spilled to a local tool-results file wrapped in a JSON envelope that the allowed Bash commands cannot unwrap)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "stop",
+      "code": "tool-error"
+    }
+  ],
+  "states": {},
+  "notReached": {
+    "empty-cart": "tool-error: export computed (sha256 cbe2f498...) but its chunk could not be fetched through the JavaScript tool, so dom.json was never written",
+    "minicart-1": "tool-error: session ended before any add (the same chunk-size defect would block every export)",
+    "cart-1": "tool-error: session ended before any add",
+    "cart-qty2": "tool-error: session ended before any add",
+    "cart-2items": "tool-error: session ended before any add",
+    "cart-other": "tool-error: session ended before any add"
+  },
+  "itemPath": null,
+  "observedCurrency": "MXN",
+  "observedCurrencyNote": "from the site header's free-shipping threshold in pesos and the MX storefront; no item price was read",
+  "outcome": {
+    "code": "tool-error",
+    "evidenceSha256": null,
+    "note": "Tool defect (.7 rule): pane-export.js uses CHUNK = 400000 characters, but window.__aiCheckoutPaneExport.chunk(0) on a 164,615-byte export exceeded the pane JavaScript tool's maximum result size, so no export could be written exactly. Stopped before adding any item, so nothing lingers in the cart."
+  },
+  "problems": [
+    "Export chunk too large for the pane JavaScript tool's result limit (chunk of about 165 KB returned as a 231,362-char tool result and was refused); every pane export over the limit will fail the same way until the chunk size changes (a new format version or chunk-call rule).",
+    "Operator ran one grep on the protocol file via Bash to list headings before switching to Read; grep is outside the allowed Bash command list (local file read only, no network)."
+  ],
+  "transcriptId": "wf_ac947c9f-521/agent-a60d9eb2be484d396",
+  "coordinatorNote": "transcriptId, startUtc and endUtc stamped by the coordinator from the transcript (operators have no clock); per-step utc left null in the pilot"
+}

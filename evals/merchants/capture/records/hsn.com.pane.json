@@ -1,0 +1,285 @@
+{
+  "schema": "capture-pane-record.1",
+  "protocol": "generic-reader-protocol.10",
+  "domain": "hsn.com",
+  "method": "pane",
+  "stream": "us",
+  "visit": 9,
+  "band": "top-1k",
+  "region": "us",
+  "entryHost": "www.hsn.com",
+  "session": 1,
+  "operator": {
+    "model": "claude-opus-5-5",
+    "transcriptId": null
+  },
+  "startUtc": "2026-10-07T05:00:38.544Z",
+  "endUtc": "2026-10-07T05:05:14.435Z",
+  "signedIn": false,
+  "signedInNote": "header showed a guest greeting with a Sign In menu",
+  "startCartCount": 0,
+  "endCartCount": 1,
+  "cartCountNote": "start 0 (header bag count before any add); end 1: the operator's own item (Curtis Stone Chop Chop, Black, qty 1) remains, because the only remove control is on /checkout/bag, which the operator must not open",
+  "removals": [
+    {
+      "n": 21,
+      "utc": null,
+      "item": "operator's item (Curtis Stone Chop Chop All-In-One Prep Tool, Black)",
+      "result": "failed",
+      "note": "header bag summary dropdown offers no remove control; the cart page is /checkout/bag (checkout segment), so it was not opened again for removal"
+    }
+  ],
+  "robots": {
+    "url": "https://www.hsn.com/robots.txt",
+    "httpStatus": 200,
+    "bytes": 593,
+    "sha256": "5513d18fbb3dbf75c8f4f568393b5a47c77f321aa9f509b569dd258d37a55a4f",
+    "rootDisallowedForStar": false,
+    "rootDisallowedForAICheckoutCapture": false,
+    "cartPathDisallowed": true,
+    "cartPathRules": [
+      "Disallow: /checkout"
+    ],
+    "checkoutPathDisallowed": true,
+    "checkoutPathRules": [
+      "Disallow: /checkout"
+    ],
+    "notes": "User-agent * group; no AICheckoutCapture group; the cart lives at /checkout/bag, covered by Disallow: /checkout",
+    "decision": "recorded-only"
+  },
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "goto",
+      "url": "https://www.hsn.com/robots.txt",
+      "challenge": false
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "goto",
+      "url": "https://www.hsn.com/",
+      "challenge": false
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "url": "https://www.hsn.com/products/curtis-stone-chop-chop-all-in-one-prep-tool/22075014",
+      "challenge": false
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "goto",
+      "url": "https://www.hsn.com/products/curtis-stone-chop-chop-all-in-one-prep-tool/22075014",
+      "challenge": false,
+      "note": "reload of the product page after two add-to-bag clicks had no effect and the background tab stopped repainting"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "click",
+      "url": "https://www.hsn.com/checkout/bag",
+      "challenge": false,
+      "note": "the site itself redirected to /checkout/bag after the add-to-bag click; checkout-segment landing, store stopped"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "goto",
+      "url": "https://www.hsn.com/",
+      "challenge": false,
+      "note": "left the checkout path; used only to look for a remove control in the header bag summary"
+    }
+  ],
+  "navigatingActions": 6,
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://www.hsn.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "type": "robots-hash",
+      "script": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://www.hsn.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "type": "challenge-check",
+      "result": "none"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "type": "click",
+      "role": "generic",
+      "name": "Curtis Stone Chop Chop All-In-One Prep T",
+      "result": "did not navigate; promotional modal opened"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "type": "popup-close",
+      "role": "button",
+      "name": "Close (x)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "type": "click",
+      "role": "link",
+      "name": "(product tile link, no accessible name)",
+      "target": "/products/curtis-stone-chop-chop-all-in-one-prep-tool/22075014"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "type": "colour-choice",
+      "role": "swatch",
+      "name": "Black"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "type": "add-to-cart",
+      "role": "button",
+      "name": "Add To Bag",
+      "result": "no change (bag count stayed 0)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "type": "popup-close",
+      "role": "button",
+      "name": "Close (price tooltip)"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "type": "add-to-cart",
+      "role": "button",
+      "name": "Add To Bag",
+      "result": "no change (bag count stayed 0)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "type": "scroll",
+      "note": "background tab stopped repainting below the fold"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://www.hsn.com/products/curtis-stone-chop-chop-all-in-one-prep-tool/22075014"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "type": "colour-choice",
+      "role": "swatch",
+      "name": "Black"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "type": "add-to-cart",
+      "role": "button",
+      "name": "Add To Bag",
+      "result": "added (bag count 1); site redirected to /checkout/bag"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "type": "challenge-check",
+      "result": "none; page is the bag step of a Bag/Account/Review/Confirm checkout stepper"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "type": "export",
+      "purpose": "evidence",
+      "sha256": "548bb4e169879233374741c9c0937e592ee35750bcaf46cb242a7a84fbdd3cbc",
+      "bytes": 843329,
+      "chunks": 3,
+      "nodes": 9047,
+      "iframes": 11,
+      "shadowRoots": 0,
+      "url": "https://www.hsn.com/checkout/bag",
+      "result": "not written: chunk 0 fetch result (611,530 characters) exceeded the pane JavaScript tool's maximum output and was diverted to a tool-results file; allowed tools cannot extract it"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://www.hsn.com/"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "type": "click",
+      "role": "button",
+      "name": "My Bag Summary",
+      "result": "dropdown toggle; no remove control found"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "type": "cart-count-read",
+      "result": "header bag shows 1 item"
+    },
+    {
+      "n": 21,
+      "utc": null,
+      "type": "removal",
+      "result": "failed; see removals"
+    }
+  ],
+  "states": {},
+  "notReached": {
+    "empty-cart": "cart page is /checkout/bag (checkout segment, not Magento /checkout/cart); forbidden path",
+    "minicart-1": "site opened no in-page cart after add; it redirected to /checkout/bag",
+    "cart-1": "cart page is /checkout/bag (checkout segment); store stopped on landing as would-need-forbidden-action",
+    "cart-qty2": "cart page is on a forbidden checkout path",
+    "cart-2items": "cart page is on a forbidden checkout path",
+    "cart-other": "cart page is on a forbidden checkout path"
+  },
+  "itemPath": {
+    "foundOn": "https://www.hsn.com/ (home page deals carousel tile)",
+    "productUrl": "https://www.hsn.com/products/curtis-stone-chop-chop-all-in-one-prep-tool/22075014",
+    "option": "colour Black (swatch)",
+    "displayedPrice": "39.95 USD",
+    "inBand": true
+  },
+  "cartPath": "/checkout/bag",
+  "observedCurrency": "USD",
+  "outcome": {
+    "code": "would-need-forbidden-action",
+    "reason": "HSN's only cart page is /checkout/bag, a path with a checkout segment (not Magento /checkout/cart), which the header bag link targets and the add-to-bag click redirects to; the protocol's backstop forbids opening it and stops the store on landing",
+    "evidenceSha256": null,
+    "evidenceExportSha256NotWritten": "548bb4e169879233374741c9c0937e592ee35750bcaf46cb242a7a84fbdd3cbc",
+    "evidenceNote": "evidence export ran but could not be written to evidence/dom.json because chunk 0 exceeded the JavaScript tool's output limit (same defect as napaonline.com); reviewer may prefer tool-error"
+  },
+  "challenge": null,
+  "problems": [
+    "Operator ran one grep on the protocol file via Bash before switching to Read; grep is outside the allowed Bash command list (local file read only, no network).",
+    "The site's own redirect after an allowed add-to-bag click landed on /checkout/bag (checkout segment); the operator did not navigate there itself, but the transcript will show the landing URL.",
+    "Evidence export not written: chunk fetch output exceeds the pane JavaScript tool's maximum result size; judgement exclusion lacks a saved pane-dom.2 file.",
+    "Operator's item remains in the HSN bag (end count 1 vs start 0): the only remove control is on the forbidden /checkout/bag page.",
+    "Background tab stopped repainting after scrolling; the first two Add To Bag ref clicks had no effect, and the product page was reloaded once."
+  ],
+  "transcriptId": "wf_b123b839-57a/agent-a5df568a70a97d9ed",
+  "coordinatorNote": "transcriptId, startUtc and endUtc stamped by the coordinator from the transcript (operators have no clock); per-step utc left null in the pilot"
+}

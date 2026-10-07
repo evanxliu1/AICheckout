@@ -1,0 +1,145 @@
+{
+  "format": "capture-pane-record.1",
+  "protocol": "generic-reader-protocol.10",
+  "domain": "webstaurantstore.com",
+  "method": "pane",
+  "stream": "us",
+  "visit": 11,
+  "band": "top-1k",
+  "region": "us",
+  "entryHost": "www.webstaurantstore.com",
+  "session": 1,
+  "sessionNote": "pane re-visit of a robot-era outcome (second attempt by a different method); ended tool-error, so one more pane session is allowed under .9",
+  "operator": {
+    "model": "claude-opus-5-5",
+    "transcriptId": null
+  },
+  "startUtc": "2026-10-07T05:02:22.088Z",
+  "endUtc": "2026-10-07T05:04:08.250Z",
+  "signedIn": false,
+  "signedInNote": "header showed a sign-in link and no account name or greeting",
+  "startCartCount": 0,
+  "startCartCountNote": "header cart link named 0 items; cart page showed the empty-cart message",
+  "endCartCount": 0,
+  "endCartCountNote": "no item was added, so the end count equals the start count (cart not re-read after the stop)",
+  "removals": [],
+  "removalsNote": "No item was added in this session, so nothing was removed.",
+  "robots": {
+    "host": "www.webstaurantstore.com",
+    "url": "https://www.webstaurantstore.com/robots.txt",
+    "status": 200,
+    "bytes": 17821,
+    "sha256": "1c1cd1e34ba762f7a6f4d065f8c22f8b757254f7ced7d75163e1ab38b7de96fb",
+    "rootDisallowedForStar": false,
+    "rootDisallowedForAICheckoutCapture": false,
+    "cartPath": "/cart/",
+    "cartPathDisallowed": true,
+    "checkoutPathDisallowed": true,
+    "notes": "User-agent * disallows /cart/, /cart?, /checkout/complete, /paypal_checkout, /additemtocart.cfm, /login, /myaccount* and other narrower paths; no AICheckoutCapture group; root not disallowed",
+    "decision": "recorded only (robots.txt never excludes under .8+); cart page visited despite a cart-path disallow"
+  },
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "action": "navigate",
+      "url": "https://www.webstaurantstore.com/robots.txt",
+      "note": "robots.txt read and hashed"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "action": "navigate",
+      "url": "https://www.webstaurantstore.com/",
+      "landing": "https://www.webstaurantstore.com/",
+      "note": "home page; screenshot showed no challenge; no cookie banner seen"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "action": "click",
+      "url": "https://www.webstaurantstore.com/cart/",
+      "landing": "https://www.webstaurantstore.com/cart/",
+      "note": "header cart link; cart page, empty; no challenge"
+    }
+  ],
+  "navigatingActions": 3,
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "target": "https://www.webstaurantstore.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "script": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "target": "https://www.webstaurantstore.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Your cart has 0 items. View your cart."
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "state": "empty-cart",
+      "script": "pane-export.js",
+      "result": "bytes 438809, sha256 fa0a8325edd741030ed7ca4e374a4f57f62d24ebd84fe9dd4c481e21d63cb52d, chunks 2, nodes 2070, shadowRoots 1, iframes 3, truncated false"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "chunk-fetch",
+      "chunk": 0,
+      "result": "failed: result (576,083 chars) exceeded the pane JavaScript tool's maximum output and spilled to a local tool-results file in a JSON envelope that the allowed Bash commands cannot unwrap"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "stop",
+      "code": "tool-error"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "tab-close"
+    }
+  ],
+  "states": {},
+  "notReached": {
+    "empty-cart": "tool-error: export computed (sha256 fa0a8325...) but chunk 0 could not be fetched through the JavaScript tool, so dom.json was never written",
+    "minicart-1": "tool-error: session ended before any add (the same chunk-size defect would block every export)",
+    "cart-1": "tool-error: session ended before any add",
+    "cart-qty2": "tool-error: session ended before any add",
+    "cart-2items": "tool-error: session ended before any add",
+    "cart-other": "tool-error: session ended before any add"
+  },
+  "itemPath": null,
+  "cartPath": "/cart/",
+  "observedCurrency": "USD",
+  "observedCurrencyNote": "U.S. storefront with dollar prices on the home page; no item page opened",
+  "outcome": {
+    "code": "tool-error",
+    "evidenceSha256": null,
+    "note": "Tool defect (.7 rule): pane-export.js uses CHUNK = 400000 characters; chunk(0) of a 438,809-byte export exceeded the pane JavaScript tool's maximum result size, so no export could be written exactly. Stopped before adding any item, so nothing lingers in the cart."
+  },
+  "challengeWording": null,
+  "problems": [
+    "Export chunk too large for the pane JavaScript tool's result limit (same defect as innvictus.com); every export over the limit fails until the chunk size changes (a new format version or chunk-call rule).",
+    "Operator ran one grep on the protocol file via Bash to list headings before switching to Read; grep is outside the allowed Bash command list (local file read only, no network)."
+  ],
+  "transcriptId": "wf_b123b839-57a/agent-a3245e70537d98d72",
+  "coordinatorNote": "transcriptId, startUtc and endUtc stamped by the coordinator from the transcript (operators have no clock); per-step utc left null in the pilot"
+}
