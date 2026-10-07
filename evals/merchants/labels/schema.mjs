@@ -174,6 +174,12 @@ const rank = (kind) => KINDS.indexOf(kind);
 export const preferredKind = (displayed) =>
   displayed.reduce((best, r) => (best === null || rank(r.kind) < rank(best) ? r.kind : best), null);
 
+/** Distinct amounts of the most preferred kind among rows (call with rows of one currency). */
+const preferredAmounts = (rows) => {
+  const pref = preferredKind(rows);
+  return new Set(rows.filter((r) => r.kind === pref).map((r) => r.amountMinor));
+};
+
 /** Checks of one parsed label beyond the schema: [message]. */
 export function labelProblems(l, minorUnits = MINOR_UNITS.currencies) {
   const out = [];
@@ -195,28 +201,40 @@ export function labelProblems(l, minorUnits = MINOR_UNITS.currencies) {
       );
   if (l.displayed.some((r) => r.currency === null) && l.expectedReason !== 'currency-undetermined')
     out.push('a displayed row without currency needs expected null with currency-undetermined');
-  const pref = preferredKind(l.displayed);
-  const prefRows = l.displayed.filter((r) => r.kind === pref);
-  const prefAmounts = new Set(prefRows.map((r) => `${r.amountMinor}|${r.currency}`));
   if (l.readable === 'none-displayed' && (l.displayed.length || l.expected))
     out.push('readable none-displayed has no displayed rows and a null expected');
   if (['iframe-only', 'closed-shadow-only'].includes(l.readable) && l.expectedReason !== 'not-readable')
     out.push(`readable ${l.readable} needs expected null with not-readable`);
   if (l.expected) {
+    // Kind preference and ambiguity are read among the rows in the charged currency; an "approx." row in another
+    // currency is displayed but never decides either.
+    const charged = l.displayed.filter((r) => r.currency === l.expected.currency);
+    const pref = preferredKind(charged);
     if (l.expected.kind !== pref)
-      out.push(`expected kind ${l.expected.kind} is not the most preferred displayed kind ${pref}`);
-    else if (
-      !prefRows.some((r) => r.amountMinor === l.expected.amountMinor && r.currency === l.expected.currency)
-    )
+      out.push(
+        `expected kind ${l.expected.kind} is not the most preferred displayed kind ${pref} in its currency`,
+      );
+    else if (!charged.some((r) => r.kind === pref && r.amountMinor === l.expected.amountMinor))
       out.push('expected is not one of the displayed rows of its kind');
-    if (prefAmounts.size > 1)
+    if (preferredAmounts(charged).size > 1)
       out.push('two different amounts of the preferred kind: expected is null (ambiguous-preferred-kind)');
+    if (l.currencyEvidence === 'd-frame' && l.currencyConflict)
+      out.push(
+        'currencyConflict with d-frame: d-frame is the last rule, so no lower rule can point elsewhere',
+      );
   } else if (l.expectedReason === 'no-total-displayed' && l.displayed.length)
     out.push('no-total-displayed with displayed rows');
-  else if (l.expectedReason === 'ambiguous-preferred-kind' && prefAmounts.size < 2)
-    out.push('ambiguous-preferred-kind needs two different amounts of the preferred kind');
+  else if (
+    l.expectedReason === 'ambiguous-preferred-kind' &&
+    ![...new Set(l.displayed.map((r) => r.currency))].some(
+      (c) => preferredAmounts(l.displayed.filter((r) => r.currency === c)).size > 1,
+    )
+  )
+    out.push('ambiguous-preferred-kind needs two different amounts of the preferred kind in one currency');
   else if (l.expectedReason === 'currency-undetermined' && !l.displayed.length)
     out.push('currency-undetermined with no displayed rows');
+  else if (l.expectedReason === 'currency-undetermined' && l.displayed.every((r) => r.currency !== null))
+    out.push('currency-undetermined while every displayed row has a currency');
   return out;
 }
 

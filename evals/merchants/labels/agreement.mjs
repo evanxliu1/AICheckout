@@ -12,7 +12,8 @@
 // currency-undetermined share of real cart-1 page-states and the counts per currency-evidence rule and of
 // currencyConflict, per stream (from retail-frame-3.json); and the protocol's stop rules: expected agreement below
 // 90%, or more than 10% of the split's real cart-1 currency-undetermined (the final labels when given, otherwise
-// either labeller). Exit 3 when a stop rule fires: the builder stops before the freeze and reports to Evan.
+// either labeller), both on raw counts. Exit 3 when a stop rule fires: the builder stops before the freeze and
+// reports to Evan. Labeller files hold real page-states only (a variant label is refused).
 //
 // A disagreement is a page-state whose labels differ in readable, displayed rows, expected, expectedReason,
 // currencyEvidence or currencyConflict; each needs one adjudicated decision. An agreed page-state's final label is
@@ -124,6 +125,12 @@ export function compare(fa, fb) {
     throw new Error('agreement compares two labeller files');
   if (fa.split !== fb.split) throw new Error(`splits differ: ${fa.split} and ${fb.split}`);
   if (fa.labeller.id === fb.labeller.id) throw new Error('the two files have the same labeller');
+  // Labellers label real page-states only; variant labels are derived from the base label by the transform rule.
+  for (const f of [fa, fb])
+    if (f.labels.some((l) => l.origin !== 'action'))
+      throw new Error(
+        `${f.labeller.id}: a labeller file has a variant label; labellers label real page-states only`,
+      );
   const a = new Map(fa.labels.map((l) => [l.id, l]));
   const b = new Map(fb.labels.map((l) => [l.id, l]));
   const onlyA = [...a.keys()].filter((id) => !b.has(id));
@@ -223,14 +230,17 @@ export function merge(fa, fb, adjudication, report, sources = {}) {
 /** Stop rules of the protocol on a report (with the final labels' currency report when merged). */
 export function stopRules(report) {
   const stop = [];
-  if (report.expected.n && report.expected.rate < STOP_EXPECTED_AGREEMENT)
+  // Raw counts in integers (agree < 90% of n), never the rounded rate.
+  if (report.expected.n && report.expected.agree * 10 < report.expected.n * 9)
     stop.push('expected-agreement-below-90');
   const cu = report.currencyUndetermined;
-  const shares = cu.final ? [cu.final.share] : [cu.a.share, cu.b.share];
-  if (shares.some((s) => s !== null && s > STOP_CURRENCY_UNDETERMINED))
+  if ((cu.final ? [cu.final] : [cu.a, cu.b]).some(undeterminedAboveStop))
     stop.push('currency-undetermined-above-10');
   return stop;
 }
+
+/** More than 10% of real cart-1 currency-undetermined, on raw counts (a currencyReport). */
+export const undeterminedAboveStop = (c) => c.undetermined * 10 > c.realCart1;
 
 function main(argv) {
   const opt = (k) => {

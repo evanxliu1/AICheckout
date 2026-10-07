@@ -79,16 +79,54 @@ test('agreement: refuses files that do not label the same page-states or snapsho
 
 test('agreement: stop rules below 90% expected agreement and above 10% currency-undetermined cart-1', () => {
   const [a, b] = files();
-  b.labels[2] = JSON.parse(JSON.stringify(label('s2.example/cart-1', nullExpected('currency-undetermined'))));
+  const undetermined = (id) =>
+    JSON.parse(
+      JSON.stringify(
+        label(
+          id,
+          nullExpected('currency-undetermined', {
+            displayed: [{ kind: 'subtotal', amountMinor: 2000, currency: null }],
+          }),
+        ),
+      ),
+    );
+  b.labels[2] = undetermined('s2.example/cart-1');
   const r = compare(a, b);
   assert.equal(r.expected.rate, 0.8);
   assert.equal(r.currencyUndetermined.b.share, 0.1);
   assert.deepEqual(stopRules(r), ['expected-agreement-below-90']);
-  b.labels[3] = JSON.parse(JSON.stringify(label('s3.example/cart-1', nullExpected('currency-undetermined'))));
+  b.labels[3] = undetermined('s3.example/cart-1');
   assert.deepEqual(stopRules(compare(a, b)), [
     'expected-agreement-below-90',
     'currency-undetermined-above-10',
   ]);
+});
+
+test('review L1: stop rules on raw counts, not rounded rates', () => {
+  const cu = (realCart1, undetermined) => ({
+    realCart1,
+    undetermined,
+    share: Math.round((undetermined / realCart1) * 1e4) / 1e4,
+  });
+  const report = (agree, n, u) => ({
+    expected: { agree, n, rate: Math.round((agree / n) * 1e4) / 1e4 },
+    currencyUndetermined: { a: u, b: cu(100000, 0) },
+  });
+  // 89,999 / 100,000 rounds to 0.9 but is below 90%; 10,001 / 100,000 rounds to 0.1 but is above 10%.
+  assert.deepEqual(stopRules(report(89999, 100000, cu(100000, 10001))), [
+    'expected-agreement-below-90',
+    'currency-undetermined-above-10',
+  ]);
+  assert.deepEqual(stopRules(report(90000, 100000, cu(100000, 10000))), []);
+});
+
+test('review L6: labeller files carry real page-states only', () => {
+  const [a, b] = files();
+  const v = label('s2.example/cart-1/class-rename');
+  assert.throws(
+    () => compare(labellerFile('labeller-1', [...a.labels, v]), labellerFile('labeller-2', [...b.labels, v])),
+    /variant/,
+  );
 });
 
 test('adjudication: merges agreed labels and decisions; refuses extra or missing decisions', () => {

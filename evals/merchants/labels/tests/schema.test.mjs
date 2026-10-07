@@ -193,3 +193,59 @@ test('validate-labels.mjs CLI: exit 0 on a valid file, 1 with ids and messages o
   assert.equal(r.status, 1);
   assert.match(r.stdout, /duplicate id/);
 });
+
+test('review M3: ambiguity only among preferred-kind rows in the charged currency', () => {
+  // An approx. row of the same kind in another currency is allowed beside the expected row.
+  const approx = {
+    displayed: [
+      { kind: 'estimatedTotal', amountMinor: 2400, currency: 'GBP' },
+      { kind: 'estimatedTotal', amountMinor: 2800, currency: 'EUR' },
+    ],
+  };
+  assert.deepEqual(
+    one(label('a.example/cart-1', { ...approx, observedTags: ['multiple-currencies-shown'] })),
+    [],
+  );
+  // A null ambiguous-preferred-kind needs two different amounts in one currency.
+  assert.ok(
+    one(label('a.example/cart-1', nullExpected('ambiguous-preferred-kind', approx))).some((m) =>
+      /two different amounts of the preferred kind in one currency/.test(m),
+    ),
+  );
+  assert.deepEqual(
+    one(
+      label(
+        'a.example/cart-1',
+        nullExpected('ambiguous-preferred-kind', {
+          displayed: [...approx.displayed, { kind: 'estimatedTotal', amountMinor: 2600, currency: 'GBP' }],
+        }),
+      ),
+    ),
+    [],
+  );
+  // The preferred kind is taken among rows in the charged currency.
+  assert.deepEqual(
+    one(
+      label('a.example/cart-1', {
+        displayed: [
+          { kind: 'estimatedTotal', amountMinor: 2400, currency: 'GBP' },
+          { kind: 'afterCredit', amountMinor: 2700, currency: 'EUR' },
+        ],
+      }),
+    ),
+    [],
+  );
+});
+
+test('review L7: currencyConflict with d-frame, currency-undetermined with every row in a currency', () => {
+  assert.ok(
+    one(label('a.example/cart-1', { currencyEvidence: 'd-frame', currencyConflict: true })).some((m) =>
+      /d-frame is the last rule/.test(m),
+    ),
+  );
+  assert.ok(
+    one(label('a.example/cart-1', nullExpected('currency-undetermined'))).some((m) =>
+      /every displayed row has a currency/.test(m),
+    ),
+  );
+});
