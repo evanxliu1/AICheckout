@@ -3,7 +3,7 @@
 
 /** Rows that are never a total, whatever else they say: savings, promotions, points, instalments. */
 export const EXCLUDE_RE =
-  /sav(?:e|ing)|discount|rabat|descuento|desconto|remise|r[ée]duction|sconto|korting|zni[żz]k|indirim|割引|할인|خصم|promo|coupon|kupon|voucher|c[óo]digo|\bcode\b|economi|ahorr|risparm|bespaar|\boff\b|\bpoints?\b|punkte|puntos|punti|reward|cashback|\bearn|per month|\/\s?mo\b|monthly|instal|klarna|afterpay|affirm|financ|\bfee\b|donation|deposit|away from|more to|orders? over|\bminimum\b|\bmin\./u;
+  /sav(?:e|ing)|discount|rabat|descuento|desconto|remise|r[ée]duction|sconto|korting|zni[żz]k|indirim|割引|할인|خصم|promo|coupon|kupon|voucher|c[óo]digo|\bcode\b|economi|ahorr|risparm|bespaar|\boff\b|\bpoints?\b|punkte|puntos|punti|reward|cashback|\bearn|per month|\/\s?mo\b|monthly|instal|klarna|afterpay|affirm|financ|\bfee\b|donation|deposit|away from|more to|orders? over|\bminimum\b|\bmin\.|add to (?:cart|bag|basket)|in den warenkorb|ajouter au|a[ñn]adir al|aggiungi al|toevoegen|\breviews?\b|bewertung|avis\b|rese[ñn]a/u;
 
 /** Shipping and tax words: a row is excluded when it has one of these and no inclusion/exclusion preposition. */
 export const SHIP_RE =
@@ -43,10 +43,17 @@ export type Kind = 'afterCredit' | 'estimatedTotal' | 'subtotal';
 /** Classifies a row label (amounts removed, lower-cased). `null` when it is not a summary total row. */
 /** Line-item and table-header rows (quantity columns), and unrendered templates. */
 export const LINE_ITEM_RE =
-  /\bqty\b|quantit|menge|anzahl|cantidad|aantal|ilo[śs][ćc]|\badet\b|数量|수량|الكمية|\{\{|\}\}/u;
+  /\bqty\b|quantit|menge|anzahl|cantidad|aantal|ilo[śs][ćc]|\badet\b|数量|수량|الكمية|\{\{|\}\}|(?:product|article|artikel|art[ií]culo|articolo|item)s?\b.*\b(?:price|prix|preis|precio|prezzo|prijs)/u;
 
-export function classifyLabel(label: string): Kind | 'after-candidate' | null {
+/** "Total after savings", "total with discount": a qualifier on a total, not a savings row. Stripped before classifying. */
+const QUALIFIED_SAVINGS_RE =
+  /(?:after|with|incl\w*|net of|nach|avec|apr[èe]s|con|tras|dopo|na|po|met)\s+(?:all\s+)?(?:sav\w+|discounts?|promotions?|coupons?|rabat\w*|descuentos?|remises?|r[ée]ductions?|sconti?|korting)/gu;
+
+export function classifyLabel(raw: string): Kind | 'after-candidate' | null {
+  const label = raw.replace(QUALIFIED_SAVINGS_RE, ' ');
   if (label.length > 80 || EXCLUDE_RE.test(label) || LINE_ITEM_RE.test(label)) return null;
+  // A number right before the total word ("500 Total") is a product name, not a label.
+  if (/\d\s*(?:tota|gesamt)/u.test(label)) return null;
   if ((SHIP_RE.test(label) || TAX_RE.test(label)) && !PREP_RE.test(label)) return null;
   if (SUBTOTAL_RE.test(label)) return 'subtotal';
   if (AFTER_RE.test(label)) return 'after-candidate';

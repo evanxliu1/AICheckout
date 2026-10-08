@@ -14,7 +14,7 @@
 // 3. The most preferred kind present wins (afterCredit > estimatedTotal > subtotal). Two different amounts of that
 //    kind mean withhold, unless only one of them sits in a cart summary (next to shipping, tax or a checkout control).
 //    A subtotal alone is shown only when its summary holds no other, different amount.
-// 4. Currency by the protocol's evidence order; zero amounts and unparseable amounts withhold.
+// 4. Currency by the protocol's evidence order; unparseable amounts withhold (a zero total is shown: an empty cart).
 import { MARK_RE, findAmounts, normalizeText, toMinor } from './amounts.ts';
 import {
   MINOR_UNITS,
@@ -29,6 +29,7 @@ import {
   ANY_LABEL_RE,
   CHECKOUT_RE,
   CREDIT_RE,
+  LINE_ITEM_RE,
   SHIP_RE,
   SUBTOTAL_RE,
   TAX_RE,
@@ -53,6 +54,8 @@ const SKIP_TAGS = new Set([
   'CANVAS',
 ]);
 const SKIP_PARENTS = new Set([...SKIP_TAGS, 'OPTION', 'TITLE']);
+/** Containers of repeated rows: a label found at this level belongs to a header or another item, not to the amount. */
+const LIST_TAGS = new Set(['TABLE', 'THEAD', 'TBODY', 'TFOOT', 'UL', 'OL']);
 const KINDS: Kind[] = ['afterCredit', 'estimatedTotal', 'subtotal'];
 const MAX_ROW_TEXT = 200;
 const MAX_LABEL_TEXT = 80;
@@ -143,9 +146,14 @@ function analyze(document: Document, options: ReadOptions): { reading: CartReadi
     const row = readRow(els, ctx, store, structuredLazy);
     if (row) rows.push(row);
   }
+  // An unreadable total row that wraps another total row is an aggregate (a block whose other amounts climbed to
+  // its label), not a second total of its kind.
+  for (const r of rows)
+    if (r.why === 'several-amounts' && rows.some((o) => o !== r && r.els.at(-1)!.contains(o.els.at(-1)!)))
+      r.kind = null;
   // "Amount due", "balance" and the like are after-credit totals only beside a credit row (same parent); otherwise
   // they are plain totals when they say so, and nothing at all when they do not.
-  const totals = rows.filter((r) => r.kind === 'estimatedTotal' || r.kind === 'subtotal');
+  const totals = rows.filter((r) => r.kind !== null && r.kind !== 'credit');
   const credits = rows.filter((r) => r.kind === 'credit' && totals.some((t) => near(r, t)));
   const resolved: (Row & { kind: Kind })[] = [];
   for (const r of rows) {
@@ -166,7 +174,6 @@ function analyze(document: Document, options: ReadOptions): { reading: CartReadi
   const row = chosen[0]!;
   if (row.minor === null) return withhold('amount-unreadable', rows);
   if (!row.currency) return withhold('currency-undetermined', rows);
-  if (row.minor === 0) return withhold('zero-total', rows);
   if (kind === 'subtotal') {
     if (!chosen.some((r) => r.inSummary)) return withhold('subtotal-outside-summary', rows);
     if (chosen.some((r) => !subtotalAlone(r, ctx, store, structuredLazy)))
@@ -191,6 +198,7 @@ function collectRows(root: Node, ctx: Ctx): void {
       continue;
     let el: Element | null = parent;
     for (let depth = 0; el && depth < MAX_CLIMB; depth += 1) {
+      if (LIST_TAGS.has(el.nodeName)) break;
       const text = el.textContent ?? '';
       if (text.length > MAX_ROW_TEXT) break;
       // A label the shopper sees (a screen-reader-only label does not count; the climb goes on).
@@ -341,11 +349,14 @@ function readRow(els: Element[], ctx: Ctx, store: Storefront, structured: () => 
   const lower = label.toLowerCase();
   const report = { els, text, minor: null, currency: null, inSummary: false };
   const values = new Set(amounts.map((a) => (a.number ? `${a.number.int}.${a.number.frac}` : 'unreadable')));
-  if (values.size !== 1) return dropped('several-amounts');
   if (amounts.some((a) => a.negative))
     return CREDIT_RE.test(lower) ? { ...report, kind: 'credit' } : dropped('negative');
   const kind = classifyLabel(lower);
   if (!kind) return dropped('label');
+  if (lineItemOf(els.at(-1)!)) return dropped('line-item');
+  // Several different amounts in one total row (a converted price, say): unreadable, but still a total of its kind.
+  if (values.size !== 1)
+    return { ...report, kind, why: 'several-amounts', inSummary: inSummary(els.at(-1)!, kind) };
   const codes = new Set<string>();
   for (const m of label.matchAll(/(?<![A-Za-z])[A-Z]{3}(?![A-Za-z])/g)) if (isCode(m[0])) codes.add(m[0]);
   for (const a of amounts) if (a.code) codes.add(a.code);
@@ -363,6 +374,23 @@ function readRow(els: Element[], ctx: Ctx, store: Storefront, structured: () => 
   const number = amounts[0]!.number;
   const minor = number ? toMinor(number, currency ? MINOR_UNITS[currency]! : 2) : null;
   return { ...report, kind, minor, currency, inSummary: inSummary(els.at(-1)!, kind) };
+}
+
+/**
+ * Whether a row sits inside one product line (a product image or quantity control within three levels, before any
+ * summary words): its total is the line's, not the cart's.
+ */
+function lineItemOf(el: Element): boolean {
+  let a = parentOf(el);
+  for (let depth = 0; a && a.nodeName !== 'BODY' && depth < 3; depth += 1) {
+    const text = (a.textContent ?? '').toLowerCase();
+    if (text.length > 600) return false;
+    if (SHIP_RE.test(text) || TAX_RE.test(text) || CHECKOUT_RE.test(text) || SUBTOTAL_RE.test(text))
+      return false;
+    if (LINE_ITEM_RE.test(text) || a.querySelector('img, picture') !== null) return true;
+    a = parentOf(a);
+  }
+  return false;
 }
 
 /** The nearest ancestor (up to five, under body) that reads as a cart summary, or null. */

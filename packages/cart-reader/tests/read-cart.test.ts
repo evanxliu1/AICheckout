@@ -88,10 +88,45 @@ describe('summary rows', () => {
     });
   });
   it('withholds a row with two different amounts', () => {
-    expect(page(row('Total', '$24.00 $22.00'))).toEqual({ shown: false, reason: 'no-summary' });
+    expect(page(row('Total', '$24.00 $22.00'))).toEqual({ shown: false, reason: 'amount-unreadable' });
   });
-  it('withholds a zero total', () => {
-    expect(page(row('Total', '$0.00'))).toEqual({ shown: false, reason: 'zero-total' });
+  it('shows a zero total (an empty cart)', () => {
+    expect(page(row('Total', '$0.00'))).toEqual({
+      shown: true,
+      kind: 'estimatedTotal',
+      amountMinor: 0,
+      currency: 'USD',
+    });
+  });
+  it('shows the after-credit total when the page has no plain total row left', () => {
+    const r = page(row('Gift card applied', '-$5.00') + row('Amount due', '$12.00'));
+    expect(r).toEqual({ shown: true, kind: 'afterCredit', amountMinor: 1200, currency: 'USD' });
+  });
+  it('reads a total qualified by savings as a total', () => {
+    const r = page(row('Order sub total', '$69.98') + row('Estimated total after savings', '$69.98'));
+    expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 6998, currency: 'USD' });
+  });
+  it('ignores a line item total next to a product image', () => {
+    const r = page(
+      `<ul><li><img alt=""><p>Blue mug</p>${row('Total:', '$17.90')}</li></ul><section>${row('Subtotal', '$17.90')}<button>Checkout</button></section>`,
+    );
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 1790, currency: 'USD' });
+  });
+  it('does not let a table header label an item row', () => {
+    const r = page(
+      `<table><tr><th>Product</th><th>Price</th><th>Total</th></tr><tr><td>Blue mug</td><td>$17.00</td><td>$17.00</td></tr></table><section>${row('Subtotal', '$17.00')}<button>Checkout</button></section>`,
+    );
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 1700, currency: 'USD' });
+  });
+  it('ignores a product card whose name holds a total word', () => {
+    const r = page(`<div><p>Paper clips, 500 Total</p><span>$8.99</span><button>Add to Cart</button></div>`);
+    expect(r).toEqual({ shown: false, reason: 'no-summary' });
+  });
+  it('withholds when a second total row of the same kind is unreadable', () => {
+    const r = page(
+      `<section>${row('Total', '£125.00 (approx. $166.66)')}<button>Checkout</button></section><section>${row('Total', '$99.75')}<button>Checkout</button></section>`,
+    );
+    expect(r).toEqual({ shown: false, reason: 'ambiguous' });
   });
   it('shows the after-credit total when a gift card row is present', () => {
     const r = page(row('Total', '$40.00') + row('Gift card applied', '-$5.00') + row('Amount due', '$35.00'));
