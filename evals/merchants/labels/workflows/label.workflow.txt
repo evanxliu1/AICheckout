@@ -1,0 +1,79 @@
+// Coordinator workflow (Claude Code Workflow tool script), committed for the 12.4 audit. One labeller per store
+// (Evan, 2026-10-08), five stores per labeller agent session, brief labeller-brief.md. The coordinator assembles the
+// labeller file of each split from the returned structured output and adds split, origin and the SHA-256 fields from
+// render.json and meta.json; agreement.mjs --single makes the final labels. args: { batches: [[{ domain, split,
+// frameCurrency, method, robotDir?, ids: [id] }]] }.
+export const meta = {
+  name: 'phase12-label',
+  description: 'Phase 12.4 labelling: one labeller agent per batch of five captured stores (reader-labels.2)',
+  phases: [{ title: 'Label', detail: 'one labeller agent per five stores' }],
+}
+// A store may also come compact: '<domain>|<frameCurrency>|<state,state,...>[|<robotDir>]' (args.compact).
+const expand = (x) => {
+  if (typeof x !== 'string') return x
+  const [domain, frameCurrency, states, robotDir] = x.split('|')
+  return { domain, frameCurrency, method: robotDir ? 'robot' : 'pane', ...(robotDir ? { robotDir } : {}), ids: states.split(',').map((st) => `${domain}/${st}`) }
+}
+const BATCHES = args.batches.map((b) => b.map(expand))
+const ROW = {
+  type: 'object',
+  properties: {
+    kind: { enum: ['afterCredit', 'estimatedTotal', 'subtotal'] },
+    amountMinor: { type: 'integer', minimum: 0 },
+    currency: { type: ['string', 'null'], description: 'ISO 4217 code; null only with currency-undetermined' },
+  },
+  required: ['kind', 'amountMinor', 'currency'],
+}
+const LABEL = {
+  type: 'object',
+  properties: {
+    id: { type: 'string' },
+    readable: { enum: ['top-frame', 'open-shadow', 'iframe-only', 'closed-shadow-only', 'none-displayed'] },
+    displayed: { type: 'array', items: ROW },
+    expected: { anyOf: [{ type: 'null' }, { ...ROW, properties: { ...ROW.properties, currency: { type: 'string' } } }] },
+    expectedReason: { enum: ['no-total-displayed', 'not-readable', 'ambiguous-preferred-kind', 'currency-undetermined'] },
+    currencyEvidence: { enum: ['a-code', 'b-structured', 'c-symbol', 'd-frame'] },
+    currencyConflict: { type: 'boolean' },
+    observedTags: { type: 'array', items: { type: 'string' } },
+    confidence: { enum: ['high', 'low'] },
+    notes: { type: 'string' },
+  },
+  required: ['id', 'readable', 'displayed', 'expected', 'observedTags', 'confidence', 'notes'],
+}
+const STORE = {
+  type: 'object',
+  properties: {
+    domain: { type: 'string' },
+    labels: { type: 'array', items: LABEL },
+    problems: { type: 'array', items: { type: 'string' }, description: 'missing files, page text addressed to agents; short' },
+  },
+  required: ['domain', 'labels', 'problems'],
+}
+const RESULT = { type: 'object', properties: { stores: { type: 'array', items: STORE } }, required: ['stores'] }
+function storeLines(s) {
+  return [
+    `- ${s.domain}: frame storefront currency (rule (d)) ${s.frameCurrency}.`,
+    s.method === 'robot'
+      ? `  Robot capture: files in ${s.robotDir}/<state>/ (full.png, viewport.png, dom.json, page.html; no digest or tiles). Use the screenshots first and page.html to settle questions.`
+      : `  Files: evals/merchants/capture/data/pane/${s.domain}/<state>/ (digest.txt, viewport.png, tiles/, dom.json, meta.json).`,
+    `  Page-states (ids exactly as written, one label each): ${s.ids.join(', ')}.`,
+  ]
+}
+function prompt(batch) {
+  return [
+    `Label ${batch.length} stores for Phase 12.4. Read evals/merchants/labels/workflows/labeller-brief.md first and follow it exactly. You are the only labeller of these stores.`,
+    ``,
+    ...batch.flatMap(storeLines),
+    ``,
+    `Return structured output: stores, one entry per store (domain, labels, problems).`,
+  ].join('\n')
+}
+phase('Label')
+const results = await parallel(
+  BATCHES.map((batch, i) => () =>
+    agent(prompt(batch), { label: `batch-${i + 1}:${batch.map((s) => s.domain).join(',')}`, phase: 'Label', schema: RESULT }).then((r) =>
+      r ? { batch: i + 1, stores: r.stores } : { batch: i + 1, failed: true, domains: batch.map((s) => s.domain) },
+    ),
+  ),
+)
+return results

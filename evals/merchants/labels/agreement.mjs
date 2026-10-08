@@ -21,6 +21,12 @@
 // notes. Adjudication file: { schema: 'reader-adjudication.1', split, adjudicator: {id, model},
 // decisions: [{ id, label: <reader-labels.2 label>, reason }] }; refused when a decision's id isn't a disagreement,
 // a disagreement has no decision, or the adjudicator is one of the labellers.
+//
+// Single labelling (Evan, 2026-10-08: one labeller per store, for speed):
+//   node evals/merchants/labels/agreement.mjs --single <labeller.json> --out <final.json> [--report <report.json>]
+// The final labels are the labeller's labels as given (sorted by id, notes kept); the report has `labelling:
+// 'single'`, no agreement counts, the currency-undetermined share and per-stream evidence counts, and the
+// currency-undetermined stop rule only (there is no second labeller to agree with).
 import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
@@ -227,11 +233,30 @@ export function merge(fa, fb, adjudication, report, sources = {}) {
   return final;
 }
 
+/** Final labels of a single labeller's file (parsed object in, object out). */
+export function single(f, sources = {}) {
+  if (f.role !== 'labeller') throw new Error('single labelling takes a labeller file');
+  if (f.labels.some((l) => l.origin !== 'action'))
+    throw new Error(`${f.labeller.id}: a labeller file has a variant label; labellers label real page-states only`);
+  const final = {
+    schema: LABEL_SCHEMA,
+    role: 'final',
+    split: f.split,
+    sources,
+    adjudicated: [],
+    labels: [...f.labels].sort((x, y) => (x.id < y.id ? -1 : 1)),
+  };
+  const v = validateLabelFile(final);
+  if (!v.ok)
+    throw new Error(`final labels invalid: ${v.problems.map((p) => `${p.id ?? ''} ${p.message}`).join('; ')}`);
+  return final;
+}
+
 /** Stop rules of the protocol on a report (with the final labels' currency report when merged). */
 export function stopRules(report) {
   const stop = [];
-  // Raw counts in integers (agree < 90% of n), never the rounded rate.
-  if (report.expected.n && report.expected.agree * 10 < report.expected.n * 9)
+  // Raw counts in integers (agree < 90% of n), never the rounded rate. A single-labelled report has no agreement.
+  if (report.expected?.n && report.expected.agree * 10 < report.expected.n * 9)
     stop.push('expected-agreement-below-90');
   const cu = report.currencyUndetermined;
   if ((cu.final ? [cu.final] : [cu.a, cu.b]).some(undeterminedAboveStop))
@@ -247,9 +272,35 @@ function main(argv) {
     const i = argv.indexOf(k);
     return i >= 0 ? argv[i + 1] : undefined;
   };
+  const out = opt('--out');
+  if (opt('--single')) {
+    const file = opt('--single');
+    if (!out) {
+      console.error('usage: agreement.mjs --single <labeller.json> --out <final.json> [--report <file>]');
+      return 2;
+    }
+    const f = readLabelFile(file);
+    const final = single(f, { labeller: { file: path.basename(file), sha256: fileSha(file) } });
+    writeFileSync(out, JSON.stringify(final, null, 1) + '\n');
+    const report = {
+      split: f.split,
+      labelling: 'single',
+      labellers: [f.labeller.id],
+      n: final.labels.length,
+      final: { file: out, sha256: fileSha(out), labels: final.labels.length },
+      lowConfidence: final.labels.filter((l) => l.confidence === 'low').map((l) => l.id),
+      currencyUndetermined: { final: currencyReport(final.labels) },
+    };
+    report.stop = stopRules(report);
+    const text = JSON.stringify(report, null, 1);
+    if (opt('--report')) writeFileSync(opt('--report'), text + '\n');
+    console.log(text);
+    if (report.stop.length)
+      console.error(`STOP before the freeze and report to Evan: ${report.stop.join(', ')}`);
+    return report.stop.length ? 3 : 0;
+  }
   const [fileA, fileB] = argv.filter((a, i) => !a.startsWith('--') && !argv[i - 1]?.startsWith('--'));
   const adjFile = opt('--adjudication');
-  const out = opt('--out');
   if (!fileA || !fileB || Boolean(adjFile) !== Boolean(out)) {
     console.error(
       'usage: agreement.mjs <labeller-a.json> <labeller-b.json> [--adjudication <file> --out <final.json>] [--report <file>]',

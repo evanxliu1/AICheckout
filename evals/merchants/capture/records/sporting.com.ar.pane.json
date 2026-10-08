@@ -202,8 +202,8 @@
   "observedCurrency": "ARS",
   "observedRegion": "AR",
   "outcome": {
-    "status": "captured",
-    "code": null,
+    "status": "excluded",
+    "code": "would-need-forbidden-action",
     "evidenceSha256": null
   },
   "challenge": null,
@@ -685,5 +685,21 @@
       }
     ],
     "errors": []
+  },
+  "droppedStates": [
+    {
+      "state": "minicart-1",
+      "reason": "capture review: in-page cart not clearly visible at export (Minicart drawer caught mid-slide (translateX 361 of 415px): only a sliver is on screen, and the item line is off-canvas.)",
+      "utc": "2026-10-08"
+    }
+  ],
+  "operatorOutcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "coordinatorOverride": {
+    "utc": "2026-10-08",
+    "reason": "VTEX cart is under /checkout/ and its only cart state (minicart-1) showed no in-page cart at export"
   }
 }

@@ -242,8 +242,8 @@
   "observedCurrency": "USD",
   "observedRegion": "US",
   "outcome": {
-    "status": "captured",
-    "code": null,
+    "status": "excluded",
+    "code": "tool-error",
     "evidenceSha256": null
   },
   "challenge": null,
@@ -587,5 +587,14 @@
         "error": "undecodable-chunk-0"
       }
     ]
+  },
+  "operatorOutcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "coordinatorOverride": {
+    "utc": "2026-10-08",
+    "reason": "collector could not decode the cart-2items export (undecodable-chunk-0); second session, so tool-error is final (M9); matches sites.json statusUnderProtocol10"
   }
 }

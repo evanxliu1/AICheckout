@@ -8,6 +8,8 @@
 //         (protocol .9: captured when any real cart-state export with the operator's item exists). Every collected
 //         state export must be at `data/pane/<domain>/<state>/dom.json` with the collected SHA-256, and no pane state
 //         folder may lack a collected entry. A record that says captured while sites.json doesn't is refused too.
+//         States in the record's `droppedStates` (capture review, 2026-10-08) are left out of the states and
+//         allowed as folders; platform detection still reads the folders, so a drop never moves another store.
 //         The platform is pane-platform.mjs's over `data/pane/<domain>/`.
 //   Robot: the latest status has a `method` other than `pane` and is `captured-stands` or `captured-pending-review`.
 //         The platform is that of the standing capture (the latest `protocolN` block of the site record with
@@ -64,11 +66,21 @@ export function standingRobotCapture(site) {
   return latest(site, 'protocol', 0, (v) => Array.isArray(v?.states))?.[1] ?? site;
 }
 
-/** Collected state exports of a pane record: Map(state -> sha256). */
-export const collectedStates = (record) =>
-  new Map(
-    (record.collected?.exports ?? []).filter((e) => e.kind === 'state').map((e) => [e.target, e.sha256]),
+/**
+ * States the coordinator dropped after the capture review (`droppedStates: [{state, reason, utc}]` in the record,
+ * 2026-10-08): their exports stay recorded and on disk, but they are not page-states of the evaluation set.
+ */
+export const droppedStates = (record) => new Set((record.droppedStates ?? []).map((d) => d.state));
+
+/** Collected state exports of a pane record, without dropped states: Map(state -> sha256). */
+export const collectedStates = (record) => {
+  const dropped = droppedStates(record);
+  return new Map(
+    (record.collected?.exports ?? [])
+      .filter((e) => e.kind === 'state' && !dropped.has(e.target))
+      .map((e) => [e.target, e.sha256]),
   );
+};
 
 const stateNames = (states) => (states ?? []).map((s) => (typeof s === 'string' ? s : s.state));
 
@@ -118,7 +130,7 @@ export function checkPaneStore(site, recordsDir, dataDir) {
   }
   const dir = path.join(dataDir, domain);
   for (const state of existsSync(dir) ? readdirSync(dir) : [])
-    if (PANE_STATES.has(state) && !collected.has(state))
+    if (PANE_STATES.has(state) && !collected.has(state) && !droppedStates(record).has(state))
       throw new Error(`${domain}: state folder ${state} has no collected export`);
   return collected;
 }

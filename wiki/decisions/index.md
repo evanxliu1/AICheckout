@@ -3,6 +3,7 @@
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
 ## 2026-10-08
+* [One labeller per store, five stores per labeller agent](./2026-10-08-single-labeller.md) — Evan: no second labeller or adjudicator, for speed; final labels from `agreement.mjs --single`; currency stop rule kept.
 * [Capture paused at about 300 stores; the ≥ 99% bar becomes a quality target](./2026-10-08-pause-capture-quality-target.md) — Evan: stop capture, start the reader; no amendment or signature; split, labels, freeze and held-out discipline kept.
 
 ## 2026-10-07

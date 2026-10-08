@@ -163,8 +163,8 @@
   "observedCurrency": "BRL",
   "observedRegion": "BR",
   "outcome": {
-    "status": "incomplete",
-    "code": null,
+    "status": "excluded",
+    "code": "would-need-forbidden-action",
     "evidenceSha256": null
   },
   "challenge": null,
@@ -479,5 +479,21 @@
       }
     ],
     "errors": []
-  }
+  },
+  "operatorOutcome": {
+    "status": "incomplete",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "coordinatorOverride": {
+    "utc": "2026-10-08",
+    "reason": "cart page is under /checkout/ and its only cart state (minicart-1) showed no in-page cart at export"
+  },
+  "droppedStates": [
+    {
+      "state": "minicart-1",
+      "reason": "capture review: no in-page cart open at export (Drawer amounts all offpage (off-canvas); operator notes drawer closed at export)",
+      "utc": "2026-10-08"
+    }
+  ]
 }

@@ -194,3 +194,38 @@ test('agreement.mjs CLI: writes the final labels and report; exit 3 on a stop ru
   assert.equal(err?.status, 3);
   assert.match(err.stderr, /expected-agreement-below-90/);
 });
+
+test('agreement.mjs --single: final labels from one labeller; report with the currency stop rule only', () => {
+  const dir = mkdtempSync(path.join(os.tmpdir(), 'agreement-single-'));
+  const cli = path.join(here, '..', 'agreement.mjs');
+  const [a] = files();
+  a.labels[9] = { ...a.labels[9], confidence: 'low', notes: 'unsure row' };
+  const pa = path.join(dir, 'a.json');
+  const out = path.join(dir, 'final.json');
+  const rep = path.join(dir, 'report.json');
+  writeFileSync(pa, JSON.stringify(a));
+  const report = JSON.parse(
+    execFileSync('node', [cli, '--single', pa, '--out', out, '--report', rep], { encoding: 'utf8' }),
+  );
+  assert.equal(report.labelling, 'single');
+  assert.deepEqual(report.stop, []);
+  assert.equal(report.lowConfidence.length, 1);
+  const final = JSON.parse(readFileSync(out, 'utf8'));
+  assert.equal(final.role, 'final');
+  assert.equal(final.labels.length, 10);
+  assert.equal(final.labels.find((l) => l.confidence === 'low').notes, 'unsure row');
+  assert.equal(final.sources.labeller.file, 'a.json');
+  assert.equal(report.final.sha256, JSON.parse(readFileSync(rep, 'utf8')).final.sha256);
+  // More than 10% of real cart-1 currency-undetermined stops.
+  for (const i of [0, 1])
+    a.labels[i] = label(`s${i}.example/cart-1`, nullExpected('currency-undetermined', { displayed: [{ kind: 'subtotal', amountMinor: 100, currency: null }] }));
+  writeFileSync(pa, JSON.stringify(a));
+  let err;
+  try {
+    execFileSync('node', [cli, '--single', pa, '--out', out], { encoding: 'utf8', stdio: 'pipe' });
+  } catch (e) {
+    err = e;
+  }
+  assert.equal(err?.status, 3);
+  assert.match(err.stderr, /currency-undetermined-above-10/);
+});
