@@ -1,0 +1,604 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "mango.com",
+  "stream": "us",
+  "visit": 223,
+  "session": 2,
+  "entryHost": "shop.mango.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-ab7b750ff260ae693",
+  "startUtc": "2026-10-08T03:46:08.926Z",
+  "endUtc": "2026-10-08T03:50:02.523Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "shop.mango.com",
+      "status": 200,
+      "sha256": "9272a1b312a46960873d51572b5e8ac9dcb4f231b02717274dac629f3aca34aa",
+      "bytes": 2115,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://shop.mango.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://shop.mango.com/us/en"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://shop.mango.com/us/en/h/women"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://shop.mango.com/us/en/c/women/t-shirts/8e23bdfb"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://shop.mango.com/us/en/p/women/t-shirts/basics/ribbed-high-neck-t-shirt/37077792/61/00"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://shop.mango.com/us/en/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host (redirect to /us/en)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "women landing"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "T-shirts Women (blocked by cookie modal)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "women t-shirts listing"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Set cookies"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject all"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "button",
+      "name": "size M"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "View bag (1)"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Add 1 Item"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove Ribbed high neck t-shirt, Lilac,"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "88354e6212711e9c0bc1c1a7a61c762786af5f61d613b93bdfe2061e937aae3a",
+      "bytes": 143283,
+      "chunks": 1,
+      "url": "https://shop.mango.com/us/en/p/women/t-shirts/basics/ribbed-high-neck-t-shirt/37077792/61/00",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "5a73df60e5e2dee29bb9ba5ccd0bf10facf2b0a08f291e1b7a1e63678f8a8bd3",
+      "bytes": 105752,
+      "chunks": 1,
+      "url": "https://shop.mango.com/us/en/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "504fbd661dad948822c3d61359c4430a27c42137ac1230a3975b93a1229ae9cc",
+      "bytes": 105472,
+      "chunks": 1,
+      "url": "https://shop.mango.com/us/en/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "0fb4fcbbf6d698574285caac7ce4844897adde4a8080672c3c97add00c06c733",
+      "bytes": 81570,
+      "chunks": 1,
+      "url": "https://shop.mango.com/us/en/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; second item skipped to keep the session short"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://shop.mango.com/us/en/c/women/t-shirts/8e23bdfb",
+    "productUrl": "https://shop.mango.com/us/en/p/women/t-shirts/basics/ribbed-high-neck-t-shirt/37077792/61/00",
+    "price": "US$ 45.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cookie modal blocked the first link click; declined via Set cookies > Reject all.",
+    "empty-cart exported after removing own item (cart actually empty).",
+    "All four chunk(0) results were saved by the harness to tool-results files (expected; not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:46:08.926Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:46:10.039Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:46:10.049Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:46:12.401Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:46:20.830Z",
+      "tool": "navigate",
+      "url": "https://shop.mango.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:46:24.490Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:46:30.432Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:46:34.088Z",
+      "tool": "navigate",
+      "url": "https://shop.mango.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:46:38.000Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:46:41.277Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:46:44.729Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:46:54.422Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:46:57.623Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:47:00.782Z",
+      "tool": "navigate",
+      "url": "https://shop.mango.com/us/en/h/women"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:47:03.287Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:47:05.337Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T03:47:07.904Z",
+      "tool": "navigate",
+      "url": "https://shop.mango.com/us/en/c/women/t-shirts/8e23bdfb"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T03:47:10.544Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T03:47:13.114Z",
+      "tool": "navigate",
+      "url": "https://shop.mango.com/us/en/p/women/t-shirts/basics/ribbed-high-neck-t-shirt/37077792/61/00"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T03:47:15.806Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T03:47:19.306Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T03:47:21.984Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T03:47:22.411Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T03:47:24.832Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T03:47:25.158Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T03:47:27.588Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T03:47:27.977Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T03:47:30.252Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T03:47:30.639Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T03:47:33.202Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T03:47:33.524Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T03:47:56.275Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T03:47:58.955Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T03:48:01.367Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T03:48:03.662Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T03:48:04.187Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T03:48:04.263Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T03:48:08.915Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T03:48:28.967Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T03:48:31.402Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T03:48:33.842Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T03:48:36.346Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T03:48:36.787Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T03:48:37.018Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T03:48:59.599Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T03:49:01.889Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T03:49:04.704Z",
+      "tool": "find"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T03:49:07.459Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T03:49:07.895Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T03:49:08.115Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T03:49:31.505Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T03:49:33.823Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T03:49:36.470Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T03:49:39.041Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T03:49:57.909Z",
+      "tool": "Write"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T03:50:02.523Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "88354e6212711e9c0bc1c1a7a61c762786af5f61d613b93bdfe2061e937aae3a"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "5a73df60e5e2dee29bb9ba5ccd0bf10facf2b0a08f291e1b7a1e63678f8a8bd3"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "504fbd661dad948822c3d61359c4430a27c42137ac1230a3975b93a1229ae9cc"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "0fb4fcbbf6d698574285caac7ce4844897adde4a8080672c3c97add00c06c733"
+      }
+    ],
+    "errors": []
+  }
+}

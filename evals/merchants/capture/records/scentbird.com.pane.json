@@ -1,0 +1,691 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "scentbird.com",
+  "stream": "us",
+  "visit": 243,
+  "session": 1,
+  "entryHost": "www.scentbird.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a516827ab4c6e3f36",
+  "startUtc": "2026-10-08T04:08:28.497Z",
+  "endUtc": "2026-10-08T04:16:24.208Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.scentbird.com",
+      "status": 200,
+      "sha256": "41815e9e4ab248d0212a912a0d7a1f7ff28e83db1bf601c2cbdb7e1ed62ebbb6",
+      "bytes": 3388,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.scentbird.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.scentbird.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.scentbird.com/shop/perfumes"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.scentbird.com/ecommerce/perfume/versace-bright-crystal-943571"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.scentbird.com/cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.scentbird.com/shop/perfumes"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "footer Shop: perfumes"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "Close (subscription modal)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Close (cart drawer)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "product: Versace Bright Crystal"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (404, no cart page)"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/shop/perfumes"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "cart"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "(unlabelled plus button)"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Yes, remove it!"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "aef4b1301e5ff1660bd087d11c99b7638d8462e36bcef8c6b9f89ae71d7a49ee",
+      "bytes": 545121,
+      "chunks": 2,
+      "url": "https://www.scentbird.com/shop/perfumes",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "fd6acd4a5d71f11225a81c127152cc89411bc8f56bd809c18382569ef6325412",
+      "bytes": 308433,
+      "chunks": 1,
+      "url": "https://www.scentbird.com/ecommerce/perfume/versace-bright-crystal-943571",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "3f95fe163a350d23b40998f37300ad688bb96a5a248a0bf7d4bdcf3571f3e225",
+      "bytes": 517978,
+      "chunks": 2,
+      "url": "https://www.scentbird.com/shop/perfumes",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "ab7a4039d381fd5eee85712dbfd23d67ddf14bde028352e51810bb433988fbe1",
+      "bytes": 517981,
+      "chunks": 2,
+      "url": "https://www.scentbird.com/shop/perfumes",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "no lingering items; second item not added (store kept to one item)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.scentbird.com/shop/perfumes",
+    "productUrl": "https://www.scentbird.com/ecommerce/perfume/versace-bright-crystal-943571",
+    "price": "USD 93.50",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Store has no cart page (/cart is a 404); cart is an in-page drawer only, so empty-cart, cart-1 and cart-qty2 are exports of the drawer opened from the header cart button on /shop/perfumes.",
+    "checkoutDisallowed reflects robots Disallow: /payment (drawer Checkout links to /subscription/payment, also under Disallow: /subscription); not visited.",
+    "Quantity-increment button has no accessible name; identified by position and verified by the total doubling.",
+    "Screenshots failed (pane hidden); read_page/find used instead."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:08:28.497Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:08:29.421Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:08:30.627Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:08:30.637Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:08:42.391Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:08:46.248Z",
+      "tool": "navigate",
+      "url": "https://www.scentbird.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:08:46.255Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:08:53.381Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:08:58.250Z",
+      "tool": "navigate",
+      "url": "https://www.scentbird.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:08:58.326Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:09:06.323Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:09:06.345Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:09:21.489Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:09:27.148Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:09:27.167Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:09:33.460Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:09:33.489Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:09:43.364Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:09:43.416Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:09:47.637Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:09:53.395Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:09:54.169Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:09:54.213Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:09:59.196Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:10:02.732Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:10:12.328Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:10:15.524Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:10:45.702Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:10:51.034Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:10:59.405Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:11:04.626Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:11:05.693Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:11:05.694Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:11:11.593Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:11:15.202Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:11:21.327Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:11:21.339Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:11:26.265Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:11:30.660Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:12:00.467Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:12:05.567Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T04:12:11.141Z",
+      "tool": "navigate",
+      "url": "https://www.scentbird.com/cart"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T04:12:11.154Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T04:12:21.110Z",
+      "tool": "navigate",
+      "url": "https://www.scentbird.com/shop/perfumes"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T04:12:21.124Z",
+      "tool": "find"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T04:12:28.320Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T04:12:32.676Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T04:12:32.958Z",
+      "tool": "find"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T04:13:02.345Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T04:13:09.969Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T04:13:13.589Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T04:13:17.230Z",
+      "tool": "find"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T04:13:20.512Z",
+      "tool": "find"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T04:13:24.327Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T04:13:29.454Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T04:13:29.456Z",
+      "tool": "find"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T04:13:33.991Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T04:13:34.064Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T04:14:05.320Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T04:14:09.328Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T04:14:19.466Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T04:14:25.305Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T04:14:26.100Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T04:14:26.114Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T04:14:34.367Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T04:14:34.383Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T04:14:34.383Z",
+      "tool": "find"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T04:14:44.283Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T04:16:10.991Z",
+      "tool": "Write"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T04:16:24.208Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "aef4b1301e5ff1660bd087d11c99b7638d8462e36bcef8c6b9f89ae71d7a49ee"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "fd6acd4a5d71f11225a81c127152cc89411bc8f56bd809c18382569ef6325412"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "3f95fe163a350d23b40998f37300ad688bb96a5a248a0bf7d4bdcf3571f3e225"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "ab7a4039d381fd5eee85712dbfd23d67ddf14bde028352e51810bb433988fbe1"
+      }
+    ],
+    "errors": []
+  }
+}

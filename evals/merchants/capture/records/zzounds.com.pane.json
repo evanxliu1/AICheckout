@@ -1,0 +1,488 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "zzounds.com",
+  "stream": "us",
+  "visit": 254,
+  "session": 1,
+  "entryHost": "www.zzounds.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a8b040b350720c8d2",
+  "startUtc": "2026-10-08T04:23:23.409Z",
+  "endUtc": "2026-10-08T04:31:53.377Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 15,
+      "item": "own item 1 (qty 2, one line)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.zzounds.com",
+      "status": 200,
+      "sha256": "97b24212f8bc906100aa47a32ce32d6760c855f71bb65e3e6c81f23e520e886d",
+      "bytes": 538,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.zzounds.com/robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.zzounds.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.zzounds.com/cart--:token"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.zzounds.com/cat--Headphones--2378"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.zzounds.com/item--SENHD280PRO"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.zzounds.com/cart--:token"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "url": "https://www.zzounds.com/item--SENHD280PRO"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "url": "https://www.zzounds.com/cart--:token"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Cart Quantity: 0"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Headphones category"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Sennheiser HD 280 Pro Headphones"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page again"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove Sennheiser HD 280 Pro Headphon"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "b89336c4e314c24a156557be28d2f844dc1fee179eada832537150f81473af7f",
+      "bytes": 118050,
+      "chunks": 1,
+      "url": "https://www.zzounds.com/cart--:token",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "8832bfa79fe721d3571c7ea6803add239473b669925a1a5ed3690407508546ae",
+      "bytes": 278215,
+      "chunks": 1,
+      "url": "https://www.zzounds.com/cart--:token",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "dc2018632c7f72dbc07e3b9ff79a1b68c78942326d9e2dda79d8182aeeb7e543",
+      "bytes": 276083,
+      "chunks": 1,
+      "url": "https://www.zzounds.com/cart--:token",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart navigates straight to the cart page; no in-page cart shown"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no lingering items; second product not added (kept scope to cart-1 and cart-qty2)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.zzounds.com/cat--Headphones--2378",
+    "productUrl": "https://www.zzounds.com/item--SENHD280PRO",
+    "price": "$99.95",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cart URL is /cart--<number>, the number changing on every load; masked as :token.",
+    "Cart quantity control is a <select>, so cart-qty2 was reached by a second Add to Cart click on the product page (same line went to qty 2).",
+    "robots.txt disallows /cart--* and /checkout--* for *; cart page visited anyway per .8 rule (record only).",
+    "Chunk results were oversized and saved by the harness to tool-results files; not opened."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:23:23.409Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:23:23.680Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:23:25.089Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:23:25.378Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:24:00.409Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:24:08.178Z",
+      "tool": "navigate",
+      "url": "https://www.zzounds.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:24:08.270Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:24:21.699Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:24:26.410Z",
+      "tool": "navigate",
+      "url": "https://www.zzounds.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:24:26.611Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:24:39.150Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:24:39.213Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:24:48.872Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:24:57.759Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:24:58.092Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:25:44.601Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:25:55.852Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:26:14.486Z",
+      "tool": "navigate",
+      "url": "https://www.zzounds.com/:token"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:26:14.515Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:26:34.871Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:26:40.383Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:26:40.430Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:26:57.930Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:27:12.244Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:27:24.424Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:27:37.778Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:27:38.149Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:28:20.687Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:28:30.910Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:28:45.439Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:28:53.771Z",
+      "tool": "navigate",
+      "url": "https://www.zzounds.com/:token"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:28:53.937Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:29:16.870Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:29:16.993Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:29:36.998Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:30:14.591Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:30:25.460Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:30:46.224Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:30:55.648Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:30:55.689Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:31:14.203Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T04:31:35.968Z",
+      "tool": "Write"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T04:31:53.377Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "b89336c4e314c24a156557be28d2f844dc1fee179eada832537150f81473af7f"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "8832bfa79fe721d3571c7ea6803add239473b669925a1a5ed3690407508546ae"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "dc2018632c7f72dbc07e3b9ff79a1b68c78942326d9e2dda79d8182aeeb7e543"
+      }
+    ],
+    "errors": []
+  }
+}

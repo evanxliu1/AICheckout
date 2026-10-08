@@ -1,0 +1,199 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "urbanoutfitters.com",
+  "stream": "us",
+  "visit": 248,
+  "session": 1,
+  "entryHost": "www.urbanoutfitters.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a95492b967bd0a5b7",
+  "startUtc": "2026-10-08T04:14:02.993Z",
+  "endUtc": "2026-10-08T04:15:23.817Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.urbanoutfitters.com",
+      "status": 403,
+      "sha256": "cff20260ea9ca574218f1412f8f2f7288df4eb604f16fc1d34980b56a8e64d68",
+      "bytes": 779,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.urbanoutfitters.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.urbanoutfitters.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home page"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at DataDome device check on home page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at DataDome device check on home page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at DataDome device check on home page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at DataDome device check on home page"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at DataDome device check on home page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.urbanoutfitters.com/",
+    "title": "https://www.urbanoutfitters.com/",
+    "wording": "DataDome Device Check",
+    "marker": "DataDome device-check page (accessibility tree showed only this element; body text empty)"
+  },
+  "problems": [
+    "robots.txt page rendered its rules in the pane, but the in-page hash re-fetch (credentials omitted) returned HTTP 403 with 779 bytes, so the hash is of the 403 body, not the rules; rules as read: User-agent * Allow /, no cart or checkout disallow",
+    "home page showed a DataDome Device Check right after entry; stopped without interacting, nothing exported",
+    "sign-in state and starting cart count not observable before the block"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:14:02.993Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:14:03.879Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:14:05.221Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:14:05.244Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:14:17.327Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:14:20.545Z",
+      "tool": "navigate",
+      "url": "https://www.urbanoutfitters.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:14:26.950Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:14:34.804Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:14:39.973Z",
+      "tool": "navigate",
+      "url": "https://www.urbanoutfitters.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:14:39.979Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:14:46.180Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:14:46.193Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:14:55.606Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:15:10.336Z",
+      "tool": "Write"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:15:23.817Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

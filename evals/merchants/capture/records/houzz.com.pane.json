@@ -1,0 +1,256 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "houzz.com",
+  "stream": "us",
+  "visit": 233,
+  "session": 2,
+  "entryHost": "www.houzz.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-acdf11f05bd4f6c2b",
+  "startUtc": "2026-10-08T03:57:43.712Z",
+  "endUtc": "2026-10-08T03:59:25.734Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.houzz.com",
+      "status": 200,
+      "sha256": "91cb6e0787ff512e471c4cefe5c5f53345273e32eea5106b0e229d7ac52d3a76",
+      "bytes": 8703,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.houzz.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.houzz.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.houzz.com/products"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Main navigation menu"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/products (shop section)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (shop closed page)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "75cec7173956afda6116b51f7eef79bb4c1922b8c4170d19290f093062efeae1",
+      "bytes": 333641,
+      "chunks": 1,
+      "url": "https://www.houzz.com/products"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "store sells nothing: Shop Houzz closed"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "store sells nothing: Shop Houzz closed"
+    },
+    {
+      "state": "cart-1",
+      "reason": "store sells nothing: Shop Houzz closed"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "store sells nothing: Shop Houzz closed"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "not-a-store",
+    "evidenceSha256": "75cec7173956afda6116b51f7eef79bb4c1922b8c4170d19290f093062efeae1"
+  },
+  "challenge": null,
+  "problems": [
+    "/products page reads: 'Purchasing on Shop Houzz, operated by Cart.com, is no longer available.' Home page and main menu have no shop or cart links.",
+    "Code chosen as not-a-store (shop discontinued); reviewer may prefer defunct.",
+    "No cart exists, so start and end cart counts were not recorded. Not signed in (Sign In link shown).",
+    "Evidence chunk(0) was saved to a harness tool-results file because it was too large (expected); I did not open it."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:57:43.712Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:57:44.876Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:57:44.883Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:57:47.854Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:57:50.919Z",
+      "tool": "navigate",
+      "url": "https://www.houzz.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:57:54.435Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:58:00.731Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:58:07.243Z",
+      "tool": "navigate",
+      "url": "https://www.houzz.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:58:07.249Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:58:11.852Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:58:18.298Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:58:18.301Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:58:23.265Z",
+      "tool": "navigate",
+      "url": "https://www.houzz.com/products"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:58:23.270Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:58:53.951Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:58:57.348Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T03:59:01.128Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T03:59:17.970Z",
+      "tool": "Write"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T03:59:25.734Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "75cec7173956afda6116b51f7eef79bb4c1922b8c4170d19290f093062efeae1"
+      }
+    ],
+    "errors": []
+  }
+}

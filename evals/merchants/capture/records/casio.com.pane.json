@@ -1,0 +1,189 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "casio.com",
+  "stream": "us",
+  "visit": 241,
+  "session": 1,
+  "entryHost": "www.casio.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a81d40f76316c3cc4",
+  "startUtc": "2026-10-08T04:07:12.565Z",
+  "endUtc": "2026-10-08T04:08:19.057Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.casio.com",
+      "status": 200,
+      "sha256": "dbf23745e2637b7f056f13b7d3ceb60d35e4a1b8110cd0b96098fd2e03be2974",
+      "bytes": 23857,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.casio.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.casio.com/us/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host (redirected to /us/)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall on entry (Akamai challenge page)"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall on entry (Akamai challenge page)"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall on entry (Akamai challenge page)"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall on entry (Akamai challenge page)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.casio.com/us/",
+    "title": "",
+    "marker": "Akamai interstitial: unlabeled button, Akamai logo, akamai.com privacy link; no store content",
+    "wording": "Powered and protected by [Akamai] Privacy"
+  },
+  "problems": [
+    "Entry https://www.casio.com/ redirected to /us/ and showed an Akamai challenge page (empty title, one unlabeled button); not interacted with, not exported.",
+    "robots.txt: '*' group disallows only login/account paths for us and checkout for EU locales; root allowed.",
+    "Sign-in state and starting cart count not observable (blocked before any store page)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:07:12.565Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:07:12.578Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:07:20.654Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:07:20.964Z",
+      "tool": "Read"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:07:20.989Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:07:24.608Z",
+      "tool": "navigate",
+      "url": "https://www.casio.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:07:24.663Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:07:33.504Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:07:37.373Z",
+      "tool": "navigate",
+      "url": "https://www.casio.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:07:37.475Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:07:53.192Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:07:57.697Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:08:11.739Z",
+      "tool": "Write"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:08:19.057Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

@@ -1,0 +1,710 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "lidl.de",
+  "stream": "non-us",
+  "visit": 188,
+  "session": 2,
+  "entryHost": "www.lidl.de",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a1af000dd3387ca56",
+  "startUtc": "2026-10-08T03:47:04.296Z",
+  "endUtc": "2026-10-08T03:52:07.917Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.lidl.de",
+      "status": 200,
+      "sha256": "221324c16f525a4dff9554f2d3d3401f225aa00046efd9fdaa96f203bb52315a",
+      "bytes": 312,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.lidl.de/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.lidl.de/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.lidl.de/otc/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.lidl.de/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.lidl.de/p/silvercrest-premium-gusseisentopf-o-21-cm/p100410308"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.lidl.de/otc/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Ablehnen (cookie, off-screen, failed)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Premium-Gusseisentopf (no navigation)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (link href from home)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "ABLEHNEN"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "radio",
+      "name": "Farbe: Schwarz"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "In den Warenkorb"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Menge erhöhen"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Entfernen (coordinate miss, no effect)"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Entfernen"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "238a6ec4770af45a0cfa48c0272bd84efd097b480145762b4ca03db74261d514",
+      "bytes": 622563,
+      "chunks": 2,
+      "url": "https://www.lidl.de/otc/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "954e5f4ab9c51459bb265069b13072b4d579e5fa3d68abf744026768cc28db9f",
+      "bytes": 2013706,
+      "chunks": 6,
+      "url": "https://www.lidl.de/p/silvercrest-premium-gusseisentopf-o-21-cm/p100410308",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "8fcfb577a8b4f2e3cc89217b8d5f917a1f1a485864ab0d844bd449435bd6e16d",
+      "bytes": 659282,
+      "chunks": 2,
+      "url": "https://www.lidl.de/otc/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "1eafa38071e7831c1f41936336b7368711bcd99097cafe7d9212d5832b71b172",
+      "bytes": 659947,
+      "chunks": 2,
+      "url": "https://www.lidl.de/otc/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "no lingering item; second item not added (focus on cart-1 and cart-qty2)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.lidl.de/",
+    "productUrl": "https://www.lidl.de/p/silvercrest-premium-gusseisentopf-o-21-cm/p100410308",
+    "price": "22.99 EUR",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EUR",
+  "observedRegion": "DE",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "All chunk results except minicart-1 chunk 5 exceeded the inline limit and were saved by the harness to tool-results files (expected, not opened).",
+    "Product link click on home page did not navigate (link in a hidden menu); product opened by URL from the link href found on the home page.",
+    "minicart-1 exported from the cart overlay drawer opened by hovering the header cart icon after the add."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:47:04.296Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:47:05.477Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:47:05.489Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:47:08.028Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:47:11.316Z",
+      "tool": "navigate",
+      "url": "https://www.lidl.de/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:47:11.440Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:47:18.644Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:47:22.942Z",
+      "tool": "navigate",
+      "url": "https://www.lidl.de/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:47:22.984Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:47:30.260Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:47:30.262Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:47:34.143Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:47:37.172Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:47:50.265Z",
+      "tool": "navigate",
+      "url": "https://www.lidl.de/otc/cart"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:47:50.267Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:48:25.975Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T03:48:29.372Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T03:48:32.974Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T03:48:37.266Z",
+      "tool": "navigate",
+      "url": "https://www.lidl.de/"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T03:48:37.270Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T03:48:41.888Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T03:48:45.670Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T03:48:49.104Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T03:48:52.017Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T03:48:57.844Z",
+      "tool": "navigate",
+      "url": "https://www.lidl.de/p/:token/p100410308"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T03:48:57.848Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T03:49:06.007Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T03:49:06.080Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T03:49:16.128Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T03:49:19.814Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T03:49:19.845Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T03:49:23.308Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T03:49:25.769Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T03:49:26.198Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T03:49:28.710Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T03:49:29.250Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T03:49:31.595Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T03:49:32.223Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T03:49:34.716Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T03:49:37.465Z",
+      "tool": "computer",
+      "action": "hover"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T03:49:37.998Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T03:49:58.198Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T03:50:00.670Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T03:50:03.675Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T03:50:06.044Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T03:50:08.404Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T03:50:10.759Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T03:50:13.130Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T03:50:15.315Z",
+      "tool": "navigate",
+      "url": "https://www.lidl.de/otc/cart"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T03:50:15.736Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T03:50:20.846Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T03:50:41.523Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T03:50:43.825Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T03:50:46.482Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T03:50:49.252Z",
+      "tool": "find"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T03:50:51.630Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T03:50:52.074Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T03:50:52.614Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T03:51:15.255Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T03:51:17.589Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T03:51:20.356Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T03:51:25.705Z",
+      "tool": "find"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T03:51:28.143Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T03:51:28.703Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T03:51:29.308Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T03:51:34.460Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T03:51:35.112Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T03:51:35.491Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T03:51:39.956Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T03:51:42.369Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T03:52:02.423Z",
+      "tool": "Write"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T03:52:07.917Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "238a6ec4770af45a0cfa48c0272bd84efd097b480145762b4ca03db74261d514"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "954e5f4ab9c51459bb265069b13072b4d579e5fa3d68abf744026768cc28db9f"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "8fcfb577a8b4f2e3cc89217b8d5f917a1f1a485864ab0d844bd449435bd6e16d"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "1eafa38071e7831c1f41936336b7368711bcd99097cafe7d9212d5832b71b172"
+      }
+    ],
+    "errors": []
+  }
+}

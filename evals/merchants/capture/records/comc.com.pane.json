@@ -1,0 +1,93 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "comc.com",
+  "stream": "us",
+  "visit": 263,
+  "session": 1,
+  "entryHost": "www.comc.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    { "n": 1, "item": "own item 1", "ok": false, "note": "cart-page Remove postback had no effect (page form validation); not retried there" },
+    { "n": 2, "item": "own item 1", "ok": true, "note": "Remove from Cart toggle on product page" },
+    { "n": 3, "item": "own item 2", "ok": true, "note": "Remove from Cart toggle on product page" }
+  ],
+  "robots": [
+    {
+      "host": "www.comc.com",
+      "status": 200,
+      "sha256": "4ed11dd2ad02aedceea5184b2bff0c2df6cf699155a57a146d79c3d070d28f99",
+      "bytes": 494,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.comc.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.comc.com/" },
+    { "n": 3, "utc": null, "url": "https://www.comc.com/ShoppingCart.aspx" },
+    { "n": 4, "utc": null, "url": "https://www.comc.com/Cards/Baseball/2001/Upper_Deck_-_Base/295/Star_Rookie_-_Albert_Pujols/2398648" },
+    { "n": 5, "utc": null, "url": "https://www.comc.com/ShoppingCart" },
+    { "n": 6, "utc": null, "url": "https://www.comc.com/Cards/Baseball/2001/Upper_Deck_-_Base/295/Star_Rookie_-_Albert_Pujols/2398648" },
+    { "n": 7, "utc": null, "url": "https://www.comc.com/ShoppingCart" },
+    { "n": 8, "utc": null, "url": "https://www.comc.com/Cards/Baseball/2001/Upper_Deck_-_Base/295/Star_Rookie_-_Albert_Pujols/2398648" },
+    { "n": 9, "utc": null, "url": "https://www.comc.com/ShoppingCart" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "pane-robots-hash.js" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "cart (starting count)" },
+    { "n": 5, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "product page (home Recently Added link)" },
+    { "n": 7, "utc": null, "kind": "add-to-cart", "role": "link", "name": "Add to Cart" },
+    { "n": 8, "utc": null, "kind": "cookie-decline", "role": "button", "name": "Reject All" },
+    { "n": 9, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 10, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 11, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 12, "utc": null, "kind": "navigate", "role": "", "name": "product page" },
+    { "n": 13, "utc": null, "kind": "add-to-cart", "role": "link", "name": "Add to Cart" },
+    { "n": 14, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 15, "utc": null, "kind": "export", "role": "", "name": "cart-2items" },
+    { "n": 16, "utc": null, "kind": "remove-item", "role": "link", "name": "Remove" },
+    { "n": 17, "utc": null, "kind": "navigate", "role": "", "name": "product page" },
+    { "n": 18, "utc": null, "kind": "remove-item", "role": "link", "name": "Remove from Cart" },
+    { "n": 19, "utc": null, "kind": "remove-item", "role": "link", "name": "Remove from Cart" },
+    { "n": 20, "utc": null, "kind": "navigate", "role": "", "name": "cart (final count)" }
+  ],
+  "states": [
+    { "state": "empty-cart", "sha256": "9ef162465ecc3313d5e801f73502a75c1a984eecbd2adf0a1bf6f560eecbad8c", "bytes": 286943, "chunks": 1, "url": "https://www.comc.com/ShoppingCart", "startCartCount": 0 },
+    { "state": "minicart-1", "sha256": "99612c2c78cfccd5d4c92dd815aa4a9157569fcc6daaaf77e40264d1e2dfb2aa", "bytes": 384934, "chunks": 1, "url": "https://www.comc.com/Cards/Baseball/2001/Upper_Deck_-_Base/295/Star_Rookie_-_Albert_Pujols/2398648", "startCartCount": 0 },
+    { "state": "cart-1", "sha256": "402cdfd324ad88e68f6658d2b736fc92b215a47a9ccb0f7f9e3eb22cc909428f", "bytes": 335361, "chunks": 1, "url": "https://www.comc.com/ShoppingCart", "startCartCount": 0 },
+    { "state": "cart-2items", "sha256": "c611d3cdae40641a2f42a144f1f29e0638f1b67cc2ba50659b22f32bf7b7f5ff", "bytes": 340744, "chunks": 1, "url": "https://www.comc.com/ShoppingCart", "startCartCount": 0 }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "cart-qty2", "reason": "listings are single unique cards; cart has no quantity control" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.comc.com/",
+    "productUrl": "https://www.comc.com/Cards/Baseball/2001/Upper_Deck_-_Base/295/Star_Rookie_-_Albert_Pujols/2398648",
+    "price": "$34.74",
+    "secondProductUrl": "https://www.comc.com/Cards/Baseball/2001/Upper_Deck_-_Base/295/Star_Rookie_-_Albert_Pujols/2398648"
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "minicart-1: no drawer opens after add; in-page state is the product page with the header cart count 1 and the listing toggled to Remove from Cart",
+    "second item is another seller's listing of the same card on the same page ($39.93)",
+    "cart page Remove is an ASP.NET postback; first attempt had no visible effect, items then removed via product-page Remove from Cart links",
+    "robots.txt disallows /ShoppingCart/ and /CheckOut2/ for *; recorded only",
+    "cart page shows a shipping-location form; nothing typed"
+  ]
+}

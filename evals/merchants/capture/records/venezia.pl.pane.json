@@ -1,0 +1,151 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "venezia.pl",
+  "stream": "non-us",
+  "visit": 203,
+  "session": 2,
+  "entryHost": "www.venezia.pl",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-ad38117772c2960e9",
+  "startUtc": "2026-10-08T04:13:59.403Z",
+  "endUtc": "2026-10-08T04:14:52.761Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.venezia.pl",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null,
+      "note": "robots.txt request answered with a Cloudflare challenge page; not hashed"
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.venezia.pl/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall at robots.txt"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall at robots.txt"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall at robots.txt"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall at robots.txt"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall at robots.txt"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.venezia.pl/robots.txt",
+    "title": "Just a moment...",
+    "marker": "Cloudflare challenge (title 'Just a moment...', redirect with __cf_chl_rt_tk query)",
+    "wording": "Performing security verification. This website uses a security service to protect against malicious bots."
+  },
+  "problems": [
+    "Cloudflare 'Just a moment...' challenge served on the first request (robots.txt); stopped at once, not interacted with, not exported",
+    "robots.txt not hashed because the challenge page was served instead"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:13:59.403Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:14:00.605Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:14:00.636Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:14:08.315Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:14:11.915Z",
+      "tool": "navigate",
+      "url": "https://www.venezia.pl/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:14:17.679Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:14:21.198Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:14:25.210Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:14:45.716Z",
+      "tool": "Write"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:14:52.761Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

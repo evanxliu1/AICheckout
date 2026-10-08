@@ -1,0 +1,228 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "wayfair.co.uk",
+  "stream": "non-us",
+  "visit": 196,
+  "session": 2,
+  "entryHost": "www.wayfair.co.uk",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a64cb2122dc3d0aab",
+  "startUtc": "2026-10-08T04:03:08.758Z",
+  "endUtc": "2026-10-08T04:04:26.183Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.wayfair.co.uk",
+      "status": 200,
+      "sha256": "c60694d9bb464ea6bfaf03063b44b3ac9c15bdefd0b47ac9af23aca9ba047406",
+      "bytes": 2165,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.wayfair.co.uk/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.wayfair.co.uk/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.wayfair.co.uk/curated/sofas~ev634486.html"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host origin"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Woven Baskets (ref click)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall before item reached"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall before item reached"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall before item reached"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall before item reached"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "GBP",
+  "observedRegion": "GB",
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.wayfair.co.uk/curated/sofas~ev634486.html",
+    "title": "Access to this page has been denied",
+    "marker": "PerimeterX/HUMAN press-and-hold challenge",
+    "wording": "Before we continue... Press & Hold to confirm you are a human (and not a bot)."
+  },
+  "problems": [
+    "Clicking the ref for the Woven Baskets menu link reported coordinate (0, 132), and the page loaded a curated sofas page instead, which showed the challenge. The ref click seems to have hit a different element.",
+    "Start cart count is 0, read from the header Basket link, which had no count badge. The cart page was not opened.",
+    "Wayfair's cart path /v/checkout/basket/show has a checkout segment, so the protocol forbids it, and robots.txt disallows /v/checkout/. cart-1 would need forbidden-action handling even if no block had happened.",
+    "Session 2 of 2. A block is final."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:03:08.758Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:03:09.932Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:03:09.935Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:03:12.439Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:03:15.477Z",
+      "tool": "navigate",
+      "url": "https://www.wayfair.co.uk/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:03:20.538Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:03:31.313Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:03:31.319Z",
+      "tool": "Read"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:03:34.794Z",
+      "tool": "navigate",
+      "url": "https://www.wayfair.co.uk/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:03:38.979Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:03:47.552Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:03:47.559Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:03:51.544Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:03:55.785Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:03:55.789Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:03:59.091Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:04:02.845Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:04:18.365Z",
+      "tool": "Write"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:04:26.183Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "courir.com",
+  "stream": "non-us",
+  "visit": 178,
+  "session": 2,
+  "entryHost": "www.courir.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a44262690210d0ef3",
+  "startUtc": "2026-10-08T03:36:03.899Z",
+  "endUtc": "2026-10-08T03:36:40.377Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.courir.com",
+      "status": 403,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.courir.com/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped: HTTP 403 on first request (robots.txt)"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped: HTTP 403 on first request (robots.txt)"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped: HTTP 403 on first request (robots.txt)"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped: HTTP 403 on first request (robots.txt)"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped: HTTP 403 on first request (robots.txt)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-http-403",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.courir.com/robots.txt",
+    "title": "",
+    "marker": "HTTP 403 JSON error body",
+    "wording": "{\"error\":{\"status-code\":\"403\",\"message\":\"Forbidden\"}}"
+  },
+  "problems": [
+    "robots.txt request answered with a 403 Forbidden JSON error; stopped at once per the 403 rule, no other page loaded",
+    "robots hash script not run (store stopped on the 403), so no robots SHA-256 or rule posture recorded",
+    "session 1 reached exports (tool-error from export-size defect), so this 403 in session 2 may be an origin-level block arising since then"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:36:03.899Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:36:05.135Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:36:05.136Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:36:07.717Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:36:11.080Z",
+      "tool": "navigate",
+      "url": "https://www.courir.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:36:11.176Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:36:20.902Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:36:34.129Z",
+      "tool": "Write"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:36:40.377Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

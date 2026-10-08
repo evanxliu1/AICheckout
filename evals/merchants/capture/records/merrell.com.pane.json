@@ -1,0 +1,752 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "merrell.com",
+  "stream": "us",
+  "visit": 232,
+  "session": 2,
+  "entryHost": "www.merrell.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-ad1949219eadb5035",
+  "startUtc": "2026-10-08T03:56:55.391Z",
+  "endUtc": "2026-10-08T04:02:10.298Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.merrell.com",
+      "status": 200,
+      "sha256": "ce1b9e729139b7650ac567a44118ced3cbc6339e787f80eb094908255ff9700a",
+      "bytes": 1741,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.merrell.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.merrell.com/US/en/home"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.merrell.com/US/en/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.merrell.com/US/en/best-selling-footwear/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.merrell.com/US/en/moab-3/52481M.html"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.merrell.com/US/en/cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.merrell.com/US/en/cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.merrell.com/US/en/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host (redirects to /US/en/home)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (start count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "best-selling-footwear listing"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Men's Moab 3"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Essential Cookies Only"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page Moab 3"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "radio",
+      "name": "size 10 M"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "image",
+      "name": "Add Quantity"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "dcde808e60932c0f46756f7c06cf1c9dcad4d4ed3d111e0df88439820f1113b9",
+      "bytes": 778573,
+      "chunks": 2,
+      "url": "https://www.merrell.com/US/en/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "74c6e7f5e10c5b9e9d5622ecf2cbda32f59687d4b8352ac5218c04a24081eeae",
+      "bytes": 2133448,
+      "chunks": 6,
+      "url": "https://www.merrell.com/US/en/moab-3/52481M.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "8188f2534f83a068bcf92af24924e949ee989ff77a26a27e5f062c273f8e5beb",
+      "bytes": 823015,
+      "chunks": 3,
+      "url": "https://www.merrell.com/US/en/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "ca805ab666ba7d920c297b7e1dfa6c49b75267381eceda5ca9ef0e9f49c708eb",
+      "bytes": 823166,
+      "chunks": 3,
+      "url": "https://www.merrell.com/US/en/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "cart started empty; no second item added (focus on core states)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.merrell.com/US/en/best-selling-footwear/",
+    "productUrl": "https://www.merrell.com/US/en/moab-3/52481M.html",
+    "price": "$145.00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt disallows /US/en/cart for * (recorded only; cart visited per .8 rule)",
+    "one stray chunk(0) call on the product page before any export there returned a TypeError (no export pending); no data affected",
+    "click on the listing's product link did not navigate within 3 s; product page then opened by URL without query",
+    "quantity increment and remove each reloaded the cart page (Salesforce form posts, allowed controls)",
+    "cart pages hold hidden invisible reCAPTCHA iframes (no visible challenge); flag for reviewer marker check",
+    "screenshots rendered blank (pane hidden); used find/read_page/get_page_text"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:56:55.391Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:56:56.603Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:56:56.610Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:56:59.033Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:57:02.344Z",
+      "tool": "navigate",
+      "url": "https://www.merrell.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:57:02.526Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:57:11.438Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:57:14.939Z",
+      "tool": "navigate",
+      "url": "https://www.merrell.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:57:15.015Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:57:20.439Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:57:23.818Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:57:27.481Z",
+      "tool": "navigate",
+      "url": "https://www.merrell.com/US/en/cart"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:57:27.490Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:57:56.772Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:58:00.196Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:58:03.684Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T03:58:08.589Z",
+      "tool": "navigate",
+      "url": "https://www.merrell.com/US/en/best-selling-footwear/"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T03:58:08.599Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T03:58:12.462Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T03:58:16.672Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T03:58:21.862Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T03:58:26.164Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T03:58:26.173Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T03:58:32.909Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T03:58:36.730Z",
+      "tool": "navigate",
+      "url": "https://www.merrell.com/US/en/moab-3/52481M.html"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T03:58:36.737Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T03:58:41.507Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T03:58:44.774Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T03:58:48.093Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T03:58:51.597Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T03:58:56.293Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T03:58:56.298Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T03:58:59.522Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T03:58:59.871Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T03:59:02.087Z",
+      "tool": "find"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T03:59:04.243Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T03:59:04.682Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T03:59:07.626Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T03:59:09.929Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T03:59:13.105Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T03:59:15.429Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T03:59:17.786Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T03:59:20.000Z",
+      "tool": "find"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T03:59:22.196Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T03:59:25.128Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T03:59:27.224Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T03:59:27.529Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T03:59:32.369Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T03:59:34.678Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T03:59:35.090Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T03:59:39.986Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T03:59:41.954Z",
+      "tool": "find"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T04:00:02.232Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T04:00:04.979Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T04:00:07.622Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T04:00:10.334Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T04:00:13.078Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T04:00:15.554Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T04:00:17.973Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T04:00:20.869Z",
+      "tool": "navigate",
+      "url": "https://www.merrell.com/US/en/cart"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T04:00:21.249Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T04:00:43.024Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T04:00:45.356Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T04:00:47.831Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T04:00:50.421Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T04:00:53.633Z",
+      "tool": "find"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T04:00:55.711Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T04:00:57.987Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T04:00:58.460Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T04:01:22.363Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T04:01:25.021Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T04:01:27.595Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T04:01:29.918Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T04:01:32.952Z",
+      "tool": "find"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T04:01:34.936Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T04:01:37.144Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T04:01:37.488Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-08T04:01:42.920Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-08T04:02:05.169Z",
+      "tool": "Write"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-08T04:02:10.298Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "74c6e7f5e10c5b9e9d5622ecf2cbda32f59687d4b8352ac5218c04a24081eeae"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "8188f2534f83a068bcf92af24924e949ee989ff77a26a27e5f062c273f8e5beb"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "ca805ab666ba7d920c297b7e1dfa6c49b75267381eceda5ca9ef0e9f49c708eb"
+      }
+    ],
+    "errors": [
+      {
+        "target": "empty-cart",
+        "error": "undecodable-chunk-0"
+      }
+    ]
+  }
+}

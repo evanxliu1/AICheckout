@@ -1,0 +1,825 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "laverne.com",
+  "stream": "non-us",
+  "visit": 179,
+  "session": 2,
+  "entryHost": "laverne.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-aa0cce60ed47e1cd5",
+  "startUtc": "2026-10-08T03:36:46.634Z",
+  "endUtc": "2026-10-08T03:42:04.158Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "laverne.com",
+      "status": 200,
+      "sha256": "5c58c4d3848b458ae9fd7240a05cd95822ad00aadfd2d3f1733604c315810316",
+      "bytes": 57041,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://laverne.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://laverne.com/en"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://laverne.com/en/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://laverne.com/en"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://laverne.com/en/-/c216169339"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://laverne.com/en"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://laverne.com/en/-/c1371516812"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://laverne.com/en/PDPmBXz"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "url": "https://laverne.com/en/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL (start count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "category tile (no navigation)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "category c216169339 (empty listing)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "back"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "category c1371516812"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "product PDPmBXz"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart (unnamed submit)"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1 (early, superseded)"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove from the cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "60f4b7efddc66d40322e165fc860b5887131280449fd238bb90038df20644f59",
+      "bytes": 201941,
+      "chunks": 1,
+      "url": "https://laverne.com/en/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "c058d6cd870a29b451edab9e1971a998cfc7891de97b6d27cd3c114ef325ae9c",
+      "bytes": 1214139,
+      "chunks": 3,
+      "url": "https://laverne.com/en/PDPmBXz",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "a11b3dbc451159abad0a8efc34efd11b4335418a2dff33d97dd11d6584d1c16e",
+      "bytes": 566763,
+      "chunks": 2,
+      "url": "https://laverne.com/en/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "b3c88ae3d10ae67a6a5c3ae7800c70dd2a223f1f2913147258a040265076ecab",
+      "bytes": 602124,
+      "chunks": 2,
+      "url": "https://laverne.com/en/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart started empty, second item skipped to keep the session short"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://laverne.com/en/-/c1371516812",
+    "productUrl": "https://laverne.com/en/PDPmBXz",
+    "price": "19.98 USD",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": null,
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Storefront displayed USD, not the frame's SAR; item 19.98 USD (about 75 SAR) is inside the 37-750 SAR band and the USD 10-200 band.",
+    "An earlier cart-1 export (sha256 92abb256e1d979eaa195c80715a95a560587c2e0933993fe2319e4fe9fc8fc89, 211205 bytes, 1 chunk) was taken before the cart page finished rendering; superseded by the recorded cart-1. Collector may find it in the transcript; ignore it.",
+    "Pane accessibility tree failed on full read/find (invalid label selector on page); screenshots rendered blank; navigation used read_page interactive refs.",
+    "Add-to-cart control was an unnamed submit button; identified as Add to cart by the added-to-cart modal and the cart contents afterwards.",
+    "A get_page_text of robots.txt exceeded the size limit and was saved by the harness to a tool-results file; not opened.",
+    "robots.txt disallows /cart and /*/gateway/checkout* for *; recorded only."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:36:46.634Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:36:47.772Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:36:47.776Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:36:50.194Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:36:53.659Z",
+      "tool": "navigate",
+      "url": "https://laverne.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:36:53.728Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:36:59.892Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:37:02.222Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:37:06.809Z",
+      "tool": "navigate",
+      "url": "https://laverne.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:37:06.814Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:37:13.594Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:37:13.600Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:37:17.615Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:37:20.819Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:37:24.110Z",
+      "tool": "navigate",
+      "url": "https://laverne.com/en/cart"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:37:24.414Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T03:37:51.896Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T03:37:54.153Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T03:37:57.306Z",
+      "tool": "navigate",
+      "url": "https://laverne.com/en"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T03:37:58.074Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T03:37:58.487Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T03:38:05.786Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T03:38:06.120Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T03:38:08.691Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T03:38:09.058Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T03:38:12.603Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T03:38:15.492Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T03:38:15.836Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T03:38:18.639Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T03:38:21.503Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T03:38:21.933Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T03:38:24.033Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T03:38:26.508Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T03:38:27.031Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T03:38:32.330Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T03:38:32.688Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T03:38:36.462Z",
+      "tool": "navigate",
+      "url": "back"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T03:38:36.775Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T03:38:39.835Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T03:38:40.368Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T03:38:42.754Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T03:38:46.427Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T03:38:47.133Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T03:38:47.491Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T03:38:53.295Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T03:38:53.881Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T03:38:56.134Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T03:38:59.021Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T03:38:59.557Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T03:38:59.949Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T03:39:05.071Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T03:39:07.740Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T03:39:08.316Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T03:39:10.969Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T03:39:11.595Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T03:39:13.952Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T03:39:17.978Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T03:39:18.568Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T03:39:22.598Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T03:39:23.233Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T03:39:23.649Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T03:39:29.424Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T03:39:50.384Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T03:39:53.006Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T03:39:53.736Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T03:39:54.426Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T03:39:57.229Z",
+      "tool": "navigate",
+      "url": "https://laverne.com/en/cart"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T03:39:57.590Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T03:40:18.712Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T03:40:21.556Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T03:40:23.938Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T03:40:27.158Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T03:40:27.707Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T03:40:32.080Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T03:40:52.775Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T03:40:55.404Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T03:40:55.981Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-08T03:40:58.954Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-08T03:40:59.199Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-08T03:40:59.595Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-08T03:41:22.509Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-08T03:41:25.287Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-08T03:41:25.813Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-08T03:41:29.476Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-08T03:41:31.955Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 85,
+      "utc": "2026-10-08T03:41:32.294Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 86,
+      "utc": "2026-10-08T03:41:32.696Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 87,
+      "utc": "2026-10-08T03:41:37.177Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 88,
+      "utc": "2026-10-08T03:41:58.593Z",
+      "tool": "Write"
+    },
+    {
+      "n": 89,
+      "utc": "2026-10-08T03:42:04.158Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "60f4b7efddc66d40322e165fc860b5887131280449fd238bb90038df20644f59"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "c058d6cd870a29b451edab9e1971a998cfc7891de97b6d27cd3c114ef325ae9c"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "a11b3dbc451159abad0a8efc34efd11b4335418a2dff33d97dd11d6584d1c16e"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "b3c88ae3d10ae67a6a5c3ae7800c70dd2a223f1f2913147258a040265076ecab"
+      }
+    ],
+    "errors": []
+  }
+}

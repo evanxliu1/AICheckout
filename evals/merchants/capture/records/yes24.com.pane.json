@@ -1,0 +1,812 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "yes24.com",
+  "stream": "non-us",
+  "visit": 195,
+  "session": 2,
+  "entryHost": "m.yes24.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a34d2cc93a22f107e",
+  "startUtc": "2026-10-08T04:01:28.387Z",
+  "endUtc": "2026-10-08T04:07:18.377Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 2,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 2 (second book)",
+      "ok": false
+    },
+    {
+      "n": 2,
+      "item": "own item 2 (second book), retry",
+      "ok": false
+    }
+  ],
+  "robots": [
+    {
+      "host": "m.yes24.com",
+      "status": 200,
+      "sha256": "4f3e17fbe1e161b0626838689b3970352396a028b46764dd48f55acf641101b7",
+      "bytes": 2693,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    },
+    {
+      "host": "ssl.yes24.com",
+      "status": 200,
+      "sha256": "7ea4052aea20413007bfc2686ba0ad7276882075c2606c86a9e6b08742b3a4ca",
+      "bytes": 26,
+      "rootDisallowed": true,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://m.yes24.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://m.yes24.com/home/main"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://ssl.yes24.com/robots.txt"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://ssl.yes24.com/mMyCart/CartMain"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://m.yes24.com/home/main"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://event.yes24.com/"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://m.yes24.com/goods/detail/172034616"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://ssl.yes24.com/mMyCart/CartMain"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "url": "https://m.yes24.com/goods/detail/172034616"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "url": "https://m.yes24.com/goods/detail/59462697"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "url": "https://ssl.yes24.com/mMyCart/CartMain"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "m.yes24.com robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "m.yes24.com"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "m.yes24.com home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "ssl.yes24.com robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "ssl.yes24.com"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "link",
+      "name": "cart (header link URL)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "m.yes24.com home"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "home book tile (hit event banner)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product URL from home tile link"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "카트담기"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "수량증가"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "first product page"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "related book tile"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "카트담기"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 21,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-other"
+    },
+    {
+      "n": 22,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "line X (no effect)"
+    },
+    {
+      "n": 23,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "line X retry (no effect)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "15be4372f15f9182711f8bffd9829fa835dcdff86d57203dda761a90bd9cf16b",
+      "bytes": 197329,
+      "chunks": 1,
+      "url": "https://ssl.yes24.com/mMyCart/CartMain",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "d13be2f755c375f152451d29eac8e1e9e4b9d5baef62a80f341d493abbd78ad4",
+      "bytes": 545063,
+      "chunks": 2,
+      "url": "https://m.yes24.com/goods/detail/172034616",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "4a1328d67e62ad2e3a1cd3c4a99d9e4c96742975ec191cdb4ee3dff5f78e0abc",
+      "bytes": 342456,
+      "chunks": 1,
+      "url": "https://ssl.yes24.com/mMyCart/CartMain",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "784380e991a569464aaa625264ab5ad741069e9355e94739458bf12da19e27cf",
+      "bytes": 344225,
+      "chunks": 1,
+      "url": "https://ssl.yes24.com/mMyCart/CartMain",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-other",
+      "sha256": "bd3c64d95b545cb30578887c185101ef85e00ec740f30d09e6dad78999bff456",
+      "bytes": 351338,
+      "chunks": 1,
+      "url": "https://ssl.yes24.com/mMyCart/CartMain",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "second own item added while first was at quantity 2 (no allowed decrement); two lines, three units, exported as cart-other"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://m.yes24.com/home/main",
+    "productUrl": "https://m.yes24.com/goods/detail/172034616",
+    "price": "18,900 KRW",
+    "secondProductUrl": "https://m.yes24.com/goods/detail/59462697"
+  },
+  "observedCurrency": "KRW",
+  "observedRegion": "KR",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cart is served on ssl.yes24.com (same registrable domain, site's own header link); its robots.txt disallows / for *. Recorded only.",
+    "A home-page click on a book tile landed on an event banner page (event.yes24.com, same registrable domain, not a frame host); no action taken there.",
+    "Cart page serves lines unselected, so the page's order total reads 0 KRW in cart-1, cart-qty2 and cart-other; captured as served, no checkbox clicked.",
+    "minicart-1 is the post-add confirmation sheet on the product page; it shows no cart totals.",
+    "Line remove (X) clicks had no visible effect twice, likely a native confirm dialog; both own items (3 units) remain in the cart.",
+    "Oversized chunk results were saved to harness tool-results files and not opened."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:01:28.387Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:01:29.239Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:01:30.517Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:01:30.524Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:01:35.158Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:01:38.828Z",
+      "tool": "navigate",
+      "url": "https://m.yes24.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:01:38.830Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:01:47.040Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:01:51.254Z",
+      "tool": "navigate",
+      "url": "https://m.yes24.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:01:51.258Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:01:58.605Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:01:58.609Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:02:03.776Z",
+      "tool": "navigate",
+      "url": "https://ssl.yes24.com/robots.txt"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:02:03.781Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:02:11.557Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:02:16.196Z",
+      "tool": "navigate",
+      "url": "https://ssl.yes24.com/mMyCart/CartMain"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:02:16.257Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:02:22.391Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:02:51.186Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:02:54.521Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:03:01.687Z",
+      "tool": "navigate",
+      "url": "https://m.yes24.com/"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:03:01.695Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:03:07.807Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:03:11.919Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:03:11.921Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:03:19.796Z",
+      "tool": "navigate",
+      "url": "https://m.yes24.com/goods/detail/172034616"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:03:19.802Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:03:30.581Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:03:30.588Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:03:33.951Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:03:34.019Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:03:37.567Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:03:40.793Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:03:41.329Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:04:03.011Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:04:05.215Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:04:07.586Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:04:10.062Z",
+      "tool": "navigate",
+      "url": "https://ssl.yes24.com/mMyCart/CartMain"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:04:10.491Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:04:15.296Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:04:15.668Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T04:04:17.981Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T04:04:20.014Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T04:04:40.634Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T04:04:42.959Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T04:04:45.748Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T04:04:46.279Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T04:05:06.561Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T04:05:09.172Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T04:05:16.279Z",
+      "tool": "navigate",
+      "url": "https://m.yes24.com/goods/detail/172034616"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T04:05:16.397Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T04:05:21.140Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T04:05:21.552Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T04:05:27.955Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T04:05:30.302Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T04:05:30.722Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T04:05:33.716Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T04:05:36.347Z",
+      "tool": "navigate",
+      "url": "https://ssl.yes24.com/mMyCart/CartMain"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T04:05:37.541Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T04:05:43.284Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T04:05:43.772Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T04:06:11.063Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T04:06:13.564Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T04:06:16.186Z",
+      "tool": "find"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T04:06:19.156Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T04:06:19.735Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T04:06:22.481Z",
+      "tool": "find"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T04:06:24.413Z",
+      "tool": "find"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T04:06:26.670Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T04:06:30.338Z",
+      "tool": "find"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T04:06:30.692Z",
+      "tool": "find"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T04:06:33.584Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T04:06:41.610Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T04:06:42.131Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T04:06:46.131Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T04:07:11.773Z",
+      "tool": "Write"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T04:07:18.377Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "15be4372f15f9182711f8bffd9829fa835dcdff86d57203dda761a90bd9cf16b"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "d13be2f755c375f152451d29eac8e1e9e4b9d5baef62a80f341d493abbd78ad4"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "4a1328d67e62ad2e3a1cd3c4a99d9e4c96742975ec191cdb4ee3dff5f78e0abc"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "784380e991a569464aaa625264ab5ad741069e9355e94739458bf12da19e27cf"
+      },
+      {
+        "target": "cart-other",
+        "kind": "state",
+        "sha256": "bd3c64d95b545cb30578887c185101ef85e00ec740f30d09e6dad78999bff456"
+      }
+    ],
+    "errors": []
+  }
+}

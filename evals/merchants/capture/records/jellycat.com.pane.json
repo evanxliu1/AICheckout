@@ -1,0 +1,571 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "jellycat.com",
+  "stream": "us",
+  "visit": 256,
+  "session": 1,
+  "entryHost": "us.jellycat.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-ac40e1c110df57126",
+  "startUtc": "2026-10-08T04:32:12.465Z",
+  "endUtc": "2026-10-08T04:43:07.034Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "us.jellycat.com",
+      "status": 200,
+      "sha256": "6e9cacd98df87f1793a7ea0e59e3571d6d89d4ef922cbfed807ab9457d2b2846",
+      "bytes": 3822,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://us.jellycat.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://us.jellycat.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://us.jellycat.com/ghost-bob/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://us.jellycat.com/cart.php"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject All"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Ghost Bob (homepage carousel)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add Ghost Bob to Bag"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart.php"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "generic",
+      "name": "Increase Quantity of Ghost Bob"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove Ghost Bob from bag"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "OK (confirm delete dialog)"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "2360f26ae8b7a8d46796104bdd6c2a66a236a268a34a821ae00e3d7dc122837d",
+      "bytes": 1046913,
+      "chunks": 3,
+      "url": "https://us.jellycat.com/ghost-bob/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "9a3cd7d02d6d36c04577ba0fbd0825a96695f31621ce7629ccab163a52e70ca6",
+      "bytes": 864215,
+      "chunks": 3,
+      "url": "https://us.jellycat.com/cart.php",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "f7ff13095d124c3951b494adffff35071dff86fff7ea1cc16a2a03107f4a1bf5",
+      "bytes": 864217,
+      "chunks": 3,
+      "url": "https://us.jellycat.com/cart.php",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "18e33078dedbe5b9ecef2dca494d00011e933b0d68feaca8cb9e744cf6d43838",
+      "bytes": 718614,
+      "chunks": 2,
+      "url": "https://us.jellycat.com/cart.php",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "cart started empty (no lingering item); a second item not added to keep the session simple"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://us.jellycat.com/",
+    "productUrl": "https://us.jellycat.com/ghost-bob/",
+    "price": "$28.00 USD",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "empty-cart taken after removing own item (cart actually empty), not at session start",
+    "robots.txt disallows /cart.php and /checkout for *; cart visited per .8 rule (record only)",
+    "product page notes a limit of 2 per customer (maximum, not minimum); qty 2 within it"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:32:12.465Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:32:12.930Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:32:14.279Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:32:14.360Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:33:26.782Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:33:39.641Z",
+      "tool": "navigate",
+      "url": "https://us.jellycat.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:33:40.765Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:34:14.101Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:34:26.047Z",
+      "tool": "navigate",
+      "url": "https://us.jellycat.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:34:26.241Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:34:42.388Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:34:52.508Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:34:52.602Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:35:08.668Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:35:16.630Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:35:16.784Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:35:30.853Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:35:30.894Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:35:51.556Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:35:59.156Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:36:12.277Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:36:14.012Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:36:14.035Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:37:14.182Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:37:25.995Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:37:41.433Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:37:49.462Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:37:59.275Z",
+      "tool": "navigate",
+      "url": "https://us.jellycat.com/cart.php"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:37:59.280Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:38:30.296Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:38:38.323Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:38:48.838Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:38:55.681Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:39:04.757Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:39:11.722Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:39:11.767Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:39:11.774Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:39:54.392Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:40:02.355Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:40:11.048Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:40:25.644Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T04:40:33.312Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T04:40:37.814Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T04:40:47.173Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T04:40:47.240Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T04:40:57.290Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T04:41:02.481Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T04:41:02.913Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T04:41:02.915Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T04:41:14.025Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T04:41:46.333Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T04:41:57.581Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T04:42:13.359Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T04:42:25.679Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T04:42:49.316Z",
+      "tool": "Write"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T04:43:07.034Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "2360f26ae8b7a8d46796104bdd6c2a66a236a268a34a821ae00e3d7dc122837d"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "9a3cd7d02d6d36c04577ba0fbd0825a96695f31621ce7629ccab163a52e70ca6"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "f7ff13095d124c3951b494adffff35071dff86fff7ea1cc16a2a03107f4a1bf5"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "18e33078dedbe5b9ecef2dca494d00011e933b0d68feaca8cb9e744cf6d43838"
+      }
+    ],
+    "errors": []
+  }
+}

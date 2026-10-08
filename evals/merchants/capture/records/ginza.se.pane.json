@@ -1,0 +1,133 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "ginza.se",
+  "stream": "non-us",
+  "visit": 181,
+  "session": 2,
+  "entryHost": "www.ginza.se",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a249e3494a5e066bf",
+  "startUtc": "2026-10-08T03:40:03.346Z",
+  "endUtc": "2026-10-08T03:43:09.133Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [],
+  "navigations": [],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt (denied by pane permission)"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt retry (denied)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "pane refused navigation: site not approved for tool access"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "pane refused navigation: site not approved for tool access"
+    },
+    {
+      "state": "cart-1",
+      "reason": "pane refused navigation: site not approved for tool access"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "pane refused navigation: site not approved for tool access"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "not-started",
+    "code": "pane-permission-denied",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Pane navigate to https://www.ginza.se/robots.txt returned 'navigation to https://ginza.se was denied or failed' twice; get_page_text returned 'This site is not approved for tool access'. No store page loaded.",
+    "Permission-system denial, not a site block or tool defect; coordinator should decide whether this counts against the store's last session or whether ginza.se needs pane site approval."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:40:03.346Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:40:04.574Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:40:04.578Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:40:07.048Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:40:10.548Z",
+      "tool": "navigate",
+      "url": "https://www.ginza.se/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:40:10.612Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:41:30.427Z",
+      "tool": "navigate",
+      "url": "https://www.ginza.se/robots.txt"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:42:51.274Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:43:02.064Z",
+      "tool": "Write"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:43:09.133Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

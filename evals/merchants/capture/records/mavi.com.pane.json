@@ -1,0 +1,663 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "mavi.com",
+  "stream": "non-us",
+  "visit": 212,
+  "session": 2,
+  "entryHost": "www.mavi.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a67182e3ed5b6024d",
+  "startUtc": "2026-10-08T04:41:22.931Z",
+  "endUtc": "2026-10-08T04:56:53.548Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.mavi.com",
+      "status": 200,
+      "sha256": "b0cd1ad4f10c5e4796f41e86ef1ff46443f34a8efd63868e95193bd3a0449f45",
+      "bytes": 998,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    },
+    {
+      "host": "us.mavi.com",
+      "status": 200,
+      "sha256": "756247db5b615543d5dc92981b5e9ad20515971ee92ef3f98d389fe7df3e2706",
+      "bytes": 5710,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.mavi.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://us.mavi.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://us.mavi.com/robots.txt"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://us.mavi.com/cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://us.mavi.com/collections/men-t-shirts"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://us.mavi.com/products/crew-neck-tee-fudge"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://us.mavi.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "www.mavi.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "www.mavi.com"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "www.mavi.com/ (redirected to us.mavi.com)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "us.mavi.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "us.mavi.com"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/collections/men-t-shirts"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "HERITAGE CREW NECK T-SHIRT IN FUDGE"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/products/crew-neck-tee-fudge"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "Close popup"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Do not sell"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove HERITAGE CREW NECK T-SHIRT IN FUD"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "d10223dc5638e89c527a2e9071fc46e9d51eed84f3d0cd4efb2452e80f0be6ea",
+      "bytes": 793779,
+      "chunks": 2,
+      "url": "https://us.mavi.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "6f6354b6723a0585bc90a594b1bc7b58048b6d223293352a9122c06bc5904d9f",
+      "bytes": 1493618,
+      "chunks": 4,
+      "url": "https://us.mavi.com/products/crew-neck-tee-fudge",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "c07c2a337ee683adfa2b5cc092fe6a0878398223cc158107711dbaeb35cb8b7c",
+      "bytes": 898940,
+      "chunks": 3,
+      "url": "https://us.mavi.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "5596d85252d4a8a1937535c76943798a82881066599e28e123faf34df313cb58",
+      "bytes": 871071,
+      "chunks": 3,
+      "url": "https://us.mavi.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "no lingering items; second item not added (focus on cart and site structure)"
+    },
+    {
+      "state": "cart-other",
+      "reason": "cart held only the operator's item"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://us.mavi.com/collections/men-t-shirts",
+    "productUrl": "https://us.mavi.com/products/crew-neck-tee-fudge",
+    "price": "$58.00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Entry www.mavi.com redirected to us.mavi.com (same registrable domain, Shopify US storefront); not in frame hosts list; robots.txt read for both hosts",
+    "Storefront served USD, not the frame's TRY; item price $58.00 judged against the USD band (10-200), since the TRY band 400-8000 cannot apply",
+    "Clicking the product link in the listing did not navigate; product page opened by its link URL instead",
+    "Cookie banner decline ('Do not sell') clicked by coordinate from a screenshot",
+    "All chunk results exceeded the inline limit and were saved by the harness to tool-results files (not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:41:22.931Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:41:23.389Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:41:23.393Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:41:30.419Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:41:35.610Z",
+      "tool": "navigate",
+      "url": "https://www.mavi.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:41:35.704Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:41:47.865Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:41:58.649Z",
+      "tool": "navigate",
+      "url": "https://www.mavi.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:41:58.669Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:42:23.118Z",
+      "tool": "navigate",
+      "url": "https://us.mavi.com/robots.txt"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:42:23.135Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:42:35.325Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:42:57.355Z",
+      "tool": "navigate",
+      "url": "https://us.mavi.com/cart"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:42:57.480Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:43:32.112Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:43:41.978Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:43:48.682Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:44:00.469Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:44:14.144Z",
+      "tool": "navigate",
+      "url": "https://us.mavi.com/collections/men-t-shirts"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:44:14.271Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:44:48.267Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:45:04.499Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:45:04.514Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:45:28.232Z",
+      "tool": "navigate",
+      "url": "https://us.mavi.com/products/crew-neck-tee-fudge"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:45:28.335Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:46:05.114Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:46:23.223Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:46:23.397Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:46:44.951Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:46:58.729Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:47:08.085Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:47:15.108Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:47:15.909Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:47:17.121Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:48:01.508Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:48:15.159Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:48:15.169Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:48:15.172Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:48:15.175Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:49:59.729Z",
+      "tool": "navigate",
+      "url": "https://us.mavi.com/cart"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:50:00.654Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T04:50:56.271Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T04:51:11.193Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T04:51:12.504Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T04:51:12.515Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T04:51:59.773Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T04:52:13.680Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T04:52:13.923Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T04:52:13.948Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T04:53:15.090Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T04:53:42.671Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T04:53:43.136Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T04:53:43.958Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T04:54:30.040Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T04:54:42.783Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T04:54:43.738Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T04:54:43.741Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T04:55:12.741Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T04:56:03.636Z",
+      "tool": "Write"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T04:56:53.548Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "d10223dc5638e89c527a2e9071fc46e9d51eed84f3d0cd4efb2452e80f0be6ea"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "6f6354b6723a0585bc90a594b1bc7b58048b6d223293352a9122c06bc5904d9f"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "c07c2a337ee683adfa2b5cc092fe6a0878398223cc158107711dbaeb35cb8b7c"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "5596d85252d4a8a1937535c76943798a82881066599e28e123faf34df313cb58"
+      }
+    ],
+    "errors": []
+  }
+}

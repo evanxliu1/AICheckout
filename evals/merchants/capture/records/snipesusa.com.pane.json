@@ -1,0 +1,563 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "snipesusa.com",
+  "stream": "us",
+  "visit": 237,
+  "session": 1,
+  "entryHost": "www.snipesusa.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a28ed69c4ab279976",
+  "startUtc": "2026-10-08T04:01:33.837Z",
+  "endUtc": "2026-10-08T04:07:04.439Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.snipesusa.com",
+      "status": 200,
+      "sha256": "0d1731670fc97a28bd0f53e9d446b3103ebf5d217d2cfa6e195ee873ab9ac225",
+      "bytes": 1052,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.snipesusa.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.snipesusa.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.snipesusa.com/accessories-bags-backpacks/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.snipesusa.com/air-crossbody-bag-jordan-black-ma9212-kk2-1000130322.html"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.snipesusa.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Bags & Backpacks listing (menu href)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Air Crossbody Bag"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add To Bag"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Go to Bag (did not navigate)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "+"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "Remove"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Yes (Remove Product? dialog)"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "194669be6725ed7741c1f227de0b97ec3e09446ae4f2d120915ffe5851c97d79",
+      "bytes": 653162,
+      "chunks": 2,
+      "url": "https://www.snipesusa.com/air-crossbody-bag-jordan-black-ma9212-kk2-1000130322.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "e9340c93f3d63e5f4aa7e814a6f300d1bc2821fe3ff10063e9d96e1d2f761361",
+      "bytes": 532956,
+      "chunks": 2,
+      "url": "https://www.snipesusa.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "dd4e9714b656bf2d38b6a3cb4ab3236fa67115738782366f95d2861c06fbeef5",
+      "bytes": 533238,
+      "chunks": 2,
+      "url": "https://www.snipesusa.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "987a532f14672f2fa66c964c15f09783fddce9c1ca2e83d980b1767a5dad5f3f",
+      "bytes": 534169,
+      "chunks": 2,
+      "url": "https://www.snipesusa.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "no lingering item; second item not added (kept session short)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.snipesusa.com/accessories-bags-backpacks/",
+    "productUrl": "https://www.snipesusa.com/air-crossbody-bag-jordan-black-ma9212-kk2-1000130322.html",
+    "price": "USD 19.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt disallows /cart and /checkout for *; visited /cart per .8 record-only rule",
+    "empty-cart taken after removing own item (in-page update, no reload); header badge text still read '1 items in bag' while cart body showed empty",
+    "Go to Bag click in minicart did not navigate; cart opened by URL",
+    "cookie banner (Accept Cookies / Do Not Sell) left alone; no decline control"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:01:33.837Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:01:34.637Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:01:34.643Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:01:35.724Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:01:40.215Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:01:54.348Z",
+      "tool": "navigate",
+      "url": "https://www.snipesusa.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:01:54.352Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:02:00.903Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:02:04.872Z",
+      "tool": "navigate",
+      "url": "https://www.snipesusa.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:02:04.888Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:02:10.021Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:02:14.505Z",
+      "tool": "navigate",
+      "url": "https://www.snipesusa.com/accessories-bags-backpacks/"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:02:14.510Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:02:19.395Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:02:23.520Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:02:23.524Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:02:26.911Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:02:31.083Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:02:31.444Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:02:31.448Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:03:02.734Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:03:06.266Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:03:09.746Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:03:13.848Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:03:17.609Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:03:17.612Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:03:21.598Z",
+      "tool": "navigate",
+      "url": "https://www.snipesusa.com/cart"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:03:21.600Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:03:51.070Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:03:55.669Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:03:59.388Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:04:03.042Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:04:06.381Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:04:10.668Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:04:10.924Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:04:10.928Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:04:16.703Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:04:45.114Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:04:50.071Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:04:53.644Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:04:58.625Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T04:05:03.188Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T04:05:03.486Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T04:05:03.489Z",
+      "tool": "find"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T04:05:10.267Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T04:05:11.203Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T04:05:11.208Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T04:06:07.807Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T04:06:12.394Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T04:06:19.940Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T04:06:23.903Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T04:06:57.607Z",
+      "tool": "Write"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T04:07:04.439Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "194669be6725ed7741c1f227de0b97ec3e09446ae4f2d120915ffe5851c97d79"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "e9340c93f3d63e5f4aa7e814a6f300d1bc2821fe3ff10063e9d96e1d2f761361"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "dd4e9714b656bf2d38b6a3cb4ab3236fa67115738782366f95d2861c06fbeef5"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "987a532f14672f2fa66c964c15f09783fddce9c1ca2e83d980b1767a5dad5f3f"
+      }
+    ],
+    "errors": []
+  }
+}

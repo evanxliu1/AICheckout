@@ -1,0 +1,369 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "coto.com.ar",
+  "stream": "non-us",
+  "visit": 176,
+  "session": 2,
+  "entryHost": "www.coto.com.ar",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a52e9eba5ebf55f27",
+  "startUtc": "2026-10-08T03:36:03.792Z",
+  "endUtc": "2026-10-08T03:39:58.111Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.coto.com.ar",
+      "status": 200,
+      "sha256": "2e9c0ded154cf3b45c69bd3c351244f4e2fdc032021430378473a2b47650fa25",
+      "bytes": 273,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.coto.com.ar/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.coto.com.ar/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.coto.com.ar/productos/pava-el%C3%A9ctrica-top-house-ksk1226d-1-7-l-plata/_/R-00484204-00484204-200"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.coto.com.ar/carrito"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.coto.com.ar/ingresar"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "heading",
+      "name": "Pava Eléctrica TOP HOUSE Ksk1226d 1.7 L"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Agregar"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart URL /carrito"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (sign-in wall)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "6c619cffb7ec4e8664ec2ce58001cd1a4b73d05050f1c50bcf0c0a102600cb7e",
+      "bytes": 95183,
+      "chunks": 1,
+      "url": "https://www.coto.com.ar/ingresar"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart URL redirects to sign-in page (/ingresar) when logged out"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "Agregar click showed no in-page cart or cart indicator while logged out"
+    },
+    {
+      "state": "cart-1",
+      "reason": "sign-in wall: /carrito redirects to /ingresar"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "sign-in wall"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "sign-in wall"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.coto.com.ar/",
+    "productUrl": "https://www.coto.com.ar/productos/pava-el%C3%A9ctrica-top-house-ksk1226d-1-7-l-plata/_/R-00484204-00484204-200",
+    "price": "$39.991,82",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "ARS",
+  "observedRegion": "AR",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": "6c619cffb7ec4e8664ec2ce58001cd1a4b73d05050f1c50bcf0c0a102600cb7e"
+  },
+  "challenge": null,
+  "problems": [
+    "Logged out ('Ingresar' link in header); no cart icon or count shown, so startCartCount and endCartCount unknown (null).",
+    "Clicking 'Agregar' on the product page produced no visible cart change; https://www.coto.com.ar/carrito redirected to /ingresar (login form with 'Cliente Registrado' and 'Crear mi cuenta').",
+    "Stopped at the sign-in wall; no removal attempted because no add was confirmed.",
+    "Page accessibility tree holds a 'reCAPTCHA' presentation element (likely invisible badge); no visible challenge seen.",
+    "robots.txt Sitemap line points to www.cotodigital.com.ar; some footer links go to cotodigital.com.ar (not loaded).",
+    "Evidence chunk(0) result was oversized and saved by the harness to a tool-results file; not opened."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:36:03.792Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:36:05.065Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:36:05.071Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:36:08.052Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:36:11.041Z",
+      "tool": "navigate",
+      "url": "https://www.coto.com.ar/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:36:15.357Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:36:20.996Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:36:25.195Z",
+      "tool": "navigate",
+      "url": "https://www.coto.com.ar/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:36:30.111Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:36:36.092Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:36:36.094Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:36:39.333Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:36:43.097Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:36:46.037Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:36:49.292Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:36:53.158Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T03:36:53.302Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T03:36:58.780Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T03:37:01.831Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T03:37:10.223Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T03:37:13.558Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T03:37:17.306Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T03:37:21.616Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T03:37:21.622Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T03:37:29.003Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T03:37:32.267Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T03:37:37.282Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T03:37:40.522Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T03:38:22.324Z",
+      "tool": "navigate",
+      "url": "https://www.coto.com.ar/carrito"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T03:38:28.616Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T03:38:28.672Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T03:39:04.110Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T03:39:07.602Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T03:39:11.817Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T03:39:49.635Z",
+      "tool": "Write"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T03:39:58.111Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "6c619cffb7ec4e8664ec2ce58001cd1a4b73d05050f1c50bcf0c0a102600cb7e"
+      }
+    ],
+    "errors": []
+  }
+}

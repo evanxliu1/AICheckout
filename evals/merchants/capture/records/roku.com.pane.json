@@ -1,0 +1,344 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "roku.com",
+  "stream": "us",
+  "visit": 231,
+  "session": 2,
+  "entryHost": "www.roku.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-afc1a13129c022e2d",
+  "startUtc": "2026-10-08T03:56:00.705Z",
+  "endUtc": "2026-10-08T03:58:00.593Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": false,
+      "note": "cart page is only at /checkout (forbidden path); in-page cart had no remove control"
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.roku.com",
+      "status": 200,
+      "sha256": "066ab71c9b66d7b45625514669f588125f1a455552ca8cc79f9d496b680b4cd1",
+      "bytes": 303,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.roku.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.roku.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.roku.com/products/players"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Toggle navigation menu, collapsed"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Shop products"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "menuitem",
+      "name": "Streaming players"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart - Roku Streaming Stick"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "e89e5a48463862cda517e44342babe1844f61094a6b45dbcb4a72479872ec222",
+      "bytes": 301517,
+      "chunks": 1,
+      "url": "https://www.roku.com/products/players",
+      "startCartCount": null
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart page is only at /checkout, a forbidden path; start count not observable"
+    },
+    {
+      "state": "cart-1",
+      "reason": "would-need-forbidden-action: every cart link (header, View cart) targets /checkout"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "would-need-forbidden-action: no increment control outside /checkout"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart view needs /checkout"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.roku.com/products/players",
+    "productUrl": "https://www.roku.com/products/players/roku-streaming-stick",
+    "price": "USD 19.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cart page is served at www.roku.com/checkout (a checkout path segment), so only minicart-1 was captured; cart-1 not reached by rule.",
+    "Item added from the listing's Add to cart button; product page not loaded.",
+    "Own item could not be removed (no remove control in the in-page cart; cart page forbidden); one Streaming Stick may linger in the pane profile's Roku cart.",
+    "Start and end cart counts not observable (no badge count exposed, cart page forbidden).",
+    "minicart-1 chunk 0 exceeded the inline limit and was saved by the harness to a tool-results file (expected, not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:56:00.705Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:56:00.718Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:56:00.721Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:56:03.691Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:56:06.723Z",
+      "tool": "navigate",
+      "url": "https://www.roku.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:56:10.162Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:56:16.074Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:56:19.736Z",
+      "tool": "navigate",
+      "url": "https://www.roku.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:56:19.808Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:56:24.942Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:56:32.877Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:56:32.883Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:56:37.620Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:56:37.628Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:56:41.192Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:56:41.213Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T03:56:46.150Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T03:56:46.159Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T03:56:53.401Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T03:56:57.611Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T03:56:58.224Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T03:56:58.227Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T03:57:04.278Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T03:57:07.602Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T03:57:10.914Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T03:57:31.717Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T03:57:34.021Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T03:57:39.814Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T03:57:41.929Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T03:57:55.273Z",
+      "tool": "Write"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T03:58:00.593Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "e89e5a48463862cda517e44342babe1844f61094a6b45dbcb4a72479872ec222"
+      }
+    ],
+    "errors": []
+  }
+}

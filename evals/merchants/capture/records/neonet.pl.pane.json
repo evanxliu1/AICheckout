@@ -1,0 +1,228 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "neonet.pl",
+  "stream": "non-us",
+  "visit": 182,
+  "session": 2,
+  "entryHost": "www.neonet.pl",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a9196bb13ad80ccef",
+  "startUtc": "2026-10-08T03:40:03.891Z",
+  "endUtc": "2026-10-08T03:41:35.034Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.neonet.pl",
+      "status": 503,
+      "sha256": "c4ae35035a6733fc61437260033ed9fc82f881c2c5106eb4f1cb06f24dd06a12",
+      "bytes": 2052136,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.neonet.pl/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.neonet.pl/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt (HTTP 503 maintenance page)"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home page"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (maintenance page)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "7ae9146185f014ddd3e5e03437ebca33cf7fd4f9ab5063066783e7247fa55da3",
+      "bytes": 1137307,
+      "chunks": 3,
+      "url": "https://www.neonet.pl/"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "whole site served a maintenance page (HTTP 503)"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "whole site served a maintenance page (HTTP 503)"
+    },
+    {
+      "state": "cart-1",
+      "reason": "whole site served a maintenance page (HTTP 503)"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "whole site served a maintenance page (HTTP 503)"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "whole site served a maintenance page (HTTP 503)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "incomplete",
+    "code": "site-maintenance",
+    "evidenceSha256": "7ae9146185f014ddd3e5e03437ebca33cf7fd4f9ab5063066783e7247fa55da3"
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt and home page both answered HTTP 503 with a store maintenance page (Polish: 'Prace serwisowe', back around 7:30); no robots rules could be read",
+    "no protocol code fits a temporary maintenance outage; recorded incomplete/site-maintenance for the coordinator to map (session 2 of 2)",
+    "sign-in state and cart counts not observable on the maintenance page",
+    "evidence export chunks 0-2 were oversized and saved by the harness to tool-results files (not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:40:03.891Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:40:05.066Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:40:05.070Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:40:07.489Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:40:10.692Z",
+      "tool": "navigate",
+      "url": "https://www.neonet.pl/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:40:15.735Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:40:24.855Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:40:29.709Z",
+      "tool": "navigate",
+      "url": "https://www.neonet.pl/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:40:29.742Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:40:59.618Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:41:02.969Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:41:06.463Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:41:09.818Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:41:14.905Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:41:27.379Z",
+      "tool": "Write"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:41:35.034Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "7ae9146185f014ddd3e5e03437ebca33cf7fd4f9ab5063066783e7247fa55da3"
+      }
+    ],
+    "errors": []
+  }
+}

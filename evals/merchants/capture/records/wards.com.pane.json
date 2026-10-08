@@ -1,0 +1,77 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "wards.com",
+  "stream": "us",
+  "visit": 261,
+  "session": 1,
+  "entryHost": "www.wards.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": null,
+  "startUtc": null,
+  "endUtc": null,
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [{ "n": 1, "item": "own item 1 (qty 2)", "ok": true }],
+  "robots": [
+    {
+      "host": "www.wards.com",
+      "status": 200,
+      "sha256": "89301f78fab20d1e584446cac09551b58d285f8990416da8955f5fd07352da8d",
+      "bytes": 4363,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    { "n": 1, "utc": null, "url": "https://www.wards.com/robots.txt" },
+    { "n": 2, "utc": null, "url": "https://www.wards.com/" },
+    { "n": 3, "utc": null, "url": "https://www.wards.com/co/shopping-cart/" },
+    { "n": 4, "utc": null, "url": "https://www.wards.com/p/782707.html" },
+    { "n": 5, "utc": null, "url": "https://www.wards.com/co/shopping-cart/" }
+  ],
+  "actions": [
+    { "n": 1, "utc": null, "kind": "navigate", "role": "", "name": "robots.txt" },
+    { "n": 2, "utc": null, "kind": "robots-hash", "role": "", "name": "robots.txt" },
+    { "n": 3, "utc": null, "kind": "navigate", "role": "", "name": "home" },
+    { "n": 4, "utc": null, "kind": "navigate", "role": "", "name": "cart (start count)" },
+    { "n": 5, "utc": null, "kind": "export", "role": "", "name": "empty-cart" },
+    { "n": 6, "utc": null, "kind": "navigate", "role": "", "name": "product from home carousel" },
+    { "n": 7, "utc": null, "kind": "add-to-cart", "role": "button", "name": "Add to Cart" },
+    { "n": 8, "utc": null, "kind": "export", "role": "", "name": "minicart-1" },
+    { "n": 9, "utc": null, "kind": "navigate", "role": "", "name": "cart" },
+    { "n": 10, "utc": null, "kind": "export", "role": "", "name": "cart-1" },
+    { "n": 11, "utc": null, "kind": "quantity-increment", "role": "button", "name": "Quantity Increase 1" },
+    { "n": 12, "utc": null, "kind": "export", "role": "", "name": "cart-qty2" },
+    { "n": 13, "utc": null, "kind": "remove-item", "role": "generic", "name": "Remove" }
+  ],
+  "states": [
+    { "state": "empty-cart", "sha256": "ae06aead9ba9701c6df7947a6c149b25f4a0e51a254d8618eb78a5fb7acd11e4", "bytes": 1026530, "chunks": 3, "url": "https://www.wards.com/co/shopping-cart/", "startCartCount": 0 },
+    { "state": "minicart-1", "sha256": "19a6f2bb6554144144bf06b895ed0a09e3ec8239ca8eb2688a7fd951e4e659ff", "bytes": 1438621, "chunks": 4, "url": "https://www.wards.com/p/heated-ice-scraper-782707.html", "startCartCount": 0 },
+    { "state": "cart-1", "sha256": "c34f50f2b031429b0837779dedd619415bc8ccddc18b534ad5cc2fe97430f9be", "bytes": 1044245, "chunks": 3, "url": "https://www.wards.com/co/shopping-cart/", "startCartCount": 0 },
+    { "state": "cart-qty2", "sha256": "2036fc3d1fd0042b2a1dc0c8cdf2e985a13ae4cffac499e6f71bf9c1c167743a", "bytes": 1045196, "chunks": 3, "url": "https://www.wards.com/co/shopping-cart/", "startCartCount": 0 }
+  ],
+  "evidence": [],
+  "notReached": [
+    { "state": "cart-2items", "reason": "cart was empty at start; no second item added" },
+    { "state": "cart-other", "reason": "no lingering items" }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.wards.com/",
+    "productUrl": "https://www.wards.com/p/heated-ice-scraper-782707.html",
+    "price": "USD 19.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": { "status": "captured", "code": null, "evidenceSha256": null },
+  "challenge": null,
+  "problems": [
+    "robots.txt disallows /co/* and /Cart-Show for *; the cart page /co/shopping-cart/ falls under /co/*, so captured cart states are on a robots-disallowed path (recorded only)",
+    "pane noted the page wrote to the OS clipboard during the add-to-cart click; the operator copied nothing",
+    "all export chunks exceeded the inline limit and were saved by the harness to tool-results files (not opened)"
+  ]
+}

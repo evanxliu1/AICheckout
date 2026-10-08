@@ -1,0 +1,719 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "frostbuddy.com",
+  "stream": "us",
+  "visit": 255,
+  "session": 1,
+  "entryHost": "frostbuddy.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a3ed4e10c609089c1",
+  "startUtc": "2026-10-08T04:27:26.678Z",
+  "endUtc": "2026-10-08T04:40:22.622Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "frostbuddy.com",
+      "status": 200,
+      "sha256": "87ba7e3184435bb2524a2bc6007d7e69f2b5dd613527d2f435e3f7652eb1eb8d",
+      "bytes": 3664,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://frostbuddy.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://frostbuddy.com/cart"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://frostbuddy.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://frostbuddy.com/products/bottle-buddy-24oz-camo-drip"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://frostbuddy.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Bottle Buddy 24oz | Camo Drip (no nav)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (link href)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart (blocked by popup)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "close promo game popup"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "generic",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove Bottle Buddy 24oz | Camo Drip"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "db1c63bd5953a65a048faa622b4ab74dbc2568310bb9470161be0a7e7fe9832b",
+      "bytes": 1863856,
+      "chunks": 5,
+      "url": "https://frostbuddy.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "a252a61c8b651a9d38bef06563251b540284880abba9c581de55a2929120133f",
+      "bytes": 2705615,
+      "chunks": 7,
+      "url": "https://frostbuddy.com/products/bottle-buddy-24oz-camo-drip",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "a26c09a022e5663be881f712c53fe6430b76fab8c31e8cca72900b30e515799a",
+      "bytes": 1814517,
+      "chunks": 5,
+      "url": "https://frostbuddy.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "2e29cfeac29a3078f82552c4b8b42494c3c0b041b4f30921d810f0540357fc2e",
+      "bytes": 1830346,
+      "chunks": 5,
+      "url": "https://frostbuddy.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "cart empty at start (no lingering item); second item not added to keep session short"
+    },
+    {
+      "state": "cart-other",
+      "reason": "no lingering items"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://frostbuddy.com/",
+    "productUrl": "https://frostbuddy.com/products/bottle-buddy-24oz-camo-drip",
+    "price": "$29.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt comments address agents (use UCP/MCP endpoints, recommend installing a Shopify shopping skill); recorded as data, not followed",
+    "robots.txt disallows /cart/ and /checkout but not /cart itself; cartDisallowed recorded false for /cart",
+    "home-page product-card click did not navigate (carousel); product page opened by its same-site link href",
+    "first add-to-cart click intercepted by a promo game popup; closed it, declined cookies, then add succeeded",
+    "all export chunks were oversized and saved by the harness to tool-results files (not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:27:26.678Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:27:27.137Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:27:28.396Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:27:29.235Z",
+      "tool": "Read"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:28:20.144Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:28:30.050Z",
+      "tool": "navigate",
+      "url": "https://frostbuddy.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:28:30.859Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:28:51.094Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:29:07.700Z",
+      "tool": "navigate",
+      "url": "https://frostbuddy.com/cart"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:29:07.817Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:29:56.041Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:30:07.610Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:30:29.624Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:30:31.731Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:30:31.831Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:30:31.838Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:31:47.316Z",
+      "tool": "navigate",
+      "url": "https://frostbuddy.com/"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:31:47.389Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:32:03.792Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:32:14.096Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:32:25.733Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:32:34.988Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:32:47.563Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:33:02.486Z",
+      "tool": "navigate",
+      "url": "https://frostbuddy.com/products/:token"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:33:02.883Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:33:21.841Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:33:21.851Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:33:41.044Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:33:41.089Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:34:08.332Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:34:08.462Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:34:28.077Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:34:39.064Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:34:48.492Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:34:48.994Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:35:04.594Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:35:04.666Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:35:18.683Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:35:22.515Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:35:22.516Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:36:01.732Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T04:36:11.373Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T04:36:11.787Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T04:36:12.519Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T04:36:14.201Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T04:36:14.216Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T04:36:15.165Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T04:36:16.791Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T04:37:15.475Z",
+      "tool": "navigate",
+      "url": "https://frostbuddy.com/cart"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T04:37:15.704Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T04:37:45.913Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T04:37:50.802Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T04:37:51.294Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T04:37:52.619Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T04:37:52.902Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T04:37:53.613Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T04:38:07.944Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T04:38:18.694Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T04:38:18.705Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T04:38:18.706Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T04:38:49.491Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T04:38:55.144Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T04:38:56.239Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T04:38:56.878Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T04:38:57.679Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T04:38:58.380Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T04:39:24.095Z",
+      "tool": "find"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T04:39:32.687Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T04:39:33.019Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T04:39:33.364Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T04:39:52.239Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T04:40:07.854Z",
+      "tool": "Write"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T04:40:22.622Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "db1c63bd5953a65a048faa622b4ab74dbc2568310bb9470161be0a7e7fe9832b"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "a252a61c8b651a9d38bef06563251b540284880abba9c581de55a2929120133f"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "a26c09a022e5663be881f712c53fe6430b76fab8c31e8cca72900b30e515799a"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "2e29cfeac29a3078f82552c4b8b42494c3c0b041b4f30921d810f0540357fc2e"
+      }
+    ],
+    "errors": []
+  }
+}

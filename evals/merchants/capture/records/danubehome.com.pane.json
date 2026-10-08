@@ -1,0 +1,151 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "danubehome.com",
+  "stream": "non-us",
+  "visit": 211,
+  "session": 2,
+  "entryHost": "www.danubehome.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a33c995cc2a2f7a5e",
+  "startUtc": "2026-10-08T04:39:57.651Z",
+  "endUtc": "2026-10-08T04:41:13.432Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.danubehome.com",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null,
+      "note": "robots.txt request answered with a Cloudflare block page; hash not run on a block page"
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.danubehome.com/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on first request"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall on first request"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall on first request"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall on first request"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall on first request"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.danubehome.com/robots.txt",
+    "title": "Attention Required! | Cloudflare",
+    "marker": "Cloudflare block page with Ray ID",
+    "wording": "Sorry, you have been blocked. You are unable to access danubehome.com"
+  },
+  "problems": [
+    "Cloudflare block page on the very first request (robots.txt); stopped at once, nothing exported, robots hash not run",
+    "signedIn and starting cart count could not be checked because no store page loaded"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:39:57.651Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:39:58.055Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:39:58.087Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:40:24.732Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:40:29.390Z",
+      "tool": "navigate",
+      "url": "https://www.danubehome.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:40:34.025Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:40:40.040Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:40:41.052Z",
+      "tool": "Read"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:41:02.825Z",
+      "tool": "Write"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:41:13.432Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

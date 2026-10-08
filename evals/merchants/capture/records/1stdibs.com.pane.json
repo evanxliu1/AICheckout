@@ -1,0 +1,281 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "1stdibs.com",
+  "stream": "us",
+  "visit": 247,
+  "session": 1,
+  "entryHost": "www.1stdibs.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-af15ced5de794304a",
+  "startUtc": "2026-10-08T04:13:46.351Z",
+  "endUtc": "2026-10-08T04:16:12.300Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.1stdibs.com",
+      "status": 200,
+      "sha256": "a549e90cca4c1a7bbbd4fff02188f3209ac1b3b1d6d1cb25772c762276c0f177",
+      "bytes": 5539,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.1stdibs.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.1stdibs.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.1stdibs.com/my/cart/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry home page"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page by URL (/my/cart/)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 sign-in wall on cart"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "5eef8acba59996c8e44dbe78c711981e43e1cb81935cf73a8c464e1c29e66150",
+      "bytes": 298821,
+      "chunks": 1,
+      "url": "https://www.1stdibs.com/my/cart/"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart page shows a sign-in wall to logged-out visitors"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at sign-in wall before any add"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at sign-in wall before any add"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at sign-in wall before any add"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at sign-in wall before any add"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": "5eef8acba59996c8e44dbe78c711981e43e1cb81935cf73a8c464e1c29e66150"
+  },
+  "challenge": null,
+  "problems": [
+    "Cart page /my/cart/ (title '1stDibs: Antiques, Vintage and Mid-Century Modern Furniture, Jewelry, Fashion and Art') shows 'Log in or register to view your bag' when logged out; stopped as sign-in-required.",
+    "Pane not signed in (header shows Log In and Sign Up); starting cart count unknown because the bag is hidden behind sign-in.",
+    "robots.txt disallows /my/ (the cart path) and /checkout/ for *; recorded only.",
+    "Cookie banner (Okay / Manage Cookies, no direct decline) left alone.",
+    "Evidence chunk 0 was oversized and saved by the harness to a tool-results file; not opened.",
+    "Footer notes the site is protected by reCAPTCHA; no challenge was shown."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:13:46.351Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:13:47.216Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:13:48.329Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:13:48.365Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:13:53.899Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:13:56.939Z",
+      "tool": "navigate",
+      "url": "https://www.1stdibs.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:14:00.971Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:14:12.149Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:14:17.896Z",
+      "tool": "navigate",
+      "url": "https://www.1stdibs.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:14:17.909Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:14:22.481Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:14:30.223Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:14:35.328Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:14:35.614Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:14:43.903Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:14:51.702Z",
+      "tool": "navigate",
+      "url": "https://www.1stdibs.com/my/cart/"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:14:51.707Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:14:57.596Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:14:57.619Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:15:36.248Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:15:40.613Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:15:45.668Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:16:03.213Z",
+      "tool": "Write"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:16:12.300Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "5eef8acba59996c8e44dbe78c711981e43e1cb81935cf73a8c464e1c29e66150"
+      }
+    ],
+    "errors": []
+  }
+}
