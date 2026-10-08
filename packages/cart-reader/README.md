@@ -24,7 +24,8 @@ The extension shows the amount only when the reader shows one; otherwise it show
 
 ```sh
 npm run test --workspace=@ai-checkout/cart-reader          # unit tests (synthetic pages)
-node evals/reader/run.mjs --split development               # development only; unlimited
+node evals/reader/dev.mjs                                    # quick loop: development, one read per page, ~5 min
+node evals/reader/run.mjs --split development               # official run (six reads per page, ~25 min)
 node evals/reader/score.mjs --run <runId> --failures         # per-page failures, development only
 ```
 
