@@ -65,9 +65,11 @@ Prerequisites to build and review first. Built on 2026-10-07 on `phase12-label-t
 
 1. **Platform and split.** `pane-platform.mjs` over the pane exports + the standing robot rows' platform from `sites.json` → `captured.json` (one row per domain, `{domain, platform}`) and `captured-methods.json` → `node evals/merchants/tools/seeded-selection.mjs split captured.json --extra-us 225 --extra-non-us 800 --weights-protocol-10` → development / held-out A. Commit `splits.json` before any labeller starts.
 2. **Label.** Since 2026-10-08 (Evan) **one labeller per store**, five stores per labeller subagent ([decision](../decisions/2026-10-08-single-labeller.md); [brief](../../evals/merchants/labels/workflows/labeller-brief.md), [workflow](../../evals/merchants/labels/workflows/label.workflow.txt)): rebuilt-page screenshots and tiles, the labeller digest and the export, never any reader output; `reader-labels.2` schema; `agreement.mjs --single` makes the final labels. (Before: two independent labellers per split and an adjudicator.)
-3. **Report rule.** Fewer than 300 labelled held-out A `cart-1` with an expected amount → stop and report to Evan; with his go-ahead apply L1: capture more stores in frozen order, re-run the split and label only the new pages, all before any freeze.
+3. **Report rule.** No longer applied since Evan's status note of 2026-10-08 (the bar is a quality target). Was: fewer than 300 labelled held-out A `cart-1` with an expected amount → stop and report to Evan.
 4. **12.3 review** by an independent subagent: exclusion evidence, audit flags, stock mismatches, item paths, robot recipe paths.
 5. **Freeze** development and held-out A together (`freeze.json`), PR, merge after CI passes. Phase 12 is then done.
+
+**Done 2026-10-08** on `phase12-eval-set`: split `7a490f6`, labels, variants `.2`, freeze at `2a850bc` ([report](../../docs/evals/reader-captures-2026-10.md)). Practical notes: the digest (`digest-pane.mjs`) and tiles (`tile-render.mjs`) are labelling aids; labelling ran as one Workflow of 67 five-store sessions (6 parallel, about 15 minutes, six stalled sessions re-run by resuming the run); the coordinator assembles labeller files with `assemble-labels.mjs`; the variant sample check ran as ten labeller sessions of about 20 entries.
 
 No reader code, and no reader-developer browsing of any store, before the freeze.
 
