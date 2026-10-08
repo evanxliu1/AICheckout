@@ -163,8 +163,8 @@
   "observedCurrency": "BRL",
   "observedRegion": "BR",
   "outcome": {
-    "status": "captured",
-    "code": null,
+    "status": "excluded",
+    "code": "would-need-forbidden-action",
     "evidenceSha256": null
   },
   "challenge": null,
@@ -487,6 +487,13 @@
   },
   "coordinatorOverride": {
     "utc": "2026-10-08",
-    "reason": "minicart-1 holds the operator item, so the store is captured (protocol .9); the cart page is under /checkout/ and was not opened; matches sites.json statusUnderProtocol10"
-  }
+    "reason": "cart page is under /checkout/ and its only cart state (minicart-1) showed no in-page cart at export"
+  },
+  "droppedStates": [
+    {
+      "state": "minicart-1",
+      "reason": "capture review: no in-page cart open at export (Drawer amounts all offpage (off-canvas); operator notes drawer closed at export)",
+      "utc": "2026-10-08"
+    }
+  ]
 }

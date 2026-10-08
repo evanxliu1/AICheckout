@@ -1,11 +1,11 @@
 // Tests of build-split-input.mjs on synthetic records, exports and site records (no capture is read).
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
-import { buildSplitInput, robotRows } from '../build-split-input.mjs';
+import { buildSplitInput, collectedStates, robotRows } from '../build-split-input.mjs';
 
 const sha = (s) => createHash('sha256').update(s).digest('hex');
 const doc = (src) =>
@@ -172,4 +172,29 @@ test('review L5: robot rows exclude pane statuses; duplicate domains are refused
   f.sites.push({ domain: 'robot.example' });
   f.writeSites();
   await assert.rejects(f.run(), /duplicate domain in sites.json: robot.example/);
+});
+
+test('capture review: dropped states leave the states, keep their folders and never move the platform', async () => {
+  const f = fixture();
+  f.store('shop.example', {
+    states: { 'empty-cart': doc('https://cdn.shopify.com/a.js'), 'minicart-1': doc('/m.js'), 'cart-1': doc('/x.js') },
+    siteStates: ['empty-cart', 'cart-1'],
+  });
+  const rec = path.join(f.records, 'shop.example.pane.json');
+  const r0 = JSON.parse(readFileSync(rec, 'utf8'));
+  r0.droppedStates = [{ state: 'minicart-1', reason: 'no in-page cart opened', utc: '2026-10-08' }];
+  writeFileSync(rec, JSON.stringify(r0));
+  const r = await f.run();
+  assert.deepEqual(r.captured, [
+    { domain: 'pending.example', platform: 'none-detected' },
+    { domain: 'robot.example', platform: 'sfcc' },
+    { domain: 'shop.example', platform: 'shopify' },
+  ]);
+  assert.deepEqual(collectedStates(r0), new Map([['empty-cart', sha(doc('https://cdn.shopify.com/a.js'))], ['cart-1', sha(doc('/x.js'))]]));
+  // Dropping the only cart state leaves no cart state: the store can't stay captured.
+  r0.droppedStates.push({ state: 'cart-1', reason: 'x', utc: '2026-10-08' });
+  writeFileSync(rec, JSON.stringify(r0));
+  f.sites.find((s) => s.domain === 'shop.example').statusUnderProtocol10.states = ['empty-cart'];
+  f.writeSites();
+  await assert.rejects(f.run(), /shop.example: captured without a cart-state export/);
 });

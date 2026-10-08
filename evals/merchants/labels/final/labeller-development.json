@@ -614,34 +614,6 @@
    "notes": "Empty basket still shows Boodschappen 0.00 and Totaal 0.00 rows plus header basket 0.00. No visible currency marker beside summary amounts (euro only in a visually hidden label and a Premium banner), so frame EUR."
   },
   {
-   "id": "ah.nl/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "0d62eb65ca75a190d3fa8a7d124dda3807fdeea2d3283f03516c9fd46254fa7a",
-   "domSha256": "cc676d4f456d6c0059912d733e2287763aec09f82b1a4057ff23712313e90530",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "estimatedTotal",
-     "amountMinor": 1915,
-     "currency": "EUR"
-    }
-   ],
-   "expected": {
-    "kind": "estimatedTotal",
-    "amountMinor": 1915,
-    "currency": "EUR"
-   },
-   "currencyEvidence": "d-frame",
-   "currencyConflict": false,
-   "observedTags": [
-    "non-english-labels"
-   ],
-   "confidence": "low",
-   "notes": "Product page; only the header basket badge shows 19.15 (its hidden aria label calls it the basket total amount). No drawer opened. Unsure whether a header badge counts as a mini-cart total row."
-  },
-  {
    "id": "alezz-oud.com/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -1043,36 +1015,6 @@
    "expected": null
   },
   {
-   "id": "amazon.co.jp/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "aa2ba42e31d1b77acadb80d20b5021415c3c3db0e77423e15c24770da014b0cc",
-   "domSha256": "91e29074cea6074d9a682147b78466c65f4718fb3c8dfece35fcc4b7eaa68295",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "subtotal",
-     "amountMinor": 1634,
-     "currency": "USD"
-    }
-   ],
-   "expected": {
-    "kind": "subtotal",
-    "amountMinor": 1634,
-    "currency": "USD"
-   },
-   "currencyEvidence": "a-code",
-   "currencyConflict": true,
-   "observedTags": [
-    "sale-strikethrough",
-    "price-carousel",
-    "currency-code-only"
-   ],
-   "confidence": "high",
-   "notes": "Smart-wagon page: side cart Subtotal USD 16.34 and Cart Subtotal USD 16.34 (same). Storefront shows USD via the currency preference; the USD code decides over frame JPY, so a conflict is recorded. JPY appears only in a hidden currency menu."
-  },
-  {
    "id": "amazon.com.au/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -1115,35 +1057,6 @@
    "confidence": "high",
    "notes": "Empty cart; no money amounts or summary rows.",
    "expected": null
-  },
-  {
-   "id": "amazon.com.au/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "e191254d3e92fb45bbf9c5fc6b2c2805bdde2b8dbc47b7220c319c22bbff43f9",
-   "domSha256": "71e8aa97619ff8103786a50eb3b4dea6cfc63b299c3f32f5def91377a7498130",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "subtotal",
-     "amountMinor": 3977,
-     "currency": "AUD"
-    }
-   ],
-   "expected": {
-    "kind": "subtotal",
-    "amountMinor": 3977,
-    "currency": "AUD"
-   },
-   "currencyEvidence": "b-structured",
-   "currencyConflict": false,
-   "observedTags": [
-    "price-carousel",
-    "shared-symbol"
-   ],
-   "confidence": "high",
-   "notes": "Side panel Subtotal and Cart Subtotal both $39.77. Bare $; cart markup carries AUD (sw-subtotal data-price, ewcCurrencySymbol, data-subtotal code) though digest structured line says none; rule (d) also gives AUD."
   },
   {
    "id": "amazon.com.mx/cart-1",
@@ -1225,36 +1138,6 @@
    "expected": null
   },
   {
-   "id": "amazon.com.mx/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "6fdd0e5d0c1a41728f7f7afca55cf3e44b550c0edb9c159fcafe0417a4a56bff",
-   "domSha256": "bb97b38608754cc567b9edad496e6e1c697168dc84b12ea3663be80e29b38f3f",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "subtotal",
-     "amountMinor": 46999,
-     "currency": "MXN"
-    }
-   ],
-   "expected": {
-    "kind": "subtotal",
-    "amountMinor": 46999,
-    "currency": "MXN"
-   },
-   "currencyEvidence": "b-structured",
-   "currencyConflict": false,
-   "observedTags": [
-    "price-carousel",
-    "shared-symbol",
-    "non-english-labels"
-   ],
-   "confidence": "high",
-   "notes": "Subtotal and Subtotal del carrito both $469.99. Cart markup has MXN (sw-subtotal data-price, ewcCurrencySymbol, data-subtotal); digest structured line says none; frame also MXN."
-  },
-  {
    "id": "amazon.de/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -1328,35 +1211,6 @@
    "confidence": "high",
    "notes": "Empty basket; no amounts.",
    "expected": null
-  },
-  {
-   "id": "amazon.de/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "8dea967d05673c731b8b2849f660a9b9a00b3ff458598bb3575786d052c2e535",
-   "domSha256": "3750e6539bad6ea2df1e955d227e4250f4fc73a71f5534118981b4547fe0b4ac",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "subtotal",
-     "amountMinor": 1573,
-     "currency": "USD"
-    }
-   ],
-   "expected": {
-    "kind": "subtotal",
-    "amountMinor": 1573,
-    "currency": "USD"
-   },
-   "currencyEvidence": "a-code",
-   "currencyConflict": true,
-   "observedTags": [
-    "price-carousel",
-    "currency-code-only"
-   ],
-   "confidence": "low",
-   "notes": "Store shows prices converted to USD (deliver to United States); Subtotal USD 15.73. Hidden markup disagrees (sw-subtotal data-price EUR 14, ewcCurrencySymbol EUR vs data-subtotal USD); frame EUR, so conflict. Low: charged currency under Amazon converter uncertain."
   },
   {
    "id": "apple.com.cn/cart-1",
@@ -2614,35 +2468,6 @@
    "notes": "Only cart amount is the header cart-value element (class header-cart-total) showing €0.00; no cart summary block on the page. Treated as the mini-cart's own total (subtotal kind); unsure whether a header badge counts as a summary row."
   },
   {
-   "id": "bluebrixx.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "8d8401dcc0bc196a3264365e44ebc7b3b751eab5a5c1324a2bf807322c8011ff",
-   "domSha256": "d834b1f79a23feaef2c64b198768eb1bbf5fba65a5922b3e04f2196ee24cbe0e",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "subtotal",
-     "amountMinor": 2495,
-     "currency": "EUR"
-    }
-   ],
-   "expected": {
-    "kind": "subtotal",
-    "amountMinor": 2495,
-    "currency": "EUR"
-   },
-   "currencyEvidence": "b-structured",
-   "currencyConflict": false,
-   "observedTags": [
-    "price-carousel",
-    "promo-banner"
-   ],
-   "confidence": "low",
-   "notes": "No drawer open in export; the only cart total is the header cart-value element (header-cart-total) €24.95 on the product page. Labelled as subtotal; unsure a header badge counts as a summary row."
-  },
-  {
    "id": "bookshop.org/cart-2items",
    "split": "development",
    "state": "cart-2items",
@@ -2821,26 +2646,6 @@
    ],
    "confidence": "high",
    "notes": "Empty cart; only recommendation carousel prices and a free-shipping threshold.",
-   "expected": null
-  },
-  {
-   "id": "bose.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "22fae53f1161650ca6e3a07c4afd3ee7695d79ffb87a28d31a076d75ff1e0bc4",
-   "domSha256": "8634ce9d27efb957d5c50b28b3900459e93a381bcd0595a616f49d8c55bad27f",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "installment-widget",
-    "price-carousel",
-    "sale-strikethrough",
-    "promo-banner"
-   ],
-   "confidence": "high",
-   "notes": "Product page with an add-to-cart warranty modal; no mini-cart subtotal or total row anywhere in the export.",
    "expected": null
   },
   {
@@ -4109,23 +3914,6 @@
    "notes": "Empty cart shows 'Sub Total (0 items): $0.00', a displayed row with amount 0."
   },
   {
-   "id": "coolstuffinc.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "4d29c21c1c3fd3a8265ceede4184c20cf85fb3daca86b7ad4e6585e4f8f4c539",
-   "domSha256": "4ffe36ab1d6b4c0f374ee25b89c499a18e9ad5c950466ed0385e7c0d92a2234b",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "price-carousel"
-   ],
-   "confidence": "high",
-   "notes": "The header cart notice shows only '1 x Gundam...' and a View Cart link; no total amount is shown.",
-   "expected": null
-  },
-  {
    "id": "coppel.com/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -4739,26 +4527,6 @@
    "expected": null
   },
   {
-   "id": "cyamoda.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "261715cf2c714ab5433d375e08afb6989879475aa863075d337d30e93a06156b",
-   "domSha256": "85dcfb923c2d3bd6def2e508facfd827f28b55d1ac170f0633e31018b47ca4b6",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "price-carousel",
-    "promo-banner",
-    "non-english-labels",
-    "shared-symbol"
-   ],
-   "confidence": "high",
-   "notes": "PDP with cart count 1; no visible mini-cart subtotal or total in export or screenshot.",
-   "expected": null
-  },
-  {
    "id": "cykloteket.se/cart-qty2",
    "split": "development",
    "state": "cart-qty2",
@@ -5311,26 +5079,6 @@
    "notes": "Empty cart shows 'Wartość produktów 0,00 zł'."
   },
   {
-   "id": "decathlon.pl/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "a854fc5e5de66396d03ba4269565e17d8a0012f403eb73fd0cc47f864b23ebc3",
-   "domSha256": "c80b3251d83b7f82a87c355f3c993d2c161750084ef407e01a7600f0d491eca9",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "non-english-labels",
-    "decimal-comma",
-    "currency-after-amount",
-    "price-carousel"
-   ],
-   "confidence": "high",
-   "notes": "Add-to-bag confirmation lists the item 69,99 zł and suggestions, no cart total. 'Łącznie 339,97 zł' is a product-bundle offer, excluded.",
-   "expected": null
-  },
-  {
    "id": "deghi.it/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -5457,27 +5205,6 @@
    "expected": null
   },
   {
-   "id": "deghi.it/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "aa15bb7ddc3614a09e8b2e9339a6dccf42fed9dab5cfd1cdc7680b9d2f377d12",
-   "domSha256": "2713d939c89621e4fdc865ca00d20c7e181bc8ad3fdaac7bf0e70f5a10a16900",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "installment-widget",
-    "price-carousel",
-    "decimal-comma",
-    "non-english-labels",
-    "promo-banner"
-   ],
-   "confidence": "low",
-   "notes": "Off-canvas cart drawer is closed in the export (overlay opacity 0, drawer boxes beyond the 1024px viewport, digest flags offpage); its Totale 13,99 is not visible. Product page price, installment offers and carousel only.",
-   "expected": null
-  },
-  {
    "id": "depop.com/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -5562,36 +5289,6 @@
    "confidence": "high",
    "notes": "Empty bag, no amounts.",
    "expected": null
-  },
-  {
-   "id": "depop.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "8ca3d22b684ab7364f5f1718b56dff6ea91029fb27a26948ba987d6f57e396bc",
-   "domSha256": "f7eb7ccc902887843406807f504ecb6a5abdb76e3bb508d1dc80d41720e07fdf",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "estimatedTotal",
-     "amountMinor": 1330,
-     "currency": "USD"
-    }
-   ],
-   "expected": {
-    "kind": "estimatedTotal",
-    "amountMinor": 1330,
-    "currency": "USD"
-   },
-   "currencyEvidence": "d-frame",
-   "currencyConflict": false,
-   "observedTags": [
-    "price-carousel",
-    "sale-strikethrough",
-    "shared-symbol"
-   ],
-   "confidence": "high",
-   "notes": "Bag drawer open with item 12.00 and Total 13.30 (includes marketplace fee). Carousel prices ignored."
   },
   {
    "id": "deraahstore.com/cart-1",
@@ -5821,36 +5518,6 @@
    "confidence": "high",
    "notes": "Empty shopping bag; no amounts.",
    "expected": null
-  },
-  {
-   "id": "dillards.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "b7e375eba3d0148c09145d699501986bfee3cd67b9bf56ab72abefc680c0e18f",
-   "domSha256": "6f964391662a1f60d787feb4cbf21f11d278dd59a2050765361da79538386aae",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "subtotal",
-     "amountMinor": 4500,
-     "currency": "USD"
-    }
-   ],
-   "expected": {
-    "kind": "subtotal",
-    "amountMinor": 4500,
-    "currency": "USD"
-   },
-   "currencyEvidence": "b-structured",
-   "currencyConflict": false,
-   "observedTags": [
-    "installment-widget",
-    "price-carousel",
-    "shared-symbol"
-   ],
-   "confidence": "low",
-   "notes": "Add-to-bag modal is open (body ReactModal__Body--open, dialog 380x768) with Subtotal 45.00, but its content boxes sit at x~1678, beyond the viewport, likely mid slide-in animation. Structured data-currency USD."
   },
   {
    "id": "discogs.com/cart-1",
@@ -6498,66 +6165,6 @@
    "notes": "Drawer 'Subtotal R 1,910.00' (shown twice, same amount). Bare R, no structured currency; frame ZAR."
   },
   {
-   "id": "electrodepot.fr/cart-1",
-   "split": "development",
-   "state": "cart-1",
-   "origin": "action",
-   "snapshotSha256": "9f6ec04d496c709068a7d8c24a4a8eb1ee96aad5a3b685de42ff509edf107d20",
-   "domSha256": "699a9313daec875abf319c3139d64e9463c104e3b82978d987c3871e0b37a048",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "estimatedTotal",
-     "amountMinor": 1598,
-     "currency": "EUR"
-    }
-   ],
-   "expected": {
-    "kind": "estimatedTotal",
-    "amountMinor": 1598,
-    "currency": "EUR"
-   },
-   "currencyEvidence": "c-symbol",
-   "currencyConflict": false,
-   "observedTags": [
-    "promo-banner",
-    "price-carousel",
-    "non-english-labels"
-   ],
-   "confidence": "high",
-   "notes": "'Total à payer' 15€98 (euro sign used as decimal separator)."
-  },
-  {
-   "id": "electrodepot.fr/cart-qty2",
-   "split": "development",
-   "state": "cart-qty2",
-   "origin": "action",
-   "snapshotSha256": "9e592cf1c739884326b65376b8141f804d748dc5b31e6bb910e205a480d608a0",
-   "domSha256": "6f0f8306604abd9a05eb70159f3a32e07546ba10f5323ce09686f5ffdc3aebdf",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "estimatedTotal",
-     "amountMinor": 3196,
-     "currency": "EUR"
-    }
-   ],
-   "expected": {
-    "kind": "estimatedTotal",
-    "amountMinor": 3196,
-    "currency": "EUR"
-   },
-   "currencyEvidence": "c-symbol",
-   "currencyConflict": false,
-   "observedTags": [
-    "promo-banner",
-    "price-carousel",
-    "non-english-labels"
-   ],
-   "confidence": "high",
-   "notes": "'Total à payer' 31€96 = 2 x 15€98."
-  },
-  {
    "id": "electrodepot.fr/empty-cart",
    "split": "development",
    "state": "empty-cart",
@@ -7199,23 +6806,6 @@
    "expected": null
   },
   {
-   "id": "fcpeuro.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "a8654f08e3585e4a9ed0d411847b60372de3d84740a579ff50374f15ab13bf95",
-   "domSha256": "e386bdc5ece68ff3be7677b15a743fe922913360951ec9046764fc6f2c6dedf7",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "promo-banner"
-   ],
-   "confidence": "high",
-   "notes": "Product page; the added-to-cart modal is hidden in the export (display none, zero box) and shows no subtotal. Only product and kit-part prices visible.",
-   "expected": null
-  },
-  {
    "id": "firstcry.com/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -7300,24 +6890,6 @@
    ],
    "confidence": "high",
    "notes": "Shows no items in your cart. A leftover payment widget below has a PAY NOW button amount (450); that is a button, not a summary row.",
-   "expected": null
-  },
-  {
-   "id": "firstcry.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "7711dce12676e1d73e0af937f4a917bf7c1fddd1f4006cdc78568841bec6b1b1",
-   "domSha256": "515f8ffe92e01ed40f2e5dd84f6dafd1484c29724333f44245c5e394c0175867",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "price-carousel",
-    "sale-strikethrough"
-   ],
-   "confidence": "high",
-   "notes": "Product page with a GO TO CART prompt; no mini-cart subtotal shown. Prices have no currency marker (rupee likely an icon).",
    "expected": null
   },
   {
@@ -7541,25 +7113,6 @@
    "observedTags": [],
    "confidence": "high",
    "notes": "Gift box is empty message; no amounts.",
-   "expected": null
-  },
-  {
-   "id": "fnp.ae/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "be01a17f667f13993811e8da16e9308cca7c1d573ad5b7766bda60159eeb4689",
-   "domSha256": "99c40b8068fed23c20a848d9ca719df4d77566a343d2959a2c31809a87b5ed42",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "price-carousel",
-    "installment-widget",
-    "currency-code-only"
-   ],
-   "confidence": "high",
-   "notes": "Product page with add-on dialog (Continue shopping / Proceed to cart) listing add-on products; no cart total row.",
    "expected": null
   },
   {
@@ -8304,36 +7857,6 @@
    "expected": null
   },
   {
-   "id": "goosecreek.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "b91cbf8de780f629290d1bd157b8752490721cae4aaa6ef98dbd9899404bd21f",
-   "domSha256": "51d34f7cf0e85d828e7753826a172b8ecc975a4d3dbe67df2427347746c98d13",
-   "readable": "open-shadow",
-   "displayed": [
-    {
-     "kind": "subtotal",
-     "amountMinor": 1399,
-     "currency": "USD"
-    }
-   ],
-   "expected": {
-    "kind": "subtotal",
-    "amountMinor": 1399,
-    "currency": "USD"
-   },
-   "currencyEvidence": "b-structured",
-   "currencyConflict": false,
-   "observedTags": [
-    "summary-in-open-shadow",
-    "sale-strikethrough",
-    "promo-banner"
-   ],
-   "confidence": "low",
-   "notes": "Upcart drawer in open shadow root has no labelled total row; only the checkout button shows $13.99 (struck $25.50 compare-at). Treated button amount as cart subtotal. An sr-only 'Your Cart Subtotal' label on the product price is a page artefact, not counted."
-  },
-  {
    "id": "greenpoint.pl/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -8583,40 +8106,6 @@
    ],
    "confidence": "high",
    "notes": "Drawer 'Subtotal: $17.99'; data-currency and og:price:currency USD."
-  },
-  {
-   "id": "gsuplementos.com.br/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "c9b8cab7b612a2d0e7cec771b0540b387fb7492b535f57dc04215233fcbb0b09",
-   "domSha256": "640382cd6260f68a3a851116b87d8f98d2e88355c06c229d7d9f377e32cbd76c",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "subtotal",
-     "amountMinor": 12211,
-     "currency": "BRL"
-    }
-   ],
-   "expected": {
-    "kind": "subtotal",
-    "amountMinor": 12211,
-    "currency": "BRL"
-   },
-   "currencyEvidence": "a-code",
-   "currencyConflict": false,
-   "observedTags": [
-    "free-shipping-progress",
-    "promo-banner",
-    "installment-widget",
-    "sale-strikethrough",
-    "price-carousel",
-    "decimal-comma",
-    "non-english-labels"
-   ],
-   "confidence": "low",
-   "notes": "Side cart has class open but its boxes sit right of the 1024 viewport (page dimmed, likely mid-slide). 'Subtotal R$122,11'; 'À vista no PIX / Boleto R$109,90' treated as a payment-method price, not a total row."
   },
   {
    "id": "guitarcenter.com/cart-1",
@@ -8959,24 +8448,6 @@
    "expected": null
   },
   {
-   "id": "hirschs.co.za/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "7b35c1bb89a9f230f2903208884ea8635355411eef70fa4c9a7cb916ce7867e6",
-   "domSha256": "8ffdacc01c8f7ff4f3c74a397e377a40e49b441cdf16d57302bc1411b950e88d",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "installment-widget",
-    "shared-symbol"
-   ],
-   "confidence": "high",
-   "notes": "Mini-cart slideout (Cart Subtotal R 779.99) exists in export but is translated fully off-canvas (transform 336px, overlay opacity 0), so closed; only product page price shown.",
-   "expected": null
-  },
-  {
    "id": "hollisterco.com/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -9044,23 +8515,6 @@
    ],
    "confidence": "high",
    "notes": "Summary shows Items (0) $0.00 and Subtotal $0.00 (same amount, one row)."
-  },
-  {
-   "id": "hollisterco.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "87c9f459c47d36cb37022ffd8312b1810020c4283e75b2adeb3a26674e4ad8b2",
-   "domSha256": "7ef4099304dc10816cc8520ce0d9ef594afc26e4080a9ef95c4d3e913ab1e31d",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "price-carousel"
-   ],
-   "confidence": "high",
-   "notes": "Product page with bag count 1; no mini-cart or subtotal row in export.",
-   "expected": null
   },
   {
    "id": "holtrenfrew.com/cart-1",
@@ -9381,25 +8835,6 @@
    "expected": null
   },
   {
-   "id": "hottopic.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "ae3a752cf4c99fe3379e3e17831f1e516b55e4ff4c96c984cff39872a908ea72",
-   "domSha256": "8b8013d33f6b1c57e96203f75435565cdcb0eb186f6beff5b2235230528f6247",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "promo-banner",
-    "sale-strikethrough",
-    "price-carousel"
-   ],
-   "confidence": "high",
-   "notes": "Product page; minicart popover is display:none and empty, only the bag badge (1 item) shows. No summary total row.",
-   "expected": null
-  },
-  {
    "id": "hp.com/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -9478,25 +8913,6 @@
    "observedTags": [],
    "confidence": "high",
    "notes": "Empty cart page, no amounts shown.",
-   "expected": null
-  },
-  {
-   "id": "hp.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "e566cce0f309542152efdda0ad30afb3cca50677abfa0f3d3c658b71e0712ff7",
-   "domSha256": "d5b73d8853ce3975ea70c1477096df67e9a74018d15ccde76c7c690d7e2cee46",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "promo-banner",
-    "sale-strikethrough",
-    "price-carousel"
-   ],
-   "confidence": "high",
-   "notes": "Product page with cart badge 1; no mini cart panel or total rendered. Shadow roots are reviews and an AI waitlist widget with no amounts.",
    "expected": null
   },
   {
@@ -9787,24 +9203,6 @@
    "observedTags": [],
    "confidence": "high",
    "notes": "Your cart is empty; no amounts shown.",
-   "expected": null
-  },
-  {
-   "id": "iravin.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "9526fb43363c2e43a4ea35e4ddeea1241af4f29fa44e8ecf476b132e13465a1d",
-   "domSha256": "dd5362f131f5888c956fbdff0357e38c0dd57cd6ecdef45506db2727ca843755",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "promo-banner",
-    "installment-widget"
-   ],
-   "confidence": "high",
-   "notes": "Product page after add; no cart drawer or popup with a total is open, only the header badge (1 item).",
    "expected": null
   },
   {
@@ -10438,23 +9836,6 @@
    "observedTags": [],
    "confidence": "low",
    "notes": "Empty cart; only the header cart link shows 'Cart $0.00', an unlabelled header value, not treated as a summary total row. Low because a reader might count it.",
-   "expected": null
-  },
-  {
-   "id": "jetpens.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "f5785b48a2bc1493f875f426de2901b83e54f067fff4e8cf2fe7e97ad3ce92d7",
-   "domSha256": "5b88d69157c8be85a6850e51eb489019104861b675cdb58796611a9236c46a2a",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "price-carousel"
-   ],
-   "confidence": "low",
-   "notes": "Product page with 'Added to cart' banner, no drawer. Header link 'Cart: 1 $12.95' not treated as a summary row; 'Total Price $25.90' is a bought-together bundle, excluded.",
    "expected": null
   },
   {
@@ -11439,27 +10820,6 @@
    "expected": null
   },
   {
-   "id": "laverne.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "cb6b068eecf012609c27fcba9bad97106a5f220bd49535048b60794873d6559e",
-   "domSha256": "c058d6cd870a29b451edab9e1971a998cfc7891de97b6d27cd3c114ef325ae9c",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "sale-strikethrough",
-    "price-carousel",
-    "currency-code-only",
-    "currency-after-amount",
-    "non-english-labels"
-   ],
-   "confidence": "high",
-   "notes": "Product page after add; no in-page cart opened, only cart count 1.",
-   "expected": null
-  },
-  {
    "id": "lcw.com/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -11789,26 +11149,6 @@
    ],
    "confidence": "high",
    "notes": "Summary shown with zeros: order amount 0원 and final expected payment 0원. 원 is not a listed symbol, frame KRW."
-  },
-  {
-   "id": "lge.co.kr/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "99154e669967f984a70eba82054cc6a7c184f4388997570fd8e1387bbd0800d6",
-   "domSha256": "2859e069598760171f77c6a061d500575325180c53cbf04645ef40dec87e0d71",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "installment-widget",
-    "zero-decimal-currency",
-    "currency-after-amount",
-    "non-english-labels"
-   ],
-   "confidence": "high",
-   "notes": "Only an added-to-cart toast without amounts; the PDP purchase-box total (58,900원) is a product quantity total, not a cart summary.",
-   "expected": null
   },
   {
    "id": "lidl.de/cart-1",
@@ -12683,23 +12023,6 @@
    ],
    "confidence": "high",
    "notes": "Empty bag message; only promo banner amounts.",
-   "expected": null
-  },
-  {
-   "id": "maurices.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "5a7789a66b5385156a0f53ea5ae47302db0f5b97a8d478478b8b5dea264144c4",
-   "domSha256": "967cff756ffe7511f53089aaca878a44f5e6d0d9d33646dd6ff942e3bcb800d6",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "promo-banner"
-   ],
-   "confidence": "low",
-   "notes": "Added-to-bag modal with Bag Subtotal $34.99 exists in the export but every node is reported invisible (checkVisibility false; modal likely still animating in); rebuild and digest show no subtotal. Labelled as not displayed per the export.",
    "expected": null
   },
   {
@@ -13951,39 +13274,6 @@
    "expected": null
   },
   {
-   "id": "pittarello.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "fc030a61476234d24907aa7d6aba484720d24f3b7631df3b85c0ed4cacf0777d",
-   "domSha256": "e88d207ff905238faaf135d07e8b0325691ec8d1f7661c647292d885413477d0",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "estimatedTotal",
-     "amountMinor": 3590,
-     "currency": "EUR"
-    }
-   ],
-   "expected": {
-    "kind": "estimatedTotal",
-    "amountMinor": 3590,
-    "currency": "EUR"
-   },
-   "currencyEvidence": "b-structured",
-   "currencyConflict": false,
-   "observedTags": [
-    "installment-widget",
-    "price-carousel",
-    "promo-banner",
-    "decimal-comma",
-    "currency-after-amount",
-    "non-english-labels"
-   ],
-   "confidence": "low",
-   "notes": "Cart drawer is open (class show) but captured mid slide-in, boxes offpage; its checkout button reads Totale 35,90 €. Unsure it is visible to the shopper at capture."
-  },
-  {
    "id": "popflexactive.com/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -14235,24 +13525,6 @@
    ],
    "confidence": "high",
    "notes": "Cart is empty; only recommendation prices.",
-   "expected": null
-  },
-  {
-   "id": "potterybarn.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "938e4fe4b49c5ded3090753a72f5961443803df6e5a46bbec889dbe3b4d56795",
-   "domSha256": "305a52dd379e7adf235bce7d8f5a490549f0582d922c7ebcf51a8271084265d5",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "price-carousel",
-    "shared-symbol"
-   ],
-   "confidence": "high",
-   "notes": "Product page with cart count 1 but no mini-cart or added-to-cart summary in the export; $22.50 amounts are product price next to Add To Cart.",
    "expected": null
   },
   {
@@ -14897,27 +14169,6 @@
    "expected": null
   },
   {
-   "id": "rayashop.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "bcc4698df99308b5f38f539b862439e17ac101173f38647343cbcb08a250fb66",
-   "domSha256": "79b8ab76715bdda4496aefdee316c8fbc37d71b7fd2c27aa77795cf75e05e573",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "sale-strikethrough",
-    "installment-widget",
-    "rtl-layout",
-    "non-english-labels",
-    "currency-after-amount"
-   ],
-   "confidence": "high",
-   "notes": "Product page; the top bar shows only the item price (2,200, struck 2,750) and quantity, no subtotal or total row.",
-   "expected": null
-  },
-  {
    "id": "reebok.com.ar/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -15035,26 +14286,6 @@
    ],
    "confidence": "high",
    "notes": "Empty cart; only recommended products.",
-   "expected": null
-  },
-  {
-   "id": "reebok.com.ar/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "1637cb82af94cec1c6cd7e0822be0f92bae26a4a512fb888f8f80bf590da02c1",
-   "domSha256": "e1d1f6d26d873da8c5e0ffcf49aec29726fa3365f91b5e4cb015cef716d4dffc",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "installment-widget",
-    "promo-banner",
-    "price-carousel",
-    "non-english-labels"
-   ],
-   "confidence": "low",
-   "notes": "Cart drawer markup with Subtotal $ 154.999 exists in DOM but every box is zero-size and not visible; screenshot shows no open drawer. Treated as not displayed.",
    "expected": null
   },
   {
@@ -16114,25 +15345,6 @@
    "expected": null
   },
   {
-   "id": "roller.de/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "7fc0127101815462706e0a54dc31c84d06400b1233cdd7a2bb911520f5d2798d",
-   "domSha256": "d34e881a4fc4fe116b7c8a2f9b3e0292805c8b948b62a8f3abdac76363a3c9d7",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "non-english-labels",
-    "currency-after-amount",
-    "promo-banner"
-   ],
-   "confidence": "high",
-   "notes": "Product page after add; header cart count 1 but no mini-cart drawer or summary row in the export. Product price 35.99* and shipping 5.99 € are not summary rows.",
-   "expected": null
-  },
-  {
    "id": "rusta.com/cart-qty2",
    "split": "development",
    "state": "cart-qty2",
@@ -16361,35 +15573,6 @@
    ],
    "confidence": "low",
    "notes": "No cart summary block; only the header cart button shows $0.00 (aria label 'Total Amount $0.00'). Treated the header cart amount as a subtotal row; it could instead be read as none-displayed."
-  },
-  {
-   "id": "samsclub.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "98e566279b437fe1eb39a0893fbfb0d134879c2ac2a87cb21038ce86551d3c8f",
-   "domSha256": "0fe0b798c7f0651999b78eb651088ddd7760cb7b83f8088d3dc52b3b3ca79aae",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "subtotal",
-     "amountMinor": 1898,
-     "currency": "USD"
-    }
-   ],
-   "expected": {
-    "kind": "subtotal",
-    "amountMinor": 1898,
-    "currency": "USD"
-   },
-   "currencyEvidence": "b-structured",
-   "currencyConflict": false,
-   "observedTags": [
-    "price-carousel",
-    "shared-symbol"
-   ],
-   "confidence": "low",
-   "notes": "No drawer opened; the only in-page cart display is the sticky header cart button showing $18.98 (1 item). Treated as subtotal (equals item price, no shipping). Could be judged none-displayed."
   },
   {
    "id": "samsung.com/cart-1",
@@ -17326,21 +16509,6 @@
    "expected": null
   },
   {
-   "id": "shoeshowmega.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "bd0e5acecb768e2eefd36a0cda03869d70ce182eea7fa8648b4f126944ad0e28",
-   "domSha256": "c00aa5640c118735922ee61a4da3da67327a194f45851f57c33cd9ee83864094",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [],
-   "confidence": "high",
-   "notes": "Mini-cart drawer with Estimated Total is in the export but not visible (zero box); only product page price $ 64.99 shown.",
-   "expected": null
-  },
-  {
    "id": "shopakira.com/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -17523,25 +16691,6 @@
    "expected": null
   },
   {
-   "id": "sierra.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "9d6af5a04771f82d80f145bcece0359296e6f373aab48f1778bb58f68537a69a",
-   "domSha256": "30bce9b3c8bd7ae0af2a718cd2e2b2d962c6dc4eaa70d03a7072aa74b4571e26",
-   "readable": "iframe-only",
-   "displayed": [],
-   "expectedReason": "not-readable",
-   "observedTags": [
-    "promo-banner",
-    "price-carousel",
-    "sale-strikethrough"
-   ],
-   "confidence": "low",
-   "notes": "No cart summary in top-frame export; a large same-origin iframe (980x600) over the page is likely the added-to-cart dialog, content not exported. Could be none-displayed.",
-   "expected": null
-  },
-  {
    "id": "sodimac.com.ar/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -17617,24 +16766,6 @@
    "expected": null
   },
   {
-   "id": "sodimac.com.ar/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "bf9fa889015ca651be0d5598af9d0484b8c881e0f06b778c49030f10b86b3adf",
-   "domSha256": "2b0bb78e5d3f12f2b810155df4804bba824325fa277f70cfaac472279227608a",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "non-english-labels",
-    "thousands-dot"
-   ],
-   "confidence": "high",
-   "notes": "Modal 'Producto agregado al carro' with buttons only; no total row.",
-   "expected": null
-  },
-  {
    "id": "sodimac.com.mx/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -17666,23 +16797,6 @@
    ],
    "confidence": "high",
    "notes": "Productos (1) $699; Total: $699. A hidden (not visible) 'S/950' Yape promo is in the export; not shown, so no conflict."
-  },
-  {
-   "id": "sodimac.com.mx/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "b47d797c6b3e3df720c497476ca3ed4f8f6c3c9a15e8c8e813415f51043a97cf",
-   "domSha256": "6b0a88596505155e8cc5316705846bffc63e1658893f9b60c052abbadc66eeb4",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "non-english-labels"
-   ],
-   "confidence": "high",
-   "notes": "Drawer 'Lo que llevas en tu Carro' shows the line item $699 only; no subtotal/total row.",
-   "expected": null
   },
   {
    "id": "spencersonline.com/minicart-1",
@@ -18256,26 +17370,6 @@
    ],
    "confidence": "high",
    "notes": "Empty cart; no amounts shown.",
-   "expected": null
-  },
-  {
-   "id": "suburbia.com.mx/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "27acf0e8797801d196c217f46ae08e9135b4aaf6463b2acf6072bbbf505d0c73",
-   "domSha256": "a221d1563c44946966b2545ac0c13655e16d4caf14ff80641d51af8cbb9984a6",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "sale-strikethrough",
-    "price-carousel",
-    "non-english-labels",
-    "shared-symbol"
-   ],
-   "confidence": "high",
-   "notes": "Product page after add; only a cart count badge, no mini-cart total shown.",
    "expected": null
   },
   {
@@ -19033,35 +18127,6 @@
    "confidence": "high",
    "notes": "Empty bag with recommendation carousel only.",
    "expected": null
-  },
-  {
-   "id": "thereformation.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "589d4b1f43947f693ce7de5e5bdfcd287184c83e0aeebd9560c18f3636f4dfd1",
-   "domSha256": "07b4ec0c95755bfd1c384cea9b9fee32ecda7555daffc375247c3ad68a987067",
-   "readable": "top-frame",
-   "displayed": [
-    {
-     "kind": "subtotal",
-     "amountMinor": 12800,
-     "currency": "USD"
-    }
-   ],
-   "expected": {
-    "kind": "subtotal",
-    "amountMinor": 12800,
-    "currency": "USD"
-   },
-   "currencyEvidence": "b-structured",
-   "currencyConflict": false,
-   "observedTags": [
-    "price-carousel",
-    "shared-symbol"
-   ],
-   "confidence": "high",
-   "notes": "Added drawer shows subtotal $128.00; digest flags it offpage due to horizontal page offset but the rebuild viewport shows the drawer. Structured priceCurrency and data-attr USD agree."
   },
   {
    "id": "threebirdnest.com/cart-1",
@@ -20146,26 +19211,6 @@
    "expected": null
   },
   {
-   "id": "vevor.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "1ceaca81aa11a68b08b45679834e95bebb76954ce9ca8a8cffd80e22493bc240",
-   "domSha256": "2a1145b0ad0c98424a53cd6350e64a3979f53a1ba6d08f268f6a51a6e613e02b",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "price-carousel",
-    "sale-strikethrough",
-    "promo-banner",
-    "shared-symbol"
-   ],
-   "confidence": "high",
-   "notes": "Product page; side fixed-cart with Subtotal $88.90 exists in export but under a display:none ancestor with zero box, so not shown. No visible cart total.",
-   "expected": null
-  },
-  {
    "id": "vevor.es/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -20259,26 +19304,6 @@
    ],
    "confidence": "high",
    "notes": "Empty cart; only recommendation prices.",
-   "expected": null
-  },
-  {
-   "id": "vevor.es/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "24998008f72453ba2fb73de66979fe638c5cc2c9c825da7a86bb08911f554fab",
-   "domSha256": "c10a29376538c24e8f9a38a49e58930cdfc2d601c106db08eae82fe4bc9cb1cc",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "promo-banner",
-    "decimal-comma",
-    "currency-after-amount",
-    "non-english-labels"
-   ],
-   "confidence": "high",
-   "notes": "Product page; side fixed-cart Total Parcial 41,90 € is in export under a display:none ancestor (zero box), not shown.",
    "expected": null
   },
   {
@@ -20405,27 +19430,6 @@
    "expected": null
   },
   {
-   "id": "vistaprint.fr/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "48e6b315d967812a563de57d44a9194ab7dbd10631894bee27dfaa4091503997",
-   "domSha256": "f774109043bf2a809416c1c22e32fce6a0f8b86e71b9af47a566e5b51e95f992",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "price-carousel",
-    "tax-or-shipping-estimate",
-    "decimal-comma",
-    "currency-after-amount",
-    "non-english-labels"
-   ],
-   "confidence": "high",
-   "notes": "Product page with an added-to-cart notice linking to the cart; no subtotal or total row shown.",
-   "expected": null
-  },
-  {
    "id": "vonmaur.com/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -20525,21 +19529,6 @@
    "expected": null
   },
   {
-   "id": "vonmaur.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "e251cd348dee27d0a267d1e41732dcfdf5f548cef113ca629923741f8d44fecd",
-   "domSha256": "e269dd50a6a0e24e91961e2a02084003bb83e5652357bf3a27b0a4a6b91de6c2",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [],
-   "confidence": "low",
-   "notes": "Side bag drawer with Subtotal $48.00 exists in export but is off-canvas (box x>1024, not visible); only a sticky item bar with item price $48.00 and Check Out shows. Treated as not displayed.",
-   "expected": null
-  },
-  {
    "id": "walmart.com/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -20625,24 +19614,6 @@
    ],
    "confidence": "high",
    "notes": "Empty cart; only header cart badge $0.00 and recommendation prices.",
-   "expected": null
-  },
-  {
-   "id": "walmart.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "8efdef4de724a873274de0b7321b9c0564ee917e5a5411e5980151dcd363f756",
-   "domSha256": "84ca5001b70482a2941de3bf4dc777f56998f85e1e3cc963be67c5a89f86e588",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "price-carousel",
-    "sale-strikethrough"
-   ],
-   "confidence": "low",
-   "notes": "No mini-cart or drawer in export; only the header cart-icon badge shows $19.72 (unlabelled cart-total under icon), not counted as a summary row.",
    "expected": null
   },
   {
@@ -21017,23 +19988,6 @@
    "expected": null
   },
   {
-   "id": "webstaurantstore.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "ef583e2946a17e11efb8dea088f62f0c72ba854d8eef76e45ef4c032be4cc0bb",
-   "domSha256": "b4bb54275f8b49f6b9efe85c5f5899a6c0c805e5085c1743427e8b57a39298f7",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "price-carousel"
-   ],
-   "confidence": "high",
-   "notes": "Product page panel says 1 item added to your cart with View Cart; no subtotal row.",
-   "expected": null
-  },
-  {
    "id": "westelm.com/cart-1",
    "split": "development",
    "state": "cart-1",
@@ -21242,26 +20196,6 @@
    ],
    "confidence": "high",
    "notes": "Bottom order bar shows total 0 items 0원 (a shown zero total row). Suffix 원 is not in the rule (c) list, no structured currency, so frame KRW."
-  },
-  {
-   "id": "yes24.com/minicart-1",
-   "split": "development",
-   "state": "minicart-1",
-   "origin": "action",
-   "snapshotSha256": "661989ccbba4b05ac276ca4f55345198b24d48713253c21fba842c40123ab937",
-   "domSha256": "d13be2f755c375f152451d29eac8e1e9e4b9d5baef62a80f341d493abbd78ad4",
-   "readable": "none-displayed",
-   "displayed": [],
-   "expectedReason": "no-total-displayed",
-   "observedTags": [
-    "price-carousel",
-    "non-english-labels",
-    "zero-decimal-currency",
-    "currency-after-amount"
-   ],
-   "confidence": "high",
-   "notes": "Product page with an added-to-cart message and recommendation prices; no cart subtotal or total row shown.",
-   "expected": null
   },
   {
    "id": "zales.com/cart-1",
