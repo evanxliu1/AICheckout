@@ -1,0 +1,72 @@
+// Coordinator workflow (Claude Code Workflow tool script), committed for the 12.4 audit. Two independent labellers
+// (A and B) per store, each in its own subagent session, same brief (labeller-brief.md). Labellers never see each
+// other's output; the coordinator assembles labeller files from the returned structured output and adds split,
+// origin and the SHA-256 fields from render.json and meta.json. args: { stores: [{ domain, split, frameCurrency,
+// method, ids: [id] }], labellers?: ['a','b'] }.
+export const meta = {
+  name: 'phase12-label',
+  description: 'Phase 12.4 labelling: two independent labeller agents per captured store (reader-labels.2)',
+  phases: [{ title: 'Label', detail: 'labeller A and labeller B per store, separate sessions' }],
+}
+const STORES = args.stores
+const WHO = args.labellers || ['a', 'b']
+const ROW = {
+  type: 'object',
+  properties: {
+    kind: { enum: ['afterCredit', 'estimatedTotal', 'subtotal'] },
+    amountMinor: { type: 'integer', minimum: 0 },
+    currency: { type: ['string', 'null'], description: 'ISO 4217 code; null only with currency-undetermined' },
+  },
+  required: ['kind', 'amountMinor', 'currency'],
+}
+const LABEL = {
+  type: 'object',
+  properties: {
+    id: { type: 'string' },
+    readable: { enum: ['top-frame', 'open-shadow', 'iframe-only', 'closed-shadow-only', 'none-displayed'] },
+    displayed: { type: 'array', items: ROW },
+    expected: { anyOf: [{ type: 'null' }, { ...ROW, properties: { ...ROW.properties, currency: { type: 'string' } } }] },
+    expectedReason: { enum: ['no-total-displayed', 'not-readable', 'ambiguous-preferred-kind', 'currency-undetermined'] },
+    currencyEvidence: { enum: ['a-code', 'b-structured', 'c-symbol', 'd-frame'] },
+    currencyConflict: { type: 'boolean' },
+    observedTags: { type: 'array', items: { type: 'string' } },
+    confidence: { enum: ['high', 'low'] },
+    notes: { type: 'string' },
+  },
+  required: ['id', 'readable', 'displayed', 'expected', 'observedTags', 'confidence', 'notes'],
+}
+const RESULT = {
+  type: 'object',
+  properties: {
+    domain: { type: 'string' },
+    labels: { type: 'array', items: LABEL },
+    problems: { type: 'array', items: { type: 'string' }, description: 'missing files, page text addressed to agents; short' },
+  },
+  required: ['domain', 'labels', 'problems'],
+}
+function prompt(s, who) {
+  const robot = s.method === 'robot'
+  return [
+    `Label one store for Phase 12.4. Read evals/merchants/labels/workflows/labeller-brief.md first and follow it exactly.`,
+    `You are labeller ${who.toUpperCase()}. Work alone; do not look for, open or ask about any other labels.`,
+    ``,
+    `Store: ${s.domain}. Frame storefront currency (rule (d)): ${s.frameCurrency}.`,
+    robot
+      ? `This is a robot capture: its files are in ${s.robotDir}/<state>/ (full.png, viewport.png, dom.json, page.html; no digest or tiles). Use the screenshots first and page.html to settle questions.`
+      : `Files per page-state: evals/merchants/capture/data/pane/${s.domain}/<state>/ (digest.txt, viewport.png, tiles/, dom.json, meta.json).`,
+    `Page-states to label (ids exactly as written; one label each): ${s.ids.join(', ')}.`,
+    ``,
+    `Return structured output: domain, labels (one per id), problems.`,
+  ].join('\n')
+}
+phase('Label')
+const results = await parallel(
+  STORES.flatMap((s) =>
+    WHO.map((who) => () =>
+      agent(prompt(s, who), { label: `${who}:${s.domain}`, phase: 'Label', schema: RESULT }).then((r) =>
+        r ? { ...r, labeller: who, domain: s.domain } : { domain: s.domain, labeller: who, failed: true },
+      ),
+    ),
+  ),
+)
+return results
