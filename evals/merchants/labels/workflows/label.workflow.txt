@@ -1,15 +1,14 @@
-// Coordinator workflow (Claude Code Workflow tool script), committed for the 12.4 audit. Two independent labellers
-// (A and B) per store, each in its own subagent session, same brief (labeller-brief.md). Labellers never see each
-// other's output; the coordinator assembles labeller files from the returned structured output and adds split,
-// origin and the SHA-256 fields from render.json and meta.json. args: { stores: [{ domain, split, frameCurrency,
-// method, ids: [id] }], labellers?: ['a','b'] }.
+// Coordinator workflow (Claude Code Workflow tool script), committed for the 12.4 audit. One labeller per store
+// (Evan, 2026-10-08), five stores per labeller agent session, brief labeller-brief.md. The coordinator assembles the
+// labeller file of each split from the returned structured output and adds split, origin and the SHA-256 fields from
+// render.json and meta.json; agreement.mjs --single makes the final labels. args: { batches: [[{ domain, split,
+// frameCurrency, method, robotDir?, ids: [id] }]] }.
 export const meta = {
   name: 'phase12-label',
-  description: 'Phase 12.4 labelling: two independent labeller agents per captured store (reader-labels.2)',
-  phases: [{ title: 'Label', detail: 'labeller A and labeller B per store, separate sessions' }],
+  description: 'Phase 12.4 labelling: one labeller agent per batch of five captured stores (reader-labels.2)',
+  phases: [{ title: 'Label', detail: 'one labeller agent per five stores' }],
 }
-const STORES = args.stores
-const WHO = args.labellers || ['a', 'b']
+const BATCHES = args.batches
 const ROW = {
   type: 'object',
   properties: {
@@ -35,7 +34,7 @@ const LABEL = {
   },
   required: ['id', 'readable', 'displayed', 'expected', 'observedTags', 'confidence', 'notes'],
 }
-const RESULT = {
+const STORE = {
   type: 'object',
   properties: {
     domain: { type: 'string' },
@@ -44,28 +43,30 @@ const RESULT = {
   },
   required: ['domain', 'labels', 'problems'],
 }
-function prompt(s, who) {
-  const robot = s.method === 'robot'
+const RESULT = { type: 'object', properties: { stores: { type: 'array', items: STORE } }, required: ['stores'] }
+function storeLines(s) {
   return [
-    `Label one store for Phase 12.4. Read evals/merchants/labels/workflows/labeller-brief.md first and follow it exactly.`,
-    `You are labeller ${who.toUpperCase()}. Work alone; do not look for, open or ask about any other labels.`,
+    `- ${s.domain}: frame storefront currency (rule (d)) ${s.frameCurrency}.`,
+    s.method === 'robot'
+      ? `  Robot capture: files in ${s.robotDir}/<state>/ (full.png, viewport.png, dom.json, page.html; no digest or tiles). Use the screenshots first and page.html to settle questions.`
+      : `  Files: evals/merchants/capture/data/pane/${s.domain}/<state>/ (digest.txt, viewport.png, tiles/, dom.json, meta.json).`,
+    `  Page-states (ids exactly as written, one label each): ${s.ids.join(', ')}.`,
+  ]
+}
+function prompt(batch) {
+  return [
+    `Label ${batch.length} stores for Phase 12.4. Read evals/merchants/labels/workflows/labeller-brief.md first and follow it exactly. You are the only labeller of these stores.`,
     ``,
-    `Store: ${s.domain}. Frame storefront currency (rule (d)): ${s.frameCurrency}.`,
-    robot
-      ? `This is a robot capture: its files are in ${s.robotDir}/<state>/ (full.png, viewport.png, dom.json, page.html; no digest or tiles). Use the screenshots first and page.html to settle questions.`
-      : `Files per page-state: evals/merchants/capture/data/pane/${s.domain}/<state>/ (digest.txt, viewport.png, tiles/, dom.json, meta.json).`,
-    `Page-states to label (ids exactly as written; one label each): ${s.ids.join(', ')}.`,
+    ...batch.flatMap(storeLines),
     ``,
-    `Return structured output: domain, labels (one per id), problems.`,
+    `Return structured output: stores, one entry per store (domain, labels, problems).`,
   ].join('\n')
 }
 phase('Label')
 const results = await parallel(
-  STORES.flatMap((s) =>
-    WHO.map((who) => () =>
-      agent(prompt(s, who), { label: `${who}:${s.domain}`, phase: 'Label', schema: RESULT }).then((r) =>
-        r ? { ...r, labeller: who, domain: s.domain } : { domain: s.domain, labeller: who, failed: true },
-      ),
+  BATCHES.map((batch, i) => () =>
+    agent(prompt(batch), { label: `batch-${i + 1}:${batch.map((s) => s.domain).join(',')}`, phase: 'Label', schema: RESULT }).then((r) =>
+      r ? { batch: i + 1, stores: r.stores } : { batch: i + 1, failed: true, domains: batch.map((s) => s.domain) },
     ),
   ),
 )
