@@ -37,16 +37,19 @@ export const MANIFEST_SCHEMA = 'reader-variants.1';
 export const VARIANT_SCHEMA = 'reader-variant.1';
 export const PROTOCOL = 'generic-reader-protocol.11';
 /** Transform versions. A sample-check mismatch gives the transform a new version; every variant is then regenerated. */
+// .2 (2026-10-08, after the 12.4 sample check): the expected row's total words include Polish "do zapłaty" (the
+// row finder could anchor on a line item's "Suma"), which can change the row of every row-dependent transform; and
+// zero-decimal rewrites the page currency's own ISO code anywhere in text (a "(USD)" in a total's label was left).
 export const VERSIONS = {
   'class-rename': 'class-rename.1',
-  'promo-row': 'promo-row.1',
-  'fake-subtotal': 'fake-subtotal.1',
-  'injected-instruction': 'injected-instruction.1',
-  'credit-applied': 'credit-applied.1',
-  'format-swap': 'format-swap.1',
-  'format-space-after': 'format-space-after.1',
-  'zero-decimal': 'zero-decimal.1',
-  'mixed-currency': 'mixed-currency.1',
+  'promo-row': 'promo-row.2',
+  'fake-subtotal': 'fake-subtotal.2',
+  'injected-instruction': 'injected-instruction.2',
+  'credit-applied': 'credit-applied.2',
+  'format-swap': 'format-swap.2',
+  'format-space-after': 'format-space-after.2',
+  'zero-decimal': 'zero-decimal.2',
+  'mixed-currency': 'mixed-currency.2',
 };
 export const SKIP_REASONS = [
   'base-dom-missing',
@@ -266,6 +269,7 @@ const TOTAL_RE = new RegExp(
       'gesamt\\p{L}*',
       'razem',
       'suma',
+      'do zapłaty',
       'toplam',
       'celkem',
       'összesen',
@@ -865,8 +869,12 @@ export const TRANSFORMS = {
             return true;
         return false;
       };
+      // The page currency's own code is rewritten anywhere in text (zero-decimal.2), so no "(USD)" is left beside JPY.
+      const ownCode = new RegExp(`(?<![\\p{L}\\d])${a.currency}(?!\\p{L})`, 'gu');
       for (const t of a.ix.texts.filter((x) => x.rewritable))
-        t.node.x = t.node.x.replace(selector(a.ix.parent.get(t.node)) ? codeRe : nearAmount, target);
+        t.node.x = t.node.x
+          .replace(selector(a.ix.parent.get(t.node)) ? codeRe : nearAmount, target)
+          .replace(ownCode, target);
       let structured = false;
       const isCode = (v) => typeof v === 'string' && CODES.includes(v);
       const jsonCurrencies = (o) => {

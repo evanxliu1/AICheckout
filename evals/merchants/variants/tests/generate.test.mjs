@@ -615,3 +615,28 @@ test('review L3: the manifest pins generate.mjs and retail-frame-3.json', () => 
     sha(readFileSync(path.join(here, '..', '..', 'retail-frame-3.json'))),
   );
 });
+
+test('12.4 check: zero-decimal.2 rewrites the page currency code in a total label; versions bumped', () => {
+  const page = cartPage({
+    rows: [
+      ['subtotal', 'Subtotal', '£20.00'],
+      ['total', 'Total Before Tax (GBP):', '£24.00'],
+    ],
+  });
+  const r = run('zero-decimal', page);
+  assert.ok(!/GBP/.test(visibleText(r.doc)), visibleText(r.doc));
+  assert.equal(VERSIONS['zero-decimal'], 'zero-decimal.2');
+  assert.equal(VERSIONS['class-rename'], 'class-rename.1');
+});
+
+test('12.4 check: a line item "Suma" and the summary "Do zapłaty" of one amount are not unique', () => {
+  const page = cartPage({
+    items: [['Suma:', '£24.00']],
+    rows: [
+      ['subtotal', 'Subtotal', '£20.00'],
+      ['due', 'Do zapłaty', '£24.00'],
+    ],
+  });
+  for (const t of ['promo-row', 'credit-applied', 'mixed-currency'])
+    assert.equal(run(t, page).skip, 'expected-row-not-unique', t);
+});
