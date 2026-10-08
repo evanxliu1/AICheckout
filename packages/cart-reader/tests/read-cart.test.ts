@@ -122,6 +122,19 @@ describe('summary rows', () => {
     const r = page(`<div><p>Paper clips, 500 Total</p><span>$8.99</span><button>Add to Cart</button></div>`);
     expect(r).toEqual({ shown: false, reason: 'no-summary' });
   });
+  it('lets a grand total outrank a bare total', () => {
+    const r = page(
+      `<section>${row('Total', '€24.95')}${row('Shipping', '€5.95')}${row('Grand total', '€30.90')}</section>`,
+      { url: 'https://shop.example.de/cart' },
+    );
+    expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 3090, currency: 'EUR' });
+  });
+  it('still withholds two bare totals', () => {
+    const r = page(
+      `<section>${row('Total', '$24.95')}${row('Shipping', '$5.95')}${row('Total', '$30.90')}</section>`,
+    );
+    expect(r).toEqual({ shown: false, reason: 'ambiguous' });
+  });
   it('withholds when a second total row of the same kind is unreadable', () => {
     const r = page(
       `<section>${row('Total', '£125.00 (approx. $166.66)')}<button>Checkout</button></section><section>${row('Total', '$99.75')}<button>Checkout</button></section>`,

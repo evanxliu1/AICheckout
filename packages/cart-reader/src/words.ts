@@ -3,7 +3,7 @@
 
 /** Rows that are never a total, whatever else they say: savings, promotions, points, instalments. */
 export const EXCLUDE_RE =
-  /sav(?:e|ing)|discount|rabat|descuento|desconto|remise|r[ée]duction|sconto|korting|zni[żz]k|indirim|割引|할인|خصم|promo|coupon|kupon|voucher|c[óo]digo|\bcode\b|economi|ahorr|risparm|bespaar|\boff\b|\bpoints?\b|punkte|puntos|punti|reward|cashback|\bearn|per month|\/\s?mo\b|monthly|instal|klarna|afterpay|affirm|financ|\bfee\b|donation|deposit|away from|more to|orders? over|\bminimum\b|\bmin\.|add to (?:cart|bag|basket)|in den warenkorb|ajouter au|a[ñn]adir al|aggiungi al|toevoegen|\breviews?\b|bewertung|avis\b|rese[ñn]a/u;
+  /sav(?:e|ing)|discount|rabat|descuento|desconto|remise|r[ée]duction|sconto|korting|zni[żz]k|indirim|割引|할인|خصم|promo|coupon|kupon|voucher|c[óo]digo|\bcode\b|economi|ahorr|risparm|bespaar|\boff\b|\bpoints?\b|punkte|puntos|punti|reward|cashback|\bearn|per month|\/\s?mo\b|monthly|instal|klarna|afterpay|affirm|financ|\bfee\b|donation|deposit|away from|more to|orders? over|\bminimum\b|\bmin\.|\bmrp\b|\brrp\b|\buvp\b|list price|add to (?:cart|bag|basket)|in den warenkorb|ajouter au|a[ñn]adir al|aggiungi al|toevoegen|\breviews?\b|bewertung|avis\b|rese[ñn]a/u;
 
 /** Shipping and tax words: a row is excluded when it has one of these and no inclusion/exclusion preposition. */
 export const SHIP_RE =
@@ -20,6 +20,10 @@ export const SUBTOTAL_RE =
 /** Order total, with or without tax or shipping. */
 export const TOTAL_RE =
   /tota(?:l|al)|gesamt|endsumme|endbetrag|bestellsumme|rechnungsbetrag|summa|\bsuma\b|razem|zap[łl]aty|toplam|合計|総計|総額|总计|总额|總計|总价|合计|결제|합계|총액|الإجمالي|الاجمالي|إجمالي|اجمالي|المجموع|итого|всего|к оплате|[àa] payer|a pagar|zu zahlen|te betalen|att betala|amount due|payment due|お支払い|支払い?金額/u;
+
+/** An order total, as opposed to a bare "total" that may be the items total: used only to break a tie. */
+export const GRAND_RE =
+  /grand|order total|total (?:de la |du )?commande|total (?:del )?pedido|totale ordine|totaal bestelling|bestellsumme|gesamtsumme|gesamtbetrag|endsumme|endbetrag|rechnungsbetrag|to pay|[àa] payer|a pagar|zu zahlen|te betalen|att betala|amount due|payment due|お支払い|결제/u;
 
 /** A total after a gift card, store credit or points: only when a credit row is on the page. */
 export const AFTER_RE = /\bdue\b|after|remaining|verbleib|restbetrag|balance/u;

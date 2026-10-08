@@ -29,6 +29,7 @@ import {
   ANY_LABEL_RE,
   CHECKOUT_RE,
   CREDIT_RE,
+  GRAND_RE,
   LINE_ITEM_RE,
   SHIP_RE,
   SUBTOTAL_RE,
@@ -126,6 +127,9 @@ function analyze(document: Document, options: ReadOptions): { reading: CartReadi
     pageH: root ? Math.max(root.scrollHeight, root.clientHeight) : 0,
     rows: new Map(),
   };
+  // A body that clips or scrolls its own overflow bounds what the shopper can reach.
+  if (document.body && view && ctx.layout && view.getComputedStyle(document.body).overflowX !== 'visible')
+    ctx.pageW = Math.min(ctx.pageW, document.body.scrollWidth);
   const withhold = (reason: string, rows: Row[] = []) => ({
     reading: { shown: false, reason } as CartReading,
     rows,
@@ -169,6 +173,11 @@ function analyze(document: Document, options: ReadOptions): { reading: CartReadi
   const key = (r: Row) => (r.minor === null ? 'unreadable' : `${r.currency ?? '?'}:${r.minor}`);
   if (new Set(chosen.map(key)).size > 1) {
     chosen = chosen.filter((r) => r.inSummary);
+    // Several different totals: an order total ("grand total", "order total", "to pay") outranks a bare "total".
+    if (new Set(chosen.map(key)).size > 1 && kind === 'estimatedTotal') {
+      const grand = chosen.filter((r) => GRAND_RE.test(r.text.toLowerCase()));
+      if (grand.length > 0) chosen = grand;
+    }
     if (new Set(chosen.map(key)).size !== 1) return withhold('ambiguous', rows);
   }
   const row = chosen[0]!;
