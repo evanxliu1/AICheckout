@@ -13,7 +13,8 @@
 //    credit row, an after-credit total. Savings, shipping, tax, points, instalment and line-item rows are excluded.
 // 3. The most preferred kind present wins (afterCredit > estimatedTotal > subtotal). Two different amounts of that
 //    kind mean withhold, unless only one of them sits in a cart summary (next to shipping, tax or a checkout control).
-//    A subtotal alone is shown only when its summary holds no other, different amount.
+//    A subtotal alone is shown only when no other row of its summary holds a total label or an unexplained different
+//    amount (shipping, tax, savings, threshold and rewards rows explain theirs).
 // 4. Currency by the protocol's evidence order; unparseable amounts withhold (a zero total is shown: an empty cart).
 import { MARK_RE, findAmounts, normalizeText, toMinor } from './amounts.ts';
 import {
@@ -29,8 +30,10 @@ import {
   ANY_LABEL_RE,
   CHECKOUT_RE,
   CREDIT_RE,
+  EXCLUDE_RE,
   GRAND_RE,
   LINE_ITEM_RE,
+  PREP_RE,
   SHIP_RE,
   SUBTOTAL_RE,
   TAX_RE,
@@ -123,13 +126,15 @@ function analyze(document: Document, options: ReadOptions): { reading: CartReadi
     view,
     styles: new Map(),
     layout: Boolean(root && view && root.getBoundingClientRect().width > 0),
-    pageW: root ? Math.max(root.scrollWidth, root.clientWidth) : 0,
-    pageH: root ? Math.max(root.scrollHeight, root.clientHeight) : 0,
+    // The shopper scrolls down, not sideways: a box to the right of the viewport is an off-canvas panel, while the
+    // page's height is the taller of the root's and the body's (either may be the scrolling element).
+    pageW: root ? root.clientWidth : 0,
+    pageH: root ? Math.max(root.scrollHeight, root.clientHeight, document.body?.scrollHeight ?? 0) : 0,
     rows: new Map(),
   };
-  // A body that clips or scrolls its own overflow bounds what the shopper can reach.
+  // A body that clips or scrolls its own overflow bounds what the shopper can reach sideways.
   if (document.body && view && ctx.layout && view.getComputedStyle(document.body).overflowX !== 'visible')
-    ctx.pageW = Math.min(ctx.pageW, document.body.scrollWidth);
+    ctx.pageW = Math.min(ctx.pageW, document.body.clientWidth);
   const withhold = (reason: string, rows: Row[] = []) => ({
     reading: { shown: false, reason } as CartReading,
     rows,
@@ -184,9 +189,16 @@ function analyze(document: Document, options: ReadOptions): { reading: CartReadi
   if (row.minor === null) return withhold('amount-unreadable', rows);
   if (!row.currency) return withhold('currency-undetermined', rows);
   if (kind === 'subtotal') {
+    // An items total of zero is an empty cart: nothing to recommend a card for, and often a drawer's placeholder.
+    if (row.minor === 0) return withhold('subtotal-zero', rows);
     if (!chosen.some((r) => r.inSummary)) return withhold('subtotal-outside-summary', rows);
-    if (chosen.some((r) => !subtotalAlone(r, ctx, store, structuredLazy)))
-      return withhold('subtotal-not-alone', rows);
+    for (const r of chosen) {
+      const blocker = subtotalBlocker(r, ctx, store, structuredLazy);
+      if (blocker) {
+        r.why = `not-alone: ${blocker}`;
+        return withhold('subtotal-not-alone', rows);
+      }
+    }
   }
   return { reading: { shown: true, kind, amountMinor: row.minor, currency: row.currency }, rows };
 }
@@ -261,9 +273,9 @@ function style(el: Element, ctx: Ctx): CSSStyleDeclaration {
   return cs;
 }
 
-/** Hidden by its own styles (not inherited ones): display, opacity, clipping and screen-reader-only boxes. */
+/** Hidden by its own styles (not inherited ones): display, opacity (a faded, inactive block too), clipping and screen-reader-only boxes. */
 function hiddenBox(cs: CSSStyleDeclaration): boolean {
-  if (cs.display === 'none' || cs.opacity === '0' || cs.fontSize === '0px') return true;
+  if (cs.display === 'none' || parseFloat(cs.opacity) < 0.5 || cs.fontSize === '0px') return true;
   if (/^rect\(0px,? 0px,? 0px,? 0px\)$/.test(cs.clip ?? '')) return true;
   if (/inset\((?:50|100)%\)/.test(cs.clipPath ?? '')) return true;
   if (cs.position === 'absolute' && parseFloat(cs.width) <= 1 && parseFloat(cs.height) <= 1) return true;
@@ -283,8 +295,9 @@ function hiddenWhy(el: Element, ctx: Ctx): string | null {
   const sx = ctx.view?.scrollX ?? 0;
   const sy = ctx.view?.scrollY ?? 0;
   if (r.width < 1 || r.height < 1) return 'empty-rect';
-  if (r.right + sx <= 0 || r.bottom + sy <= 0 || r.left + sx >= ctx.pageW || r.top + sy >= ctx.pageH)
-    return 'off-page';
+  if (r.right + sx <= 0 || r.bottom + sy <= 0 || r.left + sx >= ctx.pageW) return 'off-page';
+  // Below the page's end, unless a scrolling ancestor (overflow auto or scroll, taller inside than out) reaches it.
+  if (r.top + sy >= ctx.pageH && !inScroller(el, ctx)) return 'off-page';
   // A collapsed clipping ancestor (overflow hidden at zero height or width) hides everything inside. Partial
   // clipping is not checked: offline rebuilds lay content out differently from the live page.
   for (let a = parentOf(el); a; a = parentOf(a)) {
@@ -294,6 +307,13 @@ function hiddenWhy(el: Element, ctx: Ctx): string | null {
     if (ar.width < 1 || ar.height < 1) return 'clipped';
   }
   return null;
+}
+
+/** Whether an ancestor scrolls vertically, so that content below the page's own end is still reachable. */
+function inScroller(el: Element, ctx: Ctx): boolean {
+  for (let a = parentOf(el); a && a.nodeName !== 'BODY'; a = parentOf(a))
+    if (/auto|scroll/.test(style(a, ctx).overflowY) && a.scrollHeight > a.clientHeight + 1) return true;
+  return false;
 }
 
 /** The text a shopper sees inside `el`: hidden and struck-through parts dropped, boxes separated by spaces. */
@@ -346,17 +366,16 @@ function readRow(els: Element[], ctx: Ctx, store: Storefront, structured: () => 
   if (hidden) return dropped(`hidden:${hidden}`);
   if (els.some((el) => (style(el, ctx).textDecorationLine ?? '').includes('line-through')))
     return dropped('struck');
-  const amounts = findAmounts(text, isCode);
-  if (amounts.length === 0) return dropped('no-amount');
-  let label = '';
-  let at = 0;
-  for (const a of amounts) {
-    label += text.slice(at, a.start) + ' ';
-    at = a.end;
-  }
-  label = (label + text.slice(at)).replace(/\s+/g, ' ').trim();
-  const lower = label.toLowerCase();
   const report = { els, text, minor: null, currency: null, inSummary: false };
+  const amounts = findAmounts(text, isCode);
+  if (amounts.length === 0) {
+    // A total label ending in a bare number the grammar cannot read ("Total: 196") is a total the reader cannot show.
+    const kind = /\d[\d.,]*\s*$/.test(text) ? classifyLabel(text.toLowerCase()) : null;
+    if (kind && !lineItemOf(els.at(-1)!)) return { ...report, kind, why: 'bare-number' };
+    return dropped('no-amount');
+  }
+  const label = withoutAmounts(text);
+  const lower = label.toLowerCase();
   const values = new Set(amounts.map((a) => (a.number ? `${a.number.int}.${a.number.frac}` : 'unreadable')));
   if (amounts.some((a) => a.negative))
     return CREDIT_RE.test(lower) ? { ...report, kind: 'credit' } : dropped('negative');
@@ -402,17 +421,25 @@ function lineItemOf(el: Element): boolean {
   return false;
 }
 
-/** The nearest ancestor (up to five, under body) that reads as a cart summary, or null. */
-function summaryOf(el: Element, kind: Kind | 'after-candidate'): Element | null {
+/** The nearest (or, with `outermost`, the largest) ancestor up to five under body that reads as a cart summary. */
+function summaryOf(el: Element, kind: Kind | 'after-candidate', outermost = false): Element | null {
+  let found: Element | null = null;
   let a = parentOf(el);
   for (let depth = 0; a && a.nodeName !== 'BODY' && depth < 5; depth += 1) {
     const text = (a.textContent ?? '').toLowerCase();
-    if (text.length > 4000) return null;
-    if (SHIP_RE.test(text) || TAX_RE.test(text) || CHECKOUT_RE.test(text)) return a;
-    if (kind !== 'subtotal' && SUBTOTAL_RE.test(text)) return a;
+    if (text.length > 4000) break;
+    if (
+      SHIP_RE.test(text) ||
+      TAX_RE.test(text) ||
+      CHECKOUT_RE.test(text) ||
+      (kind !== 'subtotal' && SUBTOTAL_RE.test(text))
+    ) {
+      found = a;
+      if (!outermost) break;
+    }
     a = parentOf(a);
   }
-  return null;
+  return found;
 }
 
 /** Whether a row sits in a cart summary: an ancestor also holds shipping, tax, a checkout control or a subtotal. */
@@ -420,23 +447,68 @@ function inSummary(el: Element, kind: Kind | 'after-candidate'): boolean {
   return summaryOf(el, kind) !== null;
 }
 
-/**
- * A subtotal shown alone must really be alone: when its summary also shows another, different positive amount
- * (an unlabelled total, say), the reader cannot tell which one the shopper pays.
- */
-function subtotalAlone(row: Row, ctx: Ctx, store: Storefront, structured: () => string | null): boolean {
-  const summary = summaryOf(row.els.at(-1)!, 'subtotal');
-  if (!summary) return true;
-  const text = normalizeText(visibleText(summary, ctx));
+/** The text with its amounts taken out: the row's label. */
+function withoutAmounts(text: string): string {
+  let label = '';
+  let at = 0;
   for (const a of findAmounts(text, isCode)) {
-    if (a.negative || !a.number) continue;
-    const currency = resolveCurrency(
-      { codes: a.code ? [a.code] : [], marker: a.marker, sharedText: a.markerText },
-      structured(),
-      store,
-    );
-    const minor = toMinor(a.number, currency ? MINOR_UNITS[currency]! : 2);
-    if (minor !== null && minor !== 0 && minor !== row.minor) return false;
+    label += text.slice(at, a.start) + ' ';
+    at = a.end;
   }
-  return true;
+  return (label + text.slice(at)).replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * A subtotal shown alone must really be alone. Every other row of its summary that holds a digit is read: a row
+ * with a total label (whatever its amount, even one the grammar cannot read) and a row with a different positive
+ * amount and no explanation both mean the shopper may pay something else. Shipping, tax, savings, threshold and
+ * rewards rows explain their amounts and do not count; nor do unmarked numbers when the subtotal carries a marker.
+ * Returns null when the subtotal is alone, otherwise the text of the row that is in the way.
+ */
+function subtotalBlocker(
+  row: Row,
+  ctx: Ctx,
+  store: Storefront,
+  structured: () => string | null,
+): string | null {
+  const own = row.els.at(-1)!;
+  const summary = summaryOf(own, 'subtotal', true);
+  if (!summary) return null;
+  const marked = findAmounts(row.text, isCode).some((a) => a.marker !== null || a.code !== null);
+  const seen = new Set<Element>();
+  const walker = ctx.doc.createTreeWalker(summary, 4 /* SHOW_TEXT */);
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    if (!/\d/.test((n as Text).data)) continue;
+    let el = n.parentNode as Element | null;
+    if (!el || el.nodeType !== 1 || SKIP_PARENTS.has(el.nodeName)) continue;
+    // The nearest ancestor with words (beyond the amounts' own markers) is the row the number belongs to.
+    while (el && el !== summary && !/\p{L}{2}/u.test(withoutAmounts(normalizeText(el.textContent ?? ''))))
+      el = parentOf(el);
+    if (!el || seen.has(el) || row.els.some((e) => e.contains(el))) continue;
+    seen.add(el);
+    if (hiddenWhy(el, ctx) || lineItemOf(el)) continue;
+    // A wrapper around the subtotal row is read without the subtotal's own text.
+    const text = normalizeText(visibleText(el, ctx)).replace(row.text, ' ').trim();
+    if (text.length > MAX_ROW_TEXT) continue;
+    const amounts = findAmounts(text, isCode).filter((a) => !a.negative);
+    const others = amounts.filter((a) => {
+      if (!a.number || (marked && a.marker === null && a.code === null)) return false;
+      const currency = resolveCurrency(
+        { codes: a.code ? [a.code] : [], marker: a.marker, sharedText: a.markerText },
+        structured(),
+        store,
+      );
+      const minor = toMinor(a.number, currency ? MINOR_UNITS[currency]! : 2);
+      return minor === null || (minor !== 0 && minor !== row.minor);
+    });
+    const label = withoutAmounts(text).toLowerCase();
+    const bareNumber = amounts.length === 0 && /\d[\d.,]*\s*$/.test(text);
+    if (classifyLabel(label) !== null && (others.length > 0 || bareNumber)) return text;
+    // "Incl. tax" beside an amount qualifies a total; with a rate ("incl. VAT 19%") it is the tax itself.
+    const explained =
+      EXCLUDE_RE.test(label) ||
+      ((SHIP_RE.test(label) || TAX_RE.test(label)) && (!PREP_RE.test(label) || /\d\s?%/.test(label)));
+    if (others.length > 0 && !explained) return text;
+  }
+  return null;
 }

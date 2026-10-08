@@ -98,6 +98,12 @@ describe('summary rows', () => {
       currency: 'USD',
     });
   });
+  it('withholds a zero subtotal (an empty cart) but shows a zero total', () => {
+    expect(page(`<section>${row('Subtotal', '$0.00')}<button>Checkout</button></section>`)).toEqual({
+      shown: false,
+      reason: 'subtotal-zero',
+    });
+  });
   it('shows the after-credit total when the page has no plain total row left', () => {
     const r = page(row('Gift card applied', '-$5.00') + row('Amount due', '$12.00'));
     expect(r).toEqual({ shown: true, kind: 'afterCredit', amountMinor: 1200, currency: 'USD' });
@@ -196,6 +202,70 @@ describe('summary rows', () => {
       currency: 'EUR',
     });
   });
+  it('shows a subtotal beside tax, threshold, savings and rewards amounts', () => {
+    const r = page(
+      `<section>${row('Subtotal', '$20.00')}<p>Spend $30.00 more for free shipping</p>${row('You save', '$4.00')}<p>Earn up to $2.00 in rewards</p><p>incl. VAT 19%: $3.19</p><button>Checkout</button></section>`,
+    );
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 2000, currency: 'USD' });
+  });
+  it('withholds a subtotal when a total row shows a number the grammar cannot read', () => {
+    const r = page(
+      `<section>${row('Subtotal (excl. VAT)', '170.43')}${row('VAT', '25.57')}</section><p>Total (1 items) prices include VAT 196</p>`,
+      { url: 'https://shop.example.sa/cart' },
+    );
+    expect(r).toEqual({ shown: false, reason: 'amount-unreadable' });
+  });
+  it('keeps a total row that carries a "you saved" note as a total', () => {
+    const r = page(
+      `<section>${row('Subtotal', '86.88')}${row('Shipping', '13.04')}</section><p>Total (2 items) 96.95 You saved 2.57</p>`,
+      { url: 'https://shop.example.sa/cart' },
+    );
+    expect(r).toEqual({ shown: false, reason: 'amount-unreadable' });
+  });
+  it('does not read an item number as an amount', () => {
+    const r = page(
+      `<section>${row('Subtotal', '$34.95')}<p>ITEM #R06229-M</p><button>Checkout</button></section>`,
+    );
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 3495, currency: 'USD' });
+  });
+  it('does not take a membership block for a shipping summary', () => {
+    const aside = `<div><p>Members get cash back</p>${row('Total Value', '$17.52')}<p>Add membership for $39.99/yr</p></div>`;
+    const summary = `<dl>${row('Original price', '$50.40')}${row('Estimated shipping', 'FREE')}${row('Estimated Total', '$50.40')}</dl>`;
+    expect(page(aside + summary)).toMatchObject({ shown: true, kind: 'estimatedTotal', amountMinor: 5040 });
+  });
+  it('reads "item(s) total" and "total in cart" as subtotals', () => {
+    expect(
+      page(row('Item(s) total', '$94.99') + row('Subtotal', '$51.97') + row('Total', '$51.97')),
+    ).toMatchObject({
+      shown: true,
+      kind: 'estimatedTotal',
+      amountMinor: 5197,
+    });
+    expect(page(`<div>${row('Total in Cart:', '£29.99')}<button>Checkout</button></div>`)).toMatchObject({
+      shown: true,
+      kind: 'subtotal',
+      amountMinor: 2999,
+    });
+  });
+  it('treats a faded, inactive block as not shown', () => {
+    expect(page(`<div style="opacity:0.3">${row('Total', '£0.00')}<button>Checkout</button></div>`)).toEqual({
+      shown: false,
+      reason: 'no-summary',
+    });
+  });
+  it('does not read "summary" as a total word', () => {
+    const r = page(
+      `<section><h2>Bag summary (1 item)</h2>${row('Subtotal (1 item)', '$65')}<button>Checkout</button></section>`,
+    );
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 6500, currency: 'USD' });
+  });
+  it('withholds a subtotal when an unlabelled total sits in the wider summary', () => {
+    const r = page(
+      `<section><div>${row('Subtotal', '22.99 €')}${row('Versandkosten', '5.95 €')}</div><p>1 Artikel 28.94 € inkl. MwSt</p><button>Zur Kasse</button></section>`,
+      { url: 'https://shop.example.de/cart', lang: 'de' },
+    );
+    expect(r).toEqual({ shown: false, reason: 'subtotal-not-alone' });
+  });
 });
 
 describe('currency evidence', () => {
@@ -239,6 +309,10 @@ describe('currency evidence', () => {
       amountMinor: 1915,
     });
     expect(page(row('Total', '19.15'))).toEqual({ shown: false, reason: 'currency-undetermined' });
+  });
+  it('takes a bare amount currency from a component currency attribute', () => {
+    const r = page(`<x-localization currency="SAR"></x-localization>${row('Total', '44.85')}`);
+    expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 4485, currency: 'SAR' });
   });
 });
 

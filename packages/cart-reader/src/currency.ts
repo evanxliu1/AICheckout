@@ -147,8 +147,8 @@ export function storefrontOf(url: string, lang: string): Storefront {
 }
 
 /**
- * Rule (b): a currency code from the page's structured data (JSON-LD, currency meta tags, microdata, currency data
- * attributes). Null when there is none or they disagree.
+ * Rule (b): a currency code from the page's structured data (JSON-LD, currency meta tags, microdata, currency
+ * attributes such as `data-currency` or a component's `currency`). Null when there is none or they disagree.
  */
 export function structuredCurrency(doc: Document): string | null {
   const found = new Set<string>();
@@ -170,7 +170,7 @@ export function structuredCurrency(doc: Document): string | null {
   for (const el of doc.querySelectorAll('*')) {
     if (!el.hasAttributes()) continue;
     for (const name of el.getAttributeNames())
-      if (name.startsWith('data-') && /currenc/i.test(name)) {
+      if (/currenc/i.test(name)) {
         const v = el.getAttribute(name) ?? '';
         if (/^[A-Za-z]{3}$/.test(v)) add(v);
       }

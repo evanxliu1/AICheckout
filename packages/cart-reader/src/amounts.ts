@@ -161,6 +161,8 @@ export function findAmounts(text: string, isCode: (c: string) => boolean): Amoun
     const broken = /\d\p{L}{1,2} ?$/u.test(
       text.slice(0, m.index! + (g.neg1?.length ?? 0) + (g.pre?.length ?? 0)).replace(/[\s-−–]+$/, ''),
     );
+    // A run with a leading zero ("06229" in an item number) is a code, not a price.
+    if (/^0\d/.test(g.run!)) continue;
     const parsed = broken ? null : parseRun(g.run!);
     let code: string | null = null;
     let marker: string | null = null;
