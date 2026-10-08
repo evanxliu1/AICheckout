@@ -1,0 +1,214 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "shbabbek.com",
+  "stream": "non-us",
+  "visit": 173,
+  "session": 1,
+  "entryHost": "shbabbek.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a907671266b842c71",
+  "startUtc": "2026-10-08T01:29:41.315Z",
+  "endUtc": "2026-10-08T01:31:21.134Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "shbabbek.com",
+      "status": 200,
+      "sha256": "e5c4b84484ee4216e9373be99380320c25dd94805f99f0a805846f087636553f",
+      "bytes": 24,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://shbabbek.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://shbabbek.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt hash"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home page"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (not-a-store)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "baa26ec2ee78d180bf12119087b72a9ad47f5e6d4779d4e16beb825c04a78f5e",
+      "bytes": 179055,
+      "chunks": 1,
+      "url": "https://shbabbek.com/"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "not-a-store: site has no shop or cart"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "not-a-store"
+    },
+    {
+      "state": "cart-1",
+      "reason": "not-a-store"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "not-a-store"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not-a-store"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": "EG",
+  "outcome": {
+    "status": "excluded",
+    "code": "not-a-store",
+    "evidenceSha256": "baa26ec2ee78d180bf12119087b72a9ad47f5e6d4779d4e16beb825c04a78f5e"
+  },
+  "challenge": null,
+  "problems": [
+    "Home page is an Arabic-language student/education news portal (articles, exam schedules, PDFs); no products, prices, cart or shop links seen in page text or footer (home, about, contact only).",
+    "No sign-in indicator; no cart exists, so start and end cart counts are null.",
+    "Evidence chunk(0) was oversized and saved by the harness to a tool-results file; not opened, as instructed.",
+    "observedRegion EG inferred from Egyptian-focused content; no currency shown."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:29:41.315Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:29:41.624Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:29:41.644Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:29:53.924Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:29:59.606Z",
+      "tool": "navigate",
+      "url": "https://shbabbek.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:29:59.774Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:30:16.320Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:30:21.271Z",
+      "tool": "navigate",
+      "url": "https://shbabbek.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:30:21.275Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:30:53.059Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:30:56.696Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:31:00.711Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:31:12.602Z",
+      "tool": "Write"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:31:21.134Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "baa26ec2ee78d180bf12119087b72a9ad47f5e6d4779d4e16beb825c04a78f5e"
+      }
+    ],
+    "errors": []
+  }
+}

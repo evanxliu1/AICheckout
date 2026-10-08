@@ -1,0 +1,215 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "terrariedjur.se",
+  "stream": "non-us",
+  "visit": 160,
+  "session": 1,
+  "entryHost": "www.terrariedjur.se",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a66375e9cf70a3fc7",
+  "startUtc": "2026-10-08T01:12:19.052Z",
+  "endUtc": "2026-10-08T01:13:40.424Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.terrariedjur.se",
+      "status": 200,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.terrariedjur.se/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.terrariedjur.se/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (home page)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "701b1cb9dfe703f6110294f94bf40a360b6525afefcc33f2e1e480b5f2e4194c",
+      "bytes": 103082,
+      "chunks": 1,
+      "url": "https://www.terrariedjur.se/"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "not-a-store: community forum and classifieds site, no cart"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "not-a-store"
+    },
+    {
+      "state": "cart-1",
+      "reason": "not-a-store"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "not-a-store"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not-a-store"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": "SE",
+  "outcome": {
+    "status": "excluded",
+    "code": "not-a-store",
+    "evidenceSha256": "701b1cb9dfe703f6110294f94bf40a360b6525afefcc33f2e1e480b5f2e4194c"
+  },
+  "challenge": null,
+  "problems": [
+    "Site is a community, forum and private classifieds marketplace (self-described); no shop, product pages or cart found on the home page.",
+    "robots.txt is empty (0 bytes, status 200); nothing disallowed.",
+    "Pane reported the captured origin as https://terrariedjur.se while the tab URL showed www.terrariedjur.se; same registrable domain.",
+    "Cookie banner (OK only, no decline) left alone; no clicks made.",
+    "Evidence chunk 0 was oversized and saved by the harness to a tool-results file; not opened."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:12:19.052Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:12:20.351Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:12:20.354Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:12:22.627Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:12:25.926Z",
+      "tool": "navigate",
+      "url": "https://www.terrariedjur.se/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:12:26.119Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:12:33.553Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:12:38.148Z",
+      "tool": "navigate",
+      "url": "https://www.terrariedjur.se/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:12:38.167Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:13:11.664Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:13:15.128Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:13:18.579Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:13:33.497Z",
+      "tool": "Write"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:13:40.424Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "701b1cb9dfe703f6110294f94bf40a360b6525afefcc33f2e1e480b5f2e4194c"
+      }
+    ],
+    "errors": []
+  }
+}

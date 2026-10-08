@@ -1,0 +1,537 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "brilliantearth.com",
+  "stream": "us",
+  "visit": 203,
+  "session": 1,
+  "entryHost": "www.brilliantearth.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-ac06e777acf2e6836",
+  "startUtc": "2026-10-08T01:16:10.321Z",
+  "endUtc": "2026-10-08T01:21:18.993Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.brilliantearth.com",
+      "status": 200,
+      "sha256": "55ba1718cc5e04ebb888ef992971ee98257064b693a80c9ca87c56dedc09866f",
+      "bytes": 1714,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.brilliantearth.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.brilliantearth.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.brilliantearth.com/shop/cart/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.brilliantearth.com/gifts/under-250/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.brilliantearth.com/Petite-Diamond-Huggie-Earrings-Silver-BE3D048/"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.brilliantearth.com/shop/cart/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (start count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Gifts Under $250 (hidden menu, no nav)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Gifts Under $250 listing"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "BE3D048-SLV Petite Diamond Huggie Earrin"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "ADD TO BAG"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "generic",
+      "name": "+ (Qty)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "Remove"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "97fca3f09047a6bc6e34bce79a5927d647a2f28385e6385c00c630b5dbc54fdd",
+      "bytes": 824817,
+      "chunks": 3,
+      "url": "https://www.brilliantearth.com/shop/cart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "e53d1dd89efcaea1b557f1bfb6cfba8097d14cfd02dafd93dda9113a29a4afd3",
+      "bytes": 1302252,
+      "chunks": 4,
+      "url": "https://www.brilliantearth.com/shop/cart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "da6ccc715a8a5b55df8803bf309f45993c300e5ea7ca51da71ab722642c584a3",
+      "bytes": 1300097,
+      "chunks": 4,
+      "url": "https://www.brilliantearth.com/shop/cart/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-bag redirects straight to the cart page; no in-page mini-cart shown"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no lingering item; second item not added to keep the session short"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.brilliantearth.com/gifts/under-250/",
+    "productUrl": "https://www.brilliantearth.com/Petite-Diamond-Huggie-Earrings-Silver-BE3D048/",
+    "price": "$125",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Listing reached by URL from a header menu link (Gifts Under $250) after a click on the hidden menu link did not navigate.",
+    "All chunk results for the three exports exceeded the inline limit and were saved by the harness to tool-results files (not opened), except empty-cart chunk 2 returned inline."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:16:10.321Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:16:11.431Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:16:11.487Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:16:14.400Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:16:18.053Z",
+      "tool": "navigate",
+      "url": "https://www.brilliantearth.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:16:18.174Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:16:25.300Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:16:29.062Z",
+      "tool": "navigate",
+      "url": "https://www.brilliantearth.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:16:29.114Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:16:33.884Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:16:33.976Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:16:42.543Z",
+      "tool": "navigate",
+      "url": "https://www.brilliantearth.com/shop/cart/"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:16:42.550Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:17:11.974Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T01:17:32.976Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T01:17:36.879Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T01:17:40.492Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T01:17:47.512Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T01:17:56.496Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T01:18:01.282Z",
+      "tool": "navigate",
+      "url": "https://www.brilliantearth.com/gifts/under-250/"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T01:18:01.285Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T01:18:08.804Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T01:18:15.405Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T01:18:27.362Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T01:18:30.554Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T01:18:33.670Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T01:18:36.822Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T01:18:40.317Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T01:18:45.566Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T01:18:54.468Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T01:19:31.315Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T01:19:34.412Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T01:19:37.428Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T01:19:40.585Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T01:19:43.760Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T01:19:47.088Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T01:19:49.512Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T01:19:52.187Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T01:19:55.227Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T01:19:58.169Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T01:20:01.710Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T01:20:22.913Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T01:20:26.955Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T01:20:29.921Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T01:20:35.267Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T01:20:41.447Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T01:20:48.054Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T01:20:51.343Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T01:20:56.250Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T01:21:14.058Z",
+      "tool": "Write"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T01:21:18.993Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "97fca3f09047a6bc6e34bce79a5927d647a2f28385e6385c00c630b5dbc54fdd"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "e53d1dd89efcaea1b557f1bfb6cfba8097d14cfd02dafd93dda9113a29a4afd3"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "da6ccc715a8a5b55df8803bf309f45993c300e5ea7ca51da71ab722642c584a3"
+      }
+    ],
+    "errors": []
+  }
+}

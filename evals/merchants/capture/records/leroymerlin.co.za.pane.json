@@ -1,0 +1,720 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "leroymerlin.co.za",
+  "stream": "non-us",
+  "visit": 172,
+  "session": 1,
+  "entryHost": "leroymerlin.co.za",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a2008456256034032",
+  "startUtc": "2026-10-08T01:25:45.440Z",
+  "endUtc": "2026-10-08T01:32:43.543Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true,
+      "note": "via cart's Empty Cart control plus Yes confirm; cart held only the operator's item; no per-line remove visible at qty 2"
+    }
+  ],
+  "robots": [
+    {
+      "host": "leroymerlin.co.za",
+      "status": 403,
+      "sha256": "c27b09adaaa7c554bd1bd098f1f35dba40f05a81523d9cf4364de2d5db4a4a0f",
+      "bytes": 777,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true,
+      "note": "pane page load showed the robots.txt rules; the hash script's credential-less re-fetch got HTTP 403 (777 bytes), so the hash is of that 403 body, not the rules. Rules for *: Disallow /checkout/* (covers /checkout/cart). ClaudeBot has Disallow: / (not our token)."
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://leroymerlin.co.za/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://leroymerlin.co.za/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://leroymerlin.co.za/checkout/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://leroymerlin.co.za/tools"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://leroymerlin.co.za/straight-edge-mitco-2m-81447797"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://leroymerlin.co.za/checkout/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Tools category (menu link href)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "MITCO Straight Edge Aluminium 2m"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (listing link href)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "+"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Update"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Empty Cart"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Yes"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "4d23c4d16125a6b182cf5324138d0f998cd4ac5a407b785c3e640435c9fb4dbd",
+      "bytes": 2631731,
+      "chunks": 7,
+      "url": "https://leroymerlin.co.za/checkout/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "363f23b09cf236e522b7707ff448002f3f61d65fabc6858f705878f27e188b0d",
+      "bytes": 907733,
+      "chunks": 3,
+      "url": "https://leroymerlin.co.za/straight-edge-mitco-2m-81447797",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "29810d15a17981c09cf25698a3dd5e4f1f3f6590ded66f874b0d1daea219dc8d",
+      "bytes": 353144,
+      "chunks": 1,
+      "url": "https://leroymerlin.co.za/checkout/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "a94910f4c1beeffb73a6bd897d2c6706b237950ac2d95be66a1f5100586f5133",
+      "bytes": 2730046,
+      "chunks": 7,
+      "url": "https://leroymerlin.co.za/checkout/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "cart started empty (no lingering item); no second item added, kept the session short"
+    },
+    {
+      "state": "cart-other",
+      "reason": "no lingering items"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://leroymerlin.co.za/tools",
+    "productUrl": "https://leroymerlin.co.za/straight-edge-mitco-2m-81447797",
+    "price": "R 299.00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "ZAR",
+  "observedRegion": "ZA (fulfilled by a Boksburg store; header delivery location set by the site to a US postcode)",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots hash re-fetch returned HTTP 403 (777 bytes) although the pane loaded robots.txt normally; recorded hash is of the 403 body",
+    "product page price R 299.00; cart line price R 260.00 (store-level price after add)",
+    "cart quantity increment needed the cart's Update button after +, clicked as part of the increment",
+    "removal used Empty Cart (with Yes confirm) because no per-line remove control was visible at qty 2; cart held only the operator's item",
+    "a first click on the listing product name did not navigate; product opened by its listing link href",
+    "site set header delivery location to a US postcode (not changed)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:25:45.440Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:25:46.668Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:25:46.708Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:25:51.090Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:25:56.393Z",
+      "tool": "navigate",
+      "url": "https://leroymerlin.co.za/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:25:56.444Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:26:04.932Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:26:10.946Z",
+      "tool": "navigate",
+      "url": "https://leroymerlin.co.za/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:26:11.076Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:26:23.776Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:26:24.053Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:26:27.953Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:26:27.963Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:26:57.958Z",
+      "tool": "navigate",
+      "url": "https://leroymerlin.co.za/checkout/cart"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T01:26:58.478Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T01:27:31.937Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T01:27:36.488Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T01:27:42.273Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T01:27:46.209Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T01:27:51.303Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T01:27:56.409Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T01:28:02.369Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T01:28:10.156Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T01:28:19.723Z",
+      "tool": "navigate",
+      "url": "https://leroymerlin.co.za/tools"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T01:28:19.924Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T01:28:31.148Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T01:28:35.361Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T01:28:35.379Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T01:28:39.811Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T01:28:44.927Z",
+      "tool": "navigate",
+      "url": "https://leroymerlin.co.za/:token"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T01:28:44.932Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T01:28:56.306Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T01:29:10.832Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T01:29:14.515Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T01:29:17.833Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T01:29:18.647Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T01:29:19.186Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T01:29:44.870Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T01:29:50.732Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T01:29:57.341Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T01:30:02.717Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T01:30:08.921Z",
+      "tool": "navigate",
+      "url": "https://leroymerlin.co.za/checkout/cart"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T01:30:09.103Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T01:30:38.056Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T01:30:41.138Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T01:30:44.115Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T01:30:46.439Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T01:30:50.228Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T01:30:50.553Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T01:30:50.946Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T01:30:57.904Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T01:30:58.737Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T01:30:59.012Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T01:31:24.331Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T01:31:27.831Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T01:31:31.560Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T01:31:34.439Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T01:31:37.413Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T01:31:40.810Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T01:31:44.780Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T01:31:47.659Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T01:31:52.211Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T01:31:55.912Z",
+      "tool": "find"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T01:31:59.464Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T01:31:59.836Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T01:32:05.559Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T01:32:06.015Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T01:32:09.442Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T01:32:09.764Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T01:32:10.211Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T01:32:16.223Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T01:32:37.561Z",
+      "tool": "Write"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T01:32:43.543Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "4d23c4d16125a6b182cf5324138d0f998cd4ac5a407b785c3e640435c9fb4dbd"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "363f23b09cf236e522b7707ff448002f3f61d65fabc6858f705878f27e188b0d"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "29810d15a17981c09cf25698a3dd5e4f1f3f6590ded66f874b0d1daea219dc8d"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "a94910f4c1beeffb73a6bd897d2c6706b237950ac2d95be66a1f5100586f5133"
+      }
+    ],
+    "errors": []
+  }
+}

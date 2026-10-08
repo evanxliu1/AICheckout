@@ -1,0 +1,145 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "pccasegear.com",
+  "stream": "non-us",
+  "visit": 165,
+  "session": 1,
+  "entryHost": "www.pccasegear.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-af9dc7b8e6e2bda12",
+  "startUtc": "2026-10-08T01:16:34.140Z",
+  "endUtc": "2026-10-08T01:17:04.520Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.pccasegear.com",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.pccasegear.com/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on first load"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall on first load"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall on first load"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall on first load"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall on first load"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.pccasegear.com/robots.txt",
+    "title": "Just a moment...",
+    "marker": "Cloudflare challenge: title 'Just a moment...' and __cf_chl_rt_tk query token on redirect",
+    "wording": "Just a moment..."
+  },
+  "problems": [
+    "Cloudflare challenge served on robots.txt itself, so the robots hash was not run and no store page was loaded",
+    "Page body text was empty; the only visible wording was the title"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:16:34.140Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:16:35.549Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:16:35.555Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:16:37.991Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:16:41.806Z",
+      "tool": "navigate",
+      "url": "https://www.pccasegear.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:16:41.973Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:16:46.696Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:16:58.082Z",
+      "tool": "Write"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:17:04.520Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

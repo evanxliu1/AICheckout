@@ -8,109 +8,840 @@
   "session": 1,
   "entryHost": "www.shoezone.com",
   "operator": "claude-code/claude-opus-5-5",
-  "transcriptId": "wf_ddc7aa30-949/agent-a1ed0595469a62218",
-  "startUtc": "2026-10-07T22:51:18.299Z",
-  "endUtc": "2026-10-07T22:51:50.414Z",
+  "transcriptId": "wf_4ab106a4-03b/agent-a9cdff114942d708c",
+  "startUtc": "2026-10-08T00:28:27.659Z",
+  "endUtc": "2026-10-08T00:34:03.857Z",
   "signedIn": false,
-  "startCartCount": null,
-  "endCartCount": null,
-  "removals": [],
-  "robots": [],
-  "navigations": [],
-  "actions": [],
-  "states": [],
-  "evidence": [],
-  "notReached": [
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2, one line)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.shoezone.com",
+      "status": 200,
+      "sha256": "63fa5f15ebfddb9a8a9e0bc17d12207e62afbf2e6e1e07317a08fcd9973ec7cf",
+      "bytes": 122,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.shoezone.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.shoezone.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.shoezone.com/Cookie-Notice"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.shoezone.com/Mens/Boots"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.shoezone.com/Products/Beckett-Mens-Black-Lace-Up-Zip-Up-Ankle-Boot-58628"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.shoezone.com/Bags-Accessories/Handbags"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.shoezone.com/Products/Lilley-Womens-Black-Crossbody-Bag-90412"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.shoezone.com/"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "url": "https://www.shoezone.com/ShoppingBag"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "url": "https://www.shoezone.com/Products/Lilley-Womens-Black-Crossbody-Bag-90412"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "url": "https://www.shoezone.com/ShoppingBag"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Manage Cookies"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Mens/Boots listing"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Mens Black Lace Up Zip Up Ankle Boot"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Handbags listing"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Women's Black Crossbody Bag"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to Bag"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/Basket (redirected to home)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "click",
+      "role": "",
+      "name": "header Bag icon (coordinate)"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page again"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to Bag"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "ShoppingBag"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "Remove this item from the shopping bag"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
     {
       "state": "minicart-1",
-      "reason": "tab-cap: tabs_create failed 6 times, no page loaded"
+      "sha256": "f7124f13f7433dcae84b0d498b62d5a941a51194763822e55fb06926dd8040ff",
+      "bytes": 1958685,
+      "chunks": 5,
+      "url": "https://www.shoezone.com/Products/Lilley-Womens-Black-Crossbody-Bag-90412",
+      "startCartCount": 0
     },
     {
       "state": "cart-1",
-      "reason": "tab-cap: tabs_create failed 6 times, no page loaded"
+      "sha256": "c439f27c2bfd52ea538ee852e0e80a2ecf0886f72be0f72a87bb74220d15b6e4",
+      "bytes": 962082,
+      "chunks": 3,
+      "url": "https://www.shoezone.com/ShoppingBag",
+      "startCartCount": 0
     },
     {
       "state": "cart-qty2",
-      "reason": "tab-cap: tabs_create failed 6 times, no page loaded"
+      "sha256": "ac659aecfad563b2a56d401d9f0eb09a7f3bdecca09c70f0f0c21459b0e2911c",
+      "bytes": 962109,
+      "chunks": 3,
+      "url": "https://www.shoezone.com/ShoppingBag",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "77bd2c560dbdd1b2d7dd2ed3e6698f6acce5b27aae0927f733ac0425aecf78d9",
+      "bytes": 870056,
+      "chunks": 3,
+      "url": "https://www.shoezone.com/ShoppingBag",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "no lingering items and no second item added; not needed"
     }
   ],
   "itemPath": {
-    "listingUrl": null,
-    "productUrl": null,
-    "price": null,
+    "listingUrl": "https://www.shoezone.com/Bags-Accessories/Handbags",
+    "productUrl": "https://www.shoezone.com/Products/Lilley-Womens-Black-Crossbody-Bag-90412",
+    "price": "GBP 14.99",
     "secondProductUrl": null
   },
-  "observedCurrency": null,
-  "observedRegion": null,
+  "observedCurrency": "GBP",
+  "observedRegion": "GB",
   "outcome": {
-    "status": "not-started",
-    "code": "tab-cap",
+    "status": "captured",
+    "code": null,
     "evidenceSha256": null
   },
   "challenge": null,
   "problems": [
-    "tabs_create failed 6 times back to back (pane gone, gate off, or tab cap reached); nothing loaded, session not started"
+    "Footwear PDPs need a size from a native <select>; skipped the boot (first item looked at, no add attempted) and took a one-size handbag whose add worked without choosing from the select.",
+    "Cookie banner has only Allow/Manage; Manage Cookies navigated to /Cookie-Notice with no reject control found; banner left alone (not accepted).",
+    "Cart qty is a <select>, no increment control; cart-qty2 reached by a second Add to Bag of the same item from the PDP.",
+    "minicart-1 is the PDP with the '1 item added' overlay open (no slide-out minicart).",
+    "/Basket redirected to home; cart is /ShoppingBag (opened via header bag icon by coordinate click).",
+    "Start cart count inferred as 0: first cart view showed only own item at qty 1.",
+    "empty-cart exported after removal of own item (cart actually empty)."
   ],
   "timeline": [
     {
       "n": 0,
-      "utc": "2026-10-07T22:51:18.299Z",
+      "utc": "2026-10-08T00:28:27.659Z",
       "tool": "Read"
     },
     {
       "n": 1,
-      "utc": "2026-10-07T22:51:19.094Z",
+      "utc": "2026-10-08T00:28:28.728Z",
       "tool": "Read"
     },
     {
       "n": 2,
-      "utc": "2026-10-07T22:51:19.162Z",
+      "utc": "2026-10-08T00:28:28.736Z",
       "tool": "Read"
     },
     {
       "n": 3,
-      "utc": "2026-10-07T22:51:21.643Z",
+      "utc": "2026-10-08T00:28:31.213Z",
       "tool": "tabs_create"
     },
     {
       "n": 4,
-      "utc": "2026-10-07T22:51:24.261Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:28:34.801Z",
+      "tool": "navigate",
+      "url": "https://www.shoezone.com/robots.txt"
     },
     {
       "n": 5,
-      "utc": "2026-10-07T22:51:26.754Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:28:34.838Z",
+      "tool": "get_page_text"
     },
     {
       "n": 6,
-      "utc": "2026-10-07T22:51:29.423Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:28:43.577Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
     },
     {
       "n": 7,
-      "utc": "2026-10-07T22:51:32.202Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:28:47.956Z",
+      "tool": "navigate",
+      "url": "https://www.shoezone.com/"
     },
     {
       "n": 8,
-      "utc": "2026-10-07T22:51:35.717Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:28:47.985Z",
+      "tool": "read_page"
     },
     {
       "n": 9,
-      "utc": "2026-10-07T22:51:44.585Z",
-      "tool": "Write"
+      "utc": "2026-10-08T00:28:53.010Z",
+      "tool": "find"
     },
     {
       "n": 10,
-      "utc": "2026-10-07T22:51:50.414Z",
+      "utc": "2026-10-08T00:28:53.031Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:28:56.553Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:29:00.181Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:29:02.493Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:29:04.836Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:29:05.348Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:29:07.695Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:29:11.459Z",
+      "tool": "navigate",
+      "url": "https://www.shoezone.com/Mens/Boots"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:29:11.885Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:29:15.684Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:29:18.078Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:29:18.468Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:29:22.581Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:29:22.583Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:29:24.828Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:29:25.212Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T00:29:28.054Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T00:29:28.528Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T00:29:31.130Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T00:29:34.666Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T00:29:41.460Z",
+      "tool": "navigate",
+      "url": "https://www.shoezone.com/Bags-Accessories/Handbags"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T00:29:41.814Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T00:29:44.980Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T00:29:47.872Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T00:29:47.963Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T00:29:52.567Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T00:29:54.824Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T00:29:56.996Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T00:30:02.427Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T00:30:05.187Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T00:30:05.820Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T00:30:08.386Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T00:30:08.816Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T00:30:32.642Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T00:30:35.700Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T00:30:38.950Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T00:30:41.329Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T00:30:43.893Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T00:30:48.261Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T00:30:51.546Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T00:30:54.141Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T00:30:57.512Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T00:31:00.100Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T00:31:00.384Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T00:31:03.991Z",
+      "tool": "navigate",
+      "url": "https://www.shoezone.com/Basket"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T00:31:04.349Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T00:31:08.484Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T00:31:10.366Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T00:31:12.824Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T00:31:13.323Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T00:31:25.996Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T00:31:48.083Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T00:31:50.709Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T00:31:53.630Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T00:31:56.276Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T00:31:59.343Z",
+      "tool": "find"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T00:31:59.743Z",
+      "tool": "find"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T00:32:01.814Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T00:32:06.286Z",
+      "tool": "navigate",
+      "url": "https://www.shoezone.com/Products/:token"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T00:32:06.678Z",
+      "tool": "find"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T00:32:11.391Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T00:32:11.817Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T00:32:12.444Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T00:32:17.158Z",
+      "tool": "navigate",
+      "url": "https://www.shoezone.com/ShoppingBag"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T00:32:17.685Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T00:32:22.009Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T00:32:42.879Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-08T00:32:47.061Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-08T00:32:49.754Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-08T00:32:52.904Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-08T00:32:55.467Z",
+      "tool": "find"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-08T00:32:58.145Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-08T00:32:58.637Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-08T00:32:59.161Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-08T00:33:03.358Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 85,
+      "utc": "2026-10-08T00:33:23.779Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 86,
+      "utc": "2026-10-08T00:33:26.086Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 87,
+      "utc": "2026-10-08T00:33:28.457Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 88,
+      "utc": "2026-10-08T00:33:31.248Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 89,
+      "utc": "2026-10-08T00:33:33.715Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 90,
+      "utc": "2026-10-08T00:33:57.928Z",
+      "tool": "Write"
+    },
+    {
+      "n": 91,
+      "utc": "2026-10-08T00:34:03.857Z",
       "tool": "StructuredOutput"
     }
   ],
   "collected": {
     "by": "collect-pane-exports.mjs",
-    "exports": [],
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "f7124f13f7433dcae84b0d498b62d5a941a51194763822e55fb06926dd8040ff"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "c439f27c2bfd52ea538ee852e0e80a2ecf0886f72be0f72a87bb74220d15b6e4"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "ac659aecfad563b2a56d401d9f0eb09a7f3bdecca09c70f0f0c21459b0e2911c"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "77bd2c560dbdd1b2d7dd2ed3e6698f6acce5b27aae0927f733ac0425aecf78d9"
+      }
+    ],
     "errors": []
   }
 }

@@ -8,119 +8,783 @@
   "session": 2,
   "entryHost": "www.diy.com",
   "operator": "claude-code/claude-opus-5-5",
-  "transcriptId": "wf_ddc7aa30-949/agent-a47ef4c05354b8b96",
-  "startUtc": "2026-10-07T22:44:45.058Z",
-  "endUtc": "2026-10-07T22:45:52.454Z",
+  "transcriptId": "wf_4ab106a4-03b/agent-a0149c9c79ba06ee2",
+  "startUtc": "2026-10-07T23:47:07.692Z",
+  "endUtc": "2026-10-07T23:56:06.296Z",
   "signedIn": false,
-  "startCartCount": null,
-  "endCartCount": null,
+  "startCartCount": 0,
+  "endCartCount": 0,
   "removals": [],
-  "robots": [],
-  "navigations": [],
-  "actions": [],
-  "states": [],
-  "evidence": [],
-  "notReached": [
+  "robots": [
+    {
+      "host": "www.diy.com",
+      "status": 200,
+      "sha256": "625907a9db10e5dcaf2eb6eddb1f7ff20aca6b38852af04d8f558eb4ba0d9276",
+      "bytes": 1081,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.diy.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.diy.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.diy.com/basket"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.diy.com/offers/tools-equipment-offers/power-tool-offers.cat"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.diy.com/departments/wagner-steamforce-2000w-4l-wallpaper-stripper-12v/4004025098765_BQ.prd"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.diy.com/basket"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.diy.com/departments/wagner-steamforce-2000w-4l-wallpaper-stripper-12v/4004025098765_BQ.prd"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.diy.com/basket"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "url": "https://www.diy.com/offers/tools-equipment-offers/power-tool-offers.cat"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "url": "https://www.diy.com/basket"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "url": "https://www.diy.com/offers/tools-equipment-offers/power-tool-offers.cat"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "url": "https://www.diy.com/departments/bosch-240v-550w-corded-sds-drill-pbh2100re/174057_BQ.prd"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "url": "https://www.diy.com/basket"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "basket (start count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "power tool offers listing"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Wagner Steamforce 2000W 4L Wallpaper st"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add 1 item to basket"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "basket (shows empty)"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "back to product"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add 1 item to basket"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Go to basket"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "power tool offers listing"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to basket Black+Decker 55W 240V Cor"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "basket (shows empty)"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "power tool offers listing"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Bosch 240V 550W Corded SDS+ drill PBH21"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add 1 item to basket"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Go to basket"
+    },
+    {
+      "n": 21,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (basket empty after adds)"
+    }
+  ],
+  "states": [
     {
       "state": "empty-cart",
-      "reason": "tab-cap: tabs_create failed 6 times, nothing loaded"
+      "sha256": "097f2040a873e91795c8b4549d88859c00d4499979029968f021ee9b7c0eba62",
+      "bytes": 589112,
+      "chunks": 2,
+      "url": "https://www.diy.com/basket",
+      "startCartCount": 0
     },
     {
       "state": "minicart-1",
-      "reason": "tab-cap: tabs_create failed 6 times, nothing loaded"
-    },
+      "sha256": "12f9d6522206324f558d2f4ac3556e82495eff90b43ebeb93194693005c760ec",
+      "bytes": 371786,
+      "chunks": 1,
+      "url": "https://www.diy.com/departments/wagner-steamforce-2000w-4l-wallpaper-stripper-12v/4004025098765_BQ.prd",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "9451f64d41cf6df82287ce9fc90c2e9833d9d6109c77468e4dec4a2fc6f866e9",
+      "bytes": 588675,
+      "chunks": 2,
+      "url": "https://www.diy.com/basket"
+    }
+  ],
+  "notReached": [
     {
       "state": "cart-1",
-      "reason": "tab-cap: tabs_create failed 6 times, nothing loaded"
+      "reason": "basket page showed empty after 3 confirmed in-page adds of 3 items"
     },
     {
       "state": "cart-qty2",
-      "reason": "tab-cap: tabs_create failed 6 times, nothing loaded"
+      "reason": "no item ever reached the basket"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no item ever reached the basket"
     }
   ],
   "itemPath": {
-    "listingUrl": null,
-    "productUrl": null,
-    "price": null,
+    "listingUrl": "https://www.diy.com/offers/tools-equipment-offers/power-tool-offers.cat",
+    "productUrl": "https://www.diy.com/departments/wagner-steamforce-2000w-4l-wallpaper-stripper-12v/4004025098765_BQ.prd",
+    "price": "GBP 33",
     "secondProductUrl": null
   },
-  "observedCurrency": null,
-  "observedRegion": null,
+  "observedCurrency": "GBP",
+  "observedRegion": "GB",
   "outcome": {
-    "status": "not-started",
-    "code": "tab-cap",
-    "evidenceSha256": null
+    "status": "excluded",
+    "code": "add-to-cart-refused",
+    "evidenceSha256": "9451f64d41cf6df82287ce9fc90c2e9833d9d6109c77468e4dec4a2fc6f866e9"
   },
   "challenge": null,
   "problems": [
-    "tabs_create failed on all 6 attempts (1 + 5 retries): 'Could not open a new tab (Browser pane gone, gate off, or tab cap reached).' No page loaded, no other tab touched.",
-    "Session 2 of at most 2 was not started; reviewer should decide whether a not-started session counts against the M9 one-more-session allowance."
+    "Each add showed an in-page '1 item added to basket' dialog, but /basket stayed empty (Wagner GBP 33 twice, Black+Decker sander GBP 15 from listing, Bosch SDS drill GBP 65). Cause unknown; possibly a cookie/session issue in the pane.",
+    "minicart-1 was exported from the add confirmation dialog, but the basket never held the item; reviewer should decide whether this state is usable.",
+    "Wagner product page has a 'Condition' select (New default / Refurbished); left at default New, not changed.",
+    "The first empty-cart export call timed out at 45 s (pane hidden); the identical script was re-run and succeeded. The timed-out call returned no summary.",
+    "One stray chunk(0) call was made on the home page before any export existed; it errored (no export object) and produced nothing.",
+    "robots.txt disallows /basket and /checkout/ for *; root allowed. /basket was visited (robots never excludes under .11).",
+    "No items removed: nothing reached the basket. Start and end cart count both 0.",
+    "Replaces an earlier not-started session-2 record (tab-cap) for this store."
   ],
   "timeline": [
     {
       "n": 0,
-      "utc": "2026-10-07T22:44:45.058Z",
+      "utc": "2026-10-07T23:47:07.692Z",
       "tool": "Read"
     },
     {
       "n": 1,
-      "utc": "2026-10-07T22:44:45.449Z",
+      "utc": "2026-10-07T23:47:08.909Z",
       "tool": "Read"
     },
     {
       "n": 2,
-      "utc": "2026-10-07T22:44:45.460Z",
+      "utc": "2026-10-07T23:47:08.920Z",
       "tool": "Read"
     },
     {
       "n": 3,
-      "utc": "2026-10-07T22:44:48.025Z",
+      "utc": "2026-10-07T23:47:12.055Z",
       "tool": "tabs_create"
     },
     {
       "n": 4,
-      "utc": "2026-10-07T22:44:50.851Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:47:15.730Z",
+      "tool": "navigate",
+      "url": "https://www.diy.com/robots.txt"
     },
     {
       "n": 5,
-      "utc": "2026-10-07T22:45:03.924Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:47:15.780Z",
+      "tool": "get_page_text"
     },
     {
       "n": 6,
-      "utc": "2026-10-07T22:45:20.087Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:47:22.664Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
     },
     {
       "n": 7,
-      "utc": "2026-10-07T22:45:22.588Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:47:26.769Z",
+      "tool": "navigate",
+      "url": "https://www.diy.com/"
     },
     {
       "n": 8,
-      "utc": "2026-10-07T22:45:29.729Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:47:26.822Z",
+      "tool": "find"
     },
     {
       "n": 9,
-      "utc": "2026-10-07T22:45:33.957Z",
-      "tool": "Bash"
+      "utc": "2026-10-07T23:47:32.406Z",
+      "tool": "read_page"
     },
     {
       "n": 10,
-      "utc": "2026-10-07T22:45:46.156Z",
-      "tool": "Write"
+      "utc": "2026-10-07T23:47:35.652Z",
+      "tool": "get_page_text"
     },
     {
       "n": 11,
-      "utc": "2026-10-07T22:45:52.454Z",
+      "utc": "2026-10-07T23:47:39.666Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:47:53.141Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:47:53.181Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:47:57.679Z",
+      "tool": "navigate",
+      "url": "https://www.diy.com/basket"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T23:47:57.687Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T23:48:29.318Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T23:49:43.472Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T23:50:20.971Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T23:50:25.735Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T23:50:32.857Z",
+      "tool": "navigate",
+      "url": "https://www.diy.com/offers/tools-equipment-offers/power-tool-offers.cat"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T23:50:32.862Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T23:50:40.222Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T23:50:43.865Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T23:50:47.078Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T23:50:50.656Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T23:50:54.358Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T23:50:54.380Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T23:50:58.056Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T23:51:01.776Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T23:51:01.812Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T23:51:33.032Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T23:51:36.960Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T23:51:41.493Z",
+      "tool": "navigate",
+      "url": "https://www.diy.com/basket"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T23:51:41.505Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T23:51:48.132Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T23:51:48.137Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T23:51:59.426Z",
+      "tool": "navigate",
+      "url": "back"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T23:51:59.781Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T23:51:59.782Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T23:52:09.967Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T23:52:24.112Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T23:52:24.118Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T23:52:24.119Z",
+      "tool": "find"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T23:52:32.676Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T23:52:33.600Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T23:52:33.759Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T23:52:46.817Z",
+      "tool": "navigate",
+      "url": "https://www.diy.com/offers/tools-equipment-offers/power-tool-offers.cat"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T23:52:46.820Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T23:52:53.612Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T23:52:58.274Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T23:52:58.554Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T23:52:58.555Z",
+      "tool": "find"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T23:53:05.879Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T23:53:10.413Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T23:53:10.417Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T23:53:10.418Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T23:53:29.809Z",
+      "tool": "navigate",
+      "url": "https://www.diy.com/basket"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T23:53:30.595Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T23:53:30.877Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T23:53:44.408Z",
+      "tool": "navigate",
+      "url": "https://www.diy.com/offers/tools-equipment-offers/power-tool-offers.cat"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T23:53:44.946Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T23:53:44.949Z",
+      "tool": "find"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T23:53:55.705Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T23:53:55.956Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T23:53:55.957Z",
+      "tool": "find"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T23:54:15.418Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T23:54:15.774Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T23:54:15.777Z",
+      "tool": "find"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-07T23:54:23.399Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-07T23:54:23.454Z",
+      "tool": "find"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-07T23:54:29.488Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-07T23:54:29.750Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-07T23:54:29.756Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-07T23:55:05.143Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-07T23:55:09.198Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-07T23:55:14.083Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-07T23:55:18.993Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-07T23:55:19.158Z",
+      "tool": "Read"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-07T23:55:57.709Z",
+      "tool": "Write"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-07T23:56:06.296Z",
       "tool": "StructuredOutput"
     }
   ],
   "collected": {
     "by": "collect-pane-exports.mjs",
-    "exports": [],
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "097f2040a873e91795c8b4549d88859c00d4499979029968f021ee9b7c0eba62"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "12f9d6522206324f558d2f4ac3556e82495eff90b43ebeb93194693005c760ec"
+      },
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "9451f64d41cf6df82287ce9fc90c2e9833d9d6109c77468e4dec4a2fc6f866e9"
+      }
+    ],
     "errors": []
   }
 }

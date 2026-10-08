@@ -8,34 +8,77 @@
   "session": 1,
   "entryHost": "www.nfm.com",
   "operator": "claude-code/claude-opus-5-5",
-  "transcriptId": "wf_448612a2-435/agent-acbeafb99b8db56b1",
-  "startUtc": "2026-10-07T22:42:58.713Z",
-  "endUtc": "2026-10-07T22:43:43.994Z",
+  "transcriptId": "wf_361171eb-ede/agent-a49afae445e24c03a",
+  "startUtc": "2026-10-07T23:45:56.409Z",
+  "endUtc": "2026-10-07T23:46:48.978Z",
   "signedIn": false,
   "startCartCount": null,
   "endCartCount": null,
   "removals": [],
-  "robots": [],
-  "navigations": [],
-  "actions": [],
+  "robots": [
+    {
+      "host": "www.nfm.com",
+      "status": 200,
+      "sha256": "fdba13ea08c1a611c020c45bea038930132d0a798b276b8a429ea8d10778c9a4",
+      "bytes": 3795,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.nfm.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.nfm.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry home page"
+    }
+  ],
   "states": [],
   "evidence": [],
   "notReached": [
     {
       "state": "empty-cart",
-      "reason": "tab-cap: no tab could be opened"
+      "reason": "blocked-bot-wall: Akamai challenge page on entry"
     },
     {
       "state": "minicart-1",
-      "reason": "tab-cap: no tab could be opened"
+      "reason": "blocked-bot-wall: Akamai challenge page on entry"
     },
     {
       "state": "cart-1",
-      "reason": "tab-cap: no tab could be opened"
+      "reason": "blocked-bot-wall: Akamai challenge page on entry"
     },
     {
       "state": "cart-qty2",
-      "reason": "tab-cap: no tab could be opened"
+      "reason": "blocked-bot-wall: Akamai challenge page on entry"
     }
   ],
   "itemPath": {
@@ -47,73 +90,106 @@
   "observedCurrency": null,
   "observedRegion": null,
   "outcome": {
-    "status": "not-started",
-    "code": "tab-cap",
+    "status": "excluded",
+    "code": "blocked-bot-wall",
     "evidenceSha256": null
   },
-  "challenge": null,
+  "challenge": {
+    "url": "https://www.nfm.com/",
+    "title": "",
+    "marker": "Akamai interstitial: lone button plus Akamai logo and akamai.com privacy link, no store content",
+    "wording": "Powered and protected by [Akamai] Privacy"
+  },
   "problems": [
-    "tabs_create failed 6 times back to back (Browser pane gone, gate off, or tab cap reached); no page loaded, no robots.txt read; session should not count against the store's session limit"
+    "Entry page showed only an Akamai challenge interstitial (a button, 'Powered and protected by' Akamai, Privacy link); not interacted with, not exported",
+    "Screenshot of the challenge rendered blank (pane hidden); wording taken from read_page/get_page_text",
+    "Replaces an earlier not-started (tab-cap) record for this store; this is the first session that loaded a page",
+    "robots.txt disallows /cart* and /checkout*; root allowed"
   ],
   "timeline": [
     {
       "n": 0,
-      "utc": "2026-10-07T22:42:58.713Z",
+      "utc": "2026-10-07T23:45:56.409Z",
       "tool": "Read"
     },
     {
       "n": 1,
-      "utc": "2026-10-07T22:42:59.855Z",
+      "utc": "2026-10-07T23:45:56.542Z",
       "tool": "Read"
     },
     {
       "n": 2,
-      "utc": "2026-10-07T22:42:59.947Z",
+      "utc": "2026-10-07T23:45:56.549Z",
       "tool": "Read"
     },
     {
       "n": 3,
-      "utc": "2026-10-07T22:43:02.631Z",
+      "utc": "2026-10-07T23:45:59.252Z",
       "tool": "tabs_create"
     },
     {
       "n": 4,
-      "utc": "2026-10-07T22:43:05.195Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:46:03.033Z",
+      "tool": "navigate",
+      "url": "https://www.nfm.com/robots.txt"
     },
     {
       "n": 5,
-      "utc": "2026-10-07T22:43:08.681Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:46:03.040Z",
+      "tool": "get_page_text"
     },
     {
       "n": 6,
-      "utc": "2026-10-07T22:43:11.169Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:46:09.593Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
     },
     {
       "n": 7,
-      "utc": "2026-10-07T22:43:13.581Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:46:13.607Z",
+      "tool": "navigate",
+      "url": "https://www.nfm.com/"
     },
     {
       "n": 8,
-      "utc": "2026-10-07T22:43:16.054Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:46:13.621Z",
+      "tool": "get_page_text"
     },
     {
       "n": 9,
-      "utc": "2026-10-07T22:43:19.558Z",
-      "tool": "Bash"
+      "utc": "2026-10-07T23:46:18.233Z",
+      "tool": "read_page"
     },
     {
       "n": 10,
-      "utc": "2026-10-07T22:43:28.641Z",
-      "tool": "Write"
+      "utc": "2026-10-07T23:46:22.386Z",
+      "tool": "computer",
+      "action": "screenshot"
     },
     {
       "n": 11,
-      "utc": "2026-10-07T22:43:43.994Z",
+      "utc": "2026-10-07T23:46:25.351Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:46:26.051Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:46:32.454Z",
+      "tool": "Read"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:46:43.982Z",
+      "tool": "Write"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T23:46:48.978Z",
       "tool": "StructuredOutput"
     }
   ],

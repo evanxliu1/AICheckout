@@ -8,113 +8,834 @@
   "session": 1,
   "entryHost": "www.ginnys.com",
   "operator": "claude-code/claude-opus-5-5",
-  "transcriptId": "wf_448612a2-435/agent-a427e25e68820d0b6",
-  "startUtc": "2026-10-07T22:51:30.939Z",
-  "endUtc": "2026-10-07T22:52:06.297Z",
+  "transcriptId": "wf_361171eb-ede/agent-a0857d19d9c3d4f80",
+  "startUtc": "2026-10-08T00:40:41.767Z",
+  "endUtc": "2026-10-08T00:49:30.066Z",
   "signedIn": false,
-  "startCartCount": null,
-  "endCartCount": null,
-  "removals": [],
-  "robots": [],
-  "navigations": [],
-  "actions": [],
-  "states": [],
-  "evidence": [],
-  "notReached": [
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (garlic roaster, qty 2)",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "item": "own item 2 (pizza pan)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.ginnys.com",
+      "status": 200,
+      "sha256": "c20c06df0cc343fb7adffe8673556b672b3a3a4669badbb57dcbeaa8d70eefb5",
+      "bytes": 4363,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.ginnys.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.ginnys.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.ginnys.com/co/shopping-cart/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.ginnys.com/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.ginnys.com/c/kitchen/cookware/"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.ginnys.com/p/cast-iron-garlic-roaster-333533.html"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.ginnys.com/co/shopping-cart/"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.ginnys.com/c/kitchen/cookware/"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "url": "https://www.ginnys.com/p/pre-seasoned-cast-iron-pizza-pan-765311.html"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "url": "https://www.ginnys.com/co/shopping-cart/"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "url": "https://www.ginnys.com/co/shopping-cart/"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "url": "https://www.ginnys.com/co/shopping-cart/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (start count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Cookware"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Cast Iron Garlic Roaster"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (garlic roaster)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Quantity Increase 1"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cookware listing"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (pizza pan)"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-other"
+    },
+    {
+      "n": 21,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "Remove (garlic roaster)"
+    },
+    {
+      "n": 22,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart reload"
+    },
+    {
+      "n": 23,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "Remove (pizza pan)"
+    },
+    {
+      "n": 24,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (final count)"
+    }
+  ],
+  "states": [
     {
       "state": "empty-cart",
-      "reason": "tab-cap: no tab could be opened"
+      "sha256": "ce0c2e507c892d1e29ca7edb30af24a81278ac52d8534ea53cd57fcca211f04d",
+      "bytes": 985980,
+      "chunks": 3,
+      "url": "https://www.ginnys.com/co/shopping-cart/",
+      "startCartCount": 0
     },
     {
       "state": "minicart-1",
-      "reason": "tab-cap: no tab could be opened"
+      "sha256": "2a32303c523f4dad391e40d1a07e1dc51c242d421eb01a333e3f46cfdc8b98c0",
+      "bytes": 1078010,
+      "chunks": 3,
+      "url": "https://www.ginnys.com/p/cast-iron-garlic-roaster-333533.html",
+      "startCartCount": 0
     },
     {
       "state": "cart-1",
-      "reason": "tab-cap: no tab could be opened"
+      "sha256": "337c34e26cad5976672d3fc0d0421ec12017ad6e9e361fb028c272367945c2a6",
+      "bytes": 1006460,
+      "chunks": 3,
+      "url": "https://www.ginnys.com/co/shopping-cart/",
+      "startCartCount": 0
     },
     {
       "state": "cart-qty2",
-      "reason": "tab-cap: no tab could be opened"
+      "sha256": "af8ff3ba2fbc2cec6c0e23687062021ebfde7ac435807b0e611ac29503f70253",
+      "bytes": 1005299,
+      "chunks": 3,
+      "url": "https://www.ginnys.com/co/shopping-cart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-other",
+      "sha256": "4479c7300b1a920e880cda53dc0b8ac89f883e3c46c5942c9b454f229902362d",
+      "bytes": 1012518,
+      "chunks": 3,
+      "url": "https://www.ginnys.com/co/shopping-cart/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "second item added while first item was at qty 2 (decrement not an allowed control); the two-line cart (qty 2 + qty 1) was exported as cart-other"
     }
   ],
   "itemPath": {
-    "listingUrl": null,
-    "productUrl": null,
-    "price": null,
-    "secondProductUrl": null
+    "listingUrl": "https://www.ginnys.com/c/kitchen/cookware/",
+    "productUrl": "https://www.ginnys.com/p/cast-iron-garlic-roaster-333533.html",
+    "price": "$19.99",
+    "secondProductUrl": "https://www.ginnys.com/p/pre-seasoned-cast-iron-pizza-pan-765311.html"
   },
-  "observedCurrency": null,
-  "observedRegion": null,
+  "observedCurrency": "USD",
+  "observedRegion": "US",
   "outcome": {
-    "status": "not-started",
-    "code": "tab-cap",
+    "status": "captured",
+    "code": null,
     "evidenceSha256": null
   },
   "challenge": null,
   "problems": [
-    "tabs_create failed 6 times back to back (1 + 5 retries): 'Could not open a new tab (Browser pane gone, gate off, or tab cap reached).' No page loaded; session not started, so it should not count as this store's pane session."
+    "cart-other holds only the operator's own items (roaster qty 2 + pizza pan qty 1), not lingering items; named cart-other because it is neither cart-2items nor cart-qty2",
+    "robots.txt disallows /Cart-Show, /Cart-AddProduct and /co/* for *; cart page /co/shopping-cart/ falls under /co/* (recorded only, per .8)",
+    "click on product link in listing (action 8) did not navigate; product page then opened by URL without query",
+    "minicart-1 exported from the product page with the 'Added To Cart' panel open",
+    "after the quantity-increment and remove clicks the cart re-rendered in place; cart reloaded by URL to reach remove controls"
   ],
   "timeline": [
     {
       "n": 0,
-      "utc": "2026-10-07T22:51:30.939Z",
+      "utc": "2026-10-08T00:40:41.767Z",
       "tool": "Read"
     },
     {
       "n": 1,
-      "utc": "2026-10-07T22:51:32.091Z",
+      "utc": "2026-10-08T00:40:43.073Z",
       "tool": "Read"
     },
     {
       "n": 2,
-      "utc": "2026-10-07T22:51:32.099Z",
+      "utc": "2026-10-08T00:40:43.077Z",
       "tool": "Read"
     },
     {
       "n": 3,
-      "utc": "2026-10-07T22:51:35.720Z",
+      "utc": "2026-10-08T00:40:45.598Z",
       "tool": "tabs_create"
     },
     {
       "n": 4,
-      "utc": "2026-10-07T22:51:38.311Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:40:49.137Z",
+      "tool": "navigate",
+      "url": "https://www.ginnys.com/robots.txt"
     },
     {
       "n": 5,
-      "utc": "2026-10-07T22:51:41.143Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:40:49.278Z",
+      "tool": "get_page_text"
     },
     {
       "n": 6,
-      "utc": "2026-10-07T22:51:44.766Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:40:56.770Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
     },
     {
       "n": 7,
-      "utc": "2026-10-07T22:51:47.195Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:41:00.516Z",
+      "tool": "navigate",
+      "url": "https://www.ginnys.com/"
     },
     {
       "n": 8,
-      "utc": "2026-10-07T22:51:50.301Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:41:00.612Z",
+      "tool": "find"
     },
     {
       "n": 9,
-      "utc": "2026-10-07T22:51:59.249Z",
-      "tool": "Write"
+      "utc": "2026-10-08T00:41:05.995Z",
+      "tool": "read_page"
     },
     {
       "n": 10,
-      "utc": "2026-10-07T22:52:06.297Z",
+      "utc": "2026-10-08T00:41:05.998Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:41:10.023Z",
+      "tool": "navigate",
+      "url": "https://www.ginnys.com/co/shopping-cart/"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:41:10.040Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:41:40.463Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:41:44.041Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:41:48.103Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:41:51.812Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:41:57.831Z",
+      "tool": "navigate",
+      "url": "https://www.ginnys.com/"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:41:57.842Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:42:02.663Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:42:02.665Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:42:06.708Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:42:12.065Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:42:12.070Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:42:15.974Z",
+      "tool": "navigate",
+      "url": "https://www.ginnys.com/p/:token"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:42:15.978Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T00:42:20.071Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T00:42:33.894Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T00:42:36.193Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T00:42:36.196Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T00:42:43.329Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T00:42:43.332Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T00:43:12.110Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T00:43:16.037Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T00:43:19.587Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T00:43:23.656Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T00:43:27.647Z",
+      "tool": "navigate",
+      "url": "https://www.ginnys.com/co/shopping-cart/"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T00:43:27.665Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T00:43:56.927Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T00:44:26.698Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T00:44:31.148Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T00:44:35.198Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T00:44:38.917Z",
+      "tool": "find"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T00:44:43.584Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T00:44:43.814Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T00:44:43.815Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T00:44:53.026Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T00:44:53.027Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T00:45:24.110Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T00:45:46.653Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T00:45:50.742Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T00:45:55.022Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T00:46:39.180Z",
+      "tool": "navigate",
+      "url": "https://www.ginnys.com/c/kitchen/cookware/"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T00:46:39.184Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T00:46:44.039Z",
+      "tool": "find"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T00:46:48.335Z",
+      "tool": "navigate",
+      "url": "https://www.ginnys.com/p/:token"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T00:46:48.621Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T00:46:48.622Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T00:46:54.018Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T00:46:54.307Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T00:46:54.310Z",
+      "tool": "find"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T00:47:04.239Z",
+      "tool": "navigate",
+      "url": "https://www.ginnys.com/co/shopping-cart/"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T00:47:04.248Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T00:47:34.890Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T00:47:38.557Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T00:48:04.803Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T00:48:16.050Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T00:48:19.444Z",
+      "tool": "find"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T00:48:23.963Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T00:48:24.432Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T00:48:24.434Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T00:48:32.058Z",
+      "tool": "navigate",
+      "url": "https://www.ginnys.com/co/shopping-cart/"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T00:48:32.061Z",
+      "tool": "find"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T00:48:37.405Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T00:48:38.203Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T00:48:38.623Z",
+      "tool": "navigate",
+      "url": "https://www.ginnys.com/co/shopping-cart/"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T00:48:38.626Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-08T00:48:47.363Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-08T00:49:22.404Z",
+      "tool": "Write"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-08T00:49:30.066Z",
       "tool": "StructuredOutput"
     }
   ],
   "collected": {
     "by": "collect-pane-exports.mjs",
-    "exports": [],
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "ce0c2e507c892d1e29ca7edb30af24a81278ac52d8534ea53cd57fcca211f04d"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "2a32303c523f4dad391e40d1a07e1dc51c242d421eb01a333e3f46cfdc8b98c0"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "337c34e26cad5976672d3fc0d0421ec12017ad6e9e361fb028c272367945c2a6"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "af8ff3ba2fbc2cec6c0e23687062021ebfde7ac435807b0e611ac29503f70253"
+      },
+      {
+        "target": "cart-other",
+        "kind": "state",
+        "sha256": "4479c7300b1a920e880cda53dc0b8ac89f883e3c46c5942c9b454f229902362d"
+      }
+    ],
     "errors": []
   }
 }

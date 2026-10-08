@@ -8,34 +8,105 @@
   "session": 2,
   "entryHost": "p-bandai.jp",
   "operator": "claude-code/claude-opus-5-5",
-  "transcriptId": "wf_ddc7aa30-949/agent-ae9c0b0bcf7f182f6",
-  "startUtc": "2026-10-07T22:40:38.733Z",
-  "endUtc": "2026-10-07T22:41:13.854Z",
+  "transcriptId": "wf_4ab106a4-03b/agent-a5ff4ace516e33db9",
+  "startUtc": "2026-10-07T23:22:42.408Z",
+  "endUtc": "2026-10-07T23:24:41.214Z",
   "signedIn": false,
   "startCartCount": null,
   "endCartCount": null,
   "removals": [],
-  "robots": [],
-  "navigations": [],
-  "actions": [],
+  "robots": [
+    {
+      "host": "p-bandai.jp",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null,
+      "note": "robots.txt request redirected to the same-host international region page /global_newpc.html; robots file not served, hash script not run (it would hash the redirect page)"
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://p-bandai.jp/robots.txt",
+      "landed": "https://p-bandai.jp/global_newpc.html"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://p-bandai.jp/",
+      "landed": "https://p-bandai.jp/global_newpc.html"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://p-bandai.jp/cart/",
+      "landed": "https://p-bandai.jp/global_newpc.html"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host origin"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart path"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 geo-block region page"
+    }
+  ],
   "states": [],
-  "evidence": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "b13f6923d1e3d698de32afb66f246d2c5bf5fb6decb5e614706160adae409535",
+      "bytes": 19545,
+      "chunks": 1,
+      "url": "https://p-bandai.jp/global_newpc.html"
+    }
+  ],
   "notReached": [
     {
       "state": "empty-cart",
-      "reason": "tab-cap: tabs_create failed, no page loaded"
+      "reason": "every path redirects U.S. visitors to the international region page"
     },
     {
       "state": "minicart-1",
-      "reason": "tab-cap: tabs_create failed, no page loaded"
+      "reason": "geo-blocked: Japanese storefront not served"
     },
     {
       "state": "cart-1",
-      "reason": "tab-cap: tabs_create failed, no page loaded"
+      "reason": "geo-blocked: Japanese storefront not served"
     },
     {
       "state": "cart-qty2",
-      "reason": "tab-cap: tabs_create failed, no page loaded"
+      "reason": "geo-blocked: Japanese storefront not served"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "geo-blocked: Japanese storefront not served"
     }
   ],
   "itemPath": {
@@ -45,76 +116,112 @@
     "secondProductUrl": null
   },
   "observedCurrency": null,
-  "observedRegion": null,
+  "observedRegion": "international region selector (links to other domains per region)",
   "outcome": {
-    "status": "not-started",
-    "code": "tab-cap",
-    "evidenceSha256": null
+    "status": "excluded",
+    "code": "geo-blocked",
+    "evidenceSha256": "b13f6923d1e3d698de32afb66f246d2c5bf5fb6decb5e614706160adae409535"
   },
   "challenge": null,
   "problems": [
-    "tabs_create failed 6 times back to back (1 attempt plus 5 retries): 'Could not open a new tab (Browser pane gone, gate off, or tab cap reached).' No page of the store was loaded, no other tab was touched."
+    "robots.txt, origin and /cart/ all redirect to /global_newpc.html, titled 'INTERNATIONAL SHIPPING AVAILABLE', asking visitors to 'Purchase PREMIUM BANDAI products from your regions below'",
+    "region links point to other registrable domains (p-bandai.com/us etc., shopee, tmall); none followed",
+    "robots posture not recordable: file not served to this visitor",
+    "sign-in and cart count not observable (no storefront page served)"
   ],
   "timeline": [
     {
       "n": 0,
-      "utc": "2026-10-07T22:40:38.733Z",
+      "utc": "2026-10-07T23:22:42.408Z",
       "tool": "Read"
     },
     {
       "n": 1,
-      "utc": "2026-10-07T22:40:39.984Z",
+      "utc": "2026-10-07T23:22:43.624Z",
       "tool": "Read"
     },
     {
       "n": 2,
-      "utc": "2026-10-07T22:40:39.986Z",
+      "utc": "2026-10-07T23:22:43.651Z",
       "tool": "Read"
     },
     {
       "n": 3,
-      "utc": "2026-10-07T22:40:42.456Z",
+      "utc": "2026-10-07T23:22:47.961Z",
       "tool": "tabs_create"
     },
     {
       "n": 4,
-      "utc": "2026-10-07T22:40:45.013Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:22:51.879Z",
+      "tool": "navigate",
+      "url": "https://p-bandai.jp/robots.txt"
     },
     {
       "n": 5,
-      "utc": "2026-10-07T22:40:47.546Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:22:59.691Z",
+      "tool": "get_page_text"
     },
     {
       "n": 6,
-      "utc": "2026-10-07T22:40:50.560Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:23:08.039Z",
+      "tool": "navigate",
+      "url": "https://p-bandai.jp/"
     },
     {
       "n": 7,
-      "utc": "2026-10-07T22:40:53.112Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:23:15.581Z",
+      "tool": "find"
     },
     {
       "n": 8,
-      "utc": "2026-10-07T22:40:58.030Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:23:19.390Z",
+      "tool": "read_page"
     },
     {
       "n": 9,
-      "utc": "2026-10-07T22:41:07.226Z",
-      "tool": "Write"
+      "utc": "2026-10-07T23:23:25.174Z",
+      "tool": "navigate",
+      "url": "https://p-bandai.jp/cart/"
     },
     {
       "n": 10,
-      "utc": "2026-10-07T22:41:13.854Z",
+      "utc": "2026-10-07T23:23:55.790Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T23:24:04.296Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:24:15.205Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:24:28.864Z",
+      "tool": "Write"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:24:41.214Z",
       "tool": "StructuredOutput"
     }
   ],
   "collected": {
     "by": "collect-pane-exports.mjs",
-    "exports": [],
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "b13f6923d1e3d698de32afb66f246d2c5bf5fb6decb5e614706160adae409535"
+      }
+    ],
     "errors": []
   }
 }

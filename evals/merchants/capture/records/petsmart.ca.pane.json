@@ -8,117 +8,891 @@
   "session": 1,
   "entryHost": "www.petsmart.ca",
   "operator": "claude-code/claude-opus-5-5",
-  "transcriptId": "wf_ddc7aa30-949/agent-adbf404fb22a77d2c",
-  "startUtc": "2026-10-07T22:50:02.914Z",
-  "endUtc": "2026-10-07T22:50:50.516Z",
+  "transcriptId": "wf_4ab106a4-03b/agent-aa81ec62a631f20a2",
+  "startUtc": "2026-10-08T00:21:27.372Z",
+  "endUtc": "2026-10-08T00:28:19.803Z",
   "signedIn": false,
-  "startCartCount": null,
-  "endCartCount": null,
-  "removals": [],
-  "robots": [],
-  "navigations": [],
-  "actions": [],
-  "states": [],
-  "evidence": [],
-  "notReached": [
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (Red Leaf dog food 11.5 kg)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.petsmart.ca",
+      "status": 200,
+      "sha256": "706b2ca16eae4c13498b1660bfa9304a258ab95f87b034ad0906cff75a728662",
+      "bytes": 1576,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.petsmart.ca/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.petsmart.ca/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.petsmart.ca/cart/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.petsmart.ca/cat/litter-and-waste-disposal/litter/odour-beater-carbon-cat-clumping-litter---unscented-62977.html"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.petsmart.ca/cart/"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.petsmart.ca/"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.petsmart.ca/dog/food/dry-food/red-leaf-adult-dog-food---angus-beef-51039.html"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.petsmart.ca/cart/"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "url": "https://www.petsmart.ca/dog/food/dry-food/red-leaf-adult-dog-food---angus-beef-51039.html"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "url": "https://www.petsmart.ca/cart/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (starting count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Necessary Cookies Only"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product 1 (home page link)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to cart"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "generic",
+      "name": "Ship to me (fulfilment radio)"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (check add 1: still empty)"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Red Leaf Adult Dog Food - Angus Beef"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "label",
+      "name": "Ship to me (fulfilment radio)"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product 2 again (re-add for qty 2)"
+    },
+    {
+      "n": 21,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "generic",
+      "name": "Ship to me (fulfilment radio)"
+    },
+    {
+      "n": 22,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart"
+    },
+    {
+      "n": 23,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (still qty 1)"
+    },
+    {
+      "n": 24,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "Remove"
+    }
+  ],
+  "states": [
     {
       "state": "empty-cart",
-      "reason": "session not started: tabs_create failed (tab-cap)"
+      "sha256": "9377e1fce21b9d0532cd8c8bb62bd7c5181436d164f4b3e2c846e04bb9c8ef06",
+      "bytes": 307058,
+      "chunks": 1,
+      "url": "https://www.petsmart.ca/cart/",
+      "startCartCount": 0
     },
     {
       "state": "minicart-1",
-      "reason": "session not started: tabs_create failed (tab-cap)"
+      "sha256": "69330b41f9be6a4f034fb92a4adbb8ceab7c7689617d4299c9ec7490cee1ab37",
+      "bytes": 575148,
+      "chunks": 2,
+      "url": "https://www.petsmart.ca/dog/food/dry-food/red-leaf-adult-dog-food---angus-beef-51039.html",
+      "startCartCount": 0
     },
     {
       "state": "cart-1",
-      "reason": "session not started: tabs_create failed (tab-cap)"
-    },
+      "sha256": "692ca07ba805f959090c72e1db6588fd06598675b8fb6321e48d6b8882f06edf",
+      "bytes": 439155,
+      "chunks": 2,
+      "url": "https://www.petsmart.ca/cart/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
     {
       "state": "cart-qty2",
-      "reason": "session not started: tabs_create failed (tab-cap)"
+      "reason": "cart quantity control is a select-style combobox (not allowed); a second add-to-cart from the product page did not change the cart (still qty 1)"
     },
     {
       "state": "cart-2items",
-      "reason": "session not started: tabs_create failed (tab-cap)"
+      "reason": "not attempted; cart started empty, focus on cart and structure"
     }
   ],
   "itemPath": {
-    "listingUrl": null,
-    "productUrl": null,
-    "price": null,
+    "listingUrl": "https://www.petsmart.ca/",
+    "productUrl": "https://www.petsmart.ca/dog/food/dry-food/red-leaf-adult-dog-food---angus-beef-51039.html",
+    "price": "64.99 CAD (11.5 kg, default size)",
     "secondProductUrl": null
   },
-  "observedCurrency": null,
-  "observedRegion": null,
+  "observedCurrency": "CAD",
+  "observedRegion": "CA",
   "outcome": {
-    "status": "not-started",
-    "code": "tab-cap",
+    "status": "captured",
+    "code": null,
     "evidenceSha256": null
   },
   "challenge": null,
   "problems": [
-    "tabs_create failed 6 times back to back (1 attempt + 5 retries): 'Could not open a new tab (Browser pane gone, gate off, or tab cap reached).' No page loaded; store unvisited, so session 1 is not consumed by a store-side failure."
+    "First eligible item (Odour Beater litter, 22.99 CAD) add-to-cart had no effect after three clicks (before and after choosing Ship to me); counted as failed item 1 of 3, no evidence export since a later item succeeded.",
+    "Add-to-cart needed the fulfilment radio 'Ship to me' clicked first (default pickup asks to select a store); this radio click is a fulfilment choice, not size/colour; flagged for reviewer.",
+    "robots.txt disallows /cart and /checkout for *; recorded only.",
+    "Pane hidden: screenshots blank; read_page/find used. chunk(0) of each export saved by harness to tool-results files (not opened); cart-1 chunk(1) returned inline.",
+    "Product price shown with an online promo code discount line beside the regular price."
   ],
   "timeline": [
     {
       "n": 0,
-      "utc": "2026-10-07T22:50:02.914Z",
+      "utc": "2026-10-08T00:21:27.372Z",
       "tool": "Read"
     },
     {
       "n": 1,
-      "utc": "2026-10-07T22:50:03.422Z",
+      "utc": "2026-10-08T00:21:28.528Z",
       "tool": "Read"
     },
     {
       "n": 2,
-      "utc": "2026-10-07T22:50:03.426Z",
+      "utc": "2026-10-08T00:21:28.547Z",
       "tool": "Read"
     },
     {
       "n": 3,
-      "utc": "2026-10-07T22:50:05.957Z",
+      "utc": "2026-10-08T00:21:31.216Z",
       "tool": "tabs_create"
     },
     {
       "n": 4,
-      "utc": "2026-10-07T22:50:08.568Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:21:53.698Z",
+      "tool": "navigate",
+      "url": "https://www.petsmart.ca/robots.txt"
     },
     {
       "n": 5,
-      "utc": "2026-10-07T22:50:20.634Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:21:53.709Z",
+      "tool": "get_page_text"
     },
     {
       "n": 6,
-      "utc": "2026-10-07T22:50:23.247Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:22:03.058Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
     },
     {
       "n": 7,
-      "utc": "2026-10-07T22:50:25.631Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:22:07.443Z",
+      "tool": "navigate",
+      "url": "https://www.petsmart.ca/"
     },
     {
       "n": 8,
-      "utc": "2026-10-07T22:50:28.701Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-08T00:22:07.458Z",
+      "tool": "get_page_text"
     },
     {
       "n": 9,
-      "utc": "2026-10-07T22:50:38.481Z",
-      "tool": "Write"
+      "utc": "2026-10-08T00:22:14.393Z",
+      "tool": "find"
     },
     {
       "n": 10,
-      "utc": "2026-10-07T22:50:50.516Z",
+      "utc": "2026-10-08T00:22:14.397Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:22:18.747Z",
+      "tool": "navigate",
+      "url": "https://www.petsmart.ca/cart/"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:22:18.753Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:22:24.265Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:22:24.278Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:22:37.325Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:22:51.304Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:23:22.997Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:23:26.960Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:23:31.439Z",
+      "tool": "navigate",
+      "url": "https://www.petsmart.ca/cat/litter-and-waste-disposal/litter/:token"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:23:31.525Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:23:46.320Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:23:46.325Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:23:51.328Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:23:54.979Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:23:54.984Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T00:24:01.183Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T00:24:05.299Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T00:24:08.747Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T00:24:09.152Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T00:24:11.461Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T00:24:14.121Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T00:24:17.952Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T00:24:20.131Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T00:24:20.557Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T00:24:25.871Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T00:24:26.301Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T00:24:29.528Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T00:24:31.481Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T00:24:33.885Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T00:24:37.032Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T00:24:37.382Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T00:24:42.085Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T00:24:45.017Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T00:24:45.051Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T00:24:51.931Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T00:24:55.006Z",
+      "tool": "find"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T00:24:58.243Z",
+      "tool": "navigate",
+      "url": "https://www.petsmart.ca/cart/"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T00:25:01.927Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T00:25:02.387Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T00:25:10.466Z",
+      "tool": "navigate",
+      "url": "https://www.petsmart.ca/"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T00:25:10.960Z",
+      "tool": "find"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T00:25:14.276Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T00:25:17.643Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T00:25:17.771Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T00:25:22.811Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T00:25:25.058Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T00:25:27.217Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T00:25:30.376Z",
+      "tool": "find"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T00:25:33.073Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T00:25:36.080Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T00:25:38.252Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T00:25:38.797Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T00:25:43.214Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T00:25:43.514Z",
+      "tool": "find"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T00:25:48.864Z",
+      "tool": "find"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T00:25:51.109Z",
+      "tool": "find"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T00:25:53.585Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T00:26:13.623Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T00:26:16.255Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T00:26:18.724Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T00:26:21.281Z",
+      "tool": "navigate",
+      "url": "https://www.petsmart.ca/cart/"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T00:26:22.013Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T00:26:22.416Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T00:26:48.781Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T00:26:51.367Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T00:26:53.725Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-08T00:26:56.391Z",
+      "tool": "find"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-08T00:26:58.708Z",
+      "tool": "find"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-08T00:26:59.046Z",
+      "tool": "find"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-08T00:27:03.447Z",
+      "tool": "navigate",
+      "url": "https://www.petsmart.ca/dog/food/dry-food/:token"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-08T00:27:04.098Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-08T00:27:04.534Z",
+      "tool": "find"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-08T00:27:11.292Z",
+      "tool": "find"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-08T00:27:11.669Z",
+      "tool": "find"
+    },
+    {
+      "n": 85,
+      "utc": "2026-10-08T00:27:13.915Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 86,
+      "utc": "2026-10-08T00:27:16.131Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 87,
+      "utc": "2026-10-08T00:27:18.384Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 88,
+      "utc": "2026-10-08T00:27:21.021Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 89,
+      "utc": "2026-10-08T00:27:21.633Z",
+      "tool": "navigate",
+      "url": "https://www.petsmart.ca/cart/"
+    },
+    {
+      "n": 90,
+      "utc": "2026-10-08T00:27:22.144Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 91,
+      "utc": "2026-10-08T00:27:22.519Z",
+      "tool": "find"
+    },
+    {
+      "n": 92,
+      "utc": "2026-10-08T00:27:31.202Z",
+      "tool": "find"
+    },
+    {
+      "n": 93,
+      "utc": "2026-10-08T00:27:33.381Z",
+      "tool": "find"
+    },
+    {
+      "n": 94,
+      "utc": "2026-10-08T00:27:38.092Z",
+      "tool": "find"
+    },
+    {
+      "n": 95,
+      "utc": "2026-10-08T00:27:40.508Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 96,
+      "utc": "2026-10-08T00:27:42.763Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 97,
+      "utc": "2026-10-08T00:27:43.151Z",
+      "tool": "find"
+    },
+    {
+      "n": 98,
+      "utc": "2026-10-08T00:27:49.756Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 99,
+      "utc": "2026-10-08T00:28:14.386Z",
+      "tool": "Write"
+    },
+    {
+      "n": 100,
+      "utc": "2026-10-08T00:28:19.803Z",
       "tool": "StructuredOutput"
     }
   ],
   "collected": {
     "by": "collect-pane-exports.mjs",
-    "exports": [],
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "9377e1fce21b9d0532cd8c8bb62bd7c5181436d164f4b3e2c846e04bb9c8ef06"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "69330b41f9be6a4f034fb92a4adbb8ceab7c7689617d4299c9ec7490cee1ab37"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "692ca07ba805f959090c72e1db6588fd06598675b8fb6321e48d6b8882f06edf"
+      }
+    ],
     "errors": []
   }
 }

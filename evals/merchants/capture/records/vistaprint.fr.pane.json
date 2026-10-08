@@ -8,114 +8,922 @@
   "session": 2,
   "entryHost": "www.vistaprint.fr",
   "operator": "claude-code/claude-opus-5-5",
-  "transcriptId": "wf_ddc7aa30-949/agent-a8749e036da2200dc",
-  "startUtc": "2026-10-07T22:37:50.335Z",
-  "endUtc": "2026-10-07T22:38:43.643Z",
+  "transcriptId": "wf_4ab106a4-03b/agent-a2c950f8ba02dada1",
+  "startUtc": "2026-10-07T23:03:16.831Z",
+  "endUtc": "2026-10-07T23:17:06.086Z",
   "signedIn": false,
-  "startCartCount": null,
-  "endCartCount": null,
-  "removals": [],
-  "robots": [],
-  "navigations": [],
-  "actions": [],
-  "states": [],
-  "evidence": [],
-  "notReached": [
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (Trepieds)",
+      "ok": true,
+      "note": "first confirm click by coordinate did not take; second attempt by ref succeeded"
+    },
+    {
+      "n": 2,
+      "item": "own item 2 (Porte-affiches en bois)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.vistaprint.fr",
+      "status": 200,
+      "sha256": "a0b591959147d96f03a53510a8622590161517d222c1e42b49e6c4a7dcbe7487",
+      "bytes": 2877,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true,
+      "note": "cart path /c/ disallowed by '*/c/' (also /cart.aspx); checkout '*/co/' disallowed; robots never excludes under .8+"
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.vistaprint.fr/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.vistaprint.fr/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.vistaprint.fr/c/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.vistaprint.fr/pancartes-affiches"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.vistaprint.fr/pancartes-affiches/accessoires"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.vistaprint.fr/pancartes-affiches/accessoires/languettes-adhesives-command"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.vistaprint.fr/pancartes-affiches/accessoires"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.vistaprint.fr/pancartes-affiches/accessoires/trepieds"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "url": "https://www.vistaprint.fr/c/"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "url": "https://www.vistaprint.fr/pancartes-affiches/accessoires"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "url": "https://www.vistaprint.fr/pancartes-affiches/porte-affiches-en-bois"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "url": "https://www.vistaprint.fr/c/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart /c/ (starting count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "pancartes-affiches"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "accessoires"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "languettes-adhesives-command (link href)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "accessoires listing"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Lampe LED card (did not navigate)"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "trepieds (link href)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Ajouter au panier"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart /c/"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "accessoires listing"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "porte-affiches-en-bois (link href, A3)"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Ajouter au panier"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart /c/"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-2items"
+    },
+    {
+      "n": 21,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Supprimer"
+    },
+    {
+      "n": 22,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Oui, supprimer (coordinate; no effect)"
+    },
+    {
+      "n": 23,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Supprimer"
+    },
+    {
+      "n": 24,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Oui, supprimer"
+    },
+    {
+      "n": 25,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Supprimer"
+    },
+    {
+      "n": 26,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Oui, supprimer"
+    }
+  ],
+  "states": [
     {
       "state": "empty-cart",
-      "reason": "tab-cap: tabs_create failed 6 times, nothing loaded"
+      "sha256": "04bffd8d01d01349607a0d228d71bad2f1f32bbd19f0ae41f65342645dbf1fe6",
+      "bytes": 417549,
+      "chunks": 2,
+      "url": "https://www.vistaprint.fr/c/",
+      "startCartCount": 0
     },
     {
       "state": "minicart-1",
-      "reason": "tab-cap: tabs_create failed 6 times, nothing loaded"
+      "sha256": "f774109043bf2a809416c1c22e32fce6a0f8b86e71b9af47a566e5b51e95f992",
+      "bytes": 811845,
+      "chunks": 3,
+      "url": "https://www.vistaprint.fr/pancartes-affiches/accessoires/trepieds",
+      "startCartCount": 0
     },
     {
       "state": "cart-1",
-      "reason": "tab-cap: tabs_create failed 6 times, nothing loaded"
+      "sha256": "e1845266912c7b4b900936eb23816bcf8bdf9a72d456e5dc8f9e10e4d502a66e",
+      "bytes": 443985,
+      "chunks": 2,
+      "url": "https://www.vistaprint.fr/c/",
+      "startCartCount": 0
     },
     {
+      "state": "cart-2items",
+      "sha256": "491b9b61cbe70f9c5256fb3384881c7b66a57780c07ee2e1690408deb7a26e7a",
+      "bytes": 456393,
+      "chunks": 2,
+      "url": "https://www.vistaprint.fr/c/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
       "state": "cart-qty2",
-      "reason": "tab-cap: tabs_create failed 6 times, nothing loaded"
+      "reason": "cart quantity is a dropdown listbox (select-like); no increment control"
     }
   ],
   "itemPath": {
-    "listingUrl": null,
-    "productUrl": null,
-    "price": null,
-    "secondProductUrl": null
+    "listingUrl": "https://www.vistaprint.fr/pancartes-affiches/accessoires",
+    "productUrl": "https://www.vistaprint.fr/pancartes-affiches/accessoires/trepieds",
+    "price": "10,49 EUR HT (12,59 TTC in cart)",
+    "secondProductUrl": "https://www.vistaprint.fr/pancartes-affiches/porte-affiches-en-bois"
   },
-  "observedCurrency": null,
-  "observedRegion": null,
+  "observedCurrency": "EUR",
+  "observedRegion": "FR",
   "outcome": {
-    "status": "not-started",
-    "code": "tab-cap",
+    "status": "captured",
+    "code": null,
     "evidenceSha256": null
   },
   "challenge": null,
   "problems": [
-    "tabs_create failed on all 6 attempts (1 + 5 retries): 'Could not open a new tab (Browser pane gone, gate off, or tab cap reached).' No page loaded, no tab to close.",
-    "Session 2 of 2 for this store was not started in the browser; the coordinator should decide whether this counts as a used session."
+    "empty-cart chunk(1) first fetch timed out (pane hidden); retried once with the same allowed text and it returned inline",
+    "minicart-1 is the PDP with the in-page 'added to cart' alert; vistaprint shows no mini-cart drawer",
+    "PDP quantity combobox was left empty; add-to-cart succeeded with quantity 1 without choosing a quantity",
+    "two product-card clicks did not navigate; product pages opened by URL from the link hrefs (second carried a size option query, recorded without it)",
+    "items are blank (non-personalised) sign accessories; storefront shows HT prices by default (TVA toggle not changed)"
   ],
   "timeline": [
     {
       "n": 0,
-      "utc": "2026-10-07T22:37:50.335Z",
+      "utc": "2026-10-07T23:03:16.831Z",
       "tool": "Read"
     },
     {
       "n": 1,
-      "utc": "2026-10-07T22:37:51.583Z",
+      "utc": "2026-10-07T23:03:18.151Z",
       "tool": "Read"
     },
     {
       "n": 2,
-      "utc": "2026-10-07T22:37:51.589Z",
+      "utc": "2026-10-07T23:03:18.166Z",
       "tool": "Read"
     },
     {
       "n": 3,
-      "utc": "2026-10-07T22:38:01.881Z",
+      "utc": "2026-10-07T23:03:24.383Z",
       "tool": "tabs_create"
     },
     {
       "n": 4,
-      "utc": "2026-10-07T22:38:04.204Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:03:28.713Z",
+      "tool": "navigate",
+      "url": "https://www.vistaprint.fr/robots.txt"
     },
     {
       "n": 5,
-      "utc": "2026-10-07T22:38:06.789Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:03:28.746Z",
+      "tool": "get_page_text"
     },
     {
       "n": 6,
-      "utc": "2026-10-07T22:38:09.228Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:03:37.825Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
     },
     {
       "n": 7,
-      "utc": "2026-10-07T22:38:22.169Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:03:42.760Z",
+      "tool": "navigate",
+      "url": "https://www.vistaprint.fr/"
     },
     {
       "n": 8,
-      "utc": "2026-10-07T22:38:26.678Z",
-      "tool": "tabs_create"
+      "utc": "2026-10-07T23:03:42.773Z",
+      "tool": "find"
     },
     {
       "n": 9,
-      "utc": "2026-10-07T22:38:36.998Z",
-      "tool": "Write"
+      "utc": "2026-10-07T23:03:53.147Z",
+      "tool": "read_page"
     },
     {
       "n": 10,
-      "utc": "2026-10-07T22:38:43.643Z",
+      "utc": "2026-10-07T23:04:03.002Z",
+      "tool": "navigate",
+      "url": "https://www.vistaprint.fr/c/"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T23:04:03.007Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:04:11.508Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:04:11.553Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:04:43.835Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T23:04:48.307Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T23:04:52.582Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T23:05:42.282Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T23:05:49.742Z",
+      "tool": "navigate",
+      "url": "https://www.vistaprint.fr/pancartes-affiches"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T23:05:49.755Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T23:05:59.716Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T23:05:59.733Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T23:06:20.244Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T23:06:25.610Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T23:06:25.618Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T23:07:09.734Z",
+      "tool": "navigate",
+      "url": "https://www.vistaprint.fr/pancartes-affiches/accessoires/languettes-adhesives-command"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T23:07:09.980Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T23:07:18.160Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T23:07:28.184Z",
+      "tool": "navigate",
+      "url": "https://www.vistaprint.fr/pancartes-affiches/accessoires"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T23:07:28.250Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T23:07:37.007Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T23:07:37.088Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T23:08:00.087Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T23:08:00.125Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T23:08:09.101Z",
+      "tool": "navigate",
+      "url": "https://www.vistaprint.fr/pancartes-affiches/accessoires/trepieds"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T23:08:09.104Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T23:08:24.810Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T23:08:29.583Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T23:08:51.077Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T23:08:51.081Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T23:08:58.188Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T23:09:02.632Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T23:10:15.628Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T23:10:20.077Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T23:10:28.828Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T23:10:36.199Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T23:10:45.291Z",
+      "tool": "navigate",
+      "url": "https://www.vistaprint.fr/c/"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T23:10:45.825Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T23:10:45.834Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T23:10:56.947Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T23:10:57.022Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T23:11:05.348Z",
+      "tool": "find"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T23:11:39.173Z",
+      "tool": "find"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T23:11:42.542Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T23:12:18.452Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T23:12:21.188Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T23:12:23.844Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T23:12:26.701Z",
+      "tool": "find"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T23:12:29.049Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T23:12:34.578Z",
+      "tool": "navigate",
+      "url": "https://www.vistaprint.fr/pancartes-affiches/accessoires"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T23:12:35.010Z",
+      "tool": "find"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T23:12:40.744Z",
+      "tool": "navigate",
+      "url": "https://www.vistaprint.fr/pancartes-affiches/porte-affiches-en-bois"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T23:12:41.168Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T23:14:14.484Z",
+      "tool": "find"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T23:14:17.299Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T23:14:17.686Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T23:14:18.050Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T23:14:32.187Z",
+      "tool": "navigate",
+      "url": "https://www.vistaprint.fr/c/"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T23:14:32.766Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-07T23:14:33.332Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-07T23:14:59.224Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-07T23:14:59.777Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-07T23:15:40.218Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-07T23:15:43.242Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-07T23:15:46.823Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-07T23:15:49.445Z",
+      "tool": "find"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-07T23:15:52.418Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-07T23:15:53.002Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-07T23:15:53.531Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-07T23:15:58.745Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-07T23:15:59.323Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-07T23:15:59.819Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-07T23:16:06.349Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-07T23:16:06.753Z",
+      "tool": "find"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-07T23:16:13.695Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 85,
+      "utc": "2026-10-07T23:16:14.423Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 86,
+      "utc": "2026-10-07T23:16:15.100Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 87,
+      "utc": "2026-10-07T23:16:15.660Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 88,
+      "utc": "2026-10-07T23:16:22.547Z",
+      "tool": "find"
+    },
+    {
+      "n": 89,
+      "utc": "2026-10-07T23:16:25.101Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 90,
+      "utc": "2026-10-07T23:16:25.699Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 91,
+      "utc": "2026-10-07T23:16:26.310Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 92,
+      "utc": "2026-10-07T23:16:26.679Z",
+      "tool": "find"
+    },
+    {
+      "n": 93,
+      "utc": "2026-10-07T23:16:33.192Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 94,
+      "utc": "2026-10-07T23:16:59.052Z",
+      "tool": "Write"
+    },
+    {
+      "n": 95,
+      "utc": "2026-10-07T23:17:06.086Z",
       "tool": "StructuredOutput"
     }
   ],
   "collected": {
     "by": "collect-pane-exports.mjs",
-    "exports": [],
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "04bffd8d01d01349607a0d228d71bad2f1f32bbd19f0ae41f65342645dbf1fe6"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "f774109043bf2a809416c1c22e32fce6a0f8b86e71b9af47a566e5b51e95f992"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "e1845266912c7b4b900936eb23816bcf8bdf9a72d456e5dc8f9e10e4d502a66e"
+      },
+      {
+        "target": "cart-2items",
+        "kind": "state",
+        "sha256": "491b9b61cbe70f9c5256fb3384881c7b66a57780c07ee2e1690408deb7a26e7a"
+      }
+    ],
     "errors": []
   }
 }

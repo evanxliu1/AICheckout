@@ -1,0 +1,141 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "dolap.com",
+  "stream": "non-us",
+  "visit": 149,
+  "session": 1,
+  "entryHost": "dolap.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a8fa2a62d86be7397",
+  "startUtc": "2026-10-08T00:52:43.640Z",
+  "endUtc": "2026-10-08T00:53:10.838Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "dolap.com",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://dolap.com/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on first load"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall on first load"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall on first load"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall on first load"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://dolap.com/robots.txt",
+    "title": "Just a moment...",
+    "marker": "Cloudflare interstitial: title 'Just a moment...', redirect with __cf_chl_rt_tk query parameter, empty body text",
+    "wording": "Just a moment..."
+  },
+  "problems": [
+    "Cloudflare challenge served on the robots.txt request itself, so the robots hash was not run and no store page was loaded; not interacted with, not exported",
+    "Sign-in state and starting cart count not observable (null)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:52:43.640Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:52:44.830Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:52:44.839Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:52:47.136Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:52:50.453Z",
+      "tool": "navigate",
+      "url": "https://dolap.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:52:50.522Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:52:55.995Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:53:04.585Z",
+      "tool": "Write"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:53:10.838Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

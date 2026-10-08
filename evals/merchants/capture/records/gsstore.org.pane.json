@@ -1,0 +1,587 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "gsstore.org",
+  "stream": "non-us",
+  "visit": 170,
+  "session": 1,
+  "entryHost": "www.gsstore.org",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a2fcbda467f764caa",
+  "startUtc": "2026-10-08T01:24:04.795Z",
+  "endUtc": "2026-10-08T01:29:32.894Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2, one remove control)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.gsstore.org",
+      "status": 200,
+      "sha256": "e5aed8bedc42f677d73a953905e540c51e08a3e1e69fce12ff1add68090cdfb5",
+      "bytes": 2211,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.gsstore.org/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.gsstore.org/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.gsstore.org/baskets/basket/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.gsstore.org/gs-home/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.gsstore.org/galatasaray-karaca-taraftar-lunch-box-1000258514001/"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.gsstore.org/baskets/basket/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (start count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "GS Home listing (menu link href)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reddet"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Galatasaray Karaca Taraftar Lunch Box"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Sepete Ekle"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "+"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "trash icon"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Ürünü Sil (confirm)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "cd60f0e861b72b0f4ee0de4f514ae0598048725cac465ed9d333f0e781ed6cb0",
+      "bytes": 308933,
+      "chunks": 1,
+      "url": "https://www.gsstore.org/baskets/basket/",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "4ca5e15981449e956cba8dc9c8905b89a30b8e1fa2fd6c2eb0b24fa2e2a5a1bc",
+      "bytes": 772502,
+      "chunks": 2,
+      "url": "https://www.gsstore.org/galatasaray-karaca-taraftar-lunch-box-1000258514001/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "322f0e54c549a61bbde369a3efb96fbb3439c74b8a40c7533a873c351ba95c9e",
+      "bytes": 533915,
+      "chunks": 2,
+      "url": "https://www.gsstore.org/baskets/basket/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "ea27271d0c39b7b63ac4e0035d5e41fe9d5cddeb33e6c0ca225a5a9e7eb87574",
+      "bytes": 534401,
+      "chunks": 2,
+      "url": "https://www.gsstore.org/baskets/basket/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; second item optional, kept session short"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.gsstore.org/gs-home/",
+    "productUrl": "https://www.gsstore.org/galatasaray-karaca-taraftar-lunch-box-1000258514001/",
+    "price": "499,99 TL",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "TRY",
+  "observedRegion": "TR",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt disallows /baskets/* (cart) and /orders/*; visited per .8 record-only rule",
+    "listing reached by URL from a home-page menu link href (/gs-home/) rather than a click",
+    "all chunk results oversized and saved by harness to tool-results files (not opened)",
+    "screenshot zoom region not supported in pane; full screenshot returned"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:24:04.795Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:24:05.836Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:24:05.865Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:24:09.237Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:24:12.802Z",
+      "tool": "navigate",
+      "url": "https://www.gsstore.org/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:24:12.980Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:24:23.359Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:24:32.579Z",
+      "tool": "navigate",
+      "url": "https://www.gsstore.org/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:24:32.583Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:24:42.727Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:24:47.985Z",
+      "tool": "navigate",
+      "url": "https://www.gsstore.org/baskets/basket/"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:24:48.136Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:25:19.105Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:25:37.037Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T01:25:55.456Z",
+      "tool": "navigate",
+      "url": "https://www.gsstore.org/gs-home/"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T01:25:55.470Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T01:26:01.392Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T01:26:05.522Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T01:26:09.031Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T01:26:12.982Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T01:26:19.725Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T01:26:19.846Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T01:26:24.397Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T01:26:24.935Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T01:26:28.270Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T01:26:28.762Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T01:26:32.294Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T01:26:32.786Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T01:26:53.453Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T01:26:56.890Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T01:27:05.696Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T01:27:13.380Z",
+      "tool": "navigate",
+      "url": "https://www.gsstore.org/baskets/basket/"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T01:27:13.755Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T01:27:19.142Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T01:27:55.177Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T01:27:58.202Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T01:28:02.058Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T01:28:05.127Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T01:28:09.566Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T01:28:17.097Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T01:28:17.758Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T01:28:22.494Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T01:28:22.633Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T01:28:48.399Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T01:28:51.993Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T01:28:56.315Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T01:28:59.670Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T01:29:00.165Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T01:29:03.794Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T01:29:04.360Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T01:29:05.046Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T01:29:10.600Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T01:29:26.255Z",
+      "tool": "Write"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T01:29:32.894Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "cd60f0e861b72b0f4ee0de4f514ae0598048725cac465ed9d333f0e781ed6cb0"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "4ca5e15981449e956cba8dc9c8905b89a30b8e1fa2fd6c2eb0b24fa2e2a5a1bc"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "322f0e54c549a61bbde369a3efb96fbb3439c74b8a40c7533a873c351ba95c9e"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "ea27271d0c39b7b63ac4e0035d5e41fe9d5cddeb33e6c0ca225a5a9e7eb87574"
+      }
+    ],
+    "errors": []
+  }
+}
