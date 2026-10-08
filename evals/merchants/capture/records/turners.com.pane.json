@@ -1,0 +1,340 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "turners.com",
+  "stream": "us",
+  "visit": 283,
+  "session": 1,
+  "entryHost": "www.turners.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a60c89100b5cb3ec3",
+  "startUtc": "2026-10-08T05:37:44.751Z",
+  "endUtc": "2026-10-08T05:40:22.608Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.turners.com",
+      "status": 200,
+      "sha256": "6c0d785fb7845a9f9568e6a038b77bfe2639ced5e1822be8ce35315e95a87e75",
+      "bytes": 829,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.turners.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.turners.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.turners.com/fishing-baits-and-lures/browse/orderby/price-high-to-low"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.turners.com/clear-choice-lures/clear-choice-lures-ghost-150-clear-popper-1831461"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Shop Baits and Lures (blocked by modal)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "baits and lures listing"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Ghost 150 Clear Popper (blocked by modal)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Add to Cart (blocked by age modal)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "0c10c502ba33b3fb9cf3f44ce2bd3ea7969fb895e04716e80e41651238388e72",
+      "bytes": 352395,
+      "chunks": 1,
+      "url": "https://www.turners.com/clear-choice-lures/clear-choice-lures-ghost-150-clear-popper-1831461"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "age-attestation modal blocks the site; stopped before the cart"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart click intercepted by age-attestation modal"
+    },
+    {
+      "state": "cart-1",
+      "reason": "no item added"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "no item added"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no item added"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.turners.com/fishing-baits-and-lures/browse/orderby/price-high-to-low",
+    "productUrl": "https://www.turners.com/clear-choice-lures/clear-choice-lures-ghost-150-clear-popper-1831461",
+    "price": "$44.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "would-need-forbidden-action",
+    "evidenceSha256": "0c10c502ba33b3fb9cf3f44ce2bd3ea7969fb895e04716e80e41651238388e72"
+  },
+  "challenge": null,
+  "problems": [
+    "Site-wide age-attestation modal ('does not market nor sell regulated items to individuals who are underage... click Yes') overlays every page and intercepts clicks, including Add to Cart; proceeding needs clicking 'Yes' (an age attestation), which is not an allowed action, so not clicked.",
+    "Did not bypass the modal by navigating to the add-to-cart link URL (index.cfm?action=ADDTOCART); reviewer may decide whether that route is acceptable in a second session.",
+    "Cookie banner had no decline control; left alone.",
+    "robots.txt disallows /viewcart.cfm and /checkout.cfm for *; recorded only."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:37:44.751Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:37:46.011Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:37:46.022Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:37:49.795Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:37:55.402Z",
+      "tool": "navigate",
+      "url": "https://www.turners.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:37:55.404Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:38:02.129Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:38:06.978Z",
+      "tool": "navigate",
+      "url": "https://www.turners.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:38:07.016Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:38:15.556Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:38:15.625Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:38:20.261Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:38:20.290Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:38:37.289Z",
+      "tool": "navigate",
+      "url": "https://www.turners.com/fishing-baits-and-lures/browse/orderby/price-high-to-low"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:38:37.342Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:38:51.209Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:38:57.080Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:38:57.126Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:39:06.268Z",
+      "tool": "navigate",
+      "url": "https://www.turners.com/clear-choice-lures/:token"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:39:06.544Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:39:17.735Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:39:25.010Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:39:25.012Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:39:29.632Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:39:59.347Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:40:01.776Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:40:04.606Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:40:16.722Z",
+      "tool": "Write"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:40:22.608Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "0c10c502ba33b3fb9cf3f44ce2bd3ea7969fb895e04716e80e41651238388e72"
+      }
+    ],
+    "errors": []
+  }
+}

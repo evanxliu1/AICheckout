@@ -1,0 +1,188 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "tjx.com",
+  "stream": "us",
+  "visit": 54,
+  "session": 1,
+  "entryHost": "m.tjmaxx.tjx.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-aa3651e1b5ad67e73",
+  "startUtc": "2026-10-07T07:25:19.437Z",
+  "endUtc": "2026-10-07T07:26:15.785Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "m.tjmaxx.tjx.com",
+      "status": 200,
+      "sha256": "4fba23be3937f2e76a0540aa7802edf22bd30d2a2baddd1e5f38370fbeba8305",
+      "bytes": 2659,
+      "rootDisallowed": false,
+      "cartDisallowed": null,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://m.tjmaxx.tjx.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://m.tjmaxx.tjx.com/m/index.jsp"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host root"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall at entry"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://m.tjmaxx.tjx.com/m/index.jsp",
+    "title": "",
+    "marker": "Akamai challenge page: unlabelled button plus Akamai logo, no store content",
+    "wording": "Powered and protected by [Akamai] Privacy"
+  },
+  "problems": [
+    "Entry root redirected to /m/index.jsp and served an Akamai interstitial (empty title, unlabelled button, 'Powered and protected by' Akamai); stopped at once without interacting, not exported.",
+    "Cart path not determined before the block, so cartDisallowed is null; robots.txt disallows /m/checkout/ for *.",
+    "Start and end cart counts not read (no store page reached)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:25:19.437Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:25:20.595Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:25:20.603Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:25:23.886Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:25:27.866Z",
+      "tool": "navigate",
+      "url": "https://m.tjmaxx.tjx.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:25:27.870Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:25:34.685Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:25:41.946Z",
+      "tool": "navigate",
+      "url": "https://m.tjmaxx.tjx.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:25:41.949Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:25:47.851Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:25:52.884Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:26:07.401Z",
+      "tool": "Write"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:26:15.785Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

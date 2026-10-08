@@ -1,0 +1,592 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "aeropostale.com",
+  "stream": "us",
+  "visit": 156,
+  "session": 1,
+  "entryHost": "www.aeropostale.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-af4cb398a65ff72c2",
+  "startUtc": "2026-10-08T00:07:13.869Z",
+  "endUtc": "2026-10-08T00:12:36.152Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.aeropostale.com",
+      "status": 200,
+      "sha256": "59e5bb33047af086cfe31a69f82c3cd2274c122088447b32429178a8d261b10b",
+      "bytes": 1234,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.aeropostale.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.aeropostale.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.aeropostale.com/cart/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.aeropostale.com/men-teen-boys/tops/graphic-tees/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.aeropostale.com/skittles-relaxed-graphic-tee/60187245.html"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.aeropostale.com/cart/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (start count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "men graphic tees listing"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Go to Product: (tile)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "link",
+      "name": "size swatch (M)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add To Bag"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove (confirm dialog)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "fe8a10fb14143505086bf42bffafbbedb517d9d35b2ae3b3e20af809c5caa9f8",
+      "bytes": 490149,
+      "chunks": 2,
+      "url": "https://www.aeropostale.com/cart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "d93598058cd1a28e2c1f58f0de74225c7e37056b952fbf7c3530e1d53b2753d7",
+      "bytes": 1367825,
+      "chunks": 4,
+      "url": "https://www.aeropostale.com/skittles-relaxed-graphic-tee/60187245.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "d8895782725c41799568858623df01325dd8eae5e87657f32bc2f525f29e1959",
+      "bytes": 637221,
+      "chunks": 2,
+      "url": "https://www.aeropostale.com/cart/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-qty2",
+      "reason": "no increment control in cart; quantity changes only via an edit dialog (not an allowed control)"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart started empty and one own item suffices for cart-1"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.aeropostale.com/men-teen-boys/tops/graphic-tees/",
+    "productUrl": "https://www.aeropostale.com/skittles-relaxed-graphic-tee/60187245.html",
+    "price": "$16.00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Earlier attempt of this store was not-started (tab cap); this record replaces it as session 1 per the coordinator's task.",
+    "Click on the Toyota Supra tile landed on the adjacent Skittles tee (layout shift); that item ($16.00, in band) was used.",
+    "First Add To Bag ref was off-viewport; the second (visible) Add To Bag button was clicked once.",
+    "robots.txt disallows /cart and /*Checkout-* for *; recorded only. Cart page was loaded by URL.",
+    "All chunk results exceeded the inline limit and were saved by the harness to tool-results files (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:07:13.869Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:07:15.079Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:07:15.087Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:07:17.603Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:07:20.699Z",
+      "tool": "navigate",
+      "url": "https://www.aeropostale.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:07:24.641Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:07:30.747Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:07:34.368Z",
+      "tool": "navigate",
+      "url": "https://www.aeropostale.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:07:39.596Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:07:44.287Z",
+      "tool": "navigate",
+      "url": "https://www.aeropostale.com/cart/"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:07:44.296Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:08:14.066Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:08:17.546Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:08:21.220Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:08:25.365Z",
+      "tool": "navigate",
+      "url": "https://www.aeropostale.com/men-teen-boys/tops/graphic-tees/"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:08:25.370Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:08:30.352Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:08:33.963Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:08:37.125Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:08:46.622Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:08:46.629Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:09:02.711Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:09:06.606Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:09:10.731Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:09:10.768Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:09:22.261Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T00:09:25.596Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T00:09:28.806Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T00:09:32.174Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T00:09:35.937Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T00:09:35.944Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T00:10:07.428Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T00:10:10.904Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T00:10:18.233Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T00:10:21.863Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T00:10:25.477Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T00:10:40.943Z",
+      "tool": "navigate",
+      "url": "https://www.aeropostale.com/cart/"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T00:10:41.373Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T00:11:12.176Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T00:11:15.601Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T00:11:23.801Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T00:11:27.303Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T00:11:30.624Z",
+      "tool": "find"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T00:11:33.804Z",
+      "tool": "find"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T00:11:37.592Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T00:11:40.983Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T00:11:44.794Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T00:11:47.538Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T00:11:49.851Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T00:11:52.168Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T00:11:56.308Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T00:11:56.835Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T00:11:58.991Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T00:11:59.524Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T00:12:04.292Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T00:12:04.699Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T00:12:09.434Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T00:12:11.533Z",
+      "tool": "Read"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T00:12:31.090Z",
+      "tool": "Write"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T00:12:36.152Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "fe8a10fb14143505086bf42bffafbbedb517d9d35b2ae3b3e20af809c5caa9f8"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "d93598058cd1a28e2c1f58f0de74225c7e37056b952fbf7c3530e1d53b2753d7"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "d8895782725c41799568858623df01325dd8eae5e87657f32bc2f525f29e1959"
+      }
+    ],
+    "errors": []
+  }
+}

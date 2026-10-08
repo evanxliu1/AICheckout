@@ -1,0 +1,188 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "freepeople.com",
+  "stream": "us",
+  "visit": 291,
+  "session": 1,
+  "entryHost": "www.freepeople.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a62ea36943f168d80",
+  "startUtc": "2026-10-08T05:45:08.124Z",
+  "endUtc": "2026-10-08T05:46:54.072Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.freepeople.com",
+      "status": 403,
+      "sha256": "859e141d5a1825d47ae043917d18d0ef71b7876e0391731b9004f53ef75fb34f",
+      "bytes": 774,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.freepeople.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.freepeople.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at DataDome challenge on entry"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at DataDome challenge on entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at DataDome challenge on entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at DataDome challenge on entry"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.freepeople.com/",
+    "title": "https://www.freepeople.com/",
+    "marker": "DataDome device check element in accessibility tree; page body text empty",
+    "wording": "DataDome Device Check"
+  },
+  "problems": [
+    "robots.txt rendered in the pane, but the hash script's re-fetch (credentials omitted) got HTTP 403, 774 bytes; the hash is of that 403 body, not of the robots.txt shown. The rules as displayed: Allow / for *, no cart or checkout disallow (order/ and profile/ disallowed).",
+    "Entry home page showed a DataDome Device Check challenge; stopped at once, no interaction, no export. Sign-in state and cart count were not observable."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:45:08.124Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:45:08.128Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:45:08.930Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:45:08.942Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:45:28.055Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:45:31.585Z",
+      "tool": "navigate",
+      "url": "https://www.freepeople.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:45:37.886Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:45:47.431Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:45:54.017Z",
+      "tool": "navigate",
+      "url": "https://www.freepeople.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:46:02.646Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:46:09.876Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:46:31.683Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:46:45.788Z",
+      "tool": "Write"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:46:54.072Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

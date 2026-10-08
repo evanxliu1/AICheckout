@@ -1,0 +1,826 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "bokus.com",
+  "stream": "non-us",
+  "visit": 202,
+  "session": 2,
+  "entryHost": "www.bokus.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-add8af9be9286fecd",
+  "startUtc": "2026-10-08T04:13:47.143Z",
+  "endUtc": "2026-10-08T04:25:00.320Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.bokus.com",
+      "status": 200,
+      "sha256": "4fb25f63f745e1abee62bbfed44dfe86b2a80a244a7771aff6f919732b88d983",
+      "bytes": 106,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.bokus.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.bokus.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.bokus.com/varukorg"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.bokus.com/topplistor"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.bokus.com/bok/9789180068338/flickan-pa-klippan"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.bokus.com/cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.bokus.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/varukorg (guess, 404)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/topplistor"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Flickan på klippan"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Förboka (no effect, consent dialog)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Fler alternativ (cookie settings)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Bekräfta mina val (defaults)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Förboka"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Antal produkter i varukorg: 1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (guess, 404)"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Antal produkter i varukorg: 1"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Antal produkter i varukorg: 1"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Ökat antal till 2"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "ta bort \"Flickan på klippan\" ur din kun"
+    },
+    {
+      "n": 21,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "8be20a7690f704c67d7041f341f90513746d9caffb81c05c75ce5a960ebdeba4",
+      "bytes": 1104319,
+      "chunks": 3,
+      "url": "https://www.bokus.com/bok/9789180068338/flickan-pa-klippan",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "c02660b857e8821e15b554b24101b0f967d28c17260f38f0f3b05395cce6521b",
+      "bytes": 904259,
+      "chunks": 3,
+      "url": "https://www.bokus.com/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "3de514ada0e61242aa6f20606dd4e4e49996b3175b38b7c19b413b11bcb746d9",
+      "bytes": 904210,
+      "chunks": 3,
+      "url": "https://www.bokus.com/",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "8f8c3ae998e96a67cd542172ac8605b10b338870b6938416777d23bccc9649d7",
+      "bytes": 897981,
+      "chunks": 3,
+      "url": "https://www.bokus.com/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; second item skipped to keep the session short"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.bokus.com/topplistor",
+    "productUrl": "https://www.bokus.com/bok/9789180068338/flickan-pa-klippan",
+    "price": "259 kr",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "SEK",
+  "observedRegion": "SE",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "No standalone cart page outside /checkout (forbidden): cart-1, cart-qty2 and empty-cart are the header cart drawer opened on the home page; /varukorg and /cart are 404.",
+    "Item is a pre-order (Förboka, ships 2026-10-29), counted as in stock per the item rule.",
+    "First add-to-cart click had no effect while the cookie consent dialog was open; consent saved via preference centre with default (non-essential off) choices, then add succeeded.",
+    "empty-cart taken after removing own item (cart actually empty), not at session start."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:13:47.143Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:13:48.490Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:13:48.496Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:13:52.085Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:13:55.165Z",
+      "tool": "navigate",
+      "url": "https://www.bokus.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:13:59.138Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:14:06.055Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:14:11.629Z",
+      "tool": "navigate",
+      "url": "https://www.bokus.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:14:11.686Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:14:17.368Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:14:21.706Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:14:21.783Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:14:35.042Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:14:40.750Z",
+      "tool": "navigate",
+      "url": "https://www.bokus.com/varukorg"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:14:40.855Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:14:47.131Z",
+      "tool": "navigate",
+      "url": "https://www.bokus.com/topplistor"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:14:47.139Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:14:53.629Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:15:01.756Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:15:06.430Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:15:13.202Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:15:17.003Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:15:25.750Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:15:30.628Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:15:34.119Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:15:38.229Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:15:42.982Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:15:43.000Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:15:50.754Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:16:01.860Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:16:06.605Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:16:11.910Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:16:20.321Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:16:28.867Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:16:41.284Z",
+      "tool": "find"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:16:52.431Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:16:58.824Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:17:15.530Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:17:15.761Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:17:24.691Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:17:41.674Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T04:17:47.583Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T04:17:47.641Z",
+      "tool": "find"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T04:17:55.332Z",
+      "tool": "find"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T04:18:25.923Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T04:18:31.553Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T04:18:36.232Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T04:18:44.456Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T04:18:50.770Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T04:18:59.241Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T04:18:59.298Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T04:19:06.918Z",
+      "tool": "find"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T04:19:15.467Z",
+      "tool": "find"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T04:19:29.401Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T04:19:38.097Z",
+      "tool": "find"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T04:19:46.153Z",
+      "tool": "find"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T04:19:53.624Z",
+      "tool": "navigate",
+      "url": "https://www.bokus.com/cart"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T04:19:53.633Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T04:19:59.293Z",
+      "tool": "find"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T04:20:04.674Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T04:20:04.850Z",
+      "tool": "find"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T04:20:11.720Z",
+      "tool": "navigate",
+      "url": "https://www.bokus.com/"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T04:20:11.733Z",
+      "tool": "find"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T04:20:21.691Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T04:20:21.698Z",
+      "tool": "find"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T04:20:32.748Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T04:20:32.760Z",
+      "tool": "find"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T04:20:39.390Z",
+      "tool": "find"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T04:20:39.422Z",
+      "tool": "find"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T04:21:23.465Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T04:21:33.699Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T04:21:38.658Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T04:21:43.136Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T04:21:48.670Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T04:21:49.051Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T04:21:49.058Z",
+      "tool": "find"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T04:21:55.942Z",
+      "tool": "find"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-08T04:22:25.674Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-08T04:22:30.876Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-08T04:22:36.299Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-08T04:22:42.265Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-08T04:22:49.870Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-08T04:22:49.953Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-08T04:22:49.954Z",
+      "tool": "find"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-08T04:23:23.709Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 85,
+      "utc": "2026-10-08T04:23:33.670Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 86,
+      "utc": "2026-10-08T04:23:47.563Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 87,
+      "utc": "2026-10-08T04:23:59.730Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 88,
+      "utc": "2026-10-08T04:24:12.743Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 89,
+      "utc": "2026-10-08T04:24:13.124Z",
+      "tool": "Read"
+    },
+    {
+      "n": 90,
+      "utc": "2026-10-08T04:24:48.731Z",
+      "tool": "Write"
+    },
+    {
+      "n": 91,
+      "utc": "2026-10-08T04:25:00.320Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "8be20a7690f704c67d7041f341f90513746d9caffb81c05c75ce5a960ebdeba4"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "c02660b857e8821e15b554b24101b0f967d28c17260f38f0f3b05395cce6521b"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "3de514ada0e61242aa6f20606dd4e4e49996b3175b38b7c19b413b11bcb746d9"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "8f8c3ae998e96a67cd542172ac8605b10b338870b6938416777d23bccc9649d7"
+      }
+    ],
+    "errors": []
+  }
+}

@@ -1,0 +1,788 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "naturallife.com",
+  "stream": "us",
+  "visit": 249,
+  "session": 1,
+  "entryHost": "www.naturallife.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a703a412a33aae2c3",
+  "startUtc": "2026-10-08T04:15:32.270Z",
+  "endUtc": "2026-10-08T04:23:09.870Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2 -> 1 via decrement)",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "item": "own item 1 (qty 1 -> 0 via decrement)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.naturallife.com",
+      "status": 200,
+      "sha256": "c3bf4cb995b20ef449163031eadfc1c2194eaf36f96738b8ca8dcbec3a3f38b1",
+      "bytes": 4867,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.naturallife.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.naturallife.com/cart"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.naturallife.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.naturallife.com/products/favorite-coffee-mug-horse"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.naturallife.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (starting count)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Favorite Coffee Mug (did not navigate)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (link href)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart (hit video widget)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "",
+      "name": "live video overlay close"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "",
+      "name": "video mini-player close"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "",
+      "name": "video overlay close"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "",
+      "name": "cookie banner close (no decline seen)"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increment Quantity"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "click",
+      "role": "",
+      "name": "trash icon (no effect)"
+    },
+    {
+      "n": 21,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Decrement Quantity"
+    },
+    {
+      "n": 22,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Decrement Quantity"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "67f8fa66cde9c461505c15b3e0969b0c633f258ee1420fb83784f7e34900cab7",
+      "bytes": 614276,
+      "chunks": 2,
+      "url": "https://www.naturallife.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "49f72d27e393acceff827290bea93256091290fb80243ed04cf0c56a11dbfe23",
+      "bytes": 622893,
+      "chunks": 2,
+      "url": "https://www.naturallife.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "152c79eb5e5af730f10a28f7b3149696fae798ee3ab56abea82b57edc3df0504",
+      "bytes": 654610,
+      "chunks": 2,
+      "url": "https://www.naturallife.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "no in-page cart drawer appeared after add-to-cart; add was confirmed on /cart"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "cart started empty, no lingering item"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.naturallife.com/",
+    "productUrl": "https://www.naturallife.com/products/favorite-coffee-mug-horse",
+    "price": "$17.00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Several Add to Cart clicks were made (first hit a live-video widget overlay); /cart showed qty 1, so only one add took effect",
+    "Pane screenshots looked offset from the 1024x768 viewport; coordinate clicks were unreliable, so ref clicks were used",
+    "Removal used Decrement Quantity twice (trash icon not exposed to the accessibility tree; coordinate click on it had no effect)",
+    "Cookie banner closed with its X; no decline control was visible",
+    "robots.txt disallows /cart and /checkout for *; recorded only"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:15:32.270Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:15:33.139Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:15:34.460Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:15:34.469Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:15:47.402Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:15:51.283Z",
+      "tool": "navigate",
+      "url": "https://www.naturallife.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:15:51.346Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:15:59.307Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:16:04.247Z",
+      "tool": "navigate",
+      "url": "https://www.naturallife.com/cart"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:16:04.277Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:16:15.515Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:16:15.685Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:16:48.900Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:16:58.938Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:17:09.563Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:17:26.651Z",
+      "tool": "navigate",
+      "url": "https://www.naturallife.com/"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:17:26.829Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:17:44.438Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:17:44.505Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:17:53.920Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:17:59.756Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:18:00.580Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:18:00.589Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:18:13.395Z",
+      "tool": "navigate",
+      "url": "https://www.naturallife.com/products/favorite-coffee-mug-horse"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:18:13.401Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:18:25.138Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:18:30.032Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:18:35.109Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:18:36.519Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:18:36.520Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:18:47.922Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:18:47.941Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:18:58.533Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:18:58.599Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:19:07.139Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:19:07.925Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:19:17.440Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:19:17.443Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:19:23.100Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:19:23.558Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:19:23.884Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T04:19:36.068Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T04:19:41.640Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T04:19:42.682Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T04:19:43.393Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T04:19:49.238Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T04:19:49.816Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T04:19:50.181Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T04:19:57.549Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T04:20:02.208Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T04:20:06.692Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T04:20:07.383Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T04:20:08.408Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T04:20:13.665Z",
+      "tool": "navigate",
+      "url": "https://www.naturallife.com/cart"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T04:20:14.215Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T04:20:44.988Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T04:20:49.088Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T04:20:54.407Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T04:20:57.322Z",
+      "tool": "find"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T04:21:00.541Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T04:21:01.514Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T04:21:01.516Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T04:21:28.000Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T04:21:33.308Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T04:21:37.426Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T04:21:44.975Z",
+      "tool": "find"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T04:21:48.023Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T04:21:50.707Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T04:21:53.987Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T04:21:57.718Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T04:21:58.170Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T04:21:58.539Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T04:22:06.999Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T04:22:11.704Z",
+      "tool": "find"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T04:22:14.272Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T04:22:19.969Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T04:22:23.048Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-08T04:22:23.961Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-08T04:22:24.178Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-08T04:22:33.478Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-08T04:22:34.184Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-08T04:22:34.613Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-08T04:22:41.127Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-08T04:23:02.643Z",
+      "tool": "Write"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-08T04:23:09.870Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "67f8fa66cde9c461505c15b3e0969b0c633f258ee1420fb83784f7e34900cab7"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "49f72d27e393acceff827290bea93256091290fb80243ed04cf0c56a11dbfe23"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "152c79eb5e5af730f10a28f7b3149696fae798ee3ab56abea82b57edc3df0504"
+      }
+    ],
+    "errors": []
+  }
+}

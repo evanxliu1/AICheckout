@@ -1,0 +1,309 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "libraccio.it",
+  "stream": "non-us",
+  "visit": 126,
+  "session": 1,
+  "entryHost": "www.libraccio.it",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a636c3c4c46aaee16",
+  "startUtc": "2026-10-08T00:18:49.435Z",
+  "endUtc": "2026-10-08T00:21:16.832Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.libraccio.it",
+      "status": 200,
+      "sha256": "879893742675300868a134b480fc6a0b3307a2114c30b1dfa2c59a3d97181ad6",
+      "bytes": 1344,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.libraccio.it/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.libraccio.it/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.libraccio.it/libri-nuovi"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.libraccio.it/libro/9788807037351/chiara-gamberale/liberi-tutti.-con-cartolina-illustrata-in-omaggio.html"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "Chiudi (cookie banner, no accept)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "libri nuovi"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Liberi tutti. Con cartolina illustrata i"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "2c052124be5e2b8cf5a7db966d4d763e9addd337fd07ddbb69eadccd1e81f928",
+      "bytes": 399539,
+      "chunks": 1,
+      "url": "https://www.libraccio.it/libro/9788807037351/chiara-gamberale/liberi-tutti.-con-cartolina-illustrata-in-omaggio.html"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "no add attempted: the store's only cart page is /Checkout/Carrello.aspx (checkout segment), and the add button is an ASP.NET postback likely to land there"
+    },
+    {
+      "state": "cart-1",
+      "reason": "cart page path /Checkout/Carrello.aspx has a checkout segment (forbidden; not Magento /checkout/cart)"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "cart page under /Checkout/"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "cart page under /Checkout/"
+    },
+    {
+      "state": "empty-cart",
+      "reason": "cart page under /Checkout/; header showed 0 items but the page was not opened"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.libraccio.it/libri-nuovi",
+    "productUrl": "https://www.libraccio.it/libro/9788807037351/chiara-gamberale/liberi-tutti.-con-cartolina-illustrata-in-omaggio.html",
+    "price": "EUR 17,10",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EUR",
+  "observedRegion": "IT",
+  "outcome": {
+    "status": "excluded",
+    "code": "would-need-forbidden-action",
+    "evidenceSha256": "2c052124be5e2b8cf5a7db966d4d763e9addd337fd07ddbb69eadccd1e81f928"
+  },
+  "challenge": null,
+  "problems": [
+    "Cart link in header points to /Checkout/Carrello.aspx; every cart state needs a path with a checkout segment, so the store was stopped before any add (no item added, nothing to remove).",
+    "Add-to-cart control 'Compra nuovo' is a javascript __doPostBack link; a post-add redirect to /Checkout/Carrello.aspx was judged likely. Reviewer may decide whether a later session should test for an in-page minicart.",
+    "Evidence export is the product page (shows the header cart link and add control); chunk 0 was oversized and saved by the harness to a file, not opened.",
+    "Cookie banner closed with 'Chiudi' (no explicit decline control besides settings).",
+    "robots.txt disallows /checkout/* and /Checkout/* (cart lives under /Checkout/); root allowed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:18:49.435Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:18:50.685Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:18:50.692Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:18:53.024Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:18:56.263Z",
+      "tool": "navigate",
+      "url": "https://www.libraccio.it/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:18:56.385Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:19:03.719Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:19:12.009Z",
+      "tool": "navigate",
+      "url": "https://www.libraccio.it/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:19:12.389Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:19:30.580Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:19:30.583Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:19:34.127Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:19:34.168Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:19:37.521Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:19:41.772Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:19:41.775Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:19:45.135Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:19:48.692Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:19:52.475Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:19:52.482Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:19:57.430Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:20:32.413Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:20:36.039Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:20:44.140Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:21:05.855Z",
+      "tool": "Write"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:21:16.832Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "2c052124be5e2b8cf5a7db966d4d763e9addd337fd07ddbb69eadccd1e81f928"
+      }
+    ],
+    "errors": []
+  }
+}

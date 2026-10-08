@@ -1,0 +1,557 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "teepublic.com",
+  "stream": "us",
+  "visit": 149,
+  "session": 1,
+  "entryHost": "www.teepublic.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-a64246b7e3f643cd6",
+  "startUtc": "2026-10-07T23:57:34.187Z",
+  "endUtc": "2026-10-08T00:03:05.535Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (t-shirt, size L, qty field 2 unsubmitted)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.teepublic.com",
+      "status": 200,
+      "sha256": "1463328cbb869e7841ccf62af57abbdd1bb090e493ac604ae085c9df2417889b",
+      "bytes": 4005,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.teepublic.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.teepublic.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.teepublic.com/t-shirt/495324-vampires-mornings-suck"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.teepublic.com/cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.teepublic.com/"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.teepublic.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "DinoMike (home banner product tile)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "link",
+      "name": "Close pop-up dialog"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "radio",
+      "name": "Size L"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add To Cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "increment item quantity"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (redirects home when empty)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "cart-1",
+      "sha256": "af3214104abde1ac82152db9d0485f5c9fef9337e827dbabe0e68c828c5b3a65",
+      "bytes": 360130,
+      "chunks": 1,
+      "url": "https://www.teepublic.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "ab0e5bc48d79a1febb662fab9c18d3769ca7478cb62d03b3ed3328927b503c8e",
+      "bytes": 675225,
+      "chunks": 2,
+      "url": "https://www.teepublic.com/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart navigates straight to the /cart page; no in-page cart shown after the add"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "increment only changes the quantity field; totals need a separate 'Update' submit button, not clicked as it is outside the allowed controls"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no lingering items; second item not added"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.teepublic.com/",
+    "productUrl": "https://www.teepublic.com/t-shirt/495324-vampires-mornings-suck",
+    "price": "$24",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Replaces an earlier not-started (tab-cap) record for session 1; that attempt loaded nothing.",
+    "empty-cart: /cart with an empty cart redirects to the home page showing a 'no items in your cart' notice; exported there (URL is the home page), taken after removing own item.",
+    "cart-qty2 not taken: cart quantity uses increment plus an 'Update' submit button; Update not clicked. Reviewer may decide whether Update counts as a quantity-increment control.",
+    "All chunk results exceeded the inline limit and were saved by the harness to tool-results files (cart-1 chunk 0; empty-cart chunks 0 and 1); not opened.",
+    "robots.txt disallows /cart and /checkout for *; recorded only.",
+    "Pane hidden: screenshots rendered partly blank; used read_page/find."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T23:57:34.187Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T23:57:35.395Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T23:57:35.403Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T23:57:38.063Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T23:57:41.850Z",
+      "tool": "navigate",
+      "url": "https://www.teepublic.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T23:57:41.948Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T23:57:54.196Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T23:57:58.395Z",
+      "tool": "navigate",
+      "url": "https://www.teepublic.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T23:57:58.399Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T23:58:03.684Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T23:58:36.973Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T23:59:02.856Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:59:02.862Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:59:22.573Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:59:27.380Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T23:59:31.065Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T23:59:31.070Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T23:59:49.160Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T23:59:52.222Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:00:09.956Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:00:10.346Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:00:13.594Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:00:13.973Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:00:16.370Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:00:19.714Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:00:21.880Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T00:00:23.996Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T00:00:27.161Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T00:00:29.530Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T00:00:29.874Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T00:00:32.377Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T00:00:32.819Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T00:00:35.102Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T00:00:35.466Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T00:00:37.934Z",
+      "tool": "find"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T00:00:40.943Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T00:01:01.658Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T00:01:04.399Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T00:01:06.924Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T00:01:09.019Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T00:01:16.620Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T00:01:17.396Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T00:01:17.707Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T00:01:44.114Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T00:01:44.641Z",
+      "tool": "find"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T00:01:45.020Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T00:01:50.268Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T00:01:58.418Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T00:01:59.164Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T00:01:59.509Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T00:02:05.995Z",
+      "tool": "navigate",
+      "url": "https://www.teepublic.com/cart"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T00:02:06.332Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T00:02:29.033Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T00:02:31.539Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T00:02:34.075Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T00:02:37.360Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T00:02:38.122Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T00:02:42.342Z",
+      "tool": "Read"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T00:02:59.714Z",
+      "tool": "Write"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T00:03:05.535Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "af3214104abde1ac82152db9d0485f5c9fef9337e827dbabe0e68c828c5b3a65"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "ab0e5bc48d79a1febb662fab9c18d3769ca7478cb62d03b3ed3328927b503c8e"
+      }
+    ],
+    "errors": []
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "schema": "capture-pane-record.1",
+  "protocol": "generic-reader-protocol.10",
+  "domain": "davidjones.com",
+  "method": "pane",
+  "stream": "non-us",
+  "visit": 10,
+  "band": "top-1k",
+  "region": "asia-pacific",
+  "country": "AU",
+  "entryHost": "www.davidjones.com",
+  "session": 1,
+  "operator": {
+    "model": "claude-opus-5-5",
+    "transcriptId": null
+  },
+  "startUtc": "2026-10-07T05:00:59.735Z",
+  "endUtc": "2026-10-07T05:02:42.686Z",
+  "signedIn": false,
+  "signedInNote": "header showed a Sign In link and no account greeting",
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "cartCountNote": "start count read from the header bag button and the empty bag drawer; no item was added, so the end count is unchanged (cart not re-read after the challenge)",
+  "removals": [],
+  "robots": {
+    "url": "https://www.davidjones.com/robots.txt",
+    "httpStatus": 200,
+    "bytes": 2013,
+    "sha256": "64d6b50b71b1cb11465300ab40fd4e2229d7057cb71943273853de6f98a1f57d",
+    "rootDisallowedForStar": false,
+    "rootDisallowedForAICheckoutCapture": false,
+    "cartPathDisallowed": false,
+    "checkoutPathDisallowed": false,
+    "notes": "User-agent * disallows only query patterns (default.aspx?q=, search?q, filter, refine=, sort=); no AICheckoutCapture group; cart path not observed (bag is a drawer). Recorded only, never excludes",
+    "decision": "recorded-only"
+  },
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "action": "navigate",
+      "url": "https://www.davidjones.com/robots.txt",
+      "note": "robots.txt read and hashed"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "action": "navigate",
+      "url": "https://www.davidjones.com/",
+      "note": "home page loaded, no challenge"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "action": "navigate",
+      "url": "https://www.davidjones.com/home/kitchen/reusable-cups",
+      "note": "listing (href of the home menu link 'Travel Mugs'); loaded, then showed a client-side error page after a scroll"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "action": "navigate",
+      "url": "https://www.davidjones.com/home/kitchen/reusable-cups",
+      "note": "reload of the listing; Imperva/Incapsula security verification page served; store stopped"
+    }
+  ],
+  "navigatingActions": 4,
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://www.davidjones.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "type": "robots-hash",
+      "script": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://www.davidjones.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "type": "click",
+      "role": "button",
+      "name": "Bag: 0 items",
+      "note": "opened bag drawer (empty); no navigation"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "type": "popup-close",
+      "role": "button",
+      "name": "Close",
+      "note": "closed bag drawer"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://www.davidjones.com/home/kitchen/reusable-cups"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "type": "scroll",
+      "note": "page then rendered 'Oops. Something went wrong.' error view"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "type": "navigate",
+      "target": "https://www.davidjones.com/home/kitchen/reusable-cups"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "type": "screenshot-check",
+      "result": "challenge detected; no interaction"
+    }
+  ],
+  "states": {},
+  "notReached": {
+    "empty-cart": "cart was empty but the bag is a drawer with no cart-page link while empty; store stopped by captcha before a cart page was found",
+    "minicart-1": "stopped: captcha on listing before any add",
+    "cart-1": "stopped: captcha on listing before any add",
+    "cart-qty2": "stopped: captcha on listing before any add",
+    "cart-2items": "stopped: captcha on listing before any add",
+    "cart-other": "stopped: captcha on listing before any add"
+  },
+  "itemPath": null,
+  "observedCurrency": "AUD",
+  "observedCurrencyNote": "home and listing prices shown with $ on the Australian storefront",
+  "outcome": {
+    "code": "captcha",
+    "evidenceSha256": null,
+    "challenge": {
+      "url": "https://www.davidjones.com/home/kitchen/reusable-cups",
+      "title": "(empty)",
+      "vendor": "Imperva/Incapsula",
+      "marker": "accessibility tree: 'Request unsuccessful. Incapsula incident ID' (id not recorded)",
+      "wording": "Just a quick check. We need to make sure you're a real person. Complete the following security verification."
+    },
+    "notExported": "CAPTCHA pages are never exported"
+  },
+  "problems": [
+    "Operator ran one grep on the protocol file (heading list) via Bash before switching to Read; grep is outside the allowed Bash command list (local file read only, no network).",
+    "Listing first loaded normally, then rendered a client-side 'Oops. Something went wrong.' view after a scroll; the one reload was served the Incapsula verification page.",
+    "Robot-era outcome re-visit (session 1 of at most 2); pane was also blocked, so no further session per the block rule."
+  ],
+  "transcriptId": "wf_ac947c9f-521/agent-a1914eff0e7307820",
+  "coordinatorNote": "transcriptId, startUtc and endUtc stamped by the coordinator from the transcript (operators have no clock); per-step utc left null in the pilot"
+}

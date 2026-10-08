@@ -1,0 +1,558 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "swappa.com",
+  "stream": "us",
+  "visit": 182,
+  "session": 1,
+  "entryHost": "swappa.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-ae1ea60be9d65f2f8",
+  "startUtc": "2026-10-08T00:42:45.154Z",
+  "endUtc": "2026-10-08T00:46:58.936Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "swappa.com",
+      "status": 200,
+      "sha256": "f9d22a1cf53c405cfc8d8cf9fbe25dfb8c10f5abc98fdd685ab60ce0b8dc6621",
+      "bytes": 63,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://swappa.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://swappa.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://swappa.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://swappa.com/listings/apple-ipad-9th-gen"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://swappa.com/listing/view/LAKR75364"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://swappa.com/listings/apple-ipad-9th-gen"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://swappa.com/listing/view/LAKR75364"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "iPad 9th Gen listings (homepage link)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "listing LAKR75364"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject Optional"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "iPad 9th Gen listings"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Listing Preview"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "listing LAKR75364"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "4361e824d702efe3f060278103f6052c790446060a0cc2d6983996463ef9fc11",
+      "bytes": 135681,
+      "chunks": 1,
+      "url": "https://swappa.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "132ecbbb90cec5d1dbfc6d0bf325bdfb7bef25a24a2d5cf3f12fb22542a11ece",
+      "bytes": 208373,
+      "chunks": 1,
+      "url": "https://swappa.com/listing/view/LAKR75364"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "no add-to-cart for logged-out visitors; listing offers only 'Login to Buy'"
+    },
+    {
+      "state": "cart-1",
+      "reason": "no add-to-cart for logged-out visitors"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "no add-to-cart; marketplace listings are single units"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no add-to-cart for logged-out visitors"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://swappa.com/listings/apple-ipad-9th-gen",
+    "productUrl": "https://swappa.com/listing/view/LAKR75364",
+    "price": "$165",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": "132ecbbb90cec5d1dbfc6d0bf325bdfb7bef25a24a2d5cf3f12fb22542a11ece"
+  },
+  "challenge": null,
+  "problems": [
+    "Logged-out listing page and listing preview offer no add-to-cart control, only a 'Login to Buy' link to /login; adding to the cart needs sign-in.",
+    "Empty cart exported before the item search (cart was actually empty).",
+    "Pane viewport rendered with a blank band above the sticky header on the listings page; did not affect reading."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:42:45.154Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:42:46.364Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:42:46.372Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:42:48.795Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:42:51.937Z",
+      "tool": "navigate",
+      "url": "https://swappa.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:42:52.084Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:42:58.547Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:43:10.517Z",
+      "tool": "navigate",
+      "url": "https://swappa.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:43:10.522Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:43:15.411Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:43:16.034Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:43:16.037Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:43:20.414Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:43:20.538Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:43:23.924Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:43:27.463Z",
+      "tool": "navigate",
+      "url": "https://swappa.com/cart"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:43:27.566Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:43:57.276Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:44:40.448Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:44:47.777Z",
+      "tool": "navigate",
+      "url": "https://swappa.com/listings/:token"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:44:47.806Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:44:53.021Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:44:57.289Z",
+      "tool": "navigate",
+      "url": "https://swappa.com/listing/view/LAKR75364"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:44:57.294Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:45:01.425Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:45:04.554Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T00:45:08.574Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T00:45:12.775Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T00:45:12.781Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T00:45:20.067Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T00:45:23.036Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T00:45:23.427Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T00:45:26.608Z",
+      "tool": "navigate",
+      "url": "https://swappa.com/listings/:token"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T00:45:27.674Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T00:45:28.144Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T00:45:36.348Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T00:45:38.764Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T00:45:39.158Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T00:45:41.373Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T00:45:43.872Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T00:45:44.254Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T00:45:46.856Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T00:45:47.278Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T00:45:49.645Z",
+      "tool": "find"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T00:45:51.740Z",
+      "tool": "find"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T00:45:54.482Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T00:45:54.880Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T00:45:57.658Z",
+      "tool": "find"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T00:45:59.737Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T00:46:00.133Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T00:46:02.945Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T00:46:03.284Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T00:46:06.418Z",
+      "tool": "find"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T00:46:11.863Z",
+      "tool": "navigate",
+      "url": "https://swappa.com/listing/view/LAKR75364"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T00:46:12.220Z",
+      "tool": "find"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T00:46:32.984Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T00:46:35.279Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T00:46:37.912Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T00:46:53.586Z",
+      "tool": "Write"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T00:46:58.936Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "4361e824d702efe3f060278103f6052c790446060a0cc2d6983996463ef9fc11"
+      },
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "132ecbbb90cec5d1dbfc6d0bf325bdfb7bef25a24a2d5cf3f12fb22542a11ece"
+      }
+    ],
+    "errors": []
+  }
+}

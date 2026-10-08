@@ -1,0 +1,144 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "jumia.com.eg",
+  "stream": "non-us",
+  "visit": 65,
+  "session": 1,
+  "entryHost": "www.jumia.com.eg",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a1a35ec575400cc03",
+  "startUtc": "2026-10-07T07:59:59.463Z",
+  "endUtc": "2026-10-07T08:00:27.557Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.jumia.com.eg",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.jumia.com.eg/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on first request"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall on first request"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall on first request"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall on first request"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall on first request"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.jumia.com.eg/robots.txt",
+    "title": "Just a moment...",
+    "marker": "Cloudflare challenge redirect (__cf_chl_rt_tk query parameter) with title 'Just a moment...'",
+    "wording": "Just a moment..."
+  },
+  "problems": [
+    "Cloudflare 'Just a moment...' challenge served on the very first request (robots.txt); no robots hash, sign-in check or cart count possible; not interacted with, not exported; tab closed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:59:59.463Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:00:00.589Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:00:00.595Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:00:03.129Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:00:06.713Z",
+      "tool": "navigate",
+      "url": "https://www.jumia.com.eg/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:00:06.773Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:00:13.139Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:00:21.074Z",
+      "tool": "Write"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:00:27.557Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

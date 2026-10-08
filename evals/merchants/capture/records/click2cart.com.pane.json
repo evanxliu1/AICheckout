@@ -1,0 +1,178 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "click2cart.com",
+  "stream": "us",
+  "visit": 268,
+  "session": 1,
+  "entryHost": "click2cart.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a5adb5620e172c235",
+  "startUtc": "2026-10-08T05:15:50.769Z",
+  "endUtc": "2026-10-08T05:17:08.081Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "click2cart.com",
+      "status": 200,
+      "sha256": "3a125e84a637dc3f5442bb6949fa200056f37db4627b4c2a3addc55bbb89b703",
+      "bytes": 23,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://click2cart.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://click2cart.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host root"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "entry redirected off-domain; stopped"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "entry redirected off-domain; stopped"
+    },
+    {
+      "state": "cart-1",
+      "reason": "entry redirected off-domain; stopped"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "entry redirected off-domain; stopped"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "redirected-off-domain",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Entry https://click2cart.com/ redirected to https://www.smartcommerce.com/ (landing host www.smartcommerce.com, title 'SmartCommerce | Built to Convert. Proven to Perform.'); a B2B commerce-technology vendor site, not a store. Stopped at once; nothing more loaded or exported.",
+    "Starting and ending cart counts not observed (no store page reached)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:15:50.769Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:15:51.898Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:15:53.363Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:15:53.460Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:16:07.759Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:16:12.547Z",
+      "tool": "navigate",
+      "url": "https://click2cart.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:16:12.579Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:16:19.879Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:16:24.481Z",
+      "tool": "navigate",
+      "url": "https://click2cart.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:16:24.539Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:16:41.339Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:16:56.227Z",
+      "tool": "Write"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:17:08.081Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

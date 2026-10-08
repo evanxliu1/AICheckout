@@ -1,0 +1,204 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "ugg.com",
+  "stream": "us",
+  "visit": 300,
+  "session": 1,
+  "entryHost": "www.ugg.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a3969a153ae81198b",
+  "startUtc": "2026-10-08T06:00:08.176Z",
+  "endUtc": "2026-10-08T06:02:45.197Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.ugg.com",
+      "status": 200,
+      "sha256": "434d159e454adfc32ba657ed7b337cc6bde5eccdb92cda0765ed981d5138c4db",
+      "bytes": 12731,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.ugg.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.ugg.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "stopped at DataDome challenge on entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at DataDome challenge on entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at DataDome challenge on entry"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at DataDome challenge on entry"
+    },
+    {
+      "state": "empty-cart",
+      "reason": "stopped at DataDome challenge on entry"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.ugg.com/",
+    "title": "https://www.ugg.com/",
+    "marker": "DataDome",
+    "wording": "DataDome Device Check"
+  },
+  "problems": [
+    "Home page showed an empty body, then accessibility tree held only 'DataDome Device Check'; stopped, not exported, no interaction.",
+    "robots.txt: */cart/* and */checkout/* disallowed for *; Cart-Show pipeline path disallowed; root allowed.",
+    "Sign-in state and cart count not observable (challenge before any store page rendered)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T06:00:08.176Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T06:00:09.004Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T06:00:10.408Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T06:00:10.418Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T06:00:22.818Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T06:00:28.731Z",
+      "tool": "navigate",
+      "url": "https://www.ugg.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T06:00:29.101Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T06:00:40.305Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T06:00:49.816Z",
+      "tool": "navigate",
+      "url": "https://www.ugg.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T06:00:50.229Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T06:01:01.648Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T06:01:38.516Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T06:01:38.703Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T06:02:16.905Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T06:02:33.845Z",
+      "tool": "Write"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T06:02:45.197Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

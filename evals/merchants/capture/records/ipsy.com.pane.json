@@ -1,0 +1,411 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "ipsy.com",
+  "stream": "us",
+  "visit": 236,
+  "session": 1,
+  "entryHost": "www.ipsy.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-adfafca02ccd3ae0f",
+  "startUtc": "2026-10-08T04:00:19.935Z",
+  "endUtc": "2026-10-08T04:03:53.879Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.ipsy.com",
+      "status": 200,
+      "sha256": "3a3db8684b7ac9c49ff0fc7e388b016bc5ce6e5dedca911a312d40ab15055650",
+      "bytes": 183,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.ipsy.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.ipsy.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.ipsy.com/shop"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.ipsy.com/shop"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.ipsy.com/shop/c/tools"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.ipsy.com/shop/m/holiday-gift-shop"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/shop (footer link IPSY Shop off-canvas)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Makeup"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/shop/c/tools (menu link href)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/shop/m/holiday-gift-shop (menu link)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "08478409052f72b897b5fe44329200e12f49840a33327d38a6639c56d75925d5",
+      "bytes": 2757609,
+      "chunks": 7,
+      "url": "https://www.ipsy.com/shop/m/holiday-gift-shop"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "shop is members-only; every product tile shows Unlock Access instead of add-to-cart when logged out"
+    },
+    {
+      "state": "cart-1",
+      "reason": "no add possible without membership sign-in"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "no add possible without membership sign-in"
+    },
+    {
+      "state": "empty-cart",
+      "reason": "cart page not opened; header cart badge showed no count when logged out"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.ipsy.com/shop/m/holiday-gift-shop",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": "08478409052f72b897b5fe44329200e12f49840a33327d38a6639c56d75925d5"
+  },
+  "challenge": null,
+  "problems": [
+    "IPSY Shop is members-only: shop banner says picks are 'exclusively for members' and every listed product shows 'Unlock Access' in place of add-to-cart",
+    "read_page/find failed on listing pages (accessibility tree error on a filter radio label selector), and screenshots failed because the pane was hidden, so no product page was opened; exclusion judged from listing text",
+    "starting cart count not read (header cart button showed 'undefined Items'); not signed in",
+    "evidence export chunks 0-6 were oversized and saved by the harness to tool-results files (not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:00:19.935Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:00:20.739Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:00:21.763Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:00:21.769Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:00:26.333Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:00:29.365Z",
+      "tool": "navigate",
+      "url": "https://www.ipsy.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:00:32.982Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:00:39.279Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:00:43.118Z",
+      "tool": "navigate",
+      "url": "https://www.ipsy.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:00:43.161Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:00:52.223Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:00:55.679Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:00:59.199Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:00:59.204Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:01:03.075Z",
+      "tool": "navigate",
+      "url": "https://www.ipsy.com/shop"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:01:03.190Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:01:07.773Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:01:11.880Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:01:11.883Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:01:18.758Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:01:21.889Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:01:25.938Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:01:35.299Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:01:41.973Z",
+      "tool": "navigate",
+      "url": "https://www.ipsy.com/shop/c/tools"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:01:41.978Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:01:46.168Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:02:07.139Z",
+      "tool": "navigate",
+      "url": "https://www.ipsy.com/shop/m/holiday-gift-shop"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:02:07.141Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:02:14.607Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:02:23.918Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:02:53.085Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:02:56.973Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:03:01.454Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:03:04.938Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:03:09.145Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:03:13.022Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:03:16.671Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:03:21.236Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:03:25.258Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:03:46.230Z",
+      "tool": "Write"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:03:53.879Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "08478409052f72b897b5fe44329200e12f49840a33327d38a6639c56d75925d5"
+      }
+    ],
+    "errors": []
+  }
+}

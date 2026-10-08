@@ -1,0 +1,911 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "michaels.com",
+  "stream": "us",
+  "visit": 83,
+  "session": 1,
+  "entryHost": "www.michaels.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a829b7eebca34789e",
+  "startUtc": "2026-10-07T07:57:49.314Z",
+  "endUtc": "2026-10-07T08:05:16.287Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 2,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": false
+    },
+    {
+      "n": 2,
+      "item": "own item 1 (qty 2), retry",
+      "ok": false
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.michaels.com",
+      "status": 200,
+      "sha256": "d3727adc9b0c7a5b6412a5eaa4b3ba40b9bb9de5ee53411047271b1f4180c4a6",
+      "bytes": 2717,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.michaels.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.michaels.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.michaels.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.michaels.com/shop/art-supplies"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.michaels.com/shop/art-supplies/drawing-supplies"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.michaels.com/product/uniball-jetstream-rt-07mm-ballpoint-pen-set-10801883"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.michaels.com/cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.michaels.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "art-supplies listing"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Drawing Supplies"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "uniball Jetstream RT 0.7mm Ballpoint Pen"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "button to increment counter for number"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "Remove"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Yes (Remove Product? dialog)"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (final check)"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "Remove"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "Yes (Remove Product? dialog)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "e4a08156caeb737b5cf2a2d8c04ecd9ef4c53ef919d314cc94c766523c6b4a8d",
+      "bytes": 818216,
+      "chunks": 3,
+      "url": "https://www.michaels.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "678e20d63862d0783d05c69336f534f8dd074a0c07cbc1ea28919bcda3e40966",
+      "bytes": 1172737,
+      "chunks": 3,
+      "url": "https://www.michaels.com/product/uniball-jetstream-rt-07mm-ballpoint-pen-set-10801883",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "742d609280c2a663b1cae58ff82fa5c9c054bfc9c366b4d0a5f1195e2846287b",
+      "bytes": 961256,
+      "chunks": 3,
+      "url": "https://www.michaels.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "f7055f3ed004c61c28db2397fd8e1079cc32fafebe8cd6cfadd969f0491e363f",
+      "bytes": 1206976,
+      "chunks": 4,
+      "url": "https://www.michaels.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; no lingering items and a second item was skipped to keep the session short"
+    },
+    {
+      "state": "cart-other",
+      "reason": "cart held only the operator's item"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.michaels.com/shop/art-supplies/drawing-supplies",
+    "productUrl": "https://www.michaels.com/product/uniball-jetstream-rt-07mm-ballpoint-pen-set-10801883",
+    "price": "USD 11.24",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cleanup failed: Remove opened a 'Remove Product?' dialog but clicking Yes (twice, once after a reload) did not remove the item; cart left with own item at qty 2 (endCartCount 2 vs start 0).",
+    "Pane screenshots rendered mostly blank/stale on the cart page; one increment ref was off-canvas (responsive duplicate), the visible duplicate was used.",
+    "Site auto-selected a pickup store and ZIP; left unchanged. Cookie banner has only accept or preferences; left alone.",
+    "A hidden 'Invalid Profile Information Detected' alertdialog is present in the DOM while logged out (not visible).",
+    "Chunk fetches were issued as separate direct calls in one parallel block; most chunk results were saved by the harness to tool-results files (not opened).",
+    "read_page full-tree output on the cart page was saved by the harness to a tool-results file (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:57:49.314Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:57:50.536Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:57:50.546Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:57:53.561Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:57:58.930Z",
+      "tool": "navigate",
+      "url": "https://www.michaels.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:57:59.044Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:58:06.516Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:58:11.236Z",
+      "tool": "navigate",
+      "url": "https://www.michaels.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:58:11.239Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:58:17.089Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:58:17.093Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:58:17.099Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:58:25.223Z",
+      "tool": "navigate",
+      "url": "https://www.michaels.com/cart"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:58:25.228Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:58:57.578Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:59:07.079Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:59:07.879Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:59:08.175Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:59:14.010Z",
+      "tool": "navigate",
+      "url": "https://www.michaels.com/shop/art-supplies"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:59:14.014Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T07:59:19.053Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T07:59:23.007Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T07:59:27.781Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T07:59:31.016Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T07:59:34.629Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T07:59:38.268Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T07:59:42.491Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T07:59:47.491Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T07:59:47.494Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T07:59:51.509Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T07:59:56.885Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T07:59:56.890Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T08:00:03.476Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T08:00:34.759Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T08:00:43.443Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T08:00:44.250Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T08:00:44.552Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T08:00:50.320Z",
+      "tool": "navigate",
+      "url": "https://www.michaels.com/cart"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T08:00:50.324Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T08:00:55.741Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T08:00:56.132Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T08:01:13.565Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T08:01:46.051Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T08:01:50.800Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T08:01:52.060Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T08:01:52.064Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T08:01:58.652Z",
+      "tool": "find"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T08:02:02.588Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T08:02:07.993Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T08:02:13.728Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T08:02:13.735Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T08:02:17.971Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T08:02:18.436Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T08:02:21.583Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T08:02:24.242Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T08:02:27.221Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T08:02:27.544Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T08:02:32.051Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T08:02:35.499Z",
+      "tool": "find"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T08:02:35.999Z",
+      "tool": "find"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T08:02:36.417Z",
+      "tool": "find"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T08:02:39.546Z",
+      "tool": "find"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T08:02:43.322Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T08:02:43.765Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T08:02:47.129Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T08:02:50.041Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T08:02:53.212Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T08:02:53.700Z",
+      "tool": "find"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T08:03:17.592Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-07T08:03:21.377Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-07T08:03:22.078Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-07T08:03:22.960Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-07T08:03:23.579Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-07T08:03:28.952Z",
+      "tool": "find"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-07T08:03:31.490Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-07T08:03:34.084Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-07T08:03:34.512Z",
+      "tool": "find"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-07T08:03:39.577Z",
+      "tool": "find"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-07T08:03:42.226Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-07T08:03:45.447Z",
+      "tool": "find"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-07T08:03:48.862Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-07T08:03:49.226Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-07T08:03:52.558Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-07T08:03:53.079Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-07T08:03:56.751Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 85,
+      "utc": "2026-10-07T08:03:59.620Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 86,
+      "utc": "2026-10-07T08:04:00.041Z",
+      "tool": "find"
+    },
+    {
+      "n": 87,
+      "utc": "2026-10-07T08:04:05.841Z",
+      "tool": "navigate",
+      "url": "https://www.michaels.com/cart"
+    },
+    {
+      "n": 88,
+      "utc": "2026-10-07T08:04:06.342Z",
+      "tool": "find"
+    },
+    {
+      "n": 89,
+      "utc": "2026-10-07T08:04:06.732Z",
+      "tool": "find"
+    },
+    {
+      "n": 90,
+      "utc": "2026-10-07T08:04:11.519Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 91,
+      "utc": "2026-10-07T08:04:11.596Z",
+      "tool": "find"
+    },
+    {
+      "n": 92,
+      "utc": "2026-10-07T08:04:11.969Z",
+      "tool": "find"
+    },
+    {
+      "n": 93,
+      "utc": "2026-10-07T08:04:18.495Z",
+      "tool": "find"
+    },
+    {
+      "n": 94,
+      "utc": "2026-10-07T08:04:21.031Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 95,
+      "utc": "2026-10-07T08:04:23.755Z",
+      "tool": "find"
+    },
+    {
+      "n": 96,
+      "utc": "2026-10-07T08:04:26.211Z",
+      "tool": "find"
+    },
+    {
+      "n": 97,
+      "utc": "2026-10-07T08:04:28.790Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 98,
+      "utc": "2026-10-07T08:04:32.139Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 99,
+      "utc": "2026-10-07T08:04:32.181Z",
+      "tool": "find"
+    },
+    {
+      "n": 100,
+      "utc": "2026-10-07T08:04:32.665Z",
+      "tool": "find"
+    },
+    {
+      "n": 101,
+      "utc": "2026-10-07T08:04:39.846Z",
+      "tool": "find"
+    },
+    {
+      "n": 102,
+      "utc": "2026-10-07T08:04:42.405Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 103,
+      "utc": "2026-10-07T08:04:46.189Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 104,
+      "utc": "2026-10-07T08:05:09.499Z",
+      "tool": "Write"
+    },
+    {
+      "n": 105,
+      "utc": "2026-10-07T08:05:16.287Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "e4a08156caeb737b5cf2a2d8c04ecd9ef4c53ef919d314cc94c766523c6b4a8d"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "678e20d63862d0783d05c69336f534f8dd074a0c07cbc1ea28919bcda3e40966"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "742d609280c2a663b1cae58ff82fa5c9c054bfc9c366b4d0a5f1195e2846287b"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "f7055f3ed004c61c28db2397fd8e1079cc32fafebe8cd6cfadd969f0491e363f"
+      }
+    ],
+    "errors": []
+  }
+}

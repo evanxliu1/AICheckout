@@ -1,0 +1,575 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "backcountry.com",
+  "stream": "us",
+  "visit": 123,
+  "session": 2,
+  "entryHost": "www.backcountry.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-ad2fbc054d7388618",
+  "startUtc": "2026-10-07T23:19:34.186Z",
+  "endUtc": "2026-10-07T23:27:44.499Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2 -> 1, Remove one)",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "item": "own item 1 (qty 1 -> 0, Remove)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.backcountry.com",
+      "status": 202,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.backcountry.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.backcountry.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.backcountry.com/rc/flash-sale"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.backcountry.com/cat/water-bottles"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.backcountry.com/salomon-soft-flask-500ml-water-bottle-salza1w"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.backcountry.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Water Bottles (landed on flash sale)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cat/water-bottles"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "heading",
+      "name": "Soft Flask 500ml Water Bottle"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Add one"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove one"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "0dacdb44794851c194e821bc90647577e32dccf4ad10d36fa30735e1aad4043e",
+      "bytes": 1303457,
+      "chunks": 4,
+      "url": "https://www.backcountry.com/salomon-soft-flask-500ml-water-bottle-salza1w",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "837860a7710e3fe4531853830353a8f4644d75b484a726acbd6def40b39ae994",
+      "bytes": 677154,
+      "chunks": 2,
+      "url": "https://www.backcountry.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "b7dcaa6edea1ecb7bc4afcc01a414e9b3109525c4c6bfd455467aaab23c008aa",
+      "bytes": 706787,
+      "chunks": 2,
+      "url": "https://www.backcountry.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart was empty at start but cart page not opened before the first add"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no lingering item; second item not added (focus on cart structure)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.backcountry.com/cat/water-bottles",
+    "productUrl": "https://www.backcountry.com/salomon-soft-flask-500ml-water-bottle-salza1w",
+    "price": "$21.95",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt answered HTTP 202 with an empty body (0 bytes, empty-string SHA-256); no rules readable, recorded as no disallows; no challenge wording seen and later pages loaded normally",
+    "the site auto-adds a 'Seel Worry-Free Delivery Fee' line item with the first product, so the cart page header reads 'Cart (2)' at cart-1 and 'Cart (3)' at cart-qty2; only one operator product line, named cart-1/cart-qty2; the fee line disappeared when the product was removed",
+    "first click on the hidden mega-menu 'Water Bottles' link by ref landed on /rc/flash-sale instead; listing then opened by URL",
+    "pane hidden; read_page timed out once on robots.txt"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T23:19:34.186Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T23:19:35.341Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T23:19:35.363Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T23:19:38.171Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T23:19:41.153Z",
+      "tool": "navigate",
+      "url": "https://www.backcountry.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T23:19:51.864Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T23:19:57.495Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T23:20:33.166Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T23:20:43.507Z",
+      "tool": "navigate",
+      "url": "https://www.backcountry.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T23:20:48.146Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T23:20:53.343Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T23:20:53.345Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:20:57.110Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:21:11.417Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:21:14.863Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T23:21:19.086Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T23:21:23.064Z",
+      "tool": "navigate",
+      "url": "https://www.backcountry.com/cat/water-bottles"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T23:21:28.567Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T23:21:32.309Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T23:21:35.430Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T23:21:39.062Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T23:21:43.288Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T23:21:46.712Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T23:21:50.285Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T23:21:54.731Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T23:21:58.804Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T23:22:12.829Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T23:22:17.246Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T23:22:45.427Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T23:22:52.243Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T23:22:53.748Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T23:22:54.411Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T23:22:54.742Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T23:23:07.042Z",
+      "tool": "navigate",
+      "url": "https://www.backcountry.com/cart"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T23:23:14.622Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T23:23:46.681Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T23:23:58.665Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T23:23:58.692Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T23:24:14.482Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T23:24:19.262Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T23:24:27.087Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T23:24:31.096Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T23:24:52.829Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T23:26:28.297Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T23:26:44.165Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T23:26:44.174Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T23:26:49.075Z",
+      "tool": "find"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T23:26:53.076Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T23:26:58.377Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T23:26:58.383Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T23:27:02.878Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T23:27:02.887Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T23:27:07.190Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T23:27:07.211Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T23:27:13.307Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T23:27:36.897Z",
+      "tool": "Write"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T23:27:44.499Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "0dacdb44794851c194e821bc90647577e32dccf4ad10d36fa30735e1aad4043e"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "837860a7710e3fe4531853830353a8f4644d75b484a726acbd6def40b39ae994"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "b7dcaa6edea1ecb7bc4afcc01a414e9b3109525c4c6bfd455467aaab23c008aa"
+      }
+    ],
+    "errors": []
+  }
+}

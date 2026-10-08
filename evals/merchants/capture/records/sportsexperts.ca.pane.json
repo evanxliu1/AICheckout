@@ -1,0 +1,604 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "sportsexperts.ca",
+  "stream": "non-us",
+  "visit": 86,
+  "session": 1,
+  "entryHost": "www.sportsexperts.ca",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a1962345c0cf0b7bd",
+  "startUtc": "2026-10-07T08:28:57.236Z",
+  "endUtc": "2026-10-07T08:35:10.202Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2 line)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.sportsexperts.ca",
+      "status": 200,
+      "sha256": "34b029bcc2115607c3f95d89ae7cd013a80b79db21bc3c725a8602064a712e2a",
+      "bytes": 414,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.sportsexperts.ca/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.sportsexperts.ca/fr-CA/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.sportsexperts.ca/fr-CA/Panier"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.sportsexperts.ca/fr-CA/hommes/accessoires/tuques-et-bandeaux"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.sportsexperts.ca/fr-CA/p-bird-word-tuque-a-revers-pour-adulte/732848/732848-4"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.sportsexperts.ca/fr-CA/Panier"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry origin (redirected to /fr-CA/)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page by URL"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "link",
+      "name": "menu link Tuques et bandeaux (by href)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Bird Word - Tuque à revers pour adulte"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Ajouter au panier"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page by URL"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "+ (unnamed increment)"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Retirer l'article"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "e3d846f3839570754828325cf0858e633624eca45823ff56b876fa7bab99d95e",
+      "bytes": 636537,
+      "chunks": 2,
+      "url": "https://www.sportsexperts.ca/fr-CA/Panier",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "d1440574162868c330d8ea3ad6209a0bda7841d6bc15eb41ef1f2e7a6e24e814",
+      "bytes": 842226,
+      "chunks": 3,
+      "url": "https://www.sportsexperts.ca/fr-CA/p-bird-word-tuque-a-revers-pour-adulte/732848/732848-4",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "7e1da9019fa7c1ba571785831fddc85047e0fd7f941506e474d4cd8c94aa554e",
+      "bytes": 665978,
+      "chunks": 2,
+      "url": "https://www.sportsexperts.ca/fr-CA/Panier",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "999e1e7897df62451e8a2775b603481da53c3111f3b89eff91543d5457a78751",
+      "bytes": 666769,
+      "chunks": 2,
+      "url": "https://www.sportsexperts.ca/fr-CA/Panier",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted: kept to item 1 at qty 2; no decrement control allowed to return to two single lines"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.sportsexperts.ca/fr-CA/hommes/accessoires/tuques-et-bandeaux",
+    "productUrl": "https://www.sportsexperts.ca/fr-CA/p-bird-word-tuque-a-revers-pour-adulte/732848/732848-4",
+    "price": "79,99 $",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "CAD",
+  "observedRegion": "CA-QC",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Entry origin redirected to /fr-CA/ (same host); French storefront accepted as served.",
+    "Menu link was off-canvas, so the category was opened by its href URL (same host) instead of a click.",
+    "No cookie banner was visible, so there was nothing to decline; OneTrust preference markup is present in exports.",
+    "minicart-1 chunks 0-1 saved to harness files (oversized); chunk 2 returned inline. Other states' chunks all saved to files. None opened.",
+    "Chunks of one export were fetched in parallel direct calls (same message), in index order."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:28:57.236Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:28:58.344Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:28:58.439Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:29:05.450Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:29:08.983Z",
+      "tool": "navigate",
+      "url": "https://www.sportsexperts.ca/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:29:09.020Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:29:16.538Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:29:27.526Z",
+      "tool": "navigate",
+      "url": "https://www.sportsexperts.ca/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:29:27.530Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:29:40.169Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:29:44.752Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:29:49.958Z",
+      "tool": "navigate",
+      "url": "https://www.sportsexperts.ca/fr-CA/Panier"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:29:49.966Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:29:56.171Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:29:56.174Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:30:28.617Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:30:32.993Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:30:39.522Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:30:44.365Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:30:49.779Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:30:54.358Z",
+      "tool": "navigate",
+      "url": "https://www.sportsexperts.ca/fr-CA/hommes/accessoires/tuques-et-bandeaux"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:30:54.365Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:31:10.033Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:31:15.646Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:31:19.721Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:31:23.782Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:31:30.191Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:31:30.230Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:31:46.319Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:31:50.746Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:31:54.995Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T08:31:54.998Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T08:32:27.161Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T08:32:33.919Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T08:32:34.707Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T08:32:34.984Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T08:32:44.700Z",
+      "tool": "navigate",
+      "url": "https://www.sportsexperts.ca/fr-CA/Panier"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T08:32:45.501Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T08:32:45.501Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T08:33:20.215Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T08:33:25.718Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T08:33:25.726Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T08:33:40.514Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T08:33:41.299Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T08:33:41.304Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T08:33:52.098Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T08:33:52.101Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T08:33:55.501Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T08:33:58.026Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T08:33:58.562Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T08:34:22.801Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T08:34:25.927Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T08:34:26.487Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T08:34:33.158Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T08:34:35.866Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T08:34:38.713Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T08:34:39.013Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T08:34:44.538Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T08:35:04.676Z",
+      "tool": "Write"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T08:35:10.202Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "e3d846f3839570754828325cf0858e633624eca45823ff56b876fa7bab99d95e"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "d1440574162868c330d8ea3ad6209a0bda7841d6bc15eb41ef1f2e7a6e24e814"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "7e1da9019fa7c1ba571785831fddc85047e0fd7f941506e474d4cd8c94aa554e"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "999e1e7897df62451e8a2775b603481da53c3111f3b89eff91543d5457a78751"
+      }
+    ],
+    "errors": []
+  }
+}

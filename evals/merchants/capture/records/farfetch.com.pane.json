@@ -1,0 +1,217 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "farfetch.com",
+  "stream": "us",
+  "visit": 163,
+  "session": 1,
+  "entryHost": "www.farfetch.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-aa2c946b41a833f0c",
+  "startUtc": "2026-10-08T00:16:49.528Z",
+  "endUtc": "2026-10-08T00:19:13.886Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.farfetch.com",
+      "status": 200,
+      "sha256": "71e0dfc13e6ce3d5a422d975e04fea028bb4bc2a1eec311ce0a9069716232bba",
+      "bytes": 13357,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.farfetch.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.farfetch.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt hash"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (home, bag link)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "57c62063e98d0d0c7ac2960a5b826c37a90f6fde7bfc72e2680f97ca90d0ce3c",
+      "bytes": 212669,
+      "chunks": 1,
+      "url": "https://www.farfetch.com/"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "bag page is /checkout/basket.aspx, a forbidden checkout path segment"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "not attempted: added item could not be removed without the forbidden bag page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "bag page is /checkout/basket.aspx, a forbidden checkout path segment"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "bag page is /checkout/basket.aspx, a forbidden checkout path segment"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "would-need-forbidden-action",
+    "evidenceSha256": "57c62063e98d0d0c7ac2960a5b826c37a90f6fde7bfc72e2680f97ca90d0ce3c"
+  },
+  "challenge": null,
+  "problems": [
+    "Header bag link (\"Bag 0 items.\") points to /checkout/basket.aspx; the checklist forbids any path with a checkout segment except Magento /checkout/cart, so no cart page can be opened.",
+    "Stopped before adding an item, since cleanup would also need the forbidden bag page; reviewer may decide whether a basket-under-checkout exception applies (a second session could then capture).",
+    "Start cart count 0 read from the header bag link; end count unchanged (nothing added).",
+    "observedCurrency assumed USD from the frame; no price was viewed on the home page.",
+    "Signed-out state inferred from a 'Login page.' header button.",
+    "Evidence chunk(0) was oversized and saved by the harness to a tool-results file; not opened."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:16:49.528Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:16:50.793Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:16:50.801Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:16:55.672Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:16:58.806Z",
+      "tool": "navigate",
+      "url": "https://www.farfetch.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:17:03.792Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:17:11.935Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:17:15.424Z",
+      "tool": "navigate",
+      "url": "https://www.farfetch.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:17:19.578Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:17:22.664Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:17:59.076Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:18:02.927Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:18:06.834Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:18:20.973Z",
+      "tool": "Write"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:19:13.886Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "57c62063e98d0d0c7ac2960a5b826c37a90f6fde7bfc72e2680f97ca90d0ce3c"
+      }
+    ],
+    "errors": []
+  }
+}

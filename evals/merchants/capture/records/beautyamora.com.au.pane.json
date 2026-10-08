@@ -1,0 +1,291 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "beautyamora.com.au",
+  "stream": "non-us",
+  "visit": 57,
+  "session": 1,
+  "entryHost": "www.beautyamora.com.au",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-af490695bf8f979b5",
+  "startUtc": "2026-10-07T07:48:28.659Z",
+  "endUtc": "2026-10-07T07:50:25.913Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.beautyamora.com.au",
+      "status": 200,
+      "sha256": "c34ec4bf0315ee432235b1650498250ca4868cab82b7c55d0e7ed634924aa8f3",
+      "bytes": 655,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.beautyamora.com.au/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.beautyamora.com.au/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.beautyamora.com.au/checkout/cart/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.beautyamora.com.au/face.html"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page (Magento /checkout/cart)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Skincare listing (face.html)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "7b08d756548890e3b9a6cabcfa3e43beb5b887f642ffc6d8999870468dae0184",
+      "bytes": 1032667,
+      "chunks": 3,
+      "url": "https://www.beautyamora.com.au/checkout/cart/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "Cloudflare challenge on first listing page; store stopped"
+    },
+    {
+      "state": "cart-1",
+      "reason": "Cloudflare challenge on first listing page; store stopped"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "Cloudflare challenge on first listing page; store stopped"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "Cloudflare challenge on first listing page; store stopped"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.beautyamora.com.au/face.html",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "AUD",
+  "observedRegion": "AU",
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.beautyamora.com.au/face.html",
+    "title": "Beauty Amora AU | Beauty Amora | Australia's K-beauty Store",
+    "marker": "redirect with __cf_chl_rt_tk query parameter (Cloudflare challenge)",
+    "wording": "Please Fill Out The Quick Test Below And Accept The Use Of Cookies!"
+  },
+  "problems": [
+    "Cloudflare challenge served on the first listing navigation (URL gained __cf_chl_rt_tk); not interacted with, not exported.",
+    "Code chosen as captcha (page asks to fill out a quick test); reviewer may prefer blocked-bot-wall.",
+    "endCartCount taken from the start read; nothing was added, and the cart was not re-read after the block.",
+    "empty-cart chunks 0-2 were all oversized and saved by the harness to tool-results files (expected; not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:48:28.659Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:48:29.818Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:48:29.825Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:48:34.013Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:48:37.399Z",
+      "tool": "navigate",
+      "url": "https://www.beautyamora.com.au/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:48:37.516Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:48:45.075Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:48:49.771Z",
+      "tool": "navigate",
+      "url": "https://www.beautyamora.com.au/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:48:49.784Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:48:58.204Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:48:58.213Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:49:01.606Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:49:06.058Z",
+      "tool": "navigate",
+      "url": "https://www.beautyamora.com.au/checkout/cart/"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:49:06.074Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:49:36.841Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:49:44.714Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:49:45.541Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:49:45.827Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:49:51.020Z",
+      "tool": "navigate",
+      "url": "https://www.beautyamora.com.au/face.html"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:49:51.027Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T07:49:58.941Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T07:50:17.184Z",
+      "tool": "Write"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T07:50:25.913Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "7b08d756548890e3b9a6cabcfa3e43beb5b887f642ffc6d8999870468dae0184"
+      }
+    ],
+    "errors": []
+  }
+}

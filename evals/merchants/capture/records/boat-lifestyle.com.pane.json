@@ -1,0 +1,803 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "boat-lifestyle.com",
+  "stream": "non-us",
+  "visit": 31,
+  "session": 1,
+  "entryHost": "www.boat-lifestyle.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_fd33ec5a-fa0/agent-ab4b22d8ea616ad47",
+  "startUtc": "2026-10-07T06:41:42.637Z",
+  "endUtc": "2026-10-07T06:47:32.972Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2, single line)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.boat-lifestyle.com",
+      "status": 200,
+      "sha256": "d0f4d8b6ac02a5ce7e45a46c238584716f8556d55340f4d2ca9fbeeab2e3c262",
+      "bytes": 3654,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.boat-lifestyle.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.boat-lifestyle.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.boat-lifestyle.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.boat-lifestyle.com/products/airdopes-181-pro-bluetooth-earbuds"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.boat-lifestyle.com/products/airdopes-181-pro-bluetooth-earbuds"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.boat-lifestyle.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (redirects to /#cart drawer)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to cart (no cart change)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Cart (drawer, still empty)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page reload"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to cart"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (drawer)"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "link",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "remove line (quantity=0)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "7337cb41f13932080de1b0d546d07d64325cfdc2c18d3c9d5f40e0da50cdd636",
+      "bytes": 1803149,
+      "chunks": 5,
+      "url": "https://www.boat-lifestyle.com/",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "d144d429f3314ba38f65018585a17204736e9460453f4a35da945f4808c9e714",
+      "bytes": 1587683,
+      "chunks": 4,
+      "url": "https://www.boat-lifestyle.com/products/airdopes-181-pro-bluetooth-earbuds",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "ba845d1475fb8927f09f908d304171ed4c80d231e01bf11e6593d6d556285859",
+      "bytes": 2156746,
+      "chunks": 6,
+      "url": "https://www.boat-lifestyle.com/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "8a53ea558ea8ebbdc16edc0579461e63e7499b70c354dc07abad609f82f9658a",
+      "bytes": 2184295,
+      "chunks": 6,
+      "url": "https://www.boat-lifestyle.com/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart and structure captured, no lingering items"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.boat-lifestyle.com/",
+    "productUrl": "https://www.boat-lifestyle.com/products/airdopes-181-pro-bluetooth-earbuds",
+    "price": "INR 1199",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "INR",
+  "observedRegion": "IN",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cart is a drawer: /cart redirects to /#cart on the home page; cart-1 and cart-qty2 are the home page with the drawer open.",
+    "robots.txt comments address agents (recommend installing a shopping skill, use UCP/MCP endpoints); reported, not followed.",
+    "robots.txt disallows /cart/ and /cart.js but not /cart itself; checkout paths disallowed.",
+    "First add-to-cart click had no visible effect; second click after a page reload added the item. Same item, so not counted as a new item.",
+    "Pane screenshots rendered partly blank or offset; relied on find and read_page.",
+    "First tabs_create failed (tab cap); after tabs_context, a 10 s wait was mistakenly issued with tabId seed (coordinator tab, wait only, no page action); retry succeeded.",
+    "Product page notes a matching cover may be auto-added with a colour variant; cart showed a single line."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:41:42.637Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:41:43.872Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:41:43.878Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:41:48.257Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:41:51.299Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:41:54.795Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:42:07.698Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:42:10.984Z",
+      "tool": "navigate",
+      "url": "https://www.boat-lifestyle.com/robots.txt"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:42:15.567Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:42:18.853Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:42:27.958Z",
+      "tool": "navigate",
+      "url": "https://www.boat-lifestyle.com/"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:42:33.730Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:42:37.198Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T06:42:40.521Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T06:42:47.684Z",
+      "tool": "navigate",
+      "url": "https://www.boat-lifestyle.com/cart"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T06:42:53.780Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T06:42:57.292Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T06:43:01.059Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T06:43:21.764Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T06:43:24.935Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T06:43:25.540Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T06:43:26.482Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T06:43:27.203Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T06:43:27.881Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T06:43:33.299Z",
+      "tool": "navigate",
+      "url": "https://www.boat-lifestyle.com/products/:token"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T06:43:38.033Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T06:43:40.648Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T06:43:43.111Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T06:43:46.306Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T06:43:49.266Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T06:43:52.285Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T06:43:52.864Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T06:43:57.678Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T06:44:01.129Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T06:44:03.516Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T06:44:05.883Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T06:44:09.126Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T06:44:11.887Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T06:44:14.038Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T06:44:17.050Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T06:44:17.477Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T06:44:21.032Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T06:44:23.263Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T06:44:27.205Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T06:44:27.633Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T06:44:32.409Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T06:44:35.161Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T06:44:37.456Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T06:44:39.998Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T06:44:43.831Z",
+      "tool": "navigate",
+      "url": "https://www.boat-lifestyle.com/products/:token"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T06:44:48.807Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T06:44:49.195Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T06:44:56.671Z",
+      "tool": "find"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T06:44:59.671Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T06:45:00.073Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T06:45:03.486Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T06:45:05.973Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T06:45:09.503Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T06:45:09.808Z",
+      "tool": "find"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T06:45:34.772Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T06:45:37.866Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T06:45:38.579Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T06:45:39.429Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T06:45:40.080Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T06:45:44.401Z",
+      "tool": "navigate",
+      "url": "https://www.boat-lifestyle.com/cart"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T06:45:48.821Z",
+      "tool": "find"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T06:46:10.000Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T06:46:12.942Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T06:46:13.682Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-07T06:46:14.535Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-07T06:46:15.341Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-07T06:46:16.187Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-07T06:46:16.873Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-07T06:46:21.633Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-07T06:46:22.283Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-07T06:46:22.671Z",
+      "tool": "find"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-07T06:46:45.816Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-07T06:46:48.907Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-07T06:46:49.649Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-07T06:46:50.423Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-07T06:46:51.224Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-07T06:46:52.023Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-07T06:46:52.688Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-07T06:46:58.221Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-07T06:46:58.594Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 85,
+      "utc": "2026-10-07T06:46:59.079Z",
+      "tool": "find"
+    },
+    {
+      "n": 86,
+      "utc": "2026-10-07T06:47:05.785Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 87,
+      "utc": "2026-10-07T06:47:25.654Z",
+      "tool": "Write"
+    },
+    {
+      "n": 88,
+      "utc": "2026-10-07T06:47:32.972Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "7337cb41f13932080de1b0d546d07d64325cfdc2c18d3c9d5f40e0da50cdd636"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "d144d429f3314ba38f65018585a17204736e9460453f4a35da945f4808c9e714"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "ba845d1475fb8927f09f908d304171ed4c80d231e01bf11e6593d6d556285859"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "8a53ea558ea8ebbdc16edc0579461e63e7499b70c354dc07abad609f82f9658a"
+      }
+    ],
+    "errors": []
+  }
+}

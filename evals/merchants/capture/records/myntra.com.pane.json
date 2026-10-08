@@ -1,0 +1,581 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "myntra.com",
+  "stream": "non-us",
+  "visit": 141,
+  "session": 1,
+  "entryHost": "www.myntra.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a7a09c10fca0bd3bd",
+  "startUtc": "2026-10-08T00:40:42.724Z",
+  "endUtc": "2026-10-08T00:47:42.319Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.myntra.com",
+      "status": 200,
+      "sha256": "26109ffd4503b7cd7057bdd8a7caf53078e4c1eb45cab20e815c917d46caf6a5",
+      "bytes": 24173,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.myntra.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.myntra.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.myntra.com/checkout/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.myntra.com/handbags"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.myntra.com/handbags/mast+%26+harbour/mast--harbour-checked-pu-sling-bag/46554643/buy"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.myntra.com/checkout/cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.myntra.com/checkout/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (start count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "handbags listing"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (listing link href)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "button",
+      "name": "size S"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "ADD TO BAG"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Qty: 1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (reload to close qty modal)"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "REMOVE"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove (confirm dialog)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "607afaccce581e6f7629af0d6a9ae4094a991e065e89f45ea1da28471ee6bd97",
+      "bytes": 151581,
+      "chunks": 1,
+      "url": "https://www.myntra.com/checkout/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "5ba5c97b75f8b1e93c10851bb2151b5be900b6b8fcc038523fab4c7bc7f330f2",
+      "bytes": 572481,
+      "chunks": 2,
+      "url": "https://www.myntra.com/handbags/mast+%26+harbour/mast--harbour-checked-pu-sling-bag/46554643/buy",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "a25dc357228b0fdf6a6f448f7c957e1fbfd11d52b7649d6d1fc95ec50061c83d",
+      "bytes": 805827,
+      "chunks": 3,
+      "url": "https://www.myntra.com/checkout/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-qty2",
+      "reason": "quantity is a modal picker whose options were not exposed in the accessibility tree and pane was hidden (no screenshot); skipped"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart and site structure captured with one item"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.myntra.com/handbags",
+    "productUrl": "https://www.myntra.com/handbags/mast+%26+harbour/mast--harbour-checked-pu-sling-bag/46554643/buy",
+    "price": "INR 1754",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "INR",
+  "observedRegion": "IN",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Myntra's cart lives at /checkout/cart (not Magento); opened by URL under the /checkout/cart exception; no other checkout path loaded. Reviewer please confirm.",
+    "minicart-1 is the product page with the in-page 'Added to bag' toast; Myntra has no drawer minicart.",
+    "Product opened by navigating to the listing link's href (links open a new tab), not by clicking.",
+    "robots.txt: checkoutDisallowed reflects '*checkout-address*'; /checkout/cart itself not disallowed.",
+    "Pane hidden; screenshot failed once; used find/read_page/get_page_text."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:40:42.724Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:40:43.958Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:40:43.969Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:40:46.331Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:40:49.363Z",
+      "tool": "navigate",
+      "url": "https://www.myntra.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:40:52.661Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:41:04.673Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:41:08.046Z",
+      "tool": "navigate",
+      "url": "https://www.myntra.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:41:12.810Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:41:12.818Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:41:16.767Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:41:16.816Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:41:20.964Z",
+      "tool": "navigate",
+      "url": "https://www.myntra.com/checkout/cart"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:41:25.204Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:41:54.241Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:41:57.860Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:42:03.126Z",
+      "tool": "navigate",
+      "url": "https://www.myntra.com/handbags"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:42:07.450Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:42:11.865Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:42:15.589Z",
+      "tool": "navigate",
+      "url": "https://www.myntra.com/handbags/:token/mast--harbour-checked-pu-sling-bag/46554643/buy"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:42:30.370Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:42:30.388Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:42:33.446Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:42:36.722Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:42:40.389Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:42:44.612Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T00:42:47.724Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T00:42:51.100Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T00:43:39.748Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T00:43:43.488Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T00:43:47.490Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T00:43:50.718Z",
+      "tool": "navigate",
+      "url": "https://www.myntra.com/checkout/cart"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T00:44:14.006Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T00:45:16.373Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T00:45:20.137Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T00:45:23.688Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T00:45:27.939Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T00:45:32.683Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T00:45:40.582Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T00:45:43.665Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T00:45:46.808Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T00:45:49.919Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T00:45:57.589Z",
+      "tool": "find"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T00:46:00.941Z",
+      "tool": "find"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T00:46:04.880Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T00:46:17.824Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T00:46:23.511Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T00:46:28.297Z",
+      "tool": "navigate",
+      "url": "https://www.myntra.com/checkout/cart"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T00:46:31.927Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T00:46:36.153Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T00:46:39.448Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T00:46:42.732Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T00:46:45.916Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T00:47:08.044Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T00:47:34.152Z",
+      "tool": "Write"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T00:47:42.319Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "607afaccce581e6f7629af0d6a9ae4094a991e065e89f45ea1da28471ee6bd97"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "5ba5c97b75f8b1e93c10851bb2151b5be900b6b8fcc038523fab4c7bc7f330f2"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "a25dc357228b0fdf6a6f448f7c957e1fbfd11d52b7649d6d1fc95ec50061c83d"
+      }
+    ],
+    "errors": []
+  }
+}

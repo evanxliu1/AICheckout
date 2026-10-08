@@ -1,0 +1,230 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "lanebryant.com",
+  "stream": "us",
+  "visit": 66,
+  "session": 1,
+  "entryHost": "www.lanebryant.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a6c18363628a4d112",
+  "startUtc": "2026-10-07T07:39:09.354Z",
+  "endUtc": "2026-10-07T07:40:33.133Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.lanebryant.com",
+      "status": 200,
+      "sha256": "69d8a90e1983b65db2fcb155f0a39a82faac0be04b7d8d31f4ebe1dc4040d377",
+      "bytes": 1327,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.lanebryant.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.lanebryant.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.lanebryant.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.lanebryant.com/verify"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL (redirected to /verify)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart URL redirected to PerimeterX block page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at bot wall"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at bot wall"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at bot wall"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at bot wall"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "vendor": "PerimeterX",
+    "url": "https://www.lanebryant.com/verify",
+    "title": "Access to this page has been denied.",
+    "wording": "Please verify you are a human. Access to this page has been denied because we believe you are using automation tools to browse the website."
+  },
+  "problems": [
+    "Home page loaded normally (header showed Cart 0 Items, not signed in); opening /cart by URL redirected to a PerimeterX /verify page. Not interacted with, not exported.",
+    "No items added, so nothing to remove; end cart count not re-read after the block."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:39:09.354Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:39:10.609Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:39:10.618Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:39:13.769Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:39:23.088Z",
+      "tool": "navigate",
+      "url": "https://www.lanebryant.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:39:23.110Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:39:30.617Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:39:34.929Z",
+      "tool": "navigate",
+      "url": "https://www.lanebryant.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:39:34.994Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:39:41.213Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:39:41.930Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:39:41.931Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:39:48.902Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:40:00.632Z",
+      "tool": "navigate",
+      "url": "https://www.lanebryant.com/cart"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:40:00.636Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:40:09.721Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:40:25.314Z",
+      "tool": "Write"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:40:33.133Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

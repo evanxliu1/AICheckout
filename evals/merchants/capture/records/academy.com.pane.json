@@ -1,0 +1,272 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "academy.com",
+  "stream": "us",
+  "visit": 94,
+  "session": 1,
+  "entryHost": "www.academy.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a22ab6d3b36808114",
+  "startUtc": "2026-10-07T08:11:32.170Z",
+  "endUtc": "2026-10-07T08:13:26.191Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.academy.com",
+      "status": 200,
+      "sha256": "287ce1b4afb886571328b89fdb5605f86440556d9ea316e6e6948cd988fba0eb",
+      "bytes": 3354,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.academy.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.academy.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.academy.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.academy.com/shop/cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.academy.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (404 page)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/shop/cart (empty, redirected home)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Shop Magellan Outdoors camo."
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "empty /shop/cart redirected to home; no cart page to export"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped on human-verification challenge before any add"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped on human-verification challenge"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped on human-verification challenge"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped on human-verification challenge"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.academy.com/",
+    "title": "Academy Sports + Outdoors | Quality Sporting Goods | Top Hunting, Fishing & Outdoor Gear",
+    "wording": "Please verify you are a human. Why is this happening? Javascript may be disabled or blocked by an extension"
+  },
+  "problems": [
+    "Human-verification challenge text appeared in page text after clicking the first listing link; the click did not navigate. Not interacted with, not exported.",
+    "Cart path /cart returned a 404 page; /shop/cart with an empty cart redirected to home.",
+    "Cookie banner (Reject All Marketing Cookies) appeared but was not clicked before the stop.",
+    "Final cart count not re-read after the stop; nothing was added, so the cart is unchanged (0)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:11:32.170Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:11:33.425Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:11:33.434Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:11:38.105Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:11:41.968Z",
+      "tool": "navigate",
+      "url": "https://www.academy.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:11:42.094Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:11:52.855Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:11:58.412Z",
+      "tool": "navigate",
+      "url": "https://www.academy.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:11:58.418Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:12:05.537Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:12:05.542Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:12:09.122Z",
+      "tool": "navigate",
+      "url": "https://www.academy.com/cart"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:12:09.566Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:12:16.785Z",
+      "tool": "navigate",
+      "url": "https://www.academy.com/shop/cart"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:12:16.915Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:12:21.799Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:12:34.322Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:12:44.526Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:12:44.531Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:12:51.173Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:13:03.255Z",
+      "tool": "Write"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:13:26.191Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

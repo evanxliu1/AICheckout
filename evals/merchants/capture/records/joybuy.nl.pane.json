@@ -1,0 +1,188 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "joybuy.nl",
+  "stream": "non-us",
+  "visit": 187,
+  "session": 2,
+  "entryHost": "m.joybuy.nl",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-aca12242c3d5d2bcb",
+  "startUtc": "2026-10-08T03:46:05.427Z",
+  "endUtc": "2026-10-08T03:46:57.939Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "m.joybuy.nl",
+      "status": 200,
+      "sha256": "d7b6cebcbf997fa76ce2b0d88143cd322e5a5aad14150af535a5bb2b53871d17",
+      "bytes": 1508,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://m.joybuy.nl/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.joybuy.nl/user/risk/pic"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host root"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at captcha on entry"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at captcha on entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at captcha on entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at captcha on entry"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at captcha on entry"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EUR",
+  "observedRegion": "NL",
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.joybuy.nl/user/risk/pic",
+    "title": "Joybuy Risk Control",
+    "marker": "JD risk-control picture CAPTCHA page (risk_handler at cfe.m.jd.com named in redirect query)",
+    "wording": "Veiligheidscontrole. Laden. Klik op de afbeelding"
+  },
+  "problems": [
+    "Entry m.joybuy.nl/ redirected (same registrable domain) to www.joybuy.nl/user/risk/pic, a picture CAPTCHA; not interacted with, not exported.",
+    "Cookie banner was present behind the challenge; not touched.",
+    "Sign-in state and starting cart count not determinable before the stop."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:46:05.427Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:46:06.616Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:46:06.621Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:46:08.994Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:46:12.645Z",
+      "tool": "navigate",
+      "url": "https://m.joybuy.nl/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:46:12.689Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:46:23.078Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:46:27.624Z",
+      "tool": "navigate",
+      "url": "https://m.joybuy.nl/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:46:27.631Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:46:32.833Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:46:36.422Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:46:51.344Z",
+      "tool": "Write"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:46:57.939Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

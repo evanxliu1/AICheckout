@@ -1,0 +1,866 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "decathlon.in",
+  "stream": "non-us",
+  "visit": 77,
+  "session": 1,
+  "entryHost": "www.decathlon.in",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a640ec8b1a27e9653",
+  "startUtc": "2026-10-07T08:18:33.859Z",
+  "endUtc": "2026-10-07T08:24:39.018Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 2 (convertible trackpant, 2XL)",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "item": "own item 1 (slim fit trackpants, M, qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.decathlon.in",
+      "status": 200,
+      "sha256": "dc6ca6702524fcfd3884827e5ca6f9219a95c10ff69c4bc996f12c31031d3816",
+      "bytes": 3585,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.decathlon.in/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.decathlon.in/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.decathlon.in/p/8404222/men-gym-trackpants-slim-fit-jogger-style-breathable-quick-dry-smoked-black"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.decathlon.in/checkout/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "link",
+      "name": "product link from home carousel"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "button",
+      "name": "Select size M"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to cart (refused: size not set)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "button",
+      "name": "Select size M"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "link",
+      "name": "Cart"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "+"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart (cart recommendation)"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "generic",
+      "name": "2XL (size modal)"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart (size modal)"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-other"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "delete icon + Delete confirm (item 2)"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "delete icon + Delete confirm (item 1)"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "cart-1",
+      "sha256": "9d6863e2f88b9f65de4b23e6073cf3ab26dccb6cfb1f5a6a7e42b4dbdab4faa9",
+      "bytes": 402788,
+      "chunks": 2,
+      "url": "https://www.decathlon.in/checkout/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "910f2aa14097a83d529f11b208a5cb6fe1a5b2e61b06e500c484298113ca25c9",
+      "bytes": 407457,
+      "chunks": 2,
+      "url": "https://www.decathlon.in/checkout/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-other",
+      "sha256": "9c7807e085dda7f104e595710426db08bb1e5534d8dced452335ed43705749fb",
+      "bytes": 433901,
+      "chunks": 2,
+      "url": "https://www.decathlon.in/checkout/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "f275436d13a8718fbf157874fb6bba4e6520b49c5a4d63389d0d75d9ceb4f846",
+      "bytes": 59954,
+      "chunks": 1,
+      "url": "https://www.decathlon.in/checkout/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart on the product page shows no in-page cart; button only changes to 'Go to cart'"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "second own item added while first was at qty 2 (no decrement allowed), so the two-item state was exported as cart-other"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.decathlon.in/",
+    "productUrl": "https://www.decathlon.in/p/8404222/men-gym-trackpants-slim-fit-jogger-style-breathable-quick-dry-smoked-black",
+    "price": "INR 899",
+    "secondProductUrl": "https://www.decathlon.in/p/8731703/men-gym-joggers-trackpants/men-gym-trackpant-convertible-jog-fit-quick-dry-zip-pockets-500-black"
+  },
+  "observedCurrency": "INR",
+  "observedRegion": "IN (delivery pincode 560001 preset by site)",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cart URL is /checkout/cart on a non-Magento (Next.js) storefront; opened via the site's own Cart link under the /checkout/cart exception, no further checkout path loaded",
+    "robots.txt disallows /cart (not /checkout/cart); recorded only",
+    "cart-other holds only own items (item 1 qty 2 + item 2 qty 1); empty-cart taken after cleanup, when the cart was actually empty",
+    "Remove-item required a site 'Delete' confirmation in a modal (part of the remove control)",
+    "Chunk results over the inline limit were saved by the harness to tool-results files (not opened)",
+    "Item 1 was found on the home page product carousel, not a category listing"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:18:33.859Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:18:34.904Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:18:34.913Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:18:44.103Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:18:47.689Z",
+      "tool": "navigate",
+      "url": "https://www.decathlon.in/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:18:47.794Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:18:57.546Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:19:02.167Z",
+      "tool": "navigate",
+      "url": "https://www.decathlon.in/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:19:02.186Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:19:11.139Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:19:15.117Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:19:15.139Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:19:23.590Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:19:23.592Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:19:27.040Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:19:31.921Z",
+      "tool": "navigate",
+      "url": "https://www.decathlon.in/p/8404222/men-gym-trackpants-slim-fit-jogger-style-breathable-quick-dry-smoked-black"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:19:31.925Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:19:36.811Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:19:43.947Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:19:48.236Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:19:48.242Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:19:52.563Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:19:55.708Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:19:56.126Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:19:58.852Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:20:01.610Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:20:02.329Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:20:02.692Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:20:07.569Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:20:10.942Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:20:11.482Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T08:20:12.016Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T08:20:12.490Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T08:20:17.874Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T08:20:18.123Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T08:20:18.579Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T08:20:23.333Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T08:20:26.482Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T08:20:26.729Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T08:20:27.164Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T08:20:32.314Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T08:20:32.735Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T08:20:36.697Z",
+      "tool": "navigate",
+      "url": "https://www.decathlon.in/checkout/cart"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T08:20:37.126Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T08:20:40.369Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T08:20:40.795Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T08:21:04.521Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T08:21:07.425Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T08:21:10.486Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T08:21:12.982Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T08:21:15.408Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T08:21:18.542Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T08:21:18.869Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T08:21:19.225Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T08:21:42.195Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T08:21:45.282Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T08:21:48.425Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T08:21:53.478Z",
+      "tool": "find"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T08:21:56.864Z",
+      "tool": "find"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T08:22:00.289Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T08:22:00.812Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T08:22:01.335Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T08:22:01.598Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T08:22:06.646Z",
+      "tool": "find"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T08:22:09.920Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T08:22:13.494Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T08:22:16.542Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T08:22:17.064Z",
+      "tool": "find"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T08:22:20.214Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-07T08:22:24.074Z",
+      "tool": "find"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-07T08:22:24.600Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-07T08:22:27.221Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-07T08:22:27.643Z",
+      "tool": "find"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-07T08:22:30.700Z",
+      "tool": "find"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-07T08:22:34.211Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-07T08:22:34.683Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-07T08:22:35.241Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-07T08:22:35.959Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-07T08:22:36.460Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-07T08:23:04.862Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-07T08:23:07.748Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-07T08:23:10.957Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-07T08:23:15.580Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-07T08:23:15.839Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-07T08:23:19.224Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 85,
+      "utc": "2026-10-07T08:23:19.453Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 86,
+      "utc": "2026-10-07T08:23:19.830Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 87,
+      "utc": "2026-10-07T08:23:25.753Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 88,
+      "utc": "2026-10-07T08:23:26.339Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 89,
+      "utc": "2026-10-07T08:23:26.793Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 90,
+      "utc": "2026-10-07T08:23:32.382Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 91,
+      "utc": "2026-10-07T08:23:32.576Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 92,
+      "utc": "2026-10-07T08:23:32.965Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 93,
+      "utc": "2026-10-07T08:23:38.556Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 94,
+      "utc": "2026-10-07T08:23:38.851Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 95,
+      "utc": "2026-10-07T08:23:39.151Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 96,
+      "utc": "2026-10-07T08:24:03.566Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 97,
+      "utc": "2026-10-07T08:24:06.373Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 98,
+      "utc": "2026-10-07T08:24:09.218Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 99,
+      "utc": "2026-10-07T08:24:32.817Z",
+      "tool": "Write"
+    },
+    {
+      "n": 100,
+      "utc": "2026-10-07T08:24:39.018Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "9d6863e2f88b9f65de4b23e6073cf3ab26dccb6cfb1f5a6a7e42b4dbdab4faa9"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "910f2aa14097a83d529f11b208a5cb6fe1a5b2e61b06e500c484298113ca25c9"
+      },
+      {
+        "target": "cart-other",
+        "kind": "state",
+        "sha256": "9c7807e085dda7f104e595710426db08bb1e5534d8dced452335ed43705749fb"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "f275436d13a8718fbf157874fb6bba4e6520b49c5a4d63389d0d75d9ceb4f846"
+      }
+    ],
+    "errors": []
+  }
+}

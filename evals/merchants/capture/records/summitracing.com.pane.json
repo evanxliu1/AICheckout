@@ -1,0 +1,337 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "summitracing.com",
+  "stream": "us",
+  "visit": 92,
+  "session": 1,
+  "entryHost": "www.summitracing.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a92c3b698e202eda0",
+  "startUtc": "2026-10-07T08:08:48.632Z",
+  "endUtc": "2026-10-07T08:11:25.390Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.summitracing.com",
+      "status": 200,
+      "sha256": "72edc92c7732fcfab01960be4fc5aa60835c4266312469ac1779e23d4d604802",
+      "bytes": 1458,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.summitracing.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.summitracing.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.summitracing.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.summitracing.com/parts/jgr-01806"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "Close modal"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "5w30 Driven Racing Oil BR30 Break-In Mot"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "1138904ac694bc50c640d1b4ec6602054f813c420c1569f4d1a8dc35151c333d",
+      "bytes": 466561,
+      "chunks": 2,
+      "url": "https://www.summitracing.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "captcha on first product page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "captcha on first product page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "captcha on first product page"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "captcha on first product page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.summitracing.com/cart",
+    "productUrl": "https://www.summitracing.com/parts/jgr-01806",
+    "price": "$11.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.summitracing.com/parts/jgr-01806",
+    "title": "",
+    "marker": "Imperva-style interstitial with Incident ID",
+    "wording": "Sorry For The Interruption ... Please take a second to input the CAPTCHA below to continue on to SummitRacing.com."
+  },
+  "problems": [
+    "CAPTCHA interstitial on first product page (reached by clicking a recommended item on the empty cart page); stopped without interacting, not exported",
+    "empty-cart exported before the block; both chunks oversized and saved to harness files, not opened",
+    "end cart count not re-read after the block (no item added; cart was 0 at start)",
+    "robots.txt disallows /cart and /checkout for *; recorded only"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:08:48.632Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:08:49.816Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:08:49.820Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:08:54.035Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:08:57.844Z",
+      "tool": "navigate",
+      "url": "https://www.summitracing.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:08:57.959Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:09:04.883Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:09:10.981Z",
+      "tool": "navigate",
+      "url": "https://www.summitracing.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:09:10.985Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:09:18.261Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:09:18.268Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:09:32.544Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:09:32.546Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:09:40.568Z",
+      "tool": "navigate",
+      "url": "https://www.summitracing.com/cart"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:09:40.572Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:09:45.587Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:09:45.591Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:10:18.684Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:10:24.970Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:10:32.203Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:10:39.740Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:10:44.676Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:10:45.094Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:10:45.099Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:10:52.925Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:10:52.930Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:11:03.384Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:11:07.609Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:11:20.024Z",
+      "tool": "Write"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:11:25.390Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "1138904ac694bc50c640d1b4ec6602054f813c420c1569f4d1a8dc35151c333d"
+      }
+    ],
+    "errors": []
+  }
+}

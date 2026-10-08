@@ -1,0 +1,561 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "americantrucks.com",
+  "stream": "us",
+  "visit": 274,
+  "session": 1,
+  "entryHost": "www.americantrucks.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a461eefcc86034b6b",
+  "startUtc": "2026-10-08T05:23:29.658Z",
+  "endUtc": "2026-10-08T05:28:37.956Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.americantrucks.com",
+      "status": 200,
+      "sha256": "c61fca08646ad0842ce6dd26ae6894fd8aabae1656b1c2a915fd8240780c9e32",
+      "bytes": 5515,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.americantrucks.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.americantrucks.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.americantrucks.com/shopping-cart.html"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.americantrucks.com/truck-lifestyle.html"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.americantrucks.com/f150-mens-ford-motor-1903-t-shirt-t559753.html"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.americantrucks.com/shopping-cart.html"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart (superseded, see problems)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Truck Gifts & Lifestyle listing"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Men's Ford Motor 1903 T-Shirt"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "link",
+      "name": "Large"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "link",
+      "name": "Add to Shopping Cart"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "link",
+      "name": "No Thanks"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "cart-1",
+      "sha256": "cf01b49c816b0c5435729e6bb252fbb0c738a4101da842f3bb13a75f254a12af",
+      "bytes": 444826,
+      "chunks": 2,
+      "url": "https://www.americantrucks.com/shopping-cart.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "04fc2ea83e235f330a74a19a8ee60c9b2ce6a4a03c0be953b0881ac897963a70",
+      "bytes": 382195,
+      "chunks": 1,
+      "url": "https://www.americantrucks.com/shopping-cart.html",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart redirects straight to the full cart page; no in-page cart shown"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "no quantity-increment button found on the cart line; only a remove link"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart started empty, focus on cart and structure"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.americantrucks.com/truck-lifestyle.html",
+    "productUrl": "https://www.americantrucks.com/f150-mens-ford-motor-1903-t-shirt-t559753.html",
+    "price": "$34.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "An earlier empty-cart export (sha256 2c15c1334642518fdbcfd97f1f0a00ea8f190d255d9ed438eefc7a021b7df3c9, 317317 bytes, 1 chunk) was taken before the cart widget had rendered; it is superseded by the post-removal empty-cart export and should not be labelled.",
+    "The empty-cart state recorded was exported after removing the operator's own item (the cart was empty at the start too).",
+    "All chunk results were oversized and saved by the harness to tool-results files; none were opened."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:23:29.658Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:23:30.385Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:23:31.716Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:23:31.733Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:23:39.161Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:23:43.109Z",
+      "tool": "navigate",
+      "url": "https://www.americantrucks.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:23:43.180Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:23:50.113Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:23:53.764Z",
+      "tool": "navigate",
+      "url": "https://www.americantrucks.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:23:53.772Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:23:58.663Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:23:58.665Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:24:02.696Z",
+      "tool": "navigate",
+      "url": "https://www.americantrucks.com/shopping-cart.html"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:24:02.726Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:24:08.524Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:24:08.530Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:24:39.731Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:24:43.795Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:24:48.642Z",
+      "tool": "navigate",
+      "url": "https://www.americantrucks.com/truck-lifestyle.html"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:24:48.651Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:24:53.364Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:24:57.037Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:25:00.877Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:25:04.200Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:25:08.906Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:25:08.909Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:25:13.415Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:25:13.416Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:25:18.183Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:25:22.089Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:25:27.579Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:25:27.590Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T05:25:31.155Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T05:25:35.394Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T05:25:39.899Z",
+      "tool": "find"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T05:25:44.234Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T05:25:44.588Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T05:25:44.603Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T05:25:51.860Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T05:25:51.865Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T05:26:00.172Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T05:26:00.179Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T05:26:11.481Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T05:26:15.151Z",
+      "tool": "find"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T05:26:19.814Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T05:26:19.820Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T05:26:52.527Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T05:26:56.610Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T05:27:00.245Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T05:27:04.731Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T05:27:08.630Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T05:27:13.198Z",
+      "tool": "find"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T05:27:18.809Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T05:27:19.216Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T05:27:19.282Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T05:27:56.881Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T05:28:01.114Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T05:28:05.331Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T05:28:30.806Z",
+      "tool": "Write"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T05:28:37.956Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "cf01b49c816b0c5435729e6bb252fbb0c738a4101da842f3bb13a75f254a12af"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "04fc2ea83e235f330a74a19a8ee60c9b2ce6a4a03c0be953b0881ac897963a70"
+      }
+    ],
+    "errors": []
+  }
+}

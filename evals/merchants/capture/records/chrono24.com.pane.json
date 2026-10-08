@@ -1,0 +1,335 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "chrono24.com",
+  "stream": "us",
+  "visit": 196,
+  "session": 1,
+  "entryHost": "www.chrono24.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-a921496b3d26709b9",
+  "startUtc": "2026-10-08T01:04:05.467Z",
+  "endUtc": "2026-10-08T01:06:17.649Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.chrono24.com",
+      "status": 200,
+      "sha256": "6ccaed097426ce2ce6f82561f6df4548f67e7641284e68e630ef4a34bbbf9a53",
+      "bytes": 4063,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.chrono24.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.chrono24.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.chrono24.com/search/index.htm"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.chrono24.com/hamilton/dial-below-zero--id47448427.htm"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Only necessary cookies"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Buy a watch"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Parts and Accessories (menu link URL)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Hamilton Khaki Below Zero Dial listing"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "Close"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "5e5c0d836825b6b8889d95fa482965e8f352b5816198aadedb188e40bfb79149",
+      "bytes": 277827,
+      "chunks": 1,
+      "url": "https://www.chrono24.com/hamilton/dial-below-zero--id47448427.htm"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "site has no shopping cart"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "no add-to-cart control; only Buy (order request) and Suggest a price"
+    },
+    {
+      "state": "cart-1",
+      "reason": "site has no shopping cart"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "site has no shopping cart"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "site has no shopping cart"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.chrono24.com/search/index.htm",
+    "productUrl": "https://www.chrono24.com/hamilton/dial-below-zero--id47448427.htm",
+    "price": "$175",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "would-need-forbidden-action",
+    "evidenceSha256": "5e5c0d836825b6b8889d95fa482965e8f352b5816198aadedb188e40bfb79149"
+  },
+  "challenge": null,
+  "problems": [
+    "Marketplace with no cart: product page offers only Buy (buy-it-now order request to /user/request-offer.htm) and Suggest a price; no add-to-cart control or cart link found, so no cart state is reachable without an order flow",
+    "startCartCount and endCartCount null: no cart exists on the site",
+    "Listing reached by navigating to the URL of the Buy a watch menu link 'Parts and Accessories' (off-canvas, not clickable)",
+    "evidence-1 chunk 0 was oversized and saved by the harness to a tool-results file (not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:04:05.467Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:04:06.644Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:04:06.647Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:04:09.444Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:04:12.416Z",
+      "tool": "navigate",
+      "url": "https://www.chrono24.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:04:16.087Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:04:21.955Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:04:27.552Z",
+      "tool": "navigate",
+      "url": "https://www.chrono24.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:04:27.557Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:04:32.055Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:04:38.494Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:04:38.496Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:04:41.502Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:04:45.008Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T01:04:45.070Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T01:04:50.227Z",
+      "tool": "navigate",
+      "url": "https://www.chrono24.com/search/index.htm"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T01:04:50.230Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T01:04:57.374Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T01:05:02.078Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T01:05:02.080Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T01:05:05.431Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T01:05:13.464Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T01:05:13.469Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T01:05:42.030Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T01:05:45.662Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T01:05:50.383Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T01:06:09.205Z",
+      "tool": "Write"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T01:06:17.649Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "5e5c0d836825b6b8889d95fa482965e8f352b5816198aadedb188e40bfb79149"
+      }
+    ],
+    "errors": []
+  }
+}

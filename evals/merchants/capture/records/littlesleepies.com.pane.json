@@ -1,0 +1,990 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "littlesleepies.com",
+  "stream": "us",
+  "visit": 253,
+  "session": 1,
+  "entryHost": "littlesleepies.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-abdc4bdb5a21ddeac",
+  "startUtc": "2026-10-08T04:22:30.289Z",
+  "endUtc": "2026-10-08T04:40:55.212Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "littlesleepies.com",
+      "status": 200,
+      "sha256": "d44efdc7a35d869a12e0a71473381475ec61319025d4d103b1fe81c15abd5fd6",
+      "bytes": 3638,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://littlesleepies.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://littlesleepies.com/cart"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://littlesleepies.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://littlesleepies.com/collections/best-sellers"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://littlesleepies.com/collections/best-sellers/products/sunshine-bamboo-viscose-zippy"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://littlesleepies.com/collections/best-sellers/products/sunshine-bamboo-viscose-zippy"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://littlesleepies.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (starting count)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/collections/best-sellers (menu link)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Sunshine Zippy product card"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "radio",
+      "name": "3-6 months (did not register)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "cookie banner close (opened prefs)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "cookie preferences close"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart (missed, no cart change)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page reload"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject All Cookies"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "radio",
+      "name": "3-6 months (Micro Preemie kept)"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase Quantity of Sunshine Zippy"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 21,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove item from cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "eadf45774df1235cd4ad876bafb0fc9d5e6a844a543d36ba21438528e80ef4fe",
+      "bytes": 1331679,
+      "chunks": 4,
+      "url": "https://littlesleepies.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "14cfee1d4c388295b1c67354e731e8058c9c7aee78345883204e19192d75ade4",
+      "bytes": 2524246,
+      "chunks": 7,
+      "url": "https://littlesleepies.com/collections/best-sellers/products/sunshine-bamboo-viscose-zippy",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "2959e115734a0a898e7026cf4f36ad77b2c319dfa8b01012457ed1d5bd4e092b",
+      "bytes": 1336897,
+      "chunks": 4,
+      "url": "https://littlesleepies.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "2555e54906e768f27246c504e64a633b23faf24d57aa6a77b6b84dc172ef93fa",
+      "bytes": 1368866,
+      "chunks": 4,
+      "url": "https://littlesleepies.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart started empty, no lingering item, second item optional"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://littlesleepies.com/collections/best-sellers",
+    "productUrl": "https://littlesleepies.com/collections/best-sellers/products/sunshine-bamboo-viscose-zippy",
+    "price": "$36.00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt comments address AI agents (point them to a UCP/MCP endpoint and suggest recommending a shop.app skill install); reported, not followed",
+    "robots.txt disallows /cart/ (trailing slash) and /cart.js but not /cart itself; /checkout disallowed",
+    "first add-to-cart attempt missed: ref clicks reported 1024-wide viewport coordinates while screenshots were 800-wide, and a cookie preferences modal was open; no cart change; succeeded after reload on same item",
+    "size choice did not register; item added in default size Micro Preemie at the same $36.00 price",
+    "screenshots intermittently stale or blank after scrolling (pane rendering)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:22:30.289Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:22:30.572Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:22:30.578Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:22:31.257Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:22:42.244Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:22:47.026Z",
+      "tool": "navigate",
+      "url": "https://littlesleepies.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:22:47.124Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:22:58.849Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:23:04.086Z",
+      "tool": "navigate",
+      "url": "https://littlesleepies.com/cart"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:23:04.091Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:23:14.961Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:23:48.452Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:23:59.913Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:24:00.163Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:24:02.307Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:24:02.322Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:24:25.242Z",
+      "tool": "navigate",
+      "url": "https://littlesleepies.com/"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:24:25.244Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:24:37.472Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:24:46.133Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:24:51.212Z",
+      "tool": "navigate",
+      "url": "https://littlesleepies.com/collections/best-sellers"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:24:51.298Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:25:18.327Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:25:32.503Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:25:46.651Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:25:55.913Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:26:05.546Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:26:05.918Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:26:26.541Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:26:40.127Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:26:51.732Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:27:00.310Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:27:15.015Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:27:27.079Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:27:37.596Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:27:38.144Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:27:58.972Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:27:59.031Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:28:08.165Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:28:16.173Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:28:22.929Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T04:28:22.955Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T04:28:23.545Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T04:28:35.655Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T04:28:36.774Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T04:28:46.250Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T04:28:50.836Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T04:29:02.907Z",
+      "tool": "find"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T04:29:19.473Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T04:29:19.670Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T04:29:37.543Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T04:29:50.339Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T04:29:50.573Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T04:30:08.490Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T04:30:22.473Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T04:30:22.477Z",
+      "tool": "find"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T04:30:38.981Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T04:30:49.481Z",
+      "tool": "find"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T04:31:08.448Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T04:31:16.621Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T04:31:33.593Z",
+      "tool": "find"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T04:31:42.590Z",
+      "tool": "find"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T04:31:54.718Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T04:31:56.874Z",
+      "tool": "find"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T04:32:11.272Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T04:32:11.847Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T04:32:30.996Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T04:32:31.001Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T04:32:44.820Z",
+      "tool": "find"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T04:32:57.281Z",
+      "tool": "navigate",
+      "url": "https://littlesleepies.com/collections/best-sellers/products/sunshine-bamboo-viscose-zippy"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T04:32:57.489Z",
+      "tool": "find"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T04:33:18.974Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T04:33:29.317Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T04:33:29.366Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T04:34:03.169Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T04:34:03.186Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T04:34:24.014Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-08T04:34:24.494Z",
+      "tool": "find"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-08T04:34:38.252Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-08T04:34:38.386Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-08T04:34:50.252Z",
+      "tool": "find"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-08T04:35:01.636Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-08T04:35:01.645Z",
+      "tool": "find"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-08T04:35:16.810Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-08T04:35:17.111Z",
+      "tool": "find"
+    },
+    {
+      "n": 85,
+      "utc": "2026-10-08T04:35:33.095Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 86,
+      "utc": "2026-10-08T04:35:33.237Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 87,
+      "utc": "2026-10-08T04:36:10.086Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 88,
+      "utc": "2026-10-08T04:36:20.011Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 89,
+      "utc": "2026-10-08T04:36:22.357Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 90,
+      "utc": "2026-10-08T04:36:22.360Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 91,
+      "utc": "2026-10-08T04:36:22.515Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 92,
+      "utc": "2026-10-08T04:36:23.550Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 93,
+      "utc": "2026-10-08T04:36:25.332Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 94,
+      "utc": "2026-10-08T04:36:25.333Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 95,
+      "utc": "2026-10-08T04:37:31.146Z",
+      "tool": "navigate",
+      "url": "https://littlesleepies.com/cart"
+    },
+    {
+      "n": 96,
+      "utc": "2026-10-08T04:37:31.262Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 97,
+      "utc": "2026-10-08T04:38:05.661Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 98,
+      "utc": "2026-10-08T04:38:17.494Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 99,
+      "utc": "2026-10-08T04:38:18.687Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 100,
+      "utc": "2026-10-08T04:38:21.327Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 101,
+      "utc": "2026-10-08T04:38:21.331Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 102,
+      "utc": "2026-10-08T04:38:35.172Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 103,
+      "utc": "2026-10-08T04:38:41.955Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 104,
+      "utc": "2026-10-08T04:38:42.349Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 105,
+      "utc": "2026-10-08T04:38:42.733Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 106,
+      "utc": "2026-10-08T04:39:10.152Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 107,
+      "utc": "2026-10-08T04:39:18.421Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 108,
+      "utc": "2026-10-08T04:39:18.567Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 109,
+      "utc": "2026-10-08T04:39:18.621Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 110,
+      "utc": "2026-10-08T04:39:19.301Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 111,
+      "utc": "2026-10-08T04:39:57.626Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 112,
+      "utc": "2026-10-08T04:39:58.053Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 113,
+      "utc": "2026-10-08T04:39:58.605Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 114,
+      "utc": "2026-10-08T04:40:18.484Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 115,
+      "utc": "2026-10-08T04:40:42.625Z",
+      "tool": "Write"
+    },
+    {
+      "n": 116,
+      "utc": "2026-10-08T04:40:55.212Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "eadf45774df1235cd4ad876bafb0fc9d5e6a844a543d36ba21438528e80ef4fe"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "14cfee1d4c388295b1c67354e731e8058c9c7aee78345883204e19192d75ade4"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "2959e115734a0a898e7026cf4f36ad77b2c319dfa8b01012457ed1d5bd4e092b"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "2555e54906e768f27246c504e64a633b23faf24d57aa6a77b6b84dc172ef93fa"
+      }
+    ],
+    "errors": []
+  }
+}

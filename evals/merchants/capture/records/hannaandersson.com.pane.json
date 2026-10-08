@@ -1,0 +1,236 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "hannaandersson.com",
+  "stream": "us",
+  "visit": 284,
+  "session": 1,
+  "entryHost": "www.hannaandersson.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a2dc70b134b0f6ca6",
+  "startUtc": "2026-10-08T05:38:21.626Z",
+  "endUtc": "2026-10-08T05:39:53.866Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.hannaandersson.com",
+      "status": 200,
+      "sha256": "519058834561f28855bb9b8e672a227314f8e4059e74c7c0bc3970ca5a01013f",
+      "bytes": 1560,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.hannaandersson.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.hannaandersson.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.hannaandersson.com/category/accessories-baby-cat/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "baby accessories (refused: off-viewport)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "link",
+      "name": "baby accessories (menu link href)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on first category page before cart was opened"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.hannaandersson.com/category/accessories-baby-cat/",
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.hannaandersson.com/category/accessories-baby-cat/",
+    "title": "Access to this page has been denied",
+    "wording": "Access to this page has been denied",
+    "marker": "page title typical of PerimeterX/HUMAN block page; body text empty to get_page_text; not exported, not interacted with"
+  },
+  "problems": [
+    "Start cart count 0 read from header bag link on home page; cart page never opened.",
+    "Signed-in check: header showed 'Sign in or view account', read as logged out.",
+    "robots.txt disallows /shopping-bag and /*checkout for *; header cart link is /cart (not disallowed); listing URL query (prefn/prefv) dropped when navigating.",
+    "Menu link click refused by tool as off-viewport, so the store's own menu href was opened by URL.",
+    "endCartCount null: no cart re-read after block; nothing was added."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:38:21.626Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:38:22.896Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:38:22.970Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:38:26.411Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:38:31.373Z",
+      "tool": "navigate",
+      "url": "https://www.hannaandersson.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:38:31.429Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:38:38.834Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:38:42.857Z",
+      "tool": "navigate",
+      "url": "https://www.hannaandersson.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:38:42.874Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:38:53.088Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:38:53.095Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:39:02.630Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:39:09.894Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:39:17.695Z",
+      "tool": "navigate",
+      "url": "https://www.hannaandersson.com/category/accessories-baby-cat/"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:39:17.705Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:39:23.811Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:39:40.319Z",
+      "tool": "Write"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:39:53.866Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

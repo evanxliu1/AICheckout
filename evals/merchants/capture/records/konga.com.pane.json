@@ -1,0 +1,619 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "konga.com",
+  "stream": "non-us",
+  "visit": 23,
+  "session": 1,
+  "entryHost": "www.konga.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-ad03f49e18f57cad2",
+  "startUtc": "2026-10-07T06:53:25.164Z",
+  "endUtc": "2026-10-07T06:57:15.909Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.konga.com",
+      "status": 200,
+      "sha256": "863a5a7a362acc200cb17d763a981a598778bbb3096b4c2cea5445d1cfff1793",
+      "bytes": 361,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.konga.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.konga.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.konga.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.konga.com/category/home-kitchen-602"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.konga.com/product/binatone-2-litres-professional-blender-bl-1500-pro-6816693"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.konga.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Only Necessary"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "category home-kitchen"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "product link (Binatone blender)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Shopping cart"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove Item"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "f61c8d90005827707000fac860adcffb0c896501a31c689e804751e595492e66",
+      "bytes": 208138,
+      "chunks": 1,
+      "url": "https://www.konga.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "a3cd2924a0c5d4f0482130f921ed89b2d7ac562cb7f100d07ac7c2ca28460ddb",
+      "bytes": 312944,
+      "chunks": 1,
+      "url": "https://www.konga.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add showed only a transient 'added to your cart' toast; the header cart button opened no in-page cart"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "Increase quantity clicked twice on the cart page; quantity stayed at 1 with no visible message"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no lingering item in the cart"
+    },
+    {
+      "state": "cart-other",
+      "reason": "no lingering items in the cart"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.konga.com/category/home-kitchen-602",
+    "productUrl": "https://www.konga.com/product/binatone-2-litres-professional-blender-bl-1500-pro-6816693",
+    "price": "NGN 122,099",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "NGN",
+  "observedRegion": "NG",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt for * disallows /cart/ and /checkout/ (prefix with trailing slash); /cart itself was loaded; root allowed",
+    "cart-qty2 not reached: increment control had no effect (possible per-item limit); a second, off-viewport Increase quantity ref was refused by the tool",
+    "screenshots failed once because the pane was not displayed; used find and get_page_text",
+    "both chunk(0) results were oversized and saved by the harness to tool-results files (not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:53:25.164Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:53:26.472Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:53:26.478Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:53:29.253Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:53:33.732Z",
+      "tool": "navigate",
+      "url": "https://www.konga.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:53:33.751Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:53:44.012Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:53:48.046Z",
+      "tool": "navigate",
+      "url": "https://www.konga.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:53:48.112Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:53:55.010Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:53:55.102Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:53:59.294Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:53:59.298Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T06:54:07.243Z",
+      "tool": "navigate",
+      "url": "https://www.konga.com/cart"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T06:54:07.250Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T06:54:12.677Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T06:54:33.098Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T06:54:35.996Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T06:54:38.924Z",
+      "tool": "navigate",
+      "url": "https://www.konga.com/category/:token"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T06:54:39.356Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T06:54:44.057Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T06:54:46.862Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T06:54:49.449Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T06:54:49.877Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T06:54:56.980Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T06:54:59.601Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T06:55:02.063Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T06:55:04.917Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T06:55:07.986Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T06:55:08.610Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T06:55:09.192Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T06:55:19.903Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T06:55:20.567Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T06:55:23.198Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T06:55:25.674Z",
+      "tool": "find"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T06:55:28.521Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T06:55:28.954Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T06:55:29.293Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T06:55:35.245Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T06:55:35.894Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T06:55:36.297Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T06:55:41.014Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T06:55:44.953Z",
+      "tool": "navigate",
+      "url": "https://www.konga.com/cart"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T06:55:45.606Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T06:55:46.027Z",
+      "tool": "find"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T06:56:11.216Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T06:56:13.601Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T06:56:16.196Z",
+      "tool": "find"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T06:56:18.588Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T06:56:19.016Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T06:56:22.100Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T06:56:22.705Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T06:56:23.139Z",
+      "tool": "find"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T06:56:29.109Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T06:56:29.496Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T06:56:32.778Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T06:56:33.348Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T06:56:33.727Z",
+      "tool": "find"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T06:56:40.453Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T06:56:41.105Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T06:56:41.476Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T06:56:46.154Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T06:56:46.853Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T06:56:47.245Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T06:56:52.099Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T06:57:10.148Z",
+      "tool": "Write"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T06:57:15.909Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "f61c8d90005827707000fac860adcffb0c896501a31c689e804751e595492e66"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "a3cd2924a0c5d4f0482130f921ed89b2d7ac562cb7f100d07ac7c2ca28460ddb"
+      }
+    ],
+    "errors": []
+  }
+}

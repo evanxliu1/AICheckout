@@ -1,0 +1,289 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "musinsa.com",
+  "stream": "non-us",
+  "visit": 216,
+  "session": 2,
+  "entryHost": "www.musinsa.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a6fd2d3f98cb1a8aa",
+  "startUtc": "2026-10-08T05:04:53.218Z",
+  "endUtc": "2026-10-08T05:11:00.513Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.musinsa.com",
+      "status": 200,
+      "sha256": "22ee9b86d1ed1854eb48551c53f0df54a2c35e55a339a0adbf6126b53557be9b",
+      "bytes": 1987,
+      "rootDisallowed": true,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    },
+    {
+      "host": "global.musinsa.com",
+      "status": 200,
+      "sha256": "36b0f572f66a0865ee4046495b55beab05a216e2761ae813a3455a1227df1385",
+      "bytes": 1488,
+      "rootDisallowed": true,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.musinsa.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.musinsa.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://global.musinsa.com/robots.txt"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.musinsa.com/main/musinsa/recommend"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "www robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "www.musinsa.com robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry; redirected to global chooser"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "global robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "global.musinsa.com robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "www main page; redirected to chooser"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 choose-location"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "e7e636c0173ace7c043219b61ad327044db737698e42e6ccb857e909528b120f",
+      "bytes": 65870,
+      "chunks": 1,
+      "url": "https://global.musinsa.com/choose-location"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "every www page redirects to global.musinsa.com/choose-location; KR storefront not offered"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "storefront not reachable without a location choice"
+    },
+    {
+      "state": "cart-1",
+      "reason": "storefront not reachable without a location choice"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "storefront not reachable without a location choice"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "storefront not reachable without a location choice"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "geo-blocked",
+    "evidenceSha256": "e7e636c0173ace7c043219b61ad327044db737698e42e6ccb857e909528b120f"
+  },
+  "challenge": null,
+  "problems": [
+    "Entry www.musinsa.com (and /main/musinsa/recommend) redirects a US visitor to global.musinsa.com/choose-location, same registrable domain; Korea is not among the listed locations.",
+    "Continuing would need a country/location chooser choice, which the posture forbids; recorded geo-blocked (would-need-forbidden-action is the alternative reading) for reviewer judgement.",
+    "robots.txt on both hosts disallows / for User-agent *; recorded only.",
+    "Starting and ending cart counts not observable (no storefront page loaded); sign-in state not observable.",
+    "Evidence chunk(0) was oversized and saved by the harness to a tool-results file; not opened."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:04:53.218Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:04:55.586Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:04:55.833Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:06:08.711Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:06:27.732Z",
+      "tool": "navigate",
+      "url": "https://www.musinsa.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:06:27.841Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:06:43.039Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:06:57.130Z",
+      "tool": "navigate",
+      "url": "https://www.musinsa.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:06:57.620Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:07:44.520Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:07:57.810Z",
+      "tool": "navigate",
+      "url": "https://global.musinsa.com/robots.txt"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:07:58.124Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:08:25.323Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:08:39.746Z",
+      "tool": "navigate",
+      "url": "https://www.musinsa.com/main/musinsa/recommend"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:08:39.863Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:09:33.550Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:09:52.164Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:10:10.220Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:10:27.438Z",
+      "tool": "Write"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:11:00.513Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "e7e636c0173ace7c043219b61ad327044db737698e42e6ccb857e909528b120f"
+      }
+    ],
+    "errors": []
+  }
+}

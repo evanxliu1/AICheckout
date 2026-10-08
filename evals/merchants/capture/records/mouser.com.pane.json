@@ -1,0 +1,199 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "mouser.com",
+  "stream": "us",
+  "visit": 215,
+  "session": 1,
+  "entryHost": "www.mouser.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-afaaf86d86f3dd9f2",
+  "startUtc": "2026-10-08T01:36:59.301Z",
+  "endUtc": "2026-10-08T01:38:37.908Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.mouser.com",
+      "status": 200,
+      "sha256": "138032693b12de072ef1d8000bc2c8d66fd5fea39dbdad92dc8c74b0790e7285",
+      "bytes": 4732,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.mouser.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.mouser.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall at entry"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.mouser.com/",
+    "title": "https://www.mouser.com/ (no document title)",
+    "marker": "DataDome device check frame (accessibility name 'DataDome Device Check'); page body otherwise empty",
+    "wording": "DataDome Device Check"
+  },
+  "problems": [
+    "Entry page showed only a DataDome device-check frame; no visible text, screenshot blank. Not exported, not interacted with.",
+    "Sign-in state and starting cart count could not be checked before the stop."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:36:59.301Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:37:00.464Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:37:00.480Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:37:34.082Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:37:41.404Z",
+      "tool": "navigate",
+      "url": "https://www.mouser.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:37:41.465Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:37:48.627Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:37:53.361Z",
+      "tool": "navigate",
+      "url": "https://www.mouser.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:37:53.506Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:37:58.533Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:37:58.540Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:38:22.222Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:38:24.720Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:38:32.183Z",
+      "tool": "Write"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T01:38:37.908Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

@@ -1,0 +1,651 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "disturbia.us",
+  "stream": "us",
+  "visit": 227,
+  "session": 2,
+  "entryHost": "www.disturbia.us",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-adf05b0f90ddbb0a7",
+  "startUtc": "2026-10-08T03:51:29.679Z",
+  "endUtc": "2026-10-08T03:55:51.833Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.disturbia.us",
+      "status": 200,
+      "sha256": "43c57183bdc7433cc1bd90c84bd8177716a55f00ce820a8fd0f675ff48a89a97",
+      "bytes": 3632,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.disturbia.us/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.disturbia.us/cart"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.disturbia.us/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.disturbia.us/products/corvus-layered-chain-necklace"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.disturbia.us/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (starting count)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "SHOP JEWELRY (no navigation)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product link from home (by href)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Add to cart (blocked by cookie modal)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Manage settings (cookie banner)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Not today"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "Close (newsletter popup)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "+"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "5a54e4e76a9dcbbfe845aece819c052a376862937ce39088f96398c1a51c53d0",
+      "bytes": 519968,
+      "chunks": 2,
+      "url": "https://www.disturbia.us/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "cfd04b6f664929eb29793d44cc3d588b6896da8ebf79445ea6c7301251a32290",
+      "bytes": 1004858,
+      "chunks": 3,
+      "url": "https://www.disturbia.us/products/corvus-layered-chain-necklace",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "20f11588728f9ea53a4029749ddcdee9faced533757132b0f5c488915cec5428",
+      "bytes": 400435,
+      "chunks": 2,
+      "url": "https://www.disturbia.us/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "73224ce9fc58c73afe29c3003059b0d243778aff795168ad35d43138bf666502",
+      "bytes": 554607,
+      "chunks": 2,
+      "url": "https://www.disturbia.us/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "cart started empty (no lingering item); no decrement control allowed after cart-qty2, so a second own item was not added"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.disturbia.us/",
+    "productUrl": "https://www.disturbia.us/products/corvus-layered-chain-necklace",
+    "price": "$22",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt comments address agents (recommend installing a shop.app skill, use UCP/MCP endpoints); reported, not followed",
+    "cookie banner had no direct decline; declined via Manage settings > Not today",
+    "first add-to-cart click was blocked by the cookie modal; item added on retry after decline",
+    "all chunk results except one were oversized and saved to harness tool-results files (not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:51:29.679Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:51:30.830Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:51:30.838Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:51:33.271Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:51:36.759Z",
+      "tool": "navigate",
+      "url": "https://www.disturbia.us/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:51:36.835Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:51:47.943Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:51:52.272Z",
+      "tool": "navigate",
+      "url": "https://www.disturbia.us/cart"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:51:52.276Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:51:57.379Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:52:25.478Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:52:28.941Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:52:32.538Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:52:36.534Z",
+      "tool": "navigate",
+      "url": "https://www.disturbia.us/"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:52:36.565Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:52:42.354Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T03:52:45.615Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T03:52:48.759Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T03:52:51.987Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T03:52:55.576Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T03:52:59.780Z",
+      "tool": "navigate",
+      "url": "https://www.disturbia.us/products/corvus-layered-chain-necklace"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T03:52:59.782Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T03:53:04.860Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T03:53:04.863Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T03:53:08.166Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T03:53:11.660Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T03:53:15.915Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T03:53:15.936Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T03:53:22.373Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T03:53:22.376Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T03:53:26.006Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T03:53:29.519Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T03:53:30.091Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T03:53:32.317Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T03:53:32.705Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T03:53:35.022Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T03:53:35.428Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T03:53:38.368Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T03:53:39.181Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T03:53:39.427Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T03:54:03.250Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T03:54:05.964Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T03:54:08.520Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T03:54:11.099Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T03:54:13.278Z",
+      "tool": "navigate",
+      "url": "https://www.disturbia.us/cart"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T03:54:13.697Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T03:54:35.594Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T03:54:38.345Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T03:54:40.777Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T03:54:42.878Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T03:54:44.947Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T03:54:47.659Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T03:54:48.020Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T03:54:48.382Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T03:55:10.850Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T03:55:13.126Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T03:55:15.663Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T03:55:21.205Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T03:55:21.858Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T03:55:22.230Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T03:55:26.931Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T03:55:27.512Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T03:55:47.152Z",
+      "tool": "Write"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T03:55:51.833Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "5a54e4e76a9dcbbfe845aece819c052a376862937ce39088f96398c1a51c53d0"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "cfd04b6f664929eb29793d44cc3d588b6896da8ebf79445ea6c7301251a32290"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "20f11588728f9ea53a4029749ddcdee9faced533757132b0f5c488915cec5428"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "73224ce9fc58c73afe29c3003059b0d243778aff795168ad35d43138bf666502"
+      }
+    ],
+    "errors": []
+  }
+}

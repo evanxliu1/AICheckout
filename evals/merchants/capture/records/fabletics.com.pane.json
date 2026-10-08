@@ -1,0 +1,594 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "fabletics.com",
+  "stream": "us",
+  "visit": 280,
+  "session": 1,
+  "entryHost": "www.fabletics.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a6bd679627eac63c9",
+  "startUtc": "2026-10-08T05:31:55.314Z",
+  "endUtc": "2026-10-08T05:37:36.580Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.fabletics.com",
+      "status": 200,
+      "sha256": "f5b0fa1b31a3e33b5893767c75b24cc936ba6be26a8e4e0d29d8ed58f4385b6a",
+      "bytes": 641,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.fabletics.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.fabletics.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.fabletics.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.fabletics.com/womens/bottoms/leggings"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.fabletics.com/products/ON-THE-GO-HIGH-WAISTED-LEGGING-LG1937944-0001"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.fabletics.com/cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.fabletics.com/products/ON-THE-GO-HIGH-WAISTED-LEGGING-LG1937944-0001"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (empty: script redirect to home)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "leggings listing"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "On-The-Go PowerHold Legging"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "radio",
+      "name": "size: M"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to Bag (non-member)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "Speedy signup close"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to Bag (non-member)"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (still empty: redirect to home)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page again for evidence"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "radio",
+      "name": "size: M"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to Bag (non-member)"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (sign-up modal)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "46f31475c4ed993c34cd772acb45772e24f28edfe01c8ee9ddd579fe5871acb8",
+      "bytes": 1756435,
+      "chunks": 5,
+      "url": "https://www.fabletics.com/products/ON-THE-GO-HIGH-WAISTED-LEGGING-LG1937944-0001"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "empty /cart redirects to the home page by script; no cart page to export"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "add-to-bag opens a sign-in or sign-up modal; nothing added"
+    },
+    {
+      "state": "cart-1",
+      "reason": "sign-in-required at add-to-bag"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "sign-in-required at add-to-bag"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "sign-in-required at add-to-bag"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.fabletics.com/womens/bottoms/leggings",
+    "productUrl": "https://www.fabletics.com/products/ON-THE-GO-HIGH-WAISTED-LEGGING-LG1937944-0001",
+    "price": "USD 94.95 (non-member)",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": "46f31475c4ed993c34cd772acb45772e24f28edfe01c8ee9ddd579fe5871acb8"
+  },
+  "challenge": null,
+  "problems": [
+    "Both 'Add to Bag' (non-member) and 'Add to Bag & Claim VIP Offer' open a 'Speedy signup' modal: 'Sign in or sign up to unlock this deal' (email, password, zip form). Tried on one item (twice); the wall is site-wide for logged-out visitors, so no further items were tried.",
+    "The first add click could not be confirmed visually (pane hidden, screenshots fail); the repeat after reload was confirmed on the non-member button by ref, and the modal appeared again.",
+    "Evidence export taken for sign-in-required although that code is not in the judgement-evidence list; offered for the reviewer.",
+    "Store promotes a paid VIP membership (monthly charge); the VIP add button was never deliberately used."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:31:55.314Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:31:56.572Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:31:56.578Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:31:59.178Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:32:02.951Z",
+      "tool": "navigate",
+      "url": "https://www.fabletics.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:32:02.957Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:32:09.426Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:32:17.963Z",
+      "tool": "navigate",
+      "url": "https://www.fabletics.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:32:17.978Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:32:24.998Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:32:25.001Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:32:28.641Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:32:32.992Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:32:38.932Z",
+      "tool": "navigate",
+      "url": "https://www.fabletics.com/cart"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:32:38.935Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:32:44.809Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:32:44.876Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:32:57.087Z",
+      "tool": "navigate",
+      "url": "https://www.fabletics.com/womens/bottoms/leggings"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:32:57.097Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:33:07.545Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:33:07.559Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:33:19.249Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:33:19.284Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:33:28.575Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:33:28.596Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:33:37.793Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:33:42.066Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:33:42.229Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:33:51.575Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:33:55.724Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:34:00.203Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:34:05.846Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T05:34:05.870Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T05:34:12.582Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T05:34:21.488Z",
+      "tool": "find"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T05:34:25.224Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T05:34:31.926Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T05:34:35.344Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T05:34:41.554Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T05:34:41.574Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T05:34:45.923Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T05:34:49.069Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T05:34:52.434Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T05:34:59.720Z",
+      "tool": "navigate",
+      "url": "https://www.fabletics.com/cart"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T05:35:00.060Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T05:35:00.061Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T05:35:16.254Z",
+      "tool": "navigate",
+      "url": "https://www.fabletics.com/products/:token"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T05:35:16.822Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T05:35:16.837Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T05:35:38.925Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T05:35:39.256Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T05:35:39.261Z",
+      "tool": "find"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T05:35:53.034Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T05:35:53.229Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T05:35:53.246Z",
+      "tool": "find"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T05:36:31.245Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T05:36:37.639Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T05:36:44.438Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T05:36:48.537Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T05:36:52.772Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T05:36:57.073Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T05:37:01.617Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T05:37:28.348Z",
+      "tool": "Write"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T05:37:36.580Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "46f31475c4ed993c34cd772acb45772e24f28edfe01c8ee9ddd579fe5871acb8"
+      }
+    ],
+    "errors": []
+  }
+}

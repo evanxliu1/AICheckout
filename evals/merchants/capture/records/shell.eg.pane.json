@@ -1,0 +1,672 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "shell.eg",
+  "stream": "non-us",
+  "visit": 194,
+  "session": 2,
+  "entryHost": "shop.shell.eg",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-afee862c069e62dd4",
+  "startUtc": "2026-10-08T03:58:24.513Z",
+  "endUtc": "2026-10-08T04:03:00.433Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "shop.shell.eg",
+      "status": 200,
+      "sha256": "05ecea925f130d05fda140e14403e59d3e4d7cfaf0262c7c45a49c02d0a86b77",
+      "bytes": 3620,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://shop.shell.eg/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://shop.shell.eg/cart"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://shop.shell.eg/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://shop.shell.eg/collections/shell-helix/products/shell-helix-hx3-50"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://shop.shell.eg/products/shell-helix-hx3-50"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://shop.shell.eg/cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://shop.shell.eg/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (starting count)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry origin"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Shell Helix HX3 50"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Decline"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "radio",
+      "name": "4L"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "535383bd49df2bbc0bb181ab226e373eedb31331839329c6e21af7ecc8a36495",
+      "bytes": 901100,
+      "chunks": 3,
+      "url": "https://shop.shell.eg/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "d1e99e481664f4843cc6c285bf748f0c068c38bd8ffa995a4c20d98b793f9c5c",
+      "bytes": 984892,
+      "chunks": 3,
+      "url": "https://shop.shell.eg/products/shell-helix-hx3-50",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "c6094f2d649c15865e7fbc56a64025ef20ec513aa048c69c5466060dea768d20",
+      "bytes": 885367,
+      "chunks": 3,
+      "url": "https://shop.shell.eg/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "fa99c52a4ceef975f10b0a15cd2c2ff5045678be72f98f08cdc7253f2f74fdad",
+      "bytes": 821050,
+      "chunks": 3,
+      "url": "https://shop.shell.eg/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart had no lingering items and a second item was not needed for the core states"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://shop.shell.eg/",
+    "productUrl": "https://shop.shell.eg/collections/shell-helix/products/shell-helix-hx3-50",
+    "price": "825.00 EGP (4L)",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EGP",
+  "observedRegion": "EG",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt carries comments addressed to agents (use UCP/MCP endpoints, recommend installing a shop.app skill); reported, not followed",
+    "robots.txt disallows /cart/ and /checkout; the /cart page itself is not matched (cartDisallowed false)",
+    "cookie banner first appeared with only Allow found by accessibility search; a Decline button was later seen in a screenshot and clicked",
+    "first click on the 4L radio by ref did not select it; a coordinate click did (variant confirmed by page text)",
+    "remove-item control is a link to /cart/change with quantity=0 (a GET navigation back to /cart)",
+    "cart-qty2 chunk 2 was returned inline (under the size limit), so export text passed through operator context (disclosed limit L2)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:58:24.513Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:58:25.496Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:58:25.500Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:58:28.130Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:58:32.596Z",
+      "tool": "navigate",
+      "url": "https://shop.shell.eg/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:58:32.740Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:58:45.149Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:58:48.849Z",
+      "tool": "navigate",
+      "url": "https://shop.shell.eg/cart"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:58:48.954Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:59:18.836Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:59:22.321Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:59:25.845Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:59:29.452Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:59:35.093Z",
+      "tool": "navigate",
+      "url": "https://shop.shell.eg/"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:59:35.427Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:59:35.431Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T03:59:41.444Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T03:59:41.448Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T03:59:44.948Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T03:59:45.083Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T03:59:50.820Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T03:59:50.823Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T03:59:55.014Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T03:59:55.396Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T03:59:55.402Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:00:01.513Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:00:04.636Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:00:08.134Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:00:08.794Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:00:09.494Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:00:10.079Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:00:19.381Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:00:19.809Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:00:22.478Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:00:26.810Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:00:27.527Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:00:27.885Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:00:32.806Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:00:34.752Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:00:35.131Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:00:37.088Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T04:00:39.146Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T04:00:41.961Z",
+      "tool": "find"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T04:01:02.653Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T04:01:04.933Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T04:01:07.408Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T04:01:09.817Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T04:01:12.201Z",
+      "tool": "navigate",
+      "url": "https://shop.shell.eg/cart"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T04:01:12.629Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T04:01:33.911Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T04:01:36.264Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T04:01:38.677Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T04:01:41.186Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T04:01:43.446Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T04:01:45.691Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T04:01:48.630Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T04:01:49.313Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T04:01:49.711Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T04:02:13.429Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T04:02:15.899Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T04:02:18.486Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T04:02:20.872Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T04:02:24.195Z",
+      "tool": "find"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T04:02:26.730Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T04:02:27.085Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T04:02:27.586Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T04:02:33.073Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T04:02:33.922Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T04:02:55.519Z",
+      "tool": "Write"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T04:03:00.433Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "535383bd49df2bbc0bb181ab226e373eedb31331839329c6e21af7ecc8a36495"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "d1e99e481664f4843cc6c285bf748f0c068c38bd8ffa995a4c20d98b793f9c5c"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "c6094f2d649c15865e7fbc56a64025ef20ec513aa048c69c5466060dea768d20"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "fa99c52a4ceef975f10b0a15cd2c2ff5045678be72f98f08cdc7253f2f74fdad"
+      }
+    ],
+    "errors": []
+  }
+}

@@ -1,0 +1,239 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "belk.com",
+  "stream": "us",
+  "visit": 56,
+  "session": 1,
+  "entryHost": "www.belk.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-aff27aa04915b0f99",
+  "startUtc": "2026-10-07T07:26:48.525Z",
+  "endUtc": "2026-10-07T07:27:55.271Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.belk.com",
+      "status": 200,
+      "sha256": "243a08426ba5708b7badbf59152af737a5db34600f71eabf0aa48ef015a9157b",
+      "bytes": 2949,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.belk.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.belk.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.belk.com/shopping-bag"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page (starting count)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on cart page before any capture"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.belk.com/shopping-bag",
+    "title": "Access to this page has been denied",
+    "vendor": "PerimeterX/HUMAN (press-and-hold)",
+    "wording": "Before we continue... Press & Hold to confirm you are a human (and not a bot)."
+  },
+  "problems": [
+    "Home page loaded without challenge; PerimeterX press-and-hold wall on /shopping-bag (third navigation). Not interacted with, not exported.",
+    "Sign-in state judged from home page header only (no greeting seen); starting cart count unknown.",
+    "robots.txt disallows /shopping-bag/ for *; recorded only."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:26:48.525Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:26:49.536Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:26:49.540Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:26:52.132Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:26:55.833Z",
+      "tool": "navigate",
+      "url": "https://www.belk.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:26:55.839Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:27:03.497Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:27:08.329Z",
+      "tool": "navigate",
+      "url": "https://www.belk.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:27:08.333Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:27:14.242Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:27:14.246Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:27:21.991Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:27:21.994Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:27:25.583Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:27:29.358Z",
+      "tool": "navigate",
+      "url": "https://www.belk.com/shopping-bag"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:27:29.746Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:27:33.382Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:27:38.870Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:27:49.337Z",
+      "tool": "Write"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:27:55.271Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

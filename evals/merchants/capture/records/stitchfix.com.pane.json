@@ -1,0 +1,310 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "stitchfix.com",
+  "stream": "us",
+  "visit": 212,
+  "session": 1,
+  "entryHost": "www.stitchfix.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-ad57baafeb62f528a",
+  "startUtc": "2026-10-08T01:34:26.717Z",
+  "endUtc": "2026-10-08T01:36:47.736Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.stitchfix.com",
+      "status": 200,
+      "sha256": "876f37b0e93e4092aae81f4d870e95414799b4e94313eb82a0ed7907677ed790",
+      "bytes": 565,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.stitchfix.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.stitchfix.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.stitchfix.com/women"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.stitchfix.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Women"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Can I browse and purchase pieces on my"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart URL (404)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "586b3d4890d2936c35096f15d871da044c9c75225668d087ab9f5026d7587b42",
+      "bytes": 487965,
+      "chunks": 2,
+      "url": "https://www.stitchfix.com/women"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "no public cart: /cart returns 404 for a logged-out visitor"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "no add-to-cart for logged-out visitors; shopping (Freestyle) only for clients after a first Fix"
+    },
+    {
+      "state": "cart-1",
+      "reason": "as minicart-1"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "as minicart-1"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "as minicart-1"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": "586b3d4890d2936c35096f15d871da044c9c75225668d087ab9f5026d7587b42"
+  },
+  "challenge": null,
+  "problems": [
+    "Stitch Fix is a styling-subscription service; logged-out pages show only the style quiz and sign-in, no product listing or add-to-cart.",
+    "FAQ (expanded on /women, exported as evidence) says self-shopping (Freestyle) is available once you have received your first Fix, i.e. an account is required.",
+    "Cart URL /cart returned a 404 page; no cart count observable, so start and end cart counts are null.",
+    "Code choice sign-in-required vs no-eligible-item is a judgement call for the reviewer."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:34:26.717Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:34:27.763Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:34:27.781Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:34:30.926Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:34:34.579Z",
+      "tool": "navigate",
+      "url": "https://www.stitchfix.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:34:34.586Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:34:41.735Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:34:46.635Z",
+      "tool": "navigate",
+      "url": "https://www.stitchfix.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:34:46.640Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:34:53.814Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:34:53.837Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:34:59.427Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:34:59.485Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:35:18.778Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T01:35:21.872Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T01:35:25.987Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T01:35:29.943Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T01:35:29.951Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T01:36:03.247Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T01:36:07.425Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T01:36:11.237Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T01:36:17.150Z",
+      "tool": "navigate",
+      "url": "https://www.stitchfix.com/cart"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T01:36:17.167Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T01:36:22.767Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T01:36:40.174Z",
+      "tool": "Write"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T01:36:47.736Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "586b3d4890d2936c35096f15d871da044c9c75225668d087ab9f5026d7587b42"
+      }
+    ],
+    "errors": []
+  }
+}

@@ -1,0 +1,746 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "lidl.fr",
+  "stream": "non-us",
+  "visit": 70,
+  "session": 1,
+  "entryHost": "www.lidl.fr",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a7fb36af60caa6e6f",
+  "startUtc": "2026-10-07T08:09:31.776Z",
+  "endUtc": "2026-10-07T08:14:58.839Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.lidl.fr",
+      "status": 200,
+      "sha256": "bd7bbb4f4c90d3801140c159b3e7fc4c3d8d0331e499d85c4995f9f3bbc5a5f7",
+      "bytes": 312,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.lidl.fr/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.lidl.fr/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.lidl.fr/otc/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.lidl.fr/c/cuisine-menage/s10067764"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.lidl.fr/q/query/tous-les-produits-cuisine-menage"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.lidl.fr/p/silvercrest-hachoir-multifonction-retro-1973-1-2-l/p100410401"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.lidl.fr/otc/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "TOUT REFUSER"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Cuisine & Ménage category"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Tous les produits"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Hachoir multifonction Retro 1973, 1,2 L"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "radio",
+      "name": "rouge"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Dans le panier"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Augmenter la quantité"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Supprimer"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "410bf8f94f4424dbc3d542d64de00f08e9152e1eff945fa578b36df7137a02e1",
+      "bytes": 623855,
+      "chunks": 2,
+      "url": "https://www.lidl.fr/otc/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "e75560179b377547f8a1e91d5d117b4e7d6d40198133e9ca395bcab24ed51d18",
+      "bytes": 1941189,
+      "chunks": 5,
+      "url": "https://www.lidl.fr/p/silvercrest-hachoir-multifonction-retro-1973-1-2-l/p100410401",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "f3d69ffffddc4bcb42eb8a3747d94f0a77aa97836817b9d1121bbcddbb564248",
+      "bytes": 663918,
+      "chunks": 2,
+      "url": "https://www.lidl.fr/otc/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "702919977bc4b6431e66b5f95f5a08dd62378ac5aaaff65f179ce19700303e46",
+      "bytes": 664732,
+      "chunks": 2,
+      "url": "https://www.lidl.fr/otc/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; second item skipped to keep the session short"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.lidl.fr/q/query/tous-les-produits-cuisine-menage",
+    "productUrl": "https://www.lidl.fr/p/silvercrest-hachoir-multifonction-retro-1973-1-2-l/p100410401",
+    "price": "14.99 EUR",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EUR",
+  "observedRegion": "FR",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Listing reached by clicking a 'Tous les produits' category link that lands on a /q/query/ path (site's own category listing, not the search box)",
+    "Product needed a colour radio choice (rouge) before add-to-cart",
+    "All chunk results exceeded the inline limit and were saved by the harness to tool-results files (not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:09:31.776Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:09:32.907Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:09:32.910Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:09:40.682Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:09:44.415Z",
+      "tool": "navigate",
+      "url": "https://www.lidl.fr/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:09:44.492Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:09:55.382Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:10:00.098Z",
+      "tool": "navigate",
+      "url": "https://www.lidl.fr/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:10:00.138Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:10:08.501Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:10:12.909Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:10:13.605Z",
+      "tool": "navigate",
+      "url": "https://www.lidl.fr/otc/cart"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:10:13.611Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:10:43.902Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:10:49.456Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:10:53.383Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:10:58.142Z",
+      "tool": "navigate",
+      "url": "https://www.lidl.fr/c/cuisine-menage/s10067764"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:10:58.147Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:11:02.292Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:11:05.643Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:11:09.633Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:11:13.749Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:11:13.751Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:11:17.249Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:11:21.516Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:11:21.599Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:11:25.423Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:11:29.052Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:11:33.910Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:11:33.913Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:11:40.405Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T08:11:48.721Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T08:11:48.727Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T08:11:52.330Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T08:11:52.826Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T08:12:00.418Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T08:12:00.743Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T08:12:03.794Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T08:12:06.099Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T08:12:08.703Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T08:12:11.757Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T08:12:14.588Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T08:12:17.804Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T08:12:18.014Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T08:12:18.342Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T08:12:23.720Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T08:12:26.415Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T08:12:29.355Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T08:12:32.676Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T08:12:32.819Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T08:12:33.196Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T08:12:38.411Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T08:12:41.723Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T08:12:41.850Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T08:12:42.237Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T08:13:05.135Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T08:13:07.928Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T08:13:08.657Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T08:13:09.508Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T08:13:10.378Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T08:13:10.995Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T08:13:15.622Z",
+      "tool": "navigate",
+      "url": "https://www.lidl.fr/otc/cart"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T08:13:15.624Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T08:13:16.049Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T08:13:43.458Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T08:13:46.596Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T08:13:47.141Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T08:13:50.481Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T08:13:53.726Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-07T08:13:53.943Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-07T08:13:54.419Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-07T08:14:18.380Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-07T08:14:21.679Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-07T08:14:22.079Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-07T08:14:25.384Z",
+      "tool": "find"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-07T08:14:28.709Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-07T08:14:28.866Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-07T08:14:29.242Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-07T08:14:34.730Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-07T08:14:53.853Z",
+      "tool": "Write"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-07T08:14:58.839Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "410bf8f94f4424dbc3d542d64de00f08e9152e1eff945fa578b36df7137a02e1"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "e75560179b377547f8a1e91d5d117b4e7d6d40198133e9ca395bcab24ed51d18"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "f3d69ffffddc4bcb42eb8a3747d94f0a77aa97836817b9d1121bbcddbb564248"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "702919977bc4b6431e66b5f95f5a08dd62378ac5aaaff65f179ce19700303e46"
+      }
+    ],
+    "errors": []
+  }
+}

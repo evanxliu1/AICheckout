@@ -1,0 +1,575 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "dixxon.com",
+  "stream": "us",
+  "visit": 109,
+  "session": 1,
+  "entryHost": "www.dixxon.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-ae72db0159c579f01",
+  "startUtc": "2026-10-07T08:32:15.355Z",
+  "endUtc": "2026-10-07T08:37:00.307Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.dixxon.com",
+      "status": 200,
+      "sha256": "3177aef94238771cc10eff9b23760c46df1619d0fc652b3286f7dee29ffd9119",
+      "bytes": 3618,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.dixxon.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.dixxon.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.dixxon.com/collections/new-arrivals/products/the-showboat-flannel"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.dixxon.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (link from home)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "Close dialog"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "button",
+      "name": "Size S"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "ade465eb31afd82822fb2c49e081e1e8ba000606cb20587be83110e0e3970135",
+      "bytes": 1594021,
+      "chunks": 4,
+      "url": "https://www.dixxon.com/products/the-showboat-flannel",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "b435610c5786487536000af86b4b5f0e8d729a6f433d55ab7acde458670d94d4",
+      "bytes": 607601,
+      "chunks": 2,
+      "url": "https://www.dixxon.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "1b4da8bb8318180a7e30f1680b1c78b3edfa4726e359ffc4faf3036382741539",
+      "bytes": 608924,
+      "chunks": 2,
+      "url": "https://www.dixxon.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "3680f7a60fa2fd2fc4caf0a4573884251447da426708565e0f0a28f5a6c0393f",
+      "bytes": 590942,
+      "chunks": 2,
+      "url": "https://www.dixxon.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted: decrement is not an allowed control, so a second item would have given a 3-unit cart; kept the session short"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.dixxon.com/",
+    "productUrl": "https://www.dixxon.com/collections/new-arrivals/products/the-showboat-flannel",
+    "price": "USD 39.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt comments address agents (use the store's UCP/MCP endpoint; recommend installing a shop.app skill); reported, not followed",
+    "robots.txt disallows /cart/ (trailing slash) and /checkout; /cart itself not matched, so cartDisallowed recorded false",
+    "size click rewrote the URL to /products/the-showboat-flannel with a variant query (script history change, not counted as a navigation); minicart-1 exported there",
+    "empty-cart exported after removing own item (cart was actually empty)",
+    "all chunk results were oversized and saved by the harness to tool-results files (not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:32:15.355Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:32:16.621Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:32:16.629Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:32:20.855Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:32:25.536Z",
+      "tool": "navigate",
+      "url": "https://www.dixxon.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:32:28.997Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:32:31.637Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:32:58.292Z",
+      "tool": "navigate",
+      "url": "https://www.dixxon.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:33:07.372Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:33:07.475Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:33:13.766Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:33:13.772Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:33:18.634Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:33:22.680Z",
+      "tool": "navigate",
+      "url": "https://www.dixxon.com/collections/new-arrivals/products/the-showboat-flannel"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:33:28.043Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:33:37.070Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:33:41.334Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:33:50.048Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:33:53.729Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:33:57.492Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:34:02.521Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:34:06.716Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:34:07.241Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:34:10.021Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:34:12.495Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:34:15.114Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:34:17.448Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:34:20.063Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:34:40.656Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:34:43.766Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:34:44.482Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T08:34:45.334Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T08:34:46.048Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T08:34:49.502Z",
+      "tool": "navigate",
+      "url": "https://www.dixxon.com/cart"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T08:34:52.769Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T08:35:13.501Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T08:35:16.857Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T08:35:17.333Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T08:35:20.647Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T08:35:23.271Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T08:35:25.890Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T08:35:26.290Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T08:35:48.958Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T08:35:52.145Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T08:35:52.628Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T08:35:59.857Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T08:36:02.463Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T08:36:05.674Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T08:36:06.126Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T08:36:29.322Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T08:36:32.608Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T08:36:33.227Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T08:36:37.850Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T08:36:54.964Z",
+      "tool": "Write"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T08:37:00.307Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "ade465eb31afd82822fb2c49e081e1e8ba000606cb20587be83110e0e3970135"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "b435610c5786487536000af86b4b5f0e8d729a6f433d55ab7acde458670d94d4"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "1b4da8bb8318180a7e30f1680b1c78b3edfa4726e359ffc4faf3036382741539"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "3680f7a60fa2fd2fc4caf0a4573884251447da426708565e0f0a28f5a6c0393f"
+      }
+    ],
+    "errors": []
+  }
+}

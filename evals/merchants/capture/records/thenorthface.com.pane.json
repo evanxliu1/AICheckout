@@ -1,0 +1,355 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "thenorthface.com",
+  "stream": "us",
+  "visit": 235,
+  "session": 2,
+  "entryHost": "www.thenorthface.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-abab227753d96d265",
+  "startUtc": "2026-10-08T03:59:34.277Z",
+  "endUtc": "2026-10-08T04:01:27.177Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.thenorthface.com",
+      "status": 200,
+      "sha256": "30d0c0192a7cf5e5dc1e34cc0d15edb24e0e4af7f0ef1fb84adfd9ad654e37ce",
+      "bytes": 919,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.thenorthface.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.thenorthface.com/en-us"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.thenorthface.com/en-us/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.thenorthface.com/en-us"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.thenorthface.com/en-us/p/womens/womens-jackets-and-vests/womens-insulated-and-down-299277/womens-nuketo-synthetic-insulated-jacket-NF0A8J44"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home (entry host)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page by URL"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home (entry host)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Cart - 0 items"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page by URL"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart page rendered blank (no title, no text) by URL; header cart click opened nothing readable; not exported"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped: captcha on product page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped: captcha on product page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped: captcha on product page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.thenorthface.com/en-us",
+    "productUrl": "https://www.thenorthface.com/en-us/p/womens/womens-jackets-and-vests/womens-insulated-and-down-299277/womens-nuketo-synthetic-insulated-jacket-NF0A8J44",
+    "price": "$180.00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.thenorthface.com/en-us/p/womens/womens-jackets-and-vests/womens-insulated-and-down-299277/womens-nuketo-synthetic-insulated-jacket-NF0A8J44",
+    "title": "Access to this page has been denied",
+    "wording": "BEFORE WE CONTINUE... Press & Hold to confirm you are a human (and not a bot).",
+    "marker": "PerimeterX/HUMAN press-and-hold page (title and wording); not interacted with, not exported"
+  },
+  "problems": [
+    "Cart page /en-us/cart loaded blank (empty body, no title) after 15 s; may have been an early sign of the bot check; empty-cart not exported",
+    "Product carousel on the home page showed 'No Results Found' after returning; product opened by URL taken from the home page link (query dropped)",
+    "Captcha shown on the product page on the 5th navigation; stopped at once; tab closed; nothing added to the cart, so no removals"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:59:34.277Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:59:35.397Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:59:35.405Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:59:37.813Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:59:41.014Z",
+      "tool": "navigate",
+      "url": "https://www.thenorthface.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:59:44.995Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:59:50.952Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:59:54.243Z",
+      "tool": "navigate",
+      "url": "https://www.thenorthface.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:59:58.812Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:59:59.602Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:59:59.606Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:00:02.886Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:00:07.154Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:00:07.159Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:00:11.436Z",
+      "tool": "navigate",
+      "url": "https://www.thenorthface.com/en-us/cart"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:00:11.438Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:00:16.277Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:00:16.278Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:00:22.581Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:00:22.597Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:00:29.654Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:00:32.851Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:00:33.295Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:00:43.278Z",
+      "tool": "navigate",
+      "url": "https://www.thenorthface.com/en-us"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:00:43.617Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:00:45.890Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:00:47.973Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:00:50.070Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:00:52.538Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:00:55.898Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:00:58.750Z",
+      "tool": "navigate",
+      "url": "https://www.thenorthface.com/en-us/p/womens/womens-jackets-and-vests/:token/:token"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:00:59.135Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:01:03.519Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:01:05.641Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:01:07.895Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:01:22.819Z",
+      "tool": "Write"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:01:27.177Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

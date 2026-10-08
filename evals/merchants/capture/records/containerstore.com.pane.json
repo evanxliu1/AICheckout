@@ -1,0 +1,215 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "containerstore.com",
+  "stream": "us",
+  "visit": 220,
+  "session": 2,
+  "entryHost": "www.containerstore.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a820fbbacddac6a7a",
+  "startUtc": "2026-10-08T03:41:47.392Z",
+  "endUtc": "2026-10-08T03:42:51.153Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.containerstore.com",
+      "status": 200,
+      "sha256": "bdc9879729d451f56ee3ed960d06ef4c1a62c93e542f2877ad4aec13341c6839",
+      "bytes": 5525,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.containerstore.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.containerstore.com/welcome.htm"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.containerstore.com/cart/list.htm"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page (starting count)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "bot wall on cart page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "bot wall on cart page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "bot wall on cart page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "bot wall on cart page"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "bot wall on cart page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.containerstore.com/cart/list.htm",
+    "title": "Access to this page has been denied",
+    "wording": "Before we continue... Press & Hold to confirm you are a human (and not a bot).",
+    "marker": "PerimeterX/HUMAN press-and-hold challenge"
+  },
+  "problems": [
+    "Home page loaded normally and showed a Sign In link, so not signed in; the cart page served a PerimeterX press-and-hold challenge before the starting cart count could be read; not interacted with or exported.",
+    "Observed currency and region are from the frame (USD, US); the home page was not inspected further."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:41:47.392Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:41:48.598Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:41:48.619Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:41:51.102Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:41:54.200Z",
+      "tool": "navigate",
+      "url": "https://www.containerstore.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:41:58.327Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:42:01.472Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:42:05.931Z",
+      "tool": "navigate",
+      "url": "https://www.containerstore.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:42:11.143Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:42:11.203Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:42:14.458Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:42:22.731Z",
+      "tool": "navigate",
+      "url": "https://www.containerstore.com/cart/list.htm"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:42:26.636Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:42:30.033Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:42:43.991Z",
+      "tool": "Write"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:42:51.153Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

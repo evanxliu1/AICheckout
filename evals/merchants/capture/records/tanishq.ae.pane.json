@@ -1,0 +1,561 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "tanishq.ae",
+  "stream": "non-us",
+  "visit": 190,
+  "session": 2,
+  "entryHost": "www.tanishq.ae",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a02ba0ea87af2f6ea",
+  "startUtc": "2026-10-08T03:50:46.600Z",
+  "endUtc": "2026-10-08T03:56:59.609Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.tanishq.ae",
+      "status": 200,
+      "sha256": "335fadd35d0fe0da29315424925307f7937a669299afa9a796a5e9d96f410a9e",
+      "bytes": 371,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.tanishq.ae/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.tanishq.ae/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.tanishq.ae/jewellery/kids-earrings"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.tanishq.ae/product/stellar-pop-diamond-stud-earrings-uh2923scyaaa09.html"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.tanishq.ae/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "kids earrings listing (site link URL)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "heading",
+      "name": "Stellar Pop Diamond Stud Earrings"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove product Stellar Pop Diamond Stud"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove (confirm dialog)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "1c7e0711c447c3123581eec87a5debe2c142124fb9e087512e115ef98861a09d",
+      "bytes": 2843940,
+      "chunks": 8,
+      "url": "https://www.tanishq.ae/product/stellar-pop-diamond-stud-earrings-uh2923scyaaa09.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "45781052454d866e7bca7375344adaba228a3ace807884fc39edc185a00162f4",
+      "bytes": 1705630,
+      "chunks": 5,
+      "url": "https://www.tanishq.ae/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "945775e851b96e420de3eb933459eba76504169ef788fd90f73a150bc261023d",
+      "bytes": 1561070,
+      "chunks": 4,
+      "url": "https://www.tanishq.ae/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-qty2",
+      "reason": "cart shows quantity as static text; no quantity-increment control"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart started empty and one own item was enough for cart-1"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.tanishq.ae/jewellery/kids-earrings",
+    "productUrl": "https://www.tanishq.ae/product/stellar-pop-diamond-stud-earrings-uh2923scyaaa09.html",
+    "price": "621 AED",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "AED",
+  "observedRegion": "AE",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Listing reached by navigating to the URL of a site menu link (the menu link was off-viewport), not by a click.",
+    "empty-cart was exported after removing the own item (cart actually empty), not at session start.",
+    "Every chunk result exceeded the inline limit and was saved by the harness to tool-results files (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:50:46.600Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:50:47.702Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:50:47.705Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:50:56.152Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:50:59.805Z",
+      "tool": "navigate",
+      "url": "https://www.tanishq.ae/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:51:03.787Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:51:09.697Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:51:14.187Z",
+      "tool": "navigate",
+      "url": "https://www.tanishq.ae/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:51:19.747Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:51:24.249Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:51:24.252Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:51:29.676Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:51:41.133Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:51:44.988Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:51:52.711Z",
+      "tool": "navigate",
+      "url": "https://www.tanishq.ae/jewellery/kids-earrings"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:51:57.920Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T03:52:01.601Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T03:52:05.052Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T03:52:08.030Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T03:52:11.319Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T03:52:15.028Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T03:52:18.156Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T03:52:21.507Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T03:52:50.058Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T03:52:57.480Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T03:53:01.098Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T03:53:05.017Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T03:53:08.500Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T03:53:12.360Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T03:53:16.096Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T03:53:19.700Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T03:53:23.123Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T03:53:26.575Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T03:53:39.154Z",
+      "tool": "navigate",
+      "url": "https://www.tanishq.ae/cart"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T03:53:45.950Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T03:54:17.390Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T03:54:23.667Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T03:54:28.557Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T03:54:54.724Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T03:54:58.897Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T03:55:02.601Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T03:55:10.327Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T03:55:10.328Z",
+      "tool": "find"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T03:55:13.722Z",
+      "tool": "find"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T03:55:17.701Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T03:55:20.918Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T03:55:26.838Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T03:55:30.068Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T03:55:59.695Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T03:56:04.178Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T03:56:07.753Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T03:56:12.486Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T03:56:27.955Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T03:56:31.277Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T03:56:53.285Z",
+      "tool": "Write"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T03:56:59.609Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "1c7e0711c447c3123581eec87a5debe2c142124fb9e087512e115ef98861a09d"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "45781052454d866e7bca7375344adaba228a3ace807884fc39edc185a00162f4"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "945775e851b96e420de3eb933459eba76504169ef788fd90f73a150bc261023d"
+      }
+    ],
+    "errors": []
+  }
+}

@@ -1,0 +1,564 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "imperialfashion.com",
+  "stream": "non-us",
+  "visit": 37,
+  "session": 1,
+  "entryHost": "www.imperialfashion.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a325476f4a4b463dc",
+  "startUtc": "2026-10-07T07:12:37.401Z",
+  "endUtc": "2026-10-07T07:16:18.240Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.imperialfashion.com",
+      "status": 200,
+      "sha256": "29640dba3f4fc6d155ee70f26c70fb159342a5e7b0b50f9261f137f323cf37e1",
+      "bytes": 1624,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.imperialfashion.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.imperialfashion.com/int/en"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.imperialfashion.com/int/en/checkout/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.imperialfashion.com/int/en/trending-now-woman"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.imperialfashion.com/int/en"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.imperialfashion.com/int/en/trending-now-woman"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.imperialfashion.com/int/en/trending-now-man"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host (redirected to /int/en)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "Close (newsletter popup)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "menuitem",
+      "name": "WOMAN (trending-now-woman)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "menuitem",
+      "name": "WOMAN"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "link",
+      "name": "home"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Discover woman"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "navigate",
+      "role": "menuitem",
+      "name": "MAN (trending-now-man)"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 no-eligible-item"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "3546d214844abd62dd0e5b6fd80329376b85dd6a4cb153e2c17c9bae7f7da544",
+      "bytes": 160260,
+      "chunks": 1,
+      "url": "https://www.imperialfashion.com/int/en/checkout/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "18d3e303975112386768ddc9d75c14c4e384d646ea0e2a5ace7bb1bd0fc8fb61",
+      "bytes": 370183,
+      "chunks": 1,
+      "url": "https://www.imperialfashion.com/int/en/trending-now-man"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "no-eligible-item: International storeview served to US visitor shows no product listings or prices"
+    },
+    {
+      "state": "cart-1",
+      "reason": "no-eligible-item"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "no-eligible-item"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no-eligible-item"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": "International storeview (int/en)",
+  "outcome": {
+    "status": "excluded",
+    "code": "no-eligible-item",
+    "evidenceSha256": "18d3e303975112386768ddc9d75c14c4e384d646ea0e2a5ace7bb1bd0fc8fb61"
+  },
+  "challenge": null,
+  "problems": [
+    "Entry host redirected to the International storeview (/int/en); its WOMAN and MAN menus lead only to editorial campaign pages with no product links, prices or categories; country storeviews (e.g. /it/it/) were not opened because changing the storefront is not allowed.",
+    "Banner on the International storeview said the site no longer ships to the UK and redirected to the International storeview; no explicit US geo-block wording seen. Reviewer may consider geo-blocked instead of no-eligible-item.",
+    "Newsletter popup contains a reCAPTCHA checkbox inside a signup form; not a page challenge, not interacted with.",
+    "robots.txt disallows /checkout/ (covers Magento /checkout/cart) and /customer/; root allowed.",
+    "Both chunk(0) results exceeded the inline limit and were saved by the harness to tool-results files (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:12:37.401Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:12:38.418Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:12:38.425Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:12:41.218Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:12:45.066Z",
+      "tool": "navigate",
+      "url": "https://www.imperialfashion.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:12:45.069Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:12:52.731Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:13:02.254Z",
+      "tool": "navigate",
+      "url": "https://www.imperialfashion.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:13:02.395Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:13:10.030Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:13:14.289Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:13:14.296Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:13:18.089Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:13:21.097Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:13:21.587Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:13:24.192Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:13:27.337Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:13:27.853Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:13:30.866Z",
+      "tool": "navigate",
+      "url": "https://www.imperialfashion.com/int/en/checkout/cart/"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:13:31.252Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T07:13:53.638Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T07:13:56.524Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T07:13:59.612Z",
+      "tool": "navigate",
+      "url": "https://www.imperialfashion.com/int/en/trending-now-woman"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T07:14:00.032Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T07:14:03.702Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T07:14:06.322Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T07:14:09.055Z",
+      "tool": "computer",
+      "action": "hover"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T07:14:09.467Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T07:14:12.156Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T07:14:12.701Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T07:14:26.085Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T07:14:29.390Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T07:14:32.537Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T07:14:33.074Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T07:14:36.343Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T07:14:36.731Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T07:14:41.972Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T07:14:44.595Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T07:14:47.316Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T07:14:50.204Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T07:14:54.440Z",
+      "tool": "navigate",
+      "url": "https://www.imperialfashion.com/int/en/"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T07:14:54.882Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T07:14:59.273Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T07:15:01.699Z",
+      "tool": "find"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T07:15:04.076Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T07:15:04.146Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T07:15:07.796Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T07:15:12.808Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T07:15:13.815Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T07:15:14.340Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T07:15:17.172Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T07:15:22.145Z",
+      "tool": "navigate",
+      "url": "https://www.imperialfashion.com/int/en/trending-now-man"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T07:15:22.704Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T07:15:23.228Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T07:15:49.078Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T07:15:52.222Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T07:15:55.051Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T07:16:12.501Z",
+      "tool": "Write"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T07:16:18.240Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "3546d214844abd62dd0e5b6fd80329376b85dd6a4cb153e2c17c9bae7f7da544"
+      },
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "18d3e303975112386768ddc9d75c14c4e384d646ea0e2a5ace7bb1bd0fc8fb61"
+      }
+    ],
+    "errors": []
+  }
+}

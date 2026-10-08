@@ -1,0 +1,461 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "spencersonline.com",
+  "stream": "us",
+  "visit": 267,
+  "session": 1,
+  "entryHost": "www.spencersonline.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-af3dd11b676e833c9",
+  "startUtc": "2026-10-08T05:14:31.472Z",
+  "endUtc": "2026-10-08T05:20:18.934Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.spencersonline.com",
+      "status": 200,
+      "sha256": "ac8af5605269ee603a2ed3bef13201479be8026a8543b4300d070598424d285b",
+      "bytes": 626,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.spencersonline.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.spencersonline.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.spencersonline.com/category/lava-lamps/pc/5531/310.uts"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.spencersonline.com/product/14-5-inch-rocket-ship-lava-lamp/297709.uts"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "lava lamps listing"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "14.5 Inch Rocket Ship Lava Lamp"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "close"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Cart (hover, opens mini-cart flyout)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "remove (mini-cart flyout)"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "7db1186f5d780a68b09fdfa7a00c0c952ee945c40f5b390947d33a39e059f571",
+      "bytes": 2499497,
+      "chunks": 7,
+      "url": "https://www.spencersonline.com/product/14-5-inch-rocket-ship-lava-lamp/297709.uts",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart page is /checkout/basket.jsp, a checkout path segment the checklist forbids opening"
+    },
+    {
+      "state": "cart-1",
+      "reason": "cart page is /checkout/basket.jsp, a checkout path segment the checklist forbids opening"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "needs the cart page at /checkout/basket.jsp (forbidden checkout segment); no increment in the drawer"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.spencersonline.com/category/lava-lamps/pc/5531/310.uts",
+    "productUrl": "https://www.spencersonline.com/product/14-5-inch-rocket-ship-lava-lamp/297709.uts",
+    "price": "$39.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cart page lives at /checkout/basket.jsp; not opened because the checklist forbids any path with a checkout segment (only Magento /checkout/cart excepted). Only minicart-1 captured; reviewer may decide whether basket.jsp warrants an exception.",
+    "minicart-1 is the 'Added to cart' drawer shown after add (item, size, price, recommendations); a separate hover mini-cart flyout with Subtotal exists but was not exported as a state.",
+    "robots.txt disallows */checkout/* for *, which covers the cart path /checkout/basket.jsp; root not disallowed.",
+    "Removal done via the hover mini-cart flyout's remove link; header cart badge read 0 afterwards.",
+    "All 7 chunk results were oversized and saved by the harness to tool-results files (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:14:31.472Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:14:32.237Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:14:33.442Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:14:33.493Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:15:06.170Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:15:12.415Z",
+      "tool": "navigate",
+      "url": "https://www.spencersonline.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:15:12.456Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:15:21.686Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:15:29.480Z",
+      "tool": "navigate",
+      "url": "https://www.spencersonline.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:15:29.581Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:15:48.957Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:15:48.970Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:15:48.972Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:15:58.572Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:16:07.141Z",
+      "tool": "navigate",
+      "url": "https://www.spencersonline.com/category/lava-lamps/pc/5531/310.uts"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:16:07.154Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:16:15.170Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:16:20.819Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:16:24.589Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:16:44.011Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:16:52.024Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:16:55.851Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:17:01.728Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:17:10.045Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:17:10.111Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:17:24.952Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:17:28.959Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:17:59.958Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:18:07.478Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:18:08.198Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:18:09.992Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:18:11.353Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T05:18:12.922Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T05:18:13.523Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T05:18:13.543Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T05:18:48.074Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T05:18:55.048Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T05:19:01.254Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T05:19:09.812Z",
+      "tool": "computer",
+      "action": "hover"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T05:19:16.743Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T05:19:16.822Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T05:19:22.919Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T05:19:29.376Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T05:19:37.765Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T05:19:37.777Z",
+      "tool": "find"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T05:19:37.777Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T05:19:44.180Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T05:20:10.128Z",
+      "tool": "Write"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T05:20:18.934Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "7db1186f5d780a68b09fdfa7a00c0c952ee945c40f5b390947d33a39e059f571"
+      }
+    ],
+    "errors": []
+  }
+}

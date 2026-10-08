@@ -1,0 +1,741 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "sherwin-williams.com",
+  "stream": "us",
+  "visit": 167,
+  "session": 1,
+  "entryHost": "www.sherwin-williams.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-afa1a2f9200c8e6e9",
+  "startUtc": "2026-10-08T00:23:02.469Z",
+  "endUtc": "2026-10-08T00:28:31.724Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.sherwin-williams.com",
+      "status": 200,
+      "sha256": "4070f5ae8af83f67b71d468934cddff75dad3df402de831d6874538eb00a0da5",
+      "bytes": 3023,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.sherwin-williams.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.sherwin-williams.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.sherwin-williams.com/homeowners/products/tools-supplies/brushes"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.sherwin-williams.com/homeowners/products/purdy-xl-pro-brush-set"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.sherwin-williams.com/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject All Non-Essential Cookies"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Shop Products & Color"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "link",
+      "name": "Brushes (menu link href)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Purdy XL Pro Brush Set"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "View Your Cart"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "click",
+      "role": "",
+      "name": "coordinate click in Remove Item dialog"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove (coordinate click)"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove (coordinate click)"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Yes (Remove Item dialog)"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "0505a0c8bc3cdb6be18b158c0acc992c2f77b86623d44a04c1eba36381abc93b",
+      "bytes": 1501411,
+      "chunks": 4,
+      "url": "https://www.sherwin-williams.com/homeowners/products/purdy-xl-pro-brush-set",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "8fd6c6c7579c8a76b133a824f4610a0a2812cc6c8d5b3ffad39cbcf8e002883a",
+      "bytes": 1135850,
+      "chunks": 3,
+      "url": "https://www.sherwin-williams.com/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "3723d7f1131a66de7b10c230ef890a6a48cb3a4a62b61b669809df785f29510a",
+      "bytes": 1134141,
+      "chunks": 3,
+      "url": "https://www.sherwin-williams.com/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "b80d91c89e36492db0e2429f0f6301c9615e66e9d1da074f3dbef803bde0b7c3",
+      "bytes": 1083448,
+      "chunks": 3,
+      "url": "https://www.sherwin-williams.com/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted: starting cart was empty; focused on core states within the navigation budget"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.sherwin-williams.com/homeowners/products/tools-supplies/brushes",
+    "productUrl": "https://www.sherwin-williams.com/homeowners/products/purdy-xl-pro-brush-set",
+    "price": "USD 29.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cart path (/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView) is disallowed by robots.txt for *; recorded only (robots never excludes under .8).",
+    "Brushes listing reached by navigating to the menu link's same-domain href (the menu link was off-viewport for a ref click).",
+    "empty-cart was exported after removing own item (cart actually empty), not before the first add.",
+    "Removal needed a site confirmation dialog (Yes); three coordinate clicks (one inside the dialog, two on Remove) did not complete it before a ref click on Yes succeeded.",
+    "Cart page shows a pricing note asking to sign in to confirm pricing; guest add and cart worked, no sign-in wall."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:23:02.469Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:23:03.707Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:23:03.713Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:23:06.218Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:23:09.364Z",
+      "tool": "navigate",
+      "url": "https://www.sherwin-williams.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:23:21.680Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:23:26.172Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:23:30.048Z",
+      "tool": "navigate",
+      "url": "https://www.sherwin-williams.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:23:34.428Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:23:40.555Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:23:44.018Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:23:48.599Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:23:51.726Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:23:57.654Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:24:00.836Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:24:06.034Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:24:09.416Z",
+      "tool": "navigate",
+      "url": "https://www.sherwin-williams.com/homeowners/products/tools-supplies/brushes"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:24:13.723Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:24:18.153Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:24:21.226Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:24:24.349Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:24:27.921Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:24:43.233Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:24:47.850Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:25:09.459Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:25:12.000Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T00:25:12.817Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T00:25:13.654Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T00:25:14.378Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T00:25:18.581Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T00:25:20.689Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T00:25:22.487Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T00:25:45.689Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T00:25:49.613Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T00:25:50.392Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T00:25:51.080Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T00:25:54.580Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T00:25:56.707Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T00:25:58.837Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T00:26:01.246Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T00:26:01.631Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T00:26:25.283Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T00:26:27.776Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T00:26:28.513Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T00:26:29.171Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T00:26:32.718Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T00:26:34.822Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T00:26:37.163Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T00:26:39.310Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T00:26:41.469Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T00:26:41.931Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T00:26:47.363Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T00:26:49.968Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T00:26:52.464Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T00:26:52.831Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T00:26:58.426Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T00:27:01.852Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T00:27:02.194Z",
+      "tool": "find"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T00:27:04.241Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T00:27:06.965Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T00:27:08.861Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T00:27:11.561Z",
+      "tool": "find"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T00:27:13.755Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T00:27:16.101Z",
+      "tool": "find"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T00:27:18.354Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T00:27:20.746Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T00:27:23.338Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T00:27:23.591Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T00:27:48.429Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T00:27:51.367Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T00:27:52.172Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T00:27:52.816Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T00:27:55.624Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T00:27:58.301Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T00:28:01.970Z",
+      "tool": "Read"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T00:28:26.682Z",
+      "tool": "Write"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T00:28:31.724Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "0505a0c8bc3cdb6be18b158c0acc992c2f77b86623d44a04c1eba36381abc93b"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "8fd6c6c7579c8a76b133a824f4610a0a2812cc6c8d5b3ffad39cbcf8e002883a"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "3723d7f1131a66de7b10c230ef890a6a48cb3a4a62b61b669809df785f29510a"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "b80d91c89e36492db0e2429f0f6301c9615e66e9d1da074f3dbef803bde0b7c3"
+      }
+    ],
+    "errors": []
+  }
+}

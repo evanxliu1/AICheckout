@@ -1,0 +1,325 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "kroger.com",
+  "stream": "us",
+  "visit": 95,
+  "session": 1,
+  "entryHost": "www.kroger.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-aa374846382465528",
+  "startUtc": "2026-10-07T08:11:41.781Z",
+  "endUtc": "2026-10-07T08:14:03.079Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.kroger.com",
+      "status": 200,
+      "sha256": "89271187e3a69fca0e5223be3d106c26dd97e6b0fb394642ae5d28ac6731613a",
+      "bytes": 618,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.kroger.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.kroger.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt hash"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (home, sign-in to add)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "396b18606b6d1fc27a3b3f25dbccc81b56405520c6754fd26c3606f5d951378c",
+      "bytes": 5340222,
+      "chunks": 14,
+      "url": "https://www.kroger.com/"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "store stopped at sign-in-required before opening the cart"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart requires sign-in"
+    },
+    {
+      "state": "cart-1",
+      "reason": "add-to-cart requires sign-in"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "add-to-cart requires sign-in"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "add-to-cart requires sign-in"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.kroger.com/",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": "396b18606b6d1fc27a3b3f25dbccc81b56405520c6754fd26c3606f5d951378c"
+  },
+  "challenge": null,
+  "problems": [
+    "Home first showed a brief interstitial reading 'Powered and protected by ... Privacy' (likely bot-management sensor); it cleared by itself after a 5 s wait with no interaction. Reviewer: check evidence export for vendor markers.",
+    "Every add-to-cart button on the home page is named 'Sign in to add <item> to your cart'; header cart link shows 0 items. Stopped as sign-in-required.",
+    "Logged out (home shows 'Sign In To Clip'); start and end cart count 0 from header link; no items added, so no removals."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:11:41.781Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:11:42.848Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:11:42.850Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:11:49.496Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:11:55.933Z",
+      "tool": "navigate",
+      "url": "https://www.kroger.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:11:56.033Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:12:02.819Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:12:05.997Z",
+      "tool": "navigate",
+      "url": "https://www.kroger.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:12:06.417Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:12:09.960Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:12:15.552Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:12:15.555Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:12:25.118Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:13:02.186Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:13:05.662Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:13:11.955Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:13:12.802Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:13:14.576Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:13:15.341Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:13:17.193Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:13:18.244Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:13:18.246Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:13:26.106Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:13:26.934Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:13:28.728Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:13:29.537Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:13:30.860Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:13:30.865Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:13:40.348Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:13:54.109Z",
+      "tool": "Write"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:14:03.079Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "396b18606b6d1fc27a3b3f25dbccc81b56405520c6754fd26c3606f5d951378c"
+      }
+    ],
+    "errors": []
+  }
+}

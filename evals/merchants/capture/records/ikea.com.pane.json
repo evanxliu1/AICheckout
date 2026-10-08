@@ -1,0 +1,554 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "ikea.com",
+  "stream": "us",
+  "visit": 65,
+  "session": 1,
+  "entryHost": "www.ikea.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a86fbc4a6df2502c3",
+  "startUtc": "2026-10-07T07:36:57.444Z",
+  "endUtc": "2026-10-07T07:42:21.323Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.ikea.com",
+      "status": 200,
+      "sha256": "53df86f20aea5f91125e8ed0d4ae2c69aaf94fd671a276b41354a5a62b4a9338",
+      "bytes": 4054,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.ikea.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.ikea.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.ikea.com/us/en/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.ikea.com/us/en/shoppingcart/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.ikea.com/us/en/p/raskog-utility-cart-red-brown-90637204/"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.ikea.com/us/en/shoppingcart/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host root (global page)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "suggested store link /us/en/"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "shopping bag"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (linked from home)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to bag"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "shopping bag"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity of RÅSKOG"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove RÅSKOG"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "f3be513fb402b4bc33106fbd8f768b80996df92cb55bd8ffda3e2375b5f69cfb",
+      "bytes": 183860,
+      "chunks": 1,
+      "url": "https://www.ikea.com/us/en/shoppingcart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "ae972b57638af30bbc08f7cb35bb476ccc8da3690d21c0b409d6b0cb935c83a0",
+      "bytes": 563313,
+      "chunks": 2,
+      "url": "https://www.ikea.com/us/en/p/raskog-utility-cart-red-brown-90637204/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "d876938edf45fb2cf3e9c6299bd41eaeb1b4436aca94d95dd1e3d17fc69b616c",
+      "bytes": 351256,
+      "chunks": 1,
+      "url": "https://www.ikea.com/us/en/shoppingcart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "b0c7e80ff63db708edfe4000619ae581069c4e9eed78163f1f3d73b4fd6358e5",
+      "bytes": 354193,
+      "chunks": 1,
+      "url": "https://www.ikea.com/us/en/shoppingcart/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "cart started empty (no lingering item); second own item not added to keep scope minimal after cart-qty2"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.ikea.com/us/en/",
+    "productUrl": "https://www.ikea.com/us/en/p/raskog-utility-cart-red-brown-90637204/",
+    "price": "$39.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Entry host root serves IKEA Global landing; reached US store via the page's own suggested-store link (/us/en/), same host.",
+    "US privacy banner with only 'Ok' / 'Your privacy choices' left alone (no decline control).",
+    "Item taken from a product linked on the US home page (navigated by URL), not a category listing.",
+    "robots.txt disallows */shoppingcart/, */cart/* and */checkout/* for *; recorded only.",
+    "All chunk results were oversized and saved by the harness to tool-results files; not opened."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:36:57.444Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:36:58.623Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:36:58.628Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:37:01.771Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:37:06.057Z",
+      "tool": "navigate",
+      "url": "https://www.ikea.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:37:06.073Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:37:12.967Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:37:18.509Z",
+      "tool": "navigate",
+      "url": "https://www.ikea.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:37:18.519Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:37:24.852Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:37:28.174Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:37:32.728Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:37:40.124Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:37:40.130Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:37:47.254Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:37:47.275Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:37:53.010Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:37:58.577Z",
+      "tool": "navigate",
+      "url": "https://www.ikea.com/us/en/shoppingcart/"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:37:58.581Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:38:04.195Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T07:38:04.198Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T07:38:36.142Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T07:38:40.224Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T07:38:47.187Z",
+      "tool": "navigate",
+      "url": "https://www.ikea.com/us/en/p/:token/"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T07:38:47.191Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T07:38:53.385Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T07:38:53.439Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T07:38:56.642Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T07:39:00.459Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T07:39:00.480Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T07:39:32.107Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T07:39:35.983Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T07:39:40.162Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T07:39:45.599Z",
+      "tool": "navigate",
+      "url": "https://www.ikea.com/us/en/shoppingcart/"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T07:39:45.928Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T07:39:45.929Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T07:40:25.646Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T07:40:29.162Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T07:40:35.074Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T07:40:39.601Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T07:40:39.785Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T07:40:39.790Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T07:41:13.341Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T07:41:17.291Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T07:41:30.260Z",
+      "tool": "find"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T07:41:35.650Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T07:41:36.043Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T07:41:36.044Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T07:41:43.747Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T07:42:10.260Z",
+      "tool": "Write"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T07:42:21.323Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "f3be513fb402b4bc33106fbd8f768b80996df92cb55bd8ffda3e2375b5f69cfb"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "ae972b57638af30bbc08f7cb35bb476ccc8da3690d21c0b409d6b0cb935c83a0"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "d876938edf45fb2cf3e9c6299bd41eaeb1b4436aca94d95dd1e3d17fc69b616c"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "b0c7e80ff63db708edfe4000619ae581069c4e9eed78163f1f3d73b4fd6358e5"
+      }
+    ],
+    "errors": []
+  }
+}

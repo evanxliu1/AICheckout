@@ -1,0 +1,200 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "etsy.com",
+  "stream": "us",
+  "visit": 63,
+  "session": 1,
+  "entryHost": "www.etsy.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a52eea759008b2e0c",
+  "startUtc": "2026-10-07T07:35:47.704Z",
+  "endUtc": "2026-10-07T07:36:51.141Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.etsy.com",
+      "status": 200,
+      "sha256": "9a17d71fc77eae2d432391fb51fd2086fe6cca975c6f4bc8a9f4643d6e011fe0",
+      "bytes": 52825,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.etsy.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.etsy.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at DataDome device check on entry"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at DataDome device check on entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at DataDome device check on entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at DataDome device check on entry"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at DataDome device check on entry"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.etsy.com/",
+    "title": "https://www.etsy.com/",
+    "marker": "DataDome",
+    "wording": "DataDome Device Check"
+  },
+  "problems": [
+    "Home page rendered blank; accessibility tree showed only a 'DataDome Device Check' element (DataDome vendor challenge). Not interacted with, not exported.",
+    "robots.txt: /cart disallowed for *; Etsy checkout lives under /cart paths, so checkoutDisallowed recorded true by that inference.",
+    "Signed-in state and starting cart count could not be checked before the stop."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:35:47.704Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:35:48.831Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:35:48.836Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:35:51.462Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:35:55.423Z",
+      "tool": "navigate",
+      "url": "https://www.etsy.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:35:55.438Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:36:03.044Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:36:08.478Z",
+      "tool": "navigate",
+      "url": "https://www.etsy.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:36:08.482Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:36:12.741Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:36:12.748Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:36:28.822Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:36:32.144Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:36:42.367Z",
+      "tool": "Write"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:36:51.141Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

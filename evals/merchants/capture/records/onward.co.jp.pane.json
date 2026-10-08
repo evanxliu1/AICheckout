@@ -1,0 +1,152 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "onward.co.jp",
+  "stream": "non-us",
+  "visit": 143,
+  "session": 1,
+  "entryHost": "crosset.onward.co.jp",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a6687b55d15062b5e",
+  "startUtc": "2026-10-08T00:44:11.752Z",
+  "endUtc": "2026-10-08T00:46:44.999Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "crosset.onward.co.jp",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://crosset.onward.co.jp/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped: Akamai Access Denied on robots.txt (blocked-bot-wall)"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped: Akamai Access Denied on robots.txt (blocked-bot-wall)"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped: Akamai Access Denied on robots.txt (blocked-bot-wall)"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped: Akamai Access Denied on robots.txt (blocked-bot-wall)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://crosset.onward.co.jp/robots.txt",
+    "title": "Access Denied",
+    "marker": "errors.edgesuite.net reference (Akamai)",
+    "wording": "Access Denied. You don't have permission to access \"http://crosset.onward.co.jp/robots.txt\" on this server."
+  },
+  "problems": [
+    "First page load (robots.txt) returned an Akamai Access Denied page with an errors.edgesuite.net reference; stopped at once, no robots hash run, no store page loaded, nothing exported",
+    "HTTP status not observed in the pane (Akamai Access Denied is usually 403); code recorded as blocked-bot-wall per the Akamai marker rule",
+    "Replaces an earlier not-started (tab-cap) record for this store"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:44:11.752Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:44:12.988Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:44:12.990Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:44:15.697Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:44:19.061Z",
+      "tool": "navigate",
+      "url": "https://crosset.onward.co.jp/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:44:19.122Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:44:32.162Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:44:35.416Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:44:39.949Z",
+      "tool": "Read"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:46:37.539Z",
+      "tool": "Write"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:46:44.999Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

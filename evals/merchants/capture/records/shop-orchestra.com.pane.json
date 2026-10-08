@@ -1,0 +1,601 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "shop-orchestra.com",
+  "stream": "non-us",
+  "visit": 157,
+  "session": 1,
+  "entryHost": "fr.shop-orchestra.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a4cb3a5240938916c",
+  "startUtc": "2026-10-08T01:07:11.577Z",
+  "endUtc": "2026-10-08T01:15:21.540Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (quantity 2 to 1, stepper)",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "item": "own item 1 (line removed)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "fr.shop-orchestra.com",
+      "status": 200,
+      "sha256": "76c2a1b9610ebac3378b51377d8242df5671e3ee3e27578a3a0b3f9d2b86107a",
+      "bytes": 3479,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://fr.shop-orchestra.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://fr.shop-orchestra.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://fr.shop-orchestra.com/fr/collection/pyjamas/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://fr.shop-orchestra.com/fr/bebe/naissance/vetements-sous-vetements/dors-bien/lot-de-3-dors-bien-motifs-ecureuil-pour-bebe-avec-ouvertures-differentes-selon-l39%C3%A2ge-HNAYU8.html"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://fr.shop-orchestra.com/fr/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Fermer le widget sans consentement"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "pyjamas listing (home link)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Lot de 3 dors-bien motifs écureuil pour"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Ajouter au panier"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Augmenter la quantité"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Supprimer (stepper decrement)"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Supprimer"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "2627f4db1002dc1207fcbf747b7abd8f05d80dc3ba6a5d77d077cb8a3a286624",
+      "bytes": 1725454,
+      "chunks": 5,
+      "url": "https://fr.shop-orchestra.com/fr/bebe/naissance/vetements-sous-vetements/dors-bien/lot-de-3-dors-bien-motifs-ecureuil-pour-bebe-avec-ouvertures-differentes-selon-l39%C3%A2ge-HNAYU8.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "3bbf3dccd9cbfb3a1a5d75c20833c1a03613234e65bdc366ecaadc1b12e59913",
+      "bytes": 377609,
+      "chunks": 1,
+      "url": "https://fr.shop-orchestra.com/fr/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "2ffd89f5c6dda852691e16a047420793bbf1d7042743d97962d6ae3e26ce194d",
+      "bytes": 377971,
+      "chunks": 1,
+      "url": "https://fr.shop-orchestra.com/fr/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "366d27049e9a7e73d927a11e3ac40f6863c5d2f9b3255acf3a197751c9da4729",
+      "bytes": 308831,
+      "chunks": 1,
+      "url": "https://fr.shop-orchestra.com/fr/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart held no lingering item and a second own item was skipped to keep the session short"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://fr.shop-orchestra.com/fr/collection/pyjamas/",
+    "productUrl": "https://fr.shop-orchestra.com/fr/bebe/naissance/vetements-sous-vetements/dors-bien/lot-de-3-dors-bien-motifs-ecureuil-pour-bebe-avec-ouvertures-differentes-selon-l39%C3%A2ge-HNAYU8.html",
+    "price": "19,99€ displayed (club price; strike-through 39,99€ is the price the cart charged)",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EUR",
+  "observedRegion": "FR",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Product page showed 39,99€ struck through and 19,99€ (club member price); the cart charged 39,99€ per unit for a non-member. Both lie within the 9-185 EUR band.",
+    "Size 1 mois was preselected by the product link's variant parameter; no option was chosen by the operator.",
+    "empty-cart was exported after cleanup (cart actually empty), not at the start.",
+    "The cart's first 'Supprimer' button was a quantity decrement (2 to 1); the second removed the line without a visible confirm step.",
+    "robots.txt disallows /Cart-Show and checkout pipelines (COShipping-Start etc.); the cart was opened at /fr/cart, which is not disallowed.",
+    "All export chunks were too large for inline results and were saved by the harness to tool-results files (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:07:11.577Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:07:12.707Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:07:12.714Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:07:21.578Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:07:24.704Z",
+      "tool": "navigate",
+      "url": "https://fr.shop-orchestra.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:07:29.400Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:07:37.789Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:07:41.719Z",
+      "tool": "navigate",
+      "url": "https://fr.shop-orchestra.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:07:48.001Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:07:52.132Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:07:52.136Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:07:56.154Z",
+      "tool": "navigate",
+      "url": "https://fr.shop-orchestra.com/fr/collection/pyjamas/"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:08:02.091Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:08:07.146Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T01:08:10.370Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T01:08:12.905Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T01:08:16.076Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T01:08:19.285Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T01:08:22.664Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T01:08:27.584Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T01:08:27.903Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T01:08:27.906Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T01:09:39.191Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T01:09:47.005Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T01:09:47.852Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T01:09:49.742Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T01:09:50.558Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T01:09:50.558Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T01:09:58.856Z",
+      "tool": "navigate",
+      "url": "https://fr.shop-orchestra.com/fr/cart"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T01:10:04.414Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T01:12:16.928Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T01:12:20.516Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T01:12:24.217Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T01:12:28.739Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T01:12:29.047Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T01:12:29.051Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T01:13:00.069Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T01:13:03.569Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T01:13:13.917Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T01:13:14.419Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T01:13:14.421Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T01:13:20.078Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T01:13:24.022Z",
+      "tool": "find"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T01:13:27.159Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T01:13:31.563Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T01:13:38.690Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T01:13:39.396Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T01:13:39.405Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T01:13:45.330Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T01:13:49.260Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T01:14:12.394Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T01:14:18.067Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T01:14:22.956Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T01:14:43.951Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T01:14:46.328Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T01:14:48.933Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T01:14:51.770Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T01:15:16.199Z",
+      "tool": "Write"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T01:15:21.540Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "2627f4db1002dc1207fcbf747b7abd8f05d80dc3ba6a5d77d077cb8a3a286624"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "3bbf3dccd9cbfb3a1a5d75c20833c1a03613234e65bdc366ecaadc1b12e59913"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "2ffd89f5c6dda852691e16a047420793bbf1d7042743d97962d6ae3e26ce194d"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "366d27049e9a7e73d927a11e3ac40f6863c5d2f9b3255acf3a197751c9da4729"
+      }
+    ],
+    "errors": []
+  }
+}

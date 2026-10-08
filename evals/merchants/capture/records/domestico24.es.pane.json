@@ -1,0 +1,376 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "domestico24.es",
+  "stream": "non-us",
+  "visit": 201,
+  "session": 2,
+  "entryHost": "domestico24.es",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-adf4d261e6374c7a3",
+  "startUtc": "2026-10-08T04:10:51.589Z",
+  "endUtc": "2026-10-08T04:13:53.043Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "domestico24.es",
+      "status": 200,
+      "sha256": "69a1276f00ed26310896a8c07dcaa6c6c90b0151d5c37e460e8027769f96480e",
+      "bytes": 649,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://domestico24.es/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://domestico24.es/en"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host (redirected to /en)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (home page, 24 chunks)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "a6e187413fa679668f021c4b566080aaa32c7dbceac352c5956827dfd1911140",
+      "bytes": 9453719,
+      "chunks": 24,
+      "url": "https://domestico24.es/en"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "not a store: home-services job marketplace, no cart"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "not a store: no products or add-to-cart"
+    },
+    {
+      "state": "cart-1",
+      "reason": "not a store: no cart"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "not a store: no cart"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not a store: no cart"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": "ES",
+  "outcome": {
+    "status": "excluded",
+    "code": "not-a-store",
+    "evidenceSha256": "a6e187413fa679668f021c4b566080aaa32c7dbceac352c5956827dfd1911140"
+  },
+  "challenge": null,
+  "problems": [
+    "Site is a home-services marketplace (find cleaners, babysitters, gardeners; free job offers), with no products, prices or cart; excluded as not-a-store.",
+    "Entry host redirected to /en (English) on its own; no cookie banner seen in page text.",
+    "Not signed in (Login and Sign up links shown); cart counts null because the site has no cart.",
+    "Evidence export truncated at the 60000-node cap (9.45 MB, 24 chunks); all 24 chunks fetched and saved by the harness to tool-results files, unopened.",
+    "robots.txt allows / for *; no cart or checkout paths listed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:10:51.589Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:10:52.803Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:10:53.141Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:11:01.425Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:11:04.803Z",
+      "tool": "navigate",
+      "url": "https://domestico24.es/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:11:10.069Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:11:17.275Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:11:24.750Z",
+      "tool": "navigate",
+      "url": "https://domestico24.es/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:11:24.870Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:12:02.270Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:12:10.687Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:12:14.349Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:12:14.369Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:12:14.371Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:12:23.364Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:12:25.013Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:12:25.503Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:12:25.504Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:12:42.747Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:12:44.947Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:12:45.465Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:12:45.479Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:12:54.486Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:12:55.317Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:12:57.060Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:12:57.064Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:13:11.337Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:13:12.352Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:13:14.115Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:13:14.143Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:13:20.118Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:13:20.974Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:13:22.672Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:13:22.675Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:13:28.351Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:13:45.620Z",
+      "tool": "Write"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:13:53.043Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "a6e187413fa679668f021c4b566080aaa32c7dbceac352c5956827dfd1911140"
+      }
+    ],
+    "errors": []
+  }
+}

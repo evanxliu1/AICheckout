@@ -1,0 +1,211 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "adidas.com",
+  "stream": "us",
+  "visit": 143,
+  "session": 1,
+  "entryHost": "www.adidas.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-a33133ce8b1f5bc84",
+  "startUtc": "2026-10-07T23:47:49.933Z",
+  "endUtc": "2026-10-07T23:49:37.106Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.adidas.com",
+      "status": 200,
+      "sha256": "bf0289da7eb82029feab8576c3f289e8afaea317f62ea868c3e55f26d5de9950",
+      "bytes": 6164,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.adidas.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.adidas.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host root"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at vendor challenge interstitial on entry"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at vendor challenge interstitial on entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at vendor challenge interstitial on entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at vendor challenge interstitial on entry"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at vendor challenge interstitial on entry"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.adidas.com/",
+    "title": "",
+    "wording": "Powered and protected by ... Privacy",
+    "marker": "bot-management interstitial (blank page, empty title, vendor 'Powered and protected by' footer; Akamai-style)"
+  },
+  "problems": [
+    "Entry load showed a bot-management interstitial (blank page, empty title, only 'Powered and protected by ... Privacy'). Stopped per checklist step 6; never interacted with it and did not export it.",
+    "Reviewer flag: after one 8 s wait (no interaction) the tab self-redirected to /us homepage (adidas US, USD). The operator took no further action. The interstitial may be a transparent, auto-passing check; reviewer to decide whether this counts as a block.",
+    "read_page timed out on the interstitial (pane hidden); detection used get_page_text and a screenshot (blank).",
+    "robots.txt disallows */cart and /*checkout for *; root allowed. Recorded only."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T23:47:49.933Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T23:47:51.188Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T23:47:51.193Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T23:47:53.884Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T23:47:57.491Z",
+      "tool": "navigate",
+      "url": "https://www.adidas.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T23:48:01.955Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T23:48:09.211Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T23:48:15.538Z",
+      "tool": "navigate",
+      "url": "https://www.adidas.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T23:48:19.707Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T23:48:23.143Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T23:48:56.610Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T23:48:59.905Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:49:03.153Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:49:03.544Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:49:19.600Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T23:49:30.742Z",
+      "tool": "Write"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T23:49:37.106Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

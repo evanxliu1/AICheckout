@@ -1,0 +1,284 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "zillionsgift.com",
+  "stream": "us",
+  "visit": 111,
+  "session": 1,
+  "entryHost": "zillionsgift.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a6d4d5ca9e4940a82",
+  "startUtc": "2026-10-07T08:33:52.038Z",
+  "endUtc": "2026-10-07T08:36:18.045Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "zillionsgift.com",
+      "status": 200,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://zillionsgift.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://zillionsgift.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://zillionsgift.com/sitemap"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://zillionsgift.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Site Map"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "sitemap"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (home, card-number gate)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "b371343cc78ce3c52b1c01e5a86349e63921d2420b91cf8b151f02e4d8ed97a7",
+      "bytes": 254667,
+      "chunks": 1,
+      "url": "https://zillionsgift.com/"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "no cart without entering a gift card number"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "catalog gated behind typed card number"
+    },
+    {
+      "state": "cart-1",
+      "reason": "catalog gated behind typed card number"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "catalog gated behind typed card number"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "catalog gated behind typed card number"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "needs-input",
+    "evidenceSha256": "b371343cc78ce3c52b1c01e5a86349e63921d2420b91cf8b151f02e4d8ed97a7"
+  },
+  "challenge": null,
+  "problems": [
+    "Site is a gift-card redemption portal: home shows only card number, expiry and CVV fields ('Redeem for eGifts and check your balance'); no public catalog or cart.",
+    "Sitemap lists only redeem, track order, card balance, legal and help pages; no browsable product listing.",
+    "Click on 'Site Map' link did not visibly navigate; opened /sitemap by URL instead.",
+    "robots.txt is 1 byte (empty, no rules).",
+    "Start and end cart counts not observable (no cart reachable)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:33:52.038Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:33:53.246Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:33:53.250Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:33:59.380Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:34:03.243Z",
+      "tool": "navigate",
+      "url": "https://zillionsgift.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:34:10.391Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:34:21.398Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:34:25.966Z",
+      "tool": "navigate",
+      "url": "https://zillionsgift.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:34:25.971Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:34:30.622Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:34:35.787Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:34:35.791Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:35:01.335Z",
+      "tool": "navigate",
+      "url": "https://zillionsgift.com/sitemap/"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:35:01.428Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:35:07.449Z",
+      "tool": "navigate",
+      "url": "https://zillionsgift.com/"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:35:07.454Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:35:37.950Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:35:41.803Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:35:46.411Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:36:08.224Z",
+      "tool": "Write"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:36:18.045Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "b371343cc78ce3c52b1c01e5a86349e63921d2420b91cf8b151f02e4d8ed97a7"
+      }
+    ],
+    "errors": []
+  }
+}

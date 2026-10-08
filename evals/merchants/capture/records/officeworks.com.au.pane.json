@@ -1,0 +1,455 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "officeworks.com.au",
+  "stream": "non-us",
+  "visit": 228,
+  "session": 2,
+  "entryHost": "www.officeworks.com.au",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a84c233bc94352a0c",
+  "startUtc": "2026-10-08T05:34:02.351Z",
+  "endUtc": "2026-10-08T05:37:48.183Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.officeworks.com.au",
+      "status": 200,
+      "sha256": "d28933ee076b684c9df39dd34788c90f8d0d4ae349b39c5390ab4f4c946f48e5",
+      "bytes": 2326,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.officeworks.com.au/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.officeworks.com.au/app/cart"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.officeworks.com.au/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.officeworks.com.au/shop/officeworks/p/reflex-carbon-neutral-80gsm-a4-copy-paper-5-ream-carton-rxcpa480ct"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "guessed cart URL (502 Bad Gateway)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (home Top sellers link)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (needs-input)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "f7551d5c047f673d7acb558f9e73f7ac975b54f92492646a6b85f9eef6a2f9bc",
+      "bytes": 2361524,
+      "chunks": 6,
+      "url": "https://www.officeworks.com.au/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "bd3087600a680ef3cbeed78027a3806d99801b98016d203423792e87da50b6fe",
+      "bytes": 1862657,
+      "chunks": 5,
+      "url": "https://www.officeworks.com.au/shop/officeworks/p/reflex-carbon-neutral-80gsm-a4-copy-paper-5-ream-carton-rxcpa480ct"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart opens a 'Set your shopping method to continue' drawer needing a typed suburb/postcode or location sharing (needs-input)"
+    },
+    {
+      "state": "cart-1",
+      "reason": "no item could be added (needs-input)"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "no item could be added (needs-input)"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no item could be added (needs-input)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.officeworks.com.au/",
+    "productUrl": "https://www.officeworks.com.au/shop/officeworks/p/reflex-carbon-neutral-80gsm-a4-copy-paper-5-ream-carton-rxcpa480ct",
+    "price": "$43.00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "AUD",
+  "observedRegion": "AU",
+  "outcome": {
+    "status": "excluded",
+    "code": "needs-input",
+    "evidenceSha256": "bd3087600a680ef3cbeed78027a3806d99801b98016d203423792e87da50b6fe"
+  },
+  "challenge": null,
+  "problems": [
+    "Add to Cart opens a drawer 'Set your shopping method to continue' with only suburb/postcode text fields and 'Use my current location'; no add happens without typed input or location sharing, so needs-input; other items not tried since the gate is site-wide shopping-method setup.",
+    "empty-cart exported from the home page with the in-page cart drawer open (0 items, $0.00); no standalone cart page URL was found (guessed /app/cart returned nginx 502).",
+    "Screenshots on the product page returned blank white images after the add click; state read via read_page/get_page_text.",
+    "All chunks of both exports were oversized and saved by the harness to tool-results files (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:34:02.351Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:34:03.485Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:34:03.491Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:34:06.074Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:34:09.542Z",
+      "tool": "navigate",
+      "url": "https://www.officeworks.com.au/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:34:09.680Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:34:17.344Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:34:22.452Z",
+      "tool": "navigate",
+      "url": "https://www.officeworks.com.au/app/cart"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:34:22.470Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:34:27.463Z",
+      "tool": "navigate",
+      "url": "https://www.officeworks.com.au/"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:34:27.469Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:34:34.095Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:34:38.834Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:34:38.836Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:34:45.957Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:35:07.572Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:35:13.743Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:35:19.257Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:35:22.778Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:35:35.871Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:35:40.398Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:35:50.031Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:35:59.008Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:36:01.861Z",
+      "tool": "navigate",
+      "url": "https://www.officeworks.com.au/shop/officeworks/p/:token"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:36:02.611Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:36:06.562Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:36:15.279Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:36:15.792Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:36:16.361Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:36:20.934Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:36:24.912Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:36:27.765Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T05:36:33.063Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T05:36:36.869Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T05:36:40.844Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T05:36:43.825Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T05:37:06.132Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T05:37:09.578Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T05:37:12.643Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T05:37:16.128Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T05:37:20.164Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T05:37:24.194Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T05:37:27.778Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T05:37:42.038Z",
+      "tool": "Write"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T05:37:48.183Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "f7551d5c047f673d7acb558f9e73f7ac975b54f92492646a6b85f9eef6a2f9bc"
+      },
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "bd3087600a680ef3cbeed78027a3806d99801b98016d203423792e87da50b6fe"
+      }
+    ],
+    "errors": []
+  }
+}

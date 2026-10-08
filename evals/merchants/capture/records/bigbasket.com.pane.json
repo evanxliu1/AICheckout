@@ -1,0 +1,366 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "bigbasket.com",
+  "stream": "non-us",
+  "visit": 54,
+  "session": 1,
+  "entryHost": "www.bigbasket.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-ab0c222d16a2beb4c",
+  "startUtc": "2026-10-07T07:44:48.031Z",
+  "endUtc": "2026-10-07T07:46:50.328Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (decrement to 0 on product page)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.bigbasket.com",
+      "status": 200,
+      "sha256": "ac91c879d3fe5cca340a459380e3539529e6379b57803489a15a31f73a54d2a7",
+      "bytes": 1367,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.bigbasket.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.bigbasket.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.bigbasket.com/pc/foodgrains-oil-masala/edible-oils-ghee/ghee-vanaspati/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.bigbasket.com/pd/255834/grb-ghee-1-l-bottle/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.bigbasket.com/basket/"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.bigbasket.com/pd/255834/grb-ghee-1-l-bottle/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "ghee listing (home tile link)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "GRB Ghee 1 L Bottle (new tab blocked)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page by URL"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to basket"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL -> login redirect"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page for cleanup"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "quantity decrement (-) to 0"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "no in-page cart panel opened on add; stopped at sign-in wall"
+    },
+    {
+      "state": "cart-1",
+      "reason": "/basket/ redirects to /?next=/basket/ with login/OTP modal (sign-in wall)"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at sign-in wall"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.bigbasket.com/pc/foodgrains-oil-masala/edible-oils-ghee/ghee-vanaspati/",
+    "productUrl": "https://www.bigbasket.com/pd/255834/grb-ghee-1-l-bottle/",
+    "price": "INR 1026",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "INR",
+  "observedRegion": "IN",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.bigbasket.com/",
+    "title": "Online Grocery Shopping and Online Supermarket in India - bigbasket",
+    "marker": "cart URL /basket/ redirected to /?next=%2Fbasket%2F with modal: Login/ Sign up, Using OTP, Enter Phone number/ Email Id"
+  },
+  "problems": [
+    "Cart page /basket/ requires sign-in: logged-out visit redirects to home with a login/OTP modal; stopped as sign-in-required, no exports taken.",
+    "Add to basket worked logged out (stepper showed 1); own item removed afterwards via product-page decrement, after the stop, as best-effort cleanup.",
+    "Listing product link tried to open a new tab, blocked by the pane; product opened by URL instead.",
+    "Location not set ('Select Location'); none chosen."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:44:48.031Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:44:49.116Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:44:49.127Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:44:52.508Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:44:56.823Z",
+      "tool": "navigate",
+      "url": "https://www.bigbasket.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:44:56.826Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:45:03.650Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:45:08.375Z",
+      "tool": "navigate",
+      "url": "https://www.bigbasket.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:45:08.377Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:45:14.305Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:45:19.503Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:45:22.906Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:45:28.172Z",
+      "tool": "navigate",
+      "url": "https://www.bigbasket.com/pc/foodgrains-oil-masala/edible-oils-ghee/ghee-vanaspati/"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:45:28.175Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:45:36.541Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:45:41.853Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:45:41.896Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:45:46.310Z",
+      "tool": "navigate",
+      "url": "https://www.bigbasket.com/pd/255834/:token/"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:45:46.315Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:45:51.445Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T07:45:51.450Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T07:45:57.231Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T07:46:00.617Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T07:46:03.901Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T07:46:07.983Z",
+      "tool": "navigate",
+      "url": "https://www.bigbasket.com/basket/"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T07:46:08.393Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T07:46:18.070Z",
+      "tool": "navigate",
+      "url": "https://www.bigbasket.com/pd/255834/:token/"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T07:46:18.611Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T07:46:24.814Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T07:46:25.300Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T07:46:28.596Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T07:46:44.664Z",
+      "tool": "Write"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T07:46:50.328Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

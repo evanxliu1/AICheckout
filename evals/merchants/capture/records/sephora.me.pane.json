@@ -1,0 +1,187 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "sephora.me",
+  "stream": "non-us",
+  "visit": 169,
+  "session": 1,
+  "entryHost": "www.sephora.me",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a479eeb73318d138a",
+  "startUtc": "2026-10-08T01:23:05.840Z",
+  "endUtc": "2026-10-08T01:23:57.971Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.sephora.me",
+      "status": 200,
+      "sha256": "2daf581cb53ecf482b2a6e27530d597d34059269bfba7889915697aeb1770c35",
+      "bytes": 1645,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.sephora.me/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.sephora.me/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall on entry page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.sephora.me/",
+    "title": "Access Denied",
+    "marker": "Akamai errors.edgesuite.net reference",
+    "wording": "Access Denied. You don't have permission to access \"http://www.sephora.me/\" on this server."
+  },
+  "problems": [
+    "Akamai Access Denied page (errors.edgesuite.net reference) on the first page load after robots.txt; HTTP status not observable in the pane, possibly a 403; recorded as blocked-bot-wall per the Blocks marker list.",
+    "Starting cart count not observed (blocked before any store page); signed-in state unknown, recorded false."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:23:05.840Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:23:06.987Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:23:06.989Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:23:10.971Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:23:15.099Z",
+      "tool": "navigate",
+      "url": "https://www.sephora.me/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:23:15.103Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:23:22.858Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:23:27.612Z",
+      "tool": "navigate",
+      "url": "https://www.sephora.me/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:23:27.650Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:23:35.860Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:23:35.867Z",
+      "tool": "Read"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:23:50.391Z",
+      "tool": "Write"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:23:57.971Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

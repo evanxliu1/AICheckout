@@ -1,0 +1,150 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "onbuy.com",
+  "stream": "non-us",
+  "visit": 217,
+  "session": 2,
+  "entryHost": "www.onbuy.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a73c7bdc112ed0c5d",
+  "startUtc": "2026-10-08T05:11:18.229Z",
+  "endUtc": "2026-10-08T05:13:58.033Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.onbuy.com",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.onbuy.com/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at Cloudflare challenge on first load"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at Cloudflare challenge on first load"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at Cloudflare challenge on first load"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at Cloudflare challenge on first load"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at Cloudflare challenge on first load"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.onbuy.com/robots.txt",
+    "title": "Just a moment...",
+    "marker": "Cloudflare challenge page (title 'Just a moment...', __cf_chl_rt_tk redirect parameter)",
+    "wording": "Performing security verification. This website uses a security service to protect against malicious bots."
+  },
+  "problems": [
+    "Cloudflare challenge served on the very first request (robots.txt); robots hash not run, nothing exported, no interaction with the challenge",
+    "Signed-in state and cart counts not observable"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:11:18.229Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:11:19.309Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:11:19.338Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:12:21.843Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:12:40.677Z",
+      "tool": "navigate",
+      "url": "https://www.onbuy.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:12:40.853Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:13:02.640Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:13:02.661Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:13:38.898Z",
+      "tool": "Write"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:13:58.033Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

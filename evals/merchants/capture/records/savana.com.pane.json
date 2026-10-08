@@ -1,0 +1,651 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "savana.com",
+  "stream": "non-us",
+  "visit": 7,
+  "session": 2,
+  "entryHost": "www.savana.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_a638f4e9-151/agent-abb78d9c992f1e338",
+  "startUtc": "2026-10-07T06:37:51.391Z",
+  "endUtc": "2026-10-07T06:42:25.219Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (Shoulder Bag)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.savana.com",
+      "status": 200,
+      "sha256": "b1a641f201d343497b853a09d2c9a4febe8f25fad9552c96ce9d4811646ae037",
+      "bytes": 1100,
+      "rootDisallowed": true,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.savana.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.savana.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.savana.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.savana.com/details/metal-detail-plain-eyeglasses-2262612"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.savana.com/cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.savana.com/"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.savana.com/details/shoulder-bag-1999092"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.savana.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Metal Detail Plain Eyeglasses (below band)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "back"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "activity banner (no navigation)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Shoulder Bag"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "ADD TO BAG"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "bag icon (/cart)"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "click",
+      "role": "image",
+      "name": "cart line image near x1 (no effect)"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "Delete"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "DELETE (confirm dialog)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "04bfd131b133f57998b378c67805133150bb414c2c1cf52cbd2b3756eab0a8fb",
+      "bytes": 778577,
+      "chunks": 2,
+      "url": "https://www.savana.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "0c83e18559485ee89ffd95baa776d874cc12bfedfc35aa1a4f1706e5c2caf382",
+      "bytes": 216674,
+      "chunks": 1,
+      "url": "https://www.savana.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart showed no in-page cart drawer, only a header badge count"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "cart line shows quantity as x1 with no identifiable increment control in the accessibility tree; pane hidden so no screenshot"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; focus on core states"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.savana.com/",
+    "productUrl": "https://www.savana.com/details/shoulder-bag-1999092",
+    "price": "INR 990",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "INR",
+  "observedRegion": null,
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt disallows / for * (recorded only)",
+    "empty-cart chunks and cart-1 chunk exceeded inline size and were saved by the harness to tool-results files (not opened)",
+    "pane hidden: screenshots failed after the first; navigation used read_page/find/get_page_text",
+    "home-page product grid loaded lazily; Shoulder Bag reached from the home FOR YOU grid after clicking a banner link that did not navigate"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:37:51.391Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:37:52.553Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:37:52.556Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:37:55.582Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:37:59.171Z",
+      "tool": "navigate",
+      "url": "https://www.savana.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:37:59.246Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:38:06.597Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:38:13.004Z",
+      "tool": "navigate",
+      "url": "https://www.savana.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:38:13.015Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:38:18.089Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:38:18.094Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:38:26.091Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:38:31.771Z",
+      "tool": "navigate",
+      "url": "https://www.savana.com/cart"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T06:38:31.779Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T06:38:31.780Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T06:38:41.574Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T06:39:07.949Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T06:39:10.919Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T06:39:11.691Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T06:39:16.268Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T06:39:19.955Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T06:39:20.486Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T06:39:20.760Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T06:39:27.277Z",
+      "tool": "navigate",
+      "url": "back"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T06:39:27.814Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T06:39:28.174Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T06:39:36.148Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T06:39:41.210Z",
+      "tool": "navigate",
+      "url": "https://www.savana.com/"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T06:39:41.578Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T06:39:41.991Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T06:39:49.523Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T06:39:52.460Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T06:40:00.345Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T06:40:03.725Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T06:40:04.500Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T06:40:04.624Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T06:40:10.850Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T06:40:13.694Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T06:40:14.177Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T06:40:14.785Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T06:40:21.873Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T06:40:25.210Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T06:40:25.538Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T06:40:25.769Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T06:40:36.757Z",
+      "tool": "find"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T06:40:39.021Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T06:40:42.395Z",
+      "tool": "find"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T06:40:45.927Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T06:40:46.711Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T06:40:46.820Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T06:41:11.736Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T06:41:14.557Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T06:41:17.938Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T06:41:20.328Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T06:41:23.221Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T06:41:28.489Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T06:41:29.198Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T06:41:29.429Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T06:41:41.927Z",
+      "tool": "find"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T06:41:45.022Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T06:41:45.316Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T06:41:45.745Z",
+      "tool": "find"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T06:41:51.312Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T06:41:54.060Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T06:41:57.217Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T06:41:57.505Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T06:41:57.878Z",
+      "tool": "find"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T06:42:02.687Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T06:42:19.664Z",
+      "tool": "Write"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-07T06:42:25.219Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "04bfd131b133f57998b378c67805133150bb414c2c1cf52cbd2b3756eab0a8fb"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "0c83e18559485ee89ffd95baa776d874cc12bfedfc35aa1a4f1706e5c2caf382"
+      }
+    ],
+    "errors": []
+  }
+}

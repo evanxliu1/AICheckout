@@ -1,0 +1,864 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "jbhifi.com.au",
+  "stream": "non-us",
+  "visit": 123,
+  "session": 2,
+  "entryHost": "www.jbhifi.com.au",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a4c14c629e9c724d3",
+  "startUtc": "2026-10-08T00:12:20.632Z",
+  "endUtc": "2026-10-08T00:19:02.580Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (cart line 1)",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "item": "own item 1 (cart line 2, second add)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.jbhifi.com.au",
+      "status": 200,
+      "sha256": "b4e209c025f8385159ce49b350aa052660fdf13e6e3f3a43676b8cff2aceb1c1",
+      "bytes": 4124,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.jbhifi.com.au/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.jbhifi.com.au/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.jbhifi.com.au/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.jbhifi.com.au/collections/computer-parts-accessories/laptop-sleeves"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.jbhifi.com.au/products/cygnett-boost-10k-v4-power-bank-black"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.jbhifi.com.au/cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.jbhifi.com.au/products/cygnett-boost-10k-v4-power-bank-black"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.jbhifi.com.au/cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "url": "https://www.jbhifi.com.au/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "collection laptop-sleeves"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "menuitem",
+      "name": "product link from listing menu"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product (same item)"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to cart"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-other"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "Remove"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "Remove"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (final check)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "0024529b089b81ba73bcaa6b720d867b4297e9db626cdb2c290acec11945a43b",
+      "bytes": 3103356,
+      "chunks": 8,
+      "url": "https://www.jbhifi.com.au/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "30a7290d43876d5a834519f193ea5d8913cd4ed0d6747403584e6f9ba1a19fd5",
+      "bytes": 3660471,
+      "chunks": 10,
+      "url": "https://www.jbhifi.com.au/products/cygnett-boost-10k-v4-power-bank-black",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "1ebf1e28bb7bc071467adc57a04a25d7ff47d55ce4a867086fcb4536a5e70507",
+      "bytes": 3185324,
+      "chunks": 8,
+      "url": "https://www.jbhifi.com.au/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-other",
+      "sha256": "265b9b306b2e6702b4381a93ba64d95acf7564988bbfec5f8f0dd3f844e6fbd3",
+      "bytes": 3329030,
+      "chunks": 9,
+      "url": "https://www.jbhifi.com.au/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-qty2",
+      "reason": "cart quantity control is a <select> (not allowed); a second add-to-cart of the same item created a separate line at qty 1, exported as cart-other"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.jbhifi.com.au/collections/computer-parts-accessories/laptop-sleeves",
+    "productUrl": "https://www.jbhifi.com.au/products/cygnett-boost-10k-v4-power-bank-black",
+    "price": "AUD 59.95",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "AUD",
+  "observedRegion": "AU",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Item reached via a header menu product link on the listing page (listing grid had not rendered in page text).",
+    "cart-other here is two separate lines of the same own item (qty 1 each, subtotal AUD 119.90), no lingering items; the state names don't cover this case exactly. Reviewer to confirm the name.",
+    "All chunk results were oversized and saved by the harness to tool-results files (expected); none opened.",
+    "Earlier not-started attempt of session 2 (tab-cap) existed in this record and is replaced by this session."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:12:20.632Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:12:21.861Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:12:21.872Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:12:25.200Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:12:28.919Z",
+      "tool": "navigate",
+      "url": "https://www.jbhifi.com.au/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:12:28.969Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:12:35.900Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:12:40.042Z",
+      "tool": "navigate",
+      "url": "https://www.jbhifi.com.au/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:12:40.075Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:12:46.164Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:12:46.215Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:12:50.456Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:12:50.458Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:12:53.971Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:12:58.261Z",
+      "tool": "navigate",
+      "url": "https://www.jbhifi.com.au/cart"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:12:58.266Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:13:02.759Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:13:30.854Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:13:36.303Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:13:36.537Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:13:38.683Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:13:39.481Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:13:41.317Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:13:42.459Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:13:43.468Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:13:43.468Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T00:13:50.365Z",
+      "tool": "navigate",
+      "url": "https://www.jbhifi.com.au/collections/computer-parts-accessories/laptop-sleeves"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T00:13:50.368Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T00:13:56.053Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T00:14:01.881Z",
+      "tool": "navigate",
+      "url": "https://www.jbhifi.com.au/products/:token"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T00:14:01.896Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T00:14:06.741Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T00:14:06.833Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T00:14:11.589Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T00:14:27.982Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T00:14:28.361Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T00:15:00.265Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T00:15:05.036Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T00:15:05.948Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T00:15:07.590Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T00:15:08.467Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T00:15:10.055Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T00:15:10.934Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T00:15:11.735Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T00:15:13.457Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T00:15:14.336Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T00:15:14.337Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T00:15:32.670Z",
+      "tool": "navigate",
+      "url": "https://www.jbhifi.com.au/cart"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T00:15:32.677Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T00:15:32.678Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T00:16:07.717Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T00:16:12.274Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T00:16:13.072Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T00:16:14.771Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T00:16:15.620Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T00:16:17.275Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T00:16:18.183Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T00:16:19.235Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T00:16:19.236Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T00:16:25.522Z",
+      "tool": "find"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T00:16:32.086Z",
+      "tool": "find"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T00:16:32.091Z",
+      "tool": "find"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T00:16:40.204Z",
+      "tool": "navigate",
+      "url": "https://www.jbhifi.com.au/products/:token"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T00:16:40.205Z",
+      "tool": "find"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T00:16:45.448Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T00:16:50.054Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T00:16:51.278Z",
+      "tool": "navigate",
+      "url": "https://www.jbhifi.com.au/cart"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T00:16:51.278Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T00:16:51.280Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T00:17:28.167Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T00:17:33.026Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T00:17:33.794Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T00:17:35.511Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T00:17:36.296Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T00:17:38.045Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T00:17:38.915Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T00:17:39.754Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-08T00:17:41.011Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-08T00:17:41.012Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-08T00:17:46.835Z",
+      "tool": "find"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-08T00:17:50.069Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-08T00:17:53.753Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-08T00:17:53.756Z",
+      "tool": "find"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-08T00:18:05.653Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-08T00:18:09.863Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 85,
+      "utc": "2026-10-08T00:18:10.896Z",
+      "tool": "navigate",
+      "url": "https://www.jbhifi.com.au/cart"
+    },
+    {
+      "n": 86,
+      "utc": "2026-10-08T00:18:11.155Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 87,
+      "utc": "2026-10-08T00:18:11.161Z",
+      "tool": "find"
+    },
+    {
+      "n": 88,
+      "utc": "2026-10-08T00:18:19.840Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 89,
+      "utc": "2026-10-08T00:18:23.586Z",
+      "tool": "Read"
+    },
+    {
+      "n": 90,
+      "utc": "2026-10-08T00:18:54.944Z",
+      "tool": "Write"
+    },
+    {
+      "n": 91,
+      "utc": "2026-10-08T00:19:02.580Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "0024529b089b81ba73bcaa6b720d867b4297e9db626cdb2c290acec11945a43b"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "30a7290d43876d5a834519f193ea5d8913cd4ed0d6747403584e6f9ba1a19fd5"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "1ebf1e28bb7bc071467adc57a04a25d7ff47d55ce4a867086fcb4536a5e70507"
+      },
+      {
+        "target": "cart-other",
+        "kind": "state",
+        "sha256": "265b9b306b2e6702b4381a93ba64d95acf7564988bbfec5f8f0dd3f844e6fbd3"
+      }
+    ],
+    "errors": []
+  }
+}

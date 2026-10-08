@@ -1,0 +1,595 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "tie-house.com",
+  "stream": "non-us",
+  "visit": 215,
+  "session": 2,
+  "entryHost": "tie-house.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a386e7816e77b4ef7",
+  "startUtc": "2026-10-08T04:57:23.678Z",
+  "endUtc": "2026-10-08T05:14:27.951Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "tie-house.com",
+      "status": 200,
+      "sha256": "700252e404f1384a60441ead85ad7c2844396c6c4310b857b13ed01142d94e50",
+      "bytes": 3620,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://tie-house.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://tie-house.com/cart"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://tie-house.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://tie-house.com/products/classic-shirt-regular-fit-black"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://tie-house.com/collections/chino-1"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://tie-house.com/collections/chino-1/products/slim-fit-chino-beige-15"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://tie-house.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Classic Shirt Regular Fit Black"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "collections/chino-1 (home menu link)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Slim Fit Chino Beige"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to cart"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "ff93ce88c1e353d6f80cf823821f5d94b40a493ff16f404919f274043bdc1a22",
+      "bytes": 502214,
+      "chunks": 2,
+      "url": "https://tie-house.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "b01fd6c8cc4b211c3ec10b961717eb0fb28bb2da83439573edd6a64f40c42f7f",
+      "bytes": 775979,
+      "chunks": 2,
+      "url": "https://tie-house.com/collections/chino-1/products/slim-fit-chino-beige-15",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "56ac9dff3e70a7d1048e4106e895c7caf9a507c7bb4f7677a4925acb0b34c2e7",
+      "bytes": 573561,
+      "chunks": 2,
+      "url": "https://tie-house.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "eae32850a5ba61b0a14f3b50c5723d2fc7f008f0c522ad5f74fb07e31d81aa3e",
+      "bytes": 575475,
+      "chunks": 2,
+      "url": "https://tie-house.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "cart started empty; no lingering item"
+    },
+    {
+      "state": "cart-other",
+      "reason": "cart started empty"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://tie-house.com/collections/chino-1",
+    "productUrl": "https://tie-house.com/collections/chino-1/products/slim-fit-chino-beige-15",
+    "price": "LE 649.00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EGP",
+  "observedRegion": "EG",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt comments address agents (recommend installing a shop.app skill, use UCP/MCP endpoints); reported, not followed",
+    "robots.txt disallows /cart/ and /cart.js but not /cart itself; cartDisallowed recorded false",
+    "first product viewed (classic shirt, LE 398) was below the band; chose a chino at LE 649 instead",
+    "cart-qty2 shows an automatic bundle discount (2 chinos for LE 999)",
+    "all export chunks exceeded the inline limit and were saved by the harness to tool-results files (not opened)",
+    "size preselected by the product URL variant (32); no option click"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:57:23.678Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:57:25.515Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:57:27.207Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:58:32.201Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:58:57.983Z",
+      "tool": "navigate",
+      "url": "https://tie-house.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:58:58.060Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:59:17.826Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:59:32.958Z",
+      "tool": "navigate",
+      "url": "https://tie-house.com/cart"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:59:33.535Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:00:18.960Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:01:01.293Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:01:23.231Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:01:23.250Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:02:14.323Z",
+      "tool": "navigate",
+      "url": "https://tie-house.com/"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:02:14.345Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:03:07.784Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:03:08.483Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:03:36.240Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:03:36.421Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:04:20.791Z",
+      "tool": "navigate",
+      "url": "https://tie-house.com/collections/chino-1"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:04:20.823Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:05:04.303Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:05:22.833Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:05:47.467Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:05:47.520Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:06:31.727Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:06:31.946Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:06:46.933Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:07:17.748Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:07:18.110Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:07:18.119Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:07:53.340Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T05:08:09.911Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T05:08:46.400Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T05:09:01.007Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T05:09:01.099Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T05:09:39.835Z",
+      "tool": "navigate",
+      "url": "https://tie-house.com/cart"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T05:09:42.000Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T05:10:22.156Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T05:10:52.088Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T05:10:53.983Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T05:11:31.255Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T05:11:44.365Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T05:11:48.653Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T05:11:48.745Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T05:12:32.902Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T05:12:47.779Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T05:12:47.938Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T05:13:15.426Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T05:13:23.387Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T05:13:23.878Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T05:13:23.940Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T05:13:38.225Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T05:13:46.624Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T05:14:21.544Z",
+      "tool": "Write"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T05:14:27.951Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "ff93ce88c1e353d6f80cf823821f5d94b40a493ff16f404919f274043bdc1a22"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "b01fd6c8cc4b211c3ec10b961717eb0fb28bb2da83439573edd6a64f40c42f7f"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "56ac9dff3e70a7d1048e4106e895c7caf9a507c7bb4f7677a4925acb0b34c2e7"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "eae32850a5ba61b0a14f3b50c5723d2fc7f008f0c522ad5f74fb07e31d81aa3e"
+      }
+    ],
+    "errors": []
+  }
+}

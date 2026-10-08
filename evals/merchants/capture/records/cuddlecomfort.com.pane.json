@@ -1,0 +1,229 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "cuddlecomfort.com",
+  "stream": "us",
+  "visit": 110,
+  "session": 1,
+  "entryHost": "www.cuddlecomfort.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-ae299b63715e47003",
+  "startUtc": "2026-10-07T08:33:24.326Z",
+  "endUtc": "2026-10-07T08:35:35.642Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.cuddlecomfort.com",
+      "status": 200,
+      "sha256": "93c2caa760d5066346dd86a92ab5c1f1ea756989d1a473aa8872b9adf95d5936",
+      "bytes": 418,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.cuddlecomfort.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.cuddlecomfort.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (home page)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "77f4a353f1795f618556f00e36e5f5bdede35ae4b5714f7457c7579370b31fdf",
+      "bytes": 71934,
+      "chunks": 1,
+      "url": "https://www.cuddlecomfort.com/"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "not-a-store: no shop, products or cart"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "not-a-store"
+    },
+    {
+      "state": "cart-1",
+      "reason": "not-a-store"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "not-a-store"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not-a-store"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "not-a-store",
+    "evidenceSha256": "77f4a353f1795f618556f00e36e5f5bdede35ae4b5714f7457c7579370b31fdf"
+  },
+  "challenge": null,
+  "problems": [
+    "Site is a free cuddle-buddy community/booking platform; home nav has only How It Works, About, FAQ, Sign Up, Login; no shop, product or cart link (find 'shop' and 'cart' returned nothing).",
+    "Pane reported the JavaScript results as captured at origin https://cuddlecomfort.com although the tab URL showed www.cuddlecomfort.com; same registrable domain.",
+    "Not signed in (Sign Up and Login links shown); cart counts null because no cart exists.",
+    "Evidence chunk(0) was oversized and saved by the harness to a tool-results file; not opened."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:33:24.326Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:33:25.429Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:33:25.437Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:33:38.998Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:33:50.083Z",
+      "tool": "navigate",
+      "url": "https://www.cuddlecomfort.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:33:50.134Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:34:06.071Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:34:10.429Z",
+      "tool": "navigate",
+      "url": "https://www.cuddlecomfort.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:34:10.437Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:34:16.680Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:34:16.682Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:34:20.347Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:34:51.891Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:35:06.342Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:35:12.261Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:35:25.366Z",
+      "tool": "Write"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:35:35.642Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "77f4a353f1795f618556f00e36e5f5bdede35ae4b5714f7457c7579370b31fdf"
+      }
+    ],
+    "errors": []
+  }
+}

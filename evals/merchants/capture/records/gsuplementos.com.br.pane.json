@@ -1,0 +1,483 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "gsuplementos.com.br",
+  "stream": "non-us",
+  "visit": 69,
+  "session": 1,
+  "entryHost": "www.gsuplementos.com.br",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-af68c0bb1f21203a0",
+  "startUtc": "2026-10-07T08:04:59.390Z",
+  "endUtc": "2026-10-07T08:09:13.804Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 1,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": false,
+      "note": "remove control in the off-canvas cart drawer, outside the viewport; drawer would not open with the pane hidden"
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.gsuplementos.com.br",
+      "status": 200,
+      "sha256": "7a3cb8c09cc8e5cf716aa156bfe576b32e442e25d6f03b83c41566833dbf9cec",
+      "bytes": 1027,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.gsuplementos.com.br/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.gsuplementos.com.br/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.gsuplementos.com.br/creatina-250g-creapure-growth-supplements-p985824"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Creatina Monohidratada 250g (no nav)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product link href from home listing"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Comprar (no cart change)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "(unnamed buy button)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Abrir meu carrinho de compras, 1 itens"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Carrinho"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Abrir meu carrinho de compras, 1 itens"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "640382cd6260f68a3a851116b87d8f98d2e88355c06c229d7d9f377e32cbd76c",
+      "bytes": 1234758,
+      "chunks": 4,
+      "url": "https://www.gsuplementos.com.br/creatina-250g-creapure-growth-supplements-p985824",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart page lives at /checkout/carrinho/ (checkout segment, forbidden); not exported while empty"
+    },
+    {
+      "state": "cart-1",
+      "reason": "cart page lives at /checkout/carrinho/ (checkout segment, forbidden path)"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "drawer increment control off-canvas; drawer would not open with the pane hidden; cart page forbidden path"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.gsuplementos.com.br/",
+    "productUrl": "https://www.gsuplementos.com.br/creatina-250g-creapure-growth-supplements-p985824",
+    "price": "R$109,90",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "BRL",
+  "observedRegion": "BR",
+  "outcome": {
+    "status": "incomplete",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Home page tab title briefly read 'Verifying your browser. Please wait a few seconds...' then the store loaded by itself; no interaction",
+    "Cart page is /checkout/carrinho/ (checkout segment, not Magento): only the in-page drawer is reachable",
+    "minicart-1 export: drawer holds the item in the DOM but was off-canvas (closed) at export; pane hidden, screenshots failed",
+    "Own item not removed: remove control off-canvas; end cart count 1 vs start 0",
+    "Item price shown is the PIX/boleto cash price R$109,90; instalment price R$122,11"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:04:59.390Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:05:00.480Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:05:00.500Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:05:07.380Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:05:10.910Z",
+      "tool": "navigate",
+      "url": "https://www.gsuplementos.com.br/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:05:11.001Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:05:18.572Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:05:23.617Z",
+      "tool": "navigate",
+      "url": "https://www.gsuplementos.com.br/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:05:23.627Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:05:31.169Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:05:31.172Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:05:35.148Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:05:39.558Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:05:42.985Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:05:48.171Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:05:48.175Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:05:53.758Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:06:00.745Z",
+      "tool": "navigate",
+      "url": "https://www.gsuplementos.com.br/:token"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:06:00.748Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:06:05.871Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:06:09.952Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:06:15.708Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:06:15.712Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:06:22.831Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:06:31.179Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:06:35.738Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:06:35.743Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:06:42.162Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:06:42.164Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:06:48.801Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:07:18.957Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T08:07:24.523Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T08:07:25.365Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T08:07:26.973Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T08:07:26.980Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T08:07:33.599Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T08:07:46.520Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T08:07:46.947Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T08:07:46.957Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T08:07:57.685Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T08:07:58.159Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T08:07:58.164Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T08:08:05.527Z",
+      "tool": "computer",
+      "action": "hover"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T08:08:12.211Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T08:08:12.919Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T08:08:12.925Z",
+      "tool": "computer",
+      "action": "hover"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T08:08:23.508Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T08:08:24.267Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T08:08:24.269Z",
+      "tool": "computer",
+      "action": "hover"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T08:08:32.806Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T08:08:57.715Z",
+      "tool": "Write"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T08:09:13.804Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "640382cd6260f68a3a851116b87d8f98d2e88355c06c229d7d9f377e32cbd76c"
+      }
+    ],
+    "errors": []
+  }
+}

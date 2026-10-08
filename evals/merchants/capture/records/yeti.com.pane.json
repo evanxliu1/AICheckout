@@ -1,0 +1,278 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "yeti.com",
+  "stream": "us",
+  "visit": 197,
+  "session": 1,
+  "entryHost": "www.yeti.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-a3ff9102740c5f230",
+  "startUtc": "2026-10-08T01:05:08.654Z",
+  "endUtc": "2026-10-08T01:07:35.017Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.yeti.com",
+      "status": 200,
+      "sha256": "e31b33f9b7bb8958876a2d13b617fa88f9f8df32867967c8782023ab49aaea74",
+      "bytes": 9278,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.yeti.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.yeti.com/cart"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.yeti.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "dd72c96537842fe1f747dab2c552d0f4b2d17b77c8a6b8d6d16deac12f84013c",
+      "bytes": 903573,
+      "chunks": 3,
+      "url": "https://www.yeti.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "stopped: press-and-hold challenge on home page before any add"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped: press-and-hold challenge"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped: press-and-hold challenge"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped: press-and-hold challenge"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.yeti.com/",
+    "title": "Access to this page has been denied",
+    "marker": "PerimeterX/HUMAN-style press-and-hold page with Reference ID",
+    "wording": "Before we continue... Press & Hold to confirm you are a human (and not a bot)."
+  },
+  "problems": [
+    "Cart page (navigation 2) loaded normally and was exported as empty-cart; the next navigation (home) returned a press-and-hold challenge. Not interacted with, not exported.",
+    "robots.txt has no User-agent * group; cart/Cart-AddProduct disallowed only for Googlebot groups.",
+    "Cookie notice had no decline control; left alone.",
+    "Final cart count not re-read because of the stop; no items were added, so nothing to remove."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:05:08.654Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:05:09.795Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:05:09.800Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:05:13.717Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:05:17.018Z",
+      "tool": "navigate",
+      "url": "https://www.yeti.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:05:17.283Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:05:49.862Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:05:53.986Z",
+      "tool": "navigate",
+      "url": "https://www.yeti.com/cart"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:05:53.989Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:05:59.240Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:05:59.250Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:06:07.461Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:06:36.832Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:06:44.071Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T01:06:47.664Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T01:06:51.309Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T01:06:55.316Z",
+      "tool": "navigate",
+      "url": "https://www.yeti.com/"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T01:06:55.318Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T01:06:59.112Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T01:07:04.125Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T01:07:07.716Z",
+      "tool": "Read"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T01:07:22.921Z",
+      "tool": "Write"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T01:07:35.017Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "dd72c96537842fe1f747dab2c552d0f4b2d17b77c8a6b8d6d16deac12f84013c"
+      }
+    ],
+    "errors": []
+  }
+}

@@ -1,0 +1,542 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "todomoda.com",
+  "stream": "non-us",
+  "visit": 113,
+  "session": 2,
+  "entryHost": "ar.todomoda.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a583e4467c9cfcc61",
+  "startUtc": "2026-10-07T23:51:48.615Z",
+  "endUtc": "2026-10-07T23:59:55.812Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "ar.todomoda.com",
+      "status": 200,
+      "sha256": "5c922585d07f17c7f8f98c3b598ab759b467a5f39a120bd01ada358977e5e517",
+      "bytes": 3477,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://ar.todomoda.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://ar.todomoda.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://ar.todomoda.com/checkout/cart/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://ar.todomoda.com/taza-de-ceramica-de-snoopy-84210701.html"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://ar.todomoda.com/checkout/cart/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page by URL"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product linked from home"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Agregar al carrito"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page by URL"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "+"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Eliminar"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "2ddb9130ec01ca5831a6127759943b55af84f8cf08ebed5a60f567db3b7b937c",
+      "bytes": 432183,
+      "chunks": 2,
+      "url": "https://ar.todomoda.com/checkout/cart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "f53e04a5d1927c3b632db88c129748dd1fa3ce53a5f55e771845e3145319f364",
+      "bytes": 560094,
+      "chunks": 2,
+      "url": "https://ar.todomoda.com/taza-de-ceramica-de-snoopy-84210701.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "a2f0da84902b8acdaf9cd7fb84f5c967b60a60c0ff031a1dee4121b42c7d0722",
+      "bytes": 545830,
+      "chunks": 2,
+      "url": "https://ar.todomoda.com/checkout/cart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "d7667edd9334d084349b4e7866f5943faf019bc3ac28ee09b98e88e2110ec01a",
+      "bytes": 556855,
+      "chunks": 2,
+      "url": "https://ar.todomoda.com/checkout/cart/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted: cart started empty and no second item was added (kept the session short)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://ar.todomoda.com/",
+    "productUrl": "https://ar.todomoda.com/taza-de-ceramica-de-snoopy-84210701.html",
+    "price": "$ 35.000",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "ARS",
+  "observedRegion": "AR",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt: root allowed for *, but /checkout/ (cart is Magento /checkout/cart/) is disallowed for *; the file also lists 'User-agent: Claude' and 'ClaudeBot' with Disallow: / (recorded only; robots never excludes under .8).",
+    "Every export chunk was oversized and saved by the harness to tool-results files (not opened), as expected.",
+    "find/read_page timed out twice on the cart page while the pane was hidden; the quantity increment was clicked by screenshot coordinate.",
+    "Product page shows a promo line about a gift above $40.000; cart-qty2 total ($70.000) crosses that threshold; no gift item was added by the operator."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T23:51:48.615Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T23:51:49.337Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T23:51:50.610Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T23:51:50.617Z",
+      "tool": "Read"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T23:51:54.624Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T23:52:08.140Z",
+      "tool": "navigate",
+      "url": "https://ar.todomoda.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T23:52:11.720Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T23:52:18.510Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T23:52:21.653Z",
+      "tool": "navigate",
+      "url": "https://ar.todomoda.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T23:52:27.664Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T23:52:31.872Z",
+      "tool": "navigate",
+      "url": "https://ar.todomoda.com/checkout/cart/"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T23:52:37.916Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:53:06.407Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:53:10.219Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:53:14.386Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T23:53:34.449Z",
+      "tool": "navigate",
+      "url": "https://ar.todomoda.com/:token"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T23:53:40.534Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T23:54:10.191Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T23:54:15.203Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T23:54:18.879Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T23:54:25.951Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T23:54:54.538Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T23:54:58.529Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T23:55:09.509Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T23:55:13.282Z",
+      "tool": "navigate",
+      "url": "https://ar.todomoda.com/checkout/cart/"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T23:55:22.469Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T23:55:51.158Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T23:56:01.555Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T23:56:05.446Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T23:56:09.417Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T23:56:12.607Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T23:56:45.480Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T23:57:18.546Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T23:57:26.696Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T23:57:44.952Z",
+      "tool": "find"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T23:58:17.911Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T23:58:20.944Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T23:58:21.592Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T23:58:22.174Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T23:58:29.101Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T23:58:29.651Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T23:58:55.888Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T23:58:58.561Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T23:59:01.371Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T23:59:05.871Z",
+      "tool": "find"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T23:59:08.986Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T23:59:09.603Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T23:59:10.143Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T23:59:33.361Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T23:59:50.971Z",
+      "tool": "Write"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T23:59:55.812Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "2ddb9130ec01ca5831a6127759943b55af84f8cf08ebed5a60f567db3b7b937c"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "f53e04a5d1927c3b632db88c129748dd1fa3ce53a5f55e771845e3145319f364"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "a2f0da84902b8acdaf9cd7fb84f5c967b60a60c0ff031a1dee4121b42c7d0722"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "d7667edd9334d084349b4e7866f5943faf019bc3ac28ee09b98e88e2110ec01a"
+      }
+    ],
+    "errors": []
+  }
+}

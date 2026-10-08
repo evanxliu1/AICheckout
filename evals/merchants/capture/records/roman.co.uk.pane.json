@@ -1,0 +1,147 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "roman.co.uk",
+  "stream": "non-us",
+  "visit": 67,
+  "session": 1,
+  "entryHost": "www.roman.co.uk",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-ac22ee3ba3fafc2e9",
+  "startUtc": "2026-10-07T08:03:11.011Z",
+  "endUtc": "2026-10-07T08:03:43.499Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.roman.co.uk",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null,
+      "note": "robots.txt itself answered with a Cloudflare challenge page; not hashed"
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.roman.co.uk/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at Cloudflare challenge on first navigation"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at Cloudflare challenge on first navigation"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at Cloudflare challenge on first navigation"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at Cloudflare challenge on first navigation"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at Cloudflare challenge on first navigation"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.roman.co.uk/robots.txt",
+    "title": "Just a moment...",
+    "vendor": "Cloudflare",
+    "marker": "title 'Just a moment...'; redirect with __cf_chl_rt_tk query parameter",
+    "wording": "Performing security verification. This website uses a security service to protect against malicious bots."
+  },
+  "problems": [
+    "Cloudflare challenge served on the very first request (robots.txt); no store page loaded, not interacted with, not exported",
+    "robots.txt could not be read or hashed because it was behind the challenge"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:03:11.011Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:03:11.017Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:03:11.020Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:03:15.592Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:03:18.753Z",
+      "tool": "navigate",
+      "url": "https://www.roman.co.uk/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:03:22.518Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:03:26.932Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:03:36.337Z",
+      "tool": "Write"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:03:43.499Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

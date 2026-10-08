@@ -1,0 +1,531 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "bookshop.org",
+  "stream": "us",
+  "visit": 213,
+  "session": 2,
+  "entryHost": "bookshop.org",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a21b3baaf4cd39b4e",
+  "startUtc": "2026-10-08T03:34:42.421Z",
+  "endUtc": "2026-10-08T03:38:16.849Z",
+  "signedIn": false,
+  "startCartCount": 1,
+  "endCartCount": 1,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (line at qty 2, one remove control)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "bookshop.org",
+      "status": 200,
+      "sha256": "a5b813ab54c172bc6c7b40c368b9af7fd0223cb3046b226277c408912ad81b8e",
+      "bytes": 1120,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://bookshop.org/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://bookshop.org/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://bookshop.org/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://bookshop.org/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://bookshop.org/p/books/of-mice-and-men-john-steinbeck/:token"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://bookshop.org/cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://bookshop.org/p/books/of-mice-and-men-john-steinbeck/:token"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://bookshop.org/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (starting count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "link to The Road"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-2items"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (same item)"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-other"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "img",
+      "name": "remove item from cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "cart-2items",
+      "sha256": "9b6014486d5fcee03236c13ff565596b5bc4f718bd7d12c09f54addd18d08bc5",
+      "bytes": 232843,
+      "chunks": 1,
+      "url": "https://bookshop.org/cart",
+      "startCartCount": 1
+    },
+    {
+      "state": "cart-other",
+      "sha256": "62d8ca5429376d2db862b7890fe9f581cc1980581dfde584dccf3f7e2d3cacbe",
+      "bytes": 232844,
+      "chunks": 1,
+      "url": "https://bookshop.org/cart",
+      "startCartCount": 1
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart held 1 lingering item at start"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "no in-page cart after add; only an inline 'already in cart' note"
+    },
+    {
+      "state": "cart-1",
+      "reason": "lingering item present, so own item alone never shown"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "lingering item present; own item at qty 2 (via second add-to-cart) exported as cart-other; cart quantity is a typed number field"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://bookshop.org/",
+    "productUrl": "https://bookshop.org/p/books/of-mice-and-men-john-steinbeck/:token",
+    "price": "$13.05",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Click on home-page link 'link to The Road' landed on Of Mice and Men (layout shift); that in-band item was used.",
+    "Cart held 1 lingering item at start (not added this session); left in place.",
+    "cart-other is own item at qty 2 reached by a second add-to-cart click, since the cart has no increment control (typed quantity field only).",
+    "Both chunk(0) results were oversized and saved by the harness to tool-results files; not opened.",
+    "robots.txt disallows /cart and /checkout for *; recorded only."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:34:42.421Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:34:43.613Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:34:43.614Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:34:46.139Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:34:49.634Z",
+      "tool": "navigate",
+      "url": "https://bookshop.org/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:34:49.785Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:34:56.110Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:34:59.878Z",
+      "tool": "navigate",
+      "url": "https://bookshop.org/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:34:59.926Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:35:05.192Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:35:05.299Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:35:09.083Z",
+      "tool": "navigate",
+      "url": "https://bookshop.org/cart"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:35:09.091Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:35:15.782Z",
+      "tool": "navigate",
+      "url": "https://bookshop.org/"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:35:15.785Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:35:20.262Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T03:35:25.018Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T03:35:25.025Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T03:35:31.509Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T03:35:34.656Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T03:35:38.529Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T03:35:38.532Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T03:35:44.614Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T03:35:48.692Z",
+      "tool": "navigate",
+      "url": "https://bookshop.org/cart"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T03:35:48.697Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T03:36:17.657Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T03:36:21.166Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T03:36:25.695Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T03:36:31.683Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T03:36:37.057Z",
+      "tool": "navigate",
+      "url": "https://bookshop.org/p/books/of-mice-and-men-john-steinbeck/:token"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T03:36:37.070Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T03:36:44.390Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T03:36:47.856Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T03:36:47.913Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T03:36:54.428Z",
+      "tool": "navigate",
+      "url": "https://bookshop.org/cart"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T03:36:54.486Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T03:37:23.306Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T03:37:26.857Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T03:37:31.245Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T03:37:34.801Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T03:37:37.849Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T03:37:38.267Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T03:37:40.669Z",
+      "tool": "find"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T03:37:43.417Z",
+      "tool": "find"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T03:37:46.847Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T03:37:49.106Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T03:37:49.490Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T03:37:54.762Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T03:38:10.911Z",
+      "tool": "Write"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T03:38:16.849Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "cart-2items",
+        "kind": "state",
+        "sha256": "9b6014486d5fcee03236c13ff565596b5bc4f718bd7d12c09f54addd18d08bc5"
+      },
+      {
+        "target": "cart-other",
+        "kind": "state",
+        "sha256": "62d8ca5429376d2db862b7890fe9f581cc1980581dfde584dccf3f7e2d3cacbe"
+      }
+    ],
+    "errors": []
+  }
+}

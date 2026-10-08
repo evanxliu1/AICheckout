@@ -1,0 +1,221 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "ralphlauren.com",
+  "stream": "us",
+  "visit": 295,
+  "session": 1,
+  "entryHost": "www.ralphlauren.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-abeffffecbcbc7443",
+  "startUtc": "2026-10-08T05:49:30.753Z",
+  "endUtc": "2026-10-08T05:51:11.529Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.ralphlauren.com",
+      "status": 200,
+      "sha256": "4f722eed391b6e3777a544105a73723234b3c667cc3e584c7b11cf6dd330f6fc",
+      "bytes": 2426,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.ralphlauren.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.ralphlauren.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.ralphlauren.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (starting count check)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on /cart before any capture"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.ralphlauren.com/cart",
+    "title": "Access to this page has been denied",
+    "wording": "Access to this page has been denied",
+    "marker": "page title only (PerimeterX/HUMAN-style block title); body text and accessibility tree empty"
+  },
+  "problems": [
+    "Home page loaded normally (logged out, country selector US English); /cart opened by URL returned a block page titled 'Access to this page has been denied'. Stopped at once; not exported.",
+    "Starting cart count not read: the block came on the first cart view.",
+    "robots.txt disallows /*cart$ for *; cart visited by URL per .8 (record only)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:49:30.753Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:49:31.530Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:49:32.746Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:49:32.752Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:49:53.586Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:49:59.527Z",
+      "tool": "navigate",
+      "url": "https://www.ralphlauren.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:49:59.720Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:50:08.472Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:50:13.842Z",
+      "tool": "navigate",
+      "url": "https://www.ralphlauren.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:50:13.868Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:50:22.801Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:50:28.427Z",
+      "tool": "navigate",
+      "url": "https://www.ralphlauren.com/cart"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:50:28.694Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:50:43.435Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:50:51.059Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:51:02.743Z",
+      "tool": "Write"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:51:11.529Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

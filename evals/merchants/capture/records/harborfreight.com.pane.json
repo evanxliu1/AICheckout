@@ -1,0 +1,295 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "harborfreight.com",
+  "stream": "us",
+  "visit": 24,
+  "session": 1,
+  "entryHost": "www.harborfreight.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-aff8673dd78ec24cc",
+  "startUtc": "2026-10-07T06:56:48.121Z",
+  "endUtc": "2026-10-07T06:58:29.013Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.harborfreight.com",
+      "status": 200,
+      "sha256": "14c85c6113679b137eed194822ff558b7e5c3e543b250350fe6a7cba6075ff42",
+      "bytes": 2684,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.harborfreight.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.harborfreight.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.harborfreight.com/8-in-1-magnetic-nut-driver-70708.html"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Hand Tools (no navigation)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "8-in-1 Magnetic Nut Driver (no nav)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject All Cookies"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "product tile link (no navigation)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page from home link href"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "captcha on first product page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "captcha on first product page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "captcha on first product page"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "captcha on first product page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.harborfreight.com/",
+    "productUrl": "https://www.harborfreight.com/8-in-1-magnetic-nut-driver-70708.html",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.harborfreight.com/8-in-1-magnetic-nut-driver-70708.html",
+    "title": "Access to this page has been denied",
+    "wording": "Before we continue... Press & Hold to confirm you area human (and not a bot).",
+    "marker": "PerimeterX/HUMAN-style press-and-hold challenge (title and wording); not interacted with, not exported"
+  },
+  "problems": [
+    "Home page clicks by ref on menu and product tiles did not navigate (before and after cookie decline); product page then opened by URL from the home page link href",
+    "Challenge appeared on the first product page load; store stopped, no export taken",
+    "Home page showed 0 items in cart and a signed-out prompt; endCartCount not re-read because the store was stopped at the challenge",
+    "robots.txt contains joke comments addressed to robots/humans; no instructions followed"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:56:48.121Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:56:49.233Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:56:49.241Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:56:56.573Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:57:00.705Z",
+      "tool": "navigate",
+      "url": "https://www.harborfreight.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:57:00.774Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:57:08.824Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:57:12.653Z",
+      "tool": "navigate",
+      "url": "https://www.harborfreight.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:57:12.662Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:57:17.090Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:57:21.050Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:57:21.053Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:57:25.061Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T06:57:29.570Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T06:57:29.610Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T06:57:34.421Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T06:57:39.004Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T06:57:43.480Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T06:57:44.091Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T06:57:44.095Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T06:57:51.149Z",
+      "tool": "navigate",
+      "url": "https://www.harborfreight.com/:token"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T06:57:51.154Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T06:57:56.940Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T06:58:00.564Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T06:58:19.871Z",
+      "tool": "Write"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T06:58:29.013Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

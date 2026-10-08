@@ -1,0 +1,461 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "obramat.es",
+  "stream": "non-us",
+  "visit": 159,
+  "session": 1,
+  "entryHost": "www.obramat.es",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a80248fc8d9234a54",
+  "startUtc": "2026-10-08T01:08:20.581Z",
+  "endUtc": "2026-10-08T01:12:13.120Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.obramat.es",
+      "status": 200,
+      "sha256": "cb7d5e5703a2c8417753fc208b957f963e4808e45028ef14182a8d286beccfbc",
+      "bytes": 1586,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.obramat.es/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.obramat.es/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.obramat.es/checkout/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.obramat.es/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.obramat.es/productos/bota-de-seguridad-s3-src-crupon-t41-25051976.html"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (/checkout/cart, Magento-style)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "BOTA DE SEGURIDAD S3 SRC CRUPON T41"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (link href from home)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Añadir al pedido"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Rechazar todas"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (needs-input)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "006618b672373ecb4b1e38f2df7bed68834d33754cd61595a998d5fa3fbf6587",
+      "bytes": 1452879,
+      "chunks": 4,
+      "url": "https://www.obramat.es/checkout/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "4fe9c6eda992535630c8e830969cd1fd0cdd7e119119be2e23da78cba08c81d9",
+      "bytes": 1689288,
+      "chunks": 5,
+      "url": "https://www.obramat.es/productos/bota-de-seguridad-s3-src-crupon-t41-25051976.html"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart opens a mandatory warehouse (Almacén) chooser; choosing a store is not a size or colour choice"
+    },
+    {
+      "state": "cart-1",
+      "reason": "needs-input: no item added"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "needs-input: no item added"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "needs-input: no item added"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.obramat.es/",
+    "productUrl": "https://www.obramat.es/productos/bota-de-seguridad-s3-src-crupon-t41-25051976.html",
+    "price": "18,50 EUR",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EUR",
+  "observedRegion": "ES",
+  "outcome": {
+    "status": "excluded",
+    "code": "needs-input",
+    "evidenceSha256": "4fe9c6eda992535630c8e830969cd1fd0cdd7e119119be2e23da78cba08c81d9"
+  },
+  "challenge": null,
+  "problems": [
+    "Add-to-cart ('Añadir al pedido') opened 'Elige tu Almacén OBRAMAT' modal requiring a warehouse choice (postcode search or 'Elegir este Almacén'); not chosen, recorded needs-input.",
+    "Store chooser text says using it accepts cookies to identify the nearest warehouse.",
+    "Cookie banner appeared after the add click; declined with 'Rechazar todas' before the chooser was visible.",
+    "Click on homepage carousel product link did not navigate; product page opened by URL from the link's href.",
+    "Evidence export taken with the warehouse chooser modal open; all chunk results were oversized and saved by the harness (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:08:20.581Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:08:21.698Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:08:21.706Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:08:24.091Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:08:37.756Z",
+      "tool": "navigate",
+      "url": "https://www.obramat.es/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:08:41.751Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:08:47.876Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:08:52.601Z",
+      "tool": "navigate",
+      "url": "https://www.obramat.es/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:08:52.617Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:08:59.282Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:09:04.543Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:09:04.550Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:09:39.224Z",
+      "tool": "navigate",
+      "url": "https://www.obramat.es/checkout/cart"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:09:39.235Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T01:10:12.821Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T01:10:18.244Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T01:10:18.776Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T01:10:20.336Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T01:10:20.340Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T01:10:28.549Z",
+      "tool": "navigate",
+      "url": "https://www.obramat.es/"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T01:10:28.561Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T01:10:41.041Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T01:10:45.847Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T01:10:45.975Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T01:10:50.980Z",
+      "tool": "navigate",
+      "url": "https://www.obramat.es/productos/:token"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T01:10:51.064Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T01:10:57.375Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T01:11:07.702Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T01:11:10.271Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T01:11:12.405Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T01:11:12.827Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T01:11:15.026Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T01:11:15.560Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T01:11:39.711Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T01:11:42.254Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T01:11:43.029Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T01:11:43.886Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T01:11:44.706Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T01:11:45.362Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T01:11:50.874Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T01:11:51.367Z",
+      "tool": "Read"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T01:12:06.898Z",
+      "tool": "Write"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T01:12:13.120Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "006618b672373ecb4b1e38f2df7bed68834d33754cd61595a998d5fa3fbf6587"
+      },
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "4fe9c6eda992535630c8e830969cd1fd0cdd7e119119be2e23da78cba08c81d9"
+      }
+    ],
+    "errors": []
+  }
+}

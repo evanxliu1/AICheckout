@@ -1,0 +1,727 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "worldmarket.com",
+  "stream": "us",
+  "visit": 258,
+  "session": 1,
+  "entryHost": "www.worldmarket.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-af3896cdd6b4e4f0b",
+  "startUtc": "2026-10-08T04:40:35.442Z",
+  "endUtc": "2026-10-08T05:00:18.248Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.worldmarket.com",
+      "status": 200,
+      "sha256": "7683edc6d487ff5aa7cd71ec923f6ec101480b840eee0b0891f4d1fd437a19da",
+      "bytes": 643,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.worldmarket.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.worldmarket.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.worldmarket.com/c/food-and-drinks/cookies-and-cakes/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.worldmarket.com/p/create-a-treat-holiday-house-pre-built-gingerbread-kit-643916.html"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.worldmarket.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "category cookies-and-cakes"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Create-A-Treat Holiday House Pre Built G"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "",
+      "name": "coordinate click on plus (no effect)"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "(unnamed plus button)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "0021365925e2c534df17f1cc9f96d669a5c5beae6ec0a12816cc685e768b65fb",
+      "bytes": 2423622,
+      "chunks": 7,
+      "url": "https://www.worldmarket.com/p/create-a-treat-holiday-house-pre-built-gingerbread-kit-643916.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "d6d4068a2bead22f84ba8d9a267ed51f2910a9fbfab5156c0c15c4ecb5054b56",
+      "bytes": 2168470,
+      "chunks": 6,
+      "url": "https://www.worldmarket.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "cd05c05199331ea8ab53260a7464f2976ad49037275c81a48b2e23204a06b9d7",
+      "bytes": 2171725,
+      "chunks": 6,
+      "url": "https://www.worldmarket.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "b89eaeab74d5395cf2db8a225b71bb85db1f7f222146e9ff0e5f8c0813b3ef20",
+      "bytes": 2077480,
+      "chunks": 6,
+      "url": "https://www.worldmarket.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; session kept to one item (cart focus)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.worldmarket.com/c/food-and-drinks/cookies-and-cakes/",
+    "productUrl": "https://www.worldmarket.com/p/create-a-treat-holiday-house-pre-built-gingerbread-kit-643916.html",
+    "price": "USD 16.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Listing reached by direct URL of a category link seen on the home page menu, not by a click.",
+    "empty-cart exported after removing own item (cart actually empty), taken last rather than first.",
+    "One coordinate click on the quantity plus control had no effect; the ref click then incremented to 2.",
+    "Cookie banner had no decline control; left alone.",
+    "robots.txt disallows /cart* and /checkout* for *; recorded only."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:40:35.442Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:40:36.307Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:40:37.518Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:40:37.639Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:41:02.834Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:41:08.016Z",
+      "tool": "navigate",
+      "url": "https://www.worldmarket.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:41:13.508Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:41:16.723Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:41:25.248Z",
+      "tool": "navigate",
+      "url": "https://www.worldmarket.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:41:25.268Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:41:33.813Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:41:33.836Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:41:38.519Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:41:47.981Z",
+      "tool": "navigate",
+      "url": "https://www.worldmarket.com/c/food-and-drinks/cookies-and-cakes/"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:41:47.987Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:41:58.026Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:42:03.424Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:42:16.980Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:42:26.599Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:42:31.220Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:42:35.356Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:42:44.799Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:42:45.471Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:42:47.298Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:43:23.151Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:43:31.940Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:43:32.013Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:43:32.284Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:43:33.858Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:43:33.885Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:43:34.714Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:43:36.595Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:44:20.470Z",
+      "tool": "navigate",
+      "url": "https://www.worldmarket.com/cart"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:44:20.636Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:44:53.155Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:45:08.128Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:45:08.419Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:45:08.889Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:45:12.401Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:45:12.417Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:45:12.422Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T04:47:08.805Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T04:47:14.981Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T04:47:26.953Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T04:47:27.000Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T04:47:53.814Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T04:47:53.988Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T04:47:53.988Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T04:48:18.201Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T04:48:34.465Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T04:48:50.475Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T04:49:04.834Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T04:49:41.936Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T04:49:42.608Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T04:49:43.182Z",
+      "tool": "find"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T04:50:29.052Z",
+      "tool": "find"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T04:50:46.043Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T04:51:23.075Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T04:51:45.889Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T04:51:46.948Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T04:51:47.579Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T04:51:48.896Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T04:51:48.964Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T04:51:49.369Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T04:53:55.621Z",
+      "tool": "find"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T04:54:13.747Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T04:54:13.764Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T04:54:15.917Z",
+      "tool": "find"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T04:54:42.874Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T04:55:10.361Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T04:55:25.030Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T04:55:26.680Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T04:55:26.697Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T04:55:27.301Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T04:55:28.534Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T04:55:28.785Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T04:59:09.159Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-08T04:59:31.312Z",
+      "tool": "Write"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-08T05:00:18.248Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "0021365925e2c534df17f1cc9f96d669a5c5beae6ec0a12816cc685e768b65fb"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "d6d4068a2bead22f84ba8d9a267ed51f2910a9fbfab5156c0c15c4ecb5054b56"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "cd05c05199331ea8ab53260a7464f2976ad49037275c81a48b2e23204a06b9d7"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "b89eaeab74d5395cf2db8a225b71bb85db1f7f222146e9ff0e5f8c0813b3ef20"
+      }
+    ],
+    "errors": []
+  }
+}

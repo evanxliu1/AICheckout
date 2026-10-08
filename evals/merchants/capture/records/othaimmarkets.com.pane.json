@@ -1,0 +1,287 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "othaimmarkets.com",
+  "stream": "non-us",
+  "visit": 137,
+  "session": 1,
+  "entryHost": "www.othaimmarkets.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a350cd90c5d1e132a",
+  "startUtc": "2026-10-08T00:35:03.055Z",
+  "endUtc": "2026-10-08T00:37:10.112Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.othaimmarkets.com",
+      "status": 200,
+      "sha256": "e092abd967466fd9b7451fcda8a8c368ccc7f4f54747b29b7986f63f3e1cf70d",
+      "bytes": 73,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.othaimmarkets.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.othaimmarkets.com/ar"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.othaimmarkets.com/ar/offers"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host (redirects to /ar)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject all (Arabic)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Offers footer link (no navigation)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/offers"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (offers page)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "7e54739bb2a2f12eb5af2c4d797a72247eb8edd1cbbae23210627b04810f69db",
+      "bytes": 149581,
+      "chunks": 1,
+      "url": "https://www.othaimmarkets.com/ar/offers"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "site has no cart"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "site has no add-to-cart"
+    },
+    {
+      "state": "cart-1",
+      "reason": "site has no cart"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "site has no cart"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "site has no cart"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": "SA",
+  "outcome": {
+    "status": "excluded",
+    "code": "not-a-store",
+    "evidenceSha256": "7e54739bb2a2f12eb5af2c4d797a72247eb8edd1cbbae23210627b04810f69db"
+  },
+  "challenge": null,
+  "problems": [
+    "Entry host is a corporate/investor-relations site for the supermarket chain: no cart, no product pages, no add-to-cart; offers are flyer categories only. Online ordering is via a separate app linked from the footer (not loaded).",
+    "Starting and ending cart counts are null because the site has no cart.",
+    "Evidence chunk(0) result was oversized and saved by the harness to a tool-results file; not opened."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:35:03.055Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:35:04.290Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:35:04.301Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:35:06.746Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:35:09.864Z",
+      "tool": "navigate",
+      "url": "https://www.othaimmarkets.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:35:13.406Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:35:19.203Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:35:42.588Z",
+      "tool": "navigate",
+      "url": "https://www.othaimmarkets.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:35:47.499Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:35:52.578Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:35:56.516Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:35:56.550Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:35:59.910Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:36:00.017Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:36:03.647Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:36:03.713Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:36:07.068Z",
+      "tool": "navigate",
+      "url": "https://www.othaimmarkets.com/offers"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:36:11.134Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:36:41.467Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:36:44.969Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:36:49.890Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:37:02.975Z",
+      "tool": "Write"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:37:10.112Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "7e54739bb2a2f12eb5af2c4d797a72247eb8edd1cbbae23210627b04810f69db"
+      }
+    ],
+    "errors": []
+  }
+}

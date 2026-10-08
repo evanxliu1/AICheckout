@@ -1,0 +1,874 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "motosport.com",
+  "stream": "us",
+  "visit": 106,
+  "session": 1,
+  "entryHost": "www.motosport.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a93363d20179f64a4",
+  "startUtc": "2026-10-07T08:26:16.750Z",
+  "endUtc": "2026-10-07T08:33:17.087Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 2 (Latch tiedowns)",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "item": "own item 1 (Hook tiedowns, qty 2): decrement to 1, then remove",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.motosport.com",
+      "status": 200,
+      "sha256": "0d404ee087209d38c8e59b228e5462b8c37474bf563f6b7549f40b00d60c6206",
+      "bytes": 304,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.motosport.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.motosport.com/cart"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.motosport.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.motosport.com/motosport-powertye-tiedowns-hook"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.motosport.com/cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.motosport.com/motosport-powertye-tiedowns-latch"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.motosport.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (starting count)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home (entry)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "heading",
+      "name": "MotoSport Powertye Tiedowns - Hook"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "click",
+      "role": "heading",
+      "name": "MotoSport Powertye Tiedowns - Latch"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-other"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove item from cart. (no effect)"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove item (Latch)"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove item from cart. (no effect)"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Decrease quantity (Hook, own item)"
+    },
+    {
+      "n": 21,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove item (Hook)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "160228412b09abbf040f7138421a2313b34e5bf968fce453991510dfd0922fbc",
+      "bytes": 1239163,
+      "chunks": 4,
+      "url": "https://www.motosport.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "98d1c92dce966e6cb994f655d9304512795b67a2279ef5ad784fef6136c344fd",
+      "bytes": 1437559,
+      "chunks": 4,
+      "url": "https://www.motosport.com/motosport-powertye-tiedowns-hook",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "0bfd1c10a6dbd559824a6cfdedebd0a04412bf0cdbe0412d289eac8bd4376304",
+      "bytes": 1280792,
+      "chunks": 4,
+      "url": "https://www.motosport.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "1d1bb1d7991ad343b7ff3e0caddabb5558e5c7785c9774a4a3c1da0f6f432df3",
+      "bytes": 1281164,
+      "chunks": 4,
+      "url": "https://www.motosport.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-other",
+      "sha256": "911394444c77e1ba067c3569b4c55d47a728ed9f7cc46b983d1051caac81de31",
+      "bytes": 1294856,
+      "chunks": 4,
+      "url": "https://www.motosport.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "second own item added while first was at qty 2 (no decrement before capture); cart showed 2 lines, 3 units, exported as cart-other"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.motosport.com/",
+    "productUrl": "https://www.motosport.com/motosport-powertye-tiedowns-hook",
+    "price": "USD 21.99",
+    "secondProductUrl": "https://www.motosport.com/motosport-powertye-tiedowns-latch"
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "All 20 export chunks exceeded the inline limit and were saved by the harness to tool-results files (not opened).",
+    "Cookie banner (OneTrust) offered no decline control on the banner; left alone.",
+    "Hidden 'Remove item from cart.' links did nothing when clicked by ref; removal done with the visible trash button. For own item 1 at qty 2, a Decrease quantity click (own item) was needed first so the trash button appeared.",
+    "Item 1 found in the home page product carousel; item 2 from the cart page recommendations carousel.",
+    "robots.txt disallows */checkout and */account/; no such path was opened."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:26:16.750Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:26:17.778Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:26:17.781Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:26:27.163Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:26:32.149Z",
+      "tool": "navigate",
+      "url": "https://www.motosport.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:26:32.151Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:26:38.945Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:26:43.138Z",
+      "tool": "navigate",
+      "url": "https://www.motosport.com/cart"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:26:43.191Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:26:48.546Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:27:18.453Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:27:23.264Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:27:27.305Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:27:31.025Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:27:35.654Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:27:51.336Z",
+      "tool": "navigate",
+      "url": "https://www.motosport.com/"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:27:51.350Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:27:56.677Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:28:00.816Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:28:00.819Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:28:05.202Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:28:09.292Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:28:09.294Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:28:14.217Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:28:18.278Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:28:24.886Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:28:28.570Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:28:40.749Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:28:40.756Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:28:46.671Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:28:50.577Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T08:28:55.511Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T08:28:58.807Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T08:29:20.794Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T08:29:24.129Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T08:29:27.008Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T08:29:29.945Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T08:29:33.059Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T08:29:35.783Z",
+      "tool": "navigate",
+      "url": "https://www.motosport.com/cart"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T08:29:36.187Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T08:29:58.731Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T08:30:01.987Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T08:30:05.148Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T08:30:07.979Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T08:30:10.968Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T08:30:14.873Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T08:30:17.607Z",
+      "tool": "find"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T08:30:20.513Z",
+      "tool": "find"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T08:30:24.149Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T08:30:24.426Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T08:30:24.748Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T08:30:48.270Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T08:30:51.451Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T08:30:54.518Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T08:30:57.455Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T08:31:00.615Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T08:31:04.686Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T08:31:07.439Z",
+      "tool": "find"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T08:31:10.121Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T08:31:10.616Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T08:31:12.821Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T08:31:15.624Z",
+      "tool": "find"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T08:31:18.560Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T08:31:19.026Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T08:31:23.385Z",
+      "tool": "navigate",
+      "url": "https://www.motosport.com/cart"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T08:31:23.770Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T08:31:45.682Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T08:31:48.736Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T08:31:52.175Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-07T08:31:55.403Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-07T08:31:58.586Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-07T08:32:01.311Z",
+      "tool": "find"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-07T08:32:04.195Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-07T08:32:04.578Z",
+      "tool": "find"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-07T08:32:07.713Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-07T08:32:11.490Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-07T08:32:15.347Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-07T08:32:15.935Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-07T08:32:16.280Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-07T08:32:21.533Z",
+      "tool": "find"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-07T08:32:27.008Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-07T08:32:27.724Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-07T08:32:28.150Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-07T08:32:33.281Z",
+      "tool": "find"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-07T08:32:36.543Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 85,
+      "utc": "2026-10-07T08:32:36.775Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 86,
+      "utc": "2026-10-07T08:32:37.255Z",
+      "tool": "find"
+    },
+    {
+      "n": 87,
+      "utc": "2026-10-07T08:32:42.480Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 88,
+      "utc": "2026-10-07T08:32:42.833Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 89,
+      "utc": "2026-10-07T08:32:43.221Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 90,
+      "utc": "2026-10-07T08:32:48.096Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 91,
+      "utc": "2026-10-07T08:33:11.280Z",
+      "tool": "Write"
+    },
+    {
+      "n": 92,
+      "utc": "2026-10-07T08:33:17.087Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "160228412b09abbf040f7138421a2313b34e5bf968fce453991510dfd0922fbc"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "98d1c92dce966e6cb994f655d9304512795b67a2279ef5ad784fef6136c344fd"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "0bfd1c10a6dbd559824a6cfdedebd0a04412bf0cdbe0412d289eac8bd4376304"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "1d1bb1d7991ad343b7ff3e0caddabb5558e5c7785c9774a4a3c1da0f6f432df3"
+      },
+      {
+        "target": "cart-other",
+        "kind": "state",
+        "sha256": "911394444c77e1ba067c3569b4c55d47a728ed9f7cc46b983d1051caac81de31"
+      }
+    ],
+    "errors": []
+  }
+}

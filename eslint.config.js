@@ -47,6 +47,18 @@ export default [
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
     rules: js.configs.recommended.rules,
   },
+  // Phase 12.3 label tools (schema, agreement, freeze) and the offline variant generator: Node only.
+  {
+    files: ['evals/merchants/labels/**/*.mjs', 'evals/merchants/variants/**/*.mjs'],
+    languageOptions: { globals: globals.node },
+    rules: js.configs.recommended.rules,
+  },
+  // Phase 13 reader harness: Node modules whose in-page functions run in the browser (Playwright evaluate).
+  {
+    files: ['evals/reader/**/*.mjs'],
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
+    rules: js.configs.recommended.rules,
+  },
   // The pane export script runs only in a page (the browser pane's JavaScript tool).
   {
     files: ['evals/merchants/capture/pane-export.js', 'evals/merchants/capture/pane-robots-hash.js'],

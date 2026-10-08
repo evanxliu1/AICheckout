@@ -1,0 +1,146 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "shelflife.co.za",
+  "stream": "non-us",
+  "visit": 130,
+  "session": 1,
+  "entryHost": "www.shelflife.co.za",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a12c33c0382a6acd8",
+  "startUtc": "2026-10-08T00:25:10.767Z",
+  "endUtc": "2026-10-08T00:25:37.815Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.shelflife.co.za",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null,
+      "note": "robots.txt request answered with a Cloudflare challenge page; not hashed"
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.shelflife.co.za/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on first load"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall on first load"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall on first load"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall on first load"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall on first load"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "vendor": "Cloudflare",
+    "url": "https://www.shelflife.co.za/robots.txt",
+    "title": "Just a moment...",
+    "marker": "title 'Just a moment...' and redirect with __cf_chl_rt_tk query parameter",
+    "wording": "Just a moment..."
+  },
+  "problems": [
+    "Cloudflare challenge served on the very first request (robots.txt); nothing else loaded, no export taken, robots not hashed"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:25:10.767Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:25:11.806Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:25:11.814Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:25:14.225Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:25:18.043Z",
+      "tool": "navigate",
+      "url": "https://www.shelflife.co.za/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:25:18.094Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:25:22.973Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:25:31.902Z",
+      "tool": "Write"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:25:37.815Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

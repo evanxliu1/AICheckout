@@ -1,0 +1,252 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "gsshop.com",
+  "stream": "non-us",
+  "visit": 237,
+  "session": 1,
+  "entryHost": "m.gsshop.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-aca772668d86acfb1",
+  "startUtc": "2026-10-08T05:54:21.701Z",
+  "endUtc": "2026-10-08T05:56:01.989Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "m.gsshop.com",
+      "status": 200,
+      "sha256": "32aa6227703a461410d4559123f82dec5b236c6b6a7713fada12affbcc9a4957",
+      "bytes": 2597,
+      "rootDisallowed": true,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://m.gsshop.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://m.gsshop.com/index.gs"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://m.gsshop.com/member/logIn.gs"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "cart label (no navigation)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "link",
+      "name": "welcome event popup close"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "header cart link"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart link redirects to sign-in page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at sign-in wall before any add"
+    },
+    {
+      "state": "cart-1",
+      "reason": "cart requires sign-in"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "cart requires sign-in"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "cart requires sign-in"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "KRW",
+  "observedRegion": "KR",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://m.gsshop.com/member/logIn.gs",
+    "title": "로그인 - GS SHOP",
+    "marker": "header cart link /mobile/cart/viewCart.gs redirected to member login page with returnurl"
+  },
+  "problems": [
+    "Logged out; clicking the header cart link (/mobile/cart/viewCart.gs) redirected to /member/logIn.gs, a sign-in wall; stopped at once per checklist step 6.",
+    "Starting and ending cart counts unknown: the cart could not be viewed without sign-in; no items added, nothing removed.",
+    "robots.txt disallows / for User-agent *; recorded only.",
+    "No export taken: sign-in-required is a stop code, not a judgement exclusion needing evidence."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:54:21.701Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:54:22.502Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:54:23.916Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:54:23.967Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:54:38.961Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:54:43.205Z",
+      "tool": "navigate",
+      "url": "https://m.gsshop.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:54:43.209Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:54:51.870Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:54:56.168Z",
+      "tool": "navigate",
+      "url": "https://m.gsshop.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:54:56.176Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:55:08.104Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:55:12.042Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:55:17.322Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:55:21.248Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:55:26.892Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:55:26.950Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:55:31.512Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:55:38.738Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:55:54.549Z",
+      "tool": "Write"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:56:01.989Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

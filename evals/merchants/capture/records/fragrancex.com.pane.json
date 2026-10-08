@@ -1,0 +1,541 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "fragrancex.com",
+  "stream": "us",
+  "visit": 151,
+  "session": 1,
+  "entryHost": "www.fragrancex.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-ab40601b44e869f51",
+  "startUtc": "2026-10-07T23:59:45.238Z",
+  "endUtc": "2026-10-08T00:03:40.588Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 2 (D&G travel spray)",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "item": "own item 1 (Pink Sugar 3.4 oz, qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.fragrancex.com",
+      "status": 200,
+      "sha256": "a339289f52724082f8a6938e3f1b66887b61c9f91ee9f2492c892e7ea1de657f",
+      "bytes": 321,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.fragrancex.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.fragrancex.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.fragrancex.com/orders/cart.html"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.fragrancex.com/products/aquolina/pink-sugar-perfume"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.fragrancex.com/orders/cart.html"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (by URL)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product (Pink Sugar, home best seller)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "link",
+      "name": "No thanks, I'd rather pay full price."
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "+"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "+ ADD (cart recommendation)"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-other"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Delete"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Delete"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "6ec154284d9763556558a9438475d53040a3703e089f3bf6df6faff0e43ecae6",
+      "bytes": 221251,
+      "chunks": 1,
+      "url": "https://www.fragrancex.com/orders/cart.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "954f98a9da1f5ac94257c3296ad973f7bf5d6e95322827bcb6f056ed83f3723e",
+      "bytes": 299442,
+      "chunks": 1,
+      "url": "https://www.fragrancex.com/orders/cart.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "096628a4993409fd6b2eadca0e1954f640d567263b0fad7f0e9f44c863fb0363",
+      "bytes": 301479,
+      "chunks": 1,
+      "url": "https://www.fragrancex.com/orders/cart.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-other",
+      "sha256": "69f248e939fb7051ab9b1113c272cb49e750336feceb765fe5a3b0d80f43e582",
+      "bytes": 315124,
+      "chunks": 1,
+      "url": "https://www.fragrancex.com/orders/cart.html",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "Add to Cart on the product page goes straight to the full cart page; no in-page cart shown"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "second item added while item 1 was at qty 2 (2 lines, 3 units); no decrement allowed, exported as cart-other"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.fragrancex.com/",
+    "productUrl": "https://www.fragrancex.com/products/aquolina/pink-sugar-perfume",
+    "price": "USD 22.64 listed (with coupon); cart shows USD 26.64",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "minicart-1 not reached: add-to-cart goes straight to the cart page",
+    "second item (D&G Light Blue 0.27 oz travel spray, USD 10.99) added from the cart page's recommendation ADD button, no product URL; cart then showed 2 lines / 3 units, exported as cart-other",
+    "email-signup discount popup on cart page closed via its decline link before the increment",
+    "all four chunk(0) results exceeded the inline limit and were saved by the harness to tool-results files (not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T23:59:45.238Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T23:59:46.325Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T23:59:46.334Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T23:59:48.779Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T23:59:52.020Z",
+      "tool": "navigate",
+      "url": "https://www.fragrancex.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T23:59:52.136Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T23:59:58.533Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:00:15.570Z",
+      "tool": "navigate",
+      "url": "https://www.fragrancex.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:00:15.580Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:00:20.756Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:00:20.762Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:00:20.763Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:00:25.050Z",
+      "tool": "navigate",
+      "url": "https://www.fragrancex.com/orders/cart.html"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:00:25.052Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:00:55.360Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:00:59.369Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:01:04.291Z",
+      "tool": "navigate",
+      "url": "https://www.fragrancex.com/products/aquolina/pink-sugar-perfume"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:01:04.305Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:01:08.584Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:01:12.717Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:01:15.415Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:01:17.903Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:01:40.753Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:01:43.416Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:01:45.931Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:01:48.316Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T00:01:50.736Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T00:01:52.866Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T00:01:55.337Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T00:01:55.910Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T00:01:56.320Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T00:02:19.037Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T00:02:21.561Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T00:02:25.788Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T00:02:26.449Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T00:02:26.770Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T00:03:01.244Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T00:03:03.802Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T00:03:06.702Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T00:03:07.129Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T00:03:07.530Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T00:03:12.503Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T00:03:12.895Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T00:03:13.263Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T00:03:17.575Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T00:03:35.447Z",
+      "tool": "Write"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T00:03:40.588Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "6ec154284d9763556558a9438475d53040a3703e089f3bf6df6faff0e43ecae6"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "954f98a9da1f5ac94257c3296ad973f7bf5d6e95322827bcb6f056ed83f3723e"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "096628a4993409fd6b2eadca0e1954f640d567263b0fad7f0e9f44c863fb0363"
+      },
+      {
+        "target": "cart-other",
+        "kind": "state",
+        "sha256": "69f248e939fb7051ab9b1113c272cb49e750336feceb765fe5a3b0d80f43e582"
+      }
+    ],
+    "errors": []
+  }
+}

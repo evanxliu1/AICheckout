@@ -1,0 +1,578 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "coupang.com",
+  "stream": "non-us",
+  "visit": 174,
+  "session": 1,
+  "entryHost": "cart.coupang.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a17667a8168657844",
+  "startUtc": "2026-10-08T01:31:28.182Z",
+  "endUtc": "2026-10-08T01:38:21.885Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "cart.coupang.com",
+      "status": 404,
+      "sha256": "408f8e040d024ec294a015036fd670bf6c58e6153faa017622883b2d4bc93a87",
+      "bytes": 3701,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    },
+    {
+      "host": "www.coupang.com",
+      "status": 200,
+      "sha256": "13199570597e5821fca34b66cff1efd593346c99d93f13a76ad5e20fe826ae95",
+      "bytes": 3966,
+      "rootDisallowed": true,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://cart.coupang.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://cart.coupang.com/cartView.pang"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.coupang.com/robots.txt"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.coupang.com/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.coupang.com/vp/products/9590852569"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://cart.coupang.com/cartView.pang"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart.coupang.com robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "cart.coupang.com"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "www.coupang.com robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "www.coupang.com"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "home promo product tile (boston bag)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "장바구니 담기"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "+"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "삭제"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "4fec9d7dbd8d962168910d59a4d4c57fc8d905312243d8ad0092f8d3ab0e720a",
+      "bytes": 37565,
+      "chunks": 1,
+      "url": "https://cart.coupang.com/cartView.pang",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "eadd0c7f7f91aabc35b02ffd2a2cbde3e0f5297054d0e515f206ac499f774fd6",
+      "bytes": 420034,
+      "chunks": 2,
+      "url": "https://cart.coupang.com/cartView.pang",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "bddbabcbd944b88cde787c854c7d1a072025975e8592f2659f843b83c96fae5e",
+      "bytes": 420343,
+      "chunks": 2,
+      "url": "https://cart.coupang.com/cartView.pang",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "no in-page cart confirmation was found after the add (header mini-cart text did not update); cart verified on the cart page"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; no lingering items and session kept to core cart states"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.coupang.com/",
+    "productUrl": "https://www.coupang.com/vp/products/9590852569",
+    "price": "41,200 KRW",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "KRW",
+  "observedRegion": "KR",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "www.coupang.com robots.txt disallows / for User-agent * (visited anyway per .8 rule); cart.coupang.com robots.txt returns 404",
+    "cart.coupang.com/robots.txt 404 page shows a no-permission style message; treated as not-found, not a block (cart page loaded normally)",
+    "cart-1 and cart-qty2 chunk(0) were oversized and saved by the harness to tool-results files (not opened)",
+    "pane hidden: product page screenshots rendered blank, add-to-cart clicked by ref"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:31:28.182Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:31:29.341Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:31:29.344Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:31:33.387Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:31:37.006Z",
+      "tool": "navigate",
+      "url": "https://cart.coupang.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:31:37.054Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:31:46.836Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:31:51.901Z",
+      "tool": "navigate",
+      "url": "https://cart.coupang.com/cartView.pang"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:31:51.930Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:32:23.879Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:32:34.929Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:32:40.950Z",
+      "tool": "navigate",
+      "url": "https://www.coupang.com/robots.txt"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:32:40.952Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:33:04.614Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T01:33:21.307Z",
+      "tool": "navigate",
+      "url": "https://www.coupang.com/"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T01:33:21.339Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T01:33:30.487Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T01:33:36.583Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T01:33:41.910Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T01:33:49.849Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T01:34:16.095Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T01:34:19.706Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T01:34:23.908Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T01:34:32.715Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T01:34:52.146Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T01:35:12.635Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T01:35:13.044Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T01:35:15.804Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T01:35:16.293Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T01:35:18.992Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T01:35:21.883Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T01:35:22.376Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T01:35:25.007Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T01:35:27.525Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T01:35:30.741Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T01:35:31.102Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T01:35:35.251Z",
+      "tool": "navigate",
+      "url": "https://cart.coupang.com/cartView.pang"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T01:35:35.667Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T01:35:58.768Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T01:36:02.206Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T01:36:32.543Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T01:37:08.086Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T01:37:11.858Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T01:37:15.280Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T01:37:15.596Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T01:37:16.045Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T01:37:39.971Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T01:37:43.144Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T01:37:46.146Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T01:37:49.895Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T01:37:50.315Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T01:37:50.648Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T01:37:55.886Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T01:37:58.329Z",
+      "tool": "Read"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T01:38:16.662Z",
+      "tool": "Write"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T01:38:21.885Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "4fec9d7dbd8d962168910d59a4d4c57fc8d905312243d8ad0092f8d3ab0e720a"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "eadd0c7f7f91aabc35b02ffd2a2cbde3e0f5297054d0e515f206ac499f774fd6"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "bddbabcbd944b88cde787c854c7d1a072025975e8592f2659f843b83c96fae5e"
+      }
+    ],
+    "errors": []
+  }
+}

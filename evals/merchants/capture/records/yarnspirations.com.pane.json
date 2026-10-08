@@ -1,0 +1,675 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "yarnspirations.com",
+  "stream": "us",
+  "visit": 155,
+  "session": 1,
+  "entryHost": "www.yarnspirations.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-ae9e964520034a856",
+  "startUtc": "2026-10-08T00:07:17.443Z",
+  "endUtc": "2026-10-08T00:12:22.256Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.yarnspirations.com",
+      "status": 200,
+      "sha256": "b4f3c611690b5950580db1763ba55d5ad064c9eb079e3198feb27a94ea47511b",
+      "bytes": 4580,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.yarnspirations.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.yarnspirations.com/cart"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.yarnspirations.com/products/bernat-super-fluffee-yarn-280g-9-8oz"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.yarnspirations.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (redirects to home)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "cart button (no visible effect)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject all"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "cart button"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "$14.99 — Add to Cart"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (redirects to home)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "cart button"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity (missed, off-screen)"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "0089ebffce1129ca4b3dfc3f78f04ca1724694b9cdc77d13f811b30a7c1205ad",
+      "bytes": 1515354,
+      "chunks": 4,
+      "url": "https://www.yarnspirations.com/",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "3877ad5179d9cc6d63065bcf5cb06bd7684b3ecaec08f4834b0d7396408cd337",
+      "bytes": 1559777,
+      "chunks": 4,
+      "url": "https://www.yarnspirations.com/products/bernat-super-fluffee-yarn-280g-9-8oz",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "91fe541cf5da950ee3441643bf44deda8e634446cf6566233b290443ea4f0649",
+      "bytes": 1523369,
+      "chunks": 4,
+      "url": "https://www.yarnspirations.com/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "a14a769069ccc9dfba7f345b03966ab272b22a70bb3663ae6756490e38a08dc1",
+      "bytes": 1527356,
+      "chunks": 4,
+      "url": "https://www.yarnspirations.com/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "no lingering item in cart; second item not added"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.yarnspirations.com/",
+    "productUrl": "https://www.yarnspirations.com/products/bernat-super-fluffee-yarn-280g-9-8oz",
+    "price": "USD 10.50 (30% off 14.99)",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "No cart page: /cart redirects to the home page; empty-cart, cart-1 and cart-qty2 are the cart drawer opened on the home page.",
+    "Cookie banner Reject all reachable only by coordinate click (ref reported off-viewport).",
+    "First quantity-increment click by ref landed off-screen (viewport mismatch) with no effect; second click by coordinate worked.",
+    "robots.txt disallows */cart and */checkout for *; recorded only."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:07:17.443Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:07:17.447Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:07:17.537Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:07:20.158Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:07:23.491Z",
+      "tool": "navigate",
+      "url": "https://www.yarnspirations.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:07:23.627Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:07:30.977Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:07:35.366Z",
+      "tool": "navigate",
+      "url": "https://www.yarnspirations.com/cart"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:07:35.369Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:07:42.186Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:07:42.190Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:08:42.643Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:08:43.184Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:08:47.446Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:08:47.454Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:08:51.675Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:08:51.689Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:08:54.778Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:08:57.025Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:08:59.143Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:08:59.663Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:09:02.550Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:09:03.073Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:09:23.480Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:09:26.099Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:09:29.026Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T00:09:31.422Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T00:09:34.033Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T00:09:38.815Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T00:09:41.159Z",
+      "tool": "navigate",
+      "url": "https://www.yarnspirations.com/products/:token"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T00:09:41.602Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T00:09:45.912Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T00:09:46.354Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T00:09:49.966Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T00:09:51.244Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T00:10:12.572Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T00:10:14.991Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T00:10:17.274Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T00:10:19.740Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T00:10:22.030Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T00:10:25.214Z",
+      "tool": "navigate",
+      "url": "https://www.yarnspirations.com/cart"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T00:10:25.713Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T00:10:31.802Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T00:10:32.136Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T00:10:52.360Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T00:10:54.706Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T00:10:57.110Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T00:10:59.696Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T00:11:02.313Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T00:11:04.739Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T00:11:07.122Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T00:11:09.892Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T00:11:10.203Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T00:11:10.696Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T00:11:15.766Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T00:11:16.462Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T00:11:16.824Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T00:11:39.531Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T00:11:42.359Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T00:11:45.306Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T00:11:47.934Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T00:11:50.632Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T00:11:53.684Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T00:11:54.304Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T00:11:54.794Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T00:11:59.272Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T00:12:16.971Z",
+      "tool": "Write"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T00:12:22.256Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "0089ebffce1129ca4b3dfc3f78f04ca1724694b9cdc77d13f811b30a7c1205ad"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "3877ad5179d9cc6d63065bcf5cb06bd7684b3ecaec08f4834b0d7396408cd337"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "91fe541cf5da950ee3441643bf44deda8e634446cf6566233b290443ea4f0649"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "a14a769069ccc9dfba7f345b03966ab272b22a70bb3663ae6756490e38a08dc1"
+      }
+    ],
+    "errors": []
+  }
+}

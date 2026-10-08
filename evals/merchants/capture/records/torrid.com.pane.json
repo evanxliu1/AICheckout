@@ -1,0 +1,192 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "torrid.com",
+  "stream": "us",
+  "visit": 67,
+  "session": 1,
+  "entryHost": "www.torrid.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-a04518ba72d75571c",
+  "startUtc": "2026-10-07T07:39:27.088Z",
+  "endUtc": "2026-10-07T07:40:28.707Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.torrid.com",
+      "status": 200,
+      "sha256": "5e86d82fea9f5e50b0efeb979e95a227f6270e163674b438e5ba67087448171b",
+      "bytes": 7772,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.torrid.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.torrid.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.torrid.com/on/demandware.store/Sites-torrid-Site/default/DDUser-Challenge"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host root"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall at entry (DataDome device check)"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall at entry"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall at entry"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.torrid.com/on/demandware.store/Sites-torrid-Site/default/DDUser-Challenge",
+    "title": "",
+    "marker": "Redirect to DDUser-Challenge; accessibility tree shows only a DataDome device-check frame",
+    "wording": "DataDome Device Check"
+  },
+  "problems": [
+    "Entry root redirected same-host to SFCC DDUser-Challenge (DataDome device check); not interacted with, not exported.",
+    "Sign-in state and starting cart count not observable before the wall."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:39:27.088Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:39:28.170Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:39:28.174Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:39:31.967Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:39:35.979Z",
+      "tool": "navigate",
+      "url": "https://www.torrid.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:39:36.038Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:39:43.406Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:39:47.863Z",
+      "tool": "navigate",
+      "url": "https://www.torrid.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:39:47.871Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:40:01.349Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:40:20.606Z",
+      "tool": "Write"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:40:20.612Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:40:28.707Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

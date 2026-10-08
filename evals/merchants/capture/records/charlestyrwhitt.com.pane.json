@@ -1,0 +1,503 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "charlestyrwhitt.com",
+  "stream": "us",
+  "visit": 113,
+  "session": 2,
+  "entryHost": "www.charlestyrwhitt.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-ac3c07adbaacfc4d2",
+  "startUtc": "2026-10-07T23:02:07.086Z",
+  "endUtc": "2026-10-07T23:08:35.386Z",
+  "signedIn": false,
+  "startCartCount": 1,
+  "endCartCount": 1,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (Silk Patterned Tie - Lemon & Blue)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.charlestyrwhitt.com",
+      "status": 200,
+      "sha256": "56a4248a20df2c40f8b704e0d408d769e5e6846c378981fda204ca2b9ada67d2",
+      "bytes": 1474,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.charlestyrwhitt.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.charlestyrwhitt.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.charlestyrwhitt.com/us/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.charlestyrwhitt.com/us/mens-accessories/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.charlestyrwhitt.com/us/silk-patterned-tie---lemon-%26-blue/TIC2122LMN.html"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.charlestyrwhitt.com/us/cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.charlestyrwhitt.com/us/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host origin"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page (starting count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Accessories listing"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Silk Patterned Tie - Lemon & Blue"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-2items"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove Silk Patterned Tie - Lemon & Blu"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "4d92dd04a033e4309525fecb6ca36d1112e6677cab0ff4df9a61f71c58686e90",
+      "bytes": 2479970,
+      "chunks": 7,
+      "url": "https://www.charlestyrwhitt.com/us/silk-patterned-tie---lemon-%26-blue/TIC2122LMN.html",
+      "startCartCount": 1
+    },
+    {
+      "state": "cart-2items",
+      "sha256": "15133d806a899c80ae735816afdea48252f34992b3ced12370138626b50e31a8",
+      "bytes": 1608926,
+      "chunks": 5,
+      "url": "https://www.charlestyrwhitt.com/us/cart",
+      "startCartCount": 1
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart held 1 lingering item at start; not actually empty"
+    },
+    {
+      "state": "cart-1",
+      "reason": "lingering item present; the cart with own item was cart-2items"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "cart quantity control is a select (forbidden); no increment button"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.charlestyrwhitt.com/us/mens-accessories/",
+    "productUrl": "https://www.charlestyrwhitt.com/us/silk-patterned-tie---lemon-%26-blue/TIC2122LMN.html",
+    "price": "USD 52.00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US (/us/ storefront)",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Starting cart held 1 lingering item (a tie, likely from session 1); not removed.",
+    "Own item is backordered (ships around 2026-10-31) with an enabled add-to-cart; counted as in stock per the pre-order rule.",
+    "robots.txt disallows /us/cart for *; recorded only. Checkout path not listed explicitly; /on/demandware.store/Sites-CTShirts-* is disallowed.",
+    "cart-2items chunk 4 was returned inline; minicart-1 chunks 0-6 and cart-2items chunks 0-3 saved to harness files (not opened).",
+    "Remove click landed on /us/cart with a dwcont query (form post redirect); counted as navigation 7."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T23:02:07.086Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T23:02:07.189Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T23:02:07.200Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T23:02:09.958Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T23:02:13.932Z",
+      "tool": "navigate",
+      "url": "https://www.charlestyrwhitt.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T23:02:14.048Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T23:02:22.216Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T23:02:27.470Z",
+      "tool": "navigate",
+      "url": "https://www.charlestyrwhitt.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T23:02:27.476Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T23:02:33.797Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T23:02:39.129Z",
+      "tool": "navigate",
+      "url": "https://www.charlestyrwhitt.com/us/cart"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T23:02:39.256Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:02:48.633Z",
+      "tool": "navigate",
+      "url": "https://www.charlestyrwhitt.com/us/mens-accessories/"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:02:48.667Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:02:53.182Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T23:02:56.938Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T23:03:11.688Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T23:03:33.388Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T23:03:37.359Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T23:04:11.562Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T23:04:17.764Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T23:04:21.874Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T23:04:42.904Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T23:04:42.911Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T23:04:49.720Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T23:05:17.656Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T23:05:22.437Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T23:05:27.011Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T23:05:30.979Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T23:05:43.463Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T23:05:48.293Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T23:05:52.210Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T23:06:03.302Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T23:06:08.710Z",
+      "tool": "navigate",
+      "url": "https://www.charlestyrwhitt.com/us/cart"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T23:06:08.742Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T23:06:41.193Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T23:06:45.617Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T23:06:50.488Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T23:06:56.733Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T23:07:11.080Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T23:07:18.141Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T23:07:30.351Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T23:07:34.679Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T23:07:54.911Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T23:07:54.920Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T23:08:02.668Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T23:08:27.027Z",
+      "tool": "Write"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T23:08:35.386Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "4d92dd04a033e4309525fecb6ca36d1112e6677cab0ff4df9a61f71c58686e90"
+      },
+      {
+        "target": "cart-2items",
+        "kind": "state",
+        "sha256": "15133d806a899c80ae735816afdea48252f34992b3ced12370138626b50e31a8"
+      }
+    ],
+    "errors": []
+  }
+}

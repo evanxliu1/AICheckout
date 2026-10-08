@@ -1,0 +1,268 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "lazada.co.id",
+  "stream": "non-us",
+  "visit": 98,
+  "session": 2,
+  "entryHost": "www.lazada.co.id",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a8b4496010c8491c9",
+  "startUtc": "2026-10-07T23:19:13.812Z",
+  "endUtc": "2026-10-07T23:21:18.633Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.lazada.co.id",
+      "status": 200,
+      "sha256": "401ed505ac155646dc76bbccedb4b34c9cddf99eafa910606ea61d53120f5362",
+      "bytes": 153,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.lazada.co.id/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.lazada.co.id/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.lazada.co.id/products/pdp-i399549237-s439857136.html"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "LEGO Classic 10698 Large Creative Brick"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (flash sale link)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "stopped: vendor challenge on product page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped: vendor challenge on product page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped: vendor challenge on product page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.lazada.co.id/",
+    "productUrl": "https://www.lazada.co.id/products/pdp-i399549237-s439857136.html",
+    "price": "Rp 980.000",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "IDR",
+  "observedRegion": "ID",
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.lazada.co.id//products/pdp-i399549237-s439857136.html/_____tmd_____/punish",
+    "title": "",
+    "marker": "Alibaba x5sec punish path (_____tmd_____/punish); x5secdata names recaptcha; QR feedback widget",
+    "wording": "Network error, click to reload. Click to feedback >"
+  },
+  "problems": [
+    "Product page load redirected to an Alibaba/x5sec punish challenge page; not interacted with or exported.",
+    "Header showed a login link, so signedIn false; cart count not read because the cart is on cart.lazada.co.id and the session stopped before it.",
+    "Click on the flash-sale tile did not navigate the tab; the product URL was then opened by URL from the tile's same-site link."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T23:19:13.812Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T23:19:15.061Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T23:19:15.074Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T23:19:19.392Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T23:19:23.413Z",
+      "tool": "navigate",
+      "url": "https://www.lazada.co.id/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T23:19:23.526Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T23:19:30.566Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T23:19:34.460Z",
+      "tool": "navigate",
+      "url": "https://www.lazada.co.id/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T23:19:34.492Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T23:19:42.178Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T23:19:42.190Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T23:19:50.643Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:19:54.438Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:20:11.795Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:20:15.344Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T23:20:18.752Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T23:20:18.838Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T23:20:25.447Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T23:20:30.283Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T23:20:35.094Z",
+      "tool": "navigate",
+      "url": "https://www.lazada.co.id/products/:token"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T23:20:35.115Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T23:20:40.032Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T23:20:44.751Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T23:21:02.256Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T23:21:13.679Z",
+      "tool": "Write"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T23:21:18.633Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

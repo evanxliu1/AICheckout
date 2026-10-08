@@ -1,0 +1,623 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "harley-davidson.com",
+  "stream": "us",
+  "visit": 240,
+  "session": 1,
+  "entryHost": "www.harley-davidson.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a3ff73949ae0fe121",
+  "startUtc": "2026-10-08T04:04:00.747Z",
+  "endUtc": "2026-10-08T04:08:29.740Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (key fob), removed via minicart",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.harley-davidson.com",
+      "status": 200,
+      "sha256": "ba9e819b8f28fd9ec651078125693aefc7a03f4010986403e2139202ac6fc943",
+      "bytes": 5693,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.harley-davidson.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.harley-davidson.com/us/en/index.html"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.harley-davidson.com/us/en/shop/c/car-accessories"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.harley-davidson.com/us/en/shop/bar-shield-key-fob/p/99012-26LX"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.harley-davidson.com/us/en/cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.harley-davidson.com/us/en/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Car & Truck Accessories listing"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Bar & Shield Key Fob product"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart (sticky bar, coordinate)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "View Cart"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart reload"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Cart (1)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "9b46205889d8d5f569059472a28d3a69c8f2204375ccfef8d75d77cc31c7c753",
+      "bytes": 903563,
+      "chunks": 3,
+      "url": "https://www.harley-davidson.com/us/en/shop/bar-shield-key-fob/p/99012-26LX",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "b48461243d78e6e0c7930976492904d207a2f9c3ffe593fa37707719583bf984",
+      "bytes": 758452,
+      "chunks": 2,
+      "url": "https://www.harley-davidson.com/us/en/cart"
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-1",
+      "reason": "cart page item list stayed on a loading spinner showing 'Your Cart (0)' across a reload and ~35 s of waits while the header showed Cart (1)"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "cart page never rendered items; minicart has no quantity control"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart page never rendered items"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.harley-davidson.com/us/en/shop/c/car-accessories",
+    "productUrl": "https://www.harley-davidson.com/us/en/shop/bar-shield-key-fob/p/99012-26LX",
+    "price": "$25.00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "incomplete",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Full cart page /us/en/cart never rendered line items in the background pane tab (spinner; 'Your Cart (0)') although the minicart held the item; possibly background-tab rendering or a blocked cart API call. cart-1 not reached.",
+    "empty-cart export was taken after removing own item; the minicart drawer was open over the still-spinning cart page.",
+    "First sticky-bar Add to Cart coordinate click showed no visible change; the second click by ref opened the minicart with qty 1.",
+    "Chunk results were oversized and saved by the harness to tool-results files (expected; not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T04:04:00.747Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T04:04:01.544Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T04:04:03.059Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T04:04:03.064Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T04:04:07.012Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T04:04:10.376Z",
+      "tool": "navigate",
+      "url": "https://www.harley-davidson.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T04:04:10.465Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T04:04:16.976Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T04:04:20.499Z",
+      "tool": "navigate",
+      "url": "https://www.harley-davidson.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T04:04:20.534Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T04:04:25.763Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T04:04:25.765Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T04:04:29.560Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T04:04:29.639Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T04:04:40.800Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T04:04:43.907Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T04:04:46.745Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T04:04:51.945Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T04:04:55.822Z",
+      "tool": "navigate",
+      "url": "https://www.harley-davidson.com/us/en/shop/c/car-accessories"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T04:04:55.922Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T04:04:59.713Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T04:05:03.018Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T04:05:06.978Z",
+      "tool": "navigate",
+      "url": "https://www.harley-davidson.com/us/en/shop/bar-shield-key-fob/p/99012-26LX"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T04:05:06.982Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T04:05:10.857Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T04:05:16.426Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T04:05:21.381Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T04:05:25.011Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T04:05:25.545Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T04:05:29.005Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T04:05:29.355Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T04:05:31.845Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T04:05:34.505Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T04:05:37.742Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T04:05:37.949Z",
+      "tool": "find"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T04:05:40.913Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T04:06:01.638Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T04:06:04.738Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T04:06:07.282Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T04:06:10.309Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T04:06:12.409Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T04:06:14.813Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T04:06:15.148Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T04:06:17.611Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T04:06:17.985Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T04:06:22.299Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T04:06:24.617Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T04:06:25.193Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T04:06:35.383Z",
+      "tool": "navigate",
+      "url": "https://www.harley-davidson.com/us/en/cart"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T04:06:35.879Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T04:06:36.273Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T04:06:43.691Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T04:06:44.227Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T04:06:58.418Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T04:06:59.073Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T04:06:59.485Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T04:07:12.128Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T04:07:14.443Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T04:07:15.070Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T04:07:17.558Z",
+      "tool": "find"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T04:07:20.174Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T04:07:20.664Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T04:07:21.092Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T04:07:44.800Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T04:07:47.150Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T04:07:55.650Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T04:07:58.180Z",
+      "tool": "find"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T04:08:00.507Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T04:08:22.309Z",
+      "tool": "Write"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T04:08:29.740Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "9b46205889d8d5f569059472a28d3a69c8f2204375ccfef8d75d77cc31c7c753"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "b48461243d78e6e0c7930976492904d207a2f9c3ffe593fa37707719583bf984"
+      }
+    ],
+    "errors": []
+  }
+}

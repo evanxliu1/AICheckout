@@ -1,0 +1,638 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "auchan.fr",
+  "stream": "non-us",
+  "visit": 136,
+  "session": 1,
+  "entryHost": "www.auchan.fr",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-af107c56033e5f275",
+  "startUtc": "2026-10-08T00:35:28.689Z",
+  "endUtc": "2026-10-08T00:40:09.945Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.auchan.fr",
+      "status": 200,
+      "sha256": "2287ab75ac13dcc597d0c5c24d95d091004c895589b6657f418d4adeb33a67bc",
+      "bytes": 2378,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.auchan.fr/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.auchan.fr/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.auchan.fr/maison-loisirs/ep-maison-loisirs"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.auchan.fr/jouets-jeux-video-loisirs/jeux-jouets/ca-6856153"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.auchan.fr/lego-botanicals-11506-petites-plantes-dansantes/pr-C1869113"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.auchan.fr/checkout/cart/"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.auchan.fr/checkout/cart/"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.auchan.fr/lego-botanicals-11506-petites-plantes-dansantes/pr-C1869113"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Continuer sans accepter"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Maison & Loisirs tile"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Jeux & jouets category"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "LEGO Botanicals 11506 product"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Ajouter au panier"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1 (closed; superseded)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Aller a la page panier (opens minicart)"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Voir mon panier"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page reload"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Supprimer LEGO Botanicals 11506 du panier"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "97952ca83a9106eb4f8056b5e50bdbbc9a08a14fadd02015837c70b2778329e6",
+      "bytes": 497352,
+      "chunks": 2,
+      "url": "https://www.auchan.fr/lego-botanicals-11506-petites-plantes-dansantes/pr-C1869113",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "not exported; cart page never rendered past a loading skeleton"
+    },
+    {
+      "state": "cart-1",
+      "reason": "cart page /checkout/cart/ stayed a loading skeleton after 20+ s and one reload"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "cart page did not render; not attempted"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no lingering item; cart page did not render"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.auchan.fr/jouets-jeux-video-loisirs/jeux-jouets/ca-6856153",
+    "productUrl": "https://www.auchan.fr/lego-botanicals-11506-petites-plantes-dansantes/pr-C1869113",
+    "price": "11,99 EUR",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EUR",
+  "observedRegion": "FR",
+  "outcome": {
+    "status": "incomplete",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cart link is /checkout/cart/ (has a checkout segment); loaded under the /checkout/cart exception though the site is not Magento; robots.txt disallows /checkout/ (record only).",
+    "Cart page /checkout/cart/ rendered only a loading skeleton (no items, no totals) after waits and one reload, possibly background-tab or store-selection dependent; cart-1 not exported.",
+    "An earlier minicart-1 export (sha256 605863711838119e43b217710cc61df82f41e5c13ed89b533773cdabd14870ed, 2 chunks) was taken with the minicart closed and is superseded; the collector should ignore it.",
+    "cartDisallowed true reflects Disallow: /checkout/ covering the site's cart path."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:35:28.689Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:35:28.693Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:35:28.696Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:35:31.288Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:35:34.673Z",
+      "tool": "navigate",
+      "url": "https://www.auchan.fr/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:35:34.745Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:35:43.450Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:35:48.017Z",
+      "tool": "navigate",
+      "url": "https://www.auchan.fr/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:35:48.020Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:35:54.763Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:36:03.318Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:36:03.322Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:36:12.203Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:36:12.205Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:36:15.811Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:36:20.061Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:36:20.066Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:36:23.448Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:36:27.099Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:36:27.244Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:36:31.246Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:36:34.319Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:36:39.175Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:36:39.186Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:36:43.723Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:36:43.838Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T00:37:09.918Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T00:37:09.921Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T00:37:14.815Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T00:37:14.851Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T00:37:17.861Z",
+      "tool": "computer",
+      "action": "hover"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T00:37:18.395Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T00:37:39.491Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T00:37:41.891Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T00:37:44.522Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T00:37:47.988Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T00:37:48.318Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T00:37:50.875Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T00:38:12.376Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T00:38:14.825Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T00:38:17.420Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T00:38:19.852Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T00:38:22.549Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T00:38:22.866Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T00:38:25.390Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T00:38:27.816Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T00:38:28.133Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T00:38:32.834Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T00:38:35.524Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T00:38:35.913Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T00:38:43.247Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T00:38:43.675Z",
+      "tool": "find"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T00:38:55.606Z",
+      "tool": "navigate",
+      "url": "https://www.auchan.fr/checkout/cart/"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T00:38:56.486Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T00:38:56.775Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T00:39:06.726Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T00:39:07.262Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T00:39:21.715Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T00:39:22.352Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T00:39:28.481Z",
+      "tool": "navigate",
+      "url": "https://www.auchan.fr/:token/pr-C1869113"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T00:39:28.837Z",
+      "tool": "find"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T00:39:32.822Z",
+      "tool": "find"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T00:39:35.235Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T00:39:35.598Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T00:39:36.112Z",
+      "tool": "find"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T00:39:40.817Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T00:39:43.435Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T00:39:46.357Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T00:40:04.911Z",
+      "tool": "Write"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T00:40:09.945Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "97952ca83a9106eb4f8056b5e50bdbbc9a08a14fadd02015837c70b2778329e6"
+      }
+    ],
+    "errors": []
+  }
+}

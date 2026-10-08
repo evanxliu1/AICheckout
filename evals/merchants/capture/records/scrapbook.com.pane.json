@@ -1,0 +1,185 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "scrapbook.com",
+  "stream": "us",
+  "visit": 157,
+  "session": 1,
+  "entryHost": "www.scrapbook.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-a2d3ab814a9df28a9",
+  "startUtc": "2026-10-08T00:08:32.383Z",
+  "endUtc": "2026-10-08T00:09:34.277Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.scrapbook.com",
+      "status": 200,
+      "sha256": "fd68ccb553e6b49d7441c055a0505ce8daa0d4c06c0583a1c47c3dbadb3befb1",
+      "bytes": 18388,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.scrapbook.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.scrapbook.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home page"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on entry"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall on entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall on entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall on entry"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall on entry"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.scrapbook.com/",
+    "title": "Just a moment...",
+    "wording": "Just a moment...",
+    "marker": "Cloudflare challenge: title 'Just a moment...', redirect query __cf_chl_rt_tk, empty body text"
+  },
+  "problems": [
+    "Cloudflare 'Just a moment...' challenge on first home-page load; stopped at once, not exported, no interaction.",
+    "Start and end cart counts unknown: the cart was never reached.",
+    "robots.txt comments are addressed to agents (checkouts are for humans; points to /llms.txt and /skill.md). Reported only, not followed or opened.",
+    "robots.txt disallows /store/cart.php for *; root allowed.",
+    "Robots hash tool reported 'captured at origin https://scrapbook.com' although the page URL was www.scrapbook.com."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:08:32.383Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:08:33.455Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:08:33.471Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:08:35.924Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:08:40.184Z",
+      "tool": "navigate",
+      "url": "https://www.scrapbook.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:08:40.187Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:08:48.961Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:08:53.234Z",
+      "tool": "navigate",
+      "url": "https://www.scrapbook.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:08:53.251Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:08:57.868Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:09:26.083Z",
+      "tool": "Write"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:09:34.277Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

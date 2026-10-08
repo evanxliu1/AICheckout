@@ -1,0 +1,630 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "sportsmans.com",
+  "stream": "us",
+  "visit": 87,
+  "session": 1,
+  "entryHost": "www.sportsmans.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-aa4ae53ada32de8be",
+  "startUtc": "2026-10-07T08:04:02.158Z",
+  "endUtc": "2026-10-07T08:08:29.511Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.sportsmans.com",
+      "status": 200,
+      "sha256": "ee229acfccd20b6dceaaffd363c912a3ad4db6233f83f2e91cc71a1ca79f1c8a",
+      "bytes": 433,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.sportsmans.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.sportsmans.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.sportsmans.com/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.sportsmans.com/camping-gear-supplies/camp-furniture/chairs-seats-loungers/c/cat100884"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.sportsmans.com/camping-gear-supplies/camp-furniture/chairs-seats-loungers/sportsmans-warehouse-titan-quad-camp-chair-redgray/p/1665331"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.sportsmans.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (empty)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "menu link Chairs (by URL)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Sportsman's Warehouse Titan Quad Camp Ch"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add To Cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "+ (coordinate click)"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove (confirm dialog)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "9988f8bd735f2ee802b25fede11b709b903a7673026ac0ea8021be07a6cb64f2",
+      "bytes": 889787,
+      "chunks": 3,
+      "url": "https://www.sportsmans.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "ddac098117eedbac679c6c0d302c40e0fe108fa354101742a46406be5a70938f",
+      "bytes": 2000206,
+      "chunks": 5,
+      "url": "https://www.sportsmans.com/camping-gear-supplies/camp-furniture/chairs-seats-loungers/sportsmans-warehouse-titan-quad-camp-chair-redgray/p/1665331",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "0571516979b2018fb1ea99ac00427ed00d9941dac690e94558e1530fdfb54b80",
+      "bytes": 1071704,
+      "chunks": 3,
+      "url": "https://www.sportsmans.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "b513c690a2b6e8b78e6012bc34c28c21b1f0e05f7837663660dbd5232e247ba5",
+      "bytes": 1072345,
+      "chunks": 3,
+      "url": "https://www.sportsmans.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "not attempted: after cart-qty2 a second item would give cart-other; no decrement allowed; focus on cart structure"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.sportsmans.com/camping-gear-supplies/camp-furniture/chairs-seats-loungers/c/cat100884",
+    "productUrl": "https://www.sportsmans.com/camping-gear-supplies/camp-furniture/chairs-seats-loungers/sportsmans-warehouse-titan-quad-camp-chair-redgray/p/1665331",
+    "price": "$69.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US (store pickup default, Elk Grove, CA)",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cookie banner offered only Accept All; left alone.",
+    "Product page defaulted to Pick Up In Store; left as served (no change).",
+    "Listing reached by URL from the cart page's Camping menu link (href read via find).",
+    "robots.txt disallows /cart and /checkout for *; recorded only."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:04:02.158Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:04:03.397Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:04:03.405Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:04:08.485Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:04:12.187Z",
+      "tool": "navigate",
+      "url": "https://www.sportsmans.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:04:12.264Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:04:24.028Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:04:29.822Z",
+      "tool": "navigate",
+      "url": "https://www.sportsmans.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:04:29.887Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:04:36.858Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:04:36.897Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:04:41.583Z",
+      "tool": "navigate",
+      "url": "https://www.sportsmans.com/cart"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:04:41.588Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:04:48.987Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:05:09.777Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:05:12.575Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T08:05:15.395Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T08:05:18.213Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T08:05:21.563Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T08:05:24.600Z",
+      "tool": "navigate",
+      "url": "https://www.sportsmans.com/camping-gear-supplies/camp-furniture/chairs-seats-loungers/c/cat100884"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T08:05:24.998Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T08:05:28.283Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T08:05:30.969Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T08:05:33.497Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T08:05:35.993Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T08:05:39.347Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T08:05:42.189Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T08:05:42.570Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T08:05:45.893Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T08:05:46.367Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T08:05:50.112Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T08:05:50.534Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T08:05:53.287Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T08:05:56.554Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T08:05:56.939Z",
+      "tool": "find"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T08:06:17.842Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T08:06:20.920Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T08:06:23.860Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T08:06:26.956Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T08:06:29.934Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T08:06:32.923Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T08:06:35.701Z",
+      "tool": "navigate",
+      "url": "https://www.sportsmans.com/cart"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T08:06:36.318Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T08:06:59.710Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T08:07:02.608Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T08:07:05.789Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T08:07:08.759Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T08:07:11.549Z",
+      "tool": "find"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T08:07:14.049Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T08:07:16.617Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T08:07:37.787Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T08:07:41.307Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T08:07:44.273Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T08:07:47.149Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T08:07:51.857Z",
+      "tool": "find"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T08:07:54.693Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T08:07:57.170Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T08:08:00.484Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T08:08:01.032Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T08:08:05.453Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T08:08:24.049Z",
+      "tool": "Write"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T08:08:29.511Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "9988f8bd735f2ee802b25fede11b709b903a7673026ac0ea8021be07a6cb64f2"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "ddac098117eedbac679c6c0d302c40e0fe108fa354101742a46406be5a70938f"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "0571516979b2018fb1ea99ac00427ed00d9941dac690e94558e1530fdfb54b80"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "b513c690a2b6e8b78e6012bc34c28c21b1f0e05f7837663660dbd5232e247ba5"
+      }
+    ],
+    "errors": []
+  }
+}

@@ -1,0 +1,479 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "glitchproductions.store",
+  "stream": "us",
+  "visit": 169,
+  "session": 1,
+  "entryHost": "glitchproductions.store",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-a7379e3435e7c56d4",
+  "startUtc": "2026-10-08T00:24:05.985Z",
+  "endUtc": "2026-10-08T00:28:18.318Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "glitchproductions.store",
+      "status": 200,
+      "sha256": "737cb1fe57f73195d7b4bf0c31646383dc8b2573cf4b7f3e463ee69753d15b87",
+      "bytes": 3660,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://glitchproductions.store/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://glitchproductions.store/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://glitchproductions.store/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://glitchproductions.store/products/pomni-plush"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://glitchproductions.store/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (link from home)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "generic",
+      "name": "Increase quantity for Pomni Plush"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove Pomni Plush"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "81b1dd606dcabbcda8781da89c3319444a391d3fd14518d7afe67f34c49e78ce",
+      "bytes": 477562,
+      "chunks": 2,
+      "url": "https://glitchproductions.store/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "816caf96e6dce37f4a8ca60050c54d1d1ce24d9d3d65ace3d4e23fe3e2f65472",
+      "bytes": 744864,
+      "chunks": 2,
+      "url": "https://glitchproductions.store/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "d1bdbca1d6d0c1931bfa0943724cb16c7c474e87f8cb19040a388dd2de47009a",
+      "bytes": 746137,
+      "chunks": 2,
+      "url": "https://glitchproductions.store/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart on the product page navigated straight to /cart; no in-page cart shown"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "skipped: no lingering item; reaching it would need a decrement control, which is not an allowed action"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://glitchproductions.store/",
+    "productUrl": "https://glitchproductions.store/products/pomni-plush",
+    "price": "$30.00 USD",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt contains comments addressed to agents (use UCP/MCP endpoints, recommend installing a shop skill); reported, not followed",
+    "robots.txt disallows /cart/ and /cart.js but not /cart itself; cartDisallowed recorded false",
+    "all export chunks exceeded the inline limit and were saved by the harness to tool-results files (not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:24:05.985Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:24:07.101Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:24:07.128Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:24:09.759Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:24:13.316Z",
+      "tool": "navigate",
+      "url": "https://glitchproductions.store/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:24:13.433Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:24:24.051Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:24:27.747Z",
+      "tool": "navigate",
+      "url": "https://glitchproductions.store/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:24:27.767Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:24:32.661Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:24:32.740Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:24:36.836Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:24:37.465Z",
+      "tool": "navigate",
+      "url": "https://glitchproductions.store/cart"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:24:37.471Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:25:06.510Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:25:10.369Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:25:14.215Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:25:20.448Z",
+      "tool": "navigate",
+      "url": "https://glitchproductions.store/products/pomni-plush"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:25:21.192Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:25:21.192Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:25:27.562Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:25:30.689Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T00:25:34.301Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T00:25:34.365Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T00:25:40.822Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T00:25:55.568Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T00:26:24.728Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T00:26:29.958Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T00:26:34.468Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T00:26:38.124Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T00:26:41.574Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T00:26:44.724Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T00:26:48.296Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T00:26:48.420Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T00:27:20.285Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T00:27:23.663Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T00:27:27.058Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T00:27:34.269Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T00:27:37.412Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T00:27:40.545Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T00:27:44.869Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T00:27:44.915Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T00:27:51.888Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T00:28:11.716Z",
+      "tool": "Write"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T00:28:18.318Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "81b1dd606dcabbcda8781da89c3319444a391d3fd14518d7afe67f34c49e78ce"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "816caf96e6dce37f4a8ca60050c54d1d1ce24d9d3d65ace3d4e23fe3e2f65472"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "d1bdbca1d6d0c1931bfa0943724cb16c7c474e87f8cb19040a388dd2de47009a"
+      }
+    ],
+    "errors": []
+  }
+}

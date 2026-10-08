@@ -1,0 +1,357 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "napaonline.com",
+  "stream": "us",
+  "visit": 6,
+  "session": 2,
+  "entryHost": "www.napaonline.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_fd33ec5a-fa0/agent-a856bf3888463bb5c",
+  "startUtc": "2026-10-07T06:37:51.096Z",
+  "endUtc": "2026-10-07T06:41:16.926Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.napaonline.com",
+      "status": 200,
+      "sha256": "12759c36f9fc94846e44de19828e9af0f8700f397c2c32bff0c57b86a48a370e",
+      "bytes": 3003,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.napaonline.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.napaonline.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.napaonline.com/en/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.napaonline.com/en/shop/oil-chemicals/motor-oils/automotive-engine-oils/349628874"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.napaonline.com/en/p/MIL247520"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page by URL"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "link",
+      "name": "Motor Oil (listing link from home)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "link",
+      "name": "product link on listing"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "54c42dfe474049d8631a0f756198e0ed7afdef227cb51162edcff9250ee1ffa2",
+      "bytes": 486790,
+      "chunks": 2,
+      "url": "https://www.napaonline.com/en/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall on product page before add-to-cart"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall on product page before add-to-cart"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall on product page before add-to-cart"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall on product page before add-to-cart"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.napaonline.com/en/shop/oil-chemicals/motor-oils/automotive-engine-oils/349628874",
+    "productUrl": "https://www.napaonline.com/en/p/MIL247520",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.napaonline.com/en/p/MIL247520",
+    "title": "Just a moment...",
+    "marker": "Cloudflare challenge page (title 'Just a moment...', __cf_chl_rt_tk query on redirect)",
+    "wording": "Performing security verification. This website uses a security service to protect against malicious bots."
+  },
+  "problems": [
+    "tabs_create failed twice (tab cap) before succeeding on the third try; no other tab was used",
+    "empty-cart export chunks 0 and 1 were both oversized and saved by the harness to tool-results files (not opened)",
+    "Cloudflare challenge appeared on the first product page; challenge not interacted with or exported; no item added, so nothing removed",
+    "listing page showed no product prices in the accessibility tree; the product link was the only /en/p/ link found"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:37:51.096Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:37:52.647Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:37:52.651Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:37:56.980Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:37:59.683Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:38:03.971Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:38:10.102Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:38:16.988Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:38:28.603Z",
+      "tool": "Read"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:38:28.611Z",
+      "tool": "navigate",
+      "url": "https://www.napaonline.com/robots.txt"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:38:40.479Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:38:40.484Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:38:44.754Z",
+      "tool": "navigate",
+      "url": "https://www.napaonline.com/"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T06:38:49.957Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T06:38:54.393Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T06:38:54.395Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T06:39:05.462Z",
+      "tool": "navigate",
+      "url": "https://www.napaonline.com/en/cart"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T06:39:10.755Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T06:39:15.382Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T06:39:44.640Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T06:39:54.384Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T06:39:58.387Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T06:40:03.484Z",
+      "tool": "navigate",
+      "url": "https://www.napaonline.com/en/shop/oil-chemicals/motor-oils/automotive-engine-oils/349628874"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T06:40:09.583Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T06:40:12.907Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T06:40:16.470Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T06:40:24.163Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T06:40:27.586Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T06:40:32.293Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T06:40:41.172Z",
+      "tool": "navigate",
+      "url": "https://www.napaonline.com/en/p/MIL247520"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T06:40:45.336Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T06:40:49.853Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T06:41:09.270Z",
+      "tool": "Write"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T06:41:16.926Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "54c42dfe474049d8631a0f756198e0ed7afdef227cb51162edcff9250ee1ffa2"
+      }
+    ],
+    "errors": []
+  }
+}

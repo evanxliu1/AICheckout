@@ -1,0 +1,665 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "noon.com",
+  "stream": "non-us",
+  "visit": 106,
+  "session": 2,
+  "entryHost": "minutes.noon.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a2683b9606c51de43",
+  "startUtc": "2026-10-07T23:35:49.050Z",
+  "endUtc": "2026-10-07T23:42:03.282Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2 -> 1, minus control)",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "item": "own item 1 (qty 1 -> 0, minus control)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "minutes.noon.com",
+      "status": 200,
+      "sha256": "a503b55264aa95d264e9a5a387840a55d538be140e17aa0c2a06e40e5d6f63c9",
+      "bytes": 221,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://minutes.noon.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://minutes.noon.com/uae-en/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://minutes.noon.com/uae-en/categories/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://minutes.noon.com/uae-en/category/fragrances/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://minutes.noon.com/uae-en/cart/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host origin"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Categories (timed out, no navigation)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "categories page"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "fragrances listing"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "View Cart (no navigation)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "(unnamed plus button)"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "(unnamed minus button)"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "(unnamed minus button)"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "9190cd63d6c3818ba0e93aa4fdc2fb833a4f195e5f8450d09d1032f17b093cac",
+      "bytes": 843648,
+      "chunks": 3,
+      "url": "https://minutes.noon.com/uae-en/category/fragrances/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "697fea2a6204940ae91091fc85952da9ba89428eae997ee65b95413cca24bc37",
+      "bytes": 199090,
+      "chunks": 1,
+      "url": "https://minutes.noon.com/uae-en/cart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "81f9938ad48d9d81b3b62e4a2adb4b9cc108bd3e0b36dc393f50163b29207cd7",
+      "bytes": 199132,
+      "chunks": 1,
+      "url": "https://minutes.noon.com/uae-en/cart/",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "e78e9304b52bf2eec60adf80a9ef44289342db9b43da30ca63a974173f4293e3",
+      "bytes": 88408,
+      "chunks": 1,
+      "url": "https://minutes.noon.com/uae-en/cart/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "no lingering items and no second item added; focus on cart structure"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://minutes.noon.com/uae-en/category/fragrances/",
+    "productUrl": "https://minutes.noon.com/uae-en/now-product/:token/",
+    "price": "185 AED",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "AED",
+  "observedRegion": "AE (Dubai)",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Replaces an earlier not-started (tab-cap) record of this session 2 attempt; that attempt loaded no page.",
+    "minicart-1 is the listing page with the in-page 'View Cart 1 item' bar and the card's quantity stepper; noon Minutes has no drawer minicart.",
+    "Item added from the listing card's Add button (no product page visit); productUrl taken from the cart's item link, id segment masked.",
+    "Cart '+' and '-' controls are unnamed buttons; identified by position next to the quantity. Removal done with '-' twice; cart then showed empty.",
+    "Cookie banner offered only Accept All / Customize (no decline); left alone.",
+    "Clicks on Categories link and View Cart bar did not navigate (pane timeout / banner overlap); pages opened by URL instead.",
+    "Screenshots failed once later in the session (pane not displayed); read_page/get_page_text used.",
+    "All export chunks were oversized and saved by the harness to tool-results files (not opened), as expected."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T23:35:49.050Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T23:35:50.206Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T23:35:50.213Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T23:35:52.997Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T23:36:01.748Z",
+      "tool": "navigate",
+      "url": "https://minutes.noon.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T23:36:01.756Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T23:36:09.314Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T23:36:19.822Z",
+      "tool": "navigate",
+      "url": "https://minutes.noon.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T23:36:19.852Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T23:36:25.229Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T23:36:40.531Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T23:36:40.587Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:37:13.472Z",
+      "tool": "navigate",
+      "url": "https://minutes.noon.com/uae-en/categories/"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:37:13.478Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:37:19.050Z",
+      "tool": "navigate",
+      "url": "https://minutes.noon.com/uae-en/category/fragrances/"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T23:37:19.144Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T23:37:24.511Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T23:37:24.540Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T23:37:31.350Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T23:37:49.802Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T23:37:50.316Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T23:37:58.440Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T23:38:01.746Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T23:38:04.380Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T23:38:07.474Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T23:38:07.830Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T23:38:10.155Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T23:38:13.745Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T23:38:16.149Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T23:38:37.096Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T23:38:40.516Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T23:38:41.322Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T23:38:41.900Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T23:38:45.464Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T23:38:47.399Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T23:38:49.804Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T23:38:50.175Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T23:38:55.253Z",
+      "tool": "navigate",
+      "url": "https://minutes.noon.com/uae-en/cart/"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T23:38:58.444Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T23:38:58.854Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T23:39:04.309Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T23:39:23.708Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T23:39:24.091Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T23:39:52.381Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T23:39:54.851Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T23:39:57.601Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T23:40:00.285Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T23:40:00.717Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T23:40:08.489Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T23:40:10.882Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T23:40:14.450Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T23:40:17.549Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T23:40:21.831Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T23:40:22.226Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T23:40:27.479Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T23:40:47.557Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T23:40:50.282Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T23:40:54.413Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T23:40:56.558Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T23:40:56.983Z",
+      "tool": "find"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T23:41:01.952Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T23:41:04.456Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T23:41:04.840Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T23:41:28.456Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T23:41:31.444Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T23:41:34.625Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T23:41:35.180Z",
+      "tool": "Read"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T23:41:58.070Z",
+      "tool": "Write"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T23:42:03.282Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "9190cd63d6c3818ba0e93aa4fdc2fb833a4f195e5f8450d09d1032f17b093cac"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "697fea2a6204940ae91091fc85952da9ba89428eae997ee65b95413cca24bc37"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "81f9938ad48d9d81b3b62e4a2adb4b9cc108bd3e0b36dc393f50163b29207cd7"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "e78e9304b52bf2eec60adf80a9ef44289342db9b43da30ca63a974173f4293e3"
+      }
+    ],
+    "errors": []
+  }
+}

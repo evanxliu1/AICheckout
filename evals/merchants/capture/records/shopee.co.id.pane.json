@@ -1,0 +1,210 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "shopee.co.id",
+  "stream": "non-us",
+  "visit": 76,
+  "session": 1,
+  "entryHost": "shopee.co.id",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a82902c8a45b54807",
+  "startUtc": "2026-10-07T08:17:14.022Z",
+  "endUtc": "2026-10-07T08:18:27.110Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "shopee.co.id",
+      "status": 200,
+      "sha256": "5e3c47bbfc45f08e23a188c68384c286bdac93d28b086e6709bda3dbf954521f",
+      "bytes": 2795,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://shopee.co.id/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://shopee.co.id/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://shopee.co.id/verify/captcha"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "captcha before any cart page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "captcha before any item"
+    },
+    {
+      "state": "cart-1",
+      "reason": "captcha before any item"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "captcha before any item"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "captcha before any item"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "IDR",
+  "observedRegion": "ID",
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://shopee.co.id/verify/captcha",
+    "title": "Shopee Indonesia | Belanja Online Terlengkap & Terpercaya",
+    "wording": "Verifikasi untuk melanjutkan",
+    "marker": "home page script-redirected to /verify/captcha (scene=crawler_item) a few seconds after load, without any operator action"
+  },
+  "problems": [
+    "Home page redirected itself to /verify/captcha a few seconds after load; no interaction with the challenge, no export.",
+    "Before the redirect the home header read 'Please log in to view cart / add items to cart' (cart needs sign-in, logged out).",
+    "robots.txt disallows /cart/ and /checkout/ for *; recorded only.",
+    "Starting cart count unknown (not signed in; cart not viewable)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:17:14.022Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:17:15.268Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:17:15.271Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:17:18.044Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:17:31.999Z",
+      "tool": "navigate",
+      "url": "https://shopee.co.id/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:17:32.025Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:17:40.244Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:17:44.641Z",
+      "tool": "navigate",
+      "url": "https://shopee.co.id/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:17:44.769Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T08:17:50.878Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T08:17:50.899Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T08:17:59.975Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T08:18:03.653Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T08:18:08.361Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T08:18:19.703Z",
+      "tool": "Write"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T08:18:27.110Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

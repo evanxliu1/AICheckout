@@ -1,0 +1,790 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "bonito.pl",
+  "stream": "non-us",
+  "visit": 224,
+  "session": 2,
+  "entryHost": "bonito.pl",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a70fbb74b863d6ca0",
+  "startUtc": "2026-10-08T05:26:14.641Z",
+  "endUtc": "2026-10-08T05:32:09.644Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (after cart-qty2, to rebuild cart for cart-2items)",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "item": "own item 2",
+      "ok": true
+    },
+    {
+      "n": 3,
+      "item": "own item 1",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "bonito.pl",
+      "status": 200,
+      "sha256": "f78b9cda1828af2ab52387ba805c13c65f2ac1bd4adff8f542cbce7b84626296",
+      "bytes": 1818,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://bonito.pl/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://bonito.pl/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://bonito.pl/koszyk/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://bonito.pl/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://bonito.pl/produkt/turysta-futurysta"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://bonito.pl/koszyk/"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://bonito.pl/produkt/turysta-futurysta"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://bonito.pl/"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "url": "https://bonito.pl/produkt/ameryka-kremla-jak-rosja-zatrula-nasz-kraj"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "url": "https://bonito.pl/koszyk/"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "url": "https://bonito.pl/koszyk/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart /koszyk/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Turysta futurysta (product tile)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Do koszyka"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart /koszyk/"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "+ (quantity)"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Usuń z koszyka"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product item 1 by URL"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Do koszyka"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "Ameryka Kremla (product tile)"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Do koszyka"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart /koszyk/"
+    },
+    {
+      "n": 21,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-2items"
+    },
+    {
+      "n": 22,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Usuń z koszyka"
+    },
+    {
+      "n": 23,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Usuń z koszyka"
+    },
+    {
+      "n": 24,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart /koszyk/ (final check)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "223319c44dd84115e5ca335e941d78ff58dfc0ce4a7f86f3f660e31628262c7b",
+      "bytes": 148792,
+      "chunks": 1,
+      "url": "https://bonito.pl/koszyk/",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "2e80f5b6a770041b5bdeff0468e9c6e1311edb2cac8b47741dbec2cb82056b16",
+      "bytes": 508324,
+      "chunks": 2,
+      "url": "https://bonito.pl/produkt/turysta-futurysta",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "72a4679c49d6da48e91657deb6dda828a1add0e6de7ba8bffcdb8348eda5df3f",
+      "bytes": 167858,
+      "chunks": 1,
+      "url": "https://bonito.pl/koszyk/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "fbbd742f16d30eb90fa03d7661915618c45be5eee1febbfc1e3584d38706086e",
+      "bytes": 169826,
+      "chunks": 1,
+      "url": "https://bonito.pl/koszyk/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-2items",
+      "sha256": "b6009fe35f577e61e428a8a93706bceee2ed07c04683b0e52b527e8f7ff63afb",
+      "bytes": 179048,
+      "chunks": 1,
+      "url": "https://bonito.pl/koszyk/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [],
+  "itemPath": {
+    "listingUrl": "https://bonito.pl/",
+    "productUrl": "https://bonito.pl/produkt/turysta-futurysta",
+    "price": "92,19 zł",
+    "secondProductUrl": "https://bonito.pl/produkt/ameryka-kremla-jak-rosja-zatrula-nasz-kraj"
+  },
+  "observedCurrency": "PLN",
+  "observedRegion": "PL",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "minicart-1: no visible drawer in hidden pane; export taken on product page right after add (header badge showed 1, add-confirmation layer present).",
+    "cart-2items built by removing own item 1 after cart-qty2 (no decrement allowed), re-adding it and adding item 2; both items own, no lingering items.",
+    "checkoutDisallowed: robots.txt disallows /zamowienie/ (order path) for *; cart /koszyk/ allowed.",
+    "One tabs_context call made without tabId (read-only listing; no other tab touched).",
+    "All chunk results were oversized and saved by the harness to tool-results files (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:26:14.641Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:26:15.825Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:26:15.852Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:26:18.682Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:26:22.070Z",
+      "tool": "navigate",
+      "url": "https://bonito.pl/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:26:22.094Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:26:30.357Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:26:34.935Z",
+      "tool": "navigate",
+      "url": "https://bonito.pl/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:26:34.941Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:26:41.051Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:26:45.176Z",
+      "tool": "navigate",
+      "url": "https://bonito.pl/koszyk/"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:26:45.181Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:27:16.252Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:27:20.581Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:27:26.925Z",
+      "tool": "navigate",
+      "url": "https://bonito.pl/"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:27:26.972Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:27:31.685Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:27:35.668Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:27:35.743Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:27:42.879Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:27:46.002Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:27:49.963Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:27:53.667Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:27:58.618Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:27:58.626Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:28:05.758Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:28:08.416Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:28:29.043Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:28:33.209Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:28:36.379Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:28:39.639Z",
+      "tool": "navigate",
+      "url": "https://bonito.pl/koszyk/"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:28:40.021Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T05:29:01.355Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T05:29:04.177Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T05:29:06.692Z",
+      "tool": "find"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T05:29:08.980Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T05:29:11.573Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T05:29:15.000Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T05:29:15.366Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T05:29:20.016Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T05:29:45.159Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T05:29:50.759Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T05:29:57.466Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T05:30:00.410Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T05:30:00.831Z",
+      "tool": "find"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T05:30:05.893Z",
+      "tool": "navigate",
+      "url": "https://bonito.pl/produkt/turysta-futurysta"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T05:30:06.274Z",
+      "tool": "find"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T05:30:10.460Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T05:30:13.833Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T05:30:14.385Z",
+      "tool": "navigate",
+      "url": "https://bonito.pl/"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T05:30:14.804Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T05:30:20.773Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T05:30:23.755Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T05:30:24.229Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T05:30:29.778Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T05:30:33.122Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T05:30:33.409Z",
+      "tool": "navigate",
+      "url": "https://bonito.pl/koszyk/"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T05:30:33.850Z",
+      "tool": "find"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T05:30:39.450Z",
+      "tool": "screenshot"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T05:30:42.362Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T05:31:08.255Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T05:31:11.726Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T05:31:14.537Z",
+      "tool": "find"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T05:31:16.813Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T05:31:19.559Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T05:31:19.972Z",
+      "tool": "find"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T05:31:28.684Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T05:31:34.259Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T05:31:34.481Z",
+      "tool": "navigate",
+      "url": "https://bonito.pl/koszyk/"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T05:31:34.821Z",
+      "tool": "find"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T05:31:39.722Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T05:32:03.875Z",
+      "tool": "Write"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T05:32:09.644Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "223319c44dd84115e5ca335e941d78ff58dfc0ce4a7f86f3f660e31628262c7b"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "2e80f5b6a770041b5bdeff0468e9c6e1311edb2cac8b47741dbec2cb82056b16"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "72a4679c49d6da48e91657deb6dda828a1add0e6de7ba8bffcdb8348eda5df3f"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "fbbd742f16d30eb90fa03d7661915618c45be5eee1febbfc1e3584d38706086e"
+      },
+      {
+        "target": "cart-2items",
+        "kind": "state",
+        "sha256": "b6009fe35f577e61e428a8a93706bceee2ed07c04683b0e52b527e8f7ff63afb"
+      }
+    ],
+    "errors": []
+  }
+}

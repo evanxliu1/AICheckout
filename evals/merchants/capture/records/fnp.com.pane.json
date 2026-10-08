@@ -1,0 +1,452 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "fnp.com",
+  "stream": "non-us",
+  "visit": 183,
+  "session": 2,
+  "entryHost": "www.fnp.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-ab91ef78e1ce1a9fb",
+  "startUtc": "2026-10-08T03:41:40.912Z",
+  "endUtc": "2026-10-08T03:44:19.671Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.fnp.com",
+      "status": 200,
+      "sha256": "1d5b2a8297281f401748da58f0c22a83f8603f91c389073af6e7d01780dcaab7",
+      "bytes": 658,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.fnp.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.fnp.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.fnp.com/indoor-plants-lp"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.fnp.com/gift/fnp-live-peace-lily-plant-in-gold-hammered-pot"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.fnp.com/plants/birthday-lp"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.fnp.com/gift/syngonium-plant-in-birthday-antiquity-bottle-planters"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.fnp.com/checkout/delivery-address"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Indoor Plants (off-viewport, refused)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Indoor Plants listing (menu link href)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "listing product pos=1 (no navigation)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product pos=1 (listing href; INR 299)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Plants for Birthday listing (menu href)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product pos=3 (listing href; INR 899)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add To Cart"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (needs delivery location)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Cart (header)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "e4e1d740bd5a22e4f050d48c3263f1202c04a674a8fa444aba3a29912ce2f1fe",
+      "bytes": 744187,
+      "chunks": 2,
+      "url": "https://www.fnp.com/gift/syngonium-plant-in-birthday-antiquity-bottle-planters"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart requires a typed delivery pincode or locality"
+    },
+    {
+      "state": "cart-1",
+      "reason": "no item added; site cart button leads into /checkout/ path"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "no item added"
+    },
+    {
+      "state": "empty-cart",
+      "reason": "cart button opens /checkout/delivery-address (forbidden path); not exported"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.fnp.com/plants/birthday-lp",
+    "productUrl": "https://www.fnp.com/gift/syngonium-plant-in-birthday-antiquity-bottle-planters",
+    "price": "INR 899",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "INR",
+  "observedRegion": "IN",
+  "outcome": {
+    "status": "excluded",
+    "code": "needs-input",
+    "evidenceSha256": "e4e1d740bd5a22e4f050d48c3263f1202c04a674a8fa444aba3a29912ce2f1fe"
+  },
+  "challenge": null,
+  "problems": [
+    "Add To Cart answered 'Please enter delivery location'; only a typed pincode/locality field (country chooser also not allowed) satisfies it.",
+    "Header Cart button (click by ref) navigated straight to /checkout/delivery-address (Login/Address/Time Slot/Payment steps); the page was not exported or interacted with and the tab was closed at once. Reviewer: unintended checkout-path landing via site's own cart control.",
+    "Start cart count inferred 0 from no header badge; cart never viewable outside /checkout/.",
+    "robots.txt disallows /checkout/ (where the cart lives); root allowed for *.",
+    "Product links on listing opened nothing on click; product pages loaded by URL from the listing hrefs (query dropped)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T03:41:40.912Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T03:41:42.132Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T03:41:42.142Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T03:41:48.386Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T03:41:51.799Z",
+      "tool": "navigate",
+      "url": "https://www.fnp.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T03:41:51.842Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T03:41:58.322Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T03:42:03.659Z",
+      "tool": "navigate",
+      "url": "https://www.fnp.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T03:42:03.663Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T03:42:08.423Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T03:42:11.943Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T03:42:16.408Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T03:42:16.411Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T03:42:24.000Z",
+      "tool": "navigate",
+      "url": "https://www.fnp.com/indoor-plants-lp"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T03:42:24.002Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T03:42:29.280Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T03:42:32.919Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T03:42:32.921Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T03:42:38.058Z",
+      "tool": "navigate",
+      "url": "https://www.fnp.com/gift/fnp-live-peace-lily-plant-in-gold-hammered-pot"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T03:42:38.067Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T03:42:41.721Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T03:42:46.417Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T03:42:46.422Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T03:42:46.423Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T03:42:50.218Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T03:42:54.980Z",
+      "tool": "navigate",
+      "url": "https://www.fnp.com/plants/birthday-lp"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T03:42:55.510Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T03:43:02.328Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T03:43:04.374Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T03:43:06.661Z",
+      "tool": "navigate",
+      "url": "https://www.fnp.com/gift/syngonium-plant-in-birthday-antiquity-bottle-planters"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T03:43:07.171Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T03:43:13.058Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T03:43:13.577Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T03:43:36.545Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T03:43:39.249Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T03:43:41.913Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T03:43:44.998Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T03:43:47.127Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T03:43:49.475Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T03:43:50.356Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T03:43:56.868Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T03:44:13.188Z",
+      "tool": "Write"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T03:44:19.671Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "e4e1d740bd5a22e4f050d48c3263f1202c04a674a8fa444aba3a29912ce2f1fe"
+      }
+    ],
+    "errors": []
+  }
+}

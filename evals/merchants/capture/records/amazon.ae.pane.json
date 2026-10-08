@@ -1,0 +1,204 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "amazon.ae",
+  "stream": "non-us",
+  "visit": 38,
+  "session": 1,
+  "entryHost": "www.amazon.ae",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-aa1b233ed5cfcaf09",
+  "startUtc": "2026-10-07T07:15:55.400Z",
+  "endUtc": "2026-10-07T07:17:05.098Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.amazon.ae",
+      "status": 200,
+      "sha256": "224c62f6d49b1afb81cfea716e9487032e5177e775922d80dc30722f0be6abf5",
+      "bytes": 6711,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.amazon.ae/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.amazon.ae/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at bot-check interstitial on entry"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at bot-check interstitial on entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at bot-check interstitial on entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at bot-check interstitial on entry"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at bot-check interstitial on entry"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.amazon.ae/",
+    "title": "https://www.amazon.ae/",
+    "wording": "انقر فوق الزر أدناه لمتابعة التسوق (Arabic: 'Click the button below to continue shopping'); button 'متابعة التسوق.'",
+    "marker": "Amazon bot-check interstitial: form with three hidden token fields and a single continue-shopping submit button, replacing the home page"
+  },
+  "problems": [
+    "Entry page served Amazon's bot-check interstitial (continue-shopping form with hidden tokens) instead of the storefront; not clicked, not exported, per the stop rule.",
+    "Sign-in state and starting cart count could not be read (null).",
+    "robots.txt: / allowed for *; /gp/cart disallowed for *; Claude-User, ClaudeBot and many AI agents disallowed from / (recorded only per protocol)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:15:55.400Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:15:56.460Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:15:56.466Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:16:01.343Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:16:05.855Z",
+      "tool": "navigate",
+      "url": "https://www.amazon.ae/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:16:05.862Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:16:12.741Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:16:18.059Z",
+      "tool": "navigate",
+      "url": "https://www.amazon.ae/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:16:18.063Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:16:25.625Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:16:25.629Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:16:32.596Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:16:38.594Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:16:44.475Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:16:56.189Z",
+      "tool": "Write"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:17:05.098Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

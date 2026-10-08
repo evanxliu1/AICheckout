@@ -1,0 +1,217 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "pacsun.com",
+  "stream": "us",
+  "visit": 141,
+  "session": 1,
+  "entryHost": "www.pacsun.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-afab0eb75fa77046b",
+  "startUtc": "2026-10-07T23:46:45.242Z",
+  "endUtc": "2026-10-07T23:47:43.737Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.pacsun.com",
+      "status": 200,
+      "sha256": "c28455b62e99391ec3e9c003b3474c28ea1c5eb90ac292c1f119b37a59729038",
+      "bytes": 1701,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.pacsun.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.pacsun.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.pacsun.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home (entry host)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart URL served a bot-block page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped on bot block before any add"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped on bot block before any add"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped on bot block before any add"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.pacsun.com/cart",
+    "title": "Access to this page has been denied",
+    "wording": "Access to this page has been denied",
+    "marker": "page title (PerimeterX/HUMAN block page wording); body text empty to read_page and get_page_text"
+  },
+  "problems": [
+    "Home page loaded normally (logged out, header cart showed 0 items); the bot block appeared on the first cart load by URL.",
+    "Block page body was empty to the pane's text tools, so the vendor widget couldn't be confirmed; not exported or interacted with, per the rule.",
+    "endCartCount not re-read: the cart page was blocked."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T23:46:45.242Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T23:46:46.497Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T23:46:46.508Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T23:46:48.890Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T23:46:52.456Z",
+      "tool": "navigate",
+      "url": "https://www.pacsun.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T23:46:52.507Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T23:46:59.251Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T23:47:03.332Z",
+      "tool": "navigate",
+      "url": "https://www.pacsun.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T23:47:03.446Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T23:47:09.038Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T23:47:09.044Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T23:47:12.987Z",
+      "tool": "navigate",
+      "url": "https://www.pacsun.com/cart"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:47:12.993Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:47:17.449Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:47:21.494Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T23:47:35.542Z",
+      "tool": "Write"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T23:47:43.737Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

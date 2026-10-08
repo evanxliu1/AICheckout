@@ -1,0 +1,215 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "hsn.com",
+  "stream": "us",
+  "visit": 9,
+  "session": 2,
+  "entryHost": "www.hsn.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_fd33ec5a-fa0/agent-aabe7632ca45be7d1",
+  "startUtc": "2026-10-07T06:37:51.303Z",
+  "endUtc": "2026-10-07T06:39:05.781Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.hsn.com",
+      "status": 200,
+      "sha256": "5513d18fbb3dbf75c8f4f568393b5a47c77f321aa9f509b569dd258d37a55a4f",
+      "bytes": 593,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.hsn.com/robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.hsn.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home page"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at Akamai bot-management challenge on the entry page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at Akamai bot-management challenge on the entry page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at Akamai bot-management challenge on the entry page; cart is /checkout/bag (forbidden) in any case"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at Akamai bot-management challenge on the entry page"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at Akamai bot-management challenge on the entry page"
+    },
+    {
+      "state": "cart-other",
+      "reason": "stopped at Akamai bot-management challenge on the entry page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.hsn.com/",
+    "title": "",
+    "vendor": "Akamai",
+    "wording": "Powered and protected by [Akamai logo] Privacy (page body otherwise only an unlabelled button)",
+    "marker": "Akamai challenge page: unlabelled button, 'Powered and protected by' Akamai image, link to akamai.com/privacy; unchanged after a 5 s wait"
+  },
+  "problems": [
+    "Entry page https://www.hsn.com/ served an Akamai bot-management challenge (unlabelled button plus 'Powered and protected by Akamai'); not interacted with, not exported; stopped before the coordinator's evidence-export plan could run.",
+    "Session 1 (protocol .10) found no challenge on the same page; this session-2 block may be triggered by the session-1 add-to-bag activity or by the concurrent pane profile.",
+    "Start and end cart counts not read: the bag header was never shown; session 1 left its own item in the bag.",
+    "This file overwrote the session-1 record (schema capture-pane-record.1); session 1 is in git history at b6866dd."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:37:51.303Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:37:52.492Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:37:52.496Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:37:55.069Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:37:58.659Z",
+      "tool": "navigate",
+      "url": "https://www.hsn.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:37:58.771Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:38:07.229Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:38:11.143Z",
+      "tool": "navigate",
+      "url": "https://www.hsn.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:38:11.150Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:38:16.305Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:38:23.068Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:38:23.079Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:38:32.282Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T06:38:32.285Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T06:38:37.259Z",
+      "tool": "Read"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T06:38:56.466Z",
+      "tool": "Write"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T06:39:05.781Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

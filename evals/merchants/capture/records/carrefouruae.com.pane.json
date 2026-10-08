@@ -1,0 +1,146 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "carrefouruae.com",
+  "stream": "non-us",
+  "visit": 84,
+  "session": 1,
+  "entryHost": "www.carrefouruae.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_17756d11-17e/agent-a83a769ce350eb1d0",
+  "startUtc": "2026-10-07T08:27:37.760Z",
+  "endUtc": "2026-10-07T08:28:20.175Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.carrefouruae.com",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null,
+      "note": "robots.txt itself answered an Akamai Access Denied page; hash script not run, posture unknown"
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.carrefouruae.com/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at Akamai block on first page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at Akamai block on first page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at Akamai block on first page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at Akamai block on first page"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at Akamai block on first page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.carrefouruae.com/robots.txt",
+    "title": "Access Denied",
+    "marker": "errors.edgesuite.net reference (Akamai)",
+    "wording": "Access Denied. You don't have permission to access \"http://www.carrefouruae.com/robots.txt\" on this server."
+  },
+  "problems": [
+    "Akamai Access Denied (errors.edgesuite.net marker) served on robots.txt, the first page loaded; no store page loaded, nothing exported",
+    "HTTP status not observable in the pane; Akamai Access Denied is typically 403, reviewer may prefer blocked-http-403"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T08:27:37.760Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T08:27:38.906Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T08:27:38.914Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T08:27:48.416Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T08:27:53.050Z",
+      "tool": "navigate",
+      "url": "https://www.carrefouruae.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T08:27:53.125Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T08:27:58.551Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T08:28:12.829Z",
+      "tool": "Write"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T08:28:20.175Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "autozone.com",
+  "stream": "us",
+  "visit": 62,
+  "session": 1,
+  "entryHost": "www.autozone.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-adbefbdd65a3d969a",
+  "startUtc": "2026-10-07T07:35:00.954Z",
+  "endUtc": "2026-10-07T07:35:50.655Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.autozone.com",
+      "status": 200,
+      "sha256": "1fed1a609409304efce989d4da5f56bbd002a5eadace3a77b128654dc38c0746",
+      "bytes": 3952,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.autozone.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.autozone.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (starting count)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on first store page (/cart)"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall on first store page (/cart)"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall on first store page (/cart)"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall on first store page (/cart)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.autozone.com/cart",
+    "title": "https://www.autozone.com/cart",
+    "marker": "DataDome Device Check (accessibility tree element)",
+    "wording": "Please enable JS and disable any ad blocker"
+  },
+  "problems": [
+    "DataDome device check served on the first store page (/cart, opened to read the starting cart count); not interacted with, not exported.",
+    "Starting cart count and signed-in status could not be read because of the block.",
+    "robots.txt disallows /cart and /checkout for *; root allowed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:35:00.954Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:35:02.173Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:35:02.183Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:35:06.370Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:35:10.327Z",
+      "tool": "navigate",
+      "url": "https://www.autozone.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:35:10.346Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:35:17.185Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:35:21.491Z",
+      "tool": "navigate",
+      "url": "https://www.autozone.com/cart"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:35:21.496Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:35:25.689Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:35:29.371Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:35:42.789Z",
+      "tool": "Write"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:35:50.655Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

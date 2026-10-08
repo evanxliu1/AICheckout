@@ -1,0 +1,651 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "deraahstore.com",
+  "stream": "non-us",
+  "visit": 158,
+  "session": 1,
+  "entryHost": "www.deraahstore.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-ac8f5004ac9ac1741",
+  "startUtc": "2026-10-08T01:07:12.731Z",
+  "endUtc": "2026-10-08T01:12:29.977Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.deraahstore.com",
+      "status": 200,
+      "sha256": "fbbdfccc66139475999082a8e8b13bfac6b413e099fc978cb36709211e94bdda",
+      "bytes": 721,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.deraahstore.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.deraahstore.com/ar_sa"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.deraahstore.com/ar_sa/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.deraahstore.com/ar_sa"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.deraahstore.com/ar_sa/perfumes/men-perfumes/ring-m/10111031011100-1445.html"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.deraahstore.com/ar_sa/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host (redirected to /ar_sa)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "generic",
+      "name": "product tile name (perfume 100 ml)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "add to cart (Arabic label)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "unnamed qty button (coordinate), no change"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "unnamed qty button (ref_561), no change"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "unnamed qty button (ref_563), qty 1->2"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove product (own item)"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "confirm removal dialog: yes"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "4860956ea2afd72f217bcbbbc21c937522679e92b816ec40d69606720c897be4",
+      "bytes": 849369,
+      "chunks": 3,
+      "url": "https://www.deraahstore.com/ar_sa/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "3619fd43bf4f62e413c220c61ee29ae49e85aec6c67e600a94b916dd05d1feba",
+      "bytes": 868505,
+      "chunks": 3,
+      "url": "https://www.deraahstore.com/ar_sa/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "dda202bb32bf9a5cb9b14dc52414a46765271791a2512896bec337c34b074010",
+      "bytes": 869598,
+      "chunks": 3,
+      "url": "https://www.deraahstore.com/ar_sa/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart showed only a toast alert; no in-page cart panel rendered"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no lingering item; second item not added"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.deraahstore.com/ar_sa",
+    "productUrl": "https://www.deraahstore.com/ar_sa/perfumes/men-perfumes/ring-m/10111031011100-1445.html",
+    "price": "290 SAR (cart showed 145 at qty 1 under a store '1+2 free' promotion)",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "SAR",
+  "observedRegion": "SA",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cookie banner had only an accept control; left alone.",
+    "Store promotion halved the line price in cart-1 (145 vs listed 290); cart-qty2 shows 290.",
+    "First two qty-button clicks made no change; the third (ref_563) incremented to 2. Screenshot coordinates looked offset in the hidden pane.",
+    "robots.txt disallows /*/cart and /*/checkout for *; recorded only."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:07:12.731Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:07:13.964Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:07:13.972Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:07:21.566Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:07:24.968Z",
+      "tool": "navigate",
+      "url": "https://www.deraahstore.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:07:24.990Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:07:33.681Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:07:37.998Z",
+      "tool": "navigate",
+      "url": "https://www.deraahstore.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:07:37.999Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:07:46.749Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:07:46.824Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:07:49.981Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:07:54.442Z",
+      "tool": "navigate",
+      "url": "https://www.deraahstore.com/ar_sa/cart"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:07:54.446Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T01:08:24.160Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T01:08:32.909Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T01:08:37.144Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T01:08:43.945Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T01:08:50.575Z",
+      "tool": "navigate",
+      "url": "https://www.deraahstore.com/ar_sa"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T01:08:50.584Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T01:09:00.831Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T01:09:00.849Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T01:09:20.792Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T01:09:24.921Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T01:09:24.928Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T01:09:32.417Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T01:09:39.621Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T01:09:45.468Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T01:09:49.716Z",
+      "tool": "computer",
+      "action": "hover"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T01:09:49.960Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T01:09:55.292Z",
+      "tool": "navigate",
+      "url": "https://www.deraahstore.com/ar_sa/cart"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T01:09:55.739Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T01:10:18.751Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T01:10:21.446Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T01:10:24.573Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T01:10:31.292Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T01:10:34.206Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T01:10:37.964Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T01:10:42.332Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T01:10:42.568Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T01:10:46.580Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T01:10:46.910Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T01:10:47.311Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T01:10:52.700Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T01:10:56.799Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T01:10:57.304Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T01:10:57.669Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T01:11:02.837Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T01:11:08.604Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T01:11:09.054Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T01:11:13.141Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T01:11:13.795Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T01:11:14.153Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T01:11:36.923Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T01:11:39.460Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T01:11:42.083Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T01:11:45.009Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T01:11:49.640Z",
+      "tool": "find"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T01:11:52.044Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T01:11:52.429Z",
+      "tool": "find"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T01:11:54.694Z",
+      "tool": "find"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T01:11:56.900Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T01:11:59.681Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T01:12:00.064Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T01:12:00.462Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T01:12:05.674Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T01:12:24.120Z",
+      "tool": "Write"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T01:12:29.977Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "4860956ea2afd72f217bcbbbc21c937522679e92b816ec40d69606720c897be4"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "3619fd43bf4f62e413c220c61ee29ae49e85aec6c67e600a94b916dd05d1feba"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "dda202bb32bf9a5cb9b14dc52414a46765271791a2512896bec337c34b074010"
+      }
+    ],
+    "errors": []
+  }
+}

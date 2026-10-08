@@ -1,0 +1,188 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "wayfair.com",
+  "stream": "us",
+  "visit": 82,
+  "session": 1,
+  "entryHost": "www.wayfair.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-aadd0fabaf8f3dc90",
+  "startUtc": "2026-10-07T07:56:38.075Z",
+  "endUtc": "2026-10-07T07:57:40.830Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.wayfair.com",
+      "status": 200,
+      "sha256": "c00436f6bfb9eef80d98fc78c591c15a452d58ca20e982e25fa05a92eb74ae3a",
+      "bytes": 3224,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.wayfair.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.wayfair.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at bot wall on entry page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at bot wall on entry page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at bot wall on entry page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at bot wall on entry page"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at bot wall on entry page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.wayfair.com/",
+    "title": "Access to this page has been denied",
+    "wording": "Before we continue... Press & Hold to confirm you are human (and not a bot).",
+    "marker": "PerimeterX/HUMAN-style press-and-hold challenge with Reference ID; not interacted with, not exported"
+  },
+  "problems": [
+    "Entry page served a press-and-hold human verification (PerimeterX/HUMAN style) on first load; stopped at once, no interaction, no export.",
+    "robots.txt disallows /v/checkout/ (Wayfair cart path /v/checkout/basket/show has a checkout segment) and /session/public/basket.php; recorded only.",
+    "Code chosen as captcha (press-and-hold verification); reviewer may prefer blocked-bot-wall."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:56:38.075Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:56:39.147Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:56:39.155Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:56:43.019Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:56:50.921Z",
+      "tool": "navigate",
+      "url": "https://www.wayfair.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:56:51.024Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:57:05.828Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:57:10.642Z",
+      "tool": "navigate",
+      "url": "https://www.wayfair.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:57:10.694Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:57:15.146Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:57:18.440Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:57:32.710Z",
+      "tool": "Write"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:57:40.830Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

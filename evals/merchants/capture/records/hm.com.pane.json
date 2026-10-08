@@ -1,0 +1,718 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "hm.com",
+  "stream": "us",
+  "visit": 77,
+  "session": 1,
+  "entryHost": "www2.hm.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_d6c28255-d7d/agent-aac2a299d8a35156f",
+  "startUtc": "2026-10-07T07:48:39.493Z",
+  "endUtc": "2026-10-07T07:53:42.039Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2 decremented to 1, then removed via confirm dialog)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www2.hm.com",
+      "status": 200,
+      "sha256": "cbdcdbea8c3f22fcff1fd515ea669a4dabbd35d46ebafdf98e49314a5675a77f",
+      "bytes": 3874,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www2.hm.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www2.hm.com/en_us/index.html"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www2.hm.com/en_us/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www2.hm.com/en_us/men.html"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www2.hm.com/en_us/productpage.1363603002.html"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www2.hm.com/en_us/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host root"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Men listing"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Regular-Fit Boxy Printed Cotton T-Shirt"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page by URL (from listing link)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "radio",
+      "name": "Size M: Available. Select the size."
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to bag"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Only required cookies"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to bag"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart by URL"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity by 1"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Decrease quantity by 1"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove (trash icon at qty 1)"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove from bag"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "24a716333202c196690b9ee13a3cf151258f4353bc12d22b47aa4a22f04bc31e",
+      "bytes": 314308,
+      "chunks": 1,
+      "url": "https://www2.hm.com/en_us/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "1a85960159f70561c7844930ccff6aa0deb5793cb672192691a6973c4ad53409",
+      "bytes": 593512,
+      "chunks": 2,
+      "url": "https://www2.hm.com/en_us/productpage.1363603002.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "9ee337e173ae85cd157fb61798370b9677ae22d265d291e48dfa529e66bde87d",
+      "bytes": 317930,
+      "chunks": 1,
+      "url": "https://www2.hm.com/en_us/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "9e55c11647e04f3424e2203bfc487280457a07019b47eced3c903f450fbf8dfa",
+      "bytes": 327120,
+      "chunks": 1,
+      "url": "https://www2.hm.com/en_us/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "cart started empty (no lingering item); second item not added, to keep the session short"
+    },
+    {
+      "state": "cart-other",
+      "reason": "cart started empty; no lingering items"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www2.hm.com/en_us/men.html",
+    "productUrl": "https://www2.hm.com/en_us/productpage.1363603002.html",
+    "price": "$39.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Entry root redirected to /en_us/index.html on the same host.",
+    "Clicking the listing's product link (carousel) did not navigate; the product page was then opened by URL from that link's href.",
+    "First Add to bag click had no effect while a cookie banner was shown; after declining (Only required cookies) the second click added one item (bag count 1, cart showed qty 1).",
+    "minicart-1 export is the product page with the added-to-bag flyout open.",
+    "Removal went through the quantity control: decrease 2->1, then trash icon at qty 1 opened a confirm dialog, then Remove from bag.",
+    "robots.txt disallows /*/cart$ and /*/checkout$ for *; root allowed. Cart was visited (record only under .8).",
+    "All chunk results were oversized and saved by the harness to tool-results files; not opened."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T07:48:39.493Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T07:48:40.512Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T07:48:40.521Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T07:48:45.546Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T07:48:49.211Z",
+      "tool": "navigate",
+      "url": "https://www2.hm.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T07:48:49.243Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T07:48:56.450Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T07:49:00.746Z",
+      "tool": "navigate",
+      "url": "https://www2.hm.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T07:49:00.749Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T07:49:09.502Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T07:49:13.900Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T07:49:13.903Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T07:49:18.270Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T07:49:23.983Z",
+      "tool": "navigate",
+      "url": "https://www2.hm.com/en_us/cart"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T07:49:23.988Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T07:49:55.317Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T07:49:58.929Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T07:50:04.754Z",
+      "tool": "navigate",
+      "url": "https://www2.hm.com/en_us/men.html"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T07:50:04.756Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T07:50:11.680Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T07:50:15.088Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T07:50:18.302Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T07:50:22.804Z",
+      "tool": "navigate",
+      "url": "https://www2.hm.com/en_us/:token"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T07:50:22.811Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T07:50:27.936Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T07:50:31.717Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T07:50:31.773Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T07:50:35.499Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T07:50:35.501Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T07:50:39.297Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T07:50:42.350Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T07:50:45.249Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T07:50:45.636Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T07:50:48.684Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T07:50:49.233Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T07:50:52.884Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T07:50:53.418Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T07:50:56.236Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T07:50:56.576Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T07:50:59.443Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T07:51:02.672Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T07:51:23.100Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T07:51:26.124Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T07:51:29.576Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T07:51:32.761Z",
+      "tool": "navigate",
+      "url": "https://www2.hm.com/en_us/cart"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T07:51:33.208Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T07:51:55.998Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T07:51:59.175Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T07:52:02.326Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T07:52:05.582Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T07:52:05.948Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T07:52:08.832Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T07:52:09.147Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T07:52:32.420Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T07:52:35.221Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T07:52:39.378Z",
+      "tool": "find"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T07:52:42.183Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T07:52:45.123Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T07:52:49.075Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T07:52:49.439Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T07:52:53.263Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T07:52:53.529Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T07:52:54.024Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T07:52:59.665Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T07:52:59.917Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T07:53:00.310Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T07:53:05.424Z",
+      "tool": "find"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T07:53:08.734Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T07:53:08.994Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-07T07:53:09.293Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-07T07:53:14.440Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-07T07:53:35.531Z",
+      "tool": "Write"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-07T07:53:42.039Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "24a716333202c196690b9ee13a3cf151258f4353bc12d22b47aa4a22f04bc31e"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "1a85960159f70561c7844930ccff6aa0deb5793cb672192691a6973c4ad53409"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "9ee337e173ae85cd157fb61798370b9677ae22d265d291e48dfa529e66bde87d"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "9e55c11647e04f3424e2203bfc487280457a07019b47eced3c903f450fbf8dfa"
+      }
+    ],
+    "errors": []
+  }
+}

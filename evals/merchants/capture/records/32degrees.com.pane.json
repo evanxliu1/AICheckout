@@ -1,0 +1,703 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "32degrees.com",
+  "stream": "us",
+  "visit": 140,
+  "session": 1,
+  "entryHost": "www.32degrees.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_361171eb-ede/agent-a0c134afed26256e1",
+  "startUtc": "2026-10-07T23:46:02.149Z",
+  "endUtc": "2026-10-07T23:53:39.443Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.32degrees.com",
+      "status": 200,
+      "sha256": "1db4ccac7d251cbe479d6cc98819322ceeb8237dffdfabe6a5d053724e8e7f10",
+      "bytes": 3630,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.32degrees.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.32degrees.com/cart"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.32degrees.com/collections/mens-polos"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.32degrees.com/collections/mens-polos/products/mens-cool-polo"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.32degrees.com/collections/mens-polos/products/mens-air-luxe-polo"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.32degrees.com/collections/soft-velour"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.32degrees.com/collections/soft-velour/products/womens-soft-velour-hooded-full-zip"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.32degrees.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (redirects to /?cart=true)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/collections/mens-polos"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "product card: mens-cool-polo"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "mens-air-luxe-polo"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/collections/soft-velour"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "product card: soft velour full zip"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "choose-option",
+      "role": "button",
+      "name": "Size M"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to bag"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart (redirects to /?cart=true)"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Add"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "a09b2a4757c6a65b0495fa5fab1c9316f00a0b9b2260d071da9217ed74de47db",
+      "bytes": 1140191,
+      "chunks": 3,
+      "url": "https://www.32degrees.com/",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "70fd3168249d1c2213186f46a7136331f09f1ae4101851a37f2feaec22acb0af",
+      "bytes": 1494571,
+      "chunks": 4,
+      "url": "https://www.32degrees.com/collections/soft-velour/products/womens-soft-velour-hooded-full-zip",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "56c0b78088a1fc233fbd0ed30a1693891dc9cc3b60f7926d40fc46351bd2ce02",
+      "bytes": 1099911,
+      "chunks": 3,
+      "url": "https://www.32degrees.com/",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "57c8274f48aa0d40f1750159ced99eb3f0cd09ac4a46437eb7e1818a32231c64",
+      "bytes": 1107128,
+      "chunks": 3,
+      "url": "https://www.32degrees.com/",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "no lingering items; second own item not added (kept session short)"
+    },
+    {
+      "state": "cart-other",
+      "reason": "no lingering items"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.32degrees.com/collections/soft-velour",
+    "productUrl": "https://www.32degrees.com/collections/soft-velour/products/womens-soft-velour-hooded-full-zip",
+    "price": "$12.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Store has no standalone cart page: /cart redirects to /?cart=true (homepage with cart drawer open); empty-cart, cart-1 and cart-qty2 are the drawer over the homepage.",
+    "robots.txt comments address agents (use UCP/MCP endpoints, recommend installing a Shopify shopping skill); reported, not followed.",
+    "Two polos checked first were $7.99, below the price band; not added.",
+    "First quantity-increment click timed out in the tool (tab not ready); retried once, cart showed quantity 2 ($25.98), not 3.",
+    "Screenshots failed while the pane was hidden; read_page/find used instead."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T23:46:02.149Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T23:46:03.291Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T23:46:03.300Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T23:46:05.916Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T23:46:09.339Z",
+      "tool": "navigate",
+      "url": "https://www.32degrees.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T23:46:09.424Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T23:46:20.539Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T23:46:25.438Z",
+      "tool": "navigate",
+      "url": "https://www.32degrees.com/cart"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T23:46:25.442Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T23:46:31.851Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T23:46:36.543Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T23:46:40.211Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:47:09.679Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:47:14.340Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:47:15.205Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T23:47:15.449Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T23:47:34.664Z",
+      "tool": "navigate",
+      "url": "https://www.32degrees.com/collections/mens-polos"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T23:47:34.668Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T23:47:39.346Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T23:47:42.341Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T23:47:47.031Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T23:47:52.083Z",
+      "tool": "navigate",
+      "url": "https://www.32degrees.com/collections/mens-polos/products/mens-air-luxe-polo"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T23:47:52.106Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T23:47:58.095Z",
+      "tool": "navigate",
+      "url": "https://www.32degrees.com/collections/soft-velour"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T23:47:58.099Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T23:48:02.316Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T23:48:05.669Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T23:48:08.913Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T23:48:12.410Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T23:48:17.515Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T23:48:21.316Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T23:48:24.992Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T23:48:34.026Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T23:48:52.418Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T23:48:52.942Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T23:48:59.666Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T23:49:01.795Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T23:49:04.000Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T23:49:06.310Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T23:49:26.406Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T23:49:29.457Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T23:49:30.235Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T23:49:31.226Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T23:49:31.745Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T23:49:36.478Z",
+      "tool": "navigate",
+      "url": "https://www.32degrees.com/cart"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T23:49:36.627Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T23:49:59.846Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T23:50:02.813Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T23:50:03.670Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T23:50:04.278Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T23:50:08.525Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T23:50:08.891Z",
+      "tool": "find"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T23:50:40.755Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T23:51:12.626Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T23:51:14.813Z",
+      "tool": "find"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T23:51:33.635Z",
+      "tool": "find"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T23:51:35.602Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T23:51:40.572Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T23:51:43.190Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T23:52:10.115Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T23:52:32.390Z",
+      "tool": "find"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-07T23:52:34.903Z",
+      "tool": "find"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-07T23:52:55.704Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-07T23:52:58.556Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-07T23:52:59.393Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-07T23:53:00.061Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-07T23:53:06.151Z",
+      "tool": "find"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-07T23:53:08.359Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-07T23:53:10.620Z",
+      "tool": "find"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-07T23:53:13.673Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-07T23:53:33.667Z",
+      "tool": "Write"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-07T23:53:39.443Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "a09b2a4757c6a65b0495fa5fab1c9316f00a0b9b2260d071da9217ed74de47db"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "70fd3168249d1c2213186f46a7136331f09f1ae4101851a37f2feaec22acb0af"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "56c0b78088a1fc233fbd0ed30a1693891dc9cc3b60f7926d40fc46351bd2ce02"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "57c8274f48aa0d40f1750159ced99eb3f0cd09ac4a46437eb7e1818a32231c64"
+      }
+    ],
+    "errors": []
+  }
+}

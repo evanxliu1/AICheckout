@@ -1,0 +1,222 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "29cm.co.kr",
+  "stream": "non-us",
+  "visit": 111,
+  "session": 2,
+  "entryHost": "www.29cm.co.kr",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-aa5c53bdf34e521a8",
+  "startUtc": "2026-10-07T23:45:40.693Z",
+  "endUtc": "2026-10-07T23:47:01.579Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.29cm.co.kr",
+      "status": 200,
+      "sha256": "4ce2b11b8f89650b38014267f0fe0a8d122dcaca4e41ed7141d509cc7f11c143",
+      "bytes": 294,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.29cm.co.kr/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.29cm.co.kr/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.29cm.co.kr/order/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://auth.29cm.co.kr/login"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page by URL (header cart link)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart URL redirected to sign-in page (sign-in-required)"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "store stopped at sign-in wall"
+    },
+    {
+      "state": "cart-1",
+      "reason": "store stopped at sign-in wall"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "store stopped at sign-in wall"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "store stopped at sign-in wall"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "KRW",
+  "observedRegion": "KR",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://auth.29cm.co.kr/login",
+    "title": "",
+    "marker": "Logged-out visit to /order/cart redirected to auth.29cm.co.kr/login with redirect_uri back to the cart; page title empty."
+  },
+  "problems": [
+    "The cart needs sign-in: a logged-out visit to /order/cart redirects to auth.29cm.co.kr/login, so no cart state can be reached.",
+    "The robots.txt for auth.29cm.co.kr was not read: the site redirected there itself. No action was taken on that host.",
+    "robots.txt disallows /order/ for *, which covers the cart path /order/cart. Checkout is assumed to be under /order/ as well.",
+    "Starting and ending cart counts are unknown because the cart was never shown. No item was added, so nothing was removed.",
+    "No evidence export: sign-in-required is a stop code, not a judgement exclusion. The login page also rendered with no text."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T23:45:40.693Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T23:45:41.896Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T23:45:41.900Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T23:45:44.537Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T23:45:48.169Z",
+      "tool": "navigate",
+      "url": "https://www.29cm.co.kr/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T23:45:48.335Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T23:45:56.477Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T23:46:00.235Z",
+      "tool": "navigate",
+      "url": "https://www.29cm.co.kr/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T23:46:00.240Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T23:46:21.853Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T23:46:25.524Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T23:46:30.034Z",
+      "tool": "navigate",
+      "url": "https://www.29cm.co.kr/order/cart"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T23:46:30.046Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T23:46:37.287Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T23:46:54.079Z",
+      "tool": "Write"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T23:47:01.579Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "rylko.com",
+  "stream": "non-us",
+  "visit": 161,
+  "session": 1,
+  "entryHost": "www.rylko.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-acbcfc3026a65d931",
+  "startUtc": "2026-10-08T01:12:41.694Z",
+  "endUtc": "2026-10-08T01:13:10.799Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.rylko.com",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.rylko.com/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped: Cloudflare challenge on robots.txt"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped: Cloudflare challenge on robots.txt"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped: Cloudflare challenge on robots.txt"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped: Cloudflare challenge on robots.txt"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped: Cloudflare challenge on robots.txt"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.rylko.com/robots.txt",
+    "title": "Just a moment...",
+    "marker": "Cloudflare challenge: title 'Just a moment...', redirect added __cf_chl_rt_tk query parameter",
+    "wording": "Just a moment..."
+  },
+  "problems": [
+    "Cloudflare challenge served on the first request (robots.txt); robots hash not taken, no store page loaded, nothing exported."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:12:41.694Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:12:42.847Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:12:42.853Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:12:46.005Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:12:50.340Z",
+      "tool": "navigate",
+      "url": "https://www.rylko.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:12:50.341Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:12:56.605Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:13:04.605Z",
+      "tool": "Write"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:13:10.799Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

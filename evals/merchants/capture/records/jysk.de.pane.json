@@ -1,0 +1,278 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "jysk.de",
+  "stream": "non-us",
+  "visit": 125,
+  "session": 1,
+  "entryHost": "jysk.de",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a4eb9d5a136754e04",
+  "startUtc": "2026-10-08T00:17:35.246Z",
+  "endUtc": "2026-10-08T00:19:06.339Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "jysk.de",
+      "status": 200,
+      "sha256": "74cd8dce902785ce2fe916d35ca54fe225e8caa8485f18383156994cab2410f4",
+      "bytes": 2356,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://jysk.de/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://jysk.de/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://jysk.de/checkout"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Unbedingt erforderlich"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Warenkorb (header cart link)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "evidence-1 (cart at /checkout)"
+    }
+  ],
+  "states": [],
+  "evidence": [
+    {
+      "name": "evidence-1",
+      "sha256": "ae725373f5d6e10ae9869f59d787d1adf65f3b0a6486d0e996c4497d4bb8bcac",
+      "bytes": 199727,
+      "chunks": 1,
+      "url": "https://jysk.de/checkout"
+    }
+  ],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart page is served at /checkout, a forbidden checkout path; stopped on landing"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped before add-to-cart: cart lives at /checkout"
+    },
+    {
+      "state": "cart-1",
+      "reason": "cart page path /checkout is forbidden"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "cart page path /checkout is forbidden"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "cart page path /checkout is forbidden"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EUR",
+  "observedRegion": "DE",
+  "outcome": {
+    "status": "excluded",
+    "code": "would-need-forbidden-action",
+    "evidenceSha256": "ae725373f5d6e10ae9869f59d787d1adf65f3b0a6486d0e996c4497d4bb8bcac"
+  },
+  "challenge": null,
+  "problems": [
+    "The header Warenkorb link landed on https://jysk.de/checkout (title 'Zum Warenkorb | JYSK'), showing an empty cart. The cart page has a checkout path segment, so the operator stopped as would-need-forbidden-action; reviewer may decide whether this cart path should be allowlisted like Magento /checkout/cart.",
+    "The evidence export was taken on the /checkout landing page (empty cart, no personal data); chunk 0 was oversized and saved by the harness to a tool-results file, which was not opened.",
+    "The pane's find tool failed on the home page (accessibility-tree selector error), so the cookie decline and cart link were clicked by screenshot coordinate.",
+    "robots.txt disallows /basket/ (cart-like path) for *; root and /checkout are not disallowed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:17:35.246Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:17:35.367Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:17:35.381Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:17:38.623Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:17:41.617Z",
+      "tool": "navigate",
+      "url": "https://jysk.de/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:17:45.421Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:17:51.536Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:17:55.179Z",
+      "tool": "navigate",
+      "url": "https://jysk.de/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:17:55.237Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:18:01.321Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:18:04.619Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T00:18:07.833Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T00:18:10.733Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T00:18:11.132Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T00:18:13.558Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T00:18:16.154Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T00:18:16.458Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T00:18:41.382Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T00:18:43.661Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T00:18:47.004Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T00:19:00.049Z",
+      "tool": "Write"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T00:19:06.339Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "evidence-1",
+        "kind": "evidence",
+        "sha256": "ae725373f5d6e10ae9869f59d787d1adf65f3b0a6486d0e996c4497d4bb8bcac"
+      }
+    ],
+    "errors": []
+  }
+}

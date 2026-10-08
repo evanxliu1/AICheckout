@@ -1,0 +1,150 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "carrefouregypt.com",
+  "stream": "non-us",
+  "visit": 110,
+  "session": 2,
+  "entryHost": "www.carrefouregypt.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a60a9e4272c17a32f",
+  "startUtc": "2026-10-07T23:44:50.559Z",
+  "endUtc": "2026-10-07T23:45:22.509Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.carrefouregypt.com",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.carrefouregypt.com/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on first page load (robots.txt)"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.carrefouregypt.com/robots.txt",
+    "title": "Access Denied",
+    "marker": "Akamai errors.edgesuite.net reference on the Access Denied page",
+    "wording": "Access Denied. You don't have permission to access \"http://www.carrefouregypt.com/robots.txt\" on this server."
+  },
+  "problems": [
+    "First navigation (robots.txt) returned an Akamai Access Denied page with an errors.edgesuite.net reference; stopped at once, nothing exported, robots hash not run (no robots.txt content served).",
+    "Session 2 of 2; the earlier session 2 record was a tab-cap not-started, overwritten by this session."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T23:44:50.559Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T23:44:51.372Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T23:44:52.630Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T23:44:52.642Z",
+      "tool": "Read"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T23:44:55.517Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T23:44:59.076Z",
+      "tool": "navigate",
+      "url": "https://www.carrefouregypt.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T23:44:59.123Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T23:45:03.935Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T23:45:15.931Z",
+      "tool": "Write"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T23:45:22.509Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

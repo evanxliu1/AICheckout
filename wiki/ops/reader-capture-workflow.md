@@ -18,6 +18,8 @@ sources:
 
 # Reader capture workflow (Phase 12.3)
 
+**Capture paused 2026-10-08 (Evan):** about 300 stores captured; the 840 stop rule no longer applies ([decision](../decisions/2026-10-08-pause-capture-quality-target.md)). This runbook stays valid for any later capture. Practical notes from the run: keep the coordinator's own pane tab open (closing the last tab closes the pane); run at most 7 operators (tab cap 9); close stale operator tabs before a new run; the batch script stops starting stores after 3 `not-started` in a row.
+
 The binding rules are in [`docs/evals/generic-reader-protocol.md`](../../docs/evals/generic-reader-protocol.md) (`generic-reader-protocol.10`, signed at `779855e`). This page says **how the coordinating session runs them**; where it and the protocol differ, the protocol wins and this page is fixed. Plan and status: [Phase 12 plan](../product/phase-12-reader-eval.md).
 
 ## Before starting
@@ -45,7 +47,9 @@ A workflow script cannot read files: the coordinator reads the candidate list an
 - **Pilot stores are real evaluation visits** under the one-session rule; there is no do-over (only the protocol's one retry after a failure). A change to `pane-export.js` is a new format version and an amendment.
 - **Transcripts:** subagent transcripts live under `~/.claude/projects/-Users-evanliu-Projects-AICheckout/<session>/subagents/agent-<id>.jsonl`; confirm the location for workflow agents in the pilot and record each store's transcript ID in its record.
 - **Audit:** `node evals/merchants/capture/audit-pane-transcript.mjs <transcript.jsonl>... --repo-root /Users/evanliu/Projects/AICheckout` (exit 1 on any flag; every flag is explained or reported as a deviation).
-- After it: commit the records, run the audit, open 2–3 exports and rebuild them (`rebuild.mjs`, JavaScript off) to check fidelity, and compute cost per store. Fix anything structural before the full run (a tool fix is a reviewed change; a rule change is an amendment).
+- **After each store (since `.11`):** run the collector `node evals/merchants/capture/collect-pane-exports.mjs <transcript> --record <record> --transcript-id <workflow>/agent-<id>` before committing the record; it writes `dom.json`/`meta.json` and stamps times. A collector error is the store's export mismatch (one more session, M9).
+- After it: commit the records, run the audit, open 2–3 exports and rebuild them (`rebuild.mjs`, JavaScript off) to check fidelity, and compute cost per store.
+- **Before any re-queued (second-session) store runs:** at least one first-session store has an export with an inline chunk collected with a matching SHA-256 (`.11` M4). hsn.com's second session exports the product page as evidence before any add-to-bag and does not add (`.11` I4). Fix anything structural before the full run (a tool fix is a reviewed change; a rule change is an amendment).
 
 ## Workflow 2: full capture
 
@@ -57,7 +61,7 @@ A workflow script cannot read files: the coordinator reads the candidate list an
 
 ## Workflow 3: split, label, review, freeze
 
-Prerequisites to build and review first (none exist on 2026-10-07; `rebuild.mjs` exists but takes no screenshots): a renderer that rebuilds each `pane-dom.2` export and takes full-page and viewport screenshots with JavaScript off and network blocked; label files in the `reader-labels.2` schema; the offline variant generator and its manifest; the 10% derived-label sample check; a freeze script that writes `freeze.json` with the SHA-256 of the labels, variant and snapshot manifests, `currency-minor-units.json`, `item-price-bands.json` and `retail-frame-3.json`. Labellers of the standing robot captures get the robot inputs (screenshots, DOM, MHTML).
+Prerequisites to build and review first. Built on 2026-10-07 on `phase12-label-tools`, review pending ([capture README](../../evals/merchants/capture/README.md#workflow-3-tools-split-label-freeze)): `render-pane.mjs`, `build-split-input.mjs`, the `reader-labels.2` schema and validator, `agreement.mjs` and `freeze.mjs`; the offline variant generator and the 10% sample check on 2026-10-07 on `phase12-variants`, review pending ([variants README](../../evals/merchants/variants/README.md)). The list: a renderer that rebuilds each `pane-dom.2` export and takes full-page and viewport screenshots with JavaScript off and network blocked; label files in the `reader-labels.2` schema; the offline variant generator and its manifest; the 10% derived-label sample check; a freeze script that writes `freeze.json` with the SHA-256 of the labels, variant and snapshot manifests, `currency-minor-units.json`, `item-price-bands.json` and `retail-frame-3.json`. Labellers of the standing robot captures get the robot inputs (screenshots, DOM, MHTML).
 
 1. **Platform and split.** `pane-platform.mjs` over the pane exports + the standing robot rows' platform from `sites.json` → `captured.json` (one row per domain, `{domain, platform}`) and `captured-methods.json` → `node evals/merchants/tools/seeded-selection.mjs split captured.json --extra-us 225 --extra-non-us 800 --weights-protocol-10` → development / held-out A. Commit `splits.json` before any labeller starts.
 2. **Label.** Two independent labellers per split (rebuilt-page screenshots and the export; never each other's labels or any reader output), `reader-labels.2` schema → an adjudicator who never labelled that split decides disagreements. Report agreement.

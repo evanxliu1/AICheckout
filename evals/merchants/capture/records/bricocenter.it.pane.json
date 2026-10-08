@@ -1,0 +1,164 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "bricocenter.it",
+  "stream": "non-us",
+  "visit": 147,
+  "session": 1,
+  "entryHost": "www.bricocenter.it",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-af3ff6fd1987ddc7a",
+  "startUtc": "2026-10-08T00:51:51.199Z",
+  "endUtc": "2026-10-08T00:52:35.916Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.bricocenter.it",
+      "status": 403,
+      "sha256": "aa14f9765d0880f1c74cb64b7622618884de3a426cefd5f49afc7b5eecbc2abb",
+      "bytes": 774,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.bricocenter.it/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt hash (status 403)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at DataDome device check on robots.txt"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at DataDome device check on robots.txt"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at DataDome device check on robots.txt"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at DataDome device check on robots.txt"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at DataDome device check on robots.txt"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.bricocenter.it/robots.txt",
+    "title": "https://www.bricocenter.it/robots.txt",
+    "marker": "DataDome device check (accessibility tree); robots.txt re-fetch returned HTTP 403",
+    "wording": "DataDome Device Check"
+  },
+  "problems": [
+    "First page load (robots.txt) served a DataDome device check with an empty visible body; the in-page robots fetch returned HTTP 403 (774 bytes, hash is of the 403 response, not a robots file). Robots rules unknown.",
+    "Stopped before entry; no cart, sign-in or cart count observed; not exported (bot-check pages are never exported)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T00:51:51.199Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T00:51:52.395Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T00:51:52.400Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T00:51:54.658Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T00:51:58.163Z",
+      "tool": "navigate",
+      "url": "https://www.bricocenter.it/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T00:51:58.202Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T00:52:04.904Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T00:52:08.396Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T00:52:15.735Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T00:52:28.881Z",
+      "tool": "Write"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T00:52:35.916Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

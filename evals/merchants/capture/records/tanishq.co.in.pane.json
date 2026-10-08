@@ -1,0 +1,591 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "tanishq.co.in",
+  "stream": "non-us",
+  "visit": 162,
+  "session": 1,
+  "entryHost": "www.tanishq.co.in",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_4ab106a4-03b/agent-a731894839e79db67",
+  "startUtc": "2026-10-08T01:13:16.821Z",
+  "endUtc": "2026-10-08T01:17:04.552Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.tanishq.co.in",
+      "status": 200,
+      "sha256": "192312cb7b6660b63c68eaad5fa72112b458b1171f9d0d7c88ed54a74f0cfc80",
+      "bytes": 366,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.tanishq.co.in/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.tanishq.co.in/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.tanishq.co.in/shop/silver-idols"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.tanishq.co.in/product/divine-ganesh-silver-idol-asr5p1iaiaaa00.html"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.tanishq.co.in/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Silver Idols (no navigation)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "silver-idols listing (homepage link)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (listing link)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (Go to Cart link target)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Remove"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Delete from cart"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "de9be1fec5f856307063a3d837fc5a30a40a4ea9c3a295dab67492aa46df1d47",
+      "bytes": 1943678,
+      "chunks": 5,
+      "url": "https://www.tanishq.co.in/product/divine-ganesh-silver-idol-asr5p1iaiaaa00.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "96fbf11552010e009acba028b434e93e8da773882b02fe7235c389eb93490a26",
+      "bytes": 1329675,
+      "chunks": 4,
+      "url": "https://www.tanishq.co.in/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "afecd2bbb479c1d049857c7b6a4dba61aba94a916927bff9637c48860355a455",
+      "bytes": 1217328,
+      "chunks": 4,
+      "url": "https://www.tanishq.co.in/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-qty2",
+      "reason": "cart shows a static Qty 1 with no increment control"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "no lingering items; second item not added"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.tanishq.co.in/shop/silver-idols",
+    "productUrl": "https://www.tanishq.co.in/product/divine-ganesh-silver-idol-asr5p1iaiaaa00.html",
+    "price": "INR 13916",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "INR",
+  "observedRegion": "IN",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "minicart-1 exported on the product page right after add; the mini cart panel exists in the DOM but was not visibly opened (hover did not reveal it)",
+    "empty-cart taken after removing own item (cart actually empty), not at session start",
+    "robots.txt disallows /cart* and /checkout* for *; recorded only",
+    "chunks 0-3 of each export (and 0-3 of minicart-1) were saved by the harness to tool-results files (oversized); not opened"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T01:13:16.821Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T01:13:17.852Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T01:13:17.857Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T01:13:20.335Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T01:13:23.819Z",
+      "tool": "navigate",
+      "url": "https://www.tanishq.co.in/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T01:13:23.880Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T01:13:30.646Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T01:13:35.026Z",
+      "tool": "navigate",
+      "url": "https://www.tanishq.co.in/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T01:13:35.027Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T01:13:41.429Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T01:13:41.431Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T01:13:45.795Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T01:13:45.804Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T01:13:49.725Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T01:13:49.751Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T01:13:55.170Z",
+      "tool": "navigate",
+      "url": "https://www.tanishq.co.in/shop/silver-idols"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T01:13:55.176Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T01:14:01.312Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T01:14:04.991Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T01:14:05.001Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T01:14:08.574Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T01:14:17.772Z",
+      "tool": "navigate",
+      "url": "https://www.tanishq.co.in/product/:token"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T01:14:17.784Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T01:14:24.419Z",
+      "tool": "find"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T01:14:29.672Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T01:14:33.035Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T01:14:33.618Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T01:14:37.290Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T01:14:40.161Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T01:14:42.992Z",
+      "tool": "computer",
+      "action": "hover"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T01:14:43.491Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T01:15:04.039Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T01:15:06.956Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T01:15:09.900Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T01:15:10.642Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T01:15:11.490Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T01:15:12.179Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T01:15:16.025Z",
+      "tool": "navigate",
+      "url": "https://www.tanishq.co.in/cart"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T01:15:16.441Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T01:15:20.212Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T01:15:46.974Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T01:15:49.821Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T01:15:50.588Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T01:15:51.453Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T01:15:52.135Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T01:15:55.764Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T01:15:57.913Z",
+      "tool": "find"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T01:16:00.259Z",
+      "tool": "find"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T01:16:03.496Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T01:16:05.883Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T01:16:06.435Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T01:16:09.232Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T01:16:09.804Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T01:16:31.055Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T01:16:33.983Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T01:16:34.829Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T01:16:35.628Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T01:16:36.308Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T01:16:40.213Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T01:16:57.581Z",
+      "tool": "Write"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T01:17:04.552Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "de9be1fec5f856307063a3d837fc5a30a40a4ea9c3a295dab67492aa46df1d47"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "96fbf11552010e009acba028b434e93e8da773882b02fe7235c389eb93490a26"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "afecd2bbb479c1d049857c7b6a4dba61aba94a916927bff9637c48860355a455"
+      }
+    ],
+    "errors": []
+  }
+}

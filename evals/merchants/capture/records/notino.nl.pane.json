@@ -1,0 +1,601 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "notino.nl",
+  "stream": "non-us",
+  "visit": 11,
+  "session": 1,
+  "entryHost": "www.notino.nl",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2db7e336-87f/agent-ab277ea0a2419b1bc",
+  "startUtc": "2026-10-07T06:20:22.097Z",
+  "endUtc": "2026-10-07T06:25:00.263Z",
+  "signedIn": false,
+  "startCartCount": 1,
+  "endCartCount": 1,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.notino.nl",
+      "status": 200,
+      "sha256": "585958a0aba466ad716bfb3187b90411e049ceb7ec957c3d61e3205b935ce195",
+      "bytes": 2549,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.notino.nl/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.notino.nl/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.notino.nl/cart/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.notino.nl/whitening-tandpasta/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.notino.nl/mediblanc/dental-care-white-time-set-tandverzorgingsset-voor-stralende-witte-tanden/"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.notino.nl/cart/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (starting count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Tanden (menu)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Whitening tandpasta"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Dental Care White Time Set"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "In je winkelmandje"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Naar winkelmandje"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-2items"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity by one"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-other"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Verwijderen uit winkelmandje"
+    }
+  ],
+  "states": [
+    {
+      "state": "minicart-1",
+      "sha256": "8b1edb76bb31bc248ba5676b1852d88df04ae30cbe6e226df8e8d9c9c0186ef3",
+      "bytes": 367813,
+      "chunks": 1,
+      "url": "https://www.notino.nl/mediblanc/dental-care-white-time-set-tandverzorgingsset-voor-stralende-witte-tanden/",
+      "startCartCount": 1
+    },
+    {
+      "state": "cart-2items",
+      "sha256": "880ed88ea28b3cde020cc293bacffd11d893ba238fcb4bc6a3d146e8378af23d",
+      "bytes": 176654,
+      "chunks": 1,
+      "url": "https://www.notino.nl/cart/",
+      "startCartCount": 1
+    },
+    {
+      "state": "cart-other",
+      "sha256": "ddb045c91b8f7edbfdd670b67c681afd586cc31d832cd61193efb9c6668da8a1",
+      "bytes": 178985,
+      "chunks": 1,
+      "url": "https://www.notino.nl/cart/",
+      "startCartCount": 1
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "cart never empty: one lingering item at start"
+    },
+    {
+      "state": "cart-1",
+      "reason": "lingering item present; first cart state is cart-2items"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "own item at qty 2 shown with lingering item; exported as cart-other"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.notino.nl/whitening-tandpasta/",
+    "productUrl": "https://www.notino.nl/mediblanc/dental-care-white-time-set-tandverzorgingsset-voor-stralende-witte-tanden/",
+    "price": "EUR 25,00",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "EUR",
+  "observedRegion": "NL",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Pane was not open at start; first navigate (no tabId) opened a 'seed' tab on notino robots.txt, which then showed another store (crocs.com) driven by another operator; abandoned it and used own tab tab-4 from tabs_create. robots get_page_text on the seed tab returned crocs content and was discarded.",
+    "Starting cart held 1 lingering paid item plus free gift samples (site-added 'Gratis cadeau' lines); counts exclude free gifts. A third free gift line appeared after the add and stayed after removal (site-managed, not removed).",
+    "Background-tab screenshots rendered blank after scrolling on the cart; cart state verified with read_page.",
+    "Not signed in (header shows 'Inloggen' link).",
+    "cart-2items and cart-other add-to-cart modal and cart chunks were oversized and saved by the harness to tool-results files (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-07T06:20:22.097Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-07T06:20:23.370Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-07T06:20:23.375Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-07T06:20:26.709Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-07T06:20:31.653Z",
+      "tool": "navigate",
+      "url": "https://www.notino.nl/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-07T06:20:36.773Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-07T06:20:40.803Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-07T06:20:44.551Z",
+      "tool": "navigate",
+      "url": "https://www.notino.nl/robots.txt"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-07T06:20:44.653Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-07T06:20:51.032Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-07T06:20:55.664Z",
+      "tool": "navigate",
+      "url": "https://www.notino.nl/"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-07T06:20:55.672Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-07T06:21:21.913Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-07T06:21:22.135Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-07T06:21:22.348Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-07T06:21:25.764Z",
+      "tool": "navigate",
+      "url": "https://www.notino.nl/cart/"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-07T06:21:25.965Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-07T06:21:29.527Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-07T06:21:48.166Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-07T06:21:51.305Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-07T06:21:51.851Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-07T06:21:54.648Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-07T06:21:55.116Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-07T06:22:07.221Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-07T06:22:07.593Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-07T06:22:10.621Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-07T06:22:11.014Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-07T06:22:21.508Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-07T06:22:21.931Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-07T06:22:24.811Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-07T06:22:25.245Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-07T06:22:48.423Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-07T06:22:51.322Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-07T06:22:55.810Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-07T06:22:56.289Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-07T06:22:56.680Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-07T06:23:20.371Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-07T06:23:25.299Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-07T06:23:30.648Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-07T06:23:31.088Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-07T06:23:34.736Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-07T06:23:35.121Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-07T06:23:38.239Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-07T06:23:38.934Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-07T06:23:39.232Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-07T06:23:44.385Z",
+      "tool": "find"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-07T06:23:44.797Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-07T06:23:48.395Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-07T06:23:48.885Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-07T06:23:52.802Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-07T06:24:14.806Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-07T06:24:17.934Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-07T06:24:21.393Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-07T06:24:21.935Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-07T06:24:22.447Z",
+      "tool": "find"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-07T06:24:22.866Z",
+      "tool": "find"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-07T06:24:27.948Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-07T06:24:28.375Z",
+      "tool": "find"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-07T06:24:31.354Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-07T06:24:50.583Z",
+      "tool": "Write"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-07T06:25:00.263Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "8b1edb76bb31bc248ba5676b1852d88df04ae30cbe6e226df8e8d9c9c0186ef3"
+      },
+      {
+        "target": "cart-2items",
+        "kind": "state",
+        "sha256": "880ed88ea28b3cde020cc293bacffd11d893ba238fcb4bc6a3d146e8378af23d"
+      },
+      {
+        "target": "cart-other",
+        "kind": "state",
+        "sha256": "ddb045c91b8f7edbfdd670b67c681afd586cc31d832cd61193efb9c6668da8a1"
+      }
+    ],
+    "errors": []
+  }
+}
