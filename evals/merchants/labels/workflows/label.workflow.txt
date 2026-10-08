@@ -8,7 +8,13 @@ export const meta = {
   description: 'Phase 12.4 labelling: one labeller agent per batch of five captured stores (reader-labels.2)',
   phases: [{ title: 'Label', detail: 'one labeller agent per five stores' }],
 }
-const BATCHES = args.batches
+// A store may also come compact: '<domain>|<frameCurrency>|<state,state,...>[|<robotDir>]' (args.compact).
+const expand = (x) => {
+  if (typeof x !== 'string') return x
+  const [domain, frameCurrency, states, robotDir] = x.split('|')
+  return { domain, frameCurrency, method: robotDir ? 'robot' : 'pane', ...(robotDir ? { robotDir } : {}), ids: states.split(',').map((st) => `${domain}/${st}`) }
+}
+const BATCHES = args.batches.map((b) => b.map(expand))
 const ROW = {
   type: 'object',
   properties: {
