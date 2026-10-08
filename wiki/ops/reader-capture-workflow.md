@@ -69,7 +69,7 @@ Prerequisites to build and review first. Built on 2026-10-07 on `phase12-label-t
 4. **12.3 review** by an independent subagent: exclusion evidence, audit flags, stock mismatches, item paths, robot recipe paths.
 5. **Freeze** development and held-out A together (`freeze.json`), PR, merge after CI passes. Phase 12 is then done.
 
-**Done 2026-10-08** on `phase12-eval-set`: split `7a490f6`, labels, variants `.2`, freeze at `2a850bc` ([report](../../docs/evals/reader-captures-2026-10.md)). Practical notes: the digest (`digest-pane.mjs`) and tiles (`tile-render.mjs`) are labelling aids; labelling ran as one Workflow of 67 five-store sessions (6 parallel, about 15 minutes, six stalled sessions re-run by resuming the run); the coordinator assembles labeller files with `assemble-labels.mjs`; the variant sample check ran as ten labeller sessions of about 20 entries.
+**Done 2026-10-08** on `phase12-eval-set`: split `7a490f6`, labels, variants `.2`, capture review (step 4) applied, freeze at `2de2fec` (step 4 ran after a first freeze at `2a850bc`, which was replaced before any reader run) ([report](../../docs/evals/reader-captures-2026-10.md)). Practical notes: the digest (`digest-pane.mjs`) and tiles (`tile-render.mjs`) are labelling aids; labelling ran as one Workflow of 67 five-store sessions (6 parallel, about 15 minutes, six stalled sessions re-run by resuming the run); the coordinator assembles labeller files with `assemble-labels.mjs`; the variant sample check ran as ten labeller sessions of about 20 entries.
 
 No reader code, and no reader-developer browsing of any store, before the freeze.
 
