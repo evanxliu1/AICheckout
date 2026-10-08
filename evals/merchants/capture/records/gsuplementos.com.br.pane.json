@@ -163,7 +163,7 @@
   "observedCurrency": "BRL",
   "observedRegion": "BR",
   "outcome": {
-    "status": "incomplete",
+    "status": "captured",
     "code": null,
     "evidenceSha256": null
   },
@@ -479,5 +479,14 @@
       }
     ],
     "errors": []
+  },
+  "operatorOutcome": {
+    "status": "incomplete",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "coordinatorOverride": {
+    "utc": "2026-10-08",
+    "reason": "minicart-1 holds the operator item, so the store is captured (protocol .9); the cart page is under /checkout/ and was not opened; matches sites.json statusUnderProtocol10"
   }
 }
