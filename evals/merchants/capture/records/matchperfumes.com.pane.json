@@ -1,0 +1,577 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "matchperfumes.com",
+  "stream": "non-us",
+  "visit": 221,
+  "session": 2,
+  "entryHost": "matchperfumes.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a96a36fb7df8aed3a",
+  "startUtc": "2026-10-08T05:21:49.470Z",
+  "endUtc": "2026-10-08T05:26:07.935Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "matchperfumes.com",
+      "status": 200,
+      "sha256": "992109ac2b8f0ac202485117bf3b1ebc7209eb85e5664019ed75bcc37d74f95d",
+      "bytes": 89,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://matchperfumes.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://matchperfumes.com/en"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://matchperfumes.com/en/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://matchperfumes.com/en/Mowj-Collection/c1867682677"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://matchperfumes.com/en/guidance-exist/p433844431"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://matchperfumes.com/en/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home (redirects to /en)"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home slider category (by URL)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "The Mowj Collection (Guidance – Exist)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "+ (coordinate click)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "remove x (coordinate click)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "e269233fd7e58ff6d1b867092785efcad0c18760db3d9bc9a70fbd7aae762e0e",
+      "bytes": 116286,
+      "chunks": 1,
+      "url": "https://matchperfumes.com/en/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "25e1e6850902ab65ca9dc7c8eb8602690d921f9fb3bab0acb71c2cc5b8a80efe",
+      "bytes": 187625,
+      "chunks": 1,
+      "url": "https://matchperfumes.com/en/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "02c84147ace5ae2b379204d6465124b142cc6aa69d1536472bcfee05d9b62aca",
+      "bytes": 510499,
+      "chunks": 2,
+      "url": "https://matchperfumes.com/en/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "Salla theme opens no in-page cart after add; only the header badge changes"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; kept the session short (cart and structure focus)"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://matchperfumes.com/en/Mowj-Collection/c1867682677",
+    "productUrl": "https://matchperfumes.com/en/guidance-exist/p433844431",
+    "price": "175 SAR",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "SAR",
+  "observedRegion": "SA",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "find tool failed on this site (invalid label selector in accessibility tree generator); used read_page and screenshots",
+    "cart-1 exported a few seconds after load; the order-summary panel may not have rendered yet (it showed after the increment)",
+    "all chunk results exceeded the inline limit and were saved by the harness to tool-results files (not opened)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:21:49.470Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:21:50.531Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:21:50.538Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:21:55.691Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:21:59.441Z",
+      "tool": "navigate",
+      "url": "https://matchperfumes.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:22:00.335Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:22:07.688Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:22:11.897Z",
+      "tool": "navigate",
+      "url": "https://matchperfumes.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:22:11.912Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:22:17.540Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:22:21.166Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:22:41.148Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:22:44.315Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:22:47.785Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:22:52.046Z",
+      "tool": "navigate",
+      "url": "https://matchperfumes.com/en/cart"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:22:52.140Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:23:14.541Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:23:18.447Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:23:23.854Z",
+      "tool": "navigate",
+      "url": "https://matchperfumes.com/en/-/c1867682677"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:23:24.264Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:23:28.705Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:23:32.150Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:23:32.931Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:23:36.122Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:23:36.471Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:23:38.910Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:23:41.429Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:23:44.931Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:23:45.452Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:23:48.540Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:23:49.105Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:23:53.279Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T05:23:55.837Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T05:23:58.465Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T05:23:59.318Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T05:24:02.583Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T05:24:03.234Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T05:24:03.657Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T05:24:09.680Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T05:24:14.036Z",
+      "tool": "navigate",
+      "url": "https://matchperfumes.com/en/cart"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T05:24:14.328Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T05:24:18.499Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T05:24:18.814Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T05:24:41.125Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T05:24:44.153Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T05:24:46.821Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T05:25:04.034Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T05:25:07.008Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T05:25:07.531Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T05:25:08.089Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T05:25:31.205Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T05:25:34.035Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T05:25:36.924Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T05:25:42.143Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T05:25:42.709Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T05:25:43.281Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T05:25:48.702Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T05:26:02.797Z",
+      "tool": "Write"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T05:26:07.935Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "e269233fd7e58ff6d1b867092785efcad0c18760db3d9bc9a70fbd7aae762e0e"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "25e1e6850902ab65ca9dc7c8eb8602690d921f9fb3bab0acb71c2cc5b8a80efe"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "02c84147ace5ae2b379204d6465124b142cc6aa69d1536472bcfee05d9b62aca"
+      }
+    ],
+    "errors": []
+  }
+}

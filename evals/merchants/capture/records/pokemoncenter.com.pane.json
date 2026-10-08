@@ -1,0 +1,241 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "pokemoncenter.com",
+  "stream": "us",
+  "visit": 271,
+  "session": 1,
+  "entryHost": "www.pokemoncenter.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-ad90ec974c7f6deb0",
+  "startUtc": "2026-10-08T05:20:26.781Z",
+  "endUtc": "2026-10-08T05:22:06.641Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.pokemoncenter.com",
+      "status": 200,
+      "sha256": "b325bd8e4f3a1710263a2ded3196c2744f6aa2f8d9b0730c63ffef04ffdd26c8",
+      "bytes": 801,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.pokemoncenter.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.pokemoncenter.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.pokemoncenter.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (starting count)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "bot wall on /cart before any state"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "bot wall on /cart before any add"
+    },
+    {
+      "state": "cart-1",
+      "reason": "bot wall on /cart before any add"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "bot wall on /cart before any add"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "bot wall on /cart before any add"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.pokemoncenter.com/cart",
+    "title": "",
+    "marker": "Imperva/Distil-style interstitial (ds.tl help link)",
+    "wording": "Pardon Our Interruption. As you were browsing something about your browser made us think you were a bot."
+  },
+  "problems": [
+    "Home page loaded normally (not signed in, header cart link present); opening /cart by URL returned the bot interstitial, so the starting cart count was not read.",
+    "robots.txt disallows /carts and /checkout; /cart itself is not disallowed. Root allowed."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:20:26.781Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:20:27.712Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:20:28.710Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:20:28.735Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:20:34.936Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:20:39.556Z",
+      "tool": "navigate",
+      "url": "https://www.pokemoncenter.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:20:39.568Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:20:47.127Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:20:53.364Z",
+      "tool": "navigate",
+      "url": "https://www.pokemoncenter.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:20:53.382Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:21:01.624Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:21:01.646Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:21:01.647Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:21:06.054Z",
+      "tool": "navigate",
+      "url": "https://www.pokemoncenter.com/cart"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:21:06.063Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:21:10.573Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:21:10.584Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:21:27.154Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:21:42.664Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:21:57.678Z",
+      "tool": "Write"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:22:06.641Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

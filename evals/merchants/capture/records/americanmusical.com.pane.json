@@ -1,0 +1,217 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "americanmusical.com",
+  "stream": "us",
+  "visit": 286,
+  "session": 1,
+  "entryHost": "www.americanmusical.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a391b1e1b864af099",
+  "startUtc": "2026-10-08T05:40:30.477Z",
+  "endUtc": "2026-10-08T05:41:37.952Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.americanmusical.com",
+      "status": 403,
+      "sha256": "fbe938b95237c9dbf84e5380691ea617cf96d3b7adb5cdca3122559446d1745b",
+      "bytes": 779,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.americanmusical.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.americanmusical.com/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at DataDome device check on entry"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at DataDome device check on entry"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at DataDome device check on entry"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at DataDome device check on entry"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at DataDome device check on entry"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.americanmusical.com/",
+    "title": "https://www.americanmusical.com/",
+    "marker": "DataDome",
+    "wording": "DataDome Device Check"
+  },
+  "problems": [
+    "robots.txt displayed in the pane, but the hash script's credential-less re-fetch got HTTP 403 (779 bytes); the recorded SHA-256 is of that 403 body, not of the rules file",
+    "robots posture read from the displayed text: / allowed for *; /checkout/ disallowed (covers Magento /checkout/cart); no AICheckoutCapture group",
+    "home page rendered blank; after about 11 s the accessibility tree showed only a 'DataDome Device Check' element; not interacted with, not exported",
+    "start and end cart counts unknown (stopped before any store page loaded)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:40:30.477Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:40:31.700Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:40:31.757Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:40:36.059Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:40:39.605Z",
+      "tool": "navigate",
+      "url": "https://www.americanmusical.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:40:39.755Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:40:48.934Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:40:53.670Z",
+      "tool": "navigate",
+      "url": "https://www.americanmusical.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:40:53.695Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:40:59.098Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:40:59.111Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:41:05.741Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:41:09.913Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:41:10.422Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:41:20.134Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:41:22.267Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:41:32.495Z",
+      "tool": "Write"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:41:37.952Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

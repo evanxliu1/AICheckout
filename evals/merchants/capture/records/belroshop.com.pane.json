@@ -1,0 +1,514 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "belroshop.com",
+  "stream": "us",
+  "visit": 297,
+  "session": 1,
+  "entryHost": "belroshop.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a4117449ff9594a3d",
+  "startUtc": "2026-10-08T05:54:37.104Z",
+  "endUtc": "2026-10-08T06:04:28.784Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 17,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "belroshop.com",
+      "status": 200,
+      "sha256": "f905b68ca90f9e6f9551e2aec9d07e0fb773379334ad89742e019b2db8befa28",
+      "bytes": 978,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://belroshop.com/robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://belroshop.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://belroshop.com/cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://belroshop.com/"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://belroshop.com/products/wireless-door-chime-with-brass-bell-and-wooden-frame"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "url": "https://belroshop.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Wireless Door Chime product tile"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "site redirected to /cart after add"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "generic",
+      "name": "add"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "delete"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "bab0e137803590a82275c3a0c826475ea34db23af5c38bdbb6824401d90077ed",
+      "bytes": 178657,
+      "chunks": 1,
+      "url": "https://belroshop.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "9202dcdea4ca77a5ce07214dacd02f1d1f0ee331395fbbac8116f02cc34cbac1",
+      "bytes": 260844,
+      "chunks": 1,
+      "url": "https://belroshop.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "001c27df545d0f8ae3567a8d30cba93a42efadb0a800c1ecfa2deab108ad378d",
+      "bytes": 261995,
+      "chunks": 1,
+      "url": "https://belroshop.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart redirects straight to the /cart page; no in-page cart shown"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart held only the operator's item, kept session short"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://belroshop.com/",
+    "productUrl": "https://belroshop.com/products/wireless-door-chime-with-brass-bell-and-wooden-frame",
+    "price": "$19.97",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "cart-1 chunk(0) fetch timed out once (45 s) and was re-fetched; the second fetch returned (saved to a tool-results file)",
+    "several clicks first failed with 'tab not ready' timeouts and were retried; the add-to-cart and delete clicks each landed once"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:54:37.104Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:54:38.159Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:54:38.171Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:54:43.935Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:54:48.502Z",
+      "tool": "navigate",
+      "url": "https://belroshop.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:54:48.631Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:54:57.616Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:55:01.897Z",
+      "tool": "navigate",
+      "url": "https://belroshop.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:55:02.084Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:55:10.819Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:55:11.169Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:55:22.595Z",
+      "tool": "navigate",
+      "url": "https://belroshop.com/cart"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:55:22.611Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:55:27.438Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:55:56.960Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:56:02.086Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:56:06.989Z",
+      "tool": "navigate",
+      "url": "https://belroshop.com/"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:56:07.051Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:56:12.414Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:56:17.825Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:56:17.836Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:56:40.329Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:57:14.733Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:57:18.835Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:57:18.884Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:57:47.716Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:58:19.632Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:58:19.643Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:58:36.338Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:58:40.322Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:59:09.043Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:59:12.945Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T06:00:03.219Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T06:00:08.007Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T06:00:11.632Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T06:00:32.806Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T06:00:32.845Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T06:01:05.647Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T06:01:38.703Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T06:01:49.139Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T06:02:18.571Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T06:02:18.573Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T06:02:18.573Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T06:03:02.923Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T06:03:02.934Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T06:03:02.940Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T06:03:34.367Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T06:04:00.640Z",
+      "tool": "Write"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T06:04:28.784Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "bab0e137803590a82275c3a0c826475ea34db23af5c38bdbb6824401d90077ed"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "9202dcdea4ca77a5ce07214dacd02f1d1f0ee331395fbbac8116f02cc34cbac1"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "001c27df545d0f8ae3567a8d30cba93a42efadb0a800c1ecfa2deab108ad378d"
+      }
+    ],
+    "errors": []
+  }
+}

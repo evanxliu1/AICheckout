@@ -1,0 +1,519 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "bradfordexchange.com",
+  "stream": "us",
+  "visit": 296,
+  "session": 1,
+  "entryHost": "www.bradfordexchange.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a6f54be158c305d3d",
+  "startUtc": "2026-10-08T05:51:21.784Z",
+  "endUtc": "2026-10-08T05:59:59.187Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.bradfordexchange.com",
+      "status": 200,
+      "sha256": "d4ce23daefa503d1fb68527f81cc93412f61634606ed55add9da2ea24b91937c",
+      "bytes": 617,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.bradfordexchange.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.bradfordexchange.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.bradfordexchange.com/c/giftswithgreatvalue.html"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.bradfordexchange.com/products/142718001_gnome-cottage-sculpted-cuckoo-clock.html"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.bradfordexchange.com/basket.html"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.bradfordexchange.com/basket.html"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.bradfordexchange.com/basket.html"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "generic",
+      "name": "Decline All"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "gifts under $100"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Gnome Cottage Bavarian-Inspired Sculpte"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "link",
+      "name": "Add to Cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "generic",
+      "name": "Increase Quantity"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2 (first run timed out)"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove Item"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "cart-1",
+      "sha256": "1b825b069582804205f4d070fba43499cc10a21d1832e7992d235591711afd38",
+      "bytes": 258957,
+      "chunks": 1,
+      "url": "https://www.bradfordexchange.com/basket.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "5d1e005d7a16425ae70e84c4f52826a8f668e304067ca5f56d19731a92542b9b",
+      "bytes": 258960,
+      "chunks": 1,
+      "url": "https://www.bradfordexchange.com/basket.html",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "6519b95184b7a91214b5e2de45a1f73dc9bc2fb3dff67cc22bc061eabb2ce2ad",
+      "bytes": 214153,
+      "chunks": 1,
+      "url": "https://www.bradfordexchange.com/basket.html",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart navigates straight to the full cart page; no in-page cart shown"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not attempted; cart started empty"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.bradfordexchange.com/c/giftswithgreatvalue.html",
+    "productUrl": "https://www.bradfordexchange.com/products/142718001_gnome-cottage-sculpted-cuckoo-clock.html",
+    "price": "$99.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "robots.txt disallows /basket.html (cart path); recorded only",
+    "first cart-qty2 export call timed out after 45 s (pane hidden); re-run succeeded, only the second export's summary and chunk are recorded",
+    "empty-cart exported after removing own item (cart actually empty)",
+    "chunk results saved to harness tool-results files (oversized, expected); not opened"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:51:21.784Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:51:22.126Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:51:22.944Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:51:22.948Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:51:37.483Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:51:42.403Z",
+      "tool": "navigate",
+      "url": "https://www.bradfordexchange.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:51:47.216Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:51:53.520Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:51:58.853Z",
+      "tool": "navigate",
+      "url": "https://www.bradfordexchange.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:51:58.857Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:52:07.288Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:52:07.734Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:52:07.735Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:52:12.635Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:52:12.637Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:52:17.465Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:52:17.469Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:52:24.071Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:52:30.355Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:52:34.476Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:52:38.218Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:52:44.211Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:52:48.279Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:52:53.130Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:52:56.686Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:53:03.103Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:53:08.716Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:53:08.749Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:53:23.398Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:53:52.786Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:54:07.070Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:54:38.880Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T05:54:43.118Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T05:55:05.718Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T05:55:05.994Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T05:55:37.343Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T05:56:51.961Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T05:56:56.247Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T05:57:01.035Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T05:57:36.126Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T05:57:40.288Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T05:58:12.354Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T05:58:12.477Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T05:58:50.746Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T05:59:28.254Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T05:59:31.662Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T05:59:36.995Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T05:59:53.172Z",
+      "tool": "Write"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T05:59:59.187Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "1b825b069582804205f4d070fba43499cc10a21d1832e7992d235591711afd38"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "5d1e005d7a16425ae70e84c4f52826a8f668e304067ca5f56d19731a92542b9b"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "6519b95184b7a91214b5e2de45a1f73dc9bc2fb3dff67cc22bc061eabb2ce2ad"
+      }
+    ],
+    "errors": []
+  }
+}

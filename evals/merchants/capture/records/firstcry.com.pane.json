@@ -1,0 +1,741 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "firstcry.com",
+  "stream": "non-us",
+  "visit": 225,
+  "session": 2,
+  "entryHost": "www.firstcry.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a6652946047353cf7",
+  "startUtc": "2026-10-08T05:29:39.681Z",
+  "endUtc": "2026-10-08T05:37:16.618Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.firstcry.com",
+      "status": 200,
+      "sha256": "d2f1d74de7032f58e2be7135193a25eddabc4b342c264c2100a80fbb3385aeb4",
+      "bytes": 29090,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    },
+    {
+      "host": "checkout.firstcry.com",
+      "status": 200,
+      "sha256": "331ea9090db0c9f6f597bd9840fd5b171830f6e0b3ba1cb24dfa91f0c95aedc1",
+      "bytes": 26,
+      "rootDisallowed": true,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.firstcry.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.firstcry.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://checkout.firstcry.com/pay"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://checkout.firstcry.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.firstcry.com/carters/6/0/52"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.firstcry.com/carters/carters-cotton-woven-half-sleeves-striped-and-printed-onesies-pack-of-5-color-may-vary/22566050/product-detail"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://checkout.firstcry.com/pay"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "www.firstcry.com"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "menuitem",
+      "name": "Cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "checkout host robots.txt"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "checkout.firstcry.com"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Carter's boy fashion listing"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "product page (from listing link)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "ADD TO CART"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "click",
+      "role": "menuitem",
+      "name": "Cart"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "click",
+      "role": "",
+      "name": "product image (opened Quick View)"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "",
+      "name": "Quick View close"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "click",
+      "role": "",
+      "name": "Qty : 1 (opens quantity picker)"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "",
+      "name": "Select Quantity: 2"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "generic",
+      "name": "REMOVE"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "3737ded52f8f160954f49d07e4300c54ddddffb40f97f6f9c181357f09d06be5",
+      "bytes": 1194442,
+      "chunks": 3,
+      "url": "https://checkout.firstcry.com/pay",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "515f8ffe92e01ed40f2e5dd84f6dafd1484c29724333f44245c5e394c0175867",
+      "bytes": 1762155,
+      "chunks": 5,
+      "url": "https://www.firstcry.com/carters/carters-cotton-woven-half-sleeves-striped-and-printed-onesies-pack-of-5-color-may-vary/22566050/product-detail",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "98eaa08100bf1fba8b5e557e9e8124536b38ca624790923258cb8de4ec57db1f",
+      "bytes": 1252172,
+      "chunks": 4,
+      "url": "https://checkout.firstcry.com/pay",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "824f139cafb0806bcf9317971cfd33e7ee84da540fc930c42b0e77198f560655",
+      "bytes": 1433527,
+      "chunks": 4,
+      "url": "https://checkout.firstcry.com/pay",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-2items",
+      "reason": "cart started empty (no lingering item); second item not added, to keep the session short"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.firstcry.com/carters/6/0/52",
+    "productUrl": "https://www.firstcry.com/carters/carters-cotton-woven-half-sleeves-striped-and-printed-onesies-pack-of-5-color-may-vary/22566050/product-detail",
+    "price": "INR 1499",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "INR",
+  "observedRegion": "IN",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cart page is served on checkout.firstcry.com/pay (same registrable domain, reached by the site's own Cart control; title 'Shopping Cart - Checkout'). No path segment 'checkout'; the reviewer may want to confirm this host/path against the checkout and payment-path rules.",
+    "checkout.firstcry.com robots.txt was read after its first page load (cart click redirected there before it could be read); it disallows / for *. Recorded only.",
+    "The cart page also renders payment-method sections (cards, UPI, net banking) in the same document; none was touched.",
+    "minicart-1: the site has no drawer; after add-to-cart the product page shows a header badge of 1 and a 'GO TO CART' button. Exported that page as minicart-1.",
+    "Quantity changed via the cart's button-based 'Select Quantity' picker (custom buttons, not a <select>), choosing 2.",
+    "One stray click on the cart line's image opened a Quick View panel; closed it without other action.",
+    "First robots-hash call on checkout.firstcry.com timed out (45 s, pane hidden); the identical retry succeeded.",
+    "All chunk results were oversized and saved by the harness to tool-results files (not opened)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:29:39.681Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:29:40.885Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:29:40.915Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:29:45.441Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:30:07.209Z",
+      "tool": "navigate",
+      "url": "https://www.firstcry.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:30:07.226Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:30:14.649Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:30:18.998Z",
+      "tool": "navigate",
+      "url": "https://www.firstcry.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:30:19.004Z",
+      "tool": "find"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:30:27.896Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:30:28.011Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:30:33.470Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:30:38.121Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:30:41.655Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:31:19.879Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:31:22.620Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:31:29.262Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:31:32.490Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:31:35.365Z",
+      "tool": "navigate",
+      "url": "https://checkout.firstcry.com/robots.txt"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:31:35.789Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:31:40.891Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:32:31.341Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:32:57.144Z",
+      "tool": "navigate",
+      "url": "https://www.firstcry.com/carters/6/0/52"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:32:57.436Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:33:07.521Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:33:14.384Z",
+      "tool": "navigate",
+      "url": "https://www.firstcry.com/carters/:token/22566050/product-detail"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:33:14.767Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:33:24.222Z",
+      "tool": "find"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:33:26.901Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:33:30.111Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:33:33.480Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:33:37.795Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T05:33:38.588Z",
+      "tool": "computer",
+      "action": "hover"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T05:33:39.096Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T05:34:00.429Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T05:34:04.554Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T05:34:08.463Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T05:34:11.742Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T05:34:14.420Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T05:34:16.992Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T05:34:21.180Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T05:34:21.610Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T05:34:25.713Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T05:34:26.326Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T05:34:50.014Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T05:34:53.403Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T05:34:59.972Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T05:35:03.129Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T05:35:06.720Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T05:35:15.720Z",
+      "tool": "find"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T05:35:19.377Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T05:35:19.738Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T05:35:26.412Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T05:35:26.503Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T05:35:36.396Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T05:35:36.792Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T05:35:42.116Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T05:35:42.139Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T05:35:50.397Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T05:35:51.984Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T05:35:52.038Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T05:36:17.926Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T05:36:20.722Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T05:36:24.272Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T05:36:27.401Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T05:36:33.995Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T05:36:38.997Z",
+      "tool": "find"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T05:36:42.997Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T05:36:43.351Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T05:36:45.926Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T05:37:09.878Z",
+      "tool": "Write"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T05:37:16.618Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "3737ded52f8f160954f49d07e4300c54ddddffb40f97f6f9c181357f09d06be5"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "515f8ffe92e01ed40f2e5dd84f6dafd1484c29724333f44245c5e394c0175867"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "98eaa08100bf1fba8b5e557e9e8124536b38ca624790923258cb8de4ec57db1f"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "824f139cafb0806bcf9317971cfd33e7ee84da540fc930c42b0e77198f560655"
+      }
+    ],
+    "errors": []
+  }
+}

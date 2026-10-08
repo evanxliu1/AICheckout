@@ -1,0 +1,682 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "lululemon.com",
+  "stream": "us",
+  "visit": 273,
+  "session": 1,
+  "entryHost": "shop.lululemon.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a2239767ab8ffd74e",
+  "startUtc": "2026-10-08T05:22:14.181Z",
+  "endUtc": "2026-10-08T05:29:09.378Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 1,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (Everywhere Belt Bag 1L)",
+      "ok": false,
+      "note": "cart page never rendered its items while the pane was hidden; no remove control reachable"
+    }
+  ],
+  "robots": [
+    {
+      "host": "shop.lululemon.com",
+      "status": 200,
+      "sha256": "0f932ab3de71a96db307ce608d0f51fc6ec47bb3e049783fc08a4d247a8ebff0",
+      "bytes": 488,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://shop.lululemon.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://shop.lululemon.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://shop.lululemon.com/shop/mybag"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://shop.lululemon.com/c/belt-bags/n18mu7zrdci"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://shop.lululemon.com/p/everywhere-belt-bag/p2c308toaw"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://shop.lululemon.com/shop/mybag"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://shop.lululemon.com/shop/mybag"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://shop.lululemon.com/shop/mybag"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (starting count)"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Belt Bags listing (menu link)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Everywhere Belt Bag 1L"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to bag $38"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (reload, still loading)"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (reload, still loading)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "5b7d494cd05f8ac593dff87d852ce9d2afd3e457ff7a9ffe502113093e28fe34",
+      "bytes": 203109,
+      "chunks": 1,
+      "url": "https://shop.lululemon.com/shop/mybag",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "9ea327103a92fc00316a73333b2ca092fe65fbc02660208313f170614c3c1cec",
+      "bytes": 1162675,
+      "chunks": 3,
+      "url": "https://shop.lululemon.com/p/everywhere-belt-bag/p2c308toaw",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "cart-1",
+      "reason": "cart page stayed on 'Loading your bag...' across 3 loads and ~90 s; pane hidden, page not compositing"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "cart page did not render"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "cart page did not render"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://shop.lululemon.com/c/belt-bags/n18mu7zrdci",
+    "productUrl": "https://shop.lululemon.com/p/everywhere-belt-bag/p2c308toaw",
+    "price": "$38",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Browser pane hidden: screenshots, scroll and zoom failed; /shop/mybag rendered its contents only once (empty cart, while a screenshot succeeded) and afterwards stayed on its loading skeleton",
+    "cart-1 not reached; eligible for one more pane session (M9)",
+    "own item (Everywhere Belt Bag 1L) left in cart; removal not possible without the cart page rendering",
+    "endCartCount 1 is from the header 'Bag: 1' after the add; the cart page could not be re-read",
+    "cookie preference center present in DOM but not shown; left alone"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:22:14.181Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:22:15.270Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:22:15.312Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:22:20.134Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:22:20.167Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:22:25.666Z",
+      "tool": "navigate",
+      "url": "https://shop.lululemon.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:22:25.923Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:22:33.453Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:22:38.787Z",
+      "tool": "navigate",
+      "url": "https://shop.lululemon.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:22:38.790Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:22:44.672Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:22:45.280Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:22:45.319Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:22:50.430Z",
+      "tool": "navigate",
+      "url": "https://shop.lululemon.com/shop/mybag"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:22:50.447Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:22:57.083Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:22:57.097Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:23:03.882Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:23:08.248Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:23:08.273Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:23:18.634Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:23:23.306Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:23:23.812Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:23:51.550Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:23:54.121Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:23:58.624Z",
+      "tool": "navigate",
+      "url": "https://shop.lululemon.com/c/belt-bags/n18mu7zrdci"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:23:58.991Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:24:03.707Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:24:04.501Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:24:04.787Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:24:05.142Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:24:25.844Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T05:24:26.501Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T05:24:26.835Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T05:24:34.384Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T05:24:35.038Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T05:24:35.570Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T05:24:45.749Z",
+      "tool": "find"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T05:24:47.890Z",
+      "tool": "find"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T05:24:50.114Z",
+      "tool": "find"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T05:24:50.454Z",
+      "tool": "find"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T05:25:10.664Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T05:25:13.398Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T05:25:14.192Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T05:25:14.884Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T05:25:21.845Z",
+      "tool": "navigate",
+      "url": "https://shop.lululemon.com/shop/mybag"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T05:25:22.293Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T05:25:22.434Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T05:25:36.898Z",
+      "tool": "find"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T05:25:39.175Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T05:25:39.559Z",
+      "tool": "find"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T05:25:51.869Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T05:25:55.835Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T05:25:56.414Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T05:25:56.802Z",
+      "tool": "find"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T05:26:09.573Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T05:26:09.908Z",
+      "tool": "find"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T05:26:22.188Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T05:26:30.181Z",
+      "tool": "navigate",
+      "url": "https://shop.lululemon.com/shop/mybag"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T05:26:30.716Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T05:26:31.090Z",
+      "tool": "find"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T05:26:46.307Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T05:26:46.895Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T05:27:04.832Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T05:27:05.222Z",
+      "tool": "find"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T05:27:18.844Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T05:27:27.109Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T05:27:27.770Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T05:27:28.160Z",
+      "tool": "find"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T05:27:52.452Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T05:28:00.286Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T05:28:00.805Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T05:28:01.230Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T05:28:28.480Z",
+      "tool": "navigate",
+      "url": "https://shop.lululemon.com/shop/mybag"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T05:28:28.878Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T05:28:29.373Z",
+      "tool": "find"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T05:28:46.150Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-08T05:29:03.151Z",
+      "tool": "Write"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-08T05:29:09.378Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "5b7d494cd05f8ac593dff87d852ce9d2afd3e457ff7a9ffe502113093e28fe34"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "9ea327103a92fc00316a73333b2ca092fe65fbc02660208313f170614c3c1cec"
+      }
+    ],
+    "errors": []
+  }
+}

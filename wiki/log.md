@@ -2,6 +2,10 @@
 
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
+## 2026-10-08
+* **Decision** [2026-10-08-pause-capture-quality-target](decisions/2026-10-08-pause-capture-quality-target.md) — Evan: capture paused at about 300 stores; the ≥ 99% bar is a quality target, not a gate; no amendment or signature; status note added to the protocol; directive recorded.
+* **Update** Phase 12.3 capture paused: 532 visited, 334 captured (315 real `cart-1`), U.S. 187 / non-U.S. 147. Pages: [Phase 12 plan](product/phase-12-reader-eval.md#progress), [roadmap](product/roadmap.md), [runbook](ops/reader-capture-workflow.md), [now](now.md). (claude-code/claude-opus-5-5)
+
 ## 2026-10-07
 * **Review** `generic-reader-protocol.12` (Amendment 11: tab cap at 8, refused-tab sessions are `not-started`, mixed-currency markers, Workflow 3 tools) reviewed at `e9e5d20` (sign with fixes, applied) and **signed at `265dbdc`** (agent-verified). The two long-run workflows launched before it used the older brief. Workflow 3 tools merged into `phase12-capture-run` after independent reviews (label tools `2c80833`, variants `847e8fb`). (claude-code/claude-opus-5-5)
 * **Review** re-check of `phase13-harness` at `b0fe2a8` (agent-verified): approve with fixes, applied with tests.

@@ -1,0 +1,188 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "levi.com",
+  "stream": "us",
+  "visit": 302,
+  "session": 1,
+  "entryHost": "www.levi.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a7f6ab6dac74faaa4",
+  "startUtc": "2026-10-08T06:04:48.357Z",
+  "endUtc": "2026-10-08T06:07:58.544Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.levi.com",
+      "status": 200,
+      "sha256": "1980353ac097d54f74a3d48873dd3b3859b37df1926558237e640e491e0ee2e8",
+      "bytes": 70944,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.levi.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.levi.com/US/en_US/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry host home"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "cart-1",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "blocked-bot-wall on entry page"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "blocked-bot-wall on entry page"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.levi.com/US/en_US/",
+    "title": "",
+    "marker": "Akamai /_sec/cpr/challenge path in page body",
+    "wording": "SSR Server cannot GET /_sec/cpr/challenge"
+  },
+  "problems": [
+    "Entry page body showed only an Akamai challenge route error (/_sec/cpr/challenge); stopped at once, nothing exported, nothing clicked.",
+    "robots.txt is about 71 KB; only the first 6000 chars were read in-page. Cart and checkout disallowed for * (/*/*/cart*, /*/*/checkout*); root not disallowed in the portion read.",
+    "Sign-in status and starting cart count not checked because the block came first."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T06:04:48.357Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T06:04:51.534Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T06:04:51.581Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T06:05:46.609Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T06:06:04.435Z",
+      "tool": "navigate",
+      "url": "https://www.levi.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T06:06:04.450Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T06:06:29.756Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T06:06:51.166Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T06:07:03.405Z",
+      "tool": "navigate",
+      "url": "https://www.levi.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T06:07:03.469Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T06:07:25.532Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T06:07:43.399Z",
+      "tool": "Write"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T06:07:58.544Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

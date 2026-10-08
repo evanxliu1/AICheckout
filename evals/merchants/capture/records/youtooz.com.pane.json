@@ -1,0 +1,389 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "youtooz.com",
+  "stream": "us",
+  "visit": 276,
+  "session": 1,
+  "entryHost": "youtooz.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a8af9fa5a54272654",
+  "startUtc": "2026-10-08T05:28:22.573Z",
+  "endUtc": "2026-10-08T05:31:48.638Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [],
+  "robots": [
+    {
+      "host": "youtooz.com",
+      "status": 200,
+      "sha256": "2808b09b51b75bcc1e62b8a9caef058da4571b01570a34242b35fc926c9730f5",
+      "bytes": 3612,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://youtooz.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://youtooz.com/cart"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://youtooz.com/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://youtooz.com/products/lil-poundcake-plush-9-inch"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://youtooz.com/products/lil-poundcake-plush-9-inch"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "product tile (lil-poundcake-plush)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "/products/lil-poundcake-plush-9-inch"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "generic",
+      "name": "Add to cart (click failed, pane hidden)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "8a032eb9fe584ee61fd2971ac9d9218fb2a6aea03b5031fbb96506643a30c950",
+      "bytes": 92780,
+      "chunks": 1,
+      "url": "https://youtooz.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "tool-error: add-to-cart click failed, Browser pane not displayed"
+    },
+    {
+      "state": "cart-1",
+      "reason": "tool-error: no item added"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "tool-error: no item added"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://youtooz.com/",
+    "productUrl": "https://youtooz.com/products/lil-poundcake-plush-9-inch",
+    "price": "$29.99 USD",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "incomplete",
+    "code": "tool-error",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "computer left_click on Add to cart failed 4 times: Browser pane not displayed, page not compositing frames; screenshots also failed",
+    "First click on homepage product tile opened an in-page overlay whose Add to cart was off-viewport; product URL then loaded directly",
+    "robots.txt comments address agents (use UCP/MCP endpoints, recommend installing a shop.app skill); reported, not followed",
+    "robots.txt disallows /cart/ prefix and /cart.js, not /cart itself; /checkout disallowed",
+    "Item is a pre-order with enabled add-to-cart (counts as in stock)",
+    "Session 1 of 2: one more pane session allowed (M9)"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:28:22.573Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:28:23.731Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:28:23.789Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:28:26.422Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:28:30.244Z",
+      "tool": "navigate",
+      "url": "https://youtooz.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:28:30.330Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:28:43.945Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:28:47.968Z",
+      "tool": "navigate",
+      "url": "https://youtooz.com/cart"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:28:47.971Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:28:53.372Z",
+      "tool": "find"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:28:53.378Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:28:57.688Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:29:26.101Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:29:31.592Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:29:42.835Z",
+      "tool": "navigate",
+      "url": "https://youtooz.com/"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:29:42.839Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:29:53.261Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:29:53.275Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:29:58.475Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:29:58.551Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:30:02.321Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:30:11.622Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:30:11.644Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:30:16.713Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:30:16.733Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:30:22.029Z",
+      "tool": "navigate",
+      "url": "https://youtooz.com/products/:token"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:30:22.088Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:30:26.323Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:30:30.901Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:30:31.702Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:30:31.704Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:30:42.683Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T05:30:51.824Z",
+      "tool": "computer",
+      "action": "scroll_to"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T05:30:51.826Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T05:31:02.172Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T05:31:02.189Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T05:31:21.458Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T05:31:41.037Z",
+      "tool": "Write"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T05:31:48.638Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "8a032eb9fe584ee61fd2971ac9d9218fb2a6aea03b5031fbb96506643a30c950"
+      }
+    ],
+    "errors": []
+  }
+}

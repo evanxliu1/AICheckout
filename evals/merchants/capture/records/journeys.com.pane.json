@@ -1,0 +1,1034 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "journeys.com",
+  "stream": "us",
+  "visit": 277,
+  "session": 1,
+  "entryHost": "www.journeys.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a7a59e7110880874f",
+  "startUtc": "2026-10-08T05:29:02.717Z",
+  "endUtc": "2026-10-08T05:37:13.229Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 2 (second item, qty 1)",
+      "ok": true
+    },
+    {
+      "n": 2,
+      "item": "own item 1 (line at qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.journeys.com",
+      "status": 200,
+      "sha256": "2279e09d7fe89d02a6f3b0a344633ec33811814e227fb7435950c5edac0cd14d",
+      "bytes": 593,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.journeys.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.journeys.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.journeys.com/checkout/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.journeys.com/men/mens-socks"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.journeys.com/product/mens-crew-socks-5-pack-white-303"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.journeys.com/checkout/cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.journeys.com/product/mens-quarter-socks-5-pack-white-301"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://www.journeys.com/checkout/cart"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "url": "https://www.journeys.com/product/mens-crew-socks-5-pack-white-303"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "url": "https://www.journeys.com/checkout/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject Optional Cookies"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "menuitem",
+      "name": "Socks (failed: off-canvas)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "men's socks listing (menu link href)"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Mens Crew Socks 5 Pack - White"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Bag"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "minicart-1"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Mens Quarter Socks 5 Pack (no nav)"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "second product (cart rec link href)"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Bag"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-2items"
+    },
+    {
+      "n": 19,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove (item 2, opens confirm)"
+    },
+    {
+      "n": 20,
+      "utc": null,
+      "kind": "click",
+      "role": "",
+      "name": "confirm Remove by coordinate (missed)"
+    },
+    {
+      "n": 21,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove (item 2, opens confirm)"
+    },
+    {
+      "n": 22,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove (modal confirm)"
+    },
+    {
+      "n": 23,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "first product"
+    },
+    {
+      "n": 24,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to Bag (same item, to qty 2)"
+    },
+    {
+      "n": 25,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 26,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 27,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove (item 1, no modal)"
+    },
+    {
+      "n": 28,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Reject Optional Cookies"
+    },
+    {
+      "n": 29,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "",
+      "name": "REMOVE by coordinate (no modal)"
+    },
+    {
+      "n": 30,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "",
+      "name": "REMOVE by coordinate (no modal)"
+    },
+    {
+      "n": 31,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove (item 1, opens confirm)"
+    },
+    {
+      "n": 32,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Remove (modal confirm)"
+    }
+  ],
+  "states": [
+    {
+      "state": "empty-cart",
+      "sha256": "83892c207b02f0e7f23810cd6892570186035389394792c9baee58b5678ef864",
+      "bytes": 474887,
+      "chunks": 2,
+      "url": "https://www.journeys.com/checkout/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "minicart-1",
+      "sha256": "bbb13d8f81391711e7aff3f628afb37f551d12913a7c027d38902f04f9e4614e",
+      "bytes": 779218,
+      "chunks": 2,
+      "url": "https://www.journeys.com/product/mens-crew-socks-5-pack-white-303",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-1",
+      "sha256": "4a28101a6cff8c6cd59c640ff6d4e071ce2556aa4cd61a198e6a24cebb7ad416",
+      "bytes": 529556,
+      "chunks": 2,
+      "url": "https://www.journeys.com/checkout/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-2items",
+      "sha256": "de614360d95c64ee3c3404924a41fe47e717947d09b47e4d6f054b7b465fefcd",
+      "bytes": 535087,
+      "chunks": 2,
+      "url": "https://www.journeys.com/checkout/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "23249bdad59597bb651124e10d8dd1eb14505bc6bacc865859d3c8b5005cfd93",
+      "bytes": 536815,
+      "chunks": 2,
+      "url": "https://www.journeys.com/checkout/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [],
+  "itemPath": {
+    "listingUrl": "https://www.journeys.com/men/mens-socks",
+    "productUrl": "https://www.journeys.com/product/mens-crew-socks-5-pack-white-303",
+    "price": "13.00 USD",
+    "secondProductUrl": "https://www.journeys.com/product/mens-quarter-socks-5-pack-white-301"
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Cart path is /checkout/cart (not a Magento store by inspection); loaded under the protocol's /checkout/cart allowance.",
+    "Cart page has no quantity-increment control (qty changes via an Edit dialog); cart-qty2 reached by a second Add to Bag of the same item on its product page.",
+    "cart-2items holds two of the operator's own items (no lingering items).",
+    "Remove opens a confirm dialog; two coordinate clicks missed before ref clicks worked. Cookie banner reappeared after the first decline and was declined again.",
+    "Menu and cart-recommendation link clicks did not navigate (off-canvas or carousel); their own hrefs were opened by URL instead."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:29:02.717Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:29:04.501Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:29:04.504Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:29:04.505Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:29:08.394Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:29:11.870Z",
+      "tool": "navigate",
+      "url": "https://www.journeys.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:29:11.872Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:29:18.215Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:29:22.850Z",
+      "tool": "navigate",
+      "url": "https://www.journeys.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:29:22.854Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:29:29.458Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:29:29.492Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:29:29.492Z",
+      "tool": "find"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:29:34.001Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:29:34.018Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:29:43.982Z",
+      "tool": "navigate",
+      "url": "https://www.journeys.com/checkout/cart"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:29:43.990Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:30:17.147Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:30:21.147Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:30:25.295Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:30:29.655Z",
+      "tool": "find"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:30:34.842Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:30:34.883Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:30:38.977Z",
+      "tool": "navigate",
+      "url": "https://www.journeys.com/men/mens-socks"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:30:38.988Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:30:44.533Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:30:47.966Z",
+      "tool": "find"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:30:52.158Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:30:52.251Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:30:58.806Z",
+      "tool": "find"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:30:58.842Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:31:02.876Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T05:31:03.018Z",
+      "tool": "find"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T05:31:07.379Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T05:31:11.554Z",
+      "tool": "find"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T05:31:15.131Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T05:31:35.770Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T05:31:38.254Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T05:31:41.099Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T05:31:43.672Z",
+      "tool": "navigate",
+      "url": "https://www.journeys.com/checkout/cart"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T05:31:44.109Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-08T05:32:06.961Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-08T05:32:09.455Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-08T05:32:12.461Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-08T05:32:15.342Z",
+      "tool": "find"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-08T05:32:29.304Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-08T05:32:34.008Z",
+      "tool": "find"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-08T05:32:39.282Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-08T05:32:48.275Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-08T05:32:48.785Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-08T05:32:55.966Z",
+      "tool": "navigate",
+      "url": "https://www.journeys.com/product/:token"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-08T05:32:56.535Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-08T05:32:57.083Z",
+      "tool": "find"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-08T05:33:05.765Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-08T05:33:07.476Z",
+      "tool": "find"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-08T05:33:14.169Z",
+      "tool": "navigate",
+      "url": "https://www.journeys.com/checkout/cart"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-08T05:33:14.620Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-08T05:33:42.910Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-08T05:33:45.893Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-08T05:33:48.980Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-08T05:33:52.172Z",
+      "tool": "find"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-08T05:33:54.734Z",
+      "tool": "find"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-08T05:33:58.083Z",
+      "tool": "find"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-08T05:34:00.635Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-08T05:34:01.169Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-08T05:34:04.542Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-08T05:34:07.850Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-08T05:34:08.264Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-08T05:34:10.940Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-08T05:34:13.875Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-08T05:34:14.268Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-08T05:34:19.802Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-08T05:34:20.352Z",
+      "tool": "find"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-08T05:34:23.351Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-08T05:34:23.707Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-08T05:34:24.172Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-08T05:34:29.282Z",
+      "tool": "navigate",
+      "url": "https://www.journeys.com/product/:token"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-08T05:34:29.743Z",
+      "tool": "find"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-08T05:34:33.842Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 79,
+      "utc": "2026-10-08T05:34:34.337Z",
+      "tool": "find"
+    },
+    {
+      "n": 80,
+      "utc": "2026-10-08T05:34:44.000Z",
+      "tool": "navigate",
+      "url": "https://www.journeys.com/checkout/cart"
+    },
+    {
+      "n": 81,
+      "utc": "2026-10-08T05:34:44.375Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 82,
+      "utc": "2026-10-08T05:35:08.287Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 83,
+      "utc": "2026-10-08T05:35:14.759Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 84,
+      "utc": "2026-10-08T05:35:19.732Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 85,
+      "utc": "2026-10-08T05:35:22.705Z",
+      "tool": "find"
+    },
+    {
+      "n": 86,
+      "utc": "2026-10-08T05:35:33.864Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 87,
+      "utc": "2026-10-08T05:35:34.350Z",
+      "tool": "find"
+    },
+    {
+      "n": 88,
+      "utc": "2026-10-08T05:35:38.759Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 89,
+      "utc": "2026-10-08T05:35:48.789Z",
+      "tool": "find"
+    },
+    {
+      "n": 90,
+      "utc": "2026-10-08T05:35:51.713Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 91,
+      "utc": "2026-10-08T05:35:52.114Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 92,
+      "utc": "2026-10-08T05:35:52.463Z",
+      "tool": "find"
+    },
+    {
+      "n": 93,
+      "utc": "2026-10-08T05:36:04.541Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 94,
+      "utc": "2026-10-08T05:36:07.328Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 95,
+      "utc": "2026-10-08T05:36:07.728Z",
+      "tool": "find"
+    },
+    {
+      "n": 96,
+      "utc": "2026-10-08T05:36:10.781Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 97,
+      "utc": "2026-10-08T05:36:15.434Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 98,
+      "utc": "2026-10-08T05:36:15.675Z",
+      "tool": "find"
+    },
+    {
+      "n": 99,
+      "utc": "2026-10-08T05:36:18.370Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 100,
+      "utc": "2026-10-08T05:36:20.854Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 101,
+      "utc": "2026-10-08T05:36:21.387Z",
+      "tool": "find"
+    },
+    {
+      "n": 102,
+      "utc": "2026-10-08T05:36:23.860Z",
+      "tool": "find"
+    },
+    {
+      "n": 103,
+      "utc": "2026-10-08T05:36:26.639Z",
+      "tool": "find"
+    },
+    {
+      "n": 104,
+      "utc": "2026-10-08T05:36:30.733Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 105,
+      "utc": "2026-10-08T05:36:31.042Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 106,
+      "utc": "2026-10-08T05:36:31.972Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 107,
+      "utc": "2026-10-08T05:36:37.496Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 108,
+      "utc": "2026-10-08T05:37:06.634Z",
+      "tool": "Write"
+    },
+    {
+      "n": 109,
+      "utc": "2026-10-08T05:37:13.229Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "83892c207b02f0e7f23810cd6892570186035389394792c9baee58b5678ef864"
+      },
+      {
+        "target": "minicart-1",
+        "kind": "state",
+        "sha256": "bbb13d8f81391711e7aff3f628afb37f551d12913a7c027d38902f04f9e4614e"
+      },
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "4a28101a6cff8c6cd59c640ff6d4e071ce2556aa4cd61a198e6a24cebb7ad416"
+      },
+      {
+        "target": "cart-2items",
+        "kind": "state",
+        "sha256": "de614360d95c64ee3c3404924a41fe47e717947d09b47e4d6f054b7b465fefcd"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "23249bdad59597bb651124e10d8dd1eb14505bc6bacc865859d3c8b5005cfd93"
+      }
+    ],
+    "errors": []
+  }
+}

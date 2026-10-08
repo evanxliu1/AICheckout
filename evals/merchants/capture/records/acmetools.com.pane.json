@@ -1,0 +1,270 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "acmetools.com",
+  "stream": "us",
+  "visit": 287,
+  "session": 1,
+  "entryHost": "www.acmetools.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a69fff02e623be49b",
+  "startUtc": "2026-10-08T05:41:40.615Z",
+  "endUtc": "2026-10-08T05:43:42.283Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.acmetools.com",
+      "status": 200,
+      "sha256": "7ef249045117acf6bbb71cfd897a1ba4996131dcc1749162ea8e2286b2aa21a2",
+      "bytes": 3049,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.acmetools.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.acmetools.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.acmetools.com/cart/"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry home page"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page by URL"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "attempted empty-cart (void: captcha)"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "PerimeterX press-and-hold CAPTCHA overlay on the cart page; export void"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at captcha"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at captcha"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at captcha"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at captcha"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "",
+    "productUrl": "",
+    "price": "",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "captcha",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "vendor": "PerimeterX/HUMAN",
+    "marker": "px-captcha",
+    "url": "https://www.acmetools.com/cart/",
+    "title": "Shopping Cart | Acme Tools",
+    "wording": "Before we continue... Press & Hold to confirm you are a human (and not a bot)."
+  },
+  "problems": [
+    "navigate to /cart/ returned 'denied or failed' yet the tab showed the cart page; get_page_text (main content) showed only an empty cart, so the overlay was missed",
+    "an export (sha256 f3f9c875b5178667972ba1e4e76a5e40e56fa200c3204d1fd03a5204e647da46, 1207564 bytes, 4 chunks) was run before the captcha was seen; its last chunk showed the px-captcha wrapper; it is void, not a state or evidence, and should not be collected",
+    "captcha confirmed by screenshot; never interacted with; tab closed; no item added so no removals; end cart count not re-read"
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:41:40.615Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:41:42.501Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:41:42.532Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:41:42.544Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:41:51.788Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:41:55.838Z",
+      "tool": "navigate",
+      "url": "https://www.acmetools.com/robots.txt"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:41:55.862Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:42:04.151Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:42:09.095Z",
+      "tool": "navigate",
+      "url": "https://www.acmetools.com/"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:42:09.098Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:42:16.022Z",
+      "tool": "find"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:42:16.032Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:42:20.616Z",
+      "tool": "navigate",
+      "url": "https://www.acmetools.com/cart/"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:42:20.644Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:42:51.476Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:42:56.249Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:43:00.649Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:43:05.968Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:43:10.531Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:43:19.251Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:43:24.210Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:43:35.882Z",
+      "tool": "Write"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:43:42.283Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

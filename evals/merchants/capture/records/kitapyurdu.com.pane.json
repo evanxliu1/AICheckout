@@ -1,0 +1,145 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "kitapyurdu.com",
+  "stream": "non-us",
+  "visit": 233,
+  "session": 2,
+  "entryHost": "www.kitapyurdu.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2a06a12e-c34/agent-a774d51a6c938edf3",
+  "startUtc": "2026-10-08T05:47:01.516Z",
+  "endUtc": "2026-10-08T05:47:38.227Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.kitapyurdu.com",
+      "status": null,
+      "sha256": null,
+      "bytes": null,
+      "rootDisallowed": null,
+      "cartDisallowed": null,
+      "checkoutDisallowed": null
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.kitapyurdu.com/robots.txt"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at Cloudflare challenge on robots.txt"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "stopped at Cloudflare challenge on robots.txt"
+    },
+    {
+      "state": "cart-1",
+      "reason": "stopped at Cloudflare challenge on robots.txt"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "stopped at Cloudflare challenge on robots.txt"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "stopped at Cloudflare challenge on robots.txt"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": null,
+    "productUrl": null,
+    "price": null,
+    "secondProductUrl": null
+  },
+  "observedCurrency": null,
+  "observedRegion": null,
+  "outcome": {
+    "status": "excluded",
+    "code": "blocked-bot-wall",
+    "evidenceSha256": null
+  },
+  "challenge": {
+    "url": "https://www.kitapyurdu.com/robots.txt",
+    "title": "Just a moment...",
+    "marker": "Cloudflare challenge (title 'Just a moment...', __cf_chl_rt_tk redirect parameter, Ray ID)",
+    "wording": "Web sitesine erişim sağlamak için lütfen güvenlik kontrolünü tamamlayın."
+  },
+  "problems": [
+    "Cloudflare challenge served on the very first load (robots.txt), so robots hash, sign-in check and start cart count were not taken.",
+    "Challenge page was not exported or interacted with, per the stop rule."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:47:01.516Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:47:02.569Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:47:02.588Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:47:05.297Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:47:11.011Z",
+      "tool": "navigate",
+      "url": "https://www.kitapyurdu.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:47:11.061Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:47:19.239Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:47:30.969Z",
+      "tool": "Write"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:47:38.227Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}

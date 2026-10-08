@@ -18,6 +18,8 @@ sources:
 
 # Reader capture workflow (Phase 12.3)
 
+**Capture paused 2026-10-08 (Evan):** about 300 stores captured; the 840 stop rule no longer applies ([decision](../decisions/2026-10-08-pause-capture-quality-target.md)). This runbook stays valid for any later capture. Practical notes from the run: keep the coordinator's own pane tab open (closing the last tab closes the pane); run at most 7 operators (tab cap 9); close stale operator tabs before a new run; the batch script stops starting stores after 3 `not-started` in a row.
+
 The binding rules are in [`docs/evals/generic-reader-protocol.md`](../../docs/evals/generic-reader-protocol.md) (`generic-reader-protocol.10`, signed at `779855e`). This page says **how the coordinating session runs them**; where it and the protocol differ, the protocol wins and this page is fixed. Plan and status: [Phase 12 plan](../product/phase-12-reader-eval.md).
 
 ## Before starting

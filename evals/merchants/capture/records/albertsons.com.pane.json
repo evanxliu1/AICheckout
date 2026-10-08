@@ -1,0 +1,407 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.11",
+  "method": "pane",
+  "domain": "albertsons.com",
+  "stream": "us",
+  "visit": 279,
+  "session": 1,
+  "entryHost": "www.albertsons.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "wf_2d8755aa-fea/agent-a99b1cea91c1c7b7e",
+  "startUtc": "2026-10-08T05:31:47.191Z",
+  "endUtc": "2026-10-08T05:34:52.641Z",
+  "signedIn": false,
+  "startCartCount": null,
+  "endCartCount": null,
+  "removals": [],
+  "robots": [
+    {
+      "host": "www.albertsons.com",
+      "status": 200,
+      "sha256": "9e520348f917e91c6a81f85014e2849279dc86b323137dca58271a92bece9da2",
+      "bytes": 595,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.albertsons.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.albertsons.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.albertsons.com/shop/aisles/paper-cleaning-home/laundry.html"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.albertsons.com/shop/aisles/bread-bakery/bakery-catering-trays.html"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.albertsons.com/shop/mf/aisles/paper-cleaning-home"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.albertsons.com/shop/pd/swiffer-dusters-dusting-kit-heavy-duty-super-extendable-handle-1-handle-4-dusters-each/960452516"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "cookie-decline",
+      "role": "button",
+      "name": "Necessary only"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "button",
+      "name": "Navigation menu"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Laundry aisle (menu link href)"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Bakery Catering Trays (menu link href)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Paper, Cleaning & Home aisle"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Swiffer Dusters Dusting Kit (no nav)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Swiffer Dusters product page"
+    }
+  ],
+  "states": [],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "empty-cart",
+      "reason": "stopped at sign-in wall before opening cart"
+    },
+    {
+      "state": "minicart-1",
+      "reason": "add-to-cart requires sign-in"
+    },
+    {
+      "state": "cart-1",
+      "reason": "add-to-cart requires sign-in"
+    },
+    {
+      "state": "cart-qty2",
+      "reason": "add-to-cart requires sign-in"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "add-to-cart requires sign-in"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.albertsons.com/shop/mf/aisles/paper-cleaning-home",
+    "productUrl": "https://www.albertsons.com/shop/pd/swiffer-dusters-dusting-kit-heavy-duty-super-extendable-handle-1-handle-4-dusters-each/960452516",
+    "price": "$18.99",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "excluded",
+    "code": "sign-in-required",
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Logged out: every product tile's add control on the aisle listing was named 'Sign in to add 1 unit of ...'; the product page showed no add control. Stopped as sign-in-required without clicking.",
+    "Site banner said scheduled maintenance was in progress; two .html aisle listings showed 0 items; the /shop/mf/ aisle page listed products.",
+    "Starting and ending cart counts not read: cart never opened (header cart button showed no count badge). No items added, so nothing to remove.",
+    "No evidence export taken (sign-in-required is a stop code, not a judgement exclusion)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-08T05:31:47.191Z",
+      "tool": "Read"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-08T05:31:48.393Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-08T05:31:48.438Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-08T05:31:51.819Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-08T05:31:54.893Z",
+      "tool": "navigate",
+      "url": "https://www.albertsons.com/robots.txt"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-08T05:31:58.218Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-08T05:32:04.084Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-08T05:32:07.208Z",
+      "tool": "navigate",
+      "url": "https://www.albertsons.com/"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-08T05:32:11.772Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-08T05:32:16.628Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-08T05:32:19.768Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-08T05:32:32.190Z",
+      "tool": "find"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-08T05:32:36.428Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-08T05:32:40.517Z",
+      "tool": "read_page"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-08T05:32:45.024Z",
+      "tool": "find"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-08T05:32:48.792Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-08T05:32:56.403Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-08T05:33:01.370Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-08T05:33:05.759Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-08T05:33:14.701Z",
+      "tool": "navigate",
+      "url": "https://www.albertsons.com/shop/aisles/paper-cleaning-home/laundry.html"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-08T05:33:24.687Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-08T05:33:29.441Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-08T05:33:29.447Z",
+      "tool": "find"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-08T05:33:37.285Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-08T05:33:41.710Z",
+      "tool": "navigate",
+      "url": "https://www.albertsons.com/shop/aisles/bread-bakery/bakery-catering-trays.html"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-08T05:33:45.525Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-08T05:33:45.842Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-08T05:33:52.504Z",
+      "tool": "navigate",
+      "url": "https://www.albertsons.com/shop/mf/aisles/paper-cleaning-home"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-08T05:33:56.152Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-08T05:33:56.747Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-08T05:34:04.173Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-08T05:34:08.475Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-08T05:34:08.994Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-08T05:34:09.325Z",
+      "tool": "find"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-08T05:34:15.742Z",
+      "tool": "navigate",
+      "url": "https://www.albertsons.com/shop/pd/:token/960452516"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-08T05:34:20.437Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-08T05:34:20.853Z",
+      "tool": "find"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-08T05:34:28.193Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-08T05:34:33.254Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-08T05:34:47.706Z",
+      "tool": "Write"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-08T05:34:52.641Z",
+      "tool": "StructuredOutput"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [],
+    "errors": []
+  }
+}
