@@ -43,7 +43,21 @@ Simplified by Evan on 2026-10-08: "no need for isolation audit or held out A run
 | 13.4 Held-out A | Coordinator | `run.mjs --split heldout-a --confirm-heldout-run 1`, commit the `runs.json` row, `score.mjs --record` and `--class-only`; a second run only after a generic fix on development | Scored |
 | 13.5 Report | Coordinator | `docs/evals/reader-v1.md`: precision with exact bounds at page, store and operator level, coverage, by stream, state, currency and variant; wiki; PR | PR merged after CI |
 
-**Phase 13b** (separate PR): the extension uses the reader on checkout pages of non-legacy stores. It shows the reader's amount when the reader is certain, otherwise card rates only. The Amazon, Best Buy and Newegg adapters stay. End-to-end tests run on fixture pages.
+## Phase 13b: the reader in the extension (planned 2026-10-09)
+
+Evan, 2026-10-09: "plan phase 13b, then have a fable 5.1 subagent implement". Branch `phase13b-extension`; implementer Fable 5.1; an independent review before the PR.
+
+**Scope: the popup's "Read cart" at any store.** Today the popup reads the cart only at the three legacy stores (Best Buy US, Newegg US, Amazon US) and asks for a typed amount everywhere else (Phase 11).
+- On "Read cart" at any other page, the popup injects the manual reader (`src/checkout/content.js`, `activeTab` + `scripting`, as today) and that reader runs `readCart` from `@ai-checkout/cart-reader` in the isolated world. The legacy adapters keep their three stores and run first there.
+- **Shown and USD:** the amount fills the purchase like a legacy read (merchant = the store the popup already resolved, usually the generic store profile; kind `afterCredit`→`total`, `estimatedTotal`→`estimated-total`, `subtotal`→`subtotal`; reader version `generic-reader-v1`). The read is validated again before the comparison is saved, as legacy reads are.
+- **Shown in another currency:** "This comparison supports USD only" (the existing message); nothing is filled.
+- **Withheld:** a plain message to enter the amount; the shopper types it (Phase 11 behaviour). No guess, no partial amount.
+- **Privacy unchanged:** the content script returns only the reading (kind, amount, currency, or a reason code), never page text; it reads nothing on its own, only on the shopper's click.
+
+**Out of scope:** the automatic badge stays on the three legacy stores (it would need host access to every site, a Release A decision); the legacy adapters stay; no store configs; Web Store and privacy texts (`docs/release/`) are flagged for Phase 15, not edited.
+
+**Tests:** unit tests for the mapping, currency and withhold paths and the contracts; Playwright end-to-end tests on local fixture stores (a generic cart page read correctly, a withheld page, a non-USD page, a legacy store unchanged); every existing test green.
+
 
 ## What matters most
 
