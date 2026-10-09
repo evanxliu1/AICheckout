@@ -77,7 +77,21 @@ async function mhtmlOf(html) {
   return data;
 }
 
-test('a rebuilt pane page loads with JavaScript off and no network; data-pane-* stripped; placeholder withholds', async () => {
+/**
+ * A placeholder reader that always withholds `not-implemented`: these tests check the harness, not the real reader
+ * in packages/cart-reader (which reads the synthetic pages).
+ */
+function placeholderRoot() {
+  const root = mkdtempSync(path.join(os.tmpdir(), 'reader-placeholder-'));
+  mkdirSync(path.join(root, 'packages', 'cart-reader', 'src'), { recursive: true });
+  writeFileSync(
+    path.join(root, 'packages', 'cart-reader', 'src', 'index.ts'),
+    "export function readCart() {\n  return { shown: false as const, reason: 'not-implemented' };\n}\n",
+  );
+  return root;
+}
+
+test('a rebuilt pane page loads with JavaScript off and no network; data-pane-* stripped; placeholder reader withholds', async () => {
   const env = frozenEnv({
     pages: { 'dev.example/cart-1': cartPage() },
     labels: { development: [label('dev.example/cart-1')] },
@@ -95,7 +109,7 @@ test('a rebuilt pane page loads with JavaScript off and no network; data-pane-* 
     assert.equal(await opened.page.evaluate(() => document.querySelector('script')), null);
     // Two boxes (one in an open shadow root) and the iframe-free page: every data-pane-* attribute goes.
     assert.equal(await stripPaneAttributes(opened.page), 2);
-    await installReader(opened.page, (await bundleReader()).code);
+    await installReader(opened.page, (await bundleReader({ root: placeholderRoot() })).code);
     opened.network.mark();
     const t0 = Date.now();
     const r = await readPage(opened.page, opened.url);
@@ -216,7 +230,7 @@ test('review 7: a synthetic MHTML robot snapshot loads through replay.mjs; a cha
   try {
     assert.equal(opened.url, 'https://robot.example/cart');
     assert.equal(await opened.page.evaluate(() => document.querySelector('#t')?.textContent), 'Subtotal $20.00');
-    await installReader(opened.page, (await bundleReader()).code);
+    await installReader(opened.page, (await bundleReader({ root: placeholderRoot() })).code);
     const r = await readPage(opened.page, opened.url, { gapMs: 50 });
     assert.equal(r.output.reason, 'not-implemented');
   } finally {
@@ -245,7 +259,7 @@ test('run + score: real pages, variants, a robot page and legacy reads in one co
     },
     frame,
   });
-  const opts = { ...env, browser, testOnlyReaderCommit: 'abc1234', gapMs: 50 };
+  const opts = { ...env, browser, testOnlyReaderCommit: 'abc1234', gapMs: 50, readerRoot: placeholderRoot() };
   const dev = await run({ split: 'development', ...opts });
   assert.deepEqual([dev.pageStates, dev.variants, dev.errors], [3, 1, 0]);
   const lines = readFileSync(dev.outputsFile, 'utf8').trim().split('\n').map(JSON.parse);
