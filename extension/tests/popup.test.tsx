@@ -187,7 +187,9 @@ describe('popup store from the open tab', () => {
   it('shows the reader’s message when it withholds and fills nothing', async () => {
     openOn('https://shop.example.com/checkout');
     read.mockRejectedValue(
-      new Error('The cart total could not be read with certainty on this page. Enter the amount you will pay.'),
+      new Error(
+        'The cart total could not be read with certainty on this page. Enter the amount you will pay.',
+      ),
     );
     render(<Popup />);
     fireEvent.click(await screen.findByRole('button', { name: 'Read cart amount' }));

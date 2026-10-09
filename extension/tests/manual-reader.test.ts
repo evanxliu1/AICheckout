@@ -15,7 +15,10 @@ const store = 'https://shop.example.com/checkout';
 
 describe('manual reader (Phase 13b)', () => {
   it('maps a shown USD total to a generic reading at the tab’s store', () => {
-    const r = page(summary(row('Subtotal', '$90.00') + row('Shipping', '$10.00') + row('Order total', '$100.00')), store);
+    const r = page(
+      summary(row('Subtotal', '$90.00') + row('Shipping', '$10.00') + row('Order total', '$100.00')),
+      store,
+    );
     expect(r).toEqual({
       status: 'found',
       merchantId: 'generic-us-online',
@@ -27,7 +30,12 @@ describe('manual reader (Phase 13b)', () => {
   });
   it('maps the reader’s kinds: afterCredit → total, subtotal → subtotal', () => {
     expect(
-      page(summary(row('Total', '$50.00') + row('Gift card', '-$10.00') + row('Total after gift card', '$40.00')), store),
+      page(
+        summary(
+          row('Total', '$50.00') + row('Gift card', '-$10.00') + row('Total after gift card', '$40.00'),
+        ),
+        store,
+      ),
     ).toMatchObject({ status: 'found', kind: 'total', amountCents: 4000 });
     expect(page(summary(row('Subtotal (1 item)', '$65')), store)).toMatchObject({
       status: 'found',
@@ -47,14 +55,19 @@ describe('manual reader (Phase 13b)', () => {
       status: 'unavailable',
       reason: 'withheld',
     });
-    expect(page(summary(row('Total', '$0.00')), store)).toEqual({ status: 'unavailable', reason: 'empty-cart' });
+    expect(page(summary(row('Total', '$0.00')), store)).toEqual({
+      status: 'unavailable',
+      reason: 'empty-cart',
+    });
   });
   it('names a legacy site’s store for a generic reading of its other pages', () => {
-    expect(page(summary(row('Total', '$100.00')), 'https://www.bestbuy.com/site/some-product')).toMatchObject({
-      status: 'found',
-      merchantId: 'best-buy-us',
-      extractorVersion: 'generic-reader-v1',
-    });
+    expect(page(summary(row('Total', '$100.00')), 'https://www.bestbuy.com/site/some-product')).toMatchObject(
+      {
+        status: 'found',
+        merchantId: 'best-buy-us',
+        extractorVersion: 'generic-reader-v1',
+      },
+    );
   });
   it('runs the legacy adapter first on its cart pages', () => {
     const fixture = readFileSync('tests/fixtures/bestbuy-observed-summary.html', 'utf8');

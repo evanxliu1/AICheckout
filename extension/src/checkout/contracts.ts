@@ -11,7 +11,10 @@ const readingFields = z.strictObject({
   kind: z.enum(['total', 'estimated-total', 'subtotal']),
   // A legacy reading carries its merchant's bundled adapter version; a generic (`readCart`) reading,
   // at any merchant, the generic version (refined below).
-  extractorVersion: z.union([z.string().regex(/^[a-z0-9]+-summary-v[0-9]+$/), z.literal(GENERIC_READER_VERSION)]),
+  extractorVersion: z.union([
+    z.string().regex(/^[a-z0-9]+-summary-v[0-9]+$/),
+    z.literal(GENERIC_READER_VERSION),
+  ]),
 });
 const matchingReader = (value: { merchantId: string; extractorVersion: string }) =>
   value.extractorVersion === GENERIC_READER_VERSION ||

@@ -20,7 +20,7 @@ const snapshotFields = {
 };
 const probe = (reading: unknown) => probeSchema.safeParse({ url, reading }).success;
 const snapshot = (reading: Record<string, unknown>) => {
-  const { status: _status, ...fields } = reading;
+  const fields = Object.fromEntries(Object.entries(reading).filter(([key]) => key !== 'status'));
   return cartSnapshotSchema.safeParse({ ...fields, ...snapshotFields }).success;
 };
 

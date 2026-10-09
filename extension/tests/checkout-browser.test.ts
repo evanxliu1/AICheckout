@@ -108,7 +108,11 @@ describe('checkout browser boundary', () => {
       expect(JSON.stringify(snapshot)).not.toContain('do-not-store');
       await expect(validateActiveCheckout(snapshot)).resolves.toBeUndefined();
       execute.mockResolvedValue([
-        { frameId: 0, documentId: 'doc-1', result: { url: storeUrl, reading: { ...generic, amountCents: 10001 } } },
+        {
+          frameId: 0,
+          documentId: 'doc-1',
+          result: { url: storeUrl, reading: { ...generic, amountCents: 10001 } },
+        },
       ]);
       await expect(validateActiveCheckout(snapshot)).rejects.toThrow('cart or page changed');
     });
