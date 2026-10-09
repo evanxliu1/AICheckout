@@ -24,6 +24,7 @@ As of 2026-10-08T20:00Z.
 ## Active work
 
 - **Close Phase 12:** PR `phase12-eval-set` → `main` (capture review applied; merge after CI), merge after CI passes.
+- **Phase 13.2 in progress** on `phase13-reader` (not merged): generic reader rounds 1–4 (2026-10-08); round 4 applied an independent code review (tax/shipping labels are totals only with a preposition and never when they start with the tax or shipping word; a total outside any cart summary withholds; the storefront currency rule yields when the page's text says prices are in another currency; two-digit superscript cents only; Arabic separators; Indian grouping with decimals). Quick loop on development: real 381 correct / 0 wrong / 341 withheld, `cart-1` coverage 85.4%, variants 867 / 0 wrong, p95 13.5 ms. Not implemented from the review: skipping `data-pane-*` attribute names in code (the harness's bundle tripwire rejects the literal; the harness strips those attributes before every read).
 - **Phase 13 next:** reader v1 by a separate reader-developer agent on development pages only (`evals/reader/run.mjs` on development, unlimited); independent code review; held-out A run 1 by an evaluation agent (at most two runs); `docs/evals/reader-v1.md`; then extension integration (13b).
 
 ## Open questions and next steps
