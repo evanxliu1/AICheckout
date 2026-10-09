@@ -61,9 +61,12 @@ const HEADER_RE = new RegExp(`${QTY_RE.source}|^${PRODUCT_PRICE}`, 'u');
 const QUALIFIED_SAVINGS_RE =
   /(?:after|with|incl\w*|net of|nach|avec|apr[èe]s|con|tras|dopo|na|po|met)\s+(?:all\s+)?(?:sav\w+|discounts?|promotions?|coupons?|rabat\w*|descuentos?|remises?|r[ée]ductions?|sconti?|korting)|\byou(?:'ve| have)? saved\b\s*$/gu;
 
-/** "(shipping calculated at checkout)": a note on a total, stripped before classifying. */
+/**
+ * "(shipping calculated at checkout)", "total, tax estimated at checkout": a note on a total, stripped before
+ * classifying. Only as a parenthetical or after a comma or dash: "Total tax calculated at checkout" is a tax row.
+ */
 const AT_CHECKOUT_RE =
-  /(?:\b(?:ship\w*|deliver\w*|tax\w*|vat|gst|duties)\b\s*(?:(?:&|and|,)\s*)?)*(?:calculated|estimated|determined)\s+(?:at|in|during)\s+checkout/gu;
+  /[(,\-–—]\s*(?:\b(?:ship\w*|deliver\w*|tax\w*|vat|gst|duties)\b\s*(?:(?:&|and|,)\s*)?)*(?:calculated|estimated|determined)\s+(?:at|in|during)\s+checkout\)?/gu;
 
 const TAX_SHIP_RE = new RegExp(`${SHIP_RE.source}|${TAX_RE.source}`, 'gu');
 const TOTAL_WORD_RE = new RegExp(`${SUBTOTAL_RE.source}|${TOTAL_RE.source}`, 'u');
@@ -71,9 +74,15 @@ const TOTAL_WORD_RE = new RegExp(`${SUBTOTAL_RE.source}|${TOTAL_RE.source}`, 'u'
 const PREP_BEFORE_RE = new RegExp(`${PREP_RE.source}|\\bpre\\b|\\+|\\bplus\\b`, 'u');
 /**
  * A preposition starting the text right after one ("iva incluido", "税込", "livraison incluse", "tax-inclusive",
- * "vat 21% included"); never "+" or "plus".
+ * "vat 21% included", "Total del pedido IVA incl.", "Totale IVA inclusa"); never "+" or "plus".
  */
 const PREP_AFTER_RE = new RegExp(`^[\\s):.-]*(?:\\d+\\s?%\\s*)?(?:${PREP_RE.source})`, 'u');
+/**
+ * An English tax word right after the total word with nothing but a trailing preposition ("Total tax included",
+ * "Total VAT incl.") is the tax row; set off by a parenthesis or comma ("Total (tax included)", "Total, VAT incl.")
+ * or fused ("Total tax-inclusive") it is a total.
+ */
+const TAX_ROW_RE = /\btotal\s+(?:tax\w*|vat|gst|hst|pst|qst)\b(?!-)/u;
 
 /**
  * Whether a label that names tax or shipping is a qualified total ("Total incl. VAT", "Pre-tax total", "Total + tax",
@@ -88,7 +97,8 @@ function taxShipQualified(label: string): boolean {
     const after = label.slice(m.index! + m[0].length);
     if (!/[\p{L}\d]/u.test(before)) return false;
     const near = before.split(/\s+/).slice(-3).join(' ');
-    if (!PREP_BEFORE_RE.test(near) && !PREP_AFTER_RE.test(after)) return false;
+    const afterOk = PREP_AFTER_RE.test(after) && !TAX_ROW_RE.test(label);
+    if (!PREP_BEFORE_RE.test(near) && !afterOk) return false;
   }
   return true;
 }

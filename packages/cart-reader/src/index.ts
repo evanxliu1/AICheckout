@@ -221,6 +221,18 @@ function analyze(document: Document, options: ReadOptions): { reading: CartReadi
     return withhold(`${kind === 'subtotal' ? 'sub' : ''}total-outside-summary`, rows);
   if (row.minor === null) return withhold('amount-unreadable', rows);
   if (!row.currency) return withhold('currency-undetermined', rows);
+  // A total below every readable items total of its summary, with no credit row and no negative amount in the
+  // summary's text to explain it, is a misread row (a tax row taken for a total, say). An items total above it beside
+  // another that matches is a discount shown without a negative amount.
+  if (kind === 'estimatedTotal') {
+    const subs = rows.filter((r) => r.kind === 'subtotal' && r.minor !== null && near(r, row));
+    if (subs.length > 0 && subs.every((r) => r.minor! > row.minor!)) {
+      const first = row.els[0]!;
+      const scope = parentOf(parentOf(first) ?? first) ?? first;
+      const negative = findAmounts(normalizeText(visibleText(scope, ctx)), isCode).some((a) => a.negative);
+      if (!negative && !rows.some((r) => r.kind === 'credit')) return withhold('total-below-subtotal', rows);
+    }
+  }
   if (kind === 'subtotal') {
     // An items total of zero is an empty cart: nothing to recommend a card for, and often a drawer's placeholder.
     if (row.minor === 0) return withhold('subtotal-zero', rows);

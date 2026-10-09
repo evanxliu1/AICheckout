@@ -353,6 +353,47 @@ describe('review round 4 (2026-10-08)', () => {
     expect(classifyLabel('total delivery (incl. vat)')).toBeNull();
     expect(classifyLabel('total shipping incl. tax')).toBeNull();
   });
+  it('round 5 re-review (2026-10-08): a tax word right after the total word is the tax row', () => {
+    expect(classifyLabel('total tax calculated at checkout')).toBeNull();
+    expect(classifyLabel('total tax included')).toBeNull();
+    expect(classifyLabel('total vat incl.')).toBeNull();
+    expect(classifyLabel('total (tax included)')).toBe('estimatedTotal');
+    expect(classifyLabel('total, vat included')).toBe('estimatedTotal');
+    expect(classifyLabel('total tax-inclusive')).toBe('estimatedTotal');
+    expect(classifyLabel('total del pedido iva incl.')).toBe('estimatedTotal');
+    expect(classifyLabel('totale iva inclusa')).toBe('estimatedTotal');
+    expect(classifyLabel('total (shipping calculated at checkout)')).toBe('estimatedTotal');
+    expect(classifyLabel('total, tax estimated at checkout')).toBe('estimatedTotal');
+    expect(
+      page(
+        summary(
+          row('Subtotal', '$40.00') +
+            row('Total tax calculated at checkout', '$3.20') +
+            row('Total tax included', '$3.20'),
+        ),
+      ),
+    ).toEqual({ shown: false, reason: 'subtotal-not-alone' });
+  });
+  it('withholds a total below the items total when nothing negative explains it', () => {
+    expect(page(summary(row('Subtotal', '$40.00') + row('Total', '$3.20')))).toEqual({
+      shown: false,
+      reason: 'total-below-subtotal',
+    });
+    expect(
+      page(summary(row('Subtotal', '$40.00') + row('Discount', '-$10.00') + row('Total', '$30.00'))),
+    ).toMatchObject({
+      kind: 'estimatedTotal',
+      amountMinor: 3000,
+    });
+    // A negative amount anywhere in the summary's text explains it, even when it forms no row of its own.
+    expect(
+      page(summary(row('Subtotal', '$40.00') + '<p>Discount: - $10.00</p>' + row('Total', '$30.00'))),
+    ).toMatchObject({ kind: 'estimatedTotal', amountMinor: 3000 });
+    // An items total before savings beside a matching subtotal: a discount shown without a negative row.
+    expect(
+      page(summary(row('Item(s) total', '$94.99') + row('Subtotal', '$51.97') + row('Total', '$51.97'))),
+    ).toMatchObject({ kind: 'estimatedTotal', amountMinor: 5197 });
+  });
   it('takes exactly two superscript digits as cents; one digit is a footnote mark', () => {
     expect(page(summary('<div><span>Total</span><span>$12<sup>1</sup></span></div>'))).toMatchObject({
       shown: false,
