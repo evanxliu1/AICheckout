@@ -176,7 +176,7 @@ export async function installReader(page, code, name = GENERIC) {
 }
 
 /** One read: the reader's page-reading function called once, wall time measured in the page. */
-async function readOnce(page, url, name) {
+export async function readOnce(page, url, name) {
   const r = await page.evaluate(
     ({ name, url }) => {
       const reader = globalThis[name];
@@ -259,7 +259,7 @@ export function preflight(where) {
 }
 
 /** Where a snapshot-manifest entry's snapshot lives. */
-function locate(entry, { dataRoot, sites }) {
+export function locate(entry, { dataRoot, sites }) {
   const { domain, state } = parseId(entry.id);
   if (entry.method === 'pane')
     return {

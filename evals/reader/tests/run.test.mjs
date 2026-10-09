@@ -93,9 +93,10 @@ function readerRoot(files) {
   return root;
 }
 
-test('bundle: the placeholder bundles from packages/cart-reader/src only', async () => {
+test('bundle: the reader bundles from packages/cart-reader/src only', async () => {
   const b = await bundleReader();
-  assert.deepEqual(b.inputs, ['packages/cart-reader/src/index.ts', 'packages/cart-reader/src/types.ts']);
+  assert.ok(b.inputs.includes('packages/cart-reader/src/index.ts'));
+  assert.ok(b.inputs.every((f) => f.startsWith('packages/cart-reader/src/')), b.inputs.join(', '));
   assert.match(b.code, /__aiCheckoutCartReader/);
 });
 
