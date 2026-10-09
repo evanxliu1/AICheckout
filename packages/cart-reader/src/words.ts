@@ -33,7 +33,7 @@ export const AFTER_RE = /\bdue\b|after|remaining|verbleib|restbetrag|balance/u;
  * never a credit in the cart, never a total after one.
  */
 export const OFFER_RE =
-  /approv|\bstatement\b|terms apply|when you (?:open|apply|spend)|after you spend|if you (?:open|apply|spend)|apply (?:now|today)|card ?members?\b|\bgenehmig|\bapprobation|\baprobaci/u;
+  /approv|\bstatement\b|terms apply|when you (?:open|apply|spend)|after you spend|if you (?:open|apply|spend)|apply (?:now|today)|\bgenehmig|\bapprobation|\baprobaci/u;
 
 /** A credit row: negative amount with one of these words. */
 export const CREDIT_RE =

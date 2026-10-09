@@ -214,9 +214,20 @@ function analyze(document: Document, options: ReadOptions): { reading: CartReadi
     if (row) rows.push(row);
   }
   // A header's basket flyout (often laid out off the page by stylesheets the rebuild lacks) yields to the page's own
-  // summary: when a labelled summary row sits outside every header, the rows inside headers are left out.
-  if (rows.some((r) => r.kind !== null && r.inSummary && !inHeader(r.els[0]!)))
-    rows = rows.filter((r) => !inHeader(r.els[0]!));
+  // summary: when a summary row outside every header holds a non-zero amount of the same or a more preferred kind,
+  // the rows inside headers are left out. A header total that disagrees with an outside row is otherwise ambiguous.
+  const labelled = rows.filter((r) => r.kind !== null && r.kind !== 'credit');
+  const inside = labelled.filter((r) => inHeader(r.els[0]!));
+  if (inside.length > 0) {
+    const rank = (r: Row) => (r.kind === 'after-candidate' ? 1 : KINDS.indexOf(r.kind as Kind));
+    const best = Math.min(...inside.map(rank));
+    const outside = labelled.filter((r) => r.inSummary && !inHeader(r.els[0]!));
+    const amount = (r: Row) => `${r.currency ?? '?'}:${r.minor ?? 'unreadable'}`;
+    if (outside.some((r) => r.minor !== 0 && rank(r) <= best))
+      rows = rows.filter((r) => !inHeader(r.els[0]!));
+    else if (outside.some((o) => inside.some((i) => amount(o) !== amount(i))))
+      return withhold('ambiguous', rows);
+  }
   // An unreadable total row that wraps another total row is an aggregate (a block whose other amounts climbed to
   // its label), not a second total of its kind.
   for (const r of rows)
@@ -431,7 +442,8 @@ function hiddenWhy(el: Element, ctx: Ctx): string | null {
   for (let a: Element | null = el; a; a = parentOf(a))
     if (hiddenBox(style(a, ctx))) return a === el ? 'box' : 'ancestor-box';
   if (!ctx.layout) return null;
-  // An off-canvas drawer slid out of view: an ancestor translated by at least its own width or height.
+  // An off-canvas drawer slid out of view: an ancestor translated by at least its own width or height to beyond the
+  // viewport's edge (a box aligned right by left:100% and translateX(-100%) stays on screen).
   for (let a: Element | null = el; a; a = parentOf(a)) if (translatedAway(a, ctx)) return 'translated-away';
   const range = ctx.doc.createRange();
   range.selectNodeContents(el);
@@ -453,13 +465,19 @@ function hiddenWhy(el: Element, ctx: Ctx): string | null {
   return null;
 }
 
-/** Whether a box is translated (translateX(100%), translateY(-100%)) at least its own width or height away. */
+/**
+ * Whether a box is translated (translateX(100%), translateY(-100%)) at least its own width or height away, and lies
+ * beyond the viewport's edge where it ends up.
+ */
 function translatedAway(el: Element, ctx: Ctx): boolean {
   const m = /^matrix\(([^)]*)\)$/.exec(style(el, ctx).transform ?? '');
   if (!m) return false;
   const [, , , , tx, ty] = m[1]!.split(',').map(Number);
   const r = el.getBoundingClientRect();
-  return (r.width >= 1 && Math.abs(tx!) >= r.width - 1) || (r.height >= 1 && Math.abs(ty!) >= r.height - 1);
+  const viewW = ctx.view?.innerWidth ?? 0;
+  const viewH = ctx.view?.innerHeight ?? 0;
+  if (r.width >= 1 && Math.abs(tx!) >= r.width - 1 && (r.right <= 0 || r.left >= viewW)) return true;
+  return r.height >= 1 && Math.abs(ty!) >= r.height - 1 && (r.bottom <= 0 || r.top >= viewH);
 }
 
 /** Whether an ancestor scrolls vertically, so that content below the page's own end is still reachable. */

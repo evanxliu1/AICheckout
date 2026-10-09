@@ -647,13 +647,16 @@ describe('amount grammar', () => {
 describe('round 6 (2026-10-08): generalization to stores the reader was not tuned on', () => {
   it("a header's basket flyout yields to the page's own summary", () => {
     const flyout = `<header><div>${row('Total', '$31.00')}<button>Checkout</button></div></header>`;
-    const main = `<main>${summary(row('Subtotal', '$26.00') + row('Shipping', '$5.00'))}</main>`;
+    const main = `<main>${summary(row('Subtotal', '$21.00') + row('Shipping', '$5.00') + row('Total', '$26.00'))}</main>`;
     expect(page(flyout + main)).toEqual({
       shown: true,
-      kind: 'subtotal',
+      kind: 'estimatedTotal',
       amountMinor: 2600,
       currency: 'USD',
     });
+    // Only a subtotal outside: the header's total is not displaced, and the two disagree.
+    const subOnly = `<main>${summary(row('Subtotal', '$26.00') + row('Shipping', '$5.00'))}</main>`;
+    expect(page(flyout + subOnly)).toEqual({ shown: false, reason: 'ambiguous' });
     // Alone, the flyout is the page's summary (a mini cart open over a product page).
     expect(page(flyout)).toMatchObject({ shown: true, amountMinor: 3100 });
   });
@@ -677,6 +680,26 @@ describe('round 6 (2026-10-08): generalization to stores the reader was not tune
       `${row('Total after gift card and future statement credit*', '$4.93')}<button>Checkout</button></section>`;
     const r = page(offer + summary(row('Subtotal', '$279.98') + row('Total', '$304.93')));
     expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 30493, currency: 'USD' });
+  });
+  it('a loyalty credit applied in the cart is a credit; only a card offer is not', () => {
+    const r = page(
+      summary(
+        row('Total', '$50.00') + row('Cardmember rewards applied', '-$10.00') + row('Amount due', '$40.00'),
+      ),
+    );
+    expect(r).toEqual({ shown: true, kind: 'afterCredit', amountMinor: 4000, currency: 'USD' });
+  });
+  it("a header's summary does not yield to a zero placeholder outside it", () => {
+    const flyout = `<header>${summary(row('Total', '$55.00'))}</header>`;
+    expect(page(flyout + summary(row('Estimated total', '$0.00')))).toEqual({
+      shown: false,
+      reason: 'ambiguous',
+    });
+    // A less preferred kind outside does not displace the header's total either.
+    expect(page(flyout + summary(row('Subtotal', '$55.00')))).toMatchObject({
+      shown: true,
+      amountMinor: 5500,
+    });
   });
   it('a different order total outside the summary list keeps two totals ambiguous', () => {
     const bar = `<div>${row('Order Total', '$32.84')}<button>Secure checkout</button></div>`;
