@@ -170,7 +170,15 @@ function analyze(document: Document, options: ReadOptions): { reading: CartReadi
   let named: Set<string> | undefined;
   const evidence: PageEvidence = {
     structured: () => (structured ??= structuredCurrency(document)),
-    named: () => (named ??= namedCurrencies(pageText([document.body, ...shadowRoots], ctx))),
+    named: () =>
+      (named ??= namedCurrencies(
+        pageText([document.body, ...shadowRoots], ctx),
+        [document, ...shadowRoots].flatMap((r) =>
+          [...r.querySelectorAll('select')].map((s) =>
+            [...s.options].map((o) => ({ text: o.textContent ?? '', selected: o.selected })),
+          ),
+        ),
+      )),
   };
   const rows: Row[] = [];
   for (const els of ctx.rows.values()) {
@@ -273,16 +281,23 @@ function collectRows(root: Node, ctx: Ctx): void {
   }
 }
 
-/** The text of whole trees, scripts and styles left out (visibility is not checked: this is a page-wide gate). */
+/**
+ * The text a shopper can see across whole trees: hidden boxes (own styles only), scripts, styles and option lists left
+ * out. Layout is not checked: this is a page-wide gate.
+ */
 function pageText(roots: Node[], ctx: Ctx): string {
   const parts: string[] = [];
-  for (const root of roots) {
-    const walker = ctx.doc.createTreeWalker(root, 4 /* SHOW_TEXT */);
-    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
-      const parent = n.parentNode as Element | null;
-      if (parent && parent.nodeType === 1 && !SKIP_PARENTS.has(parent.nodeName)) parts.push((n as Text).data);
+  const walk = (node: Node) => {
+    for (let n = node.firstChild; n; n = n.nextSibling) {
+      if (n.nodeType === 3) parts.push((n as Text).data);
+      else if (n.nodeType === 1 && !SKIP_PARENTS.has(n.nodeName)) {
+        const cs = style(n as Element, ctx);
+        if (hiddenBox(cs) || cs.visibility === 'hidden' || cs.visibility === 'collapse') continue;
+        walk(n);
+      }
     }
-  }
+  };
+  for (const root of roots) walk(root);
   return parts.join(' ');
 }
 

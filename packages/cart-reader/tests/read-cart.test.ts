@@ -339,6 +339,20 @@ describe('review round 4 (2026-10-08)', () => {
     expect(classifyLabel('items total with tax')).toBe('subtotal');
     expect(classifyLabel('total after tax')).toBe('after-candidate');
   });
+  it('round 5 (2026-10-08): hyphens, rates, more prepositions and a shipping-fee word', () => {
+    expect(classifyLabel('total tax-inclusive')).toBe('estimatedTotal');
+    expect(classifyLabel('total, vat 21% included')).toBe('estimatedTotal');
+    expect(classifyLabel('total (vat 21% incl.)')).toBe('estimatedTotal');
+    expect(classifyLabel('total estimé avant taxes')).toBe('estimatedTotal');
+    expect(classifyLabel('total antes de impuestos')).toBe('estimatedTotal');
+    expect(classifyLabel('합계(배송비 포함)')).toBe('estimatedTotal');
+    expect(classifyLabel('total (shipping calculated at checkout)')).toBe('estimatedTotal');
+    expect(classifyLabel('shipping & taxes calculated at checkout')).toBeNull();
+    // The preposition must be within three words of the tax or shipping word.
+    expect(classifyLabel('total with discount for members on delivery')).toBeNull();
+    expect(classifyLabel('total delivery (incl. vat)')).toBeNull();
+    expect(classifyLabel('total shipping incl. tax')).toBeNull();
+  });
   it('takes exactly two superscript digits as cents; one digit is a footnote mark', () => {
     expect(page(summary('<div><span>Total</span><span>$12<sup>1</sup></span></div>'))).toMatchObject({
       shown: false,
@@ -366,8 +380,52 @@ describe('review round 4 (2026-10-08)', () => {
     });
     // A selector list, a converted price and "Hong Kong SAR" are not statements about the page's prices.
     const list =
-      '<p>Currency USD (selected) AUD CAD EUR</p><p>Ships to Hong Kong SAR</p><p>$19.72 (≈ AUD 11.50)</p><p>$9.99 (‚âà EUR 8.70)</p><p>Canadian dollar (CAD)</p>';
+      '<p>Currency USD (selected) AUD CAD EUR</p><p>Ships to Hong Kong SAR</p><p>$19.72 (≈ AUD 11.50)</p><p>$9.99 (‚âà EUR 8.70)</p>';
     expect(page(list + summary(row('Total', '$25.00')))).toMatchObject({ currency: 'USD' });
+  });
+  describe('round 5 (2026-10-08): more ways a page names its currency', () => {
+    const total = summary(row('Total', '$25.00'));
+    const undetermined = { shown: false, reason: 'currency-undetermined' };
+    it('a "Currency:" label, capitals and a currency name are statements', () => {
+      expect(page(`<header>Currency: CAD</header>${total}`)).toEqual(undetermined);
+      expect(page(`<p>ALL PRICES IN AUD</p>${total}`)).toEqual(undetermined);
+      expect(page(`<p>All prices are in Canadian dollars.</p>${total}`)).toEqual(undetermined);
+      expect(page(`<p>Prices in USD</p>${total}`)).toMatchObject({ currency: 'USD' });
+      expect(page(`<p>Choose currency: USD AUD CAD</p>${total}`)).toMatchObject({ currency: 'USD' });
+      expect(page(`<p>Euro pillow</p>${total}`)).toMatchObject({ currency: 'USD' });
+    });
+    it('a selector button counts when the visible text holds one code; hidden option lists do not', () => {
+      expect(page(`<header><button>Canada (CAD $)</button></header>${total}`)).toEqual(undetermined);
+      expect(page(`<header><button>CAD $</button></header>${total}`)).toEqual(undetermined);
+      const hiddenList =
+        '<ul style="display:none"><li>United States (USD $)</li><li>Singapore (SGD $)</li></ul>';
+      expect(page(`<button>Canada (CAD $)</button>${hiddenList}${total}`)).toEqual(undetermined);
+      expect(page(`<button>United States (USD $)</button>${hiddenList}${total}`)).toMatchObject({
+        currency: 'USD',
+      });
+      expect(page(`<ul><li>USD $</li><li>CAD $</li></ul>${total}`)).toMatchObject({ currency: 'USD' });
+      expect(
+        page(`<p style="display:none">prices in NZD</p>${total}`, { url: 'https://x.example.com.au/' }),
+      ).toMatchObject({ currency: 'AUD' });
+    });
+    it('a price written with a code or country-named prefix elsewhere counts; a conversion does not', () => {
+      expect(page(`<div><p>You may also like</p><span>CA$19.99</span></div>${total}`)).toEqual(undetermined);
+      expect(page(`<div><p>Gift card</p><span>$19.99 CAD</span></div>${total}`)).toEqual(undetermined);
+      expect(page(`<div><p>Gift card</p><span>$19.99 USD</span></div>${total}`)).toMatchObject({
+        currency: 'USD',
+      });
+      expect(page(`<p>$19.72 (approx. CAD 27.10)</p>${total}`)).toMatchObject({ currency: 'USD' });
+    });
+    it('the chosen option of a currency select counts; a country select does not', () => {
+      expect(page(`<select><option>USD</option><option selected>CAD</option></select>${total}`)).toEqual(
+        undetermined,
+      );
+      expect(
+        page(`<select><option selected>Hong Kong SAR</option><option>Macao SAR</option></select>${total}`, {
+          url: 'https://x.example.hk/',
+        }),
+      ).toMatchObject({ currency: 'HKD' });
+    });
   });
   it('withholds a total that sits outside any cart summary', () => {
     const offer = `<div><h3>Frequently bought together</h3><p>Total price: $45.00</p><button>Add all three to cart</button></div>`;

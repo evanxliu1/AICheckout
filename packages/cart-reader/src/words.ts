@@ -7,11 +7,11 @@ export const EXCLUDE_RE =
 
 /** Shipping and tax words: a row with one of these is a total only in the shape `taxShipQualified` accepts. */
 export const SHIP_RE =
-  /(?<![a-z])ship|deliver|liefer|versand|livraison|env[ií]o|bezorg|verzend|spedizion|consegna|frete|entrega|dostaw|wysy[łl]|kargo|teslimat|配送|送料|배송|شحن|توصيل|\bporto\b|frakt|leverans|levering|handling/u;
+  /(?<![a-z])ship|deliver|liefer|versand|livraison|env[ií]o|bezorg|verzend|spedizion|consegna|frete|entrega|dostaw|wysy[łl]|kargo|teslimat|配送|送料|배송(?:비|료)?|شحن|توصيل|\bporto\b|frakt|leverans|levering|handling/u;
 export const TAX_RE =
   /\btax|\bvat\b|\bgst\b|\bhst\b|\bpst\b|\bqst\b|mwst|\bust\b|steuer|\biva\b|\btva\b|\bbtw\b|impuest|imposto|imp[ôo]t|imposta|podatek|\bkdv\b|税|세금|ضريب|\bmoms\b|skatt/u;
 export const PREP_RE =
-  /incl|inkl|\binc\b|excl|exkl|\bexc\b|before|after|pre-?\s?tax|\bwith\b|without|\bsans\b|\bhors\b|\bttc\b|\bht\b|税込|税抜|込|抜|포함|제외|zzgl|compris|\bavec\b|escl|senza|\bcon\b|\bsin\b|zonder|ohne|inbegrepen|w tym|\bz\b|\bbez\b|dahil|hariç|شامل|brut|gross/u;
+  /incl|inkl|\binc\b|excl|exkl|\bexc\b|before|after|avant|antes|\bvor\b|prima|pre-?\s?tax|\bwith\b|without|\bsans\b|\bhors\b|\bttc\b|\bht\b|税込|税抜|込|抜|포함|제외|zzgl|compris|\bavec\b|escl|senza|\bcon\b|\bsin\b|zonder|ohne|inbegrepen|w tym|\bz\b|\bbez\b|dahil|hariç|شامل|brut|gross/u;
 
 /** Items total. Tested before TOTAL_RE, since most of these contain a total word. */
 export const SUBTOTAL_RE =
@@ -61,12 +61,19 @@ const HEADER_RE = new RegExp(`${QTY_RE.source}|^${PRODUCT_PRICE}`, 'u');
 const QUALIFIED_SAVINGS_RE =
   /(?:after|with|incl\w*|net of|nach|avec|apr[èe]s|con|tras|dopo|na|po|met)\s+(?:all\s+)?(?:sav\w+|discounts?|promotions?|coupons?|rabat\w*|descuentos?|remises?|r[ée]ductions?|sconti?|korting)|\byou(?:'ve| have)? saved\b\s*$/gu;
 
+/** "(shipping calculated at checkout)": a note on a total, stripped before classifying. */
+const AT_CHECKOUT_RE =
+  /(?:\b(?:ship\w*|deliver\w*|tax\w*|vat|gst|duties)\b\s*(?:(?:&|and|,)\s*)?)*(?:calculated|estimated|determined)\s+(?:at|in|during)\s+checkout/gu;
+
 const TAX_SHIP_RE = new RegExp(`${SHIP_RE.source}|${TAX_RE.source}`, 'gu');
 const TOTAL_WORD_RE = new RegExp(`${SUBTOTAL_RE.source}|${TOTAL_RE.source}`, 'u');
-/** A preposition somewhere before a tax or shipping word ("total incl. 21% btw", "pre-tax", "before tax & shipping"). */
+/** A preposition within three words before a tax or shipping word ("total incl. 21% btw", "pre-tax", "before tax & shipping"). */
 const PREP_BEFORE_RE = new RegExp(`${PREP_RE.source}|\\bpre\\b|\\+|\\bplus\\b`, 'u');
-/** A preposition starting the text right after one ("iva incluido", "税込", "livraison incluse"); never "+" or "plus". */
-const PREP_AFTER_RE = new RegExp(`^[\\s):.]*(?:${PREP_RE.source})`, 'u');
+/**
+ * A preposition starting the text right after one ("iva incluido", "税込", "livraison incluse", "tax-inclusive",
+ * "vat 21% included"); never "+" or "plus".
+ */
+const PREP_AFTER_RE = new RegExp(`^[\\s):.-]*(?:\\d+\\s?%\\s*)?(?:${PREP_RE.source})`, 'u');
 
 /**
  * Whether a label that names tax or shipping is a qualified total ("Total incl. VAT", "Pre-tax total", "Total + tax",
@@ -77,17 +84,18 @@ const PREP_AFTER_RE = new RegExp(`^[\\s):.]*(?:${PREP_RE.source})`, 'u');
 function taxShipQualified(label: string): boolean {
   if (!TOTAL_WORD_RE.test(label)) return false;
   for (const m of label.matchAll(TAX_SHIP_RE)) {
-    const before = label.slice(0, m.index!);
+    const before = label.slice(0, m.index!).trim();
     const after = label.slice(m.index! + m[0].length);
     if (!/[\p{L}\d]/u.test(before)) return false;
-    if (!PREP_BEFORE_RE.test(before) && !PREP_AFTER_RE.test(after)) return false;
+    const near = before.split(/\s+/).slice(-3).join(' ');
+    if (!PREP_BEFORE_RE.test(near) && !PREP_AFTER_RE.test(after)) return false;
   }
   return true;
 }
 
 /** Classifies a row label (amounts removed, lower-cased). `null` when it is not a summary total row. */
 export function classifyLabel(raw: string): Kind | 'after-candidate' | null {
-  const label = raw.replace(QUALIFIED_SAVINGS_RE, ' ');
+  const label = raw.replace(QUALIFIED_SAVINGS_RE, ' ').replace(AT_CHECKOUT_RE, ' ');
   if (label.length > 80 || EXCLUDE_RE.test(label) || HEADER_RE.test(label)) return null;
   // A number right before the total word ("500 Total") is a product name, not a label.
   if (/\d\s*(?:tota|gesamt)/u.test(label)) return null;
