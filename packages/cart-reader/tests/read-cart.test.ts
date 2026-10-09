@@ -253,6 +253,26 @@ describe('summary rows', () => {
       reason: 'no-summary',
     });
   });
+  it('does not let a product line price inside the summary block a subtotal', () => {
+    const r = page(
+      `<section><ul><li><img alt=""><p>Blue mug</p><span>$59.95</span><button>Remove</button></li></ul>${row('Subtotal', '$119.90')}<button>Checkout</button></section>`,
+    );
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 11990, currency: 'USD' });
+  });
+  it('is not put off by markup indentation inside a row', () => {
+    const pad = '\n' + ' '.repeat(40);
+    const r = page(
+      `<section><div><span>${pad.repeat(12)}Subtotal (1 item):</span><span><span>USD 16.34</span></span><div>Points to be earned: 26 pt</div></div><button>Proceed to checkout</button></section>`,
+    );
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 1634, currency: 'USD' });
+  });
+  it('drops a line total inside an indented product block that names its price', () => {
+    const pad = '\n' + ' '.repeat(60);
+    const r = page(
+      `<div>${pad}<p>Qty: 1</p>${pad}<p>Availability: 1 Item(s) in Stock</p>${pad}<div>${pad}<span>price: $69.95</span>${pad}<span>total: $69.95</span>${pad}</div>${pad.repeat(8)}</div>`,
+    );
+    expect(r).toEqual({ shown: false, reason: 'no-summary' });
+  });
   it('does not read "summary" as a total word', () => {
     const r = page(
       `<section><h2>Bag summary (1 item)</h2>${row('Subtotal (1 item)', '$65')}<button>Checkout</button></section>`,

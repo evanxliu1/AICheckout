@@ -45,9 +45,15 @@ export const CHECKOUT_RE =
 export type Kind = 'afterCredit' | 'estimatedTotal' | 'subtotal';
 
 /** Classifies a row label (amounts removed, lower-cased). `null` when it is not a summary total row. */
-/** Line-item and table-header rows (quantity columns), and unrendered templates. */
-export const LINE_ITEM_RE =
-  /\bqty\b|quantit|menge|anzahl|cantidad|aantal|ilo[śs][ćc]|\badet\b|数量|수량|الكمية|\{\{|\}\}|^(?:product|article|artikel|art[ií]culo|articolo|item)s?\b.*\b(?:price|prix|preis|precio|prezzo|prijs)/u;
+/** Quantity words and unrendered templates: a line item or a table header. */
+const QTY_RE =
+  /\bqty\b|quantit|menge|anzahl|cantidad|aantal|ilo[śs][ćc]|\badet\b|数量|수량|الكمية|\{\{|\}\}/u;
+/** "Product ... price": a table header or a product block. */
+const PRODUCT_PRICE = String.raw`(?:product|article|artikel|art[ií]culo|articolo|item)s?\b.*\b(?:price|prix|preis|precio|prezzo|prijs)`;
+/** A product block's text (used on blocks around a row). */
+export const LINE_ITEM_RE = new RegExp(`${QTY_RE.source}|${PRODUCT_PRICE}`, 'u');
+/** A row label that is a table header, not a total ("Total (1 items) prices include VAT" is a total). */
+const HEADER_RE = new RegExp(`${QTY_RE.source}|^${PRODUCT_PRICE}`, 'u');
 
 /**
  * "Total after savings", "total with discount": a qualifier on a total, not a savings row; "you saved": a note beside
@@ -58,7 +64,7 @@ const QUALIFIED_SAVINGS_RE =
 
 export function classifyLabel(raw: string): Kind | 'after-candidate' | null {
   const label = raw.replace(QUALIFIED_SAVINGS_RE, ' ');
-  if (label.length > 80 || EXCLUDE_RE.test(label) || LINE_ITEM_RE.test(label)) return null;
+  if (label.length > 80 || EXCLUDE_RE.test(label) || HEADER_RE.test(label)) return null;
   // A number right before the total word ("500 Total") is a product name, not a label.
   if (/\d\s*(?:tota|gesamt)/u.test(label)) return null;
   if ((SHIP_RE.test(label) || TAX_RE.test(label)) && !PREP_RE.test(label)) return null;

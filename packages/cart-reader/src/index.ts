@@ -4,18 +4,21 @@
 // never the rebuild's `data-pane-*` attributes or any per-domain list. It shows an amount only when certain and
 // otherwise withholds. The evaluation harness is evals/reader/.
 //
-// How it reads (development round 1, 2026-10-08):
+// How it reads (development rounds 1 to 3, 2026-10-08):
 // 1. Every text node that looks like an amount climbs to its row: the nearest small ancestor whose text carries a
 //    summary label (total, subtotal, amount due, in many languages), or a labelled previous sibling of an ancestor
 //    (dt/dd, th/td, label/value pairs).
-// 2. A row counts when it is visible to the shopper (display, visibility, opacity, clipping, on the page), its
-//    visible text has exactly one distinct non-negative amount, and its label is a total, subtotal or, next to a
-//    credit row, an after-credit total. Savings, shipping, tax, points, instalment and line-item rows are excluded.
+// 2. A row counts when it is visible to the shopper (display, visibility, opacity below one half, clipping, on the
+//    page or inside a scrolling panel), its visible text has exactly one distinct non-negative amount, and its label
+//    is a total, subtotal or, next to a credit row, an after-credit total. Savings, shipping, tax, points, instalment
+//    and line-item rows are excluded. A total label ending in a bare number the grammar cannot read is a total the
+//    reader cannot show, and withholds.
 // 3. The most preferred kind present wins (afterCredit > estimatedTotal > subtotal). Two different amounts of that
 //    kind mean withhold, unless only one of them sits in a cart summary (next to shipping, tax or a checkout control).
 //    A subtotal alone is shown only when no other row of its summary holds a total label or an unexplained different
 //    amount (shipping, tax, savings, threshold and rewards rows explain theirs).
-// 4. Currency by the protocol's evidence order; unparseable amounts withhold (a zero total is shown: an empty cart).
+// 4. Currency by the protocol's evidence order; unparseable amounts withhold. A zero total is shown (an empty cart);
+//    a zero subtotal is withheld, since it is often a drawer's placeholder.
 import { MARK_RE, findAmounts, normalizeText, toMinor } from './amounts.ts';
 import {
   MINOR_UNITS,
@@ -64,6 +67,9 @@ const KINDS: Kind[] = ['afterCredit', 'estimatedTotal', 'subtotal'];
 const MAX_ROW_TEXT = 200;
 const MAX_LABEL_TEXT = 80;
 const MAX_CLIMB = 8;
+/** A line's remove control, in many languages. */
+const REMOVE_RE =
+  /\bremove\b|\bdelete\b|entfernen|l[öo]schen|supprimer|retirer|eliminar|quitar|rimuovi|elimina|verwijder|usu[ńn]|kaldır|sil\b|удалить|削除|삭제|حذف|إزالة/u;
 const ALNUM_END = /[\p{L}\d]$/u;
 const ALNUM_START = /^[\p{L}\d]/u;
 /** Text that may hold an amount: a marker or code, two decimals, ",-" decimals, or a bare numeric fragment. */
@@ -126,15 +132,14 @@ function analyze(document: Document, options: ReadOptions): { reading: CartReadi
     view,
     styles: new Map(),
     layout: Boolean(root && view && root.getBoundingClientRect().width > 0),
-    // The shopper scrolls down, not sideways: a box to the right of the viewport is an off-canvas panel, while the
-    // page's height is the taller of the root's and the body's (either may be the scrolling element).
-    pageW: root ? root.clientWidth : 0,
+    pageW: root ? Math.max(root.scrollWidth, root.clientWidth) : 0,
+    // The page's height is the taller of the root's and the body's (either may be the scrolling element).
     pageH: root ? Math.max(root.scrollHeight, root.clientHeight, document.body?.scrollHeight ?? 0) : 0,
     rows: new Map(),
   };
   // A body that clips or scrolls its own overflow bounds what the shopper can reach sideways.
   if (document.body && view && ctx.layout && view.getComputedStyle(document.body).overflowX !== 'visible')
-    ctx.pageW = Math.min(ctx.pageW, document.body.clientWidth);
+    ctx.pageW = Math.min(ctx.pageW, document.body.scrollWidth);
   const withhold = (reason: string, rows: Row[] = []) => ({
     reading: { shown: false, reason } as CartReading,
     rows,
@@ -220,20 +225,22 @@ function collectRows(root: Node, ctx: Ctx): void {
     let el: Element | null = parent;
     for (let depth = 0; el && depth < MAX_CLIMB; depth += 1) {
       if (LIST_TAGS.has(el.nodeName)) break;
-      const text = el.textContent ?? '';
+      // Lengths are of the words, not of the markup's indentation.
+      const text = (el.textContent ?? '').replace(/\s+/g, ' ');
       if (text.length > MAX_ROW_TEXT) break;
       // A label the shopper sees (a screen-reader-only label does not count; the climb goes on).
       if (ANY_LABEL_RE.test(text.toLowerCase()) && ANY_LABEL_RE.test(visibleText(el, ctx).toLowerCase())) {
         if (!ctx.rows.has(el)) ctx.rows.set(el, [el]);
         break;
       }
-      // A label in the previous sibling: <dt>Total</dt><dd>$12</dd>, <th>Total</th><td>$12</td>.
+      // A label in the previous sibling: <dt>Total</dt><dd>$12</dd>, <th>Total</th><td>$12</td>. A count in
+      // parentheses ("Subtotal (2 items)") is part of the label; any other digit makes it something else.
       const prev = el.previousElementSibling;
-      const prevText = prev?.textContent ?? '';
+      const prevText = (prev?.textContent ?? '').replace(/\s+/g, ' ');
       if (
         prev &&
         prevText.length <= MAX_LABEL_TEXT &&
-        !/\d/.test(prevText) &&
+        !/\d/.test(prevText.replace(/\([^)]*\)/g, '')) &&
         ANY_LABEL_RE.test(prevText.toLowerCase()) &&
         !hiddenWhy(prev, ctx)
       ) {
@@ -404,6 +411,11 @@ function readRow(els: Element[], ctx: Ctx, store: Storefront, structured: () => 
   return { ...report, kind, minor, currency, inSummary: inSummary(els.at(-1)!, kind) };
 }
 
+/** A block's text, lower-cased, with the markup's indentation collapsed (lengths are of the words). */
+function blockText(el: Element): string {
+  return (el.textContent ?? '').replace(/\s+/g, ' ').toLowerCase();
+}
+
 /**
  * Whether a row sits inside one product line (a product image or quantity control within three levels, before any
  * summary words): its total is the line's, not the cart's.
@@ -411,7 +423,7 @@ function readRow(els: Element[], ctx: Ctx, store: Storefront, structured: () => 
 function lineItemOf(el: Element): boolean {
   let a = parentOf(el);
   for (let depth = 0; a && a.nodeName !== 'BODY' && depth < 3; depth += 1) {
-    const text = (a.textContent ?? '').toLowerCase();
+    const text = blockText(a);
     if (text.length > 600) return false;
     if (SHIP_RE.test(text) || TAX_RE.test(text) || CHECKOUT_RE.test(text) || SUBTOTAL_RE.test(text))
       return false;
@@ -426,7 +438,7 @@ function summaryOf(el: Element, kind: Kind | 'after-candidate', outermost = fals
   let found: Element | null = null;
   let a = parentOf(el);
   for (let depth = 0; a && a.nodeName !== 'BODY' && depth < 5; depth += 1) {
-    const text = (a.textContent ?? '').toLowerCase();
+    const text = blockText(a);
     if (text.length > 4000) break;
     if (
       SHIP_RE.test(text) ||
@@ -445,6 +457,21 @@ function summaryOf(el: Element, kind: Kind | 'after-candidate', outermost = fals
 /** Whether a row sits in a cart summary: an ancestor also holds shipping, tax, a checkout control or a subtotal. */
 function inSummary(el: Element, kind: Kind | 'after-candidate'): boolean {
   return summaryOf(el, kind) !== null;
+}
+
+/**
+ * Whether a row of the summary sits in a product line: an ancestor below the summary, not holding the subtotal row,
+ * shows a product image, a quantity or a remove control. Its prices are the line's, not an unlabelled total.
+ */
+function inProductLine(el: Element, summary: Element, subtotal: Element): boolean {
+  for (let a = parentOf(el); a && a !== summary; a = parentOf(a)) {
+    if (a.contains(subtotal)) return false;
+    const text = blockText(a);
+    if (text.length > 600) return false;
+    if (LINE_ITEM_RE.test(text) || REMOVE_RE.test(text) || a.querySelector('img, picture') !== null)
+      return true;
+  }
+  return false;
 }
 
 /** The text with its amounts taken out: the row's label. */
@@ -486,7 +513,7 @@ function subtotalBlocker(
       el = parentOf(el);
     if (!el || seen.has(el) || row.els.some((e) => e.contains(el))) continue;
     seen.add(el);
-    if (hiddenWhy(el, ctx) || lineItemOf(el)) continue;
+    if (hiddenWhy(el, ctx) || lineItemOf(el) || inProductLine(el, summary, own)) continue;
     // A wrapper around the subtotal row is read without the subtotal's own text.
     const text = normalizeText(visibleText(el, ctx)).replace(row.text, ' ').trim();
     if (text.length > MAX_ROW_TEXT) continue;
