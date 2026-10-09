@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-10-09
+* [Phase 13b manual read: adapter on its cart URLs, readCart everywhere else, merchant from the tab](./2026-10-09-generic-read-on-legacy-site-pages.md) — implementer: the generic reader runs on every URL no adapter matches (a legacy store's product pages included) and names the tab's store; `generic-reader-v1` is accepted at any merchant id; the generic store keeps "Eligible" after a read.
+
 ## 2026-10-08
 * [Phase 13 simplified](./2026-10-08-phase-13-simplified.md) — Evan: no isolation audit or separate held-out agent; a generic, store-agnostic reader is what matters.
 * [One labeller per store, five stores per labeller agent](./2026-10-08-single-labeller.md) — Evan: no second labeller or adjudicator, for speed; final labels from `agreement.mjs --single`; currency stop rule kept.

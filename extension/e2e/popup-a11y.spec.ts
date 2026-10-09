@@ -100,10 +100,10 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
     await expect(page.getByRole('alert')).toBeVisible();
     await check('cart-error');
 
-    // Another U.S. online store (Phase 11): a typed amount, no cart reader; online retail applies.
+    // Another U.S. online store (Phase 11): a typed amount; online retail applies. Since Phase 13b the
+    // cart reader is offered here too.
     await page.getByLabel('Merchant').selectOption('generic-us-online');
-    await expect(page.getByText(/Type the amount you will pay/)).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Read cart amount' })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Read cart amount' })).toBeVisible();
     await page.getByLabel('Purchase amount (USD)').fill('100');
     await page.getByLabel('How you will pay').selectOption('card');
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
