@@ -52,4 +52,6 @@ Simplified by Evan on 2026-10-08: "no need for isolation audit or held out A run
 
 ## Progress
 
+- **2026-10-09: 13.2–13.5 done** on `phase13-reader`. Fable 5.1 built the reader in six rounds (final `94b7b9a`), reviewed by an independent subagent after rounds 3–6 (agent-verified). Development: 384 correct / 0 wrong / 338 withheld, `cart-1` coverage 86%, p95 10 ms. Held-out A run 1 (unbiased): 237 correct / 18 wrong (precision 92.9%, ≤ 10.3%), `cart-1` coverage 76.9%. Run 2 after held-out-informed general fixes: 244 / 7 (97.2%, ≤ 5.2%; right amount and currency on 249 of 251), `cart-1` 78.6%, p95 11.6 ms. Both held-out runs are used. Report: [reader-v1](../../docs/evals/reader-v1.md). Next: PR, then 13b (extension).
+
 - **2026-10-08:** plan written; Phase 12 merged (PR #76, `298d6f6`); simplified by Evan the same day.

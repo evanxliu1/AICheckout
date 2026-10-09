@@ -2,6 +2,9 @@
 
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
+## 2026-10-09
+* **Update** Phase 13.2–13.5: generic cart reader v1 (`packages/cart-reader`, final `94b7b9a`) by a Fable 5.1 reader developer in six rounds; independent reviews after rounds 3–6 (agent-verified). Development 384 / 0 / 338, `cart-1` 86%, p95 10 ms. Held-out A run 1 237 / 18 (92.9%, ≤ 10.3%), run 2 after general fixes informed by run 1's classes 244 / 7 (97.2%, ≤ 5.2%), `cart-1` 78.6%, p95 11.6 ms; both held-out runs used. Pages: [report](../docs/evals/reader-v1.md), [Phase 13 plan](product/phase-13-reader.md), [roadmap](product/roadmap.md), [now](now.md). (claude-code/claude-opus-5-5)
+
 ## 2026-10-08
 * **Update** Phase 13.2 round 6 reviewer's fixes on `phase13-reader`: offer words without `card member`; header flyout rows yield only to a non-zero outside amount of the same or a more preferred kind, else a disagreement withholds; translated-away boxes must also lie beyond the viewport. Quick loop: real 384 correct / 0 wrong / 338 withheld, `cart-1` 86.0%, variants 875 / 0 wrong, p95 10.5 ms, max 29 ms. 75 unit tests. (claude-code/claude-fable-5-1)
 * **Update** Phase 13.2 round 6 on `phase13-reader`, after held-out A run 1 (precision 92.9%, 18 wrong): six generic rules (translated-away drawers, header flyouts yield to the page's summary, qualified tax labels, card-offer credits excluded, order-total tie-break within one list only, disagreeing structured currencies block rule (d), product totals are subtotals) and a performance pass (cached bounded texts, `checkVisibility`, fragment climb bound). Quick loop: real 383 correct / 0 wrong / 339 withheld, `cart-1` 86.0%, variants 875 / 0 wrong, p95 10.9 ms, max 27.9 ms. 73 unit tests. (claude-code/claude-fable-5-1)
