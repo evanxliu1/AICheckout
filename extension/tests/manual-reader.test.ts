@@ -1,6 +1,18 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { readManualCart } from '../src/checkout/manual-reader';
+
+let throwNext = false;
+vi.mock('@ai-checkout/cart-reader', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@ai-checkout/cart-reader')>();
+  return {
+    ...actual,
+    readCart: (...args: Parameters<typeof actual.readCart>) => {
+      if (throwNext) throw new Error('reader bug');
+      return actual.readCart(...args);
+    },
+  };
+});
 
 // Synthetic pages only (no store text); jsdom has no layout, so the reader's box checks are the
 // harness's business (evals/reader/). These cover the Phase 13b split and mapping.
@@ -81,6 +93,22 @@ describe('manual reader (Phase 13b)', () => {
     expect(page(summary(row('Total', '$100.00')), 'https://www.bestbuy.com/cart')).toMatchObject({
       status: 'unavailable',
     });
+  });
+  it('withholds when the reader throws', () => {
+    throwNext = true;
+    try {
+      expect(page(summary(row('Total', '$100.00')), store)).toEqual({
+        status: 'unavailable',
+        reason: 'withheld',
+      });
+    } finally {
+      throwNext = false;
+    }
+  });
+  it('reports a dollar total on a .ca storefront as another currency (storefront rule)', () => {
+    expect(
+      page(summary(row('Subtotal', '$90.00') + row('Total', '$100.00')), 'https://www.bestbuy.ca/cart'),
+    ).toEqual({ status: 'unavailable', reason: 'unsupported-currency' });
   });
   it('reads nothing on a non-web page', () => {
     expect(page(summary(row('Total', '$100.00')), 'chrome://extensions/')).toEqual({

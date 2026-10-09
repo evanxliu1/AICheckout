@@ -31,11 +31,11 @@ The Phase 13b plan says the legacy adapters "keep their three stores and run fir
 | Where the version constant lives | `contracts.ts` (Zod); `merchants.ts` (Zod-free) | `merchants.ts`, so the content script shares it without bundling Zod |
 
 ## Decision
-As chosen above. The withheld message is one new copy string ("The cart total could not be read with certainty on this page. Enter the amount you will pay."); the unsupported-page message no longer names the three stores. The automatic badge is untouched.
+As chosen above. One reader per URL: when an adapter matches the URL and fails (no Best Buy summary on `/cart`), there is no generic fallback; legacy behaviour is unchanged. `merchantForTab` matches a store by the last two host labels (pre-existing, Phase 11), so `pay.amazon.com` is `amazon-us` and a generic reading there names that store. The reading's version must be the URL's expected one (adapter version on its cart pages, `generic-reader-v1` elsewhere), checked in `browser.ts` (review fix, 2026-10-09). The withheld message is one new copy string ("The cart total could not be read with certainty on this page. Enter the amount you will pay."); the unsupported-page message no longer names the three stores. The automatic badge is untouched.
 
 ## Consequences
 - The manual reader bundle grows from 8,908 to 34,458 bytes (it now carries `readCart`); it is injected only on the shopper's click.
-- `docs/release/support.md` ("Unsupported page" row), `docs/release/reviewer-instructions.md` step 2 and the capture-manifest popup texts describe the three-store manual read and are now inaccurate; they are Phase 15 material ([plan](../product/phase-13-reader.md)).
+- `docs/release/support.md` ("Unsupported page" row), `docs/release/reviewer-instructions.md` step 2 and the capture-manifest popup texts describe the three-store manual read and are now inaccurate; `docs/release/privacy-policy.md` (line 31) and `store-listing.md` (line 54, scripting row) are narrower than the generic reader, which also reads JSON-LD, meta and attribute currency hints and the URL's TLD (nothing but the reading leaves the page). All are Phase 15 material ([plan](../product/phase-13-reader.md)).
 
 ## Status
 Accepted 2026-10-09 (implementer's choice within the plan; review before the PR pending).

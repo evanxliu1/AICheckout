@@ -125,6 +125,15 @@ describe('checkout browser boundary', () => {
       probe(generic, 'https://www.bestbuy.com/site/some-product');
       await expect(readActiveCheckout()).rejects.toThrow('cart or page changed');
     });
+    it('ties the reader version to the URL: generic on a legacy cart URL and an adapter version off it are rejected', async () => {
+      probe({ ...generic, merchantId: 'best-buy-us' }, 'https://www.bestbuy.com/cart');
+      await expect(readActiveCheckout()).rejects.toThrow('cart or page changed');
+      probe(
+        { ...generic, merchantId: 'best-buy-us', kind: 'total', extractorVersion: 'bestbuy-summary-v1' },
+        'https://www.bestbuy.com/site/some-product',
+      );
+      await expect(readActiveCheckout()).rejects.toThrow('cart or page changed');
+    });
     it('rejects a legacy reader version at the generic store and a generic reading that names a legacy cart', async () => {
       probe({ ...generic, extractorVersion: 'bestbuy-summary-v1' });
       await expect(readActiveCheckout()).rejects.toThrow('ambiguous');
