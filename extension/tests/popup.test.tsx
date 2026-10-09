@@ -86,7 +86,8 @@ describe('popup store from the open tab', () => {
     render(<Popup />);
     await screen.findByLabelText('Purchase amount (USD)');
     await vi.waitFor(() => expect(merchantValue()).toBe('generic-us-online'));
-    expect(screen.queryByRole('button', { name: 'Read cart amount' })).toBeNull();
+    // Phase 13b: the cart can be read at any store.
+    expect(screen.getByRole('button', { name: 'Read cart amount' })).toBeTruthy();
     expect(screen.queryByText(/do not cover/)).toBeNull();
     expect((screen.getByLabelText('Online retail bonus eligibility') as HTMLSelectElement).value).toBe(
       'eligible',
@@ -152,8 +153,47 @@ describe('popup store from the open tab', () => {
     render(<Popup />);
     await screen.findByLabelText('Purchase amount (USD)');
     fireEvent.change(screen.getByLabelText('Merchant'), { target: { value: 'generic-us-online' } });
-    expect(screen.queryByRole('button', { name: 'Read cart amount' })).toBeNull();
-    expect(screen.getByText(/Type the amount you will pay/)).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Read cart amount' })).toBeTruthy();
+  });
+  it('reads a generic store’s cart like a legacy one and keeps online retail eligible (Phase 13b)', async () => {
+    openOn('https://shop.example.com/checkout');
+    read.mockResolvedValue({
+      id: '6b89a362-0be9-4dca-990d-7e110e7f91ea',
+      capturedAt: Date.now(),
+      tabId: 3,
+      documentId: 'doc-1',
+      pageKey: 'a'.repeat(64),
+      merchantId: 'generic-us-online',
+      currency: 'USD',
+      amountCents: 10000,
+      kind: 'estimated-total',
+      extractorVersion: 'generic-reader-v1',
+    });
+    render(<Popup />);
+    fireEvent.click(await screen.findByRole('button', { name: 'Read cart amount' }));
+    expect(await screen.findByText(/Read \$100\.00 as an estimated total/)).toBeTruthy();
+    expect(merchantValue()).toBe('generic-us-online');
+    expect((screen.getByLabelText('Purchase amount (USD)') as HTMLInputElement).value).toBe('100.00');
+    expect((screen.getByLabelText('Online retail bonus eligibility') as HTMLSelectElement).value).toBe(
+      'eligible',
+    );
+    fireEvent.click(screen.getByRole('checkbox', { name: /I confirmed/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Compare my cards' }));
+    expect(
+      await screen.findByText('Saved estimate for a $100.00 Another U.S. online store purchase.'),
+    ).toBeTruthy();
+    expect((data.checkoutStateV1 as AppState).cart?.extractorVersion).toBe('generic-reader-v1');
+  });
+  it('shows the reader’s message when it withholds and fills nothing', async () => {
+    openOn('https://shop.example.com/checkout');
+    read.mockRejectedValue(
+      new Error('The cart total could not be read with certainty on this page. Enter the amount you will pay.'),
+    );
+    render(<Popup />);
+    fireEvent.click(await screen.findByRole('button', { name: 'Read cart amount' }));
+    expect(await screen.findByText(/Enter the amount you will pay/)).toBeTruthy();
+    expect((screen.getByLabelText('Purchase amount (USD)') as HTMLInputElement).value).toBe('');
+    expect(merchantValue()).toBe('generic-us-online');
   });
 });
 describe('offline comparison popup', () => {

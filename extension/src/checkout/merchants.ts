@@ -10,6 +10,9 @@ export const MERCHANTS = Object.fromEntries(
   ]),
 ) as Record<MerchantId, { name: string; extractorVersion: string }>;
 
+/** The reader version of a generic (`readCart`) reading; legacy readings carry their adapter's. */
+export const GENERIC_READER_VERSION = 'generic-reader-v1';
+
 export function merchantName(id: string): string {
   if (id === GENERIC_MERCHANT_ID) return GENERIC_MERCHANT_PROFILE.name;
   return Object.hasOwn(MERCHANTS, id) ? MERCHANTS[id as MerchantId].name : 'Unsupported merchant';

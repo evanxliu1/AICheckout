@@ -72,12 +72,67 @@ describe('checkout browser boundary', () => {
     expect(execute.mock.calls[1][0]).toMatchObject({ target: { tabId: 7, documentIds: ['doc-1'] } });
     await expect(validateActiveCheckout(snapshot)).resolves.toBeUndefined();
   });
-  it('does not inject on unapproved pages or when Chrome has not granted activeTab', async () => {
-    query.mockResolvedValue([{ id: 7, url: 'https://www.bestbuy.ca/cart' }]);
-    await expect(readActiveCheckout()).rejects.toThrow('Best Buy US');
+  it('does not inject on non-web pages or when Chrome has not granted activeTab', async () => {
+    query.mockResolvedValue([{ id: 7, url: 'chrome://extensions/' }]);
+    await expect(readActiveCheckout()).rejects.toThrow('cart or checkout page in a web tab');
     query.mockResolvedValue([{ id: 7 }]);
     await expect(readActiveCheckout()).rejects.toThrow('toolbar');
     expect(execute).not.toHaveBeenCalled();
+  });
+  describe('generic reader at any other store (Phase 13b)', () => {
+    const storeUrl = 'https://shop.example.com/checkout?session=do-not-store';
+    const generic = {
+      status: 'found',
+      merchantId: 'generic-us-online',
+      currency: 'USD',
+      amountCents: 10000,
+      kind: 'estimated-total',
+      extractorVersion: 'generic-reader-v1',
+    };
+    const probe = (reading: unknown, url = storeUrl) => {
+      query.mockResolvedValue([{ id: 7, url }]);
+      execute
+        .mockReset()
+        .mockResolvedValueOnce([{ frameId: 0, documentId: 'doc-1' }])
+        .mockResolvedValue([{ frameId: 0, documentId: 'doc-1', result: { url, reading } }]);
+    };
+    it('stores a generic reading at the generic store and validates it again', async () => {
+      probe(generic);
+      const snapshot = await readActiveCheckout(1000);
+      expect(snapshot).toMatchObject({
+        merchantId: 'generic-us-online',
+        amountCents: 10000,
+        kind: 'estimated-total',
+        extractorVersion: 'generic-reader-v1',
+      });
+      expect(JSON.stringify(snapshot)).not.toContain('do-not-store');
+      await expect(validateActiveCheckout(snapshot)).resolves.toBeUndefined();
+      execute.mockResolvedValue([
+        { frameId: 0, documentId: 'doc-1', result: { url: storeUrl, reading: { ...generic, amountCents: 10001 } } },
+      ]);
+      await expect(validateActiveCheckout(snapshot)).rejects.toThrow('cart or page changed');
+    });
+    it('names the tab’s store for a generic reading on a legacy site’s other pages', async () => {
+      probe({ ...generic, merchantId: 'best-buy-us' }, 'https://www.bestbuy.com/site/some-product');
+      await expect(readActiveCheckout()).resolves.toMatchObject({
+        merchantId: 'best-buy-us',
+        extractorVersion: 'generic-reader-v1',
+      });
+      probe(generic, 'https://www.bestbuy.com/site/some-product');
+      await expect(readActiveCheckout()).rejects.toThrow('cart or page changed');
+    });
+    it('rejects a legacy reader version at the generic store and a generic reading that names a legacy cart', async () => {
+      probe({ ...generic, extractorVersion: 'bestbuy-summary-v1' });
+      await expect(readActiveCheckout()).rejects.toThrow('ambiguous');
+      probe({ ...generic, merchantId: 'best-buy-us' });
+      await expect(readActiveCheckout()).rejects.toThrow('cart or page changed');
+    });
+    it('tells the shopper to enter the amount when the reader withholds, and keeps the USD-only message', async () => {
+      probe({ status: 'unavailable', reason: 'withheld' });
+      await expect(readActiveCheckout()).rejects.toThrow('Enter the amount you will pay');
+      probe({ status: 'unavailable', reason: 'unsupported-currency' });
+      await expect(readActiveCheckout()).rejects.toThrow('supports USD only');
+    });
   });
   it('rejects navigation even when a new document has the same URL', async () => {
     execute
