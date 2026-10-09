@@ -23,7 +23,7 @@ The extension shows the amount only when the reader shows one; otherwise it show
 `evals/reader/` ([README](../../evals/reader/README.md)) loads each frozen page rebuilt offline (JavaScript off, network blocked), reads it six times and scores shown-correct, shown-wrong and withheld against the frozen labels (`reader-labels.2`), with exact bounds; coverage is on `cart-1` and excludes `cart-other`. Offline variants test robustness (class renames, fake subtotals outside the summary, promo rows, injected instructions, credit applied, format swaps, zero-decimal currencies, mixed currencies) and are reported apart.
 
 ```sh
-npm run test --workspace=@ai-checkout/cart-reader          # unit tests (synthetic pages)
+npm run test --workspace=@ai-checkout/cart-reader          # unit tests (synthetic pages; jsdom has no layout, so box and visibility rules are covered by the harness, not here)
 node evals/reader/dev.mjs                                    # quick loop: development, one read per page, ~5 min
 node evals/reader/run.mjs --split development               # official run (six reads per page, ~25 min)
 node evals/reader/score.mjs --run <runId> --failures         # per-page failures, development only

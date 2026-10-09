@@ -4,7 +4,7 @@
 // never the rebuild's `data-pane-*` attributes or any per-domain list. It shows an amount only when certain and
 // otherwise withholds. The evaluation harness is evals/reader/.
 //
-// How it reads (development rounds 1 to 3, 2026-10-08):
+// How it reads (development rounds 1 to 4, 2026-10-08):
 // 1. Every text node that looks like an amount climbs to its row: the nearest small ancestor whose text carries a
 //    summary label (total, subtotal, amount due, in many languages), or a labelled previous sibling of an ancestor
 //    (dt/dd, th/td, label/value pairs).
@@ -15,14 +15,17 @@
 //    reader cannot show, and withholds.
 // 3. The most preferred kind present wins (afterCredit > estimatedTotal > subtotal). Two different amounts of that
 //    kind mean withhold, unless only one of them sits in a cart summary (next to shipping, tax or a checkout control).
-//    A subtotal alone is shown only when no other row of its summary holds a total label or an unexplained different
-//    amount (shipping, tax, savings, threshold and rewards rows explain theirs).
-// 4. Currency by the protocol's evidence order; unparseable amounts withhold. A zero total is shown (an empty cart);
+//    A total outside any summary (a bundle offer's "total price") withholds. A subtotal alone is shown only when no
+//    other row of its summary holds a total label or an unexplained different amount (shipping, tax, savings,
+//    threshold and rewards rows explain theirs).
+// 4. Currency by the protocol's evidence order; the storefront's currency (rule (d)) is not used when the page's text
+//    names another currency. Unparseable amounts withhold. A zero total is shown (an empty cart);
 //    a zero subtotal is withheld, since it is often a drawer's placeholder.
 import { MARK_RE, findAmounts, normalizeText, toMinor } from './amounts.ts';
 import {
   MINOR_UNITS,
   isCode,
+  namedCurrencies,
   resolveCurrency,
   storefrontOf,
   structuredCurrency,
@@ -69,7 +72,7 @@ const MAX_LABEL_TEXT = 80;
 const MAX_CLIMB = 8;
 /** A line's remove control, in many languages. */
 const REMOVE_RE =
-  /\bremove\b|\bdelete\b|entfernen|l[öo]schen|supprimer|retirer|eliminar|quitar|rimuovi|elimina|verwijder|usu[ńn]|kaldır|sil\b|удалить|削除|삭제|حذف|إزالة/u;
+  /\bremove\b|\bdelete\b|entfernen|l[öo]schen|supprimer|retirer|eliminar|quitar|rimuovi|elimina|verwijder|usu[ńn]|kaldır|\bsil\b|удалить|削除|삭제|حذف|إزالة/u;
 const ALNUM_END = /[\p{L}\d]$/u;
 const ALNUM_START = /^[\p{L}\d]/u;
 /** Text that may hold an amount: a marker or code, two decimals, ",-" decimals, or a bare numeric fragment. */
@@ -88,6 +91,9 @@ type Ctx = {
   /** Candidate rows keyed by the element holding the amount. */
   rows: Map<Element, Element[]>;
 };
+
+/** Page-wide currency evidence, read lazily once: structured data (rule (b)) and currencies named in the text. */
+type PageEvidence = { structured: () => string | null; named: () => Set<string> };
 
 /** One candidate row, as `explainCart` reports it. */
 export type RowReport = {
@@ -146,18 +152,29 @@ function analyze(document: Document, options: ReadOptions): { reading: CartReadi
   });
   if (!document.body) return withhold('no-summary');
   const store = storefrontOf(options.url, root?.getAttribute('lang') ?? '');
+  // Open shadow roots, nested ones included (a host inside a shadow tree is not in the document's own tree).
   const shadowRoots: ShadowRoot[] = [];
-  for (const el of document.querySelectorAll('*')) if (el.shadowRoot) shadowRoots.push(el.shadowRoot);
+  const findHosts = (scope: ParentNode) => {
+    for (const el of scope.querySelectorAll('*'))
+      if (el.shadowRoot) {
+        shadowRoots.push(el.shadowRoot);
+        findHosts(el.shadowRoot);
+      }
+  };
+  findHosts(document);
   collectRows(document.body, ctx);
   for (const sr of shadowRoots) collectRows(sr, ctx);
   if (ctx.rows.size === 0) return withhold('no-summary');
 
   let structured: string | null | undefined;
-  const structuredLazy = () =>
-    structured === undefined ? (structured = structuredCurrency(document)) : structured;
+  let named: Set<string> | undefined;
+  const evidence: PageEvidence = {
+    structured: () => (structured ??= structuredCurrency(document)),
+    named: () => (named ??= namedCurrencies(pageText([document.body, ...shadowRoots], ctx))),
+  };
   const rows: Row[] = [];
   for (const els of ctx.rows.values()) {
-    const row = readRow(els, ctx, store, structuredLazy);
+    const row = readRow(els, ctx, store, evidence);
     if (row) rows.push(row);
   }
   // An unreadable total row that wraps another total row is an aggregate (a block whose other amounts climbed to
@@ -191,14 +208,16 @@ function analyze(document: Document, options: ReadOptions): { reading: CartReadi
     if (new Set(chosen.map(key)).size !== 1) return withhold('ambiguous', rows);
   }
   const row = chosen[0]!;
+  // A total outside any cart summary ("Total price" of a bundle offer, "total value of free gifts") is not the cart's.
+  if (!chosen.some((r) => r.inSummary))
+    return withhold(`${kind === 'subtotal' ? 'sub' : ''}total-outside-summary`, rows);
   if (row.minor === null) return withhold('amount-unreadable', rows);
   if (!row.currency) return withhold('currency-undetermined', rows);
   if (kind === 'subtotal') {
     // An items total of zero is an empty cart: nothing to recommend a card for, and often a drawer's placeholder.
     if (row.minor === 0) return withhold('subtotal-zero', rows);
-    if (!chosen.some((r) => r.inSummary)) return withhold('subtotal-outside-summary', rows);
     for (const r of chosen) {
-      const blocker = subtotalBlocker(r, ctx, store, structuredLazy);
+      const blocker = subtotalBlocker(r, ctx, store, evidence);
       if (blocker) {
         r.why = `not-alone: ${blocker}`;
         return withhold('subtotal-not-alone', rows);
@@ -212,8 +231,10 @@ function analyze(document: Document, options: ReadOptions): { reading: CartReadi
 function collectRows(root: Node, ctx: Ctx): void {
   const walker = ctx.doc.createTreeWalker(root, 4 /* SHOW_TEXT */);
   for (let n = walker.nextNode(); n; n = walker.nextNode()) {
-    const data = (n as Text).data;
-    if (!/\d/.test(data) || !CANDIDATE_RE.test(data)) continue;
+    // Digits of any script (Arabic-Indic, Devanagari, full-width) are normalized before the amount gate.
+    if (!/\p{Nd}/u.test((n as Text).data)) continue;
+    const data = normalizeText((n as Text).data);
+    if (!CANDIDATE_RE.test(data)) continue;
     const parent = n.parentNode as Element | null;
     if (
       !parent ||
@@ -250,6 +271,19 @@ function collectRows(root: Node, ctx: Ctx): void {
       el = parentOf(el);
     }
   }
+}
+
+/** The text of whole trees, scripts and styles left out (visibility is not checked: this is a page-wide gate). */
+function pageText(roots: Node[], ctx: Ctx): string {
+  const parts: string[] = [];
+  for (const root of roots) {
+    const walker = ctx.doc.createTreeWalker(root, 4 /* SHOW_TEXT */);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const parent = n.parentNode as Element | null;
+      if (parent && parent.nodeType === 1 && !SKIP_PARENTS.has(parent.nodeName)) parts.push((n as Text).data);
+    }
+  }
+  return parts.join(' ');
 }
 
 /** Two rows of the same summary list: an ancestor within two levels is shared. */
@@ -346,7 +380,8 @@ function visibleText(el: Element, ctx: Ctx): string {
       if (hiddenBox(cs) || cs.visibility === 'hidden' || cs.visibility === 'collapse') continue;
       if ((cs.textDecorationLine ?? '').includes('line-through')) continue;
       const inline = cs.display === 'inline' || cs.display === 'contents' || cs.display === '';
-      if ((e.nodeName === 'SUP' || e.nodeName === 'SUB') && /^\s*\d{1,2}\s*$/.test(e.textContent ?? '')) {
+      // Exactly two digits in a superscript are cents ("$12" "99"); one digit is a footnote mark.
+      if ((e.nodeName === 'SUP' || e.nodeName === 'SUB') && /^\s*\d{2}\s*$/.test(e.textContent ?? '')) {
         if (/\d\s*$/.test(parts.at(-1) ?? '')) parts.push('.');
       } else if (!inline) parts.push(' ');
       walk(e.shadowRoot ?? e);
@@ -358,7 +393,7 @@ function visibleText(el: Element, ctx: Ctx): string {
 }
 
 /** Reads one candidate row (one element, or a label element and a value element). */
-function readRow(els: Element[], ctx: Ctx, store: Storefront, structured: () => string | null): Row | null {
+function readRow(els: Element[], ctx: Ctx, store: Storefront, page: PageEvidence): Row | null {
   const text = normalizeText(els.map((el) => visibleText(el, ctx)).join(' '));
   const dropped = (why: string): Row => ({
     els,
@@ -378,12 +413,16 @@ function readRow(els: Element[], ctx: Ctx, store: Storefront, structured: () => 
   if (amounts.length === 0) {
     // A total label ending in a bare number the grammar cannot read ("Total: 196") is a total the reader cannot show.
     const kind = /\d[\d.,]*\s*$/.test(text) ? classifyLabel(text.toLowerCase()) : null;
-    if (kind && !lineItemOf(els.at(-1)!)) return { ...report, kind, why: 'bare-number' };
+    if (kind && !lineItemOf(els.at(-1)!))
+      return { ...report, kind, why: 'bare-number', inSummary: inSummary(els.at(-1)!, kind) };
     return dropped('no-amount');
   }
   const label = withoutAmounts(text);
   const lower = label.toLowerCase();
-  const values = new Set(amounts.map((a) => (a.number ? `${a.number.int}.${a.number.frac}` : 'unreadable')));
+  // "$12" and "$12.00" are one amount.
+  const values = new Set(
+    amounts.map((a) => (a.number ? `${a.number.int}.${a.number.frac.padEnd(2, '0')}` : 'unreadable')),
+  );
   if (amounts.some((a) => a.negative))
     return CREDIT_RE.test(lower) ? { ...report, kind: 'credit' } : dropped('negative');
   const kind = classifyLabel(lower);
@@ -392,8 +431,8 @@ function readRow(els: Element[], ctx: Ctx, store: Storefront, structured: () => 
   // Several different amounts in one total row (a converted price, say): unreadable, but still a total of its kind.
   if (values.size !== 1)
     return { ...report, kind, why: 'several-amounts', inSummary: inSummary(els.at(-1)!, kind) };
+  // Rule (a): a code written next to an amount ("USD 16.34", "£1,200.00 EGP"); a code elsewhere in the label is not.
   const codes = new Set<string>();
-  for (const m of label.matchAll(/(?<![A-Za-z])[A-Z]{3}(?![A-Za-z])/g)) if (isCode(m[0])) codes.add(m[0]);
   for (const a of amounts) if (a.code) codes.add(a.code);
   const markers = new Set(amounts.map((a) => a.marker).filter((m): m is string => m !== null));
   const marker = markers.size > 1 ? 'conflict' : ([...markers][0] ?? null);
@@ -403,8 +442,9 @@ function readRow(els: Element[], ctx: Ctx, store: Storefront, structured: () => 
       ? null
       : resolveCurrency(
           { codes: [...codes], marker, sharedText: shared?.markerText ?? null },
-          structured(),
+          page.structured(),
           store,
+          page.named,
         );
   const number = amounts[0]!.number;
   const minor = number ? toMinor(number, currency ? MINOR_UNITS[currency]! : 2) : null;
@@ -492,25 +532,25 @@ function withoutAmounts(text: string): string {
  * rewards rows explain their amounts and do not count; nor do unmarked numbers when the subtotal carries a marker.
  * Returns null when the subtotal is alone, otherwise the text of the row that is in the way.
  */
-function subtotalBlocker(
-  row: Row,
-  ctx: Ctx,
-  store: Storefront,
-  structured: () => string | null,
-): string | null {
+function subtotalBlocker(row: Row, ctx: Ctx, store: Storefront, page: PageEvidence): string | null {
   const own = row.els.at(-1)!;
   const summary = summaryOf(own, 'subtotal', true);
   if (!summary) return null;
   const marked = findAmounts(row.text, isCode).some((a) => a.marker !== null || a.code !== null);
   const seen = new Set<Element>();
+  const labels = new Map<Element, string>();
+  const labelOf = (el: Element) => {
+    let l = labels.get(el);
+    if (l === undefined) labels.set(el, (l = withoutAmounts(normalizeText(el.textContent ?? ''))));
+    return l;
+  };
   const walker = ctx.doc.createTreeWalker(summary, 4 /* SHOW_TEXT */);
   for (let n = walker.nextNode(); n; n = walker.nextNode()) {
     if (!/\d/.test((n as Text).data)) continue;
     let el = n.parentNode as Element | null;
     if (!el || el.nodeType !== 1 || SKIP_PARENTS.has(el.nodeName)) continue;
     // The nearest ancestor with words (beyond the amounts' own markers) is the row the number belongs to.
-    while (el && el !== summary && !/\p{L}{2}/u.test(withoutAmounts(normalizeText(el.textContent ?? ''))))
-      el = parentOf(el);
+    while (el && el !== summary && !/\p{L}{2}/u.test(labelOf(el))) el = parentOf(el);
     if (!el || seen.has(el) || row.els.some((e) => e.contains(el))) continue;
     seen.add(el);
     if (hiddenWhy(el, ctx) || lineItemOf(el) || inProductLine(el, summary, own)) continue;
@@ -522,8 +562,9 @@ function subtotalBlocker(
       if (!a.number || (marked && a.marker === null && a.code === null)) return false;
       const currency = resolveCurrency(
         { codes: a.code ? [a.code] : [], marker: a.marker, sharedText: a.markerText },
-        structured(),
+        page.structured(),
         store,
+        page.named,
       );
       const minor = toMinor(a.number, currency ? MINOR_UNITS[currency]! : 2);
       return minor === null || (minor !== 0 && minor !== row.minor);

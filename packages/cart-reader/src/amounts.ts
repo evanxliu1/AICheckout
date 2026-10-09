@@ -92,7 +92,10 @@ export type Amount = {
 const DIGIT_RANGES = [0x0660, 0x06f0, 0x0966, 0x09e6, 0x0e50, 0xff10];
 // Zero-width, bidi and word-joiner marks (built from a string so the source holds no such characters).
 const INVISIBLE_RE = new RegExp('[\\u200b-\\u200f\\u202a-\\u202e\\u2060\\u2066-\\u2069\\ufeff\\u061c]', 'g');
-/** Lower-cases nothing; maps non-Latin digits to ASCII, drops zero-width and bidi marks, normalizes spaces. */
+/**
+ * Lower-cases nothing; maps non-Latin digits to ASCII, drops zero-width and bidi marks, maps full-width and Arabic
+ * separators (U+066B decimal, U+066C thousands) to ASCII, normalizes spaces.
+ */
 export function normalizeText(s: string): string {
   let out = s.replace(INVISIBLE_RE, '');
   out = out.replace(/[٠-٩۰-۹०-९০-৯๐-๙０-９]/g, (ch) => {
@@ -102,8 +105,8 @@ export function normalizeText(s: string): string {
   });
   return out
     .replace(/(\d)€(\d{2})(?!\d|[.,]\d)/g, '$1.$2 €')
-    .replace(/[，]/g, ',')
-    .replace(/[．]/g, '.')
+    .replace(/[，٬]/g, ',')
+    .replace(/[．٫]/g, '.')
     .replace(/[’‘]/g, "'")
     .replace(/\s+/g, ' ')
     .trim();
@@ -135,7 +138,10 @@ export function parseRun(run: string): ParsedNumber | null {
   if (dots > 0 && commas > 0) {
     const dec = s.lastIndexOf('.') > s.lastIndexOf(',') ? '.' : ',';
     const grp = dec === '.' ? ',' : '.';
-    const m = s.match(new RegExp(`^(\\d{1,3}(?:\\${grp}\\d{3})+)\\${dec}(\\d{1,2})$`));
+    const m =
+      s.match(new RegExp(`^(\\d{1,3}(?:\\${grp}\\d{3})+)\\${dec}(\\d{1,2})$`)) ??
+      // Indian grouping with decimals: "1,49,900.00".
+      (dec === '.' ? s.match(/^(\d{1,2}(?:,\d{2})+,\d{3})\.(\d{1,2})$/) : null);
     return m ? done(m[1]!.replace(new RegExp(`\\${grp}`, 'g'), ''), m[2]!) : null;
   }
   const sep = dots ? '.' : ',';
@@ -157,7 +163,8 @@ export function findAmounts(text: string, isCode: (c: string) => boolean): Amoun
   const out: Amount[] = [];
   for (const m of text.matchAll(AMOUNT_RE)) {
     const g = m.groups!;
-    // A digit and a letter right before the run ("18Â 499,00": a mangled separator) make the number unreadable.
+    // Mojibake: a digit and one or two letters right before the run ("18Â 499,00", a non-breaking space decoded as
+    // Latin-1) mean the separator was mangled, so the number is unreadable (the amount still counts as present).
     const broken = /\d\p{L}{1,2} ?$/u.test(
       text.slice(0, m.index! + (g.neg1?.length ?? 0) + (g.pre?.length ?? 0)).replace(/[\s-−–]+$/, ''),
     );

@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { readCart } from '../src/index.ts';
 import { findAmounts, normalizeText, parseRun } from '../src/amounts.ts';
 import { isCode } from '../src/currency.ts';
+import { classifyLabel } from '../src/words.ts';
 
 const URL_COM = 'https://shop.example.com/cart';
 function page(body: string, { url = URL_COM, lang = 'en', head = '' } = {}) {
@@ -13,10 +14,14 @@ function page(body: string, { url = URL_COM, lang = 'en', head = '' } = {}) {
 }
 const row = (label: string, amount: string, extra = '') =>
   `<div class="r"${extra}><span>${label}</span><span>${amount}</span></div>`;
+/** A cart summary: rows beside a checkout control. A total outside any summary is not the cart's. */
+const summary = (inner: string) => `<section>${inner}<button>Checkout</button></section>`;
 
 describe('summary rows', () => {
   it('shows the order total over the subtotal', () => {
-    const r = page(row('Subtotal', '$19.99') + row('Shipping', '$5.00') + row('Estimated total', '$24.99'));
+    const r = page(
+      summary(row('Subtotal', '$19.99') + row('Shipping', '$5.00') + row('Estimated total', '$24.99')),
+    );
     expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 2499, currency: 'USD' });
   });
   it('shows a subtotal when there is no total', () => {
@@ -81,17 +86,20 @@ describe('summary rows', () => {
   it('drops hidden rows and struck-through prices', () => {
     const hidden = `<div style="display:none">${row('Total', '$50.00')}</div>`;
     const struck = `<div class="r"><span>Total</span> <s style="text-decoration-line: line-through">$30.00</s> <span>$20.00</span></div>`;
-    expect(page(hidden + struck)).toMatchObject({ shown: true, amountMinor: 2000 });
-    expect(page(`<div style="visibility:hidden">${row('Total', '$50.00')}</div>`)).toEqual({
+    expect(page(summary(hidden + struck))).toMatchObject({ shown: true, amountMinor: 2000 });
+    expect(page(summary(`<div style="visibility:hidden">${row('Total', '$50.00')}</div>`))).toEqual({
       shown: false,
       reason: 'no-summary',
     });
   });
   it('withholds a row with two different amounts', () => {
-    expect(page(row('Total', '$24.00 $22.00'))).toEqual({ shown: false, reason: 'amount-unreadable' });
+    expect(page(summary(row('Total', '$24.00 $22.00')))).toEqual({
+      shown: false,
+      reason: 'amount-unreadable',
+    });
   });
   it('shows a zero total (an empty cart)', () => {
-    expect(page(row('Total', '$0.00'))).toEqual({
+    expect(page(summary(row('Total', '$0.00')))).toEqual({
       shown: true,
       kind: 'estimatedTotal',
       amountMinor: 0,
@@ -105,11 +113,13 @@ describe('summary rows', () => {
     });
   });
   it('shows the after-credit total when the page has no plain total row left', () => {
-    const r = page(row('Gift card applied', '-$5.00') + row('Amount due', '$12.00'));
+    const r = page(summary(row('Gift card applied', '-$5.00') + row('Amount due', '$12.00')));
     expect(r).toEqual({ shown: true, kind: 'afterCredit', amountMinor: 1200, currency: 'USD' });
   });
   it('reads a total qualified by savings as a total', () => {
-    const r = page(row('Order sub total', '$69.98') + row('Estimated total after savings', '$69.98'));
+    const r = page(
+      summary(row('Order sub total', '$69.98') + row('Estimated total after savings', '$69.98')),
+    );
     expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 6998, currency: 'USD' });
   });
   it('ignores a line item total next to a product image', () => {
@@ -148,11 +158,13 @@ describe('summary rows', () => {
     expect(r).toEqual({ shown: false, reason: 'ambiguous' });
   });
   it('shows the after-credit total when a gift card row is present', () => {
-    const r = page(row('Total', '$40.00') + row('Gift card applied', '-$5.00') + row('Amount due', '$35.00'));
+    const r = page(
+      summary(row('Total', '$40.00') + row('Gift card applied', '-$5.00') + row('Amount due', '$35.00')),
+    );
     expect(r).toEqual({ shown: true, kind: 'afterCredit', amountMinor: 3500, currency: 'USD' });
   });
   it('reads amount due as a plain total without a credit row', () => {
-    expect(page(row('Payment due', '$29.95'))).toMatchObject({
+    expect(page(summary(row('Payment due', '$29.95')))).toMatchObject({
       shown: true,
       kind: 'estimatedTotal',
       amountMinor: 2995,
@@ -166,38 +178,40 @@ describe('summary rows', () => {
   });
   it('reads amounts split across inline elements and sup cents', () => {
     expect(
-      page('<div><span>Total</span><span><span>$</span><span>12</span><sup>99</sup></span></div>'),
+      page(summary('<div><span>Total</span><span><span>$</span><span>12</span><sup>99</sup></span></div>')),
     ).toMatchObject({ amountMinor: 1299 });
   });
   it('reads open shadow roots', () => {
     document.body.innerHTML = '<div id="host"></div>';
     const sr = document.getElementById('host')!.attachShadow({ mode: 'open' });
-    sr.innerHTML = row('Total', '$12.00');
+    sr.innerHTML = summary(row('Total', '$12.00'));
     document.documentElement.setAttribute('lang', 'en');
     document.head.innerHTML = '';
     expect(readCart(document, { url: URL_COM })).toMatchObject({ shown: true, amountMinor: 1200 });
   });
   it('reads labels in other languages and formats', () => {
-    expect(page(row('Gesamtsumme', 'EUR 21,98'), { url: 'https://shop.example.de/' })).toMatchObject({
-      amountMinor: 2198,
-      currency: 'EUR',
-    });
-    expect(page(row('合計(税込)', '¥1,989'), { url: 'https://shop.example.jp/' })).toMatchObject({
+    expect(page(summary(row('Gesamtsumme', 'EUR 21,98')), { url: 'https://shop.example.de/' })).toMatchObject(
+      {
+        amountMinor: 2198,
+        currency: 'EUR',
+      },
+    );
+    expect(page(summary(row('合計(税込)', '¥1,989')), { url: 'https://shop.example.jp/' })).toMatchObject({
       amountMinor: 1989,
       currency: 'JPY',
     });
     expect(
-      page(row('최종 결제예정금액', '65,500원'), { url: 'https://shop.example.com/', lang: 'ko' }),
+      page(summary(row('최종 결제예정금액', '65,500원')), { url: 'https://shop.example.com/', lang: 'ko' }),
     ).toMatchObject({ amountMinor: 65500, currency: 'KRW' });
-    expect(page(row('Do zapłaty', '129,99 zł'), { url: 'https://shop.example.pl/' })).toMatchObject({
+    expect(page(summary(row('Do zapłaty', '129,99 zł')), { url: 'https://shop.example.pl/' })).toMatchObject({
       amountMinor: 12999,
       currency: 'PLN',
     });
-    expect(page(row('Total', 'R 1 399,00'), { url: 'https://shop.example.co.za/' })).toMatchObject({
+    expect(page(summary(row('Total', 'R 1 399,00')), { url: 'https://shop.example.co.za/' })).toMatchObject({
       amountMinor: 139900,
       currency: 'ZAR',
     });
-    expect(page(row('Totale', '1.299,00 €'), { url: 'https://shop.example.it/' })).toMatchObject({
+    expect(page(summary(row('Totale', '1.299,00 €')), { url: 'https://shop.example.it/' })).toMatchObject({
       amountMinor: 129900,
       currency: 'EUR',
     });
@@ -210,14 +224,14 @@ describe('summary rows', () => {
   });
   it('withholds a subtotal when a total row shows a number the grammar cannot read', () => {
     const r = page(
-      `<section>${row('Subtotal (excl. VAT)', '170.43')}${row('VAT', '25.57')}</section><p>Total (1 items) prices include VAT 196</p>`,
+      `<section>${row('Subtotal (excl. VAT)', '170.43')}${row('VAT', '25.57')}<p>Total (1 items) prices include VAT 196</p></section>`,
       { url: 'https://shop.example.sa/cart' },
     );
     expect(r).toEqual({ shown: false, reason: 'amount-unreadable' });
   });
   it('keeps a total row that carries a "you saved" note as a total', () => {
     const r = page(
-      `<section>${row('Subtotal', '86.88')}${row('Shipping', '13.04')}</section><p>Total (2 items) 96.95 You saved 2.57</p>`,
+      `<section>${row('Subtotal', '86.88')}${row('Shipping', '13.04')}<p>Total (2 items) 96.95 You saved 2.57</p></section>`,
       { url: 'https://shop.example.sa/cart' },
     );
     expect(r).toEqual({ shown: false, reason: 'amount-unreadable' });
@@ -235,7 +249,7 @@ describe('summary rows', () => {
   });
   it('reads "item(s) total" and "total in cart" as subtotals', () => {
     expect(
-      page(row('Item(s) total', '$94.99') + row('Subtotal', '$51.97') + row('Total', '$51.97')),
+      page(summary(row('Item(s) total', '$94.99') + row('Subtotal', '$51.97') + row('Total', '$51.97'))),
     ).toMatchObject({
       shown: true,
       kind: 'estimatedTotal',
@@ -288,9 +302,159 @@ describe('summary rows', () => {
   });
 });
 
+describe('review round 4 (2026-10-08)', () => {
+  it('a label that starts with a tax or shipping word is never a total', () => {
+    const uk = { url: 'https://shop.example.co.uk/' };
+    expect(page(summary(row('Subtotal', '£20.00') + row('VAT included in total', '£3.33')), uk)).toEqual({
+      shown: false,
+      reason: 'subtotal-not-alone',
+    });
+    expect(page(summary(row('Tax included in total', '£4.17')), uk)).toEqual({
+      shown: false,
+      reason: 'no-summary',
+    });
+    expect(
+      page(summary(row('Shipping total (incl. VAT)', '€4.95') + row('Subtotal', '€20.00')), {
+        url: 'https://shop.example.de/',
+      }),
+    ).toEqual({ shown: false, reason: 'subtotal-not-alone' });
+    expect(classifyLabel('total tax + fees')).toBeNull();
+    expect(classifyLabel('total shipping')).toBeNull();
+    expect(classifyLabel('tax net total')).toBeNull();
+  });
+  it('keeps a total whose every tax or shipping word has a preposition right before or after it', () => {
+    expect(classifyLabel('total (incl. vat)')).toBe('estimatedTotal');
+    expect(classifyLabel('total (iva incluido)')).toBe('estimatedTotal');
+    expect(classifyLabel('合計(税込)')).toBe('estimatedTotal');
+    expect(classifyLabel('pre-tax total')).toBe('estimatedTotal');
+    expect(classifyLabel('total + tax')).toBe('estimatedTotal');
+    expect(classifyLabel('total amount (inc gst) excluding delivery')).toBe('estimatedTotal');
+    expect(classifyLabel('suma z vat')).toBe('estimatedTotal');
+    expect(classifyLabel('total (livraison incluse)')).toBe('estimatedTotal');
+    expect(classifyLabel('total (1 items) prices include vat')).toBe('estimatedTotal');
+    expect(classifyLabel('totaal (incl. 21% btw)')).toBe('estimatedTotal');
+    expect(classifyLabel('total before tax & shipping')).toBe('estimatedTotal');
+    expect(classifyLabel('subtotal: before taxes and delivery')).toBe('subtotal');
+    expect(classifyLabel('gesamtbetrag inkl. versand')).toBe('estimatedTotal');
+    expect(classifyLabel('items total with tax')).toBe('subtotal');
+    expect(classifyLabel('total after tax')).toBe('after-candidate');
+  });
+  it('takes exactly two superscript digits as cents; one digit is a footnote mark', () => {
+    expect(page(summary('<div><span>Total</span><span>$12<sup>1</sup></span></div>'))).toMatchObject({
+      shown: false,
+    });
+    expect(page(summary('<div><span>Total</span><span>$12<sup>10</sup></span></div>'))).toMatchObject({
+      amountMinor: 1210,
+    });
+  });
+  it('does not let the storefront decide a shared symbol when the page names another currency', () => {
+    const ca = { url: 'https://shop.example.ca/' };
+    expect(page(`<p>Prices shown in US$</p>${summary(row('Total', '$25.00'))}`, ca)).toEqual({
+      shown: false,
+      reason: 'currency-undetermined',
+    });
+    expect(page(`<p>All prices in USD</p>${summary(row('Total', '$25.00'))}`, ca)).toEqual({
+      shown: false,
+      reason: 'currency-undetermined',
+    });
+    expect(page(`<p>Prices in CAD</p>${summary(row('Total', '$25.00'))}`, ca)).toMatchObject({
+      currency: 'CAD',
+    });
+    expect(page(`<p>Prices in CAD</p>${summary(row('Total', '$25.00'))}`)).toEqual({
+      shown: false,
+      reason: 'currency-undetermined',
+    });
+    // A selector list, a converted price and "Hong Kong SAR" are not statements about the page's prices.
+    const list =
+      '<p>Currency USD (selected) AUD CAD EUR</p><p>Ships to Hong Kong SAR</p><p>$19.72 (≈ AUD 11.50)</p><p>$9.99 (‚âà EUR 8.70)</p><p>Canadian dollar (CAD)</p>';
+    expect(page(list + summary(row('Total', '$25.00')))).toMatchObject({ currency: 'USD' });
+  });
+  it('withholds a total that sits outside any cart summary', () => {
+    const offer = `<div><h3>Frequently bought together</h3><p>Total price: $45.00</p><button>Add all three to cart</button></div>`;
+    expect(page(offer)).toEqual({ shown: false, reason: 'total-outside-summary' });
+    expect(page(row('Total value of free gifts', '$15.00'))).toEqual({
+      shown: false,
+      reason: 'total-outside-summary',
+    });
+    expect(page(offer + summary(row('Subtotal', '$10.00') + row('Total', '$10.00')))).toMatchObject({
+      shown: true,
+      amountMinor: 1000,
+    });
+  });
+  it('reads Arabic decimal and thousands separators', () => {
+    expect(normalizeText('٦٩٫٠٠')).toBe('69.00');
+    expect(
+      page(summary(row('الإجمالي', '١٬٢٩٩٫٠٠ ر.س')), { url: 'https://shop.example.sa/', lang: 'ar' }),
+    ).toEqual({
+      shown: true,
+      kind: 'estimatedTotal',
+      amountMinor: 129900,
+      currency: 'SAR',
+    });
+  });
+  it('reads Indian grouping with decimals', () => {
+    expect(parseRun('1,49,900.00')).toEqual({ int: '149900', frac: '00' });
+    expect(page(summary(row('Total', '₹1,49,900.00')), { url: 'https://shop.example.in/' })).toMatchObject({
+      amountMinor: 14990000,
+      currency: 'INR',
+    });
+  });
+  it('lets consistent structured data outrank a deciding symbol (pinned as intended)', () => {
+    const head = '<meta property="og:price:currency" content="USD">';
+    expect(page(summary(row('Total', '€25.00')), { head, url: 'https://shop.example.de/' })).toMatchObject({
+      currency: 'USD',
+      amountMinor: 2500,
+    });
+  });
+  it('withholds a zero-decimal currency written with a non-zero fraction', () => {
+    expect(page(summary(row('합계', '₩65,500.50')), { lang: 'ko' })).toEqual({
+      shown: false,
+      reason: 'amount-unreadable',
+    });
+    expect(page(summary(row('Total', '₫1.200.000,50')), { lang: 'vi' })).toEqual({
+      shown: false,
+      reason: 'amount-unreadable',
+    });
+  });
+  it('reads an after-credit total beside a points row', () => {
+    expect(page(summary(row('Points applied', '-$5.00') + row('Balance due', '$35.00')))).toEqual({
+      shown: true,
+      kind: 'afterCredit',
+      amountMinor: 3500,
+      currency: 'USD',
+    });
+  });
+  it('reads nested open shadow roots', () => {
+    document.body.innerHTML = '<div id="outer"></div>';
+    const outer = document.getElementById('outer')!.attachShadow({ mode: 'open' });
+    outer.innerHTML = '<div id="inner"></div>';
+    const inner = outer.getElementById('inner')!.attachShadow({ mode: 'open' });
+    inner.innerHTML = summary(row('Total', '$12.00'));
+    document.documentElement.setAttribute('lang', 'en');
+    document.head.innerHTML = '';
+    expect(readCart(document, { url: URL_COM })).toMatchObject({ shown: true, amountMinor: 1200 });
+  });
+  it('excludes instalment rows by generic wording and treats $12 and $12.00 as one amount', () => {
+    expect(classifyLabel('pay in 4 interest-free payments of')).toBeNull();
+    expect(classifyLabel('4 payments of')).toBeNull();
+    expect(
+      page(
+        `<section>${row('Subtotal', '$89')}<p>As low as $16/month or 0% APR with financing</p><button>Checkout</button></section>`,
+      ),
+    ).toMatchObject({ shown: true, kind: 'subtotal', amountMinor: 8900 });
+    expect(page(summary(row('Total', '$12 $12.00')))).toMatchObject({ shown: true, amountMinor: 1200 });
+  });
+  it('takes a code as currency evidence only next to an amount', () => {
+    expect(page(summary(row('Total (EGP)', '£25.00')))).toMatchObject({ currency: 'GBP' });
+  });
+});
+
 describe('currency evidence', () => {
   it('a code in the row beats a symbol and the storefront', () => {
-    expect(page(row('Total', '£1,200.00 EGP'))).toMatchObject({ currency: 'EGP', amountMinor: 120000 });
+    expect(page(summary(row('Total', '£1,200.00 EGP')))).toMatchObject({
+      currency: 'EGP',
+      amountMinor: 120000,
+    });
     expect(
       page(`<section>${row('Subtotal', 'USD 16.34')}<button>Checkout</button></section>`, {
         url: 'https://shop.example.jp/',
@@ -299,8 +463,10 @@ describe('currency evidence', () => {
   });
   it('structured data decides a shared symbol', () => {
     const head = '<meta property="og:price:currency" content="CAD">';
-    expect(page(row('Total', '$27.99'), { head })).toMatchObject({ currency: 'CAD' });
-    expect(page(`<div data-currency="SAR">${row('Total', '69.00')}</div>`, { lang: 'ar' })).toMatchObject({
+    expect(page(summary(row('Total', '$27.99')), { head })).toMatchObject({ currency: 'CAD' });
+    expect(
+      page(`<div data-currency="SAR">${summary(row('Total', '69.00'))}</div>`, { lang: 'ar' }),
+    ).toMatchObject({
       currency: 'SAR',
       amountMinor: 6900,
     });
@@ -308,30 +474,32 @@ describe('currency evidence', () => {
   it('disagreeing structured data does not apply', () => {
     const head =
       '<meta property="og:price:currency" content="CAD"><meta property="product:price:currency" content="USD">';
-    expect(page(row('Total', '$27.99'), { head })).toMatchObject({ currency: 'USD' });
+    expect(page(summary(row('Total', '$27.99')), { head })).toMatchObject({ currency: 'USD' });
   });
   it('a bare dollar is USD only on an English generic-TLD page', () => {
-    expect(page(row('Total', '$298.00'), { lang: 'es-MX' })).toEqual({
+    expect(page(summary(row('Total', '$298.00')), { lang: 'es-MX' })).toEqual({
       shown: false,
       reason: 'currency-undetermined',
     });
-    expect(page(row('Total', '$298.00'), { url: 'https://shop.example.com.mx/', lang: 'es' })).toMatchObject({
-      currency: 'MXN',
-    });
-    expect(page(row('Total', '$27.99'), { url: 'https://shop.example.ca/' })).toMatchObject({
+    expect(
+      page(summary(row('Total', '$298.00')), { url: 'https://shop.example.com.mx/', lang: 'es' }),
+    ).toMatchObject({ currency: 'MXN' });
+    expect(page(summary(row('Total', '$27.99')), { url: 'https://shop.example.ca/' })).toMatchObject({
       currency: 'CAD',
     });
-    expect(page(row('Total', '¥1,989'))).toEqual({ shown: false, reason: 'currency-undetermined' });
+    expect(page(summary(row('Total', '¥1,989')))).toEqual({ shown: false, reason: 'currency-undetermined' });
   });
   it('no marker: the country storefront decides, a generic TLD withholds', () => {
-    expect(page(row('Totaal', '19,15'), { url: 'https://shop.example.nl/', lang: 'nl' })).toMatchObject({
+    expect(
+      page(summary(row('Totaal', '19,15')), { url: 'https://shop.example.nl/', lang: 'nl' }),
+    ).toMatchObject({
       currency: 'EUR',
       amountMinor: 1915,
     });
-    expect(page(row('Total', '19.15'))).toEqual({ shown: false, reason: 'currency-undetermined' });
+    expect(page(summary(row('Total', '19.15')))).toEqual({ shown: false, reason: 'currency-undetermined' });
   });
   it('takes a bare amount currency from a component currency attribute', () => {
-    const r = page(`<x-localization currency="SAR"></x-localization>${row('Total', '44.85')}`);
+    const r = page(`<x-localization currency="SAR"></x-localization>${summary(row('Total', '44.85'))}`);
     expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 4485, currency: 'SAR' });
   });
 });
@@ -361,8 +529,9 @@ describe('amount grammar', () => {
       marker: 'USD',
       number: { int: '24', frac: '' },
     });
-    expect(findAmounts(normalizeText('Total ٦٩٫٠٠ ر.س'.replace('٫', ',')), isCode)[0]).toMatchObject({
+    expect(findAmounts(normalizeText('Total ١٬٢٩٩٫٠٠ ر.س'), isCode)[0]).toMatchObject({
       marker: 'SAR',
+      number: { int: '1299', frac: '00' },
     });
     expect(findAmounts('Qty 1 Size R', isCode)).toEqual([]);
   });

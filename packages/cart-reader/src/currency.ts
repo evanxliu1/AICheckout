@@ -1,6 +1,8 @@
 // Currency evidence (generic-reader-protocol, Currency evidence): (a) a code in the row, (b) consistent structured
 // data on the page, (c) an unambiguous symbol, (d) the storefront's currency from the page URL's country TLD for a
-// shared symbol or no marker, unless the page's language points elsewhere. `lang` alone never decides.
+// shared symbol or no marker, unless the page names another currency (a code or a country-named prefix anywhere in its
+// text) or its language points elsewhere. `lang` alone never decides.
+import { DECIDING_MARKERS } from './amounts.ts';
 
 /** ISO 4217 minor-unit exponents (evals/merchants/currency-minor-units.json, currency-minor-units.1). */
 export const MINOR_UNITS: Record<string, number> = {
@@ -178,6 +180,25 @@ export function structuredCurrency(doc: Document): string | null {
   return found.size === 1 ? [...found][0]! : null;
 }
 
+const PREFIXES = Object.keys(DECIDING_MARKERS).filter((m) => m.endsWith('$'));
+// A code or prefix after a lower-case word and not before a number ("prices in USD", "shown in US$", "billed in
+// CAD"). Selector lists ("USD AUD CAD", "Canada $ USD", "dollar (CAD)"), converted prices ("≈ AUD 11.50", also with
+// a mangled "≈"), "Hong Kong SAR" and "TRY ON" are not statements about the page's prices and do not count.
+const NAMED_RE = new RegExp(
+  `(?<!\\p{L})\\p{Ll}+[\\s:,]+(?:([A-Z]{3})(?![A-Za-z])|(${PREFIXES.map((m) => m.replace('$', '\\$')).join('|')})(?![\\p{L}]))(?!\\s*\\d)`,
+  'gu',
+);
+
+/** Currencies the page's text says its prices are in: an ISO code or country-named dollar after a lower-case word. */
+export function namedCurrencies(text: string): Set<string> {
+  const out = new Set<string>();
+  for (const m of text.matchAll(NAMED_RE)) {
+    const c = m[2] ? DECIDING_MARKERS[m[2]] : isCode(m[1]!) ? m[1] : null;
+    if (c) out.add(c);
+  }
+  return out;
+}
+
 export type RowCurrencyEvidence = {
   /** Distinct ISO codes written in the row (rule (a)). */
   codes: string[];
@@ -187,29 +208,35 @@ export type RowCurrencyEvidence = {
   sharedText: string | null;
 };
 
-/** Resolves the row's currency by the evidence order, or null when it is undetermined. */
+/**
+ * Resolves the row's currency by the evidence order, or null when it is undetermined. `named` lists the currencies
+ * the page's text names (codes, country-named prefixes); it is read only when rule (d) is reached.
+ */
 export function resolveCurrency(
   row: RowCurrencyEvidence,
   structured: string | null,
   store: Storefront,
+  named: () => Set<string>,
 ): string | null {
   if (row.codes.length > 1) return null;
   if (row.codes.length === 1) return row.codes[0]!;
   if (structured) return structured;
   if (row.marker && row.marker !== 'shared') return row.marker;
-  // Rule (d): the storefront, only for a shared marker or no marker, and only when nothing points elsewhere.
+  // Rule (d): the storefront, only for a shared marker or no marker, and only when nothing on the page names
+  // another currency.
+  const storefront = (c: string | null) => (c && [...named()].every((n) => n === c) ? c : null);
   if (row.marker === 'shared') {
     const key = row.sharedText?.replace(/\.$/, '').replace('￥', '¥').replace('₨', 'Rs') ?? '';
     const options = SHARED_FOR[key] ?? [];
-    if (store.tld) return options.includes(store.tld) ? store.tld : null;
+    if (store.tld) return options.includes(store.tld) ? storefront(store.tld) : null;
     // Generic TLD: a bare `$` is USD only on an English page with no other region.
     if (
       key === '$' &&
       (store.lang === '' || store.lang === 'en') &&
       (store.region === '' || store.region === 'us')
     )
-      return 'USD';
+      return storefront('USD');
     return null;
   }
-  return store.tld;
+  return storefront(store.tld);
 }
